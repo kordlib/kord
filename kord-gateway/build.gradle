@@ -5,8 +5,8 @@ apply plugin: 'kotlinx-serialization'
 buildscript {
     ext {
         kotlin_version = '1.3.21'
-        serailization_version = '0.10.0'
-        ktor_version = '1.1.3'
+        serailization_version = '0.11.0'
+        ktor_version = '1.1.4'
         spek_version = '2.0.2'
     }
     repositories {
@@ -26,6 +26,7 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "io.ktor:ktor-client-json:$ktor_version"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serailization_version"
     implementation "io.ktor:ktor-client-websocket:$ktor_version"
     implementation "io.ktor:ktor-client-cio:$ktor_version"

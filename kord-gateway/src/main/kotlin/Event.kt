@@ -1,5 +1,4 @@
 import Cache.sequance
-import kotlinx.serialization.Optional
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
@@ -11,15 +10,13 @@ open class Event(
         val opCode: Int,
         @SerialName("d")
         val data: JsonElement?,
-        @Optional
         @SerialName("s")
         val sequence: Int? = null,
-        @Optional
         @SerialName("t")
         val name: String? = null)
 
 @Serializable
-internal object HeartBeat : Event(10, JsonPrimitive(sequance))
+internal class HeartBeat : Event(10, JsonPrimitive(sequance))
 
 object Cache {
     var sequance: Int? = null
