@@ -21,6 +21,7 @@ data class Payload(
     constructor(opCode: OpCode, data: String, sequence: Int? = null, name: String? = null) : this(opCode, data.primitive(), sequence, name)
 
     companion object {
+        @UnstableDefault
         @ImplicitReflectionSerializer
         inline operator fun <reified T : Event> invoke(opCode: OpCode, data: T, sequence: Int? = null, name: String? = null) =
                 Payload(opCode, Json.plain.toJson(T::class.serializer(), data), sequence, name)
@@ -33,8 +34,8 @@ data class Payload(
 fun Payload.stringify() = Json.stringify(Payload.serializer(), this)
 
 
-fun Number?.primitive() = JsonPrimitive(this)
-fun String?.primitive() = JsonPrimitive(this)
-fun Boolean?.primitive() = JsonPrimitive(this)
+private fun Number?.primitive() = JsonPrimitive(this)
+private fun String?.primitive() = JsonPrimitive(this)
+private fun Boolean?.primitive() = JsonPrimitive(this)
 
 
