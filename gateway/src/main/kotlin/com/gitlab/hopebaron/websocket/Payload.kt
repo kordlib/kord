@@ -12,9 +12,9 @@ data class Payload(
         @SerialName("d")
         val data: JsonElement? = null,
         @SerialName("s")
-        val sequence: Int? = null,
+        val sequence: Int? = 0,
         @SerialName("t")
-        val name: String? = null
+        val name: String? = ""
 ) {
     constructor(opCode: OpCode, data: Number, sequence: Int? = null, name: String? = null) : this(opCode, data.primitive(), sequence, name)
     constructor(opCode: OpCode, data: Boolean, sequence: Int? = null, name: String? = null) : this(opCode, data.primitive(), sequence, name)
