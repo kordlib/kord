@@ -1,3 +1,17 @@
+buildscript {
+    ext {
+        kotlin_version = '1.3.31'
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+
+    }
+}
+
 group 'com.gitlab.hopebaron'
 version '0.0.1'
 
@@ -5,23 +19,10 @@ ext {
     spek_version = '2.0.4'
     serailization_version = '0.11.0'
     ktor_version = '1.1.3'
+    junit_version = '5.0.3'
 }
 
 allprojects {
-    buildscript {
-        ext {
-            kotlin_version = '1.3.31'
-        }
-        repositories {
-            jcenter()
-        }
-        dependencies {
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-            classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
-
-        }
-    }
-
     apply plugin: 'kotlin'
     apply plugin: 'kotlinx-serialization'
 
@@ -40,8 +41,8 @@ allprojects {
         testImplementation 'io.mockk:mockk:1.9.3.kotlin12'
         testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:$spek_version"
         testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.0.3'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.0.3'
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
     }
 
     compileKotlin {
