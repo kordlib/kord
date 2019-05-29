@@ -7,13 +7,12 @@ import kotlin.reflect.KClass
 
 @Serializable
 sealed class Event
+
 sealed class Command
 
-@ImplicitReflectionSerializer
 @UnstableDefault
-inline fun <reified T : Event> JsonElement.event() = Json.plain.fromJson(T::class.serializer(), this)
+fun <T : Event> JsonElement.event(serializer: KSerializer<T>) = Json.plain.fromJson(serializer, this)
 
 @UnstableDefault
-@ImplicitReflectionSerializer
-inline fun <reified T : Command> JsonElement.command() = Json.plain.fromJson(T::class.serializer(), this)
+fun <T : Command> JsonElement.command(serializer: KSerializer<T>) = Json.plain.fromJson(serializer, this)
 
