@@ -16,9 +16,9 @@ data class Payload(
         @SerialName("t")
         val name: String? = ""
 ) {
-    constructor(opCode: OpCode, data: Number, sequence: Int? = null, name: String? = null) : this(opCode, data.primitive(), sequence, name)
-    constructor(opCode: OpCode, data: Boolean, sequence: Int? = null, name: String? = null) : this(opCode, data.primitive(), sequence, name)
-    constructor(opCode: OpCode, data: String, sequence: Int? = null, name: String? = null) : this(opCode, data.primitive(), sequence, name)
+    constructor(opCode: OpCode, data: Number?, sequence: Int? = null, name: String? = null) : this(opCode, data.primitive(), sequence, name)
+    constructor(opCode: OpCode, data: Boolean?, sequence: Int? = null, name: String? = null) : this(opCode, data.primitive(), sequence, name)
+    constructor(opCode: OpCode, data: String?, sequence: Int? = null, name: String? = null) : this(opCode, data.primitive(), sequence, name)
 
     companion object {
         @UnstableDefault
