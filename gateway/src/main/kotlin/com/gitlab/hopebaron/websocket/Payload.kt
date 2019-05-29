@@ -31,7 +31,7 @@ data class Payload(
 
 @ImplicitReflectionSerializer
 @UnstableDefault
-fun Payload.stringify() = Json.stringify(Payload.serializer(), this)
+private fun Payload.stringify() = Json.stringify(Payload.serializer(), this)
 
 
 private fun Number?.primitive() = JsonPrimitive(this)
