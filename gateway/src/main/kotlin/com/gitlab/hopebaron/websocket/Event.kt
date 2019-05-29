@@ -7,27 +7,13 @@ import kotlin.reflect.KClass
 
 @Serializable
 sealed class Event
+sealed class Command
 
 @ImplicitReflectionSerializer
 @UnstableDefault
 inline fun <reified T : Event> JsonElement.event() = Json.plain.fromJson(T::class.serializer(), this)
 
+@UnstableDefault
 @ImplicitReflectionSerializer
-inline fun <reified T : Event> JsonElement.event(expected: KClass<T>) = Json.plain.fromJson(expected.serializer(), this)
-
-
-@Serializable
-data class HelloEvent(
-        @SerialName("heartbeat_interval")
-        val interval: Long,
-        @SerialName("_trace")
-        val trace: String) : Event()
-
-@Serializable
-data class ResumeEvent(val token: String,
-                       @SerialName("session_id")
-                       val id: String,
-                       @SerialName("seq")
-                       val sequance: Int) : Event()
-
+inline fun <reified T : Command> JsonElement.command() = Json.plain.fromJson(T::class.serializer(), this)
 
