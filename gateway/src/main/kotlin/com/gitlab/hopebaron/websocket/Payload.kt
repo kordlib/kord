@@ -22,15 +22,11 @@ data class Payload(
 
     companion object {
         @UnstableDefault
-        @ImplicitReflectionSerializer
-        inline operator fun <reified T : Command> invoke(opCode: OpCode, data: T, sequence: Int? = null, name: String? = null) =
-                Payload(opCode, Json.plain.toJson(T::class.serializer(), data), sequence, name)
+        operator fun <T : Command> invoke(opCode: OpCode, data: T, serializer: KSerializer<T>, sequence: Int? = null, name: String? = null) =
+                Payload(opCode, Json.plain.toJson(serializer, data), sequence, name)
     }
 
 }
-
-
-
 
 
 private fun Number?.primitive() = JsonPrimitive(this)
