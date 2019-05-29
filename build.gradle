@@ -1,0 +1,59 @@
+buildscript {
+    ext {
+        kotlin_version = '1.3.31'
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+
+    }
+}
+
+group 'com.gitlab.hopebaron'
+version '0.0.1'
+
+ext {
+    spek_version = '2.0.4'
+    serailization_version = '0.11.0'
+    ktor_version = '1.1.3'
+    junit_version = '5.0.3'
+}
+
+allprojects {
+    apply plugin: 'kotlin'
+    apply plugin: 'kotlinx-serialization'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+    }
+
+    dependencies {
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+
+        testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+        testImplementation 'io.mockk:mockk-dsl-jvm:1.9.3.kotlin12'
+        testImplementation 'io.mockk:mockk:1.9.3.kotlin12'
+        testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+        testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    test {
+        useJUnitPlatform {
+            includeEngines 'spek2'
+        }
+    }
+}
