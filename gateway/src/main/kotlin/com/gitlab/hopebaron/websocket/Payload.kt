@@ -23,15 +23,14 @@ data class Payload(
     companion object {
         @UnstableDefault
         @ImplicitReflectionSerializer
-        inline operator fun <reified T : Event> invoke(opCode: OpCode, data: T, sequence: Int? = null, name: String? = null) =
+        inline operator fun <reified T : Command> invoke(opCode: OpCode, data: T, sequence: Int? = null, name: String? = null) =
                 Payload(opCode, Json.plain.toJson(T::class.serializer(), data), sequence, name)
     }
 
 }
 
-@ImplicitReflectionSerializer
-@UnstableDefault
-private fun Payload.stringify() = Json.stringify(Payload.serializer(), this)
+
+
 
 
 private fun Number?.primitive() = JsonPrimitive(this)
