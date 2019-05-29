@@ -19,23 +19,25 @@ import kotlin.coroutines.CoroutineContext
 @ExperimentalCoroutinesApi
 @ObsoleteCoroutinesApi
 class DiscordWebSocket(val ws: WebSocketSession) : CoroutineScope {
+    private val sequence: Int? = null
+
     init {
         heartBeat()
         ws.outgoing.invokeOnClose { job.cancel() }
     }
 
 
-    private val job = Job() + newSingleThreadContext("WebSocketThread")
+    private val job = Job() + Dispatchers.IO
     override val coroutineContext: CoroutineContext = job
     val incoming = ws.incoming.map { it.payload() }
-    suspend inline fun send(payload: Payload) = ws.send(Frame.Text(payload.stringify()))
+    suspend fun send(payload: Payload) = ws.send(Frame.Text(payload.stringify()))
     private suspend fun getInterval(): Long {
         val hello = incoming.first { it.opCode == OpCode.Hello }
         return hello.data!!.primitive.long
     }
 
     private fun heartBeat() = launch {
-        ticker(getInterval()).consumeEach { send(Payload(OpCode.Heartbeat, Cache.sequence.primitive())) }
+        ticker(getInterval()).consumeEach { send(Payload(OpCode.Heartbeat, sequence)) }
     }
 
 
@@ -48,6 +50,9 @@ fun Frame.payload(): Payload {
     return Json.plain.fromJson(Payload.serializer(), element)
 }
 
+@UnstableDefault
+@ImplicitReflectionSerializer
+private fun Payload.stringify() = Json.stringify(Payload.serializer(), this)
 
 
 
