@@ -1,3 +1,3 @@
-kord-gateway/.gradle/
-kord-gateway/.idea
-kord-gateway/build/
+.gradle/
+.idea/
+build/
