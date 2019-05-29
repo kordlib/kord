@@ -18,7 +18,7 @@ import kotlin.coroutines.CoroutineContext
 @ImplicitReflectionSerializer
 @ExperimentalCoroutinesApi
 @ObsoleteCoroutinesApi
-class DiscordWebSocket(val ws: WebSocketSession) : CoroutineScope {
+class DiscordWebSocket(private val ws: WebSocketSession) : CoroutineScope {
     private val sequence: Int? = null
 
     init {
