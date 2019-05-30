@@ -15,6 +15,7 @@ import kotlin.coroutines.CoroutineContext
 
 
 @UnstableDefault
+@ImplicitReflectionSerializer
 @ExperimentalCoroutinesApi
 @ObsoleteCoroutinesApi
 class DiscordWebSocket(private val ws: WebSocketSession) : CoroutineScope {
@@ -43,12 +44,14 @@ class DiscordWebSocket(private val ws: WebSocketSession) : CoroutineScope {
 }
 
 @UnstableDefault
+@ImplicitReflectionSerializer
 fun Frame.payload(): Payload {
     val element = Json.plain.parseJson((this as Frame.Text).readText())
     return Json.plain.fromJson(Payload.serializer(), element)
 }
 
 @UnstableDefault
+@ImplicitReflectionSerializer
 private fun Payload.stringify() = Json.stringify(Payload.serializer(), this)
 
 
