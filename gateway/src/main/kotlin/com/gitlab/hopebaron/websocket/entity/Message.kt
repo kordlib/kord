@@ -102,6 +102,7 @@ data class Embed(
     data class Field(val name: String, val value: String, val inline: Boolean?)
 }
 
+@Serializable
 data class Reaction(
         val count: Int,
         val me: Boolean,
