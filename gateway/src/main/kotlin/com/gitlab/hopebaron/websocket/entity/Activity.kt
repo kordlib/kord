@@ -7,46 +7,46 @@ import kotlinx.serialization.Serializable
 data class Activity(
         val name: String,
         val type: Int,
-        val url: String?,
-        val timestamps: ActivityTimeStamps?,
+        val url: String? = null,
+        val timestamps: ActivityTimeStamps? = null,
         @SerialName("application_id")
-        val applicationId: String?,
-        val details: String?,
-        val state: String?,
-        val party: ActivityParty?,
-        val assets: ActivityAssets?,
-        val secrets: ActivitySecrets?,
-        val instance: Boolean?,
-        val flags: Int?
+        val applicationId: String? = null,
+        val details: String? = null,
+        val state: String? = null,
+        val party: ActivityParty? = null,
+        val assets: ActivityAssets? = null,
+        val secrets: ActivitySecrets? = null,
+        val instance: Boolean? = null,
+        val flags: Int? = null
 )
 
 @Serializable
 data class ActivityTimeStamps(
-        val start: Long?,
-        val end: Long?
+        val start: Long? = null,
+        val end: Long? = null
 )
 
 @Serializable
 data class ActivityParty(
-        val id: String?,
-        val size: List<Int>?
+        val id: String? = null,
+        val size: List<Int>? = null
 )
 
 @Serializable
 data class ActivityAssets(
         @SerialName("large_image")
-        val largeImage: String?,
+        val largeImage: String? = null,
         @SerialName("large_text")
-        val largeText: String?,
+        val largeText: String? = null,
         @SerialName("small_image")
-        val smallImage: String?,
+        val smallImage: String? = null,
         @SerialName("small_text")
-        val smallText: String?
+        val smallText: String? = null
 )
 
 @Serializable
 data class ActivitySecrets(
-        val join: String?,
-        val spectate: String?,
-        val match: String?
+        val join: String? = null,
+        val spectate: String? = null,
+        val match: String? = null
 )

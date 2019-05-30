@@ -7,25 +7,25 @@ import kotlinx.serialization.Serializable
 data class Message(
         val id: String,
         val channelId: String,
-        val guildId: String?,
+        val guildId: String? = null,
         val author: User,
-        val member: PartialGuildMember?,
+        val member: PartialGuildMember? = null,
         val content: String,
         val timestamp: String,
-        val editedTimestamp: String?,
+        val editedTimestamp: String? = null,
         val tts: Boolean,
         val mentionEveryone: Boolean,
         val mentions: List<OptionallyMemberUser>,
         val mentionRoles: List<Role>,
         val attachments: List<Attachment>,
         val embeds: List<Embed>,
-        val reactions: List<Reaction>?,
-        val nonce: String?,
+        val reactions: List<Reaction>? = null,
+        val nonce: String? = null,
         val pinned: Boolean,
-        val webhookId: String?,
+        val webhookId: String? = null,
         val type: Int,
-        val activity: MessageActivity?,
-        val application: MessageApplication?
+        val activity: MessageActivity? = null,
+        val application: MessageApplication? = null
 )
 
 @Serializable
@@ -35,71 +35,71 @@ data class Attachment(
         val size: Int,
         val url: String,
         val proxyUrl: String,
-        val height: Int?,
-        val width: Int?
+        val height: Int? = null,
+        val width: Int? = null
 )
 
 @Serializable
 data class Embed(
-        val title: String?,
-        val type: String?,
-        val description: String?,
-        val url: String?,
+        val title: String? = null,
+        val type: String? = null,
+        val description: String? = null,
+        val url: String? = null,
         val timestamp: String,
         val color: Int,
-        val footer: Footer?,
-        val image: Image?,
-        val thumbnail: Thumbnail?,
-        val video: Video?,
-        val provider: Provider?,
-        val author: Author?,
-        val fields: List<Field>?
+        val footer: Footer? = null,
+        val image: Image? = null,
+        val thumbnail: Thumbnail? = null,
+        val video: Video? = null,
+        val provider: Provider? = null,
+        val author: Author? = null,
+        val fields: List<Field>? = null
 ) {
     @Serializable
     data class Footer(
             val text: String,
             @SerialName("icon_url")
-            val iconUrl: String?,
+            val iconUrl: String? = null,
             @SerialName("proxy_icon_url")
-            val proxyIconUrl: String?
+            val proxyIconUrl: String? = null
     )
 
     @Serializable
     data class Image(
-            val url: String?,
+            val url: String? = null,
             @SerialName("proxy_url")
-            val proxyUrl: String?,
-            val height: Int?,
-            val width: Int?
+            val proxyUrl: String? = null,
+            val height: Int? = null,
+            val width: Int? = null
     )
 
     @Serializable
     data class Thumbnail(
-            val url: String?,
+            val url: String? = null,
             @SerialName("proxy_url")
-            val proxyUrl: String?,
-            val height: Int?,
-            val width: Int?
+            val proxyUrl: String? = null,
+            val height: Int? = null,
+            val width: Int? = null
     )
 
     @Serializable
-    data class Video(val url: String?, val height: Int?, val width: Int?)
+    data class Video(val url: String? = null, val height: Int? = null, val width: Int? = null)
 
     @Serializable
-    data class Provider(val name: String?, val url: String?)
+    data class Provider(val name: String? = null, val url: String? = null)
 
     @Serializable
     data class Author(
-            val name: String?,
-            val url: String?,
+            val name: String? = null,
+            val url: String? = null,
             @SerialName("icon_url")
-            val iconUrl: String?,
+            val iconUrl: String? = null,
             @SerialName("proxy_icon_url")
-            val proxyIconUrl: String?
+            val proxyIconUrl: String? = null
     )
 
     @Serializable
-    data class Field(val name: String, val value: String, val inline: Boolean?)
+    data class Field(val name: String, val value: String, val inline: Boolean? = null)
 }
 
 @Serializable
@@ -110,13 +110,13 @@ data class Reaction(
 )
 
 @Serializable
-data class MessageActivity(val type: Int, @SerialName("party_id") val partyId: String?)
+data class MessageActivity(val type: Int, @SerialName("party_id") val partyId: String? = null)
 
 @Serializable
 data class MessageApplication(
         val id: String,
         @SerialName("cover_image")
-        val coverImage: String?,
+        val coverImage: String? = null,
         val description: String,
         val icon: String,
         val name: String
@@ -128,7 +128,7 @@ data class DeletedMessage(
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("guild_id")
-        val guildId: String?
+        val guildId: String? = null
 )
 
 @Serializable
@@ -137,7 +137,7 @@ data class BulkDeleteData(
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("guild_id")
-        val guildId: String?
+        val guildId: String? = null
 )
 
 @Serializable
@@ -149,7 +149,7 @@ data class MessageReaction(
         @SerialName("message_id")
         val messageId: String,
         @SerialName("guild_id")
-        val guildId: String?,
+        val guildId: String? = null,
         val emoji: PartialEmoji
 )
 
@@ -166,5 +166,5 @@ data class AllRemovedMessageReactions(
         @SerialName("message_id")
         val messageId: String,
         @SerialName("guild_id")
-        val guildId: String?
+        val guildId: String? = null
 )

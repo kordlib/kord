@@ -6,28 +6,28 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UnavailableGuild(
         val id: String,
-        val unavailable: Boolean?
+        val unavailable: Boolean? = null
 )
 
 @Serializable
 data class Guild(
         val id: String,
         val name: String,
-        val icon: String?,
-        val splash: String?,
-        val owner: Boolean?,
+        val icon: String? = null,
+        val splash: String? = null,
+        val owner: Boolean? = null,
         @SerialName("owner_id")
         val ownerId: String,
-        val permissions: Int?,
+        val permissions: Int? = null,
         val region: String,
         @SerialName("afk_channel_id")
-        val afkChannelId: String?,
+        val afkChannelId: String? = null,
         @SerialName("afk_timeout")
         val afkTimeout: Int,
         @SerialName("embed_enabled")
-        val embedEnabled: Boolean?,
+        val embedEnabled: Boolean? = null,
         @SerialName("embed_channel_id")
-        val embedChannelId: String?,
+        val embedChannelId: String? = null,
         @SerialName("verification_level")
         val verificationLevel: Int,
         @SerialName("default_message_notifications")
@@ -40,32 +40,32 @@ data class Guild(
         @SerialName("mfa_level")
         val mfaLevel: Int,
         @SerialName("application_id")
-        val applicationId: String?,
+        val applicationId: String? = null,
         @SerialName("widget_enabled")
-        val widgetEnabled: Boolean?,
+        val widgetEnabled: Boolean? = null,
         @SerialName("widget_channel_id")
-        val widgetChannelId: String?,
+        val widgetChannelId: String? = null,
         @SerialName("system_channel_id")
-        val systemChannelId: String?,
+        val systemChannelId: String? = null,
         @SerialName("joined_at")
-        val joinedAt: String?,
-        val large: Boolean?,
-        val unavailable: Boolean?,
+        val joinedAt: String? = null,
+        val large: Boolean? = null,
+        val unavailable: Boolean? = null,
         @SerialName("member_count")
-        val memberCount: Int?,
+        val memberCount: Int? = null,
         @SerialName("voice_states")
-        val voiceStates: List<VoiceState>?,
-        val members: List<GuildMember>?,
-        val channels: List<Channel>?,
-        val presences: List<PresenceUpdateData>?,
+        val voiceStates: List<VoiceState>? = null,
+        val members: List<GuildMember>? = null,
+        val channels: List<Channel>? = null,
+        val presences: List<PresenceUpdateData>? = null,
         @SerialName("max_presences")
-        val maxPresences: Int?,
+        val maxPresences: Int? = null,
         @SerialName("max_members")
-        val maxMembers: Int?,
+        val maxMembers: Int? = null,
         @SerialName("vanity_url_code")
-        val vanityUrlCode: String?,
-        val description: String?,
-        val banner: String?
+        val vanityUrlCode: String? = null,
+        val description: String? = null,
+        val banner: String? = null
 )
 
 @Serializable
@@ -104,13 +104,13 @@ data class WebhooksUpdateData(
 @Serializable
 data class VoiceState(
         @SerialName("guild_id")
-        val guildId: String?,
+        val guildId: String? = null,
         @SerialName("channel_id")
-        val channelId: String?,
+        val channelId: String? = null,
         @SerialName("user_id")
         val userId: String,
         @SerialName("guild_member")
-        val member: GuildMember?,
+        val member: GuildMember? = null,
         @SerialName("session_id")
         val sessionId: String,
         val deaf: Boolean,
