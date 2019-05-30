@@ -45,9 +45,6 @@ data class VoiceStateUpdate(val voiceState: VoiceState) : Event()
 data class VoiceServerUpdate(val voiceServerUpdateData: VoiceServerUpdateData) : Event()
 data class WebhooksUpdate(val webhooksUpdateData: WebhooksUpdateData) : Event()
 
-@UnstableDefault
-fun <T : Event> JsonObject.event(serializer: KSerializer<T>) = Json.plain.fromJson(serializer, this)
-
 private fun <T> fromJson(serializer: KSerializer<T>, element: JsonElement?) = Json.plain.fromJson(serializer, element!!)
 
 @UnstableDefault
