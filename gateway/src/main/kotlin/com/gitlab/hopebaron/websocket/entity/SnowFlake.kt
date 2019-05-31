@@ -18,18 +18,17 @@ class SnowFlake(private val id: String) {
             return SnowFlake(snowFlake)
         }
 
-        override fun serialize(encoder: Encoder, obj: SnowFlake) {
-            val timestamp = obj.instant.toEpochMilli()
-            val snowFlake = (timestamp - discordEpoch) shr 22
-            encoder.encodeString(snowFlake.toString())
-        }
+        override fun serialize(encoder: Encoder, obj: SnowFlake) =
+                encoder.encodeString(obj.id)
+
     }
 
     val idLong
         get() = id.toLong()
-    val instant: Instant
-        get() {
-            val time = idLong shl 22
-            return Instant.ofEpochMilli(discordEpoch + time)
-        }
+
+}
+
+fun SnowFlake.instant(): Instant {
+    val time = idLong shl 22
+    return Instant.ofEpochMilli(discordEpoch + time)
 }
