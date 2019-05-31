@@ -23,20 +23,20 @@ data class AddedGuildMember(
         val joinedAt: String,
         val deaf: Boolean,
         val mute: Boolean,
-        val guildId: String
+        val guildId: Snowflake
 )
 
 @Serializable
 data class RemovedGuildMember(
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: Snowflake,
         val user: User
 )
 
 @Serializable
 data class UpdatedGuildMember(
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: Snowflake,
         val roles: List<String>,
         val user: User,
         val nick: String
@@ -54,7 +54,7 @@ data class PartialGuildMember(
 
 @Serializable
 data class OptionallyMemberUser(
-        val id: String,
+        val id: Snowflake,
         val username: String,
         val discriminator: String,
         val avatar: String? = null,

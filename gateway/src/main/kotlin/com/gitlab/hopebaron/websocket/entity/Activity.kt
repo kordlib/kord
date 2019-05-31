@@ -10,7 +10,7 @@ data class Activity(
         val url: String? = null,
         val timestamps: ActivityTimeStamps? = null,
         @SerialName("application_id")
-        val applicationId: String? = null,
+        val applicationId: Snowflake? = null,
         val details: String? = null,
         val state: String? = null,
         val party: ActivityParty? = null,
@@ -28,7 +28,7 @@ data class ActivityTimeStamps(
 
 @Serializable
 data class ActivityParty(
-        val id: String? = null,
+        val id: Snowflake? = null,
         val size: List<Int>? = null
 )
 

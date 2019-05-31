@@ -5,10 +5,10 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class Channel(
-        val id: String,
+        val id: Snowflake,
         val type: ChannelType,
         @SerialName("guild_id")
-        val guildId: String? = null,
+        val guildId: Snowflake? = null,
         val position: Int? = null,
         @SerialName("permission_overwrites")
         val permissionOverwrites: List<Overwrite>? = null,
@@ -16,7 +16,7 @@ data class Channel(
         val topic: String? = null,
         val nsfw: Boolean? = null,
         @SerialName("last_message_id")
-        val lastMessageId: String? = null,
+        val lastMessageId: Snowflake? = null,
         val bitrate: Int? = null,
         @SerialName("user_limit")
         val userLimit: Int? = null,
@@ -25,11 +25,11 @@ data class Channel(
         val recipients: List<User>? = null,
         val icon: String? = null,
         @SerialName("owner_id")
-        val ownerId: String? = null,
+        val ownerId: Snowflake? = null,
         @SerialName("application_id")
-        val applicationId: String? = null,
+        val applicationId: Snowflake? = null,
         @SerialName("parent_id")
-        val parentId: String? = null,
+        val parentId: Snowflake? = null,
         @SerialName("last_pin_timestamp")
         val lastPinTimestamp: String? = null
 )

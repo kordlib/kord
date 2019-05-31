@@ -18,7 +18,7 @@ data class Guild(
         val owner: Boolean? = null,
         @SerialName("owner_id")
         val ownerId: String,
-        val permissions: Permissions? = null,
+        val permissions: Int? = null,
         val region: String,
         @SerialName("afk_channel_id")
         val afkChannelId: String? = null,
@@ -74,7 +74,7 @@ data class PartialGuild(
         val name: String,
         val icon: String?,
         val owner: Boolean?,
-        val permissions: Permissions?
+        val permissions: Int?
 )
 
 @Serializable
