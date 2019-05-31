@@ -1,7 +1,7 @@
 package com.gitlab.hopebaron.websocket.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
+import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class Message(
@@ -23,7 +23,7 @@ data class Message(
         val nonce: String? = null,
         val pinned: Boolean,
         val webhookId: String? = null,
-        val type: Int,
+        val type: MessageType,
         val activity: MessageActivity? = null,
         val application: MessageApplication? = null
 )
@@ -168,3 +168,32 @@ data class AllRemovedMessageReactions(
         @SerialName("guild_id")
         val guildId: String? = null
 )
+
+@Serializable(with = MessageType.MessageTypeSerializer::class)
+enum class MessageType(val code: Int) {
+    Default(0),
+    RecipientAdd(1),
+    RecipientRemove(2),
+    Call(3),
+    ChannelNameChange(4),
+    ChannelIconChange(5),
+    ChannelPinnedMessage(6),
+    GuildMemberJoin(7);
+
+    @Serializer(forClass = MessageType::class)
+    companion object MessageTypeSerializer : KSerializer<MessageType> {
+
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("type")
+
+        override fun deserialize(decoder: Decoder): MessageType {
+            val code = decoder.decodeInt()
+            return values().first { it.code == code }
+        }
+
+        override fun serialize(encoder: Encoder, obj: MessageType) {
+            encoder.encodeInt(obj.code)
+        }
+    }
+}
+

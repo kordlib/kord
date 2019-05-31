@@ -1,7 +1,7 @@
 package com.gitlab.hopebaron.websocket.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
+import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class UnavailableGuild(
@@ -29,16 +29,16 @@ data class Guild(
         @SerialName("embed_channel_id")
         val embedChannelId: String? = null,
         @SerialName("verification_level")
-        val verificationLevel: Int,
+        val verificationLevel: VerificationLevel,
         @SerialName("default_message_notifications")
-        val defaultMessageNotifications: Int,
+        val defaultMessageNotifications: DefaultMessageNotificationLevel,
         @SerialName("explicit_content_filter")
-        val explicitContentFilter: Int,
+        val explicitContentFilter: ExplicitContentFilter,
         val roles: List<Role>,
         val emojis: List<Emoji>,
         val features: List<String>,
         @SerialName("mfa_level")
-        val mfaLevel: Int,
+        val mfaLevel: MFALevel,
         @SerialName("application_id")
         val applicationId: String? = null,
         @SerialName("widget_enabled")
@@ -121,3 +121,97 @@ data class VoiceState(
         val selfMute: Boolean,
         val suppress: Boolean
 )
+
+@Serializable(with = DefaultMessageNotificationLevelSerializer::class)
+enum class DefaultMessageNotificationLevel(val code: Int) {
+    AllMessages(0),
+    OnlyMentions(1)
+}
+
+@Serializer(forClass = DefaultMessageNotificationLevel::class)
+private object DefaultMessageNotificationLevelSerializer : KSerializer<DefaultMessageNotificationLevel> {
+    override val descriptor: SerialDescriptor
+        get() = IntDescriptor.withName("default_message_notifications")
+
+    override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel {
+        val code = decoder.decodeInt()
+        return DefaultMessageNotificationLevel.values().first { it.code == code }
+    }
+
+    override fun serialize(encoder: Encoder, obj: DefaultMessageNotificationLevel) {
+        encoder.encodeInt(obj.code)
+    }
+}
+
+@Serializable(with = ExplicitContentFilterSerializer::class)
+enum class ExplicitContentFilter(val code: Int) {
+    Disabled(0),
+    MembersWithoutRoles(1),
+    AllMembers(2)
+}
+
+@Serializer(forClass = ExplicitContentFilter::class)
+private object ExplicitContentFilterSerializer : KSerializer<ExplicitContentFilter> {
+
+    override val descriptor: SerialDescriptor
+        get() = IntDescriptor.withName("explicit_content_filter")
+
+    override fun deserialize(decoder: Decoder): ExplicitContentFilter {
+        val code = decoder.decodeInt()
+        return ExplicitContentFilter.values().first { it.code == code }
+    }
+
+    override fun serialize(encoder: Encoder, obj: ExplicitContentFilter) {
+        encoder.encodeInt(obj.code)
+    }
+
+}
+
+@Serializable(with = MFALevelSerializer::class)
+enum class MFALevel(val code: Int) {
+    None(0),
+    Elevated(1)
+}
+
+@Serializer(forClass = MFALevel::class)
+private object MFALevelSerializer : KSerializer<MFALevel> {
+
+    override val descriptor: SerialDescriptor
+        get() = IntDescriptor.withName("mfa_level")
+
+    override fun deserialize(decoder: Decoder): MFALevel {
+        val code = decoder.decodeInt()
+        return MFALevel.values().first { it.code == code }
+    }
+
+    override fun serialize(encoder: Encoder, obj: MFALevel) {
+        encoder.encodeInt(obj.code)
+    }
+
+}
+
+@Serializable(with = VerificationLevel.VerificationLevelSerializer::class)
+enum class VerificationLevel(val code: Int) {
+    None(0),
+    Low(1),
+    Medium(2),
+    High(3),
+    VeryHigh(4);
+
+    @Serializer(forClass = VerificationLevel::class)
+    companion object VerificationLevelSerializer : KSerializer<VerificationLevel> {
+
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("verification_level")
+
+        override fun deserialize(decoder: Decoder): VerificationLevel {
+            val code = decoder.decodeInt()
+            return values().first { it.code == code }
+        }
+
+        override fun serialize(encoder: Encoder, obj: VerificationLevel) {
+            encoder.encodeInt(obj.code)
+        }
+
+    }
+}
