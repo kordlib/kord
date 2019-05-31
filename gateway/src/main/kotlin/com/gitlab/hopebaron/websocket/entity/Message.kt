@@ -12,16 +12,20 @@ data class Message(
         val member: PartialGuildMember? = null,
         val content: String,
         val timestamp: String,
+        @SerialName("edited_timestamp")
         val editedTimestamp: String? = null,
         val tts: Boolean,
+        @SerialName("mentions_everyone")
         val mentionEveryone: Boolean,
         val mentions: List<OptionallyMemberUser>,
+        @SerialName("mention_rles")
         val mentionRoles: List<Role>,
         val attachments: List<Attachment>,
         val embeds: List<Embed>,
         val reactions: List<Reaction>? = null,
         val nonce: String? = null,
         val pinned: Boolean,
+        @SerialName("webhook_id")
         val webhookId: String? = null,
         val type: MessageType,
         val activity: MessageActivity? = null,
@@ -34,6 +38,7 @@ data class Attachment(
         val fileName: String,
         val size: Int,
         val url: String,
+        @SerialName("proxy_url")
         val proxyUrl: String,
         val height: Int? = null,
         val width: Int? = null
