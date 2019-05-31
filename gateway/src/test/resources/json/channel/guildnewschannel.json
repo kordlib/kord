@@ -1,0 +1,12 @@
+{
+  "id": "41771983423143937",
+  "guild_id": "41771983423143937",
+  "name": "important-news",
+  "type": 5,
+  "position": 6,
+  "permission_overwrites": [],
+  "nsfw": true,
+  "topic": "Rumors about Half Life 3",
+  "last_message_id": "155117677105512449",
+  "parent_id": "399942396007890945"
+}

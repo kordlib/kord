@@ -7,11 +7,11 @@ import kotlinx.serialization.Serializable
 data class IdentifyData(
         internal val token: String,
         val properties: IdentifyProperties,
-        val compress: Boolean?,
+        val compress: Boolean? = null,
         @SerialName("large_threshold")
         val largeThreshold: Int = 50,
-        val shard: List<Int>?,
-        val presence: Presence?
+        val shard: List<Int>? = null,
+        val presence: Presence? = null
 ) {
     override fun toString(): String = "IdentifyData(token=hunter2,properties=$properties,compress=$compress,largeThreshold=$largeThreshold," +
             "shard=$shard,presence=$presence"
@@ -32,6 +32,6 @@ data class IdentifyProperties(
 data class Presence(
         val status: String,
         val afk: Boolean,
-        val since: Int?,
-        val game: Activity?
+        val since: Int? = null,
+        val game: Activity? = null
 )

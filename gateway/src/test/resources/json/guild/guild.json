@@ -1,0 +1,23 @@
+{
+  "id": "41771983423143937",
+  "application_id": null,
+  "name": "Discord Developers",
+  "icon": "86e39f7ae3307e811784e2ffd11a7310",
+  "splash": null,
+  "owner_id": "80351110224678912",
+  "region": "us-east",
+  "afk_channel_id": "42072017402331136",
+  "afk_timeout": 300,
+  "embed_enabled": true,
+  "embed_channel_id": "41771983444115456",
+  "verification_level": 1,
+  "default_message_notifications": 0,
+  "explicit_content_filter": 0,
+  "mfa_level": 0,
+  "widget_enabled": false,
+  "widget_channel_id": "41771983423143937",
+  "roles": [],
+  "emojis": [],
+  "features": ["INVITE_SPLASH"],
+  "unavailable": false
+}
