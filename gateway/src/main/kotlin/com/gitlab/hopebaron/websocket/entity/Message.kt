@@ -6,7 +6,9 @@ import kotlinx.serialization.internal.IntDescriptor
 @Serializable
 data class Message(
         val id: String,
+        @SerialName("channel_id")
         val channelId: String,
+        @SerialName("guild_id")
         val guildId: String? = null,
         val author: User,
         val member: PartialGuildMember? = null,
@@ -15,10 +17,10 @@ data class Message(
         @SerialName("edited_timestamp")
         val editedTimestamp: String? = null,
         val tts: Boolean,
-        @SerialName("mentions_everyone")
+        @SerialName("mention_everyone")
         val mentionEveryone: Boolean,
         val mentions: List<OptionallyMemberUser>,
-        @SerialName("mention_rles")
+        @SerialName("mention_roles")
         val mentionRoles: List<Role>,
         val attachments: List<Attachment>,
         val embeds: List<Embed>,
