@@ -11,10 +11,6 @@ private fun file(name: String): String {
     return loader.getResource("json/channel/$name.json").readText()
 }
 
-infix fun <T> T.shouldBe(that: T) {
-    assertEquals(this, that)
-}
-
 class ChannelTest : Spek({
 
     describe("dmchannel") {
