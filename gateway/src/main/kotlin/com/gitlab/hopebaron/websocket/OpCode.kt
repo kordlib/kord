@@ -3,7 +3,7 @@ package com.gitlab.hopebaron.websocket
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
-@Serializable
+@Serializable(with = OpCode.OpCodeSerializer::class)
 enum class OpCode(val code: Int) {
     Dispatch(0),
     Heartbeat(1),
@@ -18,7 +18,7 @@ enum class OpCode(val code: Int) {
     HelloACK(11);
 
     @Serializer(forClass = OpCode::class)
-    companion object : KSerializer<OpCode> {
+    companion object OpCodeSerializer : KSerializer<OpCode> {
         override val descriptor: SerialDescriptor
             get() = IntDescriptor.withName("op")
 
@@ -31,4 +31,5 @@ enum class OpCode(val code: Int) {
             encoder.encodeInt(obj.code)
         }
     }
+
 }
