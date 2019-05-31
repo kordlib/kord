@@ -66,8 +66,8 @@ class ChannelTest : Spek({
                 with(recipients!![1]) {
                     username shouldBe "test2"
                     discriminator shouldBe "9999"
-                    id shouldBe "82198898841029460"
-                    avatar shouldBe "33ecab261d4681afa4d85a04691c4a01"
+                    id shouldBe "82198810841029460"
+                    avatar shouldBe "33ecab261d4681afa4d85a10691c4a01"
                 }
                 lastMessageId shouldBe "3343820033257021450"
                 type.code shouldBe 3
