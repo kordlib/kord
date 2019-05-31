@@ -1,0 +1,31 @@
+{
+  "reactions": [
+    {
+      "count": 1,
+      "me": false,
+      "emoji": {
+        "id": null,
+        "name": "🔥"
+      }
+    }
+  ],
+  "attachments": [],
+  "tts": false,
+  "embeds": [],
+  "timestamp": "2017-07-11T17:27:07.299000+00:00",
+  "mention_everyone": false,
+  "id": "334385199974967042",
+  "pinned": false,
+  "edited_timestamp": null,
+  "author": {
+    "username": "Mason",
+    "discriminator": "9999",
+    "id": "53908099506183680",
+    "avatar": "a_bab14f271d565501444b2ca3be944b25"
+  },
+  "mention_roles": [],
+  "content": "Supa Hot",
+  "channel_id": "290926798999357250",
+  "mentions": [],
+  "type": 0
+}
