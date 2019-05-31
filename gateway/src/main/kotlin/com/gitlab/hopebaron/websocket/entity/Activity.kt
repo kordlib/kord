@@ -28,7 +28,7 @@ data class ActivityTimeStamps(
 
 @Serializable
 data class ActivityParty(
-        val id: String? = null,
+        val id: SnowFlake? = null,
         val size: List<Int>? = null
 )
 

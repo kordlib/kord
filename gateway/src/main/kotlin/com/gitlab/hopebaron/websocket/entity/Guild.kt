@@ -5,13 +5,13 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class UnavailableGuild(
-        val id: String,
+        val id: SnowFlake,
         val unavailable: Boolean? = null
 )
 
 @Serializable
 data class Guild(
-        val id: String,
+        val id: SnowFlake,
         val name: String,
         val icon: String? = null,
         val splash: String? = null,
@@ -70,7 +70,7 @@ data class Guild(
 
 @Serializable
 data class PartialGuild(
-        val id: String,
+        val id: SnowFlake,
         val name: String,
         val icon: String?,
         val owner: Boolean?,

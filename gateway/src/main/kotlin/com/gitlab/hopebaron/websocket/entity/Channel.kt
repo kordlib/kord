@@ -5,7 +5,7 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class Channel(
-        val id: String,
+        val id: SnowFlake,
         val type: ChannelType,
         @SerialName("guild_id")
         val guildId: String? = null,

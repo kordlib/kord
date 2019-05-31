@@ -5,7 +5,7 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class Message(
-        val id: String,
+        val id: SnowFlake,
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("guild_id")
@@ -36,7 +36,7 @@ data class Message(
 
 @Serializable
 data class Attachment(
-        val id: String,
+        val id: SnowFlake,
         val fileName: String,
         val size: Int,
         val url: String,
@@ -121,7 +121,7 @@ data class MessageActivity(val type: Int, @SerialName("party_id") val partyId: S
 
 @Serializable
 data class MessageApplication(
-        val id: String,
+        val id: SnowFlake,
         @SerialName("cover_image")
         val coverImage: String? = null,
         val description: String,
@@ -131,7 +131,7 @@ data class MessageApplication(
 
 @Serializable
 data class DeletedMessage(
-        val id: String,
+        val id: SnowFlake,
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("guild_id")
@@ -162,7 +162,7 @@ data class MessageReaction(
 
 @Serializable
 data class PartialEmoji(
-        val id: String,
+        val id: SnowFlake,
         val name: String
 )
 

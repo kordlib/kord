@@ -18,7 +18,7 @@ data class PresenceUpdateData(
 
 @Serializable
 data class PresenceUser(
-        val id: String,
+        val id: SnowFlake,
         val username: String? = null,
         val discriminator: String? = null,
         val avatar: String? = null,

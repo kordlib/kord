@@ -54,7 +54,7 @@ data class PartialGuildMember(
 
 @Serializable
 data class OptionallyMemberUser(
-        val id: String,
+        val id: SnowFlake,
         val username: String,
         val discriminator: String,
         val avatar: String? = null,

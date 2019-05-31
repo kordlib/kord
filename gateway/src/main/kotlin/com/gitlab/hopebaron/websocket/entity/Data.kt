@@ -42,7 +42,7 @@ data class Hello(
 
 @Serializable
 data class Overwrite(
-        val id: String,
+        val id: SnowFlake,
         val type: String,
         val allow: Int,
         val deny: Int

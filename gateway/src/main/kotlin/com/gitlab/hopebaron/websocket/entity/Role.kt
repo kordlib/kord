@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Role(
-        val id: String,
+        val id: SnowFlake,
         val name: String,
         val color: Int,
         val hoist: Boolean,
