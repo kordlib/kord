@@ -1,0 +1,12 @@
+{
+  "id": "155101607195836416",
+  "guild_id": "41771983423143937",
+  "name": "ROCKET CHEESE",
+  "type": 2,
+  "nsfw": false,
+  "position": 5,
+  "permission_overwrites": [],
+  "bitrate": 64000,
+  "user_limit": 0,
+  "parent_id": null
+}

@@ -62,7 +62,7 @@ data class PinsUpdateData(
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("last_pin_timestamp")
-        val lastPinTimestamp: String?
+        val lastPinTimestamp: String? = null
 )
 
 
@@ -71,7 +71,7 @@ data class Typing(
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("guild_id")
-        val guildId: String?,
+        val guildId: String? = null,
         @SerialName("user_id")
         val userId: String,
         val timestamp: Long
