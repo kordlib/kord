@@ -5,29 +5,29 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class UnavailableGuild(
-        val id: Snowflake,
+        val id: String,
         val unavailable: Boolean? = null
 )
 
 @Serializable
 data class Guild(
-        val id: Snowflake,
+        val id: String,
         val name: String,
         val icon: String? = null,
         val splash: String? = null,
         val owner: Boolean? = null,
         @SerialName("owner_id")
-        val ownerId: Snowflake,
+        val ownerId: String,
         val permissions: Int? = null,
         val region: String,
         @SerialName("afk_channel_id")
-        val afkChannelId: Snowflake? = null,
+        val afkChannelId: String? = null,
         @SerialName("afk_timeout")
         val afkTimeout: Int,
         @SerialName("embed_enabled")
         val embedEnabled: Boolean? = null,
         @SerialName("embed_channel_id")
-        val embedChannelId: Snowflake? = null,
+        val embedChannelId: String? = null,
         @SerialName("verification_level")
         val verificationLevel: VerificationLevel,
         @SerialName("default_message_notifications")
@@ -40,13 +40,13 @@ data class Guild(
         @SerialName("mfa_level")
         val mfaLevel: MFALevel,
         @SerialName("application_id")
-        val applicationId: Snowflake? = null,
+        val applicationId: String? = null,
         @SerialName("widget_enabled")
         val widgetEnabled: Boolean? = null,
         @SerialName("widget_channel_id")
-        val widgetChannelId: Snowflake? = null,
+        val widgetChannelId: String? = null,
         @SerialName("system_channel_id")
-        val systemChannelId: Snowflake? = null,
+        val systemChannelId: String? = null,
         @SerialName("joined_at")
         val joinedAt: String? = null,
         val large: Boolean? = null,
@@ -70,7 +70,7 @@ data class Guild(
 
 @Serializable
 data class PartialGuild(
-        val id: Snowflake,
+        val id: String,
         val name: String,
         val icon: String?,
         val owner: Boolean?,
@@ -80,17 +80,17 @@ data class PartialGuild(
 @Serializable
 data class GuildBan(
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         val user: User
 )
 
 @Serializable
-data class GuildIntegrations(@SerialName("guild_id") val guildId: Snowflake)
+data class GuildIntegrations(@SerialName("guild_id") val guildId: String)
 
 @Serializable
 data class GuildMembersChunkData(
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         val members: List<GuildMember>
 )
 
@@ -98,30 +98,30 @@ data class GuildMembersChunkData(
 data class VoiceServerUpdateData(
         val token: String,
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         val endpoint: String
 )
 
 @Serializable
 data class WebhooksUpdateData(
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         @SerialName("channel_id")
-        val channelId: Snowflake
+        val channelId: String
 )
 
 @Serializable
 data class VoiceState(
         @SerialName("guild_id")
-        val guildId: Snowflake? = null,
+        val guildId: String? = null,
         @SerialName("channel_id")
-        val channelId: Snowflake? = null,
+        val channelId: String? = null,
         @SerialName("user_id")
-        val userId: Snowflake,
+        val userId: String,
         @SerialName("guild_member")
         val member: GuildMember? = null,
         @SerialName("session_id")
-        val sessionId: Snowflake,
+        val sessionId: String,
         val deaf: Boolean,
         val mute: Boolean,
         @SerialName("self_deaf")

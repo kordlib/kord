@@ -10,7 +10,7 @@ data class Role(
         val color: Int,
         val hoist: Boolean,
         val position: Int,
-        val permissions: Int,
+        val permissions: Permissions,
         val managed: Boolean,
         val mentionable: Boolean
 )

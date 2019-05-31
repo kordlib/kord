@@ -78,7 +78,7 @@ class GuildTest : Spek({
                 name shouldBe "1337 Krew"
                 icon shouldBe "8342729096ea3675442027381ff50dfe"
                 owner shouldBe true
-                permissions shouldBe 36953089
+                permissions!!.code shouldBe 36953089
             }
 
         }
