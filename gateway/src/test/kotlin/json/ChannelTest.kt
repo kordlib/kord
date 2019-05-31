@@ -67,12 +67,12 @@ class ChannelTest : Spek({
                     username shouldBe "test2"
                     discriminator shouldBe "9999"
                     id shouldBe Snowflake("82198810841029460")
-                    avatar shouldBe "33ecab261d4681afa4d85a04691c4a01"
+                    avatar shouldBe "33ecab261d4681afa4d85a10691c4a01"
                 }
-                lastMessageId shouldBe "3343820033257021450"
+                lastMessageId shouldBe Snowflake("3343820033257021450")
                 type.code shouldBe 3
                 id shouldBe Snowflake("319674150115710528")
-                ownerId shouldBe "82198810841029460"
+                ownerId shouldBe Snowflake("82198810841029460")
             }
         }
     }
