@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Role(
-        val id: SnowFlake,
+        val id: Snowflake,
         val name: String,
         val color: Int,
         val hoist: Boolean,
@@ -18,14 +18,14 @@ data class Role(
 @Serializable
 data class GuildRole(
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: Snowflake,
         val role: Role
 )
 
 @Serializable
 data class DeletedGuildRole(
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: Snowflake,
         @SerialName("role_id")
-        val roleId: String
+        val roleId: Snowflake
 )

@@ -5,11 +5,11 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class Message(
-        val id: SnowFlake,
+        val id: Snowflake,
         @SerialName("channel_id")
-        val channelId: String,
+        val channelId: Snowflake,
         @SerialName("guild_id")
-        val guildId: String? = null,
+        val guildId: Snowflake? = null,
         val author: User,
         val member: PartialGuildMember? = null,
         val content: String,
@@ -28,7 +28,7 @@ data class Message(
         val nonce: String? = null,
         val pinned: Boolean,
         @SerialName("webhook_id")
-        val webhookId: String? = null,
+        val webhookId: Snowflake? = null,
         val type: MessageType,
         val activity: MessageActivity? = null,
         val application: MessageApplication? = null
@@ -36,7 +36,7 @@ data class Message(
 
 @Serializable
 data class Attachment(
-        val id: SnowFlake,
+        val id: Snowflake,
         val fileName: String,
         val size: Int,
         val url: String,
@@ -117,11 +117,11 @@ data class Reaction(
 )
 
 @Serializable
-data class MessageActivity(val type: Int, @SerialName("party_id") val partyId: String? = null)
+data class MessageActivity(val type: Int, @SerialName("party_id") val partyId: Snowflake? = null)
 
 @Serializable
 data class MessageApplication(
-        val id: SnowFlake,
+        val id: Snowflake,
         @SerialName("cover_image")
         val coverImage: String? = null,
         val description: String,
@@ -131,49 +131,49 @@ data class MessageApplication(
 
 @Serializable
 data class DeletedMessage(
-        val id: SnowFlake,
+        val id: Snowflake,
         @SerialName("channel_id")
-        val channelId: String,
+        val channelId: Snowflake,
         @SerialName("guild_id")
-        val guildId: String? = null
+        val guildId: Snowflake? = null
 )
 
 @Serializable
 data class BulkDeleteData(
         val ids: List<String>,
         @SerialName("channel_id")
-        val channelId: String,
+        val channelId: Snowflake,
         @SerialName("guild_id")
-        val guildId: String? = null
+        val guildId: Snowflake? = null
 )
 
 @Serializable
 data class MessageReaction(
         @SerialName("user_id")
-        val userId: String,
+        val userId: Snowflake,
         @SerialName("channel_id")
-        val channelId: String,
+        val channelId: Snowflake,
         @SerialName("message_id")
-        val messageId: String,
+        val messageId: Snowflake,
         @SerialName("guild_id")
-        val guildId: String? = null,
+        val guildId: Snowflake? = null,
         val emoji: PartialEmoji
 )
 
 @Serializable
 data class PartialEmoji(
-        val id: SnowFlake,
+        val id: Snowflake,
         val name: String
 )
 
 @Serializable
 data class AllRemovedMessageReactions(
         @SerialName("channel_id")
-        val channelId: String,
+        val channelId: Snowflake,
         @SerialName("message_id")
-        val messageId: String,
+        val messageId: Snowflake,
         @SerialName("guild_id")
-        val guildId: String? = null
+        val guildId: Snowflake? = null
 )
 
 @Serializable(with = MessageType.MessageTypeSerializer::class)

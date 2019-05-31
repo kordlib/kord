@@ -42,7 +42,7 @@ data class Hello(
 
 @Serializable
 data class Overwrite(
-        val id: SnowFlake,
+        val id: Snowflake,
         val type: String,
         val allow: Int,
         val deny: Int
@@ -52,7 +52,7 @@ data class Overwrite(
 data class Resumed(
         val token: String,
         @SerialName("session_id")
-        val sessionId: String,
+        val sessionId: Snowflake,
         @SerialName("seq")
         val sequence: String
 )
@@ -60,7 +60,7 @@ data class Resumed(
 @Serializable
 data class PinsUpdateData(
         @SerialName("channel_id")
-        val channelId: String,
+        val channelId: Snowflake,
         @SerialName("last_pin_timestamp")
         val lastPinTimestamp: String? = null
 )
@@ -69,11 +69,11 @@ data class PinsUpdateData(
 @Serializable
 data class Typing(
         @SerialName("channel_id")
-        val channelId: String,
+        val channelId: Snowflake,
         @SerialName("guild_id")
-        val guildId: String? = null,
+        val guildId: Snowflake? = null,
         @SerialName("user_id")
-        val userId: String,
+        val userId: Snowflake,
         val timestamp: Long
 )
 

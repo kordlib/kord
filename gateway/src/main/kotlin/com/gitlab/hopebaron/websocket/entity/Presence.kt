@@ -9,7 +9,7 @@ data class PresenceUpdateData(
         val roles: List<String>? = null,
         val game: Activity? = null,
         @SerialName("guild_id")
-        val guildId: String? = null,
+        val guildId: Snowflake? = null,
         val status: String,
         val activities: List<Activity>,
         @SerialName("client_status")
@@ -18,7 +18,7 @@ data class PresenceUpdateData(
 
 @Serializable
 data class PresenceUser(
-        val id: SnowFlake,
+        val id: Snowflake,
         val username: String? = null,
         val discriminator: String? = null,
         val avatar: String? = null,

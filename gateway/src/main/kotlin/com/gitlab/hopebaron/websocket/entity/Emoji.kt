@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Emoji(
-        val id: SnowFlake? = null,
+        val id: Snowflake? = null,
         val name: String,
         val roles: List<String>? = null,
         val user: User? = null,
@@ -18,6 +18,6 @@ data class Emoji(
 @Serializable
 data class UpdatedEmojis(
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: Snowflake,
         val emojis: List<Emoji>
 )
