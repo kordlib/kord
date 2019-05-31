@@ -7,18 +7,18 @@ import java.time.Instant
 const val discordEpoch = 1420070400000
 
 @Serializable
-class SnowFlake(private val id: String) {
-    @Serializer(SnowFlake::class)
-    companion object : KSerializer<SnowFlake> {
+data class Snowflake(val id: String) {
+    @Serializer(Snowflake::class)
+    companion object : KSerializer<Snowflake> {
         override val descriptor: SerialDescriptor
             get() = StringDescriptor.withName("id")
 
-        override fun deserialize(decoder: Decoder): SnowFlake {
+        override fun deserialize(decoder: Decoder): Snowflake {
             val snowFlake = decoder.decodeString()
-            return SnowFlake(snowFlake)
+            return Snowflake(snowFlake)
         }
 
-        override fun serialize(encoder: Encoder, obj: SnowFlake) =
+        override fun serialize(encoder: Encoder, obj: Snowflake) =
                 encoder.encodeString(obj.id)
 
     }
@@ -28,7 +28,7 @@ class SnowFlake(private val id: String) {
 
 }
 
-fun SnowFlake.instant(): Instant {
+fun Snowflake.instant(): Instant {
     val time = idLong shl 22
     return Instant.ofEpochMilli(discordEpoch + time)
 }
