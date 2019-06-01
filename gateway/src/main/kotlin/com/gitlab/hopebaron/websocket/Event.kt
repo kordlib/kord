@@ -3,7 +3,6 @@ package com.gitlab.hopebaron.websocket
 import com.gitlab.hopebaron.websocket.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.BooleanDescriptor
-import kotlinx.serialization.internal.LongDescriptor
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 
@@ -39,18 +38,7 @@ data class InvalidSession(val resumable: Boolean) : Event() {
     }
 }
 
-@Serializable
-data class Heartbeat(val data: Long) : Event() {
-    @Serializer(Heartbeat::class)
-    companion object : KSerializer<Heartbeat> {
-        override val descriptor: SerialDescriptor
-            get() = LongDescriptor.withName("HeartbeatEvent")
 
-        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
-        override fun serialize(encoder: Encoder, obj: Heartbeat) = Unit
-
-    }
-}
 
 @Serializable
 data class ChannelCreate(val channel: Channel) : Event()
