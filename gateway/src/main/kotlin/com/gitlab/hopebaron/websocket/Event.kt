@@ -1,91 +1,151 @@
 package com.gitlab.hopebaron.websocket
 
 import com.gitlab.hopebaron.websocket.entity.*
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.UnstableDefault
+import kotlinx.serialization.*
+import kotlinx.serialization.internal.BooleanDescriptor
+import kotlinx.serialization.internal.LongDescriptor
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 @Serializable
+@Polymorphic
 sealed class Event
 
+object HeartbeatACK : Event()
+object Reconnect : Event()
+@Serializable
+data class HelloEvent(
+        @SerialName("heartbeat_interval")
+        val heartbeatInterval: Long,
+        @SerialName("_trace")
+        val traces: List<String>
+) : Event()
+
+@Serializable
+data class Resumed(
+        @SerialName("_traces")
+        val traces: List<String>
+) : Event()
+
+@Serializable
+data class InvalidSession(val resumable: Boolean) : Event() {
+    @Serializer(InvalidSession::class)
+    companion object : KSerializer<InvalidSession> {
+        override val descriptor: SerialDescriptor
+            get() = BooleanDescriptor.withName("InvalidSession")
+
+        override fun deserialize(decoder: Decoder) = InvalidSession(decoder.decodeBoolean())
+        override fun serialize(encoder: Encoder, obj: InvalidSession) = Unit
+    }
+}
+
+@Serializable
+data class Heartbeat(val data: Long) : Event() {
+    @Serializer(Heartbeat::class)
+    companion object : KSerializer<Heartbeat> {
+        override val descriptor: SerialDescriptor
+            get() = LongDescriptor.withName("HeartbeatEvent")
+
+        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
+        override fun serialize(encoder: Encoder, obj: Heartbeat) = Unit
+
+    }
+}
+
+@Serializable
 data class ChannelCreate(val channel: Channel) : Event()
+
+@Serializable
 data class ChannelUpdate(val channel: Channel) : Event()
+
+@Serializable
 data class ChannelDelete(val channel: Channel) : Event()
+
+@Serializable
 data class ChannelPinsUpdate(val pins: PinsUpdateData) : Event()
+
+@Serializable
 data class TypingStart(val data: Typing) : Event()
 
+@Serializable
 data class GuildCreate(val guild: Guild) : Event()
+
+@Serializable
 data class GuildUpdate(val guild: Guild) : Event()
+
+@Serializable
 data class GuildDelete(val guild: UnavailableGuild) : Event()
+
+@Serializable
 data class GuildBanAdd(val ban: GuildBan) : Event()
+
+@Serializable
 data class GuildBanRemove(val ban: GuildBan) : Event()
+
+@Serializable
 data class GuildEmojisUpdate(val emoji: UpdatedEmojis) : Event()
+
+@Serializable
 data class GuildIntegrationsUpdate(val integrations: GuildIntegrations) : Event()
+
+@Serializable
 data class GuildMemberAdd(val member: AddedGuildMember) : Event()
+
+@Serializable
 data class GuildMemberRemove(val member: RemovedGuildMember) : Event()
+
+@Serializable
 data class GuildMemberUpdate(val member: UpdatedGuildMember) : Event()
+
+@Serializable
 data class GuildRoleCreate(val role: GuildRole) : Event()
+
+@Serializable
 data class GuildRoleUpdate(val role: GuildRole) : Event()
+
+@Serializable
 data class GuildRoleDelete(val role: DeletedGuildRole) : Event()
+
+@Serializable
 data class GuildMembersChunk(val data: GuildMembersChunkData) : Event()
 
+@Serializable
 data class MessageCreate(val message: Message) : Event()
+
+@Serializable
 data class MessageUpdate(val message: Message) : Event()
+
+@Serializable
 data class MessageDelete(val message: DeletedMessage) : Event()
+
+@Serializable
 data class MessageDeleteBulk(val messageBulk: BulkDeleteData) : Event()
+
+@Serializable
 data class MessageReactionAdd(val reaction: MessageReaction) : Event()
+
+@Serializable
 data class MessageReactionRemove(val reaction: MessageReaction) : Event()
+
+@Serializable
 data class MessageReactionRemoveAll(val reactions: AllRemovedMessageReactions) : Event()
+
+@Serializable
 data class PresenceUpdate(val presence: PresenceUpdateData) : Event()
+
+@Serializable
 data class UserUpdate(val user: User) : Event()
+
+@Serializable
 data class VoiceStateUpdate(val voiceState: VoiceState) : Event()
+
+@Serializable
 data class VoiceServerUpdate(val voiceServerUpdateData: VoiceServerUpdateData) : Event()
+
+@Serializable
 data class WebhooksUpdate(val webhooksUpdateData: WebhooksUpdateData) : Event()
 
-private fun <T> fromJson(serializer: KSerializer<T>, element: JsonElement?) = Json.plain.fromJson(serializer, element!!)
-
 @UnstableDefault
-internal fun Payload.event(): Event = when (name) {
-    "CHANNEL_CREATE" -> ChannelCreate(fromJson(Channel.serializer(), data))
-    "CHANNEL_UPDATE" -> ChannelUpdate(fromJson(Channel.serializer(), data))
-    "CHANNEL_DELETE" -> ChannelDelete(fromJson(Channel.serializer(), data))
-    "CHANNEL_PINS_UPDATE" -> ChannelPinsUpdate(fromJson(PinsUpdateData.serializer(), data))
-
-    "TYPING_START" -> TypingStart(fromJson(Typing.serializer(), data))
-
-    "GUILD_CREATE" -> GuildCreate(fromJson(Guild.serializer(), data))
-    "GUILD_UPDATE" -> GuildUpdate(fromJson(Guild.serializer(), data))
-    "GUILD_DELETE" -> GuildDelete(fromJson(UnavailableGuild.serializer(), data))
-    "GUILD_BAN_ADD" -> GuildBanAdd(fromJson(GuildBan.serializer(), data))
-    "GUILD_BAN_REMOVE" -> GuildBanRemove(fromJson(GuildBan.serializer(), data))
-    "GUILD_EMOJIS_UPDATE" -> GuildEmojisUpdate(fromJson(UpdatedEmojis.serializer(), data))
-    "GUILD_INTEGRATIONS_UPDATE" -> GuildIntegrationsUpdate(fromJson(GuildIntegrations.serializer(), data))
-    "GUILD_MEMBER_ADD" -> GuildMemberAdd(fromJson(AddedGuildMember.serializer(), data))
-    "GUILD_MEMBER_REMOVE" -> GuildMemberRemove(fromJson(RemovedGuildMember.serializer(), data))
-    "GUILD_MEMBER_UPDATE" -> GuildMemberUpdate(fromJson(UpdatedGuildMember.serializer(), data))
-    "GUILD_ROLE_CREATE" -> GuildRoleCreate(fromJson(GuildRole.serializer(), data))
-    "GUILD_ROLE_UPDATE" -> GuildRoleUpdate(fromJson(GuildRole.serializer(), data))
-    "GUILD_ROLE_DELETE" -> GuildRoleDelete(fromJson(DeletedGuildRole.serializer(), data))
-    "GUILD_MEMBERS_CHUNK" -> GuildMembersChunk(fromJson(GuildMembersChunkData.serializer(), data))
-
-    "MESSAGE_CREATE" -> MessageCreate(fromJson(Message.serializer(), data))
-    "MESSAGE_UPDATE" -> MessageUpdate(fromJson(Message.serializer(), data))
-    "MESSAGE_DELETE" -> MessageDelete(fromJson(DeletedMessage.serializer(), data))
-    "MESSAGE_DELETE_BULK" -> MessageDeleteBulk(fromJson(BulkDeleteData.serializer(), data))
-    "MESSAGE_REACTION_ADD" -> MessageReactionAdd(fromJson(MessageReaction.serializer(), data))
-    "MESSAGE_REACTION_REMOVE" -> MessageReactionRemove(fromJson(MessageReaction.serializer(), data))
-
-    "MESSAGE_REACTION_REMOVE_ALL" -> MessageReactionRemoveAll(fromJson(AllRemovedMessageReactions.serializer(), data))
-    "PRESENCE_UPDATE" -> PresenceUpdate(fromJson(PresenceUpdateData.serializer(), data))
-    "USER_UPDATE" -> UserUpdate(fromJson(User.serializer(), data))
-    "VOICE_STATE_UPDATE" -> VoiceStateUpdate(fromJson(VoiceState.serializer(), data))
-    "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(fromJson(VoiceServerUpdateData.serializer(), data))
-    "WEBHOOKS_UPDATE" -> WebhooksUpdate(fromJson(WebhooksUpdateData.serializer(), data))
-    else -> TODO("log this event $name")
-}
 
 sealed class Command
 
