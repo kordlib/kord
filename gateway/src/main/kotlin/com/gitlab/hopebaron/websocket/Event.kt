@@ -87,8 +87,4 @@ internal fun Payload.event(): Event = when (name) {
     else -> TODO("log this event $name")
 }
 
-sealed class Command
-
-@UnstableDefault
-fun <T : Command> JsonObject.command(serializer: KSerializer<T>) = Json.plain.fromJson(serializer, this)
 
