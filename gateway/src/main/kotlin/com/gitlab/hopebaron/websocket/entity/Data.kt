@@ -32,19 +32,6 @@ data class Shard(val index: Int, val count: Int) {
 }
 
 @Serializable
-data class Heartbeat(val data: Long) {
-    @Serializer(Heartbeat::class)
-    companion object : KSerializer<Heartbeat> {
-        override val descriptor: SerialDescriptor
-            get() = LongDescriptor.withName("HeartbeatEvent")
-
-        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
-        override fun serialize(encoder: Encoder, obj: Heartbeat) = Unit
-
-    }
-}
-
-@Serializable
 data class Overwrite(
         val id: Snowflake,
         val type: String,
