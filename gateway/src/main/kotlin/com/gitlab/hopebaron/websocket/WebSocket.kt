@@ -3,10 +3,12 @@ package com.gitlab.hopebaron.websocket
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.WebSocketSession
 import io.ktor.http.cio.websocket.readText
+import io.ktor.http.cio.websocket.send
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.map
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.Json.Companion.stringify
 import kotlin.coroutines.CoroutineContext
 
 @UnstableDefault
@@ -21,9 +23,8 @@ class DiscordWebSocket(private val ws: WebSocketSession) : CoroutineScope {
         TODO("make this class work")
     }
 
-    suspend fun send(payload: SendPayload) {
-        TODO()
-    }
+    suspend fun send(payload: SendPayload) = ws.send(payload.stringify())
+
 
 }
 
@@ -34,9 +35,7 @@ fun Frame.payload(): ReceivePayload {
 }
 
 @UnstableDefault
-private fun ReceivePayload.stringify() = Json.stringify(ReceivePayload.serializer(), this)
-
-fun SendPayload.stringify() = Unit
+private fun SendPayload.stringify() = stringify(SendPayload.serializer(), this)
 
 
 
