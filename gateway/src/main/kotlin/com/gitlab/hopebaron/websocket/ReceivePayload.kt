@@ -44,7 +44,7 @@ data class ReceivePayload(
                             OpCode.Dispatch -> getByDispatchEvent(index, this, eventName)
                             OpCode.Heartbeat -> decodeSerializableElement(descriptor, index, Heartbeat.serializer())
                             OpCode.InvalidSession -> decodeSerializableElement(descriptor, index, InvalidSession)
-                            OpCode.Hello -> decodeSerializableElement(descriptor, index, HelloEvent.serializer())
+                            OpCode.Hello -> decodeSerializableElement(descriptor, index, Hello.serializer())
                             else -> error("This op code doesn't belong to an event.")
                         }
                     }
@@ -56,6 +56,7 @@ data class ReceivePayload(
 
 
         private fun getByDispatchEvent(index: Int, decoder: CompositeDecoder, name: String?) = when (name) {
+            "RESUMED" -> decoder.decodeSerializableElement(descriptor, index, Resumed.serializer())
             "CHANNEL_CREATE" -> ChannelCreate(decoder.decodeSerializableElement(descriptor, index, Channel.serializer()))
             "CHANNEL_UPDATE" -> ChannelUpdate(decoder.decodeSerializableElement(descriptor, index, Channel.serializer()))
             "CHANNEL_DELETE" -> ChannelDelete(decoder.decodeSerializableElement(descriptor, index, Channel.serializer()))
