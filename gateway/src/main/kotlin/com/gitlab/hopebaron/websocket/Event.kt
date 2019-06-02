@@ -3,11 +3,10 @@ package com.gitlab.hopebaron.websocket
 import com.gitlab.hopebaron.websocket.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.BooleanDescriptor
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.internal.LongDescriptor
 
 
-@Polymorphic
+@Serializable
 sealed class Event
 
 object HeartbeatACK : Event()
@@ -21,7 +20,7 @@ data class HelloEvent(
 ) : Event()
 
 @Serializable
-data class Heartbeat(val data: Long) {
+data class Heartbeat(val data: Long) : Event() {
     @Serializer(Heartbeat::class)
     companion object : KSerializer<Heartbeat> {
         override val descriptor: SerialDescriptor
