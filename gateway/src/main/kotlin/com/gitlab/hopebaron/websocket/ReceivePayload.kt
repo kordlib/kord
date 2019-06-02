@@ -1,7 +1,5 @@
 package com.gitlab.hopebaron.websocket
 
-import com.gitlab.hopebaron.websocket.OpCode.Dispatch
-import com.gitlab.hopebaron.websocket.OpCode.Hello
 import com.gitlab.hopebaron.websocket.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.SerialClassDescImpl
@@ -27,22 +25,26 @@ data class ReceivePayload(
             lateinit var op: OpCode
             lateinit var data: Event
             var sequence: Int? = null
+            var eventName: String? = null
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
                         CompositeDecoder.READ_DONE -> break@loop
-                        0 -> op = OpCode.deserialize(decoder)
-                        1 -> data = when (op) {
-                            Dispatch -> {
-                                val name = decodeStringElement(descriptor, index)
-                                sequence = decodeIntElement(descriptor, index)
-                                getByDispatchEvent(index, this, name)
+                        0 -> {
+                            op = OpCode.deserialize(decoder)
+                            @Suppress("NON_EXHAUSTIVE_WHEN")
+                            when (op) {
+                                OpCode.HeartbeatACK -> data = HeartbeatACK
+                                OpCode.Reconnect -> data = Reconnect
                             }
+                        }
+                        1 -> eventName = decodeStringElement(descriptor, index)
+                        2 -> sequence = decodeIntElement(descriptor, index)
+                        3 -> data = when (op) {
+                            OpCode.Dispatch -> getByDispatchEvent(index, this, eventName)
                             OpCode.Heartbeat -> decodeSerializableElement(descriptor, index, Heartbeat.serializer())
                             OpCode.InvalidSession -> decodeSerializableElement(descriptor, index, InvalidSession)
-                            Hello -> decodeSerializableElement(descriptor, index, HelloEvent.serializer())
-                            OpCode.HeartbeatACK -> HeartbeatACK
-                            OpCode.Reconnect -> Reconnect
+                            OpCode.Hello -> decodeSerializableElement(descriptor, index, HelloEvent.serializer())
                             else -> error("This op code doesn't belong to an event.")
                         }
                     }
