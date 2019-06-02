@@ -12,7 +12,7 @@ sealed class Event
 object HeartbeatACK : Event()
 object Reconnect : Event()
 @Serializable
-data class HelloEvent(
+data class Hello(
         @SerialName("heartbeat_interval")
         val heartbeatInterval: Long,
         @SerialName("_trace")
@@ -32,13 +32,13 @@ data class Heartbeat(val data: Long) : Event() {
     }
 }
 
-
+@Serializable
 data class Resumed(
         @SerialName("_traces")
         val traces: List<String>
 ) : Event()
 
-
+@Serializable
 data class InvalidSession(val resumable: Boolean) : Event() {
     @Serializer(InvalidSession::class)
     companion object : KSerializer<InvalidSession> {
