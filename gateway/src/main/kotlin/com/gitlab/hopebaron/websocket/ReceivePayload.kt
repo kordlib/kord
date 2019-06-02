@@ -1,22 +1,25 @@
 package com.gitlab.hopebaron.websocket
 
+import com.gitlab.hopebaron.websocket.OpCode.Dispatch
+import com.gitlab.hopebaron.websocket.OpCode.Hello
 import com.gitlab.hopebaron.websocket.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.SerialClassDescImpl
 
 @Serializable
 data class ReceivePayload(
-        val data: Event,
-        val sequence: Int? = null) {
-    @Serializer(Event::class)
-    internal companion object : KSerializer<ReceivePayload> {
+        val event: Event,
+        val sequence: Int?) {
+    @Serializer(ReceivePayload::class)
+    companion object : KSerializer<ReceivePayload> {
         override val descriptor: SerialDescriptor
-            get() = object : SerialClassDescImpl("Payload") {
+            get() = object : SerialClassDescImpl("ReceivePayload") {
                 init {
                     addElement("op")
-                    addElement("d", true)
-                    addElement("s", true)
                     addElement("t", true)
+                    addElement("s", true)
+                    addElement("d", true)
+
                 }
             }
 
@@ -24,38 +27,29 @@ data class ReceivePayload(
             lateinit var op: OpCode
             lateinit var data: Event
             var sequence: Int? = null
-            var name: String? = null
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
-                        CompositeDecoder.READ_ALL -> break@loop
-                        0 -> op = OpCode.values().first { it.code == decodeIntElement(descriptor, index) }
-                        1 -> when (op) {
-                            OpCode.InvalidSession -> {
+                        CompositeDecoder.READ_DONE -> break@loop
+                        0 -> op = OpCode.deserialize(decoder)
+                        1 -> data = when (op) {
+                            Dispatch -> {
+                                val name = decodeStringElement(descriptor, index)
+                                sequence = decodeIntElement(descriptor, index)
+                                getByDispatchEvent(index, this, name)
                             }
-                            OpCode.Hello -> {
-                                data = decodeSerializableElement(descriptor, index, HelloEvent.serializer())
-                                break@loop
-                            }
-                            OpCode.HeartbeatACK -> {
-                                data = HeartbeatACK
-                                break@loop
-                            }
-                            OpCode.Reconnect -> {
-                                data = Reconnect
-                                break@loop
-                            }
-                            OpCode.Dispatch -> name = decodeStringElement(descriptor, index)
+                            OpCode.Heartbeat -> decodeSerializableElement(descriptor, index, Heartbeat.serializer())
+                            OpCode.InvalidSession -> decodeSerializableElement(descriptor, index, InvalidSession)
+                            Hello -> decodeSerializableElement(descriptor, index, HelloEvent.serializer())
+                            OpCode.HeartbeatACK -> HeartbeatACK
+                            OpCode.Reconnect -> Reconnect
+                            else -> error("This op code doesn't belong to an event.")
                         }
-                        2 -> sequence = decodeIntElement(descriptor, index)
-                        3 -> data = getByDispatchEvent(index, this, name)
                     }
                 }
                 endStructure(descriptor)
+                return ReceivePayload(data, sequence)
             }
-
-
-            return ReceivePayload(data, sequence)
         }
 
 
