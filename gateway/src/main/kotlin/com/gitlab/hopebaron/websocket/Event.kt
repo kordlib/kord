@@ -20,6 +20,21 @@ data class Hello(
 ) : Event()
 
 @Serializable
+data class Ready(
+        @SerialName("v")
+        val version: Int,
+        val user: User,
+        @SerialName("private_channels")
+        val privateChannels: List<Channel>, //TODO("Add DM Channel.")
+        val guilds: List<PartialGuild>,
+        @SerialName("session_id")
+        val sessionId: String,
+        @SerialName("_trace")
+        val traces: List<String>,
+        val shard: Shard?
+) : Event()
+
+@Serializable
 data class Heartbeat(val data: Long) : Event() {
     @Serializer(Heartbeat::class)
     companion object : KSerializer<Heartbeat> {
@@ -49,7 +64,6 @@ data class InvalidSession(val resumable: Boolean) : Event() {
         override fun serialize(encoder: Encoder, obj: InvalidSession) = error("Events supposed to be serializable.")
     }
 }
-
 
 
 data class ChannelCreate(val channel: Channel) : Event()
@@ -86,5 +100,5 @@ data class UserUpdate(val user: User) : Event()
 data class VoiceStateUpdate(val voiceState: VoiceState) : Event()
 data class VoiceServerUpdate(val voiceServerUpdateData: VoiceServerUpdateData) : Event()
 data class WebhooksUpdate(val webhooksUpdateData: WebhooksUpdateData) : Event()
-
+@Serializable
 sealed class Command
