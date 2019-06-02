@@ -14,10 +14,10 @@ private fun file(name: String): String {
 
 class SerializationTest : Spek({
     describe("HeartbeatACK") {
-        it("Must return HeartbeatACK object.") {
+        it("deserializes a HeartbeatACK object") {
             val payload = Json.parse(ReceivePayload.serializer(), file("ack"))
             val event = payload.event
-            Assertions.assertEquals(true, event is HeartbeatACK)
+            Assertions.assertEquals(event, HeartbeatACK)
         }
     }
 })
