@@ -5,7 +5,6 @@ import io.ktor.http.cio.websocket.WebSocketSession
 import io.ktor.http.cio.websocket.readText
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.channels.first
 import kotlinx.coroutines.channels.map
 import kotlinx.coroutines.channels.ticker
 import kotlinx.serialization.UnstableDefault
@@ -18,20 +17,22 @@ import kotlin.coroutines.CoroutineContext
 @ObsoleteCoroutinesApi
 class DiscordWebSocket(private val ws: WebSocketSession) : CoroutineScope {
     private val sequence: Int? = null
+    private val job = Job() + Dispatchers.IO
+    override val coroutineContext: CoroutineContext = job
+    val incoming = ws.incoming.map { it.payload() }
 
     init {
         heartBeat()
         ws.outgoing.invokeOnClose { job.cancel() }
     }
 
+    suspend fun send(payload: SendPayload) {
+        val json = TODO()
+        ws.send(Frame.Text(json))
+    }
 
-    private val job = Job() + Dispatchers.IO
-    override val coroutineContext: CoroutineContext = job
-    val incoming = ws.incoming.map { it.payload() }
-    suspend fun send(payload: SendPayload) = ws.send(Frame.Text(payload.stringify()))
     private suspend fun getInterval(): Long {
-        val hello = incoming.first { it.opCode == OpCode.Hello }
-         return hello.data!!.primitive.long
+        TODO()
     }
 
     private fun heartBeat() = launch {
