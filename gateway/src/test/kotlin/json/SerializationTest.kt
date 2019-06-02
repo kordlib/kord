@@ -2,6 +2,7 @@ package json
 
 import com.gitlab.hopebaron.websocket.HeartbeatACK
 import com.gitlab.hopebaron.websocket.ReceivePayload
+import com.gitlab.hopebaron.websocket.Reconnect
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Assertions
 import org.spekframework.spek2.Spek
@@ -13,11 +14,20 @@ private fun file(name: String): String {
 }
 
 class SerializationTest : Spek({
+
     describe("HeartbeatACK") {
         it("deserializes a HeartbeatACK object") {
             val payload = Json.parse(ReceivePayload.serializer(), file("ack"))
             val event = payload.event
             Assertions.assertEquals(event, HeartbeatACK)
+        }
+    }
+
+    describe("Reconnect") {
+        it("deserializes a Reconnect object") {
+            val payload = Json.parse(ReceivePayload.serializer(), file("reconnect"))
+            val event = payload.event
+            Assertions.assertEquals(event, Reconnect)
         }
     }
 })
