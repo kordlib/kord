@@ -4,4 +4,5 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serailization_version"
     implementation "io.ktor:ktor-client-websocket:$ktor_version"
     implementation "io.ktor:ktor-client-cio:$ktor_version"
+    implementation "io.github.microutils:$kotlin_logging_version"
 }

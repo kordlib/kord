@@ -22,6 +22,7 @@ ext {
     junit_version = '5.0.3'
     coroutines_version = '1.2.1'
     mockk_version = '1.9.3.kotlin12'
+    kotlin_logging_version = 'kotlin-logging:1.6.24'
 }
 
 allprojects {

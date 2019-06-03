@@ -59,6 +59,8 @@ data class Resumed(
 
 @Serializable
 data class PinsUpdateData(
+        @SerialName("guild_id")
+        val guildId: Snowflake,
         @SerialName("channel_id")
         val channelId: Snowflake,
         @SerialName("last_pin_timestamp")

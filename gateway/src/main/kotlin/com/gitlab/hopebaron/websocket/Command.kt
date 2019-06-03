@@ -9,6 +9,17 @@ import kotlinx.serialization.internal.SerialClassDescImpl
 import kotlinx.serialization.internal.StringDescriptor
 
 sealed class Command {
+    internal data class Heartbeat(val sequenceNumber: Long? = null) : Command() {
+
+        companion object : SerializationStrategy<Heartbeat> {
+            override val descriptor: SerialDescriptor = IntDescriptor.withName("Heartbeat")
+
+            override fun serialize(encoder: Encoder, obj: Heartbeat) {
+                encoder.encodeNullableSerializableValue(Long.serializer(), obj.sequenceNumber)
+            }
+        }
+
+    }
 
     companion object : SerializationStrategy<Command> {
 
@@ -98,18 +109,6 @@ internal data class Resume(
         val sequenceNumber: Long
 ) : Command() {
     override fun toString(): String = "Resume(token=hunter2,sessionId=$sessionId,sequenceNumber:$sequenceNumber)"
-}
-
-internal data class Heartbeat(val sequenceNumber: Long? = null) : Command() {
-
-    companion object : SerializationStrategy<Heartbeat> {
-        override val descriptor: SerialDescriptor = IntDescriptor.withName("Heartbeat")
-
-        override fun serialize(encoder: Encoder, obj: Heartbeat) {
-            encoder.encodeNullableSerializableValue(Long.serializer(), obj.sequenceNumber)
-        }
-    }
-
 }
 
 @Serializable
