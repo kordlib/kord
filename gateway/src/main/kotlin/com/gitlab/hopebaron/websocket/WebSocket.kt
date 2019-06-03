@@ -29,9 +29,9 @@ class DiscordWebSocket(private val ws: WebSocketSession) : CoroutineScope {
 }
 
 @UnstableDefault
-fun Frame.payload(): ReceivePayload {
+fun Frame.payload(): Payload {
     val element = Json.plain.parseJson((this as Frame.Text).readText())
-    return Json.plain.fromJson(ReceivePayload.serializer(), element)
+    return Json.plain.fromJson(Payload.serializer(), element)
 }
 
 

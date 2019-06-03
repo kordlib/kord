@@ -84,7 +84,7 @@ class SerializationTest : Spek({
         it("deserializes a InvalidSession object") {
             val payload = Json.parse(ReceivePayload.serializer(), file("invalid"))
             val event = payload.event as InvalidSession
-            with(event) { resumable shouldBe false }
+            with(event) { resumable shouldBe true }
         }
     }
 
@@ -109,8 +109,8 @@ class SerializationTest : Spek({
             val payload = Json.parse(ReceivePayload.serializer(), file("channelcreate"))
             val event = payload.event as ChannelCreate
             with(event.channel) {
-                id shouldBe Snowflake("41771983423143937")
-                guildId shouldBe Snowflake("41771983423143937")
+                id shouldBe "41771983423143937"
+                guildId shouldBe "41771983423143937"
                 name shouldBe "general"
                 type.code shouldBe 0
                 position shouldBe 6
@@ -118,8 +118,8 @@ class SerializationTest : Spek({
                 rateLimitPerUser shouldBe 2
                 nsfw shouldBe true
                 topic shouldBe "24/7 chat about how to gank Mike #2"
-                lastMessageId shouldBe Snowflake("155117677105512449")
-                parentId shouldBe Snowflake("399942396007890945")
+                lastMessageId shouldBe "155117677105512449"
+                parentId shouldBe "399942396007890945"
             }
         }
     }
@@ -129,8 +129,8 @@ class SerializationTest : Spek({
             val payload = Json.parse(ReceivePayload.serializer(), file("channelupdate"))
             val event = payload.event as ChannelUpdate
             with(event.channel) {
-                id shouldBe Snowflake("41771983423143937")
-                guildId shouldBe Snowflake("41771983423143937")
+                id shouldBe "41771983423143937"
+                guildId shouldBe "41771983423143937"
                 name shouldBe "general"
                 type.code shouldBe 0
                 position shouldBe 6
@@ -138,8 +138,8 @@ class SerializationTest : Spek({
                 rateLimitPerUser shouldBe 2
                 nsfw shouldBe true
                 topic shouldBe "24/7 chat about how to gank Mike #2"
-                lastMessageId shouldBe Snowflake("155117677105512449")
-                parentId shouldBe Snowflake("399942396007890945")
+                lastMessageId shouldBe "155117677105512449"
+                parentId shouldBe "399942396007890945"
             }
         }
     }
@@ -148,8 +148,8 @@ class SerializationTest : Spek({
             val payload = Json.parse(ReceivePayload.serializer(), file("channeldelete"))
             val event = payload.event as ChannelDelete
             with(event.channel) {
-                id shouldBe Snowflake("41771983423143937")
-                guildId shouldBe Snowflake("41771983423143937")
+                id shouldBe "41771983423143937"
+                guildId shouldBe "41771983423143937"
                 name shouldBe "general"
                 type.code shouldBe 0
                 position shouldBe 6
@@ -157,8 +157,8 @@ class SerializationTest : Spek({
                 rateLimitPerUser shouldBe 2
                 nsfw shouldBe true
                 topic shouldBe "24/7 chat about how to gank Mike #2"
-                lastMessageId shouldBe Snowflake("155117677105512449")
-                parentId shouldBe Snowflake("399942396007890945")
+                lastMessageId shouldBe "155117677105512449"
+                parentId shouldBe "399942396007890945"
             }
         }
     }

@@ -34,7 +34,7 @@ data class Payload(
                             op = OpCode.deserialize(decoder)
                             @Suppress("NON_EXHAUSTIVE_WHEN")
                             when (op) {
-                                OpCode.HeartbeatACK -> data = HeartbeatACK
+                                OpCode.Heartbeat -> data = HeartbeatACK
                                 OpCode.Reconnect -> data = Reconnect
                             }
                         }

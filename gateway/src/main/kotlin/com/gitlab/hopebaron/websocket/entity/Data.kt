@@ -31,6 +31,16 @@ data class Shard(val index: Int, val count: Int) {
 }
 
 @Serializable
+data class Hello(
+        @SerialName("heartbeat_interval")
+        val heartbeatInterval: Long,
+        @SerialName("_trace")
+        val traces: List<String>
+)
+
+
+
+@Serializable
 data class Overwrite(
         val id: Snowflake,
         val type: String,
