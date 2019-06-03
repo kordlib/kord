@@ -4,6 +4,7 @@ import com.gitlab.hopebaron.websocket.entity.Activity
 import com.gitlab.hopebaron.websocket.entity.Shard
 import com.gitlab.hopebaron.websocket.entity.Snowflake
 import kotlinx.serialization.*
+import kotlinx.serialization.internal.IntDescriptor
 import kotlinx.serialization.internal.SerialClassDescImpl
 import kotlinx.serialization.internal.StringDescriptor
 
@@ -22,16 +23,28 @@ sealed class Command {
             val composite = encoder.beginStructure(descriptor)
             when (obj) {
                 is RequestGuildMembers -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.OpCodeSerializer, OpCode.RequestGuildMembers)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.RequestGuildMembers)
                     composite.encodeSerializableElement(descriptor, 1, RequestGuildMembers.serializer(), obj)
                 }
                 is UpdateVoiceStatus -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.OpCodeSerializer, OpCode.VoiceStateUpdate)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.VoiceStateUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateVoiceStatus.serializer(), obj)
                 }
                 is UpdateStatus -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.OpCodeSerializer, OpCode.StatusUpdate)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.StatusUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateStatus.serializer(), obj)
+                }
+                is Identify -> {
+                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.Identify)
+                    composite.encodeSerializableElement(descriptor, 1, Identify.serializer(), obj)
+                }
+                is Resume -> {
+                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.Resume)
+                    composite.encodeSerializableElement(descriptor, 1, Resume.serializer(), obj)
+                }
+                is Heartbeat -> {
+                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.Heartbeat)
+                    composite.encodeSerializableElement(descriptor, 1, Heartbeat.Companion, obj)
                 }
             }
 
@@ -43,7 +56,8 @@ sealed class Command {
 }
 
 
-data class Identify(
+@Serializable
+internal data class Identify(
         internal val token: String,
         val properties: IdentifyProperties,
         val compress: Boolean? = null,
@@ -51,56 +65,14 @@ data class Identify(
         val largeThreshold: Int = 50,
         val shard: Shard? = null,
         val presence: Presence? = null
-) {
+) : Command() {
     override fun toString(): String = "Identify(token=hunter2,properties=$properties,compress=$compress,largeThreshold=$largeThreshold," +
             "shard=$shard,presence=$presence"
-
-    companion object : SerializationStrategy<Identify> {
-
-        override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Command") {
-            init {
-                addElement("op")
-                addElement("d")
-            }
-        }
-
-        override fun serialize(encoder: Encoder, obj: Identify) {
-            val composite = encoder.beginStructure(descriptor)
-            composite.encodeSerializableElement(descriptor, 0, OpCode.OpCodeSerializer, OpCode.Identify)
-            composite.encodeSerializableElement(descriptor, 1, Inner, obj)
-            composite.endStructure(descriptor)
-        }
-
-        private object Inner : SerializationStrategy<Identify> {
-            override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Resume") {
-                init {
-                    addElement("token")
-                    addElement("properties")
-                    addElement("compress")
-                    addElement("large_threshold")
-                    addElement("shard")
-                    addElement("presence")
-                }
-            }
-
-            override fun serialize(encoder: Encoder, obj: Identify) {
-                val composite = encoder.beginStructure(descriptor)
-                composite.encodeStringElement(descriptor, 0, obj.token)
-                composite.encodeSerializableElement(descriptor, 1, IdentifyProperties.serializer(), obj.properties)
-                composite.encodeNullableSerializableElement(descriptor, 2, Boolean.serializer(), obj.compress)
-                composite.encodeIntElement(descriptor, 3, obj.largeThreshold)
-                composite.encodeNullableSerializableElement(descriptor, 4, Shard.serializer(), obj.shard)
-                composite.encodeNullableSerializableElement(descriptor, 5, Presence.serializer(), obj.presence)
-                composite.endStructure(descriptor)
-            }
-        }
-
-    }
-
 }
 
 @Serializable
 data class IdentifyProperties(
+        @Required
         @SerialName("\$os")
         val os: String,
         @SerialName("\$browser")
@@ -117,69 +89,24 @@ data class Presence(
         val game: Activity? = null
 )
 
-
 @Serializable
-data class Resume(
+internal data class Resume(
         val token: String,
+        @SerialName("session_id")
         val sessionId: String,
+        @SerialName("seq")
         val sequenceNumber: Long
-) {
+) : Command() {
     override fun toString(): String = "Resume(token=hunter2,sessionId=$sessionId,sequenceNumber:$sequenceNumber)"
-
-    companion object : SerializationStrategy<Resume> {
-
-        override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Command") {
-            init {
-                addElement("op")
-                addElement("d")
-            }
-        }
-
-        override fun serialize(encoder: Encoder, obj: Resume) {
-            val composite = encoder.beginStructure(descriptor)
-            composite.encodeSerializableElement(descriptor, 0, OpCode.OpCodeSerializer, OpCode.Resume)
-            composite.encodeSerializableElement(descriptor, 1, Inner, obj)
-            composite.endStructure(descriptor)
-        }
-
-        private object Inner : SerializationStrategy<Resume> {
-            override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Resume") {
-                init {
-                    addElement("token")
-                    addElement("session_id")
-                    addElement("seq")
-                }
-            }
-
-            override fun serialize(encoder: Encoder, obj: Resume) {
-                val composite = encoder.beginStructure(descriptor)
-                composite.encodeStringElement(descriptor, 0, obj.token)
-                composite.encodeStringElement(descriptor, 1, obj.sessionId)
-                composite.encodeLongElement(descriptor, 2, obj.sequenceNumber)
-                composite.endStructure(descriptor)
-            }
-        }
-
-    }
-
 }
 
-
-data class Heartbeat(val sequenceNumber: Long? = null) {
+internal data class Heartbeat(val sequenceNumber: Long? = null) : Command() {
 
     companion object : SerializationStrategy<Heartbeat> {
-        override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Heartbeat") {
-            init {
-                addElement("op")
-                addElement("d", isOptional = true)
-            }
-        }
+        override val descriptor: SerialDescriptor = IntDescriptor.withName("Heartbeat")
 
         override fun serialize(encoder: Encoder, obj: Heartbeat) {
-            val composite = encoder.beginStructure(descriptor)
-            composite.encodeIntElement(descriptor, 0, OpCode.Heartbeat.code)
-            composite.encodeNullableSerializableElement(descriptor, 1, Long.serializer(), obj.sequenceNumber)
-            composite.endStructure(descriptor)
+            encoder.encodeNullableSerializableValue(Long.serializer(), obj.sequenceNumber)
         }
     }
 

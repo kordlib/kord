@@ -19,7 +19,7 @@ class CommandTest : Spek({
             val sessionId = "session"
             val sequence = 1337L
 
-            val resume = Json.stringify(Resume.Companion, Resume(token, sessionId, sequence))
+            val resume = Json.stringify(Command.Companion, Resume(token, sessionId, sequence))
 
             val json = Json.stringify(JsonObject.serializer(), json {
                 "op" to OpCode.Resume.code
@@ -39,7 +39,7 @@ class CommandTest : Spek({
         it("is serialized correctly") {
             val interval = 1337L
 
-            val heartbeat = Json.stringify(Heartbeat.Companion, Heartbeat(interval))
+            val heartbeat = Json.stringify(Command.Companion, Heartbeat(interval))
 
             val json = Json.stringify(JsonObject.serializer(), json {
                 "op" to OpCode.Heartbeat.code
@@ -127,7 +127,7 @@ class CommandTest : Spek({
             val shard = Shard(0, 1)
             val presence = null
 
-            val identify = Json.stringify(Identify.Companion, Identify(token, properties, compress, largeThreshold, shard, presence))
+            val identify = Json.stringify(Command.Companion, Identify(token, properties, compress, largeThreshold, shard, presence))
 
             val json = Json.stringify(JsonObject.serializer(), json {
                 "op" to OpCode.Identify.code
