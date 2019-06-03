@@ -1,0 +1,12 @@
+{
+  "op": 0,
+  "t": "RESUMED",
+  "s": 1234,
+  "d": {
+    "_traces": [
+      "kord",
+      "is",
+      "happy"
+    ]
+  }
+}

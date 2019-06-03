@@ -15,7 +15,7 @@ enum class OpCode(val code: Int) {
     RequestGuildMembers(8),
     InvalidSession(9),
     Hello(10),
-    HelloACK(11);
+    HeartbeatACK(11);
 
     @Serializer(forClass = OpCode::class)
     companion object OpCodeSerializer : KSerializer<OpCode> {
