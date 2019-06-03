@@ -5,13 +5,13 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.SerialClassDescImpl
 
 @Serializable
-data class ReceivePayload(
-        val event: Event,
+data class Payload(
+        val event: Event?,
         val sequence: Int?) {
-    @Serializer(ReceivePayload::class)
-    companion object : DeserializationStrategy<ReceivePayload> {
+    @Serializer(Payload::class)
+    companion object : DeserializationStrategy<Payload> {
         override val descriptor: SerialDescriptor
-            get() = object : SerialClassDescImpl("ReceivePayload") {
+            get() = object : SerialClassDescImpl("Payload") {
                 init {
                     addElement("op")
                     addElement("t", true)
@@ -21,9 +21,9 @@ data class ReceivePayload(
                 }
             }
 
-        override fun deserialize(decoder: Decoder): ReceivePayload {
+        override fun deserialize(decoder: Decoder): Payload {
             lateinit var op: OpCode
-            lateinit var data: Event
+            var data: Event? = null
             var sequence: Int? = null
             var eventName: String? = null
             with(decoder.beginStructure(descriptor)) {
@@ -50,7 +50,7 @@ data class ReceivePayload(
                     }
                 }
                 endStructure(descriptor)
-                return ReceivePayload(data, sequence)
+                return Payload(data, sequence)
             }
         }
 
