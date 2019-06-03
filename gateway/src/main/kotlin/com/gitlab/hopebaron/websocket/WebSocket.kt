@@ -21,7 +21,9 @@ class DiscordWebSocket(private val ws: WebSocketSession) : CoroutineScope {
         TODO("make this class work")
     }
 
-    suspend fun send(payload: Command) = TODO("Make this work")
+    suspend fun send(payload: Command) {
+        TODO("Make this work")
+    }
 
 
 }
