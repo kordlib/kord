@@ -37,13 +37,10 @@ data class Ready(
 @Serializable
 data class Heartbeat(val data: Long) : Event() {
     @Serializer(Heartbeat::class)
-    companion object : KSerializer<Heartbeat> {
+    companion object : DeserializationStrategy<Heartbeat> {
         override val descriptor: SerialDescriptor
             get() = LongDescriptor.withName("HeartbeatEvent")
-
         override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
-        override fun serialize(encoder: Encoder, obj: Heartbeat) = error("Events are not supposed to be serialized.")
-
     }
 }
 
@@ -56,12 +53,10 @@ data class Resumed(
 @Serializable
 data class InvalidSession(val resumable: Boolean) : Event() {
     @Serializer(InvalidSession::class)
-    companion object : KSerializer<InvalidSession> {
+    companion object : DeserializationStrategy<InvalidSession> {
         override val descriptor: SerialDescriptor
             get() = BooleanDescriptor.withName("InvalidSession")
-
         override fun deserialize(decoder: Decoder) = InvalidSession(decoder.decodeBoolean())
-        override fun serialize(encoder: Encoder, obj: InvalidSession) = error("Events supposed to be serializable.")
     }
 }
 

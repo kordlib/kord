@@ -9,7 +9,7 @@ data class ReceivePayload(
         val event: Event,
         val sequence: Int?) {
     @Serializer(ReceivePayload::class)
-    companion object : KSerializer<ReceivePayload> {
+    companion object : DeserializationStrategy<ReceivePayload> {
         override val descriptor: SerialDescriptor
             get() = object : SerialClassDescImpl("ReceivePayload") {
                 init {
