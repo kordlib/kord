@@ -95,5 +95,3 @@ data class UserUpdate(val user: User) : Event()
 data class VoiceStateUpdate(val voiceState: VoiceState) : Event()
 data class VoiceServerUpdate(val voiceServerUpdateData: VoiceServerUpdateData) : Event()
 data class WebhooksUpdate(val webhooksUpdateData: WebhooksUpdateData) : Event()
-@Serializable
-sealed class Command
