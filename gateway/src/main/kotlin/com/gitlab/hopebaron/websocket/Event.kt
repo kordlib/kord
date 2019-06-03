@@ -26,7 +26,7 @@ data class Ready(
         val user: User,
         @SerialName("private_channels")
         val privateChannels: List<Channel>, //TODO("Add DM Channel.")
-        val guilds: List<Guild>,
+        val guilds: List<PartialGuild>,
         @SerialName("session_id")
         val sessionId: String,
         @SerialName("_trace")
@@ -40,6 +40,7 @@ data class Heartbeat(val data: Long) : Event() {
     companion object : DeserializationStrategy<Heartbeat> {
         override val descriptor: SerialDescriptor
             get() = LongDescriptor.withName("HeartbeatEvent")
+
         override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
     }
 }
@@ -56,6 +57,7 @@ data class InvalidSession(val resumable: Boolean) : Event() {
     companion object : DeserializationStrategy<InvalidSession> {
         override val descriptor: SerialDescriptor
             get() = BooleanDescriptor.withName("InvalidSession")
+
         override fun deserialize(decoder: Decoder) = InvalidSession(decoder.decodeBoolean())
     }
 }
