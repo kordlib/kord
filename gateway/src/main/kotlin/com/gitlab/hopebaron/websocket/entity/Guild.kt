@@ -74,7 +74,7 @@ data class PartialGuild(
         val name: String,
         val icon: String?,
         val owner: Boolean?,
-        val permissions: Int?
+        val permissions: Permissions?
 )
 
 @Serializable
