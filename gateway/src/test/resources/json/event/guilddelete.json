@@ -1,0 +1,9 @@
+{
+  "op": 0,
+  "t": "GUILD_DELETE",
+  "s": 1000,
+  "d": {
+    "id": "41771983423143937",
+    "unavailable": true
+  }
+}
