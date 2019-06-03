@@ -1,7 +1,6 @@
 package com.gitlab.hopebaron.websocket.entity
 
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.LongDescriptor
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.jsonArray
 
@@ -30,6 +29,16 @@ data class Shard(val index: Int, val count: Int) {
     }
 
 }
+
+@Serializable
+data class Hello(
+        @SerialName("heartbeat_interval")
+        val heartbeatInterval: Long,
+        @SerialName("_trace")
+        val traces: List<String>
+)
+
+
 
 @Serializable
 data class Overwrite(
