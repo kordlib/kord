@@ -8,10 +8,15 @@ const val discordEpoch = 1420070400000
 
 @Serializable
 data class Snowflake(val id: String) {
+
+    constructor(id: Long) : this(id.toString())
+
+    val idLong
+        get() = id.toLong()
+
     @Serializer(Snowflake::class)
     companion object : KSerializer<Snowflake> {
-        override val descriptor: SerialDescriptor
-            get() = StringDescriptor.withName("id")
+        override val descriptor: SerialDescriptor = StringDescriptor.withName("id")
 
         override fun deserialize(decoder: Decoder): Snowflake {
             val snowFlake = decoder.decodeString()
@@ -23,12 +28,10 @@ data class Snowflake(val id: String) {
 
     }
 
-    val idLong
-        get() = id.toLong()
-
 }
 
-fun Snowflake.instant(): Instant {
-    val time = idLong shl 22
-    return Instant.ofEpochMilli(discordEpoch + time)
-}
+val Snowflake.instant: Instant
+    get() {
+        val time = idLong shl 22
+        return Instant.ofEpochMilli(discordEpoch + time)
+    }
