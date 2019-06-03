@@ -26,7 +26,7 @@ data class Ready(
         val user: User,
         @SerialName("private_channels")
         val privateChannels: List<Channel>, //TODO("Add DM Channel.")
-        val guilds: List<Guild>,
+        val guilds: List<UnavailableGuild>,
         @SerialName("session_id")
         val sessionId: String,
         @SerialName("_trace")
