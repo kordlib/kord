@@ -1,7 +1,6 @@
 package com.gitlab.hopebaron.websocket.entity
 
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.LongDescriptor
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.jsonArray
 
@@ -50,6 +49,8 @@ data class Resumed(
 
 @Serializable
 data class PinsUpdateData(
+        @SerialName("guild_id")
+        val guildId: Snowflake,
         @SerialName("channel_id")
         val channelId: Snowflake,
         @SerialName("last_pin_timestamp")
