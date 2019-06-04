@@ -94,7 +94,7 @@ data class IdentifyProperties(
 
 @Serializable
 data class Presence(
-        val status: String,
+        val status: Status,
         val afk: Boolean,
         val since: Int? = null,
         val game: Activity? = null
