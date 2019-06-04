@@ -1,0 +1,8 @@
+{
+  "op": 0,
+  "t": "GUILD_INTEGRATIONS_UPDATE",
+  "s": 1234,
+  "d": {
+    "guild_id": "41771983423143937"
+  }
+}
