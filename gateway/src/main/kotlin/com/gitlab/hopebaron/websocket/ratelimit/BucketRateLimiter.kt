@@ -1,11 +1,11 @@
 package com.gitlab.hopebaron.websocket.ratelimit
 
-import com.gitlab.hopebaron.websocket.Presence
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.time.Duration
 import java.time.Instant
 
+@Suppress("FunctionName")
 fun BucketRateLimiter(capacity: Int, refillInterval: Duration) = BucketRateLimiter(capacity, refillInterval.toMillis())
 
 class BucketRateLimiter(private val capacity: Int, private val refillIntervalMillis: Long) : RateLimiter {
