@@ -39,7 +39,7 @@ class CommandTest : Spek({
         it("is serialized correctly") {
             val interval = 1337L
 
-            val heartbeat = Json.stringify(Command.Companion, Heartbeat(interval))
+            val heartbeat = Json.stringify(Command.Companion, Command.Heartbeat(interval))
 
             val json = Json.stringify(JsonObject.serializer(), json {
                 "op" to OpCode.Heartbeat.code
