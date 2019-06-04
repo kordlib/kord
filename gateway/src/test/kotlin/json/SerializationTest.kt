@@ -15,7 +15,7 @@ class SerializationTest : Spek({
 
     describe("HeartbeatACK") {
         it("deserializes a HeartbeatACK object") {
-            val payload = Json.parse(ReceivePayload.serializer(), file("ack"))
+            val payload = Json.parse(Payload.serializer(), file("ack"))
             val event = payload.event
             event shouldBe HeartbeatACK
         }
@@ -23,7 +23,7 @@ class SerializationTest : Spek({
 
     describe("Hello") {
         it("deserializes a Hello object") {
-            val payload = Json.parse(ReceivePayload.serializer(), file("hello"))
+            val payload = Json.parse(Payload.serializer(), file("hello"))
             val event = payload.event as Hello
             with(event) {
                 heartbeatInterval shouldBe 1337
@@ -34,7 +34,7 @@ class SerializationTest : Spek({
 
     describe("Reconnect") {
         it("deserializes a Reconnect object") {
-            val payload = Json.parse(ReceivePayload.serializer(), file("reconnect"))
+            val payload = Json.parse(Payload.serializer(), file("reconnect"))
             val event = payload.event
             event shouldBe Reconnect
         }
@@ -42,7 +42,7 @@ class SerializationTest : Spek({
 
     describe("Ready") {
         it("deserializes a Ready object") {
-            val payload = Json.parse(ReceivePayload.serializer(), file("ready"))
+            val payload = Json.parse(Payload.serializer(), file("ready"))
             val event = payload.event as Ready
             with(event) {
                 with(guilds) {
@@ -73,7 +73,7 @@ class SerializationTest : Spek({
     }
     describe("Resumed") {
         it("deserializes a Resumed object") {
-            val payload = Json.parse(ReceivePayload.serializer(), file("resumed"))
+            val payload = Json.parse(Payload.serializer(), file("resumed"))
             val event = payload.event as Resumed
             with(event) { traces shouldBe listOf("kord", "is", "happy") }
         }
@@ -82,7 +82,7 @@ class SerializationTest : Spek({
 
     describe("InvalidSession") {
         it("deserializes a InvalidSession object") {
-            val payload = Json.parse(ReceivePayload.serializer(), file("invalid"))
+            val payload = Json.parse(Payload.serializer(), file("invalid"))
             val event = payload.event as InvalidSession
             with(event) { resumable shouldBe true }
         }
@@ -91,7 +91,7 @@ class SerializationTest : Spek({
 
     describe("ChannelPinsUpdate") {
         it("deserializes a ChannelPinsUpdate object") {
-            val payload = Json.parse(ReceivePayload.serializer(), file("channelpinsupdate"))
+            val payload = Json.parse(Payload.serializer(), file("channelpinsupdate"))
             val event = payload.event as ChannelPinsUpdate
             with(event.pins) {
                 guildId shouldBe Snowflake("41771983423143937")
@@ -106,7 +106,7 @@ class SerializationTest : Spek({
 
     describe("ChannelCreate") {
         it("deserializes a ChannelCreate object") {
-            val payload = Json.parse(ReceivePayload.serializer(), file("channelcreate"))
+            val payload = Json.parse(Payload.serializer(), file("channelcreate"))
             val event = payload.event as ChannelCreate
             with(event.channel) {
                 id shouldBe "41771983423143937"
@@ -126,7 +126,7 @@ class SerializationTest : Spek({
 
     describe("ChannelUpdate") {
         it("deserializes a ChannelUpdate object") {
-            val payload = Json.parse(ReceivePayload.serializer(), file("channelupdate"))
+            val payload = Json.parse(Payload.serializer(), file("channelupdate"))
             val event = payload.event as ChannelUpdate
             with(event.channel) {
                 id shouldBe "41771983423143937"
@@ -145,7 +145,7 @@ class SerializationTest : Spek({
     }
     describe("ChannelDelete") {
         it("deserializes a ChannelUpdate object") {
-            val payload = Json.parse(ReceivePayload.serializer(), file("channeldelete"))
+            val payload = Json.parse(Payload.serializer(), file("channeldelete"))
             val event = payload.event as ChannelDelete
             with(event.channel) {
                 id shouldBe "41771983423143937"
