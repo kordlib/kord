@@ -3,6 +3,30 @@ package com.gitlab.hopebaron.websocket
 import com.gitlab.hopebaron.websocket.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.SerialClassDescImpl
+import kotlinx.serialization.internal.StringDescriptor
+
+private object NullDecoder : DeserializationStrategy<Nothing?> {
+    override val descriptor: SerialDescriptor
+        get() = StringDescriptor
+
+    override fun deserialize(decoder: Decoder): Nothing? {
+        return decoder.decodeNull()
+    }
+
+    override fun patch(decoder: Decoder, old: Nothing?): Nothing? = throw NotImplementedError()
+}
+
+private class NullableStrategy<T>(val deserializer: DeserializationStrategy<T>) : DeserializationStrategy<T?> {
+    override val descriptor: SerialDescriptor
+        get() = StringDescriptor
+
+    override fun deserialize(decoder: Decoder): T? {
+        return if (decoder.decodeNotNullMark()) return deserializer.deserialize(decoder)
+        else decoder.decodeNull()
+    }
+
+    override fun patch(decoder: Decoder, old: T?): T? = throw NotImplementedError()
+}
 
 @Serializable
 data class Payload(
@@ -10,16 +34,15 @@ data class Payload(
         val sequence: Int?) {
     @Serializer(Payload::class)
     companion object : DeserializationStrategy<Payload> {
-        override val descriptor: SerialDescriptor
-            get() = object : SerialClassDescImpl("Payload") {
-                init {
-                    addElement("op")
-                    addElement("t", true)
-                    addElement("s", true)
-                    addElement("d", true)
+        override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Payload") {
+            init {
+                addElement("op")
+                addElement("t", true)
+                addElement("s", true)
+                addElement("d", true)
 
-                }
             }
+        }
 
         override fun deserialize(decoder: Decoder): Payload {
             lateinit var op: OpCode
@@ -38,14 +61,18 @@ data class Payload(
                                 OpCode.Reconnect -> data = Reconnect
                             }
                         }
-                        1 -> eventName = decodeStringElement(descriptor, index)
-                        2 -> sequence = decodeIntElement(descriptor, index)
+                        1 -> eventName = decodeNullableSerializableElement(descriptor, index, NullableStrategy(String.serializer()))
+                        2 -> sequence = decodeNullableSerializableElement(descriptor, index, NullableStrategy(Int.serializer()))
                         3 -> data = when (op) {
                             OpCode.Dispatch -> getByDispatchEvent(index, this, eventName)
                             OpCode.Heartbeat -> decodeSerializableElement(descriptor, index, Heartbeat.serializer())
+                            OpCode.HeartbeatACK -> {
+                                this.decodeSerializableElement(descriptor, index, NullDecoder)
+                                HeartbeatACK
+                            }
                             OpCode.InvalidSession -> decodeSerializableElement(descriptor, index, InvalidSession)
                             OpCode.Hello -> decodeSerializableElement(descriptor, index, Hello.serializer())
-                            else -> error("This op code doesn't belong to an event.")
+                            else -> error("This op code ${op.code} doesn't belong to an event.")
                         }
                     }
                 }
