@@ -70,10 +70,9 @@ class DefaultGateway(
     private suspend fun readJson(incoming: ReceiveChannel<Frame.Text>) {
         for (json in incoming) {
             retry.reset()
-            val payload = Json.nonstrict.parse(Payload.serializer(), json.readText())
+            val event = Json.nonstrict.parse(Event.serializer(), json.readText())
 
-            handshakeHandler.sequence = payload.sequence ?: handshakeHandler.sequence
-            val event = payload.event
+            if (event is DispatchEvent) handshakeHandler.sequence = event.sequence ?: handshakeHandler.sequence
             event?.let { channel.send(it) }
 
             when (event) {

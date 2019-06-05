@@ -40,8 +40,8 @@ class SerializationTest : Spek({
     describe("Ready") {
         it("deserializes a Ready object") {
             val event = Json.parse(Event.serializer(), file("ready")) as Ready
-            with(event) {
-                with(guilds) {
+            with(event.data) {
+                with(event.data.guilds) {
                     val guild = get(0)
                     with(guild) {
                         id shouldBe Snowflake("41771983423143937")
@@ -70,7 +70,7 @@ class SerializationTest : Spek({
     describe("Resumed") {
         it("deserializes a Resumed object") {
             val event = Json.parse(Event.serializer(), file("resumed")) as Resumed
-            with(event) { traces shouldBe listOf("kord", "is", "happy") }
+            with(event) { data.traces shouldBe listOf("kord", "is", "happy") }
         }
 
     }

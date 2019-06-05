@@ -24,7 +24,7 @@ class HandshakeHandler(
     fun start(configuration: GatewayConfiguration) {
         jobs += launch {
             flow.filterIsInstance<Ready>().collect { ready ->
-                session = ready.sessionId
+                session = ready.data.sessionId
             }
         }
 

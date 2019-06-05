@@ -3,10 +3,7 @@ package json
 import com.gitlab.hopebaron.websocket.*
 import com.gitlab.hopebaron.websocket.entity.Shard
 import com.gitlab.hopebaron.websocket.entity.Snowflake
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.json
-import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -17,7 +14,7 @@ class CommandTest : Spek({
         it("is serialized correctly") {
             val token = "token"
             val sessionId = "session"
-            val sequence = 1337L
+            val sequence = 1337
 
             val resume = Json.stringify(Command.Companion, Resume(token, sessionId, sequence))
 
@@ -37,7 +34,7 @@ class CommandTest : Spek({
 
     describe("Heartbeat") {
         it("is serialized correctly") {
-            val interval = 1337L
+            val interval = 1337
 
             val heartbeat = Json.stringify(Command.Companion, Command.Heartbeat(interval))
 
@@ -141,8 +138,8 @@ class CommandTest : Spek({
                     "compress" to compress
                     "large_threshold" to largeThreshold
                     "shard" to jsonArray {
-                        +0
-                        +1
+                        +JsonLiteral(0)
+                        +JsonLiteral(1)
                     }
                     "presence" to null as String?
                 }

@@ -8,13 +8,16 @@ import kotlinx.serialization.internal.SerialClassDescImpl
 
 
 @Serializable
-sealed class Event {
+sealed class DispatchEvent : Event() {
     abstract val sequence: Int?
+}
 
+@Serializable
+sealed class Event {
     @Serializer(Event::class)
     companion object : DeserializationStrategy<Event> {
         override val descriptor: SerialDescriptor
-            get() = object : SerialClassDescImpl("Payload") {
+            get() = object : SerialClassDescImpl("Event") {
                 init {
                     addElement("op")
                     addElement("t", true)
@@ -59,8 +62,8 @@ sealed class Event {
 
 
         private fun getByDispatchEvent(index: Int, decoder: CompositeDecoder, name: String?, sequence: Int?) = when (name) {
-            "RESUMED" -> decoder.decodeSerializableElement(descriptor, index, Resumed.serializer())
-            "READY" -> decoder.decodeSerializableElement(descriptor, index, Ready.serializer())
+            "RESUMED" -> Resumed(decoder.decodeSerializableElement(descriptor, index, ResumedData.serializer()), sequence)
+            "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
             "CHANNEL_CREATE" -> ChannelCreate(decoder.decodeSerializableElement(descriptor, index, Channel.serializer()), sequence)
             "CHANNEL_UPDATE" -> ChannelUpdate(decoder.decodeSerializableElement(descriptor, index, Channel.serializer()), sequence)
             "CHANNEL_DELETE" -> ChannelDelete(decoder.decodeSerializableElement(descriptor, index, Channel.serializer()), sequence)
@@ -100,27 +103,20 @@ sealed class Event {
 
 }
 
-object HeartbeatACK : Event() {
-    override val sequence: Int?
-        get() = null
-}
-
-object Reconnect : Event() {
-    override val sequence: Int?
-        get() = null
-}
+object HeartbeatACK : Event()
+object Reconnect : Event()
 
 @Serializable
 data class Hello(
         @SerialName("heartbeat_interval")
         val heartbeatInterval: Long,
         @SerialName("_trace")
-        val traces: List<String>,
-        override val sequence: Int?
-) : Event()
+        val traces: List<String>) : Event()
+
+data class Ready(val data: ReadyData, override val sequence: Int?) : DispatchEvent()
 
 @Serializable
-data class Ready(
+data class ReadyData(
         @SerialName("v")
         val version: Int,
         val user: User,
@@ -131,70 +127,80 @@ data class Ready(
         val sessionId: String,
         @SerialName("_trace")
         val traces: List<String>,
-        val shard: Shard?,
-        override val sequence: Int?
-) : Event()
+        val shard: Shard?)
 
 @Serializable
-data class Heartbeat(val data: Long, override val sequence: Int?) : Event() {
+data class Heartbeat(val data: Long) : Event() {
     @Serializer(Heartbeat::class)
     companion object : DeserializationStrategy<Heartbeat> {
         override val descriptor: SerialDescriptor
             get() = LongDescriptor.withName("HeartbeatEvent")
 
-        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong(), null)
+        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
     }
 }
 
 @Serializable
-data class Resumed(
-        @SerialName("_traces")
-        val traces: List<String>, override val sequence: Int?
-) : Event()
+data class Resumed(val data: ResumedData, override val sequence: Int?) : DispatchEvent()
 
 @Serializable
-data class InvalidSession(val resumable: Boolean, override val sequence: Int?) : Event() {
+data class ResumedData(
+        @SerialName("_traces")
+        val traces: List<String>
+) {
+    @Serializer(Heartbeat::class)
+    companion object : DeserializationStrategy<Heartbeat> {
+        override val descriptor: SerialDescriptor
+            get() = LongDescriptor.withName("HeartbeatEvent")
+
+        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
+    }
+}
+
+
+@Serializable
+data class InvalidSession(val resumable: Boolean) : Event() {
     @Serializer(InvalidSession::class)
     companion object : DeserializationStrategy<InvalidSession> {
         override val descriptor: SerialDescriptor
             get() = BooleanDescriptor.withName("InvalidSession")
 
-        override fun deserialize(decoder: Decoder) = InvalidSession(decoder.decodeBoolean(), null)
+        override fun deserialize(decoder: Decoder) = InvalidSession(decoder.decodeBoolean())
     }
 }
 
 
-data class ChannelCreate(val channel: Channel, override val sequence: Int?) : Event()
-data class ChannelUpdate(val channel: Channel, override val sequence: Int?) : Event()
-data class ChannelDelete(val channel: Channel, override val sequence: Int?) : Event()
-data class ChannelPinsUpdate(val pins: PinsUpdateData, override val sequence: Int?) : Event()
+data class ChannelCreate(val channel: Channel, override val sequence: Int?) : DispatchEvent()
+data class ChannelUpdate(val channel: Channel, override val sequence: Int?) : DispatchEvent()
+data class ChannelDelete(val channel: Channel, override val sequence: Int?) : DispatchEvent()
+data class ChannelPinsUpdate(val pins: PinsUpdateData, override val sequence: Int?) : DispatchEvent()
 
-data class TypingStart(val data: Typing, override val sequence: Int?) : Event()
-data class GuildCreate(val guild: Guild, override val sequence: Int?) : Event()
-data class GuildUpdate(val guild: Guild, override val sequence: Int?) : Event()
-data class GuildDelete(val guild: UnavailableGuild, override val sequence: Int?) : Event()
-data class GuildBanAdd(val ban: GuildBan, override val sequence: Int?) : Event()
-data class GuildBanRemove(val ban: GuildBan, override val sequence: Int?) : Event()
-data class GuildEmojisUpdate(val emoji: UpdatedEmojis, override val sequence: Int?) : Event()
-data class GuildIntegrationsUpdate(val integrations: GuildIntegrations, override val sequence: Int?) : Event()
-data class GuildMemberAdd(val member: AddedGuildMember, override val sequence: Int?) : Event()
-data class GuildMemberRemove(val member: RemovedGuildMember, override val sequence: Int?) : Event()
-data class GuildMemberUpdate(val member: UpdatedGuildMember, override val sequence: Int?) : Event()
-data class GuildRoleCreate(val role: GuildRole, override val sequence: Int?) : Event()
-data class GuildRoleUpdate(val role: GuildRole, override val sequence: Int?) : Event()
-data class GuildRoleDelete(val role: DeletedGuildRole, override val sequence: Int?) : Event()
-data class GuildMembersChunk(val data: GuildMembersChunkData, override val sequence: Int?) : Event()
+data class TypingStart(val data: Typing, override val sequence: Int?) : DispatchEvent()
+data class GuildCreate(val guild: Guild, override val sequence: Int?) : DispatchEvent()
+data class GuildUpdate(val guild: Guild, override val sequence: Int?) : DispatchEvent()
+data class GuildDelete(val guild: UnavailableGuild, override val sequence: Int?) : DispatchEvent()
+data class GuildBanAdd(val ban: GuildBan, override val sequence: Int?) : DispatchEvent()
+data class GuildBanRemove(val ban: GuildBan, override val sequence: Int?) : DispatchEvent()
+data class GuildEmojisUpdate(val emoji: UpdatedEmojis, override val sequence: Int?) : DispatchEvent()
+data class GuildIntegrationsUpdate(val integrations: GuildIntegrations, override val sequence: Int?) : DispatchEvent()
+data class GuildMemberAdd(val member: AddedGuildMember, override val sequence: Int?) : DispatchEvent()
+data class GuildMemberRemove(val member: RemovedGuildMember, override val sequence: Int?) : DispatchEvent()
+data class GuildMemberUpdate(val member: UpdatedGuildMember, override val sequence: Int?) : DispatchEvent()
+data class GuildRoleCreate(val role: GuildRole, override val sequence: Int?) : DispatchEvent()
+data class GuildRoleUpdate(val role: GuildRole, override val sequence: Int?) : DispatchEvent()
+data class GuildRoleDelete(val role: DeletedGuildRole, override val sequence: Int?) : DispatchEvent()
+data class GuildMembersChunk(val data: GuildMembersChunkData, override val sequence: Int?) : DispatchEvent()
 
-data class MessageCreate(val message: Message, override val sequence: Int?) : Event()
-data class MessageUpdate(val message: Message, override val sequence: Int?) : Event()
-data class MessageDelete(val message: DeletedMessage, override val sequence: Int?) : Event()
-data class MessageDeleteBulk(val messageBulk: BulkDeleteData, override val sequence: Int?) : Event()
-data class MessageReactionAdd(val reaction: MessageReaction, override val sequence: Int?) : Event()
-data class MessageReactionRemove(val reaction: MessageReaction, override val sequence: Int?) : Event()
-data class MessageReactionRemoveAll(val reactions: AllRemovedMessageReactions, override val sequence: Int?) : Event()
+data class MessageCreate(val message: Message, override val sequence: Int?) : DispatchEvent()
+data class MessageUpdate(val message: Message, override val sequence: Int?) : DispatchEvent()
+data class MessageDelete(val message: DeletedMessage, override val sequence: Int?) : DispatchEvent()
+data class MessageDeleteBulk(val messageBulk: BulkDeleteData, override val sequence: Int?) : DispatchEvent()
+data class MessageReactionAdd(val reaction: MessageReaction, override val sequence: Int?) : DispatchEvent()
+data class MessageReactionRemove(val reaction: MessageReaction, override val sequence: Int?) : DispatchEvent()
+data class MessageReactionRemoveAll(val reactions: AllRemovedMessageReactions, override val sequence: Int?) : DispatchEvent()
 
-data class PresenceUpdate(val presence: PresenceUpdateData, override val sequence: Int?) : Event()
-data class UserUpdate(val user: User, override val sequence: Int?) : Event()
-data class VoiceStateUpdate(val voiceState: VoiceState, override val sequence: Int?) : Event()
-data class VoiceServerUpdate(val voiceServerUpdateData: VoiceServerUpdateData, override val sequence: Int?) : Event()
-data class WebhooksUpdate(val webhooksUpdateData: WebhooksUpdateData, override val sequence: Int?) : Event()
+data class PresenceUpdate(val presence: PresenceUpdateData, override val sequence: Int?) : DispatchEvent()
+data class UserUpdate(val user: User, override val sequence: Int?) : DispatchEvent()
+data class VoiceStateUpdate(val voiceState: VoiceState, override val sequence: Int?) : DispatchEvent()
+data class VoiceServerUpdate(val voiceServerUpdateData: VoiceServerUpdateData, override val sequence: Int?) : DispatchEvent()
+data class WebhooksUpdate(val webhooksUpdateData: WebhooksUpdateData, override val sequence: Int?) : DispatchEvent()
