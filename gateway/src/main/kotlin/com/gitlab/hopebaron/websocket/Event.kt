@@ -5,15 +5,14 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.BooleanDescriptor
 import kotlinx.serialization.internal.LongDescriptor
 import kotlinx.serialization.internal.SerialClassDescImpl
+import kotlinx.serialization.json.Json
 
 sealed class DispatchEvent : Event() {
     abstract val sequence: Int?
 }
 
-@Serializable(with = Event.Companion::class)
 sealed class Event {
-    @Serializer(Event::class)
-    companion object : DeserializationStrategy<Event> {
+    companion object : DeserializationStrategy<Event?> {
         override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Event") {
                 init {
                     addElement("op")
@@ -24,9 +23,9 @@ sealed class Event {
                 }
             }
 
-        override fun deserialize(decoder: Decoder): Event {
-            lateinit var op: OpCode
-            lateinit var data: Event
+        override fun deserialize(decoder: Decoder): Event? {
+            var op: OpCode? = null
+            var data: Event? = null
             var sequence: Int? = null
             var eventName: String? = null
             with(decoder.beginStructure(descriptor)) {
@@ -96,6 +95,8 @@ sealed class Event {
             "WEBHOOKS_UPDATE" -> WebhooksUpdate(decoder.decodeSerializableElement(descriptor, index, WebhooksUpdateData.serializer()), sequence)
             else -> TODO("log this event $name")
         }
+
+        override fun patch(decoder: Decoder, old: Event?): Event? = error("")
     }
 
 }
