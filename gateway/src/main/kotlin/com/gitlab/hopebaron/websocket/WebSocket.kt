@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 class DiscordWebSocket(private val ws: WebSocketSession) : CoroutineScope {
     private val sequence: Int? = null
     override val coroutineContext: CoroutineContext get() = Job() + Dispatchers.IO
-    val incoming = ws.incoming.map { it.payload() }
+    val incoming = ws.incoming.map { it.event() }
 
     init {
         TODO("make this class work")
@@ -29,9 +29,9 @@ class DiscordWebSocket(private val ws: WebSocketSession) : CoroutineScope {
 }
 
 @UnstableDefault
-fun Frame.payload(): Payload {
+fun Frame.event(): Event {
     val element = Json.plain.parseJson((this as Frame.Text).readText())
-    return Json.plain.fromJson(Payload.serializer(), element)
+    return Json.plain.fromJson(Event.serializer(), element)
 }
 
 
