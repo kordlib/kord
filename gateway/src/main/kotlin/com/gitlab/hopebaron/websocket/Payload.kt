@@ -2,8 +2,10 @@ package com.gitlab.hopebaron.websocket
 
 import com.gitlab.hopebaron.websocket.entity.*
 import kotlinx.serialization.*
+import kotlinx.serialization.internal.NullableSerializer
 import kotlinx.serialization.internal.SerialClassDescImpl
 import kotlinx.serialization.internal.StringDescriptor
+import kotlinx.serialization.internal.StringSerializer
 
 private object NullDecoder : DeserializationStrategy<Nothing?> {
     override val descriptor: SerialDescriptor
@@ -14,18 +16,6 @@ private object NullDecoder : DeserializationStrategy<Nothing?> {
     }
 
     override fun patch(decoder: Decoder, old: Nothing?): Nothing? = throw NotImplementedError()
-}
-
-private class NullableStrategy<T>(val deserializer: DeserializationStrategy<T>) : DeserializationStrategy<T?> {
-    override val descriptor: SerialDescriptor
-        get() = StringDescriptor
-
-    override fun deserialize(decoder: Decoder): T? {
-        return if (decoder.decodeNotNullMark()) return deserializer.deserialize(decoder)
-        else decoder.decodeNull()
-    }
-
-    override fun patch(decoder: Decoder, old: T?): T? = throw NotImplementedError()
 }
 
 @Serializable
@@ -61,8 +51,8 @@ data class Payload(
                                 OpCode.Reconnect -> data = Reconnect
                             }
                         }
-                        1 -> eventName = decodeNullableSerializableElement(descriptor, index, NullableStrategy(String.serializer()))
-                        2 -> sequence = decodeNullableSerializableElement(descriptor, index, NullableStrategy(Int.serializer()))
+                        1 -> eventName = decodeNullableSerializableElement(descriptor, index, NullableSerializer(String.serializer()))
+                        2 -> sequence = decodeNullableSerializableElement(descriptor, index, NullableSerializer(Int.serializer()))
                         3 -> data = when (op) {
                             OpCode.Dispatch -> getByDispatchEvent(index, this, eventName)
                             OpCode.Heartbeat -> decodeSerializableElement(descriptor, index, Heartbeat.serializer())
