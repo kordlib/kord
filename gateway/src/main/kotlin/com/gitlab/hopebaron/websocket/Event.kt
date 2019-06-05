@@ -6,18 +6,15 @@ import kotlinx.serialization.internal.BooleanDescriptor
 import kotlinx.serialization.internal.LongDescriptor
 import kotlinx.serialization.internal.SerialClassDescImpl
 
-
-@Serializable
 sealed class DispatchEvent : Event() {
     abstract val sequence: Int?
 }
 
-@Serializable
+@Serializable(with = Event.Companion::class)
 sealed class Event {
     @Serializer(Event::class)
     companion object : DeserializationStrategy<Event> {
-        override val descriptor: SerialDescriptor
-            get() = object : SerialClassDescImpl("Event") {
+        override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Event") {
                 init {
                     addElement("op")
                     addElement("t", true)
@@ -111,7 +108,8 @@ data class Hello(
         @SerialName("heartbeat_interval")
         val heartbeatInterval: Long,
         @SerialName("_trace")
-        val traces: List<String>) : Event()
+        val traces: List<String>
+) : Event()
 
 data class Ready(val data: ReadyData, override val sequence: Int?) : DispatchEvent()
 
