@@ -15,14 +15,14 @@ class SerializationTest : Spek({
 
     describe("HeartbeatACK") {
         it("deserializes a HeartbeatACK object") {
-            val event = Json.parse(Event.serializer(), file("ack"))
+            val event = Json.parse(Event.Companion, file("ack"))
             event shouldBe HeartbeatACK
         }
     }
 
     describe("Hello") {
         it("deserializes a Hello object") {
-            val event = Json.parse(Event.serializer(), file("hello")) as Hello
+            val event = Json.parse(Event.Companion, file("hello")) as Hello
             with(event) {
                 heartbeatInterval shouldBe 1337
                 traces shouldBe listOf("test")
@@ -32,14 +32,14 @@ class SerializationTest : Spek({
 
     describe("Reconnect") {
         it("deserializes a Reconnect object") {
-            val event = Json.parse(Event.serializer(), file("reconnect"))
+            val event = Json.parse(Event.Companion, file("reconnect"))
             event shouldBe Reconnect
         }
     }
 
     describe("Ready") {
         it("deserializes a Ready object") {
-            val event = Json.parse(Event.serializer(), file("ready")) as Ready
+            val event = Json.parse(Event.Companion, file("ready")) as Ready
             with(event.data) {
                 with(event.data.guilds) {
                     val guild = get(0)
@@ -69,7 +69,7 @@ class SerializationTest : Spek({
     }
     describe("Resumed") {
         it("deserializes a Resumed object") {
-            val event = Json.parse(Event.serializer(), file("resumed")) as Resumed
+            val event = Json.parse(Event.Companion, file("resumed")) as Resumed
             with(event) { data.traces shouldBe listOf("kord", "is", "happy") }
         }
 
@@ -77,7 +77,7 @@ class SerializationTest : Spek({
 
     describe("InvalidSession") {
         it("deserializes a InvalidSession object") {
-            val event = Json.parse(Event.serializer(), file("invalid")) as InvalidSession
+            val event = Json.parse(Event.Companion, file("invalid")) as InvalidSession
             with(event) { resumable shouldBe false }
         }
     }
@@ -85,7 +85,7 @@ class SerializationTest : Spek({
 
     describe("ChannelPinsUpdate") {
         it("deserializes a ChannelPinsUpdate object") {
-            val event = Json.parse(Event.serializer(), file("channelpinsupdate")) as ChannelPinsUpdate
+            val event = Json.parse(Event.Companion, file("channelpinsupdate")) as ChannelPinsUpdate
             with(event.pins) {
                 guildId shouldBe Snowflake("41771983423143937")
                 channelId shouldBe Snowflake("399942396007890945")
@@ -99,7 +99,7 @@ class SerializationTest : Spek({
 
     describe("ChannelCreate") {
         it("deserializes a ChannelCreate object") {
-            val event = Json.parse(Event.serializer(), file("channelcreate")) as ChannelCreate
+            val event = Json.parse(Event.Companion, file("channelcreate")) as ChannelCreate
             with(event.channel) {
                 id shouldBe Snowflake("41771983423143937")
                 guildId shouldBe Snowflake("41771983423143937")
@@ -118,7 +118,7 @@ class SerializationTest : Spek({
 
     describe("ChannelUpdate") {
         it("deserializes a ChannelUpdate object") {
-            val event = Json.parse(Event.serializer(), file("channelupdate")) as ChannelUpdate
+            val event = Json.parse(Event.Companion, file("channelupdate")) as ChannelUpdate
             with(event.channel) {
                 id shouldBe Snowflake("41771983423143937")
                 guildId shouldBe Snowflake("41771983423143937")
@@ -136,7 +136,7 @@ class SerializationTest : Spek({
     }
     describe("ChannelDelete") {
         it("deserializes a ChannelUpdate object") {
-            val event = Json.parse(Event.serializer(), file("channeldelete")) as ChannelDelete
+            val event = Json.parse(Event.Companion, file("channeldelete")) as ChannelDelete
             with(event.channel) {
                 id shouldBe Snowflake("41771983423143937")
                 guildId shouldBe Snowflake("41771983423143937")
