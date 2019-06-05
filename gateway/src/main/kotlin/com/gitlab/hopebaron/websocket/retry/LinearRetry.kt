@@ -30,11 +30,10 @@ class LinearRetry(
     override suspend fun retry() {
         if (!hasNext) error("max retries exceeded")
 
-        var diff = (firstBackoffMillis - maxBackoffMillis) / maxTries
+        tries.incrementAndGet()
+        var diff = (maxBackoffMillis - firstBackoffMillis) / maxTries
         diff *= tries.value
         delay(diff)
-        GlobalScope.launch { }
-
     }
 
 }
