@@ -29,8 +29,6 @@ import mu.KotlinLogging
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
 
-var global: Any? = null
-
 @FlowPreview
 @UnstableDefault
 @ObsoleteCoroutinesApi
@@ -58,7 +56,7 @@ class DefaultGateway(
             close()
 
             val result = runCatching {
-                global = HandshakeHandler(events, ::send, configuration)
+                    HandshakeHandler(events, ::send, configuration)
                 socket = webSocket(url)
                 readJson(socket.incoming.mapNotNull { it as? Frame.Text })
             }
