@@ -11,9 +11,9 @@ import kotlin.coroutines.CoroutineContext
 
 @FlowPreview
 class HandshakeHandler(
-        flow:  Flow<Event>,
+        flow: Flow<Event>,
         send: suspend (Command) -> Unit,
-        configuration: GatewayConfiguration
+        private val configuration: GatewayConfiguration
 ) : CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job() + Dispatchers.IO
@@ -21,45 +21,46 @@ class HandshakeHandler(
     private var session: AtomicRef<String?> = atomic(null)
     private var sequence: AtomicRef<Int?> = atomic(null)
 
+    private val identify
+        get() = Identify(
+                configuration.token,
+                IdentifyProperties(os, configuration.name, configuration.name),
+                false,
+                shard = configuration.shard,
+                presence = configuration.presence
+        )
+
+    private val resume
+        get() = Resume(configuration.token, session.value!!, sequence.value)
+
+    private val sessionStart get() = sequence.value == null
+
     init {
-        launch {
-            flow.filterIsInstance<DispatchEvent>().collect { event ->
-                sequence.update { event.sequence ?: sequence.value }
-            }
+        flow.on<DispatchEvent> { event ->
+            sequence.update { event.sequence ?: sequence.value }
         }
 
-        launch {
-            flow.filterIsInstance<Ready>().collect {
-                event -> session.update { event.data.sessionId }
-            }
+        flow.on<Ready> { event ->
+            session.update { event.data.sessionId }
         }
 
-        launch {
-            flow.filterIsInstance<Hello>().collect {
-                if (sequence.value == null) {
-                    val identify = Identify(
-                            configuration.token,
-                            IdentifyProperties(os, configuration.name, configuration.name),
-                            false,
-                            shard = configuration.shard,
-                            presence = configuration.presence
-                    )
-                    send(identify)
-                } else send(Resume(configuration.token, session.value!!, sequence.value))
-            }
+        flow.on<Hello> {
+            if (sessionStart) send(identify)
+            else send(resume)
         }
 
-        launch {
-            flow.filterIsInstance<Close>().collect {
-                session.update { null }
-                sequence.update { null }
-            }
+        flow.on<Close> {
+            this@HandshakeHandler.cancel()
         }
 
+        flow.on<CloseForReconnect> {
+            this@HandshakeHandler.cancel()
+        }
+    }
+
+    private inline fun <reified T> Flow<Event>.on(crossinline block: suspend (T) -> Unit) {
         launch {
-            flow.filterIsInstance<CloseForReconnect>().collect {
-                this@HandshakeHandler.cancel()
-            }
+            filterIsInstance<T>().collect { block(it) }
         }
     }
 
