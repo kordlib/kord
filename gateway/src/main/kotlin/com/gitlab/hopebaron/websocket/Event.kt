@@ -2,26 +2,34 @@ package com.gitlab.hopebaron.websocket
 
 import com.gitlab.hopebaron.websocket.entity.*
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.BooleanDescriptor
-import kotlinx.serialization.internal.LongDescriptor
-import kotlinx.serialization.internal.SerialClassDescImpl
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.internal.*
 
 sealed class DispatchEvent : Event() {
     abstract val sequence: Int?
 }
 
+private object NullDecoder : DeserializationStrategy<Nothing?> {
+    override val descriptor: SerialDescriptor
+        get() = StringDescriptor
+
+    override fun deserialize(decoder: Decoder): Nothing? {
+        return decoder.decodeNull()
+    }
+
+    override fun patch(decoder: Decoder, old: Nothing?): Nothing? = throw NotImplementedError()
+}
+
 sealed class Event {
     companion object : DeserializationStrategy<Event?> {
         override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Event") {
-                init {
-                    addElement("op")
-                    addElement("t", true)
-                    addElement("s", true)
-                    addElement("d", true)
+            init {
+                addElement("op")
+                addElement("t", true)
+                addElement("s", true)
+                addElement("d", true)
 
-                }
             }
+        }
 
         override fun deserialize(decoder: Decoder): Event? {
             var op: OpCode? = null
@@ -40,14 +48,18 @@ sealed class Event {
                                 OpCode.Reconnect -> data = Reconnect
                             }
                         }
-                        1 -> eventName = decodeStringElement(descriptor, index)
-                        2 -> sequence = decodeIntElement(descriptor, index)
+                        1 -> eventName = decodeNullableSerializableElement(descriptor, index, NullableSerializer(String.serializer()))
+                        2 -> sequence = decodeNullableSerializableElement(descriptor, index, NullableSerializer(Int.serializer()))
                         3 -> data = when (op) {
                             OpCode.Dispatch -> getByDispatchEvent(index, this, eventName, sequence)
                             OpCode.Heartbeat -> decodeSerializableElement(descriptor, index, Heartbeat.serializer())
+                            OpCode.HeartbeatACK -> {
+                                this.decodeSerializableElement(descriptor, index, NullDecoder)
+                                HeartbeatACK
+                            }
                             OpCode.InvalidSession -> decodeSerializableElement(descriptor, index, InvalidSession)
                             OpCode.Hello -> decodeSerializableElement(descriptor, index, Hello.serializer())
-                            else -> error("This op code doesn't belong to an event.")
+                            else -> error("This op code ${op?.code} doesn't belong to an event.")
                         }
                     }
                 }
