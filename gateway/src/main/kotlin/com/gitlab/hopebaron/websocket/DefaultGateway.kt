@@ -99,11 +99,11 @@ class DefaultGateway(
     }
 
     override suspend fun send(command: Command) {
+        if (!socketOpen) error("call 'start' before sending messages")
         rateLimiter.consume()
-        println(">>> $command")
         val json = Json.stringify(Command.Companion, command)
-        if (socketOpen) socket.send(Frame.Text(json))
-        else error("call 'start' before sending messages")
+        defaultGatewayLogger.trace { "Gateway >>> $json" }
+        socket.send(Frame.Text(json))
     }
 
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend
