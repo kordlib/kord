@@ -52,11 +52,11 @@ class DefaultGateway(
     private val restart = atomic(true)
 
     override suspend fun start(configuration: GatewayConfiguration) {
+        HandshakeHandler(events, ::send, configuration)
         while (retry.hasNext && restart.value) {
             close()
 
             val result = runCatching {
-                    HandshakeHandler(events, ::send, configuration)
                 socket = webSocket(url)
                 readJson(socket.incoming.mapNotNull { it as? Frame.Text })
             }
