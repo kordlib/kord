@@ -12,6 +12,8 @@ import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readText
 import io.ktor.util.error
+import kotlinx.atomicfu.atomic
+import kotlinx.atomicfu.update
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
@@ -26,6 +28,8 @@ import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
+
+var global: Any? = null
 
 @FlowPreview
 @UnstableDefault
@@ -45,16 +49,16 @@ class DefaultGateway(
     override val events: Flow<Event>
         get() = channel.asFlow()
 
-    private val handshakeHandler = HandshakeHandler(events, this::send)
-
     private lateinit var socket: DefaultClientWebSocketSession
 
+    private val restart = atomic(true)
+
     override suspend fun start(configuration: GatewayConfiguration) {
-        while (retry.hasNext) {
+        while (retry.hasNext && restart.value) {
             close()
 
             val result = runCatching {
-                handshakeHandler.start(configuration)
+                global = HandshakeHandler(events, ::send, configuration)
                 socket = webSocket(url)
                 readJson(socket.incoming.mapNotNull { it as? Frame.Text })
             }
@@ -70,14 +74,16 @@ class DefaultGateway(
     private suspend fun readJson(incoming: ReceiveChannel<Frame.Text>) {
         for (json in incoming) {
             retry.reset()
-            val event = Json.nonstrict.parse(Event.Companion, json.readText())
+            val text = json.readText()
+            defaultGatewayLogger.trace { "Gateway <<< $json" }
 
-            if (event is DispatchEvent) handshakeHandler.sequence = event.sequence ?: handshakeHandler.sequence
+            val event = Json.nonstrict.parse(Event.Companion, text)
+
             event?.let { channel.send(it) }
 
             when (event) {
                 Reconnect -> close()
-                is Hello -> ticker.tickAt(event.heartbeatInterval) { send(Command.Heartbeat(handshakeHandler.sequence)) }
+                //TODO: Fix this: is Hello -> ticker.tickAt(event.heartbeatInterval) { send(Command.Heartbeat(handshakeHandler.sequence)) }
             }
         }
     }
@@ -87,15 +93,26 @@ class DefaultGateway(
         this.url.port = 443
     }
 
-    private fun handleReason(reason: CloseReason?) {
-        if (reason?.code ?: 0 in 4000..5000) error("${reason?.message}: ${reason?.code}")
-        else defaultGatewayLogger.info { "gateway closed with a non-error code ${reason?.code}, retrying connection" }
+    private suspend fun handleReason(reason: CloseReason?) {
+        if (reason?.code ?: 0 in 4000..5000) {
+            close()
+            error("${reason?.message}: ${reason?.code}")
+        } else {
+            restart()
+            defaultGatewayLogger.info { "gateway closed with a non-error code ${reason?.code}, retrying connection" }
+        }
     }
 
     override suspend fun close() {
-        handshakeHandler.stop()
         ticker.stop()
         if (socketOpen) socket.close(CloseReason(1000, "leaving"))
+        restart.update { false }
+    }
+
+    private suspend fun restart() {
+        ticker.stop()
+        if (socketOpen) socket.close(CloseReason(1000, "reconnecting"))
+        restart.update { true }
     }
 
     override suspend fun send(command: Command) {
