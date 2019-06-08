@@ -1,5 +1,6 @@
 package com.gitlab.hopebaron.websocket
 
+import com.gitlab.hopebaron.websocket.handler.*
 import com.gitlab.hopebaron.websocket.ratelimit.RateLimiter
 import com.gitlab.hopebaron.websocket.retry.Retry
 import io.ktor.client.HttpClient
@@ -23,6 +24,7 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.mapNotNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
@@ -44,15 +46,25 @@ class DefaultGateway(
 
     private val channel = BroadcastChannel<Event>(Channel.CONFLATED)
 
-    override val events: Flow<Event>
-        get() = channel.asFlow()
+    override val events: Flow<Event> = channel.asFlow()
 
     private lateinit var socket: DefaultClientWebSocketSession
 
     private val restart = atomic(true)
 
+    private val handshakeHandler: HandshakeHandler
+
+    init {
+        val sequence = Sequence()
+        handshakeHandler = HandshakeHandler(events, ::send, sequence)
+        HeartbeatHandler(events, ::send, sequence)
+        ZombieHandler(events, ::restart)
+        ReconnectHandler(events, ::restart)
+        SequenceHandler(events, sequence)
+    }
+
     override suspend fun start(configuration: GatewayConfiguration) {
-        HandshakeHandler(events, ::send, configuration)
+        handshakeHandler.configuration = configuration
         while (retry.hasNext && restart.value) {
             close()
 
@@ -63,8 +75,6 @@ class DefaultGateway(
 
             result.onFailure {
                 defaultGatewayLogger.error(it)
-                handleReason(socket.closeReason.await())
-                retry.retry()
             }
         }
     }
@@ -73,16 +83,11 @@ class DefaultGateway(
         for (json in incoming) {
             retry.reset()
             val text = json.readText()
-            defaultGatewayLogger.trace { "Gateway <<< $json" }
+            defaultGatewayLogger.trace { "Gateway <<< $text" }
 
             val event = Json.nonstrict.parse(Event.Companion, text)
 
             event?.let { channel.send(it) }
-
-            when (event) {
-                Reconnect -> close()
-                //TODO: Fix this: is Hello -> ticker.tickAt(event.heartbeatInterval) { send(Command.Heartbeat(handshakeHandler.sequence)) }
-            }
         }
     }
 
@@ -117,11 +122,14 @@ class DefaultGateway(
         if (!socketOpen) error("call 'start' before sending messages")
         rateLimiter.consume()
         val json = Json.stringify(Command.Companion, command)
-        defaultGatewayLogger.trace { "Gateway >>> $json" }
+        if (command is Identify) defaultGatewayLogger.trace { "Gateway >>> Identify" }
+        else defaultGatewayLogger.trace { "Gateway >>> $json" }
         socket.send(Frame.Text(json))
     }
 
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend
 }
+
+internal val GatewayConfiguration.identify get() = Identify(token, IdentifyProperties(os, name, name), false, 50, shard, presence)
 
 internal val os: String get() = System.getProperty("os.name")
