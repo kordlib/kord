@@ -113,8 +113,10 @@ sealed class Event {
 
 }
 
-object Close : Event()
-object CloseForReconnect : Event()
+sealed class Close : Event()
+object SessionClose : Close()
+object CloseForReconnect : Close()
+
 object HeartbeatACK : Event()
 object Reconnect : Event()
 
