@@ -24,7 +24,6 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.mapNotNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
@@ -76,6 +75,11 @@ class DefaultGateway(
             result.onFailure {
                 defaultGatewayLogger.error(it)
             }
+
+            if (::socket.isInitialized) {
+                val reason = socket.closeReason.await()
+                handleReason(reason)
+            } else restart()
         }
     }
 
