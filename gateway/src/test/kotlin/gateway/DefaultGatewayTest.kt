@@ -46,7 +46,7 @@ class DefaultGatewayTest : Spek({
                 when (words.firstOrNull()) {
                     "!close" -> gateway.close()
                     "!status" -> when (words.getOrNull(1)) {
-                        "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = Activity("Disko", ActivityType.Game)))
+                        "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = Activity("Kord", ActivityType.Game)))
                     }
                 }
             }
