@@ -30,7 +30,6 @@ import mu.KotlinLogging
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
 
-@FlowPreview
 @UnstableDefault
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi

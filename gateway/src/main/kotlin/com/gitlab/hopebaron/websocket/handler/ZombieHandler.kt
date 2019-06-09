@@ -5,12 +5,12 @@ import com.gitlab.hopebaron.websocket.HeartbeatACK
 import com.gitlab.hopebaron.websocket.Hello
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-@FlowPreview
+@ExperimentalCoroutinesApi
 internal class ZombieHandler(flow: Flow<Event>, private val restart: suspend () -> Unit) : Handler(flow) {
 
     private val possibleZombie = atomic(false)

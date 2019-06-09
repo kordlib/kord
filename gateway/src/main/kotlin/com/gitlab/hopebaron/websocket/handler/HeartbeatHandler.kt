@@ -2,12 +2,13 @@ package com.gitlab.hopebaron.websocket.handler
 
 import com.gitlab.hopebaron.websocket.*
 import com.gitlab.hopebaron.websocket.Command.Heartbeat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
-@FlowPreview
 @ObsoleteCoroutinesApi
+@ExperimentalCoroutinesApi
 internal class HeartbeatHandler(
         flow: Flow<Event>,
         private val send: suspend (Command) -> Unit,
