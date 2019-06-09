@@ -2,6 +2,7 @@ package com.gitlab.hopebaron.websocket.entity
 
 import kotlinx.serialization.*
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonLiteral
 import kotlinx.serialization.json.jsonArray
 
 @Serializable
@@ -12,8 +13,8 @@ data class Shard(val index: Int, val count: Int) {
 
         override fun serialize(encoder: Encoder, obj: Shard) {
             val array = jsonArray {
-                +obj.index
-                +obj.count
+                +JsonLiteral(obj.index)
+                +JsonLiteral(obj.count)
             }
 
             encoder.encode(JsonArray.serializer(), array)
