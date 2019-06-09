@@ -38,14 +38,14 @@ In an effort to ease the pain of bot development, Kord grants the user an extens
 
 ```groovy
 repositories {
-...
+ ...
  maven { url 'https://jitpack.io' }
 }
 ```
 
 ```groovy
 dependencies {
-...
+ ...
  implementation 'com.gitlab.hopebaron:Kord:0.0.1'
 }
 ```
@@ -53,19 +53,17 @@ dependencies {
 ### Maven
 
 ```xml
-	<repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
 ```
 
 ```xml
 <dependency>
-	    <groupId>com.gitlab.hopebaron</groupId>
-	    <artifactId>Kord</artifactId>
-	    <version>0.0.1</version>
-	</dependency>
+    <groupId>com.gitlab.hopebaron</groupId>
+	<artifactId>Kord</artifactId>
+	<version>0.0.1</version>
+</dependency>
 ```
 
