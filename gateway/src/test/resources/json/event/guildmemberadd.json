@@ -1,0 +1,13 @@
+{
+  "op": 0,
+  "t": "GUILD_MEMBER_ADD",
+  "s": 1234,
+  "d": {
+    "guild_id": "41771983423143937",
+    "nick": "NOT API SUPPORT",
+    "roles": [],
+    "joined_at": "2015-04-26T06:26:56.936000+00:00",
+    "deaf": false,
+    "mute": false
+  }
+}
