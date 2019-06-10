@@ -4,7 +4,9 @@ import com.gitlab.hopebaron.websocket.handler.*
 import com.gitlab.hopebaron.websocket.ratelimit.RateLimiter
 import com.gitlab.hopebaron.websocket.retry.Retry
 import io.ktor.client.HttpClient
+import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.websocket.DefaultClientWebSocketSession
+import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.features.websocket.webSocketSession
 import io.ktor.http.HttpMethod
 import io.ktor.http.URLProtocol
@@ -18,18 +20,23 @@ import kotlinx.atomicfu.update
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.mapNotNull
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.flow.*
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
 
+/**
+ * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
+ *
+ * @param url the url to connect to
+ * @param client the client from which a webSocket will be created, requires the [WebSockets] and [JsonFeature] to be
+ * installed
+ * @param rateLimiter a rate limiter than follows the Discord API specifications
+ * @param retry a retry used for reconnection attempts.
+ */
 @FlowPreview
 @UnstableDefault
 @ObsoleteCoroutinesApi
@@ -43,6 +50,7 @@ class DefaultGateway(
 
     private val ticker = Ticker()
 
+    //TODO: add sane backpressure somewhere around here
     private val channel = BroadcastChannel<Event>(Channel.CONFLATED)
 
     override val events: Flow<Event> = channel.asFlow()
@@ -95,6 +103,7 @@ class DefaultGateway(
         }
     }
 
+    //TODO: make sure the url is formatted correctly
     private suspend fun webSocket(url: String) = client.webSocketSession(HttpMethod.Get, host = url) {
         this.url.protocol = URLProtocol.WSS
         this.url.port = 443
