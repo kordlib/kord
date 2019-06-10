@@ -42,7 +42,7 @@ interface Gateway {
 }
 
 /**
- * Starts a reconnection gateway connection with the given parameters.
+ * Starts a reconnecting gateway connection with the given parameters.
  * This function will suspend until the lifecycle of the gateway has ended.
  *
  * @param token the configuration for this gateway session.

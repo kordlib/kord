@@ -31,11 +31,11 @@ private val defaultGatewayLogger = KotlinLogging.logger { }
 /**
  * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
  *
- * @param url the url to connect to
- * @param client the client from which a webSocket will be created, requires the [WebSockets] and [JsonFeature] to be
- * installed
- * @param rateLimiter a rate limiter than follows the Discord API specifications
- * @param retry a retry used for reconnection attempts.
+ * @param url The url to connect to.
+ * @param client The client from which a webSocket will be created, requires the [WebSockets] and [JsonFeature] to be
+ * installed.
+ * @param rateLimiter A rate limiter than follows the Discord API specifications.
+ * @param retry A retry used for reconnection attempts.
  */
 @FlowPreview
 @UnstableDefault
