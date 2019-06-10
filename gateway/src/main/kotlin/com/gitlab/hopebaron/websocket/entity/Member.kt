@@ -44,7 +44,7 @@ data class UpdatedGuildMember(
 
 @Serializable
 data class PartialGuildMember(
-        val nick: String,
+        val nick: String? = null,
         val roles: List<String>,
         @SerialName("joined_at")
         val joinedAt: String,
