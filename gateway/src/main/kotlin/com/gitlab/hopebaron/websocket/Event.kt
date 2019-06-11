@@ -3,6 +3,9 @@ package com.gitlab.hopebaron.websocket
 import com.gitlab.hopebaron.websocket.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.*
+import mu.KotlinLogging
+
+private val jsonLogger = KotlinLogging.logger {  }
 
 sealed class DispatchEvent : Event() {
     abstract val sequence: Int?
@@ -105,7 +108,10 @@ sealed class Event {
             "VOICE_STATE_UPDATE" -> VoiceStateUpdate(decoder.decodeSerializableElement(descriptor, index, VoiceState.serializer()), sequence)
             "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(decoder.decodeSerializableElement(descriptor, index, VoiceServerUpdateData.serializer()), sequence)
             "WEBHOOKS_UPDATE" -> WebhooksUpdate(decoder.decodeSerializableElement(descriptor, index, WebhooksUpdateData.serializer()), sequence)
-            else -> TODO("log this event $name")
+            else -> {
+                jsonLogger.warn { "unknown gateway event name $name" }
+                null
+            }
         }
 
         override fun patch(decoder: Decoder, old: Event?): Event? = error("")
