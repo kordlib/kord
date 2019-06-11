@@ -39,7 +39,7 @@ data class UpdatedGuildMember(
         val guildId: Snowflake,
         val roles: List<String>,
         val user: User,
-        val nick: String
+        val nick: String? = null
 )
 
 @Serializable
