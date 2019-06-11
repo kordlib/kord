@@ -26,7 +26,7 @@ import kotlin.coroutines.CoroutineContext
 @ExperimentalCoroutinesApi
 class DefaultGatewayTest : Spek({
 
-    xdescribe("a default gateway") {
+    describe("a default gateway") {
         val url = "gateway.discord.gg"
         val token = System.getenv("token")
 
@@ -45,6 +45,7 @@ class DefaultGatewayTest : Spek({
                 val words = it.message.content.split(' ')
                 when (words.firstOrNull()) {
                     "!close" -> gateway.close()
+                    "!restart" -> gateway.restart()
                     "!status" -> when (words.getOrNull(1)) {
                         "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = Activity("Kord", ActivityType.Game)))
                     }
