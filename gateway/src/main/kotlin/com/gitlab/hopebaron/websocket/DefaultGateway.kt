@@ -55,8 +55,7 @@ class DefaultGateway(
     init {
         val sequence = Sequence()
         handshakeHandler = HandshakeHandler(events, ::send, sequence)
-        HeartbeatHandler(events, ::send, sequence)
-        ZombieHandler(events, ::restart)
+        HeartbeatHandler(events, ::send, ::restart, sequence)
         ReconnectHandler(events, ::restart)
         SequenceHandler(events, sequence)
     }

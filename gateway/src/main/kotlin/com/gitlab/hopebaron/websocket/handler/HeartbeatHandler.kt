@@ -1,9 +1,9 @@
 package com.gitlab.hopebaron.websocket.handler
 
 import com.gitlab.hopebaron.websocket.*
-import com.gitlab.hopebaron.websocket.Command.Heartbeat
+import kotlinx.atomicfu.atomic
+import kotlinx.atomicfu.update
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
@@ -12,17 +12,33 @@ import kotlinx.coroutines.flow.Flow
 internal class HeartbeatHandler(
         flow: Flow<Event>,
         private val send: suspend (Command) -> Unit,
+        private val restart: suspend () -> Unit,
         private val sequence: Sequence,
         private val ticker: Ticker = Ticker()
 ) : Handler(flow) {
 
+    private val possibleZombie = atomic(false)
+    private val delay = atomic(Long.MAX_VALUE)
+
     override fun start() {
-        on<Hello> {
-            ticker.tickAt(it.heartbeatInterval) { send(Heartbeat(sequence.value)) }
+        on<Event> {
+            possibleZombie.update { false }
         }
 
-        on<com.gitlab.hopebaron.websocket.Heartbeat> {
-            send(Heartbeat(sequence.value))
+        on<Hello> { hello ->
+            delay.update { hello.heartbeatInterval }
+            ticker.tickAt(hello.heartbeatInterval) {
+                if (possibleZombie.value) {
+                    restart()
+                } else {
+                    possibleZombie.update { true }
+                    send(Command.Heartbeat(sequence.value))
+                }
+            }
+        }
+
+        on<Heartbeat> {
+            send(Command.Heartbeat(sequence.value))
         }
 
         on<Close> {
