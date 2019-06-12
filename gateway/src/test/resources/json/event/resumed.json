@@ -3,7 +3,7 @@
   "t": "RESUMED",
   "s": 1234,
   "d": {
-    "_traces": [
+    "_trace": [
       "kord",
       "is",
       "happy"
