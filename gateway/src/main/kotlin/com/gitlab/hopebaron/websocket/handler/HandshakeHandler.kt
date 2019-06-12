@@ -25,7 +25,7 @@ internal class HandshakeHandler(
     private val resume
         get() = Resume(configuration.token, session.value!!, sequence.value)
 
-    private val sessionStart get() = sequence.value == null
+    private val sessionStart get() = session.value == null
 
     override fun start() {
         on<Ready> { event ->
