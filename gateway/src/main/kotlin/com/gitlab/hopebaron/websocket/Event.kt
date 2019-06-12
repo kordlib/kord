@@ -160,7 +160,7 @@ data class Resumed(val data: ResumedData, override val sequence: Int?) : Dispatc
 
 @Serializable
 data class ResumedData(
-        @SerialName("_traces")
+        @SerialName("_trace")
         val traces: List<String>
 ) {
     @Serializer(Heartbeat::class)
