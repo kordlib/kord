@@ -2,9 +2,10 @@ package com.gitlab.hopebaron.websocket.retry
 
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import mu.KotlinLogging
+
+private val linearRetryLogger = KotlinLogging.logger { }
 
 class LinearRetry(
         private val firstBackoffMillis: Long,
@@ -33,6 +34,7 @@ class LinearRetry(
         tries.incrementAndGet()
         var diff = (maxBackoffMillis - firstBackoffMillis) / maxTries
         diff *= tries.value
+        linearRetryLogger.trace { "retry attempt ${tries.value}, delaying for $diff ms" }
         delay(diff)
     }
 
