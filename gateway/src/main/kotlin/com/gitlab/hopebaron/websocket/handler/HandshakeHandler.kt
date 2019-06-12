@@ -37,7 +37,7 @@ internal class HandshakeHandler(
             else send(resume)
         }
 
-        on<Close> {
+        on<SessionClose> {
             session.update { null }
         }
     }
