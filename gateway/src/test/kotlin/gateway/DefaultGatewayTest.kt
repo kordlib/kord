@@ -26,7 +26,7 @@ import kotlin.coroutines.CoroutineContext
 @ExperimentalCoroutinesApi
 class DefaultGatewayTest : Spek({
 
-    describe("a default gateway") {
+    xdescribe("a default gateway") {
         val url = "gateway.discord.gg"
         val token = System.getenv("token")
 
