@@ -132,7 +132,7 @@ class DefaultGateway(
         restart.update { false }
     }
 
-    suspend fun restart(code: Close = CloseForReconnect) {
+    internal suspend fun restart(code: Close = CloseForReconnect) {
         restart.update { true }
         if (socketOpen) {
             channel.send(code)
