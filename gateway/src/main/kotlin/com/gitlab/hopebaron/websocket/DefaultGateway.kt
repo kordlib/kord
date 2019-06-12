@@ -6,8 +6,7 @@ import com.gitlab.hopebaron.websocket.retry.Retry
 import io.ktor.client.HttpClient
 import io.ktor.client.features.websocket.DefaultClientWebSocketSession
 import io.ktor.client.features.websocket.webSocketSession
-import io.ktor.http.HttpMethod
-import io.ktor.http.URLProtocol
+import io.ktor.client.request.url
 import io.ktor.http.cio.websocket.CloseReason
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.close
@@ -121,10 +120,7 @@ class DefaultGateway(
         }
     }
 
-    private suspend fun webSocket(url: String) = client.webSocketSession(HttpMethod.Get, host = url) {
-        this.url.protocol = URLProtocol.WSS
-        this.url.port = 443
-    }
+    private suspend fun webSocket(url: String) = client.webSocketSession { url(url) }
 
     override suspend fun close() {
         channel.send(SessionClose)

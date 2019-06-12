@@ -15,10 +15,8 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.UnstableDefault
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
 import org.spekframework.spek2.style.specification.xdescribe
 import java.time.Duration
-import kotlin.coroutines.CoroutineContext
 
 @FlowPreview
 @UnstableDefault
@@ -27,7 +25,7 @@ import kotlin.coroutines.CoroutineContext
 class DefaultGatewayTest : Spek({
 
     xdescribe("a default gateway") {
-        val url = "gateway.discord.gg"
+        val url = "wss://gateway.discord.gg/"
         val token = System.getenv("token")
 
         val client = HttpClient(CIO) {
