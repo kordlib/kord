@@ -16,7 +16,7 @@ import java.time.Instant
 fun BucketRateLimiter(capacity: Int, refillInterval: Duration) = BucketRateLimiter(capacity, refillInterval.toMillis())
 
 /**
- * A rate limiter that supplies a given [capacity] of permits at for each[interval](refillIntervalMillis).
+ * A rate limiter that supplies a given [capacity] of permits for each [interval](refillIntervalMillis).
  * Exceeding this [capacity] will result in a suspend until the next [interval](refillIntervalMillis).
  *
  * @param capacity The maximum amount of permits that are given for each permit.
