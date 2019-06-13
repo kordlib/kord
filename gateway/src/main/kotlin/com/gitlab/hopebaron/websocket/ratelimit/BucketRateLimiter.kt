@@ -5,9 +5,23 @@ import kotlinx.coroutines.sync.withLock
 import java.time.Duration
 import java.time.Instant
 
+/**
+ * A rate limiter that supplies a given [capacity] of permits at for each [interval](refillIntervalMillis).
+ * Exceeding this [capacity] will result in a suspend until the next [interval](refillIntervalMillis).
+ *
+ * @param capacity The maximum amount of permits that are given for each permit.
+ * @param refillInterval The interval between permit refills.
+ */
 @Suppress("FunctionName")
 fun BucketRateLimiter(capacity: Int, refillInterval: Duration) = BucketRateLimiter(capacity, refillInterval.toMillis())
 
+/**
+ * A rate limiter that supplies a given [capacity] of permits at for each[interval](refillIntervalMillis).
+ * Exceeding this [capacity] will result in a suspend until the next [interval](refillIntervalMillis).
+ *
+ * @param capacity The maximum amount of permits that are given for each permit.
+ * @param refillIntervalMillis The interval between permit refills in milliseconds.
+ */
 class BucketRateLimiter(private val capacity: Int, private val refillIntervalMillis: Long) : RateLimiter {
 
     private val mutex = Mutex()
