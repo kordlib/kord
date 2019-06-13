@@ -1,22 +1,20 @@
 package com.gitlab.hopebaron.websocket
 
-import com.gitlab.hopebaron.websocket.ratelimit.BucketRateLimiter
-import com.gitlab.hopebaron.websocket.retry.LinearRetry
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.websocket.WebSockets
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.*
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import mu.KotlinLogging
-import java.time.Duration
 import kotlin.coroutines.CoroutineContext
 
-
+/**
+ * A reusable fixed rate ticker.
+ *
+ * @param dispatcher The dispatchers the events will be fired on.
+ */
 @ObsoleteCoroutinesApi
+@ExperimentalCoroutinesApi
 class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : CoroutineScope {
 
     override val coroutineContext: CoroutineContext

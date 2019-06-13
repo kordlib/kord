@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlin.coroutines.CoroutineContext
 
-@FlowPreview
+@ExperimentalCoroutinesApi
 internal abstract class Handler(val flow: Flow<Event>, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job() + dispatcher

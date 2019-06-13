@@ -4,10 +4,11 @@ import com.gitlab.hopebaron.websocket.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 
-@FlowPreview
+@ExperimentalCoroutinesApi
 internal class HandshakeHandler(
         flow: Flow<Event>,
         private val send: suspend (Command) -> Unit,
@@ -24,7 +25,7 @@ internal class HandshakeHandler(
     private val resume
         get() = Resume(configuration.token, session.value!!, sequence.value)
 
-    private val sessionStart get() = sequence.value == null
+    private val sessionStart get() = session.value == null
 
     override fun start() {
         on<Ready> { event ->
@@ -36,7 +37,7 @@ internal class HandshakeHandler(
             else send(resume)
         }
 
-        on<Close> {
+        on<SessionClose> {
             session.update { null }
         }
     }

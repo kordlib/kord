@@ -9,25 +9,25 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.websocket.WebSockets
+import io.ktor.util.KtorExperimentalAPI
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.UnstableDefault
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
 import org.spekframework.spek2.style.specification.xdescribe
 import java.time.Duration
-import kotlin.coroutines.CoroutineContext
 
 @FlowPreview
 @UnstableDefault
+@KtorExperimentalAPI
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 class DefaultGatewayTest : Spek({
 
     xdescribe("a default gateway") {
-        val url = "gateway.discord.gg"
+        val url = "wss://gateway.discord.gg/"
         val token = System.getenv("token")
 
         val client = HttpClient(CIO) {
@@ -45,6 +45,7 @@ class DefaultGatewayTest : Spek({
                 val words = it.message.content.split(' ')
                 when (words.firstOrNull()) {
                     "!close" -> gateway.close()
+                    "!restart" -> gateway.restart()
                     "!status" -> when (words.getOrNull(1)) {
                         "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = Activity("Kord", ActivityType.Game)))
                     }

@@ -1,3 +1,5 @@
+@file:Suppress("EXPERIMENTAL_API_USAGE")
+
 package json
 
 import com.gitlab.hopebaron.websocket.entity.Emoji
