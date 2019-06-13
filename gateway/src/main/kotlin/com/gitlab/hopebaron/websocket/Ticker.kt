@@ -8,6 +8,11 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * A reusable fixed rate ticker.
+ *
+ * @param dispatcher The dispatchers the events will be fired on.
+ */
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : CoroutineScope {

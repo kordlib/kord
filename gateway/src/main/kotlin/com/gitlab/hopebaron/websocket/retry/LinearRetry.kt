@@ -7,6 +7,13 @@ import mu.KotlinLogging
 
 private val linearRetryLogger = KotlinLogging.logger { }
 
+/**
+ * A Retry that linearly increases the delay time between a given minimum and maximum over a given amount of tries.
+ *
+ * @param firstBackoffMillis the initial delay for a [retry] invocation.
+ * @param maxBackoffMillis the maximum delay for a [retry] invocation.
+ * @param maxTries the maximum amount of consecutive retries before [hasNext] returns false.
+ */
 class LinearRetry(
         private val firstBackoffMillis: Long,
         private val maxBackoffMillis: Long,

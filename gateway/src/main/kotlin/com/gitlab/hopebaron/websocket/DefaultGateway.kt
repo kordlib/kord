@@ -16,6 +16,7 @@ import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
@@ -27,6 +28,16 @@ import mu.KotlinLogging
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
 
+/**
+ * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
+ *
+ * @param url The url to connect to.
+ * @param client The client from which a webSocket will be created, requires the [WebSockets] and [JsonFeature] to be
+ * installed.
+ * @param rateLimiter A rate limiter than follows the Discord API specifications.
+ * @param retry A retry used for reconnection attempts.
+ */
+@FlowPreview
 @UnstableDefault
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi

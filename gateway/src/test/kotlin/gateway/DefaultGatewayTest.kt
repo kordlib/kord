@@ -9,6 +9,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.websocket.WebSockets
+import io.ktor.util.KtorExperimentalAPI
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterIsInstance
@@ -20,6 +21,7 @@ import java.time.Duration
 
 @FlowPreview
 @UnstableDefault
+@KtorExperimentalAPI
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 class DefaultGatewayTest : Spek({
