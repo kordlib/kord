@@ -16,6 +16,7 @@ import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
@@ -36,6 +37,7 @@ private val defaultGatewayLogger = KotlinLogging.logger { }
  * @param rateLimiter A rate limiter than follows the Discord API specifications.
  * @param retry A retry used for reconnection attempts.
  */
+@FlowPreview
 @UnstableDefault
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi

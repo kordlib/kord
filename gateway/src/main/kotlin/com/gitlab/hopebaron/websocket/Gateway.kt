@@ -1,5 +1,6 @@
 package com.gitlab.hopebaron.websocket
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 
@@ -17,6 +18,7 @@ interface Gateway {
      * Gateway.
      */
     @FlowPreview
+    @ExperimentalCoroutinesApi
     val events: Flow<Event>
 
     /**
