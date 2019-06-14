@@ -18,7 +18,6 @@ internal class HeartbeatHandler(
 ) : Handler(flow) {
 
     private val possibleZombie = atomic(false)
-    private val delay = atomic(Long.MAX_VALUE)
 
     override fun start() {
         on<Event> {
@@ -26,7 +25,6 @@ internal class HeartbeatHandler(
         }
 
         on<Hello> { hello ->
-            delay.update { hello.heartbeatInterval }
             ticker.tickAt(hello.heartbeatInterval) {
                 if (possibleZombie.value) {
                     restart()
