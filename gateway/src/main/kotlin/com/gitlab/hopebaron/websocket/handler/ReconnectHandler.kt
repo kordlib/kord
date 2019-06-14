@@ -14,7 +14,7 @@ internal class ReconnectHandler(
 
     override fun start() {
         on<Reconnect> {
-            reconnect
+            reconnect()
         }
     }
 }
