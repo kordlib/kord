@@ -1,4 +1,4 @@
-package com.gitlab.hopebaron.websocket.entity
+package com.gitlab.hopebaron.common.entity
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
@@ -92,6 +92,6 @@ enum class Permission(val code: Int = 0) {
     ManageRoles(0x10000000),
     ManageWebhooks(0x20000000),
     ManageEmojis(0x40000000),
-    All()
+    All
 }
 

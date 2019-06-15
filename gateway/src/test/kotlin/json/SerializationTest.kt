@@ -3,13 +3,13 @@
 package json
 
 import com.gitlab.hopebaron.websocket.*
-import com.gitlab.hopebaron.websocket.entity.Snowflake
+import com.gitlab.hopebaron.common.entity.Snowflake
 import kotlinx.serialization.json.Json
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
 private fun file(name: String): String {
-    val loader = ChannelTest::class.java.classLoader
+    val loader = SerializationTest::class.java.classLoader
     return loader.getResource("json/event/$name.json").readText()
 }
 

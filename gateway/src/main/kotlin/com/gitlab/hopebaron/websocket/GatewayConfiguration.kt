@@ -1,6 +1,6 @@
 package com.gitlab.hopebaron.websocket
 
-import com.gitlab.hopebaron.websocket.entity.Shard
+import com.gitlab.hopebaron.common.entity.Shard
 
 data class GatewayConfiguration(
         val token: String,

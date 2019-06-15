@@ -2,8 +2,8 @@
 
 package json
 
-import com.gitlab.hopebaron.websocket.entity.Snowflake
-import com.gitlab.hopebaron.websocket.entity.User
+import com.gitlab.hopebaron.common.entity.Snowflake
+import com.gitlab.hopebaron.common.entity.User
 import kotlinx.serialization.json.Json
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe

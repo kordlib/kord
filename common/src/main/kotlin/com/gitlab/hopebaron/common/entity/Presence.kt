@@ -1,4 +1,4 @@
-package com.gitlab.hopebaron.websocket.entity
+package com.gitlab.hopebaron.common.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

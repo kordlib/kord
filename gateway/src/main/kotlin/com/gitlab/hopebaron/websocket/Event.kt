@@ -1,6 +1,6 @@
 package com.gitlab.hopebaron.websocket
 
-import com.gitlab.hopebaron.websocket.entity.*
+import com.gitlab.hopebaron.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.*
 import mu.KotlinLogging

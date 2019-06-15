@@ -1,8 +1,8 @@
 package com.gitlab.hopebaron.websocket
 
-import com.gitlab.hopebaron.websocket.entity.Activity
-import com.gitlab.hopebaron.websocket.entity.Shard
-import com.gitlab.hopebaron.websocket.entity.Snowflake
+import com.gitlab.hopebaron.common.entity.Activity
+import com.gitlab.hopebaron.common.entity.Shard
+import com.gitlab.hopebaron.common.entity.Snowflake
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 import kotlinx.serialization.internal.SerialClassDescImpl
