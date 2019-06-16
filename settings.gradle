@@ -1,3 +1,4 @@
 rootProject.name = 'kord'
 include 'gateway'
+include 'common'
 

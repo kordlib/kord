@@ -1,4 +1,4 @@
-package com.gitlab.hopebaron.websocket.entity
+package com.gitlab.hopebaron.common.entity
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
@@ -32,6 +32,14 @@ data class Channel(
         val parentId: Snowflake? = null,
         @SerialName("last_pin_timestamp")
         val lastPinTimestamp: String? = null
+)
+
+@Serializable
+data class Overwrite(
+        val id: Snowflake,
+        val type: String,
+        val allow: Int,
+        val deny: Int
 )
 
 @Serializable(with = ChannelType.ChannelTypeSerializer::class)
