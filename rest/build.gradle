@@ -1,0 +1,8 @@
+dependencies {
+    implementation project(':common')
+
+    implementation "io.ktor:ktor-client-json:$ktor_version"
+    implementation "io.ktor:ktor-client-json-jvm:$ktor_version"
+    implementation "io.ktor:ktor-client-cio:$ktor_version"
+    implementation "io.github.microutils:kotlin-logging:$kotlin_logging_version"
+}
