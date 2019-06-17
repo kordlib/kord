@@ -176,28 +176,28 @@ private object ExplicitContentFilterSerializer : KSerializer<ExplicitContentFilt
 
 }
 
-@Serializable(with = MFALevelSerializer::class)
+@Serializable(with = MFALevel.MFALevelSerializer::class)
 enum class MFALevel(val code: Int) {
     None(0),
-    Elevated(1)
+    Elevated(1);
+
+    @Serializer(forClass = MFALevel::class)
+    object MFALevelSerializer : KSerializer<MFALevel> {
+
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("mfa_level")
+
+        override fun deserialize(decoder: Decoder): MFALevel {
+            val code = decoder.decodeInt()
+            return values().first { it.code == code }
+        }
+
+        override fun serialize(encoder: Encoder, obj: MFALevel) {
+            encoder.encodeInt(obj.code)
+        }
+    }
 }
 
-@Serializer(forClass = MFALevel::class)
-private object MFALevelSerializer : KSerializer<MFALevel> {
-
-    override val descriptor: SerialDescriptor
-        get() = IntDescriptor.withName("mfa_level")
-
-    override fun deserialize(decoder: Decoder): MFALevel {
-        val code = decoder.decodeInt()
-        return MFALevel.values().first { it.code == code }
-    }
-
-    override fun serialize(encoder: Encoder, obj: MFALevel) {
-        encoder.encodeInt(obj.code)
-    }
-
-}
 
 @Serializable(with = VerificationLevel.VerificationLevelSerializer::class)
 enum class VerificationLevel(val code: Int) {
