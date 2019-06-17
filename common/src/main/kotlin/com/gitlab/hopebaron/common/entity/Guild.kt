@@ -131,25 +131,26 @@ data class VoiceState(
         val suppress: Boolean
 )
 
-@Serializable(with = DefaultMessageNotificationLevelSerializer::class)
+@Serializable(with = DefaultMessageNotificationLevel.DefaultMessageNotificationLevelSerializer::class)
 enum class DefaultMessageNotificationLevel(val code: Int) {
     AllMessages(0),
-    OnlyMentions(1)
-}
+    OnlyMentions(1);
 
-@Serializer(forClass = DefaultMessageNotificationLevel::class)
-private object DefaultMessageNotificationLevelSerializer : KSerializer<DefaultMessageNotificationLevel> {
-    override val descriptor: SerialDescriptor
-        get() = IntDescriptor.withName("default_message_notifications")
+    @Serializer(forClass = DefaultMessageNotificationLevel::class)
+    companion object DefaultMessageNotificationLevelSerializer : KSerializer<DefaultMessageNotificationLevel> {
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("default_message_notifications")
 
-    override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel {
-        val code = decoder.decodeInt()
-        return DefaultMessageNotificationLevel.values().first { it.code == code }
+        override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel {
+            val code = decoder.decodeInt()
+            return values().first { it.code == code }
+        }
+
+        override fun serialize(encoder: Encoder, obj: DefaultMessageNotificationLevel) {
+            encoder.encodeInt(obj.code)
+        }
     }
 
-    override fun serialize(encoder: Encoder, obj: DefaultMessageNotificationLevel) {
-        encoder.encodeInt(obj.code)
-    }
 }
 
 @Serializable(with = ExplicitContentFilter.ExplicitContentFilterSerializer::class)
