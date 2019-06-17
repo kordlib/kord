@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(':common')
+    api project(':common')
 
     implementation "io.ktor:ktor-client-json:$ktor_version"
     implementation "io.ktor:ktor-client-json-jvm:$ktor_version"
