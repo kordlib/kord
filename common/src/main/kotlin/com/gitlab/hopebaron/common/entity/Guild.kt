@@ -152,28 +152,28 @@ private object DefaultMessageNotificationLevelSerializer : KSerializer<DefaultMe
     }
 }
 
-@Serializable(with = ExplicitContentFilterSerializer::class)
+@Serializable(with = ExplicitContentFilter.ExplicitContentFilterSerializer::class)
 enum class ExplicitContentFilter(val code: Int) {
     Disabled(0),
     MembersWithoutRoles(1),
-    AllMembers(2)
-}
+    AllMembers(2);
 
-@Serializer(forClass = ExplicitContentFilter::class)
-private object ExplicitContentFilterSerializer : KSerializer<ExplicitContentFilter> {
+    @Serializer(forClass = ExplicitContentFilter::class)
+    companion object ExplicitContentFilterSerializer : KSerializer<ExplicitContentFilter> {
 
-    override val descriptor: SerialDescriptor
-        get() = IntDescriptor.withName("explicit_content_filter")
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("explicit_content_filter")
 
-    override fun deserialize(decoder: Decoder): ExplicitContentFilter {
-        val code = decoder.decodeInt()
-        return ExplicitContentFilter.values().first { it.code == code }
+        override fun deserialize(decoder: Decoder): ExplicitContentFilter {
+            val code = decoder.decodeInt()
+            return values().first { it.code == code }
+        }
+
+        override fun serialize(encoder: Encoder, obj: ExplicitContentFilter) {
+            encoder.encodeInt(obj.code)
+        }
+
     }
-
-    override fun serialize(encoder: Encoder, obj: ExplicitContentFilter) {
-        encoder.encodeInt(obj.code)
-    }
-
 }
 
 @Serializable(with = MFALevel.MFALevelSerializer::class)
