@@ -4,4 +4,4 @@ import com.gitlab.hopebaron.common.entity.ChannelType
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PartialChannel(val name: String, val type: ChannelType)
+data class PartialChannelResponse(val name: String, val type: ChannelType)
