@@ -13,36 +13,36 @@ import mu.KotlinLogging
 private val auditLogger = KotlinLogging.logger { }
 
 @Serializable
-data class AuditLog(
+data class AuditLogResponse(
         val webhooks: List<Webhook>,
         val users: List<User>,
         @SerialName("audit_log_entries")
-        val auditLogEntries: List<AuditLogEntry>
+        val auditLogEntries: List<AuditLogEntryResponse>
 )
 
 @Serializable
-data class AuditLogEntry(
+data class AuditLogEntryResponse(
         @SerialName("target_id")
         val targetId: String? = null,
-        val changes: List<AuditLogChange<*>>? = null,
+        val changes: List<AuditLogChangeResponse<*>>? = null,
         @SerialName("user_id")
         val userId: Snowflake,
         val id: Snowflake,
         @SerialName("action_type")
-        val actionType: AuditLogEvent,
-        val options: AuditEntryInfo? = null,
+        val actionType: AuditLogEventResponse,
+        val options: AuditEntryInfoResponse? = null,
         val reason: String? = null
 )
 
-@Serializable(with = AuditLogChange.AuditLogChangeSerializer::class)
-data class AuditLogChange<T>(
+@Serializable(with = AuditLogChangeResponse.AuditLogChangeSerializer::class)
+data class AuditLogChangeResponse<T>(
         val newValue: T?,
         val oldValue: T?,
         val key: String
 ) {
 
-    @Serializer(forClass = AuditLogChange::class)
-    companion object AuditLogChangeSerializer : KSerializer<AuditLogChange<*>> {
+    @Serializer(forClass = AuditLogChangeResponse::class)
+    companion object AuditLogChangeSerializer : KSerializer<AuditLogChangeResponse<*>> {
         override val descriptor: SerialDescriptor = object : SerialClassDescImpl("AuditLogChange") {
             init {
                 addElement("new_value", true)
@@ -52,7 +52,7 @@ data class AuditLogChange<T>(
         }
 
         @UnstableDefault
-        override fun deserialize(decoder: Decoder): AuditLogChange<*> {
+        override fun deserialize(decoder: Decoder): AuditLogChangeResponse<*> {
             var newValue: JsonElement? = null
             var oldValue: JsonElement? = null
             lateinit var key: String
@@ -79,11 +79,11 @@ data class AuditLogChange<T>(
 
                 endStructure(descriptor)
 
-                return AuditLogChange(actualNewValue, actualOldValue, key)
+                return AuditLogChangeResponse(actualNewValue, actualOldValue, key)
             }
         }
 
-        override fun serialize(encoder: Encoder, obj: AuditLogChange<*>) {
+        override fun serialize(encoder: Encoder, obj: AuditLogChangeResponse<*>) {
             TODO("not implemented")
         }
 
@@ -133,8 +133,8 @@ data class AuditLogChange<T>(
 
 }
 
-@Serializable(with = AuditLogEvent.AuditLogEventSerializer::class)
-enum class AuditLogEvent(val code: Int) {
+@Serializable(with = AuditLogEventResponse.AuditLogEventSerializer::class)
+enum class AuditLogEventResponse(val code: Int) {
     GuildUpdate(1),
     ChannelCreate(10),
     ChannelUpdate(11),
@@ -167,17 +167,17 @@ enum class AuditLogEvent(val code: Int) {
 
     MessageDelete(72);
 
-    @Serializer(forClass = AuditLogEvent::class)
-    companion object AuditLogEventSerializer : KSerializer<AuditLogEvent> {
+    @Serializer(forClass = AuditLogEventResponse::class)
+    companion object AuditLogEventSerializer : KSerializer<AuditLogEventResponse> {
         override val descriptor: SerialDescriptor = IntDescriptor.withName("AuditLogEvent")
 
-        override fun deserialize(decoder: Decoder): AuditLogEvent {
+        override fun deserialize(decoder: Decoder): AuditLogEventResponse {
             val code = decoder.decodeInt()
 
             return values().first { it.code == code }
         }
 
-        override fun serialize(encoder: Encoder, obj: AuditLogEvent) {
+        override fun serialize(encoder: Encoder, obj: AuditLogEventResponse) {
             encoder.encodeInt(obj.code)
         }
 
@@ -185,7 +185,7 @@ enum class AuditLogEvent(val code: Int) {
 }
 
 @Serializable
-data class AuditEntryInfo(
+data class AuditEntryInfoResponse(
         @SerialName("delete_member_days")
         val deleteMemberDays: String? = null,
         @SerialName("members_removed")
