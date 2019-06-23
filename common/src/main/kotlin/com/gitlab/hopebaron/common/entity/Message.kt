@@ -52,7 +52,7 @@ data class Embed(
         val type: String? = null,
         val description: String? = null,
         val url: String? = null,
-        val timestamp: String,
+        val timestamp: String? = null,
         val color: Int,
         val footer: Footer? = null,
         val image: Image? = null,
