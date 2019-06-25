@@ -2,13 +2,13 @@ package com.gitlab.hopebaron.rest.route
 
 import com.gitlab.hopebaron.common.entity.Channel
 import com.gitlab.hopebaron.common.entity.Message
-import com.gitlab.hopebaron.rest.json.AuditLogResponse
-import com.gitlab.hopebaron.rest.json.GatewayResponse
+import com.gitlab.hopebaron.rest.json.response.AuditLogResponse
+import com.gitlab.hopebaron.rest.json.response.GatewayResponse
 import io.ktor.http.HttpMethod
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.internal.ArrayListSerializer
 
-internal sealed class Route<T>(
+sealed class Route<T>(
         val method: HttpMethod,
         val path: String,
         val strategy: DeserializationStrategy<T>
@@ -48,7 +48,7 @@ internal sealed class Route<T>(
         const val baseUrl = "https://discordapp.com/api/v6"
     }
 
-    internal open class Key(val identifier: String) {
+    open class Key(val identifier: String) {
         override fun toString(): String = identifier
     }
 
