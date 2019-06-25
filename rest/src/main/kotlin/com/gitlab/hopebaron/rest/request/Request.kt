@@ -2,6 +2,7 @@ package com.gitlab.hopebaron.rest.request
 
 import com.gitlab.hopebaron.rest.route.Route
 import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.forms.FormBuilder
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.append
 import io.ktor.client.request.forms.formData
@@ -11,7 +12,7 @@ import io.ktor.content.TextContent
 import io.ktor.http.ContentType
 import io.ktor.util.StringValues
 import kotlinx.io.InputStream
-import kotlinx.io.core.writeFully
+import kotlinx.io.streams.outputStream
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 
@@ -54,7 +55,7 @@ interface RequestIdentifier
 internal data class MajorIdentifier(val path: String, val param: String? = null) : RequestIdentifier {
 
     companion object {
-        operator fun invoke(route: Route<*>, routeParams: Map<String, Any>) : RequestIdentifier {
+        operator fun invoke(route: Route<*>, routeParams: Map<String, Any>): RequestIdentifier {
             val indexOfNextParam = route.path.indexOf('{')
             if (indexOfNextParam < 0) return MajorIdentifier(route.path)
 
@@ -124,12 +125,10 @@ internal class MutlipartRequest<T>(
             }
 
             if (files.size == 1) append("file", filename = files[0].first) {
-                writeFully(files[0].second.readAllBytes())
+                files[0].second.copyTo(outputStream())
             }
-            else files.forEachIndexed { index, (file, content) ->
-                val bytes = content.readAllBytes()
-
-                append("file$index", file) { writeFully(bytes) }
+            else files.forEachIndexed { index, pair ->
+                append("file$index", pair.first) { pair.second.copyTo(outputStream()) }
             }
         }
 
