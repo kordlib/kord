@@ -1,4 +1,4 @@
-package com.gitlab.hopebaron.rest.json
+package com.gitlab.hopebaron.rest.json.response
 
 import com.gitlab.hopebaron.common.entity.Channel
 import com.gitlab.hopebaron.common.entity.PartialGuild

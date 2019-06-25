@@ -1,4 +1,4 @@
-package com.gitlab.hopebaron.rest.json
+package com.gitlab.hopebaron.rest.json.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
