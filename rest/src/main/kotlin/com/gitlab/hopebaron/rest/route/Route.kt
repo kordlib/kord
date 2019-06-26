@@ -94,9 +94,8 @@ sealed class Route<T>(
 
     object EditMessagePatch
         : Route<Message>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId", Message.serializer())
-    companion
 
-    object {
+    companion object {
         const val baseUrl = "https://discordapp.com/api/v6"
     }
 
