@@ -2,7 +2,6 @@ package com.gitlab.hopebaron.rest.request
 
 import com.gitlab.hopebaron.rest.route.Route
 import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.forms.FormBuilder
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.append
 import io.ktor.client.request.forms.formData
@@ -19,7 +18,14 @@ import kotlinx.serialization.json.Json
 sealed class Request<T> {
     internal abstract val route: Route<T>
     internal abstract val routeParams: Map<String, Any>
-    abstract val identifier: RequestIdentifier
+    val identifier: RequestIdentifier by lazy(LazyThreadSafetyMode.NONE) {
+        when (route) {
+            //https://discordapp.com/developers/docs/topics/rate-limits#rate-limits
+            Route.MessageDelete -> MessageDeleteIdentifier(route.path, routeParams[Route.MessageId.identifier].toString())
+
+            else -> MajorIdentifier(route, routeParams)
+        }
+    }
 
     abstract fun HttpRequestBuilder.apply()
 
@@ -51,6 +57,8 @@ sealed class Request<T> {
 }
 
 interface RequestIdentifier
+
+internal class MessageDeleteIdentifier(val path: String, val messageId: String) : RequestIdentifier
 
 internal data class MajorIdentifier(val path: String, val param: String? = null) : RequestIdentifier {
 
@@ -95,8 +103,6 @@ internal class JsonRequest<T>(
             body = TextContent(json, ContentType.Application.Json)
         }
     }
-
-    override val identifier: RequestIdentifier = MajorIdentifier(route, routeParams)
 }
 
 internal class MutlipartRequest<T>(
@@ -106,9 +112,6 @@ internal class MutlipartRequest<T>(
         private val body: RequestBody<*>?,
         private val files: List<Pair<String, InputStream>> = emptyList()
 ) : Request<T>() {
-    override val identifier: RequestIdentifier
-        get() = object : RequestIdentifier {}
-
     override fun HttpRequestBuilder.apply() {
         method = route.method
 
@@ -116,7 +119,6 @@ internal class MutlipartRequest<T>(
             encodedPath += generatePath()
             parameters.appendAll(this@MutlipartRequest.parameters)
         }
-
 
         val data = formData {
 
