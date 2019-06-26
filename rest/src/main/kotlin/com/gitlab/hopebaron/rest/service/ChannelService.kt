@@ -101,7 +101,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.OverwriteId] = overwriteId
     }
 
-    suspend fun getReactions(channelId: String, messageId: String, emoji: String, limit: Int = 25, position: Position? = null) = call(Route.ReactionsGet) {
+    suspend fun getReactions(channelId: String, messageId: String, emoji: String, position: Position? = null, limit: Int = 25) = call(Route.ReactionsGet) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
