@@ -38,8 +38,7 @@ sealed class Route<T>(
         : Route<Channel>(HttpMethod.Patch, "/channels/$ChannelId", Channel.serializer())
 
     object ChannelDelete
-        : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId", NoStrategy)
-
+        : Route<Channel>(HttpMethod.Delete, "/channels/$ChannelId", Channel.serializer())
 
     object MessageCreate
         : Route<Message>(HttpMethod.Post, "/channels/$ChannelId/messages", Message.serializer())
