@@ -1,13 +1,19 @@
 package com.gitlab.hopebaron.rest.service
 
 import com.gitlab.hopebaron.common.entity.Message
-import com.gitlab.hopebaron.rest.json.request.MessageCreateRequest
-import com.gitlab.hopebaron.rest.json.request.MultipartMessageCreateRequest
+import com.gitlab.hopebaron.rest.json.request.*
 import com.gitlab.hopebaron.rest.json.response.InviteResponse
 import com.gitlab.hopebaron.rest.ratelimit.RequestHandler
 import com.gitlab.hopebaron.rest.route.Route
+import io.ktor.http.ParametersBuilder
 import io.ktor.util.InternalAPI
-import io.ktor.util.StringValues
+
+sealed class Position(val key: String, val value: String) {
+    class Before(id: String) : Position("before", id)
+    class After(id: String) : Position("after", id)
+    class Around(id: String) : Position("around", id)
+}
+
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
@@ -23,37 +29,14 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     @InternalAPI
-    suspend fun getMessages(channelId: String, limit: Int = 50): List<Message> = call(Route.MessagesGet) {
+    suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
-        parameters = StringValues.build {
-            append("limit", "$limit")
-        }
-    }
-
-    @InternalAPI
-    suspend fun getMessagesAfter(channelId: String, messageId: String, limit: Int = 50): List<Message> = call(Route.MessagesGet) {
-        keys[Route.ChannelId] = channelId
-        parameters = StringValues.build {
-            append("after", messageId)
-            append("limit", "$limit")
-        }
-    }
-
-    @InternalAPI
-    suspend fun getMessagesAround(channelId: String, messageId: String, limit: Int = 50): List<Message> = call(Route.MessagesGet) {
-        keys[Route.ChannelId] = channelId
-        parameters = StringValues.build {
-            append("around", messageId)
-            append("limit", "$limit")
-        }
-    }
-
-    @InternalAPI
-    suspend fun getMessagesBefore(channelId: String, messageId: String, limit: Int = 50): List<Message> = call(Route.MessagesGet) {
-        keys[Route.ChannelId] = channelId
-        parameters = StringValues.build {
-            append("before", messageId)
-            append("limit", "$limit")
+        if (position != null) {
+            parameters = with(ParametersBuilder()) {
+                append(position.key, position.value)
+                append("limit", "$limit")
+                build()
+            }
         }
     }
 
@@ -63,6 +46,10 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     suspend fun getChannelInvites(channelId: String): List<InviteResponse> = call(Route.InvitesGet) {
+        keys[Route.ChannelId] = channelId
+    }
+
+    suspend fun getChannel(channelId: String) = call(Route.ChannelGet) {
         keys[Route.ChannelId] = channelId
     }
 
@@ -84,7 +71,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.UserId] = userId
     }
 
-    suspend fun deleteOwnReaction(channelId: String, messageId: String, emoji: String) = call(Route.ReactionDelete) {
+    suspend fun deleteOwnReaction(channelId: String, messageId: String, emoji: String) = call(Route.OwnReactionDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
@@ -100,9 +87,70 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.MessageId] = messageId
     }
 
+    suspend fun deleteMessage(channelId: String, messageId: String) = call(Route.MessageDelete) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.MessageId] = messageId
+    }
+
+    suspend fun deleteChannel(channelId: String) = call(Route.ChannelDelete) {
+        keys[Route.ChannelId] = channelId
+    }
+
     suspend fun deleteChannelPermission(channelId: String, overwriteId: String) = call(Route.ChannelPermissionDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
+    }
+
+    suspend fun getReactions(channelId: String, messageId: String, emoji: String, limit: Int = 25, position: Position? = null) = call(Route.ReactionsGet) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.MessageId] = messageId
+        keys[Route.Emoji] = emoji
+
+        if (position != null) {
+            parameters = with(ParametersBuilder()) {
+                append(position.key, position.value)
+                append("limit", "$limit")
+                build()
+            }
+        }
+    }
+
+    suspend fun triggerTypingIndicator(channelId: String) = call(Route.TypingIndicatorPost) {
+        keys[Route.ChannelId] = channelId
+    }
+
+    suspend fun removeFromGroup(channelId: String, userId: String) = call(Route.GroupDMUserDelete) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.UserId] = userId
+    }
+
+
+    suspend fun addToGroup(channelId: String, userId: String, addUser: AddDMUserRequest) = call(Route.GroupDMUserPut) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.UserId] = userId
+        body(AddDMUserRequest.serializer(), addUser)
+    }
+
+    suspend fun createInvite(channelId: String, invite: InviteCreateRequest) = call(Route.InvitePost) {
+        keys[Route.ChannelId] = channelId
+        body(InviteCreateRequest.serializer(), invite)
+    }
+
+    suspend fun editMessage(channelId: String, messageId: String, message: MessageEditRequest) = call(Route.EditMessagePatch) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.MessageId] = messageId
+        body(MessageEditRequest.serializer(), message)
+    }
+
+    suspend fun putChannel(channelId: String, channel: PutModifyMessageRequest) = call(Route.EditMessagePatch) {
+        keys[Route.ChannelId] = channelId
+        body(PutModifyMessageRequest.serializer(), channel)
+    }
+
+
+    suspend fun patchChannel(channelId: String, channel: PatchModifyMessageRequest) = call(Route.EditMessagePatch) {
+        keys[Route.ChannelId] = channelId
+        body(PatchModifyMessageRequest.serializer(), channel)
     }
 }
 
