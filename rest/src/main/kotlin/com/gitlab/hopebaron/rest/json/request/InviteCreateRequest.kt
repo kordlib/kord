@@ -1,0 +1,14 @@
+package com.gitlab.hopebaron.rest.json.request
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class InviteCreateRequest(
+        @SerialName("max_age")
+        val age: Int = 86400,
+        @SerialName("max_uses")
+        val uses: Int = 0,
+        val temporary: Boolean = false,
+        val unique: Boolean = false
+)
