@@ -31,7 +31,6 @@ sealed class Request<T> {
 
     open suspend fun parse(response: HttpResponse): T {
         val json = response.readText()
-        println(json)
         return Json.nonstrict.parse(route.strategy, json)
     }
 
