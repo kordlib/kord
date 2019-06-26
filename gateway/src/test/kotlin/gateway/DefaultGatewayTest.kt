@@ -3,7 +3,7 @@ package gateway
 import com.gitlab.hopebaron.websocket.*
 import com.gitlab.hopebaron.common.entity.Activity
 import com.gitlab.hopebaron.common.entity.ActivityType
-import com.gitlab.hopebaron.websocket.ratelimit.BucketRateLimiter
+import com.gitlab.hopebaron.common.ratelimit.BucketRateLimiter
 import com.gitlab.hopebaron.websocket.retry.LinearRetry
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO

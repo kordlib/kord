@@ -1,7 +1,7 @@
 package com.gitlab.hopebaron.websocket
 
 import com.gitlab.hopebaron.websocket.handler.*
-import com.gitlab.hopebaron.websocket.ratelimit.RateLimiter
+import com.gitlab.hopebaron.common.ratelimit.RateLimiter
 import com.gitlab.hopebaron.websocket.retry.Retry
 import io.ktor.client.HttpClient
 import io.ktor.client.features.websocket.DefaultClientWebSocketSession

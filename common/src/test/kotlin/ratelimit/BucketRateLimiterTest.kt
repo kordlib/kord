@@ -1,6 +1,6 @@
 package ratelimit
 
-import com.gitlab.hopebaron.websocket.ratelimit.BucketRateLimiter
+import com.gitlab.hopebaron.common.ratelimit.BucketRateLimiter
 import kotlinx.coroutines.runBlocking
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
