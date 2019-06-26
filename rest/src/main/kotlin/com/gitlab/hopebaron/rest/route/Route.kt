@@ -56,6 +56,9 @@ sealed class Route<T>(
     object InvitesGet
         : Route<List<InviteResponse>>(HttpMethod.Get, "/channels/$ChannelId/invites", ArrayListSerializer(InviteResponse.serializer()))
 
+    object InvitePost
+        : Route<InviteResponse>(HttpMethod.Post, "/channels/$ChannelId/invites", InviteResponse.serializer())
+
     object ReactionPut
         : Route<Reaction>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji/@me", Reaction.serializer())
 
@@ -77,6 +80,20 @@ sealed class Route<T>(
     object ChannelPermissionDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/permissions/$OverwriteId", NoStrategy)
 
+    object ReactionsGet
+        : Route<List<Reaction>>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji", ArrayListSerializer(Reaction.serializer()))
+
+    object TypingIndicatorPost
+        : Route<Unit>(HttpMethod.Post, "/channels/$ChannelId/typing", NoStrategy)
+
+    object GroupDMUserDelete
+        : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/recipients/$UserId", NoStrategy)
+
+    object GroupDMUserPut
+        : Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/recipients/$UserId", NoStrategy)
+
+    object EditMessagePatch
+        : Route<Message>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId", Message.serializer())
     companion
 
     object {
