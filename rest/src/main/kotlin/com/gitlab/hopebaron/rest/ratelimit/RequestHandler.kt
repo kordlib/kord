@@ -1,15 +1,15 @@
 package com.gitlab.hopebaron.rest.ratelimit
 
 import com.gitlab.hopebaron.common.Platform
+import com.gitlab.hopebaron.common.ratelimit.BucketRateLimiter
 import com.gitlab.hopebaron.rest.request.Request
 import com.gitlab.hopebaron.rest.request.RequestIdentifier
 import com.gitlab.hopebaron.rest.route.Route
 import io.ktor.client.HttpClient
 import io.ktor.client.call.call
 import io.ktor.client.call.receive
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.forms.submitFormWithBinaryData
-import io.ktor.client.request.parameter
 import io.ktor.client.response.HttpResponse
 import io.ktor.client.response.readText
 import io.ktor.http.takeFrom
@@ -32,6 +32,10 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
 
     private val routeSuspensionPoints = mutableMapOf<RequestIdentifier, Long>()
 
+    //https://discordapp.com/developers/docs/topics/rate-limits#rate-limits
+    //there's no real known rate limit, and Discord won't tell us, so this is nothing more than an assumption
+    private val emojiRateLimiter = BucketRateLimiter(1, 250)
+
     private val mutex = Mutex()
 
     override suspend fun <T> handle(request: Request<T>): HttpResponse {
@@ -44,7 +48,7 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
         println(builder.url.buildString())
 
         val response = mutex.withLock {
-            suspendFor(request.identifier)
+            suspendFor(request)
 
             val response = client.call(builder).receive<HttpResponse>()
 
@@ -73,10 +77,14 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
         return response
     }
 
-    private suspend fun suspendFor(identifier: RequestIdentifier) {
+    private suspend fun suspendFor(request: Request<*>) {
         delay(globalSuspensionPoint - Platform.nowMillis())
-        val routSuspensionPoint = routeSuspensionPoints[identifier] ?: 0
-        delay(routSuspensionPoint - Platform.nowMillis())
+        if (request.route.path.contains("emoji")) { //https://discordapp.com/developers/docs/topics/rate-limits#rate-limits
+            emojiRateLimiter.consume()
+        } else {
+            val routSuspensionPoint = routeSuspensionPoints[request.identifier] ?: 0
+            delay(routSuspensionPoint - Platform.nowMillis())
+        }
 
     }
 
