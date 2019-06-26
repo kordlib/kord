@@ -6,6 +6,8 @@ import com.gitlab.hopebaron.rest.json.request.MultipartMessageCreateRequest
 import com.gitlab.hopebaron.rest.json.response.InviteResponse
 import com.gitlab.hopebaron.rest.ratelimit.RequestHandler
 import com.gitlab.hopebaron.rest.route.Route
+import io.ktor.util.InternalAPI
+import io.ktor.util.StringValues
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
@@ -20,8 +22,39 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         message.files.forEach { file(it) }
     }
 
-    suspend fun getMessages(channelId: String): List<Message> = call(Route.MessagesGet) {
+    @InternalAPI
+    suspend fun getMessages(channelId: String, limit: Int = 50): List<Message> = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
+        parameters = StringValues.build {
+            append("limit", "$limit")
+        }
+    }
+
+    @InternalAPI
+    suspend fun getMessagesAfter(channelId: String, messageId: String, limit: Int = 50): List<Message> = call(Route.MessagesGet) {
+        keys[Route.ChannelId] = channelId
+        parameters = StringValues.build {
+            append("after", messageId)
+            append("limit", "$limit")
+        }
+    }
+
+    @InternalAPI
+    suspend fun getMessagesAround(channelId: String, messageId: String, limit: Int = 50): List<Message> = call(Route.MessagesGet) {
+        keys[Route.ChannelId] = channelId
+        parameters = StringValues.build {
+            append("around", messageId)
+            append("limit", "$limit")
+        }
+    }
+
+    @InternalAPI
+    suspend fun getMessagesBefore(channelId: String, messageId: String, limit: Int = 50): List<Message> = call(Route.MessagesGet) {
+        keys[Route.ChannelId] = channelId
+        parameters = StringValues.build {
+            append("before", messageId)
+            append("limit", "$limit")
+        }
     }
 
     suspend fun getMessage(channelId: String, messageId: String): Message = call(Route.MessageGet) {
