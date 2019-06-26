@@ -112,7 +112,7 @@ sealed class Route<T>(
 
 }
 
-object NoStrategy : DeserializationStrategy<Unit> {
+internal object NoStrategy : DeserializationStrategy<Unit> {
     override val descriptor: SerialDescriptor
         get() = UnitDescriptor
 
