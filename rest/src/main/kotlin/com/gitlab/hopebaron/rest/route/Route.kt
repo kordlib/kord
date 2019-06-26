@@ -2,11 +2,16 @@ package com.gitlab.hopebaron.rest.route
 
 import com.gitlab.hopebaron.common.entity.Channel
 import com.gitlab.hopebaron.common.entity.Message
+import com.gitlab.hopebaron.common.entity.Reaction
 import com.gitlab.hopebaron.rest.json.response.AuditLogResponse
 import com.gitlab.hopebaron.rest.json.response.GatewayResponse
+import com.gitlab.hopebaron.rest.json.response.InviteResponse
 import io.ktor.http.HttpMethod
+import kotlinx.serialization.Decoder
 import kotlinx.serialization.DeserializationStrategy
+import kotlinx.serialization.SerialDescriptor
 import kotlinx.serialization.internal.ArrayListSerializer
+import kotlinx.serialization.internal.UnitDescriptor
 
 sealed class Route<T>(
         val method: HttpMethod,
@@ -33,18 +38,49 @@ sealed class Route<T>(
         : Route<Channel>(HttpMethod.Patch, "/channels/$ChannelId", Channel.serializer())
 
     object ChannelDelete
-        : Route<Channel>(HttpMethod.Delete, "/channels/$ChannelId", Channel.serializer())
+        : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId", NoStrategy)
 
-    object MessagesGet
-        : Route<List<Message>>(HttpMethod.Get, "/channels/$ChannelId/messages", ArrayListSerializer(Message.serializer()))
-
-    object MessageGet
-        : Route<Message>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId", Message.serializer())
 
     object MessageCreate
         : Route<Message>(HttpMethod.Post, "/channels/$ChannelId/messages", Message.serializer())
 
-    companion object {
+    object MessageGet
+        : Route<Message>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId", Message.serializer())
+
+    object MessagesGet
+        : Route<List<Message>>(HttpMethod.Get, "/channels/$ChannelId/messages", ArrayListSerializer(Message.serializer()))
+
+    object PinsGet
+        : Route<List<Message>>(HttpMethod.Get, "/channels/$ChannelId/pins", ArrayListSerializer(Message.serializer()))
+
+
+    object InvitesGet
+        : Route<List<InviteResponse>>(HttpMethod.Get, "/channels/$ChannelId/invites", ArrayListSerializer(InviteResponse.serializer()))
+
+    object ReactionPut
+        : Route<Reaction>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji/@me", Reaction.serializer())
+
+    object OwnReactionDelete
+        : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji/@me", NoStrategy)
+
+    object ReactionDelete
+        : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji/$UserId", NoStrategy)
+
+    object MessageDelete
+        : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/messages/$MessageId", NoStrategy)
+
+    object PinDelete
+        : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/pins/$MessageId", NoStrategy)
+
+    object AllReactionsDelete
+        : Route<Unit>(HttpMethod.Delete, "/channels/ChannelId/messages/$MessageId/reactions", NoStrategy)
+
+    object ChannelPermissionDelete
+        : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/permissions/$OverwriteId", NoStrategy)
+
+    companion
+
+    object {
         const val baseUrl = "https://discordapp.com/api/v6"
     }
 
@@ -55,7 +91,17 @@ sealed class Route<T>(
     object GuildId : Key("{guild.id}")
     object ChannelId : Key("{channel.id}")
     object MessageId : Key("{message.id}")
+    object Emoji : Key("{emoji}")
+    object UserId : Key("{user.id}")
+    object OverwriteId : Key("{overwrite.id}")
 
 }
 
+object NoStrategy : DeserializationStrategy<Unit> {
+    override val descriptor: SerialDescriptor
+        get() = UnitDescriptor
 
+    override fun deserialize(decoder: Decoder) {}
+
+    override fun patch(decoder: Decoder, old: Unit) {}
+}
