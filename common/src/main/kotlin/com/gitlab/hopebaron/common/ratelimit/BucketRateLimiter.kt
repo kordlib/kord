@@ -1,4 +1,4 @@
-package com.gitlab.hopebaron.websocket.ratelimit
+package com.gitlab.hopebaron.common.ratelimit
 
 import com.gitlab.hopebaron.common.Platform
 import kotlinx.coroutines.sync.Mutex
