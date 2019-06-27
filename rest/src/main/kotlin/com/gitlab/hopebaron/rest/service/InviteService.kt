@@ -13,7 +13,7 @@ class InviteService(requestHandler: RequestHandler) : RestService(requestHandler
         }
     }
 
-    suspend fun deleteInvite(code: String) = call(Route.InviteGet) {
+    suspend fun deleteInvite(code: String) = call(Route.InviteDelete) {
         keys[Route.InviteCode] = code
     }
 }
