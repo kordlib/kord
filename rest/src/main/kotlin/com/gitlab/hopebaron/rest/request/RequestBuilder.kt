@@ -5,30 +5,37 @@ import io.ktor.util.StringValues
 import kotlinx.io.InputStream
 import kotlinx.serialization.SerializationStrategy
 
-class RequestBuilder<T>(private val route: Route<T>) {
+class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
 
-    val keys: MutableMap<Route.Key, String> by lazy { mutableMapOf<Route.Key, String>() }
+    var keys: MutableMap<String, String> = HashMap(keySize, 1f)
 
     var parameters = StringValues.Empty
     private var body: RequestBody<*>? = null
-    private val files: MutableList<Pair<String, InputStream>> by lazy { mutableListOf<Pair<String, InputStream>>() }
+    private var files: MutableList<Pair<String, InputStream>>? = null
+
+    private fun initFiles() {
+        if (files == null) files = mutableListOf()
+    }
+
+    operator fun MutableMap<String, String>.set(key: Route.Key, value: String) = set(key.identifier, value)
 
     fun <E : Any> body(strategy: SerializationStrategy<E>, body: E) {
         this.body = RequestBody(strategy, body)
     }
 
     fun file(name: String, input: InputStream) {
-        files.add(name to input)
+        initFiles()
+        files!!.add(name to input)
     }
 
     fun file(pair: Pair<String, InputStream>) {
-        files.add(pair)
+        initFiles()
+        files!!.add(pair)
     }
 
-    fun build(): Request<T> = if (files.isEmpty()) {
-        JsonRequest(route, keys.mapKeys { it.key.identifier }, parameters, body)
+    fun build(): Request<T> = if (files == null) {
+        JsonRequest(route, keys, parameters, body)
     } else {
-        MutlipartRequest(route, keys.mapKeys { it.key.identifier }, parameters, body, files)
-
+        MutlipartRequest(route, keys, parameters, body, files.orEmpty())
     }
 }
