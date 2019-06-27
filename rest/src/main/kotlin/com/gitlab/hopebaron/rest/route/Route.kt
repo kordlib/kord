@@ -111,6 +111,13 @@ sealed class Route<T>(
     object GuildEmojiPatch
         : Route<EmojiEntity>(HttpMethod.Patch, "/guilds/$GuildId/emojis/$EmojiId", EmojiEntity.serializer())
 
+    object InviteGet
+        : Route<InviteResponse>(HttpMethod.Get, "/invites/$InviteCode", InviteResponse.serializer())
+
+    object InviteDelete
+        : Route<InviteResponse>(HttpMethod.Delete, "/invites/$InviteCode", InviteResponse.serializer())
+
+
 
     companion object {
         const val baseUrl = "https://discordapp.com/api/v6"
@@ -127,6 +134,7 @@ sealed class Route<T>(
     object UserId : Key("{user.id}")
     object OverwriteId : Key("{overwrite.id}")
     object EmojiId : Key("{emoji.id}")
+    object InviteCode : Key("{invite.code}")
 
 }
 
