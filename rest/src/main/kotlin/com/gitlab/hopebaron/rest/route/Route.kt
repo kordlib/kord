@@ -97,19 +97,19 @@ sealed class Route<T>(
         : Route<Message>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId", Message.serializer())
 
     object GuildEmojiGet
-        : Route<EmojiEntity>(HttpMethod.Get, "/guilds/$GuildId/emojis/$Emoji", EmojiEntity.serializer())
+        : Route<EmojiEntity>(HttpMethod.Get, "/guilds/$GuildId/emojis/$EmojiId", EmojiEntity.serializer())
 
     object GuildEmojisGet
         : Route<List<EmojiEntity>>(HttpMethod.Get, "/guilds/$GuildId/emojis", ArrayListSerializer(EmojiEntity.serializer()))
 
     object GuildEmojiDelete
-        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/emojis/$Emoji", NoStrategy)
+        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/emojis/$EmojiId", NoStrategy)
 
-    object GuildEmojiCreate
+    object GuildEmojiPost
         : Route<EmojiEntity>(HttpMethod.Post, "/guilds/$GuildId/emojis", EmojiEntity.serializer())
 
     object GuildEmojiPatch
-        : Route<EmojiEntity>(HttpMethod.Patch, "/guilds/$GuildId/emojis", EmojiEntity.serializer())
+        : Route<EmojiEntity>(HttpMethod.Patch, "/guilds/$GuildId/emojis/$EmojiId", EmojiEntity.serializer())
 
 
     companion object {
@@ -126,6 +126,7 @@ sealed class Route<T>(
     object Emoji : Key("{emoji}")
     object UserId : Key("{user.id}")
     object OverwriteId : Key("{overwrite.id}")
+    object EmojiId : Key("{emoji.id}")
 
 }
 
