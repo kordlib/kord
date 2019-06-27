@@ -28,7 +28,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         message.files.forEach { file(it) }
     }
 
-    @InternalAPI
     suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
         if (position != null) {
