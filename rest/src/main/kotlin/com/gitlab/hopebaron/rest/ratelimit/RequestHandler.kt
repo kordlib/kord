@@ -9,10 +9,8 @@ import com.gitlab.hopebaron.rest.route.Route
 import io.ktor.client.HttpClient
 import io.ktor.client.call.call
 import io.ktor.client.call.receive
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.response.HttpResponse
-import io.ktor.client.response.readText
 import io.ktor.http.takeFrom
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
