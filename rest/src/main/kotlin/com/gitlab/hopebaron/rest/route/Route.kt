@@ -73,7 +73,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/pins/$MessageId", NoStrategy)
 
     object AllReactionsDelete
-        : Route<Unit>(HttpMethod.Delete, "/channels/ChannelId/messages/$MessageId/reactions", NoStrategy)
+        : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/messages/$MessageId/reactions", NoStrategy)
 
     object ChannelPermissionDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/permissions/$OverwriteId", NoStrategy)
@@ -175,10 +175,10 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", NoStrategy)
 
     object GuildRolePut
-        : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
+        : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/roles/$RoleId", NoStrategy)
 
     object GuildRoleDelete
-        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
+        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/roles/$RoleId", NoStrategy)
 
 
     object GuildMemberDelete
@@ -227,7 +227,6 @@ sealed class Route<T>(
     object GuildIntegrationsPost
         : Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations", NoStrategy)
 
-
     object GuildIntegrationsPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
 
@@ -249,7 +248,7 @@ sealed class Route<T>(
 
     //TODO must return an image
     object GuildWidgetGet
-        : Route<Unit>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", NoStrategy)
+        : Route<Unit>(HttpMethod.Get, "/guilds/$GuildId/wig", NoStrategy)
 
     object ChannelWebhooksGet
         : Route<List<Webhook>>(HttpMethod.Get, "/channels/$ChannelId/webhooks", ArrayListSerializer(Webhook.serializer()))
