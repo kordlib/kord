@@ -3,13 +3,11 @@ package com.gitlab.hopebaron.rest.route
 import com.gitlab.hopebaron.common.entity.*
 import com.gitlab.hopebaron.rest.json.response.*
 import io.ktor.http.HttpMethod
-import kotlinx.io.InputStream
 import kotlinx.serialization.Decoder
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialDescriptor
 import kotlinx.serialization.internal.ArrayListSerializer
 import kotlinx.serialization.internal.NullableSerializer
-import kotlinx.serialization.internal.StringSerializer
 import kotlinx.serialization.internal.UnitDescriptor
 import com.gitlab.hopebaron.common.entity.Emoji as EmojiEntity
 
@@ -249,8 +247,9 @@ sealed class Route<T>(
     object GuildVanityInviteGet
         : Route<PartialInvite>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", PartialInvite.serializer())
 
+    //TODO must return an image
     object GuildWidgetGet
-        : Route<InputStream>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", StringSerializer)
+        : Route<Unit>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", NoStrategy)
 
     object ChannelWebhooksGet
         : Route<List<Webhook>>(HttpMethod.Get, "/channels/$ChannelId/webhooks", ArrayListSerializer(Webhook.serializer()))
