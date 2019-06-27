@@ -28,6 +28,7 @@ ext {
 
 allprojects {
     apply plugin: 'kotlin'
+    apply plugin: 'kotlinx-serialization'
 
     repositories {
         mavenCentral()
@@ -37,7 +38,7 @@ allprojects {
 
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-        implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serailization_version"
+        implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
         testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
         testImplementation "io.mockk:mockk-dsl-jvm:$mockk_version"
