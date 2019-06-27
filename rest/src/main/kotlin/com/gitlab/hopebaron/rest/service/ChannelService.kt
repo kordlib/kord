@@ -142,13 +142,13 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         body(MessageEditRequest.serializer(), message)
     }
 
-    suspend fun putChannel(channelId: String, channel: PutModifyMessageRequest) = call(Route.EditMessagePatch) {
+    suspend fun putChannel(channelId: String, channel: PutModifyMessageRequest) = call(Route.ChannelPut) {
         keys[Route.ChannelId] = channelId
         body(PutModifyMessageRequest.serializer(), channel)
     }
 
 
-    suspend fun patchChannel(channelId: String, channel: PatchModifyMessageRequest) = call(Route.EditMessagePatch) {
+    suspend fun patchChannel(channelId: String, channel: PatchModifyMessageRequest) = call(Route.ChannelPatch) {
         keys[Route.ChannelId] = channelId
         body(PatchModifyMessageRequest.serializer(), channel)
     }
