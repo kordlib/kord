@@ -1,9 +1,8 @@
 package com.gitlab.hopebaron.rest.route
 
-import com.gitlab.hopebaron.common.entity.Channel
-import com.gitlab.hopebaron.common.entity.Message
-import com.gitlab.hopebaron.common.entity.Reaction
+import com.gitlab.hopebaron.common.entity.*
 import com.gitlab.hopebaron.rest.json.response.AuditLogResponse
+import com.gitlab.hopebaron.rest.json.response.Connection
 import com.gitlab.hopebaron.rest.json.response.GatewayResponse
 import com.gitlab.hopebaron.rest.json.response.InviteResponse
 import io.ktor.http.HttpMethod
@@ -117,6 +116,26 @@ sealed class Route<T>(
     object InviteDelete
         : Route<InviteResponse>(HttpMethod.Delete, "/invites/$InviteCode", InviteResponse.serializer())
 
+    object CurrentUserGet
+        : Route<User>(HttpMethod.Get, "/users/@me", User.serializer())
+
+    object CurrentUserPatch
+        : Route<User>(HttpMethod.Patch, "/users/@me", User.serializer())
+
+    object UserGet
+        : Route<User>(HttpMethod.Get, "/users/$UserId", User.serializer())
+
+    object CurrentUsersGuildsGet
+        : Route<List<Guild>>(HttpMethod.Get, "/users/@me/guilds", ArrayListSerializer(Guild.serializer()))
+
+    object GuildDelete
+        : Route<Unit>(HttpMethod.Delete, "/users/@me/guilds/$GuildId", NoStrategy)
+
+    object DMPost
+        : Route<Channel>(HttpMethod.Get, "/users/@me/channels", Channel.serializer())
+
+    object UserConnectionsGet
+        : Route<List<Connection>>(HttpMethod.Get, "/users/@me/connections", ArrayListSerializer(Connection.serializer()))
 
 
     companion object {
