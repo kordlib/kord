@@ -14,7 +14,7 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
 
     suspend fun getCurrentUserGuilds() = call(Route.CurrentUsersGuildsGet) {}
 
-    suspend fun leaveGuild(guildId: String) = call(Route.GuildDelete) {
+    suspend fun leaveGuild(guildId: String) = call(Route.GuildLeave) {
         keys[Route.GuildId] = guildId
     }
 

@@ -1,15 +1,15 @@
 package com.gitlab.hopebaron.rest.route
 
 import com.gitlab.hopebaron.common.entity.*
-import com.gitlab.hopebaron.rest.json.response.AuditLogResponse
-import com.gitlab.hopebaron.rest.json.response.Connection
-import com.gitlab.hopebaron.rest.json.response.GatewayResponse
-import com.gitlab.hopebaron.rest.json.response.InviteResponse
+import com.gitlab.hopebaron.rest.json.response.*
 import io.ktor.http.HttpMethod
+import kotlinx.io.InputStream
 import kotlinx.serialization.Decoder
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialDescriptor
 import kotlinx.serialization.internal.ArrayListSerializer
+import kotlinx.serialization.internal.NullableSerializer
+import kotlinx.serialization.internal.StringSerializer
 import kotlinx.serialization.internal.UnitDescriptor
 import com.gitlab.hopebaron.common.entity.Emoji as EmojiEntity
 
@@ -128,7 +128,7 @@ sealed class Route<T>(
     object CurrentUsersGuildsGet
         : Route<List<Guild>>(HttpMethod.Get, "/users/@me/guilds", ArrayListSerializer(Guild.serializer()))
 
-    object GuildDelete
+    object GuildLeave
         : Route<Unit>(HttpMethod.Delete, "/users/@me/guilds/$GuildId", NoStrategy)
 
     object DMPost
@@ -136,6 +136,158 @@ sealed class Route<T>(
 
     object UserConnectionsGet
         : Route<List<Connection>>(HttpMethod.Get, "/users/@me/connections", ArrayListSerializer(Connection.serializer()))
+
+    object GuildPost
+        : Route<Guild>(HttpMethod.Post, "/guilds", Guild.serializer())
+
+    object GuildGet
+        : Route<Guild>(HttpMethod.Get, "/guilds/$GuildId", Guild.serializer())
+
+    object GuildPatch
+        : Route<Guild>(HttpMethod.Patch, "/guilds/$GuildId", Guild.serializer())
+
+    object GuildDelete
+        : Route<Guild>(HttpMethod.Delete, "/guilds/$GuildId", Guild.serializer())
+
+    object GuildChannelsGet
+        : Route<List<Channel>>(HttpMethod.Get, "/guilds/$GuildId/channels", ArrayListSerializer(Channel.serializer()))
+
+    object GuildChannelsPost
+        : Route<Channel>(HttpMethod.Post, "/guilds/$GuildId/channels", Channel.serializer())
+
+
+    object GuildChannelsPatch
+        : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/channels", NoStrategy)
+
+    object GuildMemberGet
+        : Route<GuildMember>(HttpMethod.Get, "/guilds/$GuildId/members/$UserId", GuildMember.serializer())
+
+    object GuildMembersGet
+        : Route<List<GuildMember>>(HttpMethod.Get, "/guilds/$GuildId/members", ArrayListSerializer(GuildMember.serializer()))
+
+
+    object GuildMemberPut
+        : Route<GuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", NullableSerializer(GuildMember.serializer()))
+
+
+    object GuildMemberPatch
+        : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/$UserId", NoStrategy)
+
+    object GuildCurrentUserNickPatch
+        : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", NoStrategy)
+
+    object GuildRolePut
+        : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
+
+    object GuildRoleDelete
+        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
+
+
+    object GuildMemberDelete
+        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/members/$UserId", NoStrategy)
+
+    object GuildBansGet
+        : Route<List<GuildBan>>(HttpMethod.Get, "/guilds/$GuildId/bans", ArrayListSerializer(GuildBan.serializer()))
+
+
+    object GuildBanGet
+        : Route<GuildBan>(HttpMethod.Get, "/guilds/$GuildId/bans/$UserId", GuildBan.serializer())
+
+    object GuildBanPut
+        : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/bans/$UserId", NoStrategy)
+
+    object GuildBanDelete
+        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/bans/$UserId", NoStrategy)
+
+    object GuildRolesGet
+        : Route<List<Role>>(HttpMethod.Get, "/guilds/$GuildId/roles", ArrayListSerializer(Role.serializer()))
+
+    object GuildRolePost
+        : Route<Role>(HttpMethod.Post, "/guilds/$GuildId/roles", Role.serializer())
+
+    object GuildRolesPatch
+        : Route<Role>(HttpMethod.Patch, "/guilds/$GuildId/roles", Role.serializer())
+
+    object GuildRolePatch
+        : Route<Role>(HttpMethod.Patch, "/guilds/$GuildId/roles/$RoleId", Role.serializer())
+
+    object GuildPruneCountGet
+        : Route<PruneResponse>(HttpMethod.Get, "/guilds/$GuildId/prune", PruneResponse.serializer())
+
+    object GuildPrunePost
+        : Route<PruneResponse>(HttpMethod.Post, "/guilds/$GuildId/prune", PruneResponse.serializer())
+
+    object GuildVoiceRegionsGet
+        : Route<List<VoiceRegion>>(HttpMethod.Get, "/guilds/$GuildId/regions", ArrayListSerializer(VoiceRegion.serializer()))
+
+    object GuildVoiceInvitesGet
+        : Route<List<InviteResponse>>(HttpMethod.Get, "/guilds/$GuildId/invites", ArrayListSerializer(InviteResponse.serializer()))
+
+    object GuildIntegrationsGet
+        : Route<List<GuildIntegrations>>(HttpMethod.Get, "/guilds/$GuildId/integrations", ArrayListSerializer(GuildIntegrations.serializer()))
+
+    object GuildIntegrationsPost
+        : Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations", NoStrategy)
+
+
+    object GuildIntegrationsPatch
+        : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
+
+
+    object GuildIntegrationsDelete
+        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
+
+    object GuildIntegrationsSyncPost
+        : Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations/$IntegrationId/sync", NoStrategy)
+
+    object GuildEmbedGet
+        : Route<EmbedResponse>(HttpMethod.Get, "/guilds/$GuildId/embed", EmbedResponse.serializer())
+
+    object GuildEmbedPatch
+        : Route<EmbedResponse>(HttpMethod.Patch, "/guilds/$GuildId/embed", EmbedResponse.serializer())
+
+    object GuildVanityInviteGet
+        : Route<PartialInvite>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", PartialInvite.serializer())
+
+    object GuildWidgetGet
+        : Route<InputStream>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", StringSerializer)
+
+    object ChannelWebhooksGet
+        : Route<List<Webhook>>(HttpMethod.Get, "/channels/$ChannelId/webhooks", ArrayListSerializer(Webhook.serializer()))
+
+    object GuildWebhooksGet
+        : Route<List<Webhook>>(HttpMethod.Get, "/guild/$GuildId/webhooks", ArrayListSerializer(Webhook.serializer()))
+
+    object WebhookGet
+        : Route<Webhook>(HttpMethod.Get, "/webhooks/$WebhookId", Webhook.serializer())
+
+    object WebhookByTokenGet
+        : Route<Webhook>(HttpMethod.Get, "/webhooks/$WebhookId/$WebhookToken", Webhook.serializer())
+
+    object WebhookPatch
+        : Route<Webhook>(HttpMethod.Patch, "/webhooks/$WebhookId", Webhook.serializer())
+
+    object WebhookByTokenPatch
+        : Route<Webhook>(HttpMethod.Patch, "/webhooks/$WebhookId/$WebhookToken", Webhook.serializer())
+
+    object WebhookDelete
+        : Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId", NoStrategy)
+
+    object WebhookByTokenDelete
+        : Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
+
+    //TODO Make sure of the return of these routes below
+
+    object ExecuteWebhookPost
+        : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
+
+
+    object ExecuteSlackWebhookPost
+        : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken/slack", NoStrategy)
+
+
+    object ExecuteGithubWebhookPost
+        : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
 
 
     companion object {
@@ -154,6 +306,10 @@ sealed class Route<T>(
     object OverwriteId : Key("{overwrite.id}")
     object EmojiId : Key("{emoji.id}")
     object InviteCode : Key("{invite.code}")
+    object RoleId : Key("{role.id}")
+    object IntegrationId : Key("{integration.id}")
+    object WebhookId : Key("{webhook.id}")
+    object WebhookToken : Key("{webhook.token}")
 
 }
 

@@ -55,3 +55,6 @@ data class InviteMetaDataResponse(
         val createdAt: String,
         val revoked: Boolean
 )
+
+@Serializable
+data class PartialInvite(val code: String)
