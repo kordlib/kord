@@ -3,6 +3,7 @@ package com.gitlab.hopebaron.rest.ratelimit
 import com.gitlab.hopebaron.common.Platform
 import com.gitlab.hopebaron.common.ratelimit.BucketRateLimiter
 import com.gitlab.hopebaron.rest.request.Request
+import com.gitlab.hopebaron.rest.request.RequestException
 import com.gitlab.hopebaron.rest.request.RequestIdentifier
 import com.gitlab.hopebaron.rest.route.Route
 import io.ktor.client.HttpClient
@@ -45,17 +46,13 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
             with(request) { apply() }
         }
 
-        println(builder.url.buildString())
-
         val response = mutex.withLock {
             suspendFor(request)
 
             val response = client.call(builder).receive<HttpResponse>()
 
             if (response.isGlobalRateLimit) {
-                val suspensionPoint = response.globalSuspensionPoint
-                exclusionRequestLogger.trace { "request for ${request.identifier} hit global rate limit, retrying at $suspensionPoint" }
-                globalSuspensionPoint = suspensionPoint
+                globalSuspensionPoint = response.globalSuspensionPoint
             }
 
             if (response.isChannelRateLimit) {
@@ -66,12 +63,12 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
         }
 
         if (response.isRateLimit) {
+            exclusionRequestLogger.trace { "request for ${request.identifier} hit global rate limit, retrying at $globalSuspensionPoint" }
             return handle(request)
         }
 
         if (response.isError) {
-            //TODO, throw RequestException
-            throw error(response.readText())
+            throw RequestException(response)
         }
 
         return response
