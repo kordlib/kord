@@ -85,7 +85,27 @@ data class GuildBan(
 )
 
 @Serializable
-data class GuildIntegrations(@SerialName("guild_id") val guildId: Snowflake)
+data class GuildIntegrations(
+        @SerialName("guild_id") val guildId: Snowflake,
+        val name: String,
+        val type: String,
+        val enabled: Boolean,
+        val syncing: Boolean,
+        @SerialName("role_id")
+        val roleId: Snowflake,
+        @SerialName("expire_behavior")
+        val expireBehavior: Int,
+        @SerialName("expire_grace_period")
+        val gracePeriod: Int,
+        val user: User,
+        val account: IntegrationAccount,
+        @SerialName("synced_at")
+        val syncedAt: String
+)
+
+@Serializable
+data class IntegrationAccount(val id: String,
+                              val name: String)
 
 @Serializable
 data class GuildMembersChunkData(
