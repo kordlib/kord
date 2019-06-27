@@ -103,6 +103,7 @@ data class GuildIntegrations(
         val syncedAt: String
 )
 
+@Serializable
 data class IntegrationAccount(val id: String,
                               val name: String)
 
