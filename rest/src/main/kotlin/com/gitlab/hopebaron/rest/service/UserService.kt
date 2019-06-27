@@ -1,6 +1,5 @@
 package com.gitlab.hopebaron.rest.service
 
-import com.gitlab.hopebaron.rest.json.request.CreateDM
 import com.gitlab.hopebaron.rest.json.request.CreateDMRequest
 import com.gitlab.hopebaron.rest.json.request.CreateGroupDMRequest
 import com.gitlab.hopebaron.rest.json.request.ModifyCurrentUserRequest
