@@ -12,6 +12,7 @@ import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialDescriptor
 import kotlinx.serialization.internal.ArrayListSerializer
 import kotlinx.serialization.internal.UnitDescriptor
+import com.gitlab.hopebaron.common.entity.Emoji as EmojiEntity
 
 sealed class Route<T>(
         val method: HttpMethod,
@@ -94,9 +95,24 @@ sealed class Route<T>(
 
     object EditMessagePatch
         : Route<Message>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId", Message.serializer())
-    companion
 
-    object {
+    object GuildEmojiGet
+        : Route<EmojiEntity>(HttpMethod.Get, "/guilds/$GuildId/emojis/$Emoji", EmojiEntity.serializer())
+
+    object GuildEmojisGet
+        : Route<List<EmojiEntity>>(HttpMethod.Get, "/guilds/$GuildId/emojis", ArrayListSerializer(EmojiEntity.serializer()))
+
+    object GuildEmojiDelete
+        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/emojis/$Emoji", NoStrategy)
+
+    object GuildEmojiCreate
+        : Route<EmojiEntity>(HttpMethod.Post, "/guilds/$GuildId/emojis", EmojiEntity.serializer())
+
+    object GuildEmojiPatch
+        : Route<EmojiEntity>(HttpMethod.Patch, "/guilds/$GuildId/emojis", EmojiEntity.serializer())
+
+
+    companion object {
         const val baseUrl = "https://discordapp.com/api/v6"
     }
 
