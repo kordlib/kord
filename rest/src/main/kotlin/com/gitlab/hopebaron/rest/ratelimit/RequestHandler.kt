@@ -37,7 +37,7 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
 
     private val mutex = Mutex()
 
-    override suspend fun <T> handle(request: Request<T>): HttpResponse {
+    override tailrec suspend fun <T> handle(request: Request<T>): HttpResponse {
 
         val builder = HttpRequestBuilder().apply {
             url.takeFrom(Route.baseUrl)
