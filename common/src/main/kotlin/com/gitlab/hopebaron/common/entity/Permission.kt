@@ -6,8 +6,9 @@ import kotlinx.serialization.internal.IntDescriptor
 @Serializable(with = Permissions.Companion::class)
 class Permissions private constructor(val code: Int) {
 
-    operator fun plus(permission: Permission): Permissions {
-        return Permissions(this.code or permission.code)
+    operator fun plus(permission: Permission): Permissions = when {
+        code and permission.code == permission.code -> this
+        else -> Permissions(this.code or permission.code)
     }
 
     operator fun minus(permission: Permission): Permissions = when {
@@ -94,4 +95,3 @@ enum class Permission(val code: Int = 0) {
     ManageEmojis(0x40000000),
     All
 }
-
