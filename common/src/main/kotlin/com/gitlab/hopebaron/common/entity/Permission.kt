@@ -93,5 +93,5 @@ enum class Permission(val code: Int = 0) {
     ManageRoles(0x10000000),
     ManageWebhooks(0x20000000),
     ManageEmojis(0x40000000),
-    All
+    All(0x7ED7FDFF)
 }
