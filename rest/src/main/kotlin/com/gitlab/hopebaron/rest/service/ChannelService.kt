@@ -83,6 +83,11 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.MessageId] = messageId
     }
 
+    suspend fun bulkDelete(channelId: String, messages: BulkDeleteRequest) = call(Route.BulkMessageDeletePost) {
+        keys[Route.ChannelId] = channelId
+        body(BulkDeleteRequest.serializer(), messages)
+    }
+
     suspend fun deleteChannel(channelId: String) = call(Route.ChannelDelete) {
         keys[Route.ChannelId] = channelId
     }

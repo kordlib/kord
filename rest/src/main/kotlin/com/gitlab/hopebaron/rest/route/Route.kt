@@ -69,6 +69,9 @@ sealed class Route<T>(
     object MessageDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/messages/$MessageId", NoStrategy)
 
+    object BulkMessageDeletePost
+        : Route<Unit>(HttpMethod.Post, "/channels/$ChannelId/messages/bulk-delete", NoStrategy)
+
     object PinDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/pins/$MessageId", NoStrategy)
 
