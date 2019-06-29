@@ -76,8 +76,13 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
         if (request.route.path.contains("emoji")) { //https://discordapp.com/developers/docs/topics/rate-limits#rate-limits
             emojiRateLimiter.consume()
         } else {
-            val routSuspensionPoint = routeSuspensionPoints[request.identifier] ?: 0
-            delay(routSuspensionPoint - Platform.nowMillis())
+            val key = request.identifier
+            val routeSuspensionPoint = routeSuspensionPoints[key]
+
+            if (routeSuspensionPoint != null) {
+                delay(routeSuspensionPoint - Platform.nowMillis())
+                routeSuspensionPoints.remove(key)
+            }
         }
 
     }
