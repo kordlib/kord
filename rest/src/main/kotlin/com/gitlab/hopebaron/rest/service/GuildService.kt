@@ -13,6 +13,10 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
+    suspend fun modifyGuild(guildId: String, guild: ModifyGuildRequest) = call(Route.GuildPatch) {
+        keys[Route.GuildId] = guildId
+        body(ModifyGuildRequest.serializer(), guild)
+    }
 
     suspend fun deleteGuild(guildId: String) = call(Route.GuildDelete) {
         keys[Route.GuildId] = guildId

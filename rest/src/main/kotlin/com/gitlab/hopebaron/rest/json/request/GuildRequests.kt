@@ -87,3 +87,23 @@ data class ModifyGuildEmbedRequest(val enabled: Boolean,
 
 @Serializable
 data class ModifyCurrentUserNicknameRequest(val nick: String? = null)
+
+@Serializable
+data class ModifyGuildRequest(val name: String,
+                              val region: String,
+                              @SerialName("verification_level")
+                              val verificationLevel: VerificationLevel,
+                              @SerialName("default_message_notifications")
+                              val defaultMessageNotificationLevel: DefaultMessageNotificationLevel,
+                              @SerialName("explicit_content_filter")
+                              val contentFilter: ExplicitContentFilter,
+                              @SerialName("afk_channel_id")
+                              val afkChannel: String,
+                              @SerialName("afk_timeout")
+                              val afkTimeout: Int,
+                              val icon: String,
+                              @SerialName("owner_id")
+                              val ownerId: String,
+                              val spalsh: String,
+                              @SerialName("system_channel_id")
+                              val systemChannelId: String)
