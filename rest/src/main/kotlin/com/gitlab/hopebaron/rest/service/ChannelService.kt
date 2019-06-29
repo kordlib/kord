@@ -4,15 +4,9 @@ import com.gitlab.hopebaron.common.entity.Message
 import com.gitlab.hopebaron.rest.json.request.*
 import com.gitlab.hopebaron.rest.json.response.InviteResponse
 import com.gitlab.hopebaron.rest.ratelimit.RequestHandler
+import com.gitlab.hopebaron.rest.route.Position
 import com.gitlab.hopebaron.rest.route.Route
 import io.ktor.http.ParametersBuilder
-import io.ktor.util.InternalAPI
-
-sealed class Position(val key: String, val value: String) {
-    class Before(id: String) : Position("before", id)
-    class After(id: String) : Position("after", id)
-    class Around(id: String) : Position("around", id)
-}
 
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
