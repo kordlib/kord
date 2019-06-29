@@ -7,7 +7,7 @@ import com.gitlab.hopebaron.rest.ratelimit.RequestHandler
 import com.gitlab.hopebaron.rest.route.Route
 
 class UserService(requestHandler: RequestHandler) : RestService(requestHandler) {
-    suspend fun getCurrentUser(userId: String) = call(Route.CurrentUserGet) {}
+    suspend fun getCurrentUser() = call(Route.CurrentUserGet) {}
     suspend fun getUser(userId: String) = call(Route.UserGet) {
         keys[Route.UserId] = userId
     }
