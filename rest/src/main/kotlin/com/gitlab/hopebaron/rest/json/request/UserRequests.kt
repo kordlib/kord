@@ -15,3 +15,9 @@ data class CreateGroupDMRequest(
 @Serializable
 data class ModifyCurrentUserRequest(val username: String? = null,
                                     val avatar: String? = null)
+
+@Serializable
+data class AddDMUserRequest(
+        @SerialName("access_token")
+        val accessToken: String,
+        val nick: String)
