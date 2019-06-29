@@ -174,11 +174,11 @@ sealed class Route<T>(
     object GuildCurrentUserNickPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", NoStrategy)
 
-    object GuildRolePut
-        : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/roles/$RoleId", NoStrategy)
+    object GuildMemberRolePut
+        : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
 
-    object GuildRoleDelete
-        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/roles/$RoleId", NoStrategy)
+    object GuildMemberRoleDelete
+        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
 
 
     object GuildMemberDelete
@@ -209,6 +209,10 @@ sealed class Route<T>(
     object GuildRolePatch
         : Route<Role>(HttpMethod.Patch, "/guilds/$GuildId/roles/$RoleId", Role.serializer())
 
+    object GuildRoleDelete
+        : Route<Role>(HttpMethod.Delete, "/guilds/$GuildId/roles/$RoleId", Role.serializer())
+
+
     object GuildPruneCountGet
         : Route<PruneResponse>(HttpMethod.Get, "/guilds/$GuildId/prune", PruneResponse.serializer())
 
@@ -218,23 +222,23 @@ sealed class Route<T>(
     object GuildVoiceRegionsGet
         : Route<List<VoiceRegion>>(HttpMethod.Get, "/guilds/$GuildId/regions", ArrayListSerializer(VoiceRegion.serializer()))
 
-    object GuildVoiceInvitesGet
+    object GuildInvitesGet
         : Route<List<InviteResponse>>(HttpMethod.Get, "/guilds/$GuildId/invites", ArrayListSerializer(InviteResponse.serializer()))
 
-    object GuildIntegrationsGet
+    object GuildIntegrationGet
         : Route<List<GuildIntegrations>>(HttpMethod.Get, "/guilds/$GuildId/integrations", ArrayListSerializer(GuildIntegrations.serializer()))
 
-    object GuildIntegrationsPost
+    object GuildIntegrationPost
         : Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations", NoStrategy)
 
-    object GuildIntegrationsPatch
+    object GuildIntegrationPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
 
 
-    object GuildIntegrationsDelete
+    object GuildIntegrationDelete
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
 
-    object GuildIntegrationsSyncPost
+    object GuildIntegrationSyncPost
         : Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations/$IntegrationId/sync", NoStrategy)
 
     object GuildEmbedGet
