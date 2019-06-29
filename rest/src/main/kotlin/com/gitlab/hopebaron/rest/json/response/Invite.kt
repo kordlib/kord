@@ -57,4 +57,4 @@ data class InviteMetaDataResponse(
 )
 
 @Serializable
-data class PartialInvite(val code: String)
+data class PartialInvite(val code: String? = null)

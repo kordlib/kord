@@ -7,18 +7,18 @@ import com.gitlab.hopebaron.rest.ratelimit.RequestHandler
 import com.gitlab.hopebaron.rest.route.Route
 
 class UserService(requestHandler: RequestHandler) : RestService(requestHandler) {
-    suspend fun getCurrentUser(userId: String) = call(Route.CurrentUserGet)
+    suspend fun getCurrentUser(userId: String) = call(Route.CurrentUserGet) {}
     suspend fun getUser(userId: String) = call(Route.UserGet) {
         keys[Route.UserId] = userId
     }
 
-    suspend fun getCurrentUserGuilds() = call(Route.CurrentUsersGuildsGet)
+    suspend fun getCurrentUserGuilds() = call(Route.CurrentUsersGuildsGet) {}
 
     suspend fun leaveGuild(guildId: String) = call(Route.GuildLeave) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun getUserConnections() = call(Route.UserConnectionsGet)
+    suspend fun getUserConnections() = call(Route.UserConnectionsGet) {}
 
     suspend fun createDM(dm: CreateDMRequest) = call(Route.DMPost) {
         body(CreateDMRequest.serializer(), dm)
