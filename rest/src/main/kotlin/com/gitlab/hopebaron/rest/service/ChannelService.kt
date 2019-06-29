@@ -1,8 +1,6 @@
 package com.gitlab.hopebaron.rest.service
 
-import com.gitlab.hopebaron.common.entity.Message
 import com.gitlab.hopebaron.rest.json.request.*
-import com.gitlab.hopebaron.rest.json.response.InviteResponse
 import com.gitlab.hopebaron.rest.ratelimit.RequestHandler
 import com.gitlab.hopebaron.rest.route.Position
 import com.gitlab.hopebaron.rest.route.Route
@@ -11,12 +9,12 @@ import io.ktor.http.ParametersBuilder
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend fun createMessage(channelId: String, message: MessageCreateRequest): Message = call(Route.MessageCreate) {
+    suspend fun createMessage(channelId: String, message: MessageCreateRequest) = call(Route.MessageCreate) {
         keys[Route.ChannelId] = channelId
         body(MessageCreateRequest.serializer(), message)
     }
 
-    suspend fun createMessage(channelId: String, message: MultipartMessageCreateRequest): Message = call(Route.MessageCreate) {
+    suspend fun createMessage(channelId: String, message: MultipartMessageCreateRequest) = call(Route.MessageCreate) {
         keys[Route.ChannelId] = channelId
         body(MessageCreateRequest.serializer(), message.request)
         message.files.forEach { file(it) }
@@ -33,12 +31,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         }
     }
 
-    suspend fun getMessage(channelId: String, messageId: String): Message = call(Route.MessageGet) {
+    suspend fun getMessage(channelId: String, messageId: String) = call(Route.MessageGet) {
         keys[Route.MessageId] = messageId
         keys[Route.ChannelId] = channelId
     }
 
-    suspend fun getChannelInvites(channelId: String): List<InviteResponse> = call(Route.InvitesGet) {
+    suspend fun getChannelInvites(channelId: String) = call(Route.InvitesGet) {
         keys[Route.ChannelId] = channelId
     }
 
@@ -46,7 +44,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.ChannelId] = channelId
     }
 
-    suspend fun getChannelPins(channelId: String): List<Message> = call(Route.PinsGet) {
+    suspend fun getChannelPins(channelId: String) = call(Route.PinsGet) {
         keys[Route.ChannelId] = channelId
     }
 
@@ -75,7 +73,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.MessageId] = messageId
     }
 
-    suspend fun deleteAllMessageReactions(channelId: String, messageId: String) = call(Route.AllReactionsDelete) {
+    suspend fun deleteAllReactions(channelId: String, messageId: String) = call(Route.AllReactionsDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
     }
