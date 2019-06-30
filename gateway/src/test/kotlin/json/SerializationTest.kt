@@ -3,7 +3,6 @@
 package json
 
 import com.gitlab.hopebaron.websocket.*
-import com.gitlab.hopebaron.common.entity.Snowflake
 import kotlinx.serialization.json.Json
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -46,10 +45,10 @@ class SerializationTest : Spek({
                 with(event.data.guilds) {
                     val guild = get(0)
                     with(guild) {
-                        id shouldBe Snowflake("41771983423143937")
+                        id shouldBe "41771983423143937"
                     }
                     with(user) {
-                        id shouldBe Snowflake("80351110224678912")
+                        id shouldBe "80351110224678912"
                         username shouldBe "Nelly"
                         discriminator shouldBe "1337"
                         avatar shouldBe "8342729096ea3675442027381ff50dfe"
@@ -89,8 +88,8 @@ class SerializationTest : Spek({
         it("deserializes a ChannelPinsUpdate object") {
             val event = Json.parse(Event.Companion, file("channelpinsupdate")) as ChannelPinsUpdate
             with(event.pins) {
-                guildId shouldBe Snowflake("41771983423143937")
-                channelId shouldBe Snowflake("399942396007890945")
+                guildId shouldBe "41771983423143937"
+                channelId shouldBe "399942396007890945"
                 lastPinTimestamp shouldBe "2015-04-26T06:26:56.936000+00:00"
 
             }
@@ -103,8 +102,8 @@ class SerializationTest : Spek({
         it("deserializes a ChannelCreate object") {
             val event = Json.parse(Event.Companion, file("channelcreate")) as ChannelCreate
             with(event.channel) {
-                id shouldBe Snowflake("41771983423143937")
-                guildId shouldBe Snowflake("41771983423143937")
+                id shouldBe "41771983423143937"
+                guildId shouldBe "41771983423143937"
                 name shouldBe "general"
                 type.code shouldBe 0
                 position shouldBe 6
@@ -112,8 +111,8 @@ class SerializationTest : Spek({
                 rateLimitPerUser shouldBe 2
                 nsfw shouldBe true
                 topic shouldBe "24/7 chat about how to gank Mike #2"
-                lastMessageId shouldBe Snowflake("155117677105512449")
-                parentId shouldBe Snowflake("399942396007890945")
+                lastMessageId shouldBe "155117677105512449"
+                parentId shouldBe "399942396007890945"
             }
         }
     }
@@ -122,8 +121,8 @@ class SerializationTest : Spek({
         it("deserializes a ChannelUpdate object") {
             val event = Json.parse(Event.Companion, file("channelupdate")) as ChannelUpdate
             with(event.channel) {
-                id shouldBe Snowflake("41771983423143937")
-                guildId shouldBe Snowflake("41771983423143937")
+                id shouldBe "41771983423143937"
+                guildId shouldBe "41771983423143937"
                 name shouldBe "general"
                 type.code shouldBe 0
                 position shouldBe 6
@@ -131,8 +130,8 @@ class SerializationTest : Spek({
                 rateLimitPerUser shouldBe 2
                 nsfw shouldBe true
                 topic shouldBe "24/7 chat about how to gank Mike #2"
-                lastMessageId shouldBe Snowflake("155117677105512449")
-                parentId shouldBe Snowflake("399942396007890945")
+                lastMessageId shouldBe "155117677105512449"
+                parentId shouldBe "399942396007890945"
             }
         }
     }
@@ -140,8 +139,8 @@ class SerializationTest : Spek({
         it("deserializes a ChannelUpdate object") {
             val event = Json.parse(Event.Companion, file("channeldelete")) as ChannelDelete
             with(event.channel) {
-                id shouldBe Snowflake("41771983423143937")
-                guildId shouldBe Snowflake("41771983423143937")
+                id shouldBe "41771983423143937"
+                guildId shouldBe "41771983423143937"
                 name shouldBe "general"
                 type.code shouldBe 0
                 position shouldBe 6
@@ -149,8 +148,8 @@ class SerializationTest : Spek({
                 rateLimitPerUser shouldBe 2
                 nsfw shouldBe true
                 topic shouldBe "24/7 chat about how to gank Mike #2"
-                lastMessageId shouldBe Snowflake("155117677105512449")
-                parentId shouldBe Snowflake("399942396007890945")
+                lastMessageId shouldBe "155117677105512449"
+                parentId shouldBe "399942396007890945"
             }
         }
     }

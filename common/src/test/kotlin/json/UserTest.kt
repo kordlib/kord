@@ -2,7 +2,6 @@
 
 package json
 
-import com.gitlab.hopebaron.common.entity.Snowflake
 import com.gitlab.hopebaron.common.entity.User
 import kotlinx.serialization.json.Json
 import org.spekframework.spek2.Spek
@@ -20,7 +19,7 @@ class UserTest : Spek({
             val user = Json.parse(User.serializer(), file("user"))
 
             with(user) {
-                id shouldBe Snowflake("80351110224678912")
+                id shouldBe "80351110224678912"
                 username shouldBe "Nelly"
                 discriminator shouldBe "1337"
                 avatar shouldBe "8342729096ea3675442027381ff50dfe"

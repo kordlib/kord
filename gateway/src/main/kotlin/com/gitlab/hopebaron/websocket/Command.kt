@@ -2,7 +2,6 @@ package com.gitlab.hopebaron.websocket
 
 import com.gitlab.hopebaron.common.entity.Activity
 import com.gitlab.hopebaron.common.entity.Shard
-import com.gitlab.hopebaron.common.entity.Snowflake
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 import kotlinx.serialization.internal.SerialClassDescImpl
@@ -114,7 +113,7 @@ internal data class Resume(
 @Serializable
 data class RequestGuildMembers(
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         val query: String,
         val limit: Int = 0
 ) : Command()
@@ -122,9 +121,9 @@ data class RequestGuildMembers(
 @Serializable
 data class UpdateVoiceStatus(
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         @SerialName("channel_id")
-        val channelId: Snowflake? = null,
+        val channelId: String? = null,
         @SerialName("self_mute")
         val selfMute: Boolean,
         @SerialName("self_deaf")
