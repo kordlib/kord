@@ -95,6 +95,13 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.OverwriteId] = overwriteId
     }
 
+    suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: EditChannelPermissionRequest) = call(Route.ChannelPermissionPut) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.OverwriteId] = overwriteId
+        body(EditChannelPermissionRequest.serializer(), permissions)
+    }
+
+
     suspend fun getReactions(channelId: String, messageId: String, emoji: String, position: Position? = null, limit: Int = 25) = call(Route.ReactionsGet) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
@@ -135,15 +142,15 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         body(MessageEditRequest.serializer(), message)
     }
 
-    suspend fun putChannel(channelId: String, channel: PutModifyMessageRequest) = call(Route.ChannelPut) {
+    suspend fun putChannel(channelId: String, channel: PutModifyChannelRequest) = call(Route.ChannelPut) {
         keys[Route.ChannelId] = channelId
-        body(PutModifyMessageRequest.serializer(), channel)
+        body(PutModifyChannelRequest.serializer(), channel)
     }
 
 
-    suspend fun patchChannel(channelId: String, channel: PatchModifyMessageRequest) = call(Route.ChannelPatch) {
+    suspend fun patchChannel(channelId: String, channel: PatchModifyChannelRequest) = call(Route.ChannelPatch) {
         keys[Route.ChannelId] = channelId
-        body(PatchModifyMessageRequest.serializer(), channel)
+        body(PatchModifyChannelRequest.serializer(), channel)
     }
 
 }

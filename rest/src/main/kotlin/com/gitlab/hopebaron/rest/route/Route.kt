@@ -81,6 +81,10 @@ sealed class Route<T>(
     object ChannelPermissionDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/permissions/$OverwriteId", NoStrategy)
 
+    object ChannelPermissionPut
+        : Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/permissions/$OverwriteId", NoStrategy)
+
+
     object ReactionsGet
         : Route<List<Reaction>>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji", ArrayListSerializer(Reaction.serializer()))
 

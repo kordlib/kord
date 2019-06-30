@@ -2,7 +2,7 @@ package com.gitlab.hopebaron.rest.json.request
 
 import com.gitlab.hopebaron.common.entity.Embed
 import com.gitlab.hopebaron.common.entity.Overwrite
-import com.gitlab.hopebaron.common.entity.Snowflake
+import com.gitlab.hopebaron.common.entity.Permission
 import kotlinx.io.InputStream
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MessageCreateRequest(
         val content: String,
-        val nonce: Snowflake? = null,
+        val nonce: String? = null,
         val tts: Boolean? = null,
         val embed: EmbedRequest? = null
 )
@@ -26,22 +26,22 @@ data class EmbedRequest(
         val type: String?,
         val description: String?,
         val url: String?,
-        val timestamp: String,
-        val color: Int,
-        val footer: EmbedFooterRequest,
-        val image: EmbedImageRequest,
-        val thumbnail: EmbedThumbnailRequest,
-        val author: EmbedAuthorRequest,
-        val fields: List<EmbedFieldRequest>
+        val timestamp: String? = null,
+        val color: Int? = null,
+        val footer: EmbedFooterRequest? = null,
+        val image: EmbedImageRequest? = null,
+        val thumbnail: EmbedThumbnailRequest? = null,
+        val author: EmbedAuthorRequest? = null,
+        val fields: List<EmbedFieldRequest>? = null
 )
 
 
 @Serializable
 data class EmbedFooterRequest(
         val text: String,
-        val url: String,
+        val url: String? = null,
         @SerialName("icon_url")
-        val iconUrl: String
+        val iconUrl: String? = null
 )
 
 @Serializable
@@ -52,17 +52,17 @@ data class EmbedThumbnailRequest(val url: String)
 
 @Serializable
 data class EmbedAuthorRequest(
-        val name: String,
-        val url: String,
+        val name: String? = null,
+        val url: String? = null,
         @SerialName("icon_url")
-        val iconUrl: String
+        val iconUrl: String? = null
 )
 
 @Serializable
 data class EmbedFieldRequest(
         val name: String,
         val value: String,
-        val inline: Boolean
+        val inline: Boolean? = null
 )
 
 @Serializable
@@ -70,7 +70,7 @@ data class MessageEditRequest(val content: String? = null,
                               val embed: Embed? = null)
 
 @Serializable
-data class PutModifyMessageRequest(val name: String,
+data class PutModifyChannelRequest(val name: String,
                                    val position: Int,
                                    val topic: String,
                                    val nsfw: Boolean,
@@ -82,10 +82,10 @@ data class PutModifyMessageRequest(val name: String,
                                    @SerialName("permission_overwrites")
                                    val permissionOverwrites: List<Overwrite>,
                                    @SerialName("parent_id")
-                                   val parentId: Snowflake)
+                                   val parentId: String)
 
 @Serializable
-data class PatchModifyMessageRequest(val name: String? = null,
+data class PatchModifyChannelRequest(val name: String? = null,
                                      val position: Int? = null,
                                      val topic: String? = null,
                                      val nsfw: Boolean? = null,
@@ -97,7 +97,10 @@ data class PatchModifyMessageRequest(val name: String? = null,
                                      @SerialName("permission_overwrites")
                                      val permissionOverwrites: List<Overwrite>? = null,
                                      @SerialName("parent_id")
-                                     val parentId: Snowflake? = null)
+                                     val parentId: String? = null)
+
+@Serializable
+data class EditChannelPermissionRequest(val allow: Permission, val deny: Permission, val type: String)
 
 @Serializable
 data class BulkDeleteRequest(val messages: List<String>)
