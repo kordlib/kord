@@ -266,6 +266,9 @@ sealed class Route<T>(
     object WebhookGet
         : Route<Webhook>(HttpMethod.Get, "/webhooks/$WebhookId", Webhook.serializer())
 
+    object WebhookPost
+        : Route<Webhook>(HttpMethod.Post, "/channels/$ChannelId/webhooks", Webhook.serializer())
+
     object WebhookByTokenGet
         : Route<Webhook>(HttpMethod.Get, "/webhooks/$WebhookId/$WebhookToken", Webhook.serializer())
 
