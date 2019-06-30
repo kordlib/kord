@@ -2,10 +2,7 @@ package com.gitlab.hopebaron.rest.json.response
 
 import com.gitlab.hopebaron.common.entity.*
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.ArrayListSerializer
-import kotlinx.serialization.internal.IntDescriptor
-import kotlinx.serialization.internal.NullableSerializer
-import kotlinx.serialization.internal.SerialClassDescImpl
+import kotlinx.serialization.internal.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import mu.KotlinLogging
@@ -26,8 +23,8 @@ data class AuditLogEntryResponse(
         val targetId: String? = null,
         val changes: List<AuditLogChangeResponse<*>>? = null,
         @SerialName("user_id")
-        val userId: Snowflake,
-        val id: Snowflake,
+        val userId: String,
+        val id: String,
         @SerialName("action_type")
         val actionType: AuditLogEventResponse,
         val options: AuditEntryInfoResponse? = null,
@@ -88,39 +85,39 @@ data class AuditLogChangeResponse<T>(
         }
 
         private fun String.asSerializer(): KSerializer<out Any>? = when (this) {
-            "name", "icon_hash", "splash_hash" -> String.serializer()
-            "owner_id" -> Snowflake.Companion
-            "region" -> String.serializer()
-            "afk_channel_id" -> Snowflake.serializer()
+            "name", "icon_hash", "splash_hash" -> StringSerializer
+            "owner_id" -> StringSerializer
+            "region" -> StringSerializer
+            "afk_channel_id" -> StringSerializer
             "afk_timeout" -> Int.serializer()
             "mfa_level" -> MFALevel.MFALevelSerializer
             "verification_level" -> VerificationLevel.VerificationLevelSerializer
             "explicit_content_filter" -> ExplicitContentFilter.ExplicitContentFilterSerializer
             "default_message_notifications" -> DefaultMessageNotificationLevel.DefaultMessageNotificationLevelSerializer
-            "vanity_url_code" -> String.serializer()
+            "vanity_url_code" -> StringSerializer
             "\$add", "\$remove" -> ArrayListSerializer(Role.serializer())
             "prune_delete_days" -> Int.serializer()
             "widget_enabled" -> Boolean.serializer()
-            "widget_channel_id" -> Snowflake.serializer()
+            "widget_channel_id" -> StringSerializer
             "position" -> Int.serializer()
-            "topic" -> String.serializer()
+            "topic" -> StringSerializer
             "bitrate" -> Int.serializer()
             "permission_overwrites" -> ArrayListSerializer(Overwrite.serializer())
             "nsfw" -> Boolean.serializer()
-            "application_id" -> Snowflake.serializer()
+            "application_id" -> StringSerializer
             "permissions" -> Permissions.serializer()
             "color" -> Int.serializer()
             "hoist" -> Boolean.serializer()
             "mentionable" -> Boolean.serializer()
             "allow" -> Permissions.serializer()
             "deny" -> Permissions.serializer()
-            "code" -> String.serializer()
-            "channel_id", "inviter_id" -> Snowflake.serializer()
+            "code" -> StringSerializer
+            "channel_id", "inviter_id" -> StringSerializer
             "max_uses", "uses", "max_age" -> Int.serializer()
             "temporary", "deaf", "mute" -> Boolean.serializer()
-            "nick" -> String.serializer()
-            "avatar_hash" -> String.serializer()
-            "id" -> Snowflake.serializer()
+            "nick" -> StringSerializer
+            "avatar_hash" -> StringSerializer
+            "id" -> StringSerializer
             "type" -> null // TODO fix mixed type int|string
 
             else -> {
@@ -191,9 +188,9 @@ data class AuditEntryInfoResponse(
         @SerialName("members_removed")
         val membersRemoved: String? = null,
         @SerialName("channel_id")
-        val channelId: Snowflake? = null,
+        val channelId: String? = null,
         val count: String? = null,
-        val id: Snowflake? = null,
+        val id: String? = null,
         val type: String? = null,
         @SerialName("role_name")
         val roleName: String? = null
