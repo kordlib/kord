@@ -9,9 +9,15 @@ data class CreateDMRequest(@SerialName("recipient_id") val userId: String)
 @Serializable
 data class CreateGroupDMRequest(
         @SerialName("access_tokens")
-        val accessTokens: List<String>,
+        val tokens: List<String>,
         val nick: Map<String, String>)
 
 @Serializable
 data class ModifyCurrentUserRequest(val username: String? = null,
                                     val avatar: String? = null)
+
+@Serializable
+data class AddDMUserRequest(
+        @SerialName("access_token")
+        val token: String,
+        val nick: String)

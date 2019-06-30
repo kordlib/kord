@@ -1,12 +1,12 @@
 package com.gitlab.hopebaron.rest.json.request
 
 import com.gitlab.hopebaron.common.entity.Overwrite
-import com.gitlab.hopebaron.common.entity.Snowflake
+import com.gitlab.hopebaron.common.entity.Permission
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PutModifyMessageRequest(val name: String,
+data class PutModifyChannelRequest(val name: String,
                                    val position: Int,
                                    val topic: String,
                                    val nsfw: Boolean,
@@ -18,10 +18,10 @@ data class PutModifyMessageRequest(val name: String,
                                    @SerialName("permission_overwrites")
                                    val permissionOverwrites: List<Overwrite>,
                                    @SerialName("parent_id")
-                                   val parentId: Snowflake)
+                                   val parentId: String)
 
 @Serializable
-data class PatchModifyMessageRequest(val name: String? = null,
+data class PatchModifyChannelRequest(val name: String? = null,
                                      val position: Int? = null,
                                      val topic: String? = null,
                                      val nsfw: Boolean? = null,
@@ -33,4 +33,7 @@ data class PatchModifyMessageRequest(val name: String? = null,
                                      @SerialName("permission_overwrites")
                                      val permissionOverwrites: List<Overwrite>? = null,
                                      @SerialName("parent_id")
-                                     val parentId: Snowflake? = null)
+                                     val parentId: String? = null)
+
+@Serializable
+data class EditChannelPermissionRequest(val allow: Permission, val deny: Permission, val type: String)

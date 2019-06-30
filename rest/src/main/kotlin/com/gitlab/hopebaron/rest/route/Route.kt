@@ -69,6 +69,9 @@ sealed class Route<T>(
     object MessageDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/messages/$MessageId", NoStrategy)
 
+    object BulkMessageDeletePost
+        : Route<Unit>(HttpMethod.Post, "/channels/$ChannelId/messages/bulk-delete", NoStrategy)
+
     object PinDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/pins/$MessageId", NoStrategy)
 
@@ -77,6 +80,10 @@ sealed class Route<T>(
 
     object ChannelPermissionDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/permissions/$OverwriteId", NoStrategy)
+
+    object ChannelPermissionPut
+        : Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/permissions/$OverwriteId", NoStrategy)
+
 
     object ReactionsGet
         : Route<List<Reaction>>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji", ArrayListSerializer(Reaction.serializer()))
@@ -262,6 +269,9 @@ sealed class Route<T>(
 
     object WebhookGet
         : Route<Webhook>(HttpMethod.Get, "/webhooks/$WebhookId", Webhook.serializer())
+
+    object WebhookPost
+        : Route<Webhook>(HttpMethod.Post, "/channels/$ChannelId/webhooks", Webhook.serializer())
 
     object WebhookByTokenGet
         : Route<Webhook>(HttpMethod.Get, "/webhooks/$WebhookId/$WebhookToken", Webhook.serializer())

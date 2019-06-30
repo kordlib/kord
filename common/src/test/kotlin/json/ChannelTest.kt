@@ -3,7 +3,6 @@
 package json
 
 import com.gitlab.hopebaron.common.entity.Channel
-import com.gitlab.hopebaron.common.entity.Snowflake
 import kotlinx.serialization.json.Json
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -20,14 +19,14 @@ class ChannelTest : Spek({
             val channel = Json.parse(Channel.serializer(), file("dmchannel"))
 
             with(channel) {
-                lastMessageId shouldBe Snowflake("3343820033257021450")
+                lastMessageId shouldBe "3343820033257021450"
                 type.code shouldBe 1
-                id shouldBe Snowflake("319674150115610528")
+                id shouldBe "319674150115610528"
                 recipients?.size shouldBe 1
                 with(recipients!!.first()) {
                     username shouldBe "test"
                     discriminator shouldBe "9999"
-                    id shouldBe Snowflake("82198898841029460")
+                    id shouldBe "82198898841029460"
                     avatar shouldBe "33ecab261d4681afa4d85a04691c4a01"
                 }
             }
@@ -44,9 +43,9 @@ class ChannelTest : Spek({
                 name shouldBe "Test"
                 nsfw shouldBe false
                 position shouldBe 0
-                guildId shouldBe Snowflake("290926798629997250")
+                guildId shouldBe "290926798629997250"
                 type.code shouldBe 4
-                id shouldBe Snowflake("399942396007890945")
+                id shouldBe "399942396007890945"
             }
         }
     }
@@ -62,19 +61,19 @@ class ChannelTest : Spek({
                 with(recipients!!.first()) {
                     username shouldBe "test"
                     discriminator shouldBe "9999"
-                    id shouldBe Snowflake("82198898841029460")
+                    id shouldBe "82198898841029460"
                     avatar shouldBe "33ecab261d4681afa4d85a04691c4a01"
                 }
                 with(recipients!![1]) {
                     username shouldBe "test2"
                     discriminator shouldBe "9999"
-                    id shouldBe Snowflake("82198810841029460")
+                    id shouldBe "82198810841029460"
                     avatar shouldBe "33ecab261d4681afa4d85a10691c4a01"
                 }
-                lastMessageId shouldBe Snowflake("3343820033257021450")
+                lastMessageId shouldBe "3343820033257021450"
                 type.code shouldBe 3
-                id shouldBe Snowflake("319674150115710528")
-                ownerId shouldBe Snowflake("82198810841029460")
+                id shouldBe "319674150115710528"
+                ownerId shouldBe "82198810841029460"
             }
         }
     }
@@ -84,16 +83,16 @@ class ChannelTest : Spek({
             val channel = Json.parse(Channel.serializer(), file("guildnewschannel"))
 
             with(channel) {
-                id shouldBe Snowflake("41771983423143937")
-                guildId shouldBe Snowflake("41771983423143937")
+                id shouldBe "41771983423143937"
+                guildId shouldBe "41771983423143937"
                 name shouldBe "important-news"
                 type.code shouldBe 5
                 position shouldBe 6
                 permissionOverwrites shouldBe emptyList()
                 nsfw shouldBe true
                 topic shouldBe "Rumors about Half Life 3"
-                lastMessageId shouldBe Snowflake("155117677105512449")
-                parentId shouldBe Snowflake("399942396007890945")
+                lastMessageId shouldBe "155117677105512449"
+                parentId shouldBe "399942396007890945"
             }
         }
     }
@@ -103,8 +102,8 @@ class ChannelTest : Spek({
             val channel = Json.parse(Channel.serializer(), file("guildtextchannel"))
 
             with(channel) {
-                id shouldBe Snowflake("41771983423143937")
-                guildId shouldBe Snowflake("41771983423143937")
+                id shouldBe "41771983423143937"
+                guildId shouldBe "41771983423143937"
                 name shouldBe "general"
                 type.code shouldBe 0
                 position shouldBe 6
@@ -112,8 +111,8 @@ class ChannelTest : Spek({
                 rateLimitPerUser shouldBe 2
                 nsfw shouldBe true
                 topic shouldBe "24/7 chat about how to gank Mike #2"
-                lastMessageId shouldBe Snowflake("155117677105512449")
-                parentId shouldBe Snowflake("399942396007890945")
+                lastMessageId shouldBe "155117677105512449"
+                parentId shouldBe "399942396007890945"
             }
         }
     }
@@ -123,8 +122,8 @@ class ChannelTest : Spek({
             val channel = Json.parse(Channel.serializer(), file("guildvoicechannel"))
 
             with(channel) {
-                id shouldBe Snowflake("155101607195836416")
-                guildId shouldBe Snowflake("41771983423143937")
+                id shouldBe "155101607195836416"
+                guildId shouldBe "41771983423143937"
                 name shouldBe "ROCKET CHEESE"
                 type.code shouldBe 2
                 nsfw shouldBe false
@@ -142,8 +141,8 @@ class ChannelTest : Spek({
             val channel = Json.parse(Channel.serializer(), file("storechannel"))
 
             with(channel) {
-                id shouldBe Snowflake("41771983423143937")
-                guildId shouldBe Snowflake("41771983423143937")
+                id shouldBe "41771983423143937"
+                guildId shouldBe "41771983423143937"
                 name shouldBe "buy dota-2"
                 type.code shouldBe 6
                 position shouldBe 0
