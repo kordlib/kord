@@ -26,7 +26,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             parameters = Parameters.build {
                 append(position.key, position.value)
                 append("limit", "$limit")
-                build()
             }
         }
     }
@@ -146,5 +145,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.ChannelId] = channelId
         body(PatchModifyMessageRequest.serializer(), channel)
     }
+
 }
 
