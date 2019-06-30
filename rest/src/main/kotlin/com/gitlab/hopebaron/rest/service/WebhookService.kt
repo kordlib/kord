@@ -6,7 +6,7 @@ import com.gitlab.hopebaron.rest.json.request.MultiPartWebhookExecuteRequest
 import com.gitlab.hopebaron.rest.json.request.WebhookExecuteRequest
 import com.gitlab.hopebaron.rest.ratelimit.RequestHandler
 import com.gitlab.hopebaron.rest.route.Route
-import io.ktor.http.ParametersBuilder
+import io.ktor.http.Parameters
 
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
     suspend fun createWebhook(channelId: String, webhook: CreateWebhookRequest) = call(Route.WebhookPost) {
@@ -54,9 +54,8 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend fun executeWebhook(webhookId: String, token: String, wait: Boolean, webhook: MultiPartWebhookExecuteRequest) = call(Route.ExecuteWebhookPost) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
-        parameters = with(ParametersBuilder()) {
+        parameters = Parameters.build {
             append("wait", "$wait")
-            build()
         }
         body(WebhookExecuteRequest.serializer(), webhook.request)
         webhook.files.forEach { file(it) }
@@ -65,18 +64,16 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend fun executeSlackWebhook(webhookId: String, token: String, wait: Boolean) = call(Route.ExecuteSlackWebhookPost) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
-        parameters = with(ParametersBuilder()) {
+        parameters = Parameters.build {
             append("wait", "$wait")
-            build()
         }
     }
 
     suspend fun executeGithubWebhook(webhookId: String, token: String, wait: Boolean) = call(Route.ExecuteGithubWebhookPost) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
-        parameters = with(ParametersBuilder()) {
+        parameters = Parameters.build {
             append("wait", "$wait")
-            build()
         }
     }
 }

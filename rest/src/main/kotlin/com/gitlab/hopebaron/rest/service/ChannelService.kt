@@ -4,7 +4,7 @@ import com.gitlab.hopebaron.rest.json.request.*
 import com.gitlab.hopebaron.rest.ratelimit.RequestHandler
 import com.gitlab.hopebaron.rest.route.Position
 import com.gitlab.hopebaron.rest.route.Route
-import io.ktor.http.ParametersBuilder
+import io.ktor.http.Parameters
 
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
@@ -23,7 +23,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
         if (position != null) {
-            parameters = with(ParametersBuilder()) {
+            parameters = Parameters.build {
                 append(position.key, position.value)
                 append("limit", "$limit")
                 build()
@@ -48,7 +48,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.ChannelId] = channelId
     }
 
-    //TODO Check how emoji should be handled
     suspend fun createReaction(channelId: String, messageId: String, emoji: String) = call(Route.ReactionPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
@@ -103,10 +102,9 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.Emoji] = emoji
 
         if (position != null) {
-            parameters = with(ParametersBuilder()) {
+            parameters = Parameters.build {
                 append(position.key, position.value)
                 append("limit", "$limit")
-                build()
             }
         }
     }
