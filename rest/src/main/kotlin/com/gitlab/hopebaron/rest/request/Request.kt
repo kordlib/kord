@@ -14,6 +14,9 @@ import kotlinx.io.InputStream
 import kotlinx.io.streams.outputStream
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
+import mu.KotlinLogging
+
+private val logger = KotlinLogging.logger { }
 
 sealed class Request<T> {
     internal abstract val route: Route<T>
@@ -31,6 +34,7 @@ sealed class Request<T> {
 
     open suspend fun parse(response: HttpResponse): T {
         val json = response.readText()
+        logger.trace { "${response.call.request.method.value} ${response.call.request.url}: $json" }
         return Json.nonstrict.parse(route.strategy, json)
     }
 
@@ -72,9 +76,7 @@ internal data class MajorIdentifier(val path: String, val param: String? = null)
             val param = route.path.subSequence(indexOfNextParam, indexOfNextParamEnd + 1)
             val paramValue = routeParams[param].toString()
 
-            return MajorIdentifier(route.path, paramValue).also {
-                println(it)
-            }
+            return MajorIdentifier(route.path, paramValue)
         }
     }
 
