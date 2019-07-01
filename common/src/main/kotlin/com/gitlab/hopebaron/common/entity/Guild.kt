@@ -72,9 +72,9 @@ data class Guild(
 data class PartialGuild(
         val id: String,
         val name: String,
-        val icon: String?,
-        val owner: Boolean?,
-        val permissions: Permissions?
+        val icon: String? = null,
+        val owner: Boolean? = null,
+        val permissions: Permissions? = null
 )
 
 @Serializable
