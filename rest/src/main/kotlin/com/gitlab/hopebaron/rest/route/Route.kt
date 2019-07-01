@@ -58,7 +58,7 @@ sealed class Route<T>(
         : Route<InviteResponse>(HttpMethod.Post, "/channels/$ChannelId/invites", InviteResponse.serializer())
 
     object ReactionPut
-        : Route<Reaction>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji/@me", Reaction.serializer())
+        : Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji/@me", NoStrategy)
 
     object OwnReactionDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji/@me", NoStrategy)
