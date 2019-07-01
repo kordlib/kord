@@ -98,7 +98,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/recipients/$UserId", NoStrategy)
 
     object EditMessagePatch
-        : Route<Message>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId", Message.serializer())
+        : Route<Message>(HttpMethod.Patch, "/channels/$ChannelId/messages/$MessageId", Message.serializer())
 
     object GuildEmojiGet
         : Route<EmojiEntity>(HttpMethod.Get, "/guilds/$GuildId/emojis/$EmojiId", EmojiEntity.serializer())
