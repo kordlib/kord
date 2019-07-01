@@ -34,7 +34,7 @@ sealed class Request<T> {
 
     open suspend fun parse(response: HttpResponse): T {
         val json = response.readText()
-        logger.trace { "${response.call.request.method.value} ${response.call.request.url}: $json" }
+        logger.trace { "${response.call.request.method.value} ${response.call.request.url} body: $json" }
         return Json.nonstrict.parse(route.strategy, json)
     }
 

@@ -41,19 +41,19 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
         val response = mutex.withLock {
             suspendFor(request)
 
-            logger.trace { "request for ${request.logString}" }
+            logger.trace { "REQUEST: ${request.logString}" }
 
             val response = client.call(builder).receive<HttpResponse>()
 
             logger.trace { response.logString }
 
             if (response.isGlobalRateLimit) {
-                logger.trace { "request for ${request.logString} hit global rate limit" }
+                logger.trace { "GLOBAL RATE LIMIT: ${request.logString}" }
                 globalSuspensionPoint = response.globalSuspensionPoint
             }
 
             if (response.isChannelRateLimit) {
-                logger.trace { "request for ${request.logString} hit path rate limit" }
+                logger.trace { "ROUTE RATE LIMIT: ${request.logString}" }
                 routeSuspensionPoints[request.identifier] = response.channelSuspensionPoint
             }
 
@@ -97,11 +97,11 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
         val HttpResponse.isRateLimit get() = status.value == 429
         val HttpResponse.isError get() = status.value in 400 until 600
         val HttpResponse.isGlobalRateLimit get() = headers[rateLimitGlobalHeader]?.toBoolean() == true
-        val HttpResponse.isChannelRateLimit get() = headers[rateLimitRemainingHeader]?.toInt() == 0
+        val HttpResponse.isChannelRateLimit get() = headers[rateLimitRemainingHeader]?.toIntOrNull() == 0
         val HttpResponse.globalSuspensionPoint
             get() = headers[retryAfterHeader]?.toLong()?.let { it + responseTime.timestamp } ?: 0
 
-        val HttpResponse.logString get() = "Request(method=${call.request.method.value}, url=${call.request.url}, body=${call.request}) returned $status"
+        val HttpResponse.logString get() = "$status: ${call.request.method.value} ${call.request.url}"
 
         val Request<*>.logString
             get() : String {
