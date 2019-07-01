@@ -1,5 +1,6 @@
 package com.gitlab.hopebaron.rest.service
 
+import com.gitlab.hopebaron.common.annotation.KordExperimental
 import com.gitlab.hopebaron.rest.json.request.CreateWebhookRequest
 import com.gitlab.hopebaron.rest.json.request.ModifyWebhookRequest
 import com.gitlab.hopebaron.rest.json.request.MultiPartWebhookExecuteRequest
@@ -7,6 +8,7 @@ import com.gitlab.hopebaron.rest.json.request.WebhookExecuteRequest
 import com.gitlab.hopebaron.rest.ratelimit.RequestHandler
 import com.gitlab.hopebaron.rest.route.Route
 import io.ktor.http.Parameters
+import kotlinx.serialization.json.JsonObject
 
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
     suspend fun createWebhook(channelId: String, webhook: CreateWebhookRequest) = call(Route.WebhookPost) {
@@ -61,19 +63,26 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         webhook.files.forEach { file(it) }
     }
 
-    suspend fun executeSlackWebhook(webhookId: String, token: String, wait: Boolean) = call(Route.ExecuteSlackWebhookPost) {
-        keys[Route.WebhookId] = webhookId
-        keys[Route.WebhookToken] = token
-        parameters = Parameters.build {
-            append("wait", "$wait")
-        }
-    }
+    @KordExperimental
+    suspend fun executeSlackWebhook(webhookId: String, token: String, body: JsonObject, wait: Boolean = false) =
+            call(Route.ExecuteSlackWebhookPost) {
+                keys[Route.WebhookId] = webhookId
+                keys[Route.WebhookToken] = token
+                parameters = Parameters.build {
+                    append("wait", "$wait")
+                }
 
-    suspend fun executeGithubWebhook(webhookId: String, token: String, wait: Boolean) = call(Route.ExecuteGithubWebhookPost) {
-        keys[Route.WebhookId] = webhookId
-        keys[Route.WebhookToken] = token
-        parameters = Parameters.build {
-            append("wait", "$wait")
-        }
-    }
+                body(JsonObject.serializer(), body)
+            }
+
+    @KordExperimental
+    suspend fun executeGithubWebhook(webhookId: String, token: String, body: JsonObject, wait: Boolean = false) =
+            call(Route.ExecuteGithubWebhookPost) {
+                keys[Route.WebhookId] = webhookId
+                keys[Route.WebhookToken] = token
+                parameters = Parameters.build {
+                    append("wait", "$wait")
+                }
+                body(JsonObject.serializer(), body)
+            }
 }
