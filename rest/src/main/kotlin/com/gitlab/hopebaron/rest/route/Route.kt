@@ -302,6 +302,9 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
 
 
+    object VoiceRegionsGet
+        : Route<List<VoiceRegion>>(HttpMethod.Get, "/voice/regions", ArrayListSerializer(VoiceRegion.serializer()))
+
     companion object {
         const val baseUrl = "https://discordapp.com/api/v6"
     }
