@@ -64,8 +64,10 @@ data class EmbedFieldRequest(
 )
 
 @Serializable
-data class MessageEditRequest(val content: String? = null,
-                              val embed: Embed? = null)
+data class MessageEditRequest(
+        val content: String? = null,
+        val embed: Embed? = null
+)
 
 @Serializable
 data class BulkDeleteRequest(val messages: List<String>)

@@ -4,7 +4,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateDMRequest(@SerialName("recipient_id") val userId: String)
+data class CreateDMRequest(
+        @SerialName("recipient_id")
+        val userId: String
+)
 
 @Serializable
 data class CreateGroupDMRequest(
@@ -13,11 +16,14 @@ data class CreateGroupDMRequest(
         val nick: Map<String, String>)
 
 @Serializable
-data class ModifyCurrentUserRequest(val username: String? = null,
-                                    val avatar: String? = null)
+data class ModifyCurrentUserRequest(
+        val username: String? = null,
+        val avatar: String? = null
+)
 
 @Serializable
 data class AddDMUserRequest(
         @SerialName("access_token")
         val token: String,
-        val nick: String)
+        val nick: String
+)
