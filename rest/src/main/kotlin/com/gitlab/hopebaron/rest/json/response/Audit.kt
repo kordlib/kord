@@ -2,7 +2,10 @@ package com.gitlab.hopebaron.rest.json.response
 
 import com.gitlab.hopebaron.common.entity.*
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.*
+import kotlinx.serialization.internal.ArrayListSerializer
+import kotlinx.serialization.internal.IntDescriptor
+import kotlinx.serialization.internal.SerialClassDescImpl
+import kotlinx.serialization.internal.StringSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import mu.KotlinLogging
@@ -60,18 +63,18 @@ data class AuditLogChangeResponse<T>(
                         CompositeDecoder.READ_DONE -> break@loop
                         0 -> newValue = decodeSerializableElement(descriptor, index, JsonElement.serializer())
                         1 -> oldValue = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        3 -> key = decodeStringElement(descriptor, index)
+                        2 -> key = decodeStringElement(descriptor, index)
                     }
                 }
+
                 val serializer = key.asSerializer()
 
                 val actualNewValue: Any? = serializer?.let {
-                    if (newValue != null) Json.nonstrict.fromJson(NullableSerializer(it), newValue as JsonElement)
+                    if (newValue != null) Json.nonstrict.fromJson(it, newValue as JsonElement)
                 } ?: newValue
 
                 val actualOldValue: Any? = serializer?.let {
-                    if (oldValue != null) Json.nonstrict.fromJson(NullableSerializer(it), oldValue as JsonElement)
-
+                    if (oldValue != null) Json.nonstrict.fromJson(it, oldValue as JsonElement)
                 } ?: oldValue
 
                 endStructure(descriptor)
