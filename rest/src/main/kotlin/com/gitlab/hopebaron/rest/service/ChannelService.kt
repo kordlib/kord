@@ -22,11 +22,11 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
 
     suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
-        if (position != null) {
-            parameters = Parameters.build {
+        parameters = Parameters.build {
+            if (position != null) {
                 append(position.key, position.value)
-                append("limit", "$limit")
             }
+            append("limit", "$limit")
         }
     }
 
