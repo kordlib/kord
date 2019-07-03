@@ -1,4 +1,4 @@
-package requesthandler
+package com.gitlab.hopebaron.rest.requesthandler
 
 import com.gitlab.hopebaron.common.Platform
 import com.gitlab.hopebaron.rest.ratelimit.ExclusionRequestHandler
