@@ -152,7 +152,7 @@ sealed class Route<T>(
         : Route<Guild>(HttpMethod.Patch, "/guilds/$GuildId", Guild.serializer())
 
     object GuildDelete
-        : Route<Guild>(HttpMethod.Delete, "/guilds/$GuildId", Guild.serializer())
+        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId", NoStrategy)
 
     object GuildChannelsGet
         : Route<List<Channel>>(HttpMethod.Get, "/guilds/$GuildId/channels", ArrayListSerializer(Channel.serializer()))
