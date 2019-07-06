@@ -38,7 +38,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         body(ModifyWebhookRequest.serializer(), webhook)
     }
 
-    suspend fun modifyWebhook(webhookId: String, token: String, webhook: ModifyWebhookRequest) = call(Route.WebhookPatch) {
+    suspend fun modifyWebhookWithToken(webhookId: String, token: String, webhook: ModifyWebhookRequest) = call(Route.WebhookByTokenPatch) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
         body(ModifyWebhookRequest.serializer(), webhook)
@@ -48,7 +48,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.WebhookId] = webhookId
     }
 
-    suspend fun deleteWebhookWithToken(webhookId: String, token: String) = call(Route.WebhookDelete) {
+    suspend fun deleteWebhookWithToken(webhookId: String, token: String) = call(Route.WebhookByTokenDelete) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
     }
