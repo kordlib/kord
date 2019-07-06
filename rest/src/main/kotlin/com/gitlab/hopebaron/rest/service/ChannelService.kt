@@ -43,6 +43,11 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.ChannelId] = channelId
     }
 
+    suspend fun addPinnedMessage(channelId: String, messageId: String) = call(Route.PinPut) {
+        keys[Route.MessageId] = messageId
+        keys[Route.ChannelId] = channelId
+    }
+
     suspend fun getChannelPins(channelId: String) = call(Route.PinsGet) {
         keys[Route.ChannelId] = channelId
     }
