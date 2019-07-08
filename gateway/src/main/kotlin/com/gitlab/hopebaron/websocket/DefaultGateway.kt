@@ -12,6 +12,7 @@ import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readText
 import io.ktor.util.error
+import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.CancellationException
@@ -27,6 +28,11 @@ import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
+
+private sealed class State(val retry: Boolean) {
+    object ShutDown : State(false)
+    class Restart(retry: Boolean) : State(retry)
+}
 
 /**
  * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
@@ -54,7 +60,7 @@ class DefaultGateway(
 
     private lateinit var socket: DefaultClientWebSocketSession
 
-    private val restart = atomic(true)
+    private val state: AtomicRef<State> = atomic(State.Restart(true))
 
     private val handshakeHandler: HandshakeHandler
 
@@ -70,26 +76,26 @@ class DefaultGateway(
     override suspend fun start(configuration: GatewayConfiguration) {
         handshakeHandler.configuration = configuration
         retry.reset()
-        while (retry.hasNext && restart.value) {
+        state.update { State.Restart(true) } //resetting state
+        while (retry.hasNext && state.value is State.Restart) {
 
             try {
                 socket = webSocket(url)
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
-                continue
+                continue //can't handle a close code if you've got no socket
             }
+
             try {
                 readSocket()
-                retry.reset() //successfully connected, reset retry token
+                retry.reset() //connected and read without problems, resetting retry counter
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
-
             }
+
             handleClose()
 
-            //only suspend when we're retrying
-            //TODO don't want to retry when we're manually restarting, figure out a way to know the difference
-            if (restart.value) retry.retry()
+            if (state.value.retry) retry.retry()
         }
 
         if (!retry.hasNext) {
@@ -108,19 +114,20 @@ class DefaultGateway(
     }
 
     private suspend fun handleClose() {
-        val reason = socket.closeReason.await()
-        val webSocketReason = reason?.knownReason
-        val discordReason = GatewayCloseCode.values().firstOrNull { it.code == reason?.code }
+        val reason = socket.closeReason.await() ?: return
+        defaultGatewayLogger.trace { "Gateway closed: ${reason.code} ${reason.message}" }
+        val discordReason = GatewayCloseCode.values().firstOrNull { it.code == reason.code } ?: return
 
-        restart.update {
-            if (webSocketReason != null || discordReason?.retry == true) {
-                defaultGatewayLogger.info { "Gateway closed: ${webSocketReason?.code} ${webSocketReason?.name}, retrying connection" }
-                true
-            } else false
+        when {
+            !discordReason.retry -> {
+                state.update { State.ShutDown }
+                throw  IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
+            }
+            discordReason.resetSession -> {
+                state.update { State.Restart(true) }
+                channel.send(SessionClose)
+            }
         }
-
-        if (discordReason?.resetSession == true) channel.send(SessionClose)
-        if (!restart.value) throw  IllegalStateException("Gateway closed: ${reason?.code} ${reason?.message}")
     }
 
     private fun <T> ReceiveChannel<T>.asFlow() = flow {
@@ -135,12 +142,12 @@ class DefaultGateway(
 
     override suspend fun close() {
         channel.send(SessionClose)
+        state.update { State.ShutDown }
         if (socketOpen) socket.close(CloseReason(1000, "leaving"))
-        restart.update { false }
     }
 
     internal suspend fun restart(code: Close = CloseForReconnect) {
-        restart.update { true }
+        state.update { State.Restart(false) }
         if (socketOpen) {
             channel.send(code)
             socket.close(CloseReason(1000, "reconnecting"))
