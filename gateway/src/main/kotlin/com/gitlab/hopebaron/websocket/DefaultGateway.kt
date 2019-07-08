@@ -83,6 +83,7 @@ class DefaultGateway(
                 socket = webSocket(url)
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
+                retry.retry()
                 continue //can't handle a close code if you've got no socket
             }
 
