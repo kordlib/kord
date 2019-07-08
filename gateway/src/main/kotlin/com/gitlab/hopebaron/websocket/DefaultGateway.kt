@@ -12,6 +12,7 @@ import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readText
 import io.ktor.util.error
+import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.CancellationException
@@ -27,6 +28,11 @@ import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
+
+private sealed class State(val retry: Boolean) {
+    object ShutDown : State(false)
+    class Restart(retry: Boolean) : State(retry)
+}
 
 /**
  * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
@@ -54,7 +60,7 @@ class DefaultGateway(
 
     private lateinit var socket: DefaultClientWebSocketSession
 
-    private val restart = atomic(true)
+    private val state: AtomicRef<State> = atomic(State.Restart(true))
 
     private val handshakeHandler: HandshakeHandler
 
@@ -70,41 +76,26 @@ class DefaultGateway(
     override suspend fun start(configuration: GatewayConfiguration) {
         handshakeHandler.configuration = configuration
         retry.reset()
-        while (retry.hasNext && restart.value) {
-            var error: Throwable? = null
+        state.update { State.Restart(true) } //resetting state
+        while (retry.hasNext && state.value is State.Restart) {
 
             try {
                 socket = webSocket(url)
-                retry.reset() //successfully connected, reset retry token
+            } catch (exception: Exception) {
+                defaultGatewayLogger.error(exception)
+                continue //can't handle a close code if you've got no socket
+            }
+
+            try {
                 readSocket()
-                if (socket.closeReason.isCompleted) { //did Discord close the socket?
-                    val reason = socket.closeReason.await()
-
-                    val webSocketReason = reason?.knownReason
-                    if (webSocketReason != null) { //discord didn't throw an error, we'll just restart
-                        defaultGatewayLogger.info { "Gateway closed: ${webSocketReason.code} ${webSocketReason.name}, retrying connection" }
-                        restart.update { true }
-                    } else { //discord did throw an error
-
-                        //find out if it's our fault or the user's
-                        val discordReason = GatewayCloseCode.values().firstOrNull { it.code == reason?.code }
-                        if (discordReason?.resetSession == true) channel.send(SessionClose)
-                        if (discordReason?.retry == true) restart.update { true }
-                        else {
-                            restart.update { false }
-                            error = IllegalStateException("Gateway closed: ${reason?.code} ${reason?.message}")
-                        }
-                    }
-                }
+                retry.reset() //connected and read without problems, resetting retry counter
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
             }
 
-            if (error != null) throw error
+            handleClose()
 
-            //only suspend when we're retrying
-            //TODO don't want to retry when we're manually restarting, figure out a way to know the difference
-            if (restart.value) retry.retry()
+            if (state.value.retry) retry.retry()
         }
 
         if (!retry.hasNext) {
@@ -113,19 +104,35 @@ class DefaultGateway(
     }
 
     private suspend fun readSocket() {
-        socket.incoming.asFlow().filterIsInstance<Frame.Text>().collect { frame ->
+        socket.incoming.asFlow().filterIsInstance<Frame.Text>().collect { read(it) }
+    }
 
-            val json = frame.readText()
-            defaultGatewayLogger.trace { "Gateway <<< $json" }
+    private suspend fun read(frame: Frame.Text) {
+        val json = frame.readText()
+        defaultGatewayLogger.trace { "Gateway <<< $json" }
+        Json.nonstrict.parse(Event.Companion, json)?.let { channel.send(it) }
+    }
 
-            Json.nonstrict.parse(Event.Companion, json)?.let { channel.send(it) }
+    private suspend fun handleClose() {
+        val reason = socket.closeReason.await() ?: return
+        defaultGatewayLogger.trace { "Gateway closed: ${reason.code} ${reason.message}" }
+        val discordReason = GatewayCloseCode.values().firstOrNull { it.code == reason.code } ?: return
+
+        when {
+            !discordReason.retry -> {
+                state.update { State.ShutDown }
+                throw  IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
+            }
+            discordReason.resetSession -> {
+                state.update { State.Restart(true) }
+                channel.send(SessionClose)
+            }
         }
     }
 
     private fun <T> ReceiveChannel<T>.asFlow() = flow {
-        val iterator = iterator()
         try {
-            while (iterator.hasNext()) emit(iterator.next())
+            for (value in this@asFlow) emit(value)
         } catch (ignore: CancellationException) {
             //reading was stopped from somewhere else, ignore
         }
@@ -135,12 +142,12 @@ class DefaultGateway(
 
     override suspend fun close() {
         channel.send(SessionClose)
+        state.update { State.ShutDown }
         if (socketOpen) socket.close(CloseReason(1000, "leaving"))
-        restart.update { false }
     }
 
     internal suspend fun restart(code: Close = CloseForReconnect) {
-        restart.update { true }
+        state.update { State.Restart(false) }
         if (socketOpen) {
             channel.send(code)
             socket.close(CloseReason(1000, "reconnecting"))
