@@ -71,36 +71,21 @@ class DefaultGateway(
         handshakeHandler.configuration = configuration
         retry.reset()
         while (retry.hasNext && restart.value) {
-            var error: Throwable? = null
 
             try {
                 socket = webSocket(url)
-                retry.reset() //successfully connected, reset retry token
-                readSocket()
-                if (socket.closeReason.isCompleted) { //did Discord close the socket?
-                    val reason = socket.closeReason.await()
-
-                    val webSocketReason = reason?.knownReason
-                    if (webSocketReason != null) { //discord didn't throw an error, we'll just restart
-                        defaultGatewayLogger.info { "Gateway closed: ${webSocketReason.code} ${webSocketReason.name}, retrying connection" }
-                        restart.update { true }
-                    } else { //discord did throw an error
-
-                        //find out if it's our fault or the user's
-                        val discordReason = GatewayCloseCode.values().firstOrNull { it.code == reason?.code }
-                        if (discordReason?.resetSession == true) channel.send(SessionClose)
-                        if (discordReason?.retry == true) restart.update { true }
-                        else {
-                            restart.update { false }
-                            error = IllegalStateException("Gateway closed: ${reason?.code} ${reason?.message}")
-                        }
-                    }
-                }
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
+                continue
             }
+            try {
+                readSocket()
+                retry.reset() //successfully connected, reset retry token
+            } catch (exception: Exception) {
+                defaultGatewayLogger.error(exception)
 
-            if (error != null) throw error
+            }
+            handleClose()
 
             //only suspend when we're retrying
             //TODO don't want to retry when we're manually restarting, figure out a way to know the difference
@@ -113,19 +98,34 @@ class DefaultGateway(
     }
 
     private suspend fun readSocket() {
-        socket.incoming.asFlow().filterIsInstance<Frame.Text>().collect { frame ->
+        socket.incoming.asFlow().filterIsInstance<Frame.Text>().collect { read(it) }
+    }
 
-            val json = frame.readText()
-            defaultGatewayLogger.trace { "Gateway <<< $json" }
+    private suspend fun read(frame: Frame.Text) {
+        val json = frame.readText()
+        defaultGatewayLogger.trace { "Gateway <<< $json" }
+        Json.nonstrict.parse(Event.Companion, json)?.let { channel.send(it) }
+    }
 
-            Json.nonstrict.parse(Event.Companion, json)?.let { channel.send(it) }
+    private suspend fun handleClose() {
+        val reason = socket.closeReason.await()
+        val webSocketReason = reason?.knownReason
+        val discordReason = GatewayCloseCode.values().firstOrNull { it.code == reason?.code }
+
+        restart.update {
+            if (webSocketReason != null || discordReason?.retry == true) {
+                defaultGatewayLogger.info { "Gateway closed: ${webSocketReason?.code} ${webSocketReason?.name}, retrying connection" }
+                true
+            } else false
         }
+
+        if (discordReason?.resetSession == true) channel.send(SessionClose)
+        if (!restart.value) throw  IllegalStateException("Gateway closed: ${reason?.code} ${reason?.message}")
     }
 
     private fun <T> ReceiveChannel<T>.asFlow() = flow {
-        val iterator = iterator()
         try {
-            while (iterator.hasNext()) emit(iterator.next())
+            for (value in this@asFlow) emit(value)
         } catch (ignore: CancellationException) {
             //reading was stopped from somewhere else, ignore
         }
