@@ -14,6 +14,15 @@ import io.ktor.client.features.defaultRequest
 import io.ktor.client.request.header
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
+import java.util.*
+
+fun image(path: String): String {
+    val loader = Unit::class.java.classLoader
+    val image = loader?.getResource(path)?.readBytes()
+    val encoded = Base64.getEncoder().encodeToString(image)
+    val imageType = path.split(".").last()
+    return "data:image/$imageType;base64, $encoded"
+}
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -100,6 +109,7 @@ class RestServiceTest {
             deleteReaction(channelId, message.id, message.author.id, "\ud83d\udc4d")
 
             createReaction(channelId, message.id, "\ud83d\udc4e")
+            getReactions(channelId, message.id, "\ud83d\udc4e")
             deleteAllReactions(channelId, message.id)
 
             deleteMessage(channelId, message.id)
@@ -114,7 +124,9 @@ class RestServiceTest {
 
             val message = createMessage(channelId, MessageCreateRequest("TEST"))
 
+
             getMessage(channelId, message.id)
+
 
             deleteMessage(channelId, message.id)
 
@@ -123,9 +135,35 @@ class RestServiceTest {
 
             val messages = getMessages(channelId)
 
-            this.bulkDelete(channelId, BulkDeleteRequest(messages.map { it.id }))
+            bulkDelete(channelId, BulkDeleteRequest(messages.map { it.id }))
+
         }
     }
+
+    @Test
+    @Order(6)
+    fun `pinned messages in channel`() = runBlocking {
+        with(rest.channel) {
+            val pinnedMessage = createMessage(channelId, MessageCreateRequest("TEST"))
+
+            addPinnedMessage(channelId, pinnedMessage.id)
+
+            getChannelPins(channelId)
+
+            deletePinnedMessage(channelId, pinnedMessage.id)
+        }
+
+    }
+
+    @Test
+    @Order(7)
+    fun `invites in channel`() = runBlocking {
+        with(rest.channel) {
+            getChannelInvites(channelId)
+        }
+
+    }
+
 
     @Test
     @Order(Int.MAX_VALUE - 2)
