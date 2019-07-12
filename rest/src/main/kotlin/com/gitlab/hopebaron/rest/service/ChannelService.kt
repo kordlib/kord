@@ -112,11 +112,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
 
-        if (position != null) {
-            parameters = Parameters.build {
+        parameters = Parameters.build {
+            if (position != null) {
                 append(position.key, position.value)
-                append("limit", "$limit")
             }
+            append("limit", "$limit")
+
         }
     }
 
