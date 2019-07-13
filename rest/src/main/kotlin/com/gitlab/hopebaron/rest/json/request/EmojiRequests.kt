@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class EmojiCreateRequest(
         val name: String,
         val image: String,
-        val roles: List<Role>
+        val roles: List<String>
 )
 
 @Serializable
