@@ -1,9 +1,6 @@
 package com.gitlab.hopebaron.rest.services
 
-import com.gitlab.hopebaron.common.entity.ChannelType
-import com.gitlab.hopebaron.common.entity.DefaultMessageNotificationLevel
-import com.gitlab.hopebaron.common.entity.ExplicitContentFilter
-import com.gitlab.hopebaron.common.entity.VerificationLevel
+import com.gitlab.hopebaron.common.entity.*
 import com.gitlab.hopebaron.rest.json.request.*
 import com.gitlab.hopebaron.rest.ratelimit.ExclusionRequestHandler
 import com.gitlab.hopebaron.rest.ratelimit.RequestHandler
@@ -151,6 +148,8 @@ class RestServiceTest {
             getChannelPins(channelId)
 
             deletePinnedMessage(channelId, pinnedMessage.id)
+
+            Unit
         }
 
     }
@@ -160,10 +159,28 @@ class RestServiceTest {
     fun `invites in channel`() = runBlocking {
         with(rest.channel) {
             getChannelInvites(channelId)
+
+            Unit
         }
 
     }
 
+    @Test
+    @Order(8)
+    fun `permissions in channels`() = runBlocking {
+        val role = rest.guild.createGuildRole(guildId, CreateGuildRoleRequest())
+        with(rest.channel) {
+            val allow = Permissions { permissions() + Permission.CreateInstantInvite }
+            val deny = Permissions { permissions() + Permission.SendTTSMessages }
+
+            editChannelPermissions(channelId, role.id, EditChannelPermissionRequest(allow, deny, "role"))
+
+            deleteChannelPermission(channelId, role.id)
+
+        }
+    }
+
+//TODO Add Group Channel Tests
 
     @Test
     @Order(Int.MAX_VALUE - 2)
