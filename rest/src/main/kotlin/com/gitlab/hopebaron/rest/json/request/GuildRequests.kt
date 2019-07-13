@@ -68,12 +68,12 @@ data class AddGuildBanRequest(
 
 @Serializable
 data class CreateGuildRoleRequest(
-        val name: String,
-        val permissions: Permission,
-        val color: Int,
+        val name: String? = null,
+        val permissions: Permissions? = null,
+        val color: Int = 0,
         @SerialName("hoist")
-        val separate: Boolean,
-        val Mentionable: Boolean
+        val separate: Boolean = false,
+        val mentionable: Boolean = false
 )
 
 @Serializable
@@ -85,7 +85,7 @@ data class ModifyGuildRolePositionRequest(
 @Serializable
 data class ModifyGuildRoleRequest(
         val name: String? = null,
-        val permissions: Permission? = null,
+        val permissions: Permissions? = null,
         val color: Int? = null,
         @SerialName("hoist")
         val separate: Boolean? = null,
