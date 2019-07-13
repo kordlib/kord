@@ -1,7 +1,7 @@
 package com.gitlab.hopebaron.rest.json.request
 
 import com.gitlab.hopebaron.common.entity.Overwrite
-import com.gitlab.hopebaron.common.entity.Permission
+import com.gitlab.hopebaron.common.entity.Permissions
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -40,4 +40,4 @@ data class PatchModifyChannelRequest(
 )
 
 @Serializable
-data class EditChannelPermissionRequest(val allow: Permission, val deny: Permission, val type: String)
+data class EditChannelPermissionRequest(val allow: Permissions, val deny: Permissions, val type: String)
