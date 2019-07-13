@@ -170,8 +170,8 @@ class RestServiceTest {
     fun `permissions in channels`() = runBlocking {
         val role = rest.guild.createGuildRole(guildId, CreateGuildRoleRequest())
         with(rest.channel) {
-            val allow = Permissions { permissions() + Permission.CreateInstantInvite }
-            val deny = Permissions { permissions() + Permission.SendTTSMessages }
+            val allow = Permissions { +Permission.CreateInstantInvite }
+            val deny = Permissions { +Permission.SendTTSMessages }
 
             editChannelPermissions(channelId, role.id, EditChannelPermissionRequest(allow, deny, "role"))
 
