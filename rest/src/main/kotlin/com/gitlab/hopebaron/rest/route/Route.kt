@@ -89,7 +89,7 @@ sealed class Route<T>(
 
 
     object ReactionsGet
-        : Route<List<Reaction>>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji", ArrayListSerializer(Reaction.serializer()))
+        : Route<List<User>>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji", ArrayListSerializer(User.serializer()))
 
     object TypingIndicatorPost
         : Route<Unit>(HttpMethod.Post, "/channels/$ChannelId/typing", NoStrategy)
