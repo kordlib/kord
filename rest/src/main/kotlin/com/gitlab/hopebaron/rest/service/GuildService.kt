@@ -109,8 +109,9 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
     }
 
 
-    suspend fun modifyGuildRole(guildId: String, role: ModifyGuildRoleRequest) = call(Route.GuildRolePatch) {
+    suspend fun modifyGuildRole(guildId: String, roleId: String, role: ModifyGuildRoleRequest) = call(Route.GuildRolePatch) {
         keys[Route.GuildId] = guildId
+        keys[Route.RoleId] = roleId
         body(ModifyGuildRoleRequest.serializer(), role)
     }
 
