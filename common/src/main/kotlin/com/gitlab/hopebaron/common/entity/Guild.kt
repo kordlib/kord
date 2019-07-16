@@ -86,7 +86,7 @@ data class GuildBan(
 
 @Serializable
 data class GuildIntegrations(
-        @SerialName("guild_id") val guildId: String,
+        val id: String,
         val name: String,
         val type: String,
         val enabled: Boolean,
