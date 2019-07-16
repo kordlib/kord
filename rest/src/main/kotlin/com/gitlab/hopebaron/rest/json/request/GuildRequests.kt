@@ -79,7 +79,7 @@ data class CreateGuildRoleRequest(
 @Serializable
 data class ModifyGuildRolePositionRequest(
         val id: String,
-        val position: String
+        val position: Int
 )
 
 @Serializable
@@ -117,22 +117,22 @@ data class ModifyCurrentUserNicknameRequest(val nick: String? = null)
 
 @Serializable
 data class ModifyGuildRequest(
-        val name: String,
-        val region: String,
+        val name: String? = null,
+        val region: String? = null,
         @SerialName("verification_level")
-        val verificationLevel: VerificationLevel,
+        val verificationLevel: VerificationLevel? = null,
         @SerialName("default_message_notifications")
-        val defaultMessageNotificationLevel: DefaultMessageNotificationLevel,
+        val defaultMessageNotificationLevel: DefaultMessageNotificationLevel? = null,
         @SerialName("explicit_content_filter")
-        val contentFilter: ExplicitContentFilter,
+        val contentFilter: ExplicitContentFilter? = null,
         @SerialName("afk_channel_id")
-        val afkChannel: String,
+        val afkChannel: String? = null,
         @SerialName("afk_timeout")
-        val afkTimeout: Int,
-        val icon: String,
+        val afkTimeout: Int? = null,
+        val icon: String? = null,
         @SerialName("owner_id")
-        val ownerId: String,
-        val spalsh: String,
+        val ownerId: String? = null,
+        val spalsh: String? = null,
         @SerialName("system_channel_id")
-        val systemChannelId: String
+        val systemChannelId: String? = null
 )
