@@ -42,10 +42,10 @@ data class ModifyGuildChannelPositionRequest(val id: String, val position: Int)
 @Serializable
 data class AddGuildMemberRequest(
         @SerialName("access_token") val token: String,
-        val nick: String,
-        val roles: List<String>,
-        val mute: Boolean,
-        val deaf: Boolean
+        val nick: String? = null,
+        val roles: List<String>? = null,
+        val mute: Boolean? = null,
+        val deaf: Boolean? = null
 )
 
 @Serializable
