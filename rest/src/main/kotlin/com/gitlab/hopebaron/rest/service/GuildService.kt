@@ -78,7 +78,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun getGuildBans(guildId: String, userId: String) = call(Route.GuildBanGet) {
+    suspend fun getGuildBan(guildId: String, userId: String) = call(Route.GuildBanGet) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
     }
