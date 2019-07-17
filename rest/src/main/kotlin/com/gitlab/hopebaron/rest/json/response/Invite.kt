@@ -8,7 +8,7 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class InviteResponse(
-        val code: String,
+        val code: String?,
         val guild: PartialGuild? = null,
         val channel: Channel? = null,
         @SerialName("target_user")
