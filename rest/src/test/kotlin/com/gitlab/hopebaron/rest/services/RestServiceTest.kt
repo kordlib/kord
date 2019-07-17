@@ -25,6 +25,9 @@ fun image(path: String): String {
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RestServiceTest {
 
+    val client1 = System.getenv("client1")
+    val client2 = System.getenv("client2")
+
     private val token = System.getenv("token")
 
     private lateinit var requestHandler: RequestHandler
@@ -39,8 +42,12 @@ class RestServiceTest {
     //created channel id
     private lateinit var channelId: String
 
+    private lateinit var userId: String
+
     @BeforeAll
-    fun setup() {
+    fun setup() = runBlocking {
+
+
         client = HttpClient(CIO) {
             defaultRequest {
                 header("Authorization", "Bot $token")
@@ -48,6 +55,8 @@ class RestServiceTest {
         }
         requestHandler = ExclusionRequestHandler(client)
         rest = RestClient(ExclusionRequestHandler(client))
+
+        userId = rest.user.getCurrentUser().id
     }
 
     @Test
@@ -68,7 +77,18 @@ class RestServiceTest {
 
         val guild = rest.guild.createGuild(request)
 
+
+
         guildId = guild.id
+
+        rest.guild.getGuild(guildId)
+
+        rest.guild.modifyGuild(guildId, ModifyGuildRequest("Edited Guild Test"))
+
+        rest.guild.getGuildVoiceRegions(guildId).first()
+
+
+        Unit
     }
 
     @Test
@@ -180,7 +200,136 @@ class RestServiceTest {
         }
     }
 
+    @Test
+    @Order(9)
+    fun `modify channels`() = runBlocking {
+        with(rest.channel) {
+            //TODO Test Put method
+
+            patchChannel(channelId, PatchModifyChannelRequest("PATCH"))
+
+            Unit
+
+        }
+    }
+
 //TODO Add Group Channel Tests
+
+    @Test
+    @Disabled("Member is not added to guild yet due to Guild#addGuildMember")
+    @Order(11)
+    fun `member in guild`() = runBlocking {
+        with(rest.guild) {
+            val members = getGuildMembers(guildId)
+            //TODO add member to guild
+
+            modifyGuildMember(guildId, userId, ModifyGuildMemberRequest("My nickname", mute = true, deaf = true))
+
+            getGuildMember(guildId, userId)
+
+            deleteGuildMember(guildId, client1)
+
+            modifyCurrentUserNickname(guildId, ModifyCurrentUserNicknameRequest("Kord"))
+
+            Unit
+        }
+    }
+
+    @Test
+    @Order(12)
+    fun `roles in guild`() = runBlocking {
+        with(rest.guild) {
+            val role = createGuildRole(
+                    guildId,
+                    CreateGuildRoleRequest(
+                            "Sudoers",
+                            Permissions { +Permission.Administrator },
+                            5000,
+                            true,
+                            true
+                    )
+            )
+
+            modifyGuildRole(guildId, role.id, ModifyGuildRoleRequest("Edited role"))
+
+            addRoleToGuildMember(guildId, userId, role.id)
+
+            deleteRoleFromGuildMember(guildId, userId, role.id)
+
+            modifyGuildRolePosition(guildId, ModifyGuildRolePositionRequest(role.id, 0))
+
+            getGuildRoles(guildId)
+
+            deleteGuildRole(guildId, role.id)
+
+            Unit
+        }
+    }
+
+    @Test
+    @Disabled("User to ban is not there.")
+    @Order(13)
+    fun `bans in guild`() = runBlocking {
+
+        with(rest.guild) {
+
+            addGuildBan(guildId, client1, AddGuildBanRequest())
+
+            getGuildBans(guildId)
+
+            getGuildBan(guildId, client1)
+
+            deleteGuildBan(guildId, client1)
+
+            Unit
+
+        }
+    }
+
+    @Test
+    @Order(14)
+    fun `invites in guild`() = runBlocking {
+        with(rest.guild) {
+            getVanityInvite(guildId)
+            getGuildInvites(guildId)
+
+            Unit
+        }
+    }
+
+    @Test
+    @Order(15)
+    fun `prune members in guilds`() = runBlocking {
+        with(rest.guild) {
+            getGuildPruneCount(guildId)
+            beginGuildPrune(guildId)
+
+            Unit
+        }
+    }
+
+    @Test
+    @Disabled
+    @Order(16)
+    fun `integrations in guild`() = runBlocking {
+
+        //TODO
+    }
+
+    @Test
+    @Order(17)
+    fun `embeds in guild`() = runBlocking {
+
+        with(rest.guild) {
+
+            modifyGuildEmbed(guildId, ModifyGuildEmbedRequest(true, channelId))
+
+            getGuildEmbed(guildId)
+
+            Unit
+        }
+    }
+
 
     @Test
     @Order(Int.MAX_VALUE - 2)
