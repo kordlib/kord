@@ -258,11 +258,11 @@ sealed class Route<T>(
         : Route<EmbedResponse>(HttpMethod.Patch, "/guilds/$GuildId/embed", EmbedResponse.serializer())
 
     object GuildVanityInviteGet
-        : Route<PartialInvite>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", PartialInvite.serializer())
+        : Route<InviteResponse>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", InviteResponse.serializer())
 
     //TODO must return an image
     object GuildWidgetGet
-        : Route<Unit>(HttpMethod.Get, "/guilds/$GuildId/wig", NoStrategy)
+        : Route<Unit>(HttpMethod.Get, "/guilds/$GuildId/widget", NoStrategy)
 
     object ChannelWebhooksGet
         : Route<List<Webhook>>(HttpMethod.Get, "/channels/$ChannelId/webhooks", ArrayListSerializer(Webhook.serializer()))
