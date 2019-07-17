@@ -63,7 +63,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.RoleId] = roleId
     }
 
-    suspend fun deleteRoleToGuildMember(guildId: String, userId: String, roleId: String) = call(Route.GuildMemberRoleDelete) {
+    suspend fun deleteRoleFromGuildMember(guildId: String, userId: String, roleId: String) = call(Route.GuildMemberRoleDelete) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
         keys[Route.RoleId] = roleId
