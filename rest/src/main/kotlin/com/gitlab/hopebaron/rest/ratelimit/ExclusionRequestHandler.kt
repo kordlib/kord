@@ -11,6 +11,7 @@ import io.ktor.client.call.call
 import io.ktor.client.call.receive
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.response.HttpResponse
+import io.ktor.client.response.readBytes
 import io.ktor.http.takeFrom
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
@@ -65,7 +66,7 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
         }
 
         if (response.isError) {
-            throw RequestException(response, response.logString)
+            throw RequestException(response, response.errorString())
         }
 
         return response
@@ -102,6 +103,12 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
             get() = headers[retryAfterHeader]?.toLong()?.let { it + responseTime.timestamp } ?: 0
 
         val HttpResponse.logString get() = "$status: ${call.request.method.value} ${call.request.url}"
+
+        suspend fun HttpResponse.errorString(): String {
+            val message = String(this.readBytes())
+            return if (message.isBlank()) logString
+            else "$logString $message"
+        }
 
         val Request<*>.logString
             get() : String {
