@@ -14,9 +14,13 @@ import kotlinx.io.InputStream
 import kotlinx.io.streams.outputStream
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger { }
+
+@Suppress("EXPERIMENTAL_API_USAGE")
+private val parser = Json(JsonConfiguration(encodeDefaults = false, strictMode = false))
 
 sealed class Request<T> {
     internal abstract val route: Route<T>
@@ -35,7 +39,7 @@ sealed class Request<T> {
     open suspend fun parse(response: HttpResponse): T {
         val json = response.readText()
         logger.trace { "${response.call.request.method.value} ${response.call.request.url} body: $json" }
-        return Json.nonstrict.parse(route.strategy, json)
+        return parser.parse(route.strategy, json)
     }
 
     internal tailrec fun generatePath(builder: StringBuilder = StringBuilder(), start: Int = 0): String {
@@ -100,7 +104,7 @@ internal class JsonRequest<T>(
         }
 
         this@JsonRequest.body?.let {
-            val json = Json.nonstrict.stringify(it.strategy as SerializationStrategy<Any>, it.body)
+            val json = parser.stringify(it.strategy as SerializationStrategy<Any>, it.body)
             body = TextContent(json, ContentType.Application.Json)
         }
     }
@@ -124,7 +128,7 @@ internal class MutlipartRequest<T>(
         val data = formData {
 
             this@MutlipartRequest.body?.let {
-                append("payload_json", Json.nonstrict.stringify(it.strategy as SerializationStrategy<Any>, it.body))
+                append("payload_json", parser.stringify(it.strategy as SerializationStrategy<Any>, it.body))
             }
 
             if (files.size == 1) append("file", filename = files[0].first) {
