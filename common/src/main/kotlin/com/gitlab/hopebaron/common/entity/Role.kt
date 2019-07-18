@@ -16,6 +16,18 @@ data class Role(
 )
 
 @Serializable
+data class AuditLogRoleChange(
+        val id: String,
+        val name: String? = null,
+        val color: Int? = null,
+        val hoist: Boolean? = null,
+        val position: Int? = null,
+        val permissions: Permissions? = null,
+        val managed: Boolean? = null,
+        val mentionable: Boolean? = null
+)
+
+@Serializable
 data class GuildRole(
         @SerialName("guild_id")
         val guildId: String,

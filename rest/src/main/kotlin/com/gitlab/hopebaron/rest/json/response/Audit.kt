@@ -71,10 +71,12 @@ data class AuditLogChangeResponse<T>(
 
                 val actualNewValue: Any? = serializer?.let {
                     if (newValue != null) Json.nonstrict.fromJson(it, newValue as JsonElement)
+                    else null
                 } ?: newValue
 
                 val actualOldValue: Any? = serializer?.let {
                     if (oldValue != null) Json.nonstrict.fromJson(it, oldValue as JsonElement)
+                    else null
                 } ?: oldValue
 
                 endStructure(descriptor)
@@ -98,7 +100,7 @@ data class AuditLogChangeResponse<T>(
             "explicit_content_filter" -> ExplicitContentFilter.ExplicitContentFilterSerializer
             "default_message_notifications" -> DefaultMessageNotificationLevel.DefaultMessageNotificationLevelSerializer
             "vanity_url_code" -> StringSerializer
-            "\$add", "\$remove" -> ArrayListSerializer(Role.serializer())
+            "\$add", "\$remove" -> ArrayListSerializer(AuditLogRoleChange.serializer())
             "prune_delete_days" -> Int.serializer()
             "widget_enabled" -> Boolean.serializer()
             "widget_channel_id" -> StringSerializer
