@@ -214,14 +214,13 @@ sealed class Route<T>(
         : Route<Role>(HttpMethod.Post, "/guilds/$GuildId/roles", Role.serializer())
 
     object GuildRolesPatch
-        : Route<Role>(HttpMethod.Patch, "/guilds/$GuildId/roles", Role.serializer())
+        : Route<List<Role>>(HttpMethod.Patch, "/guilds/$GuildId/roles", ArrayListSerializer(Role.serializer()))
 
     object GuildRolePatch
         : Route<Role>(HttpMethod.Patch, "/guilds/$GuildId/roles/$RoleId", Role.serializer())
 
     object GuildRoleDelete
-        : Route<Role>(HttpMethod.Delete, "/guilds/$GuildId/roles/$RoleId", Role.serializer())
-
+        : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/roles/$RoleId", NoStrategy)
 
     object GuildPruneCountGet
         : Route<PruneResponse>(HttpMethod.Get, "/guilds/$GuildId/prune", PruneResponse.serializer())
