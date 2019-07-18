@@ -36,6 +36,6 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     fun build(): Request<T> = if (files == null) {
         JsonRequest(route, keys, parameters, body)
     } else {
-        MutlipartRequest(route, keys, parameters, body, files.orEmpty())
+        MultipartRequest(route, keys, parameters, body, files.orEmpty())
     }
 }

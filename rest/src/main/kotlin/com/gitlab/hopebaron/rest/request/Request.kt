@@ -110,7 +110,7 @@ internal class JsonRequest<T>(
     }
 }
 
-internal class MutlipartRequest<T>(
+internal class MultipartRequest<T>(
         override val route: Route<T>,
         override val routeParams: Map<String, Any>,
         private val parameters: StringValues,
@@ -122,12 +122,12 @@ internal class MutlipartRequest<T>(
 
         url {
             encodedPath += generatePath()
-            parameters.appendAll(this@MutlipartRequest.parameters)
+            parameters.appendAll(this@MultipartRequest.parameters)
         }
 
         val data = formData {
 
-            this@MutlipartRequest.body?.let {
+            this@MultipartRequest.body?.let {
                 append("payload_json", parser.stringify(it.strategy as SerializationStrategy<Any>, it.body))
             }
 
