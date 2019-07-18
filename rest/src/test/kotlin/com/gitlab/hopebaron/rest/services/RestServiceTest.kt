@@ -290,7 +290,7 @@ class RestServiceTest {
     @Order(14)
     fun `invites in guild`() = runBlocking {
         with(rest.guild) {
-            getVanityInvite(guildId)
+//            getVanityInvite(guildId)  //¯\_(ツ)_/¯
             getGuildInvites(guildId)
 
             Unit
