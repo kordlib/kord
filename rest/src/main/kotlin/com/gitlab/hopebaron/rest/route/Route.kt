@@ -134,7 +134,7 @@ sealed class Route<T>(
         : Route<User>(HttpMethod.Get, "/users/$UserId", User.serializer())
 
     object CurrentUsersGuildsGet
-        : Route<List<Guild>>(HttpMethod.Get, "/users/@me/guilds", ArrayListSerializer(Guild.serializer()))
+        : Route<List<PartialGuild>>(HttpMethod.Get, "/users/@me/guilds", ArrayListSerializer(PartialGuild.serializer()))
 
     object GuildLeave
         : Route<Unit>(HttpMethod.Delete, "/users/@me/guilds/$GuildId", NoStrategy)
