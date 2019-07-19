@@ -290,7 +290,7 @@ class RestServiceTest {
     @Order(14)
     fun `invites in guild`() = runBlocking {
         with(rest.guild) {
-//            getVanityInvite(guildId)  //¯\_(ツ)_/¯
+            //            getVanityInvite(guildId)  //¯\_(ツ)_/¯
             getGuildInvites(guildId)
 
             Unit
@@ -325,6 +325,28 @@ class RestServiceTest {
             modifyGuildEmbed(guildId, ModifyGuildEmbedRequest(true, channelId))
 
             getGuildEmbed(guildId)
+
+            Unit
+        }
+    }
+
+    @Test
+    @Order(18)
+    fun `user`() = runBlocking {
+        with(rest.user) {
+            getCurrentUser()
+
+            getCurrentUserGuilds()
+
+            modifyCurrentUser(ModifyCurrentUserRequest("Happy Kord"))
+
+            getUserConnections()
+
+            // getUser(client1) // works, but can't be tested with bots client id use your own id
+
+            // createDM(CreateDMRequest(client1)) // works, but can't be tested with bots client id use your own id
+
+            //TODO test groups
 
             Unit
         }
