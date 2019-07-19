@@ -3,8 +3,9 @@ package com.gitlab.hopebaron.websocket.handler
 import com.gitlab.hopebaron.websocket.Event
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlin.coroutines.CoroutineContext
 
 @ExperimentalCoroutinesApi
@@ -21,8 +22,10 @@ internal abstract class Handler(val flow: Flow<Event>, private val dispatcher: C
     open fun start() {}
 
     inline fun <reified T> on(crossinline block: suspend (T) -> Unit) {
-        launch {
-            flow.filterIsInstance<T>().collect { block(it) }
-        }
+        flow
+                .filterIsInstance<T>()
+                .onEach { block(it) }
+                .launchIn(this)
     }
+
 }

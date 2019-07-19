@@ -3,7 +3,6 @@
 package json
 
 import com.gitlab.hopebaron.common.entity.Shard
-import com.gitlab.hopebaron.common.entity.Snowflake
 import com.gitlab.hopebaron.websocket.*
 import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -51,7 +50,7 @@ class CommandTest : Spek({
 
     describe("RequestGuildMembers") {
         it("is serialized correctly") {
-            val guildId = Snowflake("1337")
+            val guildId = "1337"
             val query = "test"
             val limit = 1337
 
@@ -60,7 +59,7 @@ class CommandTest : Spek({
             val json = Json.stringify(JsonObject.serializer(), json {
                 "op" to OpCode.RequestGuildMembers.code
                 "d" to json {
-                    "guild_id" to guildId.id
+                    "guild_id" to guildId
                     "query" to query
                     "limit" to limit
                 }
@@ -72,8 +71,8 @@ class CommandTest : Spek({
 
     describe("UpdateVoiceStatus") {
         it("is serialized correctly") {
-            val guildId = Snowflake("1337")
-            val channelId = Snowflake("420")
+            val guildId = "1337"
+            val channelId = "420"
             val selfMute = true
             val selfDeaf = false
 
@@ -82,8 +81,8 @@ class CommandTest : Spek({
             val json = Json.stringify(JsonObject.serializer(), json {
                 "op" to OpCode.VoiceStateUpdate.code
                 "d" to json {
-                    "guild_id" to guildId.id
-                    "channel_id" to channelId.id
+                    "guild_id" to guildId
+                    "channel_id" to channelId
                     "self_mute" to selfMute
                     "self_deaf" to selfDeaf
                 }

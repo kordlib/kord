@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PinsUpdateData(
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         @SerialName("channel_id")
-        val channelId: Snowflake,
+        val channelId: String,
         @SerialName("last_pin_timestamp")
         val lastPinTimestamp: String? = null
 )
@@ -16,11 +16,11 @@ data class PinsUpdateData(
 @Serializable
 data class Typing(
         @SerialName("channel_id")
-        val channelId: Snowflake,
+        val channelId: String,
         @SerialName("guild_id")
-        val guildId: Snowflake? = null,
+        val guildId: String? = null,
         @SerialName("user_id")
-        val userId: Snowflake,
+        val userId: String,
         val timestamp: Long
 )
 

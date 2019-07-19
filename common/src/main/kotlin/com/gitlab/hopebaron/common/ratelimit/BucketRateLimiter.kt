@@ -1,9 +1,9 @@
-package com.gitlab.hopebaron.websocket.ratelimit
+package com.gitlab.hopebaron.common.ratelimit
 
+import com.gitlab.hopebaron.common.Platform
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.time.Duration
-import java.time.Instant
 
 /**
  * A rate limiter that supplies a given [capacity] of permits at for each [interval](refillIntervalMillis).
@@ -34,17 +34,17 @@ class BucketRateLimiter(private val capacity: Int, private val refillIntervalMil
         require(refillIntervalMillis > 0) { "refill interval must be a positive number" }
     }
 
-    private val isNextInterval get() = nextInterval <= nowMillis()
+    private val isNextInterval get() = nextInterval <= Platform.nowMillis()
 
     private val isAtCapacity get() = count == capacity
 
     private fun resetState() {
         count = 0
-        nextInterval = nowMillis() + refillIntervalMillis
+        nextInterval = Platform.nowMillis() + refillIntervalMillis
     }
 
     private suspend fun delayUntilNextInterval() {
-        val delay = nextInterval - nowMillis()
+        val delay = nextInterval - Platform.nowMillis()
         kotlinx.coroutines.delay(delay)
     }
 
@@ -58,9 +58,4 @@ class BucketRateLimiter(private val capacity: Int, private val refillIntervalMil
 
         count += 1
     }
-}
-
-
-private fun nowMillis(): Long {
-    return Instant.now().toEpochMilli()
 }

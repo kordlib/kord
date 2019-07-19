@@ -5,7 +5,7 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class User(
-        val id: Snowflake,
+        val id: String,
         val username: String,
         val discriminator: String,
         val avatar: String? = null,

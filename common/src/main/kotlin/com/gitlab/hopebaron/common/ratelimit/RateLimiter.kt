@@ -1,4 +1,4 @@
-package com.gitlab.hopebaron.websocket.ratelimit
+package com.gitlab.hopebaron.common.ratelimit
 
 /**
  * A rate limiter that limits the amount of [consume] invocations that can be made over a certain period.

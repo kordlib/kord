@@ -5,29 +5,29 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class UnavailableGuild(
-        val id: Snowflake,
+        val id: String,
         val unavailable: Boolean? = null
 )
 
 @Serializable
 data class Guild(
-        val id: Snowflake,
+        val id: String,
         val name: String,
         val icon: String? = null,
         val splash: String? = null,
         val owner: Boolean? = null,
         @SerialName("owner_id")
-        val ownerId: Snowflake,
+        val ownerId: String,
         val permissions: Int? = null,
         val region: String,
         @SerialName("afk_channel_id")
-        val afkChannelId: Snowflake? = null,
+        val afkChannelId: String? = null,
         @SerialName("afk_timeout")
         val afkTimeout: Int,
         @SerialName("embed_enabled")
         val embedEnabled: Boolean? = null,
         @SerialName("embed_channel_id")
-        val embedChannelId: Snowflake? = null,
+        val embedChannelId: String? = null,
         @SerialName("verification_level")
         val verificationLevel: VerificationLevel,
         @SerialName("default_message_notifications")
@@ -40,13 +40,13 @@ data class Guild(
         @SerialName("mfa_level")
         val mfaLevel: MFALevel,
         @SerialName("application_id")
-        val applicationId: Snowflake? = null,
+        val applicationId: String? = null,
         @SerialName("widget_enabled")
         val widgetEnabled: Boolean? = null,
         @SerialName("widget_channel_id")
-        val widgetChannelId: Snowflake? = null,
+        val widgetChannelId: String? = null,
         @SerialName("system_channel_id")
-        val systemChannelId: Snowflake? = null,
+        val systemChannelId: String? = null,
         @SerialName("joined_at")
         val joinedAt: String? = null,
         val large: Boolean? = null,
@@ -70,27 +70,47 @@ data class Guild(
 
 @Serializable
 data class PartialGuild(
-        val id: Snowflake,
+        val id: String,
         val name: String,
-        val icon: String?,
-        val owner: Boolean?,
-        val permissions: Permissions?
+        val icon: String? = null,
+        val owner: Boolean? = null,
+        val permissions: Permissions? = null
 )
 
 @Serializable
 data class GuildBan(
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         val user: User
 )
 
 @Serializable
-data class GuildIntegrations(@SerialName("guild_id") val guildId: Snowflake)
+data class GuildIntegrations(
+        val id: String,
+        val name: String,
+        val type: String,
+        val enabled: Boolean,
+        val syncing: Boolean,
+        @SerialName("role_id")
+        val roleId: String,
+        @SerialName("expire_behavior")
+        val expireBehavior: Int,
+        @SerialName("expire_grace_period")
+        val gracePeriod: Int,
+        val user: User,
+        val account: IntegrationAccount,
+        @SerialName("synced_at")
+        val syncedAt: String
+)
+
+@Serializable
+data class IntegrationAccount(val id: String,
+                              val name: String)
 
 @Serializable
 data class GuildMembersChunkData(
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         val members: List<GuildMember>
 )
 
@@ -98,30 +118,30 @@ data class GuildMembersChunkData(
 data class VoiceServerUpdateData(
         val token: String,
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         val endpoint: String
 )
 
 @Serializable
 data class WebhooksUpdateData(
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: String,
         @SerialName("channel_id")
-        val channelId: Snowflake
+        val channelId: String
 )
 
 @Serializable
 data class VoiceState(
         @SerialName("guild_id")
-        val guildId: Snowflake? = null,
+        val guildId: String? = null,
         @SerialName("channel_id")
-        val channelId: Snowflake? = null,
+        val channelId: String? = null,
         @SerialName("user_id")
-        val userId: Snowflake,
+        val userId: String,
         @SerialName("guild_member")
         val member: GuildMember? = null,
         @SerialName("session_id")
-        val sessionId: Snowflake,
+        val sessionId: String,
         val deaf: Boolean,
         val mute: Boolean,
         @SerialName("self_deaf")
@@ -131,73 +151,74 @@ data class VoiceState(
         val suppress: Boolean
 )
 
-@Serializable(with = DefaultMessageNotificationLevelSerializer::class)
+@Serializable(with = DefaultMessageNotificationLevel.DefaultMessageNotificationLevelSerializer::class)
 enum class DefaultMessageNotificationLevel(val code: Int) {
     AllMessages(0),
-    OnlyMentions(1)
-}
+    OnlyMentions(1);
 
-@Serializer(forClass = DefaultMessageNotificationLevel::class)
-private object DefaultMessageNotificationLevelSerializer : KSerializer<DefaultMessageNotificationLevel> {
-    override val descriptor: SerialDescriptor
-        get() = IntDescriptor.withName("default_message_notifications")
+    @Serializer(forClass = DefaultMessageNotificationLevel::class)
+    companion object DefaultMessageNotificationLevelSerializer : KSerializer<DefaultMessageNotificationLevel> {
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("default_message_notifications")
 
-    override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel {
-        val code = decoder.decodeInt()
-        return DefaultMessageNotificationLevel.values().first { it.code == code }
+        override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel {
+            val code = decoder.decodeInt()
+            return values().first { it.code == code }
+        }
+
+        override fun serialize(encoder: Encoder, obj: DefaultMessageNotificationLevel) {
+            encoder.encodeInt(obj.code)
+        }
     }
 
-    override fun serialize(encoder: Encoder, obj: DefaultMessageNotificationLevel) {
-        encoder.encodeInt(obj.code)
-    }
 }
 
-@Serializable(with = ExplicitContentFilterSerializer::class)
+@Serializable(with = ExplicitContentFilter.ExplicitContentFilterSerializer::class)
 enum class ExplicitContentFilter(val code: Int) {
     Disabled(0),
     MembersWithoutRoles(1),
-    AllMembers(2)
+    AllMembers(2);
+
+    @Serializer(forClass = ExplicitContentFilter::class)
+    companion object ExplicitContentFilterSerializer : KSerializer<ExplicitContentFilter> {
+
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("explicit_content_filter")
+
+        override fun deserialize(decoder: Decoder): ExplicitContentFilter {
+            val code = decoder.decodeInt()
+            return values().first { it.code == code }
+        }
+
+        override fun serialize(encoder: Encoder, obj: ExplicitContentFilter) {
+            encoder.encodeInt(obj.code)
+        }
+
+    }
 }
 
-@Serializer(forClass = ExplicitContentFilter::class)
-private object ExplicitContentFilterSerializer : KSerializer<ExplicitContentFilter> {
-
-    override val descriptor: SerialDescriptor
-        get() = IntDescriptor.withName("explicit_content_filter")
-
-    override fun deserialize(decoder: Decoder): ExplicitContentFilter {
-        val code = decoder.decodeInt()
-        return ExplicitContentFilter.values().first { it.code == code }
-    }
-
-    override fun serialize(encoder: Encoder, obj: ExplicitContentFilter) {
-        encoder.encodeInt(obj.code)
-    }
-
-}
-
-@Serializable(with = MFALevelSerializer::class)
+@Serializable(with = MFALevel.MFALevelSerializer::class)
 enum class MFALevel(val code: Int) {
     None(0),
-    Elevated(1)
+    Elevated(1);
+
+    @Serializer(forClass = MFALevel::class)
+    object MFALevelSerializer : KSerializer<MFALevel> {
+
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("mfa_level")
+
+        override fun deserialize(decoder: Decoder): MFALevel {
+            val code = decoder.decodeInt()
+            return values().first { it.code == code }
+        }
+
+        override fun serialize(encoder: Encoder, obj: MFALevel) {
+            encoder.encodeInt(obj.code)
+        }
+    }
 }
 
-@Serializer(forClass = MFALevel::class)
-private object MFALevelSerializer : KSerializer<MFALevel> {
-
-    override val descriptor: SerialDescriptor
-        get() = IntDescriptor.withName("mfa_level")
-
-    override fun deserialize(decoder: Decoder): MFALevel {
-        val code = decoder.decodeInt()
-        return MFALevel.values().first { it.code == code }
-    }
-
-    override fun serialize(encoder: Encoder, obj: MFALevel) {
-        encoder.encodeInt(obj.code)
-    }
-
-}
 
 @Serializable(with = VerificationLevel.VerificationLevelSerializer::class)
 enum class VerificationLevel(val code: Int) {
