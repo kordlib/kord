@@ -342,11 +342,30 @@ class RestServiceTest {
 
             getUserConnections()
 
-            // getUser(client1) // works, but can't be tested with bots client id use your own id
+            // getUser(client1) // works, but can't be tested with bots client id, use your own id
 
             // createDM(CreateDMRequest(client1)) // works, but can't be tested with bots client id use your own id
 
             //TODO test groups
+
+            Unit
+        }
+    }
+
+    @Test
+    @Order(19)
+    fun `emojis in guilds`() = runBlocking {
+        with(rest.emoji) {
+
+            val emoji = createEmoji(guildId,EmojiCreateRequest("kord",image("images/kord.png"),listOf(guildId)))
+
+            modifyEmoji(guildId,emoji.id!!, EmojiModifyRequest("edited"))
+
+            getEmojis(guildId)
+
+            getEmoji(guildId,emoji.id!!)
+
+            deleteEmoji(guildId,emoji.id!!)
 
             Unit
         }
