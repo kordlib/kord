@@ -140,7 +140,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Delete, "/users/@me/guilds/$GuildId", NoStrategy)
 
     object DMPost
-        : Route<Channel>(HttpMethod.Get, "/users/@me/channels", Channel.serializer())
+        : Route<Channel>(HttpMethod.Post, "/users/@me/channels", Channel.serializer())
 
     object UserConnectionsGet
         : Route<List<Connection>>(HttpMethod.Get, "/users/@me/connections", ArrayListSerializer(Connection.serializer()))
