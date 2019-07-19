@@ -25,8 +25,6 @@ fun image(path: String): String {
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RestServiceTest {
 
-    val client1 = System.getenv("client1")
-    val client2 = System.getenv("client2")
 
     private val token = System.getenv("token")
 
@@ -227,7 +225,7 @@ class RestServiceTest {
 
             getGuildMember(guildId, userId)
 
-            deleteGuildMember(guildId, client1)
+            //deleteGuildMember(guildId, user)
 
             modifyCurrentUserNickname(guildId, ModifyCurrentUserNicknameRequest("Kord"))
 
@@ -273,13 +271,13 @@ class RestServiceTest {
 
         with(rest.guild) {
 
-            addGuildBan(guildId, client1, AddGuildBanRequest())
+            //addGuildBan(guildId, user, AddGuildBanRequest())
 
             getGuildBans(guildId)
 
-            getGuildBan(guildId, client1)
+            //getGuildBan(guildId, user)
 
-            deleteGuildBan(guildId, client1)
+            //deleteGuildBan(guildId, user)
 
             Unit
 
@@ -342,9 +340,9 @@ class RestServiceTest {
 
             getUserConnections()
 
-            // getUser(client1) // works, but can't be tested with bots client id, use your own id
+            // getUser(user) // works, but can't be tested with bots client id, use your own id
 
-            // createDM(CreateDMRequest(client1)) // works, but can't be tested with bots client id use your own id
+            // createDM(CreateDMRequest(user)) // works, but can't be tested with bots client id use your own id
 
             //TODO test groups
 
@@ -357,15 +355,15 @@ class RestServiceTest {
     fun `emojis in guilds`() = runBlocking {
         with(rest.emoji) {
 
-            val emoji = createEmoji(guildId,EmojiCreateRequest("kord",image("images/kord.png"),listOf(guildId)))
+            val emoji = createEmoji(guildId, EmojiCreateRequest("kord", image("images/kord.png"), listOf(guildId)))
 
-            modifyEmoji(guildId,emoji.id!!, EmojiModifyRequest("edited"))
+            modifyEmoji(guildId, emoji.id!!, EmojiModifyRequest("edited"))
 
             getEmojis(guildId)
 
-            getEmoji(guildId,emoji.id!!)
+            getEmoji(guildId, emoji.id!!)
 
-            deleteEmoji(guildId,emoji.id!!)
+            deleteEmoji(guildId, emoji.id!!)
 
             Unit
         }
