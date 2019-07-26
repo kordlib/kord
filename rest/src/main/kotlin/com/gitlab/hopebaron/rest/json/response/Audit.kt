@@ -64,6 +64,7 @@ sealed class AuditLogChangeResponse<T> {
                         2 -> new = decodeSerializableElement(descriptor, index, JsonElementSerializer)
                     }
                 }
+                endStructure(descriptor)
             }
             return when (key) {
                 "name" -> NameLogChange(old?.primitive?.content, new?.primitive?.content)
