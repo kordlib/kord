@@ -4,7 +4,6 @@ import com.gitlab.hopebaron.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.ArrayListSerializer
 import kotlinx.serialization.internal.IntDescriptor
-import kotlinx.serialization.internal.NullableSerializer
 import kotlinx.serialization.internal.SerialClassDescImpl
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
@@ -24,7 +23,7 @@ data class AuditLogResponse(
 @Serializable
 data class AuditLogEntryResponse(
         @SerialName("target_id")
-        val targetId: String? = null,
+        val targetId: String?,
         val changes: List<AuditLogChangeResponse<*>>? = null,
         @SerialName("user_id")
         val userId: String,
@@ -41,7 +40,7 @@ sealed class AuditLogChangeResponse<T> {
     abstract val new: T?
 
     @Serializer(forClass = AuditLogChangeResponse::class)
-    companion object AuditLogChangeSerializer : KSerializer<AuditLogChangeResponse<*>?> {
+    companion object AuditLogChangeSerializer : KSerializer<AuditLogChangeResponse<*>> {
         override val descriptor: SerialDescriptor = object : SerialClassDescImpl("AuditLogChange") {
             init {
                 addElement("key")
@@ -52,7 +51,7 @@ sealed class AuditLogChangeResponse<T> {
         }
 
 
-        override fun deserialize(decoder: Decoder): AuditLogChangeResponse<*>? {
+        override fun deserialize(decoder: Decoder): AuditLogChangeResponse<*> {
             lateinit var key: String
             var new: JsonElement? = null
             var old: JsonElement? = null
@@ -61,8 +60,8 @@ sealed class AuditLogChangeResponse<T> {
                     when (val index = decodeElementIndex(descriptor)) {
                         CompositeDecoder.READ_DONE -> break@loop
                         0 -> key = decodeStringElement(descriptor, index)
-                        1 -> old = decodeNullableSerializableElement(descriptor, index, NullableSerializer(JsonElementSerializer))
-                        2 -> new = decodeNullableSerializableElement(descriptor, index, NullableSerializer(JsonElementSerializer))
+                        1 -> old = decodeSerializableElement(descriptor, index, JsonElementSerializer)
+                        2 -> new = decodeSerializableElement(descriptor, index, JsonElementSerializer)
                     }
                 }
             }
@@ -108,22 +107,21 @@ sealed class AuditLogChangeResponse<T> {
                 "deny" -> DenyLogChange(old?.primitive?.int, new?.primitive?.int)
                 "verification_level" -> VerificationLevelLogChange(old?.primitive?.int, new?.primitive?.int)
 
-                "\$remove" -> AddLogChange(nullableList(Role.serializer(),old), nullableList(Role.serializer(),new))
+                "\$remove" -> AddLogChange(listFromJson(AuditLogRoleChange.serializer(), old), listFromJson(AuditLogRoleChange.serializer(), new))
+                "\$add" -> RemoveLogChange(listFromJson(AuditLogRoleChange.serializer(), old), listFromJson(AuditLogRoleChange.serializer(), new))
+                "permission_overwrites" -> PermissionOverwriteLogChange(listFromJson(Overwrite.serializer(), old), listFromJson(Overwrite.serializer(), new))
 
+                else -> Unknown
 
-                "\$add" -> RemoveLogChange(nullableList(Role.serializer(), old), nullableList(Role.serializer(), new))
-                "permission_overwrites" -> PermissionOverwriteLogChange(nullableList(Overwrite.serializer(), old), nullableList(Overwrite.serializer(), new))
-
-                else -> null
             }
 
         }
 
         @UnstableDefault
-        private fun <T> nullableList(serializer: KSerializer<T>, element: JsonElement?): List<T>? {
+        private fun <T> listFromJson(serializer: KSerializer<T>, element: JsonElement?): List<T>? {
             return if (element != null) {
-                val nullableSerializer = NullableSerializer(ArrayListSerializer(serializer))
-                Json.nonstrict.fromJson(nullableSerializer, element)
+                val asListSerializer = ArrayListSerializer(serializer)
+                Json.nonstrict.fromJson(asListSerializer, element)
             } else null
         }
     }
@@ -148,6 +146,7 @@ data class AllowLogChange(override val old: Permissions?, override val new: Perm
             new?.let { Permissions { +it } }
     )
 }
+
 
 data class DenyLogChange(override val old: Permissions?, override val new: Permissions?) : AuditLogChangeResponse<Permissions>() {
     internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions { +it } },
@@ -179,8 +178,8 @@ data class MaxUsesLogChange(override val old: Int?, override val new: Int?) : Au
 data class UsesLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
 data class MaxAgeLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
 data class ColorLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
-data class AddLogChange(override val old: List<Role>?, override val new: List<Role>?) : AuditLogChangeResponse<List<Role>>()
-data class RemoveLogChange(override val old: List<Role>?, override val new: List<Role>?) : AuditLogChangeResponse<List<Role>>()
+data class AddLogChange(override val old: List<AuditLogRoleChange>?, override val new: List<AuditLogRoleChange>?) : AuditLogChangeResponse<List<AuditLogRoleChange>>()
+data class RemoveLogChange(override val old: List<AuditLogRoleChange>?, override val new: List<AuditLogRoleChange>?) : AuditLogChangeResponse<List<AuditLogRoleChange>>()
 data class PermissionOverwriteLogChange(override val old: List<Overwrite>?, override val new: List<Overwrite>?) : AuditLogChangeResponse<List<Overwrite>>()
 
 data class MFALogChange(override val old: MFALevel?, override val new: MFALevel?) : AuditLogChangeResponse<MFALevel>() {
@@ -209,6 +208,11 @@ data class ExplicitContentFilterLogChange(override val old: ExplicitContentFilte
             ExplicitContentFilter.values().firstOrNull { it.code == new },
             ExplicitContentFilter.values().firstOrNull { it.code == old }
     )
+}
+
+object Unknown : AuditLogChangeResponse<Nothing>() {
+    override val old = null
+    override val new = null
 }
 
 @Serializable(with = AuditLogEventResponse.AuditLogEventSerializer::class)
