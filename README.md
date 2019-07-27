@@ -41,6 +41,7 @@ In an effort to ease the pain of bot development, Kord grants the user an extens
 ```groovy
 repositories {
  ...
+ jcenter()
  maven { url 'https://jitpack.io' }
 }
 ```
@@ -48,7 +49,7 @@ repositories {
 ```groovy
 dependencies {
  ...
- implementation 'com.gitlab.hopebaron:Kord:0.0.1'
+ implementation 'com.gitlab.kordlib:kord:0.1.0'
 }
 ```
 
