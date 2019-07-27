@@ -39,6 +39,7 @@ sealed class AuditLogChangeResponse<T> {
     abstract val old: T?
     abstract val new: T?
 
+
     @Serializer(forClass = AuditLogChangeResponse::class)
     companion object AuditLogChangeSerializer : KSerializer<AuditLogChangeResponse<*>> {
         override val descriptor: SerialDescriptor = object : SerialClassDescImpl("AuditLogChange") {
@@ -50,7 +51,7 @@ sealed class AuditLogChangeResponse<T> {
 
         }
 
-
+        @UnstableDefault
         override fun deserialize(decoder: Decoder): AuditLogChangeResponse<*> {
             lateinit var key: String
             var new: JsonElement? = null
