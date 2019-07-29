@@ -1,9 +1,9 @@
-package com.gitlab.hopebaron.rest.requesthandler
+package com.gitlab.kordlib.rest.requesthandler
 
-import com.gitlab.hopebaron.common.Platform
-import com.gitlab.hopebaron.rest.ratelimit.ExclusionRequestHandler
-import com.gitlab.hopebaron.rest.request.RequestBuilder
-import com.gitlab.hopebaron.rest.route.Route
+import com.gitlab.kordlib.common.Platform
+import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
+import com.gitlab.kordlib.rest.request.RequestBuilder
+import com.gitlab.kordlib.rest.route.Route
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
