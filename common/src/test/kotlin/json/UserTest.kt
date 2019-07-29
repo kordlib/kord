@@ -2,7 +2,7 @@
 
 package json
 
-import com.gitlab.hopebaron.common.entity.User
+import com.gitlab.kordlib.common.entity.User
 import kotlinx.serialization.json.Json
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe

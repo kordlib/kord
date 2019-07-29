@@ -2,7 +2,7 @@
 
 package json
 
-import com.gitlab.hopebaron.websocket.*
+import com.gitlab.kordlib.gateway.*
 import kotlinx.serialization.json.Json
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe

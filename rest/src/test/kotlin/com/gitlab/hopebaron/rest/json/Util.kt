@@ -1,4 +1,4 @@
-package com.gitlab.hopebaron.rest.json
+package com.gitlab.kordlib.rest.json
 
 internal fun file(name: String): String {
     val loader = Unit::class.java.classLoader

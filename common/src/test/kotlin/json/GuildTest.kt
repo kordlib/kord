@@ -2,10 +2,10 @@
 
 package json
 
-import com.gitlab.hopebaron.common.entity.Guild
-import com.gitlab.hopebaron.common.entity.GuildMember
-import com.gitlab.hopebaron.common.entity.PartialGuild
-import com.gitlab.hopebaron.common.entity.UnavailableGuild
+import com.gitlab.kordlib.common.entity.Guild
+import com.gitlab.kordlib.common.entity.GuildMember
+import com.gitlab.kordlib.common.entity.PartialGuild
+import com.gitlab.kordlib.common.entity.UnavailableGuild
 import kotlinx.serialization.json.Json
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
