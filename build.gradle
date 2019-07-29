@@ -12,8 +12,8 @@ buildscript {
     }
 }
 
-group 'com.gitlab.hopebaron'
-version '0.0.1'
+group 'com.gitlab.kordlib'
+version '0.1.0'
 
 ext {
     spek_version = '2.0.5'

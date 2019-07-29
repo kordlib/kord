@@ -64,9 +64,9 @@ dependencies {
 
 ```xml
 <dependency>
-    <groupId>com.gitlab.hopebaron</groupId>
+    <groupId>com.gitlab.kordlib</groupId>
     <artifactId>Kord</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
