@@ -3,3 +3,8 @@ dependencies {
     api project(':rest')
     api project(':gateway')
 }
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
+    }
+}
