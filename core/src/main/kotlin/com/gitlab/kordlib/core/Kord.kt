@@ -1,3 +1,11 @@
 package com.gitlab.kordlib.core
 
-class Kord
+import com.gitlab.kordlib.gateway.Gateway
+import com.gitlab.kordlib.rest.service.RestClient
+
+class Kord {
+
+    val rest: RestClient = TODO()
+    val gateway: Gateway = TODO()
+
+}
