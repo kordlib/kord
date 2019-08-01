@@ -29,7 +29,7 @@ class Permissions private constructor(val code: Int) {
     @Serializer(forClass = Permissions::class)
     companion object : KSerializer<Permissions> {
 
-        inline operator fun invoke(block: PermissionsBuilder.() -> Unit): Permissions {
+        inline operator fun invoke(block: PermissionsBuilder.() -> Unit = {}): Permissions {
             val builder = PermissionsBuilder()
             builder.apply(block)
             return builder.permissions()
