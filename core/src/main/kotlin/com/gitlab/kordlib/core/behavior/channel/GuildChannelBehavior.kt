@@ -18,11 +18,11 @@ interface GuildChannelBehavior<T : UpdateGuildChannelBuilder> : ChannelBehavior 
 
     suspend fun editPermissions(overwrite: PermissionOverwrite) {
         val request = EditChannelPermissionRequest(overwrite.allowed, overwrite.denied, overwrite.type)
-        kord.rest.channel.editChannelPermissions(id.toString(), overwrite.target.toString(), request)
+        kord.rest.channel.editChannelPermissions(id.value, overwrite.target.value, request)
     }
 
     suspend fun type() {
-        kord.rest.channel.triggerTypingIndicator(id.toString())
+        kord.rest.channel.triggerTypingIndicator(id.value)
     }
 
     //TODO 1.3.50 add fun typeUntil(mark: ClockMark): Unit

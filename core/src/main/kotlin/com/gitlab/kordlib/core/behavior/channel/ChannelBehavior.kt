@@ -8,7 +8,7 @@ interface ChannelBehavior : Entity {
     val mention get() = "<#${id.value}>"
 
     suspend fun delete() {
-        kord.rest.channel.deleteChannel(id.toString())
+        kord.rest.channel.deleteChannel(id.value)
     }
 
     companion object {

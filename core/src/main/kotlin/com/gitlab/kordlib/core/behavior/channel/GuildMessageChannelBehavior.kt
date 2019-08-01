@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.Flow
 interface GuildMessageChannelBehavior<T : UpdateGuildChannelBuilder> : GuildChannelBehavior<T>, MessageChannelBehavior {
 
     suspend fun bulkDelete(messages: Iterable<Snowflake>) {
-        val request = BulkDeleteRequest(messages.map { it.toString() })
-        kord.rest.channel.bulkDelete(id.toString(), request)
+        val request = BulkDeleteRequest(messages.map { it.value })
+        kord.rest.channel.bulkDelete(id.value, request)
     }
 
     suspend fun getPinnedMessage(): Flow<Nothing /*Message*/> = TODO()

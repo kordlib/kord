@@ -25,8 +25,8 @@ data class UpdateTextChannelBuilder(
             topic = topic,
             nsfw = nsfw,
             rateLimitPerUser = rateLimitPerUser,
-            permissionOverwrites = permissionOverwrites.map { Overwrite(it.target.toString(), it.type, it.allowed.code, it.denied.code) },
-            parentId = parentId?.toString()
+            permissionOverwrites = permissionOverwrites.map { Overwrite(it.target.value, it.type, it.allowed.code, it.denied.code) },
+            parentId = parentId?.value
     )
 
 }
@@ -42,10 +42,10 @@ class UpdateVoiceChannelBuilder(
     override fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
             name = name,
             position = position,
-            parentId = parentId?.toString(),
+            parentId = parentId?.value,
             bitrate = bitrate,
             userLimit = userLimit,
-            permissionOverwrites = permissionOverwrites.map { Overwrite(it.target.toString(), it.type, it.allowed.code, it.denied.code) }
+            permissionOverwrites = permissionOverwrites.map { Overwrite(it.target.value, it.type, it.allowed.code, it.denied.code) }
     )
 }
 
@@ -62,8 +62,8 @@ class UpdateNewsChannelBuilder(
             position = position,
             topic = topic,
             nsfw = nsfw,
-            permissionOverwrites = permissionOverwrites.map { Overwrite(it.target.toString(), it.type, it.allowed.code, it.denied.code) },
-            parentId = parentId?.toString()
+            permissionOverwrites = permissionOverwrites.map { Overwrite(it.target.value, it.type, it.allowed.code, it.denied.code) },
+            parentId = parentId?.value
     )
 }
 
@@ -75,6 +75,6 @@ class UpdateStoreChannelBuilder(
     override fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
             name = name,
             position = position,
-            permissionOverwrites = permissionOverwrites.map { Overwrite(it.target.toString(), it.type, it.allowed.code, it.denied.code) }
+            permissionOverwrites = permissionOverwrites.map { Overwrite(it.target.value, it.type, it.allowed.code, it.denied.code) }
     )
 }
