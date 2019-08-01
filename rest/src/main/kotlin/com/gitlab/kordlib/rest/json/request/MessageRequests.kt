@@ -6,8 +6,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MessageCreatePostRequest(
-        val content: String,
+data class MessageCreateRequest(
+        val content: String? = null,
         val nonce: String? = null,
         val tts: Boolean? = null,
         val embed: EmbedRequest? = null
