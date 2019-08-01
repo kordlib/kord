@@ -1,6 +1,5 @@
-package com.gitlab.kordlib.rest.json.response
+package com.gitlab.kordlib.common.entity
 
-import com.gitlab.kordlib.common.entity.User
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
