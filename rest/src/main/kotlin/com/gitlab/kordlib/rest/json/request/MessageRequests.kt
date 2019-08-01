@@ -66,7 +66,7 @@ data class EmbedFieldRequest(
 @Serializable
 data class MessageEditPatchRequest(
         val content: String? = null,
-        val embed: Embed? = null
+        val embed: EmbedRequest? = null
 )
 
 @Serializable
