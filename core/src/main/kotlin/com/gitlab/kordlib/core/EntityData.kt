@@ -97,7 +97,7 @@ data class GuildIntegrationsData(
 
 @Serializable
 data class GuildMemberData(
-        var user: User,
+        var user: User? = null,
         var nick: String? = null,
         var roles: List<String>? = null,
         @SerialName("joined_at")

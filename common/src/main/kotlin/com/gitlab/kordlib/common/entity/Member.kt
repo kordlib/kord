@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GuildMember(
-        val user: User,
+        val user: User? = null,
         val nick: String? = null,
         val roles: List<String>,
         @SerialName("joined_at")
@@ -16,7 +16,7 @@ data class GuildMember(
 
 @Serializable
 data class AddedGuildMember(
-        val user: User,
+        val user: User? = null,
         val nick: String? = null,
         val roles: List<String>,
         @SerialName("joined_at")
