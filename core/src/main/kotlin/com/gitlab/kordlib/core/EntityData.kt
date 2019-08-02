@@ -4,163 +4,163 @@ import com.gitlab.kordlib.common.entity.*
 
 data class RoleData(
         val id: String,
-        val name: String? = null,
-        val color: Int? = null,
-        val hoist: Boolean? = null,
-        val position: Int? = null,
-        val permissions: Permissions? = null,
-        val managed: Boolean? = null,
-        val mentionable: Boolean? = null,
-        val guildId: String? = null
+        var name: String? = null,
+        var color: Int? = null,
+        var hoist: Boolean? = null,
+        var position: Int? = null,
+        var permissions: Permissions? = null,
+        var managed: Boolean? = null,
+        var mentionable: Boolean? = null,
+        var guildId: String? = null
 )
 
 data class GuildData(
         val id: String,
-        val name: String? = null,
-        val icon: String? = null,
-        val splash: String? = null,
-        val owner: Boolean? = null,
-        val ownerId: String? = null,
-        val permissions: Int? = null,
-        val region: String? = null,
-        val afkChannelId: String? = null,
-        val afkTimeout: Int? = null,
-        val embedEnabled: Boolean? = null,
-        val embedChannelId: String? = null,
-        val verificationLevel: VerificationLevel? = null,
-        val defaultMessageNotifications: DefaultMessageNotificationLevel? = null,
-        val explicitContentFilter: ExplicitContentFilter? = null,
-        val roles: List<Role>? = null,
-        val emojis: List<Emoji>? = null,
-        val features: List<String>? = null,
-        val mfaLevel: MFALevel? = null,
-        val applicationId: String? = null,
-        val widgetEnabled: Boolean? = null,
-        val widgetChannelId: String? = null,
-        val systemChannelId: String? = null,
-        val joinedAt: String? = null,
-        val large: Boolean? = null,
-        val unavailable: Boolean? = null,
-        val memberCount: Int? = null,
-        val voiceStates: List<VoiceState>? = null,
-        val members: List<GuildMember>? = null,
-        val channels: List<Channel>? = null,
-        val presences: List<PresenceUpdateData>? = null,
-        val maxPresences: Int? = null,
-        val maxMembers: Int? = null,
-        val vanityUrlCode: String? = null,
-        val description: String? = null,
-        val banner: String? = null
+        var name: String? = null,
+        var icon: String? = null,
+        var splash: String? = null,
+        var owner: Boolean? = null,
+        var ownerId: String? = null,
+        var permissions: Int? = null,
+        var region: String? = null,
+        var afkChannelId: String? = null,
+        var afkTimeout: Int? = null,
+        var embedEnabled: Boolean? = null,
+        var embedChannelId: String? = null,
+        var verificationLevel: VerificationLevel? = null,
+        var defaultMessageNotifications: DefaultMessageNotificationLevel? = null,
+        var explicitContentFilter: ExplicitContentFilter? = null,
+        var roles: List<Role>? = null,
+        var emojis: List<Emoji>? = null,
+        var features: List<String>? = null,
+        var mfaLevel: MFALevel? = null,
+        var applicationId: String? = null,
+        var widgetEnabled: Boolean? = null,
+        var widgetChannelId: String? = null,
+        var systemChannelId: String? = null,
+        var joinedAt: String? = null,
+        var large: Boolean? = null,
+        var unavailable: Boolean? = null,
+        var memberCount: Int? = null,
+        var voiceStates: List<VoiceState>? = null,
+        var members: List<GuildMember>? = null,
+        var channels: List<Channel>? = null,
+        var presences: List<PresenceUpdateData>? = null,
+        var maxPresences: Int? = null,
+        var maxMembers: Int? = null,
+        var vanityUrlCode: String? = null,
+        var description: String? = null,
+        var banner: String? = null
 )
 
 data class GuildIntegrationsData(
         val id: String,
-        val name: String,
-        val type: String,
-        val enabled: Boolean,
-        val syncing: Boolean,
-        val roleId: String,
-        val expireBehavior: Int,
-        val gracePeriod: Int,
-        val user: User,
-        val account: IntegrationAccount,
-        val syncedAt: String
+        var name: String,
+        var type: String,
+        var enabled: Boolean,
+        var syncing: Boolean,
+        var roleId: String,
+        var expireBehavior: Int,
+        var gracePeriod: Int,
+        var user: User,
+        var account: IntegrationAccount,
+        var syncedAt: String
 )
 
 data class GuildMemberData(
-        val user: User? = null,
-        val nick: String? = null,
-        val roles: List<String>,
-        val joinedAt: String,
-        val deaf: Boolean,
-        val mute: Boolean,
-        val guildId: String
+        var user: User? = null,
+        var nick: String? = null,
+        var roles: List<String>,
+        var joinedAt: String,
+        var deaf: Boolean,
+        var mute: Boolean,
+        var guildId: String
 )
 
 data class UserData(
         val id: String,
-        val username: String,
-        val discriminator: String,
-        val avatar: String? = null,
-        val bot: Boolean? = null,
-        val mfaEnable: Boolean? = null,
-        val locale: String? = null,
-        val flags: Int? = null,
-        val premiumType: Premium? = null,
-        val verified: Boolean? = null,
-        val email: String? = null
+        var username: String,
+        var discriminator: String,
+        var avatar: String? = null,
+        var bot: Boolean? = null,
+        var mfaEnable: Boolean? = null,
+        var locale: String? = null,
+        var flags: Int? = null,
+        var premiumType: Premium? = null,
+        var verified: Boolean? = null,
+        var email: String? = null
 )
 
 data class MessageData(
         val id: String,
-        val channelId: String,
-        val guildId: String? = null,
-        val author: User? = null,
-        val member: PartialGuildMember? = null,
-        val content: String? = null,
-        val timestamp: String? = null,
-        val editedTimestamp: String? = null,
-        val tts: Boolean? = null,
-        val mentionEveryone: Boolean? = null,
-        val mentions: List<OptionallyMemberUser>? = null,
-        val mentionRoles: List<Role>? = null,
-        val attachments: List<Attachment>? = null,
-        val embeds: List<Embed>? = null,
-        val reactions: List<Reaction>? = null,
-        val nonce: String? = null,
-        val pinned: Boolean? = null,
-        val webhookId: String? = null,
-        val type: MessageType? = null,
-        val activity: MessageActivity? = null,
-        val application: MessageApplication? = null
+        var channelId: String,
+        var guildId: String? = null,
+        var author: User? = null,
+        var member: PartialGuildMember? = null,
+        var content: String? = null,
+        var timestamp: String? = null,
+        var editedTimestamp: String? = null,
+        var tts: Boolean? = null,
+        var mentionEveryone: Boolean? = null,
+        var mentions: List<OptionallyMemberUser>? = null,
+        var mentionRoles: List<Role>? = null,
+        var attachments: List<Attachment>? = null,
+        var embeds: List<Embed>? = null,
+        var reactions: List<Reaction>? = null,
+        var nonce: String? = null,
+        var pinned: Boolean? = null,
+        var webhookId: String? = null,
+        var type: MessageType? = null,
+        var activity: MessageActivity? = null,
+        var application: MessageApplication? = null
 )
 
 
 data class MessageApplicationData(
         val id: String,
-        val coverImage: String? = null,
-        val description: String,
-        val icon: String,
-        val name: String
+        var coverImage: String? = null,
+        var description: String,
+        var icon: String,
+        var name: String
 )
 
 data class OverwriteData(
         val id: String,
-        val type: String,
-        val allow: Int,
-        val deny: Int
+        var type: String,
+        var allow: Int,
+        var deny: Int
 )
 
 data class EmojiData(
         val id: String? = null,
-        val name: String,
-        val roles: List<String>? = null,
-        val user: User? = null,
-        val requireColons: Boolean? = null,
-        val managed: Boolean? = null,
-        val animated: Boolean? = null
+        var name: String,
+        var roles: List<String>? = null,
+        var user: User? = null,
+        var requireColons: Boolean? = null,
+        var managed: Boolean? = null,
+        var animated: Boolean? = null
 )
 
 data class WebhookData(
         val id: String,
-        val guildId: String? = null,
-        val channelId: String,
-        val user: User? = null,
-        val name: String? = null,
-        val avatar: String? = null,
-        val token: String
+        var guildId: String? = null,
+        var channelId: String,
+        var user: User? = null,
+        var name: String? = null,
+        var avatar: String? = null,
+        var token: String
 )
 
 data class PresenceUserData(
         val id: String,
-        val username: String? = null,
-        val discriminator: String? = null,
-        val avatar: String? = null,
-        val bot: String? = null,
-        val mfaEnable: String? = null,
-        val locale: String? = null,
-        val flags: String? = null,
-        val premiumType: String? = null,
-        val verified: String? = null,
-        val email: String? = null
+        var username: String? = null,
+        var discriminator: String? = null,
+        var avatar: String? = null,
+        var bot: String? = null,
+        var mfaEnable: String? = null,
+        var locale: String? = null,
+        var flags: String? = null,
+        var premiumType: String? = null,
+        var verified: String? = null,
+        var email: String? = null
 )
