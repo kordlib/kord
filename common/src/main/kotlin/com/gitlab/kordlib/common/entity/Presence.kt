@@ -28,7 +28,7 @@ data class PresenceUser(
         val locale: String? = null,
         val flags: String? = null,
         @SerialName("premium_type")
-        val premiumType: String? = null,
+        val premiumType: Premium? = null,
         val verified: String? = null,
         val email: String? = null
 )
