@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.rest.services
 
 import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
