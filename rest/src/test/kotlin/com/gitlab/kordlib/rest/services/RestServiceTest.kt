@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.services
 
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
@@ -61,7 +62,7 @@ class RestServiceTest {
     fun `create guild`() = runBlocking {
         val region = rest.voice.getVoiceRegions().first()
 
-        val request = com.gitlab.kordlib.rest.json.request.CreateGuildRequest(
+        val request = CreateGuildRequest(
                 "TEST GUILD",
                 region.id,
                 null,
@@ -80,7 +81,7 @@ class RestServiceTest {
 
         rest.guild.getGuild(guildId)
 
-        rest.guild.modifyGuild(guildId, com.gitlab.kordlib.rest.json.request.ModifyGuildRequest("Edited Guild Test"))
+        rest.guild.modifyGuild(guildId, ModifyGuildRequest("Edited Guild Test"))
 
         rest.guild.getGuildVoiceRegions(guildId).first()
 
@@ -93,7 +94,7 @@ class RestServiceTest {
     fun `create invite`() = runBlocking {
         val generalId = rest.guild.getGuildChannels(guildId).first { it.type == ChannelType.GuildText }.id
 
-        rest.channel.createInvite(generalId, com.gitlab.kordlib.rest.json.request.InviteCreateRequest())
+        rest.channel.createInvite(generalId, InviteCreateRequest())
 
         Unit
     }
@@ -101,7 +102,7 @@ class RestServiceTest {
     @Test
     @Order(3)
     fun `create channel`() = runBlocking {
-        val channel = rest.guild.createGuildChannel(guildId, com.gitlab.kordlib.rest.json.request.CreateGuildChannelRequest("BOT TEST RUN"))
+        val channel = rest.guild.createGuildChannel(guildId, CreateGuildChannelRequest("BOT TEST RUN"))
         channelId = channel.id
 
         rest.channel.getChannel(channel.id)
@@ -113,8 +114,8 @@ class RestServiceTest {
     @Order(4)
     fun `reaction in channel`() = runBlocking {
         with(rest.channel) {
-            val message = createMessage(channelId, com.gitlab.kordlib.rest.json.request.MessageCreateRequest("TEST"))
-            editMessage(channelId, message.id, com.gitlab.kordlib.rest.json.request.MessageEditRequest("EDIT TEST"))
+            val message = createMessage(channelId, MessageCreateRequest("TEST"))
+            editMessage(channelId, message.id, MessageEditRequest("EDIT TEST"))
 
             createReaction(channelId, message.id, "\ud83d\udc4e")
             deleteOwnReaction(channelId, message.id, "\ud83d\udc4e")
@@ -136,7 +137,7 @@ class RestServiceTest {
         with(rest.channel) {
             triggerTypingIndicator(channelId)
 
-            val message = createMessage(channelId, com.gitlab.kordlib.rest.json.request.MessageCreateRequest("TEST"))
+            val message = createMessage(channelId, MessageCreateRequest("TEST"))
 
 
             getMessage(channelId, message.id)
@@ -144,12 +145,12 @@ class RestServiceTest {
 
             deleteMessage(channelId, message.id)
 
-            createMessage(channelId, com.gitlab.kordlib.rest.json.request.MessageCreateRequest("TEST"))
-            createMessage(channelId, com.gitlab.kordlib.rest.json.request.MultipartMessageCreateRequest(com.gitlab.kordlib.rest.json.request.MessageCreateRequest("TEST")))
+            createMessage(channelId, MessageCreateRequest("TEST"))
+            createMessage(channelId, MultipartMessageCreateRequest(MessageCreateRequest("TEST")))
 
             val messages = getMessages(channelId)
 
-            bulkDelete(channelId, com.gitlab.kordlib.rest.json.request.BulkDeleteRequest(messages.map { it.id }))
+            bulkDelete(channelId, BulkDeleteRequest(messages.map { it.id }))
 
         }
     }
@@ -158,7 +159,7 @@ class RestServiceTest {
     @Order(6)
     fun `pinned messages in channel`() = runBlocking {
         with(rest.channel) {
-            val pinnedMessage = createMessage(channelId, com.gitlab.kordlib.rest.json.request.MessageCreateRequest("TEST"))
+            val pinnedMessage = createMessage(channelId, MessageCreateRequest("TEST"))
 
             addPinnedMessage(channelId, pinnedMessage.id)
 
@@ -185,12 +186,12 @@ class RestServiceTest {
     @Test
     @Order(8)
     fun `permissions in channels`() = runBlocking {
-        val role = rest.guild.createGuildRole(guildId, com.gitlab.kordlib.rest.json.request.CreateGuildRoleRequest())
+        val role = rest.guild.createGuildRole(guildId, CreateGuildRoleRequest())
         with(rest.channel) {
             val allow = Permissions { +Permission.CreateInstantInvite }
             val deny = Permissions { +Permission.SendTTSMessages }
 
-            editChannelPermissions(channelId, role.id, com.gitlab.kordlib.rest.json.request.EditChannelPermissionRequest(allow, deny, "role"))
+            editChannelPermissions(channelId, role.id, EditChannelPermissionRequest(allow, deny, "role"))
 
             deleteChannelPermission(channelId, role.id)
 
@@ -203,7 +204,7 @@ class RestServiceTest {
         with(rest.channel) {
             //TODO Test Put method
 
-            patchChannel(channelId, com.gitlab.kordlib.rest.json.request.PatchModifyChannelRequest("PATCH"))
+            patchChannel(channelId, PatchModifyChannelRequest("PATCH"))
 
             Unit
 
@@ -220,13 +221,13 @@ class RestServiceTest {
             val members = getGuildMembers(guildId)
             //TODO add member to guild
 
-            modifyGuildMember(guildId, userId, com.gitlab.kordlib.rest.json.request.ModifyGuildMemberRequest("My nickname", mute = true, deaf = true))
+            modifyGuildMember(guildId, userId, ModifyGuildMemberRequest("My nickname", mute = true, deaf = true))
 
             getGuildMember(guildId, userId)
 
             //deleteGuildMember(guildId, user)
 
-            modifyCurrentUserNickname(guildId, com.gitlab.kordlib.rest.json.request.ModifyCurrentUserNicknameRequest("Kord"))
+            modifyCurrentUserNickname(guildId, ModifyCurrentUserNicknameRequest("Kord"))
 
             Unit
         }
@@ -238,7 +239,7 @@ class RestServiceTest {
         with(rest.guild) {
             val role = createGuildRole(
                     guildId,
-                    com.gitlab.kordlib.rest.json.request.CreateGuildRoleRequest(
+                    CreateGuildRoleRequest(
                             "Sudoers",
                             Permissions { +Permission.Administrator },
                             5000,
@@ -247,13 +248,13 @@ class RestServiceTest {
                     )
             )
 
-            modifyGuildRole(guildId, role.id, com.gitlab.kordlib.rest.json.request.ModifyGuildRoleRequest("Edited role"))
+            modifyGuildRole(guildId, role.id, ModifyGuildRoleRequest("Edited role"))
 
             addRoleToGuildMember(guildId, userId, role.id)
 
             deleteRoleFromGuildMember(guildId, userId, role.id)
 
-            modifyGuildRolePosition(guildId, com.gitlab.kordlib.rest.json.request.ModifyGuildRolePositionRequest(role.id, 0))
+            modifyGuildRolePosition(guildId, ModifyGuildRolePositionRequest(role.id, 0))
 
             getGuildRoles(guildId)
 
@@ -319,7 +320,7 @@ class RestServiceTest {
 
         with(rest.guild) {
 
-            modifyGuildEmbed(guildId, com.gitlab.kordlib.rest.json.request.ModifyGuildEmbedRequest(true, channelId))
+            modifyGuildEmbed(guildId, ModifyGuildEmbedRequest(true, channelId))
 
             getGuildEmbed(guildId)
 
@@ -335,7 +336,7 @@ class RestServiceTest {
 
             getCurrentUserGuilds()
 
-            modifyCurrentUser(com.gitlab.kordlib.rest.json.request.ModifyCurrentUserRequest("Happy Kord"))
+            modifyCurrentUser(ModifyCurrentUserRequest("Happy Kord"))
 
             getUserConnections()
 
@@ -354,9 +355,9 @@ class RestServiceTest {
     fun `emojis in guilds`() = runBlocking {
         with(rest.emoji) {
 
-            val emoji = createEmoji(guildId, com.gitlab.kordlib.rest.json.request.EmojiCreateRequest("kord", image("images/kord.png"), listOf(guildId)))
+            val emoji = createEmoji(guildId, EmojiCreateRequest("kord", image("images/kord.png"), listOf(guildId)))
 
-            modifyEmoji(guildId, emoji.id!!, com.gitlab.kordlib.rest.json.request.EmojiModifyRequest("edited"))
+            modifyEmoji(guildId, emoji.id!!, EmojiModifyRequest("edited"))
 
             getEmojis(guildId)
 
