@@ -97,7 +97,7 @@ data class ModifyGuildRolePositionRequest(val swaps: List<Pair<String, Int>>) {
         override val descriptor: SerialDescriptor
             get() = ArrayListClassDesc(RolePosition.serializer().descriptor)
 
-        override fun serialize(encoder: Encoder, obj: ModifyGuildChannelPositionRequest) {
+        override fun serialize(encoder: Encoder, obj: ModifyGuildRolePositionRequest) {
             val positions = obj.swaps.map { RolePosition(it.first, it.second) }
             ArrayListSerializer(RolePosition.serializer()).serialize(encoder, positions)
         }
