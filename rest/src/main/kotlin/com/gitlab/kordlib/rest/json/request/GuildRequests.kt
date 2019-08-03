@@ -1,8 +1,9 @@
 package com.gitlab.kordlib.rest.json.request
 
 import com.gitlab.kordlib.common.entity.*
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
+import kotlinx.serialization.internal.ArrayListClassDesc
+import kotlinx.serialization.internal.ArrayListSerializer
 
 @Serializable
 data class GuildCreatePostRequest(
@@ -36,8 +37,22 @@ data class GuildChannelCreatePostRequest(
         val nsfw: Boolean? = null
 )
 
-@Serializable
-data class GuildChannelPositionModifyPatchRequest(val id: String, val position: Int)
+data class ModifyGuildChannelPositionRequest(val swaps: List<Pair<String, Int>>) {
+
+    companion object Serializer : SerializationStrategy<ModifyGuildChannelPositionRequest> {
+        override val descriptor: SerialDescriptor
+            get() = ArrayListClassDesc(ChannelPosition.serializer().descriptor)
+
+        override fun serialize(encoder: Encoder, obj: ModifyGuildChannelPositionRequest) {
+            val positions = obj.swaps.map { ChannelPosition(it.first, it.second) }
+            ArrayListSerializer(ChannelPosition.serializer()).serialize(encoder, positions)
+        }
+
+    }
+
+    @Serializable
+    private data class ChannelPosition(val id: String, val position: Int)
+}
 
 @Serializable
 data class GuildMemberAddPutRequest(
@@ -63,7 +78,7 @@ data class GuildMemberModifyPatchRequest(
 data class GuildBanAddPutRequest(
         val reason: String? = null,
         @SerialName("delete-message-days")
-        val deleteMessagesDays: String? = null
+        val deleteMessagesDays: Int? = null
 )
 
 @Serializable
@@ -76,11 +91,22 @@ data class GuildRoleCreatePostRequest(
         val mentionable: Boolean = false
 )
 
-@Serializable
-data class GuildRolePositionModifyPatchRequest(
-        val id: String? = null,
-        val position: Int? = null
-)
+data class ModifyGuildRolePositionRequest(val swaps: List<Pair<String, Int>>) {
+
+    companion object Serializer : SerializationStrategy<ModifyGuildRolePositionRequest> {
+        override val descriptor: SerialDescriptor
+            get() = ArrayListClassDesc(RolePosition.serializer().descriptor)
+
+        override fun serialize(encoder: Encoder, obj: ModifyGuildChannelPositionRequest) {
+            val positions = obj.swaps.map { RolePosition(it.first, it.second) }
+            ArrayListSerializer(RolePosition.serializer()).serialize(encoder, positions)
+        }
+
+    }
+
+    @Serializable
+    private data class RolePosition(val id: String, val position: Int)
+}
 
 @Serializable
 data class GuildRoleModifyPatchRequest(

@@ -2,7 +2,9 @@ package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
+import io.ktor.http.Parameters
 
 class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
     suspend fun createGuild(guild: GuildCreatePostRequest) = call(Route.GuildPost) {
@@ -35,7 +37,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
 
     suspend fun modifyGuildChannelPosition(guildId: String, channel: GuildChannelPositionModifyPatchRequest) = call(Route.GuildChannelsPatch) {
         keys[Route.GuildId] = guildId
-        body(GuildChannelPositionModifyPatchRequest.serializer(), channel)
+        body(com.gitlab.kordlib.rest.json.request.ModifyGuildChannelPositionRequest.Serializer, channel)
     }
 
     suspend fun getGuildMember(guildId: String, userId: String) = call(Route.GuildMemberGet) {
@@ -43,8 +45,15 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.UserId] = userId
     }
 
-    suspend fun getGuildMembers(guildId: String) = call(Route.GuildMembersGet) {
+    suspend fun getGuildMembers(guildId: String, position: Position? = null, limit: Int = 1) = call(Route.GuildMembersGet) {
         keys[Route.GuildId] = guildId
+        parameters = Parameters.build {
+            if (position != null) {
+                append(position.key, position.value)
+            }
+            append("limit", "$limit")
+
+        }
     }
 
     suspend fun addGuildMember(guildId: String, userId: String, member: GuildMemberAddPutRequest, reason: String? = null) = call(Route.GuildMemberPut) {
@@ -115,7 +124,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
 
     suspend fun modifyGuildRolePosition(guildId: String, role: GuildRolePositionModifyPatchRequest) = call(Route.GuildRolesPatch) {
         keys[Route.GuildId] = guildId
-        body(GuildRolePositionModifyPatchRequest.serializer(), role)
+        body(com.gitlab.kordlib.rest.json.request.ModifyGuildRolePositionRequest.Serializer, role)
     }
 
 
@@ -132,11 +141,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun getGuildPruneCount(guildId: String) = call(Route.GuildPruneCountGet) {
+    suspend fun getGuildPruneCount(guildId: String, request: GetGuildPruneRequest) = call(Route.GuildPruneCountGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun beginGuildPrune(guildId: String, reason: String? = null) = call(Route.GuildPrunePost) {
+    suspend fun beginGuildPrune(guildId: String, request: BeginGuildPruneRequest) = call(Route.GuildPrunePost) {
         keys[Route.GuildId] = guildId
         reason?.let { header("X-Audit-Log-Reason", it) }
     }
