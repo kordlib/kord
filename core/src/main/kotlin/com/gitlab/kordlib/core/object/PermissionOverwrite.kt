@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.`object`
 
+import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.EditChannelPermissionRequest
@@ -12,6 +13,8 @@ class PermissionOverwrite private constructor(
 ) {
 
     internal fun asRequest() = EditChannelPermissionRequest(allowed, denied, type)
+
+    internal fun toOverwrite() = Overwrite(id = target.value, type = type, allow = allowed.code, deny = denied.code)
 
     companion object {
         fun forMember(member: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
