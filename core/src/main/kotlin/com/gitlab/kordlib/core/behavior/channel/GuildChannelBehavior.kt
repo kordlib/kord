@@ -21,12 +21,6 @@ interface GuildChannelBehavior<T : UpdateGuildChannelBuilder> : ChannelBehavior 
         kord.rest.channel.editChannelPermissions(id.value, overwrite.target.value, request)
     }
 
-    suspend fun type() {
-        kord.rest.channel.triggerTypingIndicator(id.value)
-    }
-
-    //TODO 1.3.50 add fun typeUntil(mark: ClockMark): Unit
-
     companion object {
         internal operator fun<T: UpdateGuildChannelBuilder> invoke(id: Snowflake, kord: Kord) = object : GuildChannelBehavior<T> {
             override val id: Snowflake = id

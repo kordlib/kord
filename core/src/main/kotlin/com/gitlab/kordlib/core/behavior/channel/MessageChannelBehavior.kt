@@ -18,6 +18,12 @@ interface MessageChannelBehavior : ChannelBehavior {
 
     suspend fun getMessage(messageId: Snowflake): Nothing /*Message*/ = TODO()
 
+    suspend fun type() {
+        kord.rest.channel.triggerTypingIndicator(id.value)
+    }
+
+    //TODO 1.3.50 add fun typeUntil(mark: ClockMark): Unit
+
     companion object {
         internal operator fun invoke(id: Snowflake, kord: Kord) = object : MessageChannelBehavior {
             override val id: Snowflake = id
