@@ -254,7 +254,7 @@ class RestServiceTest {
 
             deleteRoleFromGuildMember(guildId, userId, role.id)
 
-            modifyGuildRolePosition(guildId, GuildRolePositionModifyPatchRequest(role.id, 0))
+            modifyGuildRolePosition(guildId, com.gitlab.kordlib.rest.json.request.ModifyGuildRolePositionRequest(listOf(role.id to 0)))
 
             getGuildRoles(guildId)
 
@@ -299,8 +299,8 @@ class RestServiceTest {
     @Order(15)
     fun `prune members in guilds`() = runBlocking {
         with(rest.guild) {
-            getGuildPruneCount(guildId)
-            beginGuildPrune(guildId)
+            getGuildPruneCount(guildId, GetGuildPruneRequest())
+            beginGuildPrune(guildId, BeginGuildPruneRequest())
 
             Unit
         }

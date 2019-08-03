@@ -224,7 +224,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/roles/$RoleId", NoStrategy)
 
     object GuildPruneCountGet
-        : Route<GetPruneResponse>(HttpMethod.Get, "/guilds/$GuildId/prune", PruneResponse.serializer())
+        : Route<GetPruneResponse>(HttpMethod.Get, "/guilds/$GuildId/prune", GetPruneResponse.serializer())
 
     object GuildPrunePost
         : Route<PruneResponse>(HttpMethod.Post, "/guilds/$GuildId/prune", PruneResponse.serializer())
