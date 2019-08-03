@@ -30,7 +30,9 @@ interface GuildBehavior : Entity {
 
     suspend fun edit(builder: EditGuildBuilder): Nothing /*Guild*/ = TODO()
 
-    suspend fun delete(): Unit = kord.rest.guild.deleteGuild(id.value)
+    suspend fun delete()= kord.rest.guild.deleteGuild(id.value)
+
+    suspend fun leave() = kord.rest.user.leaveGuild(id.value)
 
     suspend fun getChannels(): Flow<Nothing/*Channel*/> = TODO()
 
