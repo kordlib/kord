@@ -2,7 +2,7 @@ package com.gitlab.kordlib.core.`object`.builder.channel
 
 import com.gitlab.kordlib.rest.json.request.InviteCreateRequest
 
-class NewInviteBuilder(
+class NewInviteBuilder (
         var age: Int? = null,
         var uses: Int? = null,
         var temporary: Boolean? = null,
