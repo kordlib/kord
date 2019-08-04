@@ -115,7 +115,7 @@ data class GuildRoleModifyPatchRequest(
         val color: Int? = null,
         @SerialName("hoist")
         val separate: Boolean? = null,
-        val Mentionable: Boolean? = null
+        val mentionable: Boolean? = null
 )
 
 @Serializable
