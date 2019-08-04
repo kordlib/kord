@@ -13,5 +13,5 @@ data class EmojiCreatePostRequest(
 @Serializable
 data class EmojiModifyPatchRequest(
         val name: String? = null,
-        val roles: List<Role>? = null
+        val roles: List<String>? = null
 )
