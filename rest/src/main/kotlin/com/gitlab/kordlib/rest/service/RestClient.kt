@@ -13,6 +13,7 @@ class RestClient constructor(requestHandler: RequestHandler) : RestService(reque
     val invite: InviteService = InviteService(requestHandler)
     val user: UserService = UserService(requestHandler)
     val voice: VoiceService = VoiceService(requestHandler)
+    val webhook: WebhookService = WebhookService(requestHandler)
 
     /**
      * Sends a request to the given [route].
