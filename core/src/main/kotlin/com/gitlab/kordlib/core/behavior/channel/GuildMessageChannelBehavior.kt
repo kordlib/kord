@@ -21,7 +21,8 @@ interface GuildMessageChannelBehavior<T : UpdateGuildChannelBuilder> : GuildChan
     suspend fun createWebhook(builder: NewWebhookBuilder): Nothing /*Webhook*/ = TODO()
 
     companion object {
-        internal operator fun <T : UpdateGuildChannelBuilder> invoke(id: Snowflake, kord: Kord) = object : GuildMessageChannelBehavior<T> {
+        internal operator fun <T : UpdateGuildChannelBuilder> invoke(guildId: Snowflake, id: Snowflake, kord: Kord) = object : GuildMessageChannelBehavior<T> {
+            override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
         }
