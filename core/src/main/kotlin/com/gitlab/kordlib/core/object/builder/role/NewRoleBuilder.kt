@@ -4,7 +4,8 @@ import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.rest.json.request.CreateGuildRoleRequest
 import java.awt.Color
 
-class NewRoleBuilder (        var color: Color? = null,
+class NewRoleBuilder (
+        var color: Color? = null,
         var hoist: Boolean? = null,
         var name: String? = null,
         var mentionable: Boolean? = null,

@@ -3,7 +3,8 @@ package com.gitlab.kordlib.core.`object`.builder.member
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.ModifyGuildMemberRequest
 
-class UpdateMemberBuilder (        var voiceChannelId: Snowflake? = null,
+class UpdateMemberBuilder (
+        var voiceChannelId: Snowflake? = null,
         var muted: Boolean? = null,
         var deafened: Boolean? = null,
         var nickname: String? = null,
