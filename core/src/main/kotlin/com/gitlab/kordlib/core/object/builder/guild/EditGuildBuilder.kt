@@ -8,8 +8,7 @@ import com.gitlab.kordlib.core.entity.Region
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.ModifyGuildRequest
 
-class EditGuildBuilder(
-        var name: String? = null,
+class EditGuildBuilder (        var name: String? = null,
         var region: Region? = null,
         var verificationLevel: VerificationLevel? = null,
         var notificationLevel: DefaultMessageNotificationLevel? = null,
@@ -19,7 +18,7 @@ class EditGuildBuilder(
         var ownerId: Snowflake? = null,
         var splash: Image? = null
 ) {
-    internal fun toRequest() = ModifyGuildRequest(
+    fun toRequest() = ModifyGuildRequest(
             name = name,
             region = region?.id?.value,
             verificationLevel = verificationLevel,

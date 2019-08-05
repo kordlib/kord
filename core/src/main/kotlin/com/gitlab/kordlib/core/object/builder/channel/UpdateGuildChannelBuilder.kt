@@ -5,11 +5,7 @@ import com.gitlab.kordlib.core.`object`.PermissionOverwrite
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.PatchModifyChannelRequest
 
-abstract class UpdateGuildChannelBuilder {
-    internal abstract fun toRequest(): PatchModifyChannelRequest
-}
-
-data class UpdateTextChannelBuilder(
+data class UpdateTextChannelBuilder (
         var name: String? = null,
         var position: Int? = null,
         var topic: String? = null,
@@ -17,9 +13,9 @@ data class UpdateTextChannelBuilder(
         var parentId: Snowflake? = null,
         var rateLimitPerUser: Int? = null,
         val permissionOverwrites: MutableSet<PermissionOverwrite> = mutableSetOf()
-) : UpdateGuildChannelBuilder() {
+) {
 
-    override fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
+    fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
             name = name,
             position = position,
             topic = topic,
@@ -31,15 +27,15 @@ data class UpdateTextChannelBuilder(
 
 }
 
-class UpdateVoiceChannelBuilder(
+class UpdateVoiceChannelBuilder (
         var name: String? = null,
         var position: Int? = null,
         var parentId: Snowflake? = null,
         var bitrate: Int? = null,
         var userLimit: Int? = null,
         val permissionOverwrites: MutableSet<PermissionOverwrite> = mutableSetOf()
-) : UpdateGuildChannelBuilder() {
-    override fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
+) {
+    fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
             name = name,
             position = position,
             parentId = parentId?.value,
@@ -49,15 +45,15 @@ class UpdateVoiceChannelBuilder(
     )
 }
 
-class UpdateNewsChannelBuilder(
+class UpdateNewsChannelBuilder (
         var name: String? = null,
         var position: Int? = null,
         var topic: String? = null,
         var nsfw: Boolean? = null,
         var parentId: Snowflake? = null,
         val permissionOverwrites: MutableSet<PermissionOverwrite> = mutableSetOf()
-) : UpdateGuildChannelBuilder() {
-    override fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
+) {
+    fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
             name = name,
             position = position,
             topic = topic,
@@ -67,12 +63,12 @@ class UpdateNewsChannelBuilder(
     )
 }
 
-class UpdateStoreChannelBuilder(
+class UpdateStoreChannelBuilder (
         var name: String? = null,
         var position: Int? = null,
         val permissionOverwrites: MutableSet<PermissionOverwrite> = mutableSetOf()
-) : UpdateGuildChannelBuilder() {
-    override fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
+) {
+    fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
             name = name,
             position = position,
             permissionOverwrites = permissionOverwrites.map { Overwrite(it.target.value, it.type, it.allowed.code, it.denied.code) }

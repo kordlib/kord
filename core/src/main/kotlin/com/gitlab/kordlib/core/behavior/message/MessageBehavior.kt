@@ -6,7 +6,6 @@ import com.gitlab.kordlib.core.`object`.Pagination
 import com.gitlab.kordlib.core.`object`.ReactionEmoji
 import com.gitlab.kordlib.core.`object`.builder.message.EditMessageBuilder
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.createMessage
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.route.Position
@@ -18,8 +17,6 @@ import kotlinx.coroutines.flow.map
 interface MessageBehavior : Entity {
     val channelId: Snowflake
     val channel get() = MessageChannelBehavior(channelId, kord)
-
-    suspend fun edit(builder: EditMessageBuilder): Nothing /*Message*/ = TODO()
 
     suspend fun delete() {
         kord.rest.channel.deleteMessage(channelId = channelId.value, messageId = id.value)
@@ -63,4 +60,4 @@ interface MessageBehavior : Entity {
 
 }
 
-suspend inline fun MessageBehavior.edit(builder: EditMessageBuilder.() -> Unit): Nothing = edit(EditMessageBuilder().also(builder))
+suspend inline fun MessageBehavior.edit(builder: EditMessageBuilder.() -> Unit): Nothing /*Message*/ = TODO()

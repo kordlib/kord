@@ -49,7 +49,7 @@ class Embed(
     )
 
     class Thumbnail(var url: String? = null) {
-        internal fun toRequest() = url?.let(::EmbedThumbnailRequest)
+        fun toRequest() = url?.let(::EmbedThumbnailRequest)
     }
 
     class Footer(
@@ -57,7 +57,7 @@ class Embed(
             var url: String? = null,
             var icon: String? = null
     ) {
-        internal fun toRequest() = EmbedFooterRequest(text!!, url, icon)
+        fun toRequest() = EmbedFooterRequest(text!!, url, icon)
     }
 
     class Author(
@@ -65,7 +65,7 @@ class Embed(
             var url: String? = null,
             var icon: String? = null
     ) {
-        internal fun toRequest() = EmbedAuthorRequest(name, url, icon)
+        fun toRequest() = EmbedAuthorRequest(name, url, icon)
     }
 
     class Field(

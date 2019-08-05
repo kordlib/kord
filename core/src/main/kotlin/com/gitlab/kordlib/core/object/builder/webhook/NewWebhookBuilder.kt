@@ -2,9 +2,8 @@ package com.gitlab.kordlib.core.`object`.builder.webhook
 
 import com.gitlab.kordlib.rest.json.request.CreateWebhookRequest
 
-class NewWebhookBuilder(
-        var name: String? = null,
+class NewWebhookBuilder (        var name: String? = null,
         var avatar: String? = null
 ) {
-    internal fun toRequest() = CreateWebhookRequest(name!!, avatar)
+    fun toRequest() = CreateWebhookRequest(name!!, avatar)
 }

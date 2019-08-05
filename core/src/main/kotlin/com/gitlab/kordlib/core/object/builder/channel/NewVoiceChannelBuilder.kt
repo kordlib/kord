@@ -5,7 +5,7 @@ import com.gitlab.kordlib.core.`object`.PermissionOverwrite
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.CreateGuildChannelRequest
 
-class NewVoiceChannelBuilder(
+class NewVoiceChannelBuilder (
         var bitrate: Int? = null,
         var name: String? = null,
         var userLimit: Int? = null,
@@ -13,7 +13,7 @@ class NewVoiceChannelBuilder(
         var position: Int? = null,
         val permissionOverwrites: MutableList<PermissionOverwrite> = mutableListOf()
 ) {
-    internal fun toRequest(): CreateGuildChannelRequest = CreateGuildChannelRequest(
+    fun toRequest(): CreateGuildChannelRequest = CreateGuildChannelRequest(
             name = name!!,
             bitrate = bitrate,
             userLimit = userLimit,

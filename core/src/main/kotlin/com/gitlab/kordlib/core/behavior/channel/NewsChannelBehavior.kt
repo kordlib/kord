@@ -2,11 +2,12 @@ package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.builder.channel.UpdateNewsChannelBuilder
+import com.gitlab.kordlib.core.`object`.builder.channel.UpdateTextChannelBuilder
 import com.gitlab.kordlib.core.entity.Snowflake
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-interface NewsChannelBehavior : GuildMessageChannelBehavior<UpdateNewsChannelBuilder> {
+interface NewsChannelBehavior : GuildMessageChannelBehavior {
 
     companion object {
         internal operator fun invoke(guildId: Snowflake, categoryId: Snowflake, id: Snowflake, kord: Kord): NewsChannelBehavior = object : NewsChannelBehavior {
@@ -18,3 +19,6 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior<UpdateNewsChannelBui
     }
 
 }
+
+@ExperimentalCoroutinesApi
+suspend inline fun NewsChannelBehavior.edit(block: (UpdateNewsChannelBuilder) -> Unit): Nothing /*NewsChannel*/ = TODO()

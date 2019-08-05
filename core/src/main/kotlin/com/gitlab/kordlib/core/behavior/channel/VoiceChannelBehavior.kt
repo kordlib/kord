@@ -4,7 +4,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.builder.channel.UpdateVoiceChannelBuilder
 import com.gitlab.kordlib.core.entity.Snowflake
 
-interface VoiceChannelBehavior : CategorizableChannelBehavior<UpdateVoiceChannelBuilder> {
+interface VoiceChannelBehavior : CategorizableChannelBehavior {
 
     companion object {
         internal operator fun invoke(guildId: Snowflake, categoryId: Snowflake, id: Snowflake, kord: Kord) = object : VoiceChannelBehavior {
@@ -17,5 +17,4 @@ interface VoiceChannelBehavior : CategorizableChannelBehavior<UpdateVoiceChannel
 
 }
 
-suspend inline fun VoiceChannelBehavior.edit(block: (UpdateVoiceChannelBuilder) -> Unit): Nothing /*VoiceChannel*/ =
-        edit(UpdateVoiceChannelBuilder().apply(block))
+suspend inline fun VoiceChannelBehavior.edit(block: (UpdateVoiceChannelBuilder) -> Unit): Nothing /*VoiceChannel*/ = TODO()

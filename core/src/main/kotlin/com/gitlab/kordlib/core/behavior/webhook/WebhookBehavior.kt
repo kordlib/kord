@@ -13,8 +13,6 @@ interface WebhookBehavior : Entity {
         kord.rest.webhook.deleteWebhook(id.value)
     }
 
-    suspend fun edit(builder: UpdateWebhookBuilder) : Nothing /*Webhook*/ = TODO()
-
 }
 
-suspend inline fun WebhookBehavior.embed(builder: UpdateWebhookBuilder.() -> Unit) : Nothing /*Webhook*/ = edit(UpdateWebhookBuilder().also(builder))
+suspend inline fun WebhookBehavior.embed(builder: UpdateWebhookBuilder.() -> Unit) : Nothing /*Webhook*/ = TODO()

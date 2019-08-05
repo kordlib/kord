@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 @ExperimentalCoroutinesApi
 interface MessageChannelBehavior : ChannelBehavior {
 
-    suspend fun createMessage(builder: NewMessageBuilder): Nothing /*Message*/ = TODO()
     suspend fun createMessage(content: String): Nothing /*Message*/ = TODO()
 
     suspend fun getMessagesBefore(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Nothing /*Message*/> = TODO()
@@ -34,4 +33,4 @@ interface MessageChannelBehavior : ChannelBehavior {
 }
 
 @ExperimentalCoroutinesApi
-suspend inline fun MessageChannelBehavior.createMessage(block: NewMessageBuilder.() -> Unit): Nothing = createMessage(NewMessageBuilder().apply(block))
+suspend inline fun MessageChannelBehavior.createMessage(block: NewMessageBuilder.() -> Unit): Nothing = TODO()

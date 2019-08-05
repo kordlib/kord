@@ -8,7 +8,7 @@ class NewInviteBuilder (
         var temporary: Boolean? = null,
         var unique: Boolean? = null
 ) {
-    internal fun toRequest(): InviteCreateRequest = InviteCreateRequest(
+    fun toRequest(): InviteCreateRequest = InviteCreateRequest(
             temporary = temporary ?: false,
             age = age ?: 0,
             unique = unique ?: false,

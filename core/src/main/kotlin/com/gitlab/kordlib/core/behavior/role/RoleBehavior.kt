@@ -13,8 +13,6 @@ interface RoleBehavior : Entity {
 
     suspend fun changePosition(position: Int) : Flow<Nothing /*Role*/> = TODO()
 
-    suspend fun edit(builder: UpdateRoleBuilder) : Nothing /*Role*/ = TODO()
-
     suspend fun delete() {
         kord.rest.guild.deleteGuildRole(guildId = guildId.value, roleId = id.value)
     }
@@ -28,4 +26,4 @@ interface RoleBehavior : Entity {
     }
 }
 
-suspend inline fun RoleBehavior.edit(builder: UpdateRoleBuilder.() -> Unit): Nothing /*Role*/  = edit(UpdateRoleBuilder().apply(builder))
+suspend inline fun RoleBehavior.edit(builder: UpdateRoleBuilder.() -> Unit): Nothing /*Role*/  = TODO()

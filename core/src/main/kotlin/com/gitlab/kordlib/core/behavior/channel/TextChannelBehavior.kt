@@ -6,7 +6,7 @@ import com.gitlab.kordlib.core.entity.Snowflake
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-interface TextChannelBehavior : GuildMessageChannelBehavior<UpdateTextChannelBuilder> {
+interface TextChannelBehavior : GuildMessageChannelBehavior  {
 
     companion object {
         internal operator fun invoke(guildId: Snowflake, categoryId: Snowflake, id: Snowflake, kord: Kord): TextChannelBehavior = object : TextChannelBehavior {
@@ -20,5 +20,4 @@ interface TextChannelBehavior : GuildMessageChannelBehavior<UpdateTextChannelBui
 }
 
 @ExperimentalCoroutinesApi
-suspend inline fun TextChannelBehavior.edit(block: (UpdateTextChannelBuilder) -> Unit): Nothing /*VoiceChannel*/ =
-        edit(UpdateTextChannelBuilder().apply(block))
+suspend inline fun TextChannelBehavior.edit(block: (UpdateTextChannelBuilder) -> Unit): Nothing /*VoiceChannel*/ = TODO()
