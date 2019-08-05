@@ -1,10 +1,6 @@
 package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.annotation.KordExperimental
-import com.gitlab.kordlib.rest.json.request.MultiPartWebhookExecutePostRequest
-import com.gitlab.kordlib.rest.json.request.WebhookCreatePostRequest
-import com.gitlab.kordlib.rest.json.request.WebhookExecutePostRequest
-import com.gitlab.kordlib.rest.json.request.WebhookModifyPatchRequest
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 import kotlinx.serialization.json.JsonObject
@@ -55,12 +51,14 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.WebhookToken] = token
     }
 
-    suspend fun executeWebhook(webhookId: String, token: String, wait: Boolean, webhook: MultiPartWebhookExecutePostRequest) = call(Route.ExecuteWebhookPost) {
+    suspend fun executeWebhook(webhookId: String, token: String, wait: Boolean, request: com.gitlab.kordlib.rest.json.request.MultiPartWebhookExecuteRequest) = call(Route.ExecuteWebhookPost) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
-        parameter("wait", "$wait")
-        body(WebhookExecutePostRequest.serializer(), webhook.request)
-        webhook.files.forEach { file(it) }
+        parameters = Parameters.build {
+            append("wait", "$wait")
+        }
+        body(com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest.serializer(), request.request)
+        request.file?.let { file(it) }
     }
 
     @KordExperimental

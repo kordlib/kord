@@ -1,6 +1,5 @@
 package com.gitlab.kordlib.rest.json.request
 
-import com.gitlab.kordlib.common.entity.Embed
 import kotlinx.io.InputStream
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -17,17 +16,18 @@ data class WebhookModifyPatchRequest(
 )
 
 @Serializable
-data class WebhookExecutePostRequest(
-        val content: String,
+data class WebhookExecuteRequest(
+        val content: String?,
         val username: String? = null,
         @SerialName("avatar_url")
         val avatar: String? = null,
         val tts: Boolean? = null,
-        val embeds: List<Embed>? = null,
+        val embeds: List<EmbedRequest>? = null,
         @SerialName("payload_json")
         val payload: String? = null
 )
 
-data class MultiPartWebhookExecutePostRequest(
-        val request: WebhookExecutePostRequest,
-        val files: List<Pair<String, InputStream>>)
+data class MultiPartWebhookExecuteRequest(
+        val request: com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest,
+        val file: Pair<String, InputStream>?
+)
