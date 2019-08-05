@@ -2,11 +2,8 @@ package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.PermissionOverwrite
-import com.gitlab.kordlib.core.`object`.builder.channel.NewInviteBuilder
-import com.gitlab.kordlib.core.`object`.builder.channel.UpdateGuildChannelBuilder
 import com.gitlab.kordlib.core.behavior.guild.GuildBehavior
 import com.gitlab.kordlib.core.entity.Snowflake
-import com.gitlab.kordlib.rest.json.request.EditChannelPermissionRequest
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -36,7 +33,7 @@ interface GuildChannelBehavior : ChannelBehavior {
     }
 
     companion object {
-        internal operator fun  invoke(guildId: Snowflake, id: Snowflake, kord: Kord) = object : GuildChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord) = object : GuildChannelBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord

@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.channel.UpdateGuildChannelBuilder
 import com.gitlab.kordlib.core.`object`.builder.webhook.NewWebhookBuilder
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.BulkDeleteRequest
