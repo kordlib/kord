@@ -17,14 +17,14 @@ class PermissionOverwrite private constructor(
     internal fun toOverwrite() = Overwrite(id = target.value, type = type, allow = allowed.code, deny = denied.code)
 
     companion object {
-        fun forEveryone(guild: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
-                PermissionOverwrite(allowed, denied, guild, "role")
+        fun forEveryone(guildId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
+                PermissionOverwrite(allowed, denied, guildId, "role")
 
-        fun forMember(member: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
-                PermissionOverwrite(allowed, denied, member, "member")
+        fun forMember(memberId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
+                PermissionOverwrite(allowed, denied, memberId, "member")
 
-        fun forRole(role: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
-                PermissionOverwrite(allowed, denied, role, "role")
+        fun forRole(roleId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
+                PermissionOverwrite(allowed, denied, roleId, "role")
     }
 
 }
