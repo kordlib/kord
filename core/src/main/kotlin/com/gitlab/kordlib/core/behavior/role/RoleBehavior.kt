@@ -7,12 +7,27 @@ import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Snowflake
 import kotlinx.coroutines.flow.Flow
 
+
+/**
+ * The behavior of a [Discord Role](https://discordapp.com/developers/docs/topics/permissions#role-object) associated to a [guild].
+ */
 interface RoleBehavior : Entity {
     val guildId: Snowflake
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
+    /**
+     * Requests to change the [position] of this role.
+     */
     suspend fun changePosition(position: Int) : Flow<Nothing /*Role*/> = TODO()
 
+    /**
+     * Requests to get the position of this role in the role list of this guild.
+     */
+    suspend fun getPosition() : Int = TODO()
+
+    /**
+     *Requests to delete this role.
+     */
     suspend fun delete() {
         kord.rest.guild.deleteGuildRole(guildId = guildId.value, roleId = id.value)
     }
@@ -26,4 +41,9 @@ interface RoleBehavior : Entity {
     }
 }
 
+/**
+ * Requests to edit this role.
+ *
+ * @return The edited [Role].
+ */
 suspend inline fun RoleBehavior.edit(builder: UpdateRoleBuilder.() -> Unit): Nothing /*Role*/  = TODO()

@@ -60,9 +60,7 @@ interface MessageChannelBehavior : ChannelBehavior {
     suspend fun getMessagesAround(messageId: Snowflake): Flow<Nothing /*Message*/> = TODO()
 
     /**
-     * Requests to get a message with the given [messageId].
-     *
-     * @return The Message with the given id in this Channel, or null if the message isn't present.
+     * Requests to get a message with the given [messageId], if present.
      */
     suspend fun getMessage(messageId: Snowflake): Nothing /*Message?*/ = TODO()
 
