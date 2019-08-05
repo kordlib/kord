@@ -22,12 +22,10 @@ data class WebhookExecuteRequest(
         @SerialName("avatar_url")
         val avatar: String? = null,
         val tts: Boolean? = null,
-        val embeds: List<EmbedRequest>? = null,
-        @SerialName("payload_json")
-        val payload: String? = null
+        val embeds: List<EmbedRequest>? = null
 )
 
 data class MultiPartWebhookExecuteRequest(
-        val request: com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest,
+        val request: WebhookExecuteRequest,
         val file: Pair<String, InputStream>?
 )
