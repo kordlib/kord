@@ -4,6 +4,9 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.builder.channel.UpdateVoiceChannelBuilder
 import com.gitlab.kordlib.core.entity.Snowflake
 
+/**
+ * The behavior of a Discord Voice Channel associated to a guild.
+ */
 interface VoiceChannelBehavior : CategorizableChannelBehavior {
 
     companion object {
@@ -17,4 +20,9 @@ interface VoiceChannelBehavior : CategorizableChannelBehavior {
 
 }
 
+/**
+ * Requests to edit this channel.
+ *
+ * @return The edited [VoiceChannel].
+ */
 suspend inline fun VoiceChannelBehavior.edit(block: (UpdateVoiceChannelBuilder) -> Unit): Nothing /*VoiceChannel*/ = TODO()

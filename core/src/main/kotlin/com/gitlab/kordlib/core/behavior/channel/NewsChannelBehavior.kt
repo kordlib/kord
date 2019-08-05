@@ -1,11 +1,16 @@
 package com.gitlab.kordlib.core.behavior.channel
 
+import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.builder.channel.UpdateNewsChannelBuilder
 import com.gitlab.kordlib.core.`object`.builder.channel.UpdateTextChannelBuilder
 import com.gitlab.kordlib.core.entity.Snowflake
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+/**
+ * The behavior of a Discord News Channel associated to a guild.
+ */
+@KordPreview
 @ExperimentalCoroutinesApi
 interface NewsChannelBehavior : GuildMessageChannelBehavior {
 
@@ -20,5 +25,11 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
 
 }
 
+/**
+ * Requests to edit this channel.
+ *
+ * @return The edited [NewsChannel].
+ */
+@KordPreview
 @ExperimentalCoroutinesApi
 suspend inline fun NewsChannelBehavior.edit(block: (UpdateNewsChannelBuilder) -> Unit): Nothing /*NewsChannel*/ = TODO()

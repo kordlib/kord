@@ -7,16 +7,16 @@ import com.gitlab.kordlib.core.entity.Snowflake
 import kotlinx.coroutines.flow.Flow
 
 /**
- * A Discord channel associated to a [guild]
+ * The behavior of a Discord channel associated to a [guild].
  */
 interface GuildChannelBehavior : ChannelBehavior {
     /**
-     * the id of the guild this channel is associated to.
+     * The id of the guild this channel is associated to.
      */
     val guildId: Snowflake
 
     /**
-     * the guild this channel is associated to.
+     * The guild this channel is associated to.
      */
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 

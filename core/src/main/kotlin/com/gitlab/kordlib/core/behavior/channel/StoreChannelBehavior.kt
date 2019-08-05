@@ -1,11 +1,16 @@
 package com.gitlab.kordlib.core.behavior.channel
 
+import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.builder.channel.UpdateNewsChannelBuilder
 import com.gitlab.kordlib.core.`object`.builder.channel.UpdateStoreChannelBuilder
 import com.gitlab.kordlib.core.entity.Snowflake
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+/**
+ * The behavior of a Discord Store Channel associated to a guild.
+ */
+@KordPreview
 @ExperimentalCoroutinesApi
 interface StoreChannelBehavior : GuildMessageChannelBehavior {
 
@@ -20,4 +25,10 @@ interface StoreChannelBehavior : GuildMessageChannelBehavior {
 
 }
 
+/**
+ * Requests to edit this channel.
+ *
+ * @return The edited [StoreChannel].
+ */
+@KordPreview
 suspend inline fun StoreChannelBehavior.edit(block: (UpdateStoreChannelBuilder) -> Unit): Nothing /*NewsChannel*/ = TODO()

@@ -5,6 +5,9 @@ import com.gitlab.kordlib.core.`object`.builder.channel.UpdateTextChannelBuilder
 import com.gitlab.kordlib.core.entity.Snowflake
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+/**
+ * The behavior of a Discord Text Channel associated to a guild.
+ */
 @ExperimentalCoroutinesApi
 interface TextChannelBehavior : GuildMessageChannelBehavior  {
 
@@ -19,5 +22,10 @@ interface TextChannelBehavior : GuildMessageChannelBehavior  {
 
 }
 
+/**
+ * Requests to edit this channel.
+ *
+ * @return The edited [TextChannel].
+ */
 @ExperimentalCoroutinesApi
 suspend inline fun TextChannelBehavior.edit(block: (UpdateTextChannelBuilder) -> Unit): Nothing /*VoiceChannel*/ = TODO()
