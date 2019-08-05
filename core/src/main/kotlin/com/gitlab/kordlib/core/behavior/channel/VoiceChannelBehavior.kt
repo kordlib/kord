@@ -4,10 +4,12 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.builder.channel.UpdateVoiceChannelBuilder
 import com.gitlab.kordlib.core.entity.Snowflake
 
-interface VoiceChannelBehavior : GuildChannelBehavior<UpdateVoiceChannelBuilder> {
+interface VoiceChannelBehavior : CategorizableChannelBehavior<UpdateVoiceChannelBuilder> {
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord) = object : VoiceChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, categoryId: Snowflake, id: Snowflake, kord: Kord) = object : VoiceChannelBehavior {
+            override val guildId: Snowflake = guildId
+            override val categoryId: Snowflake = categoryId
             override val id: Snowflake = id
             override val kord: Kord = kord
         }

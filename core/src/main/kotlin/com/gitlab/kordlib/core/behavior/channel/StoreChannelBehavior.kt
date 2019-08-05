@@ -9,7 +9,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 interface StoreChannelBehavior : GuildMessageChannelBehavior<UpdateStoreChannelBuilder> {
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord) = object: StoreChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, categoryId: Snowflake, id: Snowflake, kord: Kord): StoreChannelBehavior = object: StoreChannelBehavior {
+            override val guildId: Snowflake = guildId
+            override val categoryId: Snowflake = categoryId
             override val id: Snowflake = id
             override val kord: Kord = kord
         }
