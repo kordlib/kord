@@ -5,7 +5,7 @@ import java.awt.Color
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
-class Embed(
+class EmbedBuilder(
         var title: String? = null,
         var description: String? = null,
         var url: String? = null,
