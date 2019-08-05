@@ -17,6 +17,9 @@ class PermissionOverwrite private constructor(
     internal fun toOverwrite() = Overwrite(id = target.value, type = type, allow = allowed.code, deny = denied.code)
 
     companion object {
+        fun forEveryone(guild: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
+                PermissionOverwrite(allowed, denied, guild, "role")
+
         fun forMember(member: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
                 PermissionOverwrite(allowed, denied, member, "member")
 
