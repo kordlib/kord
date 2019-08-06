@@ -18,7 +18,7 @@ data class Guild(
         val owner: Boolean? = null,
         @SerialName("owner_id")
         val ownerId: String,
-        val permissions: Int? = null,
+        val permissions: Permissions? = null,
         val region: String,
         @SerialName("afk_channel_id")
         val afkChannelId: String? = null,
