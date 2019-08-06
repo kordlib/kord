@@ -32,7 +32,7 @@ data class OptionallyMemberUser(
         val locale: String? = null,
         val flags: Int? = null,
         @SerialName("premium_type")
-        val premiumType: Int? = null,
+        val premiumType: Premium? = null,
         val member: PartialGuildMember
 )
 
