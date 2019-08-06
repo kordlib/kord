@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.core.`object`.builder.guild
 
 import com.gitlab.kordlib.common.entity.DefaultMessageNotificationLevel
-import com.gitlab.kordlib.common.entity.Embed
 import com.gitlab.kordlib.common.entity.VerificationLevel
 import com.gitlab.kordlib.core.`object`.Image
 import com.gitlab.kordlib.core.entity.Region
@@ -25,8 +24,8 @@ class EditGuildBuilder (        var name: String? = null,
             defaultMessageNotificationLevel = notificationLevel,
             afkChannel = afkChannelId?.value,
             afkTimeout = afkTimeout,
-            icon = icon?.formatted,
+            icon = icon?.dataUri,
             ownerId = ownerId?.value,
-            spalsh = splash?.formatted
+            spalsh = splash?.dataUri
     )
 }

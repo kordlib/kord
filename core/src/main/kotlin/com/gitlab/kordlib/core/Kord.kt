@@ -7,5 +7,4 @@ class Kord {
 
     val rest: RestClient = TODO()
     val gateway: Gateway = TODO()
-
 }

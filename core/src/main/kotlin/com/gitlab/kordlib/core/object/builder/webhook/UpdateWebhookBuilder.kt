@@ -11,7 +11,7 @@ class UpdateWebhookBuilder (
 ) {
     fun toRequest(): ModifyWebhookRequest = ModifyWebhookRequest(
             name = name!!,
-            avatar = avatar!!.formatted,
+            avatar = avatar!!.dataUri,
             channelId = channelId!!.value
     )
 }
