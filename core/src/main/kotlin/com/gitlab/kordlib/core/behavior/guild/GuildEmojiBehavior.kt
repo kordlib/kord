@@ -20,7 +20,7 @@ interface GuildEmojiBehavior : Entity {
     }
 
     companion object {
-        internal operator fun invoke(id: Snowflake, guildId: Snowflake, kord: Kord): GuildEmojiBehavior = object : GuildEmojiBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): GuildEmojiBehavior = object : GuildEmojiBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
