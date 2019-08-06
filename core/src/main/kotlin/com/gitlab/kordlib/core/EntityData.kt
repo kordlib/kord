@@ -13,8 +13,43 @@ data class RoleData(
         var position: Int? = null,
         var permissions: Permissions? = null,
         var managed: Boolean? = null,
-        var mentionable: Boolean? = null
+        var mentionable: Boolean? = null,
+        @SerialName("guild_id")
+        var guildId: String? = null
 )
+
+
+@Serializable
+data class ChannelData(
+        val id: String,
+        var type: ChannelType,
+        @SerialName("guild_id")
+        var guildId: String? = null,
+        var position: Int? = null,
+        @SerialName("permission_overwrites")
+        var permissionOverwrites: List<Overwrite>? = null,
+        var name: String? = null,
+        var topic: String? = null,
+        var nsfw: Boolean? = null,
+        @SerialName("last_message_id")
+        var lastMessageId: String? = null,
+        var bitrate: Int? = null,
+        @SerialName("user_limit")
+        var userLimit: Int? = null,
+        @SerialName("rate_limit_per_user")
+        var rateLimitPerUser: Int? = null,
+        var recipients: List<User>? = null,
+        var icon: String? = null,
+        @SerialName("owner_id")
+        var ownerId: String? = null,
+        @SerialName("application_id")
+        var applicationId: String? = null,
+        @SerialName("parent_id")
+        var parentId: String? = null,
+        @SerialName("last_pin_timestamp")
+        var lastPinTimestamp: String? = null
+)
+
 
 @Serializable
 data class GuildData(
@@ -25,7 +60,7 @@ data class GuildData(
         var owner: Boolean? = null,
         @SerialName("owner_id")
         var ownerId: String? = null,
-        var permissions: Int? = null,
+        var permissions: Permissions? = null,
         var region: String? = null,
         @SerialName("afk_channel_id")
         var afkChannelId: String? = null,
@@ -202,20 +237,65 @@ data class WebhookData(
         var token: String
 )
 
+object Data {
+    fun from(entity: Webhook) = with(entity) { WebhookData(id, guildId, channelId, user, name, avatar, token) }
 
-@Serializable
-data class PresenceUserData(
-        val id: String,
-        var username: String? = null,
-        var discriminator: String? = null,
-        var avatar: String? = null,
-        var bot: String? = null,
-        @SerialName("mfa_enable")
-        var mfaEnable: String? = null,
-        var locale: String? = null,
-        var flags: String? = null,
-        @SerialName("premium_type")
-        var premiumType: Premium? = null,
-        var verified: String? = null,
-        var email: String? = null
-)
+    fun from(entity: User) = with(entity) {
+        UserData(id, username, discriminator, avatar, bot, mfaEnable, locale, flags,
+                premiumType, verified, email)
+    }
+
+    fun from(entity: Channel) = with(entity) {
+        ChannelData(
+                id, type, guildId, position, permissionOverwrites, name,
+                topic, nsfw, lastMessageId, bitrate, userLimit,
+                rateLimitPerUser, recipients, icon, ownerId, applicationId,
+                parentId, lastPinTimestamp
+        )
+    }
+
+    fun from(entity: Overwrite) = with(entity) { OverwriteData(id, type, allow, deny) }
+
+    fun from(entity: UnavailableGuild) = with(entity) { GuildData(id, unavailable = unavailable) }
+    fun from(entity: PartialGuild) = with(entity) { GuildData(id, name, icon, owner = owner, permissions = permissions) }
+    fun from(entity: Guild) = with(entity) {
+        GuildData(
+                id, name, icon, splash, owner, ownerId, permissions, region,
+                afkChannelId, afkTimeout, embedEnabled, embedChannelId, verificationLevel, defaultMessageNotifications,
+                explicitContentFilter, roles, emojis, features, mfaLevel, applicationId, widgetEnabled,
+                widgetChannelId, systemChannelId, joinedAt, large, unavailable, memberCount, voiceStates, members,
+                channels, presences, maxPresences, maxMembers, vanityUrlCode, description, banner
+        )
+    }
+
+
+    fun from(entity: Emoji) = with(entity) { EmojiData(id, name, roles, user, requireColons, managed, animated) }
+    fun from(entity: PartialEmoji) = with(entity) { EmojiData(id, name) }
+
+    fun from(entity: Role) = with(entity) { RoleData(id, name, color, hoist, position, permissions, managed, mentionable) }
+    fun from(entity: DeletedGuildRole) = with(entity) { RoleData(id, guildId) }
+    fun from(entity: AuditLogRoleChange) = with(entity) { RoleData(id, name, color, hoist, position, permissions, managed, mentionable) }
+    fun from(entity: GuildRole) = with(entity.role) { RoleData(id, name, color, hoist, position, permissions, managed, mentionable, entity.guildId) }
+
+    fun from(entity: Message) = with(entity) {
+        MessageData(
+                id, channelId, guildId, author, member, content, timestamp,
+                editedTimestamp, tts, mentionEveryone, mentions,
+                mentionRoles, attachments, embeds, reactions, nonce, pinned,
+                webhookId, type, activity, application
+        )
+    }
+
+    fun from(entity: GuildIntegrations) = with(entity) {
+        GuildIntegrationsData(
+                id, name, type, enabled, syncing, roleId, expireBehavior, gracePeriod, user, account, syncedAt
+        )
+    }
+
+    fun from(entity: MessageApplication) = with(entity) { MessageApplicationData(id, coverImage, description, icon, name) }
+
+    fun from(entity: GuildMember) = with(entity) { GuildMemberData(user, nick, roles, joinedAt, deaf, mute) }
+    fun from(entity: AddedGuildMember) = with(entity) { GuildMemberData(user, nick, roles, joinedAt, deaf, mute, guildId) }
+    fun from(entity: RemovedGuildMember) = with(entity) { GuildMemberData(user, guildId = guildId) }
+    fun from(entity: PartialGuildMember) = with(entity) { GuildMemberData(null, nick, roles, joinedAt, deaf, mute) }
+}
