@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior.user
 
+import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.builder.ban.NewBanBuilder
 import com.gitlab.kordlib.core.`object`.builder.member.UpdateMemberBuilder
 import com.gitlab.kordlib.core.behavior.guild.GuildBehavior
@@ -43,6 +44,14 @@ interface MemberBehavior : Entity, UserBehavior {
      */
     suspend fun removeRole(roleId: Snowflake) {
         kord.rest.guild.deleteRoleFromGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value)
+    }
+
+    companion object {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): MemberBehavior = object: MemberBehavior {
+            override val guildId: Snowflake = guildId
+            override val id: Snowflake = id
+            override val kord: Kord = kord
+        }
     }
 
 }
