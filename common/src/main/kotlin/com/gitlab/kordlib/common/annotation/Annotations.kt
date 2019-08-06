@@ -28,3 +28,19 @@ annotation class KordPreview
 @Experimental(level = Experimental.Level.WARNING)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
 annotation class KordExperimental
+
+/**
+ * Marks a Kord-related API as potentially unsafe.
+ *
+ * Kord marks targets as unsafe if it exposes functionality in a way that is more error prone than alternatives
+ * and can lead to *inconsistent state* and *fail silent* or *fail slow* code.
+ *
+ * The trade off is usually increased performance by reducing cache hits and requests to the discord api.
+ *
+ * Functionality that is annotated with KordUnsafe should suggest a safer alternative approach in its documentation.
+ */
+@MustBeDocumented
+@Retention(value = AnnotationRetention.BINARY)
+@Experimental(level = Experimental.Level.WARNING)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
+annotation class KordUnsafe
