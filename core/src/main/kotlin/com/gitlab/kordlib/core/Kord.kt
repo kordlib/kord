@@ -7,4 +7,5 @@ class Kord {
 
     val rest: RestClient = TODO()
     val gateway: Gateway = TODO()
+    val unsafe: Unsafe = Unsafe(this)
 }
