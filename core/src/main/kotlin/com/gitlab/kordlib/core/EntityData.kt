@@ -127,7 +127,6 @@ data class GuildData(
         var banner: String? = null
 ) {
     companion object {
-        fun from(entity: UnavailableGuild) = with(entity) { GuildData(id, unavailable = unavailable) }
         fun from(entity: PartialGuild) = with(entity) { GuildData(id, name, icon, owner = owner, permissions = permissions) }
         fun from(entity: Guild) = with(entity) {
             GuildData(
