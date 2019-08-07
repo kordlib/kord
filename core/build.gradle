@@ -1,0 +1,5 @@
+dependencies {
+    api project(':common')
+    api project(':rest')
+    api project(':gateway')
+}

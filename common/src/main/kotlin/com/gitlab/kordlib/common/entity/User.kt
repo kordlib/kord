@@ -20,6 +20,22 @@ data class User(
         val email: String? = null
 )
 
+@Serializable
+data class OptionallyMemberUser(
+        val id: String,
+        val username: String,
+        val discriminator: String,
+        val avatar: String? = null,
+        val bot: Boolean? = null,
+        @SerialName("mfa_enable")
+        val mfaEnable: Boolean? = null,
+        val locale: String? = null,
+        val flags: Int? = null,
+        @SerialName("premium_type")
+        val premiumType: Premium? = null,
+        val member: PartialGuildMember
+)
+
 @Serializable(with = Premium.PremiumSerializer::class)
 enum class Premium(val code: Int) {
     NitroClassic(1),

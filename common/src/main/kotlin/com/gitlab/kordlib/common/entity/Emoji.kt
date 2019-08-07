@@ -21,3 +21,9 @@ data class UpdatedEmojis(
         val guildId: String,
         val emojis: List<Emoji>
 )
+
+@Serializable
+data class PartialEmoji(
+        val id: String,
+        val name: String
+)

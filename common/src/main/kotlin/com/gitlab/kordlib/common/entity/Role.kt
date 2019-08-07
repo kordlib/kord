@@ -39,5 +39,5 @@ data class DeletedGuildRole(
         @SerialName("guild_id")
         val guildId: String,
         @SerialName("role_id")
-        val roleId: String
+        val id: String
 )

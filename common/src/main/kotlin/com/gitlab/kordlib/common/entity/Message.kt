@@ -161,12 +161,6 @@ data class MessageReaction(
 )
 
 @Serializable
-data class PartialEmoji(
-        val id: String,
-        val name: String
-)
-
-@Serializable
 data class AllRemovedMessageReactions(
         @SerialName("channel_id")
         val channelId: String,
