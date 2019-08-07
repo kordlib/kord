@@ -8,6 +8,7 @@ import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialDescriptor
 import kotlinx.serialization.internal.ArrayListSerializer
 import kotlinx.serialization.internal.NullableSerializer
+import kotlinx.serialization.internal.StringSerializer
 import kotlinx.serialization.internal.UnitDescriptor
 import com.gitlab.kordlib.common.entity.Emoji as EmojiEntity
 
@@ -182,7 +183,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/$UserId", NoStrategy)
 
     object GuildCurrentUserNickPatch
-        : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", NoStrategy)
+        : Route<String>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", StringSerializer)
 
     object GuildMemberRolePut
         : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
