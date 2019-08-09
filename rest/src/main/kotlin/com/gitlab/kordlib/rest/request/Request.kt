@@ -92,6 +92,7 @@ internal class JsonRequest<T>(
         override val route: Route<T>,
         override val routeParams: Map<String, Any>,
         private val parameters: StringValues,
+        private val headers: StringValues,
         private val body: RequestBody<*>?
 ) : Request<T>() {
 
@@ -101,6 +102,7 @@ internal class JsonRequest<T>(
         url {
             encodedPath += generatePath()
             parameters.appendAll(this@JsonRequest.parameters)
+            headers.appendAll(this@JsonRequest.headers)
         }
 
         this@JsonRequest.body?.let {
@@ -114,6 +116,7 @@ internal class MultipartRequest<T>(
         override val route: Route<T>,
         override val routeParams: Map<String, Any>,
         private val parameters: StringValues,
+        private val headers: StringValues,
         private val body: RequestBody<*>?,
         private val files: List<Pair<String, InputStream>> = emptyList()
 ) : Request<T>() {
@@ -123,6 +126,7 @@ internal class MultipartRequest<T>(
         url {
             encodedPath += generatePath()
             parameters.appendAll(this@MultipartRequest.parameters)
+            headers.appendAll(this@MultipartRequest.headers)
         }
 
         val data = formData {

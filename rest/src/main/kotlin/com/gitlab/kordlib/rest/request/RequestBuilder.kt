@@ -9,7 +9,9 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
 
     var keys: MutableMap<String, String> = HashMap(keySize, 1f)
 
+    var headers = StringValues.Empty
     var parameters = StringValues.Empty
+
     private var body: RequestBody<*>? = null
     private var files: MutableList<Pair<String, InputStream>>? = null
 
@@ -34,8 +36,8 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     }
 
     fun build(): Request<T> = if (files == null) {
-        JsonRequest(route, keys, parameters, body)
+        JsonRequest(route, keys, parameters, headers, body)
     } else {
-        MultipartRequest(route, keys, parameters, body, files.orEmpty())
+        MultipartRequest(route, keys, parameters, headers, body, files.orEmpty())
     }
 }
