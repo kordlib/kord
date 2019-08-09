@@ -7,7 +7,6 @@ import com.gitlab.kordlib.rest.json.request.WebhookExecutePostRequest
 import com.gitlab.kordlib.rest.json.request.WebhookModifyPatchRequest
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
-import io.ktor.http.Parameters
 import kotlinx.serialization.json.JsonObject
 
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
@@ -56,9 +55,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend fun executeWebhook(webhookId: String, token: String, wait: Boolean, webhook: MultiPartWebhookExecutePostRequest) = call(Route.ExecuteWebhookPost) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
-        parameters = Parameters.build {
-            append("wait", "$wait")
-        }
+        parameter("wait", "$wait")
         body(WebhookExecutePostRequest.serializer(), webhook.request)
         webhook.files.forEach { file(it) }
     }
@@ -68,10 +65,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             call(Route.ExecuteSlackWebhookPost) {
                 keys[Route.WebhookId] = webhookId
                 keys[Route.WebhookToken] = token
-                parameters = Parameters.build {
-                    append("wait", "$wait")
-                }
-
+                parameter("wait", "$wait")
                 body(JsonObject.serializer(), body)
             }
 
@@ -80,9 +74,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             call(Route.ExecuteGithubWebhookPost) {
                 keys[Route.WebhookId] = webhookId
                 keys[Route.WebhookToken] = token
-                parameters = Parameters.build {
-                    append("wait", "$wait")
-                }
+                parameter("wait", "$wait")
                 body(JsonObject.serializer(), body)
             }
 }

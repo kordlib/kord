@@ -4,7 +4,6 @@ import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
-import io.ktor.http.Parameters
 
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
@@ -22,13 +21,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
 
     suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
-        parameters = Parameters.build {
             if (position != null) {
-                append(position.key, position.value)
+                parameter(position.key, position.value)
             }
-            append("limit", "$limit")
+        parameter("limit", "$limit")
         }
-    }
+
 
     suspend fun getMessage(channelId: String, messageId: String) = call(Route.MessageGet) {
         keys[Route.MessageId] = messageId
@@ -112,13 +110,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
 
-        parameters = Parameters.build {
-            if (position != null) {
-                append(position.key, position.value)
+        if (position != null) {
+            parameter(position.key, position.value)
             }
-            append("limit", "$limit")
+        parameter("limit", "$limit")
 
-        }
+
     }
 
     suspend fun triggerTypingIndicator(channelId: String) = call(Route.TypingIndicatorPost) {
