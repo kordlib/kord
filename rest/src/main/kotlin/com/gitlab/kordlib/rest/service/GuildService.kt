@@ -13,9 +13,10 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyGuild(guildId: String, guild: GuildModifyPatchRequest) = call(Route.GuildPatch) {
+    suspend fun modifyGuild(guildId: String, guild: GuildModifyPatchRequest, reason: String? = null) = call(Route.GuildPatch) {
         keys[Route.GuildId] = guildId
         body(GuildModifyPatchRequest.serializer(), guild)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun deleteGuild(guildId: String) = call(Route.GuildDelete) {
@@ -26,9 +27,10 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun createGuildChannel(guildId: String, channel: GuildChannelCreatePostRequest) = call(Route.GuildChannelsPost) {
+    suspend fun createGuildChannel(guildId: String, channel: GuildChannelCreatePostRequest, reason: String? = null) = call(Route.GuildChannelsPost) {
         keys[Route.GuildId] = guildId
         body(GuildChannelCreatePostRequest.serializer(), channel)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun modifyGuildChannelPosition(guildId: String, channel: GuildChannelPositionModifyPatchRequest) = call(Route.GuildChannelsPatch) {
@@ -45,33 +47,38 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun addGuildMember(guildId: String, userId: String, member: GuildMemberAddPutRequest) = call(Route.GuildMemberPut) {
+    suspend fun addGuildMember(guildId: String, userId: String, member: GuildMemberAddPutRequest, reason: String? = null) = call(Route.GuildMemberPut) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
         body(GuildMemberAddPutRequest.serializer(), member)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun modifyGuildMember(guildId: String, userId: String, member: GuildMemberModifyPatchRequest) = call(Route.GuildMemberPatch) {
+    suspend fun modifyGuildMember(guildId: String, userId: String, member: GuildMemberModifyPatchRequest, reason: String? = null) = call(Route.GuildMemberPatch) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
         body(GuildMemberModifyPatchRequest.serializer(), member)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun addRoleToGuildMember(guildId: String, userId: String, roleId: String) = call(Route.GuildMemberRolePut) {
+    suspend fun addRoleToGuildMember(guildId: String, userId: String, roleId: String, reason: String? = null) = call(Route.GuildMemberRolePut) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
         keys[Route.RoleId] = roleId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun deleteRoleFromGuildMember(guildId: String, userId: String, roleId: String) = call(Route.GuildMemberRoleDelete) {
+    suspend fun deleteRoleFromGuildMember(guildId: String, userId: String, roleId: String, reason: String? = null) = call(Route.GuildMemberRoleDelete) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
         keys[Route.RoleId] = roleId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun deleteGuildMember(guildId: String, userId: String) = call(Route.GuildMemberDelete) {
+    suspend fun deleteGuildMember(guildId: String, userId: String, reason: String? = null) = call(Route.GuildMemberDelete) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun getGuildBans(guildId: String) = call(Route.GuildBansGet) {
@@ -83,24 +90,27 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.UserId] = userId
     }
 
-    suspend fun addGuildBan(guildId: String, userId: String, ban: GuildBanAddPutRequest) = call(Route.GuildBanPut) {
+    suspend fun addGuildBan(guildId: String, userId: String, ban: GuildBanAddPutRequest, reason: String? = null) = call(Route.GuildBanPut) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
         body(GuildBanAddPutRequest.serializer(), ban)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun deleteGuildBan(guildId: String, userId: String) = call(Route.GuildBanDelete) {
+    suspend fun deleteGuildBan(guildId: String, userId: String, reason: String? = null) = call(Route.GuildBanDelete) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun getGuildRoles(guildId: String) = call(Route.GuildRolesGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun createGuildRole(guildId: String, role: GuildRoleCreatePostRequest) = call(Route.GuildRolePost) {
+    suspend fun createGuildRole(guildId: String, role: GuildRoleCreatePostRequest, reason: String? = null) = call(Route.GuildRolePost) {
         keys[Route.GuildId] = guildId
         body(GuildRoleCreatePostRequest.serializer(), role)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun modifyGuildRolePosition(guildId: String, role: GuildRolePositionModifyPatchRequest) = call(Route.GuildRolesPatch) {
@@ -109,23 +119,26 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
     }
 
 
-    suspend fun modifyGuildRole(guildId: String, roleId: String, role: GuildRoleModifyPatchRequest) = call(Route.GuildRolePatch) {
+    suspend fun modifyGuildRole(guildId: String, roleId: String, role: GuildRoleModifyPatchRequest, reason: String? = null) = call(Route.GuildRolePatch) {
         keys[Route.GuildId] = guildId
         keys[Route.RoleId] = roleId
         body(GuildRoleModifyPatchRequest.serializer(), role)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun deleteGuildRole(guildId: String, roleId: String) = call(Route.GuildRoleDelete) {
+    suspend fun deleteGuildRole(guildId: String, roleId: String, reason: String? = null) = call(Route.GuildRoleDelete) {
         keys[Route.GuildId] = guildId
         keys[Route.RoleId] = roleId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun getGuildPruneCount(guildId: String) = call(Route.GuildPruneCountGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun beginGuildPrune(guildId: String) = call(Route.GuildPrunePost) {
+    suspend fun beginGuildPrune(guildId: String, reason: String? = null) = call(Route.GuildPrunePost) {
         keys[Route.GuildId] = guildId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun getGuildVoiceRegions(guildId: String) = call(Route.GuildVoiceRegionsGet) {

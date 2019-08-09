@@ -79,9 +79,10 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.MessageId] = messageId
     }
 
-    suspend fun deleteMessage(channelId: String, messageId: String) = call(Route.MessageDelete) {
+    suspend fun deleteMessage(channelId: String, messageId: String, reason: String? = null) = call(Route.MessageDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun bulkDelete(channelId: String, messages: BulkDeleteRequest) = call(Route.BulkMessageDeletePost) {
@@ -89,19 +90,22 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         body(BulkDeleteRequest.serializer(), messages)
     }
 
-    suspend fun deleteChannel(channelId: String) = call(Route.ChannelDelete) {
+    suspend fun deleteChannel(channelId: String, reason: String? = null) = call(Route.ChannelDelete) {
         keys[Route.ChannelId] = channelId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun deleteChannelPermission(channelId: String, overwriteId: String) = call(Route.ChannelPermissionDelete) {
+    suspend fun deleteChannelPermission(channelId: String, overwriteId: String, reason: String? = null) = call(Route.ChannelPermissionDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: ChannelPermissionEditPutRequest) = call(Route.ChannelPermissionPut) {
+    suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: ChannelPermissionEditPutRequest, reason: String? = null) = call(Route.ChannelPermissionPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
         body(ChannelPermissionEditPutRequest.serializer(), permissions)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
 
@@ -134,9 +138,10 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         body(UserAddDMPutRequest.serializer(), addUser)
     }
 
-    suspend fun createInvite(channelId: String, invite: InviteCreatePostRequest) = call(Route.InvitePost) {
+    suspend fun createInvite(channelId: String, invite: InviteCreatePostRequest, reason: String? = null) = call(Route.InvitePost) {
         keys[Route.ChannelId] = channelId
         body(InviteCreatePostRequest.serializer(), invite)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun editMessage(channelId: String, messageId: String, message: MessageEditPatchRequest) = call(Route.EditMessagePatch) {
@@ -145,15 +150,17 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         body(MessageEditPatchRequest.serializer(), message)
     }
 
-    suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest) = call(Route.ChannelPut) {
+    suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest, reason: String? = null) = call(Route.ChannelPut) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPutRequest.serializer(), channel)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
 
-    suspend fun patchChannel(channelId: String, channel: ChannelModifyPatchRequest) = call(Route.ChannelPatch) {
+    suspend fun patchChannel(channelId: String, channel: ChannelModifyPatchRequest, reason: String? = null) = call(Route.ChannelPatch) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPatchRequest.serializer(), channel)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
 }

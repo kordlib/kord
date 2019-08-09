@@ -10,9 +10,10 @@ import com.gitlab.kordlib.rest.route.Route
 import kotlinx.serialization.json.JsonObject
 
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
-    suspend fun createWebhook(channelId: String, webhook: WebhookCreatePostRequest) = call(Route.WebhookPost) {
+    suspend fun createWebhook(channelId: String, webhook: WebhookCreatePostRequest, reason: String? = null) = call(Route.WebhookPost) {
         keys[Route.ChannelId] = channelId
         body(WebhookCreatePostRequest.serializer(), webhook)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun getChannelWebhooks(channelId: String) = call(Route.ChannelWebhooksGet) {
@@ -32,9 +33,10 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.WebhookToken] = token
     }
 
-    suspend fun modifyWebhook(webhookId: String, webhook: WebhookModifyPatchRequest) = call(Route.WebhookPatch) {
+    suspend fun modifyWebhook(webhookId: String, webhook: WebhookModifyPatchRequest, reason: String? = null) = call(Route.WebhookPatch) {
         keys[Route.WebhookId] = webhookId
         body(WebhookModifyPatchRequest.serializer(), webhook)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun modifyWebhookWithToken(webhookId: String, token: String, webhook: WebhookModifyPatchRequest) = call(Route.WebhookByTokenPatch) {
@@ -43,8 +45,9 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         body(WebhookModifyPatchRequest.serializer(), webhook)
     }
 
-    suspend fun deleteWebhook(webhookId: String) = call(Route.WebhookDelete) {
+    suspend fun deleteWebhook(webhookId: String, reason: String? = null) = call(Route.WebhookDelete) {
         keys[Route.WebhookId] = webhookId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun deleteWebhookWithToken(webhookId: String, token: String) = call(Route.WebhookByTokenDelete) {

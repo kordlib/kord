@@ -6,20 +6,23 @@ import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 
 class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler) {
-    suspend fun createEmoji(guildId: String, emoji: EmojiCreatePostRequest) = call(Route.GuildEmojiPost) {
+    suspend fun createEmoji(guildId: String, emoji: EmojiCreatePostRequest, reason: String? = null) = call(Route.GuildEmojiPost) {
         keys[Route.GuildId] = guildId
         body(EmojiCreatePostRequest.serializer(), emoji)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun deleteEmoji(guildId: String, emojiId: String) = call(Route.GuildEmojiDelete) {
+    suspend fun deleteEmoji(guildId: String, emojiId: String, reason: String? = null) = call(Route.GuildEmojiDelete) {
         keys[Route.GuildId] = guildId
         keys[Route.EmojiId] = emojiId
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun modifyEmoji(guildId: String, emojiId: String, emoji: EmojiModifyPatchRequest) = call(Route.GuildEmojiPatch) {
+    suspend fun modifyEmoji(guildId: String, emojiId: String, emoji: EmojiModifyPatchRequest, reason: String? = null) = call(Route.GuildEmojiPatch) {
         keys[Route.GuildId] = guildId
         keys[Route.EmojiId] = emojiId
         body(EmojiModifyPatchRequest.serializer(), emoji)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun getEmoji(guildId: String, emojiId: String) = call(Route.GuildEmojiGet) {

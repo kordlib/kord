@@ -9,7 +9,8 @@ class InviteService(requestHandler: RequestHandler) : RestService(requestHandler
         parameter("with_counts", "$withCounts")
     }
 
-    suspend fun deleteInvite(code: String) = call(Route.InviteDelete) {
+    suspend fun deleteInvite(code: String, reason: String? = null) = call(Route.InviteDelete) {
         keys[Route.InviteCode] = code
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 }
