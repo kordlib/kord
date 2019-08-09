@@ -1,8 +1,8 @@
 package com.gitlab.kordlib.rest.service
 
-import com.gitlab.kordlib.rest.json.request.CreateDMRequest
-import com.gitlab.kordlib.rest.json.request.CreateGroupDMRequest
-import com.gitlab.kordlib.rest.json.request.ModifyCurrentUserRequest
+import com.gitlab.kordlib.rest.json.request.CurrentUserModifyPatchRequest
+import com.gitlab.kordlib.rest.json.request.DMCreatePostRequest
+import com.gitlab.kordlib.rest.json.request.GroupDMCreatePostRequest
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 
@@ -20,16 +20,16 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
 
     suspend fun getUserConnections() = call(Route.UserConnectionsGet)
 
-    suspend fun createDM(dm: com.gitlab.kordlib.rest.json.request.CreateDMRequest) = call(Route.DMPost) {
-        body(com.gitlab.kordlib.rest.json.request.CreateDMRequest.serializer(), dm)
+    suspend fun createDM(dm: DMCreatePostRequest) = call(Route.DMPost) {
+        body(DMCreatePostRequest.serializer(), dm)
     }
 
 
-    suspend fun createGroupDM(dm: com.gitlab.kordlib.rest.json.request.CreateGroupDMRequest) = call(Route.DMPost) {
-        body(com.gitlab.kordlib.rest.json.request.CreateGroupDMRequest.serializer(), dm)
+    suspend fun createGroupDM(dm: GroupDMCreatePostRequest) = call(Route.DMPost) {
+        body(GroupDMCreatePostRequest.serializer(), dm)
     }
 
-    suspend fun modifyCurrentUser(user: com.gitlab.kordlib.rest.json.request.ModifyCurrentUserRequest) = call(Route.CurrentUserPatch) {
-        body(com.gitlab.kordlib.rest.json.request.ModifyCurrentUserRequest.serializer(), user)
+    suspend fun modifyCurrentUser(user: CurrentUserModifyPatchRequest) = call(Route.CurrentUserPatch) {
+        body(CurrentUserModifyPatchRequest.serializer(), user)
     }
 }
