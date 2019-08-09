@@ -2,6 +2,9 @@ dependencies {
     api project(':common')
     api project(':rest')
     api project(':gateway')
+
+    api 'com.gitlab.kordlib.cache:api:07d86a4625'
+    implementation 'com.gitlab.kordlib.cache:map:07d86a4625'
 }
 compileKotlin {
     kotlinOptions {

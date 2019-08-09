@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core
 
+import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -18,11 +19,12 @@ data class RoleData(
         var guildId: String? = null
 ) {
     companion object {
+        val description get() = description(RoleData::id)
+
         fun from(entity: Role) = with(entity) { RoleData(id, name, color, hoist, position, permissions, managed, mentionable) }
         fun from(entity: DeletedGuildRole) = with(entity) { RoleData(id, guildId) }
         fun from(entity: AuditLogRoleChange) = with(entity) { RoleData(id, name, color, hoist, position, permissions, managed, mentionable) }
         fun from(entity: GuildRole) = with(entity.role) { RoleData(id, name, color, hoist, position, permissions, managed, mentionable, entity.guildId) }
-
     }
 }
 
@@ -46,7 +48,7 @@ data class ChannelData(
         var userLimit: Int? = null,
         @SerialName("rate_limit_per_user")
         var rateLimitPerUser: Int? = null,
-        var recipients: List<User>? = null,
+        var recipients: List<String>? = null,
         var icon: String? = null,
         @SerialName("owner_id")
         var ownerId: String? = null,
@@ -58,12 +60,30 @@ data class ChannelData(
         var lastPinTimestamp: String? = null
 ) {
     companion object {
-        fun from(entity: Channel) = with(entity) {
-            ChannelData(
-                    id, type, guildId, position, permissionOverwrites, name, topic, nsfw, lastMessageId, bitrate, userLimit,
-                    rateLimitPerUser, recipients, icon, ownerId, applicationId, parentId, lastPinTimestamp
-            )
-        }
+        val description get() = description(ChannelData::id)
+    }
+
+    fun from(entity: Channel) = with(entity) {
+        ChannelData(
+                id,
+                type,
+                guildId,
+                position,
+                permissionOverwrites,
+                name,
+                topic,
+                nsfw,
+                lastMessageId,
+                bitrate,
+                userLimit,
+                rateLimitPerUser,
+                recipients?.map { it.id },
+                icon,
+                ownerId,
+                applicationId,
+                parentId,
+                lastPinTimestamp
+        )
     }
 }
 
@@ -127,68 +147,85 @@ data class GuildData(
         var banner: String? = null
 ) {
     companion object {
+
+        val description = description(GuildData::id) {
+            link(GuildData::id to RoleData::guildId)
+            link(GuildData::id to ChannelData::guildId)
+            link(GuildData::id to GuildMemberData::guildId)
+            link(GuildData::id to MessageData::guildId)
+            link(GuildData::id to WebhookData::guildId)
+        }
+
         fun from(entity: PartialGuild) = with(entity) { GuildData(id, name, icon, owner = owner, permissions = permissions) }
         fun from(entity: Guild) = with(entity) {
             GuildData(
-                    id, name, icon, splash, owner, ownerId, permissions, region,
-                    afkChannelId, afkTimeout, embedEnabled, embedChannelId, verificationLevel, defaultMessageNotifications,
-                    explicitContentFilter, roles, emojis, features, mfaLevel, applicationId, widgetEnabled,
-                    widgetChannelId, systemChannelId, joinedAt, large, unavailable, memberCount, voiceStates, members,
-                    channels, presences, maxPresences, maxMembers, vanityUrlCode, description, banner
+                    id,
+                    name,
+                    icon,
+                    splash,
+                    owner,
+                    ownerId,
+                    permissions,
+                    region,
+                    afkChannelId,
+                    afkTimeout,
+                    embedEnabled,
+                    embedChannelId,
+                    verificationLevel,
+                    defaultMessageNotifications,
+                    explicitContentFilter,
+                    roles,
+                    emojis,
+                    features,
+                    mfaLevel,
+                    applicationId,
+                    widgetEnabled,
+                    widgetChannelId,
+                    systemChannelId,
+                    joinedAt,
+                    large,
+                    unavailable,
+                    memberCount,
+                    voiceStates,
+                    members,
+                    channels,
+                    presences,
+                    maxPresences,
+                    maxMembers,
+                    vanityUrlCode,
+                    description,
+                    banner
             )
         }
 
     }
 }
 
-
-@Serializable
-data class GuildIntegrationsData(
-        val id: String,
-        var name: String,
-        var type: String,
-        var enabled: Boolean,
-        var syncing: Boolean,
-        @SerialName("role_id")
-        var roleId: String,
-        @SerialName("expire_behavior")
-        var expireBehavior: Int,
-        @SerialName("expire_grace_period")
-        var gracePeriod: Int,
-        var user: User,
-        var account: IntegrationAccount,
-        @SerialName("synced_at")
-        var syncedAt: String
-) {
-    companion object {
-        fun from(entity: GuildIntegrations) = with(entity) {
-            GuildIntegrationsData(
-                    id, name, type, enabled, syncing, roleId, expireBehavior, gracePeriod, user, account, syncedAt
-            )
-        }
-
-    }
-}
-
+private val GuildMemberData.id get() = "$userId$guildId"
 
 @Serializable
 data class GuildMemberData(
-        var user: User? = null,
-        var nick: String? = null,
-        var roles: List<String>? = null,
-        @SerialName("joined_at")
-        var joinedAt: String? = null,
-        var deaf: Boolean? = null,
-        var mute: Boolean? = null,
+        var userId: String,
         @SerialName("guild_id")
-        var guildId: String? = null
+        var guildId: String,
+        var nick: String? = null,
+        var roles: List<String>,
+        @SerialName("joined_at")
+        var joinedAt: String,
+        var deaf: Boolean,
+        var mute: Boolean
 ) {
     companion object {
+        val description get() = description(GuildMemberData::id)
 
-        fun from(entity: GuildMember) = with(entity) { GuildMemberData(user, nick, roles, joinedAt, deaf, mute) }
-        fun from(entity: AddedGuildMember) = with(entity) { GuildMemberData(user, nick, roles, joinedAt, deaf, mute, guildId) }
-        fun from(entity: RemovedGuildMember) = with(entity) { GuildMemberData(user, guildId = guildId) }
-        fun from(entity: PartialGuildMember) = with(entity) { GuildMemberData(null, nick, roles, joinedAt, deaf, mute) }
+        fun from(userId: String, guildId: String, entity: GuildMember) =
+                with(entity) { GuildMemberData(userId, guildId, nick, roles, joinedAt, deaf, mute) }
+
+        fun from(userId: String, entity: AddedGuildMember) =
+                with(entity) { GuildMemberData(userId, guildId, nick, roles, joinedAt, deaf, mute) }
+
+        fun from(userId: String, guildId: String, entity: PartialGuildMember) =
+                with(entity) { GuildMemberData(userId, guildId, nick, roles, joinedAt, deaf, mute) }
 
     }
 }
@@ -211,9 +248,28 @@ data class UserData(
         var email: String? = null
 ) {
     companion object {
+
+        val description
+            get() = description(UserData::id) {
+                link(UserData::id to GuildMemberData::userId)
+                link(UserData::id to MessageData::authorId)
+                link(UserData::id to WebhookData::userid)
+            }
+
         fun from(entity: User) = with(entity) {
-            UserData(id, username, discriminator, avatar, bot, mfaEnable, locale, flags,
-                    premiumType, verified, email)
+            UserData(
+                    id,
+                    username,
+                    discriminator,
+                    avatar,
+                    bot,
+                    mfaEnable,
+                    locale,
+                    flags,
+                    premiumType,
+                    verified,
+                    email
+            )
         }
 
     }
@@ -227,8 +283,7 @@ data class MessageData(
         var channelId: String,
         @SerialName("guild_id")
         var guildId: String? = null,
-        var author: User? = null,
-        var member: PartialGuildMember? = null,
+        var authorId: String? = null,
         var content: String? = null,
         var timestamp: String? = null,
         @SerialName("edited_timestamp")
@@ -236,9 +291,9 @@ data class MessageData(
         var tts: Boolean? = null,
         @SerialName("mention_everyone")
         var mentionEveryone: Boolean? = null,
-        var mentions: List<OptionallyMemberUser>? = null,
+        var mentions: List<String>? = null,
         @SerialName("mention_roles")
-        var mentionRoles: List<Role>? = null,
+        var mentionRoles: List<String>? = null,
         var attachments: List<Attachment>? = null,
         var embeds: List<Embed>? = null,
         var reactions: List<Reaction>? = null,
@@ -251,35 +306,38 @@ data class MessageData(
         var application: MessageApplication? = null
 ) {
     companion object {
+        val description get() = description(MessageData::id)
+
         fun from(entity: Message) = with(entity) {
             MessageData(
-                    id, channelId, guildId, author, member, content, timestamp,
-                    editedTimestamp, tts, mentionEveryone, mentions,
-                    mentionRoles, attachments, embeds, reactions, nonce, pinned,
-                    webhookId, type, activity, application
+                    id,
+                    channelId,
+                    guildId,
+                    author.id,
+                    content,
+                    timestamp,
+                    editedTimestamp,
+                    tts,
+                    mentionEveryone,
+                    mentions.map { it.id },
+                    mentionRoles.map { it.id },
+                    attachments,
+                    embeds,
+                    reactions,
+                    nonce,
+                    pinned,
+                    webhookId,
+                    type,
+                    activity,
+                    application
             )
         }
     }
 }
 
-
-@Serializable
-data class OverwriteData(
-        val id: String,
-        var type: String,
-        var allow: Int,
-        var deny: Int
-) {
-    companion object {
-        fun from(entity: Overwrite) = with(entity) { OverwriteData(id, type, allow, deny) }
-
-    }
-}
-
-
 @Serializable
 data class EmojiData(
-        val id: String? = null,
+        val id: String,
         var name: String,
         var roles: List<String>? = null,
         var user: User? = null,
@@ -289,8 +347,13 @@ data class EmojiData(
         var animated: Boolean? = null
 ) {
     companion object {
-        fun from(entity: Emoji) = with(entity) { EmojiData(id, name, roles, user, requireColons, managed, animated) }
-        fun from(entity: PartialEmoji) = with(entity) { EmojiData(id, name) }
+        val description get() = description(EmojiData::id)
+
+        fun from(id: String, entity: Emoji) =
+                with(entity) { EmojiData(id, name, roles, user, requireColons, managed, animated) }
+
+        fun from(entity: PartialEmoji) =
+                with(entity) { EmojiData(id, name) }
 
     }
 }
@@ -302,12 +365,14 @@ data class WebhookData(
         @SerialName("guild_id")
         var guildId: String? = null,
         var channelId: String,
-        var user: User? = null,
+        var userid: String? = null,
         var name: String? = null,
         var avatar: String? = null,
         var token: String
 ) {
     companion object {
-        fun from(entity: Webhook) = with(entity) { WebhookData(id, guildId, channelId, user, name, avatar, token) }
+        val description get() = description(WebhookData::id)
+
+        fun from(entity: Webhook) = with(entity) { WebhookData(id, guildId, channelId, user?.id, name, avatar, token) }
     }
 }

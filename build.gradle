@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-group 'com.gitlab.kordlib'
+group 'com.gitlab.kordlib.kord'
 version '0.1.0'
 
 ext {
@@ -34,6 +34,7 @@ allprojects {
         mavenCentral()
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx" }
+        maven { url 'https://jitpack.io' }
     }
 
     dependencies {
