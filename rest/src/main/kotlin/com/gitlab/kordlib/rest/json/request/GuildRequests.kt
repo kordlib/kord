@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateGuildRequest(
+data class GuildCreatePostRequest(
         val name: String,
         val region: String,
         val icon: String? = null,
@@ -15,11 +15,11 @@ data class CreateGuildRequest(
         val defaultNotificationLevel: DefaultMessageNotificationLevel,
         val explicitContentFilter: ExplicitContentFilter,
         val roles: List<Role> = emptyList(),
-        val channels: List<com.gitlab.kordlib.rest.json.request.CreateGuildChannelRequest> = emptyList()
+        val channels: List<GuildChannelCreatePostRequest> = emptyList()
 )
 
 @Serializable
-data class CreateGuildChannelRequest(
+data class GuildChannelCreatePostRequest(
         val name: String,
         val type: ChannelType? = null,
         val topic: String? = null,
@@ -37,10 +37,10 @@ data class CreateGuildChannelRequest(
 )
 
 @Serializable
-data class ModifyGuildChannelPositionRequest(val id: String, val position: Int)
+data class GuildChannelPositionModifyPatchRequest(val id: String, val position: Int)
 
 @Serializable
-data class AddGuildMemberRequest(
+data class GuildMemberAddPutRequest(
         @SerialName("access_token") val token: String,
         val nick: String? = null,
         val roles: List<String>? = null,
@@ -49,7 +49,7 @@ data class AddGuildMemberRequest(
 )
 
 @Serializable
-data class ModifyGuildMemberRequest(
+data class GuildMemberModifyPatchRequest(
         val nick: String? = null,
         val roles: List<String>? = null,
         val mute: Boolean? = null,
@@ -60,14 +60,14 @@ data class ModifyGuildMemberRequest(
 
 
 @Serializable
-data class AddGuildBanRequest(
+data class GuildBanAddPutRequest(
         val reason: String? = null,
         @SerialName("delete-message-days")
         val deleteMessagesDays: String? = null
 )
 
 @Serializable
-data class CreateGuildRoleRequest(
+data class GuildRoleCreatePostRequest(
         val name: String? = null,
         val permissions: Permissions? = null,
         val color: Int = 0,
@@ -77,13 +77,13 @@ data class CreateGuildRoleRequest(
 )
 
 @Serializable
-data class ModifyGuildRolePositionRequest(
-        val id: String,
-        val position: Int
+data class GuildRolePositionModifyPatchRequest(
+        val id: String? = null,
+        val position: Int? = null
 )
 
 @Serializable
-data class ModifyGuildRoleRequest(
+data class GuildRoleModifyPatchRequest(
         val name: String? = null,
         val permissions: Permissions? = null,
         val color: Int? = null,
@@ -93,10 +93,10 @@ data class ModifyGuildRoleRequest(
 )
 
 @Serializable
-data class CreateGuildIntegrationRequest(val type: Int, val id: String)
+data class GuildIntegrationCreatePostRequest(val type: Int, val id: String)
 
 @Serializable
-data class ModifyGuildIntegrationRequest(
+data class GuildIntegrationModifyPatchRequest(
         @SerialName("expire_behavior")
         val expireBehavior: Int? = null,
         @SerialName("expire_grace_period")
@@ -106,17 +106,17 @@ data class ModifyGuildIntegrationRequest(
 )
 
 @Serializable
-data class ModifyGuildEmbedRequest(
+data class GuildEmbedModifyPatchRequest(
         val enabled: Boolean,
         @SerialName("channel_id")
         val channelId: String
 )
 
 @Serializable
-data class ModifyCurrentUserNicknameRequest(val nick: String? = null)
+data class CurrentUserNicknameModifyPatchRequest(val nick: String? = null)
 
 @Serializable
-data class ModifyGuildRequest(
+data class GuildModifyPatchRequest(
         val name: String? = null,
         val region: String? = null,
         @SerialName("verification_level")

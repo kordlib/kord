@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class InviteCreateRequest(
+data class InviteCreatePostRequest(
         @SerialName("max_age")
         val age: Int = 86400,
         @SerialName("max_uses")

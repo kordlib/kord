@@ -6,10 +6,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateWebhookRequest(val name: String, val avatar: String?)
+data class WebhookCreatePostRequest(val name: String, val avatar: String?)
 
 @Serializable
-data class ModifyWebhookRequest(
+data class WebhookModifyPatchRequest(
         val name: String? = null,
         val avatar: String? = null,
         @SerialName("channel_id")
@@ -17,7 +17,7 @@ data class ModifyWebhookRequest(
 )
 
 @Serializable
-data class WebhookExecuteRequest(
+data class WebhookExecutePostRequest(
         val content: String,
         val username: String? = null,
         @SerialName("avatar_url")
@@ -28,6 +28,6 @@ data class WebhookExecuteRequest(
         val payload: String? = null
 )
 
-data class MultiPartWebhookExecuteRequest(
-        val request: com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest,
+data class MultiPartWebhookExecutePostRequest(
+        val request: WebhookExecutePostRequest,
         val files: List<Pair<String, InputStream>>)

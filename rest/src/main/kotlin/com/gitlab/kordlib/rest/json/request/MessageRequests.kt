@@ -6,15 +6,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MessageCreateRequest(
+data class MessageCreatePostRequest(
         val content: String,
         val nonce: String? = null,
         val tts: Boolean? = null,
-        val embed: com.gitlab.kordlib.rest.json.request.EmbedRequest? = null
+        val embed: EmbedRequest? = null
 )
 
-data class MultipartMessageCreateRequest(
-        val request: com.gitlab.kordlib.rest.json.request.MessageCreateRequest,
+data class MultipartMessageCreatePostRequest(
+        val request: MessageCreatePostRequest,
         val files: List<Pair<String, InputStream>> = emptyList()
 )
 
@@ -26,11 +26,11 @@ data class EmbedRequest(
         val url: String?,
         val timestamp: String? = null,
         val color: Int? = null,
-        val footer: com.gitlab.kordlib.rest.json.request.EmbedFooterRequest? = null,
-        val image: com.gitlab.kordlib.rest.json.request.EmbedImageRequest? = null,
-        val thumbnail: com.gitlab.kordlib.rest.json.request.EmbedThumbnailRequest? = null,
-        val author: com.gitlab.kordlib.rest.json.request.EmbedAuthorRequest? = null,
-        val fields: List<com.gitlab.kordlib.rest.json.request.EmbedFieldRequest>? = null
+        val footer: EmbedFooterRequest? = null,
+        val image: EmbedImageRequest? = null,
+        val thumbnail: EmbedThumbnailRequest? = null,
+        val author: EmbedAuthorRequest? = null,
+        val fields: List<EmbedFieldRequest>? = null
 )
 
 
@@ -64,7 +64,7 @@ data class EmbedFieldRequest(
 )
 
 @Serializable
-data class MessageEditRequest(
+data class MessageEditPatchRequest(
         val content: String? = null,
         val embed: Embed? = null
 )

@@ -62,7 +62,7 @@ class RestServiceTest {
     fun `create guild`() = runBlocking {
         val region = rest.voice.getVoiceRegions().first()
 
-        val request = CreateGuildRequest(
+        val request = GuildCreatePostRequest(
                 "TEST GUILD",
                 region.id,
                 null,
@@ -81,7 +81,7 @@ class RestServiceTest {
 
         rest.guild.getGuild(guildId)
 
-        rest.guild.modifyGuild(guildId, ModifyGuildRequest("Edited Guild Test"))
+        rest.guild.modifyGuild(guildId, GuildModifyPatchRequest("Edited Guild Test"))
 
         rest.guild.getGuildVoiceRegions(guildId).first()
 
@@ -94,7 +94,7 @@ class RestServiceTest {
     fun `create invite`() = runBlocking {
         val generalId = rest.guild.getGuildChannels(guildId).first { it.type == ChannelType.GuildText }.id
 
-        rest.channel.createInvite(generalId, InviteCreateRequest())
+        rest.channel.createInvite(generalId, InviteCreatePostRequest())
 
         Unit
     }
@@ -102,7 +102,7 @@ class RestServiceTest {
     @Test
     @Order(3)
     fun `create channel`() = runBlocking {
-        val channel = rest.guild.createGuildChannel(guildId, CreateGuildChannelRequest("BOT TEST RUN"))
+        val channel = rest.guild.createGuildChannel(guildId, GuildChannelCreatePostRequest("BOT TEST RUN"))
         channelId = channel.id
 
         rest.channel.getChannel(channel.id)
@@ -114,8 +114,8 @@ class RestServiceTest {
     @Order(4)
     fun `reaction in channel`() = runBlocking {
         with(rest.channel) {
-            val message = createMessage(channelId, MessageCreateRequest("TEST"))
-            editMessage(channelId, message.id, MessageEditRequest("EDIT TEST"))
+            val message = createMessage(channelId, MessageCreatePostRequest("TEST"))
+            editMessage(channelId, message.id, MessageEditPatchRequest("EDIT TEST"))
 
             createReaction(channelId, message.id, "\ud83d\udc4e")
             deleteOwnReaction(channelId, message.id, "\ud83d\udc4e")
@@ -137,7 +137,7 @@ class RestServiceTest {
         with(rest.channel) {
             triggerTypingIndicator(channelId)
 
-            val message = createMessage(channelId, MessageCreateRequest("TEST"))
+            val message = createMessage(channelId, MessageCreatePostRequest("TEST"))
 
 
             getMessage(channelId, message.id)
@@ -145,8 +145,8 @@ class RestServiceTest {
 
             deleteMessage(channelId, message.id)
 
-            createMessage(channelId, MessageCreateRequest("TEST"))
-            createMessage(channelId, MultipartMessageCreateRequest(MessageCreateRequest("TEST")))
+            createMessage(channelId, MessageCreatePostRequest("TEST"))
+            createMessage(channelId, MultipartMessageCreatePostRequest(MessageCreatePostRequest("TEST")))
 
             val messages = getMessages(channelId)
 
@@ -159,7 +159,7 @@ class RestServiceTest {
     @Order(6)
     fun `pinned messages in channel`() = runBlocking {
         with(rest.channel) {
-            val pinnedMessage = createMessage(channelId, MessageCreateRequest("TEST"))
+            val pinnedMessage = createMessage(channelId, MessageCreatePostRequest("TEST"))
 
             addPinnedMessage(channelId, pinnedMessage.id)
 
@@ -186,12 +186,12 @@ class RestServiceTest {
     @Test
     @Order(8)
     fun `permissions in channels`() = runBlocking {
-        val role = rest.guild.createGuildRole(guildId, CreateGuildRoleRequest())
+        val role = rest.guild.createGuildRole(guildId, GuildRoleCreatePostRequest())
         with(rest.channel) {
             val allow = Permissions { +Permission.CreateInstantInvite }
             val deny = Permissions { +Permission.SendTTSMessages }
 
-            editChannelPermissions(channelId, role.id, EditChannelPermissionRequest(allow, deny, "role"))
+            editChannelPermissions(channelId, role.id, ChannelPermissionEditPutRequest(allow, deny, "role"))
 
             deleteChannelPermission(channelId, role.id)
 
@@ -204,7 +204,7 @@ class RestServiceTest {
         with(rest.channel) {
             //TODO Test Put method
 
-            patchChannel(channelId, PatchModifyChannelRequest("PATCH"))
+            patchChannel(channelId, ChannelModifyPatchRequest("PATCH"))
 
             Unit
 
@@ -221,13 +221,13 @@ class RestServiceTest {
             val members = getGuildMembers(guildId)
             //TODO add member to guild
 
-            modifyGuildMember(guildId, userId, ModifyGuildMemberRequest("My nickname", mute = true, deaf = true))
+            modifyGuildMember(guildId, userId, GuildMemberModifyPatchRequest("My nickname", mute = true, deaf = true))
 
             getGuildMember(guildId, userId)
 
             //deleteGuildMember(guildId, user)
 
-            modifyCurrentUserNickname(guildId, ModifyCurrentUserNicknameRequest("Kord"))
+            modifyCurrentUserNickname(guildId, CurrentUserNicknameModifyPatchRequest("Kord"))
 
             Unit
         }
@@ -239,7 +239,7 @@ class RestServiceTest {
         with(rest.guild) {
             val role = createGuildRole(
                     guildId,
-                    CreateGuildRoleRequest(
+                    GuildRoleCreatePostRequest(
                             "Sudoers",
                             Permissions { +Permission.Administrator },
                             5000,
@@ -248,13 +248,13 @@ class RestServiceTest {
                     )
             )
 
-            modifyGuildRole(guildId, role.id, ModifyGuildRoleRequest("Edited role"))
+            modifyGuildRole(guildId, role.id, GuildRoleModifyPatchRequest("Edited role"))
 
             addRoleToGuildMember(guildId, userId, role.id)
 
             deleteRoleFromGuildMember(guildId, userId, role.id)
 
-            modifyGuildRolePosition(guildId, ModifyGuildRolePositionRequest(role.id, 0))
+            modifyGuildRolePosition(guildId, GuildRolePositionModifyPatchRequest(role.id, 0))
 
             getGuildRoles(guildId)
 
@@ -320,7 +320,7 @@ class RestServiceTest {
 
         with(rest.guild) {
 
-            modifyGuildEmbed(guildId, ModifyGuildEmbedRequest(true, channelId))
+            modifyGuildEmbed(guildId, GuildEmbedModifyPatchRequest(true, channelId))
 
             getGuildEmbed(guildId)
 
@@ -336,7 +336,7 @@ class RestServiceTest {
 
             getCurrentUserGuilds()
 
-            modifyCurrentUser(ModifyCurrentUserRequest("Happy Kord"))
+            modifyCurrentUser(CurrentUserModifyPatchRequest("Happy Kord"))
 
             getUserConnections()
 
@@ -355,9 +355,9 @@ class RestServiceTest {
     fun `emojis in guilds`() = runBlocking {
         with(rest.emoji) {
 
-            val emoji = createEmoji(guildId, EmojiCreateRequest("kord", image("images/kord.png"), listOf(guildId)))
+            val emoji = createEmoji(guildId, EmojiCreatePostRequest("kord", image("images/kord.png"), listOf(guildId)))
 
-            modifyEmoji(guildId, emoji.id!!, EmojiModifyRequest("edited"))
+            modifyEmoji(guildId, emoji.id!!, EmojiModifyPatchRequest("edited"))
 
             getEmojis(guildId)
 

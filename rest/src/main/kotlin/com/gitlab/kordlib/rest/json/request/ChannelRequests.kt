@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PutModifyChannelRequest(
+data class ChannelModifyPutRequest(
         val name: String,
         val position: Int,
         val topic: String? = null,
@@ -23,7 +23,7 @@ data class PutModifyChannelRequest(
 )
 
 @Serializable
-data class PatchModifyChannelRequest(
+data class ChannelModifyPatchRequest(
         val name: String? = null,
         val position: Int? = null,
         val topic: String? = null,
@@ -40,4 +40,4 @@ data class PatchModifyChannelRequest(
 )
 
 @Serializable
-data class EditChannelPermissionRequest(val allow: Permissions, val deny: Permissions, val type: String)
+data class ChannelPermissionEditPutRequest(val allow: Permissions, val deny: Permissions, val type: String)
