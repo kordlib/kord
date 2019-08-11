@@ -3,7 +3,7 @@ package com.gitlab.kordlib.core.`object`.builder.channel
 import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.core.`object`.PermissionOverwrite
 import com.gitlab.kordlib.core.entity.Snowflake
-import com.gitlab.kordlib.rest.json.request.CreateGuildChannelRequest
+import com.gitlab.kordlib.rest.json.request.GuildCreateChannelRequest
 
 class NewTextChannelBuilder (
         var name: String? = null,
@@ -14,7 +14,7 @@ class NewTextChannelBuilder (
         var nsfw: Boolean? = null,
         val permissionOverwrites: MutableList<PermissionOverwrite> = mutableListOf()
 ) {
-    fun toRequest(): CreateGuildChannelRequest = CreateGuildChannelRequest(
+    fun toRequest(): GuildCreateChannelRequest = GuildCreateChannelRequest(
             name = name!!,
             topic = topic,
             rateLimitPerUser = rateLimitPerUser,

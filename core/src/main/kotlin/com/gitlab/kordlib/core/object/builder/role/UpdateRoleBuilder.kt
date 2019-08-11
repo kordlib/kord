@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.`object`.builder.role
 
 import com.gitlab.kordlib.common.entity.Permissions
-import com.gitlab.kordlib.rest.json.request.ModifyGuildRoleRequest
+import com.gitlab.kordlib.rest.json.request.GuildRoleModifyRequest
 import java.awt.Color
 
 class UpdateRoleBuilder (
@@ -11,7 +11,7 @@ class UpdateRoleBuilder (
         var mentionable: Boolean? = null,
         var permissions: Permissions? = null
 ) {
-    fun toRequest(): ModifyGuildRoleRequest = ModifyGuildRoleRequest(
+    fun toRequest(): GuildRoleModifyRequest = GuildRoleModifyRequest(
             name = name,
             color = color?.rgb,
             separate = hoist,

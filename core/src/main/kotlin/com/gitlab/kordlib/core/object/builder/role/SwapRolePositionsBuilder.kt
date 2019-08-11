@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.`object`.builder.role
 
 import com.gitlab.kordlib.core.entity.Snowflake
-import com.gitlab.kordlib.rest.json.request.ModifyGuildRolePositionRequest
+import com.gitlab.kordlib.rest.json.request.GuildRolePositionModifyRequest
 
 class SwapRolePositionsBuilder(
         private val swaps: MutableList<Pair<String, Int>> = mutableListOf()
@@ -14,6 +14,6 @@ class SwapRolePositionsBuilder(
         swaps += pairs.map { it.first.value to it.second }
     }
 
-    fun toRequest(): ModifyGuildRolePositionRequest =
-            ModifyGuildRolePositionRequest(swaps)
+    fun toRequest(): GuildRolePositionModifyRequest =
+            GuildRolePositionModifyRequest(swaps)
 }

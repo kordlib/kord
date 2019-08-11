@@ -8,14 +8,14 @@ import com.gitlab.kordlib.rest.route.Route
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend fun createMessage(channelId: String, message: MessageCreatePostRequest) = call(Route.MessagePost) {
+    suspend fun createMessage(channelId: String, message: MessageCreateRequest) = call(Route.MessageCreate) {
         keys[Route.ChannelId] = channelId
-        body(MessageCreatePostRequest.serializer(), message)
+        body(MessageCreateRequest.serializer(), message)
     }
 
-    suspend fun createMessage(channelId: String, message: MultipartMessageCreatePostRequest) = call(Route.MessagePost) {
+    suspend fun createMessage(channelId: String, message: MultipartMessageCreateRequest) = call(Route.MessageCreate) {
         keys[Route.ChannelId] = channelId
-        body(MessageCreatePostRequest.serializer(), message.request)
+        body(MessageCreateRequest.serializer(), message.request)
         message.files.forEach { file(it) }
     }
 
@@ -101,11 +101,10 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: ChannelPermissionEditPutRequest, reason: String? = null) = call(Route.ChannelPermissionPut) {
+    suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: ChannelPermissionEditRequest) = call(Route.ChannelPermissionPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
-        body(ChannelPermissionEditPutRequest.serializer(), permissions)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        body(ChannelPermissionEditRequest.serializer(), permissions)
     }
 
 
@@ -132,35 +131,32 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
 
-    suspend fun addToGroup(channelId: String, userId: String, addUser: UserAddDMPutRequest) = call(Route.GroupDMUserPut) {
+    suspend fun addToGroup(channelId: String, userId: String, addUser: UserAddDMRequest) = call(Route.GroupDMUserPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.UserId] = userId
-        body(UserAddDMPutRequest.serializer(), addUser)
+        body(UserAddDMRequest.serializer(), addUser)
     }
 
-    suspend fun createInvite(channelId: String, invite: InviteCreatePostRequest, reason: String? = null) = call(Route.InvitePost) {
+    suspend fun createInvite(channelId: String, invite: InviteCreateRequest) = call(Route.InvitePost) {
         keys[Route.ChannelId] = channelId
-        body(InviteCreatePostRequest.serializer(), invite)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        body(InviteCreateRequest.serializer(), invite)
     }
 
-    suspend fun editMessage(channelId: String, messageId: String, message: MessageEditPatchRequest) = call(Route.EditMessagePatch) {
+    suspend fun editMessage(channelId: String, messageId: String, message: MessageEditRequest) = call(Route.EditMessagePatch) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
-        body(MessageEditPatchRequest.serializer(), message)
+        body(MessageEditRequest.serializer(), message)
     }
 
-    suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest, reason: String? = null) = call(Route.ChannelPut) {
+    suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest) = call(Route.ChannelPut) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPutRequest.serializer(), channel)
-        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
 
-    suspend fun patchChannel(channelId: String, channel: ChannelModifyPatchRequest, reason: String? = null) = call(Route.ChannelPatch) {
+    suspend fun patchChannel(channelId: String, channel: ChannelModifyPatchRequest) = call(Route.ChannelPatch) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPatchRequest.serializer(), channel)
-        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
 }

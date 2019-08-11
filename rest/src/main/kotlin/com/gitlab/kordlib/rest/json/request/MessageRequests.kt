@@ -1,6 +1,5 @@
 package com.gitlab.kordlib.rest.json.request
 
-import com.gitlab.kordlib.common.entity.Embed
 import kotlinx.io.InputStream
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -13,8 +12,8 @@ data class MessageCreateRequest(
         val embed: EmbedRequest? = null
 )
 
-data class MultipartMessageCreatePostRequest(
-        val request: MessageCreatePostRequest,
+data class MultipartMessageCreateRequest(
+        val request: MessageCreateRequest,
         val files: List<Pair<String, InputStream>> = emptyList()
 )
 

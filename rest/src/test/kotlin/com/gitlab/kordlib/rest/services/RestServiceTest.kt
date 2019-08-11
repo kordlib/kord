@@ -62,7 +62,7 @@ class RestServiceTest {
     fun `create guild`() = runBlocking {
         val region = rest.voice.getVoiceRegions().first()
 
-        val request = GuildCreatePostRequest(
+        val request = GuildCreateRequest(
                 "TEST GUILD",
                 region.id,
                 null,
@@ -81,7 +81,7 @@ class RestServiceTest {
 
         rest.guild.getGuild(guildId)
 
-        rest.guild.modifyGuild(guildId, GuildModifyPatchRequest("Edited Guild Test"))
+        rest.guild.modifyGuild(guildId, GuildModifyRequest("Edited Guild Test"))
 
         rest.guild.getGuildVoiceRegions(guildId).first()
 
@@ -102,7 +102,7 @@ class RestServiceTest {
     @Test
     @Order(3)
     fun `create channel`() = runBlocking {
-        val channel = rest.guild.createGuildChannel(guildId, GuildChannelCreatePostRequest("BOT TEST RUN"))
+        val channel = rest.guild.createGuildChannel(guildId, GuildCreateChannelRequest("BOT TEST RUN"))
         channelId = channel.id
 
         rest.channel.getChannel(channel.id)
@@ -186,12 +186,12 @@ class RestServiceTest {
     @Test
     @Order(8)
     fun `permissions in channels`() = runBlocking {
-        val role = rest.guild.createGuildRole(guildId, GuildRoleCreatePostRequest())
+        val role = rest.guild.createGuildRole(guildId, GuildRoleCreateRequest())
         with(rest.channel) {
             val allow = Permissions { +Permission.CreateInstantInvite }
             val deny = Permissions { +Permission.SendTTSMessages }
 
-            editChannelPermissions(channelId, role.id, ChannelPermissionEditPutRequest(allow, deny, "role"))
+            editChannelPermissions(channelId, role.id, ChannelPermissionEditRequest(allow, deny, "role"))
 
             deleteChannelPermission(channelId, role.id)
 
@@ -221,13 +221,13 @@ class RestServiceTest {
             val members = getGuildMembers(guildId)
             //TODO add member to guild
 
-            modifyGuildMember(guildId, userId, GuildMemberModifyPatchRequest("My nickname", mute = true, deaf = true))
+            modifyGuildMember(guildId, userId, GuildMemberModifyRequest("My nickname", mute = true, deaf = true))
 
             getGuildMember(guildId, userId)
 
             //deleteGuildMember(guildId, user)
 
-            modifyCurrentUserNickname(guildId, CurrentUserNicknameModifyPatchRequest("Kord"))
+            modifyCurrentUserNickname(guildId, CurrentUserNicknameModifyRequest("Kord"))
 
             Unit
         }
@@ -239,7 +239,7 @@ class RestServiceTest {
         with(rest.guild) {
             val role = createGuildRole(
                     guildId,
-                    GuildRoleCreatePostRequest(
+                    GuildRoleCreateRequest(
                             "Sudoers",
                             Permissions { +Permission.Administrator },
                             5000,
@@ -248,13 +248,13 @@ class RestServiceTest {
                     )
             )
 
-            modifyGuildRole(guildId, role.id, GuildRoleModifyPatchRequest("Edited role"))
+            modifyGuildRole(guildId, role.id, GuildRoleModifyRequest("Edited role"))
 
             addRoleToGuildMember(guildId, userId, role.id)
 
             deleteRoleFromGuildMember(guildId, userId, role.id)
 
-            modifyGuildRolePosition(guildId, com.gitlab.kordlib.rest.json.request.ModifyGuildRolePositionRequest(listOf(role.id to 0)))
+            modifyGuildRolePosition(guildId, com.gitlab.kordlib.rest.json.request.GuildRolePositionModifyRequest(listOf(role.id to 0)))
 
             getGuildRoles(guildId)
 
@@ -299,8 +299,8 @@ class RestServiceTest {
     @Order(15)
     fun `prune members in guilds`() = runBlocking {
         with(rest.guild) {
-            getGuildPruneCount(guildId, GetGuildPruneRequest())
-            beginGuildPrune(guildId, BeginGuildPruneRequest())
+            getGuildPruneCount(guildId, GuildPruneGetRequest())
+            beginGuildPrune(guildId, GuildPruneBeginRequest())
 
             Unit
         }
@@ -320,7 +320,7 @@ class RestServiceTest {
 
         with(rest.guild) {
 
-            modifyGuildEmbed(guildId, GuildEmbedModifyPatchRequest(true, channelId))
+            modifyGuildEmbed(guildId, GuildEmbedModifyRequest(true, channelId))
 
             getGuildEmbed(guildId)
 
@@ -336,7 +336,7 @@ class RestServiceTest {
 
             getCurrentUserGuilds()
 
-            modifyCurrentUser(CurrentUserModifyPatchRequest("Happy Kord"))
+            modifyCurrentUser(CurrentUserModifyRequest("Happy Kord"))
 
             getUserConnections()
 

@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.`object`.builder.channel
 
 import com.gitlab.kordlib.core.entity.Snowflake
-import com.gitlab.kordlib.rest.json.request.ModifyGuildChannelPositionRequest
+import com.gitlab.kordlib.rest.json.request.GuildChannelPositionModifyRequest
 
 class SwapChannelPositionsBuilder (
         private val swaps: MutableList<Pair<String, Int>> = mutableListOf()
@@ -14,6 +14,6 @@ class SwapChannelPositionsBuilder (
         swaps += pairs.map { it.first.value to it.second }
     }
 
-    fun toRequest(): ModifyGuildChannelPositionRequest =
-            ModifyGuildChannelPositionRequest(swaps)
+    fun toRequest(): GuildChannelPositionModifyRequest =
+            GuildChannelPositionModifyRequest(swaps)
 }

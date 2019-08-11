@@ -3,7 +3,7 @@ package com.gitlab.kordlib.core.`object`.builder.channel
 import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.core.`object`.PermissionOverwrite
 import com.gitlab.kordlib.core.entity.Snowflake
-import com.gitlab.kordlib.rest.json.request.PatchModifyChannelRequest
+import com.gitlab.kordlib.rest.json.request.ChannelModifyPatchRequest
 
 data class UpdateTextChannelBuilder (
         var name: String? = null,
@@ -15,7 +15,7 @@ data class UpdateTextChannelBuilder (
         val permissionOverwrites: MutableSet<PermissionOverwrite> = mutableSetOf()
 ) {
 
-    fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
+    fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
             topic = topic,
@@ -35,7 +35,7 @@ class UpdateVoiceChannelBuilder (
         var userLimit: Int? = null,
         val permissionOverwrites: MutableSet<PermissionOverwrite> = mutableSetOf()
 ) {
-    fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
+    fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
             parentId = parentId?.value,
@@ -53,7 +53,7 @@ class UpdateNewsChannelBuilder (
         var parentId: Snowflake? = null,
         val permissionOverwrites: MutableSet<PermissionOverwrite> = mutableSetOf()
 ) {
-    fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
+    fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
             topic = topic,
@@ -68,7 +68,7 @@ class UpdateStoreChannelBuilder (
         var position: Int? = null,
         val permissionOverwrites: MutableSet<PermissionOverwrite> = mutableSetOf()
 ) {
-    fun toRequest(): PatchModifyChannelRequest = PatchModifyChannelRequest(
+    fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
             permissionOverwrites = permissionOverwrites.map { Overwrite(it.target.value, it.type, it.allowed.code, it.denied.code) }

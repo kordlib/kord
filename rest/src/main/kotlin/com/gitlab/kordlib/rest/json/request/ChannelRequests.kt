@@ -40,4 +40,4 @@ data class ChannelModifyPatchRequest(
 )
 
 @Serializable
-data class ChannelPermissionEditPutRequest(val allow: Permissions, val deny: Permissions, val type: String)
+data class ChannelPermissionEditRequest(val allow: Permissions, val deny: Permissions, val type: String)

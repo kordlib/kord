@@ -1,6 +1,6 @@
 package com.gitlab.kordlib.core.`object`.builder.ban
 
-import com.gitlab.kordlib.rest.json.request.AddGuildBanRequest
+import com.gitlab.kordlib.rest.json.request.GuildBanAddRequest
 
 
 class NewBanBuilder (
@@ -14,5 +14,5 @@ class NewBanBuilder (
          */
         var deleteMessagesDays: Int? = null
 ) {
-    fun toRequest() = AddGuildBanRequest(reason, deleteMessagesDays)
+    fun toRequest() = GuildBanAddRequest(reason, deleteMessagesDays)
 }

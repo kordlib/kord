@@ -5,10 +5,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WebhookCreatePostRequest(val name: String, val avatar: String?)
+data class WebhookCreateRequest(val name: String, val avatar: String?)
 
 @Serializable
-data class WebhookModifyPatchRequest(
+data class WebhookModifyRequest(
         val name: String? = null,
         val avatar: String? = null,
         @SerialName("channel_id")

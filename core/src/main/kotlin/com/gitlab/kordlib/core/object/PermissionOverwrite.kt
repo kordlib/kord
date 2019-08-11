@@ -3,7 +3,7 @@ package com.gitlab.kordlib.core.`object`
 import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.core.entity.Snowflake
-import com.gitlab.kordlib.rest.json.request.EditChannelPermissionRequest
+import com.gitlab.kordlib.rest.json.request.ChannelPermissionEditRequest
 
 class PermissionOverwrite private constructor(
         val allowed: Permissions,
@@ -12,7 +12,7 @@ class PermissionOverwrite private constructor(
         val type: String
 ) {
 
-    internal fun asRequest() = EditChannelPermissionRequest(allowed, denied, type)
+    internal fun asRequest() = ChannelPermissionEditRequest(allowed, denied, type)
 
     internal fun toOverwrite() = Overwrite(id = target.value, type = type, allow = allowed.code, deny = denied.code)
 

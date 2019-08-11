@@ -6,7 +6,7 @@ import kotlinx.serialization.internal.ArrayListClassDesc
 import kotlinx.serialization.internal.ArrayListSerializer
 
 @Serializable
-data class GuildCreatePostRequest(
+data class GuildCreateRequest(
         val name: String,
         val region: String,
         val icon: String? = null,
@@ -16,11 +16,11 @@ data class GuildCreatePostRequest(
         val defaultNotificationLevel: DefaultMessageNotificationLevel,
         val explicitContentFilter: ExplicitContentFilter,
         val roles: List<Role> = emptyList(),
-        val channels: List<GuildChannelCreatePostRequest> = emptyList()
+        val channels: List<GuildCreateChannelRequest> = emptyList()
 )
 
 @Serializable
-data class GuildChannelCreatePostRequest(
+data class GuildCreateChannelRequest(
         val name: String,
         val type: ChannelType? = null,
         val topic: String? = null,
@@ -37,13 +37,13 @@ data class GuildChannelCreatePostRequest(
         val nsfw: Boolean? = null
 )
 
-data class ModifyGuildChannelPositionRequest(val swaps: List<Pair<String, Int>>) {
+data class GuildChannelPositionModifyRequest(val swaps: List<Pair<String, Int>>) {
 
-    companion object Serializer : SerializationStrategy<ModifyGuildChannelPositionRequest> {
+    companion object Serializer : SerializationStrategy<GuildChannelPositionModifyRequest> {
         override val descriptor: SerialDescriptor
             get() = ArrayListClassDesc(ChannelPosition.serializer().descriptor)
 
-        override fun serialize(encoder: Encoder, obj: ModifyGuildChannelPositionRequest) {
+        override fun serialize(encoder: Encoder, obj: GuildChannelPositionModifyRequest) {
             val positions = obj.swaps.map { ChannelPosition(it.first, it.second) }
             ArrayListSerializer(ChannelPosition.serializer()).serialize(encoder, positions)
         }
@@ -55,7 +55,7 @@ data class ModifyGuildChannelPositionRequest(val swaps: List<Pair<String, Int>>)
 }
 
 @Serializable
-data class GuildMemberAddPutRequest(
+data class GuildMemberAddRequest(
         @SerialName("access_token") val token: String,
         val nick: String? = null,
         val roles: List<String>? = null,
@@ -64,7 +64,7 @@ data class GuildMemberAddPutRequest(
 )
 
 @Serializable
-data class GuildMemberModifyPatchRequest(
+data class GuildMemberModifyRequest(
         val nick: String? = null,
         val roles: List<String>? = null,
         val mute: Boolean? = null,
@@ -75,14 +75,14 @@ data class GuildMemberModifyPatchRequest(
 
 
 @Serializable
-data class GuildBanAddPutRequest(
+data class GuildBanAddRequest(
         val reason: String? = null,
         @SerialName("delete-message-days")
         val deleteMessagesDays: Int? = null
 )
 
 @Serializable
-data class GuildRoleCreatePostRequest(
+data class GuildRoleCreateRequest(
         val name: String? = null,
         val permissions: Permissions? = null,
         val color: Int = 0,
@@ -91,13 +91,13 @@ data class GuildRoleCreatePostRequest(
         val mentionable: Boolean = false
 )
 
-data class ModifyGuildRolePositionRequest(val swaps: List<Pair<String, Int>>) {
+data class GuildRolePositionModifyRequest(val swaps: List<Pair<String, Int>>) {
 
-    companion object Serializer : SerializationStrategy<ModifyGuildRolePositionRequest> {
+    companion object Serializer : SerializationStrategy<GuildRolePositionModifyRequest> {
         override val descriptor: SerialDescriptor
             get() = ArrayListClassDesc(RolePosition.serializer().descriptor)
 
-        override fun serialize(encoder: Encoder, obj: ModifyGuildRolePositionRequest) {
+        override fun serialize(encoder: Encoder, obj: GuildRolePositionModifyRequest) {
             val positions = obj.swaps.map { RolePosition(it.first, it.second) }
             ArrayListSerializer(RolePosition.serializer()).serialize(encoder, positions)
         }
@@ -109,7 +109,7 @@ data class ModifyGuildRolePositionRequest(val swaps: List<Pair<String, Int>>) {
 }
 
 @Serializable
-data class GuildRoleModifyPatchRequest(
+data class GuildRoleModifyRequest(
         val name: String? = null,
         val permissions: Permissions? = null,
         val color: Int? = null,
@@ -119,10 +119,10 @@ data class GuildRoleModifyPatchRequest(
 )
 
 @Serializable
-data class GuildIntegrationCreatePostRequest(val type: Int, val id: String)
+data class GuildIntegrationCreateRequest(val type: Int, val id: String)
 
 @Serializable
-data class GuildIntegrationModifyPatchRequest(
+data class GuildIntegrationModifyRequest(
         @SerialName("expire_behavior")
         val expireBehavior: Int? = null,
         @SerialName("expire_grace_period")
@@ -132,17 +132,17 @@ data class GuildIntegrationModifyPatchRequest(
 )
 
 @Serializable
-data class GuildEmbedModifyPatchRequest(
+data class GuildEmbedModifyRequest(
         val enabled: Boolean,
         @SerialName("channel_id")
         val channelId: String
 )
 
 @Serializable
-data class CurrentUserNicknameModifyPatchRequest(val nick: String? = null)
+data class CurrentUserNicknameModifyRequest(val nick: String? = null)
 
 @Serializable
-data class GuildModifyPatchRequest(
+data class GuildModifyRequest(
         val name: String? = null,
         val region: String? = null,
         @SerialName("verification_level")

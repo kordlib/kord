@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.`object`.builder.member
 
 import com.gitlab.kordlib.core.entity.Snowflake
-import com.gitlab.kordlib.rest.json.request.ModifyGuildMemberRequest
+import com.gitlab.kordlib.rest.json.request.GuildMemberModifyRequest
 
 class UpdateMemberBuilder (
         var voiceChannelId: Snowflake? = null,
@@ -10,7 +10,7 @@ class UpdateMemberBuilder (
         var nickname: String? = null,
         var roles: MutableSet<Snowflake> = mutableSetOf()
 ) {
-    fun toRequest(): ModifyGuildMemberRequest = ModifyGuildMemberRequest(
+    fun toRequest(): GuildMemberModifyRequest = GuildMemberModifyRequest(
             nick = nickname,
             channelId = voiceChannelId?.value,
             mute = muted,

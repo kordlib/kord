@@ -7,18 +7,17 @@ import com.gitlab.kordlib.rest.route.Route
 import io.ktor.http.Parameters
 
 class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
-    suspend fun createGuild(guild: GuildCreatePostRequest) = call(Route.GuildPost) {
-        body(GuildCreatePostRequest.serializer(), guild)
+    suspend fun createGuild(guild: GuildCreateRequest) = call(Route.GuildPost) {
+        body(GuildCreateRequest.serializer(), guild)
     }
 
     suspend fun getGuild(guildId: String) = call(Route.GuildGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyGuild(guildId: String, guild: GuildModifyPatchRequest, reason: String? = null) = call(Route.GuildPatch) {
+    suspend fun modifyGuild(guildId: String, guild: GuildModifyRequest) = call(Route.GuildPatch) {
         keys[Route.GuildId] = guildId
-        body(GuildModifyPatchRequest.serializer(), guild)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        body(GuildModifyRequest.serializer(), guild)
     }
 
     suspend fun deleteGuild(guildId: String) = call(Route.GuildDelete) {
@@ -29,15 +28,14 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun createGuildChannel(guildId: String, channel: GuildChannelCreatePostRequest, reason: String? = null) = call(Route.GuildChannelsPost) {
+    suspend fun createGuildChannel(guildId: String, channel: GuildCreateChannelRequest) = call(Route.GuildChannelsPost) {
         keys[Route.GuildId] = guildId
-        body(GuildChannelCreatePostRequest.serializer(), channel)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        body(GuildCreateChannelRequest.serializer(), channel)
     }
 
-    suspend fun modifyGuildChannelPosition(guildId: String, channel: GuildChannelPositionModifyPatchRequest) = call(Route.GuildChannelsPatch) {
+    suspend fun modifyGuildChannelPosition(guildId: String, channel: GuildChannelPositionModifyRequest) = call(Route.GuildChannelsPatch) {
         keys[Route.GuildId] = guildId
-        body(com.gitlab.kordlib.rest.json.request.ModifyGuildChannelPositionRequest.Serializer, channel)
+        body(GuildChannelPositionModifyRequest.Serializer, channel)
     }
 
     suspend fun getGuildMember(guildId: String, userId: String) = call(Route.GuildMemberGet) {
@@ -56,18 +54,16 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend fun addGuildMember(guildId: String, userId: String, member: GuildMemberAddPutRequest, reason: String? = null) = call(Route.GuildMemberPut) {
+    suspend fun addGuildMember(guildId: String, userId: String, member: GuildMemberAddRequest) = call(Route.GuildMemberPut) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
-        body(GuildMemberAddPutRequest.serializer(), member)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        body(GuildMemberAddRequest.serializer(), member)
     }
 
-    suspend fun modifyGuildMember(guildId: String, userId: String, member: GuildMemberModifyPatchRequest, reason: String? = null) = call(Route.GuildMemberPatch) {
+    suspend fun modifyGuildMember(guildId: String, userId: String, member: GuildMemberModifyRequest) = call(Route.GuildMemberPatch) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
-        body(GuildMemberModifyPatchRequest.serializer(), member)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        body(GuildMemberModifyRequest.serializer(), member)
     }
 
     suspend fun addRoleToGuildMember(guildId: String, userId: String, roleId: String, reason: String? = null) = call(Route.GuildMemberRolePut) {
@@ -99,11 +95,10 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.UserId] = userId
     }
 
-    suspend fun addGuildBan(guildId: String, userId: String, ban: GuildBanAddPutRequest, reason: String? = null) = call(Route.GuildBanPut) {
+    suspend fun addGuildBan(guildId: String, userId: String, ban: GuildBanAddRequest) = call(Route.GuildBanPut) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
-        body(GuildBanAddPutRequest.serializer(), ban)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        body(GuildBanAddRequest.serializer(), ban)
     }
 
     suspend fun deleteGuildBan(guildId: String, userId: String, reason: String? = null) = call(Route.GuildBanDelete) {
@@ -116,23 +111,21 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun createGuildRole(guildId: String, role: GuildRoleCreatePostRequest, reason: String? = null) = call(Route.GuildRolePost) {
+    suspend fun createGuildRole(guildId: String, role: GuildRoleCreateRequest) = call(Route.GuildRolePost) {
         keys[Route.GuildId] = guildId
-        body(GuildRoleCreatePostRequest.serializer(), role)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        body(GuildRoleCreateRequest.serializer(), role)
     }
 
-    suspend fun modifyGuildRolePosition(guildId: String, role: GuildRolePositionModifyPatchRequest) = call(Route.GuildRolesPatch) {
+    suspend fun modifyGuildRolePosition(guildId: String, role: GuildRolePositionModifyRequest) = call(Route.GuildRolesPatch) {
         keys[Route.GuildId] = guildId
-        body(com.gitlab.kordlib.rest.json.request.ModifyGuildRolePositionRequest.Serializer, role)
+        body(GuildRolePositionModifyRequest.Serializer, role)
     }
 
 
-    suspend fun modifyGuildRole(guildId: String, roleId: String, role: GuildRoleModifyPatchRequest, reason: String? = null) = call(Route.GuildRolePatch) {
+    suspend fun modifyGuildRole(guildId: String, roleId: String, role: GuildRoleModifyRequest) = call(Route.GuildRolePatch) {
         keys[Route.GuildId] = guildId
         keys[Route.RoleId] = roleId
-        body(GuildRoleModifyPatchRequest.serializer(), role)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        body(GuildRoleModifyRequest.serializer(), role)
     }
 
     suspend fun deleteGuildRole(guildId: String, roleId: String, reason: String? = null) = call(Route.GuildRoleDelete) {
@@ -141,11 +134,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun getGuildPruneCount(guildId: String, request: GetGuildPruneRequest) = call(Route.GuildPruneCountGet) {
+    suspend fun getGuildPruneCount(guildId: String, request: GuildPruneGetRequest) = call(Route.GuildPruneCountGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun beginGuildPrune(guildId: String, request: BeginGuildPruneRequest) = call(Route.GuildPrunePost) {
+    suspend fun beginGuildPrune(guildId: String, request: GuildPruneBeginRequest) = call(Route.GuildPrunePost) {
         keys[Route.GuildId] = guildId
         reason?.let { header("X-Audit-Log-Reason", it) }
     }
@@ -163,15 +156,15 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun createGuildIntegration(guildId: String, integration: GuildIntegrationCreatePostRequest) = call(Route.GuildIntegrationPost) {
+    suspend fun createGuildIntegration(guildId: String, integration: GuildIntegrationCreateRequest) = call(Route.GuildIntegrationPost) {
         keys[Route.GuildId] = guildId
-        body(GuildIntegrationCreatePostRequest.serializer(), integration)
+        body(GuildIntegrationCreateRequest.serializer(), integration)
     }
 
-    suspend fun modifyGuildIntegration(guildId: String, integrationId: String, integration: GuildIntegrationModifyPatchRequest) = call(Route.GuildIntegrationPatch) {
+    suspend fun modifyGuildIntegration(guildId: String, integrationId: String, integration: GuildIntegrationModifyRequest) = call(Route.GuildIntegrationPatch) {
         keys[Route.GuildId] = guildId
         keys[Route.IntegrationId] = integrationId
-        body(GuildIntegrationModifyPatchRequest.serializer(), integration)
+        body(GuildIntegrationModifyRequest.serializer(), integration)
     }
 
     suspend fun deleteGuildIntegration(guildId: String, integrationId: String) = call(Route.GuildIntegrationDelete) {
@@ -188,18 +181,18 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyGuildEmbed(guildId: String, embed: GuildEmbedModifyPatchRequest) = call(Route.GuildEmbedPatch) {
+    suspend fun modifyGuildEmbed(guildId: String, embed: GuildEmbedModifyRequest) = call(Route.GuildEmbedPatch) {
         keys[Route.GuildId] = guildId
-        body(GuildEmbedModifyPatchRequest.serializer(), embed)
+        body(GuildEmbedModifyRequest.serializer(), embed)
     }
 
     suspend fun getVanityInvite(guildId: String) = call(Route.GuildVanityInviteGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyCurrentUserNickname(guildId: String, nick: CurrentUserNicknameModifyPatchRequest) = call(Route.GuildCurrentUserNickPatch) {
+    suspend fun modifyCurrentUserNickname(guildId: String, nick: CurrentUserNicknameModifyRequest) = call(Route.GuildCurrentUserNickPatch) {
         keys[Route.GuildId] = guildId
-        body(CurrentUserNicknameModifyPatchRequest.serializer(), nick)
+        body(CurrentUserNicknameModifyRequest.serializer(), nick)
 
     }
 

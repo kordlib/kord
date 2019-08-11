@@ -4,16 +4,18 @@ import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.Pagination
 import com.gitlab.kordlib.core.`object`.builder.ban.NewBanBuilder
-import com.gitlab.kordlib.core.`object`.builder.channel.*
+import com.gitlab.kordlib.core.`object`.builder.channel.NewNewsChannelBuilder
+import com.gitlab.kordlib.core.`object`.builder.channel.NewTextChannelBuilder
+import com.gitlab.kordlib.core.`object`.builder.channel.NewVoiceChannelBuilder
+import com.gitlab.kordlib.core.`object`.builder.channel.SwapChannelPositionsBuilder
 import com.gitlab.kordlib.core.`object`.builder.guild.EditGuildBuilder
 import com.gitlab.kordlib.core.`object`.builder.role.NewRoleBuilder
 import com.gitlab.kordlib.core.`object`.builder.role.SwapRolePositionsBuilder
-import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Snowflake
-import com.gitlab.kordlib.rest.json.request.BeginGuildPruneRequest
-import com.gitlab.kordlib.rest.json.request.GetGuildPruneRequest
-import com.gitlab.kordlib.rest.json.request.ModifyCurrentUserNicknameRequest
+import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
+import com.gitlab.kordlib.rest.json.request.GuildPruneBeginRequest
+import com.gitlab.kordlib.rest.json.request.GuildPruneGetRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -60,7 +62,7 @@ interface GuildBehavior : Entity {
      *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
      */
     suspend fun modifySelfNickname(newNickName: String?) : String {
-        kord.rest.guild.modifyCurrentUserNickname(id.value, ModifyCurrentUserNicknameRequest(newNickName))
+        kord.rest.guild.modifyCurrentUserNickname(id.value, CurrentUserNicknameModifyRequest(newNickName))
         TODO("https://gitlab.com/kordlib/kord/issues/26")
     }
 
@@ -98,7 +100,7 @@ interface GuildBehavior : Entity {
      * if they have not been seen within the given [days] and don't have a [Role] assigned in this guild.
      */
     suspend fun getPruneCount(days: Int = 7): Int {
-        return kord.rest.guild.getGuildPruneCount(id.value, GetGuildPruneRequest(days)).pruned
+        return kord.rest.guild.getGuildPruneCount(id.value, GuildPruneGetRequest(days)).pruned
     }
 
     /**
@@ -106,7 +108,7 @@ interface GuildBehavior : Entity {
      * the given [days] and don't have a [Role] assigned in this guild.
      */
     suspend fun prune(days: Int = 7): Int {
-        return kord.rest.guild.beginGuildPrune(id.value, BeginGuildPruneRequest(days, true)).pruned!!
+        return kord.rest.guild.beginGuildPrune(id.value, GuildPruneBeginRequest(days, true)).pruned!!
     }
 
     /**
