@@ -10,9 +10,10 @@ import com.gitlab.kordlib.rest.route.Route
 import kotlinx.serialization.json.JsonObject
 
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
-    suspend fun createWebhook(channelId: String, webhook: WebhookCreateRequest) = call(Route.WebhookPost) {
+    suspend fun createWebhook(channelId: String, webhook: WebhookCreateRequest, reason: String? = null) = call(Route.WebhookPost) {
         keys[Route.ChannelId] = channelId
         body(WebhookCreateRequest.serializer(), webhook)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
     suspend fun getChannelWebhooks(channelId: String) = call(Route.ChannelWebhooksGet) {
@@ -32,33 +33,34 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.WebhookToken] = token
     }
 
-    suspend fun modifyWebhook(webhookId: String, webhook: WebhookModifyRequest) = call(Route.WebhookPatch) {
+    suspend fun modifyWebhook(webhookId: String, webhook: WebhookModifyRequest, reason: String? = null) = call(Route.WebhookPatch) {
         keys[Route.WebhookId] = webhookId
         body(WebhookModifyRequest.serializer(), webhook)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun modifyWebhookWithToken(webhookId: String, token: String, webhook: WebhookModifyRequest) = call(Route.WebhookByTokenPatch) {
+    suspend fun modifyWebhookWithToken(webhookId: String, token: String, webhook: WebhookModifyRequest, reason: String? = null) = call(Route.WebhookByTokenPatch) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
         body(WebhookModifyRequest.serializer(), webhook)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
     suspend fun deleteWebhook(webhookId: String, reason: String? = null) = call(Route.WebhookDelete) {
         keys[Route.WebhookId] = webhookId
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun deleteWebhookWithToken(webhookId: String, token: String) = call(Route.WebhookByTokenDelete) {
+    suspend fun deleteWebhookWithToken(webhookId: String, token: String, reason: String? = null) = call(Route.WebhookByTokenDelete) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
     suspend fun executeWebhook(webhookId: String, token: String, wait: Boolean, request: MultiPartWebhookExecuteRequest) = call(Route.ExecuteWebhookPost) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
-        parameters = Parameters.build {
-            append("wait", "$wait")
-        }
+        parameter("wait", "$wait")
         body(WebhookExecuteRequest.serializer(), request.request)
         request.file?.let { file(it) }
     }

@@ -8,12 +8,12 @@ import com.gitlab.kordlib.rest.route.Route
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend fun createMessage(channelId: String, message: MessageCreateRequest) = call(Route.MessageCreate) {
+    suspend fun createMessage(channelId: String, message: MessageCreateRequest) = call(Route.MessagePost) {
         keys[Route.ChannelId] = channelId
         body(MessageCreateRequest.serializer(), message)
     }
 
-    suspend fun createMessage(channelId: String, message: MultipartMessageCreateRequest) = call(Route.MessageCreate) {
+    suspend fun createMessage(channelId: String, message: MultipartMessageCreateRequest) = call(Route.MessagePost) {
         keys[Route.ChannelId] = channelId
         body(MessageCreateRequest.serializer(), message.request)
         message.files.forEach { file(it) }
@@ -21,12 +21,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
 
     suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
-            if (position != null) {
-                parameter(position.key, position.value)
-            }
-        parameter("limit", "$limit")
+        if (position != null) {
+            parameter(position.key, position.value)
         }
+        parameter("limit", "$limit")
 
+    }
 
     suspend fun getMessage(channelId: String, messageId: String) = call(Route.MessageGet) {
         keys[Route.MessageId] = messageId
@@ -82,7 +82,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend fun deleteMessage(channelId: String, messageId: String, reason: String? = null) = call(Route.MessageDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
     suspend fun bulkDelete(channelId: String, messages: BulkDeleteRequest) = call(Route.BulkMessageDeletePost) {
@@ -92,19 +92,23 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
 
     suspend fun deleteChannel(channelId: String, reason: String? = null) = call(Route.ChannelDelete) {
         keys[Route.ChannelId] = channelId
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
     suspend fun deleteChannelPermission(channelId: String, overwriteId: String, reason: String? = null) = call(Route.ChannelPermissionDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
-    suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: ChannelPermissionEditRequest) = call(Route.ChannelPermissionPut) {
+    suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: ChannelPermissionEditRequest, reason: String? = null) = call(Route.ChannelPermissionPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
         body(ChannelPermissionEditRequest.serializer(), permissions)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
 
@@ -113,12 +117,10 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
 
-        if (position != null) {
-            parameter(position.key, position.value)
+            if (position != null) {
+                parameter(position.key, position.value)
             }
         parameter("limit", "$limit")
-
-
     }
 
     suspend fun triggerTypingIndicator(channelId: String) = call(Route.TypingIndicatorPost) {
@@ -137,9 +139,11 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         body(UserAddDMRequest.serializer(), addUser)
     }
 
-    suspend fun createInvite(channelId: String, invite: InviteCreateRequest) = call(Route.InvitePost) {
+    suspend fun createInvite(channelId: String, invite: InviteCreateRequest, reason: String? = null) = call(Route.InvitePost) {
         keys[Route.ChannelId] = channelId
         body(InviteCreateRequest.serializer(), invite)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
     suspend fun editMessage(channelId: String, messageId: String, message: MessageEditRequest) = call(Route.EditMessagePatch) {
@@ -148,15 +152,19 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         body(MessageEditRequest.serializer(), message)
     }
 
-    suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest) = call(Route.ChannelPut) {
+    suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest, reason: String? = null) = call(Route.ChannelPut) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPutRequest.serializer(), channel)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
 
-    suspend fun patchChannel(channelId: String, channel: ChannelModifyPatchRequest) = call(Route.ChannelPatch) {
+    suspend fun patchChannel(channelId: String, channel: ChannelModifyPatchRequest, reason: String? = null) = call(Route.ChannelPatch) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPatchRequest.serializer(), channel)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
 }
