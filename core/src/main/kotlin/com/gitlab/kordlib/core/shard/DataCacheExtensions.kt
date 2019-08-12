@@ -2,7 +2,7 @@ package com.gitlab.kordlib.core.shard
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
-import com.gitlab.kordlib.core.*
+import com.gitlab.kordlib.core.`object`.data.*
 
 /**
  * Registers all Kord data classes for this cache
