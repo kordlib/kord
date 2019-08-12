@@ -125,7 +125,7 @@ class RestServiceTest {
             deleteOwnReaction(channelId, message.id, "\ud83d\udc4e")
 
             createReaction(channelId, message.id, "\ud83d\udc4d")
-            deleteReaction(channelId, message.id, message.author.id, "\ud83d\udc4d")
+            deleteReaction(channelId, message.id, message.author!!.id, "\ud83d\udc4d")
 
             createReaction(channelId, message.id, "\ud83d\udc4e")
             getReactions(channelId, message.id, "\ud83d\udc4e")
