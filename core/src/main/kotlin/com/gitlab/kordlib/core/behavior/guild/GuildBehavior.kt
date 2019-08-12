@@ -14,8 +14,6 @@ import com.gitlab.kordlib.core.`object`.builder.role.SwapRolePositionsBuilder
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
-import com.gitlab.kordlib.rest.json.request.GuildPruneBeginRequest
-import com.gitlab.kordlib.rest.json.request.GuildPruneGetRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -100,7 +98,7 @@ interface GuildBehavior : Entity {
      * if they have not been seen within the given [days] and don't have a [Role] assigned in this guild.
      */
     suspend fun getPruneCount(days: Int = 7): Int {
-        return kord.rest.guild.getGuildPruneCount(id.value, GuildPruneGetRequest(days)).pruned
+        return kord.rest.guild.getGuildPruneCount(id.value, days).pruned
     }
 
     /**
@@ -108,7 +106,7 @@ interface GuildBehavior : Entity {
      * the given [days] and don't have a [Role] assigned in this guild.
      */
     suspend fun prune(days: Int = 7): Int {
-        return kord.rest.guild.beginGuildPrune(id.value, GuildPruneBeginRequest(days, true)).pruned!!
+        return kord.rest.guild.beginGuildPrune(id.value, days, true).pruned!!
     }
 
     /**

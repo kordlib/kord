@@ -26,7 +26,7 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
         this.body = RequestBody(strategy, body)
     }
 
-    fun parameter(key: String, value: String) = parameters.append(key, value)
+    fun parameter(key: String, value: Any) = parameters.append(key, value.toString())
 
     fun header(key: String, value: String) = headers.append(key, value)
 

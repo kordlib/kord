@@ -299,8 +299,8 @@ class RestServiceTest {
     @Order(15)
     fun `prune members in guilds`() = runBlocking {
         with(rest.guild) {
-            getGuildPruneCount(guildId, GuildPruneGetRequest())
-            beginGuildPrune(guildId, GuildPruneBeginRequest())
+            getGuildPruneCount(guildId)
+            beginGuildPrune(guildId)
 
             Unit
         }

@@ -136,15 +136,15 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun getGuildPruneCount(guildId: String, prune: GuildPruneGetRequest, reason: String? = null) = call(Route.GuildPruneCountGet) {
+    suspend fun getGuildPruneCount(guildId: String, days: Int = 7) = call(Route.GuildPruneCountGet) {
         keys[Route.GuildId] = guildId
-        body(GuildPruneGetRequest.serializer(), prune)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        parameter("days", days)
     }
 
-    suspend fun beginGuildPrune(guildId: String, prune: GuildPruneBeginRequest, reason: String? = null) = call(Route.GuildPrunePost) {
+    suspend fun beginGuildPrune(guildId: String, days: Int = 7, computePruneCount: Boolean = true, reason: String? = null) = call(Route.GuildPrunePost) {
         keys[Route.GuildId] = guildId
-        body(GuildPruneBeginRequest.serializer(), prune)
+        parameter("days", days)
+        parameter("compute_prune_count", computePruneCount)
         reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
