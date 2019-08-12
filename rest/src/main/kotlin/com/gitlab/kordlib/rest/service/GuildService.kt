@@ -34,9 +34,10 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun modifyGuildChannelPosition(guildId: String, channel: GuildChannelPositionModifyRequest) = call(Route.GuildChannelsPatch) {
+    suspend fun modifyGuildChannelPosition(guildId: String, channel: GuildChannelPositionModifyRequest, reason: String? = null) = call(Route.GuildChannelsPatch) {
         keys[Route.GuildId] = guildId
         body(GuildChannelPositionModifyRequest.Serializer, channel)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun getGuildMember(guildId: String, userId: String) = call(Route.GuildMemberGet) {
@@ -48,7 +49,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
         if (position != null) {
             parameter(position.key, position.value)
-            }
+        }
         parameter("limit", "$limit")
     }
 
@@ -117,9 +118,10 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun modifyGuildRolePosition(guildId: String, role: GuildRolePositionModifyRequest) = call(Route.GuildRolesPatch) {
+    suspend fun modifyGuildRolePosition(guildId: String, role: GuildRolePositionModifyRequest, reason: String? = null) = call(Route.GuildRolesPatch) {
         keys[Route.GuildId] = guildId
         body(GuildRolePositionModifyRequest.Serializer, role)
+        reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
 
