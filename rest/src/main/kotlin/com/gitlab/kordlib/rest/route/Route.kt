@@ -51,7 +51,6 @@ sealed class Route<T>(
     object PinsGet
         : Route<List<Message>>(HttpMethod.Get, "/channels/$ChannelId/pins", ArrayListSerializer(Message.serializer()))
 
-
     object InvitesGet
         : Route<List<InviteResponse>>(HttpMethod.Get, "/channels/$ChannelId/invites", ArrayListSerializer(InviteResponse.serializer()))
 
@@ -87,7 +86,6 @@ sealed class Route<T>(
 
     object ChannelPermissionPut
         : Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/permissions/$OverwriteId", NoStrategy)
-
 
     object ReactionsGet
         : Route<List<User>>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji", ArrayListSerializer(User.serializer()))
@@ -164,7 +162,6 @@ sealed class Route<T>(
     object GuildChannelsPost
         : Route<Channel>(HttpMethod.Post, "/guilds/$GuildId/channels", Channel.serializer())
 
-
     object GuildChannelsPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/channels", NoStrategy)
 
@@ -174,10 +171,8 @@ sealed class Route<T>(
     object GuildMembersGet
         : Route<List<GuildMember>>(HttpMethod.Get, "/guilds/$GuildId/members", ArrayListSerializer(GuildMember.serializer()))
 
-
     object GuildMemberPut
         : Route<GuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", NullableSerializer(GuildMember.serializer()))
-
 
     object GuildMemberPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/$UserId", NoStrategy)
@@ -191,16 +186,14 @@ sealed class Route<T>(
     object GuildMemberRoleDelete
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
 
-
     object GuildMemberDelete
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/members/$UserId", NoStrategy)
 
     object GuildBansGet
-        : Route<List<GuildBan>>(HttpMethod.Get, "/guilds/$GuildId/bans", ArrayListSerializer(GuildBan.serializer()))
-
+        : Route<List<BanResponse>>(HttpMethod.Get, "/guilds/$GuildId/bans", ArrayListSerializer(BanResponse.serializer()))
 
     object GuildBanGet
-        : Route<GuildBan>(HttpMethod.Get, "/guilds/$GuildId/bans/$UserId", GuildBan.serializer())
+        : Route<BanResponse>(HttpMethod.Get, "/guilds/$GuildId/bans/$UserId", BanResponse.serializer())
 
     object GuildBanPut
         : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/bans/$UserId", NoStrategy)
@@ -243,7 +236,6 @@ sealed class Route<T>(
 
     object GuildIntegrationPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
-
 
     object GuildIntegrationDelete
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
@@ -303,7 +295,6 @@ sealed class Route<T>(
 
     object ExecuteGithubWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
-
 
     object VoiceRegionsGet
         : Route<List<VoiceRegion>>(HttpMethod.Get, "/voice/regions", ArrayListSerializer(VoiceRegion.serializer()))
