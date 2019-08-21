@@ -65,7 +65,13 @@ data class Guild(
         @SerialName("vanity_url_code")
         val vanityUrlCode: String? = null,
         val description: String? = null,
-        val banner: String? = null
+        val banner: String? = null,
+        @SerialName("premium_tier")
+        val premiumTier: PremiumTier,
+        @SerialName("premium_subscription_count")
+        val premiumSubscriptionCount: Int? = null,
+        @SerialName("preferred_locale")
+        val preferredLocale: String
 )
 
 @Serializable
@@ -150,6 +156,30 @@ data class VoiceState(
         val selfMute: Boolean,
         val suppress: Boolean
 )
+
+@Serializable(with = PremiumTier.PremiumTierSerializer::class)
+enum class PremiumTier(val level: Int) {
+    None(0),
+    One(1),
+    Two(2),
+    Three(3);
+
+    @Serializer(forClass = PremiumTier::class)
+    companion object PremiumTierSerializer : KSerializer<PremiumTier> {
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("premium_tier")
+
+        override fun deserialize(decoder: Decoder): PremiumTier {
+            val level = decoder.decodeInt()
+            return values().first { it.level == level }
+        }
+
+        override fun serialize(encoder: Encoder, obj: PremiumTier) {
+            encoder.encodeInt(obj.level)
+        }
+
+    }
+}
 
 @Serializable(with = DefaultMessageNotificationLevel.DefaultMessageNotificationLevelSerializer::class)
 enum class DefaultMessageNotificationLevel(val code: Int) {

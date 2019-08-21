@@ -144,7 +144,13 @@ data class GuildData(
         @SerialName("vanity_url_code")
         var vanityUrlCode: String? = null,
         var description: String? = null,
-        var banner: String? = null
+        var banner: String? = null,
+        @SerialName("premium_tier")
+        var premiumTier: PremiumTier? = null,
+        @SerialName("premium_subscription_count")
+        var premiumSubscriptionCount: Int? = null,
+        @SerialName("preferred_locale")
+        var preferredLocale: String? = null
 ) {
     companion object {
 
@@ -194,7 +200,10 @@ data class GuildData(
                     maxMembers,
                     vanityUrlCode,
                     description,
-                    banner
+                    banner,
+                    premiumTier,
+                    premiumSubscriptionCount,
+                    preferredLocale
             )
         }
 
