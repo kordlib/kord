@@ -31,8 +31,59 @@ data class Message(
         val webhookId: String? = null,
         val type: MessageType,
         val activity: MessageActivity? = null,
-        val application: MessageApplication? = null
+        val application: MessageApplication? = null,
+        @SerialName("message_reference")
+        val messageReference: MessageReference? = null,
+        @SerialName("mention_channels")
+        val mentionedChannels: List<MentionedChannel>? = null,
+        val flags: Flags? = null
 )
+
+@Serializable
+data class MessageReference(
+        @SerialName("message_id")
+        val id: String? = null,
+        @SerialName("channel_id")
+        val channelId: String,
+        @SerialName("guild_id")
+        val guildId: String? = null
+)
+
+@Serializable
+data class MentionedChannel(
+        val id: String,
+        @SerialName("guild_id")
+        val guildId: String,
+        val name: String,
+        val type: MessageType
+)
+
+enum class Flag(val value: Int) {
+    CrossPosted(1),
+    IsCrossPost(2),
+    SuppressEmbeds(4);
+}
+
+@Serializable(with = Flags.FlagsSerializer::class)
+data class Flags internal constructor(private val value: Int) {
+
+    val flags = Flag.values().filter { value and it.value != 0 }
+
+    operator fun contains(flag: Flag) = flag in flags
+
+
+    @Serializer(forClass = Flags::class)
+    companion object FlagsSerializer : DeserializationStrategy<Flags> {
+        override val descriptor: SerialDescriptor = IntDescriptor
+
+        override fun deserialize(decoder: Decoder): Flags {
+            val flags = decoder.decodeInt()
+            return Flags(flags)
+        }
+
+    }
+
+}
 
 @Serializable
 data class Attachment(
@@ -179,7 +230,12 @@ enum class MessageType(val code: Int) {
     ChannelNameChange(4),
     ChannelIconChange(5),
     ChannelPinnedMessage(6),
-    GuildMemberJoin(7);
+    GuildMemberJoin(7),
+    UserPremiumGuildSubscription(8),
+    UserPremiumGuildSubscriptionTierOne(9),
+    UserPremiumGuildSubscriptionTwo(10),
+    UserPremiumGuildSubscriptionThree(11),
+    ChannelFollowAdd(12);
 
     @Serializer(forClass = MessageType::class)
     companion object MessageTypeSerializer : KSerializer<MessageType> {

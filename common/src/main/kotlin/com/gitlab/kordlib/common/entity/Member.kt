@@ -10,6 +10,8 @@ data class GuildMember(
         val roles: List<String>,
         @SerialName("joined_at")
         val joinedAt: String,
+        @SerialName("premium_since")
+        val premiumSince: String? = null,
         val deaf: Boolean,
         val mute: Boolean
 )
@@ -21,6 +23,8 @@ data class AddedGuildMember(
         val roles: List<String>,
         @SerialName("joined_at")
         val joinedAt: String,
+        @SerialName("premium_since")
+        val premiumSince: String? = null,
         val deaf: Boolean,
         val mute: Boolean,
         val guildId: String
