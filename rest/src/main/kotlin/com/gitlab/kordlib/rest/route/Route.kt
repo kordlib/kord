@@ -312,12 +312,12 @@ sealed class Route<T>(
         const val baseUrl = "https://discordapp.com/api/v6"
     }
 
-    open class Key(val identifier: String) {
+    open class Key(val identifier: String, val isMajor: Boolean = false) {
         override fun toString(): String = identifier
     }
 
-    object GuildId : Key("{guild.id}")
-    object ChannelId : Key("{channel.id}")
+    object GuildId : Key("{guild.id}", true)
+    object ChannelId : Key("{channel.id}", true)
     object MessageId : Key("{message.id}")
     object Emoji : Key("{emoji}")
     object UserId : Key("{user.id}")
@@ -326,7 +326,7 @@ sealed class Route<T>(
     object InviteCode : Key("{invite.code}")
     object RoleId : Key("{role.id}")
     object IntegrationId : Key("{integration.id}")
-    object WebhookId : Key("{webhook.id}")
+    object WebhookId : Key("{webhook.id}", true)
     object WebhookToken : Key("{webhook.token}")
 
 }

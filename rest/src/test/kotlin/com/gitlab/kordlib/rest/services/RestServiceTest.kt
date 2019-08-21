@@ -61,7 +61,11 @@ class RestServiceTest {
     @Order(1)
     fun `create guild`() = runBlocking {
         val region = rest.voice.getVoiceRegions().first()
+        val guilds = rest.user.getCurrentUserGuilds()
 
+        guilds.filter { it.owner == true }.forEach {
+            rest.guild.deleteGuild(it.id)
+        }
         val request = GuildCreateRequest(
                 "TEST GUILD",
                 region.id,
@@ -139,14 +143,16 @@ class RestServiceTest {
 
             val message = createMessage(channelId, MessageCreatePostRequest("TEST"))
 
-
             getMessage(channelId, message.id)
-
 
             deleteMessage(channelId, message.id)
 
             createMessage(channelId, MessageCreatePostRequest("TEST"))
             createMessage(channelId, MultipartMessageCreatePostRequest(MessageCreatePostRequest("TEST")))
+
+            repeat(10) { //trying to get a ratelimit
+                createMessage(channelId, MessageCreateRequest("TEST $it"))
+            }
 
             val messages = getMessages(channelId)
 

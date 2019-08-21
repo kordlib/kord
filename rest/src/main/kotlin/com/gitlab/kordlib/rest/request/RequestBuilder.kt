@@ -8,7 +8,7 @@ import kotlinx.serialization.SerializationStrategy
 
 class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
 
-    var keys: MutableMap<String, String> = HashMap(keySize, 1f)
+    var keys: MutableMap<Route.Key, String> = HashMap(keySize, 1f)
 
     private val headers = HeadersBuilder()
     private val parameters = ParametersBuilder()

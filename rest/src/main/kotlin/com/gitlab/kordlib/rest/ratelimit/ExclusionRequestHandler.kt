@@ -17,6 +17,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import mu.KotlinLogging
+import java.time.Duration
 
 private val logger = KotlinLogging.logger {}
 
@@ -26,15 +27,14 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
 
     private val routeSuspensionPoints = mutableMapOf<RequestIdentifier, Long>()
 
-    //https://discordapp.com/developers/docs/topics/rate-limits#rate-limits
-    //there's no real known rate limit, and Discord won't tell us, so this is nothing more than an assumption
-    private val emojiRateLimiter = BucketRateLimiter(1, 250)
-
     private val mutex = Mutex()
+
+    private val autoBanRateLimiter = BucketRateLimiter(25000, Duration.ofMinutes(10))
 
     override tailrec suspend fun <T> handle(request: Request<T>): HttpResponse {
 
         val builder = HttpRequestBuilder().apply {
+            headers.append("X-RateLimit-Precision", "millisecond")
             url.takeFrom(Route.baseUrl)
             with(request) { apply() }
         }
@@ -49,12 +49,12 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
             logger.trace { response.logString }
 
             if (response.isGlobalRateLimit) {
-                logger.trace { "GLOBAL RATE LIMIT: ${request.logString}" }
+                logger.trace { "GLOBAL RATE LIMIT UNTIL ${response.globalSuspensionPoint}: ${request.logString}" }
                 globalSuspensionPoint = response.globalSuspensionPoint
             }
 
             if (response.isChannelRateLimit) {
-                logger.trace { "ROUTE RATE LIMIT: ${request.logString}" }
+                logger.trace { "ROUTE RATE LIMIT UNTIL ${response.channelSuspensionPoint}: ${request.logString}" }
                 routeSuspensionPoints[request.identifier] = response.channelSuspensionPoint
             }
 
@@ -62,7 +62,12 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
         }
 
         if (response.isRateLimit) {
+            autoBanRateLimiter.consume()
             return handle(request)
+        }
+
+        if (response.isErrorWithRateLimit) {
+            autoBanRateLimiter.consume()
         }
 
         if (response.isError) {
@@ -74,9 +79,7 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
 
     private suspend fun suspendFor(request: Request<*>) {
         delay(globalSuspensionPoint - Platform.nowMillis())
-        if (request.route.path.contains("emoji")) { //https://discordapp.com/developers/docs/topics/rate-limits#rate-limits
-            emojiRateLimiter.consume()
-        } else {
+
             val key = request.identifier
             val routeSuspensionPoint = routeSuspensionPoints[key]
 
@@ -84,8 +87,6 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
                 delay(routeSuspensionPoint - Platform.nowMillis())
                 routeSuspensionPoints.remove(key)
             }
-        }
-
     }
 
     private companion object {
@@ -94,13 +95,28 @@ class ExclusionRequestHandler(private val client: HttpClient) : RequestHandler {
         const val rateLimitRemainingHeader = "X-RateLimit-Remaining"
         const val resetTimeHeader = "X-RateLimit-Reset"
 
-        val HttpResponse.channelSuspensionPoint get() = headers[resetTimeHeader]?.toLong() ?: 0
+        /**
+         * The unix time (in ms) when the rate limit for this endpoint gets reset
+         */
+        val HttpResponse.channelSuspensionPoint: Long get() {
+            val unixSeconds = headers[resetTimeHeader]?.toDouble() ?: return 0
+            return (unixSeconds * 1000).toLong()
+        }
+
         val HttpResponse.isRateLimit get() = status.value == 429
         val HttpResponse.isError get() = status.value in 400 until 600
+        val HttpResponse.isErrorWithRateLimit get() = status.value == 403 || status.value == 401
         val HttpResponse.isGlobalRateLimit get() = headers[rateLimitGlobalHeader]?.toBoolean() == true
         val HttpResponse.isChannelRateLimit get() = headers[rateLimitRemainingHeader]?.toIntOrNull() == 0
-        val HttpResponse.globalSuspensionPoint
-            get() = headers[retryAfterHeader]?.toLong()?.let { it + responseTime.timestamp } ?: 0
+
+        /**
+         * The unix time (in ms) when the global rate limit gets reset
+         */
+        val HttpResponse.globalSuspensionPoint: Long
+            get() {
+                val msWait = headers[retryAfterHeader]?.toLong() ?: return 0
+                return msWait + responseTime.timestamp
+            }
 
         val HttpResponse.logString get() = "$status: ${call.request.method.value} ${call.request.url}"
 

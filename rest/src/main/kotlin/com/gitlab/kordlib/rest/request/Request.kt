@@ -24,12 +24,11 @@ private val parser = Json(JsonConfiguration(encodeDefaults = false, strictMode =
 
 sealed class Request<T> {
     internal abstract val route: Route<T>
-    internal abstract val routeParams: Map<String, Any>
+    internal abstract val routeParams: Map<Route.Key, String>
     val identifier: RequestIdentifier by lazy(LazyThreadSafetyMode.NONE) {
         when (route) {
             //https://discordapp.com/developers/docs/topics/rate-limits#rate-limits
-            Route.MessageDelete -> MessageDeleteIdentifier(route.path, routeParams[Route.MessageId.identifier].toString())
-
+            Route.MessageDelete -> MessageDeleteIdentifier(route.path, routeParams[Route.MessageId]!!)
             else -> MajorIdentifier(route, routeParams)
         }
     }
@@ -42,45 +41,31 @@ sealed class Request<T> {
         return parser.parse(route.strategy, json)
     }
 
-    internal tailrec fun generatePath(builder: StringBuilder = StringBuilder(), start: Int = 0): String {
-        val indexOfNextParam = route.path.indexOf('{', start)
-
-        return when {
-            indexOfNextParam > start -> {
-                builder.append(route.path.subSequence(start, indexOfNextParam))
-                val indexOfNextParamEnd = route.path.indexOf('}', indexOfNextParam)
-                val param = route.path.subSequence(indexOfNextParam, indexOfNextParamEnd + 1)
-                builder.append(routeParams[param])
-                val nextStart = (indexOfNextParamEnd + 1).coerceAtMost(route.path.length)
-                generatePath(builder, nextStart)
-            }
-            start == 0 -> route.path
-            else -> {
-                builder.append(route.path.substring(start))
-                builder.toString()
-            }
-        }
+    internal fun generatePath(): String {
+        var path = route.path
+        routeParams.forEach { (k, v) -> path = path.replaceFirst(k.identifier, v) }
+        return path
     }
 }
 
 interface RequestIdentifier
 
 internal class MessageDeleteIdentifier(val path: String, val messageId: String) : RequestIdentifier
-
 internal data class MajorIdentifier(val path: String, val param: String? = null) : RequestIdentifier {
 
     companion object {
-        operator fun invoke(route: Route<*>, routeParams: Map<String, Any>): RequestIdentifier {
-            val indexOfNextParam = route.path.indexOf('{')
-            if (indexOfNextParam < 0) return MajorIdentifier(route.path)
+        operator fun invoke(route: Route<*>, routeParams: Map<Route.Key, String>): RequestIdentifier {
+            with(route.path) {
+                val start = indexOf('{')
+                val end = indexOf('}')
 
-            val indexOfNextParamEnd = route.path.indexOf('}')
-            if (indexOfNextParamEnd < 0) return MajorIdentifier(route.path)
+                if (start < 0 || end < 0) return MajorIdentifier(this)
 
-            val param = route.path.subSequence(indexOfNextParam, indexOfNextParamEnd + 1)
-            val paramValue = routeParams[param].toString()
-
-            return MajorIdentifier(route.path, paramValue)
+                val param = subSequence(start..end)
+                val entry = routeParams.entries.firstOrNull { (k) -> param == k.identifier && k.isMajor }
+                return if (entry != null) MajorIdentifier(this, entry.value)
+                else MajorIdentifier(this)
+            }
         }
     }
 
@@ -90,7 +75,7 @@ data class RequestBody<T>(val strategy: SerializationStrategy<T>, val body: T) w
 
 internal class JsonRequest<T>(
         override val route: Route<T>,
-        override val routeParams: Map<String, Any>,
+        override val routeParams: Map<Route.Key, String>,
         private val parameters: StringValues,
         private val headers: StringValues,
         private val body: RequestBody<*>?
@@ -114,7 +99,7 @@ internal class JsonRequest<T>(
 
 internal class MultipartRequest<T>(
         override val route: Route<T>,
-        override val routeParams: Map<String, Any>,
+        override val routeParams: Map<Route.Key, String>,
         private val parameters: StringValues,
         private val headers: StringValues,
         private val body: RequestBody<*>?,
