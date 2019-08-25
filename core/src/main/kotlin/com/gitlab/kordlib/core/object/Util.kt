@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flow
 
 
 object Pagination {
-    suspend fun <C : Collection<T>, T> after(size: Int, id: (T) -> String, block: suspend (position: Position?, size: Int) -> C): Flow<T> = flow {
+    fun <C : Collection<T>, T> after(size: Int, id: (T) -> String, block: suspend (position: Position?, size: Int) -> C): Flow<T> = flow {
         var position: Position? = null
         while (true) {
             val collection = block(position, size)
@@ -18,7 +18,7 @@ object Pagination {
         }
     }
 
-    suspend fun <C : Collection<T>, T> before(size: Int, id: (T) -> String, block: suspend (position: Position?, size: Int) -> C): Flow<T> = flow {
+    fun <C : Collection<T>, T> before(size: Int, id: (T) -> String, block: suspend (position: Position?, size: Int) -> C): Flow<T> = flow {
         var position: Position? = null
         while (true) {
             val collection = block(position, size)

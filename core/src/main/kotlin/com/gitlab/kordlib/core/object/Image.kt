@@ -3,19 +3,22 @@ package com.gitlab.kordlib.core.`object`
 import java.util.*
 
 
-sealed class Image {
-    abstract val dataUri: String
+class Image private constructor(val data: ByteArray, val format: Format) {
 
-    class Raw(val data: ByteArray, val format: Format) : Image() {
-        override val dataUri: String
-            get() {
-                val hash = Base64.getEncoder().encodeToString(data)
-                return "data:image/${format.extension};base64,$hash"
-            }
+    val dataUri: String get() {
+        val hash = Base64.getEncoder().encodeToString(data)
+        return "data:image/${format.extension};base64,$hash"
     }
 
-    //TDOD expose HttpClient to get image from url
+    companion object {
+        fun raw(data: ByteArray, format: Format) : Image {
+            return Image(data, format)
+        }
 
+        suspend fun fromUrl(url: String): Image {
+            TODO()
+        }
+    }
 
     sealed class Format(val extension: String) {
         object JPEG : Format("jpeg")

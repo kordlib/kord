@@ -1,20 +1,25 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.channel.UpdateTextChannelBuilder
+import com.gitlab.kordlib.core.`object`.builder.channel.TextChannelModifyBuilder
+import com.gitlab.kordlib.core.`object`.builder.channel.UpdateVoiceChannelBuilder
+import com.gitlab.kordlib.core.`object`.data.ChannelData
 import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
+import com.gitlab.kordlib.core.entity.channel.TextChannel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-/**
- * The behavior of a Discord Text Channel associated to a guild.
- */
 @ExperimentalCoroutinesApi
-interface TextChannelBehavior : GuildMessageChannelBehavior  {
+interface TextChannelBehavior : GuildMessageChannelBehavior {
+
+    override suspend fun asChannel(): TextChannel {
+        return super.asChannel() as TextChannel
+    }
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, categoryId: Snowflake, id: Snowflake, kord: Kord): TextChannelBehavior = object : TextChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): TextChannelBehavior = object : TextChannelBehavior {
             override val guildId: Snowflake = guildId
-            override val categoryId: Snowflake = categoryId
             override val id: Snowflake = id
             override val kord: Kord = kord
         }
@@ -28,4 +33,14 @@ interface TextChannelBehavior : GuildMessageChannelBehavior  {
  * @return The edited [TextChannel].
  */
 @ExperimentalCoroutinesApi
-suspend inline fun TextChannelBehavior.edit(block: (UpdateTextChannelBuilder) -> Unit): Nothing /*VoiceChannel*/ = TODO()
+@Suppress("NAME_SHADOWING")
+suspend inline fun TextChannelBehavior.edit(builder: (TextChannelModifyBuilder) -> Unit): TextChannel {
+    val builder = TextChannelModifyBuilder().apply(builder)
+    val reason = builder.reason
+
+    val request = builder.toRequest()
+    val response = kord.rest.channel.patchChannel(id.value, request, reason)
+
+    val data = ChannelData.from(response)
+    return Channel.from(data, kord) as TextChannel
+}

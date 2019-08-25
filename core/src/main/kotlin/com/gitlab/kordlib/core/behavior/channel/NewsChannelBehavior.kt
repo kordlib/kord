@@ -3,8 +3,11 @@ package com.gitlab.kordlib.core.behavior.channel
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.builder.channel.UpdateNewsChannelBuilder
-import com.gitlab.kordlib.core.`object`.builder.channel.UpdateTextChannelBuilder
+import com.gitlab.kordlib.core.`object`.data.ChannelData
 import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
+import com.gitlab.kordlib.core.entity.channel.NewsChannel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
@@ -14,10 +17,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 interface NewsChannelBehavior : GuildMessageChannelBehavior {
 
+    override suspend fun asChannel(): NewsChannel {
+        return super.asChannel() as NewsChannel
+    }
+
     companion object {
-        internal operator fun invoke(guildId: Snowflake, categoryId: Snowflake, id: Snowflake, kord: Kord): NewsChannelBehavior = object : NewsChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): NewsChannelBehavior = object : NewsChannelBehavior {
             override val guildId: Snowflake = guildId
-            override val categoryId: Snowflake = categoryId
             override val id: Snowflake = id
             override val kord: Kord = kord
         }
@@ -32,4 +38,14 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
  */
 @KordPreview
 @ExperimentalCoroutinesApi
-suspend inline fun NewsChannelBehavior.edit(block: (UpdateNewsChannelBuilder) -> Unit): Nothing /*NewsChannel*/ = TODO()
+@Suppress("NAME_SHADOWING")
+suspend inline fun NewsChannelBehavior.edit(builder: (UpdateNewsChannelBuilder) -> Unit): NewsChannel {
+    val builder = UpdateNewsChannelBuilder().apply(builder)
+    val reason = builder.reason
+    val request = builder.toRequest()
+
+    val response = kord.rest.channel.patchChannel(id.value, request, reason)
+    val data = ChannelData.from(response)
+
+    return Channel.from(data, kord) as NewsChannel
+}

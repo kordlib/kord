@@ -11,11 +11,13 @@ internal suspend fun DataCache.registerKordData() = register(
         RoleData.description,
         ChannelData.description,
         GuildData.description,
-        GuildMemberData.description,
+        MemberData.description,
         UserData.description,
         MessageData.description,
         EmojiData.description,
-        WebhookData.description
+        WebhookData.description,
+        PresenceData.description,
+        VoiceStateData.description
 )
 
 /**
@@ -25,11 +27,13 @@ internal suspend fun DataCache.removeKordData() {
     find<RoleData>().remove()
     find<ChannelData>().remove()
     find<GuildData>().remove()
-    find<GuildMemberData>().remove()
+    find<MemberData>().remove()
     find<UserData>().remove()
     find<MessageData>().remove()
     find<EmojiData>().remove()
     find<WebhookData>().remove()
+    find<PresenceData>().remove()
+    find<VoiceStateData>().remove()
 }
 
 /**

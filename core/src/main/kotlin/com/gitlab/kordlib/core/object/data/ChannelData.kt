@@ -11,30 +11,21 @@ import kotlinx.serialization.Serializable
 data class ChannelData(
         val id: String,
         var type: ChannelType,
-        @SerialName("guild_id")
         var guildId: String? = null,
         var position: Int? = null,
-        @SerialName("permission_overwrites")
-        var permissionOverwrites: List<Overwrite>? = null,
+        var permissionOverwrites: List<PermissionOverwriteData> = emptyList(),
         var name: String? = null,
         var topic: String? = null,
         var nsfw: Boolean? = null,
-        @SerialName("last_message_id")
         var lastMessageId: String? = null,
         var bitrate: Int? = null,
-        @SerialName("user_limit")
         var userLimit: Int? = null,
-        @SerialName("rate_limit_per_user")
         var rateLimitPerUser: Int? = null,
         var recipients: List<String>? = null,
         var icon: String? = null,
-        @SerialName("owner_id")
         var ownerId: String? = null,
-        @SerialName("application_id")
         var applicationId: String? = null,
-        @SerialName("parent_id")
         var parentId: String? = null,
-        @SerialName("last_pin_timestamp")
         var lastPinTimestamp: String? = null
 ) {
     companion object {
@@ -46,7 +37,7 @@ data class ChannelData(
                     type,
                     guildId,
                     position,
-                    permissionOverwrites,
+                    permissionOverwrites.orEmpty().map { PermissionOverwriteData.from(it) },
                     name,
                     topic,
                     nsfw,

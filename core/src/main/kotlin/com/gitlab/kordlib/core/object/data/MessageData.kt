@@ -10,27 +10,21 @@ internal val MessageData.authorId get() = author?.id
 @Serializable
 data class MessageData(
         val id: String,
-        @SerialName("channel_id")
         var channelId: String,
-        @SerialName("guild_id")
         var guildId: String? = null,
         var author: User?,
         var content: String,
         var timestamp: String,
-        @SerialName("edited_timestamp")
         var editedTimestamp: String? = null,
         var tts: Boolean,
-        @SerialName("mention_everyone")
         var mentionEveryone: Boolean,
         var mentions: List<String>,
-        @SerialName("mention_roles")
         var mentionRoles: List<String>,
-        var attachments: List<Attachment>,
-        var embeds: List<Embed>,
+        var attachments: List<AttachmentData>,
+        var embeds: List<EmbedData>,
         var reactions: List<Reaction>? = null,
         var nonce: String? = null,
         var pinned: Boolean,
-        @SerialName("webhook_id")
         var webhookId: String?,
         var type: MessageType,
         var activity: MessageActivity? = null,
@@ -52,8 +46,8 @@ data class MessageData(
                     mentionEveryone,
                     mentions.map { it.id },
                     mentionRoles.map { it.id },
-                    attachments,
-                    embeds,
+                    attachments.map { AttachmentData.from(it) },
+                    embeds.map { EmbedData.from(it) },
                     reactions,
                     nonce,
                     pinned,

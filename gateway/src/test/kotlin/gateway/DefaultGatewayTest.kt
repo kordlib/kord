@@ -2,6 +2,7 @@ package gateway
 
 import com.gitlab.kordlib.common.entity.Activity
 import com.gitlab.kordlib.common.entity.ActivityType
+import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.gateway.*
 import com.gitlab.kordlib.gateway.retry.LinearRetry

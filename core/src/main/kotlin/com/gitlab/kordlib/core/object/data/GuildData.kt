@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.`object`.data
 
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.core.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,13 +17,14 @@ data class GuildData(
         val region: String,
         val afkChannelId: String? = null,
         val afkTimeout: Int,
+        //TODO, keep this?
         val embedEnabled: Boolean? = null,
         val embedChannelId: String? = null,
         val verificationLevel: VerificationLevel,
         val defaultMessageNotifications: DefaultMessageNotificationLevel,
         val explicitContentFilter: ExplicitContentFilter,
-        val roles: List<Role>,
-        val emojis: List<Emoji>,
+        val roles: List<String>,
+        val emojis: List<EmojiData>,
         val features: List<String>,
         val mfaLevel: MFALevel,
         val applicationId: String? = null,
@@ -31,12 +33,11 @@ data class GuildData(
         val systemChannelId: String? = null,
         val joinedAt: String? = null,
         val large: Boolean? = null,
-        val unavailable: Boolean? = null,
         val memberCount: Int? = null,
-        val voiceStates: List<VoiceState>? = null,
-        val members: List<GuildMember>? = null,
-        val channels: List<Channel>? = null,
-        val presences: List<PresenceUpdateData>? = null,
+        val voiceStates: List<VoiceState> = emptyList(),
+        val members: List<MemberData> = emptyList(),
+        val channels: List<String> = emptyList(),
+        val presences: List<PresenceUpdateData> = emptyList(),
         val maxPresences: Int? = null,
         val maxMembers: Int? = null,
         val vanityUrlCode: String? = null,
@@ -48,9 +49,11 @@ data class GuildData(
         val description = description(GuildData::id) {
             link(GuildData::id to RoleData::guildId)
             link(GuildData::id to ChannelData::guildId)
-            link(GuildData::id to GuildMemberData::guildId)
+            link(GuildData::id to MemberData::guildId)
             link(GuildData::id to MessageData::guildId)
             link(GuildData::id to WebhookData::guildId)
+            link(GuildData::id to VoiceStateData::guildId)
+            link(GuildData::id to PresenceData::guildId)
         }
 
         fun from(entity: Guild) = with(entity) {
@@ -70,8 +73,8 @@ data class GuildData(
                     verificationLevel,
                     defaultMessageNotifications,
                     explicitContentFilter,
-                    roles,
-                    emojis,
+                    roles.map { it.id },
+                    emojis.map { EmojiData.from(id, it) },
                     features,
                     mfaLevel,
                     applicationId,
@@ -80,12 +83,11 @@ data class GuildData(
                     systemChannelId,
                     joinedAt,
                     large,
-                    unavailable,
                     memberCount,
-                    voiceStates,
-                    members,
-                    channels,
-                    presences,
+                    voiceStates.orEmpty(),
+                    members.orEmpty().map { MemberData.from(userId = it.user!!.id, guildId = id, entity = it) },
+                    channels.orEmpty().map { it.id },
+                    presences.orEmpty(),
                     maxPresences,
                     maxMembers,
                     vanityUrlCode,

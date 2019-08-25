@@ -3,14 +3,13 @@ package com.gitlab.kordlib.core
 import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordUnsafe
 import com.gitlab.kordlib.core.behavior.channel.*
-import com.gitlab.kordlib.core.behavior.guild.GuildBehavior
-import com.gitlab.kordlib.core.behavior.guild.GuildEmojiBehavior
-import com.gitlab.kordlib.core.behavior.message.MessageBehavior
-import com.gitlab.kordlib.core.behavior.role.RoleBehavior
-import com.gitlab.kordlib.core.behavior.user.MemberBehavior
-import com.gitlab.kordlib.core.behavior.user.UserBehavior
-import com.gitlab.kordlib.core.behavior.user.ban
-import com.gitlab.kordlib.core.behavior.webhook.WebhookBehavior
+import com.gitlab.kordlib.core.behavior.GuildBehavior
+import com.gitlab.kordlib.core.behavior.GuildEmojiBehavior
+import com.gitlab.kordlib.core.behavior.MessageBehavior
+import com.gitlab.kordlib.core.behavior.RoleBehavior
+import com.gitlab.kordlib.core.behavior.MemberBehavior
+import com.gitlab.kordlib.core.behavior.UserBehavior
+import com.gitlab.kordlib.core.behavior.WebhookBehavior
 import com.gitlab.kordlib.core.entity.Snowflake
 
 /**
@@ -40,20 +39,20 @@ class Unsafe(private val kord: Kord) {
     fun guildChannel(guildId: Snowflake, id: Snowflake) : GuildChannelBehavior=
             GuildChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun guildMessageChannel(guildId: Snowflake,  categoryId: Snowflake, id: Snowflake) : GuildMessageChannelBehavior=
-            GuildMessageChannelBehavior(guildId = guildId, categoryId = categoryId, id = id, kord = kord)
+    fun guildMessageChannel(guildId: Snowflake,  id: Snowflake) : GuildMessageChannelBehavior=
+            GuildMessageChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun newsChannel(guildId: Snowflake, categoryId: Snowflake, id: Snowflake): NewsChannelBehavior =
-            NewsChannelBehavior(guildId = guildId, categoryId = categoryId, id = id, kord = kord)
+    fun newsChannel(guildId: Snowflake, id: Snowflake): NewsChannelBehavior =
+            NewsChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun textChannel(guildId: Snowflake, categoryId: Snowflake, id: Snowflake): TextChannelBehavior =
-            TextChannelBehavior(guildId = guildId, categoryId = categoryId, id = id, kord = kord)
+    fun textChannel(guildId: Snowflake, id: Snowflake): TextChannelBehavior =
+            TextChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun voiceChannel(guildId: Snowflake, categoryId: Snowflake, id: Snowflake): VoiceChannelBehavior =
-            VoiceChannelBehavior(guildId = guildId, categoryId = categoryId, id = id, kord = kord)
+    fun voiceChannel(guildId: Snowflake, id: Snowflake): VoiceChannelBehavior =
+            VoiceChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun storeChannel(guildId: Snowflake, categoryId: Snowflake, id: Snowflake): StoreChannelBehavior =
-            StoreChannelBehavior(guildId = guildId, categoryId = categoryId, id = id, kord = kord)
+    fun storeChannel(guildId: Snowflake, id: Snowflake): StoreChannelBehavior =
+            StoreChannelBehavior(guildId = guildId, id = id, kord = kord)
 
     fun guild(id: Snowflake): GuildBehavior =
             GuildBehavior(id, kord)

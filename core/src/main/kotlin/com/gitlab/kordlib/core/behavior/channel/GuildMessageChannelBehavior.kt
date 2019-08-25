@@ -1,14 +1,27 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.webhook.NewWebhookBuilder
+import com.gitlab.kordlib.core.`object`.builder.webhook.WebhookCreateBuilder
+import com.gitlab.kordlib.core.`object`.data.MessageData
+import com.gitlab.kordlib.core.`object`.data.WebhookData
+import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.core.entity.Webhook
+import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.rest.json.request.BulkDeleteRequest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-@ExperimentalCoroutinesApi
-interface GuildMessageChannelBehavior : CategorizableChannelBehavior, MessageChannelBehavior {
+/**
+ * The behavior of a Discord message channel associated to a [guild].
+ */
+interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBehavior {
+
+    override suspend fun asChannel(): GuildMessageChannel {
+        return super<GuildChannelBehavior>.asChannel() as GuildMessageChannel
+    }
 
     /**
      * Requests to bulk delete the [messages].
@@ -26,19 +39,27 @@ interface GuildMessageChannelBehavior : CategorizableChannelBehavior, MessageCha
 
     //TODO 1.3.50 add delete messages? partially bulkdelete, manually delete older ones
 
-    /**
-     * Requests to get the pinned messages in this channel.
-     */
-    suspend fun getPinnedMessage(): Flow<Nothing /*Message*/> = TODO()
-
     companion object {
-        internal operator fun invoke(guildId: Snowflake, categoryId: Snowflake, id: Snowflake, kord: Kord) = object : GuildMessageChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord) = object : GuildMessageChannelBehavior {
             override val guildId: Snowflake = guildId
-            override val categoryId: Snowflake = categoryId
             override val id: Snowflake = id
             override val kord: Kord = kord
         }
     }
 }
 
-suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: NewWebhookBuilder.() -> Unit): Nothing = TODO()
+/**
+ * Requests to create a new webhook.
+ *
+ * @return The created [Webhook].
+ */
+suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCreateBuilder.() -> Unit): Webhook {
+    val builder = WebhookCreateBuilder().apply(builder)
+    val reason = builder.reason
+    val request = builder.toRequest()
+
+    val response = kord.rest.webhook.createWebhook(id.value, request, reason)
+    val data = WebhookData.from(response)
+
+    return Webhook(data, kord)
+}

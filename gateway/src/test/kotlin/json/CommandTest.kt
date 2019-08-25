@@ -3,6 +3,7 @@
 package json
 
 import com.gitlab.kordlib.common.entity.Shard
+import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.gateway.*
 import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Assertions.assertEquals
