@@ -4,7 +4,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable(with = Permissions.Companion::class)
-class Permissions private constructor(val code: Int) {
+class Permissions constructor(val code: Int) {
 
     operator fun plus(permission: Permission): Permissions = when {
         code and permission.code == permission.code -> this

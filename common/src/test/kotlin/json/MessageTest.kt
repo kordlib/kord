@@ -16,7 +16,7 @@ class MessageTest : Spek({
 
     describe("message") {
         it("is deserialized correctly") {
-            val message = Json.parse(Message.serializer(), file("message"))
+            val message: Message = Json.parse(Message.serializer(), file("message"))
 
             with(message) {
                 reactions!!.size shouldBe 1
@@ -36,7 +36,7 @@ class MessageTest : Spek({
                 id shouldBe "334385199974967042"
                 pinned shouldBe false
                 editedTimestamp shouldBe null
-                with(author) {
+                with(author!!) {
                     username shouldBe "Mason"
                     discriminator shouldBe "9999"
                     id shouldBe "53908099506183680"

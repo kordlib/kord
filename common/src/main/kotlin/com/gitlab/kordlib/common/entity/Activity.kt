@@ -22,8 +22,8 @@ data class Activity(
 
 @Serializable
 data class ActivityTimeStamps(
-        val start: Long? = null,
-        val end: Long? = null
+        val start: Int? = null,
+        val end: Int? = null
 )
 
 @Serializable
@@ -55,7 +55,8 @@ data class ActivitySecrets(
 enum class ActivityType(val code: Int) {
     Game(0),
     Streaming(1),
-    Listening(2);
+    Listening(2),
+    Watching(3);
 
     @Serializer(forClass = ActivityType::class)
     companion object ActivityTypeSerializer : KSerializer<ActivityType> {

@@ -15,7 +15,7 @@ data class GuildCreateRequest(
         @SerialName("default_message_notifications")
         val defaultNotificationLevel: DefaultMessageNotificationLevel,
         val explicitContentFilter: ExplicitContentFilter,
-        val roles: List<Role> = emptyList(),
+        val roles: List<GuildRoleCreateRequest> = emptyList(),
         val channels: List<GuildCreateChannelRequest> = emptyList()
 )
 

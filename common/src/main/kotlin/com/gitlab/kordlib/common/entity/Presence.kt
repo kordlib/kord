@@ -1,16 +1,16 @@
 package com.gitlab.kordlib.common.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
+import kotlinx.serialization.internal.StringDescriptor
 
 @Serializable
 data class PresenceUpdateData(
         val user: PresenceUser,
-        val roles: List<String>? = null,
+        val roles: List<String>,
         val game: Activity? = null,
         @SerialName("guild_id")
-        val guildId: String? = null,
-        val status: String,
+        val guildId: String,
+        val status: Status,
         val activities: List<Activity>,
         @SerialName("client_status")
         val clientStatus: ClientStatus
@@ -35,3 +35,22 @@ data class PresenceUser(
 
 @Serializable
 data class ClientStatus(val desktop: String? = null, val mobile: String? = null, val web: String? = null)
+
+@Serializable(with = Status.StatusSerializer::class)
+enum class Status {
+        Online, DnD, Idle, Invisible, Offline;
+
+        @Serializer(forClass = Status::class)
+        companion object StatusSerializer : KSerializer<Status> {
+                override val descriptor: SerialDescriptor = StringDescriptor.withName("Status")
+
+                override fun deserialize(decoder: Decoder): Status {
+                        val name = decoder.decodeString()
+                        return values().first { it.name.toLowerCase() == name }
+                }
+
+                override fun serialize(encoder: Encoder, obj: Status) {
+                        encoder.encodeString(obj.name.toLowerCase())
+                }
+        }
+}
