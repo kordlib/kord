@@ -24,6 +24,8 @@ class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord:
 
     val roleIds: Set<Snowflake> get() = data.roles.asSequence().map { Snowflake(it) }.toSet()
 
+    val roles: Flow<Role> get() = roleIds.asFlow().map { kord.getRole(guildId, id) }.filterNotNull()
+
     val member: MemberBehavior? get() = userId?.let { MemberBehavior(guildId, it, kord) }
 
     val userId: Snowflake? get() = data.user?.id.toSnowflakeOrNull()
@@ -33,7 +35,5 @@ class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord:
     suspend fun getMember(): Member? = userId?.let { kord.getMember(guildId = guildId, userId = it) }
 
     suspend fun getUser(): User? = userId?.let { kord.getUser(it) }
-
-    suspend fun getRoles(): Flow<Role> = roleIds.asFlow().map { kord.getRole(guildId, id) }.filterNotNull()
 
 }

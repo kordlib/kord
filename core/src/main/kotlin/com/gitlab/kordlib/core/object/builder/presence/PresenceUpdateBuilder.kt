@@ -2,12 +2,8 @@ package com.gitlab.kordlib.core.`object`.builder.presence
 
 import com.gitlab.kordlib.common.entity.Activity
 import com.gitlab.kordlib.common.entity.ActivityType
-import com.gitlab.kordlib.common.entity.PresenceUpdateData
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.`object`.builder.RequestBuilder
-import com.gitlab.kordlib.core.`object`.data.ActivityData
-import com.gitlab.kordlib.core.entity.Presence
-import com.gitlab.kordlib.gateway.PresenceUpdate
 import com.gitlab.kordlib.gateway.UpdateStatus
 import java.time.Instant
 
@@ -25,11 +21,11 @@ class PresenceUpdateBuilder : RequestBuilder<UpdateStatus> {
         game = Activity(name, ActivityType.Listening)
     }
 
-    fun streaming(name: String, url: String){
+    fun streaming(name: String, url: String) {
         game = Activity(name, ActivityType.Streaming, url = url)
     }
 
-    fun watching(name: String){
+    fun watching(name: String) {
         game = Activity(name, ActivityType.Watching)
     }
 
