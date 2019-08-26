@@ -34,7 +34,7 @@ data class PresenceUser(
 )
 
 @Serializable
-data class ClientStatus(val desktop: String? = null, val mobile: String? = null, val web: String? = null)
+data class ClientStatus(val desktop: Status? = null, val mobile: Status? = null, val web: Status? = null)
 
 @Serializable(with = Status.StatusSerializer::class)
 enum class Status {

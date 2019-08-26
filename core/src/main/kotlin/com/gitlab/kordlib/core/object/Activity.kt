@@ -31,7 +31,7 @@ class Activity(val data: ActivityData) {
     val party: Party? get() = data.partyId?.let { Party(it, data.partyCurrentSize!!, data.partyMaxSize!!) }
     val assets: Assets? get() = Assets(data.largeImage, data.largeText, data.smallImage, data.smallText)
     val secrets: Secrets? get() = Secrets(data.secretsJoin, data.secretsSpectate, data.secretsMatch)
-    val instance: Boolean? get() = data.instance
+    val isInstance: Boolean? get() = data.instance
     val flags: ActivityFlags get() = ActivityFlags(data.flags ?: 0)
 
     internal fun toGatewayActivity() =
@@ -40,13 +40,5 @@ class Activity(val data: ActivityData) {
     data class Party(val id: String, val currentSize: Int, val maxSize: Int)
     data class Assets(val largeImage: String?, val largeText: String?, val smallImage: String?, val smallText: String?)
     data class Secrets(val join: String?, val spectate: String?, val match: String?)
-
-    companion object {
-        fun playing(name: String): Activity = Activity(ActivityData(name = name, type = ActivityType.Game))
-        fun listening(name: String): Activity = Activity(ActivityData(name = name, type = ActivityType.Listening))
-        fun streaming(name: String, url: String): Activity = Activity(ActivityData(name = name, type = ActivityType.Streaming, url = url))
-        fun watching(name: String): Activity = Activity(ActivityData(name = name, type = ActivityType.Watching))
-
-    }
 
 }

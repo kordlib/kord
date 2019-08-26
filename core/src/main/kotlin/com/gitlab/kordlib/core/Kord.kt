@@ -5,6 +5,7 @@ import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.entity.PartialGuild
 import com.gitlab.kordlib.core.`object`.Pagination
 import com.gitlab.kordlib.core.`object`.builder.guild.GuildCreateBuilder
+import com.gitlab.kordlib.core.`object`.builder.presence.PresenceUpdateBuilder
 import com.gitlab.kordlib.core.`object`.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
@@ -103,8 +104,9 @@ class Kord {
     suspend fun getUsers(): Flow<User> =
             cache.find<UserData>().asFlow().map { User(it, this) }
 
-    suspend fun editPresence(presence: Presence) {
-        gateway.send(presence.asUpdate())
+    suspend inline fun editPresence(builder: PresenceUpdateBuilder.() -> Unit) {
+        val request = PresenceUpdateBuilder().apply(builder).toRequest()
+        gateway.send(request)
     }
 
     override fun equals(other: Any?): Boolean {

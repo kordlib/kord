@@ -14,14 +14,15 @@ data class PresenceData(
         val roles: List<String>,
         val game: ActivityData?,
         val guildId: String,
-        val status: Status
+        val status: Status,
+        val clientStatus: ClientStatusData
 ) {
 
     companion object {
         val description = description(PresenceData::id)
 
         fun from(entity: PresenceUpdateData) = with(entity) {
-            PresenceData(user.id, roles, game?.let { ActivityData.from(it) }, guildId, status)
+            PresenceData(user.id, roles, game?.let { ActivityData.from(it) }, guildId, status, ClientStatusData.from(clientStatus))
         }
     }
 

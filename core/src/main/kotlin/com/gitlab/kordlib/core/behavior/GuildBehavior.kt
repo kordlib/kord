@@ -61,8 +61,7 @@ interface GuildBehavior : Entity {
         get() =
             kord.cache.find<PresenceData> { PresenceData::guildId eq id.value }
                     .asFlow()
-                    .map { Presence(it) }
-
+                    .map { Presence(it, kord) }
     /**
      * Requests to get all members in this guild.
      *

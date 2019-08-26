@@ -54,7 +54,7 @@ interface MemberBehavior : Entity, UserBehavior {
     }
 
     /**
-     * Requests to get the cached presence, if present.
+     * Requests to get the cached presence, if cached.
      */
     suspend fun getPresence() : Presence? {
         val data = kord.cache.find<PresenceData> {
@@ -62,7 +62,7 @@ interface MemberBehavior : Entity, UserBehavior {
             PresenceData::guildId eq guildId.value
         }.singleOrNull() ?: return null
 
-        return Presence(data)
+        return Presence(data, kord)
     }
 
     /**
