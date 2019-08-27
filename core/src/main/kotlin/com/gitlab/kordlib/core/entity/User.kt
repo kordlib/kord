@@ -4,6 +4,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.`object`.Image
 import com.gitlab.kordlib.core.`object`.data.UserData
 import com.gitlab.kordlib.core.behavior.UserBehavior
+import kotlinx.coroutines.flow.collect
 
 /**
  * An instance of a [Discord User](https://discordapp.com/developers/docs/resources/user#user-object).
@@ -39,7 +40,12 @@ open class User(val data: UserData, override val kord: Kord) : UserBehavior {
     val defaultAvatarUrl: String get() = "https://cdn.discordapp.com/embed/avatars/${data.discriminator.toInt() % 5}.png"
 
     /**
-     * Whether or not the user has an animated avatar.
+     * Whether the user has an avatar.
+     */
+    val hasCustomAvatar: Boolean get() = data.avatar != null
+
+    /**
+     * Whether the user has an animated avatar.
      */
     val hasAnimatedAvatar: Boolean get() = data.avatar?.startsWith("a_") ?: false
 
@@ -69,14 +75,23 @@ open class User(val data: UserData, override val kord: Kord) : UserBehavior {
     /**
      * Requests to get the default avatar as an image.
      */
-    suspend fun getDefaultAvatar(): Image = TODO()
+    suspend fun getDefaultAvatar(): Image = Image.fromUrl(kord.resources.httpClient, defaultAvatarUrl)
 
     /**
-     * Requests to get the avatar as an image, or returns null if the format is not supported.
+     * Requests to get the avatar of the user as an image, or returns null if the format is not supported.
      *
      * @param format the requested image format, defaults to the behavior of [avatarUrl] if null.
      */
-    suspend fun getAvatar(format: Image.Format? = null): Image? = TODO()
+    suspend fun getAvatar(format: Image.Format): Image? {
+        val url = getAvatarUrl(format) ?: return null
+
+        return Image.fromUrl(kord.resources.httpClient, url)
+    }
+
+    /**
+     * Requests to get the avatar of the user as an image, prioritizing gif for animated avatars and png for others.
+     */
+    suspend fun getAvatar(): Image = Image.fromUrl(kord.resources.httpClient, avatarUrl)
 
     override fun equals(other: Any?): Boolean {
         if (other !is UserBehavior) return false

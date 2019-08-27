@@ -188,7 +188,11 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     /**
      * Requests to get the banner image in the specified [format], if present.
      */
-    suspend fun getBanner(format: Image.Format): Image? = TODO()
+    suspend fun getBanner(format: Image.Format): Image? {
+        val url = getBannerUrl(format) ?: return null
+
+        return Image.fromUrl(kord.resources.httpClient, url)
+    }
 
     /**
      * Requests to get the embed channel, if present.
@@ -221,7 +225,11 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     /**
      * Requests to get the icon image in the specified [format], if present.
      */
-    suspend fun getIcon(format: Image.Format): Image? = TODO()
+    suspend fun getIcon(format: Image.Format): Image? {
+        val url = getIconUrl(format) ?: return null
+
+        return Image.fromUrl(kord.resources.httpClient, url)
+    }
 
     /**
      * Requests to get the owner as member.
@@ -243,7 +251,11 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     /**
      * Requests to get the splash image in the specified [format], if present.
      */
-    suspend fun getSplash(format: Image.Format): Image? = TODO()
+    suspend fun getSplash(format: Image.Format): Image? {
+        val url = getSplashUrl(format) ?: return null
+
+        return Image.fromUrl(kord.resources.httpClient, url)
+    }
 
     /**
      * Requests to get the channel of system messages, if present.

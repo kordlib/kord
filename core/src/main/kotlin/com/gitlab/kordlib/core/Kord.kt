@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.map
 
 class Kord {
 
-    val configuration: ClientConfiguration = TODO()
+    val resources: ClientResources = TODO()
     val cache: DataCache = TODO()
     val gateway: Gateway = TODO()
     val rest: RestClient = TODO()
@@ -49,7 +49,7 @@ class Kord {
 
     suspend fun getGuilds(): Flow<Guild> {
         fun inShard(id: String): Boolean {
-            return id.toLong().shr(22) % configuration.shardIndex.toLong() == configuration.shardCount.toLong()
+            return id.toLong().shr(22) % resources.shardIndex.toLong() == resources.shardCount.toLong()
         }
 
         val cached = cache.find<GuildData>().asFlow().filter { inShard(it.id) }.map { Guild(it, this) }
@@ -112,7 +112,7 @@ class Kord {
     override fun equals(other: Any?): Boolean {
         val kord = other as? Kord ?: return false
 
-        return configuration.token == kord.configuration.token
+        return resources.token == kord.resources.token
     }
 
     internal suspend fun getChannelData(id: Snowflake): ChannelData? {
