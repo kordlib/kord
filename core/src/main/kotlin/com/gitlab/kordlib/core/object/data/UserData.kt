@@ -10,7 +10,7 @@ data class UserData(
         var username: String,
         var discriminator: String,
         var avatar: String? = null,
-        var bot: Boolean
+        var bot: Boolean? = null
 ) {
     companion object {
 
@@ -29,7 +29,7 @@ data class UserData(
                     username,
                     discriminator,
                     avatar,
-                    bot ?: false
+                    bot
             )
         }
 
