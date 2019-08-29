@@ -1,10 +1,10 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.data.WebhookData
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.WebhookBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
+import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 
 data class Webhook(val data: WebhookData, override val kord: Kord) : WebhookBehavior {

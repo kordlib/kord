@@ -1,13 +1,9 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.PermissionOverwrite
-import com.gitlab.kordlib.core.`object`.data.InviteData
 import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.core.entity.Invite
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.core.cache.data.InviteData
+import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.indexOfFirstOrNull
 import kotlinx.coroutines.flow.Flow

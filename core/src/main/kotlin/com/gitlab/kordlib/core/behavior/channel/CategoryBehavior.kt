@@ -1,8 +1,8 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.channel.CategoryModifyBuilder
-import com.gitlab.kordlib.core.`object`.data.ChannelData
+import com.gitlab.kordlib.core.builder.channel.CategoryModifyBuilder
+import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.CategorizableChannel
 import com.gitlab.kordlib.core.entity.channel.Category

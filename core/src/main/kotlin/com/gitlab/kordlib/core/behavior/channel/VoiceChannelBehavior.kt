@@ -2,13 +2,12 @@ package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.channel.UpdateVoiceChannelBuilder
-import com.gitlab.kordlib.core.`object`.data.ChannelData
-import com.gitlab.kordlib.core.`object`.data.VoiceStateData
+import com.gitlab.kordlib.core.builder.channel.UpdateVoiceChannelBuilder
+import com.gitlab.kordlib.core.cache.data.ChannelData
+import com.gitlab.kordlib.core.cache.data.VoiceStateData
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.entity.VoiceState
 import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

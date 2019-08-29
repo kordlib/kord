@@ -1,14 +1,12 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.Pagination
-import com.gitlab.kordlib.core.`object`.ReactionEmoji
-import com.gitlab.kordlib.core.`object`.builder.message.MessageModifyBuilder
-import com.gitlab.kordlib.core.`object`.data.MessageData
-import com.gitlab.kordlib.core.`object`.data.UserData
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
+import com.gitlab.kordlib.core.builder.message.MessageModifyBuilder
+import com.gitlab.kordlib.core.cache.data.MessageData
+import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.rest.route.Position
+import com.gitlab.kordlib.core.paginateForwards
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -44,12 +42,12 @@ interface MessageBehavior : Entity {
      * Requests to get all users that have reacted to this message.
      */
     fun getReactors(emoji: ReactionEmoji): Flow<User> =
-            Pagination.after(100, com.gitlab.kordlib.common.entity.User::id) { position: Position?, size: Int ->
+            paginateForwards(idSelector = { it.id }) { position ->
                 kord.rest.channel.getReactions(
                         channelId = channelId.value,
                         messageId = id.value,
                         emoji = emoji.formatted,
-                        limit = size,
+                        limit = 100,
                         position = position
                 )
             }.map { UserData.from(it) }.map { User(it, kord) }

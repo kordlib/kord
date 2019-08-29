@@ -1,8 +1,8 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.guild.EmojiModifyBuilder
-import com.gitlab.kordlib.core.`object`.data.EmojiData
+import com.gitlab.kordlib.core.builder.guild.EmojiModifyBuilder
+import com.gitlab.kordlib.core.cache.data.EmojiData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.GuildEmoji
 import com.gitlab.kordlib.core.entity.Snowflake

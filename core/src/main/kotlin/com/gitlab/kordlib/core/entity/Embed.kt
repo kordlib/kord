@@ -2,7 +2,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.`object`.data.*
+import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.toInstant
 import java.awt.Color
 import java.time.Instant

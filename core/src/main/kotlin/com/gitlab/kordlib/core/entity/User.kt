@@ -2,9 +2,8 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.`object`.Image
-import com.gitlab.kordlib.core.`object`.data.UserData
 import com.gitlab.kordlib.core.behavior.UserBehavior
+import com.gitlab.kordlib.core.cache.data.UserData
 
 /**
  * An instance of a [Discord User](https://discordapp.com/developers/docs/resources/user#user-object).

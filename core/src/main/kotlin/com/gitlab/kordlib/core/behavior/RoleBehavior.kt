@@ -1,9 +1,9 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.role.RoleModifyBuilder
-import com.gitlab.kordlib.core.`object`.builder.role.RolePositionsModifyBuilder
-import com.gitlab.kordlib.core.`object`.data.RoleData
+import com.gitlab.kordlib.core.builder.role.RoleModifyBuilder
+import com.gitlab.kordlib.core.builder.role.RolePositionsModifyBuilder
+import com.gitlab.kordlib.core.cache.data.RoleData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Role
 import com.gitlab.kordlib.core.entity.Snowflake

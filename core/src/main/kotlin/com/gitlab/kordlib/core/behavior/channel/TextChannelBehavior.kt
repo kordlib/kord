@@ -1,12 +1,10 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.channel.TextChannelModifyBuilder
-import com.gitlab.kordlib.core.`object`.builder.channel.UpdateVoiceChannelBuilder
-import com.gitlab.kordlib.core.`object`.data.ChannelData
+import com.gitlab.kordlib.core.builder.channel.TextChannelModifyBuilder
+import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.core.entity.channel.TextChannel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

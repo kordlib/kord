@@ -2,10 +2,10 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.MessageType
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.data.MessageData
-import com.gitlab.kordlib.core.`object`.data.ReactionData
-import com.gitlab.kordlib.core.`object`.data.UserData
 import com.gitlab.kordlib.core.behavior.MessageBehavior
+import com.gitlab.kordlib.core.cache.data.MessageData
+import com.gitlab.kordlib.core.cache.data.ReactionData
+import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.channel.Channel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.time.Instant

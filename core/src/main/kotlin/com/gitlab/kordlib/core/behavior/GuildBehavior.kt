@@ -1,20 +1,21 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.cache.api.find
+import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.Pagination
-import com.gitlab.kordlib.core.`object`.builder.ban.BanCreateBuilder
-import com.gitlab.kordlib.core.`object`.builder.channel.GuildChannelPositionModifyBuilder
-import com.gitlab.kordlib.core.`object`.builder.channel.NewsChannelCreateBuilder
-import com.gitlab.kordlib.core.`object`.builder.channel.TextChannelCreateBuilder
-import com.gitlab.kordlib.core.`object`.builder.channel.VoiceChannelCreateBuilder
-import com.gitlab.kordlib.core.`object`.builder.guild.GuildModifyBuilder
-import com.gitlab.kordlib.core.`object`.builder.role.RoleCreateBuilder
-import com.gitlab.kordlib.core.`object`.builder.role.RolePositionsModifyBuilder
-import com.gitlab.kordlib.core.`object`.data.*
+import com.gitlab.kordlib.core.builder.ban.BanCreateBuilder
+import com.gitlab.kordlib.core.builder.channel.GuildChannelPositionModifyBuilder
+import com.gitlab.kordlib.core.builder.channel.NewsChannelCreateBuilder
+import com.gitlab.kordlib.core.builder.channel.TextChannelCreateBuilder
+import com.gitlab.kordlib.core.builder.channel.VoiceChannelCreateBuilder
+import com.gitlab.kordlib.core.builder.guild.GuildModifyBuilder
+import com.gitlab.kordlib.core.builder.role.RoleCreateBuilder
+import com.gitlab.kordlib.core.builder.role.RolePositionsModifyBuilder
+import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
+import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.core.sorted
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
 import kotlinx.coroutines.flow.Flow
@@ -75,8 +76,8 @@ interface GuildBehavior : Entity {
      */
 
     val members: Flow<Member>
-        get() = Pagination.after(1000, { it.user!!.id }) { position, size ->
-            kord.rest.guild.getGuildMembers(id.value, position, size)
+        get() = paginateForwards(idSelector =  { it.user!!.id }) { position ->
+            kord.rest.guild.getGuildMembers(id.value, position, 1000)
         }.map {
             val memberData = MemberData.from(it.user!!.id, id.value, it)
             val userData = UserData.from(it.user!!)
@@ -263,6 +264,7 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
  *
  * @return The created [NewsChannel].
  */
+@KordPreview
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
     val builder = NewsChannelCreateBuilder().apply(builder)
@@ -278,6 +280,7 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
 /**
  * Requests to swap positions of channels in this guild.
  */
+@Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPositionModifyBuilder.() -> Unit) {
     val builder = GuildChannelPositionModifyBuilder().apply(builder)
     val reason = builder.reason

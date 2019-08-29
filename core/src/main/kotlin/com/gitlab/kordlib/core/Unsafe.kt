@@ -2,14 +2,8 @@ package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordUnsafe
+import com.gitlab.kordlib.core.behavior.*
 import com.gitlab.kordlib.core.behavior.channel.*
-import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.behavior.GuildEmojiBehavior
-import com.gitlab.kordlib.core.behavior.MessageBehavior
-import com.gitlab.kordlib.core.behavior.RoleBehavior
-import com.gitlab.kordlib.core.behavior.MemberBehavior
-import com.gitlab.kordlib.core.behavior.UserBehavior
-import com.gitlab.kordlib.core.behavior.WebhookBehavior
 import com.gitlab.kordlib.core.entity.Snowflake
 
 /**

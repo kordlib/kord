@@ -1,9 +1,8 @@
 package com.gitlab.kordlib.core.entity.channel
 
-import com.gitlab.kordlib.core.`object`.builder.channel.InviteCreateBuilder
-import com.gitlab.kordlib.core.`object`.data.InviteData
 import com.gitlab.kordlib.core.behavior.channel.CategoryBehavior
-import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
+import com.gitlab.kordlib.core.builder.channel.InviteCreateBuilder
+import com.gitlab.kordlib.core.cache.data.InviteData
 import com.gitlab.kordlib.core.entity.Invite
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.toSnowflakeOrNull

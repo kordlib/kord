@@ -2,10 +2,10 @@ package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.ban.BanCreateBuilder
-import com.gitlab.kordlib.core.`object`.builder.member.MemberModifyBuilder
-import com.gitlab.kordlib.core.`object`.data.PresenceData
-import com.gitlab.kordlib.core.`object`.data.VoiceStateData
+import com.gitlab.kordlib.core.builder.ban.BanCreateBuilder
+import com.gitlab.kordlib.core.builder.member.MemberModifyBuilder
+import com.gitlab.kordlib.core.cache.data.PresenceData
+import com.gitlab.kordlib.core.cache.data.VoiceStateData
 import com.gitlab.kordlib.core.entity.*
 
 /**

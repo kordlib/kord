@@ -1,13 +1,14 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.Pagination
-import com.gitlab.kordlib.core.`object`.builder.message.EmbedBuilder
-import com.gitlab.kordlib.core.`object`.builder.message.MessageCreateBuilder
-import com.gitlab.kordlib.core.`object`.data.MessageData
+import com.gitlab.kordlib.core.builder.message.EmbedBuilder
+import com.gitlab.kordlib.core.builder.message.MessageCreateBuilder
+import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.paginateBackwards
+import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.rest.route.Position
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -41,14 +42,15 @@ interface MessageChannelBehavior : ChannelBehavior {
     /**
      * Requests to get the pinned messages in this channel.
      */
-    val pinnedMessages: Flow<Message> get() = flow {
-        val responses = kord.rest.channel.getChannelPins(id.value)
+    val pinnedMessages: Flow<Message>
+        get() = flow {
+            val responses = kord.rest.channel.getChannelPins(id.value)
 
-        for (response in responses) {
-            val data = MessageData.from(response)
-            emit(Message(data, kord))
+            for (response in responses) {
+                val data = MessageData.from(response)
+                emit(Message(data, kord))
+            }
         }
-    }
 
     /**
      * Requests to create a message with only a [MessageCreateBuilder.content].
@@ -71,9 +73,8 @@ interface MessageChannelBehavior : ChannelBehavior {
      * [Int.MAX_VALUE] means all messages before the [messageId].
      */
     fun getMessagesBefore(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
-            Pagination.before(100, { it.id }) { position, size ->
-                kord.rest.channel.getMessages(id.value, position, size)
-            }.map { MessageData.from(it) }.map { Message(it, kord) }
+            paginateBackwards(idSelector =  {it.id}) { position -> kord.rest.channel.getMessages(id.value, position, 100) }
+            .map { MessageData.from(it) }.map { Message(it, kord) }
 
     /**
      * Requests to get all messages in this channel that were created *after* [messageId].
@@ -91,8 +92,8 @@ interface MessageChannelBehavior : ChannelBehavior {
      * [Int.MAX_VALUE] means all messages after the [messageId].
      */
     fun getMessagesAfter(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
-            Pagination.after(100, { it.id }) { position, size ->
-                kord.rest.channel.getMessages(id.value, position, size)
+            paginateForwards(idSelector = { it.id }) { position ->
+                kord.rest.channel.getMessages(id.value, position, 100)
             }.map { MessageData.from(it) }.map { Message(it, kord) }
 
     /**

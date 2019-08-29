@@ -3,10 +3,9 @@ package com.gitlab.kordlib.core
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.entity.PartialGuild
-import com.gitlab.kordlib.core.`object`.Pagination
-import com.gitlab.kordlib.core.`object`.builder.guild.GuildCreateBuilder
-import com.gitlab.kordlib.core.`object`.builder.presence.PresenceUpdateBuilder
-import com.gitlab.kordlib.core.`object`.data.*
+import com.gitlab.kordlib.core.builder.guild.GuildCreateBuilder
+import com.gitlab.kordlib.core.builder.presence.PresenceUpdateBuilder
+import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.gateway.Gateway
@@ -55,8 +54,7 @@ class Kord {
         val cached = cache.find<GuildData>().asFlow().filter { inShard(it.id) }.map { Guild(it, this) }
 
         //backup if we're not caching
-        val request = Pagination
-                .after(100, PartialGuild::id) { position, size -> rest.user.getCurrentUserGuilds(position, size) }
+        val request = paginateForwards(idSelector = PartialGuild::id) { position -> rest.user.getCurrentUserGuilds(position, 100) }
                 .filter { inShard(it.id) }
                 .map { rest.guild.getGuild(it.id) }
                 .map { GuildData.from(it) }

@@ -5,14 +5,13 @@ import com.gitlab.kordlib.common.entity.ExplicitContentFilter
 import com.gitlab.kordlib.common.entity.MFALevel
 import com.gitlab.kordlib.common.entity.VerificationLevel
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.Image
-import com.gitlab.kordlib.core.`object`.data.EmojiData
-import com.gitlab.kordlib.core.`object`.data.GuildData
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.behavior.channel.TextChannelBehavior
+import com.gitlab.kordlib.core.cache.data.EmojiData
+import com.gitlab.kordlib.core.cache.data.GuildData
 import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.entity.channel.TextChannel

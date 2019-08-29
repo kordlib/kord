@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.data.RegionData
+import com.gitlab.kordlib.core.cache.data.RegionData
 
 class Region(val data: RegionData, override val kord: Kord) : Entity {
     override val id: Snowflake

@@ -1,9 +1,9 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.data.EmojiData
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
+import com.gitlab.kordlib.core.cache.data.EmojiData
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow

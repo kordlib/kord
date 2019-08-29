@@ -1,9 +1,9 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.data.MemberData
-import com.gitlab.kordlib.core.`object`.data.UserData
 import com.gitlab.kordlib.core.behavior.MemberBehavior
+import com.gitlab.kordlib.core.cache.data.MemberData
+import com.gitlab.kordlib.core.cache.data.UserData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filterNotNull

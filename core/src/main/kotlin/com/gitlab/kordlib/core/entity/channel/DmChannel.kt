@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.entity.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.data.ChannelData
+import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.entity.User
 import kotlinx.coroutines.flow.Flow

@@ -2,8 +2,8 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.`object`.data.BanData
 import com.gitlab.kordlib.core.behavior.UserBehavior
+import com.gitlab.kordlib.core.cache.data.BanData
 
 /**
  * An instance of a [Discord Ban](https://discordapp.com/developers/docs/resources/guild#ban-object).

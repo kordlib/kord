@@ -1,9 +1,9 @@
 package com.gitlab.kordlib.core.entity.channel
 
-import com.gitlab.kordlib.core.`object`.PermissionOverwrite
-import com.gitlab.kordlib.core.`object`.PermissionOverwriteEntity
-import com.gitlab.kordlib.core.`object`.data.PermissionOverwriteData
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
+import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
+import com.gitlab.kordlib.core.entity.PermissionOverwrite
+import com.gitlab.kordlib.core.entity.PermissionOverwriteEntity
 import com.gitlab.kordlib.core.entity.Snowflake
 
 /**

@@ -3,9 +3,8 @@ package com.gitlab.kordlib.core.entity
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.`object`.Activity
-import com.gitlab.kordlib.core.`object`.data.ClientStatusData
-import com.gitlab.kordlib.core.`object`.data.PresenceData
+import com.gitlab.kordlib.core.cache.data.ClientStatusData
+import com.gitlab.kordlib.core.cache.data.PresenceData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filterNotNull

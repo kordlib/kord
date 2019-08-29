@@ -1,18 +1,12 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.webhook.WebhookCreateBuilder
-import com.gitlab.kordlib.core.`object`.data.MessageData
-import com.gitlab.kordlib.core.`object`.data.WebhookData
-import com.gitlab.kordlib.core.entity.Message
+import com.gitlab.kordlib.core.builder.webhook.WebhookCreateBuilder
+import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.entity.Webhook
-import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.rest.json.request.BulkDeleteRequest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 /**
  * The behavior of a Discord message channel associated to a [guild].
@@ -53,6 +47,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
  *
  * @return The created [Webhook].
  */
+@Suppress("NAME_SHADOWING")
 suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCreateBuilder.() -> Unit): Webhook {
     val builder = WebhookCreateBuilder().apply(builder)
     val reason = builder.reason

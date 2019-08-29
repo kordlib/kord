@@ -1,9 +1,9 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.builder.webhook.ExecuteWebhookBuilder
-import com.gitlab.kordlib.core.`object`.builder.webhook.WebhookModifyBuilder
-import com.gitlab.kordlib.core.`object`.data.WebhookData
+import com.gitlab.kordlib.core.builder.webhook.ExecuteWebhookBuilder
+import com.gitlab.kordlib.core.builder.webhook.WebhookModifyBuilder
+import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.entity.Webhook
@@ -41,6 +41,7 @@ interface WebhookBehavior : Entity {
  *
  * @return The updated [Webhook].
  */
+@Suppress("NAME_SHADOWING")
 suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit): Webhook {
     val builder = WebhookModifyBuilder().apply(builder)
     val reason = builder.reason

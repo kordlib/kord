@@ -3,8 +3,8 @@ package com.gitlab.kordlib.core.entity.channel
 import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.common.entity.ChannelType.*
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.data.ChannelData
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
+import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.Snowflake
 
 /**
@@ -22,6 +22,7 @@ interface Channel : ChannelBehavior {
     val type: ChannelType get() = data.type
 
     companion object {
+        @Suppress("EXPERIMENTAL_API_USAGE")
         fun from(data: ChannelData, kord: Kord): Channel = when (data.type) {
             GuildText -> TextChannel(data, kord)
             DM, GroupDm -> DmChannel(data, kord)

@@ -1,8 +1,8 @@
 package com.gitlab.kordlib.core.entity.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.`object`.data.ChannelData
 import com.gitlab.kordlib.core.behavior.channel.VoiceChannelBehavior
+import com.gitlab.kordlib.core.cache.data.ChannelData
 
 /**
  * An instance of a Discord Voice Channel associated to a guild.
