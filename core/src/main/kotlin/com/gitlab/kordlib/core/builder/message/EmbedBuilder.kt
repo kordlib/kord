@@ -1,23 +1,24 @@
 package com.gitlab.kordlib.core.builder.message
 
+import com.gitlab.kordlib.core.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.*
 import java.awt.Color
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
-class EmbedBuilder(
-        var title: String? = null,
-        var description: String? = null,
-        var url: String? = null,
-        var timestamp: Instant? = null,
-        var color: Color? = null,
+class EmbedBuilder : RequestBuilder<EmbedRequest> {
+    var title: String? = null
+    var description: String? = null
+    var url: String? = null
+    var timestamp: Instant? = null
+    var color: Color? = null
 
-        var image: String? = null,
-        var footer: Footer? = null,
-        var thumbnail: Thumbnail? = null,
-        var author: Author? = null,
-        val fields: MutableList<Field> = mutableListOf()
-) {
+    var image: String? = null
+    var footer: Footer? = null
+    var thumbnail: Thumbnail? = null
+    var author: Author? = null
+    val fields: MutableList<Field> = mutableListOf()
+
     inline fun footer(builder: Footer.() -> Unit) {
         footer = (footer ?: Footer()).apply(builder)
     }
@@ -30,11 +31,11 @@ class EmbedBuilder(
         author = (author ?: Author()).apply(builder)
     }
 
-    inline fun field(name: String, inline: Boolean = false, value: () -> String) {
-        fields += Field(name, value(), inline)
+    inline fun field(builder: Field.() -> Unit) {
+        fields += Field().apply(builder)
     }
 
-    fun toRequest(): EmbedRequest = EmbedRequest(
+    override fun toRequest(): EmbedRequest = EmbedRequest(
             title,
             "embed",
             description,
@@ -48,31 +49,33 @@ class EmbedBuilder(
             fields.map { it.toRequest() }
     )
 
-    class Thumbnail(var url: String? = null) {
-        fun toRequest() = url?.let(::EmbedThumbnailRequest)
+    class Thumbnail : RequestBuilder<EmbedThumbnailRequest> {
+        lateinit var url: String
+
+        override fun toRequest() = EmbedThumbnailRequest(url)
     }
 
-    class Footer(
-            var text: String? = null,
-            var url: String? = null,
-            var icon: String? = null
-    ) {
-        fun toRequest() = EmbedFooterRequest(text!!, url, icon)
+    class Footer : RequestBuilder<EmbedFooterRequest> {
+        lateinit var text: String
+        var url: String? = null
+        var icon: String? = null
+
+        override fun toRequest() = EmbedFooterRequest(text, url, icon)
     }
 
-    class Author(
-            var name: String? = null,
-            var url: String? = null,
-            var icon: String? = null
-    ) {
-        fun toRequest() = EmbedAuthorRequest(name, url, icon)
+    class Author : RequestBuilder<EmbedAuthorRequest> {
+        var name: String? = null
+        var url: String? = null
+        var icon: String? = null
+
+        override fun toRequest() = EmbedAuthorRequest(name, url, icon)
     }
 
-    class Field(
-            var name: String,
-            var value: String,
-            var inline: Boolean? = null
-    ) {
-        fun toRequest() = EmbedFieldRequest(name, value, inline ?: false)
+    class Field: RequestBuilder<EmbedFieldRequest> {
+        lateinit var value: String
+        lateinit  var name: String
+        var inline: Boolean = false
+
+        override fun toRequest() = EmbedFieldRequest(name, value, inline)
     }
 }
