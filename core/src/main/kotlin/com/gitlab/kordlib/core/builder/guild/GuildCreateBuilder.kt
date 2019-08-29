@@ -4,12 +4,14 @@ import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.common.entity.DefaultMessageNotificationLevel
 import com.gitlab.kordlib.common.entity.ExplicitContentFilter
 import com.gitlab.kordlib.common.entity.VerificationLevel
+import com.gitlab.kordlib.core.builder.KordBuilder
 import com.gitlab.kordlib.core.builder.RequestBuilder
 import com.gitlab.kordlib.core.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.json.request.GuildCreateChannelRequest
 import com.gitlab.kordlib.rest.json.request.GuildCreateRequest
 import com.gitlab.kordlib.rest.json.request.GuildRoleCreateRequest
 
+@KordBuilder
 class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
     lateinit var name: String
     lateinit var region: String

@@ -1,8 +1,10 @@
 package com.gitlab.kordlib.core.builder.channel
 
+import com.gitlab.kordlib.core.builder.KordBuilder
 import com.gitlab.kordlib.core.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.InviteCreateRequest
 
+@KordBuilder
 class InviteCreateBuilder: RequestBuilder<InviteCreateRequest> {
     /**
      * The duration of invite in seconds before expiry, or 0 for never. 86400 (24 hours) by default.

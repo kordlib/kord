@@ -1,10 +1,12 @@
 package com.gitlab.kordlib.core.builder.channel
 
 import com.gitlab.kordlib.core.builder.AuditRequestBuilder
+import com.gitlab.kordlib.core.builder.KordBuilder
 import com.gitlab.kordlib.core.entity.PermissionOverwrite
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.GuildCreateChannelRequest
 
+@KordBuilder
 class NewsChannelCreateBuilder: AuditRequestBuilder<GuildCreateChannelRequest> {
     override var reason: String? = null
     lateinit var name: String

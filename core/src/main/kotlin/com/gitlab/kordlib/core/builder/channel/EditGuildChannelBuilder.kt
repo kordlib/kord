@@ -2,10 +2,12 @@ package com.gitlab.kordlib.core.builder.channel
 
 import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.core.builder.AuditRequestBuilder
+import com.gitlab.kordlib.core.builder.KordBuilder
 import com.gitlab.kordlib.core.entity.PermissionOverwrite
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.ChannelModifyPatchRequest
 
+@KordBuilder
 class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
@@ -28,6 +30,7 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
 
 }
 
+@KordBuilder
 class UpdateVoiceChannelBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
@@ -47,6 +50,7 @@ class UpdateVoiceChannelBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     )
 }
 
+@KordBuilder
 class UpdateNewsChannelBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
@@ -66,6 +70,7 @@ class UpdateNewsChannelBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
     )
 }
 
+@KordBuilder
 class UpdateStoreChannelBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
