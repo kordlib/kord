@@ -14,6 +14,7 @@ data class PresenceData(
         val game: ActivityData?,
         val guildId: String,
         val status: Status,
+        val activities: List<ActivityData>,
         val clientStatus: ClientStatusData
 ) {
 
@@ -21,7 +22,15 @@ data class PresenceData(
         val description = description(PresenceData::id)
 
         fun from(entity: PresenceUpdateData) = with(entity) {
-            PresenceData(user.id, roles, game?.let { ActivityData.from(it) }, guildId, status, ClientStatusData.from(clientStatus))
+            PresenceData(
+                    user.id,
+                    roles,
+                    game?.let { ActivityData.from(it) },
+                    guildId,
+                    status,
+                    activities.map { ActivityData.from(it) },
+                    ClientStatusData.from(clientStatus)
+            )
         }
     }
 

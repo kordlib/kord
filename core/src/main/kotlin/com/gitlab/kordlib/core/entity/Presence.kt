@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.map
 
 class Presence(val data: PresenceData, override val kord: Kord) : KordObject {
 
+    val activities: List<Activity> get() = data.activities.map { Activity(it) }
+
     val clientStatus: ClientStatus get() = ClientStatus(data.clientStatus)
 
     val game: Activity? get() = data.game?.let { Activity(it) }
