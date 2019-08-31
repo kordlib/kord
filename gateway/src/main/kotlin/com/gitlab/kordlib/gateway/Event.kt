@@ -3,6 +3,7 @@ package com.gitlab.kordlib.gateway
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.*
+import kotlinx.serialization.json.JsonElementSerializer
 import mu.KotlinLogging
 
 private val jsonLogger = KotlinLogging.logger {  }
@@ -110,6 +111,8 @@ sealed class Event {
             "WEBHOOKS_UPDATE" -> WebhooksUpdate(decoder.decodeSerializableElement(descriptor, index, WebhooksUpdateData.serializer()), sequence)
             else -> {
                 jsonLogger.warn { "unknown gateway event name $name" }
+                // consume json elements that are unknown to us
+                decoder.decodeSerializableElement(descriptor,index,NullableSerializer(JsonElementSerializer))
                 null
             }
         }
