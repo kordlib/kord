@@ -4,6 +4,7 @@ dependencies {
     implementation "io.ktor:ktor-client-json:$ktor_version"
     implementation "io.ktor:ktor-client-json-jvm:$ktor_version"
     implementation "io.github.microutils:kotlin-logging:$kotlin_logging_version"
+    api "io.ktor:ktor-client-serialization-jvm:$ktor_version"
 
     testImplementation "io.ktor:ktor-client-mock:$ktor_version"
     testImplementation "io.ktor:ktor-client-mock-jvm:$ktor_version"
