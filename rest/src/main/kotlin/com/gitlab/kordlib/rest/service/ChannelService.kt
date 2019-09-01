@@ -146,10 +146,10 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
 
     }
 
-    suspend fun editMessage(channelId: String, messageId: String, message: MessageEditRequest) = call(Route.EditMessagePatch) {
+    suspend fun editMessage(channelId: String, messageId: String, message: MessageEditPatchRequest) = call(Route.EditMessagePatch) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
-        body(MessageEditRequest.serializer(), message)
+        body(MessageEditPatchRequest.serializer(), message)
     }
 
     suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest, reason: String? = null) = call(Route.ChannelPut) {

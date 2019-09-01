@@ -2,10 +2,10 @@ package com.gitlab.kordlib.core.builder.message
 
 import com.gitlab.kordlib.core.builder.KordBuilder
 import com.gitlab.kordlib.core.builder.RequestBuilder
-import com.gitlab.kordlib.rest.json.request.MessageEditRequest
+import com.gitlab.kordlib.rest.json.request.MessageEditPatchRequest
 
 @KordBuilder
-class MessageModifyBuilder : RequestBuilder<MessageEditRequest> {
+class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     var content: String? = null
     var embed: EmbedBuilder? = null
 
@@ -13,5 +13,5 @@ class MessageModifyBuilder : RequestBuilder<MessageEditRequest> {
         embed = (embed ?: EmbedBuilder()).also(block)
     }
 
-    override fun toRequest(): MessageEditRequest = MessageEditRequest(content, embed?.toRequest())
+    override fun toRequest(): MessageEditPatchRequest = MessageEditPatchRequest(content, embed?.toRequest())
 }

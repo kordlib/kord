@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.rest.service
 
-import com.gitlab.kordlib.rest.json.request.EmojiCreatePostRequest
-import com.gitlab.kordlib.rest.json.request.EmojiModifyPatchRequest
+import com.gitlab.kordlib.rest.json.request.EmojiCreateRequest
+import com.gitlab.kordlib.rest.json.request.EmojiModifyRequest
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 

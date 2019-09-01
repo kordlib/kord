@@ -44,8 +44,6 @@ class RestServiceTest {
 
     @BeforeAll
     fun setup() = runBlocking {
-
-
         client = HttpClient(CIO) {
             defaultRequest {
                 header("Authorization", "Bot $token")
@@ -98,7 +96,7 @@ class RestServiceTest {
     fun `create invite`() = runBlocking {
         val generalId = rest.guild.getGuildChannels(guildId).first { it.type == ChannelType.GuildText }.id
 
-        rest.channel.createInvite(generalId, InviteCreatePostRequest())
+        rest.channel.createInvite(generalId, InviteCreateRequest())
 
         Unit
     }
@@ -118,7 +116,7 @@ class RestServiceTest {
     @Order(4)
     fun `reaction in channel`() = runBlocking {
         with(rest.channel) {
-            val message = createMessage(channelId, MessageCreatePostRequest("TEST"))
+            val message = createMessage(channelId, MessageCreateRequest("TEST"))
             editMessage(channelId, message.id, MessageEditPatchRequest("EDIT TEST"))
 
             createReaction(channelId, message.id, "\ud83d\udc4e")
@@ -141,14 +139,14 @@ class RestServiceTest {
         with(rest.channel) {
             triggerTypingIndicator(channelId)
 
-            val message = createMessage(channelId, MessageCreatePostRequest("TEST"))
+            val message = createMessage(channelId, MessageCreateRequest("TEST"))
 
             getMessage(channelId, message.id)
 
             deleteMessage(channelId, message.id)
 
-            createMessage(channelId, MessageCreatePostRequest("TEST"))
-            createMessage(channelId, MultipartMessageCreatePostRequest(MessageCreatePostRequest("TEST")))
+            createMessage(channelId, MessageCreateRequest("TEST"))
+            createMessage(channelId, MultipartMessageCreateRequest(MessageCreateRequest("TEST")))
 
             repeat(10) { //trying to get a ratelimit
                 createMessage(channelId, MessageCreateRequest("TEST $it"))
@@ -165,7 +163,7 @@ class RestServiceTest {
     @Order(6)
     fun `pinned messages in channel`() = runBlocking {
         with(rest.channel) {
-            val pinnedMessage = createMessage(channelId, MessageCreatePostRequest("TEST"))
+            val pinnedMessage = createMessage(channelId, MessageCreateRequest("TEST"))
 
             addPinnedMessage(channelId, pinnedMessage.id)
 
@@ -361,9 +359,9 @@ class RestServiceTest {
     fun `emojis in guilds`() = runBlocking {
         with(rest.emoji) {
 
-            val emoji = createEmoji(guildId, EmojiCreatePostRequest("kord", image("images/kord.png"), listOf(guildId)))
+            val emoji = createEmoji(guildId, EmojiCreateRequest("kord", image("images/kord.png"), listOf(guildId)))
 
-            modifyEmoji(guildId, emoji.id!!, EmojiModifyPatchRequest("edited"))
+            modifyEmoji(guildId, emoji.id!!, EmojiModifyRequest("edited"))
 
             getEmojis(guildId)
 
