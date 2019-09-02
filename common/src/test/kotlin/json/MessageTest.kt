@@ -75,11 +75,11 @@ class MessageTest : Spek({
                 id shouldBe "334385199974967042"
                 pinned shouldBe false
                 editedTimestamp shouldBe null
-                with(author) {
-                    username shouldBe "Mason"
-                    discriminator shouldBe "9999"
-                    id shouldBe "53908099506183680"
-                    avatar shouldBe "a_bab14f271d565501444b2ca3be944b25"
+                author?.let {
+                    it.username shouldBe "Mason"
+                    it.discriminator shouldBe "9999"
+                    it.id shouldBe "53908099506183680"
+                    it.avatar shouldBe "a_bab14f271d565501444b2ca3be944b25"
                 }
                 mentionRoles shouldBe emptyList()
                 content shouldBe "Big news! In this <#278325129692446722> channel!"
