@@ -25,7 +25,6 @@ fun image(path: String): String {
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RestServiceTest {
 
-
     private val token = System.getenv("token")
 
     private lateinit var requestHandler: RequestHandler

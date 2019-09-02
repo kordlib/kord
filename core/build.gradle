@@ -8,6 +8,6 @@ dependencies {
 }
 compileKotlin {
     kotlinOptions {
-        freeCompilerArgs = ["-XXLanguage:+InlineClasses", "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses", "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi", "-Xuse-experimental=kotlin.time.ExperimentalTime"]
     }
 }

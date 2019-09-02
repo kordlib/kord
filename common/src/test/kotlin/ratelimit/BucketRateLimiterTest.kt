@@ -1,44 +1,44 @@
 package ratelimit
 
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
-import kotlinx.coroutines.runBlocking
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
-import java.time.Duration
-import kotlin.system.measureTimeMillis
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneOffset
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.asserter
+import kotlin.time.ExperimentalTime
+import kotlin.time.milliseconds
 
-class BucketRateLimiterTest : Spek({
+@ExperimentalTime
+@ExperimentalCoroutinesApi
+class BucketRateLimiterTest {
 
-    describe("a bucket rate limiter") {
-        val interval = Duration.ofMillis(250)
-        val rateLimiter by memoized { BucketRateLimiter(100, interval) }
+    val interval = 1_000_000.milliseconds
+    val instant = Instant.now()
+    val clock = Clock.fixed(instant, ZoneOffset.UTC)
+    lateinit var rateLimiter: BucketRateLimiter
 
-        it("does not rateLimit when under capacity") {
-            val time = measureTimeMillis {
-                repeat(99) {
-                    runBlocking {
-                        rateLimiter.consume()
-                    }
-                }
-            }
-
-            val duration = Duration.ofMillis(time)
-            assert(duration < interval) { "${duration.toMillis()} was bigger than interval ${duration.toMillis()}" }
-        }
-
-        it("does rateLimit when over capacity") {
-            val time = measureTimeMillis {
-                repeat(101) {
-                    runBlocking {
-                        rateLimiter.consume()
-                    }
-                }
-            }
-
-            val duration = Duration.ofMillis(time)
-            assert(duration > interval) { "${duration.toMillis()} was smaller than interval ${duration.toMillis()}" }
-        }
-
+    @BeforeTest
+    fun setup() {
+        rateLimiter = BucketRateLimiter(1, interval, clock)
     }
 
-})
+    @Test
+    fun `a bucket rate limiter does not ratelimit when under capacity`(): Unit = runBlockingTest {
+        rateLimiter.consume()
+
+        asserter.assertTrue("expected timeout of 0 ms but was $currentTime ms", 0L == currentTime)
+    }
+
+    @Test
+    fun `a bucket rate limiter does ratelimit when over capacity`(): Unit = runBlockingTest {
+        rateLimiter.consume()
+        rateLimiter.consume()
+
+        asserter.assertTrue("expected timeout of ${interval.inMilliseconds.toLong()} ms but was $currentTime ms", interval.toLongMilliseconds() == currentTime)
+    }
+
+}
