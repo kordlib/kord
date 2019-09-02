@@ -24,7 +24,7 @@ data class AuditLogResponse(
 data class AuditLogEntryResponse(
         @SerialName("target_id")
         val targetId: String?,
-        val changes: List<AuditLogChangeResponse<*>>? = null,
+        val changes: List<AuditLogChangeResponse<out @ContextualSerialization Any?>>? = null,
         @SerialName("user_id")
         val userId: String,
         val id: String,
