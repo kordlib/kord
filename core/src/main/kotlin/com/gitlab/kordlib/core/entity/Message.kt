@@ -7,6 +7,7 @@ import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.cache.data.ReactionData
 import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -54,7 +55,7 @@ class Message(private val data: MessageData, override val kord: Kord) : MessageB
 
     override suspend fun asMessage(): Message = this
 
-    suspend fun getChannel(): Channel = kord.getChannel(channelId)!!
+    suspend fun getChannel(): MessageChannel = kord.getChannel(channelId) as MessageChannel
 
     suspend fun getAuthorAsMember(): Member? = data.guildId?.let { author?.asMember(Snowflake(it)) }
 
