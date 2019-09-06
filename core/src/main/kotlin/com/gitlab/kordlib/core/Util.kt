@@ -17,6 +17,7 @@ internal fun String?.toSnowflakeOrNull(): Snowflake? = when {
 
 internal fun String.toInstant() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(this, Instant::from)
 internal fun Int.toInstant() = Instant.ofEpochMilli(toLong())
+internal fun Long.toInstant() = Instant.ofEpochMilli(this)
 
 internal inline fun <T> catchNotFound(block: () -> T): T? = try {
     block()

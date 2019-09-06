@@ -18,11 +18,11 @@ class Presence(val data: PresenceData, override val kord: Kord) : KordObject {
 
     val game: Activity? get() = data.game?.let { Activity(it) }
 
-    val guildId: Snowflake get() = Snowflake(data.guildId)
+    val guildId: Snowflake? get() = data.guildId?.let { Snowflake(it) }
 
-    val roleIds: Set<Snowflake> get() = data.roles.asSequence().map { Snowflake(it) }.toSet()
+    val roleIds: Set<Snowflake>? get() = data.roles?.asSequence()!!.map { Snowflake(it) }.toSet()
 
-    val roles: Flow<Role> get() = roleIds.asFlow().map { kord.getRole(guildId, it) }.filterNotNull()
+    val roles: Flow<Role>? get() = roleIds?.asFlow()!!.map { kord.getRole(guildId!!, it) }.filterNotNull()
 
     val status: Status get() = data.status
 
