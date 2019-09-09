@@ -8,8 +8,6 @@ import com.gitlab.kordlib.gateway.*
 import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
 
 class CommandTest {
     @Test

@@ -5,8 +5,7 @@ package json
 import com.gitlab.kordlib.common.entity.Emoji
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
+
 
 private fun file(name: String): String {
     val loader = ChannelTest::class.java.classLoader
