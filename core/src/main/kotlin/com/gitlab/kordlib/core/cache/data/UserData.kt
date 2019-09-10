@@ -7,17 +7,16 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UserData(
         val id: String,
-        var username: String,
-        var discriminator: String,
-        var avatar: String? = null,
-        var bot: Boolean? = null
+        val username: String,
+        val discriminator: String,
+        val avatar: String? = null,
+        val bot: Boolean? = null
 ) {
     companion object {
 
         val description
             get() = description(UserData::id) {
                 link(UserData::id to MemberData::userId)
-                link(UserData::id to MessageData::authorId)
                 link(UserData::id to WebhookData::userid)
                 link(UserData::id to VoiceStateData::userId)
                 link(UserData::id to PresenceData::userId)

@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.entity.GuildRole
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Role
 import kotlinx.serialization.Serializable
@@ -8,17 +9,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RoleData(
         val id: String,
-        var guildId: String,
-        var name: String,
-        var color: Int,
-        var hoisted: Boolean,
-        var position: Int,
-        var permissions: Permissions,
-        var managed: Boolean,
-        var mentionable: Boolean
+        val guildId: String,
+        val name: String,
+        val color: Int,
+        val hoisted: Boolean,
+        val position: Int,
+        val permissions: Permissions,
+        val managed: Boolean,
+        val mentionable: Boolean
 ) {
     companion object {
         val description get() = description(RoleData::id)
         fun from(guildId: String, entity: Role) = with(entity) { RoleData(id, guildId, name, color, hoist, position, permissions, managed, mentionable) }
+        fun from(entity: GuildRole) = from(entity.guildId, entity.role)
+
     }
 }

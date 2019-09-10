@@ -10,11 +10,11 @@ private val MemberData.id get() = "$userId$guildId"
 
 @Serializable
 data class MemberData(
-        var userId: String,
-        var guildId: String,
-        var nick: String? = null,
-        var roles: List<String>,
-        var joinedAt: String
+        val userId: String,
+        val guildId: String,
+        val nick: String? = null,
+        val roles: List<String>,
+        val joinedAt: String
 ) {
     companion object {
         val description get() = description(MemberData::id)
