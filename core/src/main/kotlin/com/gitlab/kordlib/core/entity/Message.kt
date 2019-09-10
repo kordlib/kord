@@ -45,10 +45,7 @@ class Message(private val data: MessageData, override val kord: Kord) : MessageB
 
     val mentionedUsers: Set<Snowflake> get() = data.mentions.map { Snowflake(it) }.toSet()
 
-    val reactions: Set<Reaction> get() {
-        val reactions = data.reactions ?: return emptySet()
-        return reactions.map { ReactionData.from(it) }.map { Reaction(it, kord) }.toSet()
-    }
+    val reactions: Set<Reaction> get()  = data.reactions.orEmpty().asSequence().map { Reaction(it, kord) }.toSet()
 
     val timestamp: Instant get() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(data.timestamp, Instant::from)
 
