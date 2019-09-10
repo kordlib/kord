@@ -92,21 +92,8 @@ data class GuildBan(
 
 @Serializable
 data class GuildIntegrations(
-        val id: String,
-        val name: String,
-        val type: String,
-        val enabled: Boolean,
-        val syncing: Boolean,
-        @SerialName("role_id")
-        val roleId: String,
-        @SerialName("expire_behavior")
-        val expireBehavior: Int,
-        @SerialName("expire_grace_period")
-        val gracePeriod: Int,
-        val user: User,
-        val account: IntegrationAccount,
-        @SerialName("synced_at")
-        val syncedAt: String
+        @SerialName("guild_id")
+        val guildId: String
 )
 
 @Serializable

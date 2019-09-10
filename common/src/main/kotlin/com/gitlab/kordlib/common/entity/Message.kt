@@ -2,6 +2,7 @@ package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
+import kotlinx.serialization.json.JsonElement
 
 @Serializable
 data class Message(
@@ -30,6 +31,42 @@ data class Message(
         @SerialName("webhook_id")
         val webhookId: String? = null,
         val type: MessageType,
+        val activity: MessageActivity? = null,
+        val application: MessageApplication? = null,
+        @SerialName("message_reference")
+        val messageReference: MessageReference? = null,
+        @SerialName("mention_channels")
+        val mentionedChannels: List<MentionedChannel>? = null,
+        val flags: Flags? = null
+)
+
+@Serializable
+data class PartialMessage(
+        val id: String,
+        @SerialName("channel_id")
+        val channelId: String,
+        @SerialName("guild_id")
+        val guildId: String? = null,
+        val author: User? = null,
+        val member: PartialGuildMember? = null,
+        val content: String? = null,
+        val timestamp: String? = null,
+        @SerialName("edited_timestamp")
+        val editedTimestamp: String? = null,
+        val tts: Boolean? = null,
+        @SerialName("mention_everyone")
+        val mentionEveryone: Boolean? = null,
+        val mentions: List<OptionallyMemberUser>,
+        @SerialName("mention_roles")
+        val mentionRoles: List<Role>? = null,
+        val attachments: List<Attachment>? = null,
+        val embeds: List<Embed>? = null,
+        val reactions: List<Reaction>? = null,
+        val nonce: String? = null,
+        val pinned: Boolean? = null,
+        @SerialName("webhook_id")
+        val webhookId: String? = null,
+        val type: MessageType? = null,
         val activity: MessageActivity? = null,
         val application: MessageApplication? = null,
         @SerialName("message_reference")
