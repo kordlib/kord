@@ -40,6 +40,7 @@ allprojects {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
         implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+        implementation "io.github.microutils:kotlin-logging:$kotlin_logging_version"
         testImplementation "io.mockk:mockk-dsl-jvm:$mockk_version"
         testImplementation "io.mockk:mockk:$mockk_version"
         testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"

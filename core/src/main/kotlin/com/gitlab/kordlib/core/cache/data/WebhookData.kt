@@ -7,12 +7,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class WebhookData(
         val id: String,
-        var guildId: String,
-        var channelId: String,
-        var userid: String,
-        var name: String? = null,
-        var avatar: String? = null,
-        var token: String
+        val guildId: String,
+        val channelId: String,
+        val userid: String,
+        val name: String? = null,
+        val avatar: String? = null,
+        val token: String
 ) {
     companion object {
         val description get() = description(WebhookData::id)

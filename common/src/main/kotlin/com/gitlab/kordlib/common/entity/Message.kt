@@ -2,6 +2,7 @@ package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
+import kotlinx.serialization.json.JsonElement
 
 @Serializable
 data class Message(

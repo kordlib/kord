@@ -4,7 +4,7 @@ import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.VoiceState
 import kotlinx.serialization.Serializable
 
-private val VoiceStateData.id get() = "$userId$channelId$guildId"
+val VoiceStateData.id get() = "$userId$channelId$guildId"
 
 @Serializable
 data class VoiceStateData(

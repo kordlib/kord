@@ -7,12 +7,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EmojiData(
         val id: String,
-        var name: String,
-        var user: UserData?,
-        var roles: List<String>,
-        var requireColons: Boolean,
-        var managed: Boolean,
-        var animated: Boolean
+        val name: String,
+        val user: UserData?,
+        val roles: List<String>,
+        val requireColons: Boolean,
+        val managed: Boolean,
+        val animated: Boolean
 ) {
     companion object {
         val description get() = description(EmojiData::id)
