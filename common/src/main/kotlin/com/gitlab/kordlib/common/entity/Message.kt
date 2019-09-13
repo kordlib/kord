@@ -39,7 +39,6 @@ data class Message(
         val mentionedChannels: List<MentionedChannel>? = null,
         val flags: Flags? = null
 )
-
 @Serializable
 data class PartialMessage(
         val id: String,
@@ -56,11 +55,11 @@ data class PartialMessage(
         val tts: Boolean? = null,
         @SerialName("mention_everyone")
         val mentionEveryone: Boolean? = null,
-        val mentions: List<OptionallyMemberUser>,
+        val mentions: List<OptionallyMemberUser>? = null,
         @SerialName("mention_roles")
-        val mentionRoles: List<Role>? = null,
-        val attachments: List<Attachment>? = null,
-        val embeds: List<Embed>? = null,
+        val mentionRoles: List<Role> ? = null,
+        val attachments: List<Attachment> ? = null,
+        val embeds: List<Embed> ? = null,
         val reactions: List<Reaction>? = null,
         val nonce: String? = null,
         val pinned: Boolean? = null,

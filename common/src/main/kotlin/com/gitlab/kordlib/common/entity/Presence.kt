@@ -7,7 +7,7 @@ import kotlinx.serialization.json.JsonElement
 @Serializable
 data class PresenceUpdateData(
         val user: PresenceUser,
-        val roles: List<String>,
+        val roles: List<String>? = null,
         val game: Activity? = null,
         @SerialName("guild_id")
         val guildId: String,

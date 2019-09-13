@@ -38,6 +38,14 @@ interface Gateway {
     suspend fun send(command: Command)
 
     /**
+     * Close gateway and releases resources.
+     *
+     * **For some implementations this will render the Gateway unopenable,
+     * as such, all implementations should be handled as if they are irreversibly closed.**
+     */
+    suspend fun detach()
+
+    /**
      * Closes the Gateway and ends the current session, suspending until the underlying webSocket is closed.
      */
     suspend fun close()

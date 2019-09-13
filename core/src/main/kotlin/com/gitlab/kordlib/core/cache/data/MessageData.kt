@@ -39,7 +39,7 @@ data class MessageData(
 
         val editedTimestamp = partialMessage.editedTimestamp ?: editedTimestamp
         val content =  partialMessage.content ?: content
-        val mentions = partialMessage.mentions.map { it.id }
+        val mentions = partialMessage.mentions.orEmpty().map { it.id }
         val mentionEveryone =  partialMessage.mentionEveryone?: mentionEveryone
         val embeds =  partialMessage.embeds?.map { EmbedData.from(it) } ?: embeds
 

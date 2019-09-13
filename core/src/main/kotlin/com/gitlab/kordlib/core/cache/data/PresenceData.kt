@@ -10,9 +10,9 @@ val PresenceData.id get() = "$userId$guildId"
 @Serializable
 data class PresenceData(
         val userId: String,
-        val roles: List<String>,
+        val roles: List<String>? = null,
         val game: ActivityData?,
-        val guildId: String,
+        val guildId: String? = null,
         val status: Status,
         val activities: List<ActivityData>,
         val clientStatus: ClientStatusData

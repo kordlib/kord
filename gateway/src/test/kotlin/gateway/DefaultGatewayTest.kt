@@ -48,6 +48,7 @@ class DefaultGatewayTest {
                 when (words.firstOrNull()) {
                     "!close" -> gateway.close()
                     "!restart" -> gateway.restart()
+                    "!detach" -> gateway.detach()
                     "!status" -> when (words.getOrNull(1)) {
                         "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = Activity("Kord", ActivityType.Game)))
                     }
