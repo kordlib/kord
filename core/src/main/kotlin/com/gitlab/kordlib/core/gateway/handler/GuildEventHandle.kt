@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.event.role.RoleCreateEvent
 import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
 import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
 import com.gitlab.kordlib.gateway.*
+import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
@@ -25,7 +26,7 @@ internal class GuildEventHandler(
         kord: Kord,
         gateway: Gateway,
         cache: DataCache,
-        coreEventChannel: CoroutineChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
 
     override suspend fun handle(event: Event) = when (event) {
@@ -217,7 +218,7 @@ internal class GuildEventHandler(
                 .singleOrNull()
                 ?.let { User(it, kord) }
 
-        coreEventChannel.send(PresenceUpdateEvent(user, this.user, Snowflake(guildId), old, new))
+        coreEventChannel.send(PresenceUpdateEvent(user, this.user, Snowflake(guildId!!), old, new))
     }
 
 }

@@ -10,6 +10,7 @@ import com.gitlab.kordlib.core.event.gateway.DisconnectEvent
 import com.gitlab.kordlib.core.event.gateway.ReadyEvent
 import com.gitlab.kordlib.core.event.gateway.ResumedEvent
 import com.gitlab.kordlib.gateway.*
+import kotlinx.coroutines.channels.SendChannel
 import com.gitlab.kordlib.core.event.Event as CoreEvent
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
@@ -18,7 +19,7 @@ internal class LifeCycleEventHandler(
         kord: Kord,
         gateway: Gateway,
         cache: DataCache,
-        coreEventChannel: CoroutineChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
 
     override suspend fun handle(event: Event) = when (event) {

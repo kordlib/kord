@@ -6,6 +6,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Gateway
 import io.ktor.util.error
+import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -20,7 +21,7 @@ class GatewayEventInterceptor(
         kord: Kord,
         private val gateway: Gateway,
         cache: DataCache,
-        coreEventChannel: CoroutineChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>
 ) {
 
     private val listeners = listOf(

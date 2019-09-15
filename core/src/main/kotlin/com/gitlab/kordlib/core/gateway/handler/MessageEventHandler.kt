@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.gateway.*
+import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
@@ -23,7 +24,7 @@ internal class MessageEventHandler(
         kord: Kord,
         gateway: Gateway,
         cache: DataCache,
-        coreEventChannel: CoroutineChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
 
     override suspend fun handle(event: Event) = when (event) {
