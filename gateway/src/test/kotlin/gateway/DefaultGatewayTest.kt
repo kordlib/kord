@@ -19,6 +19,9 @@ import kotlinx.serialization.UnstableDefault
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.milliseconds
+import kotlin.time.toKotlinDuration
 
 @FlowPreview
 @UnstableDefault
@@ -26,6 +29,7 @@ import java.time.Duration
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 class DefaultGatewayTest {
+    @ExperimentalTime
     @Test
     @Disabled
     fun `defualt gateway functions normally`() {
@@ -37,8 +41,8 @@ class DefaultGatewayTest {
             install(JsonFeature)
         }
 
-        val retry = LinearRetry(2000, 10000, 10)
-        val rateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60))
+        val retry = LinearRetry(2000.milliseconds, 10000.milliseconds, 10)
+        val rateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
 
         val gateway = DefaultGateway(url, client, retry, rateLimiter)
 
