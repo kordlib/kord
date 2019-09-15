@@ -33,7 +33,7 @@ data class OptionallyMemberUser(
         val flags: Int? = null,
         @SerialName("premium_type")
         val premiumType: Premium? = null,
-        val member: PartialGuildMember
+        val member: PartialGuildMember? = null
 )
 
 @Serializable(with = Premium.PremiumSerializer::class)
