@@ -3,27 +3,57 @@ package com.gitlab.kordlib.core
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.entity.PartialGuild
+import com.gitlab.kordlib.common.entity.Shard
+import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.builder.guild.GuildCreateBuilder
+import com.gitlab.kordlib.core.builder.kord.KordClientBuilder
 import com.gitlab.kordlib.core.builder.presence.PresenceUpdateBuilder
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.gateway.Gateway
+import com.gitlab.kordlib.gateway.start
 import com.gitlab.kordlib.rest.service.RestClient
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.flow.*
+import mu.KotlinLogging
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
-class Kord {
+val kordLogger = KotlinLogging.logger { }
 
-    val resources: ClientResources = TODO()
-    val cache: DataCache = TODO()
-    val gateway: Gateway = TODO()
-    val rest: RestClient = TODO()
-    val selfId: Snowflake? = TODO()
+class Kord internal constructor(
+        val resources: ClientResources,
+        val cache: DataCache,
+        val gateway: Gateway,
+        val rest: RestClient,
+        val selfId: Snowflake,
+        private val eventPublisher: BroadcastChannel<Event>
+) : CoroutineScope {
     @Suppress("EXPERIMENTAL_API_USAGE")
     val unsafe: Unsafe = Unsafe(this)
+
+    val events get() = eventPublisher.asFlow()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Default + Job()
+
+    suspend inline fun login(builder: PresenceUpdateBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
+        shard = Shard(0, resources.shardCount)
+        presence = PresenceUpdateBuilder().apply(builder).toGatewayPresence()
+        name = "kord"
+    }
+
+    suspend fun logout() = gateway.stop()
+
+    suspend fun shutdown() {
+        gateway.detach()
+        this.eventPublisher.close()
+    }
 
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         val request = GuildCreateBuilder().apply(builder).toRequest()
@@ -47,15 +77,10 @@ class Kord {
     }
 
     suspend fun getGuilds(): Flow<Guild> {
-        fun inShard(id: String): Boolean {
-            return id.toLong().shr(22) % resources.shardIndex.toLong() == resources.shardCount.toLong()
-        }
-
-        val cached = cache.find<GuildData>().asFlow().filter { inShard(it.id) }.map { Guild(it, this) }
+        val cached = cache.find<GuildData>().asFlow().map { Guild(it, this) }
 
         //backup if we're not caching
-        val request = paginateForwards(idSelector = PartialGuild::id) { position -> rest.user.getCurrentUserGuilds(position, 100) }
-                .filter { inShard(it.id) }
+        val request = paginateForwards(idSelector = PartialGuild::id, batchSize = 100) { position -> rest.user.getCurrentUserGuilds(position, 100) }
                 .map { rest.guild.getGuild(it.id) }
                 .map { GuildData.from(it) }
                 .map { Guild(it, this) }
@@ -85,9 +110,7 @@ class Kord {
         return Role(data, this)
     }
 
-    suspend fun getSelf(): User? {
-        val selfId = selfId ?: return null
-
+    suspend fun getSelf(): User {
         val cached = cache.find<UserData> { UserData::id eq selfId.value }.singleOrNull()
 
         return User(cached ?: UserData.from(rest.user.getCurrentUser()), this)
@@ -166,4 +189,19 @@ class Kord {
         return cached ?: catchNotFound { rest.user.getUser(id.value).let { UserData.from(it) } }
     }
 
+    companion object {
+        suspend inline operator fun invoke(token: String, builder: KordClientBuilder.() -> Unit = {}) =
+                KordClientBuilder(token).apply(builder).build()
+    }
+
 }
+
+/**
+ * Convenience method that will invoke the [consumer] on every event [T], the consumer is launched in the given [scope]
+ * or [Kord] by default and will not propagate any exceptions.
+ */
+inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline consumer: suspend T.() -> Unit) =
+        events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>().onEach {
+            runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
+        }.catch { kordLogger.catching(it) }.launchIn(scope)
+

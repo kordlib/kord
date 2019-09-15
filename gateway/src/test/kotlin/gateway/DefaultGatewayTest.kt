@@ -46,7 +46,7 @@ class DefaultGatewayTest {
             gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.IO).collect {
                 val words = it.message.content.split(' ')
                 when (words.firstOrNull()) {
-                    "!close" -> gateway.close()
+                    "!close" -> gateway.stop()
                     "!restart" -> gateway.restart()
                     "!detach" -> gateway.detach()
                     "!status" -> when (words.getOrNull(1)) {

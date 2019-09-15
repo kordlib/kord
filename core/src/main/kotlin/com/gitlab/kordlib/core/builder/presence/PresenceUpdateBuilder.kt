@@ -5,13 +5,14 @@ import com.gitlab.kordlib.common.entity.ActivityType
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.builder.KordBuilder
 import com.gitlab.kordlib.core.builder.RequestBuilder
+import com.gitlab.kordlib.gateway.Presence
 import com.gitlab.kordlib.gateway.UpdateStatus
 import java.time.Instant
 
 @KordBuilder
 class PresenceUpdateBuilder : RequestBuilder<UpdateStatus> {
-    private lateinit var game: Activity
-    private var status: Status = Status.Online
+    private var game: Activity? = null
+    var status: Status = Status.Online
     var afk: Boolean = false
     var since: Instant? = null
 
@@ -32,4 +33,6 @@ class PresenceUpdateBuilder : RequestBuilder<UpdateStatus> {
     }
 
     override fun toRequest(): UpdateStatus = UpdateStatus(since?.toEpochMilli(), game, status, afk)
+
+    fun toGatewayPresence(): Presence = Presence(status, afk, since?.toEpochMilli(), game)
 }

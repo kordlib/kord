@@ -17,8 +17,15 @@ class DataCacheView(private val cache: DataCache) : DataCache by cache {
     private val descriptions = mutableMapOf<KClass<out Any>, DataDescription<out Any, out Any>>()
 
     override suspend fun register(description: DataDescription<out Any, out Any>) {
-        super.register(description)
         descriptions[description.clazz] = description
+    }
+
+    override suspend fun register(vararg descriptions: DataDescription<out Any, out Any>) {
+        descriptions.forEach { register(it) }
+    }
+
+    override suspend fun register(descriptions: Iterable<DataDescription<out Any, out Any>>) {
+        descriptions.forEach { register(it) }
     }
 
     @Suppress("UNCHECKED_CAST")

@@ -48,7 +48,7 @@ interface Gateway {
     /**
      * Closes the Gateway and ends the current session, suspending until the underlying webSocket is closed.
      */
-    suspend fun close()
+    suspend fun stop()
 }
 
 /**

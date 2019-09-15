@@ -143,7 +143,7 @@ class DefaultGateway(
 
     private suspend fun webSocket(url: String) = client.webSocketSession { url(url) }
 
-    override suspend fun close() {
+    override suspend fun stop() {
         require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         channel.send(SessionClose)
         state.update { State.ShutDown }
