@@ -42,7 +42,7 @@ interface MessageBehavior : Entity {
      * Requests to get all users that have reacted to this message.
      */
     fun getReactors(emoji: ReactionEmoji): Flow<User> =
-            paginateForwards(idSelector = { it.id }) { position ->
+            paginateForwards(batchSize = 100, idSelector = { it.id }) { position ->
                 kord.rest.channel.getReactions(
                         channelId = channelId.value,
                         messageId = id.value,

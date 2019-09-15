@@ -1,12 +1,14 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.builder.KordBuilder
 import com.gitlab.kordlib.core.builder.webhook.WebhookCreateBuilder
 import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.entity.Webhook
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.rest.json.request.BulkDeleteRequest
+import kotlin.time.days
 
 /**
  * The behavior of a Discord message channel associated to a [guild].
@@ -18,17 +20,22 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
     }
 
     /**
-     * Requests to bulk delete the [messages].
-     *
-     * @throws RequestException when trying to delete messages older than 14 days.
+     * Requests to bulk delete the [messages]. Sequentially deletes messages older than 14 days.
      */
-    //TODO 1.3.50 return messages that are older than 14 days
     suspend fun bulkDelete(messages: Iterable<Snowflake>) {
-        messages.asSequence()
-                .map { it.value }
-                .chunked(100)
-                .map { BulkDeleteRequest(it) }
-                .forEach { kord.rest.channel.bulkDelete(id.value, it) }
+        //split up in bulk delete and manual delete
+        val messagesByRemoval = messages.groupBy { it.timeMark.plus(14.days).hasPassedNow() }
+
+        val bulk = messagesByRemoval[false].orEmpty()
+        when {
+            bulk.size < 2 -> bulk.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
+            else -> bulk.map { it.value }.chunked(100)
+                    .map { BulkDeleteRequest(it) }
+                    .forEach { kord.rest.channel.bulkDelete(id.value, it) }
+        }
+
+        val manual = messagesByRemoval[true].orEmpty()
+        manual.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
     }
 
     //TODO 1.3.50 add delete messages? partially bulkdelete, manually delete older ones

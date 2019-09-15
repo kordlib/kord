@@ -76,7 +76,7 @@ interface GuildBehavior : Entity {
      */
 
     val members: Flow<Member>
-        get() = paginateForwards(idSelector =  { it.user!!.id }) { position ->
+        get() = paginateForwards(batchSize = 10000, idSelector = { it.user!!.id }) { position ->
             kord.rest.guild.getGuildMembers(id.value, position, 1000)
         }.map {
             val memberData = MemberData.from(it.user!!.id, id.value, it)
