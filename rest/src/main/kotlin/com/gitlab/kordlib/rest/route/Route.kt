@@ -22,7 +22,7 @@ sealed class Route<T>(
         : Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer())
 
     object GatewayBotGet
-        : Route<GatewayResponse>(HttpMethod.Get, "/gateway/bot", GatewayResponse.serializer())
+        : Route<BotGatewayResponse>(HttpMethod.Get, "/gateway/bot", BotGatewayResponse.serializer())
 
     object AuditLogGet
         : Route<AuditLogResponse>(HttpMethod.Get, "/guilds/$GuildId/audit-logs", AuditLogResponse.serializer())
