@@ -96,7 +96,7 @@ data class IdentifyProperties(
 data class Presence(
         val status: Status,
         val afk: Boolean,
-        val since: Int? = null,
+        val since: Long? = null,
         val game: Activity? = null
 )
 

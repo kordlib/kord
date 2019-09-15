@@ -16,7 +16,7 @@ class RoleCreateBuilder : AuditRequestBuilder<GuildRoleCreateRequest>{
     var permissions: Permissions? = null
 
     override fun toRequest(): GuildRoleCreateRequest = GuildRoleCreateRequest(
-            color = color?.rgb ?: 0,
+            color = color?.rgb?.and(0xFFFFFF) ?: 0,
             separate = hoist,
             name = name,
             mentionable = mentionable,

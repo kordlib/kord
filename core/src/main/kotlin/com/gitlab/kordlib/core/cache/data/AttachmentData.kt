@@ -15,7 +15,7 @@ data class AttachmentData(
 ) {
     companion object {
         fun from(entity: Attachment) = with(entity) {
-            AttachmentData(id, fileName, size, url, proxyUrl, height, width)
+            AttachmentData(id, fileName ?: "", size, url, proxyUrl, height, width)
         }
     }
 }
