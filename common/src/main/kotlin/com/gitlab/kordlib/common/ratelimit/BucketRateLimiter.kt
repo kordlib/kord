@@ -3,10 +3,10 @@ package com.gitlab.kordlib.common.ratelimit
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.time.Clock
-import java.time.Duration as JavaDuration
 import kotlin.time.Duration
 import kotlin.time.milliseconds
 import kotlin.time.toKotlinDuration
+import java.time.Duration as JavaDuration
 
 /**
  * A rate limiter that supplies a given [capacity] of permits at for each [interval](refillIntervalMillis).
@@ -16,7 +16,7 @@ import kotlin.time.toKotlinDuration
  * @param refillInterval The interval between permit refills.
  */
 @Suppress("FunctionName")
-@Deprecated("use Kotlin's duration instead", ReplaceWith("refillInterval.toKotlinDuration()", "kotlin.time"))
+@Deprecated("use Kotlin's duration instead", ReplaceWith("BucketRateLimiter(capacity,refillInterval.toKotlinDuration())", "kotlin.time", "kotlin.time.toKotlinDuration"))
 fun BucketRateLimiter(capacity: Int, refillInterval: JavaDuration) = BucketRateLimiter(capacity, refillInterval.toKotlinDuration())
 
 
@@ -30,7 +30,7 @@ fun BucketRateLimiter(capacity: Int, refillInterval: JavaDuration) = BucketRateL
 class BucketRateLimiter(private val capacity: Int, private val refillInterval: Duration, private val clock: Clock = Clock.systemUTC()) : RateLimiter {
 
     @Deprecated("use Duration instead", ReplaceWith("refillInterval.milliseconds", "kotlin.time.toKotlinDuration"))
-    constructor(capacity: Int, refillInterval: Long): this(capacity, refillInterval.milliseconds)
+    constructor(capacity: Int, refillInterval: Long) : this(capacity, refillInterval.milliseconds)
 
     private val mutex = Mutex()
 
