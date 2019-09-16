@@ -43,7 +43,7 @@ internal class MessageEventHandler(
         cache.put(data)
 
         cache.find<ChannelData> { ChannelData::id eq channelId }.update {
-            it.copy(lastMessageId = id)
+            it.copy(lastMessageId = data.id)
         }
 
         coreEventChannel.send(MessageCreateEvent(Message(data, kord)))
@@ -97,7 +97,7 @@ internal class MessageEventHandler(
                 val reactions = it.reactions.orEmpty()
                 val reaction = reactions.firstOrNull { reaction ->
                     if (emoji.id == null) reaction.emojiName == emoji.name
-                    else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
+                    else reaction.emojiId?.toString() == emoji.id && reaction.emojiName == emoji.name
                 }
 
                 when (reaction) {
@@ -135,7 +135,7 @@ internal class MessageEventHandler(
             val oldReactions = it.reactions.orEmpty()
             val reaction = oldReactions.firstOrNull { reaction ->
                 if (emoji.id == null) reaction.emojiName == emoji.name
-                else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
+                else reaction.emojiId?.toString() == emoji.id && reaction.emojiName == emoji.name
             } ?: return@update it
 
             val reactions = when (val count = reaction.count - 1) {

@@ -4,10 +4,10 @@ import com.gitlab.kordlib.rest.json.response.BanResponse
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BanData(val reason: String?, val userId: String) {
+data class BanData(val reason: String?, val userId: Long) {
     companion object {
         fun from(entity: BanResponse) = with(entity) {
-            BanData(reason, user.id)
+            BanData(reason, user.id.toLong())
         }
     }
 }

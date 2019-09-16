@@ -8,23 +8,23 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ChannelData(
-        val id: String,
+        val id: Long,
         val type: ChannelType,
-        val guildId: String? = null,
+        val guildId: Long? = null,
         val position: Int? = null,
         val permissionOverwrites: List<PermissionOverwriteData> = emptyList(),
         val name: String? = null,
         val topic: String? = null,
         val nsfw: Boolean? = null,
-        val lastMessageId: String? = null,
+        val lastMessageId: Long? = null,
         val bitrate: Int? = null,
         val userLimit: Int? = null,
         val rateLimitPerUser: Int? = null,
-        val recipients: List<String>? = null,
+        val recipients: List<Long>? = null,
         val icon: String? = null,
-        val ownerId: String? = null,
-        val applicationId: String? = null,
-        val parentId: String? = null,
+        val ownerId: Long? = null,
+        val applicationId: Long? = null,
+        val parentId: Long? = null,
         val lastPinTimestamp: String? = null
 ) {
 
@@ -34,23 +34,23 @@ data class ChannelData(
 
         fun from(entity: Channel) = with(entity) {
             ChannelData(
-                    id,
+                    id.toLong(),
                     type,
-                    guildId,
+                    guildId?.toLong(),
                     position,
                     permissionOverwrites.orEmpty().map { PermissionOverwriteData.from(it) },
                     name,
                     topic,
                     nsfw,
-                    lastMessageId,
+                    lastMessageId?.toLong(),
                     bitrate,
                     userLimit,
                     rateLimitPerUser,
-                    recipients?.map { it.id },
+                    recipients?.map { it.id.toLong() },
                     icon,
-                    ownerId,
-                    applicationId,
-                    parentId,
+                    ownerId?.toLong(),
+                    applicationId?.toLong(),
+                    parentId?.toLong(),
                     lastPinTimestamp
             )
         }

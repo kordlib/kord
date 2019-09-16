@@ -9,10 +9,10 @@ import kotlin.time.toKotlinDuration
 /**
  * A unique identifier for entities [used by discord](https://discordapp.com/developers/docs/reference#snowflakes).
  */
-inline class Snowflake(val value: String) : Comparable<Snowflake> {
-    constructor(value: Long) : this(value.toString())
+inline class Snowflake(val longValue: Long) : Comparable<Snowflake> {
+    constructor(value: String) : this(value.toLong())
 
-    val longValue get() = value.toLong()
+    val value get() = longValue.toString()
 
     val timeStamp: Instant get() = Instant.ofEpochMilli(discordEpoch + (longValue shr 22))
 

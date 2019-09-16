@@ -26,13 +26,13 @@ open class PermissionOverwrite constructor(
 
     companion object {
         fun forEveryone(guildId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
-                PermissionOverwrite(PermissionOverwriteData(guildId.value, Type.Role.value, allowed.code, denied.code))
+                PermissionOverwrite(PermissionOverwriteData(guildId.longValue, Type.Role.value, allowed.code, denied.code))
 
         fun forMember(memberId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
-                PermissionOverwrite(PermissionOverwriteData(memberId.value, Type.Member.value, allowed.code, denied.code))
+                PermissionOverwrite(PermissionOverwriteData(memberId.longValue, Type.Member.value, allowed.code, denied.code))
 
         fun forRole(roleId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
-                PermissionOverwrite(PermissionOverwriteData(roleId.value, Type.Role.value, allowed.code, denied.code))
+                PermissionOverwrite(PermissionOverwriteData(roleId.longValue, Type.Role.value, allowed.code, denied.code))
     }
 
     sealed class Type(val value: String) {

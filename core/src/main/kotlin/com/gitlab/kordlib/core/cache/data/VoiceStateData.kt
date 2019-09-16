@@ -8,9 +8,9 @@ val VoiceStateData.id get() = "$userId$channelId$guildId"
 
 @Serializable
 data class VoiceStateData(
-        val guildId: String,
-        val channelId: String?,
-        val userId: String,
+        val guildId: Long,
+        val channelId: Long?,
+        val userId: Long,
         val sessionId: String,
         val mute: Boolean,
         val deaf: Boolean,
@@ -24,9 +24,9 @@ data class VoiceStateData(
 
         fun from(entity: VoiceState) = with(entity) {
             VoiceStateData(
-                    guildId!!,
-                    channelId,
-                    userId,
+                    guildId!!.toLong(),
+                    channelId?.toLong(),
+                    userId.toLong(),
                     sessionId,
                     mute,
                     deaf,

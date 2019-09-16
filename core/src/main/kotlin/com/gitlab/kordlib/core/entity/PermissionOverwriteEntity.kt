@@ -20,6 +20,6 @@ class PermissionOverwriteEntity(
     suspend fun getChannel(): GuildChannel? = kord.getChannel(channelId) as? GuildChannel
     suspend fun getGuild(): Guild? = kord.getGuild(guildId)
 
-    suspend fun delete(reason: String? = null) = kord.rest.channel.deleteChannelPermission(channelId.value, data.id, reason)
+    suspend fun delete(reason: String? = null) = kord.rest.channel.deleteChannelPermission(channelId.value, data.id.toString(), reason)
 
 }

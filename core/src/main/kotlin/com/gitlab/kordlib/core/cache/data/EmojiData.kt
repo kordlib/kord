@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class EmojiData(
-        val id: String,
+        val id: Long,
         val name: String,
         val user: UserData?,
-        val roles: List<String>,
+        val roles: List<Long>,
         val requireColons: Boolean,
         val managed: Boolean,
         val animated: Boolean
@@ -20,10 +20,10 @@ data class EmojiData(
         fun from(id: String, entity: Emoji) =
                 with(entity) {
                     EmojiData(
-                            id,
+                            id.toLong(),
                             name,
                             user?.let { UserData.from(it) },
-                            roles ?: emptyList(),
+                            roles.orEmpty().map { it.toLong() },
                             requireColons ?: false,
                             managed ?: false,
                             animated ?: false

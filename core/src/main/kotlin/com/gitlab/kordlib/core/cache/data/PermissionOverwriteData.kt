@@ -5,14 +5,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PermissionOverwriteData(
-        val id: String,
+        val id: Long,
         val type: String,
         val allowed: Int,
         val denied: Int
 ) {
     companion object {
         fun from(entity: Overwrite) = with(entity) {
-            PermissionOverwriteData(id, type, allow, deny)
+            PermissionOverwriteData(id.toLong(), type, allow, deny)
         }
     }
 }
