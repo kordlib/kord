@@ -4,23 +4,27 @@ import com.gitlab.kordlib.common.entity.Activity
 import com.gitlab.kordlib.common.entity.ActivityType
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
-import com.gitlab.kordlib.gateway.*
+import com.gitlab.kordlib.gateway.DefaultGateway
+import com.gitlab.kordlib.gateway.MessageCreate
+import com.gitlab.kordlib.gateway.UpdateStatus
 import com.gitlab.kordlib.gateway.retry.LinearRetry
+import com.gitlab.kordlib.gateway.start
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.util.KtorExperimentalAPI
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.UnstableDefault
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
+import kotlin.time.seconds
 import kotlin.time.toKotlinDuration
 
 @FlowPreview
@@ -29,36 +33,34 @@ import kotlin.time.toKotlinDuration
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 class DefaultGatewayTest {
-    @ExperimentalTime
     @Test
     @Disabled
-    fun `defualt gateway functions normally`() {
-        val url = "wss://gateway.discord.gg/"
+    @ExperimentalTime
+    fun `default gateway functions normally`() {
         val token = System.getenv("token")
 
-        val client = HttpClient(CIO) {
-            install(WebSockets)
-            install(JsonFeature)
+        val gateway = DefaultGateway {
+            url = "wss://gateway.discord.gg/"
+            client = HttpClient(CIO) {
+                install(WebSockets)
+                install(JsonFeature)
+            }
+
+            retry = LinearRetry(2.seconds, 20.seconds, 10)
+            rateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
         }
 
-        val retry = LinearRetry(2000.milliseconds, 10000.milliseconds, 10)
-        val rateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
-
-        val gateway = DefaultGateway(url, client, retry, rateLimiter)
-
-        GlobalScope.launch {
-            gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.IO).collect {
-                val words = it.message.content.split(' ')
-                when (words.firstOrNull()) {
-                    "!close" -> gateway.stop()
-                    "!restart" -> gateway.restart()
-                    "!detach" -> gateway.detach()
-                    "!status" -> when (words.getOrNull(1)) {
-                        "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = Activity("Kord", ActivityType.Game)))
-                    }
+        gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.IO).onEach {
+            val words = it.message.content.split(' ')
+            when (words.firstOrNull()) {
+                "!close" -> gateway.stop()
+                "!restart" -> gateway.restart()
+                "!detach" -> gateway.detach()
+                "!status" -> when (words.getOrNull(1)) {
+                    "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = Activity("Kord", ActivityType.Game)))
                 }
             }
-        }
+        }.launchIn(GlobalScope)
 
         runBlocking {
             gateway.start(token)

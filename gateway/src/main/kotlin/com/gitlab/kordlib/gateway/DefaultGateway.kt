@@ -177,6 +177,14 @@ class DefaultGateway(
     }
 
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
+
+    companion object {
+
+        inline operator fun invoke(builder: DefaultGatewayBuilder.() -> Unit = {}) : DefaultGateway =
+            DefaultGatewayBuilder().apply(builder).build()
+
+
+    }
 }
 
 internal val GatewayConfiguration.identify get() = Identify(token, IdentifyProperties(os, name, name), false, 50, shard, presence)

@@ -8,7 +8,10 @@ import com.gitlab.kordlib.rest.route.Route
 import io.ktor.client.HttpClient
 import io.ktor.client.call.call
 import io.ktor.client.call.receive
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.features.defaultRequest
 import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.header
 import io.ktor.client.response.HttpResponse
 import io.ktor.client.response.readBytes
 import io.ktor.http.takeFrom
@@ -22,6 +25,12 @@ import kotlin.time.minutes
 private val logger = KotlinLogging.logger {}
 
 class ExclusionRequestHandler(private val client: HttpClient, private val clock: Clock = Clock.systemUTC()) : RequestHandler {
+
+    constructor(token: String) : this(HttpClient(CIO) {
+        defaultRequest {
+            header("Authorization", "Bot $token")
+        }
+    })
 
     private var globalSuspensionPoint = 0L
 
@@ -80,13 +89,13 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
         delay(globalSuspensionPoint - clock.millis())
         globalSuspensionPoint = 0
 
-            val key = request.identifier
-            val routeSuspensionPoint = routeSuspensionPoints[key]
+        val key = request.identifier
+        val routeSuspensionPoint = routeSuspensionPoints[key]
 
-            if (routeSuspensionPoint != null) {
-                delay(routeSuspensionPoint - clock.millis())
-                routeSuspensionPoints.remove(key)
-            }
+        if (routeSuspensionPoint != null) {
+            delay(routeSuspensionPoint - clock.millis())
+            routeSuspensionPoints.remove(key)
+        }
     }
 
     private companion object {
@@ -98,10 +107,11 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
         /**
          * The unix time (in ms) when the rate limit for this endpoint gets reset
          */
-        val HttpResponse.channelSuspensionPoint: Long get() {
-            val unixSeconds = headers[resetTimeHeader]?.toDouble() ?: return 0
-            return (unixSeconds * 1000).toLong()
-        }
+        val HttpResponse.channelSuspensionPoint: Long
+            get() {
+                val unixSeconds = headers[resetTimeHeader]?.toDouble() ?: return 0
+                return (unixSeconds * 1000).toLong()
+            }
 
         val HttpResponse.isRateLimit get() = status.value == 429
         val HttpResponse.isError get() = status.value in 400 until 600
@@ -112,10 +122,10 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
         /**
          * The unix time (in ms) when the global rate limit gets reset
          */
-        fun HttpResponse.globalSuspensionPoint(clock: Clock): Long  {
-                val msWait = headers[retryAfterHeader]?.toLong() ?: return 0
-                return msWait + clock.millis()
-            }
+        fun HttpResponse.globalSuspensionPoint(clock: Clock): Long {
+            val msWait = headers[retryAfterHeader]?.toLong() ?: return 0
+            return msWait + clock.millis()
+        }
 
         val HttpResponse.logString get() = "$status: ${call.request.method.value} ${call.request.url}"
 

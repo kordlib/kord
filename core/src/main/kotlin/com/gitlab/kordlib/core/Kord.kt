@@ -42,14 +42,23 @@ class Kord internal constructor(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default + Job()
 
+    /**
+     * Logs in to the configured [Gateways][Gateway].
+     */
     suspend inline fun login(builder: PresenceUpdateBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
         shard = Shard(0, resources.shardCount)
         presence = PresenceUpdateBuilder().apply(builder).toGatewayPresence()
         name = "kord"
     }
 
+    /**
+     * Logs out to the configured [Gateways][Gateway].
+     */
     suspend fun logout() = gateway.stop()
 
+    /**
+     * Logs out of all connected [Gateways][Gateway] and frees all resources.
+     */
     suspend fun shutdown() {
         gateway.detach()
         this.eventPublisher.close()
