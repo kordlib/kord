@@ -43,7 +43,7 @@ class Kord internal constructor(
         get() = Dispatchers.Default + Job()
 
     /**
-     * Logs in to the configured [Gateways][Gateway].
+     * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
     suspend inline fun login(builder: PresenceUpdateBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
         shard = Shard(0, resources.shardCount)
@@ -62,6 +62,11 @@ class Kord internal constructor(
     suspend fun shutdown() {
         gateway.detach()
         this.eventPublisher.close()
+    }
+
+    suspend fun getApplicationInfo() : ApplicationInfo {
+        val response = rest.application.getCurrentApplicationInfo()
+        return ApplicationInfo(ApplicationInfoData.from(response), this)
     }
 
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {

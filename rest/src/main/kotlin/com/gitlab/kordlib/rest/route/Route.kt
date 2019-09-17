@@ -288,16 +288,17 @@ sealed class Route<T>(
     object ExecuteWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
 
-
     object ExecuteSlackWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken/slack", NoStrategy)
-
 
     object ExecuteGithubWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
 
     object VoiceRegionsGet
         : Route<List<VoiceRegion>>(HttpMethod.Get, "/voice/regions", ArrayListSerializer(VoiceRegion.serializer()))
+
+    object CurrentApplicationInfo
+        : Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())
 
     companion object {
         const val baseUrl = "https://discordapp.com/api/v6"
