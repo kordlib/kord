@@ -4,30 +4,28 @@ import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
-import io.ktor.http.Parameters
 
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend fun createMessage(channelId: String, message: com.gitlab.kordlib.rest.json.request.MessageCreateRequest) = call(Route.MessageCreate) {
+    suspend fun createMessage(channelId: String, message: MessageCreateRequest) = call(Route.MessagePost) {
         keys[Route.ChannelId] = channelId
-        body(com.gitlab.kordlib.rest.json.request.MessageCreateRequest.serializer(), message)
+        body(MessageCreateRequest.serializer(), message)
     }
 
-    suspend fun createMessage(channelId: String, message: com.gitlab.kordlib.rest.json.request.MultipartMessageCreateRequest) = call(Route.MessageCreate) {
+    suspend fun createMessage(channelId: String, message: MultipartMessageCreateRequest) = call(Route.MessagePost) {
         keys[Route.ChannelId] = channelId
-        body(com.gitlab.kordlib.rest.json.request.MessageCreateRequest.serializer(), message.request)
+        body(MessageCreateRequest.serializer(), message.request)
         message.files.forEach { file(it) }
     }
 
     suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
-        parameters = Parameters.build {
-            if (position != null) {
-                append(position.key, position.value)
-            }
-            append("limit", "$limit")
+        if (position != null) {
+            parameter(position.key, position.value)
         }
+        parameter("limit", "$limit")
+
     }
 
     suspend fun getMessage(channelId: String, messageId: String) = call(Route.MessageGet) {
@@ -81,29 +79,36 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.MessageId] = messageId
     }
 
-    suspend fun deleteMessage(channelId: String, messageId: String) = call(Route.MessageDelete) {
+    suspend fun deleteMessage(channelId: String, messageId: String, reason: String? = null) = call(Route.MessageDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun bulkDelete(channelId: String, messages: com.gitlab.kordlib.rest.json.request.BulkDeleteRequest) = call(Route.BulkMessageDeletePost) {
+    suspend fun bulkDelete(channelId: String, messages: BulkDeleteRequest) = call(Route.BulkMessageDeletePost) {
         keys[Route.ChannelId] = channelId
-        body(com.gitlab.kordlib.rest.json.request.BulkDeleteRequest.serializer(), messages)
+        body(BulkDeleteRequest.serializer(), messages)
     }
 
-    suspend fun deleteChannel(channelId: String) = call(Route.ChannelDelete) {
+    suspend fun deleteChannel(channelId: String, reason: String? = null) = call(Route.ChannelDelete) {
         keys[Route.ChannelId] = channelId
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
-    suspend fun deleteChannelPermission(channelId: String, overwriteId: String) = call(Route.ChannelPermissionDelete) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.OverwriteId] = overwriteId
-    }
-
-    suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: com.gitlab.kordlib.rest.json.request.EditChannelPermissionRequest) = call(Route.ChannelPermissionPut) {
+    suspend fun deleteChannelPermission(channelId: String, overwriteId: String, reason: String? = null) = call(Route.ChannelPermissionDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
-        body(com.gitlab.kordlib.rest.json.request.EditChannelPermissionRequest.serializer(), permissions)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
+    }
+
+    suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: ChannelPermissionEditRequest, reason: String? = null) = call(Route.ChannelPermissionPut) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.OverwriteId] = overwriteId
+        body(ChannelPermissionEditRequest.serializer(), permissions)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
 
@@ -112,13 +117,10 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
 
-        parameters = Parameters.build {
             if (position != null) {
-                append(position.key, position.value)
+                parameter(position.key, position.value)
             }
-            append("limit", "$limit")
-
-        }
+        parameter("limit", "$limit")
     }
 
     suspend fun triggerTypingIndicator(channelId: String) = call(Route.TypingIndicatorPost) {
@@ -131,32 +133,38 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
 
-    suspend fun addToGroup(channelId: String, userId: String, addUser: com.gitlab.kordlib.rest.json.request.AddDMUserRequest) = call(Route.GroupDMUserPut) {
+    suspend fun addToGroup(channelId: String, userId: String, addUser: UserAddDMRequest) = call(Route.GroupDMUserPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.UserId] = userId
-        body(com.gitlab.kordlib.rest.json.request.AddDMUserRequest.serializer(), addUser)
+        body(UserAddDMRequest.serializer(), addUser)
     }
 
-    suspend fun createInvite(channelId: String, invite: com.gitlab.kordlib.rest.json.request.InviteCreateRequest) = call(Route.InvitePost) {
+    suspend fun createInvite(channelId: String, invite: InviteCreateRequest, reason: String? = null) = call(Route.InvitePost) {
         keys[Route.ChannelId] = channelId
-        body(com.gitlab.kordlib.rest.json.request.InviteCreateRequest.serializer(), invite)
+        body(InviteCreateRequest.serializer(), invite)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
-    suspend fun editMessage(channelId: String, messageId: String, message: com.gitlab.kordlib.rest.json.request.MessageEditRequest) = call(Route.EditMessagePatch) {
+    suspend fun editMessage(channelId: String, messageId: String, message: MessageEditPatchRequest) = call(Route.EditMessagePatch) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
-        body(com.gitlab.kordlib.rest.json.request.MessageEditRequest.serializer(), message)
+        body(MessageEditPatchRequest.serializer(), message)
     }
 
-    suspend fun putChannel(channelId: String, channel: com.gitlab.kordlib.rest.json.request.PutModifyChannelRequest) = call(Route.ChannelPut) {
+    suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest, reason: String? = null) = call(Route.ChannelPut) {
         keys[Route.ChannelId] = channelId
-        body(com.gitlab.kordlib.rest.json.request.PutModifyChannelRequest.serializer(), channel)
+        body(ChannelModifyPutRequest.serializer(), channel)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
 
-    suspend fun patchChannel(channelId: String, channel: com.gitlab.kordlib.rest.json.request.PatchModifyChannelRequest) = call(Route.ChannelPatch) {
+    suspend fun patchChannel(channelId: String, channel: ChannelModifyPatchRequest, reason: String? = null) = call(Route.ChannelPatch) {
         keys[Route.ChannelId] = channelId
-        body(com.gitlab.kordlib.rest.json.request.PatchModifyChannelRequest.serializer(), channel)
+        body(ChannelModifyPatchRequest.serializer(), channel)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+
     }
 
 }

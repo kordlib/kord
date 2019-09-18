@@ -1,15 +1,18 @@
 package com.gitlab.kordlib.rest.request
 
 import com.gitlab.kordlib.rest.route.Route
-import io.ktor.util.StringValues
+import io.ktor.http.HeadersBuilder
+import io.ktor.http.ParametersBuilder
 import kotlinx.io.InputStream
 import kotlinx.serialization.SerializationStrategy
 
 class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
 
-    var keys: MutableMap<String, String> = HashMap(keySize, 1f)
+    var keys: MutableMap<Route.Key, String> = HashMap(keySize, 1f)
 
-    var parameters = StringValues.Empty
+    private val headers = HeadersBuilder()
+    private val parameters = ParametersBuilder()
+
     private var body: RequestBody<*>? = null
     private var files: MutableList<Pair<String, InputStream>>? = null
 
@@ -23,6 +26,10 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
         this.body = RequestBody(strategy, body)
     }
 
+    fun parameter(key: String, value: Any) = parameters.append(key, value.toString())
+
+    fun header(key: String, value: String) = headers.append(key, value)
+
     fun file(name: String, input: InputStream) {
         initFiles()
         files!!.add(name to input)
@@ -34,8 +41,9 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     }
 
     fun build(): Request<T> = if (files == null) {
-        JsonRequest(route, keys, parameters, body)
+        JsonRequest(route, keys, parameters.build(), headers.build(), body)
     } else {
-        MultipartRequest(route, keys, parameters, body, files.orEmpty())
+        MultipartRequest(route, keys, parameters.build(), headers.build(), body, files.orEmpty())
     }
+
 }

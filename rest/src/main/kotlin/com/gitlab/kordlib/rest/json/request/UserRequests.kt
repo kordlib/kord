@@ -4,25 +4,25 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateDMRequest(
+data class DMCreateRequest(
         @SerialName("recipient_id")
         val userId: String
 )
 
 @Serializable
-data class CreateGroupDMRequest(
+data class GroupDMCreateRequest(
         @SerialName("access_tokens")
         val tokens: List<String>,
         val nick: Map<String, String>)
 
 @Serializable
-data class ModifyCurrentUserRequest(
+data class CurrentUserModifyRequest(
         val username: String? = null,
         val avatar: String? = null
 )
 
 @Serializable
-data class AddDMUserRequest(
+data class UserAddDMRequest(
         @SerialName("access_token")
         val token: String,
         val nick: String

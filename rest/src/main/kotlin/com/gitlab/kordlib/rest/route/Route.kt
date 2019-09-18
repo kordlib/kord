@@ -8,6 +8,7 @@ import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialDescriptor
 import kotlinx.serialization.internal.ArrayListSerializer
 import kotlinx.serialization.internal.NullableSerializer
+import kotlinx.serialization.internal.StringSerializer
 import kotlinx.serialization.internal.UnitDescriptor
 import com.gitlab.kordlib.common.entity.Emoji as EmojiEntity
 
@@ -21,7 +22,7 @@ sealed class Route<T>(
         : Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer())
 
     object GatewayBotGet
-        : Route<GatewayResponse>(HttpMethod.Get, "/gateway/bot", GatewayResponse.serializer())
+        : Route<BotGatewayResponse>(HttpMethod.Get, "/gateway/bot", BotGatewayResponse.serializer())
 
     object AuditLogGet
         : Route<AuditLogResponse>(HttpMethod.Get, "/guilds/$GuildId/audit-logs", AuditLogResponse.serializer())
@@ -38,7 +39,7 @@ sealed class Route<T>(
     object ChannelDelete
         : Route<Channel>(HttpMethod.Delete, "/channels/$ChannelId", Channel.serializer())
 
-    object MessageCreate
+    object MessagePost
         : Route<Message>(HttpMethod.Post, "/channels/$ChannelId/messages", Message.serializer())
 
     object MessageGet
@@ -49,7 +50,6 @@ sealed class Route<T>(
 
     object PinsGet
         : Route<List<Message>>(HttpMethod.Get, "/channels/$ChannelId/pins", ArrayListSerializer(Message.serializer()))
-
 
     object InvitesGet
         : Route<List<InviteResponse>>(HttpMethod.Get, "/channels/$ChannelId/invites", ArrayListSerializer(InviteResponse.serializer()))
@@ -86,7 +86,6 @@ sealed class Route<T>(
 
     object ChannelPermissionPut
         : Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/permissions/$OverwriteId", NoStrategy)
-
 
     object ReactionsGet
         : Route<List<User>>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji", ArrayListSerializer(User.serializer()))
@@ -163,7 +162,6 @@ sealed class Route<T>(
     object GuildChannelsPost
         : Route<Channel>(HttpMethod.Post, "/guilds/$GuildId/channels", Channel.serializer())
 
-
     object GuildChannelsPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/channels", NoStrategy)
 
@@ -173,16 +171,14 @@ sealed class Route<T>(
     object GuildMembersGet
         : Route<List<GuildMember>>(HttpMethod.Get, "/guilds/$GuildId/members", ArrayListSerializer(GuildMember.serializer()))
 
-
     object GuildMemberPut
         : Route<GuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", NullableSerializer(GuildMember.serializer()))
-
 
     object GuildMemberPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/$UserId", NoStrategy)
 
     object GuildCurrentUserNickPatch
-        : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", NoStrategy)
+        : Route<String>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", StringSerializer)
 
     object GuildMemberRolePut
         : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
@@ -190,16 +186,14 @@ sealed class Route<T>(
     object GuildMemberRoleDelete
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
 
-
     object GuildMemberDelete
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/members/$UserId", NoStrategy)
 
     object GuildBansGet
-        : Route<List<GuildBan>>(HttpMethod.Get, "/guilds/$GuildId/bans", ArrayListSerializer(GuildBan.serializer()))
-
+        : Route<List<BanResponse>>(HttpMethod.Get, "/guilds/$GuildId/bans", ArrayListSerializer(BanResponse.serializer()))
 
     object GuildBanGet
-        : Route<GuildBan>(HttpMethod.Get, "/guilds/$GuildId/bans/$UserId", GuildBan.serializer())
+        : Route<BanResponse>(HttpMethod.Get, "/guilds/$GuildId/bans/$UserId", BanResponse.serializer())
 
     object GuildBanPut
         : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/bans/$UserId", NoStrategy)
@@ -223,7 +217,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/roles/$RoleId", NoStrategy)
 
     object GuildPruneCountGet
-        : Route<PruneResponse>(HttpMethod.Get, "/guilds/$GuildId/prune", PruneResponse.serializer())
+        : Route<GetPruneResponse>(HttpMethod.Get, "/guilds/$GuildId/prune", GetPruneResponse.serializer())
 
     object GuildPrunePost
         : Route<PruneResponse>(HttpMethod.Post, "/guilds/$GuildId/prune", PruneResponse.serializer())
@@ -242,7 +236,6 @@ sealed class Route<T>(
 
     object GuildIntegrationPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
-
 
     object GuildIntegrationDelete
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
@@ -295,28 +288,28 @@ sealed class Route<T>(
     object ExecuteWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
 
-
     object ExecuteSlackWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken/slack", NoStrategy)
-
 
     object ExecuteGithubWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
 
-
     object VoiceRegionsGet
         : Route<List<VoiceRegion>>(HttpMethod.Get, "/voice/regions", ArrayListSerializer(VoiceRegion.serializer()))
+
+    object CurrentApplicationInfo
+        : Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())
 
     companion object {
         const val baseUrl = "https://discordapp.com/api/v6"
     }
 
-    open class Key(val identifier: String) {
+    open class Key(val identifier: String, val isMajor: Boolean = false) {
         override fun toString(): String = identifier
     }
 
-    object GuildId : Key("{guild.id}")
-    object ChannelId : Key("{channel.id}")
+    object GuildId : Key("{guild.id}", true)
+    object ChannelId : Key("{channel.id}", true)
     object MessageId : Key("{message.id}")
     object Emoji : Key("{emoji}")
     object UserId : Key("{user.id}")
@@ -325,7 +318,7 @@ sealed class Route<T>(
     object InviteCode : Key("{invite.code}")
     object RoleId : Key("{role.id}")
     object IntegrationId : Key("{integration.id}")
-    object WebhookId : Key("{webhook.id}")
+    object WebhookId : Key("{webhook.id}", true)
     object WebhookToken : Key("{webhook.token}")
 
 }

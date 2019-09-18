@@ -97,7 +97,7 @@ sealed class Event {
             "GUILD_MEMBERS_CHUNK" -> GuildMembersChunk(decoder.decodeSerializableElement(descriptor, index, GuildMembersChunkData.serializer()), sequence)
 
             "MESSAGE_CREATE" -> MessageCreate(decoder.decodeSerializableElement(descriptor, index, Message.serializer()), sequence)
-            "MESSAGE_UPDATE" -> MessageUpdate(decoder.decodeSerializableElement(descriptor, index, Message.serializer()), sequence)
+            "MESSAGE_UPDATE" -> MessageUpdate(decoder.decodeSerializableElement(descriptor, index, PartialMessage.serializer()), sequence)
             "MESSAGE_DELETE" -> MessageDelete(decoder.decodeSerializableElement(descriptor, index, DeletedMessage.serializer()), sequence)
             "MESSAGE_DELETE_BULK" -> MessageDeleteBulk(decoder.decodeSerializableElement(descriptor, index, BulkDeleteData.serializer()), sequence)
             "MESSAGE_REACTION_ADD" -> MessageReactionAdd(decoder.decodeSerializableElement(descriptor, index, MessageReaction.serializer()), sequence)
@@ -216,7 +216,7 @@ data class GuildRoleDelete(val role: DeletedGuildRole, override val sequence: In
 data class GuildMembersChunk(val data: GuildMembersChunkData, override val sequence: Int?) : DispatchEvent()
 
 data class MessageCreate(val message: Message, override val sequence: Int?) : DispatchEvent()
-data class MessageUpdate(val message: Message, override val sequence: Int?) : DispatchEvent()
+data class MessageUpdate(val message: PartialMessage, override val sequence: Int?) : DispatchEvent()
 data class MessageDelete(val message: DeletedMessage, override val sequence: Int?) : DispatchEvent()
 data class MessageDeleteBulk(val messageBulk: BulkDeleteData, override val sequence: Int?) : DispatchEvent()
 data class MessageReactionAdd(val reaction: MessageReaction, override val sequence: Int?) : DispatchEvent()

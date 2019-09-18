@@ -1,7 +1,8 @@
 package com.gitlab.kordlib.common.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
+import kotlinx.serialization.internal.StringDescriptor
+import kotlinx.serialization.json.JsonElement
 
 @Serializable
 data class PresenceUpdateData(
@@ -9,8 +10,8 @@ data class PresenceUpdateData(
         val roles: List<String>? = null,
         val game: Activity? = null,
         @SerialName("guild_id")
-        val guildId: String? = null,
-        val status: String,
+        val guildId: String? = null, //don't trust the docs
+        val status: Status,
         val activities: List<Activity>,
         @SerialName("client_status")
         val clientStatus: ClientStatus
@@ -19,19 +20,38 @@ data class PresenceUpdateData(
 @Serializable
 data class PresenceUser(
         val id: String,
-        val username: String? = null,
-        val discriminator: String? = null,
-        val avatar: String? = null,
-        val bot: String? = null,
+        val username: JsonElement? = null,
+        val discriminator: JsonElement? = null,
+        val avatar: JsonElement? = null,
+        val bot: JsonElement? = null,
         @SerialName("mfa_enable")
-        val mfaEnable: String? = null,
-        val locale: String? = null,
-        val flags: String? = null,
+        val mfaEnable: JsonElement? = null,
+        val locale: JsonElement? = null,
+        val flags: JsonElement? = null,
         @SerialName("premium_type")
-        val premiumType: Premium? = null,
-        val verified: String? = null,
-        val email: String? = null
+        val premiumType: JsonElement? = null,
+        val verified: JsonElement? = null,
+        val email: JsonElement? = null
 )
 
 @Serializable
-data class ClientStatus(val desktop: String? = null, val mobile: String? = null, val web: String? = null)
+data class ClientStatus(val desktop: Status? = null, val mobile: Status? = null, val web: Status? = null)
+
+@Serializable(with = Status.StatusSerializer::class)
+enum class Status {
+        Online, DnD, Idle, Invisible, Offline;
+
+        @Serializer(forClass = Status::class)
+        companion object StatusSerializer : KSerializer<Status> {
+                override val descriptor: SerialDescriptor = StringDescriptor.withName("Status")
+
+                override fun deserialize(decoder: Decoder): Status {
+                        val name = decoder.decodeString()
+                        return values().first { it.name.toLowerCase() == name }
+                }
+
+                override fun serialize(encoder: Encoder, obj: Status) {
+                        encoder.encodeString(obj.name.toLowerCase())
+                }
+        }
+}

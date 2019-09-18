@@ -3,7 +3,6 @@ package com.gitlab.kordlib.rest.service
 import com.gitlab.kordlib.rest.json.response.AuditLogEventResponse
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
-import io.ktor.http.Parameters
 
 class AuditLogService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
@@ -15,12 +14,9 @@ class AuditLogService(requestHandler: RequestHandler) : RestService(requestHandl
             limit: Int = 50
     ) = call(Route.AuditLogGet) {
         keys[Route.GuildId] = guildId
-        parameters = Parameters.build {
-            userId?.let { append("user_id", it) }
-            action?.let { append("action_type", "${it.code}") }
-            before?.let { append("before", it) }
-            append("limit", "$limit")
+        userId?.let { parameter("user_id", it) }
+        action?.let { parameter("action_type", "${it.code}") }
+        before?.let { parameter("before", it) }
+        parameter("limit", "$limit")
         }
     }
-
-}

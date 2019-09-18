@@ -2,6 +2,7 @@ package com.gitlab.kordlib.gateway
 
 import com.gitlab.kordlib.common.entity.Activity
 import com.gitlab.kordlib.common.entity.Shard
+import com.gitlab.kordlib.common.entity.Status
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 import kotlinx.serialization.internal.SerialClassDescImpl
@@ -95,7 +96,7 @@ data class IdentifyProperties(
 data class Presence(
         val status: Status,
         val afk: Boolean,
-        val since: Int? = null,
+        val since: Long? = null,
         val game: Activity? = null
 )
 
@@ -137,22 +138,3 @@ data class UpdateStatus(
         val status: Status,
         val afk: Boolean
 ) : Command()
-
-@Serializable(with = Status.StatusSerializer::class)
-enum class Status {
-    Online, DnD, Idle, Invisible, Offline;
-
-    @Serializer(forClass = Status::class)
-    companion object StatusSerializer : KSerializer<Status> {
-        override val descriptor: SerialDescriptor = StringDescriptor.withName("Status")
-
-        override fun deserialize(decoder: Decoder): Status {
-            val name = decoder.decodeString()
-            return values().first { it.name.toLowerCase() == name }
-        }
-
-        override fun serialize(encoder: Encoder, obj: Status) {
-            encoder.encodeString(obj.name.toLowerCase())
-        }
-    }
-}

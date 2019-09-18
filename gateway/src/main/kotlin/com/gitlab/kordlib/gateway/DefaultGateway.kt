@@ -32,6 +32,7 @@ private val defaultGatewayLogger = KotlinLogging.logger { }
 private sealed class State(val retry: Boolean) {
     object ShutDown : State(false)
     class Restart(retry: Boolean) : State(retry)
+    object Detached: State(false)
 }
 
 /**
@@ -74,6 +75,7 @@ class DefaultGateway(
     }
 
     override suspend fun start(configuration: GatewayConfiguration) {
+        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         handshakeHandler.configuration = configuration
         retry.reset()
         state.update { State.Restart(true) } //resetting state
@@ -141,13 +143,15 @@ class DefaultGateway(
 
     private suspend fun webSocket(url: String) = client.webSocketSession { url(url) }
 
-    override suspend fun close() {
+    override suspend fun stop() {
+        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         channel.send(SessionClose)
         state.update { State.ShutDown }
         if (socketOpen) socket.close(CloseReason(1000, "leaving"))
     }
 
     internal suspend fun restart(code: Close = CloseForReconnect) {
+        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         state.update { State.Restart(false) }
         if (socketOpen) {
             channel.send(code)
@@ -155,7 +159,15 @@ class DefaultGateway(
         }
     }
 
+    override suspend fun detach() {
+        if(state.value is State.Detached) return
+        state.update { State.Detached }
+        channel.cancel()
+        socket.close()
+    }
+
     override suspend fun send(command: Command) {
+        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         if (!socketOpen) error("call 'start' before sending messages")
         rateLimiter.consume()
         val json = Json.stringify(Command.Companion, command)
@@ -165,6 +177,14 @@ class DefaultGateway(
     }
 
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
+
+    companion object {
+
+        inline operator fun invoke(builder: DefaultGatewayBuilder.() -> Unit = {}) : DefaultGateway =
+            DefaultGatewayBuilder().apply(builder).build()
+
+
+    }
 }
 
 internal val GatewayConfiguration.identify get() = Identify(token, IdentifyProperties(os, name, name), false, 50, shard, presence)

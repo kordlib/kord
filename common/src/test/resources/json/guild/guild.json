@@ -19,5 +19,10 @@
   "roles": [],
   "emojis": [],
   "features": ["INVITE_SPLASH"],
-  "unavailable": false
+  "unavailable": false,
+  "description": "We do some stuff here",
+  "premium_tier": 1,
+  "premium_subscription_count": 25,
+  "banner": null,
+  "preferred_locale": "en-US"
 }

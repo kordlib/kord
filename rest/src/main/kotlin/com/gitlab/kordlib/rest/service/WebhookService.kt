@@ -1,19 +1,19 @@
 package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.annotation.KordExperimental
-import com.gitlab.kordlib.rest.json.request.CreateWebhookRequest
-import com.gitlab.kordlib.rest.json.request.ModifyWebhookRequest
 import com.gitlab.kordlib.rest.json.request.MultiPartWebhookExecuteRequest
+import com.gitlab.kordlib.rest.json.request.WebhookCreateRequest
 import com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest
+import com.gitlab.kordlib.rest.json.request.WebhookModifyRequest
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
-import io.ktor.http.Parameters
 import kotlinx.serialization.json.JsonObject
 
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
-    suspend fun createWebhook(channelId: String, webhook: com.gitlab.kordlib.rest.json.request.CreateWebhookRequest) = call(Route.WebhookPost) {
+    suspend fun createWebhook(channelId: String, webhook: WebhookCreateRequest, reason: String? = null) = call(Route.WebhookPost) {
         keys[Route.ChannelId] = channelId
-        body(com.gitlab.kordlib.rest.json.request.CreateWebhookRequest.serializer(), webhook)
+        body(WebhookCreateRequest.serializer(), webhook)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
     suspend fun getChannelWebhooks(channelId: String) = call(Route.ChannelWebhooksGet) {
@@ -33,34 +33,36 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.WebhookToken] = token
     }
 
-    suspend fun modifyWebhook(webhookId: String, webhook: com.gitlab.kordlib.rest.json.request.ModifyWebhookRequest) = call(Route.WebhookPatch) {
+    suspend fun modifyWebhook(webhookId: String, webhook: WebhookModifyRequest, reason: String? = null) = call(Route.WebhookPatch) {
         keys[Route.WebhookId] = webhookId
-        body(com.gitlab.kordlib.rest.json.request.ModifyWebhookRequest.serializer(), webhook)
+        body(WebhookModifyRequest.serializer(), webhook)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun modifyWebhookWithToken(webhookId: String, token: String, webhook: com.gitlab.kordlib.rest.json.request.ModifyWebhookRequest) = call(Route.WebhookByTokenPatch) {
+    suspend fun modifyWebhookWithToken(webhookId: String, token: String, webhook: WebhookModifyRequest, reason: String? = null) = call(Route.WebhookByTokenPatch) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
-        body(com.gitlab.kordlib.rest.json.request.ModifyWebhookRequest.serializer(), webhook)
+        body(WebhookModifyRequest.serializer(), webhook)
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun deleteWebhook(webhookId: String) = call(Route.WebhookDelete) {
+    suspend fun deleteWebhook(webhookId: String, reason: String? = null) = call(Route.WebhookDelete) {
         keys[Route.WebhookId] = webhookId
+        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun deleteWebhookWithToken(webhookId: String, token: String) = call(Route.WebhookByTokenDelete) {
-        keys[Route.WebhookId] = webhookId
-        keys[Route.WebhookToken] = token
-    }
-
-    suspend fun executeWebhook(webhookId: String, token: String, wait: Boolean, webhook: com.gitlab.kordlib.rest.json.request.MultiPartWebhookExecuteRequest) = call(Route.ExecuteWebhookPost) {
+    suspend fun deleteWebhookWithToken(webhookId: String, token: String, reason: String? = null) = call(Route.WebhookByTokenDelete) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
-        parameters = Parameters.build {
-            append("wait", "$wait")
-        }
-        body(com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest.serializer(), webhook.request)
-        webhook.files.forEach { file(it) }
+        reason?.let { header("X-Audit-Log-Reason", reason) }
+    }
+
+    suspend fun executeWebhook(webhookId: String, token: String, wait: Boolean, request: MultiPartWebhookExecuteRequest) = call(Route.ExecuteWebhookPost) {
+        keys[Route.WebhookId] = webhookId
+        keys[Route.WebhookToken] = token
+        parameter("wait", "$wait")
+        body(WebhookExecuteRequest.serializer(), request.request)
+        request.file?.let { file(it) }
     }
 
     @KordExperimental
@@ -68,10 +70,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             call(Route.ExecuteSlackWebhookPost) {
                 keys[Route.WebhookId] = webhookId
                 keys[Route.WebhookToken] = token
-                parameters = Parameters.build {
-                    append("wait", "$wait")
-                }
-
+                parameter("wait", "$wait")
                 body(JsonObject.serializer(), body)
             }
 
@@ -80,9 +79,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             call(Route.ExecuteGithubWebhookPost) {
                 keys[Route.WebhookId] = webhookId
                 keys[Route.WebhookToken] = token
-                parameters = Parameters.build {
-                    append("wait", "$wait")
-                }
+                parameter("wait", "$wait")
                 body(JsonObject.serializer(), body)
             }
 }

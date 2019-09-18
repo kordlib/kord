@@ -1,11 +1,12 @@
 package com.gitlab.kordlib.rest.json.request
 
 import com.gitlab.kordlib.common.entity.*
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
+import kotlinx.serialization.internal.ArrayListClassDesc
+import kotlinx.serialization.internal.ArrayListSerializer
 
 @Serializable
-data class CreateGuildRequest(
+data class GuildCreateRequest(
         val name: String,
         val region: String,
         val icon: String? = null,
@@ -14,12 +15,12 @@ data class CreateGuildRequest(
         @SerialName("default_message_notifications")
         val defaultNotificationLevel: DefaultMessageNotificationLevel,
         val explicitContentFilter: ExplicitContentFilter,
-        val roles: List<Role> = emptyList(),
-        val channels: List<com.gitlab.kordlib.rest.json.request.CreateGuildChannelRequest> = emptyList()
+        val roles: List<GuildRoleCreateRequest> = emptyList(),
+        val channels: List<GuildCreateChannelRequest> = emptyList()
 )
 
 @Serializable
-data class CreateGuildChannelRequest(
+data class GuildCreateChannelRequest(
         val name: String,
         val type: ChannelType? = null,
         val topic: String? = null,
@@ -36,11 +37,25 @@ data class CreateGuildChannelRequest(
         val nsfw: Boolean? = null
 )
 
-@Serializable
-data class ModifyGuildChannelPositionRequest(val id: String, val position: Int)
+data class GuildChannelPositionModifyRequest(val swaps: List<Pair<String, Int>>) {
+
+    companion object Serializer : SerializationStrategy<GuildChannelPositionModifyRequest> {
+        override val descriptor: SerialDescriptor
+            get() = ArrayListClassDesc(ChannelPosition.serializer().descriptor)
+
+        override fun serialize(encoder: Encoder, obj: GuildChannelPositionModifyRequest) {
+            val positions = obj.swaps.map { ChannelPosition(it.first, it.second) }
+            ArrayListSerializer(ChannelPosition.serializer()).serialize(encoder, positions)
+        }
+
+    }
+
+    @Serializable
+    private data class ChannelPosition(val id: String, val position: Int)
+}
 
 @Serializable
-data class AddGuildMemberRequest(
+data class GuildMemberAddRequest(
         @SerialName("access_token") val token: String,
         val nick: String? = null,
         val roles: List<String>? = null,
@@ -49,7 +64,7 @@ data class AddGuildMemberRequest(
 )
 
 @Serializable
-data class ModifyGuildMemberRequest(
+data class GuildMemberModifyRequest(
         val nick: String? = null,
         val roles: List<String>? = null,
         val mute: Boolean? = null,
@@ -60,14 +75,14 @@ data class ModifyGuildMemberRequest(
 
 
 @Serializable
-data class AddGuildBanRequest(
+data class GuildBanAddRequest(
         val reason: String? = null,
         @SerialName("delete-message-days")
-        val deleteMessagesDays: String? = null
+        val deleteMessagesDays: Int? = null
 )
 
 @Serializable
-data class CreateGuildRoleRequest(
+data class GuildRoleCreateRequest(
         val name: String? = null,
         val permissions: Permissions? = null,
         val color: Int = 0,
@@ -76,27 +91,38 @@ data class CreateGuildRoleRequest(
         val mentionable: Boolean = false
 )
 
-@Serializable
-data class ModifyGuildRolePositionRequest(
-        val id: String,
-        val position: Int
-)
+data class GuildRolePositionModifyRequest(val swaps: List<Pair<String, Int>>) {
+
+    companion object Serializer : SerializationStrategy<GuildRolePositionModifyRequest> {
+        override val descriptor: SerialDescriptor
+            get() = ArrayListClassDesc(RolePosition.serializer().descriptor)
+
+        override fun serialize(encoder: Encoder, obj: GuildRolePositionModifyRequest) {
+            val positions = obj.swaps.map { RolePosition(it.first, it.second) }
+            ArrayListSerializer(RolePosition.serializer()).serialize(encoder, positions)
+        }
+
+    }
+
+    @Serializable
+    private data class RolePosition(val id: String, val position: Int)
+}
 
 @Serializable
-data class ModifyGuildRoleRequest(
+data class GuildRoleModifyRequest(
         val name: String? = null,
         val permissions: Permissions? = null,
         val color: Int? = null,
         @SerialName("hoist")
         val separate: Boolean? = null,
-        val Mentionable: Boolean? = null
+        val mentionable: Boolean? = null
 )
 
 @Serializable
-data class CreateGuildIntegrationRequest(val type: Int, val id: String)
+data class GuildIntegrationCreateRequest(val type: Int, val id: String)
 
 @Serializable
-data class ModifyGuildIntegrationRequest(
+data class GuildIntegrationModifyRequest(
         @SerialName("expire_behavior")
         val expireBehavior: Int? = null,
         @SerialName("expire_grace_period")
@@ -106,17 +132,17 @@ data class ModifyGuildIntegrationRequest(
 )
 
 @Serializable
-data class ModifyGuildEmbedRequest(
+data class GuildEmbedModifyRequest(
         val enabled: Boolean,
         @SerialName("channel_id")
         val channelId: String
 )
 
 @Serializable
-data class ModifyCurrentUserNicknameRequest(val nick: String? = null)
+data class CurrentUserNicknameModifyRequest(val nick: String? = null)
 
 @Serializable
-data class ModifyGuildRequest(
+data class GuildModifyRequest(
         val name: String? = null,
         val region: String? = null,
         @SerialName("verification_level")
