@@ -8,7 +8,7 @@
 
 Kord is an idiomatic, non-blocking, modularized implementation of the Discord API. 
 
-#Goals
+# Goals
 
 ## No blocking, no callbacks
 
@@ -83,7 +83,7 @@ repositories {
 ```groovy
 dependencies {
  ...
- implementation 'com.gitlab.kordlib:kord:0.1.0'
+ implementation 'com.gitlab.kordlib:kord:0.2.0'
 }
 ```
 
