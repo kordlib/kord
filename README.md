@@ -1,9 +1,9 @@
 # Kord
 [![Discord](https://img.shields.io/discord/556525343595298817.svg?color=&label=Kord&logo=discord&style=for-the-badge)](https://discord.gg/9VTsymm)
-[![JitPack](https://img.shields.io/jitpack/v/gitlab/hopebaron/Kord.svg?color=&style=for-the-badge)](https://jitpack.io/#com.gitlab.hopebaron/Kord)
+[![JitPack](https://img.shields.io/jitpack/v/gitlab/hopebaron/Kord.svg?color=&style=for-the-badge)](https://jitpack.io/#com.gitlab.kordlib/Kord)
 [![Gitlab pipeline status (branch)](https://img.shields.io/gitlab/pipeline/HopeBaron/kord/master.svg?style=for-the-badge)]()
 
-**Kord is still in it's early stages, meaning it's not ready to be used for public purposes yet.**
+**Kord is still in its early stages, meaning it's not ready to be used for public purposes yet.**
 
 
 Kord is an idiomatic, non-blocking, modularized implementation of the Discord API. 
@@ -14,7 +14,41 @@ Kord is an idiomatic, non-blocking, modularized implementation of the Discord AP
 
 Build on top of coroutines, Kord focusses on avoiding the pitfalls of java libraries without sacrificing performance.
 
-//TODO add code example
+```kotlin
+suspend fun main() {
+    val kord = Kord("token")
+
+    kord.on<MessageCreateEvent> {
+        if (message.author?.isBot == true) return@on
+        val guild = message.getGuild() ?: return@on
+
+        if (message.content == "!kord") message.channel.createEmbed {
+            author {
+                val owner = kord.getApplicationInfo().getOwner()
+                name = owner.username
+                icon = owner.avatar.url
+            }
+
+            description = "an embed made with kord"
+
+            field {
+                name = "guild description"
+                value = guild.description.orEmpty()
+            }
+
+            footer {
+                url = "https://gitlab.com/kordlib/kord"
+                text = "made with kord"
+                icon = "https://assets.gitlab-static.net/uploads/-/system/project/avatar/11355644/cord-icon.png?width=64"
+            }
+
+            guild.getOwner().displayName
+        }
+    }
+
+    kord.login()
+}
+```
 
 ## More than just an API wrapper
 
@@ -41,6 +75,7 @@ In an effort to ease the pain of bot development, Kord grants the user an extens
 ```groovy
 repositories {
  ...
+ jcenter()
  maven { url 'https://jitpack.io' }
 }
 ```
@@ -48,7 +83,7 @@ repositories {
 ```groovy
 dependencies {
  ...
- implementation 'com.gitlab.hopebaron:Kord:0.0.1'
+ implementation 'com.gitlab.kordlib:kord:0.1.0'
 }
 ```
 
@@ -63,9 +98,9 @@ dependencies {
 
 ```xml
 <dependency>
-    <groupId>com.gitlab.hopebaron</groupId>
+    <groupId>com.gitlab.kordlib</groupId>
     <artifactId>Kord</artifactId>
-    <version>0.0.1</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 

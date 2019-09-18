@@ -1,0 +1,9 @@
+dependencies {
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
+}
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses", "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi", "-Xuse-experimental=kotlin.time.ExperimentalTime"]
+    }
+}
