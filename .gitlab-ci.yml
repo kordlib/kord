@@ -34,8 +34,8 @@ test:
       - build
       - .gradle
 
-publish:
-  stage: publish
+deploy:
+  stage: deploy
   script: gradle bintrayUpload
   only:
     refs:
