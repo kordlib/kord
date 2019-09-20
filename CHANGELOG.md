@@ -6,6 +6,21 @@
 `@KordBuilder` has been renamed to `@KordDsl`.
 `KordClientBuilder` has been renamed to `KordBuilder`.
 
+# 0.2.1
+
+This is the first maintenance update for Kord 0.2. 
+With it, we have started hosting Kord on bintray, check our README on what to include to get the newest version.
+
+## Additions
+
+* Added `Flow<T: Any>.firstOrNull` and `Flow<T: Any>.any` as their behavior is often needed when interacting with
+flows of members, channels, etc (and really, they should've been part of the coroutines api).
+
+## Changes
+
+
+## Fixes
+
 # 0.2.0
 
 ## Additions

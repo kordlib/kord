@@ -6,6 +6,7 @@ import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.request.RequestException
 import com.gitlab.kordlib.rest.route.Position
 import kotlinx.atomicfu.atomic
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -36,6 +37,14 @@ fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
         emit(entity)
     }
 }
+
+@ExperimentalCoroutinesApi
+suspend inline fun <T: Any> Flow<T>.firstOrNull(crossinline predicate: (T) -> Boolean) : T? =
+        filter { predicate(it) }.take(1).singleOrNull()
+
+@ExperimentalCoroutinesApi
+suspend inline fun <T: Any> Flow<T>.any(crossinline predicate: (T) -> Boolean) : Boolean =
+        firstOrNull(predicate) != null
 
 internal fun <T> Flow<T>.switchIfEmpty(flow: Flow<T>): Flow<T> = flow {
     var empty = true
