@@ -36,7 +36,7 @@ class DataCacheView(private val cache: DataCache) : DataCache by cache {
         keys += property.get(item)
     }
 
-    @ExperimentalCoroutinesApi
+
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> query(clazz: KClass<T>): QueryBuilder<T> {
         val query = cache.query(clazz)
@@ -47,7 +47,7 @@ class DataCacheView(private val cache: DataCache) : DataCache by cache {
 
 }
 
-@ExperimentalCoroutinesApi
+
 private class QueryBuilderView<T : Any>(
         private val builder: QueryBuilder<T>,
         private val keys: MutableSet<Any>,
@@ -56,7 +56,7 @@ private class QueryBuilderView<T : Any>(
     override fun build(): Query<T> = QueryView(builder, keys, property)
 }
 
-@ExperimentalCoroutinesApi
+
 private class QueryView<T : Any>(
         private val builder: QueryBuilder<T>,
         private val keys: MutableSet<Any>,

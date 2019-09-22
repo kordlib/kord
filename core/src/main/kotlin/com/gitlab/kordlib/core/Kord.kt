@@ -15,6 +15,7 @@ import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.start
 import com.gitlab.kordlib.rest.service.RestClient
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -26,13 +27,15 @@ import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 val kordLogger = KotlinLogging.logger { }
 
+
 class Kord internal constructor(
         val resources: ClientResources,
         val cache: DataCache,
         val gateway: Gateway,
         val rest: RestClient,
         val selfId: Snowflake,
-        private val eventPublisher: BroadcastChannel<Event>
+        private val eventPublisher: BroadcastChannel<Event>,
+        private val dispatcher: CoroutineDispatcher
 ) : CoroutineScope {
     @Suppress("EXPERIMENTAL_API_USAGE")
     val unsafe: Unsafe = Unsafe(this)
@@ -40,7 +43,7 @@ class Kord internal constructor(
     val events get() = eventPublisher.asFlow()
 
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Default + Job()
+        get() = dispatcher + Job()
 
     /**
      * Gets all guilds that are currently cached, if none are cached a request will be send to get all guilds.

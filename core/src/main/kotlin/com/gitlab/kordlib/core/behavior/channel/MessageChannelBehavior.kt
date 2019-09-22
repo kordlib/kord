@@ -22,7 +22,6 @@ import kotlin.time.seconds
 /**
  * The behavior of a Discord channel that can use messages.
  */
-@ExperimentalCoroutinesApi
 interface MessageChannelBehavior : ChannelBehavior {
 
     override suspend fun asChannel(): Channel {
@@ -160,7 +159,6 @@ interface MessageChannelBehavior : ChannelBehavior {
 /**
  * Requests to create a message.
  */
-@ExperimentalCoroutinesApi
 suspend inline fun MessageChannelBehavior.createMessage(builder: MessageCreateBuilder.() -> Unit): Message {
     val request = MessageCreateBuilder().apply(builder).toRequest()
 
@@ -173,5 +171,4 @@ suspend inline fun MessageChannelBehavior.createMessage(builder: MessageCreateBu
 /**
  * Requests to create a message with only an [embed][MessageCreateBuilder.embed].
  */
-@ExperimentalCoroutinesApi
 suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> Unit): Message = createMessage { embed(block) }

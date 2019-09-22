@@ -38,11 +38,11 @@ fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
     }
 }
 
-@ExperimentalCoroutinesApi
+
 suspend inline fun <T: Any> Flow<T>.firstOrNull(crossinline predicate: (T) -> Boolean) : T? =
         filter { predicate(it) }.take(1).singleOrNull()
 
-@ExperimentalCoroutinesApi
+
 suspend inline fun <T: Any> Flow<T>.any(crossinline predicate: (T) -> Boolean) : Boolean =
         firstOrNull(predicate) != null
 

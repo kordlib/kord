@@ -33,6 +33,8 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
@@ -54,6 +56,11 @@ class KordBuilder(val token: String) {
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler = { ExclusionRequestHandler(it.httpClient) }
     private var cacheBuilder: (resources: ClientResources) -> DataCache = { MapDataCache() }
+
+    /**
+     * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.IO] by default.
+     */
+    var defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     /**
      * The client used for building [Gateways][Gateway] and [RequestHandlers][RequestHandler]. A default implementation
@@ -167,7 +174,8 @@ class KordBuilder(val token: String) {
                 gateway,
                 rest,
                 Snowflake(self),
-                eventPublisher
+                eventPublisher,
+                defaultDispatcher
         ).also {
             it.launch { GatewayEventInterceptor(it, gateway, cache, eventPublisher).start() }
         }
