@@ -12,9 +12,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 /**
  * The behavior of a Discord Store Channel associated to a guild.
  */
-@KordPreview
-@ExperimentalCoroutinesApi
-interface StoreChannelBehavior : GuildMessageChannelBehavior {
+interface StoreChannelBehavior : GuildChannelBehavior {
 
     override suspend fun asChannel(): StoreChannel {
         return super.asChannel() as StoreChannel
@@ -35,7 +33,6 @@ interface StoreChannelBehavior : GuildMessageChannelBehavior {
  *
  * @return The edited [StoreChannel].
  */
-@KordPreview
 @Suppress("NAME_SHADOWING")
 suspend inline fun StoreChannelBehavior.edit(builder: (UpdateStoreChannelBuilder) -> Unit): StoreChannel {
     val builder = UpdateStoreChannelBuilder().apply(builder)
