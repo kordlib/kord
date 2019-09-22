@@ -7,6 +7,7 @@ With it, we have started hosting Kord on bintray, check our README on what to in
 
 * Added `Flow<T: Any>.firstOrNull` and `Flow<T: Any>.any` as their behavior is often needed when interacting with
 flows of members, channels, etc (and really, they should've been part of the coroutines api).
+* Added `isSelfSteaming` to `VoiceState`, indicating when a user  is streaming using "Go Live".
 
 ## Changes
 

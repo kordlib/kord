@@ -16,6 +16,7 @@ data class VoiceStateData(
         val deaf: Boolean,
         val selfMute: Boolean,
         val selfDeaf: Boolean,
+        val selfStream: Boolean,
         val suppress: Boolean
 ) {
 
@@ -32,6 +33,7 @@ data class VoiceStateData(
                     deaf,
                     selfMute,
                     selfDeaf,
+                    selfStream ?: false,
                     suppress
             )
         }
