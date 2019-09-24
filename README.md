@@ -8,7 +8,7 @@
 
 Kord is an idiomatic, non-blocking, modularized implementation of the Discord API. 
 
-#Goals
+# Goals
 
 ## No blocking, no callbacks
 
