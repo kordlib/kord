@@ -89,7 +89,7 @@ internal class MessageEventHandler(
         }
 
         cache.find<MessageData> { MessageData::id eq messageId }.update {
-            val isMe = kord.selfId?.value == event.reaction.userId
+            val isMe = kord.selfId.value == event.reaction.userId
 
             val reactions = if (it.reactions.isNullOrEmpty()) {
                 listOf(ReactionData.from(1, isMe, emoji))
@@ -130,7 +130,7 @@ internal class MessageEventHandler(
         cache.find<MessageData> { MessageData::id eq messageId }.update {
             if (it.reactions.isNullOrEmpty()) return@update it
 
-            val me = kord.selfId?.value == event.reaction.userId
+            val me = kord.selfId.value == event.reaction.userId
 
             val oldReactions = it.reactions.orEmpty()
             val reaction = oldReactions.firstOrNull { reaction ->

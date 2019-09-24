@@ -32,6 +32,11 @@ data class VoiceState(val data: VoiceStateData, override val kord: Kord) : KordO
 
     val isSuppressed: Boolean get() = data.suppress
 
+    /**
+     * Whether this user is streaming using "Go Live".
+     */
+    val isSelfSteaming: Boolean get() = data.selfStream
+
     suspend fun getChannel(): VoiceChannel? = channelId?.let { kord.getChannel(it) } as? VoiceChannel
 
     suspend fun getGuild(): Guild = kord.getGuild(guildId)!!

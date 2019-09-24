@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 /**
  * The behavior of a [Discord Message](https://discordapp.com/developers/docs/resources/channel#message-object).
  */
-@ExperimentalCoroutinesApi
+
 interface MessageBehavior : Entity {
     /**
      * The channel id this message belongs to.
