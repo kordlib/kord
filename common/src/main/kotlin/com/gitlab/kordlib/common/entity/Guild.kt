@@ -141,6 +141,8 @@ data class VoiceState(
         val selfDeaf: Boolean,
         @SerialName("self_mute")
         val selfMute: Boolean,
+        @SerialName("self_stream")
+        val selfStream: Boolean? = null,
         val suppress: Boolean
 )
 

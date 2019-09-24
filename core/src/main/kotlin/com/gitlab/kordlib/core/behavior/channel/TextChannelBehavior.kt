@@ -8,7 +8,7 @@ import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.TextChannel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
+
 interface TextChannelBehavior : GuildMessageChannelBehavior {
 
     override suspend fun asChannel(): TextChannel {
@@ -30,7 +30,7 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
  *
  * @return The edited [TextChannel].
  */
-@ExperimentalCoroutinesApi
+
 @Suppress("NAME_SHADOWING")
 suspend inline fun TextChannelBehavior.edit(builder: (TextChannelModifyBuilder) -> Unit): TextChannel {
     val builder = TextChannelModifyBuilder().apply(builder)

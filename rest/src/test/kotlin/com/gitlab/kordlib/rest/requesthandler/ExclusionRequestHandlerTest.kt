@@ -6,22 +6,17 @@ import com.gitlab.kordlib.rest.route.Route
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
-import io.ktor.client.request.HttpResponseData
+import io.ktor.http.Headers
 import io.ktor.http.HeadersBuilder
-import io.ktor.http.HttpProtocolVersion
 import io.ktor.http.HttpStatusCode
-import io.ktor.util.date.GMTDate
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.runBlockingTest
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
 import kotlin.test.BeforeTest
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.asserter
 import kotlin.time.ExperimentalTime
@@ -37,7 +32,7 @@ class ExclusionRequestHandlerTest {
     var firstRequest = atomic(true)
 
     @BeforeTest
-    fun setup(){
+    fun setup() {
         firstRequest.update { true }
     }
 
@@ -75,7 +70,9 @@ class ExclusionRequestHandlerTest {
         client.close()
     }
 
-    private fun httpClient(code: HttpStatusCode = HttpStatusCode.TooManyRequests, block: HeadersBuilder.() -> Unit) = HttpClient(MockEngine) {
+    private fun httpClient(
+            code: HttpStatusCode = HttpStatusCode.TooManyRequests,
+            block: HeadersBuilder.() -> Unit) = HttpClient(MockEngine) {
         engine {
             addHandler {
                 if (firstRequest.getAndSet(false)) {
@@ -87,7 +84,62 @@ class ExclusionRequestHandlerTest {
         }
     }
 
+    @Test
+    fun `an ExclusionRequestHandler sending a request that results in a bucket timeout will wait for that timeout on a similar bucket call`() = runBlockingTest {
+        val count = atomic(0)
+
+        val client = HttpClient(MockEngine) {
+            engine {
+                addHandler {
+                    when (count.getAndIncrement()) {
+                        0, 1 -> respond("", HttpStatusCode.Accepted, Headers.build {
+                            // discovery
+                            this["X-RateLimit-Remaining"] = "1"
+                            this["X-RateLimit-Bucket"] = "abc"
+                        })
+                        2 -> respond("", HttpStatusCode.TooManyRequests, Headers.build {
+                            // rate limit discovery
+                            this["X-RateLimit-Remaining"] = "0"
+                            this["X-RateLimit-Reset"] = "${clock.instant().epochSecond + timeout.inSeconds.toLong()}"
+                            this["X-RateLimit-Bucket"] = "abc"
+                        })
+                        3 -> respond("", HttpStatusCode.Accepted, Headers.build {
+                            // retry doesn't limit anymore
+                            this["X-RateLimit-Remaining"] = "1"
+                            this["X-RateLimit-Bucket"] = "abc"
+                        })
+                        else -> respond("", HttpStatusCode.Accepted, Headers.build {
+                            this["X-RateLimit-Remaining"] = "0"
+                            this["X-RateLimit-Reset"] = "${clock.instant().epochSecond + timeout.inSeconds.toLong()}"
+                            this["X-RateLimit-Bucket"] = "abc"
+                        })
+                    }
+
+                }
+            }
+        }
+        val handler = ExclusionRequestHandler(client, clock)
+
+
+
+        handler.handle(request)
+        handler.handle(request2) //explore bucket
+        handler.handle(request)
+        handler.handle(request2)
+
+        asserter.assertTrue("current time should be ${timeout.toLongMilliseconds()} but was $currentTime",
+                currentTime / 2 /*since time doesn't pass we're waiting for both the route and the bucket timeout*/ == timeout.toLongMilliseconds())
+
+        client.close()
+    }
+
     val request = with(RequestBuilder(Route.PinDelete)) {
+        keys[Route.ChannelId] = "420"
+        keys[Route.MessageId] = "1337"
+        build()
+    }
+
+    val request2 = with(RequestBuilder(Route.AllReactionsDelete)) {
         keys[Route.ChannelId] = "420"
         keys[Route.MessageId] = "1337"
         build()

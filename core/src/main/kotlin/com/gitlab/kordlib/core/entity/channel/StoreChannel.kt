@@ -8,7 +8,6 @@ import com.gitlab.kordlib.core.cache.data.ChannelData
 /**
  * An instance of a Discord Store Channel associated to a guild.
  */
-@KordPreview
-data class StoreChannel(override val data: ChannelData, override val kord: Kord) : CategorizableChannel, GuildMessageChannel, StoreChannelBehavior {
+data class StoreChannel(override val data: ChannelData, override val kord: Kord) : CategorizableChannel, GuildChannel, StoreChannelBehavior {
     override suspend fun asChannel(): StoreChannel = this
 }

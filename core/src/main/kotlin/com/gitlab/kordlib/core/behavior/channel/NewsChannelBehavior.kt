@@ -1,19 +1,15 @@
 package com.gitlab.kordlib.core.behavior.channel
 
-import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.builder.channel.UpdateNewsChannelBuilder
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.NewsChannel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * The behavior of a Discord News Channel associated to a guild.
  */
-@KordPreview
-@ExperimentalCoroutinesApi
 interface NewsChannelBehavior : GuildMessageChannelBehavior {
 
     override suspend fun asChannel(): NewsChannel {
@@ -35,8 +31,6 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
  *
  * @return The edited [NewsChannel].
  */
-@KordPreview
-@ExperimentalCoroutinesApi
 @Suppress("NAME_SHADOWING")
 suspend inline fun NewsChannelBehavior.edit(builder: (UpdateNewsChannelBuilder) -> Unit): NewsChannel {
     val builder = UpdateNewsChannelBuilder().apply(builder)
