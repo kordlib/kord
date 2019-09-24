@@ -23,7 +23,7 @@ private val logger = KotlinLogging.logger { }
 private val parser = Json(JsonConfiguration(encodeDefaults = false, strictMode = false))
 
 sealed class Request<T> {
-    internal abstract val route: Route<T>
+    abstract val route: Route<T>
     internal abstract val routeParams: Map<Route.Key, String>
     val identifier: RequestIdentifier by lazy(LazyThreadSafetyMode.NONE) {
         when (route) {

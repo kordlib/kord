@@ -24,6 +24,8 @@ import kotlin.time.minutes
 
 private val logger = KotlinLogging.logger {}
 
+typealias Bucket = String
+
 class ExclusionRequestHandler(private val client: HttpClient, private val clock: Clock = Clock.systemUTC()) : RequestHandler {
 
     constructor(token: String) : this(HttpClient(CIO) {
@@ -36,6 +38,9 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
 
     private val routeSuspensionPoints = mutableMapOf<RequestIdentifier, Long>()
 
+    private val buckets = mutableMapOf<Route<*>, Bucket>()
+    private val bucketSuspensionPoints = mutableMapOf<Bucket, Long>()
+
     private val mutex = Mutex()
 
     private val autoBanRateLimiter = BucketRateLimiter(25000, 10.minutes)
@@ -46,7 +51,6 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
             url.takeFrom(Route.baseUrl)
             with(request) { apply() }
         }
-
         val response = mutex.withLock {
             suspendFor(request)
 
@@ -64,6 +68,12 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
             if (response.isChannelRateLimit) {
                 logger.trace { "ROUTE RATE LIMIT UNTIL ${response.channelSuspensionPoint}: ${request.logString}" }
                 routeSuspensionPoints[request.identifier] = response.channelSuspensionPoint
+
+                val bucket = response.bucket
+                if (bucket != null) {
+                    buckets[request.route] = bucket
+                    bucketSuspensionPoints[bucket] = response.channelSuspensionPoint
+                }
             }
 
             response
@@ -96,6 +106,23 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
             delay(routeSuspensionPoint - clock.millis())
             routeSuspensionPoints.remove(key)
         }
+
+        val bucketSuspensionPoint = getBucketSuspensionPointFor(request)
+        if (bucketSuspensionPoint != null) {
+            delay(bucketSuspensionPoint - clock.millis())
+            removeBucketSuspensionPointFor(request)
+        }
+
+    }
+
+    private fun getBucketSuspensionPointFor(request: Request<*>): Long? {
+        val bucket = buckets[request.route] ?: return null
+        return bucketSuspensionPoints[bucket]
+    }
+
+    private fun removeBucketSuspensionPointFor(request: Request<*>) {
+        val bucket = buckets[request.route] ?: return
+        bucketSuspensionPoints.remove(bucket)
     }
 
     private companion object {
@@ -103,6 +130,7 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
         const val retryAfterHeader = "Retry-After"
         const val rateLimitRemainingHeader = "X-RateLimit-Remaining"
         const val resetTimeHeader = "X-RateLimit-Reset"
+        const val bucketRateLimitKey = "X-RateLimit-Bucket"
 
         /**
          * The unix time (in ms) when the rate limit for this endpoint gets reset
@@ -118,6 +146,7 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
         val HttpResponse.isErrorWithRateLimit get() = status.value == 403 || status.value == 401
         val HttpResponse.isGlobalRateLimit get() = headers[rateLimitGlobalHeader]?.toBoolean() == true
         val HttpResponse.isChannelRateLimit get() = headers[rateLimitRemainingHeader]?.toIntOrNull() == 0
+        val HttpResponse.bucket: Bucket? get() = headers[bucketRateLimitKey]
 
         /**
          * The unix time (in ms) when the global rate limit gets reset

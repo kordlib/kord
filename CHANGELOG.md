@@ -23,6 +23,7 @@ flows of members, channels, etc (and really, they should've been part of the cor
 * Since most suspending calls in Kord will be IO related, `Kord` now uses `Dispatchers.IO` as its `CoroutineDispatcher`.
 * `StoreChannel` can no longer be used to read or send messages. [discord api](https://discordapp.com/developers/docs/resources/channel#channel-object-example-store-channel).
 * `NewsChannel` and `StoreChannel` have been upgraded to the stable api and are no longer in preview.
+* `ExclusionRequestHandler` now takes request buckets into consideration.
 
 ## Fixes
 
