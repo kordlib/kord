@@ -76,7 +76,7 @@ subprojects {
     }
 
     task sourcesJar(type: Jar) {
-        archiveClassifier = 'sources'
+        archiveClassifier.set 'sources'
         from sourceSets.main.allSource
     }
 
@@ -90,8 +90,14 @@ subprojects {
                 artifactId archivesBaseName
                 version lib_version
 
-                artifact shadowJar
                 artifact sourcesJar
+                pom.withXml {
+                    def root = asNode()
+
+                    root.dependencies.removeAll { dep ->
+                        dep.scope == "test"
+                    }
+                }
             }
         }
     }
@@ -118,3 +124,4 @@ subprojects {
         }
     }
 }
+    
