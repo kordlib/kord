@@ -11,10 +11,15 @@ import io.ktor.http.HttpStatusCode
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.TestInstance
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
+import kotlin.system.measureTimeMillis
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.asserter
@@ -22,27 +27,28 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
 @ExperimentalTime
-@ExperimentalCoroutinesApi
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Disabled
 class ParallelRequestHandlerTest {
 
     val timeout = 1000.seconds
     val instant = Instant.EPOCH
     val clock = Clock.fixed(instant, ZoneOffset.UTC)
     var firstRequest = atomic(true)
+    val client = httpClient {
+        this["X-RateLimit-Remaining"] = "0"
+        this["X-RateLimit-Reset"] = "${clock.instant().epochSecond + timeout.inSeconds.toLong()}"
+    }
+
+    val handler = ParallelRequestHandler(client)
 
     @BeforeTest
-    fun setup(){
+    fun setup() {
         firstRequest.update { true }
     }
 
     @Test
     fun `a ParallelRequestHandler sending a request that results in a route timeout will wait for that timeout on the next call`() = runBlockingTest {
-        val client = httpClient {
-            this["X-RateLimit-Remaining"] = "0"
-            this["X-RateLimit-Reset"] = "${clock.instant().epochSecond + timeout.inSeconds.toLong()}"
-        }
-
-        val handler = ParallelRequestHandler(client, clock)
 
         handler.handle(request) //get first timeout
         handler.handle(request)
@@ -53,19 +59,21 @@ class ParallelRequestHandlerTest {
     }
 
     @Test
-    fun `a ParallelRequestHandler sending a request that results in a global timeout will wait for that timeout on the next call`() = runBlockingTest {
-        val client = httpClient {
-            this["X-RateLimit-Global"] = "true"
-            this["Retry-After"] = "${timeout.toLongMilliseconds()}"
+    fun `parallelism`() = runBlockingTest {
+       val time1 =  measureTimeMillis {
+            launch { handler.handle(request) }
+            launch { handler.handle(request) }
         }
 
-        val handler = ParallelRequestHandler(client, clock)
+       val time2 =  measureTimeMillis {
+            launch { handler.handle(request) }
+            launch { handler.handle(secondRequest) }
+        }
+        asserter.assertTrue("time2 must be less than time1 but was $time2", time2 < time1)
+    }
 
-        handler.handle(request)
-        handler.handle(request)
-
-        asserter.assertTrue("current time should be ${timeout.toLongMilliseconds()} but was $currentTime", currentTime == timeout.toLongMilliseconds())
-
+    @AfterAll
+    fun end() {
         client.close()
     }
 
@@ -87,110 +95,9 @@ class ParallelRequestHandlerTest {
         build()
     }
 
-}
+    val secondRequest = with(RequestBuilder(Route.MessagePost)) {
+        keys[Route.ChannelId] = "420"
+        build()
+    }
 
-////disabled until 1.3.50
-//object ExclusionRequestHandlerTest : Spek({
-//
-//    fun request() = with(RequestBuilder(Route.PinDelete)) {
-//        keys[Route.ChannelId] = "420"
-//        keys[Route.MessageId] = "1337"
-//        build()
-//    }
-//
-//    //seems to be some lazy loading being done, this gets everything initialized
-//    fun warmupRequest() = with(RequestBuilder(Route.MessageDelete)) {
-//        keys[Route.ChannelId] = "420"
-//        keys[Route.MessageId] = "1337"
-//        build()
-//    }
-//
-//    xdescribe("an ExclusionRequestHandler") {
-//
-//        describe("sending a request that results in a route timeout") {
-//            val timeout = 1000 / 1000
-//
-//            val client by memoized {
-//                HttpClient(MockEngine) {
-//                    engine {
-//                        addHandler {
-//                            val headers = with(HeadersBuilder()) {
-//                                this["X-RateLimit-Remaining"] = "0"
-//                                TODO() //this["X-RateLimit-Reset"] = "${(clock.nowMillis() + timeout) / (1000)}"
-//
-//                                build()
-//                            }
-//
-//                            respond("", HttpStatusCode.Accepted, headers)
-//                        }
-//                    }
-//                }
-//            }
-//
-//            val requestHandler by memoized { ExclusionRequestHandler(client) }
-//
-//            it("will wait for that timeout on the next call") {
-//                runBlocking {
-//
-//
-//                    requestHandler.handle(warmupRequest())
-//
-//                    val time = measureTimeMillis {
-//                        requestHandler.handle(request()) //get first timeout
-//
-//                        requestHandler.handle(request())
-//                    }
-//
-//                    Assertions.assertTrue(time >= timeout) { "timeout expected to be greater to or equal than $timeout, but was $time" }
-//                }
-//
-//
-//            }
-//
-//            afterEach { client.close() }
-//        }
-//
-//        xdescribe("sending a request that results in a global timeout") {
-//            val timeout = 0 / 1000
-//
-//            val client by memoized {
-//                HttpClient(MockEngine) {
-//                    engine {
-//                        addHandler {
-//                            val headers = with(HeadersBuilder()) {
-//                                this["X-RateLimit-Global"] = "true"
-//                                this["Retry-After"] = "$timeout"
-//
-//                                build()
-//                            }
-//                            respond("", HttpStatusCode.Accepted, headers)
-//                        }
-//                    }
-//                }
-//            }
-//
-//            val requestHandler by memoized { ExclusionRequestHandler(client) }
-//
-//            it("will wait for that timeout on the next call") {
-//                runBlocking {
-//
-//
-//                    requestHandler.handle(warmupRequest())
-//
-//                    val time = measureTimeMillis {
-//                        requestHandler.handle(request()) //get first timeout
-//
-//                        requestHandler.handle(request())
-//                    }
-//
-//                    Assertions.assertTrue(time >= timeout) { "timeout expected to be greater to or equal than $timeout, but was $time" }
-//                }
-//
-//            }
-//
-//            afterEach { client.close() }
-//        }
-//    }
-//
-//
-//})
+}
