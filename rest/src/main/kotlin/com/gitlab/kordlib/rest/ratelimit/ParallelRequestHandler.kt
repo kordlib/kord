@@ -12,22 +12,27 @@ import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.response.HttpResponse
 import io.ktor.client.response.readBytes
 import io.ktor.http.takeFrom
+import kotlinx.atomicfu.atomic
+import kotlinx.atomicfu.update
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import mu.KotlinLogging
 import java.time.Clock
+import java.util.*
 import kotlin.time.minutes
 
 private val logger = KotlinLogging.logger {}
 
 class ParallelRequestHandler(private val client: HttpClient, private val clock: Clock = Clock.systemUTC()) : RequestHandler {
 
-    private var globalSuspensionPoint = 0L
+    private var globalSuspensionPoint = atomic(0L)
 
-    private val routeSuspensionPoints = mutableMapOf<RequestIdentifier, Long>()
+    private val routeSuspensionPoints = atomic(mutableMapOf<RequestIdentifier, Long>())
 
     private val autoBanRateLimiter = BucketRateLimiter(25000, 10.minutes)
+
+    private val locks = atomic(mutableMapOf<RequestIdentifier, Mutex>())
 
     override tailrec suspend fun <T> handle(request: Request<T>): HttpResponse {
         val builder = HttpRequestBuilder().apply {
@@ -36,98 +41,53 @@ class ParallelRequestHandler(private val client: HttpClient, private val clock: 
             with(request) { apply() }
         }
 
-            suspendFor(request)
+        suspendFor(request)
 
-            logger.trace { "REQUEST: ${request.logString}" }
-
+        logger.trace { "REQUEST: ${request.logString}" }
+        val identifier = request.identifier
+        if (identifier !in locks.value.keys) locks.value[identifier] = Mutex()
+        val mutex = locks.value[identifier]!!
+        mutex.withLock {
             val response = client.call(builder).receive<HttpResponse>()
 
             logger.trace { response.logString }
 
             if (response.isGlobalRateLimit) {
                 logger.trace { "GLOBAL RATE LIMIT UNTIL ${response.globalSuspensionPoint(clock)}: ${request.logString}" }
-                globalSuspensionPoint = response.globalSuspensionPoint(clock)
+                globalSuspensionPoint.update { response.globalSuspensionPoint(clock) }
             }
 
             if (response.isChannelRateLimit) {
                 logger.trace { "ROUTE RATE LIMIT UNTIL ${response.channelSuspensionPoint}: ${request.logString}" }
-                routeSuspensionPoints[request.identifier] = response.channelSuspensionPoint
+                routeSuspensionPoints.value[request.identifier] = response.channelSuspensionPoint
             }
 
-        if (response.isRateLimit) {
-            autoBanRateLimiter.consume()
-            return handle(request)
-        }
+            if (response.isRateLimit) {
+                autoBanRateLimiter.consume()
+                return handle(request)
+            }
 
-        if (response.isErrorWithRateLimit) {
-            autoBanRateLimiter.consume()
-        }
+            if (response.isErrorWithRateLimit) {
+                autoBanRateLimiter.consume()
+            }
 
-        if (response.isError) {
-            throw RequestException(response, response.errorString())
+            if (response.isError) {
+                throw RequestException(response, response.errorString())
+            }
+            return response
         }
-
-        return response
     }
 
     private suspend fun suspendFor(request: Request<*>) {
-        delay(globalSuspensionPoint - clock.millis())
-        globalSuspensionPoint = 0
+        delay(globalSuspensionPoint.value - clock.millis())
+        globalSuspensionPoint.update { 0 }
 
         val key = request.identifier
-        val routeSuspensionPoint = routeSuspensionPoints[key]
+        val routeSuspensionPoint = routeSuspensionPoints.value[key]
 
         if (routeSuspensionPoint != null) {
             delay(routeSuspensionPoint - clock.millis())
-            routeSuspensionPoints.remove(key)
+            routeSuspensionPoints.value.remove(key)
         }
     }
-
-    private companion object {
-        const val rateLimitGlobalHeader = "X-RateLimit-Global"
-        const val retryAfterHeader = "Retry-After"
-        const val rateLimitRemainingHeader = "X-RateLimit-Remaining"
-        const val resetTimeHeader = "X-RateLimit-Reset"
-
-        /**
-         * The unix time (in ms) when the rate limit for this endpoint gets reset
-         */
-        val HttpResponse.channelSuspensionPoint: Long get() {
-            val unixSeconds = headers[resetTimeHeader]?.toDouble() ?: return 0
-            return (unixSeconds * 1000).toLong()
-        }
-
-        val HttpResponse.isRateLimit get() = status.value == 429
-        val HttpResponse.isError get() = status.value in 400 until 600
-        val HttpResponse.isErrorWithRateLimit get() = status.value == 403 || status.value == 401
-        val HttpResponse.isGlobalRateLimit get() = headers[rateLimitGlobalHeader]?.toBoolean() == true
-        val HttpResponse.isChannelRateLimit get() = headers[rateLimitRemainingHeader]?.toIntOrNull() == 0
-
-        /**
-         * The unix time (in ms) when the global rate limit gets reset
-         */
-        fun HttpResponse.globalSuspensionPoint(clock: Clock): Long  {
-            val msWait = headers[retryAfterHeader]?.toLong() ?: return 0
-            return msWait + clock.millis()
-        }
-
-        val HttpResponse.logString get() = "$status: ${call.request.method.value} ${call.request.url}"
-
-        suspend fun HttpResponse.errorString(): String {
-            val message = String(this.readBytes())
-            return if (message.isBlank()) logString
-            else "$logString $message"
-        }
-
-        val Request<*>.logString
-            get() : String {
-                val method = route.method.value
-                val path = route.path
-                val params = routeParams.entries
-                        .joinToString(",", "[", "]") { (key, value) -> "$key=$value" }
-
-                return "route: $method/$path params: $params"
-            }
-    }
-
 }

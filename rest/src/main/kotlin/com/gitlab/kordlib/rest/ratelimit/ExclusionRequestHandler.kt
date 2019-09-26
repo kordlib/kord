@@ -163,16 +163,5 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
             return if (message.isBlank()) logString
             else "$logString $message"
         }
-
-        val Request<*>.logString
-            get() : String {
-                val method = route.method.value
-                val path = route.path
-                val params = routeParams.entries
-                        .joinToString(",", "[", "]") { (key, value) -> "$key=$value" }
-
-                return "route: $method/$path params: $params"
-            }
     }
-
 }
