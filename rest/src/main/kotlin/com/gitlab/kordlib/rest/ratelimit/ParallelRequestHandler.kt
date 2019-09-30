@@ -20,6 +20,8 @@ import kotlinx.coroutines.sync.withLock
 import mu.KotlinLogging
 import java.time.Clock
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 import kotlin.time.minutes
 
 private val logger = KotlinLogging.logger {}
@@ -32,7 +34,7 @@ class ParallelRequestHandler(private val client: HttpClient, private val clock: 
 
     private val autoBanRateLimiter = BucketRateLimiter(25000, 10.minutes)
 
-    private val locks = atomic(mutableMapOf<RequestIdentifier, Mutex>())
+    private val locks: ConcurrentMap<RequestIdentifier, Mutex> = ConcurrentHashMap()
 
     override tailrec suspend fun <T> handle(request: Request<T>): HttpResponse {
         val builder = HttpRequestBuilder().apply {
@@ -45,8 +47,8 @@ class ParallelRequestHandler(private val client: HttpClient, private val clock: 
 
         logger.trace { "REQUEST: ${request.logString}" }
         val identifier = request.identifier
-        if (identifier !in locks.value.keys) locks.value[identifier] = Mutex()
-        val mutex = locks.value[identifier]!!
+        if (identifier !in locks.keys) locks[identifier] = Mutex()
+        val mutex = locks[identifier]!!
         mutex.withLock {
             val response = client.call(builder).receive<HttpResponse>()
 
