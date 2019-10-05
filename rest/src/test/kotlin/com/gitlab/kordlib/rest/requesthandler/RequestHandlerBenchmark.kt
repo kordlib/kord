@@ -10,6 +10,7 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.request.header
 import io.ktor.util.KtorExperimentalAPI
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -38,14 +39,14 @@ class RequestHandlerBenchmark {
     @Test
     fun `parallelism`() = runBlocking {
         val time1 = measureTimeMillis {
-            val first = launch { rest.channel.getMessages(channel) }
-            val second = launch { rest.channel.getMessages(channel) }
+            val first = launch(Dispatchers.IO) { rest.channel.getMessages(channel) }
+            val second = launch(Dispatchers.IO) { rest.channel.getMessages(channel) }
             joinAll(first, second)
         }
 
         val time2 = measureTimeMillis {
-            val first = launch { rest.channel.getMessages(channel) }
-            val second = launch { rest.channel.createMessage(channel, MessageCreateRequest("TEST")) }
+            val first = launch(Dispatchers.IO) { rest.channel.getMessages(channel) }
+            val second = launch(Dispatchers.IO) { rest.channel.createMessage(channel, MessageCreateRequest("TEST")) }
             joinAll(first, second)
         }
         asserter.assertTrue("time2 must be less than time1 but was $time2", time2 < time1)
