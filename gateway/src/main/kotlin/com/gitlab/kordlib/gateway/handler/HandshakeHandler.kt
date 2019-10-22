@@ -7,7 +7,6 @@ import kotlinx.atomicfu.update
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
-@ExperimentalCoroutinesApi
 internal class HandshakeHandler(
         flow: Flow<Event>,
         private val send: suspend (Command) -> Unit,

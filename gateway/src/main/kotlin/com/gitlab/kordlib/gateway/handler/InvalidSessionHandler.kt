@@ -4,7 +4,6 @@ import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
-@ExperimentalCoroutinesApi
 internal class InvalidSessionHandler(
         flow: Flow<Event>,
         private val restart: suspend (event: Close) -> Unit

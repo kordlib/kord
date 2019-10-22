@@ -14,7 +14,6 @@ import kotlin.coroutines.CoroutineContext
  * @param dispatcher The dispatchers the events will be fired on.
  */
 @ObsoleteCoroutinesApi
-@ExperimentalCoroutinesApi
 class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : CoroutineScope {
 
     override val coroutineContext: CoroutineContext

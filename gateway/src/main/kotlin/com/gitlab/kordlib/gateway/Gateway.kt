@@ -3,6 +3,7 @@ package com.gitlab.kordlib.gateway
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import kotlin.time.Duration
 
 /**
  * An implementation of the Discord [Gateway](https://discordapp.com/developers/docs/topics/gateway) and its lifecycle.
@@ -17,9 +18,13 @@ interface Gateway {
      * of the Gateway. Users should expect these [Flows](Flow) to be hot and remain open for the entire lifecycle of the
      * Gateway.
      */
-    @FlowPreview
-    @ExperimentalCoroutinesApi
     val events: Flow<Event>
+
+    /**
+     * The duration between the last [Heartbeat] and [HeartbeatACK]. If no [Heartbeat] has been received yet,
+     * [Duration.INFINITE] will be returned.
+     */
+    val ping: Duration
 
     /**
      * Starts a reconnection gateway connection with the given [configuration].

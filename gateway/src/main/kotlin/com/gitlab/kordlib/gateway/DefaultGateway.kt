@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.gateway
 
-import com.gitlab.kordlib.gateway.handler.*
 import com.gitlab.kordlib.common.ratelimit.RateLimiter
+import com.gitlab.kordlib.gateway.handler.*
 import com.gitlab.kordlib.gateway.retry.Retry
 import io.ktor.client.HttpClient
 import io.ktor.client.features.websocket.DefaultClientWebSocketSession
@@ -16,23 +16,22 @@ import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.*
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
+import kotlin.time.Duration
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
 
 private sealed class State(val retry: Boolean) {
     object ShutDown : State(false)
     class Restart(retry: Boolean) : State(retry)
-    object Detached: State(false)
+    object Detached : State(false)
 }
 
 /**
@@ -45,9 +44,7 @@ private sealed class State(val retry: Boolean) {
  * @param retry A retry used for reconnection attempts.
  */
 @FlowPreview
-@UnstableDefault
 @ObsoleteCoroutinesApi
-@ExperimentalCoroutinesApi
 class DefaultGateway(
         private val url: String,
         private val client: HttpClient,
@@ -56,6 +53,8 @@ class DefaultGateway(
 ) : Gateway {
 
     private val channel = BroadcastChannel<Event>(Channel.CONFLATED)
+
+    override var ping: Duration = Duration.INFINITE
 
     override val events: Flow<Event> = channel.asFlow()
 
@@ -69,7 +68,7 @@ class DefaultGateway(
         val sequence = Sequence()
         SequenceHandler(events, sequence)
         handshakeHandler = HandshakeHandler(events, ::send, sequence)
-        HeartbeatHandler(events, ::send, { restart() }, sequence)
+        HeartbeatHandler(events, ::send, { restart() }, { ping = it }, sequence)
         ReconnectHandler(events) { restart() }
         InvalidSessionHandler(events) { restart(it) }
     }
@@ -160,7 +159,7 @@ class DefaultGateway(
     }
 
     override suspend fun detach() {
-        if(state.value is State.Detached) return
+        if (state.value is State.Detached) return
         state.update { State.Detached }
         channel.cancel()
         socket.close()
@@ -180,8 +179,8 @@ class DefaultGateway(
 
     companion object {
 
-        inline operator fun invoke(builder: DefaultGatewayBuilder.() -> Unit = {}) : DefaultGateway =
-            DefaultGatewayBuilder().apply(builder).build()
+        inline operator fun invoke(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway =
+                DefaultGatewayBuilder().apply(builder).build()
 
 
     }
