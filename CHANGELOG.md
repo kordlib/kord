@@ -1,3 +1,9 @@
+# 0.3.0
+
+## Changes
+
+`Kord#getGuilds()` has been replaced with the non-suspending `Kord#guilds`.
+
 # 0.2.0
 
 ## Additions
