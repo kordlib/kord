@@ -8,6 +8,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlin.time.Duration
+import kotlin.time.milliseconds
 import kotlin.time.seconds
 
 class MasterGateway(
@@ -18,6 +19,9 @@ class MasterGateway(
     init {
         require(gateways.size == shards.size) { "amount of gateways must equal amount of shards" }
     }
+
+    override val ping: Duration
+        get() = gateways.sumByDouble { it.ping.inMilliseconds }.milliseconds
 
     @FlowPreview
     override val events: Flow<Event>
