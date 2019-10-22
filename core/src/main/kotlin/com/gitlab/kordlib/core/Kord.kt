@@ -46,6 +46,29 @@ class Kord internal constructor(
         get() = dispatcher + Job()
 
     /**
+     * Gets all guilds that are currently cached, if none are cached a request will be send to get all guilds.
+     */
+    val guilds: Flow<Guild>
+        get() = flow {
+            val cached = cache.find<GuildData>().asFlow().map { Guild(it, this@Kord) }
+
+            //backup if we're not caching
+            val request = paginateForwards(idSelector = PartialGuild::id, batchSize = 100) { position -> rest.user.getCurrentUserGuilds(position, 100) }
+                    .map { rest.guild.getGuild(it.id) }
+                    .map { GuildData.from(it) }
+                    .map { Guild(it, this@Kord) }
+
+            var none = true
+
+            cached.collect {
+                none = false
+                emit(it)
+            }
+
+            if (none) emitAll(request)
+        }
+
+    /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
     suspend inline fun login(builder: PresenceUpdateBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
@@ -91,18 +114,6 @@ class Kord internal constructor(
         val data = getGuildData(guildId) ?: return null
 
         return Guild(data, this)
-    }
-
-    suspend fun getGuilds(): Flow<Guild> {
-        val cached = cache.find<GuildData>().asFlow().map { Guild(it, this) }
-
-        //backup if we're not caching
-        val request = paginateForwards(idSelector = PartialGuild::id, batchSize = 100) { position -> rest.user.getCurrentUserGuilds(position, 100) }
-                .map { rest.guild.getGuild(it.id) }
-                .map { GuildData.from(it) }
-                .map { Guild(it, this) }
-
-        return cached.switchIfEmpty(request)
     }
 
     suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member? {
