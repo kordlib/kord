@@ -1,3 +1,9 @@
+# 0.2.2
+
+## Additions
+
+`Gateway` now has a `ping` field, containing the duration between the latest heartbeat and heartbeat ack.
+
 # 0.2.1
 
 This is the first maintenance update for Kord 0.2. 
