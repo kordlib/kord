@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlin.coroutines.CoroutineContext
 
-@ExperimentalCoroutinesApi
 internal abstract class Handler(val flow: Flow<Event>, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job() + dispatcher
