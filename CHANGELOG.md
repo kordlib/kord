@@ -3,6 +3,8 @@
 ## Changes
 
 `Kord#getGuilds()` has been replaced with the non-suspending `Kord#guilds`.
+`@KordBuilder` has been renamed to `@KordDsl`.
+`KordClientBuilder` has been renamed to `KordBuilder`.
 
 # 0.2.4
 

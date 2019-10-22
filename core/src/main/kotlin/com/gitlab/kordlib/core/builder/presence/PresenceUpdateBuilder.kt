@@ -3,13 +3,13 @@ package com.gitlab.kordlib.core.builder.presence
 import com.gitlab.kordlib.common.entity.Activity
 import com.gitlab.kordlib.common.entity.ActivityType
 import com.gitlab.kordlib.common.entity.Status
-import com.gitlab.kordlib.core.builder.KordBuilder
+import com.gitlab.kordlib.core.builder.KordDsl
 import com.gitlab.kordlib.core.builder.RequestBuilder
 import com.gitlab.kordlib.gateway.Presence
 import com.gitlab.kordlib.gateway.UpdateStatus
 import java.time.Instant
 
-@KordBuilder
+@KordDsl
 class PresenceUpdateBuilder : RequestBuilder<UpdateStatus> {
     private var game: Activity? = null
     var status: Status = Status.Online

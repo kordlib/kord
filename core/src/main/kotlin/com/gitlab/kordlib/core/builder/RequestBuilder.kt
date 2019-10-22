@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.core.builder
 
-@KordBuilder
+@KordDsl
 interface RequestBuilder<T> {
     fun toRequest() : T
 }
 
-@KordBuilder
+@KordDsl
 interface AuditRequestBuilder<T> : RequestBuilder<T> {
     var reason: String?
 }

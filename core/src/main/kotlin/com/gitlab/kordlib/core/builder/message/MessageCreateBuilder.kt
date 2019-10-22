@@ -1,6 +1,6 @@
 package com.gitlab.kordlib.core.builder.message
 
-import com.gitlab.kordlib.core.builder.KordBuilder
+import com.gitlab.kordlib.core.builder.KordDsl
 import com.gitlab.kordlib.core.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.MessageCreateRequest
 import com.gitlab.kordlib.rest.json.request.MultipartMessageCreateRequest
@@ -10,7 +10,7 @@ import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
 
-@KordBuilder
+@KordDsl
 class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     var content: String? = null
     var nonce: String? = null

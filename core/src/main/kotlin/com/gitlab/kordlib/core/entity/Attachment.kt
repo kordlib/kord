@@ -3,7 +3,7 @@ package com.gitlab.kordlib.core.entity
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.AttachmentData
 
-data class Attachment(val data: AttachmentData, override val kord: Kord /*TODO remove kord? Might want to keep it for io stuff*/) : Entity {
+data class Attachment(val data: AttachmentData, override val kord: Kord) : Entity {
 
     override val id: Snowflake
         get() = Snowflake(data.id)

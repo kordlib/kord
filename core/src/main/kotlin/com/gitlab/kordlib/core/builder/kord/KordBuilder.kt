@@ -48,7 +48,7 @@ private val logger = KotlinLogging.logger { }
 operator fun DefaultGateway.Companion.invoke(resources: ClientResources, retry: Retry) =
         DefaultGateway("wss://gateway.discord.gg/", resources.httpClient, retry, BucketRateLimiter(120, 60.seconds))
 
-class KordClientBuilder(val token: String) {
+class KordBuilder(val token: String) {
     private var shardRange: (recommended: Int) -> Iterable<Int> = { 0 until it }
     private var gatewayBuilder: (resources: ClientResources, shard: Int) -> Gateway = { resources, _ ->
         DefaultGateway(resources, LinearRetry(2.seconds, 60.seconds, 10))
