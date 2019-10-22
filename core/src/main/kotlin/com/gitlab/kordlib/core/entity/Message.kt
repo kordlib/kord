@@ -5,12 +5,8 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
-import com.gitlab.kordlib.core.cache.data.ReactionData
-import com.gitlab.kordlib.core.cache.data.UserData
-import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.toSnowflakeOrNull
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
@@ -45,7 +41,7 @@ class Message(private val data: MessageData, override val kord: Kord) : MessageB
 
     val mentionedUsers: Set<Snowflake> get() = data.mentions.map { Snowflake(it) }.toSet()
 
-    val reactions: Set<Reaction> get()  = data.reactions.orEmpty().asSequence().map { Reaction(it, kord) }.toSet()
+    val reactions: Set<Reaction> get() = data.reactions.orEmpty().asSequence().map { Reaction(it, kord) }.toSet()
 
     val timestamp: Instant get() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(data.timestamp, Instant::from)
 

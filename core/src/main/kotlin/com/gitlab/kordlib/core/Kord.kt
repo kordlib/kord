@@ -6,7 +6,7 @@ import com.gitlab.kordlib.common.entity.PartialGuild
 import com.gitlab.kordlib.common.entity.Shard
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.builder.guild.GuildCreateBuilder
-import com.gitlab.kordlib.core.builder.kord.KordClientBuilder
+import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.builder.presence.PresenceUpdateBuilder
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
@@ -215,8 +215,8 @@ class Kord internal constructor(
     }
 
     companion object {
-        suspend inline operator fun invoke(token: String, builder: KordClientBuilder.() -> Unit = {}) =
-                KordClientBuilder(token).apply(builder).build()
+        suspend inline operator fun invoke(token: String, builder: KordBuilder.() -> Unit = {}) =
+                KordBuilder(token).apply(builder).build()
     }
 
 }

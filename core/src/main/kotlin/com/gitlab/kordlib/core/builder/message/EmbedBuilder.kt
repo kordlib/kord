@@ -1,13 +1,13 @@
 package com.gitlab.kordlib.core.builder.message
 
-import com.gitlab.kordlib.core.builder.KordBuilder
+import com.gitlab.kordlib.core.builder.KordDsl
 import com.gitlab.kordlib.core.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.*
 import java.awt.Color
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
-@KordBuilder
+@KordDsl
 class EmbedBuilder : RequestBuilder<EmbedRequest> {
     var title: String? = null
     var description: String? = null
@@ -51,14 +51,14 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
             fields.map { it.toRequest() }
     )
 
-    @KordBuilder
+    @KordDsl
     class Thumbnail : RequestBuilder<EmbedThumbnailRequest> {
         lateinit var url: String
 
         override fun toRequest() = EmbedThumbnailRequest(url)
     }
 
-    @KordBuilder
+    @KordDsl
     class Footer : RequestBuilder<EmbedFooterRequest> {
         lateinit var text: String
         var url: String? = null
@@ -67,7 +67,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         override fun toRequest() = EmbedFooterRequest(text, url, icon)
     }
 
-    @KordBuilder
+    @KordDsl
     class Author : RequestBuilder<EmbedAuthorRequest> {
         var name: String? = null
         var url: String? = null
@@ -76,7 +76,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         override fun toRequest() = EmbedAuthorRequest(name, url, icon)
     }
 
-    @KordBuilder
+    @KordDsl
     class Field: RequestBuilder<EmbedFieldRequest> {
         lateinit var value: String
         lateinit  var name: String

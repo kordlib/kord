@@ -3,7 +3,6 @@ package com.gitlab.kordlib.core.behavior
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.KordBuilder
 import com.gitlab.kordlib.core.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.core.builder.channel.GuildChannelPositionModifyBuilder
 import com.gitlab.kordlib.core.builder.channel.NewsChannelCreateBuilder
