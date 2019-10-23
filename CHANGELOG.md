@@ -4,6 +4,7 @@
 
 `Gateway` now has a `ping` field, containing the duration between the latest heartbeat and heartbeat ack.
 `GuildModifyRequest` now has an optional `banner` field, which can contain a `base64 16:9 png/jpeg image for the guild banner (when the server has BANNER feature)`.
+Added `presences` and `userIds` to the `RequestGuildMembers` class and the equivalents to `GuildMembersChunkData`.
 
 ## Removals
 
