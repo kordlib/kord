@@ -37,6 +37,9 @@ internal class HeartbeatHandler(
                     send(Command.Heartbeat(sequence.value))
                 }
             }
+
+            timestamp = MonoClock.markNow()
+            send(Command.Heartbeat(sequence.value))
         }
 
         on<Heartbeat> {
