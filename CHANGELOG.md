@@ -14,6 +14,10 @@ Added `presences` and `userIds` to the `RequestGuildMembers` class and the equiv
 
 `Invite#revoked` has been removed since it [never existed](https://github.com/discordapp/discord-api-docs/commit/70390b75377098204ccda75e3a7240a1604c7639).
 
+## Fixes
+
+`filename` is now correctly deserialized for `Attachment` objects.
+
 # 0.2.1
 
 This is the first maintenance update for Kord 0.2. 
