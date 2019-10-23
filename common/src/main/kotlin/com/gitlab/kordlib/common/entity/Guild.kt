@@ -100,12 +100,6 @@ data class GuildIntegrations(
 data class IntegrationAccount(val id: String,
                               val name: String)
 
-@Serializable
-data class GuildMembersChunkData(
-        @SerialName("guild_id")
-        val guildId: String,
-        val members: List<GuildMember>
-)
 
 @Serializable
 data class VoiceServerUpdateData(
