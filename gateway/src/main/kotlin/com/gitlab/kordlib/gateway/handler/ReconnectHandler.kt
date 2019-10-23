@@ -5,7 +5,6 @@ import com.gitlab.kordlib.gateway.Reconnect
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
-@ExperimentalCoroutinesApi
 internal class ReconnectHandler(
         flow: Flow<Event>,
         private val reconnect: suspend () -> Unit

@@ -160,5 +160,6 @@ data class GuildModifyRequest(
         val ownerId: String? = null,
         val spalsh: String? = null,
         @SerialName("system_channel_id")
-        val systemChannelId: String? = null
+        val systemChannelId: String? = null,
+        var banner: String? = null
 )

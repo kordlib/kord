@@ -8,8 +8,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
-@ObsoleteCoroutinesApi
-@ExperimentalCoroutinesApi
 internal class SequenceHandler(
         flow: Flow<Event>,
         private val sequence: Sequence
