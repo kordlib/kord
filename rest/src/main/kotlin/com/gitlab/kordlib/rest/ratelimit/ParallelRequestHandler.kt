@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.rest.ratelimit
 
+import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.annotation.KordUnsafe
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.rest.request.Request
 import com.gitlab.kordlib.rest.request.RequestException
@@ -10,7 +12,6 @@ import io.ktor.client.call.call
 import io.ktor.client.call.receive
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.response.HttpResponse
-import io.ktor.client.response.readBytes
 import io.ktor.http.takeFrom
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
@@ -19,13 +20,14 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import mu.KotlinLogging
 import java.time.Clock
-import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 import kotlin.time.minutes
 
 private val logger = KotlinLogging.logger {}
 
+@KordUnsafe
+@KordPreview
 class ParallelRequestHandler(private val client: HttpClient, private val clock: Clock = Clock.systemUTC()) : RequestHandler {
 
     private var globalSuspensionPoint = atomic(0L)
@@ -43,13 +45,12 @@ class ParallelRequestHandler(private val client: HttpClient, private val clock: 
             with(request) { apply() }
         }
 
-        suspendFor(request)
-
         logger.trace { "REQUEST: ${request.logString}" }
         val identifier = request.identifier
-        if (identifier !in locks.keys) locks[identifier] = Mutex()
-        val mutex = locks[identifier]!!
+        val mutex = locks.getOrPut(identifier) { Mutex() }
         mutex.withLock {
+            suspendFor(request)
+
             val response = client.call(builder).receive<HttpResponse>()
 
             logger.trace { response.logString }

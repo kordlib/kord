@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.requesthandler
 
 import com.gitlab.kordlib.rest.json.request.MessageCreateRequest
+import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
 import com.gitlab.kordlib.rest.ratelimit.ParallelRequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.HttpClient
@@ -14,9 +15,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import kotlin.system.measureTimeMillis
-import kotlin.test.asserter
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 @KtorExperimentalAPI
 class RequestHandlerBenchmark {
@@ -32,23 +34,35 @@ class RequestHandlerBenchmark {
         }
     }
 
-    val handler = ParallelRequestHandler(client)
-    val rest = RestClient(handler)
+    val parallelRequestHandler = ParallelRequestHandler(client)
+    val exclusionRequestHandler = ExclusionRequestHandler(client)
+    val parallelRest = RestClient(parallelRequestHandler)
+    val exclusionRest = RestClient(exclusionRequestHandler)
 
 
     @Test
+    @Disabled
+    @ExperimentalTime
     fun `parallelism`() = runBlocking {
-        val time1 = measureTimeMillis {
-            val first = launch(Dispatchers.IO) { rest.channel.getMessages(channel) }
-            val second = launch(Dispatchers.IO) { rest.channel.getMessages(channel) }
+        val time = measureTime {
+            val first = launch(Dispatchers.IO) { parallelRest.channel.getMessages(channel) }
+            val second = launch(Dispatchers.IO) { parallelRest.channel.createMessage(channel, MessageCreateRequest("parallel test")) }
             joinAll(first, second)
         }
 
-        val time2 = measureTimeMillis {
-            val first = launch(Dispatchers.IO) { rest.channel.getMessages(channel) }
-            val second = launch(Dispatchers.IO) { rest.channel.createMessage(channel, MessageCreateRequest("TEST")) }
+        println("parallel took ${time.inMilliseconds} ms")
+    }
+
+    @Test
+    @Disabled
+    @ExperimentalTime
+    fun `serial`() = runBlocking {
+        val time = measureTime {
+            val first = launch(Dispatchers.IO) { exclusionRest.channel.getMessages(channel) }
+            val second = launch(Dispatchers.IO) { exclusionRest.channel.createMessage(channel, MessageCreateRequest("serial test")) }
             joinAll(first, second)
         }
-        asserter.assertTrue("time2 must be less than time1 but was $time2", time2 < time1)
+
+        println("serial took ${time.inMilliseconds} ms")
     }
 }

@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.requesthandler
 
+import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
 import com.gitlab.kordlib.rest.ratelimit.ParallelRequestHandler
 import com.gitlab.kordlib.rest.request.RequestBuilder
 import com.gitlab.kordlib.rest.route.Route
@@ -28,19 +29,12 @@ import kotlin.time.seconds
 
 @ExperimentalTime
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Disabled
 class ParallelRequestHandlerTest {
 
     val timeout = 1000.seconds
     val instant = Instant.EPOCH
     val clock = Clock.fixed(instant, ZoneOffset.UTC)
     var firstRequest = atomic(true)
-    val client = httpClient {
-        this["X-RateLimit-Remaining"] = "0"
-        this["X-RateLimit-Reset"] = "${clock.instant().epochSecond + timeout.inSeconds.toLong()}"
-    }
-
-    val handler = ParallelRequestHandler(client)
 
     @BeforeTest
     fun setup() {
@@ -49,6 +43,12 @@ class ParallelRequestHandlerTest {
 
     @Test
     fun `a ParallelRequestHandler sending a request that results in a route timeout will wait for that timeout on the next call`() = runBlockingTest {
+        val client = httpClient {
+            this["X-RateLimit-Remaining"] = "0"
+            this["X-RateLimit-Reset"] = "${clock.instant().epochSecond + timeout.inSeconds.toLong()}"
+        }
+
+        val handler = ExclusionRequestHandler(client, clock)
 
         handler.handle(request) //get first timeout
         handler.handle(request)
@@ -59,21 +59,19 @@ class ParallelRequestHandlerTest {
     }
 
     @Test
-    fun `parallelism`() = runBlockingTest {
-       val time1 =  measureTimeMillis {
-            launch { handler.handle(request) }
-            launch { handler.handle(request) }
+    fun `an ParallelRequestHandler sending a request that results in a global timeout will wait for that timeout on the next call`() = runBlockingTest {
+        val client = httpClient {
+            this["X-RateLimit-Global"] = "true"
+            this["Retry-After"] = "${timeout.toLongMilliseconds()}"
         }
 
-       val time2 =  measureTimeMillis {
-            launch { handler.handle(request) }
-            launch { handler.handle(secondRequest) }
-        }
-        asserter.assertTrue("time2 must be less than time1 but was $time2", time2 < time1)
-    }
+        val handler = ExclusionRequestHandler(client, clock)
 
-    @AfterAll
-    fun end() {
+        handler.handle(request)
+        handler.handle(request)
+
+        asserter.assertTrue("current time should be ${timeout.toLongMilliseconds()} but was $currentTime", currentTime == timeout.toLongMilliseconds())
+
         client.close()
     }
 
