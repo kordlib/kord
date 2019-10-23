@@ -17,8 +17,15 @@ class DataCacheView(private val cache: DataCache) : DataCache by cache {
     private val descriptions = mutableMapOf<KClass<out Any>, DataDescription<out Any, out Any>>()
 
     override suspend fun register(description: DataDescription<out Any, out Any>) {
-        super.register(description)
         descriptions[description.clazz] = description
+    }
+
+    override suspend fun register(vararg descriptions: DataDescription<out Any, out Any>) {
+        descriptions.forEach { register(it) }
+    }
+
+    override suspend fun register(descriptions: Iterable<DataDescription<out Any, out Any>>) {
+        descriptions.forEach { register(it) }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -29,7 +36,7 @@ class DataCacheView(private val cache: DataCache) : DataCache by cache {
         keys += property.get(item)
     }
 
-    @ExperimentalCoroutinesApi
+
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> query(clazz: KClass<T>): QueryBuilder<T> {
         val query = cache.query(clazz)
@@ -40,7 +47,7 @@ class DataCacheView(private val cache: DataCache) : DataCache by cache {
 
 }
 
-@ExperimentalCoroutinesApi
+
 private class QueryBuilderView<T : Any>(
         private val builder: QueryBuilder<T>,
         private val keys: MutableSet<Any>,
@@ -49,7 +56,7 @@ private class QueryBuilderView<T : Any>(
     override fun build(): Query<T> = QueryView(builder, keys, property)
 }
 
-@ExperimentalCoroutinesApi
+
 private class QueryView<T : Any>(
         private val builder: QueryBuilder<T>,
         private val keys: MutableSet<Any>,

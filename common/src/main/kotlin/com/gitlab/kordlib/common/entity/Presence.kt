@@ -10,7 +10,7 @@ data class PresenceUpdateData(
         val roles: List<String>? = null,
         val game: Activity? = null,
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: String? = null, //don't trust the docs
         val status: Status,
         val activities: List<Activity>,
         @SerialName("client_status")

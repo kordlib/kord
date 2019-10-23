@@ -10,8 +10,8 @@ private val MemberData.id get() = "$userId$guildId"
 
 @Serializable
 data class MemberData(
-        val userId: String,
-        val guildId: String,
+        val userId: Long,
+        val guildId: Long,
         val nick: String? = null,
         val roles: List<String>,
         val joinedAt: String
@@ -20,13 +20,13 @@ data class MemberData(
         val description get() = description(MemberData::id)
 
         fun from(userId: String, guildId: String, entity: GuildMember) =
-                with(entity) { MemberData(userId, guildId, nick, roles, joinedAt) }
+                with(entity) { MemberData(userId.toLong(), guildId.toLong(), nick, roles, joinedAt) }
 
         fun from(userId: String, entity: AddedGuildMember) =
-                with(entity) { MemberData(userId, guildId, nick, roles, joinedAt) }
+                with(entity) { MemberData(userId.toLong(), guildId.toLong(), nick, roles, joinedAt) }
 
         fun from(userId: String, guildId: String, entity: PartialGuildMember) =
-                with(entity) { MemberData(userId, guildId, nick, roles, joinedAt) }
+                with(entity) { MemberData(userId.toLong(), guildId.toLong(), nick, roles, joinedAt) }
 
     }
 }

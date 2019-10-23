@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RegionData(
-        val id: String,
+        val id: Long,
         val name: String,
         val vip: Boolean,
         val optimal: Boolean,
@@ -14,7 +14,7 @@ data class RegionData(
 ) {
     companion object {
         fun from(region: VoiceRegion) = with(region) {
-            RegionData(id,name, vip, optimal, deprecated, custom)
+            RegionData(id.toLong(), name, vip, optimal, deprecated, custom)
         }
     }
 }

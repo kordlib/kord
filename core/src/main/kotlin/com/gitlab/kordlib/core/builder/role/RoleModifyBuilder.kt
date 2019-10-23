@@ -17,7 +17,7 @@ class RoleModifyBuilder : AuditRequestBuilder<GuildRoleModifyRequest> {
 
     override fun toRequest(): GuildRoleModifyRequest = GuildRoleModifyRequest(
             name = name,
-            color = color?.rgb,
+            color = color?.rgb?.and(0xFFFFFF),
             separate = hoist,
             mentionable = mentionable,
             permissions = permissions

@@ -22,7 +22,7 @@ sealed class Route<T>(
         : Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer())
 
     object GatewayBotGet
-        : Route<GatewayResponse>(HttpMethod.Get, "/gateway/bot", GatewayResponse.serializer())
+        : Route<BotGatewayResponse>(HttpMethod.Get, "/gateway/bot", BotGatewayResponse.serializer())
 
     object AuditLogGet
         : Route<AuditLogResponse>(HttpMethod.Get, "/guilds/$GuildId/audit-logs", AuditLogResponse.serializer())
@@ -288,16 +288,17 @@ sealed class Route<T>(
     object ExecuteWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
 
-
     object ExecuteSlackWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken/slack", NoStrategy)
-
 
     object ExecuteGithubWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
 
     object VoiceRegionsGet
         : Route<List<VoiceRegion>>(HttpMethod.Get, "/voice/regions", ArrayListSerializer(VoiceRegion.serializer()))
+
+    object CurrentApplicationInfo
+        : Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())
 
     companion object {
         const val baseUrl = "https://discordapp.com/api/v6"

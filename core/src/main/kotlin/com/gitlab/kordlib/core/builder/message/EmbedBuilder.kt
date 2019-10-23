@@ -43,7 +43,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
             description,
             url,
             timestamp?.let { DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it) },
-            color?.rgb,
+            color?.rgb?.and(0xFFFFFF),
             footer?.toRequest(),
             image?.let(::EmbedImageRequest),
             thumbnail?.toRequest(),

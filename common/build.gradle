@@ -1,5 +1,5 @@
 dependencies {
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
+    api "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
 }
 
 compileKotlin {

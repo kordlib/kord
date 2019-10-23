@@ -11,14 +11,17 @@ import com.gitlab.kordlib.core.paginateBackwards
 import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.rest.route.Position
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import java.time.Instant
+import kotlin.time.ClockMark
+import kotlin.time.seconds
 
 /**
  * The behavior of a Discord channel that can use messages.
  */
-@ExperimentalCoroutinesApi
 interface MessageChannelBehavior : ChannelBehavior {
 
     override suspend fun asChannel(): Channel {
@@ -58,6 +61,11 @@ interface MessageChannelBehavior : ChannelBehavior {
     suspend fun createMessage(content: String): Message = createMessage { this.content = content }
 
     /**
+     * Requests to delete a message in this channel.
+     */
+    suspend fun deleteMessage(id: Snowflake): Unit = kord.rest.channel.deleteMessage(this.id.value, id.value)
+
+    /**
      * Requests to get all messages in this channel that were created *before* [messageId].
      *
      * Messages retrieved by this function will be emitted in reverse-chronological older (newest -> oldest).
@@ -73,8 +81,9 @@ interface MessageChannelBehavior : ChannelBehavior {
      * [Int.MAX_VALUE] means all messages before the [messageId].
      */
     fun getMessagesBefore(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
-            paginateBackwards(idSelector =  {it.id}) { position -> kord.rest.channel.getMessages(id.value, position, 100) }
-            .map { MessageData.from(it) }.map { Message(it, kord) }
+            paginateBackwards(messageId, 100, idSelector = { it.id }) { position ->
+                kord.rest.channel.getMessages(id.value, position, 100)
+            }.map { MessageData.from(it) }.map { Message(it, kord) }
 
     /**
      * Requests to get all messages in this channel that were created *after* [messageId].
@@ -92,7 +101,7 @@ interface MessageChannelBehavior : ChannelBehavior {
      * [Int.MAX_VALUE] means all messages after the [messageId].
      */
     fun getMessagesAfter(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
-            paginateForwards(idSelector = { it.id }) { position ->
+            paginateForwards(messageId, 100, idSelector = { it.id }) { position ->
                 kord.rest.channel.getMessages(id.value, position, 100)
             }.map { MessageData.from(it) }.map { Message(it, kord) }
 
@@ -124,7 +133,19 @@ interface MessageChannelBehavior : ChannelBehavior {
         kord.rest.channel.triggerTypingIndicator(id.value)
     }
 
-    //TODO 1.3.50 add fun typeUntil(mark: ClockMark): Unit
+    suspend fun typeUntil(mark: ClockMark) {
+        while (mark.hasNotPassedNow()) {
+            type()
+            delay(8.seconds.toLongMilliseconds()) //bracing ourselves for some network delays
+        }
+    }
+
+    suspend fun typeUntil(instant: Instant) {
+        while (instant.isBefore(Instant.now())) {
+            type()
+            delay(8.seconds.toLongMilliseconds()) //bracing ourselves for some network delays
+        }
+    }
 
     companion object {
         internal operator fun invoke(id: Snowflake, kord: Kord) = object : MessageChannelBehavior {
@@ -138,7 +159,6 @@ interface MessageChannelBehavior : ChannelBehavior {
 /**
  * Requests to create a message.
  */
-@ExperimentalCoroutinesApi
 suspend inline fun MessageChannelBehavior.createMessage(builder: MessageCreateBuilder.() -> Unit): Message {
     val request = MessageCreateBuilder().apply(builder).toRequest()
 
@@ -151,5 +171,4 @@ suspend inline fun MessageChannelBehavior.createMessage(builder: MessageCreateBu
 /**
  * Requests to create a message with only an [embed][MessageCreateBuilder.embed].
  */
-@ExperimentalCoroutinesApi
 suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> Unit): Message = createMessage { embed(block) }

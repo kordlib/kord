@@ -9,10 +9,10 @@ val PresenceData.id get() = "$userId$guildId"
 
 @Serializable
 data class PresenceData(
-        val userId: String,
-        val roles: List<String>? = null,
+        val userId: Long,
+        val roles: List<Long>? = null,
         val game: ActivityData?,
-        val guildId: String? = null,
+        val guildId: Long? = null,
         val status: Status,
         val activities: List<ActivityData>,
         val clientStatus: ClientStatusData
@@ -23,10 +23,10 @@ data class PresenceData(
 
         fun from(entity: PresenceUpdateData) = with(entity) {
             PresenceData(
-                    user.id,
-                    roles,
+                    user.id.toLong(),
+                    roles?.map { it.toLong() },
                     game?.let { ActivityData.from(it) },
-                    guildId,
+                    guildId?.toLong(),
                     status,
                     activities.map { ActivityData.from(it) },
                     ClientStatusData.from(clientStatus)

@@ -6,7 +6,7 @@ import kotlinx.serialization.internal.IntDescriptor
 @Serializable(with = OpCode.OpCodeSerializer::class)
 enum class OpCode(val code: Int) {
     Dispatch(0),
-    Heartbeat(1),
+     Heartbeat(1),
     Identify(2),
     StatusUpdate(3),
     VoiceStateUpdate(4),

@@ -8,8 +8,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RoleData(
-        val id: String,
-        val guildId: String,
+        val id: Long,
+        val guildId: Long,
         val name: String,
         val color: Int,
         val hoisted: Boolean,
@@ -20,7 +20,7 @@ data class RoleData(
 ) {
     companion object {
         val description get() = description(RoleData::id)
-        fun from(guildId: String, entity: Role) = with(entity) { RoleData(id, guildId, name, color, hoist, position, permissions, managed, mentionable) }
+        fun from(guildId: String, entity: Role) = with(entity) { RoleData(id.toLong(), guildId.toLong(), name, color, hoist, position, permissions, managed, mentionable) }
         fun from(entity: GuildRole) = from(entity.guildId, entity.role)
 
     }

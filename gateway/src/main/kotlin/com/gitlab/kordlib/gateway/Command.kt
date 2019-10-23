@@ -1,12 +1,9 @@
 package com.gitlab.kordlib.gateway
 
-import com.gitlab.kordlib.common.entity.Activity
-import com.gitlab.kordlib.common.entity.Shard
-import com.gitlab.kordlib.common.entity.Status
+import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 import kotlinx.serialization.internal.SerialClassDescImpl
-import kotlinx.serialization.internal.StringDescriptor
 
 sealed class Command {
     internal data class Heartbeat(val sequenceNumber: Int? = null) : Command() {
@@ -93,10 +90,20 @@ data class IdentifyProperties(
 )
 
 @Serializable
+data class GuildMembersChunkData(
+        @SerialName("guild_id")
+        val guildId: String,
+        val members: List<GuildMember>,
+        @SerialName("not_found")
+        val notFound: List<String>? = null,
+        val presences: List<Presence>
+)
+
+@Serializable
 data class Presence(
         val status: Status,
         val afk: Boolean,
-        val since: Int? = null,
+        val since: Long? = null,
         val game: Activity? = null
 )
 
@@ -114,9 +121,12 @@ internal data class Resume(
 @Serializable
 data class RequestGuildMembers(
         @SerialName("guild_id")
-        val guildId: String,
-        val query: String,
-        val limit: Int = 0
+        val guildId: List<String>,
+        val query: String? = null,
+        val limit: Int = 0,
+        val presences: Boolean? = null,
+        @SerialName("user_ids")
+        val userIds: List<String>? = null
 ) : Command()
 
 @Serializable

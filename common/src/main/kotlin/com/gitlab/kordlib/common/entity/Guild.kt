@@ -100,12 +100,6 @@ data class GuildIntegrations(
 data class IntegrationAccount(val id: String,
                               val name: String)
 
-@Serializable
-data class GuildMembersChunkData(
-        @SerialName("guild_id")
-        val guildId: String,
-        val members: List<GuildMember>
-)
 
 @Serializable
 data class VoiceServerUpdateData(
@@ -141,6 +135,8 @@ data class VoiceState(
         val selfDeaf: Boolean,
         @SerialName("self_mute")
         val selfMute: Boolean,
+        @SerialName("self_stream")
+        val selfStream: Boolean? = null,
         val suppress: Boolean
 )
 

@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.gateway.*
+import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
@@ -23,7 +24,7 @@ internal class MessageEventHandler(
         kord: Kord,
         gateway: Gateway,
         cache: DataCache,
-        coreEventChannel: CoroutineChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
 
     override suspend fun handle(event: Event) = when (event) {
@@ -42,7 +43,7 @@ internal class MessageEventHandler(
         cache.put(data)
 
         cache.find<ChannelData> { ChannelData::id eq channelId }.update {
-            it.copy(lastMessageId = id)
+            it.copy(lastMessageId = data.id)
         }
 
         coreEventChannel.send(MessageCreateEvent(Message(data, kord)))
@@ -88,7 +89,7 @@ internal class MessageEventHandler(
         }
 
         cache.find<MessageData> { MessageData::id eq messageId }.update {
-            val isMe = kord.selfId?.value == event.reaction.userId
+            val isMe = kord.selfId.value == event.reaction.userId
 
             val reactions = if (it.reactions.isNullOrEmpty()) {
                 listOf(ReactionData.from(1, isMe, emoji))
@@ -96,7 +97,7 @@ internal class MessageEventHandler(
                 val reactions = it.reactions.orEmpty()
                 val reaction = reactions.firstOrNull { reaction ->
                     if (emoji.id == null) reaction.emojiName == emoji.name
-                    else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
+                    else reaction.emojiId?.toString() == emoji.id && reaction.emojiName == emoji.name
                 }
 
                 when (reaction) {
@@ -129,12 +130,12 @@ internal class MessageEventHandler(
         cache.find<MessageData> { MessageData::id eq messageId }.update {
             if (it.reactions.isNullOrEmpty()) return@update it
 
-            val me = kord.selfId?.value == event.reaction.userId
+            val me = kord.selfId.value == event.reaction.userId
 
             val oldReactions = it.reactions.orEmpty()
             val reaction = oldReactions.firstOrNull { reaction ->
                 if (emoji.id == null) reaction.emojiName == emoji.name
-                else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
+                else reaction.emojiId?.toString() == emoji.id && reaction.emojiName == emoji.name
             } ?: return@update it
 
             val reactions = when (val count = reaction.count - 1) {

@@ -22,11 +22,11 @@ class Message(private val data: MessageData, override val kord: Kord) : MessageB
     override val channelId: Snowflake
         get() = Snowflake(data.channelId)
 
-    val guildId: Snowflake? get() = data.guildId.toSnowflakeOrNull()
+    val guildId: Snowflake? get() = data.guildId?.toSnowflakeOrNull()
 
     val attachments: Set<Attachment> get() = data.attachments.asSequence().map { Attachment(it, kord) }.toSet()
 
-    val author: User? get() = data.author?.let { User(UserData.from(it), kord) }
+    val author: User? get() = data.author?.let { User(it, kord) }
 
     val content: String get() = data.content
 

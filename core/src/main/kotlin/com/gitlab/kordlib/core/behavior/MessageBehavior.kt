@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 /**
  * The behavior of a [Discord Message](https://discordapp.com/developers/docs/resources/channel#message-object).
  */
-@ExperimentalCoroutinesApi
+
 interface MessageBehavior : Entity {
     /**
      * The channel id this message belongs to.
@@ -42,7 +42,7 @@ interface MessageBehavior : Entity {
      * Requests to get all users that have reacted to this message.
      */
     fun getReactors(emoji: ReactionEmoji): Flow<User> =
-            paginateForwards(idSelector = { it.id }) { position ->
+            paginateForwards(batchSize = 100, idSelector = { it.id }) { position ->
                 kord.rest.channel.getReactions(
                         channelId = channelId.value,
                         messageId = id.value,

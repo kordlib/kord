@@ -6,15 +6,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class InviteData(
         val code: String,
-        val guildId: String?,
-        val channelId: String,
-        val targetUserId: String?,
+        val guildId: Long?,
+        val channelId: Long,
+        val targetUserId: Long?,
         val approximatePresenceCount: Int?,
         val approximateMemberCount: Int?
 ) {
     companion object {
         fun from(entity: InviteResponse) = with(entity) {
-            InviteData(code!!, guild!!.id, channel!!.id, targetUser?.id, approximatePresenceCount, approximateMemberCount)
+            InviteData(code!!, guild!!.id.toLong(), channel!!.id.toLong(), targetUser?.id?.toLong(), approximatePresenceCount, approximateMemberCount)
         }
     }
 }

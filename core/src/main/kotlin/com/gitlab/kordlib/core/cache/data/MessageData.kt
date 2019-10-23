@@ -13,23 +13,23 @@ internal val MessageData.authorId get() = author?.id
 
 @Serializable
 data class MessageData(
-        val id: String,
-        val channelId: String,
-        val guildId: String? = null,
-        val author: User?,
+        val id: Long,
+        val channelId: Long,
+        val guildId: Long? = null,
+        val author: UserData?,
         val content: String,
         val timestamp: String,
         val editedTimestamp: String? = null,
         val tts: Boolean,
         val mentionEveryone: Boolean,
-        val mentions: List<String>,
-        val mentionRoles: List<String>,
+        val mentions: List<Long>,
+        val mentionRoles: List<Long>,
         val attachments: List<AttachmentData>,
         val embeds: List<EmbedData>,
         val reactions: List<ReactionData>? = null,
-        val nonce: String? = null,
+        val nonce: Long? = null,
         val pinned: Boolean,
-        val webhookId: String?,
+        val webhookId: Long?,
         val type: MessageType,
         val activity: MessageActivity? = null,
         val application: MessageApplication? = null
@@ -39,7 +39,7 @@ data class MessageData(
 
         val editedTimestamp = partialMessage.editedTimestamp ?: editedTimestamp
         val content =  partialMessage.content ?: content
-        val mentions = partialMessage.mentions.orEmpty().map { it.id }
+        val mentions = partialMessage.mentions.orEmpty().map { it.id.toLong() }
         val mentionEveryone =  partialMessage.mentionEveryone?: mentionEveryone
         val embeds =  partialMessage.embeds?.map { EmbedData.from(it) } ?: embeds
 
@@ -72,23 +72,23 @@ data class MessageData(
 
         fun from(entity: Message) = with(entity) {
             MessageData(
-                    id,
-                    channelId,
-                    guildId,
-                    author,
+                    id.toLong(),
+                    channelId.toLong(),
+                    guildId?.toLong(),
+                    author?.let { UserData.from(it) },
                     content,
                     timestamp,
                     editedTimestamp,
                     tts,
                     mentionEveryone,
-                    mentions.map { it.id },
-                    mentionRoles.map { it.id },
+                    mentions.map { it.id.toLong() },
+                    mentionRoles.map { it.id.toLong() },
                     attachments.map { AttachmentData.from(it) },
                     embeds.map { EmbedData.from(it) },
                     reactions?.map { ReactionData.from(it) },
-                    nonce,
+                    nonce?.toLong(),
                     pinned,
-                    webhookId,
+                    webhookId?.toLong(),
                     type,
                     activity,
                     application

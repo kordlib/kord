@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WebhookData(
-        val id: String,
-        val guildId: String,
-        val channelId: String,
-        val userid: String,
+        val id: Long,
+        val guildId: Long,
+        val channelId: Long,
+        val userid: Long,
         val name: String? = null,
         val avatar: String? = null,
         val token: String
@@ -17,6 +17,6 @@ data class WebhookData(
     companion object {
         val description get() = description(WebhookData::id)
 
-        fun from(entity: Webhook) = with(entity) { WebhookData(id, guildId!!, channelId, user!!.id, name, avatar, token) }
+        fun from(entity: Webhook) = with(entity) { WebhookData(id.toLong(), guildId!!.toLong(), channelId.toLong(), user!!.id.toLong(), name, avatar, token) }
     }
 }

@@ -9,6 +9,7 @@ import com.gitlab.kordlib.core.event.UserUpdateEvent
 import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.UserUpdate
+import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import com.gitlab.kordlib.core.event.Event as CoreEvent
@@ -19,7 +20,7 @@ internal class UserEventHandler(
         kord: Kord,
         gateway: Gateway,
         cache: DataCache,
-        coreEventChannel: CoroutineChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
 
     override suspend fun handle(event: Event) = when (event) {

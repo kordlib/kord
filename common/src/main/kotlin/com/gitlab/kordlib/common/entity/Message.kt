@@ -124,7 +124,7 @@ data class Flags internal constructor(private val value: Int) {
 @Serializable
 data class Attachment(
         val id: String,
-        val fileName: String,
+        val fileName: String? = null,
         val size: Int,
         val url: String,
         @SerialName("proxy_url")
