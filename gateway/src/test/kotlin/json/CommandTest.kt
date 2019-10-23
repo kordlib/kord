@@ -52,14 +52,18 @@ class CommandTest {
         val query = "test"
         val limit = 1337
 
-        val request = Json.stringify(Command.Companion, RequestGuildMembers(guildId, query, limit))
+        val request = Json.stringify(Command.Companion, RequestGuildMembers(listOf(guildId), query, limit))
 
         val json = Json.stringify(JsonObject.serializer(), json {
             "op" to OpCode.RequestGuildMembers.code
             "d" to json {
-                "guild_id" to guildId
+                "guild_id" to jsonArray {
+                    +guildId
+                }
                 "query" to query
                 "limit" to limit
+                "presences" to null as Int?
+                "user_ids" to null as Int?
             }
         })
 
