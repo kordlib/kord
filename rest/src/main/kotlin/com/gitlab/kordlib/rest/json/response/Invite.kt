@@ -52,8 +52,7 @@ data class InviteMetaDataResponse(
         val maxAge: Int,
         val temporary: Boolean,
         @SerialName("created_at")
-        val createdAt: String,
-        val revoked: Boolean
+        val createdAt: String
 )
 
 @Serializable

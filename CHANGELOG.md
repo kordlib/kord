@@ -12,6 +12,10 @@
 
 `Gateway` now has a `ping` field, containing the duration between the latest heartbeat and heartbeat ack.
 
+## Removals
+
+`Invite#revoked` has been removed since it [never existed](https://github.com/discordapp/discord-api-docs/commit/70390b75377098204ccda75e3a7240a1604c7639).
+
 # 0.2.1
 
 This is the first maintenance update for Kord 0.2. 
