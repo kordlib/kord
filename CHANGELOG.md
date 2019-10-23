@@ -5,6 +5,7 @@
 `Kord#getGuilds()` has been replaced with the non-suspending `Kord#guilds`.
 `@KordBuilder` has been renamed to `@KordDsl`.
 `KordClientBuilder` has been renamed to `KordBuilder`.
+`fileName` has been renamed to `filename`.
 
 # 0.2.4
 
