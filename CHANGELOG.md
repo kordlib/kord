@@ -5,6 +5,7 @@
 `Kord#getGuilds()` has been replaced with the non-suspending `Kord#guilds`.
 `@KordBuilder` has been renamed to `@KordDsl`.
 `KordClientBuilder` has been renamed to `KordBuilder`.
+`fileName` has been renamed to `filename`.
 
 # 0.2.2
 
@@ -21,6 +22,10 @@ Added `presences` and `userIds` to the `RequestGuildMembers` class and the equiv
 ## Removals
 
 `Invite#revoked` has been removed since it [never existed](https://github.com/discordapp/discord-api-docs/commit/70390b75377098204ccda75e3a7240a1604c7639).
+
+## Fixes
+
+`filename` is now correctly deserialized for `Attachment` objects.
 
 # 0.2.1
 

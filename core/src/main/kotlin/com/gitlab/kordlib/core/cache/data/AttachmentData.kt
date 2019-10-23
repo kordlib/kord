@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AttachmentData(
         val id: Long,
-        val fileName: String,
+        val filename: String,
         val size: Int,
         val url: String,
         val proxyUrl: String,
@@ -15,7 +15,7 @@ data class AttachmentData(
 ) {
     companion object {
         fun from(entity: Attachment) = with(entity) {
-            AttachmentData(id.toLong(), fileName ?: "", size, url, proxyUrl, height, width)
+            AttachmentData(id.toLong(), filename ?: "", size, url, proxyUrl, height, width)
         }
     }
 }

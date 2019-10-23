@@ -9,6 +9,7 @@ import com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.io.InputStream
+import java.io.FilenameFilter
 import java.nio.file.Files
 import java.nio.file.Path
 

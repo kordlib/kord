@@ -8,7 +8,7 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : Entit
     override val id: Snowflake
         get() = Snowflake(data.id)
 
-    val fileName: String get() = data.fileName
+    val filename: String get() = data.filename
 
     val size: Int get() = data.size
 
@@ -20,7 +20,7 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : Entit
 
     val width: Int? get() = data.width
 
-    val isSpoiler: Boolean get() = fileName.startsWith("SPOILER_")
+    val isSpoiler: Boolean get() = filename.startsWith("SPOILER_")
 
     val isImage: Boolean get() = height == width && height == null
 
