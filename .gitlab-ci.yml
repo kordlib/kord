@@ -34,15 +34,4 @@ test:
       - build
       - .gradle
 
-deploy:
-  stage: deploy
-  script: gradle bintrayUpload
-  only:
-    refs:
-      - master
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: push
-    paths:
-      - build
-      - .gradle
+
