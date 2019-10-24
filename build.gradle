@@ -18,7 +18,7 @@ buildscript {
 }
 
 ext {
-    lib_version = '0.2.1'
+    lib_version = System.getenv("CI_COMMIT_TAG") ?: System.getenv("CI_COMMIT_SHA")
     lib_group = 'com.gitlab.kordlib.kord'
     serialization_version = '0.12.0'
     ktor_version = '1.2.2'
