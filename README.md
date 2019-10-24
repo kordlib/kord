@@ -1,6 +1,6 @@
 # Kord
 [![Discord](https://img.shields.io/discord/556525343595298817.svg?color=&label=Kord&logo=discord&style=for-the-badge)](https://discord.gg/6jcx5ev)
-[![JitPack](https://img.shields.io/jitpack/v/gitlab/hopebaron/Kord.svg?color=&style=for-the-badge)](https://jitpack.io/#com.gitlab.kordlib/Kord)
+    [![JitPack](https://img.shields.io/jitpack/v/gitlab/hopebaron/Kord.svg?color=&style=for-the-badge)](https://jitpack.io/#com.gitlab.kordlib/Kord)
 [![Gitlab pipeline status (branch)](https://img.shields.io/gitlab/pipeline/HopeBaron/kord/master.svg?style=for-the-badge)]()
 
 **Kord is still in its early stages, meaning it's not ready to be used for public purposes yet.**
@@ -84,7 +84,7 @@ repositories {
 ```groovy
 dependencies {
  ...
- implementation 'com.gitlab.kordlib:kord:0.2.1'
+ implementation 'com.gitlab.kordlib:kord:0.2.2'
 }
 ```
 
@@ -105,7 +105,7 @@ dependencies {
 <dependency>
     <groupId>com.gitlab.kordlib</groupId>
     <artifactId>Kord</artifactId>
-    <version>0.2.1</version>
+    <version>0.2.2</version>
 </dependency>
 ```
 
