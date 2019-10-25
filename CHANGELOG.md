@@ -1,3 +1,9 @@
+# 0.2.3
+
+## Fixes
+
+`MessageCreateBuilder#addFile` no longer ignores files added.
+
 # 0.2.2
 
 ## Additions
