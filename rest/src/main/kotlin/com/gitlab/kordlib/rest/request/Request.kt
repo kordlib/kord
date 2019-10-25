@@ -122,9 +122,10 @@ internal class MultipartRequest<T>(
 
             if (files.size == 1) append("file", filename = files[0].first) {
                 files[0].second.copyTo(outputStream())
-            }
-            else files.forEachIndexed { index, pair ->
-                append("file$index", pair.first) { pair.second.copyTo(outputStream()) }
+            } else files.forEachIndexed { index, pair ->
+                val name = pair.first
+                val inputStream = pair.second
+                append("file$index", name) { inputStream.copyTo(outputStream()) }
             }
         }
 
