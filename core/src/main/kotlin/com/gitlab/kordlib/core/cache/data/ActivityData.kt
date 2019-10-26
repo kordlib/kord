@@ -2,6 +2,8 @@ package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.common.entity.Activity
 import com.gitlab.kordlib.common.entity.ActivityType
+import com.gitlab.kordlib.common.entity.Emoji
+import com.gitlab.kordlib.common.entity.PartialEmoji
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,6 +15,7 @@ data class ActivityData(
         val stop: Long? = null,
         val applicationId: String? = null,
         val details: String? = null,
+        val emoji: PartialEmoji? = null,
         val state: String? = null,
         val partyId: String? = null,
         val partyCurrentSize: Int? = null,
@@ -37,6 +40,7 @@ data class ActivityData(
                     timestamps?.end,
                     applicationId,
                     details,
+                    emoji,
                     state,
                     party?.id,
                     party?.size?.first(),
