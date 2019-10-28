@@ -30,6 +30,10 @@ interface Channel : ChannelBehavior {
             GuildCategory -> Category(data, kord)
             GuildNews -> NewsChannel(data, kord)
             GuildStore -> StoreChannel(data, kord)
+            else -> object: Channel {
+                override val data: ChannelData = data
+                override val kord: Kord = kord
+            }
         }
     }
 }

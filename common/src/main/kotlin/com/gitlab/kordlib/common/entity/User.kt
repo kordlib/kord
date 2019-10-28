@@ -38,6 +38,8 @@ data class OptionallyMemberUser(
 
 @Serializable(with = Premium.PremiumSerializer::class)
 enum class Premium(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     NitroClassic(1),
     Nitro(2);
 
@@ -48,7 +50,7 @@ enum class Premium(val code: Int) {
 
         override fun deserialize(decoder: Decoder): Premium {
             val code = decoder.decodeInt()
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: Premium) {
