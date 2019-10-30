@@ -21,7 +21,7 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
      * Requests to retrieve the voice states of this channel, if cached.
      */
     val voiceStates: Flow<VoiceState> get() =
-            kord.cache.find<VoiceStateData> { VoiceStateData::channelId eq id.value }
+            kord.cache.find<VoiceStateData> { VoiceStateData::channelId eq id.longValue }
                     .asFlow()
                     .map { VoiceState(it, kord) }
 

@@ -2,7 +2,10 @@
 
 ## Fixes
 
-`MessageCreateBuilder#addFile` no longer ignores files added.
+* `MessageCreateBuilder#addFile` no longer ignores files added.
+* `GuildMembersChunkData#presences` has become nullable.
+* `RequestGuildMembers#query` is no longer nullable.
+* Fixed an issue with Kord ignoring cached entries that relied on querying data by id.
 
 # 0.2.2
 

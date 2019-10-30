@@ -96,7 +96,7 @@ data class GuildMembersChunkData(
         val members: List<GuildMember>,
         @SerialName("not_found")
         val notFound: List<String>? = null,
-        val presences: List<Presence>
+        val presences: List<Presence>? = null
 )
 
 @Serializable
@@ -122,7 +122,7 @@ internal data class Resume(
 data class RequestGuildMembers(
         @SerialName("guild_id")
         val guildId: List<String>,
-        val query: String? = null,
+        val query: String = "",
         val limit: Int = 0,
         val presences: Boolean? = null,
         @SerialName("user_ids")

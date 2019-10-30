@@ -58,8 +58,8 @@ interface MemberBehavior : Entity, UserBehavior {
      */
     suspend fun getPresence() : Presence? {
         val data = kord.cache.find<PresenceData> {
-            PresenceData::userId eq id.value
-            PresenceData::guildId eq guildId.value
+            PresenceData::userId eq id.longValue
+            PresenceData::guildId eq guildId.longValue
         }.singleOrNull() ?: return null
 
         return Presence(data, kord)
@@ -70,8 +70,8 @@ interface MemberBehavior : Entity, UserBehavior {
      */
     suspend fun getVoiceState(): VoiceState? {
         val data = kord.cache.find<VoiceStateData> {
-            VoiceStateData::userId eq id.value
-            VoiceStateData::guildId eq guildId.value
+            VoiceStateData::userId eq id.longValue
+            VoiceStateData::guildId eq guildId.longValue
         }.singleOrNull() ?: return null
 
         return VoiceState(data, kord)
