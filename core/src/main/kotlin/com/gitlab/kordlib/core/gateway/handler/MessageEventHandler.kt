@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
+import com.gitlab.kordlib.common.entity.MessageReaction
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.cache.data.MessageData
@@ -55,7 +56,7 @@ internal class MessageEventHandler(
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
         query.update { it + this }
 
-        coreEventChannel.send(MessageUpdateEvent(Snowflake(id), Snowflake(channelId), old, kord))
+        coreEventChannel.send(MessageUpdateEvent(Snowflake(id), Snowflake(channelId), this, old, kord))
     }
 
     private suspend fun handle(event: MessageDelete) = with(event.message) {
@@ -83,31 +84,7 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageReactionAdd) = with(event.reaction) {
-        val reaction = when (val id = emoji.id) {
-            null -> ReactionEmoji.Unicode(emoji.name)
-            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name, emoji.animated ?: false)
-        }
-
-        cache.find<MessageData> { MessageData::id eq messageId }.update {
-            val isMe = kord.selfId.value == event.reaction.userId
-
-            val reactions = if (it.reactions.isNullOrEmpty()) {
-                listOf(ReactionData.from(1, isMe, emoji))
-            } else {
-                val reactions = it.reactions.orEmpty()
-                val reaction = reactions.firstOrNull { reaction ->
-                    if (emoji.id == null) reaction.emojiName == emoji.name
-                    else reaction.emojiId?.toString() == emoji.id && reaction.emojiName == emoji.name
-                }
-
-                when (reaction) {
-                    null -> reactions + ReactionData.from(1, isMe, emoji)
-                    else -> (reactions - reaction) + reaction.copy(count = reaction.count + 1, me = isMe)
-                }
-            }
-
-            it.copy(reactions = reactions)
-        }
+        cache.find<MessageData> { MessageData::id eq messageId }.update { it.plus(kord.selfId, this) }
 
         coreEventChannel.send(
                 ReactionAddEvent(
@@ -115,7 +92,7 @@ internal class MessageEventHandler(
                         Snowflake(channelId),
                         Snowflake(messageId),
                         guildId.toSnowflakeOrNull(),
-                        reaction,
+                        toReaction(),
                         kord
                 )
         )
@@ -171,4 +148,9 @@ internal class MessageEventHandler(
         )
     }
 
+}
+
+fun MessageReaction.toReaction() = when (val id = emoji.id) {
+    null -> ReactionEmoji.Unicode(emoji.name)
+    else -> ReactionEmoji.Custom(Snowflake(id), emoji.name, emoji.animated ?: false)
 }

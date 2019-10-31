@@ -10,7 +10,7 @@ import com.gitlab.kordlib.core.toSnowflakeOrNull
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
-class Message(private val data: MessageData, override val kord: Kord) : MessageBehavior {
+class Message(val data: MessageData, override val kord: Kord) : MessageBehavior {
 
     override val id: Snowflake
         get() = Snowflake(data.id)
