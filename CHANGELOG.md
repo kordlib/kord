@@ -6,6 +6,7 @@
 * `GuildMembersChunkData#presences` has become nullable.
 * `RequestGuildMembers#query` is no longer nullable.
 * Fixed an issue with Kord ignoring cached entries that relied on querying data by id.
+* `User#discriminator` and `User#tag` will now properly format discriminators with leading spaces.
 
 # 0.2.2
 
