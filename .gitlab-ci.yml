@@ -16,7 +16,7 @@ before_script:
 
 build:
   stage: build
-  script: gradle --build-cache assemble
+  script: gradle --stacktrace --info --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
@@ -26,7 +26,7 @@ build:
 
 test:
   stage: test
-  script: gradle check
+  script: gradle --stacktrace --info check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -36,7 +36,7 @@ test:
 
 deploy:
   stage: deploy
-  script: gradle bintrayUpload
+  script: gradle --stacktrace --info bintrayUpload
   only:
     refs:
       - master
