@@ -19,13 +19,18 @@ interface MemberBehavior : Entity, UserBehavior {
 
     /**
      * The guild this channel is associated to.
-    */
+     */
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /**
-     * The
+     * The raw mention for this member's nickname.
      */
-    suspend fun asMember() : Member = kord.getMember(guildId, id)!!
+    val nicknameMention get() = "<@!${id.value}>"
+
+    /**
+     * Requests to get this behaviour as a member.
+     */
+    suspend fun asMember(): Member = kord.getMember(guildId, id)!!
 
     /**
      * Requests to unban this member from its guild.
@@ -56,7 +61,7 @@ interface MemberBehavior : Entity, UserBehavior {
     /**
      * Requests to get the cached presence, if cached.
      */
-    suspend fun getPresence() : Presence? {
+    suspend fun getPresence(): Presence? {
         val data = kord.cache.find<PresenceData> {
             PresenceData::userId eq id.longValue
             PresenceData::guildId eq guildId.longValue
@@ -78,7 +83,7 @@ interface MemberBehavior : Entity, UserBehavior {
     }
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): MemberBehavior = object: MemberBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): MemberBehavior = object : MemberBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
@@ -101,5 +106,5 @@ suspend inline fun MemberBehavior.edit(builder: MemberModifyBuilder.() -> Unit) 
     val reason = builder.reason
     val request = builder.toRequest()
 
-     kord.rest.guild.modifyGuildMember(guildId.value, id.value, request, reason)
+    kord.rest.guild.modifyGuildMember(guildId.value, id.value, request, reason)
 }

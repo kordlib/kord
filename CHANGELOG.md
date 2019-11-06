@@ -1,5 +1,9 @@
 # 0.2.3
 
+## Additions
+
+* `nicknameMention` has been added to `MemberBehavior`
+
 ## Fixes
 
 * `MessageCreateBuilder#addFile` no longer ignores files added.
