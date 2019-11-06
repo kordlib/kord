@@ -34,6 +34,18 @@ test:
       - build
       - .gradle
 
+merge:
+  stage: test
+  script: gradle --stacktrace --info check
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+  only:
+    - merge_requests
+
 deploy:
   stage: deploy
   script: gradle --stacktrace --info bintrayUpload
