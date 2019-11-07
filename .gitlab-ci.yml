@@ -21,7 +21,11 @@ build:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
+      - builds
       - build
+      - common/build
+      - core/build
+      - gateway/build
       - .gradle
 
 test:
@@ -31,7 +35,11 @@ test:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
     paths:
+      - builds
       - build
+      - common/build
+      - core/build
+      - gateway/build
       - .gradle
 
 merge:
@@ -41,7 +49,11 @@ merge:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
     paths:
+      - builds
       - build
+      - common/build
+      - core/build
+      - gateway/build
       - .gradle
   only:
     - merge_requests
@@ -56,5 +68,9 @@ deploy:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
+      - builds
       - build
+      - common/build
+      - core/build
+      - gateway/build
       - .gradle

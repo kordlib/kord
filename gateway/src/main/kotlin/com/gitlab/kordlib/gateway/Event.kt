@@ -6,7 +6,7 @@ import kotlinx.serialization.internal.*
 import kotlinx.serialization.json.JsonElementSerializer
 import mu.KotlinLogging
 
-private val jsonLogger = KotlinLogging.logger {  }
+private val jsonLogger = KotlinLogging.logger { }
 
 sealed class DispatchEvent : Event() {
     abstract val sequence: Int?
@@ -52,8 +52,8 @@ sealed class Event {
                                 OpCode.Reconnect -> data = Reconnect
                             }
                         }
-                        1 -> eventName = decodeNullableSerializableElement(descriptor, index, NullableSerializer(String.serializer()))
-                        2 -> sequence = decodeNullableSerializableElement(descriptor, index, NullableSerializer(Int.serializer()))
+                        1 -> eventName = decodeNullableSerializableElement(descriptor, index, String.serializer().nullable)
+                        2 -> sequence = decodeNullableSerializableElement(descriptor, index, Int.serializer().nullable)
                         3 -> data = when (op) {
                             OpCode.Dispatch -> getByDispatchEvent(index, this, eventName, sequence)
                             OpCode.Heartbeat -> decodeSerializableElement(descriptor, index, Heartbeat.serializer())
@@ -112,7 +112,7 @@ sealed class Event {
             else -> {
                 jsonLogger.warn { "unknown gateway event name $name" }
                 // consume json elements that are unknown to us
-                decoder.decodeSerializableElement(descriptor,index,NullableSerializer(JsonElementSerializer))
+                decoder.decodeSerializableElement(descriptor, index, JsonElementSerializer.nullable)
                 null
             }
         }
