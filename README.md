@@ -8,7 +8,7 @@
 
 Kord is an idiomatic, non-blocking, modularized implementation of the Discord API. 
 
-#Goals
+# Goals
 
 ## No blocking, no callbacks
 
@@ -77,13 +77,14 @@ repositories {
  ...
  jcenter()
  maven { url 'https://jitpack.io' }
+ maven { url "https://dl.bintray.com/kordlib/Kord" }
 }
 ```
 
 ```groovy
 dependencies {
  ...
- implementation 'com.gitlab.kordlib:kord:0.1.0'
+ implementation 'com.gitlab.kordlib:kord:0.2.1'
 }
 ```
 
@@ -94,13 +95,17 @@ dependencies {
     <id>jitpack.io</id>
     <url>https://jitpack.io</url>
 </repository>
+<repository>
+    <id>bintray</id>
+    <url>https://dl.bintray.com/kordlib/Kord</url>
+</repository>
 ```
 
 ```xml
 <dependency>
     <groupId>com.gitlab.kordlib</groupId>
     <artifactId>Kord</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
 </dependency>
 ```
 
