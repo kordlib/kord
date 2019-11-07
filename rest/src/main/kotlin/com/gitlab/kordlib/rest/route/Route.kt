@@ -6,10 +6,7 @@ import io.ktor.http.HttpMethod
 import kotlinx.serialization.Decoder
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialDescriptor
-import kotlinx.serialization.internal.ArrayListSerializer
-import kotlinx.serialization.internal.NullableSerializer
-import kotlinx.serialization.internal.StringSerializer
-import kotlinx.serialization.internal.UnitDescriptor
+import kotlinx.serialization.internal.*
 import com.gitlab.kordlib.common.entity.Emoji as EmojiEntity
 
 sealed class Route<T>(
@@ -172,7 +169,7 @@ sealed class Route<T>(
         : Route<List<GuildMember>>(HttpMethod.Get, "/guilds/$GuildId/members", ArrayListSerializer(GuildMember.serializer()))
 
     object GuildMemberPut
-        : Route<GuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", NullableSerializer(GuildMember.serializer()))
+        : Route<GuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", GuildMember.serializer().nullable)
 
     object GuildMemberPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/$UserId", NoStrategy)

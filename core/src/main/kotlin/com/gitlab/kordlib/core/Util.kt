@@ -6,7 +6,6 @@ import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.request.RequestException
 import com.gitlab.kordlib.rest.route.Position
 import kotlinx.atomicfu.atomic
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -38,12 +37,11 @@ fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
     }
 }
 
-
-suspend inline fun <T: Any> Flow<T>.firstOrNull(crossinline predicate: (T) -> Boolean) : T? =
+suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: suspend (T) -> Boolean): T? =
         filter { predicate(it) }.take(1).singleOrNull()
 
 
-suspend inline fun <T: Any> Flow<T>.any(crossinline predicate: (T) -> Boolean) : Boolean =
+suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
         firstOrNull(predicate) != null
 
 internal fun <T> Flow<T>.switchIfEmpty(flow: Flow<T>): Flow<T> = flow {
@@ -60,7 +58,7 @@ internal fun <T> Flow<T>.switchIfEmpty(flow: Flow<T>): Flow<T> = flow {
     }
 }
 
-internal suspend inline fun <T> Flow<T>.indexOfFirstOrNull(crossinline predicate: (T) -> Boolean): Int? {
+internal suspend inline fun <T> Flow<T>.indexOfFirstOrNull(crossinline predicate: suspend (T) -> Boolean): Int? {
     val counter = atomic(0)
     return map { counter.getAndIncrement() to it }
             .filter { predicate(it.second) }

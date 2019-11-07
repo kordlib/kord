@@ -61,7 +61,7 @@ interface GuildBehavior : Entity {
      */
     val presences: Flow<Presence>
         get() =
-            kord.cache.find<PresenceData> { PresenceData::guildId eq id.value }
+            kord.cache.find<PresenceData> { PresenceData::guildId eq id.longValue }
                     .asFlow()
                     .map { Presence(it, kord) }
     /**
@@ -115,7 +115,7 @@ interface GuildBehavior : Entity {
      */
     val voiceStates: Flow<VoiceState>
         get() = kord.cache
-                .find<VoiceStateData> { VoiceStateData::guildId eq id.value }
+                .find<VoiceStateData> { VoiceStateData::guildId eq id.longValue }
                 .asFlow()
                 .map { VoiceState(it, kord) }
 

@@ -85,7 +85,7 @@ internal class ChannelEventHandler(
     private suspend fun handle(event: ChannelPinsUpdate) = with(event.pins) {
         val event = ChannelPinsUpdateEvent(Snowflake(channelId), lastPinTimestamp?.toInstant(), kord)
 
-        cache.find<ChannelData> { ChannelData::id eq channelId }.update {
+        cache.find<ChannelData> { ChannelData::id eq channelId.toLong() }.update {
             it.copy(lastPinTimestamp = lastPinTimestamp ?: it.lastPinTimestamp)
         }
 

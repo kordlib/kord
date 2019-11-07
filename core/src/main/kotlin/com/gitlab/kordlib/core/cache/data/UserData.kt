@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 data class UserData(
         val id: Long,
         val username: String,
-        val discriminator: Int,
+        val discriminator: String,
         val avatar: String? = null,
         val bot: Boolean? = null
 ) {
@@ -26,7 +26,7 @@ data class UserData(
             UserData(
                     id.toLong(),
                     username,
-                    discriminator.toInt(),
+                    discriminator,
                     avatar,
                     bot
             )
