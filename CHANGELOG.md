@@ -1,3 +1,27 @@
+# 0.2.3
+
+## Additions
+
+* `nicknameMention` has been added to `MemberBehavior`
+
+## Changes
+
+* `Flow` extension now support suspending functions
+
+## Fixes
+
+* `MessageCreateBuilder#addFile` no longer ignores files added.
+* `GuildMembersChunkData#presences` has become nullable.
+* `RequestGuildMembers#query` is no longer nullable.
+* Fixed an issue with Kord ignoring cached entries that relied on querying data by id.
+* `User#discriminator` and `User#tag` will now properly format discriminators with leading spaces.
+
+## Dependencies
+* kotlin-logging: 1.7.6
+* kotlinx.coroutines: 1.3.2
+* kotlinx.serialization 0.13.0
+* ktor 1.2.5
+
 # 0.2.2
 
 ## Additions

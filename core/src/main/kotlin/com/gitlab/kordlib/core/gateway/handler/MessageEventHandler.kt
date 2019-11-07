@@ -42,7 +42,7 @@ internal class MessageEventHandler(
         val data = MessageData.from(this)
         cache.put(data)
 
-        cache.find<ChannelData> { ChannelData::id eq channelId }.update {
+        cache.find<ChannelData> { ChannelData::id eq channelId.toLong() }.update {
             it.copy(lastMessageId = data.id)
         }
 
@@ -50,7 +50,7 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageUpdate) = with(event.message) {
-        val query = cache.find<MessageData> { MessageData::id eq id }
+        val query = cache.find<MessageData> { MessageData::id eq id.toLong() }
 
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
         query.update { it + this }
@@ -59,7 +59,7 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageDelete) = with(event.message) {
-        val query = cache.find<MessageData> { MessageData::id eq id }
+        val query = cache.find<MessageData> { MessageData::id eq id.toLong() }
 
         val removed = query.singleOrNull()?.let { Message(it, kord) }
         query.remove()
@@ -88,7 +88,7 @@ internal class MessageEventHandler(
             else -> ReactionEmoji.Custom(Snowflake(id), emoji.name, emoji.animated ?: false)
         }
 
-        cache.find<MessageData> { MessageData::id eq messageId }.update {
+        cache.find<MessageData> { MessageData::id eq messageId.toLong() }.update {
             val isMe = kord.selfId.value == event.reaction.userId
 
             val reactions = if (it.reactions.isNullOrEmpty()) {
@@ -127,7 +127,7 @@ internal class MessageEventHandler(
             else -> ReactionEmoji.Custom(Snowflake(id), emoji.name, emoji.animated ?: false)
         }
 
-        cache.find<MessageData> { MessageData::id eq messageId }.update {
+        cache.find<MessageData> { MessageData::id eq messageId.toLong() }.update {
             if (it.reactions.isNullOrEmpty()) return@update it
 
             val me = kord.selfId.value == event.reaction.userId
@@ -159,7 +159,7 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageReactionRemoveAll) = with(event.reactions) {
-        cache.find<MessageData> { MessageData::id eq messageId }.update { it.copy(reactions = emptyList()) }
+        cache.find<MessageData> { MessageData::id eq messageId.toLong() }.update { it.copy(reactions = emptyList()) }
 
         coreEventChannel.send(
                 ReactionRemoveAllEvent(

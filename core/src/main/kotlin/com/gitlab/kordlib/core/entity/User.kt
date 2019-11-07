@@ -23,7 +23,7 @@ open class User(val data: UserData, override val kord: Kord) : UserBehavior {
     /**
      * The 4-digit code at the end of the user's discord tag.
      */
-    val discriminator: String get() = data.discriminator.toString()
+    val discriminator: String get() = data.discriminator
 
     /**
      * The complete user tag.

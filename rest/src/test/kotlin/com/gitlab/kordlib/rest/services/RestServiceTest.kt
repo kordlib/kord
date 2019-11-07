@@ -9,8 +9,10 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.defaultRequest
 import io.ktor.client.request.header
+import io.ktor.http.Url
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
+import java.net.URL
 import java.util.*
 
 fun image(path: String): String {
@@ -40,6 +42,11 @@ class RestServiceTest {
     private lateinit var channelId: String
 
     private lateinit var userId: String
+
+    @BeforeEach
+    fun enableOnlyOnMerge() {
+        Assumptions.assumeTrue { System.getProperty("CI_MERGE_REQUEST_ID") != null }
+    }
 
     @BeforeAll
     fun setup() = runBlocking {
@@ -138,7 +145,9 @@ class RestServiceTest {
         with(rest.channel) {
             triggerTypingIndicator(channelId)
 
-            val message = createMessage(channelId, MessageCreateRequest("TEST"))
+            val message = createMessage(channelId, MultipartMessageCreateRequest(MessageCreateRequest("TEST"), files = listOf(
+                    "test.txt" to ClassLoader.getSystemResourceAsStream("images/kord.png")!!
+            )))
 
             getMessage(channelId, message.id)
 

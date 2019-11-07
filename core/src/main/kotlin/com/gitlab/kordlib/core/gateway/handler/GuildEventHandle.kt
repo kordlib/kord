@@ -88,7 +88,7 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: GuildDelete) = with(event.guild) {
-        val query = cache.find<GuildData> { GuildData::id eq id }
+        val query = cache.find<GuildData> { GuildData::id eq id.toLong() }
 
         val old = query.asFlow().map { Guild(it, kord) }.singleOrNull()
         query.remove()
@@ -147,8 +147,10 @@ internal class GuildEventHandler(
         val userData = UserData.from(user)
         cache.put(userData)
 
-        val old = cache.find<MemberData> { MemberData::userId eq userData.id }
-                .asFlow().map { Member(it, userData, kord) }.singleOrNull()
+        val old = cache.find<MemberData> {
+            MemberData::userId eq userData.id
+            MemberData::guildId eq event.member.guildId.toLong()
+        }.asFlow().map { Member(it, userData, kord) }.singleOrNull()
 
         val roles = roles.asSequence().map { Snowflake(it) }.toSet()
 
@@ -179,7 +181,7 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: GuildRoleDelete) = with(event.role) {
-        val query = cache.find<RoleData> { RoleData::id eq event.role.id }
+        val query = cache.find<RoleData> { RoleData::id eq event.role.id.toLong() }
 
         val old = kotlin.run {
             val data = query.singleOrNull() ?: return@run null
@@ -214,7 +216,7 @@ internal class GuildEventHandler(
         val new = Presence(data, kord)
 
         val user = cache
-                .find<UserData> { UserData::id eq event.presence.user.id }
+                .find<UserData> { UserData::id eq event.presence.user.id.toLong() }
                 .singleOrNull()
                 ?.let { User(it, kord) }
 

@@ -16,27 +16,51 @@ before_script:
 
 build:
   stage: build
-  script: gradle --build-cache assemble
+  script: gradle --stacktrace --info --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
+      - builds
       - build
+      - common/build
+      - core/build
+      - gateway/build
       - .gradle
 
 test:
   stage: test
-  script: gradle check
+  script: gradle --stacktrace --info check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
     paths:
+      - builds
       - build
+      - common/build
+      - core/build
+      - gateway/build
       - .gradle
+
+merge:
+  stage: test
+  script: gradle --stacktrace --info check
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - builds
+      - build
+      - common/build
+      - core/build
+      - gateway/build
+      - .gradle
+  only:
+    - merge_requests
 
 deploy:
   stage: deploy
-  script: gradle bintrayUpload
+  script: gradle --stacktrace --info bintrayUpload
   only:
     refs:
       - tags
@@ -44,5 +68,9 @@ deploy:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
+      - builds
       - build
+      - common/build
+      - core/build
+      - gateway/build
       - .gradle

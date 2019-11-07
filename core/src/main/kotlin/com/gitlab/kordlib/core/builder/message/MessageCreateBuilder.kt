@@ -23,7 +23,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     }
 
     fun addFile(name: String, content: InputStream) {
-        files + name to content
+        files += name to content
     }
 
     suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
