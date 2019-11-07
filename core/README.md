@@ -41,7 +41,7 @@ repositories {
 
 ```groovy
 dependencies {
- implementation 'com.gitlab.kordlib:kord:core:0.2.3'
+ implementation 'com.gitlab.kordlib.kord:kord-core:0.2.3'
 }
 ```
 
@@ -56,8 +56,9 @@ dependencies {
 
 ```xml
 <dependency>
-    <groupId>com.gitlab.kordlib.kord</groupId>
-    <artifactId>core</artifactId>
-    <version>0.2.3</version>
+  <groupId>com.gitlab.kordlib.kord</groupId>
+  <artifactId>kord-core</artifactId>
+  <version>0.2.3</version>
+  <type>pom</type>
 </dependency>
 ```
