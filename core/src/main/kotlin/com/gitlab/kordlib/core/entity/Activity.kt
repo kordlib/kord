@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.ActivityType
+import com.gitlab.kordlib.common.entity.PartialEmoji
 import com.gitlab.kordlib.core.cache.data.ActivityData
 import com.gitlab.kordlib.core.toInstant
 import java.time.Instant
@@ -14,6 +15,7 @@ class Activity(val data: ActivityData) {
     val stop: Instant? get() = data.stop?.toInstant()
     val applicationId: String? get() = data.applicationId
     val details: String? get() = data.details
+    val emoji: PartialEmoji? get() = data.emoji
     val state: String? get() = data.state
     val party: Party? get() = data.partyId?.let { Party(it, data.partyCurrentSize!!, data.partyMaxSize!!) }
     val assets: Assets? get() = Assets(data.largeImage, data.largeText, data.smallImage, data.smallText)

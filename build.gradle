@@ -18,15 +18,14 @@ buildscript {
 }
 
 ext {
-    lib_version = '0.2.2'
+    lib_version = System.getenv("CI_COMMIT_TAG") ?: System.getenv("CI_COMMIT_SHA")
     lib_group = 'com.gitlab.kordlib.kord'
-    serialization_version = '0.12.0'
-    ktor_version = '1.2.2'
-    junit_version = '5.5.0-RC1'
-    coroutines_version = '1.3.0-M2'
-    mockk_version = '1.9.3'
-    kotlin_logging_version = '1.6.26'
-    log4j_version = '1.7.26'
+    serialization_version = '0.13.0'
+    ktor_version = '1.2.5'
+    coroutines_version = '1.3.2'
+    kotlin_logging_version = '1.7.6'
+    junit_version = '5.6.0-M1'
+    log4j_version = '1.7.29'
 }
 
 group lib_group
@@ -52,8 +51,6 @@ subprojects {
         api "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
         api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
         api "io.github.microutils:kotlin-logging:$kotlin_logging_version"
-        testImplementation "io.mockk:mockk-dsl-jvm:$mockk_version"
-        testImplementation "io.mockk:mockk:$mockk_version"
         testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
         testImplementation "org.jetbrains.kotlin:kotlin-test-junit5:$kotlin_version"
         testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"

@@ -12,6 +12,7 @@ data class Activity(
         @SerialName("application_id")
         val applicationId: String? = null,
         val details: String? = null,
+        val emoji: PartialEmoji? = null,
         val state: String? = null,
         val party: ActivityParty? = null,
         val assets: ActivityAssets? = null,
@@ -56,7 +57,8 @@ enum class ActivityType(val code: Int) {
     Game(0),
     Streaming(1),
     Listening(2),
-    Watching(3);
+    Watching(3),
+    Custom(4);
 
     @Serializer(forClass = ActivityType::class)
     companion object ActivityTypeSerializer : KSerializer<ActivityType> {
