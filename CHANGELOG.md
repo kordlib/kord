@@ -2,11 +2,13 @@
 
 ## Additions
 
+Enums now have an `Unknown` value to mitigate the effects of unannounced discord changes moving forward. [#39](https://gitlab.com/kordlib/kord/issues/39)
 * `nicknameMention` has been added to `MemberBehavior`
 
 ## Changes
 
 * `Flow` extension now support suspending functions
+>>>>>>> CHANGELOG.md
 
 ## Fixes
 

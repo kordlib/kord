@@ -44,6 +44,8 @@ data class Overwrite(
 
 @Serializable(with = ChannelType.ChannelTypeSerializer::class)
 enum class ChannelType(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     GuildText(0),
     DM(1),
     GuildVoice(2),
@@ -59,7 +61,7 @@ enum class ChannelType(val code: Int) {
 
         override fun deserialize(decoder: Decoder): ChannelType {
             val code = decoder.decodeInt()
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: ChannelType) {

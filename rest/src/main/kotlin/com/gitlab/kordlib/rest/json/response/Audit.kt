@@ -219,6 +219,8 @@ object Unknown : AuditLogChangeResponse<Nothing>() {
 
 @Serializable(with = AuditLogEventResponse.AuditLogEventSerializer::class)
 enum class AuditLogEventResponse(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     GuildUpdate(1),
     ChannelCreate(10),
     ChannelUpdate(11),
@@ -258,7 +260,7 @@ enum class AuditLogEventResponse(val code: Int) {
         override fun deserialize(decoder: Decoder): AuditLogEventResponse {
             val code = decoder.decodeInt()
 
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: AuditLogEventResponse) {
