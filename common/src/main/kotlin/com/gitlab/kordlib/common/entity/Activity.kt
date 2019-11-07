@@ -54,6 +54,8 @@ data class ActivitySecrets(
 
 @Serializable(with = ActivityType.ActivityTypeSerializer::class)
 enum class ActivityType(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     Game(0),
     Streaming(1),
     Listening(2),
@@ -67,7 +69,7 @@ enum class ActivityType(val code: Int) {
 
         override fun deserialize(decoder: Decoder): ActivityType {
             val code = decoder.decodeInt()
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: ActivityType) {

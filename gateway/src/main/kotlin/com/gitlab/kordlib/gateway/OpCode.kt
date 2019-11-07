@@ -5,8 +5,10 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable(with = OpCode.OpCodeSerializer::class)
 enum class OpCode(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     Dispatch(0),
-     Heartbeat(1),
+    Heartbeat(1),
     Identify(2),
     StatusUpdate(3),
     VoiceStateUpdate(4),
@@ -24,7 +26,7 @@ enum class OpCode(val code: Int) {
 
         override fun deserialize(decoder: Decoder): OpCode {
             val code = decoder.decodeInt()
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: OpCode) {

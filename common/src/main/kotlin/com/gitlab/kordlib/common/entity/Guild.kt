@@ -142,6 +142,8 @@ data class VoiceState(
 
 @Serializable(with = PremiumTier.PremiumTierSerializer::class)
 enum class PremiumTier(val level: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     None(0),
     One(1),
     Two(2),
@@ -154,7 +156,7 @@ enum class PremiumTier(val level: Int) {
 
         override fun deserialize(decoder: Decoder): PremiumTier {
             val level = decoder.decodeInt()
-            return values().first { it.level == level }
+            return values().firstOrNull { it.level == level } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: PremiumTier) {
@@ -166,6 +168,8 @@ enum class PremiumTier(val level: Int) {
 
 @Serializable(with = DefaultMessageNotificationLevel.DefaultMessageNotificationLevelSerializer::class)
 enum class DefaultMessageNotificationLevel(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     AllMessages(0),
     OnlyMentions(1);
 
@@ -176,7 +180,7 @@ enum class DefaultMessageNotificationLevel(val code: Int) {
 
         override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel {
             val code = decoder.decodeInt()
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: DefaultMessageNotificationLevel) {
@@ -188,6 +192,8 @@ enum class DefaultMessageNotificationLevel(val code: Int) {
 
 @Serializable(with = ExplicitContentFilter.ExplicitContentFilterSerializer::class)
 enum class ExplicitContentFilter(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     Disabled(0),
     MembersWithoutRoles(1),
     AllMembers(2);
@@ -200,7 +206,7 @@ enum class ExplicitContentFilter(val code: Int) {
 
         override fun deserialize(decoder: Decoder): ExplicitContentFilter {
             val code = decoder.decodeInt()
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: ExplicitContentFilter) {
@@ -212,6 +218,8 @@ enum class ExplicitContentFilter(val code: Int) {
 
 @Serializable(with = MFALevel.MFALevelSerializer::class)
 enum class MFALevel(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     None(0),
     Elevated(1);
 
@@ -223,7 +231,7 @@ enum class MFALevel(val code: Int) {
 
         override fun deserialize(decoder: Decoder): MFALevel {
             val code = decoder.decodeInt()
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: MFALevel) {
@@ -235,6 +243,8 @@ enum class MFALevel(val code: Int) {
 
 @Serializable(with = VerificationLevel.VerificationLevelSerializer::class)
 enum class VerificationLevel(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     None(0),
     Low(1),
     Medium(2),
@@ -249,7 +259,7 @@ enum class VerificationLevel(val code: Int) {
 
         override fun deserialize(decoder: Decoder): VerificationLevel {
             val code = decoder.decodeInt()
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: VerificationLevel) {

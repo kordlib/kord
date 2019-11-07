@@ -259,6 +259,8 @@ data class AllRemovedMessageReactions(
 
 @Serializable(with = MessageType.MessageTypeSerializer::class)
 enum class MessageType(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     Default(0),
     RecipientAdd(1),
     RecipientRemove(2),
@@ -281,7 +283,7 @@ enum class MessageType(val code: Int) {
 
         override fun deserialize(decoder: Decoder): MessageType {
             val code = decoder.decodeInt()
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: MessageType) {
