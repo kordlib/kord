@@ -4,6 +4,10 @@
 
 * `nicknameMention` has been added to `MemberBehavior`
 
+## Changes
+
+* `Flow` extension now support suspending functions
+
 ## Fixes
 
 * `MessageCreateBuilder#addFile` no longer ignores files added.
