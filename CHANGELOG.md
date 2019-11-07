@@ -8,7 +8,6 @@ Enums now have an `Unknown` value to mitigate the effects of unannounced discord
 ## Changes
 
 * `Flow` extension now support suspending functions
->>>>>>> CHANGELOG.md
 
 ## Fixes
 
