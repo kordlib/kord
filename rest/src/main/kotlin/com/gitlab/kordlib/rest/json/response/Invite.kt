@@ -23,6 +23,8 @@ data class InviteResponse(
 
 @Serializable(with = TargetUserTypeResponse.TargetUserTypeSerializer::class)
 enum class TargetUserTypeResponse(val code: Int) {
+    /** The default code for unknown values. */
+    Unknown(Int.MIN_VALUE),
     STREAM(1);
 
     @Serializer(forClass = TargetUserTypeResponse::class)
@@ -32,7 +34,7 @@ enum class TargetUserTypeResponse(val code: Int) {
         override fun deserialize(decoder: Decoder): TargetUserTypeResponse {
             val code = decoder.decodeInt()
 
-            return values().first { it.code == code }
+            return values().firstOrNull { it.code == code } ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, obj: TargetUserTypeResponse) {

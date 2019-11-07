@@ -39,6 +39,8 @@ data class ClientStatus(val desktop: Status? = null, val mobile: Status? = null,
 
 @Serializable(with = Status.StatusSerializer::class)
 enum class Status {
+        /** The default code for unknown values. */
+        Unknown,
         Online, DnD, Idle, Invisible, Offline;
 
         @Serializer(forClass = Status::class)
@@ -47,7 +49,7 @@ enum class Status {
 
                 override fun deserialize(decoder: Decoder): Status {
                         val name = decoder.decodeString()
-                        return values().first { it.name.toLowerCase() == name }
+                        return values().firstOrNull { it.name.toLowerCase() == name } ?: Unknown
                 }
 
                 override fun serialize(encoder: Encoder, obj: Status) {
