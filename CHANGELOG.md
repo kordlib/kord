@@ -1,3 +1,9 @@
+# 0.2.4
+
+## Changes
+
+* `User.Avatar#getUrl` no longer returns `null` when requesting a static version of a user's animated avatar.
+
 # 0.2.3
 
 ## Additions

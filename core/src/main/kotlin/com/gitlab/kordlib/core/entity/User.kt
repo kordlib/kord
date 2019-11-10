@@ -74,7 +74,6 @@ open class User(val data: UserData, override val kord: Kord) : UserBehavior {
         fun getUrl(format: Image.Format): String? {
             val hash = data.avatar ?: return defaultUrl
             if (!isAnimated && format == Image.Format.GIF) return null
-            if (isAnimated && (format == Image.Format.PNG || format == Image.Format.JPEG)) return null
 
             return "https://cdn.discordapp.com/avatars/${data.id}/$hash.${format.extension}"
         }
