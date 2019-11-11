@@ -24,7 +24,7 @@ data class UpdatedEmojis(
 
 @Serializable
 data class PartialEmoji(
-        val id: String?,
+        val id: String? = null,
         val name: String,
         val animated: Boolean? = null
 )
