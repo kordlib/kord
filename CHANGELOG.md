@@ -13,6 +13,10 @@
 * Fixed an issue where `PartialEmoji` would not deserialize with a missing `id`.
 * Fixed an issue where subscribing to the `events` Flow while kord was already logged in caused it to emit old events.
 
+## Additions
+
+* Added `mentionedChannel`-related fields to `Message`.
+
 # 0.2.3
 
 ## Additions

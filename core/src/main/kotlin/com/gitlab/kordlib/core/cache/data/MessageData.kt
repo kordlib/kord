@@ -3,11 +3,6 @@ package com.gitlab.kordlib.core.cache.data
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.internal.ArrayListSerializer
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonException
-import kotlinx.serialization.json.content
 
 internal val MessageData.authorId get() = author?.id
 
@@ -32,16 +27,18 @@ data class MessageData(
         val webhookId: Long?,
         val type: MessageType,
         val activity: MessageActivity? = null,
-        val application: MessageApplication? = null
+        val application: MessageApplication? = null,
+        val mentionedChannels: List<Long>? = null
 ) {
 
     operator fun plus(partialMessage: PartialMessage): MessageData {
 
         val editedTimestamp = partialMessage.editedTimestamp ?: editedTimestamp
-        val content =  partialMessage.content ?: content
+        val content = partialMessage.content ?: content
         val mentions = partialMessage.mentions.orEmpty().map { it.id.toLong() }
-        val mentionEveryone =  partialMessage.mentionEveryone?: mentionEveryone
-        val embeds =  partialMessage.embeds?.map { EmbedData.from(it) } ?: embeds
+        val mentionEveryone = partialMessage.mentionEveryone ?: mentionEveryone
+        val embeds = partialMessage.embeds?.map { EmbedData.from(it) } ?: embeds
+        val mentionedChannels = partialMessage.mentionedChannels?.map { it.id.toLong() } //can't figure out if list hasn't been updated or just isn't there, so we'll assume the latter
 
         return MessageData(
                 id,
@@ -63,7 +60,8 @@ data class MessageData(
                 webhookId,
                 type,
                 activity,
-                application
+                application,
+                mentionedChannels
         )
     }
 
@@ -91,7 +89,8 @@ data class MessageData(
                     webhookId?.toLong(),
                     type,
                     activity,
-                    application
+                    application,
+                    mentionedChannels?.map { it.id.toLong() }
             )
         }
     }
