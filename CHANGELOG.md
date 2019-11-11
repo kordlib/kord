@@ -1,12 +1,16 @@
 # 0.2.4
 
+## Additions
+
+* `uses` has been added as a nullable property to `InviteResponse` .
+
 ## Changes
 
 * `User.Avatar#getUrl` no longer returns `null` when requesting a static version of a user's animated avatar.
 
 ## Fixes
 
-* Fixed an issue where `PartialEmoji` would not deserialize with a missing `id`
+* Fixed an issue where `PartialEmoji` would not deserialize with a missing `id`.
 
 # 0.2.3
 

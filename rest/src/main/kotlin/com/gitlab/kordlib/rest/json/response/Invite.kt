@@ -18,7 +18,8 @@ data class InviteResponse(
         @SerialName("approximate_presence_count")
         val approximatePresenceCount: Int? = null,
         @SerialName("approximate_member_count")
-        val approximateMemberCount: Int? = null
+        val approximateMemberCount: Int? = null,
+        val uses: Int? = null
 )
 
 @Serializable(with = TargetUserTypeResponse.TargetUserTypeSerializer::class)
