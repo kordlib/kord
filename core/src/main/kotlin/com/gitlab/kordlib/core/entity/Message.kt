@@ -58,8 +58,9 @@ class Message(private val data: MessageData, override val kord: Kord) : MessageB
      *
      * This property will only emit values on crossposted messages.
      */
+    @Suppress("RemoveExplicitTypeArguments")
     val mentionedChannels: Flow<Channel>
-        get() = flow {
+        get() = flow<Channel> /*The plugin can infer the type, but the compiler can't, so leave this here for now*/ {
             for (id in mentionedChannelIds) {
                 val channel = kord.getChannel(id)
                 if (channel != null) emit(channel)
