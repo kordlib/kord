@@ -12,6 +12,7 @@
 
 * Fixed an issue where `PartialEmoji` would not deserialize with a missing `id`.
 * Fixed an issue where subscribing to the `events` Flow while kord was already logged in caused it to emit old events.
+* Fixed an issue where `DefaultGateway` would stop reading payloads after throwing an Exception while parsing json.
 
 ## Additions
 
@@ -27,7 +28,6 @@ Enums now have an `Unknown` value to mitigate the effects of unannounced discord
 ## Changes
 
 * `Flow` extension now support suspending functions
->>>>>>> CHANGELOG.md
 
 ## Fixes
 

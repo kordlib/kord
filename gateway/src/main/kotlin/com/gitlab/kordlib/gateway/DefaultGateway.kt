@@ -113,8 +113,13 @@ class DefaultGateway(
 
     private suspend fun read(frame: Frame.Text) {
         val json = frame.readText()
-        defaultGatewayLogger.trace { "Gateway <<< $json" }
-        Json.nonstrict.parse(Event.Companion, json)?.let { channel.send(it) }
+        try {
+            defaultGatewayLogger.trace { "Gateway <<< $json" }
+            Json.nonstrict.parse(Event.Companion, json)?.let { channel.send(it) }
+        } catch (exception: Exception) {
+            defaultGatewayLogger.error(exception)
+        }
+
     }
 
     private suspend fun handleClose() {
