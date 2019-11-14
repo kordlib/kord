@@ -17,6 +17,7 @@
 ## Additions
 
 * Added `mentionedChannel`-related fields to `Message`.
+* Added `KordClientBuilder#enableShutdownHook`, which enables a shutdownHook that automatically closes the gateway on process exit.
 
 # 0.2.3
 
