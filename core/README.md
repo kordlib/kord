@@ -30,6 +30,8 @@ suspend fun main() {
 
 ## Installation
 
+Replace `{version}` with the latest version number on bintray [ ![Download](https://api.bintray.com/packages/kordlib/Kord/Kord/images/download.svg) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion).
+
 ### Gradle
 
 ```groovy
@@ -41,7 +43,7 @@ repositories {
 
 ```groovy
 dependencies {
- implementation 'com.gitlab.kordlib:kord:core:0.2.1'
+ implementation 'com.gitlab.kordlib:kord:core:{version}'
 }
 ```
 
@@ -58,6 +60,6 @@ dependencies {
 <dependency>
     <groupId>com.gitlab.kordlib.kord</groupId>
     <artifactId>core</artifactId>
-    <version>0.2.1</version>
+    <version>{version}</version>
 </dependency>
 ```
