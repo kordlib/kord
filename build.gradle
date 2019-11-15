@@ -103,6 +103,7 @@ subprojects {
         user = System.getenv('BINTRAY_USER')
         key = System.getenv('BINTRAY_KEY')
         publications = ['Kord']
+        publish = true
         pkg {
             repo = 'Kord'
             name = 'Kord'
