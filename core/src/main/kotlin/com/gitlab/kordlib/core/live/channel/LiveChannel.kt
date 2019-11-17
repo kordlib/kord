@@ -46,7 +46,7 @@ abstract class LiveChannel : AbstractLiveEntity() {
         is GuildUpdateEvent -> event.guild.id.longValue == channel.data.guildId
         is GuildDeleteEvent -> event.guildId.longValue == channel.data.guildId
 
-        else -> true
+        else -> false
     }
 
 }

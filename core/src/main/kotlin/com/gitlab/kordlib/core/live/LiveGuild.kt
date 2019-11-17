@@ -13,7 +13,8 @@ import com.gitlab.kordlib.core.event.role.RoleCreateEvent
 import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
 import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
 
-fun Guild.toLive(): LiveGuild = LiveGuild(this)
+@KordPreview
+fun Guild.live(): LiveGuild = LiveGuild(this)
 
 @KordPreview
 class LiveGuild(guild: Guild) : AbstractLiveEntity(), Entity by guild {
@@ -61,7 +62,7 @@ class LiveGuild(guild: Guild) : AbstractLiveEntity(), Entity by guild {
         is GuildUpdateEvent -> event.guild.id == guild.id
         is GuildDeleteEvent -> event.guildId == guild.id
 
-        else -> true
+        else -> false
     }
 
     override fun update(event: Event): Unit = when (event) {

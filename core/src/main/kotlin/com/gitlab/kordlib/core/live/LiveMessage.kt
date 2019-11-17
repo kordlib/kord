@@ -13,6 +13,9 @@ import com.gitlab.kordlib.core.event.message.*
 import kotlinx.coroutines.flow.Flow
 
 @KordPreview
+fun Message.live() = LiveMessage(this)
+
+@KordPreview
 class LiveMessage(message: Message) : AbstractLiveEntity(), Entity by message {
 
     var message: Message = message
@@ -33,7 +36,7 @@ class LiveMessage(message: Message) : AbstractLiveEntity(), Entity by message {
         is ChannelDeleteEvent -> event.channel.id == message.channelId
 
         is GuildDeleteEvent -> event.guildId == message.guildId
-        else -> true
+        else -> false
     }
 
     override fun update(event: Event): Unit = when (event) {
@@ -41,7 +44,6 @@ class LiveMessage(message: Message) : AbstractLiveEntity(), Entity by message {
         is ReactionRemoveEvent -> process(event)
         is ReactionRemoveAllEvent -> message = Message(message.data.copy(reactions = emptyList()), kord)
 
-        is MessageCreateEvent -> message = event.message //this is kinda nonsensical, no?
         is MessageUpdateEvent -> message = Message(message.data + event.new, kord)
         is MessageDeleteEvent -> shutDown()
 
