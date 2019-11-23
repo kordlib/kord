@@ -1,10 +1,14 @@
+plugins {
+    id "org.jetbrains.kotlin.kapt"
+}
+
 dependencies {
     api project(':common')
     api project(':rest')
     api project(':gateway')
 
-    api 'com.gitlab.kordlib.cache:api:6f50afae'
-    implementation 'com.gitlab.kordlib.cache:map:6f50afae'
+    api 'com.gitlab.kordlib.cache:api:bf701c86'
+    api 'com.gitlab.kordlib.cache:map:bf701c86'
 }
 compileKotlin {
     kotlinOptions {
