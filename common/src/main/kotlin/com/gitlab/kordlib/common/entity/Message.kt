@@ -2,7 +2,6 @@ package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
-import kotlinx.serialization.json.JsonElement
 
 @Serializable
 data class Message(
@@ -94,22 +93,43 @@ data class MentionedChannel(
         val type: MessageType
 )
 
-enum class Flag(val value: Int) {
+enum class Flag(val code: Int) {
     CrossPosted(1),
     IsCrossPost(2),
     SuppressEmbeds(4);
 }
 
 @Serializable(with = Flags.FlagsSerializer::class)
-data class Flags internal constructor(private val value: Int) {
+data class Flags internal constructor(val code: Int) {
 
-    val flags = Flag.values().filter { value and it.value != 0 }
+    val flags = Flag.values().filter { code and it.code != 0 }
 
     operator fun contains(flag: Flag) = flag in flags
+
+    operator fun plus(flags: Flags): Flags = when {
+        code and flags.code == flags.code -> this
+        else -> Flags(this.code or flags.code)
+    }
+
+    operator fun minus(flag: Flag): Flags = when {
+        code and flag.code == flag.code -> Flags(code xor flag.code)
+        else -> this
+    }
+
+    inline fun copy(block: FlagsBuilder.() -> Unit): Flags {
+        val builder = FlagsBuilder(code)
+        builder.apply(block)
+        return builder.flags()
+    }
 
 
     @Serializer(forClass = Flags::class)
     companion object FlagsSerializer : DeserializationStrategy<Flags> {
+
+        inline operator fun invoke(builder: FlagsBuilder.() -> Unit): Flags {
+            return FlagsBuilder().apply(builder).flags()
+        }
+
         override val descriptor: SerialDescriptor = IntDescriptor
 
         override fun deserialize(decoder: Decoder): Flags {
@@ -117,6 +137,20 @@ data class Flags internal constructor(private val value: Int) {
             return Flags(flags)
         }
 
+    }
+
+    class FlagsBuilder(internal var code: Int = 0) {
+        operator fun Flag.unaryPlus() {
+            this@FlagsBuilder.code = this@FlagsBuilder.code or code
+        }
+
+        operator fun Flag.unaryMinus() {
+            if (this@FlagsBuilder.code and code == code) {
+                this@FlagsBuilder.code = this@FlagsBuilder.code xor code
+            }
+        }
+
+        fun flags() = Flags(code)
     }
 
 }
