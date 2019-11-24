@@ -244,6 +244,7 @@ data class MessageReaction(
         val messageId: String,
         @SerialName("guild_id")
         val guildId: String? = null,
+        val member: GuildMember? = null,
         val emoji: PartialEmoji
 )
 
