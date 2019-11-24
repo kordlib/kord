@@ -229,12 +229,15 @@ enum class AuditLogEventResponse(val code: Int) {
     ChannelOverwriteUpdate(14),
     ChannelOverwriteDelete(15),
 
-    MemberKick(15),
+    MemberKick(20),
     MemberPrune(21),
     MemberBanAdd(22),
     MemberBanRemove(23),
     MemberUpdate(24),
     MemberRoleUpdate(25),
+    MemberMove(26),
+    MemberDisconnect(27),
+    BotAdd(28),
 
     RoleCreate(30),
     RoleUpdate(31),
@@ -245,13 +248,22 @@ enum class AuditLogEventResponse(val code: Int) {
     InviteDelete(42),
 
     WebhookCreate(50),
-    WebhookDelete(51),
+    WebhookUpdate(51),
+    WebhookDelete(52),
+
 
     EmojiCreate(60),
     EmojiUpdate(61),
     EmojiDelete(62),
 
-    MessageDelete(72);
+    MessageDelete(72),
+    MessageBulkDelete(73),
+    MessagePin(74),
+    MessageUnpin(75),
+
+    IntegrationCreate(80),
+    IntegrationUpdate(81),
+    IntegrationDelete(82);
 
     @Serializer(forClass = AuditLogEventResponse::class)
     companion object AuditLogEventSerializer : KSerializer<AuditLogEventResponse> {
@@ -278,6 +290,8 @@ data class AuditEntryInfoResponse(
         val membersRemoved: String? = null,
         @SerialName("channel_id")
         val channelId: String? = null,
+        @SerialName("message_id")
+        val messageId: String? = null,
         val count: String? = null,
         val id: String? = null,
         val type: String? = null,
