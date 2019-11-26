@@ -9,6 +9,7 @@ import io.ktor.client.response.HttpResponse
 import io.ktor.client.response.readText
 import io.ktor.content.TextContent
 import io.ktor.http.ContentType
+import io.ktor.http.encodeURLQueryComponent
 import io.ktor.util.StringValues
 import kotlinx.io.InputStream
 import kotlinx.io.streams.outputStream
@@ -43,7 +44,7 @@ sealed class Request<T> {
 
     internal fun generatePath(): String {
         var path = route.path
-        routeParams.forEach { (k, v) -> path = path.replaceFirst(k.identifier, v) }
+        routeParams.forEach { (k, v) -> path = path.replaceFirst(k.identifier, v.encodeURLQueryComponent()) }
         return path
     }
 }
