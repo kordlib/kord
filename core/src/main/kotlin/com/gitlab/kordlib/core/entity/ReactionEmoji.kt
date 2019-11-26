@@ -8,8 +8,10 @@ sealed class ReactionEmoji {
     data class Custom(override val id: Snowflake, override val name: String, val isAnimated: Boolean) : ReactionEmoji() {
         override val formatted: String
             get() = "$name:${id.value}"
-    }
 
+
+        override fun toString() = "Custom(id=$id, name=$name, isAnimated=$isAnimated)"
+    }
     class Unicode(override val name: String) : ReactionEmoji() {
         override val id: Snowflake? get() = null
         override val formatted: String get() = name
