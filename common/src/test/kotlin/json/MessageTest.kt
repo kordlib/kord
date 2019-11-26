@@ -87,7 +87,7 @@ fun `User serialization`() {
         channelId shouldBe "290926798999357250"
         mentions shouldBe emptyList()
         type.code shouldBe 0
-        flags shouldBe Flags(Flag.IsCrossPost.value)
+        flags shouldBe Flags(Flag.IsCrossPost.code)
         messageReference?.let {
             it.channelId shouldBe "278325129692446722"
             it.guildId shouldBe "278325129692446720"

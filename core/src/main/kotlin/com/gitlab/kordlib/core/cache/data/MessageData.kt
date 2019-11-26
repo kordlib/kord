@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.core.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 internal val MessageData.authorId get() = author?.id
@@ -30,6 +31,27 @@ data class MessageData(
         val application: MessageApplication? = null,
         val mentionedChannels: List<Long>? = null
 ) {
+
+    fun plus(selfId: Snowflake, reaction: MessageReaction) : MessageData {
+        val isMe = selfId.value == reaction.userId
+
+        val reactions = if (reactions.isNullOrEmpty()) {
+            listOf(ReactionData.from(1, isMe, reaction.emoji))
+        } else {
+            val reactions = reactions.orEmpty()
+            val data = reactions.firstOrNull { data ->
+                if (reaction.emoji.id == null) data.emojiName == reaction.emoji.name
+                else data.emojiId?.toString() == reaction.emoji.id && data.emojiName == reaction.emoji.name
+            }
+
+            when (data) {
+                null -> reactions + ReactionData.from(1, isMe, reaction.emoji)
+                else -> (reactions - data) + data.copy(count = data.count + 1, me = isMe)
+            }
+        }
+
+        return copy(reactions = reactions)
+    }
 
     operator fun plus(partialMessage: PartialMessage): MessageData {
 
