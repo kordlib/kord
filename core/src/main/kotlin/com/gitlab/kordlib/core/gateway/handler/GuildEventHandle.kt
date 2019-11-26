@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
+import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
