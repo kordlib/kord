@@ -4,13 +4,13 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
-data class Webhook(
+data class DiscordWebhook(
         val id: String,
         val type: WebhookType,
         @SerialName("guild_id")
         val guildId: String? = null,
         val channelId: String,
-        val user: User? = null,
+        val user: DiscordUser? = null,
         val name: String? = null,
         val avatar: String? = null,
         val token: String? = null

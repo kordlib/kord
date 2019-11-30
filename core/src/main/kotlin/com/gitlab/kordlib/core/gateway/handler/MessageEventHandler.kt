@@ -56,7 +56,7 @@ internal class MessageEventHandler(
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
         query.update { it + this }
 
-        coreEventChannel.send(MessageUpdateEvent(Snowflake(id), Snowflake(channelId), old, kord))
+        coreEventChannel.send(MessageUpdateEvent(Snowflake(id), Snowflake(channelId), this, old, kord))
     }
 
     private suspend fun handle(event: MessageDelete) = with(event.message) {

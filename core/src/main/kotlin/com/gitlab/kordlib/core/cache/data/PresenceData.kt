@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
-import com.gitlab.kordlib.common.entity.PresenceUpdateData
+import com.gitlab.kordlib.common.entity.DiscordPresenceUpdateData
 import com.gitlab.kordlib.common.entity.Status
 import kotlinx.serialization.Serializable
 
@@ -21,7 +21,7 @@ data class PresenceData(
     companion object {
         val description = description(PresenceData::id)
 
-        fun from(entity: PresenceUpdateData) = with(entity) {
+        fun from(entity: DiscordPresenceUpdateData) = with(entity) {
             PresenceData(
                     user.id.toLong(),
                     roles?.map { it.toLong() },

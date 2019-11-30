@@ -53,7 +53,7 @@ data class MessageData(
         return copy(reactions = reactions)
     }
 
-    operator fun plus(partialMessage: PartialMessage): MessageData {
+    operator fun plus(partialMessage: DiscordPartialMessage): MessageData {
 
         val editedTimestamp = partialMessage.editedTimestamp ?: editedTimestamp
         val content = partialMessage.content ?: content
@@ -90,7 +90,7 @@ data class MessageData(
     companion object {
         val description get() = description(MessageData::id)
 
-        fun from(entity: Message) = with(entity) {
+        fun from(entity: DiscordMessage) = with(entity) {
             MessageData(
                     id.toLong(),
                     channelId.toLong(),

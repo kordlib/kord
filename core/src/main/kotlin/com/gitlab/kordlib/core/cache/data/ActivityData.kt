@@ -1,9 +1,8 @@
 package com.gitlab.kordlib.core.cache.data
 
-import com.gitlab.kordlib.common.entity.Activity
+import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.ActivityType
-import com.gitlab.kordlib.common.entity.Emoji
-import com.gitlab.kordlib.common.entity.PartialEmoji
+import com.gitlab.kordlib.common.entity.DiscordPartialEmoji
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,7 +14,7 @@ data class ActivityData(
         val stop: Long? = null,
         val applicationId: String? = null,
         val details: String? = null,
-        val emoji: PartialEmoji? = null,
+        val emoji: DiscordPartialEmoji? = null,
         val state: String? = null,
         val partyId: String? = null,
         val partyCurrentSize: Int? = null,
@@ -31,7 +30,7 @@ data class ActivityData(
         val flags: Int? = null
 ) {
     companion object {
-        fun from(entity: Activity) = with(entity) {
+        fun from(entity: DiscordActivity) = with(entity) {
             ActivityData(
                     name,
                     type,

@@ -4,11 +4,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Emoji(
+data class DiscordEmoji(
         val id: String? = null,
         val name: String,
         val roles: List<String>? = null,
-        val user: User? = null,
+        val user: DiscordUser? = null,
         @SerialName("require_colons")
         val requireColons: Boolean? = null,
         val managed: Boolean? = null,
@@ -16,14 +16,14 @@ data class Emoji(
 )
 
 @Serializable
-data class UpdatedEmojis(
+data class DiscordUpdatedEmojis(
         @SerialName("guild_id")
         val guildId: String,
-        val emojis: List<Emoji>
+        val emojis: List<DiscordEmoji>
 )
 
 @Serializable
-data class PartialEmoji(
+data class DiscordPartialEmoji(
         val id: String? = null,
         val name: String,
         val animated: Boolean? = null

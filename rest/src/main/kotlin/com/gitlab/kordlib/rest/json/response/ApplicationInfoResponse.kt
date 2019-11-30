@@ -2,7 +2,7 @@
 
 package com.gitlab.kordlib.rest.json.response
 
-import com.gitlab.kordlib.common.entity.User
+import com.gitlab.kordlib.common.entity.DiscordUser
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -18,5 +18,5 @@ data class ApplicationInfoResponse(
         val botPublic: Boolean,
         @SerialName("bot_require_code_grant")
         val botRequireCodeGrant: Boolean,
-        val owner: User
+        val owner: DiscordUser
 )

@@ -2,8 +2,8 @@ package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
-import com.gitlab.kordlib.common.entity.PartialGuild
-import com.gitlab.kordlib.common.entity.Shard
+import com.gitlab.kordlib.common.entity.DiscordPartialGuild
+import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
@@ -17,7 +17,6 @@ import com.gitlab.kordlib.gateway.start
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.*
@@ -53,7 +52,7 @@ class Kord internal constructor(
             val cached = cache.find<GuildData>().asFlow().map { Guild(it, this@Kord) }
 
             //backup if we're not caching
-            val request = paginateForwards(idSelector = PartialGuild::id, batchSize = 100) { position -> rest.user.getCurrentUserGuilds(position, 100) }
+            val request = paginateForwards(idSelector = DiscordPartialGuild::id, batchSize = 100) { position -> rest.user.getCurrentUserGuilds(position, 100) }
                     .map { rest.guild.getGuild(it.id) }
                     .map { GuildData.from(it) }
                     .map { Guild(it, this@Kord) }
@@ -72,7 +71,7 @@ class Kord internal constructor(
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
     suspend inline fun login(builder: PresenceUpdateBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
-        shard = Shard(0, resources.shardCount)
+        shard = DiscordShard(0, resources.shardCount)
         presence = PresenceUpdateBuilder().apply(builder).toGatewayPresence()
         name = "kord"
     }

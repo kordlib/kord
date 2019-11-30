@@ -4,14 +4,14 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
-data class Message(
+data class DiscordMessage(
         val id: String,
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("guild_id")
         val guildId: String? = null,
-        val author: User? = null,
-        val member: PartialGuildMember? = null,
+        val author: DiscordUser? = null,
+        val member: DiscordPartialGuildMember? = null,
         val content: String,
         val timestamp: String,
         @SerialName("edited_timestamp")
@@ -19,9 +19,9 @@ data class Message(
         val tts: Boolean,
         @SerialName("mention_everyone")
         val mentionEveryone: Boolean,
-        val mentions: List<OptionallyMemberUser>,
+        val mentions: List<DiscordOptionallyMemberUser>,
         @SerialName("mention_roles")
-        val mentionRoles: List<Role>,
+        val mentionRoles: List<DiscordRole>,
         val attachments: List<Attachment>,
         val embeds: List<Embed>,
         val reactions: List<Reaction>? = null,
@@ -39,14 +39,14 @@ data class Message(
         val flags: Flags? = null
 )
 @Serializable
-data class PartialMessage(
+data class DiscordPartialMessage(
         val id: String,
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("guild_id")
         val guildId: String? = null,
-        val author: User? = null,
-        val member: PartialGuildMember? = null,
+        val author: DiscordUser? = null,
+        val member: DiscordPartialGuildMember? = null,
         val content: String? = null,
         val timestamp: String? = null,
         @SerialName("edited_timestamp")
@@ -54,9 +54,9 @@ data class PartialMessage(
         val tts: Boolean? = null,
         @SerialName("mention_everyone")
         val mentionEveryone: Boolean? = null,
-        val mentions: List<OptionallyMemberUser>? = null,
+        val mentions: List<DiscordOptionallyMemberUser>? = null,
         @SerialName("mention_roles")
-        val mentionRoles: List<Role> ? = null,
+        val mentionRoles: List<DiscordRole> ? = null,
         val attachments: List<Attachment> ? = null,
         val embeds: List<Embed> ? = null,
         val reactions: List<Reaction>? = null,
@@ -234,7 +234,7 @@ data class Embed(
 data class Reaction(
         val count: Int,
         val me: Boolean,
-        val emoji: Emoji
+        val emoji: DiscordEmoji
 )
 
 @Serializable
@@ -278,8 +278,8 @@ data class MessageReaction(
         val messageId: String,
         @SerialName("guild_id")
         val guildId: String? = null,
-        val member: GuildMember? = null,
-        val emoji: PartialEmoji
+        val member: DiscordGuildMember? = null,
+        val emoji: DiscordPartialEmoji
 )
 
 @Serializable

@@ -2,7 +2,7 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.Shard
+import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.gateway.*
 import kotlinx.serialization.json.*
@@ -123,7 +123,7 @@ class CommandTest {
         val properties = IdentifyProperties("os", "browser", "device")
         val compress = false
         val largeThreshold = 1337
-        val shard = Shard(0, 1)
+        val shard = DiscordShard(0, 1)
         val presence = null
 
         val identify = Json.stringify(Command.Companion, Identify(token, properties, compress, largeThreshold, shard, presence))

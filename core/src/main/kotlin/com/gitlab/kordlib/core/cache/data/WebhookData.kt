@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
-import com.gitlab.kordlib.common.entity.Webhook
+import com.gitlab.kordlib.common.entity.DiscordWebhook
 import com.gitlab.kordlib.common.entity.WebhookType
 import kotlinx.serialization.Serializable
 
@@ -19,6 +19,6 @@ data class WebhookData(
     companion object {
         val description get() = description(WebhookData::id)
 
-        fun from(entity: Webhook) = with(entity) { WebhookData(id.toLong(), type, guildId!!.toLong(), channelId.toLong(), user!!.id.toLong(), name, avatar, token) }
+        fun from(entity: DiscordWebhook) = with(entity) { WebhookData(id.toLong(), type, guildId!!.toLong(), channelId.toLong(), user!!.id.toLong(), name, avatar, token) }
     }
 }

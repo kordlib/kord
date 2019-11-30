@@ -55,7 +55,7 @@ data class GuildData(
             link(GuildData::id to PresenceData::guildId)
         }
 
-        fun from(entity: Guild) = with(entity) {
+        fun from(entity: DiscordGuild) = with(entity) {
             GuildData(
                     id.toLong(),
                     name,

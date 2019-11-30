@@ -14,8 +14,8 @@ private val auditLogger = KotlinLogging.logger { }
 
 @Serializable
 data class AuditLogResponse(
-        val webhooks: List<Webhook>,
-        val users: List<User>,
+        val webhooks: List<DiscordWebhook>,
+        val users: List<DiscordUser>,
         @SerialName("audit_log_entries")
         val auditLogEntries: List<AuditLogEntryResponse>
 )
@@ -109,8 +109,8 @@ sealed class AuditLogChangeResponse<T> {
                 "deny" -> DenyLogChange(old?.primitive?.int, new?.primitive?.int)
                 "verification_level" -> VerificationLevelLogChange(old?.primitive?.int, new?.primitive?.int)
 
-                "\$remove" -> AddLogChange(listFromJson(AuditLogRoleChange.serializer(), old), listFromJson(AuditLogRoleChange.serializer(), new))
-                "\$add" -> RemoveLogChange(listFromJson(AuditLogRoleChange.serializer(), old), listFromJson(AuditLogRoleChange.serializer(), new))
+                "\$remove" -> AddLogChange(listFromJson(DiscordAuditLogRoleChange.serializer(), old), listFromJson(DiscordAuditLogRoleChange.serializer(), new))
+                "\$add" -> RemoveLogChange(listFromJson(DiscordAuditLogRoleChange.serializer(), old), listFromJson(DiscordAuditLogRoleChange.serializer(), new))
                 "permission_overwrites" -> PermissionOverwriteLogChange(listFromJson(Overwrite.serializer(), old), listFromJson(Overwrite.serializer(), new))
 
                 else -> Unknown
@@ -180,8 +180,8 @@ data class MaxUsesLogChange(override val old: Int?, override val new: Int?) : Au
 data class UsesLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
 data class MaxAgeLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
 data class ColorLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
-data class AddLogChange(override val old: List<AuditLogRoleChange>?, override val new: List<AuditLogRoleChange>?) : AuditLogChangeResponse<List<AuditLogRoleChange>>()
-data class RemoveLogChange(override val old: List<AuditLogRoleChange>?, override val new: List<AuditLogRoleChange>?) : AuditLogChangeResponse<List<AuditLogRoleChange>>()
+data class AddLogChange(override val old: List<DiscordAuditLogRoleChange>?, override val new: List<DiscordAuditLogRoleChange>?) : AuditLogChangeResponse<List<DiscordAuditLogRoleChange>>()
+data class RemoveLogChange(override val old: List<DiscordAuditLogRoleChange>?, override val new: List<DiscordAuditLogRoleChange>?) : AuditLogChangeResponse<List<DiscordAuditLogRoleChange>>()
 data class PermissionOverwriteLogChange(override val old: List<Overwrite>?, override val new: List<Overwrite>?) : AuditLogChangeResponse<List<Overwrite>>()
 
 data class MFALogChange(override val old: MFALevel?, override val new: MFALevel?) : AuditLogChangeResponse<MFALevel>() {
