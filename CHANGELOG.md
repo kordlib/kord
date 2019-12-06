@@ -2,10 +2,15 @@
 
 ## Changes
 
-`Kord#getGuilds()` has been replaced with the non-suspending `Kord#guilds`.
-`@KordBuilder` has been renamed to `@KordDsl`.
-`KordClientBuilder` has been renamed to `KordBuilder`.
-`fileName` has been renamed to `filename`.
+* `Kord#getGuilds()` has been replaced with the non-suspending `Kord#guilds`.
+* `@KordBuilder` has been renamed to `@KordDsl`.
+* `KordClientBuilder` has been renamed to `KordBuilder`.
+* `fileName` has been renamed to `filename`.
+* `DefaultGateway`'s constructor accepts a single `DefaultGatewayData` instead of multiple properties.
+* `DefaultGateway` is now able to rate limit identify attempts and accepts a `RateLimiter` that can be shared between multiple gateways. 
+This will be done by default for Kord clients now.
+* `KordClientBuilder`'s `gateway` function has been renamed to `gateways`. It now gives a list of shards and requests a list of gateways, this change
+allows you to more easily share configuration between gateways.
 
 # 0.2.4
 

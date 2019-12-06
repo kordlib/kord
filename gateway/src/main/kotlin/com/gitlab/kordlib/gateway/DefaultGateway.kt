@@ -36,22 +36,26 @@ private sealed class State(val retry: Boolean) {
 }
 
 /**
- * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
- *
  * @param url The url to connect to.
- * @param client The client from which a webSocket will be created, requires the [WebSockets] and [JsonFeature] to be
+ * @param client The client from which a webSocket will be created, requires the WebSockets and JsonFeature to be
  * installed.
- * @param rateLimiter A rate limiter than follows the Discord API specifications.
- * @param retry A retry used for reconnection attempts.
+ * @param reconnectRetry A retry used for reconnection attempts.
+ * @param sendRateLimiter A rate limiter than follows the Discord API specifications for sending messages.
+ * @param identifyRateLimiter: A rate limiter that follows the Discord API specifications for identifying.
  */
-@FlowPreview
+data class DefaultGatewayData(
+        val url: String,
+        val client: HttpClient,
+        val reconnectRetry: Retry,
+        val sendRateLimiter: RateLimiter,
+        val identifyRateLimiter: RateLimiter
+)
+
+/**
+ * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
+ */
 @ObsoleteCoroutinesApi
-class DefaultGateway(
-        private val url: String,
-        private val client: HttpClient,
-        private val retry: Retry,
-        private val rateLimiter: RateLimiter
-) : Gateway {
+class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private val channel = BroadcastChannel<Any>(Channel.CONFLATED)
 
@@ -69,7 +73,7 @@ class DefaultGateway(
         channel.sendBlocking(Unit)
         val sequence = Sequence()
         SequenceHandler(events, sequence)
-        handshakeHandler = HandshakeHandler(events, ::send, sequence)
+        handshakeHandler = HandshakeHandler(events, ::send, sequence, data.identifyRateLimiter)
         HeartbeatHandler(events, ::send, { restart() }, { ping = it }, sequence)
         ReconnectHandler(events) { restart() }
         InvalidSessionHandler(events) { restart(it) }
@@ -78,31 +82,31 @@ class DefaultGateway(
     override suspend fun start(configuration: GatewayConfiguration) {
         require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         handshakeHandler.configuration = configuration
-        retry.reset()
+        data.reconnectRetry.reset()
         state.update { State.Restart(true) } //resetting state
-        while (retry.hasNext && state.value is State.Restart) {
+        while (data.reconnectRetry.hasNext && state.value is State.Restart) {
 
             try {
-                socket = webSocket(url)
+                socket = webSocket(data.url)
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
-                retry.retry()
+                data.reconnectRetry.retry()
                 continue //can't handle a close code if you've got no socket
             }
 
             try {
                 readSocket()
-                retry.reset() //connected and read without problems, resetting retry counter
+                data.reconnectRetry.reset() //connected and read without problems, resetting retry counter
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
             }
 
             handleClose()
 
-            if (state.value.retry) retry.retry()
+            if (state.value.retry) data.reconnectRetry.retry()
         }
 
-        if (!retry.hasNext) {
+        if (!data.reconnectRetry.hasNext) {
             defaultGatewayLogger.warn { "retry limit exceeded, gateway closing" }
         }
     }
@@ -111,6 +115,7 @@ class DefaultGateway(
         socket.incoming.asFlow().filterIsInstance<Frame.Text>().collect { read(it) }
     }
 
+    @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun read(frame: Frame.Text) {
         val json = frame.readText()
         try {
@@ -147,7 +152,7 @@ class DefaultGateway(
         }
     }
 
-    private suspend fun webSocket(url: String) = client.webSocketSession { url(url) }
+    private suspend fun webSocket(url: String) = data.client.webSocketSession { url(url) }
 
     override suspend fun stop() {
         require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
@@ -172,10 +177,11 @@ class DefaultGateway(
         socket.close()
     }
 
+    @Suppress("EXPERIMENTAL_API_USAGE")
     override suspend fun send(command: Command) {
         require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         if (!socketOpen) error("call 'start' before sending messages")
-        rateLimiter.consume()
+        data.sendRateLimiter.consume()
         val json = Json.stringify(Command.Companion, command)
         if (command is Identify) defaultGatewayLogger.trace { "Gateway >>> Identify" }
         else defaultGatewayLogger.trace { "Gateway >>> $json" }

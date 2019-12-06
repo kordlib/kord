@@ -46,8 +46,8 @@ class DefaultGatewayTest {
                 install(JsonFeature)
             }
 
-            retry = LinearRetry(2.seconds, 20.seconds, 10)
-            rateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
+            reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
+            sendRateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
         }
 
         gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.IO).onEach {

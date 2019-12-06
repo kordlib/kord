@@ -15,8 +15,9 @@ import kotlin.time.toKotlinDuration
 class DefaultGatewayBuilder {
     var url = "wss://gateway.discord.gg/"
     var client: HttpClient? = null
-    var retry: Retry? = null
-    var rateLimiter: RateLimiter? = null
+    var reconnectRetry: Retry? = null
+    var sendRateLimiter: RateLimiter? = null
+    var identifyRateLimiter: RateLimiter? = null
 
 
     fun build(): DefaultGateway {
@@ -24,10 +25,11 @@ class DefaultGatewayBuilder {
             install(WebSockets)
             install(JsonFeature)
         }
-        val retry = retry ?: LinearRetry(2.seconds, 20.seconds, 10)
-        val rateLimiter = rateLimiter ?: BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
+        val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
+        val sendRateLimiter = sendRateLimiter ?: BucketRateLimiter(120, 60.seconds)
+        val identifyRateLimiter = identifyRateLimiter ?: BucketRateLimiter(1, 5.seconds)
 
-        return DefaultGateway(url, client, retry, rateLimiter)
+        return DefaultGateway(DefaultGatewayData(url, client, retry, sendRateLimiter, identifyRateLimiter))
     }
 
 }

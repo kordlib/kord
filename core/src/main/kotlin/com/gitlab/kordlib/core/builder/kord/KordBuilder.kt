@@ -15,11 +15,13 @@ import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.gateway.DefaultGateway
+import com.gitlab.kordlib.gateway.DefaultGatewayData
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.retry.LinearRetry
 import com.gitlab.kordlib.gateway.retry.Retry
 import com.gitlab.kordlib.rest.json.response.BotGatewayResponse
 import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
+import com.gitlab.kordlib.rest.ratelimit.ParallelRequestHandler
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 import com.gitlab.kordlib.rest.service.RestClient
@@ -41,15 +43,21 @@ import mu.KotlinLogging
 import kotlin.concurrent.thread
 import kotlin.time.seconds
 
-private val logger = KotlinLogging.logger { }
+operator fun DefaultGateway.Companion.invoke(resources: ClientResources, retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)) =
+        DefaultGateway(DefaultGatewayData("wss://gateway.discord.gg/", resources.httpClient, retry, BucketRateLimiter(120, 60.seconds), BucketRateLimiter(1, 5.seconds)))
 
-operator fun DefaultGateway.Companion.invoke(resources: ClientResources, retry: Retry) =
-        DefaultGateway("wss://gateway.discord.gg/", resources.httpClient, retry, BucketRateLimiter(120, 60.seconds))
+private val logger = KotlinLogging.logger { }
 
 class KordBuilder(val token: String) {
     private var shardRange: (recommended: Int) -> Iterable<Int> = { 0 until it }
-    private var gatewayBuilder: (resources: ClientResources, shard: Int) -> Gateway = { resources, _ ->
-        DefaultGateway(resources, LinearRetry(2.seconds, 60.seconds, 10))
+    private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> = { resources, shards ->
+        val rateLimiter = BucketRateLimiter(1, 5.seconds)
+        shards.map {
+            DefaultGateway {
+                client = resources.httpClient
+                identifyRateLimiter = rateLimiter
+            }
+        }
     }
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler = { ExclusionRequestHandler(it.httpClient) }
@@ -97,11 +105,13 @@ class KordBuilder(val token: String) {
      *
      * ```
      * Kord(token) {
-     *     { resources, shard -> DefaultGateway(resources, LinearRetry(2.seconds, 60.seconds, 10)) }
+     *     gateway { resources, shards ->
+     *         shards.map { DefaultGateway(resources) }
+     *     }
      * }
      * ```
      */
-    fun gateway(gatewayBuilder: (resources: ClientResources, shard: Int) -> Gateway) {
+    fun gateways(gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway>) {
         this.gatewayBuilder = gatewayBuilder
     }
 
@@ -171,8 +181,7 @@ class KordBuilder(val token: String) {
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
         val gateway = run {
-            val gateways = shards
-                    .map { gatewayBuilder(resources, it) }
+            val gateways = gatewayBuilder(resources, shards)
                     .map { CachingGateway(cache.createView(), it) }
                     .onEach { it.registerKordData() }
 
