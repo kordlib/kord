@@ -1,23 +1,35 @@
 package com.gitlab.kordlib.core.cache
 
 import com.gitlab.kordlib.cache.api.DataCache
+import com.gitlab.kordlib.cache.api.DataEntryCache
+import com.gitlab.kordlib.cache.api.Query
 import com.gitlab.kordlib.cache.api.QueryBuilder
 import com.gitlab.kordlib.cache.api.data.DataDescription
-import com.gitlab.kordlib.cache.api.query.Query
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
+import kotlin.reflect.KType
+
+class ViewKeys(private val keySet: MutableSet<Any> = mutableSetOf()) {
+    val keys: Set<Any> = keySet
+
+    fun add(key: Any) {
+        keySet.add(key)
+    }
+}
 
 /**
  * A [DataCacheView] that limits removal of cached instances to those inserted in this cache,
  * and not the underlying [cache].
  */
 class DataCacheView(private val cache: DataCache) : DataCache by cache {
-    private val keys = mutableSetOf<Any>()
-    private val descriptions = mutableMapOf<KClass<out Any>, DataDescription<out Any, out Any>>()
+    private val keys = ViewKeys()
+    private val descriptions = mutableMapOf<KType, DataDescription<out Any, out Any>>()
+
+    @Suppress("UNCHECKED_CAST")
+    private fun<T: Any> getDescription(type: KType) = descriptions[type]!! as DataDescription<T, out Any>
 
     override suspend fun register(description: DataDescription<out Any, out Any>) {
-        descriptions[description.clazz] = description
+        descriptions[description.type] = description
     }
 
     override suspend fun register(vararg descriptions: DataDescription<out Any, out Any>) {
@@ -28,39 +40,41 @@ class DataCacheView(private val cache: DataCache) : DataCache by cache {
         descriptions.forEach { register(it) }
     }
 
-    @Suppress("UNCHECKED_CAST")
-    override suspend fun <T : Any> put(item: T) {
-        cache.put(item)
-        val description = descriptions[item::class]!!
-        val property = description.indexField.property as KProperty1<T, Any>
-        keys += property.get(item)
-    }
-
-
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : Any> query(clazz: KClass<T>): QueryBuilder<T> {
-        val query = cache.query(clazz)
-        val description = descriptions[clazz]!!
-        val property = description.indexField.property as KProperty1<T, Any>
-        return QueryBuilderView(query, keys, property)
+    override fun <T : Any> getEntry(type: KType): DataEntryCache<T>? {
+        return cache.getEntry<T>(type)?.let { DataEntryCacheView(it, getDescription(type), keys) }
     }
 
 }
 
+private class DataEntryCacheView<T : Any>(
+        private val entryCache: DataEntryCache<T>,
+        private val description: DataDescription<T, out Any>,
+        private val viewKeys: ViewKeys
+) : DataEntryCache<T> by entryCache {
+
+    override suspend fun put(item: T) {
+        entryCache.put(item)
+        viewKeys.add(description.indexField.property.get(item))
+    }
+
+    override fun query(): QueryBuilder<T> {
+        return QueryBuilderView(entryCache.query(), description.indexField.property, viewKeys.keys)
+    }
+
+}
 
 private class QueryBuilderView<T : Any>(
         private val builder: QueryBuilder<T>,
-        private val keys: MutableSet<Any>,
-        private val property: KProperty1<T, Any>
+        private val property: KProperty1<T, Any>,
+        private val keys: Set<Any>
 ) : QueryBuilder<T> by builder {
-    override fun build(): Query<T> = QueryView(builder, keys, property)
+    override fun build(): Query<T> = QueryView(builder, property, keys)
 }
-
 
 private class QueryView<T : Any>(
         private val builder: QueryBuilder<T>,
-        private val keys: MutableSet<Any>,
-        private val property: KProperty1<T, Any>
+        private val property: KProperty1<T, Any>,
+        private val keys: Set<Any>
 ) : Query<T> by builder.build() {
     override suspend fun remove() = builder.apply { property `in` keys }.build().remove()
 }
