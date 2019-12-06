@@ -75,6 +75,12 @@ Added `presences` and `userIds` to the `RequestGuildMembers` class and the equiv
 
 `filename` is now correctly deserialized for `Attachment` objects.
 
+# 0.2.2
+
+## Additions
+
+`Gateway` now has a `ping` field, containing the duration between the latest heartbeat and heartbeat ack.
+
 # 0.2.1
 
 This is the first maintenance update for Kord 0.2. 
@@ -93,6 +99,25 @@ flows of members, channels, etc (and really, they should've been part of the cor
 * `StoreChannel` can no longer be used to read or send messages. [discord api](https://discordapp.com/developers/docs/resources/channel#channel-object-example-store-channel).
 * `NewsChannel` and `StoreChannel` have been upgraded to the stable api and are no longer in preview.
 * `ExclusionRequestHandler` now takes request buckets into consideration.
+
+## Fixes
+
+# 0.2.1
+
+This is the first maintenance update for Kord 0.2. 
+With it, we have started hosting Kord on bintray, check our README on what to include to get the newest version.
+
+## Additions
+
+* Added `Flow<T: Any>.firstOrNull` and `Flow<T: Any>.any` as their behavior is often needed when interacting with
+flows of members, channels, etc (and really, they should've been part of the coroutines api).
+
+## Changes
+
+* `KordClientBuilder` now allows you to pass a custom `CoroutineDispatcher`.
+* Since most suspending calls in Kord will be IO related, `Kord` now uses `Dispatchers.IO` as its `CoroutineDispatcher`.
+* `StoreChannel` can no longer be used to read or send messages. [discord api](https://discordapp.com/developers/docs/resources/channel#channel-object-example-store-channel).
+* `NewsChannel` and `StoreChannel` have been upgraded to the stable api and are no longer in preview.
 
 ## Fixes
 

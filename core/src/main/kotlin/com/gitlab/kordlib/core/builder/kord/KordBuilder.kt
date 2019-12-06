@@ -3,14 +3,12 @@
 package com.gitlab.kordlib.core.builder.kord
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.map.MapDataCache
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.core.ClientResources
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.CachingGateway
-import com.gitlab.kordlib.core.cache.KordCache
+import com.gitlab.kordlib.core.cache.KordCacheBuilder
 import com.gitlab.kordlib.core.cache.createView
-import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.cache.registerKordData
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.event.Event
@@ -63,7 +61,7 @@ class KordBuilder(val token: String) {
     }
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler = { ExclusionRequestHandler(it.httpClient) }
-    private var cacheBuilder: (resources: ClientResources) -> DataCache = { MapDataCache() }
+    private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
 
     /**
      * Enable adding a [Runtime.addShutdownHook] to log out of the [Gateway] when the process is killed.
@@ -86,9 +84,16 @@ class KordBuilder(val token: String) {
      * This can be used to break up to client into multiple processes.
      *
      * ```
-     * Kord(token) {
-     *     sharding { recommended -> 0 until it step 2 } //only connect to the even shards on this process
-     * }
+     * cache {
+     *  defaultGenerator = lruCache(10)
+     *  forDescription(UserData.description) { cache, description ->  DataEntryCache.none() }
+     *  forDescription(MessageData.description) { cache, description ->
+     *      MapEntryCache(cache, description, MapLikeCollection.lruLinkedHashMap(100))
+     *  }
+     *  forDescription(UserData.description) { cache, description ->
+     *      MapEntryCache(cache, description, MapLikeCollection.weakHashMap())
+     *  }
+     *}
      * ```
      */
     fun sharding(shardRange: (recommended: Int) -> Iterable<Int>) {
@@ -128,12 +133,20 @@ class KordBuilder(val token: String) {
      *
      *  ```
      * Kord(token) {
-     *     { resources -> MapDataCache() }
+     *     cache {
+     *         defaultGenerator = lruCache()
+     *         forDescription(MessageData.description) { cache, description -> DataEntryCache.none() }
+     *         forDescription(UserData.description) { cache, description -> MapEntryCache(cache, description, MapLikeCollection.weakHashMap()) }
+     *     }
      * }
      * ```
      */
-    fun cache(cacheBuilder: (resources: ClientResources) -> DataCache) {
-        this.cacheBuilder = cacheBuilder
+    fun cache(builder: KordCacheBuilder.(resources: ClientResources) -> Unit) {
+        val old = cacheBuilder
+        cacheBuilder = { resources: ClientResources ->
+            old(resources)
+            builder(resources)
+        }
     }
 
     private fun HttpClientConfig<*>.defaultConfig() {
@@ -157,8 +170,7 @@ class KordBuilder(val token: String) {
         val shards = shardRange(recommendedShards).toList()
 
         if (client.engine.config.threadsCount < shards.size + 1) {
-            logger.warn {
-                """
+            logger.warn { """
                 kord's http client is currently using ${client.engine.config.threadsCount} threads, 
                 which is less than the advised threadcount of ${shards.size + 1} (number of shards + 1)""".trimIndent()
             }
@@ -166,13 +178,8 @@ class KordBuilder(val token: String) {
 
         val resources = ClientResources(token, shards.count(), client)
         val rest = RestClient(handlerBuilder(resources))
-        val defaultCache = cacheBuilder(resources)
-        val cache = KordCache {
-            when (it.clazz) {
-                MessageData::class -> DataCache.none()
-                else -> defaultCache
-            }
-        }.also { it.registerKordData() }
+        val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
+        cache.registerKordData()
         val gateway = run {
             val gateways = gatewayBuilder(resources, shards)
                     .map { CachingGateway(cache.createView(), it) }
