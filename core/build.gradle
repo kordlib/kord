@@ -7,8 +7,8 @@ dependencies {
     api project(':rest')
     api project(':gateway')
 
-    api 'com.gitlab.kordlib.cache:api:bf701c86'
-    api 'com.gitlab.kordlib.cache:map:bf701c86'
+    api 'com.gitlab.kordlib.cache:api:0.1.0'
+    api 'com.gitlab.kordlib.cache:map:0.1.0'
 }
 compileKotlin {
     kotlinOptions {

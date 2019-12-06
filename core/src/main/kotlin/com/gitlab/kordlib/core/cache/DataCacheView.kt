@@ -2,10 +2,9 @@ package com.gitlab.kordlib.core.cache
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.DataEntryCache
+import com.gitlab.kordlib.cache.api.Query
 import com.gitlab.kordlib.cache.api.QueryBuilder
 import com.gitlab.kordlib.cache.api.data.DataDescription
-import com.gitlab.kordlib.cache.api.put
-import com.gitlab.kordlib.cache.api.query.Query
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KType
