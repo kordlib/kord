@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.json.request
 
+import com.gitlab.kordlib.common.entity.Flags
 import kotlinx.io.InputStream
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -65,7 +66,8 @@ data class EmbedFieldRequest(
 @Serializable
 data class MessageEditPatchRequest(
         val content: String? = null,
-        val embed: EmbedRequest? = null
+        val embed: EmbedRequest? = null,
+        val flags: Flags? = null
 )
 
 @Serializable

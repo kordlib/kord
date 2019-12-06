@@ -71,7 +71,7 @@ internal data class Identify(
         val compress: Boolean? = null,
         @SerialName("large_threshold")
         val largeThreshold: Int = 50,
-        val shard: Shard? = null,
+        val shard: DiscordShard? = null,
         val presence: Presence? = null
 ) : Command() {
     override fun toString(): String = "Identify(token=hunter2,properties=$properties,compress=$compress,largeThreshold=$largeThreshold," +
@@ -93,7 +93,7 @@ data class IdentifyProperties(
 data class GuildMembersChunkData(
         @SerialName("guild_id")
         val guildId: String,
-        val members: List<GuildMember>,
+        val members: List<DiscordGuildMember>,
         @SerialName("not_found")
         val notFound: List<String>? = null,
         val presences: List<Presence>? = null
@@ -104,7 +104,7 @@ data class Presence(
         val status: Status,
         val afk: Boolean,
         val since: Long? = null,
-        val game: Activity? = null
+        val game: DiscordActivity? = null
 )
 
 @Serializable
@@ -144,7 +144,7 @@ data class UpdateVoiceStatus(
 @Serializable
 data class UpdateStatus(
         val since: Long? = null,
-        val game: Activity? = null,
+        val game: DiscordActivity? = null,
         val status: Status,
         val afk: Boolean
 ) : Command()

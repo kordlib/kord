@@ -18,9 +18,8 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
-import com.gitlab.kordlib.common.entity.Guild as GatewayGuild
+import com.gitlab.kordlib.common.entity.DiscordGuild as GatewayGuild
 import com.gitlab.kordlib.core.event.Event as CoreEvent
-import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class GuildEventHandler(

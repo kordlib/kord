@@ -1,9 +1,9 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
-import com.gitlab.kordlib.common.entity.AddedGuildMember
-import com.gitlab.kordlib.common.entity.GuildMember
-import com.gitlab.kordlib.common.entity.PartialGuildMember
+import com.gitlab.kordlib.common.entity.DiscordAddedGuildMember
+import com.gitlab.kordlib.common.entity.DiscordGuildMember
+import com.gitlab.kordlib.common.entity.DiscordPartialGuildMember
 import kotlinx.serialization.Serializable
 
 private val MemberData.id get() = "$userId$guildId"
@@ -19,13 +19,13 @@ data class MemberData(
     companion object {
         val description get() = description(MemberData::id)
 
-        fun from(userId: String, guildId: String, entity: GuildMember) =
+        fun from(userId: String, guildId: String, entity: DiscordGuildMember) =
                 with(entity) { MemberData(userId.toLong(), guildId.toLong(), nick, roles, joinedAt) }
 
-        fun from(userId: String, entity: AddedGuildMember) =
+        fun from(userId: String, entity: DiscordAddedGuildMember) =
                 with(entity) { MemberData(userId.toLong(), guildId.toLong(), nick, roles, joinedAt) }
 
-        fun from(userId: String, guildId: String, entity: PartialGuildMember) =
+        fun from(userId: String, guildId: String, entity: DiscordPartialGuildMember) =
                 with(entity) { MemberData(userId.toLong(), guildId.toLong(), nick, roles, joinedAt) }
 
     }

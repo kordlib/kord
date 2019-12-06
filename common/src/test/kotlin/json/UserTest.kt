@@ -2,7 +2,7 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.User
+import com.gitlab.kordlib.common.entity.DiscordUser
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
@@ -15,7 +15,7 @@ class UserTest {
 
     @Test
     fun `User serialization`() {
-        val user = Json.parse(User.serializer(), file("user"))
+        val user = Json.parse(DiscordUser.serializer(), file("user"))
 
         with(user) {
             id shouldBe "80351110224678912"

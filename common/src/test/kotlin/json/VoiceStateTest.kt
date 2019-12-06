@@ -2,7 +2,7 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.VoiceState
+import com.gitlab.kordlib.common.entity.DiscordVoiceState
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
@@ -15,7 +15,7 @@ class VoiceStateTest {
 
     @Test
     fun `VoiceState serialization`() {
-        val state = Json.parse(VoiceState.serializer(), file("voicestate"))
+        val state = Json.parse(DiscordVoiceState.serializer(), file("voicestate"))
 
         with(state) {
             channelId shouldBe "157733188964188161"

@@ -4,37 +4,37 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
-data class Activity(
+data class DiscordActivity(
         val name: String,
         val type: ActivityType,
         val url: String? = null,
-        val timestamps: ActivityTimeStamps? = null,
+        val timestamps: DiscordActivityTimeStamps? = null,
         @SerialName("application_id")
         val applicationId: String? = null,
         val details: String? = null,
-        val emoji: PartialEmoji? = null,
+        val emoji: DiscordPartialEmoji? = null,
         val state: String? = null,
-        val party: ActivityParty? = null,
-        val assets: ActivityAssets? = null,
-        val secrets: ActivitySecrets? = null,
+        val party: DiscordActivityParty? = null,
+        val assets: DiscordActivityAssets? = null,
+        val secrets: DiscordActivitySecrets? = null,
         val instance: Boolean? = null,
         val flags: Int? = null
 )
 
 @Serializable
-data class ActivityTimeStamps(
+data class DiscordActivityTimeStamps(
         val start: Long? = null,
         val end: Long? = null
 )
 
 @Serializable
-data class ActivityParty(
+data class DiscordActivityParty(
         val id: String? = null,
         val size: List<Int>? = null
 )
 
 @Serializable
-data class ActivityAssets(
+data class DiscordActivityAssets(
         @SerialName("large_image")
         val largeImage: String? = null,
         @SerialName("large_text")
@@ -46,7 +46,7 @@ data class ActivityAssets(
 )
 
 @Serializable
-data class ActivitySecrets(
+data class DiscordActivitySecrets(
         val join: String? = null,
         val spectate: String? = null,
         val match: String? = null
