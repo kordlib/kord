@@ -208,9 +208,7 @@ class KordBuilder(val token: String) {
                 Snowflake(self),
                 eventPublisher,
                 defaultDispatcher
-        ).also {
-            it.launch { GatewayEventInterceptor(it, gateway, cache, eventPublisher).start() }
-        }
+        )
     }
 
 }

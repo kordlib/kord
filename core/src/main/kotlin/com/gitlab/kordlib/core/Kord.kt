@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.event.Event
+import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.start
 import com.gitlab.kordlib.rest.service.RestClient
@@ -20,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
@@ -36,6 +38,11 @@ class Kord internal constructor(
         private val eventPublisher: BroadcastChannel<Event>,
         private val dispatcher: CoroutineDispatcher
 ) : CoroutineScope {
+    private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventPublisher)
+    init {
+        launch { interceptor.start() }
+    }
+
     @Suppress("EXPERIMENTAL_API_USAGE")
     val unsafe: Unsafe = Unsafe(this)
 
