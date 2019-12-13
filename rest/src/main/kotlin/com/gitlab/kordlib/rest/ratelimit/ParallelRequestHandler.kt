@@ -27,7 +27,6 @@ import kotlin.time.minutes
 private val logger = KotlinLogging.logger {}
 
 @KordUnsafe
-@KordPreview
 class ParallelRequestHandler(private val client: HttpClient, private val clock: Clock = Clock.systemUTC()) : RequestHandler {
 
     private var globalSuspensionPoint = atomic(0L)
