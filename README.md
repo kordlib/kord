@@ -70,6 +70,8 @@ In an effort to ease the pain of bot development, Kord grants the user an extens
 
 ## Installation
 
+Replace `{version}` with the latest version number on bintray [ ![Download](https://api.bintray.com/packages/kordlib/Kord/Kord/images/download.svg) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion).
+
 ### Gradle
 
 ```groovy
@@ -84,7 +86,7 @@ repositories {
 ```groovy
 dependencies {
  ...
- implementation 'com.gitlab.kordlib:kord:0.2.3'
+ implementation 'com.gitlab.kordlib:kord:{version}'
 }
 ```
 
@@ -105,7 +107,7 @@ dependencies {
 <dependency>
     <groupId>com.gitlab.kordlib</groupId>
     <artifactId>Kord</artifactId>
-    <version>0.2.3</version>
+    <version>{version}</version>
 </dependency>
 ```
 

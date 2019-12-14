@@ -21,6 +21,7 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
@@ -52,11 +53,11 @@ class DefaultGateway(
         private val rateLimiter: RateLimiter
 ) : Gateway {
 
-    private val channel = BroadcastChannel<Event>(Channel.CONFLATED)
+    private val channel = BroadcastChannel<Any>(Channel.CONFLATED)
 
     override var ping: Duration = Duration.INFINITE
 
-    override val events: Flow<Event> = channel.asFlow()
+    override val events: Flow<Event> = channel.asFlow().drop(1).filterIsInstance()
 
     private lateinit var socket: DefaultClientWebSocketSession
 
@@ -65,6 +66,7 @@ class DefaultGateway(
     private val handshakeHandler: HandshakeHandler
 
     init {
+        channel.sendBlocking(Unit)
         val sequence = Sequence()
         SequenceHandler(events, sequence)
         handshakeHandler = HandshakeHandler(events, ::send, sequence)
@@ -111,8 +113,13 @@ class DefaultGateway(
 
     private suspend fun read(frame: Frame.Text) {
         val json = frame.readText()
-        defaultGatewayLogger.trace { "Gateway <<< $json" }
-        Json.nonstrict.parse(Event.Companion, json)?.let { channel.send(it) }
+        try {
+            defaultGatewayLogger.trace { "Gateway <<< $json" }
+            Json.nonstrict.parse(Event.Companion, json)?.let { channel.send(it) }
+        } catch (exception: Exception) {
+            defaultGatewayLogger.error(exception)
+        }
+
     }
 
     private suspend fun handleClose() {

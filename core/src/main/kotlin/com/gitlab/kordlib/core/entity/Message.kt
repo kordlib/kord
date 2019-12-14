@@ -4,13 +4,13 @@ import com.gitlab.kordlib.common.entity.MessageType
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MessageBehavior
+import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
-import com.gitlab.kordlib.core.cache.data.ReactionData
-import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.toSnowflakeOrNull
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
@@ -39,13 +39,41 @@ class Message(private val data: MessageData, override val kord: Kord) : MessageB
 
     val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
+    /**
+     * The ids of [Channels][Channel] specifically mentioned in this message.
+     *
+     * This collection can only contain values on crossposted messages.
+     */
+    val mentionedChannelIds: Set<Snowflake> get() = data.mentionedChannels.orEmpty().map { Snowflake(it) }.toSet()
+
+    /**
+     * The [Channels][ChannelBehavior] specifically mentioned in this message.
+     *
+     * This collection can only contain values on crossposted messages.
+     */
+    val mentionedChannelBehaviors: Set<ChannelBehavior> get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(Snowflake(it), kord) }.toSet()
+
+    /**
+     * The [Channels][Channel] specifically mentioned in this message.
+     *
+     * This property will only emit values on crossposted messages.
+     */
+    @Suppress("RemoveExplicitTypeArguments")
+    val mentionedChannels: Flow<Channel>
+        get() = flow<Channel> /*The plugin can infer the type, but the compiler can't, so leave this here for now*/ {
+            for (id in mentionedChannelIds) {
+                val channel = kord.getChannel(id)
+                if (channel != null) emit(channel)
+            }
+        }
+
     val mentionsEveryone: Boolean get() = data.mentionEveryone
 
     val mentionedRoles: Set<Snowflake> get() = data.mentionRoles.map { Snowflake(it) }.toSet()
 
     val mentionedUsers: Set<Snowflake> get() = data.mentions.map { Snowflake(it) }.toSet()
 
-    val reactions: Set<Reaction> get()  = data.reactions.orEmpty().asSequence().map { Reaction(it, kord) }.toSet()
+    val reactions: Set<Reaction> get() = data.reactions.orEmpty().asSequence().map { Reaction(it, kord) }.toSet()
 
     val timestamp: Instant get() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(data.timestamp, Instant::from)
 

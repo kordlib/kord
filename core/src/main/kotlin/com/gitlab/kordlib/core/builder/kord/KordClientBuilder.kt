@@ -35,12 +35,12 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
-import kotlin.coroutines.suspendCoroutine
+import kotlin.concurrent.thread
 import kotlin.time.seconds
 
 private val logger = KotlinLogging.logger { }
@@ -56,6 +56,11 @@ class KordClientBuilder(val token: String) {
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler = { ExclusionRequestHandler(it.httpClient) }
     private var cacheBuilder: (resources: ClientResources) -> DataCache = { MapDataCache() }
+
+    /**
+     * Enable adding a [Runtime.addShutdownHook] to log out of the [Gateway] when the process is killed.
+     */
+    var enableShutdownHook: Boolean = true
 
     /**
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.IO] by default.
@@ -142,16 +147,18 @@ class KordClientBuilder(val token: String) {
         val shards = shardRange(recommendedShards).toList()
 
         if (client.engine.config.threadsCount < shards.size + 1) {
-            logger.warn { """
+            logger.warn {
+                """
                 kord's http client is currently using ${client.engine.config.threadsCount} threads, 
-                which is less than the advised threadcount of ${shards.size + 1} (number of shards + 1)""".trimIndent() }
+                which is less than the advised threadcount of ${shards.size + 1} (number of shards + 1)""".trimIndent()
+            }
         }
 
         val resources = ClientResources(token, shards.count(), client)
         val rest = RestClient(handlerBuilder(resources))
         val defaultCache = cacheBuilder(resources)
         val cache = KordCache {
-            when(it.clazz) {
+            when (it.clazz) {
                 MessageData::class -> DataCache.none()
                 else -> defaultCache
             }
@@ -167,6 +174,14 @@ class KordClientBuilder(val token: String) {
         val self = rest.user.getCurrentUser().id
 
         val eventPublisher = BroadcastChannel<Event>(Channel.CONFLATED)
+
+        if (enableShutdownHook) {
+            Runtime.getRuntime().addShutdownHook(thread(false) {
+                runBlocking {
+                    gateway.detach()
+                }
+            })
+        }
 
         return Kord(
                 resources,

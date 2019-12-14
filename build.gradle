@@ -18,7 +18,7 @@ buildscript {
 }
 
 ext {
-    lib_version = System.getenv("CI_COMMIT_TAG") ?: System.getenv("CI_COMMIT_SHA")
+    lib_version = System.getenv("CI_COMMIT_TAG") ?: System.getenv("CI_COMMIT_SHA") ?: "undefined"
     lib_group = 'com.gitlab.kordlib.kord'
     serialization_version = '0.13.0'
     ktor_version = '1.2.5'
@@ -29,7 +29,7 @@ ext {
 }
 
 group lib_group
-version lib_version
+version lib_version ?: "undefined"
 
 subprojects {
     apply plugin: 'java'
@@ -103,6 +103,7 @@ subprojects {
         user = System.getenv('BINTRAY_USER')
         key = System.getenv('BINTRAY_KEY')
         publications = ['Kord']
+        publish = true
         pkg {
             repo = 'Kord'
             name = 'Kord'

@@ -1,3 +1,21 @@
+# 0.2.4
+
+## Additions
+
+* `uses` has been added as a nullable property to `InviteResponse` .
+* Added `mentionedChannel`-related fields to `Message`.
+* Added `KordClientBuilder#enableShutdownHook`, which enables a shutdownHook that automatically closes the gateway on process exit.
+
+## Changes
+
+* `User.Avatar#getUrl` no longer returns `null` when requesting a static version of a user's animated avatar.
+
+## Fixes
+
+* Fixed an issue where `PartialEmoji` would not deserialize with a missing `id`.
+* Fixed an issue where subscribing to the `events` Flow while kord was already logged in caused it to emit old events.
+* Fixed an issue where `DefaultGateway` would stop reading payloads after throwing an Exception while parsing json.
+
 # 0.2.3
 
 ## Additions
