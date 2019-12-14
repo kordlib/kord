@@ -63,7 +63,7 @@ deploy:
   script: gradle --stacktrace --info bintrayUpload
   only:
     refs:
-      - master
+      - tags
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
