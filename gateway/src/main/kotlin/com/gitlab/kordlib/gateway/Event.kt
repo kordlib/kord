@@ -76,9 +76,9 @@ sealed class Event {
         private fun getByDispatchEvent(index: Int, decoder: CompositeDecoder, name: String?, sequence: Int?) = when (name) {
             "RESUMED" -> Resumed(decoder.decodeSerializableElement(descriptor, index, ResumedData.serializer()), sequence)
             "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
-            "CHANNEL_CREATE" -> ChannelCreate(decoder.decodeSerializableElement(descriptor, index, Channel.serializer()), sequence)
-            "CHANNEL_UPDATE" -> ChannelUpdate(decoder.decodeSerializableElement(descriptor, index, Channel.serializer()), sequence)
-            "CHANNEL_DELETE" -> ChannelDelete(decoder.decodeSerializableElement(descriptor, index, Channel.serializer()), sequence)
+            "CHANNEL_CREATE" -> ChannelCreate(decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()), sequence)
+            "CHANNEL_UPDATE" -> ChannelUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()), sequence)
+            "CHANNEL_DELETE" -> ChannelDelete(decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()), sequence)
             "CHANNEL_PINS_UPDATE" -> ChannelPinsUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordPinsUpdateData.serializer()), sequence)
             "TYPING_START" -> TypingStart(decoder.decodeSerializableElement(descriptor, index, DiscordTyping.serializer()), sequence)
             "GUILD_CREATE" -> GuildCreate(decoder.decodeSerializableElement(descriptor, index, DiscordGuild.serializer()), sequence)
@@ -145,7 +145,7 @@ data class ReadyData(
         val version: Int,
         val user: DiscordUser,
         @SerialName("private_channels")
-        val privateChannels: List<Channel>, //TODO("Add DM Channel.")
+        val privateChannels: List<DiscordChannel>, //TODO("Add DM Channel.")
         val guilds: List<DiscordUnavailableGuild>,
         @SerialName("session_id")
         val sessionId: String,
@@ -194,9 +194,9 @@ data class InvalidSession(val resumable: Boolean) : Event() {
 }
 
 
-data class ChannelCreate(val channel: Channel, override val sequence: Int?) : DispatchEvent()
-data class ChannelUpdate(val channel: Channel, override val sequence: Int?) : DispatchEvent()
-data class ChannelDelete(val channel: Channel, override val sequence: Int?) : DispatchEvent()
+data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+data class ChannelDelete(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 data class ChannelPinsUpdate(val pins: DiscordPinsUpdateData, override val sequence: Int?) : DispatchEvent()
 
 data class TypingStart(val data: DiscordTyping, override val sequence: Int?) : DispatchEvent()

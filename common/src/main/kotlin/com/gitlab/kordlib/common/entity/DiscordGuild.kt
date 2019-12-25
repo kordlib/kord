@@ -56,7 +56,7 @@ data class DiscordGuild(
         @SerialName("voice_states")
         val voiceStates: List<DiscordVoiceState>? = null,
         val members: List<DiscordGuildMember>? = null,
-        val channels: List<Channel>? = null,
+        val channels: List<DiscordChannel>? = null,
         val presences: List<DiscordPresenceUpdateData>? = null,
         @SerialName("max_presences")
         val maxPresences: Int? = null,

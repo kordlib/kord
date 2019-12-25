@@ -25,16 +25,16 @@ sealed class Route<T>(
         : Route<AuditLogResponse>(HttpMethod.Get, "/guilds/$GuildId/audit-logs", AuditLogResponse.serializer())
 
     object ChannelGet
-        : Route<Channel>(HttpMethod.Get, "/channels/$ChannelId", Channel.serializer())
+        : Route<DiscordChannel>(HttpMethod.Get, "/channels/$ChannelId", DiscordChannel.serializer())
 
     object ChannelPut
-        : Route<Channel>(HttpMethod.Put, "/channels/$ChannelId", Channel.serializer())
+        : Route<DiscordChannel>(HttpMethod.Put, "/channels/$ChannelId", DiscordChannel.serializer())
 
     object ChannelPatch
-        : Route<Channel>(HttpMethod.Patch, "/channels/$ChannelId", Channel.serializer())
+        : Route<DiscordChannel>(HttpMethod.Patch, "/channels/$ChannelId", DiscordChannel.serializer())
 
     object ChannelDelete
-        : Route<Channel>(HttpMethod.Delete, "/channels/$ChannelId", Channel.serializer())
+        : Route<DiscordChannel>(HttpMethod.Delete, "/channels/$ChannelId", DiscordChannel.serializer())
 
     object MessagePost
         : Route<DiscordMessage>(HttpMethod.Post, "/channels/$ChannelId/messages", DiscordMessage.serializer())
@@ -136,7 +136,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Delete, "/users/@me/guilds/$GuildId", NoStrategy)
 
     object DMPost
-        : Route<Channel>(HttpMethod.Post, "/users/@me/channels", Channel.serializer())
+        : Route<DiscordChannel>(HttpMethod.Post, "/users/@me/channels", DiscordChannel.serializer())
 
     object UserConnectionsGet
         : Route<List<Connection>>(HttpMethod.Get, "/users/@me/connections", ArrayListSerializer(Connection.serializer()))
@@ -154,10 +154,10 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId", NoStrategy)
 
     object GuildChannelsGet
-        : Route<List<Channel>>(HttpMethod.Get, "/guilds/$GuildId/channels", ArrayListSerializer(Channel.serializer()))
+        : Route<List<DiscordChannel>>(HttpMethod.Get, "/guilds/$GuildId/channels", ArrayListSerializer(DiscordChannel.serializer()))
 
     object GuildChannelsPost
-        : Route<Channel>(HttpMethod.Post, "/guilds/$GuildId/channels", Channel.serializer())
+        : Route<DiscordChannel>(HttpMethod.Post, "/guilds/$GuildId/channels", DiscordChannel.serializer())
 
     object GuildChannelsPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/channels", NoStrategy)

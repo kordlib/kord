@@ -1,6 +1,6 @@
 package com.gitlab.kordlib.rest.json.response
 
-import com.gitlab.kordlib.common.entity.Channel
+import com.gitlab.kordlib.common.entity.DiscordChannel
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.DiscordUser
 import kotlinx.serialization.*
@@ -10,7 +10,7 @@ import kotlinx.serialization.internal.IntDescriptor
 data class InviteResponse(
         val code: String? = null,
         val guild: DiscordPartialGuild? = null,
-        val channel: Channel? = null,
+        val channel: DiscordChannel? = null,
         @SerialName("target_user")
         val targetUser: DiscordUser? = null,
         @SerialName("target_user_type")

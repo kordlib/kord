@@ -4,7 +4,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
-data class Channel(
+data class DiscordChannel(
         val id: String,
         val type: ChannelType,
         @SerialName("guild_id")
