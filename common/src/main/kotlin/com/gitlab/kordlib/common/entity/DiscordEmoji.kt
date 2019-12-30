@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DiscordEmoji(
         val id: String? = null,
-        val name: String,
+        val name: String? = null,
         val roles: List<String>? = null,
         val user: DiscordUser? = null,
         @SerialName("require_colons")
@@ -25,6 +25,6 @@ data class DiscordUpdatedEmojis(
 @Serializable
 data class DiscordPartialEmoji(
         val id: String? = null,
-        val name: String,
+        val name: String? = null,
         val animated: Boolean? = null
 )

@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EmojiData(
         val id: Long,
-        val name: String,
+        val name: String? = null,
         val user: UserData?,
         val roles: List<Long>,
         val requireColons: Boolean,

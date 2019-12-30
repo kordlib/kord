@@ -12,12 +12,13 @@ sealed class ReactionEmoji {
 
         override fun toString() = "Custom(id=$id, name=$name, isAnimated=$isAnimated)"
     }
+
     class Unicode(override val name: String) : ReactionEmoji() {
         override val id: Snowflake? get() = null
         override val formatted: String get() = name
     }
 
     companion object {
-        fun from(guildEmoji: GuildEmoji) = Custom(guildEmoji.id, guildEmoji.name, guildEmoji.isAnimated)
+        fun from(guildEmoji: GuildEmoji) = Custom(guildEmoji.id, guildEmoji.name ?: error("emojis without name cannot be used to react"), guildEmoji.isAnimated)
     }
 }

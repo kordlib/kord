@@ -9,7 +9,7 @@ data class ReactionData(
     val count: Int,
     val me: Boolean,
     val emojiId: Long? = null,
-    val emojiName: String,
+    val emojiName: String? = null,
     val emojiAnimated: Boolean
 ) {
     companion object {

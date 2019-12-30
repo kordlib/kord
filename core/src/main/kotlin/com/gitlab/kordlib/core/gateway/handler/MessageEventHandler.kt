@@ -84,9 +84,13 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageReactionAdd) = with(event.reaction) {
+        /**
+         * Reactions added will *always* have a name, the only case in which name is null is when a guild reaction
+         * no longer exists (only id is kept). Reacting with a non-existing reaction *should* be impossible.
+         **/
         val reaction = when (val id = emoji.id) {
-            null -> ReactionEmoji.Unicode(emoji.name)
-            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name, emoji.animated ?: false)
+            null -> ReactionEmoji.Unicode(emoji.name!!)
+            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name!!, emoji.animated ?: false)
         }
 
         cache.find<MessageData> { MessageData::id eq messageId.toLong() }.update {
@@ -123,9 +127,13 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageReactionRemove) = with(event.reaction) {
+        /**
+         * Reactions removed will *sometimes* have a name, the only case in which name is null is when a guild reaction
+         * no longer exists (only id is kept). Reomving a non-existing reaction *should* be possible.
+         **/
         val reaction = when (val id = emoji.id) {
-            null -> ReactionEmoji.Unicode(emoji.name)
-            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name, emoji.animated ?: false)
+            null -> ReactionEmoji.Unicode(emoji.name!!)
+            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name ?: "", emoji.animated ?: false)
         }
 
         cache.find<MessageData> { MessageData::id eq messageId.toLong() }.update {

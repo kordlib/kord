@@ -11,6 +11,7 @@
 This will be done by default for Kord clients now.
 * `KordClientBuilder`'s `gateway` function has been renamed to `gateways`. It now gives a list of shards and requests a list of gateways, this change
 allows you to more easily share configuration between gateways.
+* Emojis now have nullable names, this only appears when interacting with guild emojis that have been deleted.
 
 # 0.2.4
 
