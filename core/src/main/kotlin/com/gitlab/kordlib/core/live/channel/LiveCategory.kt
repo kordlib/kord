@@ -9,6 +9,7 @@ import com.gitlab.kordlib.core.event.channel.CategoryDeleteEvent
 import com.gitlab.kordlib.core.event.channel.CategoryUpdateEvent
 import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
 
+@KordPreview
 fun Category.live() = LiveCategory(this)
 
 @KordPreview

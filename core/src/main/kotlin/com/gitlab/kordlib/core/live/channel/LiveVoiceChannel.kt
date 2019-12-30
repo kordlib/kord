@@ -11,6 +11,7 @@ import com.gitlab.kordlib.core.event.channel.VoiceChannelDeleteEvent
 import com.gitlab.kordlib.core.event.channel.VoiceChannelUpdateEvent
 import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
 
+@KordPreview
 fun VoiceChannel.live() = LiveVoiceChannel(this)
 
 @KordPreview

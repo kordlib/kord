@@ -9,6 +9,7 @@ import com.gitlab.kordlib.core.event.channel.DMChannelDeleteEvent
 import com.gitlab.kordlib.core.event.channel.DMChannelUpdateEvent
 import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
 
+@KordPreview
 fun DmChannel.live() = LiveDmChannel(this)
 
 @KordPreview

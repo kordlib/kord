@@ -10,6 +10,7 @@ import com.gitlab.kordlib.core.event.channel.StoreChannelDeleteEvent
 import com.gitlab.kordlib.core.event.channel.StoreChannelUpdateEvent
 import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
 
+@KordPreview
 fun StoreChannel.live() = LiveStoreChannel(this)
 
 @KordPreview

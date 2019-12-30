@@ -13,7 +13,8 @@ import com.gitlab.kordlib.core.event.guild.GuildUpdateEvent
 import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.live.AbstractLiveEntity
 
-fun  Channel.live() = when(this) {
+@KordPreview
+fun Channel.live() = when (this) {
     is DmChannel -> this.live()
     is NewsChannel -> this.live()
     is StoreChannel -> this.live()
@@ -27,7 +28,7 @@ abstract class LiveChannel : AbstractLiveEntity() {
 
     abstract val channel: Channel
 
-    override fun filter(event: Event): Boolean = when(event) {
+    override fun filter(event: Event): Boolean = when (event) {
         is VoiceStateUpdateEvent -> event.state.channelId == channel.id
 
         is ReactionAddEvent -> event.channelId == channel.id

@@ -9,6 +9,7 @@ import com.gitlab.kordlib.core.event.channel.NewsChannelDeleteEvent
 import com.gitlab.kordlib.core.event.channel.NewsChannelUpdateEvent
 import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
 
+@KordPreview
 fun NewsChannel.live() = LiveNewsChannel(this)
 
 @KordPreview

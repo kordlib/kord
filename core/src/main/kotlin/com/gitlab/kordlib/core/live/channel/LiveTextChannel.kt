@@ -9,6 +9,7 @@ import com.gitlab.kordlib.core.event.channel.TextChannelDeleteEvent
 import com.gitlab.kordlib.core.event.channel.TextChannelUpdateEvent
 import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
 
+@KordPreview
 fun TextChannel.live() = LiveTextChannel(this)
 
 @KordPreview

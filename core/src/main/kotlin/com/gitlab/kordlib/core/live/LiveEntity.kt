@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.live
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.cache.data.ReactionData
 import com.gitlab.kordlib.core.entity.Entity
@@ -11,13 +12,22 @@ import com.gitlab.kordlib.core.event.channel.ChannelDeleteEvent
 import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
 import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.kordLogger
+import com.gitlab.kordlib.core.on
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
+/**
+ * A Discord entity that only emits events *related* to this entity.
+ *
+ * For example, a [LiveMessage] will only emit [MessageUpdateEvents][MessageUpdateEvent] of that message, and only emit
+ * [reactions][ReactionAddEvent] to that message.
+ */
+@KordPreview
 interface LiveEntity : Entity {
     val events: Flow<Event>
 
@@ -41,9 +51,14 @@ abstract class AbstractLiveEntity : LiveEntity {
 
 }
 
-inline fun <reified T : Event> LiveEntity.on(noinline consumer: suspend (T) -> Unit) =
+/**
+ * Convenience method that will invoke the [consumer] on every event [T], the consumer is launched in the given [scope]
+ * or [Kord] by default and will not propagate any exceptions.
+ */
+@KordPreview
+inline fun <reified T : Event> LiveEntity.on(scope: CoroutineScope = kord,  noinline consumer: suspend (T) -> Unit) =
         events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
             runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
-        }.catch { kordLogger.catching(it) }.launchIn(kord)
+        }.catch { kordLogger.catching(it) }.launchIn(scope)
 
 
