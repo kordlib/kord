@@ -4,7 +4,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
-data class Channel(
+data class DiscordChannel(
         val id: String,
         val type: ChannelType,
         @SerialName("guild_id")
@@ -22,7 +22,7 @@ data class Channel(
         val userLimit: Int? = null,
         @SerialName("rate_limit_per_user")
         val rateLimitPerUser: Int? = null,
-        val recipients: List<User>? = null,
+        val recipients: List<DiscordUser>? = null,
         val icon: String? = null,
         @SerialName("owner_id")
         val ownerId: String? = null,

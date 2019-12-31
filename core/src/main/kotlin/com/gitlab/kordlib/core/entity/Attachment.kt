@@ -3,12 +3,12 @@ package com.gitlab.kordlib.core.entity
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.AttachmentData
 
-data class Attachment(val data: AttachmentData, override val kord: Kord /*TODO remove kord? Might want to keep it for io stuff*/) : Entity {
+data class Attachment(val data: AttachmentData, override val kord: Kord) : Entity {
 
     override val id: Snowflake
         get() = Snowflake(data.id)
 
-    val fileName: String get() = data.fileName
+    val filename: String get() = data.filename
 
     val size: Int get() = data.size
 
@@ -20,7 +20,7 @@ data class Attachment(val data: AttachmentData, override val kord: Kord /*TODO r
 
     val width: Int? get() = data.width
 
-    val isSpoiler: Boolean get() = fileName.startsWith("SPOILER_")
+    val isSpoiler: Boolean get() = filename.startsWith("SPOILER_")
 
     val isImage: Boolean get() = height == width && height == null
 

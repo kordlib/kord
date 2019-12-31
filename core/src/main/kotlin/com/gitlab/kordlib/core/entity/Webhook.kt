@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.entity.WebhookType
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.WebhookBehavior
@@ -11,6 +12,8 @@ data class Webhook(val data: WebhookData, override val kord: Kord) : WebhookBeha
 
     override val id: Snowflake get() = Snowflake(data.id)
 
+    val type: WebhookType get() = data.type
+
     val creatorId: Snowflake get() = Snowflake(data.userid)
 
     val channelId: Snowflake get() = Snowflake(data.channelId)
@@ -19,7 +22,7 @@ data class Webhook(val data: WebhookData, override val kord: Kord) : WebhookBeha
 
     val name: String? get() = data.name
 
-    val token: String get() = data.token
+    val token: String? get() = data.token
 
     val channel: GuildMessageChannelBehavior get() = GuildMessageChannelBehavior(guildId, channelId, kord)
 

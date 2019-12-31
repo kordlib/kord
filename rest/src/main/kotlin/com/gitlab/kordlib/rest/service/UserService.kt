@@ -13,9 +13,6 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
         keys[Route.UserId] = userId
     }
 
-    @Deprecated("this method is deprecated, use the parameterized version instead", replaceWith = ReplaceWith("getCurrentUserGuilds()"), level = DeprecationLevel.HIDDEN)
-    suspend fun getCurrentUserGuilds() = call(Route.CurrentUsersGuildsGet)
-
     suspend fun getCurrentUserGuilds(position: Position? = null, limit: Int = 100) = call(Route.CurrentUsersGuildsGet) {
         if (position != null) {
             parameter(position.key, position.value)

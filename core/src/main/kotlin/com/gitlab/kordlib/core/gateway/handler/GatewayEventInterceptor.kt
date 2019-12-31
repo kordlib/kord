@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.core.ClientResources
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Gateway
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import mu.KotlinLogging
 import com.gitlab.kordlib.core.event.Event as CoreEvent
-import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 private val logger = KotlinLogging.logger { }
 

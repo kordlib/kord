@@ -4,7 +4,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
-data class User(
+data class DiscordUser(
         val id: String,
         val username: String,
         val discriminator: String,
@@ -21,7 +21,7 @@ data class User(
 )
 
 @Serializable
-data class OptionallyMemberUser(
+data class DiscordOptionallyMemberUser(
         val id: String,
         val username: String,
         val discriminator: String,
@@ -33,7 +33,7 @@ data class OptionallyMemberUser(
         val flags: Int? = null,
         @SerialName("premium_type")
         val premiumType: Premium? = null,
-        val member: PartialGuildMember? = null
+        val member: DiscordPartialGuildMember? = null
 )
 
 @Serializable(with = Premium.PremiumSerializer::class)

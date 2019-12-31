@@ -1,6 +1,6 @@
 package com.gitlab.kordlib.core.builder.webhook
 
-import com.gitlab.kordlib.core.builder.KordBuilder
+import com.gitlab.kordlib.core.builder.KordDsl
 import com.gitlab.kordlib.core.builder.RequestBuilder
 import com.gitlab.kordlib.core.builder.message.EmbedBuilder
 import com.gitlab.kordlib.rest.json.request.EmbedRequest
@@ -9,10 +9,11 @@ import com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.io.InputStream
+import java.io.FilenameFilter
 import java.nio.file.Files
 import java.nio.file.Path
 
-@KordBuilder
+@KordDsl
 class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
     var content: String? = null
     var username: String? = null

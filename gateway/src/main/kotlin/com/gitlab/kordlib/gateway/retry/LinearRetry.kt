@@ -26,14 +26,6 @@ class LinearRetry constructor(
         private val maxTries: Int
 ) : Retry {
 
-    @Deprecated(
-            "Long durations are deprecation, use kotlin.time Durations instead",
-            ReplaceWith(
-                    "LinearRetry(firstBackoffMillis.milliseconds, maxBackoffMillis.milliseconds, maxTries)",
-                    "kotlin.time.Duration",
-                    "kotlin.time.milliseconds"
-            )
-    )
     constructor(firstBackoffMillis: Long, maxBackoffMillis: Long, maxTries: Int) :
             this(firstBackoffMillis.milliseconds, maxBackoffMillis.milliseconds, maxTries)
 

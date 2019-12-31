@@ -4,7 +4,7 @@ package json
 
 import com.gitlab.kordlib.common.entity.Flag
 import com.gitlab.kordlib.common.entity.Flags
-import com.gitlab.kordlib.common.entity.Message
+import com.gitlab.kordlib.common.entity.DiscordMessage
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
@@ -18,7 +18,7 @@ class MessageTest {
 
     @Test
     fun `Message serialization`() {
-        val message: Message = Json.parse(Message.serializer(), file("message"))
+        val message: DiscordMessage = Json.parse(DiscordMessage.serializer(), file("message"))
 
         with(message) {
             reactions!!.size shouldBe 1
@@ -56,7 +56,7 @@ class MessageTest {
 
 @Test
 fun `User serialization`() {
-    val message = Json.parse(Message.serializer(), file("crossposted"))
+    val message = Json.parse(DiscordMessage.serializer(), file("crossposted"))
 
     with(message) {
         reactions!!.size shouldBe 1
@@ -87,7 +87,7 @@ fun `User serialization`() {
         channelId shouldBe "290926798999357250"
         mentions shouldBe emptyList()
         type.code shouldBe 0
-        flags shouldBe Flags(Flag.IsCrossPost.value)
+        flags shouldBe Flags(Flag.IsCrossPost.code)
         messageReference?.let {
             it.channelId shouldBe "278325129692446722"
             it.guildId shouldBe "278325129692446720"

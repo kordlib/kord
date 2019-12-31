@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AttachmentData(
         val id: Long,
-        val fileName: String,
+        val filename: String,
         val size: Int,
         val url: String,
         val proxyUrl: String,

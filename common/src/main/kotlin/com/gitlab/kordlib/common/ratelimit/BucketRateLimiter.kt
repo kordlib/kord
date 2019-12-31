@@ -8,17 +8,6 @@ import kotlin.time.milliseconds
 import kotlin.time.toKotlinDuration
 import java.time.Duration as JavaDuration
 
-/**
- * A rate limiter that supplies a given [capacity] of permits at for each [interval](refillIntervalMillis).
- * Exceeding this [capacity] will result in a suspend until the next [interval](refillIntervalMillis).
- *
- * @param capacity The maximum amount of permits that are given for each permit.
- * @param refillInterval The interval between permit refills.
- */
-@Suppress("FunctionName")
-@Deprecated("use Kotlin's duration instead", ReplaceWith("BucketRateLimiter(capacity,refillInterval.toKotlinDuration())", "kotlin.time", "kotlin.time.toKotlinDuration"))
-fun BucketRateLimiter(capacity: Int, refillInterval: JavaDuration) = BucketRateLimiter(capacity, refillInterval.toKotlinDuration())
-
 
 /**
  * A rate limiter that supplies a given [capacity] of permits for each [interval](refillIntervalMillis).
@@ -28,9 +17,6 @@ fun BucketRateLimiter(capacity: Int, refillInterval: JavaDuration) = BucketRateL
  * @param refillInterval The duration between permit refills.
  */
 class BucketRateLimiter(private val capacity: Int, private val refillInterval: Duration, private val clock: Clock = Clock.systemUTC()) : RateLimiter {
-
-    @Deprecated("use Duration instead", ReplaceWith("refillInterval.milliseconds", "kotlin.time.toKotlinDuration"))
-    constructor(capacity: Int, refillInterval: Long) : this(capacity, refillInterval.milliseconds)
 
     private val mutex = Mutex()
 

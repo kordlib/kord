@@ -18,7 +18,7 @@ class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord:
 
     val isManaged: Boolean get() = data.managed
 
-    val name: String get() = data.name
+    val name: String? get() = data.name
 
     val requiresColons: Boolean get() = data.requireColons
 

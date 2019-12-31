@@ -12,8 +12,11 @@ import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.defaultRequest
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
-import io.ktor.client.response.HttpResponse
+import io.ktor.client.request.request
 import io.ktor.client.response.readBytes
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.HttpStatement
+import io.ktor.client.statement.readBytes
 import io.ktor.http.takeFrom
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
@@ -56,7 +59,7 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
 
             logger.trace { "REQUEST: ${request.logString}" }
 
-            val response = client.call(builder).receive<HttpResponse>()
+            val response = client.request<HttpStatement>(builder).execute()
 
             logger.trace { response.logString }
 

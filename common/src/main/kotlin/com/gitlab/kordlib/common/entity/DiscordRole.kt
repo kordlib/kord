@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Role(
+data class DiscordRole(
         val id: String,
         val name: String,
         val color: Int,
@@ -16,7 +16,7 @@ data class Role(
 )
 
 @Serializable
-data class AuditLogRoleChange(
+data class DiscordAuditLogRoleChange(
         val id: String,
         val name: String? = null,
         val color: Int? = null,
@@ -28,14 +28,14 @@ data class AuditLogRoleChange(
 )
 
 @Serializable
-data class GuildRole(
+data class DiscordGuildRole(
         @SerialName("guild_id")
         val guildId: String,
-        val role: Role
+        val role: DiscordRole
 )
 
 @Serializable
-data class DeletedGuildRole(
+data class DiscordDeletedGuildRole(
         @SerialName("guild_id")
         val guildId: String,
         @SerialName("role_id")

@@ -15,8 +15,8 @@ class Reaction(val data: ReactionData, override val kord: Kord) : KordObject {
 
     val emoji: ReactionEmoji
         get() = when (data.emojiId) {
-            null -> ReactionEmoji.Unicode(data.emojiName)
-            else -> ReactionEmoji.Custom(Snowflake(data.emojiId), data.emojiName, data.emojiAnimated)
+            null -> ReactionEmoji.Unicode(data.emojiName!!)
+            else -> ReactionEmoji.Custom(Snowflake(data.emojiId), data.emojiName ?: "", data.emojiAnimated)
         }
 
     val isAnimated: Boolean get() = data.emojiAnimated

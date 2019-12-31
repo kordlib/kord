@@ -1,6 +1,5 @@
 package com.gitlab.kordlib.rest.ratelimit
 
-import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.annotation.KordUnsafe
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.rest.request.Request
@@ -11,7 +10,9 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.call
 import io.ktor.client.call.receive
 import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.response.HttpResponse
+import io.ktor.client.request.request
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.HttpStatement
 import io.ktor.http.takeFrom
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
@@ -27,7 +28,6 @@ import kotlin.time.minutes
 private val logger = KotlinLogging.logger {}
 
 @KordUnsafe
-@KordPreview
 class ParallelRequestHandler(private val client: HttpClient, private val clock: Clock = Clock.systemUTC()) : RequestHandler {
 
     private var globalSuspensionPoint = atomic(0L)
@@ -51,7 +51,7 @@ class ParallelRequestHandler(private val client: HttpClient, private val clock: 
         mutex.withLock {
             suspendFor(request)
 
-            val response = client.call(builder).receive<HttpResponse>()
+            val response = client.request<HttpStatement>(builder).execute()
 
             logger.trace { response.logString }
 

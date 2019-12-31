@@ -1,9 +1,8 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
-import com.gitlab.kordlib.common.entity.Channel
+import com.gitlab.kordlib.common.entity.DiscordChannel
 import com.gitlab.kordlib.common.entity.ChannelType
-import com.gitlab.kordlib.gateway.ChannelUpdate
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -32,7 +31,7 @@ data class ChannelData(
     companion object {
         val description get() = description(ChannelData::id)
 
-        fun from(entity: Channel) = with(entity) {
+        fun from(entity: DiscordChannel) = with(entity) {
             ChannelData(
                     id.toLong(),
                     type,

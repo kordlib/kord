@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.core.builder.channel
 
 import com.gitlab.kordlib.core.builder.AuditRequestBuilder
-import com.gitlab.kordlib.core.builder.KordBuilder
+import com.gitlab.kordlib.core.builder.KordDsl
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.GuildChannelPositionModifyRequest
 
-@KordBuilder
+@KordDsl
 class GuildChannelPositionModifyBuilder: AuditRequestBuilder<GuildChannelPositionModifyRequest>  {
     override var reason: String? = null
     private val swaps: MutableList<Pair<String, Int>> = mutableListOf()

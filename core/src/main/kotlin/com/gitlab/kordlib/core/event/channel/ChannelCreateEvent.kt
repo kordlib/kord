@@ -1,6 +1,5 @@
 package com.gitlab.kordlib.core.event.channel
 
-import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.event.Event

@@ -1,18 +1,18 @@
 package com.gitlab.kordlib.rest.json.response
 
-import com.gitlab.kordlib.common.entity.Channel
-import com.gitlab.kordlib.common.entity.PartialGuild
-import com.gitlab.kordlib.common.entity.User
+import com.gitlab.kordlib.common.entity.DiscordChannel
+import com.gitlab.kordlib.common.entity.DiscordPartialGuild
+import com.gitlab.kordlib.common.entity.DiscordUser
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class InviteResponse(
         val code: String? = null,
-        val guild: PartialGuild? = null,
-        val channel: Channel? = null,
+        val guild: DiscordPartialGuild? = null,
+        val channel: DiscordChannel? = null,
         @SerialName("target_user")
-        val targetUser: User? = null,
+        val targetUser: DiscordUser? = null,
         @SerialName("target_user_type")
         val targetUserType: TargetUserTypeResponse? = null,
         @SerialName("approximate_presence_count")
@@ -47,7 +47,7 @@ enum class TargetUserTypeResponse(val code: Int) {
 
 @Serializable
 data class InviteMetaDataResponse(
-        val inviter: User,
+        val inviter: DiscordUser,
         val uses: Int,
         @SerialName("max_uses")
         val maxUses: Int,
