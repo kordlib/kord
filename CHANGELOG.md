@@ -1,5 +1,11 @@
 # 0.3.0
 
+> This version contains an upgrade of ktor that brings breaking changes, be sure to check out ktor's changelog if you
+> were interacting with ktor or the rest module directly.
+> 
+> This change also comes with the removal of kotlinx.io, which was a transitive dependency. If your code relied on kotlinx.io
+> consider manually including the dependency or migrating away from it entirely.
+
 ## Changes
 
 * `Kord#getGuilds()` has been replaced with the non-suspending `Kord#guilds`.
@@ -15,10 +21,19 @@ allows you to more easily share configuration between gateways.
 * Rest, Gateway and Common entities have gained a `Discord` prefix to reduce name collisions with Core.
 * `ParallalRequestHandler` has been upgraded to stable
 
-### Additions
+## Additions
 
 * Added `LiveEntity` and its implementations to Core. These are self-updating entities that contain a filtered
 event stream, only emitting related events.
+
+## Dependencies 
+
+* gradle 5.4 -> 6.0.1
+* kotlin -> 1.3.60 -> 1.3.61
+* kotlinx.serialization 0.13.0 -> 0.14.0
+* ktor 1.2.5 -> 1.3.0-rc2
+* kotlinx.coroutines 1.3.2 -> 1.3.3
+* kotlin-logging 1.7.6 -> 1.7.8
 
 # 0.2.4
 

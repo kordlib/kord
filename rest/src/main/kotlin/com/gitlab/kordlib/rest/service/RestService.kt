@@ -4,7 +4,7 @@ import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.request.RequestBuilder
 import com.gitlab.kordlib.rest.route.Route
 
-abstract class RestService(protected val requestHandler: RequestHandler) {
+abstract class RestService(@PublishedApi internal val requestHandler: RequestHandler) {
 
     @PublishedApi
     internal suspend inline fun <T> call(route: Route<T>, builder: RequestBuilder<T>.() -> Unit = {}): T {
@@ -14,4 +14,5 @@ abstract class RestService(protected val requestHandler: RequestHandler) {
 
         return request.parse(response)
     }
+
 }

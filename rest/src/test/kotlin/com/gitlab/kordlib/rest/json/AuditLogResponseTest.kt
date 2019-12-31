@@ -10,7 +10,7 @@ object AuditLogResponseTest {
     fun `AuditLogResponseSerialization serialization`() {
 
         val json = file("auditlog")
-            val log = Json.parse<AuditLogResponse>(AuditLogResponse.serializer(), json)
+            val log = Json.parse(AuditLogResponse.serializer(), json)
 
 
     }

@@ -7,9 +7,21 @@ dependencies {
     api project(':rest')
     api project(':gateway')
 
-    api 'com.gitlab.kordlib.cache:api:0.1.0'
-    api 'com.gitlab.kordlib.cache:map:0.1.0'
+    api("com.gitlab.kordlib.cache:api") {
+        version {
+            strictly("[0.1.0, 0.2.0[")
+            prefer("0.1.1")
+        }
+    }
+
+    api("com.gitlab.kordlib.cache:map") {
+        version {
+            strictly("[0.1.0, 0.2.0[")
+            prefer("0.1.1")
+        }
+    }
 }
+
 compileKotlin {
     kotlinOptions {
         freeCompilerArgs = ["-XXLanguage:+InlineClasses", "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi", "-Xuse-experimental=kotlin.time.ExperimentalTime"]

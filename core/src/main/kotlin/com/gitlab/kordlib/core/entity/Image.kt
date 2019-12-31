@@ -1,7 +1,9 @@
 package com.gitlab.kordlib.core.entity
 
 import io.ktor.client.HttpClient
-import io.ktor.client.call.call
+import io.ktor.client.request.request
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.response
 import io.ktor.http.HttpMethod
 import io.ktor.util.toByteArray
 import kotlinx.coroutines.Dispatchers
@@ -22,12 +24,12 @@ class Image private constructor(val data: ByteArray, val format: Format) {
         }
 
         suspend fun fromUrl(client: HttpClient, url: String): Image = with(Dispatchers.IO) {
-            val call = client.call(url) { method = HttpMethod.Get }
-            val contentType = call.response.headers["Content-Type"]
+            val call = client.request<HttpResponse>(url) { method = HttpMethod.Get }
+            val contentType = call.headers["Content-Type"]
                     ?: error("expected 'Content-Type' header in image request")
 
             @Suppress("EXPERIMENTAL_API_USAGE")
-            val bytes = call.response.content.toByteArray()
+            val bytes = call.content.toByteArray()
 
             Image(bytes, Format.fromContentType(contentType))
         }
