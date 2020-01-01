@@ -33,10 +33,10 @@ data class GuildData(
         val joinedAt: String? = null,
         val large: Boolean? = null,
         val memberCount: Int? = null,
-        val voiceStates: List<VoiceState> = emptyList(),
+        val voiceStates: List<VoiceStateData> = emptyList(),
         val members: List<MemberData> = emptyList(),
         val channels: List<Long> = emptyList(),
-        val presences: List<PresenceUpdateData> = emptyList(),
+        val presences: List<PresenceData> = emptyList(),
         val maxPresences: Int? = null,
         val maxMembers: Int? = null,
         val vanityUrlCode: String? = null,
@@ -55,7 +55,7 @@ data class GuildData(
             link(GuildData::id to PresenceData::guildId)
         }
 
-        fun from(entity: Guild) = with(entity) {
+        fun from(entity: DiscordGuild) = with(entity) {
             GuildData(
                     id.toLong(),
                     name,
@@ -83,10 +83,10 @@ data class GuildData(
                     joinedAt,
                     large,
                     memberCount,
-                    voiceStates.orEmpty(),
+                    voiceStates.orEmpty().map { VoiceStateData.from(it) },
                     members.orEmpty().map { MemberData.from(userId = it.user!!.id, guildId = id, entity = it) },
                     channels.orEmpty().map { it.id.toLong() },
-                    presences.orEmpty(),
+                    presences.orEmpty().map { PresenceData.from(it) },
                     maxPresences,
                     maxMembers,
                     vanityUrlCode,

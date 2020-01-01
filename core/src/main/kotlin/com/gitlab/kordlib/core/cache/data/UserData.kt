@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
-import com.gitlab.kordlib.common.entity.User
+import com.gitlab.kordlib.common.entity.DiscordUser
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -22,7 +22,7 @@ data class UserData(
                 link(UserData::id to PresenceData::userId)
             }
 
-        fun from(entity: User) = with(entity) {
+        fun from(entity: DiscordUser) = with(entity) {
             UserData(
                     id.toLong(),
                     username,

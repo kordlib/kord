@@ -4,13 +4,13 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
-data class UnavailableGuild(
+data class DiscordUnavailableGuild(
         val id: String,
         val unavailable: Boolean? = null
 )
 
 @Serializable
-data class Guild(
+data class DiscordGuild(
         val id: String,
         val name: String,
         val icon: String? = null,
@@ -34,8 +34,8 @@ data class Guild(
         val defaultMessageNotifications: DefaultMessageNotificationLevel,
         @SerialName("explicit_content_filter")
         val explicitContentFilter: ExplicitContentFilter,
-        val roles: List<Role>,
-        val emojis: List<Emoji>,
+        val roles: List<DiscordRole>,
+        val emojis: List<DiscordEmoji>,
         val features: List<String>,
         @SerialName("mfa_level")
         val mfaLevel: MFALevel,
@@ -54,10 +54,10 @@ data class Guild(
         @SerialName("member_count")
         val memberCount: Int? = null,
         @SerialName("voice_states")
-        val voiceStates: List<VoiceState>? = null,
-        val members: List<GuildMember>? = null,
-        val channels: List<Channel>? = null,
-        val presences: List<PresenceUpdateData>? = null,
+        val voiceStates: List<DiscordVoiceState>? = null,
+        val members: List<DiscordGuildMember>? = null,
+        val channels: List<DiscordChannel>? = null,
+        val presences: List<DiscordPresenceUpdateData>? = null,
         @SerialName("max_presences")
         val maxPresences: Int? = null,
         @SerialName("max_members")
@@ -75,7 +75,7 @@ data class Guild(
 )
 
 @Serializable
-data class PartialGuild(
+data class DiscordPartialGuild(
         val id: String,
         val name: String,
         val icon: String? = null,
@@ -84,25 +84,25 @@ data class PartialGuild(
 )
 
 @Serializable
-data class GuildBan(
+data class DiscordGuildBan(
         @SerialName("guild_id")
         val guildId: String,
-        val user: User
+        val user: DiscordUser
 )
 
 @Serializable
-data class GuildIntegrations(
+data class DiscordGuildIntegrations(
         @SerialName("guild_id")
         val guildId: String
 )
 
 @Serializable
-data class IntegrationAccount(val id: String,
-                              val name: String)
+data class DiscordIntegrationAccount(val id: String,
+                                     val name: String)
 
 
 @Serializable
-data class VoiceServerUpdateData(
+data class DiscordVoiceServerUpdateData(
         val token: String,
         @SerialName("guild_id")
         val guildId: String,
@@ -110,7 +110,7 @@ data class VoiceServerUpdateData(
 )
 
 @Serializable
-data class WebhooksUpdateData(
+data class DiscordWebhooksUpdateData(
         @SerialName("guild_id")
         val guildId: String,
         @SerialName("channel_id")
@@ -118,7 +118,7 @@ data class WebhooksUpdateData(
 )
 
 @Serializable
-data class VoiceState(
+data class DiscordVoiceState(
         @SerialName("guild_id")
         val guildId: String? = null,
         @SerialName("channel_id")
@@ -126,7 +126,7 @@ data class VoiceState(
         @SerialName("user_id")
         val userId: String,
         @SerialName("guild_member")
-        val member: GuildMember? = null,
+        val member: DiscordGuildMember? = null,
         @SerialName("session_id")
         val sessionId: String,
         val deaf: Boolean,

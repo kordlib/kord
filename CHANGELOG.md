@@ -1,3 +1,40 @@
+# 0.3.0
+
+> This version contains an upgrade of ktor that brings breaking changes, be sure to check out ktor's changelog if you
+> were interacting with ktor or the rest module directly.
+> 
+> This change also comes with the removal of kotlinx.io, which was a transitive dependency. If your code relied on kotlinx.io
+> consider manually including the dependency or migrating away from it entirely.
+
+## Changes
+
+* `Kord#getGuilds()` has been replaced with the non-suspending `Kord#guilds`.
+* `@KordBuilder` has been renamed to `@KordDsl`.
+* `KordClientBuilder` has been renamed to `KordBuilder`.
+* `fileName` has been renamed to `filename`.
+* `DefaultGateway`'s constructor accepts a single `DefaultGatewayData` instead of multiple properties.
+* `DefaultGateway` is now able to rate limit identify attempts and accepts a `RateLimiter` that can be shared between multiple gateways. 
+This will be done by default for Kord clients now.
+* `KordClientBuilder`'s `gateway` function has been renamed to `gateways`. It now gives a list of shards and requests a list of gateways, this change
+allows you to more easily share configuration between gateways.
+* Emojis now have nullable names, this only appears when interacting with guild emojis that have been deleted.
+* Rest, Gateway and Common entities have gained a `Discord` prefix to reduce name collisions with Core.
+* `ParallalRequestHandler` has been upgraded to stable
+
+## Additions
+
+* Added `LiveEntity` and its implementations to Core. These are self-updating entities that contain a filtered
+event stream, only emitting related events.
+
+## Dependencies 
+
+* gradle 5.4 -> 6.0.1
+* kotlin -> 1.3.60 -> 1.3.61
+* kotlinx.serialization 0.13.0 -> 0.14.0
+* ktor 1.2.5 -> 1.3.0-rc2
+* kotlinx.coroutines 1.3.2 -> 1.3.3
+* kotlin-logging 1.7.6 -> 1.7.8
+
 # 0.2.4
 
 ## Additions
@@ -61,6 +98,12 @@ Added `presences` and `userIds` to the `RequestGuildMembers` class and the equiv
 
 `filename` is now correctly deserialized for `Attachment` objects.
 
+# 0.2.2
+
+## Additions
+
+`Gateway` now has a `ping` field, containing the duration between the latest heartbeat and heartbeat ack.
+
 # 0.2.1
 
 This is the first maintenance update for Kord 0.2. 
@@ -79,6 +122,25 @@ flows of members, channels, etc (and really, they should've been part of the cor
 * `StoreChannel` can no longer be used to read or send messages. [discord api](https://discordapp.com/developers/docs/resources/channel#channel-object-example-store-channel).
 * `NewsChannel` and `StoreChannel` have been upgraded to the stable api and are no longer in preview.
 * `ExclusionRequestHandler` now takes request buckets into consideration.
+
+## Fixes
+
+# 0.2.1
+
+This is the first maintenance update for Kord 0.2. 
+With it, we have started hosting Kord on bintray, check our README on what to include to get the newest version.
+
+## Additions
+
+* Added `Flow<T: Any>.firstOrNull` and `Flow<T: Any>.any` as their behavior is often needed when interacting with
+flows of members, channels, etc (and really, they should've been part of the coroutines api).
+
+## Changes
+
+* `KordClientBuilder` now allows you to pass a custom `CoroutineDispatcher`.
+* Since most suspending calls in Kord will be IO related, `Kord` now uses `Dispatchers.IO` as its `CoroutineDispatcher`.
+* `StoreChannel` can no longer be used to read or send messages. [discord api](https://discordapp.com/developers/docs/resources/channel#channel-object-example-store-channel).
+* `NewsChannel` and `StoreChannel` have been upgraded to the stable api and are no longer in preview.
 
 ## Fixes
 

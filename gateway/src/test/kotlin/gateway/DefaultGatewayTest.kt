@@ -1,6 +1,6 @@
 package gateway
 
-import com.gitlab.kordlib.common.entity.Activity
+import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.ActivityType
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
@@ -46,8 +46,8 @@ class DefaultGatewayTest {
                 install(JsonFeature)
             }
 
-            retry = LinearRetry(2.seconds, 20.seconds, 10)
-            rateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
+            reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
+            sendRateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
         }
 
         gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.IO).onEach {
@@ -57,9 +57,9 @@ class DefaultGatewayTest {
                 "!restart" -> gateway.restart()
                 "!detach" -> gateway.detach()
                 "!status" -> when (words.getOrNull(1)) {
-                    "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = Activity("Kord", ActivityType.Game)))
+                    "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Kord", ActivityType.Game)))
                 }
-                "!ping" ->  gateway.send(UpdateStatus(status = Status.Online, afk = false, game = Activity("Ping is ${gateway.ping.toLongMilliseconds()}", ActivityType.Game)))
+                "!ping" ->  gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Ping is ${gateway.ping.toLongMilliseconds()}", ActivityType.Game)))
             }
         }.launchIn(GlobalScope)
 

@@ -14,8 +14,8 @@ private val auditLogger = KotlinLogging.logger { }
 
 @Serializable
 data class AuditLogResponse(
-        val webhooks: List<Webhook>,
-        val users: List<User>,
+        val webhooks: List<DiscordWebhook>,
+        val users: List<DiscordUser>,
         @SerialName("audit_log_entries")
         val auditLogEntries: List<AuditLogEntryResponse>
 )
@@ -109,8 +109,8 @@ sealed class AuditLogChangeResponse<T> {
                 "deny" -> DenyLogChange(old?.primitive?.int, new?.primitive?.int)
                 "verification_level" -> VerificationLevelLogChange(old?.primitive?.int, new?.primitive?.int)
 
-                "\$remove" -> AddLogChange(listFromJson(AuditLogRoleChange.serializer(), old), listFromJson(AuditLogRoleChange.serializer(), new))
-                "\$add" -> RemoveLogChange(listFromJson(AuditLogRoleChange.serializer(), old), listFromJson(AuditLogRoleChange.serializer(), new))
+                "\$remove" -> AddLogChange(listFromJson(DiscordAuditLogRoleChange.serializer(), old), listFromJson(DiscordAuditLogRoleChange.serializer(), new))
+                "\$add" -> RemoveLogChange(listFromJson(DiscordAuditLogRoleChange.serializer(), old), listFromJson(DiscordAuditLogRoleChange.serializer(), new))
                 "permission_overwrites" -> PermissionOverwriteLogChange(listFromJson(Overwrite.serializer(), old), listFromJson(Overwrite.serializer(), new))
 
                 else -> Unknown
@@ -180,8 +180,8 @@ data class MaxUsesLogChange(override val old: Int?, override val new: Int?) : Au
 data class UsesLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
 data class MaxAgeLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
 data class ColorLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
-data class AddLogChange(override val old: List<AuditLogRoleChange>?, override val new: List<AuditLogRoleChange>?) : AuditLogChangeResponse<List<AuditLogRoleChange>>()
-data class RemoveLogChange(override val old: List<AuditLogRoleChange>?, override val new: List<AuditLogRoleChange>?) : AuditLogChangeResponse<List<AuditLogRoleChange>>()
+data class AddLogChange(override val old: List<DiscordAuditLogRoleChange>?, override val new: List<DiscordAuditLogRoleChange>?) : AuditLogChangeResponse<List<DiscordAuditLogRoleChange>>()
+data class RemoveLogChange(override val old: List<DiscordAuditLogRoleChange>?, override val new: List<DiscordAuditLogRoleChange>?) : AuditLogChangeResponse<List<DiscordAuditLogRoleChange>>()
 data class PermissionOverwriteLogChange(override val old: List<Overwrite>?, override val new: List<Overwrite>?) : AuditLogChangeResponse<List<Overwrite>>()
 
 data class MFALogChange(override val old: MFALevel?, override val new: MFALevel?) : AuditLogChangeResponse<MFALevel>() {
@@ -229,12 +229,15 @@ enum class AuditLogEventResponse(val code: Int) {
     ChannelOverwriteUpdate(14),
     ChannelOverwriteDelete(15),
 
-    MemberKick(15),
+    MemberKick(20),
     MemberPrune(21),
     MemberBanAdd(22),
     MemberBanRemove(23),
     MemberUpdate(24),
     MemberRoleUpdate(25),
+    MemberMove(26),
+    MemberDisconnect(27),
+    BotAdd(28),
 
     RoleCreate(30),
     RoleUpdate(31),
@@ -245,13 +248,22 @@ enum class AuditLogEventResponse(val code: Int) {
     InviteDelete(42),
 
     WebhookCreate(50),
-    WebhookDelete(51),
+    WebhookUpdate(51),
+    WebhookDelete(52),
+
 
     EmojiCreate(60),
     EmojiUpdate(61),
     EmojiDelete(62),
 
-    MessageDelete(72);
+    MessageDelete(72),
+    MessageBulkDelete(73),
+    MessagePin(74),
+    MessageUnpin(75),
+
+    IntegrationCreate(80),
+    IntegrationUpdate(81),
+    IntegrationDelete(82);
 
     @Serializer(forClass = AuditLogEventResponse::class)
     companion object AuditLogEventSerializer : KSerializer<AuditLogEventResponse> {
@@ -278,6 +290,8 @@ data class AuditEntryInfoResponse(
         val membersRemoved: String? = null,
         @SerialName("channel_id")
         val channelId: String? = null,
+        @SerialName("message_id")
+        val messageId: String? = null,
         val count: String? = null,
         val id: String? = null,
         val type: String? = null,

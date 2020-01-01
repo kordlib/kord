@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
+import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.cache.data.MessageData
@@ -55,7 +56,7 @@ internal class MessageEventHandler(
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
         query.update { it + this }
 
-        coreEventChannel.send(MessageUpdateEvent(Snowflake(id), Snowflake(channelId), old, kord))
+        coreEventChannel.send(MessageUpdateEvent(Snowflake(id), Snowflake(channelId), this, old, kord))
     }
 
     private suspend fun handle(event: MessageDelete) = with(event.message) {
@@ -83,9 +84,13 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageReactionAdd) = with(event.reaction) {
+        /**
+         * Reactions added will *always* have a name, the only case in which name is null is when a guild reaction
+         * no longer exists (only id is kept). Reacting with a non-existing reaction *should* be impossible.
+         **/
         val reaction = when (val id = emoji.id) {
-            null -> ReactionEmoji.Unicode(emoji.name)
-            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name, emoji.animated ?: false)
+            null -> ReactionEmoji.Unicode(emoji.name!!)
+            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name!!, emoji.animated ?: false)
         }
 
         cache.find<MessageData> { MessageData::id eq messageId.toLong() }.update {
@@ -122,9 +127,13 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageReactionRemove) = with(event.reaction) {
+        /**
+         * Reactions removed will *sometimes* have a name, the only case in which name is null is when a guild reaction
+         * no longer exists (only id is kept). Reomving a non-existing reaction *should* be possible.
+         **/
         val reaction = when (val id = emoji.id) {
-            null -> ReactionEmoji.Unicode(emoji.name)
-            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name, emoji.animated ?: false)
+            null -> ReactionEmoji.Unicode(emoji.name!!)
+            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name ?: "", emoji.animated ?: false)
         }
 
         cache.find<MessageData> { MessageData::id eq messageId.toLong() }.update {

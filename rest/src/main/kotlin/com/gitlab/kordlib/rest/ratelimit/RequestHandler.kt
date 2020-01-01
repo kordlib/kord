@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.rest.ratelimit
 
 import com.gitlab.kordlib.rest.request.Request
-import io.ktor.client.response.HttpResponse
+import io.ktor.client.statement.HttpResponse
 
 interface RequestHandler {
 

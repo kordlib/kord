@@ -2,17 +2,16 @@ package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
-import kotlinx.serialization.json.JsonElement
 
 @Serializable
-data class Message(
+data class DiscordMessage(
         val id: String,
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("guild_id")
         val guildId: String? = null,
-        val author: User? = null,
-        val member: PartialGuildMember? = null,
+        val author: DiscordUser? = null,
+        val member: DiscordPartialGuildMember? = null,
         val content: String,
         val timestamp: String,
         @SerialName("edited_timestamp")
@@ -20,9 +19,9 @@ data class Message(
         val tts: Boolean,
         @SerialName("mention_everyone")
         val mentionEveryone: Boolean,
-        val mentions: List<OptionallyMemberUser>,
+        val mentions: List<DiscordOptionallyMemberUser>,
         @SerialName("mention_roles")
-        val mentionRoles: List<Role>,
+        val mentionRoles: List<DiscordRole>,
         val attachments: List<Attachment>,
         val embeds: List<Embed>,
         val reactions: List<Reaction>? = null,
@@ -40,14 +39,14 @@ data class Message(
         val flags: Flags? = null
 )
 @Serializable
-data class PartialMessage(
+data class DiscordPartialMessage(
         val id: String,
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("guild_id")
         val guildId: String? = null,
-        val author: User? = null,
-        val member: PartialGuildMember? = null,
+        val author: DiscordUser? = null,
+        val member: DiscordPartialGuildMember? = null,
         val content: String? = null,
         val timestamp: String? = null,
         @SerialName("edited_timestamp")
@@ -55,9 +54,9 @@ data class PartialMessage(
         val tts: Boolean? = null,
         @SerialName("mention_everyone")
         val mentionEveryone: Boolean? = null,
-        val mentions: List<OptionallyMemberUser>? = null,
+        val mentions: List<DiscordOptionallyMemberUser>? = null,
         @SerialName("mention_roles")
-        val mentionRoles: List<Role> ? = null,
+        val mentionRoles: List<DiscordRole> ? = null,
         val attachments: List<Attachment> ? = null,
         val embeds: List<Embed> ? = null,
         val reactions: List<Reaction>? = null,
@@ -94,22 +93,43 @@ data class MentionedChannel(
         val type: MessageType
 )
 
-enum class Flag(val value: Int) {
+enum class Flag(val code: Int) {
     CrossPosted(1),
     IsCrossPost(2),
     SuppressEmbeds(4);
 }
 
 @Serializable(with = Flags.FlagsSerializer::class)
-data class Flags internal constructor(private val value: Int) {
+data class Flags internal constructor(val code: Int) {
 
-    val flags = Flag.values().filter { value and it.value != 0 }
+    val flags = Flag.values().filter { code and it.code != 0 }
 
     operator fun contains(flag: Flag) = flag in flags
+
+    operator fun plus(flags: Flags): Flags = when {
+        code and flags.code == flags.code -> this
+        else -> Flags(this.code or flags.code)
+    }
+
+    operator fun minus(flag: Flag): Flags = when {
+        code and flag.code == flag.code -> Flags(code xor flag.code)
+        else -> this
+    }
+
+    inline fun copy(block: FlagsBuilder.() -> Unit): Flags {
+        val builder = FlagsBuilder(code)
+        builder.apply(block)
+        return builder.flags()
+    }
 
 
     @Serializer(forClass = Flags::class)
     companion object FlagsSerializer : DeserializationStrategy<Flags> {
+
+        inline operator fun invoke(builder: FlagsBuilder.() -> Unit): Flags {
+            return FlagsBuilder().apply(builder).flags()
+        }
+
         override val descriptor: SerialDescriptor = IntDescriptor
 
         override fun deserialize(decoder: Decoder): Flags {
@@ -117,6 +137,20 @@ data class Flags internal constructor(private val value: Int) {
             return Flags(flags)
         }
 
+    }
+
+    class FlagsBuilder(internal var code: Int = 0) {
+        operator fun Flag.unaryPlus() {
+            this@FlagsBuilder.code = this@FlagsBuilder.code or code
+        }
+
+        operator fun Flag.unaryMinus() {
+            if (this@FlagsBuilder.code and code == code) {
+                this@FlagsBuilder.code = this@FlagsBuilder.code xor code
+            }
+        }
+
+        fun flags() = Flags(code)
     }
 
 }
@@ -200,7 +234,7 @@ data class Embed(
 data class Reaction(
         val count: Int,
         val me: Boolean,
-        val emoji: Emoji
+        val emoji: DiscordEmoji
 )
 
 @Serializable
@@ -244,7 +278,8 @@ data class MessageReaction(
         val messageId: String,
         @SerialName("guild_id")
         val guildId: String? = null,
-        val emoji: PartialEmoji
+        val member: DiscordGuildMember? = null,
+        val emoji: DiscordPartialEmoji
 )
 
 @Serializable

@@ -1,30 +1,43 @@
 package com.gitlab.kordlib.core.cache
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.QueryBuilder
+import com.gitlab.kordlib.cache.api.DataEntryCache
 import com.gitlab.kordlib.cache.api.data.DataDescription
-import java.lang.IllegalStateException
-import kotlin.reflect.KClass
+import com.gitlab.kordlib.cache.api.delegate.DelegatingDataCache
+import com.gitlab.kordlib.cache.api.delegate.EntrySupplier
+import com.gitlab.kordlib.cache.map.MapLikeCollection
+import com.gitlab.kordlib.cache.map.internal.MapEntryCache
+import com.gitlab.kordlib.cache.map.lruLinkedHashMap
+import java.util.concurrent.ConcurrentHashMap
 
-internal class KordCache(private val generator: (DataDescription<*, *>) -> DataCache) : DataCache {
-    private val caches = mutableMapOf<KClass<*>, DataCache>()
+typealias Generator<I, T> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>
 
-    override val priority: Long
-        get() = Long.MAX_VALUE
+@Suppress("FunctionName")
+inline fun KordCache(builder: KordCacheBuilder.() -> Unit): DataCache = KordCacheBuilder().apply(builder).build()
 
-    private fun getCacheOrThrow(clazz: KClass<*>) : DataCache = caches.entries
-    .firstOrNull { (key, value) -> key.java.isAssignableFrom(clazz.java) }?.value
-     ?: throw IllegalStateException("no datacache for for $clazz")
-
-    override suspend fun register(description: DataDescription<out Any, out Any>) {
-        caches[description.clazz] = generator(description).also { it.register(description) }
+class KordCacheBuilder {
+    var defaultGenerator: Generator<Any, Any> = { cache, description ->
+        MapEntryCache(cache, description, MapLikeCollection.fromThreadSafe(ConcurrentHashMap()))
     }
 
-    override suspend fun <T : Any> put(item: T) {
-        getCacheOrThrow(item::class).put(item)
+    private val descriptionGenerators: MutableMap<DataDescription<*, *>, Generator<*,*>> = mutableMapOf()
+
+    fun<T: Any, I: Any> lruCache(size: Int = 100): Generator<T, I> = { cache, description ->
+        MapEntryCache(cache, description, MapLikeCollection.lruLinkedHashMap(size))
     }
 
-    override fun <T : Any> query(clazz: KClass<T>): QueryBuilder<T> {
-        return getCacheOrThrow(clazz).query(clazz)
+    @Suppress("UNCHECKED_CAST")
+    fun<T: Any, I: Any> forDescription(description: DataDescription<T,I>, generator: Generator<T, I>?) {
+        if (generator == null) {
+            descriptionGenerators.remove(description)
+            return
+        }
+        descriptionGenerators[description] = generator as Generator<*, *>
     }
+
+    fun build(): DataCache = DelegatingDataCache(EntrySupplier.invoke { cache, description ->
+        val generator = descriptionGenerators[description] ?: defaultGenerator
+        generator(cache, description)
+    })
+
 }

@@ -1,13 +1,13 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
-import com.gitlab.kordlib.common.entity.Emoji
+import com.gitlab.kordlib.common.entity.DiscordEmoji
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class EmojiData(
         val id: Long,
-        val name: String,
+        val name: String? = null,
         val user: UserData?,
         val roles: List<Long>,
         val requireColons: Boolean,
@@ -17,7 +17,7 @@ data class EmojiData(
     companion object {
         val description get() = description(EmojiData::id)
 
-        fun from(id: String, entity: Emoji) =
+        fun from(id: String, entity: DiscordEmoji) =
                 with(entity) {
                     EmojiData(
                             id.toLong(),

@@ -9,7 +9,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlin.time.Duration
 import kotlin.time.milliseconds
-import kotlin.time.seconds
 
 class MasterGateway(
         private val gateways: List<Gateway>,
@@ -27,13 +26,9 @@ class MasterGateway(
     override val events: Flow<Event>
         get() = gateways.asFlow().flatMapMerge(gateways.size) { it.events }
 
-    override suspend fun start(configuration: GatewayConfiguration) {
-        gateways.mapIndexed { index, gateway ->
-            val config = configuration.copy(shard = configuration.shard.copy(index = shards[index]))
-            config to gateway
-        }.asFlow().delayEachAfterFirst(5.seconds).collect { (configuration, gateway) ->
-            gateway.start(configuration)
-        }
+    override suspend fun start(configuration: GatewayConfiguration) = gateways.forEachIndexed { index, gateway ->
+        val config = configuration.copy(shard = configuration.shard.copy(index = shards[index]))
+        gateway.start(config)
     }
 
     override suspend fun send(command: Command) = gateways.forEach { it.send(command) }
@@ -41,13 +36,6 @@ class MasterGateway(
     override suspend fun detach() = gateways.forEach { it.detach() }
 
     override suspend fun stop() = gateways.forEach { it.stop() }
-
-    private fun<T> Flow<T>.delayEachAfterFirst(duration: Duration) : Flow<T> = flow {
-            collect {
-                emit(it)
-                delay(duration.toLongMilliseconds())
-            }
-    }
 
 }
 

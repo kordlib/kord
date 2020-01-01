@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.KordBuilder
 import com.gitlab.kordlib.core.builder.webhook.WebhookCreateBuilder
 import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.Snowflake

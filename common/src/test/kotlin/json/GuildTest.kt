@@ -2,10 +2,10 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.Guild
-import com.gitlab.kordlib.common.entity.GuildMember
-import com.gitlab.kordlib.common.entity.PartialGuild
-import com.gitlab.kordlib.common.entity.UnavailableGuild
+import com.gitlab.kordlib.common.entity.DiscordGuild
+import com.gitlab.kordlib.common.entity.DiscordGuildMember
+import com.gitlab.kordlib.common.entity.DiscordPartialGuild
+import com.gitlab.kordlib.common.entity.DiscordUnavailableGuild
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
@@ -19,7 +19,7 @@ class GuildTest {
 
     @Test
     fun `Guild serialization`() {
-        val guild = Json.parse(Guild.serializer(), file("guild"))
+        val guild = Json.parse(DiscordGuild.serializer(), file("guild"))
 
         with(guild) {
             id shouldBe "41771983423143937"
@@ -50,7 +50,7 @@ class GuildTest {
 
 @Test
 fun `UnavailableGuild serialization`() {
-    val guild = Json.parse(UnavailableGuild.serializer(), file("unavailableguild"))
+    val guild = Json.parse(DiscordUnavailableGuild.serializer(), file("unavailableguild"))
 
     with(guild) {
         id shouldBe "41771983423143937"
@@ -62,7 +62,7 @@ fun `UnavailableGuild serialization`() {
 
 @Test
 fun `GuildMember serialization`() {
-    val member = Json.parse(GuildMember.serializer(), file("guildmember"))
+    val member = Json.parse(DiscordGuildMember.serializer(), file("guildmember"))
 
     with(member) {
         nick shouldBe "NOT API SUPPORT"
@@ -76,7 +76,7 @@ fun `GuildMember serialization`() {
 
 @Test
 fun `PartialGuild serialization`() {
-    val guild = Json.parse(PartialGuild.serializer(), file("partialguild"))
+    val guild = Json.parse(DiscordPartialGuild.serializer(), file("partialguild"))
 
     with(guild) {
         id shouldBe "80351110224678912"

@@ -4,8 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GuildMember(
-        val user: User? = null,
+data class DiscordGuildMember(
+        val user: DiscordUser? = null,
         val nick: String? = null,
         val roles: List<String>,
         @SerialName("joined_at")
@@ -17,8 +17,8 @@ data class GuildMember(
 )
 
 @Serializable
-data class AddedGuildMember(
-        val user: User? = null,
+data class DiscordAddedGuildMember(
+        val user: DiscordUser? = null,
         val nick: String? = null,
         val roles: List<String>,
         @SerialName("joined_at")
@@ -31,23 +31,23 @@ data class AddedGuildMember(
 )
 
 @Serializable
-data class RemovedGuildMember(
+data class DiscordRemovedGuildMember(
         @SerialName("guild_id")
         val guildId: String,
-        val user: User
+        val user: DiscordUser
 )
 
 @Serializable
-data class UpdatedGuildMember(
+data class DiscordUpdatedGuildMember(
         @SerialName("guild_id")
         val guildId: String,
         val roles: List<String>,
-        val user: User,
+        val user: DiscordUser,
         val nick: String? = null
 )
 
 @Serializable
-data class PartialGuildMember(
+data class DiscordPartialGuildMember(
         val nick: String? = null,
         val roles: List<String>,
         @SerialName("joined_at")

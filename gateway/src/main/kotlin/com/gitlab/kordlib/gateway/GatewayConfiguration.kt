@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.gateway
 
-import com.gitlab.kordlib.common.entity.Shard
+import com.gitlab.kordlib.common.entity.DiscordShard
 
 data class GatewayConfiguration(
         val token: String,
         val name: String,
-        val shard: Shard,
+        val shard: DiscordShard,
         val presence: Presence?,
         val threshold: Int
 )
@@ -13,7 +13,7 @@ data class GatewayConfiguration(
 data class GatewayConfigurationBuilder(
         val token: String,
         var name: String = "Kord",
-        var shard: Shard = Shard(0, 1),
+        var shard: DiscordShard = DiscordShard(0, 1),
         var presence: Presence? = null,
         var threshold: Int = 250
 ) {

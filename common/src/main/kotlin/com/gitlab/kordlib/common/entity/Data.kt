@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PinsUpdateData(
+data class DiscordPinsUpdateData(
         @SerialName("guild_id")
         val guildId: String,
         @SerialName("channel_id")
@@ -14,7 +14,7 @@ data class PinsUpdateData(
 )
 
 @Serializable
-data class Typing(
+data class DiscordTyping(
         @SerialName("channel_id")
         val channelId: String,
         @SerialName("guild_id")

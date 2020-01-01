@@ -1,10 +1,10 @@
 package com.gitlab.kordlib.core.builder.ban
 
 import com.gitlab.kordlib.core.builder.AuditRequestBuilder
-import com.gitlab.kordlib.core.builder.KordBuilder
+import com.gitlab.kordlib.core.builder.KordDsl
 import com.gitlab.kordlib.rest.json.request.GuildBanAddRequest
 
-@KordBuilder
+@KordDsl
 class BanCreateBuilder : AuditRequestBuilder<GuildBanAddRequest> {
     /**
      * The reason for banning this member.

@@ -5,20 +5,20 @@ import kotlinx.serialization.internal.StringDescriptor
 import kotlinx.serialization.json.JsonElement
 
 @Serializable
-data class PresenceUpdateData(
-        val user: PresenceUser,
+data class DiscordPresenceUpdateData(
+        val user: DiscordPresenceUser,
         val roles: List<String>? = null,
-        val game: Activity? = null,
+        val game: DiscordActivity? = null,
         @SerialName("guild_id")
         val guildId: String? = null, //don't trust the docs
         val status: Status,
-        val activities: List<Activity>,
+        val activities: List<DiscordActivity>,
         @SerialName("client_status")
-        val clientStatus: ClientStatus
+        val clientStatus: DiscordClientStatus
 )
 
 @Serializable
-data class PresenceUser(
+data class DiscordPresenceUser(
         val id: String,
         val username: JsonElement? = null,
         val discriminator: JsonElement? = null,
@@ -35,7 +35,7 @@ data class PresenceUser(
 )
 
 @Serializable
-data class ClientStatus(val desktop: Status? = null, val mobile: Status? = null, val web: Status? = null)
+data class DiscordClientStatus(val desktop: Status? = null, val mobile: Status? = null, val web: Status? = null)
 
 @Serializable(with = Status.StatusSerializer::class)
 enum class Status {

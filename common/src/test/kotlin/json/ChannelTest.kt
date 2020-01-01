@@ -2,7 +2,7 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.Channel
+import com.gitlab.kordlib.common.entity.DiscordChannel
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
@@ -15,7 +15,7 @@ class ChannelTest {
 
     @Test
     fun `DMChannel serialization`() {
-        val channel = Json.parse(Channel.serializer(), file("dmchannel"))
+        val channel = Json.parse(DiscordChannel.serializer(), file("dmchannel"))
 
         with(channel) {
             lastMessageId shouldBe "3343820033257021450"
@@ -35,7 +35,7 @@ class ChannelTest {
 
     @Test
     fun `ChannelCategory serialization`() {
-        val channel = Json.parse(Channel.serializer(), file("channelcategory"))
+        val channel = Json.parse(DiscordChannel.serializer(), file("channelcategory"))
 
         with(channel) {
             permissionOverwrites shouldBe emptyList()
@@ -51,7 +51,7 @@ class ChannelTest {
 
     @Test
     fun `GroupDMChannel serialization`() {
-        val channel = Json.parse(Channel.serializer(), file("groupdmchannel"))
+        val channel = Json.parse(DiscordChannel.serializer(), file("groupdmchannel"))
 
         with(channel) {
             name shouldBe "Some test channel"
@@ -79,7 +79,7 @@ class ChannelTest {
 
     @Test
     fun `GuildNewChannel serialization`() {
-        val channel = Json.parse(Channel.serializer(), file("guildnewschannel"))
+        val channel = Json.parse(DiscordChannel.serializer(), file("guildnewschannel"))
 
         with(channel) {
             id shouldBe "41771983423143937"
@@ -98,7 +98,7 @@ class ChannelTest {
 
     @Test
     fun `GuildTextChannel serialization`() {
-        val channel = Json.parse(Channel.serializer(), file("guildtextchannel"))
+        val channel = Json.parse(DiscordChannel.serializer(), file("guildtextchannel"))
 
         with(channel) {
             id shouldBe "41771983423143937"
@@ -118,7 +118,7 @@ class ChannelTest {
 
     @Test
     fun `GuildVoiceChannel serialization`() {
-        val channel = Json.parse(Channel.serializer(), file("guildvoicechannel"))
+        val channel = Json.parse(DiscordChannel.serializer(), file("guildvoicechannel"))
 
         with(channel) {
             id shouldBe "155101607195836416"
@@ -137,7 +137,7 @@ class ChannelTest {
 
     @Test
     fun `StoreChannel serialization`() {
-        val channel = Json.parse(Channel.serializer(), file("storechannel"))
+        val channel = Json.parse(DiscordChannel.serializer(), file("storechannel"))
 
         with(channel) {
             id shouldBe "41771983423143937"
