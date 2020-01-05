@@ -2,10 +2,12 @@ package com.gitlab.kordlib.core.builder.channel
 
 import com.gitlab.kordlib.core.builder.KordDsl
 import com.gitlab.kordlib.core.builder.RequestBuilder
+import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.InviteCreateRequest
+import com.gitlab.kordlib.rest.json.response.TargetUserType
 
 @KordDsl
-class InviteCreateBuilder: RequestBuilder<InviteCreateRequest> {
+class InviteCreateBuilder : RequestBuilder<InviteCreateRequest> {
     /**
      * The duration of invite in seconds before expiry, or 0 for never. 86400 (24 hours) by default.
      */
@@ -26,12 +28,20 @@ class InviteCreateBuilder: RequestBuilder<InviteCreateRequest> {
      */
     var unique: Boolean = false
 
+    /**
+     * The target user id for this invite.
+     */
+    var targetUser: Snowflake? = null
+
     override fun toRequest(): InviteCreateRequest = InviteCreateRequest(
             temporary = temporary,
             age = age,
             unique = unique,
-            uses = uses
+            uses = uses,
+            targetUser = targetUser?.value,
+            targetUserType = targetUser?.let { TargetUserType.STREAM }
     )
 }
+
 
 
