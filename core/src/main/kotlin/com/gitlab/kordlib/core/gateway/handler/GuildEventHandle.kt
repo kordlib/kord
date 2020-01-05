@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.event.guild.*
 import com.gitlab.kordlib.core.event.role.RoleCreateEvent
 import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
 import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
+import com.gitlab.kordlib.core.toInstant
 import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.asFlow
@@ -149,8 +150,13 @@ internal class GuildEventHandler(
 
         val old = cache.find<MemberData> {
             MemberData::userId eq userData.id
-            MemberData::guildId eq event.member.guildId.toLong()
+            MemberData::guildId eq guildId.toLong()
         }.asFlow().map { Member(it, userData, kord) }.singleOrNull()
+
+        cache.find<MemberData> {
+            MemberData::userId eq userData.id
+            MemberData::guildId eq guildId.toLong()
+        }.update { it + this }
 
         val roles = roles.asSequence().map { Snowflake(it) }.toSet()
 
@@ -161,6 +167,7 @@ internal class GuildEventHandler(
                         Snowflake(userData.id),
                         roles,
                         nick ?: userData.username,
+                        premiumSince?.toInstant(),
                         kord
                 )
         )
