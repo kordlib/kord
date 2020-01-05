@@ -25,6 +25,8 @@ allows you to more easily share configuration between gateways.
 
 * Added `LiveEntity` and its implementations to Core. These are self-updating entities that contain a filtered
 event stream, only emitting related events.
+* Added `targetUser` and `targetUserType` to invite creation. #47
+* Added a `rules channel`, `SystemChannelFlags` and `discoverySplash` to `Guild`. #48
 
 ## Dependencies 
 
