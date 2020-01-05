@@ -15,6 +15,8 @@ data class DiscordGuild(
         val name: String,
         val icon: String? = null,
         val splash: String? = null,
+        @SerialName("discovery_splash")
+        val discoverySplash: String? = null,
         val owner: Boolean? = null,
         @SerialName("owner_id")
         val ownerId: String,
@@ -47,6 +49,11 @@ data class DiscordGuild(
         val widgetChannelId: String? = null,
         @SerialName("system_channel_id")
         val systemChannelId: String? = null,
+        @SerialName("system_channel_flags")
+        val systemChannelFlags: SystemChannelFlags? = null,
+        /**  The id of the channel in which a discoverable server's rules should be found **/
+        @SerialName("rules_channel_id")
+        val rulesChannelId: String? = null,
         @SerialName("joined_at")
         val joinedAt: String? = null,
         val large: Boolean? = null,
@@ -73,6 +80,37 @@ data class DiscordGuild(
         @SerialName("preferred_locale")
         val preferredLocale: String
 )
+
+@Serializable(with = SystemChannelFlags.Companion::class)
+class SystemChannelFlags constructor(val code: Int) {
+
+    operator fun contains(permission: Permission): Boolean {
+        return this.code and permission.code == permission.code
+    }
+
+    @Serializer(forClass = SystemChannelFlags::class)
+    companion object : KSerializer<SystemChannelFlags> {
+
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("system_channel_flags")
+
+        override fun deserialize(decoder: Decoder): SystemChannelFlags {
+            return SystemChannelFlags(decoder.decodeInt())
+        }
+
+        override fun serialize(encoder: Encoder, obj: SystemChannelFlags) {
+            encoder.encodeInt(obj.code)
+        }
+    }
+
+}
+
+enum class SystemChannelFlag(val code: Int) {
+    /** Suppress member join notifications. **/
+    SuppressJoinNotifications(1.shl(0)),
+    /** Suppress server boost notifications. **/
+    SuppressPremiumSubscriptions(1.shl(1))
+}
 
 @Serializable
 data class DiscordPartialGuild(

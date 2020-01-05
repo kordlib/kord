@@ -41,7 +41,10 @@ data class GuildData(
         val maxMembers: Int? = null,
         val vanityUrlCode: String? = null,
         val description: String? = null,
-        val banner: String? = null
+        val banner: String? = null,
+        val systemChannelFlags: SystemChannelFlags? = null,
+        val rulesChannelId: Long? = null,
+        val discoverySplash: String? = null
 ) {
     companion object {
 
@@ -91,7 +94,10 @@ data class GuildData(
                     maxMembers,
                     vanityUrlCode,
                     description,
-                    banner
+                    banner,
+                    systemChannelFlags,
+                    rulesChannelId?.toLong(),
+                    discoverySplash
             )
         }
     }

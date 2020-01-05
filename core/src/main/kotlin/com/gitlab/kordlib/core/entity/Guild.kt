@@ -1,19 +1,18 @@
 package com.gitlab.kordlib.core.entity
 
-import com.gitlab.kordlib.common.entity.DefaultMessageNotificationLevel
-import com.gitlab.kordlib.common.entity.ExplicitContentFilter
-import com.gitlab.kordlib.common.entity.MFALevel
-import com.gitlab.kordlib.common.entity.VerificationLevel
+import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
+import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
 import com.gitlab.kordlib.core.behavior.channel.TextChannelBehavior
 import com.gitlab.kordlib.core.cache.data.EmojiData
 import com.gitlab.kordlib.core.cache.data.GuildData
 import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
+import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
 import com.gitlab.kordlib.core.switchIfEmpty
@@ -143,9 +142,27 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     val regionId: Snowflake get() = Snowflake(data.region)
 
     /**
+     * The id of the channel in which a discoverable server's rules should be found
+     **/
+    val rulesChannelId: Snowflake? get() = data.rulesChannelId.toSnowflakeOrNull()
+
+    /**
+     * The channel behavior in which a discoverable server's rules should be found.
+     **/
+    val rulesChannel: GuildMessageChannelBehavior?
+        get() = data.rulesChannelId.toSnowflakeOrNull()?.let {
+            GuildMessageChannelBehavior(id, it, kord)
+        }
+
+    /**
      * The splash hash, if present.
      */
     val splashHash: String? get() = data.splash
+
+    /**
+     * The hash of the discovery splash, if present.
+     */
+    val discoverySplashHash: String? get() = data.discoverySplash
 
     /**
      * The id of the channel to which system messages are sent.
@@ -155,9 +172,12 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     /**
      * The behavior of the channel to which system messages are sent.
      */
-    val systemChannel: TextChannelBehavior? get() = systemChannelId?.let {
-        TextChannelBehavior(guildId = id, id = it, kord = kord)
-    }
+    val systemChannel: TextChannelBehavior?
+        get() = systemChannelId?.let {
+            TextChannelBehavior(guildId = id, id = it, kord = kord)
+        }
+
+    val systemChannelFlags: SystemChannelFlags get() = data.systemChannelFlags ?: SystemChannelFlags(0)
 
     /**
      * The verification level required for the guild.
@@ -217,6 +237,21 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     suspend fun getEveryoneRole(): Role = kord.getRole(id, id)!!
 
     /**
+     * Gets the discovery splash url in the specified [format], if present.
+     */
+    fun getDiscoverySplashUrl(format: Image.Format): String? =
+            data.splash?.let { "discovery-splashes/${id.value}/${it}.${format.extension}" }
+
+    /**
+     * Requests to get the splash image in the specified [format], if present.
+     */
+    suspend fun getDiscoverySplash(format: Image.Format): Image? {
+        val url = getDiscoverySplashUrl(format) ?: return null
+
+        return Image.fromUrl(kord.resources.httpClient, url)
+    }
+
+    /**
      * Gets the icon url, if present.
      */
     fun getIconUrl(format: Image.Format): String? = data.icon?.let { "https://cdn.discordapp.com/icons/${id.value}/$it.${format.extension}" }
@@ -240,9 +275,13 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      */
     suspend fun getRegion(): Region = regions.first { it.id == regionId }
 
+    /**
+     * Requests to get the channel in which a discoverable server's rules should be found, if present.
+     **/
+    suspend fun getRulesChannel(): GuildMessageChannel? = rulesChannel?.asChannel()
 
     /**
-     * Gets the splash url in the specified [format].
+     * Gets the splash url in the specified [format], if present.
      */
     fun getSplashUrl(format: Image.Format): String? =
             data.splash?.let { "https://cdn.discordapp.com/splashes/${id.value}/$it.${format.extension}" }
