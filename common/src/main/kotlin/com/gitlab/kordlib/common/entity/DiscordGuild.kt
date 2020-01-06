@@ -2,6 +2,7 @@ package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
+import kotlinx.serialization.internal.StringDescriptor
 
 @Serializable
 data class DiscordUnavailableGuild(
@@ -15,6 +16,8 @@ data class DiscordGuild(
         val name: String,
         val icon: String? = null,
         val splash: String? = null,
+        @SerialName("discovery_splash")
+        val discoverySplash: String? = null,
         val owner: Boolean? = null,
         @SerialName("owner_id")
         val ownerId: String,
@@ -36,7 +39,7 @@ data class DiscordGuild(
         val explicitContentFilter: ExplicitContentFilter,
         val roles: List<DiscordRole>,
         val emojis: List<DiscordEmoji>,
-        val features: List<String>,
+        val features: List<GuildFeature>,
         @SerialName("mfa_level")
         val mfaLevel: MFALevel,
         @SerialName("application_id")
@@ -47,6 +50,11 @@ data class DiscordGuild(
         val widgetChannelId: String? = null,
         @SerialName("system_channel_id")
         val systemChannelId: String? = null,
+        @SerialName("system_channel_flags")
+        val systemChannelFlags: SystemChannelFlags? = null,
+        /**  The id of the channel in which a discoverable server's rules should be found **/
+        @SerialName("rules_channel_id")
+        val rulesChannelId: String? = null,
         @SerialName("joined_at")
         val joinedAt: String? = null,
         val large: Boolean? = null,
@@ -73,6 +81,70 @@ data class DiscordGuild(
         @SerialName("preferred_locale")
         val preferredLocale: String
 )
+
+@Serializable(with = GuildFeature.Companion::class)
+enum class GuildFeature(val value: String) {
+    Unknown(""),
+    InviteSplash("INVITE_SPLASH"),
+    VIPRegions("VIP_REGIONS"),
+    VanityUrl("VANITY_URL"),
+    Verified("VERIFIED"),
+    Partnered("PARTNERED"),
+    Public("PUBLIC"),
+    Commerce("COMMERCE"),
+    News("NEWS"),
+    Discoverable("DISCOVERABLE"),
+    Featureable("FEATURABLE"),
+    AnimatedIcon("ANIMATED_ICON"),
+    Banner("BANNER"),
+    PublicDisabled("PUBLIC_DISABLED");
+
+    @Serializer(forClass = GuildFeature::class)
+    companion object : KSerializer<GuildFeature> {
+        override val descriptor: SerialDescriptor
+            get() = StringDescriptor.withName("feature")
+
+        override fun deserialize(decoder: Decoder): GuildFeature {
+            val name = decoder.decodeString()
+            return values().firstOrNull { it.value == name } ?: Unknown
+        }
+
+        override fun serialize(encoder: Encoder, obj: GuildFeature) {
+            encoder.encodeString(obj.value)
+        }
+    }
+}
+
+@Serializable(with = SystemChannelFlags.Companion::class)
+class SystemChannelFlags constructor(val code: Int) {
+
+    operator fun contains(flag: SystemChannelFlags): Boolean {
+        return this.code and flag.code == flag.code
+    }
+
+    @Serializer(forClass = SystemChannelFlags::class)
+    companion object : KSerializer<SystemChannelFlags> {
+
+        override val descriptor: SerialDescriptor
+            get() = IntDescriptor.withName("system_channel_flags")
+
+        override fun deserialize(decoder: Decoder): SystemChannelFlags {
+            return SystemChannelFlags(decoder.decodeInt())
+        }
+
+        override fun serialize(encoder: Encoder, obj: SystemChannelFlags) {
+            encoder.encodeInt(obj.code)
+        }
+    }
+
+}
+
+enum class SystemChannelFlag(val code: Int) {
+    /** Suppress member join notifications. **/
+    SuppressJoinNotifications(1.shl(0)),
+    /** Suppress server boost notifications. **/
+    SuppressPremiumSubscriptions(1.shl(1))
+}
 
 @Serializable
 data class DiscordPartialGuild(

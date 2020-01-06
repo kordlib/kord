@@ -9,12 +9,13 @@ data class InviteData(
         val guildId: Long?,
         val channelId: Long,
         val targetUserId: Long?,
+        val inviterId: Long?,
         val approximatePresenceCount: Int?,
         val approximateMemberCount: Int?
 ) {
     companion object {
         fun from(entity: InviteResponse) = with(entity) {
-            InviteData(code!!, guild!!.id.toLong(), channel!!.id.toLong(), targetUser?.id?.toLong(), approximatePresenceCount, approximateMemberCount)
+            InviteData(code!!, guild!!.id.toLong(), channel!!.id.toLong(), targetUser?.id?.toLong(), inviter?.toLong(), approximatePresenceCount, approximateMemberCount)
         }
     }
 }

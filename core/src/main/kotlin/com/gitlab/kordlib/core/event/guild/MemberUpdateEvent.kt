@@ -12,13 +12,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import java.time.Instant
 
- class MemberUpdateEvent internal constructor(
+class MemberUpdateEvent internal constructor(
         val old: Member?,
         val guildId: Snowflake,
         val memberId: Snowflake,
         val currentRoleIds: Set<Snowflake>,
         val currentNickName: String,
+        val premiumSince: Instant?,
         override val kord: Kord
 ) : Event {
 
