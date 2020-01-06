@@ -30,6 +30,11 @@ data class Invite(val data: InviteData, override val kord: Kord) : KordObject {
     val guildId: Snowflake get() = Snowflake(data.guildId!!)
 
     /**
+     * The id of the user who created this invite, if present.
+     */
+    val inviterId: Snowflake? get() = data.inviterId.toSnowflakeOrNull()
+
+    /**
      * The id of the target user this invite is associated to, if present.
      */
     val targetUserId: Snowflake? get() = data.targetUserId.toSnowflakeOrNull()
@@ -43,6 +48,11 @@ data class Invite(val data: InviteData, override val kord: Kord) : KordObject {
      * The behavior of the guild this invite is associated to.
      */
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+
+    /**
+     * The user behavior of the user who created this invite, if present.
+     */
+    val inviter: UserBehavior? get() = inviterId?.let { UserBehavior.invoke(it, kord) }
 
     /**
      * The user behavior of the target user this invite is associated to, if present.
@@ -68,6 +78,11 @@ data class Invite(val data: InviteData, override val kord: Kord) : KordObject {
      * Requests to get the guild this invite is associated to.
      */
     suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
+
+    /**
+     * Requests to get the user who created this invite, if present.
+     */
+    suspend fun getInviter(): User? = inviterId?.let { kord.getUser(it) }
 
     /**
      * Requests to get the target user this invite is associated to, if present.

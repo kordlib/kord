@@ -11,6 +11,7 @@ data class InviteResponse(
         val code: String? = null,
         val guild: DiscordPartialGuild? = null,
         val channel: DiscordChannel? = null,
+        val inviter: String? = null,
         @SerialName("target_user")
         val targetUser: DiscordUser? = null,
         @SerialName("target_user_type")
