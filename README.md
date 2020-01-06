@@ -12,7 +12,7 @@ Kord is an idiomatic, non-blocking, modularized implementation of the Discord AP
 
 ## No blocking, no callbacks
 
-Build on top of coroutines, Kord focusses on avoiding the pitfalls of java libraries without sacrificing performance.
+Built on top of coroutines, Kord focusses on avoiding the pitfalls of java libraries without sacrificing performance.
 
 ```kotlin
 suspend fun main() {
