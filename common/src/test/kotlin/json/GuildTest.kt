@@ -2,10 +2,7 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.DiscordGuild
-import com.gitlab.kordlib.common.entity.DiscordGuildMember
-import com.gitlab.kordlib.common.entity.DiscordPartialGuild
-import com.gitlab.kordlib.common.entity.DiscordUnavailableGuild
+import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
@@ -41,7 +38,7 @@ class GuildTest {
             widgetChannelId shouldBe "41771983423143937"
             roles shouldBe emptyList()
             emojis shouldBe emptyList()
-            features shouldBe listOf("INVITE_SPLASH")
+            features shouldBe listOf(GuildFeature.InviteSplash)
             unavailable shouldBe false
         }
 

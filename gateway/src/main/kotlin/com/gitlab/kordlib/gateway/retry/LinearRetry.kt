@@ -16,10 +16,6 @@ private val linearRetryLogger = KotlinLogging.logger { }
  * @param maxBackoffMillis the maximum delay for a [retry] invocation.
  * @param maxTries the maximum amount of consecutive retries before [hasNext] returns false.
  */
-fun main() {
-    LinearRetry(5, 5, 5)
-}
-
 class LinearRetry constructor(
         private val firstBackoff: Duration,
         private val maxBackoff: Duration,

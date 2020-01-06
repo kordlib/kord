@@ -43,7 +43,9 @@ data class DiscordUpdatedGuildMember(
         val guildId: String,
         val roles: List<String>,
         val user: DiscordUser,
-        val nick: String? = null
+        val nick: String? = null,
+        @SerialName("premium_since")
+        val premiumSince: String? = null
 )
 
 @Serializable
@@ -53,5 +55,7 @@ data class DiscordPartialGuildMember(
         @SerialName("joined_at")
         val joinedAt: String,
         val deaf: Boolean,
-        val mute: Boolean
+        val mute: Boolean,
+        @SerialName("premium_since")
+        val premiumSince: String? = null
 )

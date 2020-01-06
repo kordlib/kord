@@ -1,14 +1,18 @@
 package com.gitlab.kordlib.rest.json.request
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.gitlab.kordlib.rest.json.response.TargetUserType
+import kotlinx.serialization.*
 
 @Serializable
 data class InviteCreateRequest(
         @SerialName("max_age")
-        val age: Int = 86400,
+        val age: Int? = null,
         @SerialName("max_uses")
-        val uses: Int = 0,
-        val temporary: Boolean = false,
-        val unique: Boolean = false
+        val uses: Int? = null,
+        val temporary: Boolean? = null,
+        val unique: Boolean? = null,
+        @SerialName("target_user")
+        val targetUser: String? = null,
+        @SerialName("target_user_type")
+        val targetUserType: TargetUserType? = null
 )
