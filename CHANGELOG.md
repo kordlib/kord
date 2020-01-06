@@ -27,7 +27,8 @@ allows you to more easily share configuration between gateways.
 event stream, only emitting related events.
 * Added `targetUser` and `targetUserType` to invite creation. #47
 * Added a `rules channel`, `SystemChannelFlags` and `discoverySplash` to `Guild`. #48
-* Added `premium since` to `Member`.
+* Added `premium since` to `Member`. #45
+* Added `inviter` to `Invite`. #44
 
 ## Dependencies 
 
