@@ -30,6 +30,10 @@ event stream, only emitting related events.
 * Added `premium since` to `Member`. #45
 * Added `inviter` to `Invite`. #44
 
+## Fixes
+
+* Ending the process while enabling the shutdownHook and without logging in causes UninitializedPropertyAccessException #50
+
 ## Dependencies 
 
 * gradle 5.4 -> 6.0.1

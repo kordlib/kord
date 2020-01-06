@@ -173,7 +173,9 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         if (state.value is State.Detached) return
         state.update { State.Detached }
         channel.cancel()
-        socket.close()
+        if(::socket.isInitialized) {
+            socket.close()
+        }
     }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
