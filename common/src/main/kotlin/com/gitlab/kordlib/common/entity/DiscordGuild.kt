@@ -2,6 +2,7 @@ package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
+import kotlinx.serialization.internal.StringDescriptor
 
 @Serializable
 data class DiscordUnavailableGuild(
@@ -38,7 +39,7 @@ data class DiscordGuild(
         val explicitContentFilter: ExplicitContentFilter,
         val roles: List<DiscordRole>,
         val emojis: List<DiscordEmoji>,
-        val features: List<String>,
+        val features: List<GuildFeature>,
         @SerialName("mfa_level")
         val mfaLevel: MFALevel,
         @SerialName("application_id")
@@ -81,11 +82,44 @@ data class DiscordGuild(
         val preferredLocale: String
 )
 
+@Serializable(with = GuildFeature.Companion::class)
+enum class GuildFeature(val value: String) {
+    Unknown(""),
+    InviteSplash("INVITE_SPLASH"),
+    VIPRegions("VIP_REGIONS"),
+    VanityUrl("VANITY_URL"),
+    Verified("VERIFIED"),
+    Partnered("PARTNERED"),
+    Public("PUBLIC"),
+    Commerce("COMMERCE"),
+    News("NEWS"),
+    Discoverable("DISCOVERABLE"),
+    Featureable("FEATURABLE"),
+    AnimatedIcon("ANIMATED_ICON"),
+    Banner("BANNER"),
+    PublicDisabled("PUBLIC_DISABLED");
+
+    @Serializer(forClass = GuildFeature::class)
+    companion object : KSerializer<GuildFeature> {
+        override val descriptor: SerialDescriptor
+            get() = StringDescriptor.withName("feature")
+
+        override fun deserialize(decoder: Decoder): GuildFeature {
+            val name = decoder.decodeString()
+            return values().firstOrNull { it.value == name } ?: Unknown
+        }
+
+        override fun serialize(encoder: Encoder, obj: GuildFeature) {
+            encoder.encodeString(obj.value)
+        }
+    }
+}
+
 @Serializable(with = SystemChannelFlags.Companion::class)
 class SystemChannelFlags constructor(val code: Int) {
 
-    operator fun contains(permission: Permission): Boolean {
-        return this.code and permission.code == permission.code
+    operator fun contains(flag: SystemChannelFlags): Boolean {
+        return this.code and flag.code == flag.code
     }
 
     @Serializer(forClass = SystemChannelFlags::class)

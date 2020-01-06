@@ -19,7 +19,8 @@ This will be done by default for Kord clients now.
 allows you to more easily share configuration between gateways.
 * Emojis now have nullable names, this only appears when interacting with guild emojis that have been deleted.
 * Rest, Gateway and Common entities have gained a `Discord` prefix to reduce name collisions with Core.
-* `ParallalRequestHandler` has been upgraded to stable
+* `ParallalRequestHandler` has been upgraded to stable.
+* `features` in `Guilds` are now represented as enum values instead of Strings. 
 
 ## Additions
 

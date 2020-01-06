@@ -88,7 +88,7 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     /**
      * The enabled guild features.
      */
-    val features: Set<String> get() = data.features.toSet()
+    val features: Set<GuildFeature> get() = data.features.toSet()
 
     /**
      * The icon hash, if present.

@@ -24,7 +24,7 @@ data class GuildData(
         val explicitContentFilter: ExplicitContentFilter,
         val roles: List<Long>,
         val emojis: List<EmojiData>,
-        val features: List<String>,
+        val features: List<GuildFeature>,
         val mfaLevel: MFALevel,
         val applicationId: Long? = null,
         val widgetEnabled: Boolean? = null,
