@@ -1,3 +1,11 @@
+# 0.4.0
+
+# Changes
+
+* `Kord#getRegions()` was deprecated for `Kord#regions`.
+* `Kord#getUsers()` was deprecated for `cache#users`.
+* various Snowflake argument names have been changed in`Kord` to better reflect the entity they represent.
+
 # 0.3.0
 
 > This version contains an upgrade of ktor that brings breaking changes, be sure to check out ktor's changelog if you

@@ -21,6 +21,10 @@ import java.util.concurrent.ConcurrentHashMap
 
 typealias Generator<I, T> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>
 
+@Deprecated("function will be removed", ReplaceWith("KordCacheBuilder().apply(builder).build()"), DeprecationLevel.WARNING)
+@Suppress("FunctionName")
+inline fun KordCache(builder: KordCacheBuilder.() -> Unit): DataCache = KordCacheBuilder().apply(builder).build()
+
 class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, EntitySupplier {
 
     val channels: Flow<Channel>
