@@ -35,7 +35,7 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
     val roles: Flow<Role>
         get() = find<RoleData>().asFlow().map { Role(it, kord) }
 
-    override val users: Flow<User>
+    val users: Flow<User>
         get() = find<UserData>().asFlow().map { User(it, kord) }
 
     @Suppress("EXPERIMENTAL_API_USAGE")

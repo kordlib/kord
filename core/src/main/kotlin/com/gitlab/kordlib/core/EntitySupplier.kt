@@ -9,8 +9,6 @@ interface EntitySupplier {
 
     val regions: Flow<Region>
 
-    val users: Flow<User>
-
     suspend fun getChannel(id: Snowflake): Channel?
 
     suspend fun getGuild(id: Snowflake): Guild?
