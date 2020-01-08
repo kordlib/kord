@@ -2,7 +2,7 @@ package com.gitlab.kordlib.core.event.gateway
 
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.User
 import com.gitlab.kordlib.core.event.Event
 import kotlinx.coroutines.flow.Flow

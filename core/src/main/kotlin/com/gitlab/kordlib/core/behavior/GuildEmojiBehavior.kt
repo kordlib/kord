@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.guild.EmojiModifyBuilder
+import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
 import com.gitlab.kordlib.core.cache.data.EmojiData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.GuildEmoji
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 
 /**
  * The behavior of a [Discord Emoij](https://discordapp.com/developers/docs/resources/emoji).

@@ -1,16 +1,15 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.message.EmbedBuilder
-import com.gitlab.kordlib.core.builder.message.MessageCreateBuilder
+import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
+import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.paginateBackwards
 import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.rest.route.Position
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

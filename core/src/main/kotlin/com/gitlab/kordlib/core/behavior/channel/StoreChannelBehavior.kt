@@ -1,13 +1,11 @@
 package com.gitlab.kordlib.core.behavior.channel
 
-import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.channel.UpdateStoreChannelBuilder
+import com.gitlab.kordlib.rest.builder.channel.UpdateStoreChannelBuilder
 import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.StoreChannel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /**
  * The behavior of a Discord Store Channel associated to a guild.

@@ -1,12 +1,12 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.role.RoleModifyBuilder
-import com.gitlab.kordlib.core.builder.role.RolePositionsModifyBuilder
+import com.gitlab.kordlib.rest.builder.role.RoleModifyBuilder
+import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
 import com.gitlab.kordlib.core.cache.data.RoleData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Role
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.indexOfFirstOrNull
 import com.gitlab.kordlib.core.sorted
 import kotlinx.coroutines.flow.Flow

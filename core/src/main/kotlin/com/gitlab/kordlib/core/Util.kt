@@ -2,7 +2,7 @@ package com.gitlab.kordlib.core
 
 
 import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.request.RequestException
 import com.gitlab.kordlib.rest.route.Position
 import kotlinx.atomicfu.atomic

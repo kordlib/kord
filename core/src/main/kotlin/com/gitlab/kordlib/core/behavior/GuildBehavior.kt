@@ -2,15 +2,16 @@ package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.ban.BanCreateBuilder
-import com.gitlab.kordlib.core.builder.channel.GuildChannelPositionModifyBuilder
-import com.gitlab.kordlib.core.builder.channel.NewsChannelCreateBuilder
-import com.gitlab.kordlib.core.builder.channel.TextChannelCreateBuilder
-import com.gitlab.kordlib.core.builder.channel.VoiceChannelCreateBuilder
-import com.gitlab.kordlib.core.builder.guild.GuildModifyBuilder
-import com.gitlab.kordlib.core.builder.role.RoleCreateBuilder
-import com.gitlab.kordlib.core.builder.role.RolePositionsModifyBuilder
+import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
+import com.gitlab.kordlib.rest.builder.channel.GuildChannelPositionModifyBuilder
+import com.gitlab.kordlib.rest.builder.channel.NewsChannelCreateBuilder
+import com.gitlab.kordlib.rest.builder.channel.TextChannelCreateBuilder
+import com.gitlab.kordlib.rest.builder.channel.VoiceChannelCreateBuilder
+import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
+import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
+import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*

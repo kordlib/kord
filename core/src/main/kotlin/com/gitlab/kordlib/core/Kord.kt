@@ -4,8 +4,9 @@ import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.DiscordShard
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
-import com.gitlab.kordlib.core.builder.guild.GuildCreateBuilder
+import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.builder.presence.PresenceUpdateBuilder
 import com.gitlab.kordlib.core.cache.data.*

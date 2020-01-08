@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.webhook.ExecuteWebhookBuilder
-import com.gitlab.kordlib.core.builder.webhook.WebhookModifyBuilder
+import com.gitlab.kordlib.rest.builder.webhook.ExecuteWebhookBuilder
+import com.gitlab.kordlib.rest.builder.webhook.WebhookModifyBuilder
 import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.Webhook
 
 /**

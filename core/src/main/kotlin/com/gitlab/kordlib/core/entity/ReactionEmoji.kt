@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.entity.Snowflake
+
 sealed class ReactionEmoji {
     abstract val formatted: String
     abstract val name: String
