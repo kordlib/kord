@@ -55,11 +55,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCreateBuilder.() -> Unit): Webhook {
-    val builder = WebhookCreateBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.webhook.createWebhook(id.value, request, reason)
+    val response = kord.rest.webhook.createWebhook(id.value, builder)
     val data = WebhookData.from(response)
 
     return Webhook(data, kord)

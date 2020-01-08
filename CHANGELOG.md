@@ -1,3 +1,11 @@
+# 0.4.0
+
+## Changes
+
+* `StoreChannel#edit`, `TextChannel#edit` and `NewsChannel#edit` now supply their builder as a receiver.
+* core entity builders were moved from `com.gitlab.kordlib.core.builder` to `com.gitlab.kordlib.rest.builder` and are now
+part of the rest module.
+
 # 0.3.0
 
 > This version contains an upgrade of ktor that brings breaking changes, be sure to check out ktor's changelog if you

@@ -37,11 +37,7 @@ interface GuildEmojiBehavior : Entity {
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildEmojiBehavior.edit(builder: EmojiModifyBuilder.() -> Unit): GuildEmoji {
-    val builder = EmojiModifyBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.emoji.modifyEmoji(guildId.value, id.value, request, reason)
+    val response = kord.rest.emoji.modifyEmoji(guildId.value, id.value, builder)
     val data = EmojiData.from(id.value, response)
 
     return GuildEmoji(data, guildId, kord)

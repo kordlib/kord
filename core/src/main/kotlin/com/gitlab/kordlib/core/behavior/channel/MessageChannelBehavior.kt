@@ -1,14 +1,14 @@
 package com.gitlab.kordlib.core.behavior.channel
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
-import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.paginateBackwards
 import com.gitlab.kordlib.core.paginateForwards
+import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
+import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
 import com.gitlab.kordlib.rest.route.Position
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -159,9 +159,7 @@ interface MessageChannelBehavior : ChannelBehavior {
  * Requests to create a message.
  */
 suspend inline fun MessageChannelBehavior.createMessage(builder: MessageCreateBuilder.() -> Unit): Message {
-    val request = MessageCreateBuilder().apply(builder).toRequest()
-
-    val response = kord.rest.channel.createMessage(id.value, request)
+    val response = kord.rest.channel.createMessage(id.value, builder)
     val data = MessageData.from(response)
 
     return Message(data, kord)

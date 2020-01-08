@@ -37,9 +37,7 @@ interface CategorizableChannel: GuildChannel {
      * @return the created [Invite].
      */
     suspend fun createInvite(builder: InviteCreateBuilder.() -> Unit): Invite {
-        val request = InviteCreateBuilder().apply(builder).toRequest()
-
-        val response = kord.rest.channel.createInvite(id.value, request)
+            val response = kord.rest.channel.createInvite(id.value, builder)
         val data = InviteData.from(response)
 
         return Invite(data, kord)

@@ -33,6 +33,11 @@ class InviteCreateBuilder : RequestBuilder<InviteCreateRequest> {
      */
     var targetUser: Snowflake? = null
 
+    /**
+     * The audit log reason for creating this invite.
+     */
+    var reason: String? = null
+
     override fun toRequest(): InviteCreateRequest = InviteCreateRequest(
             temporary = temporary,
             age = age,

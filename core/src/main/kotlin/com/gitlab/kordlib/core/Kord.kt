@@ -103,9 +103,7 @@ class Kord internal constructor(
     }
 
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
-        val request = GuildCreateBuilder().apply(builder).toRequest()
-
-        val response = rest.guild.createGuild(request)
+        val response = rest.guild.createGuild(builder)
         val data = GuildData.from(response)
 
         return Guild(data, this)

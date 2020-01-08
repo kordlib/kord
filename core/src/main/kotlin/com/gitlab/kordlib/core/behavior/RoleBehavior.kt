@@ -41,11 +41,9 @@ interface RoleBehavior : Entity {
      * @return The roles in of this [guild] in updated order
      */
     suspend fun changePosition(position: Int): Flow<Role> {
-        val request = RolePositionsModifyBuilder()
-                .apply { move(id to position) }
-                .toRequest()
-
-        val response = kord.rest.guild.modifyGuildRolePosition(guildId.value, request)
+        val response = kord.rest.guild.modifyGuildRolePosition(guildId.value) {
+            move(id to position)
+        }
         return response.asFlow().map { RoleData.from(guildId.value, it) }.map { Role(it, kord) }.sorted()
     }
 
@@ -78,11 +76,7 @@ interface RoleBehavior : Entity {
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun RoleBehavior.edit(builder: RoleModifyBuilder.() -> Unit): Role {
-    val builder = RoleModifyBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.guild.modifyGuildRole(guildId = guildId.value, roleId = id.value, role = request, reason = reason)
+    val response = kord.rest.guild.modifyGuildRole(guildId = guildId.value, roleId = id.value, builder = builder)
     val data = RoleData.from(id.value, response)
 
     return Role(data, kord)

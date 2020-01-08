@@ -19,6 +19,9 @@ import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.core.sorted
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
+import com.gitlab.kordlib.rest.service.createNewsChannel
+import com.gitlab.kordlib.rest.service.createTextChannel
+import com.gitlab.kordlib.rest.service.createVoiceChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
@@ -216,11 +219,7 @@ interface GuildBehavior : Entity {
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): Guild {
-    val builder = GuildModifyBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.guild.modifyGuild(id.value, request, reason)
+    val response = kord.rest.guild.modifyGuild(id.value, builder)
     val data = GuildData.from(response)
 
     return Guild(data, kord)
@@ -233,11 +232,7 @@ suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): G
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
-    val builder = TextChannelCreateBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.guild.createGuildChannel(id.value, request, reason)
+    val response = kord.rest.guild.createTextChannel(id.value, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as TextChannel
@@ -250,11 +245,7 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
-    val builder = VoiceChannelCreateBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.guild.createGuildChannel(id.value, request, reason)
+    val response = kord.rest.guild.createVoiceChannel(id.value, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as VoiceChannel
@@ -268,11 +259,7 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
 @KordPreview
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
-    val builder = NewsChannelCreateBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.guild.createGuildChannel(id.value, request, reason)
+    val response = kord.rest.guild.createNewsChannel(id.value, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as NewsChannel
@@ -283,11 +270,7 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPositionModifyBuilder.() -> Unit) {
-    val builder = GuildChannelPositionModifyBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    kord.rest.guild.modifyGuildChannelPosition(id.value, request, reason)
+    kord.rest.guild.modifyGuildChannelPosition(id.value, builder)
 }
 
 /**
@@ -299,11 +282,7 @@ suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPosit
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyBuilder.() -> Unit): Flow<Role> {
-    val builder = RolePositionsModifyBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.guild.modifyGuildRolePosition(id.value, request, reason)
+    val response = kord.rest.guild.modifyGuildRolePosition(id.value, builder)
     return response.asFlow().map { RoleData.from(id.value, it) }.map { Role(it, kord) }
 
 }
@@ -315,11 +294,7 @@ suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyB
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit): Role {
-    val builder = RoleCreateBuilder().also(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.guild.createGuildRole(id.value, request, reason)
+    val response = kord.rest.guild.createGuildRole(id.value, builder)
     val data = RoleData.from(id.value, response)
 
     return Role(data, kord)
@@ -329,5 +304,5 @@ suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit):
  * Requests to ban the given [userId] in this guild.
  */
 suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
-    kord.rest.guild.addGuildBan(guildId = id.value, userId = userId.value, ban = BanCreateBuilder().apply(builder).toRequest())
+    kord.rest.guild.addGuildBan(guildId = id.value, userId = userId.value, builder = builder)
 }

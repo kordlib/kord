@@ -103,9 +103,5 @@ suspend inline fun MemberBehavior.ban(builder: BanCreateBuilder.() -> Unit = {})
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun MemberBehavior.edit(builder: MemberModifyBuilder.() -> Unit) {
-    val builder = MemberModifyBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    kord.rest.guild.modifyGuildMember(guildId.value, id.value, request, reason)
+    kord.rest.guild.modifyGuildMember(guildId.value, id.value, builder)
 }

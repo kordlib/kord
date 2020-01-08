@@ -30,7 +30,7 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
 }
 
 @KordDsl
-class UpdateVoiceChannelBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
     var position: Int? = null
@@ -50,7 +50,7 @@ class UpdateVoiceChannelBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
 }
 
 @KordDsl
-class UpdateNewsChannelBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
     var position: Int? = null
@@ -70,7 +70,7 @@ class UpdateNewsChannelBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
 }
 
 @KordDsl
-class UpdateStoreChannelBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+class StoreChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
     var position: Int? = null

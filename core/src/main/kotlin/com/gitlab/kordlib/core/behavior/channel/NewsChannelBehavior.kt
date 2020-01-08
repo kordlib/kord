@@ -1,11 +1,12 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.rest.builder.channel.UpdateNewsChannelBuilder
+import com.gitlab.kordlib.rest.builder.channel.NewsChannelModifyBuilder
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.NewsChannel
+import com.gitlab.kordlib.rest.service.patchNewsChannel
 
 /**
  * The behavior of a Discord News Channel associated to a guild.
@@ -31,13 +32,8 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
  *
  * @return The edited [NewsChannel].
  */
-@Suppress("NAME_SHADOWING")
-suspend inline fun NewsChannelBehavior.edit(builder: (UpdateNewsChannelBuilder) -> Unit): NewsChannel {
-    val builder = UpdateNewsChannelBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.channel.patchChannel(id.value, request, reason)
+suspend inline fun NewsChannelBehavior.edit(builder: NewsChannelModifyBuilder.() -> Unit): NewsChannel {
+    val response = kord.rest.channel.patchNewsChannel(id.value, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as NewsChannel
