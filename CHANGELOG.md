@@ -1,3 +1,9 @@
+# 0.3.1
+
+## Fixes 
+
+* Fixed an issue with Kord ignoring cached entries that relied on querying data by id. *again*.
+
 # 0.3.0
 
 > This version contains an upgrade of ktor that brings breaking changes, be sure to check out ktor's changelog if you
