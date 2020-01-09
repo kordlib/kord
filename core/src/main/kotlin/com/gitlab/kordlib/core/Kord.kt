@@ -145,7 +145,7 @@ class Kord internal constructor(
     }
 
     suspend fun getSelf(): User {
-        val cached = cache.find<UserData> { UserData::id eq selfId.value }.singleOrNull()
+        val cached = cache.find<UserData> { UserData::id eq selfId.longValue }.singleOrNull()
 
         return User(cached ?: UserData.from(rest.user.getCurrentUser()), this)
     }
@@ -171,19 +171,19 @@ class Kord internal constructor(
     }
 
     internal suspend fun getChannelData(id: Snowflake): ChannelData? {
-        val cached = cache.find<ChannelData> { ChannelData::id eq id.value }.singleOrNull()
+        val cached = cache.find<ChannelData> { ChannelData::id eq id.longValue }.singleOrNull()
 
         return cached ?: catchNotFound { rest.channel.getChannel(id.value).let { ChannelData.from(it) } }
     }
 
     internal suspend fun getGuildData(id: Snowflake): GuildData? {
-        val cached = cache.find<GuildData> { GuildData::id eq id.value }.singleOrNull()
+        val cached = cache.find<GuildData> { GuildData::id eq id.longValue }.singleOrNull()
 
         return cached ?: catchNotFound { rest.guild.getGuild(id.value).let { GuildData.from(it) } }
     }
 
     internal suspend fun getMemberData(guildId: Snowflake, id: Snowflake): MemberData? {
-        val cached = cache.find<MemberData> { MemberData::userId eq id.value }.singleOrNull()
+        val cached = cache.find<MemberData> { MemberData::userId eq id.longValue }.singleOrNull()
 
         return cached ?: catchNotFound {
             val response = rest.guild.getGuildMember(guildId = guildId.value, userId = id.value)
@@ -193,8 +193,8 @@ class Kord internal constructor(
 
     internal suspend fun getMessageData(channelId: Snowflake, id: Snowflake): MessageData? {
         val cached = cache.find<MessageData> {
-            MessageData::id eq id.value
-            MessageData::channelId eq channelId.value
+            MessageData::id eq id.longValue
+            MessageData::channelId eq channelId.longValue
         }.singleOrNull()
 
         return cached ?: catchNotFound {
@@ -205,8 +205,8 @@ class Kord internal constructor(
 
     internal suspend fun getRoleData(guildId: Snowflake, id: Snowflake): RoleData? {
         val cached = cache.find<RoleData> {
-            RoleData::id eq id.value
-            RoleData::guildId eq guildId.value
+            RoleData::id eq id.longValue
+            RoleData::guildId eq guildId.longValue
         }.singleOrNull()
 
         return cached ?: catchNotFound {
@@ -218,7 +218,7 @@ class Kord internal constructor(
     }
 
     internal suspend fun getUserData(id: Snowflake): UserData? {
-        val cached = cache.find<UserData> { UserData::id eq id.value }.singleOrNull()
+        val cached = cache.find<UserData> { UserData::id eq id.longValue }.singleOrNull()
 
         return cached ?: catchNotFound { rest.user.getUser(id.value).let { UserData.from(it) } }
     }
