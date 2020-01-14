@@ -7,6 +7,8 @@ import com.gitlab.kordlib.core.cache.data.InviteData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.indexOfFirstOrNull
+import com.gitlab.kordlib.rest.builder.channel.ChannelPermissionModifyBuilder
+import com.gitlab.kordlib.rest.service.editRolePermission
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -75,4 +77,18 @@ interface GuildChannelBehavior : ChannelBehavior {
         }
     }
 
+}
+
+/**
+ * Requests to add or replace a [PermissionOverwrite] for the [roleId].
+ */
+suspend inline fun GuildChannelBehavior.editRolePermission(roleId: Snowflake, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+    kord.rest.channel.editRolePermission(channelId = id.value, roleId = roleId.value, builder = builder)
+}
+
+/**
+ * Requests to add or replace a [PermissionOverwrite] for the [memberId].
+ */
+suspend inline fun GuildChannelBehavior.editMemberPermission(memberId: Snowflake, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+    kord.rest.channel.editRolePermission(channelId = id.value, roleId = memberId.value, builder = builder)
 }

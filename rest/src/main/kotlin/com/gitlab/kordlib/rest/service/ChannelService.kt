@@ -177,3 +177,13 @@ suspend inline fun ChannelService.patchNewsChannel(channelId: String, builder: N
 
 suspend inline fun ChannelService.patchCategory(channelId: String, builder: CategoryModifyBuilder.() -> Unit) =
         patchChannel(channelId, CategoryModifyBuilder().apply(builder).toRequest())
+
+suspend inline fun ChannelService.editMemberPermissions(channelId: String, memberId: String, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+    val modifyBuilder = ChannelPermissionModifyBuilder("member").apply(builder)
+    editChannelPermissions(channelId, memberId, modifyBuilder.toRequest(), modifyBuilder.reason)
+}
+
+suspend inline fun ChannelService.editRolePermission(channelId: String, roleId: String, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+    val modifyBuilder = ChannelPermissionModifyBuilder("role").apply(builder)
+    editChannelPermissions(channelId, roleId, modifyBuilder.toRequest(), modifyBuilder.reason)
+}
