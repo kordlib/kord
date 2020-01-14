@@ -353,7 +353,9 @@ class RestServiceTest {
 
             getCurrentUserGuilds()
 
-            modifyCurrentUser(CurrentUserModifyRequest("Happy Kord"))
+            modifyCurrentUser {
+                username = "Happy Kord"
+            }
 
             getUserConnections()
 
