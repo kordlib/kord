@@ -20,115 +20,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         multipartRequest.files.forEach { file(it) }
     }
 
-    @Deprecated("Use the inline builder instead.", ReplaceWith("""
-        createMessage(channelId) { 
-            val oldMessage = message.request
-            content = oldMessage.content
-            nonce = oldMessage.nonce
-            tts = oldMessage.tts
-            
-            message.files.forEach { (name, input) ->
-                addFile(name, input)
-            }
-            
-            embed {
-                title = oldMessage.embed?.title
-                description = oldMessage.embed?.description
-                url = oldMessage.embed?.url
-                timestamp = oldMessage.embed?.timestamp?.let { DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(it, Instant::from) } 
-                color = oldMessage.embed?.color?.let { Color(it) }
-                
-                oldMessage.embed?.footer?.let {
-                    footer {
-                        text = it.text
-                        url = it.url
-                        icon = it.iconUrl
-                    }
-                }
-                
-                image = oldMessage.embed?.image?.url
-                oldMessage.embed?.thumbnail?.url?.let {
-                    thumbnail {
-                        url = it
-                    }
-                }
-                
-                oldMessage.embed?.author?.let {
-                    author {
-                        name = it.name
-                        url = it.url
-                        icon = it.iconUrl
-                    }
-                }
-                
-                oldMessage.embed?.fields?.forEach {
-                    field {
-                        name = it.name
-                        value = it.value
-                        inline = it.inline ?: false
-                    }
-                }
-            }
-        }
-    """, "java.time.format.DateTimeFormatter", "java.awt.Color", "java.time.Instant"), DeprecationLevel.ERROR)
-    suspend fun createMessage(channelId: String, message: MultipartMessageCreateRequest) = call(Route.MessagePost) {
-        keys[Route.ChannelId] = channelId
-        body(MessageCreateRequest.serializer(), message.request)
-        message.files.forEach { file(it) }
-    }
-
-    @Deprecated("Will be removed in 0.5.0. Use the inline builder instead.", ReplaceWith("""
-        createMessage(channelId) { 
-            val oldMessage = message
-            content = oldMessage.content
-            nonce = oldMessage.nonce
-            tts = oldMessage.tts
-            
-            embed {
-                title = oldMessage.embed?.title
-                description = oldMessage.embed?.description
-                url = oldMessage.embed?.url
-                timestamp = oldMessage.embed?.timestamp?.let { DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(it, Instant::from) } 
-                color = oldMessage.embed?.color?.let { Color(it) }
-                
-                oldMessage.embed?.footer?.let {
-                    footer {
-                        text = it.text
-                        url = it.url
-                        icon = it.iconUrl
-                    }
-                }
-                
-                image = oldMessage.embed?.image?.url
-                oldMessage.embed?.thumbnail?.url?.let {
-                    thumbnail {
-                        url = it
-                    }
-                }
-                
-                oldMessage.embed?.author?.let {
-                    author {
-                        name = it.name
-                        url = it.url
-                        icon = it.iconUrl
-                    }
-                }
-                
-                oldMessage.embed?.fields?.forEach {
-                    field {
-                        name = it.name
-                        value = it.value
-                        inline = it.inline ?: false
-                    }
-                }
-            }
-        }
-    """, "java.time.format.DateTimeFormatter", "java.awt.Color", "java.time.Instant"), DeprecationLevel.ERROR)
-    suspend fun createMessage(channelId: String, message: MessageCreateRequest) = call(Route.MessagePost) {
-        keys[Route.ChannelId] = channelId
-        body(MessageCreateRequest.serializer(), message)
-    }
-
     suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
         if (position != null) {
@@ -251,70 +142,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         request.reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    @Deprecated("Will be removed in 0.5.0, use the inline builder instead", ReplaceWith("createInvite(channelId) { this@createInvite.reason = reason }"), DeprecationLevel.ERROR)
-    suspend fun createInvite(channelId: String, invite: InviteCreateRequest, reason: String? = null) = call(Route.InvitePost) {
-        keys[Route.ChannelId] = channelId
-        body(InviteCreateRequest.serializer(), invite)
-        reason?.let { header("X-Audit-Log-Reason", reason) }
-    }
-
     suspend inline fun editMessage(channelId: String, messageId: String, builder: MessageModifyBuilder.() -> Unit) = call(Route.EditMessagePatch) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         body(MessageEditPatchRequest.serializer(), MessageModifyBuilder().apply(builder).toRequest())
     }
 
-
-    @Deprecated("Will be removed in 0.5.0, use the inline builder instead", ReplaceWith("""
-        editMessage(channelId, messageId) { 
-            val oldMessage = message
-            content = oldMessage.content
-            
-            embed {
-                title = oldMessage.embed?.title
-                description = oldMessage.embed?.description
-                url = oldMessage.embed?.url
-                timestamp = oldMessage.embed?.timestamp?.let { DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(it, Instant::from) } 
-                color = oldMessage.embed?.color?.let { Color(it) }
-                
-                oldMessage.embed?.footer?.let {
-                    footer {
-                        text = it.text
-                        url = it.url
-                        icon = it.iconUrl
-                    }
-                }
-                
-                image = oldMessage.embed?.image?.url
-                oldMessage.embed?.thumbnail?.url?.let {
-                    thumbnail {
-                        url = it
-                    }
-                }
-                
-                oldMessage.embed?.author?.let {
-                    author {
-                        name = it.name
-                        url = it.url
-                        icon = it.iconUrl
-                    }
-                }
-                
-                oldMessage.embed?.fields?.forEach {
-                    field {
-                        name = it.name
-                        value = it.value
-                        inline = it.inline ?: false
-                    }
-                }
-            }
-        }
-    """, "java.time.format.DateTimeFormatter", "java.awt.Color", "java.time.Instant"), DeprecationLevel.ERROR)
-    suspend fun editMessage(channelId: String, messageId: String, message: MessageEditPatchRequest) = call(Route.EditMessagePatch) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.MessageId] = messageId
-        body(MessageEditPatchRequest.serializer(), message)
-    }
 
     suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest, reason: String? = null) = call(Route.ChannelPut) {
         keys[Route.ChannelId] = channelId

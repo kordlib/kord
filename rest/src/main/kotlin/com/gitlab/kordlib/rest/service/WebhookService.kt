@@ -21,20 +21,6 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    @Deprecated("Will be removed in 0.5.0, use the inline builder instead", ReplaceWith("""
-        createWebhook(channelId) {
-            this@createWebhook.reason = reason
-            
-            name = webhook.name
-            avatar = webhook.avatar
-        }
-    """), level = DeprecationLevel.ERROR)
-    suspend fun createWebhook(channelId: String, webhook: WebhookCreateRequest, reason: String? = null) = call(Route.WebhookPost) {
-        keys[Route.ChannelId] = channelId
-        body(WebhookCreateRequest.serializer(), webhook)
-        reason?.let { header("X-Audit-Log-Reason", reason) }
-    }
-
     suspend fun getChannelWebhooks(channelId: String) = call(Route.ChannelWebhooksGet) {
         keys[Route.ChannelId] = channelId
     }
@@ -59,27 +45,12 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    @Deprecated("Will be removed in 0.5.0, use the inline builder instead", level = DeprecationLevel.ERROR)
-    suspend fun modifyWebhook(webhookId: String, webhook: WebhookModifyRequest, reason: String? = null) = call(Route.WebhookPatch) {
-        keys[Route.WebhookId] = webhookId
-        body(WebhookModifyRequest.serializer(), webhook)
-        reason?.let { header("X-Audit-Log-Reason", reason) }
-    }
-
     suspend inline fun modifyWebhookWithToken(webhookId: String, token: String, builder: WebhookModifyBuilder.() -> Unit) = call(Route.WebhookByTokenPatch) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
         val modifyBuilder = WebhookModifyBuilder().apply(builder)
         body(WebhookModifyRequest.serializer(), modifyBuilder.toRequest())
         modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
-    }
-
-    @Deprecated("Will be removed in 0.5.0, use the inline builder instead", level = DeprecationLevel.ERROR)
-    suspend fun modifyWebhookWithToken(webhookId: String, token: String, webhook: WebhookModifyRequest, reason: String? = null) = call(Route.WebhookByTokenPatch) {
-        keys[Route.WebhookId] = webhookId
-        keys[Route.WebhookToken] = token
-        body(WebhookModifyRequest.serializer(), webhook)
-        reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
     suspend fun deleteWebhook(webhookId: String, reason: String? = null) = call(Route.WebhookDelete) {
@@ -98,15 +69,6 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.WebhookToken] = token
         parameter("wait", "$wait")
         val request = ExecuteWebhookBuilder().apply(builder).toRequest()
-        body(WebhookExecuteRequest.serializer(), request.request)
-        request.file?.let { file(it) }
-    }
-
-    @Deprecated("Will be removed in 0.5.0, use the inline builder instead", level = DeprecationLevel.ERROR)
-    suspend fun executeWebhook(webhookId: String, token: String, wait: Boolean, request: MultiPartWebhookExecuteRequest) = call(Route.ExecuteWebhookPost) {
-        keys[Route.WebhookId] = webhookId
-        keys[Route.WebhookToken] = token
-        parameter("wait", "$wait")
         body(WebhookExecuteRequest.serializer(), request.request)
         request.file?.let { file(it) }
     }
