@@ -126,7 +126,7 @@ class CommandTest {
         val shard = DiscordShard(0, 1)
         val presence = null
 
-        val identify = Json.stringify(Command.Companion, Identify(token, properties, compress, largeThreshold, shard, presence))
+        val identify = Json.stringify(Command.Companion, Identify(token, properties, compress, largeThreshold, shard, presence, Intents.all))
 
         val json = Json.stringify(JsonObject.serializer(), json {
             "op" to OpCode.Identify.code
@@ -144,6 +144,7 @@ class CommandTest {
                     +JsonLiteral(1)
                 }
                 "presence" to null as String?
+                "intents" to Intents.all.code
             }
         })
 
