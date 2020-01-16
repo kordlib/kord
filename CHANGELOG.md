@@ -1,3 +1,8 @@
+# 0.4.0
+
+## Additions
+* Added [Gateway Intents](https://github.com/discordapp/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents), allowing users to filter events send by Discord.
+
 # 0.3.1
 
 ## Fixes 
