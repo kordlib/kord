@@ -2,7 +2,7 @@ package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 internal val MessageData.authorId get() = author?.id

@@ -1,6 +1,5 @@
 package com.gitlab.kordlib.rest.requesthandler
 
-import com.gitlab.kordlib.rest.json.request.MessageCreateRequest
 import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
 import com.gitlab.kordlib.rest.ratelimit.ParallelRequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
@@ -46,7 +45,7 @@ class RequestHandlerBenchmark {
     fun `parallelism`() = runBlocking {
         val time = measureTime {
             val first = launch(Dispatchers.IO) { parallelRest.channel.getMessages(channel) }
-            val second = launch(Dispatchers.IO) { parallelRest.channel.createMessage(channel, MessageCreateRequest("parallel test")) }
+            val second = launch(Dispatchers.IO) { parallelRest.channel.createMessage(channel) { content = "PARALLEL TEST" } }
             joinAll(first, second)
         }
 
@@ -59,7 +58,7 @@ class RequestHandlerBenchmark {
     fun `serial`() = runBlocking {
         val time = measureTime {
             val first = launch(Dispatchers.IO) { exclusionRest.channel.getMessages(channel) }
-            val second = launch(Dispatchers.IO) { exclusionRest.channel.createMessage(channel, MessageCreateRequest("serial test")) }
+            val second = launch(Dispatchers.IO) { exclusionRest.channel.createMessage(channel) { content = "SERIAL TEST" } }
             joinAll(first, second)
         }
 

@@ -2,9 +2,9 @@ package regression
 
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.common.entity.ChannelType
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.gateway.Command
 import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Gateway

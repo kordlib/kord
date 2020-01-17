@@ -2,7 +2,7 @@ package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
 
 /**

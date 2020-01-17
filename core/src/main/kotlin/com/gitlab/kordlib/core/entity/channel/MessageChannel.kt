@@ -3,7 +3,7 @@ package com.gitlab.kordlib.core.entity.channel
 import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
 import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.toInstant
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import java.time.Instant

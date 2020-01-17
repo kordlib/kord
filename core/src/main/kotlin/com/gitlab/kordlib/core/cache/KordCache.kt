@@ -9,6 +9,7 @@ import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.map.MapLikeCollection
 import com.gitlab.kordlib.cache.map.internal.MapEntryCache
 import com.gitlab.kordlib.cache.map.lruLinkedHashMap
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.EntitySupplier
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*

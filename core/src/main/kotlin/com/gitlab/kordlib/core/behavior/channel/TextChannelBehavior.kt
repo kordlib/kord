@@ -1,12 +1,12 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.channel.TextChannelModifyBuilder
+import com.gitlab.kordlib.rest.builder.channel.TextChannelModifyBuilder
 import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.TextChannel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.gitlab.kordlib.rest.service.patchTextChannel
 
 
 interface TextChannelBehavior : GuildMessageChannelBehavior {
@@ -30,14 +30,8 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
  *
  * @return The edited [TextChannel].
  */
-
-@Suppress("NAME_SHADOWING")
-suspend inline fun TextChannelBehavior.edit(builder: (TextChannelModifyBuilder) -> Unit): TextChannel {
-    val builder = TextChannelModifyBuilder().apply(builder)
-    val reason = builder.reason
-
-    val request = builder.toRequest()
-    val response = kord.rest.channel.patchChannel(id.value, request, reason)
+suspend inline fun TextChannelBehavior.edit(builder: TextChannelModifyBuilder.() -> Unit): TextChannel {
+    val response = kord.rest.channel.patchTextChannel(id.value, builder)
 
     val data = ChannelData.from(response)
     return Channel.from(data, kord) as TextChannel

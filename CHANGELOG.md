@@ -1,11 +1,16 @@
 # 0.4.0
 
+
 ## Additions
 
 * `Kord` and its`Cache` now implement a common interface `EntitySupplier` to retrieve entities that can be cached. 
 
-# Changes
+## Changes
 
+* `StoreChannel#edit`, `TextChannel#edit` and `NewsChannel#edit` now supply their builder as a receiver.
+* core entity builders were moved from `com.gitlab.kordlib.core.builder` to `com.gitlab.kordlib.rest.builder` and are now
+part of the rest module.
+* `Snowflake` was moved to the common module from core.
 * `Kord#getRegions()` was deprecated for `Kord#regions`.
 * `Kord#getUsers()` was deprecated for `cache#users`.
 * various Snowflake argument names have been changed in`Kord` to better reflect the entity they represent.

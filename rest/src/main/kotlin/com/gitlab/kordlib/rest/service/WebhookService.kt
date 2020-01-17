@@ -1,6 +1,9 @@
 package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.annotation.KordExperimental
+import com.gitlab.kordlib.rest.builder.webhook.ExecuteWebhookBuilder
+import com.gitlab.kordlib.rest.builder.webhook.WebhookCreateBuilder
+import com.gitlab.kordlib.rest.builder.webhook.WebhookModifyBuilder
 import com.gitlab.kordlib.rest.json.request.MultiPartWebhookExecuteRequest
 import com.gitlab.kordlib.rest.json.request.WebhookCreateRequest
 import com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest
@@ -10,10 +13,12 @@ import com.gitlab.kordlib.rest.route.Route
 import kotlinx.serialization.json.JsonObject
 
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
-    suspend fun createWebhook(channelId: String, webhook: WebhookCreateRequest, reason: String? = null) = call(Route.WebhookPost) {
+
+    suspend inline fun createWebhook(channelId: String, builder: WebhookCreateBuilder.() -> Unit) = call(Route.WebhookPost) {
         keys[Route.ChannelId] = channelId
-        body(WebhookCreateRequest.serializer(), webhook)
-        reason?.let { header("X-Audit-Log-Reason", reason) }
+        val createBuilder = WebhookCreateBuilder().apply(builder)
+        body(WebhookCreateRequest.serializer(), createBuilder.toRequest())
+        createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun getChannelWebhooks(channelId: String) = call(Route.ChannelWebhooksGet) {
@@ -33,17 +38,19 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.WebhookToken] = token
     }
 
-    suspend fun modifyWebhook(webhookId: String, webhook: WebhookModifyRequest, reason: String? = null) = call(Route.WebhookPatch) {
+    suspend inline fun modifyWebhook(webhookId: String, builder: WebhookModifyBuilder.() -> Unit) = call(Route.WebhookPatch) {
         keys[Route.WebhookId] = webhookId
-        body(WebhookModifyRequest.serializer(), webhook)
-        reason?.let { header("X-Audit-Log-Reason", reason) }
+        val modifyBuilder = WebhookModifyBuilder().apply(builder)
+        body(WebhookModifyRequest.serializer(), modifyBuilder.toRequest())
+        modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun modifyWebhookWithToken(webhookId: String, token: String, webhook: WebhookModifyRequest, reason: String? = null) = call(Route.WebhookByTokenPatch) {
+    suspend inline fun modifyWebhookWithToken(webhookId: String, token: String, builder: WebhookModifyBuilder.() -> Unit) = call(Route.WebhookByTokenPatch) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
-        body(WebhookModifyRequest.serializer(), webhook)
-        reason?.let { header("X-Audit-Log-Reason", reason) }
+        val modifyBuilder = WebhookModifyBuilder().apply(builder)
+        body(WebhookModifyRequest.serializer(), modifyBuilder.toRequest())
+        modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
     suspend fun deleteWebhook(webhookId: String, reason: String? = null) = call(Route.WebhookDelete) {
@@ -57,10 +64,11 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun executeWebhook(webhookId: String, token: String, wait: Boolean, request: MultiPartWebhookExecuteRequest) = call(Route.ExecuteWebhookPost) {
+    suspend inline fun executeWebhook(webhookId: String, token: String, wait: Boolean, builder: ExecuteWebhookBuilder.() -> Unit) = call(Route.ExecuteWebhookPost) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
         parameter("wait", "$wait")
+        val request = ExecuteWebhookBuilder().apply(builder).toRequest()
         body(WebhookExecuteRequest.serializer(), request.request)
         request.file?.let { file(it) }
     }

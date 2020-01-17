@@ -2,14 +2,11 @@ package com.gitlab.kordlib.core.event.message
 
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.MessageBehavior
-import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
 import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.core.entity.Member
 import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.event.Event
 

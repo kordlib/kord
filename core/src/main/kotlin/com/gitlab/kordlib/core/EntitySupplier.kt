@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import kotlinx.coroutines.flow.Flow

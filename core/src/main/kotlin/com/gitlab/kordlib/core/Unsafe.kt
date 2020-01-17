@@ -4,7 +4,7 @@ import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordUnsafe
 import com.gitlab.kordlib.core.behavior.*
 import com.gitlab.kordlib.core.behavior.channel.*
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 
 /**
  * A class that exposes the creation of `{Entity}Behavior` classes.
@@ -33,7 +33,7 @@ class Unsafe(private val kord: Kord) {
     fun guildChannel(guildId: Snowflake, id: Snowflake) : GuildChannelBehavior=
             GuildChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun guildMessageChannel(guildId: Snowflake,  id: Snowflake) : GuildMessageChannelBehavior=
+    fun guildMessageChannel(guildId: Snowflake, id: Snowflake) : GuildMessageChannelBehavior=
             GuildMessageChannelBehavior(guildId = guildId, id = id, kord = kord)
 
     fun newsChannel(guildId: Snowflake, id: Snowflake): NewsChannelBehavior =

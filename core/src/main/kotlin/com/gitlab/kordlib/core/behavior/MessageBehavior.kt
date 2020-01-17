@@ -1,13 +1,13 @@
 package com.gitlab.kordlib.core.behavior
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
-import com.gitlab.kordlib.core.builder.message.MessageModifyBuilder
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.paginateForwards
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -117,9 +117,7 @@ interface MessageBehavior : Entity {
  * @return The edited [Message].
  */
 suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit): Message {
-    val request = MessageModifyBuilder().apply(builder).toRequest()
-
-    val response = kord.rest.channel.editMessage(channelId = channelId.value, messageId = id.value, message = request)
+    val response = kord.rest.channel.editMessage(channelId = channelId.value, messageId = id.value, builder = builder)
     val data = MessageData.from(response)
 
     return Message(data, kord)

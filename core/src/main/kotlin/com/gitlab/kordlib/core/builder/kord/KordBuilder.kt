@@ -10,10 +10,9 @@ import com.gitlab.kordlib.core.cache.CachingGateway
 import com.gitlab.kordlib.core.cache.KordCacheBuilder
 import com.gitlab.kordlib.core.cache.createView
 import com.gitlab.kordlib.core.cache.registerKordData
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.gateway.DefaultGateway
 import com.gitlab.kordlib.gateway.DefaultGatewayData
 import com.gitlab.kordlib.gateway.Gateway
@@ -21,7 +20,6 @@ import com.gitlab.kordlib.gateway.retry.LinearRetry
 import com.gitlab.kordlib.gateway.retry.Retry
 import com.gitlab.kordlib.rest.json.response.BotGatewayResponse
 import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
-import com.gitlab.kordlib.rest.ratelimit.ParallelRequestHandler
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 import com.gitlab.kordlib.rest.service.RestClient
@@ -37,7 +35,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import kotlin.concurrent.thread

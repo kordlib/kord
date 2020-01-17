@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.Permissions
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
 import com.gitlab.kordlib.rest.json.request.ChannelPermissionEditRequest
 
