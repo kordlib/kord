@@ -28,6 +28,6 @@ class Ban(val data: BanData, override val kord: Kord) : KordObject {
     /**
      * Requests to get the banned user.
      */
-    suspend fun getUser(): User = kord.getUser(userId = userId)!!
+    suspend fun getUser(): User = kord.getUser(id = userId)!!
 
 }
