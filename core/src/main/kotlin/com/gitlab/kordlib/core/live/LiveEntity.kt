@@ -31,6 +31,7 @@ import kotlinx.coroutines.sync.withLock
 interface LiveEntity : Entity {
     val events: Flow<Event>
 
+    fun shutDown()
 }
 
 @KordPreview
@@ -47,7 +48,7 @@ abstract class AbstractLiveEntity : LiveEntity {
 
     protected abstract fun filter(event: Event): Boolean
     protected abstract fun update(event: Event)
-    protected fun shutDown() = running.update { false }
+    override fun shutDown() = running.update { false }
 
 }
 
