@@ -1,3 +1,9 @@
+# 0.3.2
+
+## Fixes 
+
+* Fixed an issue where `DiscordInvite` was wrongly representing `inviter` as a `String` instead of a `DiscordUser`.
+
 # 0.3.1
 
 ## Fixes 
