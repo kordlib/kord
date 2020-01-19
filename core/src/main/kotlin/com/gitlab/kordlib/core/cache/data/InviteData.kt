@@ -15,7 +15,7 @@ data class InviteData(
 ) {
     companion object {
         fun from(entity: InviteResponse) = with(entity) {
-            InviteData(code!!, guild!!.id.toLong(), channel!!.id.toLong(), targetUser?.id?.toLong(), inviter?.toLong(), approximatePresenceCount, approximateMemberCount)
+            InviteData(code!!, guild!!.id.toLong(), channel!!.id.toLong(), targetUser?.id?.toLong(), inviter?.id?.toLong(), approximatePresenceCount, approximateMemberCount)
         }
     }
 }
