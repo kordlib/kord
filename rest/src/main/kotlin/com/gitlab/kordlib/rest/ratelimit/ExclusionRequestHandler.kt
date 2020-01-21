@@ -1,26 +1,28 @@
 package com.gitlab.kordlib.rest.ratelimit
 
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
-import com.gitlab.kordlib.rest.request.Request
-import com.gitlab.kordlib.rest.request.RequestException
-import com.gitlab.kordlib.rest.request.RequestIdentifier
+import com.gitlab.kordlib.rest.request.*
 import com.gitlab.kordlib.rest.route.Route
 import io.ktor.client.HttpClient
-import io.ktor.client.call.call
-import io.ktor.client.call.receive
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.defaultRequest
-import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.header
 import io.ktor.client.request.request
-import io.ktor.client.response.readBytes
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.HttpStatement
 import io.ktor.client.statement.readBytes
+import io.ktor.client.statement.readText
+import io.ktor.content.TextContent
+import io.ktor.http.ContentType
+import io.ktor.http.URLProtocol
 import io.ktor.http.takeFrom
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.serialization.SerializationStrategy
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import mu.KotlinLogging
 import java.time.Clock
 import kotlin.time.minutes
@@ -28,6 +30,10 @@ import kotlin.time.minutes
 private val logger = KotlinLogging.logger {}
 
 typealias Bucket = String
+
+@Suppress("EXPERIMENTAL_API_USAGE")
+private val parser = Json(JsonConfiguration(encodeDefaults = false, strictMode = false))
+
 
 class ExclusionRequestHandler(private val client: HttpClient, private val clock: Clock = Clock.systemUTC()) : RequestHandler {
 
@@ -48,18 +54,38 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
 
     private val autoBanRateLimiter = BucketRateLimiter(25000, 10.minutes)
 
-    override tailrec suspend fun <T> handle(request: Request<T>): HttpResponse {
-        val builder = HttpRequestBuilder().apply {
-            headers.append("X-RateLimit-Precision", "millisecond")
-            url.takeFrom(Route.baseUrl)
-            with(request) { apply() }
-        }
+    override tailrec suspend fun <B : Any, R> handle(request: Request<B, R>): R {
+
         val response = mutex.withLock {
             suspendFor(request)
 
             logger.trace { "REQUEST: ${request.logString}" }
+            val response = client.request<HttpStatement> {
+                method = request.route.method
+                headers.append("X-RateLimit-Precision", "millisecond")
+                headers.appendAll(request.headers)
 
-            val response = client.request<HttpStatement>(builder).execute()
+                url {
+                    url.takeFrom(Route.baseUrl)
+                    encodedPath += request.path
+                    parameters.appendAll(request.parameters)
+                }
+
+                request.body?.let {
+                    when (request) {
+                        is MultipartRequest<*, *> -> {
+                            headers.append("payload_json", parser.stringify(it.strategy as SerializationStrategy<Any>, it.body))
+                            this.body = MultiPartFormDataContent(request.data)
+                        }
+
+                        is JsonRequest<*, *> -> {
+                            val json = parser.stringify(it.strategy as SerializationStrategy<Any>, it.body)
+                            this.body = TextContent(json, ContentType.Application.Json)
+                        }
+                    }
+                }
+
+            }.execute()
 
             logger.trace { response.logString }
 
@@ -95,10 +121,10 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
             throw RequestException(response, response.errorString())
         }
 
-        return response
+        return parser.parse(request.route.strategy, response.readText())
     }
 
-    private suspend fun suspendFor(request: Request<*>) {
+    private suspend fun suspendFor(request: Request<*, *>) {
         delay(globalSuspensionPoint - clock.millis())
         globalSuspensionPoint = 0
 
@@ -118,12 +144,12 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
 
     }
 
-    private fun getBucketSuspensionPointFor(request: Request<*>): Long? {
+    private fun getBucketSuspensionPointFor(request: Request<*, *>): Long? {
         val bucket = buckets[request.route] ?: return null
         return bucketSuspensionPoints[bucket]
     }
 
-    private fun removeBucketSuspensionPointFor(request: Request<*>) {
+    private fun removeBucketSuspensionPointFor(request: Request<*, *>) {
         val bucket = buckets[request.route] ?: return
         bucketSuspensionPoints.remove(bucket)
     }
@@ -168,3 +194,4 @@ class ExclusionRequestHandler(private val client: HttpClient, private val clock:
         }
     }
 }
+
