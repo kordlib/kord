@@ -42,7 +42,7 @@ suspend fun HttpResponse.errorString(): String {
     else "$logString $message"
 }
 
-val Request<*>.logString
+val Request<*,*>.logString
     get() : String {
         val method = route.method.value
         val path = route.path
