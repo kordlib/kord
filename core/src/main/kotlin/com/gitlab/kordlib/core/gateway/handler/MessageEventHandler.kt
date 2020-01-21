@@ -7,6 +7,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.cache.data.ReactionData
+import com.gitlab.kordlib.core.cache.data.ReactionRemoveEmojiData
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.ReactionEmoji
 import com.gitlab.kordlib.common.entity.Snowflake
@@ -35,6 +36,7 @@ internal class MessageEventHandler(
         is MessageReactionAdd -> handle(event)
         is MessageReactionRemove -> handle(event)
         is MessageReactionRemoveAll -> handle(event)
+        is MessageReactionRemoveEmoji -> handle(event)
         else -> Unit
     }
 
@@ -177,6 +179,13 @@ internal class MessageEventHandler(
                         kord
                 )
         )
+    }
+
+    private suspend fun handle(event: MessageReactionRemoveEmoji) = with(event.reaction) {
+        cache.find<MessageData> { MessageData::id eq messageId.toLong() }.update { it.copy(reactions = it.reactions?.filter { it.emojiName != emoji.name }) }
+
+        val data = ReactionRemoveEmojiData.from(this)
+        coreEventChannel.send(ReactionRemoveEmojiEvent(data, kord))
     }
 
 }
