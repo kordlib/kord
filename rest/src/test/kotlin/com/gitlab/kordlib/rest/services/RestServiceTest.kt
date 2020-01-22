@@ -9,10 +9,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.defaultRequest
 import io.ktor.client.request.header
-import io.ktor.http.Url
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
-import java.net.URL
 import java.util.*
 
 fun image(path: String): String {
@@ -135,6 +133,9 @@ class RestServiceTest {
             getReactions(channelId, message.id, "\ud83d\udc4e")
             deleteAllReactions(channelId, message.id)
 
+            createReaction(channelId, message.id, "\ud83d\udc4e")
+            deleteAllReactionsForEmoji(channelId, message.id, "\ud83d\udc4e")
+
             deleteMessage(channelId, message.id)
         }
     }
@@ -156,7 +157,8 @@ class RestServiceTest {
             createMessage(channelId, MessageCreateRequest("TEST"))
             createMessage(channelId, MultipartMessageCreateRequest(MessageCreateRequest("TEST")))
 
-            repeat(10) { //trying to get a ratelimit
+            repeat(10) {
+                //trying to get a ratelimit
                 createMessage(channelId, MessageCreateRequest("TEST $it"))
             }
 
