@@ -134,6 +134,9 @@ class RestServiceTest {
             getReactions(channelId, message.id, "\ud83d\udc4e")
             deleteAllReactions(channelId, message.id)
 
+            createReaction(channelId, message.id, "\ud83d\udc4e")
+            deleteAllReactionsForEmoji(channelId, message.id, "\ud83d\udc4e")
+
             deleteMessage(channelId, message.id)
         }
     }
@@ -153,6 +156,10 @@ class RestServiceTest {
             getMessage(channelId, message.id)
 
             deleteMessage(channelId, message.id)
+
+            createMessage(channelId) {
+                content = "TEST"
+            }
 
             createMessage(channelId) {
                 content = "TEST"
