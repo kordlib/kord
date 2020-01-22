@@ -26,6 +26,10 @@ part of the rest module.
 
 * Fixed an issue where `DiscordInvite` was wrongly representing `inviter` as a `String` instead of a `DiscordUser`.
 
+## Dependencies
+
+* ktor 1.3.0-rc2 -> 1.3.0
+
 # 0.3.1
 
 ## Fixes 
