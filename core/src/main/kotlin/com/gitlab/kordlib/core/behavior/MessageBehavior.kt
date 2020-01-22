@@ -7,7 +7,6 @@ import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.paginateForwards
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -85,6 +84,13 @@ interface MessageBehavior : Entity {
      */
     suspend fun deleteAllReactions() {
         kord.rest.channel.deleteAllReactions(channelId = channelId.value, messageId = id.value)
+    }
+
+    /**
+     * Requests to delete all [emoji] reactions from this message.
+     */
+    suspend fun deleteReaction(emoji: ReactionEmoji) {
+        kord.rest.channel.deleteAllReactionsForEmoji(channelId = channelId.value, messageId = id.value, emoji = emoji.formatted)
     }
 
     /**
