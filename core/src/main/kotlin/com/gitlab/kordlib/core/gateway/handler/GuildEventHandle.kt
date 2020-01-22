@@ -46,6 +46,8 @@ internal class GuildEventHandler(
         is GuildRoleDelete -> handle(event)
         is GuildMembersChunk -> handle(event)
         is PresenceUpdate -> handle(event)
+        is InviteCreate -> handle(event)
+        is InviteDelete -> handle(event)
         else -> Unit
     }
 
@@ -228,6 +230,22 @@ internal class GuildEventHandler(
                 ?.let { User(it, kord) }
 
         coreEventChannel.send(PresenceUpdateEvent(user, this.user, Snowflake(guildId!!), old, new))
+    }
+
+    private suspend fun handle(event: InviteCreate) = with(event) {
+        val data = InviteCreateData.from(invite)
+
+        with(invite.inviter) {
+            cache.find<UserData> { UserData::id eq id.toLong() }
+                    .update { it.copy(discriminator = discriminator, username = username, avatar = avatar) }
+        }
+
+        coreEventChannel.send(InviteCreateEvent(data, kord))
+    }
+
+    private suspend fun handle(event: InviteDelete) = with(event) {
+        val data = InviteDeleteData.from(invite)
+        coreEventChannel.send(InviteDeleteEvent(data, kord))
     }
 
 }

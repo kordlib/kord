@@ -1,3 +1,18 @@
+# 0.3.2
+
+## Additions
+
+* Added `InviteCreate`, `InviteDelete` an `MessageReactionRemoveEmoji` events. #61
+* Added `deleteAllReactionsForEmoji` to ChannelService. #61
+
+## Fixes 
+
+* Fixed an issue where `DiscordInvite` was wrongly representing `inviter` as a `String` instead of a `DiscordUser`.
+
+## Dependencies
+
+* ktor 1.3.0-rc2 -> 1.3.0
+
 # 0.3.1
 
 ## Fixes 
