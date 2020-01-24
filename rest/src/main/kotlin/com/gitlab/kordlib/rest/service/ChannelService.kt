@@ -70,6 +70,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.Emoji] = emoji
     }
 
+    suspend fun deleteAllReactionsForEmoji(channelId: String, messageId: String, emoji: String) = call(Route.DeleteAllReactionsForEmoji) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.MessageId] = messageId
+        keys[Route.Emoji] = emoji
+    }
+
     suspend fun deletePinnedMessage(channelId: String, messageId: String) = call(Route.PinDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId

@@ -20,12 +20,14 @@ import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger { }
 
-@Suppress("EXPERIMENTAL_API_USAGE")
-private val parser = Json(JsonConfiguration(encodeDefaults = false, strictMode = false))
 
-sealed class Request<T> {
-    abstract val route: Route<T>
-    internal abstract val routeParams: Map<Route.Key, String>
+sealed class Request<B : Any, R> {
+    abstract val route: Route<R>
+    abstract val routeParams: Map<Route.Key, String>
+    abstract val headers: StringValues
+    abstract val parameters: StringValues
+    abstract val body: RequestBody<B>?
+    abstract val files: List<Pair<String, InputStream>>?
     val identifier: RequestIdentifier by lazy(LazyThreadSafetyMode.NONE) {
         when (route) {
             //https://discordapp.com/developers/docs/topics/rate-limits#rate-limits
@@ -34,15 +36,7 @@ sealed class Request<T> {
         }
     }
 
-    abstract fun HttpRequestBuilder.apply()
-
-    open suspend fun parse(response: HttpResponse): T {
-        val json = response.readText()
-        logger.trace { "${response.call.request.method.value} ${response.call.request.url} body: $json" }
-        return parser.parse(route.strategy, json)
-    }
-
-    internal fun generatePath(): String {
+val path: String get() {
         var path = route.path
         routeParams.forEach { (k, v) -> path = path.replaceFirst(k.identifier, v.encodeURLQueryComponent()) }
         return path
@@ -74,62 +68,39 @@ internal data class MajorIdentifier(val path: String, val param: String? = null)
 
 data class RequestBody<T>(val strategy: SerializationStrategy<T>, val body: T) where T : Any
 
-internal class JsonRequest<T>(
-        override val route: Route<T>,
+ class JsonRequest<B : Any, R>(
+        override val route: Route<R>,
         override val routeParams: Map<Route.Key, String>,
-        private val parameters: StringValues,
-        private val headers: StringValues,
-        private val body: RequestBody<*>?
-) : Request<T>() {
-
-    override fun HttpRequestBuilder.apply() {
-        method = route.method
-
-        url {
-            encodedPath += generatePath()
-            parameters.appendAll(this@JsonRequest.parameters)
-            headers.appendAll(this@JsonRequest.headers)
-        }
-
-        this@JsonRequest.body?.let {
-            val json = parser.stringify(it.strategy as SerializationStrategy<Any>, it.body)
-            body = TextContent(json, ContentType.Application.Json)
-        }
-    }
+        override val parameters: StringValues,
+        override val headers: StringValues,
+        override val body: RequestBody<B>?
+) : Request<B, R>() {
+    override val files: List<Pair<String, InputStream>>? = null
 }
 
-internal class MultipartRequest<T>(
-        override val route: Route<T>,
+ class MultipartRequest<B : Any, R>(
+        override val route: Route<R>,
         override val routeParams: Map<Route.Key, String>,
-        private val parameters: StringValues,
-        private val headers: StringValues,
-        private val body: RequestBody<*>?,
-        private val files: List<Pair<String, InputStream>> = emptyList()
-) : Request<T>() {
-    override fun HttpRequestBuilder.apply() {
-        method = route.method
+        override val parameters: StringValues,
+        override val headers: StringValues,
+        override val body: RequestBody<B>?,
+        override val files: List<Pair<String, InputStream>> = emptyList()
+) : Request<B, R>() {
 
-        url {
-            encodedPath += generatePath()
-            parameters.appendAll(this@MultipartRequest.parameters)
-            headers.appendAll(this@MultipartRequest.headers)
-        }
+         val data = formData {
 
-        val data = formData {
 
-            this@MultipartRequest.body?.let {
-                append("payload_json", parser.stringify(it.strategy as SerializationStrategy<Any>, it.body))
-            }
+             if (files.size == 1) append("file", filename = files[0].first) {
+                 files[0].second.copyTo(outputStream())
+             } else files.forEachIndexed { index, pair ->
+                 val name = pair.first
+                 val inputStream = pair.second
+                 append("file$index", name) { inputStream.copyTo(outputStream()) }
+             }
+         }
 
-            if (files.size == 1) append("file", filename = files[0].first) {
-                files[0].second.copyTo(outputStream())
-            } else files.forEachIndexed { index, pair ->
-                val name = pair.first
-                val inputStream = pair.second
-                append("file$index", name) { inputStream.copyTo(outputStream()) }
-            }
-        }
+     }
 
-        body = MultiPartFormDataContent(data)
-    }
-}
+
+
+

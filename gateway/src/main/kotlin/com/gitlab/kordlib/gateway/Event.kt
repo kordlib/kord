@@ -96,12 +96,16 @@ sealed class Event {
             "GUILD_ROLE_DELETE" -> GuildRoleDelete(decoder.decodeSerializableElement(descriptor, index, DiscordDeletedGuildRole.serializer()), sequence)
             "GUILD_MEMBERS_CHUNK" -> GuildMembersChunk(decoder.decodeSerializableElement(descriptor, index, GuildMembersChunkData.serializer()), sequence)
 
+            "INVITE_CREATE" -> InviteCreate(decoder.decodeSerializableElement(descriptor, index, DiscordCreatedInvite.serializer()), sequence)
+            "INVITE_DELETE" -> InviteDelete(decoder.decodeSerializableElement(descriptor, index, DiscordDeletedInvite.serializer()), sequence)
+
             "MESSAGE_CREATE" -> MessageCreate(decoder.decodeSerializableElement(descriptor, index, DiscordMessage.serializer()), sequence)
             "MESSAGE_UPDATE" -> MessageUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordPartialMessage.serializer()), sequence)
             "MESSAGE_DELETE" -> MessageDelete(decoder.decodeSerializableElement(descriptor, index, DeletedMessage.serializer()), sequence)
             "MESSAGE_DELETE_BULK" -> MessageDeleteBulk(decoder.decodeSerializableElement(descriptor, index, BulkDeleteData.serializer()), sequence)
             "MESSAGE_REACTION_ADD" -> MessageReactionAdd(decoder.decodeSerializableElement(descriptor, index, MessageReaction.serializer()), sequence)
             "MESSAGE_REACTION_REMOVE" -> MessageReactionRemove(decoder.decodeSerializableElement(descriptor, index, MessageReaction.serializer()), sequence)
+            "MESSAGE_REACTION_REMOVE_EMOJI" -> MessageReactionRemoveEmoji(decoder.decodeSerializableElement(descriptor, index, DiscordRemovedEmoji.serializer()), sequence)
 
             "MESSAGE_REACTION_REMOVE_ALL" -> MessageReactionRemoveAll(decoder.decodeSerializableElement(descriptor, index, AllRemovedMessageReactions.serializer()), sequence)
             "PRESENCE_UPDATE" -> PresenceUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordPresenceUpdateData.serializer()), sequence)
@@ -215,6 +219,87 @@ data class GuildRoleUpdate(val role: DiscordGuildRole, override val sequence: In
 data class GuildRoleDelete(val role: DiscordDeletedGuildRole, override val sequence: Int?) : DispatchEvent()
 data class GuildMembersChunk(val data: GuildMembersChunkData, override val sequence: Int?) : DispatchEvent()
 
+/**
+ * Sent when a new invite to a channel is created.
+ */
+data class InviteCreate(val invite: DiscordCreatedInvite, override val sequence: Int?) : DispatchEvent()
+
+/**
+ * Sent when an invite is deleted.
+ */
+data class InviteDelete(val invite: DiscordDeletedInvite, override val sequence: Int?) : DispatchEvent()
+
+@Serializable
+data class DiscordDeletedInvite(
+        /**
+         * The channel of the invite.
+         */
+        @SerialName("channel_id")
+        val channelId: String,
+        /**
+         * The guild of the invite.
+         */
+        @SerialName("guild_id")
+        val guildId: String,
+        /**
+         * The unique invite code.
+         */
+        val code: String
+)
+
+@Serializable
+data class DiscordCreatedInvite(
+        /**
+         * The channel the invite is for.
+         */
+        @SerialName("channel_id")
+        val channelId: String,
+        /**
+         * The unique invite code.
+         */
+        val code: String,
+        /**
+         * The time at which the invite was created.
+         */
+        @SerialName("created_at")
+        val createdAt: String,
+        /**
+         * The guild of the invite.
+         */
+        @SerialName("guild_id")
+        val guildId: String,
+        /**
+         * The user that created the invite.
+         */
+        val inviter: DiscordInviteUser,
+        /**
+         * How long the invite is valid for (in seconds).
+         */
+        @SerialName("max_age")
+        val maxAge: Int,
+        /**
+         * The maximum number of times the invite can be used.
+         */
+        @SerialName("ma_uses")
+        val maxUses: Int,
+        /**
+         * Whether or not the invite is temporary (invited users will be kicked on disconnect unless they're assigned a role).
+         */
+        val temporary: Boolean,
+        /**
+         * How many times the invite has been used (always will be 0).
+         */
+        val uses: Int
+)
+
+@Serializable
+data class DiscordInviteUser(
+        val avatar: String,
+        val discriminator: String,
+        val id: String,
+        val username: String
+)
+
 data class MessageCreate(val message: DiscordMessage, override val sequence: Int?) : DispatchEvent()
 data class MessageUpdate(val message: DiscordPartialMessage, override val sequence: Int?) : DispatchEvent()
 data class MessageDelete(val message: DeletedMessage, override val sequence: Int?) : DispatchEvent()
@@ -222,6 +307,45 @@ data class MessageDeleteBulk(val messageBulk: BulkDeleteData, override val seque
 data class MessageReactionAdd(val reaction: MessageReaction, override val sequence: Int?) : DispatchEvent()
 data class MessageReactionRemove(val reaction: MessageReaction, override val sequence: Int?) : DispatchEvent()
 data class MessageReactionRemoveAll(val reactions: AllRemovedMessageReactions, override val sequence: Int?) : DispatchEvent()
+data class MessageReactionRemoveEmoji(val reaction: DiscordRemovedEmoji, override val sequence: Int?) : DispatchEvent()
+
+@Serializable
+data class DiscordRemovedEmoji(
+        /**
+         * The id of the channel.
+         */
+        @SerialName("channel_id")
+        val channelId: String,
+
+        /**
+         * The id of the guild.
+         */
+        @SerialName("guild_id")
+        val guildId: String,
+
+        /**
+         * The id of the message.
+         */
+        @SerialName("message_id")
+        val messageId: String,
+
+        /**
+         * The emoji that was removed.
+         */
+        val emoji: DiscordRemovedReactionEmoji
+)
+
+@Serializable
+data class DiscordRemovedReactionEmoji(
+        /**
+         * The id of the emoji.
+         */
+        val id: String?,
+        /**
+         * The name of the emoji.
+         */
+        val name: String
+)
 
 data class PresenceUpdate(val presence: DiscordPresenceUpdateData, override val sequence: Int?) : DispatchEvent()
 data class UserUpdate(val user: DiscordUser, override val sequence: Int?) : DispatchEvent()

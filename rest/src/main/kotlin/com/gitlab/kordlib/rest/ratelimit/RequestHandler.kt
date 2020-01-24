@@ -5,6 +5,6 @@ import io.ktor.client.statement.HttpResponse
 
 interface RequestHandler {
 
-    suspend fun <T> handle(request: Request<T>): HttpResponse
+    suspend fun <B : Any,R>  handle(request: Request<B,R>): R
 
 }

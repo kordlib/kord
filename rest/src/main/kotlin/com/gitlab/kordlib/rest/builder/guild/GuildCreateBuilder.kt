@@ -42,7 +42,7 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
             verificationLevel,
             defaultMessageNotificationLevel,
             explicitContentFilter,
-            roles.toMutableList().apply { add(0, everyoneRole.toRequest()) },
+            roles.toMutableList(),
             channels
     )
 }

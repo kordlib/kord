@@ -88,6 +88,13 @@ interface MessageBehavior : Entity {
     }
 
     /**
+     * Requests to delete all [emoji] reactions from this message.
+     */
+    suspend fun deleteReaction(emoji: ReactionEmoji) {
+        kord.rest.channel.deleteAllReactionsForEmoji(channelId = channelId.value, messageId = id.value, emoji = emoji.formatted)
+    }
+
+    /**
      * Requests to pin this message.
      */
     suspend fun pin() {

@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.cache.data.RemovedReactionData
 
 sealed class ReactionEmoji {
     abstract val formatted: String
@@ -22,5 +23,10 @@ sealed class ReactionEmoji {
 
     companion object {
         fun from(guildEmoji: GuildEmoji) = Custom(guildEmoji.id, guildEmoji.name ?: error("emojis without name cannot be used to react"), guildEmoji.isAnimated)
+
+        fun from(guildEmoji: RemovedReactionData) = when(guildEmoji.id) {
+            null -> Unicode(guildEmoji.name)
+            else -> Custom(Snowflake(guildEmoji.id), guildEmoji.name, false)
+        }
     }
 }
