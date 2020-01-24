@@ -3,9 +3,11 @@
 ## Additions
 
 * `Kord` and its`Cache` now implement a common interface `EntitySupplier` to retrieve entities that can be cached. 
+* `mentionedRoleIds`, `mentionedRoleBehaviors`, `mentionedUserIds`, `mentionedUserBehaviors` were added to `Message`.
 
 ## Changes
 
+* `Message#mentionedRoles` and `Message#mentionedUsers` now return a `Flow` of their respective entities instead of a `Set<Snwoflake>`.
 * `StoreChannel#edit`, `TextChannel#edit` and `NewsChannel#edit` now supply their builder as a receiver.
 * core entity builders were moved from `com.gitlab.kordlib.core.builder` to `com.gitlab.kordlib.rest.builder` and are now
 part of the rest module.
