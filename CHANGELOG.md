@@ -17,6 +17,17 @@ part of the rest module.
 * various Snowflake argument names have been changed in`Kord` to better reflect the entity they represent.
 * A reified `getChannel` has been added to `EntitySupplier` that will try to cast the channel to the given type.
 
+# 0.3.3
+
+## Fixes
+
+* Fixed `guild-id` being wrongly deserialized as `guildId` in `DiscordAddedGuildMember`.
+
+* Fixed an issue where disconnecting from the `DefaultGateway` 
+without closing the connection (i.e. dropping your internet connection) would indefinitely suspend the `DefaultGateway`,
+making it unusable.
+>>>>>>> 2eb939d... Fix DiscordAddedGuildMember and gateway deadlock
+
 # 0.3.2
 
 ## Additions

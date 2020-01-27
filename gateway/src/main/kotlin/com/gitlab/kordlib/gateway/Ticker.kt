@@ -1,12 +1,16 @@
 package com.gitlab.kordlib.gateway
 
+import io.ktor.util.error
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
+
+private val logger = KotlinLogging.logger {  }
 
 /**
  * A reusable fixed rate ticker.
@@ -29,7 +33,11 @@ class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : Cor
             ticker = ticker(intervalMillis)
             launch {
                 ticker?.consumeEach {
-                    block()
+                    try {
+                        block()
+                    } catch (exception: Exception) {
+                        logger.error(exception)
+                    }
                 }
             }
         }

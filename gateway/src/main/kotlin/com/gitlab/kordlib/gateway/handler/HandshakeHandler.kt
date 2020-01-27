@@ -1,13 +1,11 @@
 package com.gitlab.kordlib.gateway.handler
 
-import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.common.ratelimit.RateLimiter
 import com.gitlab.kordlib.common.ratelimit.consume
 import com.gitlab.kordlib.gateway.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
 internal class HandshakeHandler(
@@ -15,7 +13,7 @@ internal class HandshakeHandler(
         private val send: suspend (Command) -> Unit,
         private val sequence: Sequence,
         private val identifyRateLimiter: RateLimiter
-) : Handler(flow) {
+) : Handler(flow, "HandshakeHandler") {
 
     lateinit var configuration: GatewayConfiguration
 

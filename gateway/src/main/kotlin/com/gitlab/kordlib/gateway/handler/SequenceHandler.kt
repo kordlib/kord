@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 internal class SequenceHandler(
         flow: Flow<Event>,
         private val sequence: Sequence
-) : Handler(flow) {
+) : Handler(flow, "SequenceHandler") {
 
     init {
         on<DispatchEvent> { event ->
