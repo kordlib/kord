@@ -16,6 +16,12 @@ part of the rest module.
 * `Kord#getUsers()` was deprecated for `cache#users`.
 * various Snowflake argument names have been changed in`Kord` to better reflect the entity they represent.
 * A reified `getChannel` has been added to `EntitySupplier` that will try to cast the channel to the given type.
+* `CategoryModifyBuilder#permissions` is now a `val`.
+* `ChannelPermissionModifyBuilder` is now a proper `AuditRequestBuilder`.
+
+## Fixes
+
+* fixed typo `CategoryModifyBuilder#positon` -> `CategoryModifyBuilder#position`
 
 # 0.3.3
 
