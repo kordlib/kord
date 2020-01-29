@@ -5,7 +5,7 @@ import com.gitlab.kordlib.rest.builder.user.GroupDMCreateBuilder
 import com.gitlab.kordlib.rest.json.request.CurrentUserModifyRequest
 import com.gitlab.kordlib.rest.json.request.DMCreateRequest
 import com.gitlab.kordlib.rest.json.request.GroupDMCreateRequest
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
 

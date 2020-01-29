@@ -9,16 +9,14 @@ import com.gitlab.kordlib.gateway.Command
 import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.GatewayConfiguration
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.request.JsonRequest
 import com.gitlab.kordlib.rest.request.MultipartRequest
 import com.gitlab.kordlib.rest.request.Request
 import com.gitlab.kordlib.rest.route.Route
 import io.ktor.client.HttpClient
-import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.request
-import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.HttpStatement
 import io.ktor.client.statement.readText
 import io.ktor.content.TextContent
@@ -33,7 +31,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.Exception
 import java.lang.IllegalStateException
 import kotlin.test.BeforeTest
 import kotlin.time.Duration

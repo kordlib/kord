@@ -2,16 +2,19 @@
 
 ## Additions
 
-* `Kord` and its`Cache` now implement a common interface `EntitySupplier` to retrieve entities that can be cached. 
+* `Kord` and its`Cache` now implement a common interface `EntitySupplier` to retrieve entities that can be cached.  #54
 * `mentionedRoleIds`, `mentionedRoleBehaviors`, `mentionedUserIds`, `mentionedUserBehaviors` were added to `Message`.
+* Introduced two implementations for the `RequestRateLimiter`: `ExclusionRequestRateLimiter` and `ParallelRequestRateLimiter`, 
+which will be replacing the `ExclusionRequestHandler` and `ParallelRequestHandler` respectively. #59
 
 ## Changes
 
+* Removed the `ExclusionRequestHandler` and `ParallelRequestHandler` and introduced the `KtorRequestHandler`, which accepts any `RequestRateLimiter`. #59
 * `Message#mentionedRoles` and `Message#mentionedUsers` now return a `Flow` of their respective entities instead of a `Set<Snwoflake>`.
 * `StoreChannel#edit`, `TextChannel#edit` and `NewsChannel#edit` now supply their builder as a receiver.
 * core entity builders were moved from `com.gitlab.kordlib.core.builder` to `com.gitlab.kordlib.rest.builder` and are now
 part of the rest module.
-* `Snowflake` was moved to the common module from core.
+* `Snowflake` was moved to the common module from core. #53
 * `Kord#getRegions()` was deprecated for `Kord#regions`.
 * `Kord#getUsers()` was deprecated for `cache#users`.
 * various Snowflake argument names have been changed in`Kord` to better reflect the entity they represent.
