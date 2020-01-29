@@ -3,7 +3,7 @@ package com.gitlab.kordlib.rest.service
 import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
 import com.gitlab.kordlib.rest.json.request.EmojiCreateRequest
 import com.gitlab.kordlib.rest.json.request.EmojiModifyRequest
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 
 class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler) {

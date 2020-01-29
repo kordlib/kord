@@ -4,12 +4,9 @@ import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
 import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
 import com.gitlab.kordlib.rest.json.request.*
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
-import java.awt.Color
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 

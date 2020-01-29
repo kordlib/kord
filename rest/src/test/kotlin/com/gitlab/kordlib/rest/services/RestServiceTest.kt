@@ -2,8 +2,9 @@ package com.gitlab.kordlib.rest.services
 
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.json.request.*
-import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestRateLimiter
+import com.gitlab.kordlib.rest.request.KtorRequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -54,8 +55,8 @@ class RestServiceTest {
                 header("Authorization", "Bot $token")
             }
         }
-        requestHandler = ExclusionRequestHandler(client)
-        rest = RestClient(ExclusionRequestHandler(client))
+        requestHandler = KtorRequestHandler(client, ExclusionRequestRateLimiter())
+        rest = RestClient(requestHandler)
 
         userId = rest.user.getCurrentUser().id
     }
@@ -157,12 +158,10 @@ class RestServiceTest {
 
             deleteMessage(channelId, message.id)
 
-            createMessage(channelId) {
-                content = "TEST"
-            }
-
-            createMessage(channelId) {
-                content = "TEST"
+            repeat(2) {
+                createMessage(channelId) {
+                    content = "TEST"
+                }
             }
 
             val messages = getMessages(channelId)

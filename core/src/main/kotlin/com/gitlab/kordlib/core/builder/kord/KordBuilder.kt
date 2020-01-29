@@ -3,6 +3,7 @@
 package com.gitlab.kordlib.core.builder.kord
 
 import com.gitlab.kordlib.cache.api.DataCache
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.core.ClientResources
 import com.gitlab.kordlib.core.Kord
@@ -10,7 +11,6 @@ import com.gitlab.kordlib.core.cache.CachingGateway
 import com.gitlab.kordlib.core.cache.KordCacheBuilder
 import com.gitlab.kordlib.core.cache.createView
 import com.gitlab.kordlib.core.cache.registerKordData
-import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.gateway.DefaultGateway
@@ -19,8 +19,9 @@ import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.retry.LinearRetry
 import com.gitlab.kordlib.gateway.retry.Retry
 import com.gitlab.kordlib.rest.json.response.BotGatewayResponse
-import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestRateLimiter
+import com.gitlab.kordlib.rest.request.KtorRequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.HttpClient
@@ -57,7 +58,8 @@ class KordBuilder(val token: String) {
         }
     }
 
-    private var handlerBuilder: (resources: ClientResources) -> RequestHandler = { ExclusionRequestHandler(it.httpClient) }
+    private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
+            { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter()) }
     private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
 
     /**
@@ -167,7 +169,8 @@ class KordBuilder(val token: String) {
         val shards = shardRange(recommendedShards).toList()
 
         if (client.engine.config.threadsCount < shards.size + 1) {
-            logger.warn { """
+            logger.warn {
+                """
                 kord's http client is currently using ${client.engine.config.threadsCount} threads, 
                 which is less than the advised threadcount of ${shards.size + 1} (number of shards + 1)""".trimIndent()
             }

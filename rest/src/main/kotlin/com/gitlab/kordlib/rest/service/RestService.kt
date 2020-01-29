@@ -1,9 +1,8 @@
 package com.gitlab.kordlib.rest.service
 
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.request.RequestBuilder
 import com.gitlab.kordlib.rest.route.Route
-import io.ktor.client.statement.HttpResponse
 
 abstract class RestService(@PublishedApi internal val requestHandler: RequestHandler) {
 

@@ -4,11 +4,10 @@ import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.rest.builder.webhook.ExecuteWebhookBuilder
 import com.gitlab.kordlib.rest.builder.webhook.WebhookCreateBuilder
 import com.gitlab.kordlib.rest.builder.webhook.WebhookModifyBuilder
-import com.gitlab.kordlib.rest.json.request.MultiPartWebhookExecuteRequest
 import com.gitlab.kordlib.rest.json.request.WebhookCreateRequest
 import com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest
 import com.gitlab.kordlib.rest.json.request.WebhookModifyRequest
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 import kotlinx.serialization.json.JsonObject
 

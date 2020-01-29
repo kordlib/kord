@@ -27,7 +27,7 @@ internal fun Long.toInstant() = Instant.ofEpochMilli(this)
 internal inline fun <T> catchNotFound(block: () -> T): T? = try {
     block()
 } catch (exception: RequestException) {
-    if (exception.response.status.value == 404) null
+    if (exception.code == 404) null
     else throw exception
 }
 
