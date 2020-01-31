@@ -27,6 +27,7 @@ data class DiscordAddedGuildMember(
         val premiumSince: String? = null,
         val deaf: Boolean,
         val mute: Boolean,
+        @SerialName("guild_id")
         val guildId: String
 )
 

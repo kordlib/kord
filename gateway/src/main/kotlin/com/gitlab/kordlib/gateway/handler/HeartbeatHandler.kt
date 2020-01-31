@@ -17,7 +17,7 @@ internal class HeartbeatHandler(
         private val ping: (Duration) -> Unit,
         private val sequence: Sequence,
         private val ticker: Ticker = Ticker()
-) : Handler(flow) {
+) : Handler(flow, "HeartbeatHandler") {
 
     private val possibleZombie = atomic(false)
     private var timestamp: ClockMark = MonoClock.markNow()

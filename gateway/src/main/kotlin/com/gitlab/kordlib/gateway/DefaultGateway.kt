@@ -22,6 +22,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import kotlin.time.Duration
@@ -100,7 +101,15 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 defaultGatewayLogger.error(exception)
             }
 
-            handleClose()
+            defaultGatewayLogger.trace { "gateway connection closing" }
+
+            try {
+                handleClose()
+            } catch (exception: Exception) {
+                defaultGatewayLogger.error(exception)
+            }
+
+            defaultGatewayLogger.trace { "handled gateway connection closed" }
 
             if (state.value.retry) data.reconnectRetry.retry()
         }
@@ -127,7 +136,10 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private suspend fun handleClose() {
-        val reason = socket.closeReason.await() ?: return
+        val reason = withTimeoutOrNull(1500) {
+            socket.closeReason.await()
+        } ?: return
+
         defaultGatewayLogger.trace { "Gateway closed: ${reason.code} ${reason.message}" }
         val discordReason = GatewayCloseCode.values().firstOrNull { it.code == reason.code } ?: return
 
@@ -173,7 +185,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         if (state.value is State.Detached) return
         state.update { State.Detached }
         channel.cancel()
-        if(::socket.isInitialized) {
+        if (::socket.isInitialized) {
             socket.close()
         }
     }

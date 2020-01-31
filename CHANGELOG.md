@@ -1,3 +1,13 @@
+# 0.3.3
+
+## Fixes
+
+* Fixed `guild-id` being wrongly deserialized as `guildId` in `DiscordAddedGuildMember`.
+
+* Fixed an issue where disconnecting from the `DefaultGateway` 
+without closing the connection (i.e. dropping your internet connection) would indefinitely suspend the `DefaultGateway`,
+making it unusable.
+
 # 0.3.2
 
 ## Additions
