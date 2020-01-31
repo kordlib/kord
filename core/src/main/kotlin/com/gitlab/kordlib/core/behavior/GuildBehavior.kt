@@ -41,6 +41,19 @@ interface GuildBehavior : Entity {
         }
 
     /**
+     * Requests to get all webhooks for this guild.
+     */
+
+    val webhooks: Flow<Webhook>
+        get() = flow {
+            for(response in kord.rest.webhook.getGuildWebhooks(id.value)) {
+                val data = WebhookData.from(response)
+                emit(Webhook(data,kord))
+            }
+
+        }
+
+    /**
      * Requests to get all channels in this guild in an unspecified order, call [sorted] to get a consistent order.
      */
     val channels: Flow<GuildChannel>
