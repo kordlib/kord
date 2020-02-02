@@ -105,7 +105,7 @@ internal class GuildEventHandler(
         cache.put(user)
         val user = User(data, kord)
 
-        coreEventChannel.send(BanEvent(user, Snowflake(guildId)))
+        coreEventChannel.send(BanAddEvent(user, Snowflake(guildId)))
     }
 
     private suspend fun handle(event: GuildBanRemove) = with(event.ban) {
@@ -113,7 +113,7 @@ internal class GuildEventHandler(
         cache.put(user)
         val user = User(data, kord)
 
-        coreEventChannel.send(UnbanEvent(user, Snowflake(guildId)))
+        coreEventChannel.send(BanRemoveEvent(user, Snowflake(guildId)))
     }
 
     private suspend fun handle(event: GuildEmojisUpdate) = with(event.emoji) {
