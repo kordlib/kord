@@ -14,14 +14,14 @@ import com.gitlab.kordlib.rest.json.request.GuildRoleCreateRequest
 @KordDsl
 class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
     lateinit var name: String
-    lateinit var region: String
+    var region: String? = null
     var icon: String? = null
-    lateinit var verificationLevel: VerificationLevel
-    lateinit var defaultMessageNotificationLevel: DefaultMessageNotificationLevel
-    lateinit var explicitContentFilter: ExplicitContentFilter
-    var everyoneRole = RoleCreateBuilder()
+    var verificationLevel: VerificationLevel? = null
+    var defaultMessageNotificationLevel: DefaultMessageNotificationLevel? = null
+    var explicitContentFilter: ExplicitContentFilter? = null
+    var everyoneRole: RoleCreateBuilder? = null
     val roles: MutableList<GuildRoleCreateRequest> = mutableListOf()
-    private val channels: MutableList<GuildCreateChannelRequest> = mutableListOf()
+    val channels: MutableList<GuildCreateChannelRequest> = mutableListOf()
 
     fun addChannel(name: String, type: ChannelType) {
         channels.add(GuildCreateChannelRequest(name, type))
@@ -42,7 +42,7 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
             verificationLevel,
             defaultMessageNotificationLevel,
             explicitContentFilter,
-            roles.toMutableList(),
-            channels
+            if (roles.isEmpty()) null else everyoneRole?.let { roles + it.toRequest() } ?: roles,
+            if (channels.isEmpty()) null else channels
     )
 }
