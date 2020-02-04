@@ -9,6 +9,7 @@ which will be replacing the `ExclusionRequestHandler` and `ParallelRequestHandle
 
 ## Changes
 
+* All fields but `name` are now optional in `GuildCreateBuilder` and `GuildCreateRequest`. #62
 * Removed the `ExclusionRequestHandler` and `ParallelRequestHandler` and introduced the `KtorRequestHandler`, which accepts any `RequestRateLimiter`. #59
 * `Message#mentionedRoles` and `Message#mentionedUsers` now return a `Flow` of their respective entities instead of a `Set<Snwoflake>`.
 * `StoreChannel#edit`, `TextChannel#edit` and `NewsChannel#edit` now supply their builder as a receiver.
