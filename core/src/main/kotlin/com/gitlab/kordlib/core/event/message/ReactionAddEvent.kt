@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.event.message
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MemberBehavior

@@ -2,17 +2,17 @@ package com.gitlab.kordlib.rest.services
 
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.json.request.*
-import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestRateLimiter
+import com.gitlab.kordlib.rest.request.KtorRequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.defaultRequest
 import io.ktor.client.request.header
-import io.ktor.http.Url
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
-import java.net.URL
+import java.awt.Color
 import java.util.*
 
 fun image(path: String): String {
@@ -55,8 +55,8 @@ class RestServiceTest {
                 header("Authorization", "Bot $token")
             }
         }
-        requestHandler = ExclusionRequestHandler(client)
-        rest = RestClient(ExclusionRequestHandler(client))
+        requestHandler = KtorRequestHandler(client, ExclusionRequestRateLimiter())
+        rest = RestClient(requestHandler)
 
         userId = rest.user.getCurrentUser().id
     }
@@ -70,26 +70,22 @@ class RestServiceTest {
         guilds.filter { it.owner == true }.forEach {
             rest.guild.deleteGuild(it.id)
         }
-        val request = GuildCreateRequest(
-                "TEST GUILD",
-                region.id,
-                null,
-                VerificationLevel.None,
-                DefaultMessageNotificationLevel.AllMessages,
-                ExplicitContentFilter.AllMembers,
-                emptyList(),
-                emptyList()
-        )
 
-        val guild = rest.guild.createGuild(request)
-
-
+        val guild = rest.guild.createGuild {
+            name = "TEST GUILD"
+            this.region = region.id
+            verificationLevel = VerificationLevel.None
+            defaultMessageNotificationLevel = DefaultMessageNotificationLevel.AllMessages
+            explicitContentFilter = ExplicitContentFilter.AllMembers
+        }
 
         guildId = guild.id
 
         rest.guild.getGuild(guildId)
 
-        rest.guild.modifyGuild(guildId, GuildModifyRequest("Edited Guild Test"))
+        rest.guild.modifyGuild(guildId) {
+            name = "Edited Guild Test"
+        }
 
         rest.guild.getGuildVoiceRegions(guildId).first()
 
@@ -102,7 +98,7 @@ class RestServiceTest {
     fun `create invite`() = runBlocking {
         val generalId = rest.guild.getGuildChannels(guildId).first { it.type == ChannelType.GuildText }.id
 
-        rest.channel.createInvite(generalId, InviteCreateRequest())
+        rest.channel.createInvite(generalId)
 
         Unit
     }
@@ -122,8 +118,12 @@ class RestServiceTest {
     @Order(4)
     fun `reaction in channel`() = runBlocking {
         with(rest.channel) {
-            val message = createMessage(channelId, MessageCreateRequest("TEST"))
-            editMessage(channelId, message.id, MessageEditPatchRequest("EDIT TEST"))
+            val message = createMessage(channelId) {
+                content = "TEST"
+            }
+            editMessage(channelId, message.id) {
+                content = "EDIT TEST"
+            }
 
             createReaction(channelId, message.id, "\ud83d\udc4e")
             deleteOwnReaction(channelId, message.id, "\ud83d\udc4e")
@@ -135,6 +135,9 @@ class RestServiceTest {
             getReactions(channelId, message.id, "\ud83d\udc4e")
             deleteAllReactions(channelId, message.id)
 
+            createReaction(channelId, message.id, "\ud83d\udc4e")
+            deleteAllReactionsForEmoji(channelId, message.id, "\ud83d\udc4e")
+
             deleteMessage(channelId, message.id)
         }
     }
@@ -145,19 +148,20 @@ class RestServiceTest {
         with(rest.channel) {
             triggerTypingIndicator(channelId)
 
-            val message = createMessage(channelId, MultipartMessageCreateRequest(MessageCreateRequest("TEST"), files = listOf(
-                    "test.txt" to ClassLoader.getSystemResourceAsStream("images/kord.png")!!
-            )))
+            val message = createMessage(channelId) {
+                content = "TEST"
+
+                addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+            }
 
             getMessage(channelId, message.id)
 
             deleteMessage(channelId, message.id)
 
-            createMessage(channelId, MessageCreateRequest("TEST"))
-            createMessage(channelId, MultipartMessageCreateRequest(MessageCreateRequest("TEST")))
-
-            repeat(10) { //trying to get a ratelimit
-                createMessage(channelId, MessageCreateRequest("TEST $it"))
+            repeat(2) {
+                createMessage(channelId) {
+                    content = "TEST"
+                }
             }
 
             val messages = getMessages(channelId)
@@ -171,7 +175,9 @@ class RestServiceTest {
     @Order(6)
     fun `pinned messages in channel`() = runBlocking {
         with(rest.channel) {
-            val pinnedMessage = createMessage(channelId, MessageCreateRequest("TEST"))
+            val pinnedMessage = createMessage(channelId) {
+                content = "TEST"
+            }
 
             addPinnedMessage(channelId, pinnedMessage.id)
 
@@ -198,7 +204,7 @@ class RestServiceTest {
     @Test
     @Order(8)
     fun `permissions in channels`() = runBlocking {
-        val role = rest.guild.createGuildRole(guildId, GuildRoleCreateRequest())
+        val role = rest.guild.createGuildRole(guildId)
         with(rest.channel) {
             val allow = Permissions { +Permission.CreateInstantInvite }
             val deny = Permissions { +Permission.SendTTSMessages }
@@ -233,7 +239,11 @@ class RestServiceTest {
             val members = getGuildMembers(guildId)
             //TODO add member to guild
 
-            modifyGuildMember(guildId, userId, GuildMemberModifyRequest("My nickname", mute = true, deaf = true))
+            modifyGuildMember(guildId, userId) {
+                nickname = "My nickname"
+                muted = true
+                deafened = true
+            }
 
             getGuildMember(guildId, userId)
 
@@ -249,24 +259,25 @@ class RestServiceTest {
     @Order(12)
     fun `roles in guild`() = runBlocking {
         with(rest.guild) {
-            val role = createGuildRole(
-                    guildId,
-                    GuildRoleCreateRequest(
-                            "Sudoers",
-                            Permissions { +Permission.Administrator },
-                            5000,
-                            true,
-                            true
-                    )
-            )
+            val role = createGuildRole(guildId) {
+                name = "Sudoers"
+                permissions = Permissions { +Permission.Administrator }
+                color = Color.RED
+                hoist = true
+                mentionable = true
+            }
 
-            modifyGuildRole(guildId, role.id, GuildRoleModifyRequest("Edited role"))
+            modifyGuildRole(guildId, role.id) {
+                name = "Edited role"
+            }
 
             addRoleToGuildMember(guildId, userId, role.id)
 
             deleteRoleFromGuildMember(guildId, userId, role.id)
 
-            modifyGuildRolePosition(guildId, com.gitlab.kordlib.rest.json.request.GuildRolePositionModifyRequest(listOf(role.id to 0)))
+            modifyGuildRolePosition(guildId) {
+                move(Snowflake(role.id) to 0)
+            }
 
             getGuildRoles(guildId)
 
@@ -348,7 +359,9 @@ class RestServiceTest {
 
             getCurrentUserGuilds()
 
-            modifyCurrentUser(CurrentUserModifyRequest("Happy Kord"))
+            modifyCurrentUser {
+                username = "Happy Kord"
+            }
 
             getUserConnections()
 
@@ -369,7 +382,9 @@ class RestServiceTest {
 
             val emoji = createEmoji(guildId, EmojiCreateRequest("kord", image("images/kord.png"), listOf(guildId)))
 
-            modifyEmoji(guildId, emoji.id!!, EmojiModifyRequest("edited"))
+            modifyEmoji(guildId, emoji.id!!) {
+                name = "edited"
+            }
 
             getEmojis(guildId)
 

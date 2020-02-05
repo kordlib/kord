@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 internal class ReconnectHandler(
         flow: Flow<Event>,
         private val reconnect: suspend () -> Unit
-) : Handler(flow) {
+) : Handler(flow, "ReconnectHandler") {
 
     override fun start() {
         on<Reconnect> {

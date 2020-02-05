@@ -1,22 +1,20 @@
 package com.gitlab.kordlib.rest.service
 
+import com.gitlab.kordlib.rest.builder.channel.*
+import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
+import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
 import com.gitlab.kordlib.rest.json.request.*
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
 
-
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend fun createMessage(channelId: String, message: MessageCreateRequest) = call(Route.MessagePost) {
+    suspend inline fun createMessage(channelId: String, builder: MessageCreateBuilder.() -> Unit) = call(Route.MessagePost) {
         keys[Route.ChannelId] = channelId
-        body(MessageCreateRequest.serializer(), message)
-    }
-
-    suspend fun createMessage(channelId: String, message: MultipartMessageCreateRequest) = call(Route.MessagePost) {
-        keys[Route.ChannelId] = channelId
-        body(MessageCreateRequest.serializer(), message.request)
-        message.files.forEach { file(it) }
+        val multipartRequest = MessageCreateBuilder().apply(builder).toRequest()
+        body(MessageCreateRequest.serializer(), multipartRequest.request)
+        multipartRequest.files.forEach { file(it) }
     }
 
     suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
@@ -69,6 +67,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.Emoji] = emoji
     }
 
+    suspend fun deleteAllReactionsForEmoji(channelId: String, messageId: String, emoji: String) = call(Route.DeleteAllReactionsForEmoji) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.MessageId] = messageId
+        keys[Route.Emoji] = emoji
+    }
+
     suspend fun deletePinnedMessage(channelId: String, messageId: String) = call(Route.PinDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
@@ -93,14 +97,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend fun deleteChannel(channelId: String, reason: String? = null) = call(Route.ChannelDelete) {
         keys[Route.ChannelId] = channelId
         reason?.let { header("X-Audit-Log-Reason", reason) }
-
     }
 
     suspend fun deleteChannelPermission(channelId: String, overwriteId: String, reason: String? = null) = call(Route.ChannelPermissionDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
         reason?.let { header("X-Audit-Log-Reason", reason) }
-
     }
 
     suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: ChannelPermissionEditRequest, reason: String? = null) = call(Route.ChannelPermissionPut) {
@@ -108,18 +110,16 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.OverwriteId] = overwriteId
         body(ChannelPermissionEditRequest.serializer(), permissions)
         reason?.let { header("X-Audit-Log-Reason", reason) }
-
     }
-
 
     suspend fun getReactions(channelId: String, messageId: String, emoji: String, position: Position? = null, limit: Int = 25) = call(Route.ReactionsGet) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
 
-            if (position != null) {
-                parameter(position.key, position.value)
-            }
+        if (position != null) {
+            parameter(position.key, position.value)
+        }
         parameter("limit", "$limit")
     }
 
@@ -132,40 +132,61 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.UserId] = userId
     }
 
-
     suspend fun addToGroup(channelId: String, userId: String, addUser: UserAddDMRequest) = call(Route.GroupDMUserPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.UserId] = userId
         body(UserAddDMRequest.serializer(), addUser)
     }
 
-    suspend fun createInvite(channelId: String, invite: InviteCreateRequest, reason: String? = null) = call(Route.InvitePost) {
+    suspend inline fun createInvite(channelId: String, builder: InviteCreateBuilder.() -> Unit = {}) = call(Route.InvitePost) {
         keys[Route.ChannelId] = channelId
-        body(InviteCreateRequest.serializer(), invite)
-        reason?.let { header("X-Audit-Log-Reason", reason) }
-
+        val request = InviteCreateBuilder().apply(builder)
+        body(InviteCreateRequest.serializer(), request.toRequest())
+        request.reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend fun editMessage(channelId: String, messageId: String, message: MessageEditPatchRequest) = call(Route.EditMessagePatch) {
+    suspend inline fun editMessage(channelId: String, messageId: String, builder: MessageModifyBuilder.() -> Unit) = call(Route.EditMessagePatch) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
-        body(MessageEditPatchRequest.serializer(), message)
+        body(MessageEditPatchRequest.serializer(), MessageModifyBuilder().apply(builder).toRequest())
     }
+
 
     suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest, reason: String? = null) = call(Route.ChannelPut) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPutRequest.serializer(), channel)
         reason?.let { header("X-Audit-Log-Reason", reason) }
-
     }
-
 
     suspend fun patchChannel(channelId: String, channel: ChannelModifyPatchRequest, reason: String? = null) = call(Route.ChannelPatch) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPatchRequest.serializer(), channel)
         reason?.let { header("X-Audit-Log-Reason", reason) }
-
     }
 
 }
 
+suspend inline fun ChannelService.patchTextChannel(channelId: String, builder: TextChannelModifyBuilder.() -> Unit) =
+        patchChannel(channelId, TextChannelModifyBuilder().apply(builder).toRequest())
+
+suspend inline fun ChannelService.patchVoiceChannel(channelId: String, builder: VoiceChannelModifyBuilder.() -> Unit) =
+        patchChannel(channelId, VoiceChannelModifyBuilder().apply(builder).toRequest())
+
+suspend inline fun ChannelService.patchStoreChannel(channelId: String, builder: StoreChannelModifyBuilder.() -> Unit) =
+        patchChannel(channelId, StoreChannelModifyBuilder().apply(builder).toRequest())
+
+suspend inline fun ChannelService.patchNewsChannel(channelId: String, builder: NewsChannelModifyBuilder.() -> Unit) =
+        patchChannel(channelId, NewsChannelModifyBuilder().apply(builder).toRequest())
+
+suspend inline fun ChannelService.patchCategory(channelId: String, builder: CategoryModifyBuilder.() -> Unit) =
+        patchChannel(channelId, CategoryModifyBuilder().apply(builder).toRequest())
+
+suspend inline fun ChannelService.editMemberPermissions(channelId: String, memberId: String, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+    val modifyBuilder = ChannelPermissionModifyBuilder("member").apply(builder)
+    editChannelPermissions(channelId, memberId, modifyBuilder.toRequest(), modifyBuilder.reason)
+}
+
+suspend inline fun ChannelService.editRolePermission(channelId: String, roleId: String, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+    val modifyBuilder = ChannelPermissionModifyBuilder("role").apply(builder)
+    editChannelPermissions(channelId, roleId, modifyBuilder.toRequest(), modifyBuilder.reason)
+}

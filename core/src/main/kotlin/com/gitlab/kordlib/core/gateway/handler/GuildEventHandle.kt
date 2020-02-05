@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.gateway.handler
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.api.put
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
@@ -46,6 +47,8 @@ internal class GuildEventHandler(
         is GuildRoleDelete -> handle(event)
         is GuildMembersChunk -> handle(event)
         is PresenceUpdate -> handle(event)
+        is InviteCreate -> handle(event)
+        is InviteDelete -> handle(event)
         else -> Unit
     }
 
@@ -102,7 +105,7 @@ internal class GuildEventHandler(
         cache.put(user)
         val user = User(data, kord)
 
-        coreEventChannel.send(BanEvent(user, Snowflake(guildId)))
+        coreEventChannel.send(BanAddEvent(user, Snowflake(guildId)))
     }
 
     private suspend fun handle(event: GuildBanRemove) = with(event.ban) {
@@ -110,7 +113,7 @@ internal class GuildEventHandler(
         cache.put(user)
         val user = User(data, kord)
 
-        coreEventChannel.send(UnbanEvent(user, Snowflake(guildId)))
+        coreEventChannel.send(BanRemoveEvent(user, Snowflake(guildId)))
     }
 
     private suspend fun handle(event: GuildEmojisUpdate) = with(event.emoji) {
@@ -228,6 +231,22 @@ internal class GuildEventHandler(
                 ?.let { User(it, kord) }
 
         coreEventChannel.send(PresenceUpdateEvent(user, this.user, Snowflake(guildId!!), old, new))
+    }
+
+    private suspend fun handle(event: InviteCreate) = with(event) {
+        val data = InviteCreateData.from(invite)
+
+        with(invite.inviter) {
+            cache.find<UserData> { UserData::id eq id.toLong() }
+                    .update { it.copy(discriminator = discriminator, username = username, avatar = avatar) }
+        }
+
+        coreEventChannel.send(InviteCreateEvent(data, kord))
+    }
+
+    private suspend fun handle(event: InviteDelete) = with(event) {
+        val data = InviteDeleteData.from(invite)
+        coreEventChannel.send(InviteDeleteEvent(data, kord))
     }
 
 }

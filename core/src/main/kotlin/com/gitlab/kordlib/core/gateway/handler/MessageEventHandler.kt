@@ -7,9 +7,10 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.cache.data.ReactionData
+import com.gitlab.kordlib.core.cache.data.ReactionRemoveEmojiData
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.ReactionEmoji
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.gateway.*
@@ -18,7 +19,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
 import com.gitlab.kordlib.core.event.Event as CoreEvent
-import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class MessageEventHandler(
@@ -36,6 +36,7 @@ internal class MessageEventHandler(
         is MessageReactionAdd -> handle(event)
         is MessageReactionRemove -> handle(event)
         is MessageReactionRemoveAll -> handle(event)
+        is MessageReactionRemoveEmoji -> handle(event)
         else -> Unit
     }
 
@@ -178,6 +179,13 @@ internal class MessageEventHandler(
                         kord
                 )
         )
+    }
+
+    private suspend fun handle(event: MessageReactionRemoveEmoji) = with(event.reaction) {
+        cache.find<MessageData> { MessageData::id eq messageId.toLong() }.update { it.copy(reactions = it.reactions?.filter { it.emojiName != emoji.name }) }
+
+        val data = ReactionRemoveEmojiData.from(this)
+        coreEventChannel.send(ReactionRemoveEmojiEvent(data, kord))
     }
 
 }

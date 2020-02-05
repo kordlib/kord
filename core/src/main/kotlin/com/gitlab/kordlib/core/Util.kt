@@ -2,7 +2,7 @@ package com.gitlab.kordlib.core
 
 
 import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.request.RequestException
 import com.gitlab.kordlib.rest.route.Position
 import kotlinx.atomicfu.atomic
@@ -27,7 +27,7 @@ internal fun Long.toInstant() = Instant.ofEpochMilli(this)
 internal inline fun <T> catchNotFound(block: () -> T): T? = try {
     block()
 } catch (exception: RequestException) {
-    if (exception.response.status.value == 404) null
+    if (exception.code == 404) null
     else throw exception
 }
 

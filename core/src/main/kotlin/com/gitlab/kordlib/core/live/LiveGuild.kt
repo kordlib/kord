@@ -27,7 +27,7 @@ class LiveGuild(guild: Guild) : AbstractLiveEntity(), Entity by guild {
 
         is IntegrationsUpdateEvent -> event.guildId == guild.id
 
-        is UnbanEvent -> event.guildId == guild.id
+        is BanRemoveEvent -> event.guildId == guild.id
 
         is PresenceUpdateEvent -> event.guildId == guild.id
 

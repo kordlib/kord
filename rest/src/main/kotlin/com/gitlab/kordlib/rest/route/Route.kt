@@ -15,6 +15,8 @@ sealed class Route<T>(
         val strategy: DeserializationStrategy<T>
 ) {
 
+    override fun toString(): String = "Route(method:${method.value},path:$path,strategy:${strategy.descriptor.name})"
+
     object GatewayGet
         : Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer())
 
@@ -62,6 +64,9 @@ sealed class Route<T>(
 
     object ReactionDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji/$UserId", NoStrategy)
+
+    object DeleteAllReactionsForEmoji
+        : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji", NoStrategy)
 
     object MessageDelete
         : Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/messages/$MessageId", NoStrategy)

@@ -2,33 +2,41 @@ package regression
 
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.common.entity.ChannelType
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.gateway.Command
 import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.GatewayConfiguration
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
+import com.gitlab.kordlib.rest.request.JsonRequest
+import com.gitlab.kordlib.rest.request.MultipartRequest
 import com.gitlab.kordlib.rest.request.Request
 import com.gitlab.kordlib.rest.route.Route
 import io.ktor.client.HttpClient
-import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.request
-import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.HttpStatement
+import io.ktor.client.statement.readText
+import io.ktor.content.TextContent
+import io.ktor.http.ContentType
 import io.ktor.http.takeFrom
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.SerializationStrategy
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.Exception
 import java.lang.IllegalStateException
 import kotlin.test.BeforeTest
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
+
+private val parser = Json(JsonConfiguration(encodeDefaults = false, strictMode = false))
 
 object FakeGateway : Gateway {
 
@@ -54,17 +62,40 @@ object FakeGateway : Gateway {
 }
 
 class CrashingHandler(val client: HttpClient) : RequestHandler {
-    override suspend fun <T> handle(request: Request<T>): HttpResponse {
-        if (request.route == Route.CurrentUserGet) {
-            val builder = HttpRequestBuilder().apply {
-                headers.append("X-RateLimit-Precision", "millisecond")
+    override suspend fun <B : Any, R> handle(request: Request<B, R>): R {
+        if (request.route != Route.CurrentUserGet) throw IllegalStateException("shouldn't do a request")
+        val response = client.request<HttpStatement> {
+            method = request.route.method
+            headers.append("X-RateLimit-Precision", "millisecond")
+            headers.appendAll(request.headers)
+
+            url {
                 url.takeFrom(Route.baseUrl)
-                with(request) { apply() }
+                encodedPath += request.path
+                parameters.appendAll(request.parameters)
             }
 
-            return client.request<HttpStatement>(builder).execute()
-        }
-        throw IllegalStateException("shouldn't do a request")
+
+                request.body?.let {
+                    when (request) {
+                        is MultipartRequest<*, *> -> {
+                            headers.append("payload_json", parser.stringify(it.strategy as SerializationStrategy<Any>, it.body))
+                            this.body = MultiPartFormDataContent(request.data)
+                        }
+
+                        is JsonRequest<*, *> -> {
+                            val json = parser.stringify(it.strategy as SerializationStrategy<Any>, it.body)
+                            this.body = TextContent(json, ContentType.Application.Json)
+                        }
+                    }
+                }
+
+
+        }.execute()
+
+        return parser.parse(request.route.strategy, response.readText())
+
+
     }
 }
 

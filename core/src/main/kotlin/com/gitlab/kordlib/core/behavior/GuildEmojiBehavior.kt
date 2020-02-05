@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.guild.EmojiModifyBuilder
+import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
 import com.gitlab.kordlib.core.cache.data.EmojiData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.GuildEmoji
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 
 /**
  * The behavior of a [Discord Emoij](https://discordapp.com/developers/docs/resources/emoji).
@@ -37,11 +37,7 @@ interface GuildEmojiBehavior : Entity {
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildEmojiBehavior.edit(builder: EmojiModifyBuilder.() -> Unit): GuildEmoji {
-    val builder = EmojiModifyBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.emoji.modifyEmoji(guildId.value, id.value, request, reason)
+    val response = kord.rest.emoji.modifyEmoji(guildId.value, id.value, builder)
     val data = EmojiData.from(id.value, response)
 
     return GuildEmoji(data, guildId, kord)

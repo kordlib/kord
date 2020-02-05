@@ -22,6 +22,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import kotlin.time.Duration
@@ -79,7 +80,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     override suspend fun start(configuration: GatewayConfiguration) {
-        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
+        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         handshakeHandler.configuration = configuration
         data.reconnectRetry.reset()
         state.update { State.Restart(true) } //resetting state
@@ -100,7 +101,15 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 defaultGatewayLogger.error(exception)
             }
 
-            handleClose()
+            defaultGatewayLogger.trace { "gateway connection closing" }
+
+            try {
+                handleClose()
+            } catch (exception: Exception) {
+                defaultGatewayLogger.error(exception)
+            }
+
+            defaultGatewayLogger.trace { "handled gateway connection closed" }
 
             if (state.value.retry) data.reconnectRetry.retry()
         }
@@ -127,7 +136,10 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private suspend fun handleClose() {
-        val reason = socket.closeReason.await() ?: return
+        val reason = withTimeoutOrNull(1500) {
+            socket.closeReason.await()
+        } ?: return
+
         defaultGatewayLogger.trace { "Gateway closed: ${reason.code} ${reason.message}" }
         val discordReason = GatewayCloseCode.values().firstOrNull { it.code == reason.code } ?: return
 
@@ -154,14 +166,14 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private suspend fun webSocket(url: String) = data.client.webSocketSession { url(url) }
 
     override suspend fun stop() {
-        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
+        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         channel.send(SessionClose)
         state.update { State.ShutDown }
         if (socketOpen) socket.close(CloseReason(1000, "leaving"))
     }
 
     internal suspend fun restart(code: Close = CloseForReconnect) {
-        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
+        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         state.update { State.Restart(false) }
         if (socketOpen) {
             channel.send(code)
@@ -173,14 +185,14 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         if (state.value is State.Detached) return
         state.update { State.Detached }
         channel.cancel()
-        if(::socket.isInitialized) {
+        if (::socket.isInitialized) {
             socket.close()
         }
     }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     override suspend fun send(command: Command) {
-        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
+        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         if (!socketOpen) error("call 'start' before sending messages")
         data.sendRateLimiter.consume()
         val json = Json.stringify(Command.Companion, command)

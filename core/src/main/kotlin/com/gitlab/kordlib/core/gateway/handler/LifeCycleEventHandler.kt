@@ -4,7 +4,7 @@ import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.UserData
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.User
 import com.gitlab.kordlib.core.event.gateway.ConnectEvent
 import com.gitlab.kordlib.core.event.gateway.DisconnectEvent
@@ -13,7 +13,6 @@ import com.gitlab.kordlib.core.event.gateway.ResumedEvent
 import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.channels.SendChannel
 import com.gitlab.kordlib.core.event.Event as CoreEvent
-import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class LifeCycleEventHandler(
