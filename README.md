@@ -85,7 +85,7 @@ suspend fun main() {
 
         delay(5000)
         message.delete()
-        reponse.delete()
+        response.delete()
     }
 
     client.login()
