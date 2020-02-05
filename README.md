@@ -1,102 +1,57 @@
 # Kord
+
 [![Discord](https://img.shields.io/discord/556525343595298817.svg?color=&label=Kord&logo=discord&style=for-the-badge)](https://discord.gg/6jcx5ev)
-    [![JitPack](https://img.shields.io/jitpack/v/gitlab/hopebaron/Kord.svg?color=&style=for-the-badge)](https://jitpack.io/#com.gitlab.kordlib/Kord)
+[![Download](https://img.shields.io/bintray/v/kordlib/Kord/Kord?color=&style=for-the-badge) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion)
+[![JitPack](https://img.shields.io/jitpack/v/gitlab/hopebaron/Kord.svg?color=&style=for-the-badge)](https://jitpack.io/#com.gitlab.kordlib/Kord)
 [![Gitlab pipeline status (branch)](https://img.shields.io/gitlab/pipeline/HopeBaron/kord/master.svg?style=for-the-badge)]()
 
-**Kord is still in its early stages, meaning it's not ready to be used for public purposes yet.**
+__Kord is still in an experimental stage, as such we can't guarantee API stability between releases. While we'd love for you to try out our library, we don't recommend you use this in production just yet.__
 
+If you have any feedback, we'd love to hear it, hit us up on discord or write up an issue if you have any suggestions!
 
-Kord is an idiomatic, non-blocking, modularized implementation of the Discord API. 
+## What is Kord
 
-# Goals
+Kord is a [coroutine](https://kotlinlang.org/docs/reference/coroutines-overview.html)-based, modularized implementation of the Discord API, written 100% in [Kotlin](https://kotlinlang.org/).
 
-## No blocking, no callbacks
+## Why use Kord
 
-Built on top of coroutines, Kord focusses on avoiding the pitfalls of java libraries without sacrificing performance.
+Kord was created as an answer to the frustrations of writing Discord bots with other JVM libraries, which either use thread-blocking code or verbose and scope restrictive reactive systems. We believe an API written from the ground up in Kotlin with coroutines can give you the best of both worlds: The conciseness of imperative code with the concurrency of reactive code.
 
-```kotlin
-suspend fun main() {
-    val kord = Kord("token")
+Besides coroutines, we also wanted to give the user full access to lower level APIS. Sometimes you have to do some unconventional things, and we want to allow you to do those in a safe and supported way.
 
-    kord.on<MessageCreateEvent> {
-        if (message.author?.isBot == true) return@on
-        val guild = message.getGuild() ?: return@on
+## Status of Kord
 
-        if (message.content == "!kord") message.channel.createEmbed {
-            author {
-                val owner = kord.getApplicationInfo().getOwner()
-                name = owner.username
-                icon = owner.avatar.url
-            }
+* [X] [Discord Gateway](https://gitlab.com/kordlib/kord/-/tree/master/gateway)
+* [x] [Discord Rest API](https://gitlab.com/kordlib/kord/-/tree/master/rest)
+* [X] [High level abstraction + caching](https://gitlab.com/kordlib/kord/-/tree/master/core)
+* [ ] [Test Framework](https://gitlab.com/kordlib/kordx.test) (WIP) #49
+* [ ] [Command Framework](https://gitlab.com/kordlib/kordx.commands) (WIP) #36
+* [ ] Discord Voice
+* [ ] Support for multiple processes #55
 
-            description = "an embed made with kord"
-
-            field {
-                name = "guild description"
-                value = guild.description.orEmpty()
-            }
-
-            footer {
-                url = "https://gitlab.com/kordlib/kord"
-                text = "made with kord"
-                icon = "https://assets.gitlab-static.net/uploads/-/system/project/avatar/11355644/cord-icon.png?width=64"
-            }
-
-            guild.getOwner().displayName
-        }
-    }
-
-    kord.login()
-}
-```
-
-## More than just an API wrapper
-
-Kord aims to be more than just an event dispatcher, Live objects offer a style of discord bots that focus on state changes instead of event creation.
-
-//TODO add code example
-
-## Modular, extensible
-
-In its goal to become a comprehensive wrapper for the Discord API, Kord allows each segment of the API to be a standalone library, able to be swapped out for other implementations, and focusses heavily on its configuration.
-
-## Testable
-
-In an effort to ease the pain of bot development, Kord grants the user an extensive testing framework. Easily build your own test cases and execute them as if you're working with the live Discord API.
-
-//TODO add code example
-
-
+Right now Kord *should* provide a full mapping of the non-voice API. We're currently working on a testing library for easy bot testing against a semi mocked client as well as our own command system to facilitate more complex bot development.
 
 ## Installation
 
-Replace `{version}` with the latest version number on bintray [ ![Download](https://api.bintray.com/packages/kordlib/Kord/Kord/images/download.svg) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion).
+Replace `{version}` with the latest version number on bintray. [![Download](https://img.shields.io/bintray/v/kordlib/Kord/Kord?color=&style=for-the-badge) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion)
 
 ### Gradle
 
 ```groovy
 repositories {
- ...
- jcenter()
- maven { url 'https://jitpack.io' }
  maven { url "https://dl.bintray.com/kordlib/Kord" }
 }
 ```
 
 ```groovy
 dependencies {
- ...
- implementation 'com.gitlab.kordlib:kord:{version}'
+ implementation("com.gitlab.kordlib:kord:{version}")
 }
 ```
 
 ### Maven
 
 ```xml
-<repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
-</repository>
 <repository>
     <id>bintray</id>
     <url>https://dl.bintray.com/kordlib/Kord</url>
@@ -111,3 +66,81 @@ dependencies {
 </dependency>
 ```
 
+## Modules
+
+### Core
+
+A higher level API, combining `rest` and `gateway`, with additional (optional) caching. Unless you're writing your own abstractions, we'd recommend using this.
+
+```kotlin
+suspend fun main() {
+    val client = Kord("your bot token")
+    val pingPong = ReactionEmoji.Unicode("\uD83C\uDFD3")
+
+    client.on<MessageCreateEvent> {
+        if(message.content != "!ping") return@on
+
+        val response = message.channel.createMessage("Pong!")
+        response.addReaction(pingPong)
+
+        delay(5000)
+        message.delete()
+        response.delete()
+    }
+
+    client.login()
+}
+```
+
+### Rest
+
+A low level mapping of Discord's REST API. Requests follow Discord's [rate limits](https://discordapp.com/developers/docs/topics/rate-limits).
+
+```kotlin
+suspend fun main() {
+    val rest = RestClient("your bot token")
+
+    rest.channel.createMessage("605212557522763787") {
+        content = "Hello Kord!"
+
+        embed {
+            color = Color.BLUE
+            description = "Hello embed!"
+        }
+    }
+
+}
+```
+
+### Gateway
+
+A low level mapping of [Discord's Gateway](https://discordapp.com/developers/docs/topics/gateway), which maintains the connection and rate limits commands.
+
+```kotlin
+suspend fun main() {
+    val gateway = DefaultGateway()
+
+    gateway.events.filterIsInstance<MessageCreate>()
+            .flowOn(Dispatchers.IO)
+            .onEach {
+                when (it.message.content) {
+                    "!close" -> gateway.stop()
+                    "!restart" -> gateway.restart()
+                    "!detach" -> gateway.detach()
+                }
+            }
+            .launchIn(GlobalScope)
+
+    gateway.start("your bot token")
+}
+```
+
+## FAQ
+
+### Will you support kotlin multiplatform
+
+We originally intended to. We exclusively depend on multiplatform libraries and try to minimize JVM exclusive code. However, we found support for multiplatform and non-JVM platforms to be lacking (too experimental). We'll revisit multiplatform support once IR (intermediate representation) has been implemented, or our library is feature complete, whichever comes first.
+
+### Will you publish your kotlin docs online
+
+The only real documentation engine for kotlin is [Dokka](https://github.com/Kotlin/dokka). It's currently not in a happy place, but we've been told it'll get a rather extensive release sooner than later, so we're holding off until that happens.

@@ -8,17 +8,13 @@ import kotlinx.serialization.SerializationStrategy
 
 class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
 
-    var keys: MutableMap<Route.Key, String> = HashMap(keySize, 1f)
+    val keys: MutableMap<Route.Key, String> = HashMap(keySize, 1f)
 
     private val headers = HeadersBuilder()
     private val parameters = ParametersBuilder()
 
     private var body: RequestBody<*>? = null
-    private var files: MutableList<Pair<String, InputStream>>? = null
-
-    private fun initFiles() {
-        if (files == null) files = mutableListOf()
-    }
+    private val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
     operator fun MutableMap<String, String>.set(key: Route.Key, value: String) = set(key.identifier, value)
 
@@ -31,19 +27,16 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     fun header(key: String, value: String) = headers.append(key, value)
 
     fun file(name: String, input: InputStream) {
-        initFiles()
-        files!!.add(name to input)
+        files.add(name to input)
     }
 
     fun file(pair: Pair<String, InputStream>) {
-        initFiles()
-        files!!.add(pair)
+        files.add(pair)
     }
 
-    fun build(): Request<T> = if (files == null) {
-        JsonRequest(route, keys, parameters.build(), headers.build(), body)
-    } else {
-        MultipartRequest(route, keys, parameters.build(), headers.build(), body, files.orEmpty())
+    fun build(): Request<*, T> = when {
+        files.isEmpty() -> JsonRequest(route, keys, parameters.build(), headers.build(), body)
+        else -> MultipartRequest(route, keys, parameters.build(), headers.build(), body, files.orEmpty())
     }
 
 }

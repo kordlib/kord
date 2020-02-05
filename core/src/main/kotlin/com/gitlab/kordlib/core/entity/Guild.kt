@@ -17,6 +17,7 @@ import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
 import com.gitlab.kordlib.core.switchIfEmpty
 import com.gitlab.kordlib.core.toSnowflakeOrNull
+import com.gitlab.kordlib.rest.Image
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter

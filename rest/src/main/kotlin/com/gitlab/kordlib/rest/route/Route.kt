@@ -15,6 +15,8 @@ sealed class Route<T>(
         val strategy: DeserializationStrategy<T>
 ) {
 
+    override fun toString(): String = "Route(method:${method.value},path:$path,strategy:${strategy.descriptor.name})"
+
     object GatewayGet
         : Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer())
 

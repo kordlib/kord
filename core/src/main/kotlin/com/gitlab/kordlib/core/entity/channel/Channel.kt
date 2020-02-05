@@ -5,7 +5,7 @@ import com.gitlab.kordlib.common.entity.ChannelType.*
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 
 /**
  * An instance of a [Discord Channel](https://discordapp.com/developers/docs/resources/channel)

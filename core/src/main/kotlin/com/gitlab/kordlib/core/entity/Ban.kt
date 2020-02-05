@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.behavior.UserBehavior
@@ -28,6 +29,6 @@ class Ban(val data: BanData, override val kord: Kord) : KordObject {
     /**
      * Requests to get the banned user.
      */
-    suspend fun getUser(): User = kord.getUser(userId = userId)!!
+    suspend fun getUser(): User = kord.getUser(id = userId)!!
 
 }

@@ -80,7 +80,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     override suspend fun start(configuration: GatewayConfiguration) {
-        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
+        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         handshakeHandler.configuration = configuration
         data.reconnectRetry.reset()
         state.update { State.Restart(true) } //resetting state
@@ -166,14 +166,14 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private suspend fun webSocket(url: String) = data.client.webSocketSession { url(url) }
 
     override suspend fun stop() {
-        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
+        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         channel.send(SessionClose)
         state.update { State.ShutDown }
         if (socketOpen) socket.close(CloseReason(1000, "leaving"))
     }
 
     internal suspend fun restart(code: Close = CloseForReconnect) {
-        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
+        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         state.update { State.Restart(false) }
         if (socketOpen) {
             channel.send(code)
@@ -192,7 +192,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     override suspend fun send(command: Command) {
-        require(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
+        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         if (!socketOpen) error("call 'start' before sending messages")
         data.sendRateLimiter.consume()
         val json = Json.stringify(Command.Companion, command)

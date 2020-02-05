@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.event.message
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MessageBehavior
@@ -9,7 +10,6 @@ import com.gitlab.kordlib.core.cache.data.ReactionRemoveEmojiData
 import com.gitlab.kordlib.core.entity.Guild
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.ReactionEmoji
-import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.core.event.Event
 

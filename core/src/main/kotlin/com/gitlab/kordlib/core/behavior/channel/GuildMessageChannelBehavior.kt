@@ -1,9 +1,9 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.builder.webhook.WebhookCreateBuilder
+import com.gitlab.kordlib.rest.builder.webhook.WebhookCreateBuilder
 import com.gitlab.kordlib.core.cache.data.WebhookData
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.Webhook
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.rest.json.request.BulkDeleteRequest
@@ -72,11 +72,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCreateBuilder.() -> Unit): Webhook {
-    val builder = WebhookCreateBuilder().apply(builder)
-    val reason = builder.reason
-    val request = builder.toRequest()
-
-    val response = kord.rest.webhook.createWebhook(id.value, request, reason)
+    val response = kord.rest.webhook.createWebhook(id.value, builder)
     val data = WebhookData.from(response)
 
     return Webhook(data, kord)

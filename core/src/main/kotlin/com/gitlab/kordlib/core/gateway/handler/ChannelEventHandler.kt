@@ -5,7 +5,7 @@ import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.event.channel.*
 import com.gitlab.kordlib.core.toInstant
@@ -13,7 +13,6 @@ import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.channels.SendChannel
 import com.gitlab.kordlib.core.event.Event as CoreEvent
-import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class ChannelEventHandler(

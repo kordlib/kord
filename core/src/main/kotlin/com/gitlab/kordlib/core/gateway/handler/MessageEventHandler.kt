@@ -10,7 +10,7 @@ import com.gitlab.kordlib.core.cache.data.ReactionData
 import com.gitlab.kordlib.core.cache.data.ReactionRemoveEmojiData
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.ReactionEmoji
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.gateway.*

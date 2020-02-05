@@ -3,7 +3,7 @@ package com.gitlab.kordlib.core.event
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 
 class VoiceServerUpdateEvent(
         val token: String,

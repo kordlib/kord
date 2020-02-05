@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.gateway.handler
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.api.put
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
@@ -104,7 +105,7 @@ internal class GuildEventHandler(
         cache.put(user)
         val user = User(data, kord)
 
-        coreEventChannel.send(BanEvent(user, Snowflake(guildId)))
+        coreEventChannel.send(BanAddEvent(user, Snowflake(guildId)))
     }
 
     private suspend fun handle(event: GuildBanRemove) = with(event.ban) {
@@ -112,7 +113,7 @@ internal class GuildEventHandler(
         cache.put(user)
         val user = User(data, kord)
 
-        coreEventChannel.send(UnbanEvent(user, Snowflake(guildId)))
+        coreEventChannel.send(BanRemoveEvent(user, Snowflake(guildId)))
     }
 
     private suspend fun handle(event: GuildEmojisUpdate) = with(event.emoji) {

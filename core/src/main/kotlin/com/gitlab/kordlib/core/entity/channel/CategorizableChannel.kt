@@ -1,10 +1,10 @@
 package com.gitlab.kordlib.core.entity.channel
 
 import com.gitlab.kordlib.core.behavior.channel.CategoryBehavior
-import com.gitlab.kordlib.core.builder.channel.InviteCreateBuilder
+import com.gitlab.kordlib.rest.builder.channel.InviteCreateBuilder
 import com.gitlab.kordlib.core.cache.data.InviteData
 import com.gitlab.kordlib.core.entity.Invite
-import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 
 /**
@@ -37,9 +37,7 @@ interface CategorizableChannel: GuildChannel {
      * @return the created [Invite].
      */
     suspend fun createInvite(builder: InviteCreateBuilder.() -> Unit): Invite {
-        val request = InviteCreateBuilder().apply(builder).toRequest()
-
-        val response = kord.rest.channel.createInvite(id.value, request)
+            val response = kord.rest.channel.createInvite(id.value, builder)
         val data = InviteData.from(response)
 
         return Invite(data, kord)

@@ -1,14 +1,18 @@
 package com.gitlab.kordlib.rest.service
 
+import com.gitlab.kordlib.rest.builder.user.CurrentUserModifyBuilder
+import com.gitlab.kordlib.rest.builder.user.GroupDMCreateBuilder
 import com.gitlab.kordlib.rest.json.request.CurrentUserModifyRequest
 import com.gitlab.kordlib.rest.json.request.DMCreateRequest
 import com.gitlab.kordlib.rest.json.request.GroupDMCreateRequest
-import com.gitlab.kordlib.rest.ratelimit.RequestHandler
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
 
 class UserService(requestHandler: RequestHandler) : RestService(requestHandler) {
+
     suspend fun getCurrentUser() = call(Route.CurrentUserGet)
+
     suspend fun getUser(userId: String) = call(Route.UserGet) {
         keys[Route.UserId] = userId
     }
@@ -31,12 +35,12 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
         body(DMCreateRequest.serializer(), dm)
     }
 
-
-    suspend fun createGroupDM(dm: GroupDMCreateRequest) = call(Route.DMPost) {
-        body(GroupDMCreateRequest.serializer(), dm)
+    suspend inline fun createGroupDM(builder: GroupDMCreateBuilder.() -> Unit) = call(Route.DMPost) {
+        body(GroupDMCreateRequest.serializer(), GroupDMCreateBuilder().apply(builder).toRequest())
     }
 
-    suspend fun modifyCurrentUser(user: CurrentUserModifyRequest) = call(Route.CurrentUserPatch) {
-        body(CurrentUserModifyRequest.serializer(), user)
+    suspend inline fun modifyCurrentUser(builder: CurrentUserModifyBuilder.() -> Unit) = call(Route.CurrentUserPatch) {
+        body(CurrentUserModifyRequest.serializer(), CurrentUserModifyBuilder().apply(builder).toRequest())
     }
+
 }

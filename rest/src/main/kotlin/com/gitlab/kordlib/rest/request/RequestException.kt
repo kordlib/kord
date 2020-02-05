@@ -2,4 +2,6 @@ package com.gitlab.kordlib.rest.request
 
 import io.ktor.client.statement.HttpResponse
 
-class RequestException internal constructor(val response: HttpResponse, message: String) : Exception(message)
+abstract class RequestException(val code: Int, message: String) : Exception(message)
+
+class KtorRequestException(val response: HttpResponse, message: String) : RequestException(response.status.value, message)

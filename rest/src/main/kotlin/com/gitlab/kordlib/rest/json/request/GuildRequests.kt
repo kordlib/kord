@@ -8,15 +8,15 @@ import kotlinx.serialization.internal.ArrayListSerializer
 @Serializable
 data class GuildCreateRequest(
         val name: String,
-        val region: String,
+        val region: String? = null,
         val icon: String? = null,
         @SerialName("verification_level")
-        val verificationLevel: VerificationLevel,
+        val verificationLevel: VerificationLevel? = null,
         @SerialName("default_message_notifications")
-        val defaultNotificationLevel: DefaultMessageNotificationLevel,
-        val explicitContentFilter: ExplicitContentFilter,
-        val roles: List<GuildRoleCreateRequest> = emptyList(),
-        val channels: List<GuildCreateChannelRequest> = emptyList()
+        val defaultNotificationLevel: DefaultMessageNotificationLevel? = null,
+        val explicitContentFilter: ExplicitContentFilter? = null,
+        val roles: List<GuildRoleCreateRequest>? = null,
+        val channels: List<GuildCreateChannelRequest>? = null
 )
 
 @Serializable
