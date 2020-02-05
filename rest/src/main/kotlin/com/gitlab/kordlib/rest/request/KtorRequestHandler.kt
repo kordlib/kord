@@ -2,6 +2,9 @@ package com.gitlab.kordlib.rest.request
 
 import com.gitlab.kordlib.rest.ratelimit.*
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.features.defaultRequest
+import io.ktor.client.request.header
 import io.ktor.client.request.request
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.HttpStatement
@@ -74,6 +77,19 @@ class KtorRequestHandler(
                     this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
                 }
             }
+        }
+    }
+
+    companion object {
+
+        operator fun invoke(
+                token: String,
+                requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
+                clock: Clock = Clock.systemUTC(),
+                parser: Json = Json(JsonConfiguration(encodeDefaults = false, strictMode = false))
+        ): KtorRequestHandler {
+            val client = HttpClient(CIO) { defaultRequest { header("Authorization", "Bot $token") } }
+            return KtorRequestHandler(client, requestRateLimiter, clock, parser)
         }
     }
 
