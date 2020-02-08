@@ -1,3 +1,16 @@
+# 0.4.1
+
+
+## Additions
+
+* Added a `CategoryCreateBuilder` to `GuildBehavior`. #67
+
+## Fixes
+
+* Removed `url` from `EmbedFooterRequest`, as it's not an actual field in the Discord API.  #66
+
+## 
+
 # 0.4.0
 
 ## Additions

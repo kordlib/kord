@@ -61,10 +61,9 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
     @KordDsl
     class Footer : RequestBuilder<EmbedFooterRequest> {
         lateinit var text: String
-        var url: String? = null
         var icon: String? = null
 
-        override fun toRequest() = EmbedFooterRequest(text, url, icon)
+        override fun toRequest() = EmbedFooterRequest(text, icon)
     }
 
     @KordDsl

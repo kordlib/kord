@@ -37,7 +37,6 @@ data class EmbedRequest(
 @Serializable
 data class EmbedFooterRequest(
         val text: String,
-        val url: String? = null,
         @SerialName("icon_url")
         val iconUrl: String? = null
 )
