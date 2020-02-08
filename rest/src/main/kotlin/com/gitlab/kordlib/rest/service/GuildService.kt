@@ -2,10 +2,7 @@ package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.entity.DiscordChannel
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
-import com.gitlab.kordlib.rest.builder.channel.GuildChannelPositionModifyBuilder
-import com.gitlab.kordlib.rest.builder.channel.NewsChannelCreateBuilder
-import com.gitlab.kordlib.rest.builder.channel.TextChannelCreateBuilder
-import com.gitlab.kordlib.rest.builder.channel.VoiceChannelCreateBuilder
+import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
 import com.gitlab.kordlib.rest.builder.member.MemberAddBuilder
@@ -235,5 +232,10 @@ suspend inline fun GuildService.createNewsChannel(guildId: String, builder: News
 
 suspend inline fun GuildService.createVoiceChannel(guildId: String, builder: VoiceChannelCreateBuilder.() -> Unit): DiscordChannel {
     val createBuilder = VoiceChannelCreateBuilder().apply(builder)
+    return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
+}
+
+suspend inline fun GuildService.createCategory(guildId: String, builder: CategoryCreateBuilder.() -> Unit): DiscordChannel {
+    val createBuilder = CategoryCreateBuilder().apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
