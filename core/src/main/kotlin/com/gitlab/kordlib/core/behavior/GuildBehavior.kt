@@ -5,10 +5,6 @@ import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
-import com.gitlab.kordlib.rest.builder.channel.GuildChannelPositionModifyBuilder
-import com.gitlab.kordlib.rest.builder.channel.NewsChannelCreateBuilder
-import com.gitlab.kordlib.rest.builder.channel.TextChannelCreateBuilder
-import com.gitlab.kordlib.rest.builder.channel.VoiceChannelCreateBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
@@ -18,7 +14,9 @@ import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.core.sorted
+import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
+import com.gitlab.kordlib.rest.service.createCategory
 import com.gitlab.kordlib.rest.service.createNewsChannel
 import com.gitlab.kordlib.rest.service.createTextChannel
 import com.gitlab.kordlib.rest.service.createVoiceChannel
@@ -276,6 +274,19 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as NewsChannel
+}
+
+/**
+ * Requests to create a new category.
+ *
+ * @return The created [Category].
+ */
+@Suppress("NAME_SHADOWING")
+suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
+    val response = kord.rest.guild.createCategory(id.value, builder)
+    val data = ChannelData.from(response)
+
+    return Channel.from(data, kord) as Category
 }
 
 /**
