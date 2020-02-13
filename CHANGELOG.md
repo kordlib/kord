@@ -1,5 +1,10 @@
-# 0.4.1
+# 0.4.2
 
+## Additions
+
+* Added `GuildBehavior.getRole`.
+
+# 0.4.1
 
 ## Additions
 
@@ -8,8 +13,6 @@
 ## Fixes
 
 * Removed `url` from `EmbedFooterRequest`, as it's not an actual field in the Discord API.  #66
-
-## 
 
 # 0.4.0
 
