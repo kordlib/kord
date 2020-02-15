@@ -153,6 +153,11 @@ interface GuildBehavior : Entity {
      */
     suspend fun getMember(userId: Snowflake): Member? = kord.getMember(id, userId)
 
+    /**
+     * Requests to get the role represented by the [roleId], if present.
+     */
+    suspend fun getRole(roleId: Snowflake): Role? = kord.getRole(guildId = id, roleId = roleId)
+
     //TODO addGuildMember?
 
     /**

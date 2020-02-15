@@ -51,6 +51,11 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     val bannerHash: String? get() = data.banner
 
     /**
+     * The ids of all [channels][GuildChannel].
+     */
+    val channelIds: Set<Snowflake> get() = data.channels.asSequence().map { Snowflake(it) }.toSet()
+
+    /**
      * The explicit content filter level.
      */
     val contentFilter: ExplicitContentFilter get() = data.explicitContentFilter
@@ -128,6 +133,12 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      * The name of this guild.
      */
     val name: String get() = data.name
+
+    /**
+     * The behaviors of all [channels][GuildChannel].
+     */
+    val channelBehaviors: Set<GuildChannelBehavior>
+        get() = data.channels.asSequence().map { GuildChannelBehavior(id = Snowflake(it), guildId = id, kord = kord) }.toSet()
 
     override val channels: Flow<GuildChannel>
         get() = data.channels.asFlow().map { kord.getChannel(Snowflake(it)) }.filterIsInstance<GuildChannel>().switchIfEmpty(super.channels)

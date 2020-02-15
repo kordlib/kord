@@ -35,17 +35,33 @@ Right now Kord *should* provide a full mapping of the non-voice API. We're curre
 
 Replace `{version}` with the latest version number on bintray. [![Download](https://img.shields.io/bintray/v/kordlib/Kord/Kord?color=&style=for-the-badge) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion)
 
-### Gradle
+### Gradle (groovy)
 
 ```groovy
 repositories {
- maven { url "https://dl.bintray.com/kordlib/Kord" }
+    maven {
+        url = "https://dl.bintray.com/kordlib/Kord"
+    }
 }
 ```
 
 ```groovy
 dependencies {
- implementation("com.gitlab.kordlib:kord:{version}")
+   implementation("com.gitlab.kordlib:kord-core:{version}")
+}
+```
+
+### Gradle (kotlin)
+
+```kotlin
+repositories {
+   maven(url = "https://dl.bintray.com/kordlib/Kord")
+}
+```
+
+```kotlin
+dependencies {
+   implementation("com.gitlab.kordlib:kord-core:{version}")
 }
 ```
 

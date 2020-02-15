@@ -19,18 +19,33 @@ suspend fun main(args: Array<String>) {
 
 Replace `{version}` with the latest version number on bintray [ ![Download](https://api.bintray.com/packages/kordlib/Kord/Kord/images/download.svg) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion).
 
-### Gradle
+### Gradle (groovy)
 
 ```groovy
 repositories {
- jcenter()
- maven { url 'https://jitpack.io' }
+    maven {
+        url = "https://dl.bintray.com/kordlib/Kord"
+    }
 }
 ```
 
 ```groovy
 dependencies {
- implementation 'com.gitlab.kordlib:kord:rest:{version}'
+   implementation("com.gitlab.kordlib:kord-rest:{version}")
+}
+```
+
+### Gradle (kotlin)
+
+```kotlin
+repositories {
+   maven(url = "https://dl.bintray.com/kordlib/Kord")
+}
+```
+
+```kotlin
+dependencies {
+   implementation("com.gitlab.kordlib:kord:rest:{version}")
 }
 ```
 
