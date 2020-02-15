@@ -19,6 +19,7 @@ interface UserBehavior : Entity {
 
     /**
      * Requests this user as a member of the [guild][guildId].
+     * Returns null when the user is not a member of the guild.
      */
     suspend fun asMember(guildId: Snowflake): Member? = kord.getMember(guildId, id)
 
