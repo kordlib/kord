@@ -3,6 +3,7 @@
 ## Additions
 
 * Added `GuildBehavior.getRole`.
+* Added missing `Guild.channelIds` and `Guild.channelBehaviors`.
 
 # 0.4.1
 
