@@ -119,7 +119,7 @@ class RestServiceTest {
     fun `reaction in channel`() = runBlocking {
         with(rest.channel) {
             val message = createMessage(channelId) {
-                content = "TEST"
+                content = "TEST <@&${guildId}>"
             }
             editMessage(channelId, message.id) {
                 content = "EDIT TEST"

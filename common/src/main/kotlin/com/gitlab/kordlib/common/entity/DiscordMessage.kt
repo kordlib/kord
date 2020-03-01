@@ -21,7 +21,7 @@ data class DiscordMessage(
         val mentionEveryone: Boolean,
         val mentions: List<DiscordOptionallyMemberUser>,
         @SerialName("mention_roles")
-        val mentionRoles: List<DiscordRole>,
+        val mentionRoles: List<String>,
         val attachments: List<Attachment>,
         val embeds: List<Embed>,
         val reactions: List<Reaction>? = null,
@@ -56,7 +56,7 @@ data class DiscordPartialMessage(
         val mentionEveryone: Boolean? = null,
         val mentions: List<DiscordOptionallyMemberUser>? = null,
         @SerialName("mention_roles")
-        val mentionRoles: List<DiscordRole> ? = null,
+        val mentionRoles: List<String> ? = null,
         val attachments: List<Attachment> ? = null,
         val embeds: List<Embed> ? = null,
         val reactions: List<Reaction>? = null,

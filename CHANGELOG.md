@@ -1,3 +1,14 @@
+#0.4.3
+
+## Additions
+
+* Added `Guild#roleBehaviors`.
+
+## Fixes
+
+* Fix incorrect deserialization of mentioned roles in messages.
+* Message updates now correctly update mentioned channels.
+
 # 0.4.2
 
 ## Additions
