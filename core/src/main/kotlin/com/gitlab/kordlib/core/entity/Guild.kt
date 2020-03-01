@@ -204,6 +204,11 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      */
     val roleIds: Set<Snowflake> get() = data.roles.asSequence().map { Snowflake(it) }.toSet()
 
+    /**
+     * The behaviors of the [roles][Role].
+     */
+    val roleBehaviors: Set<RoleBehavior> get() = data.roles.asSequence().map { RoleBehavior(id = Snowflake(it), guildId = id, kord = kord) }.toSet()
+
     override suspend fun asGuild(): Guild = this
 
     /**
