@@ -60,7 +60,8 @@ data class MessageData(
         val mentions = partialMessage.mentions.orEmpty().map { it.id.toLong() }
         val mentionEveryone = partialMessage.mentionEveryone ?: mentionEveryone
         val embeds = partialMessage.embeds?.map { EmbedData.from(it) } ?: embeds
-        val mentionedChannels = partialMessage.mentionedChannels?.map { it.id.toLong() } //can't figure out if list hasn't been updated or just isn't there, so we'll assume the latter
+        val mentionRoles = partialMessage.mentionRoles?.map { it.toLong() } ?: mentionRoles
+        val mentionedChannels = partialMessage.mentionedChannels?.map { it.id.toLong() } //can't figure out if list hasn't been updated or just isn't there, so we'll assume the former
 
         return MessageData(
                 id,
@@ -102,7 +103,7 @@ data class MessageData(
                     tts,
                     mentionEveryone,
                     mentions.map { it.id.toLong() },
-                    mentionRoles.map { it.id.toLong() },
+                    mentionRoles.map { it.toLong() },
                     attachments.map { AttachmentData.from(it) },
                     embeds.map { EmbedData.from(it) },
                     reactions?.map { ReactionData.from(it) },
