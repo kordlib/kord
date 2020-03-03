@@ -1,3 +1,9 @@
+#0.4.4
+
+## Additions
+
+* Added `MessageBehavior.withTyping`.
+
 #0.4.3
 
 ## Additions

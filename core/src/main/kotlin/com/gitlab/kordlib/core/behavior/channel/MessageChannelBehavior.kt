@@ -14,6 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.time.Instant
 import kotlin.time.ClockMark
 import kotlin.time.seconds
@@ -169,3 +170,31 @@ suspend inline fun MessageChannelBehavior.createMessage(builder: MessageCreateBu
  * Requests to create a message with only an [embed][MessageCreateBuilder.embed].
  */
 suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> Unit): Message = createMessage { embed(block) }
+
+/**
+ * Requests to trigger the typing indicator for the bot in this channel.
+ * The typing status will be refreshed until the `block` has been completed.
+ *
+ * ```kotlin
+ * channel.withTyping {
+ *     delay(20.seconds.toLongMilliseconds()) //some very long task
+ *     createMessage("done!")
+ * }
+ * ```
+ */
+suspend inline fun<T: MessageChannelBehavior> T.withTyping(block: T.() -> Unit) {
+    var typing = true
+
+    kord.launch {
+        while (typing) {
+            type()
+            delay(8.seconds.toLongMilliseconds())
+        }
+    }
+
+    try {
+        block()
+    }  finally {
+        typing = false
+    }
+}
