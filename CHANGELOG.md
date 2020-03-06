@@ -1,4 +1,4 @@
-#0.4.4
+# 0.4.4
 
 ## Additions
 
@@ -15,7 +15,7 @@ of the typealias.
 * kotlinx.serialization 0.14.0 -> 0.20.0
 * kotlinx.coroutines 1.3.3 -> 1.3.4
 
-#0.4.3
+# 0.4.3
 
 ## Additions
 
