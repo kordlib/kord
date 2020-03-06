@@ -2,8 +2,11 @@ package com.gitlab.kordlib.gateway
 
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
+import kotlinx.serialization.builtins.nullable
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.internal.*
 import kotlinx.serialization.json.JsonElementSerializer
+import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
 
 private val jsonLogger = KotlinLogging.logger { }
@@ -25,15 +28,12 @@ private object NullDecoder : DeserializationStrategy<Nothing?> {
 
 sealed class Event {
     companion object : DeserializationStrategy<Event?> {
-        override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Event") {
-            init {
-                addElement("op")
-                addElement("t", true)
-                addElement("s", true)
-                addElement("d", true)
-
+        override val descriptor: SerialDescriptor = SerialDescriptor("Event") {
+                element("op", OpCode.descriptor)
+                element("t", String.serializer().descriptor, isOptional = true)
+                element("s", Int.serializer().descriptor, isOptional =  true)
+                element("d", JsonObject.serializer().descriptor,  isOptional = true)
             }
-        }
 
         override fun deserialize(decoder: Decoder): Event? {
             var op: OpCode? = null
@@ -162,7 +162,7 @@ data class Heartbeat(val data: Long) : Event() {
     @Serializer(Heartbeat::class)
     companion object : DeserializationStrategy<Heartbeat> {
         override val descriptor: SerialDescriptor
-            get() = LongDescriptor.withName("HeartbeatEvent")
+            get() = PrimitiveDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
 
         override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
     }
@@ -179,7 +179,7 @@ data class ResumedData(
     @Serializer(Heartbeat::class)
     companion object : DeserializationStrategy<Heartbeat> {
         override val descriptor: SerialDescriptor
-            get() = LongDescriptor.withName("HeartbeatEvent")
+            get() = PrimitiveDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
 
         override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
     }
@@ -191,7 +191,7 @@ data class InvalidSession(val resumable: Boolean) : Event() {
     @Serializer(InvalidSession::class)
     companion object : DeserializationStrategy<InvalidSession> {
         override val descriptor: SerialDescriptor
-            get() = BooleanDescriptor.withName("InvalidSession")
+            get() = PrimitiveDescriptor("InvalidSession", PrimitiveKind.BOOLEAN)
 
         override fun deserialize(decoder: Decoder) = InvalidSession(decoder.decodeBoolean())
     }

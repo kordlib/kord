@@ -65,7 +65,7 @@ enum class ActivityType(val code: Int) {
     @Serializer(forClass = ActivityType::class)
     companion object ActivityTypeSerializer : KSerializer<ActivityType> {
         override val descriptor: SerialDescriptor
-            get() = IntDescriptor.withName("op")
+            get() = PrimitiveDescriptor("op", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ActivityType {
             val code = decoder.decodeInt()

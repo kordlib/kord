@@ -6,6 +6,9 @@ import io.ktor.http.HttpMethod
 import kotlinx.serialization.Decoder
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialDescriptor
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.nullable
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.internal.*
 import com.gitlab.kordlib.common.entity.DiscordEmoji as EmojiEntity
 
@@ -15,7 +18,7 @@ sealed class Route<T>(
         val strategy: DeserializationStrategy<T>
 ) {
 
-    override fun toString(): String = "Route(method:${method.value},path:$path,strategy:${strategy.descriptor.name})"
+    override fun toString(): String = "Route(method:${method.value},path:$path,strategy:${strategy.descriptor.serialName})"
 
     object GatewayGet
         : Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer())
@@ -45,13 +48,13 @@ sealed class Route<T>(
         : Route<DiscordMessage>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId", DiscordMessage.serializer())
 
     object MessagesGet
-        : Route<List<DiscordMessage>>(HttpMethod.Get, "/channels/$ChannelId/messages", ArrayListSerializer(DiscordMessage.serializer()))
+        : Route<List<DiscordMessage>>(HttpMethod.Get, "/channels/$ChannelId/messages", ListSerializer(DiscordMessage.serializer()))
 
     object PinsGet
-        : Route<List<DiscordMessage>>(HttpMethod.Get, "/channels/$ChannelId/pins", ArrayListSerializer(DiscordMessage.serializer()))
+        : Route<List<DiscordMessage>>(HttpMethod.Get, "/channels/$ChannelId/pins", ListSerializer(DiscordMessage.serializer()))
 
     object InvitesGet
-        : Route<List<InviteResponse>>(HttpMethod.Get, "/channels/$ChannelId/invites", ArrayListSerializer(InviteResponse.serializer()))
+        : Route<List<InviteResponse>>(HttpMethod.Get, "/channels/$ChannelId/invites", ListSerializer(InviteResponse.serializer()))
 
     object InvitePost
         : Route<InviteResponse>(HttpMethod.Post, "/channels/$ChannelId/invites", InviteResponse.serializer())
@@ -90,7 +93,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/permissions/$OverwriteId", NoStrategy)
 
     object ReactionsGet
-        : Route<List<DiscordUser>>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji", ArrayListSerializer(DiscordUser.serializer()))
+        : Route<List<DiscordUser>>(HttpMethod.Get, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji", ListSerializer(DiscordUser.serializer()))
 
     object TypingIndicatorPost
         : Route<Unit>(HttpMethod.Post, "/channels/$ChannelId/typing", NoStrategy)
@@ -108,7 +111,7 @@ sealed class Route<T>(
         : Route<EmojiEntity>(HttpMethod.Get, "/guilds/$GuildId/emojis/$EmojiId", EmojiEntity.serializer())
 
     object GuildEmojisGet
-        : Route<List<EmojiEntity>>(HttpMethod.Get, "/guilds/$GuildId/emojis", ArrayListSerializer(EmojiEntity.serializer()))
+        : Route<List<EmojiEntity>>(HttpMethod.Get, "/guilds/$GuildId/emojis", ListSerializer(EmojiEntity.serializer()))
 
     object GuildEmojiDelete
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/emojis/$EmojiId", NoStrategy)
@@ -135,7 +138,7 @@ sealed class Route<T>(
         : Route<DiscordUser>(HttpMethod.Get, "/users/$UserId", DiscordUser.serializer())
 
     object CurrentUsersGuildsGet
-        : Route<List<DiscordPartialGuild>>(HttpMethod.Get, "/users/@me/guilds", ArrayListSerializer(DiscordPartialGuild.serializer()))
+        : Route<List<DiscordPartialGuild>>(HttpMethod.Get, "/users/@me/guilds", ListSerializer(DiscordPartialGuild.serializer()))
 
     object GuildLeave
         : Route<Unit>(HttpMethod.Delete, "/users/@me/guilds/$GuildId", NoStrategy)
@@ -144,7 +147,7 @@ sealed class Route<T>(
         : Route<DiscordChannel>(HttpMethod.Post, "/users/@me/channels", DiscordChannel.serializer())
 
     object UserConnectionsGet
-        : Route<List<Connection>>(HttpMethod.Get, "/users/@me/connections", ArrayListSerializer(Connection.serializer()))
+        : Route<List<Connection>>(HttpMethod.Get, "/users/@me/connections", ListSerializer(Connection.serializer()))
 
     object GuildPost
         : Route<DiscordGuild>(HttpMethod.Post, "/guilds", DiscordGuild.serializer())
@@ -159,7 +162,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId", NoStrategy)
 
     object GuildChannelsGet
-        : Route<List<DiscordChannel>>(HttpMethod.Get, "/guilds/$GuildId/channels", ArrayListSerializer(DiscordChannel.serializer()))
+        : Route<List<DiscordChannel>>(HttpMethod.Get, "/guilds/$GuildId/channels", ListSerializer(DiscordChannel.serializer()))
 
     object GuildChannelsPost
         : Route<DiscordChannel>(HttpMethod.Post, "/guilds/$GuildId/channels", DiscordChannel.serializer())
@@ -171,7 +174,7 @@ sealed class Route<T>(
         : Route<DiscordGuildMember>(HttpMethod.Get, "/guilds/$GuildId/members/$UserId", DiscordGuildMember.serializer())
 
     object GuildMembersGet
-        : Route<List<DiscordGuildMember>>(HttpMethod.Get, "/guilds/$GuildId/members", ArrayListSerializer(DiscordGuildMember.serializer()))
+        : Route<List<DiscordGuildMember>>(HttpMethod.Get, "/guilds/$GuildId/members", ListSerializer(DiscordGuildMember.serializer()))
 
     object GuildMemberPut
         : Route<DiscordGuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", DiscordGuildMember.serializer().nullable)
@@ -180,7 +183,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/$UserId", NoStrategy)
 
     object GuildCurrentUserNickPatch
-        : Route<String>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", StringSerializer)
+        : Route<String>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", String.serializer())
 
     object GuildMemberRolePut
         : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
@@ -192,7 +195,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/members/$UserId", NoStrategy)
 
     object GuildBansGet
-        : Route<List<BanResponse>>(HttpMethod.Get, "/guilds/$GuildId/bans", ArrayListSerializer(BanResponse.serializer()))
+        : Route<List<BanResponse>>(HttpMethod.Get, "/guilds/$GuildId/bans", ListSerializer(BanResponse.serializer()))
 
     object GuildBanGet
         : Route<BanResponse>(HttpMethod.Get, "/guilds/$GuildId/bans/$UserId", BanResponse.serializer())
@@ -204,13 +207,13 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/bans/$UserId", NoStrategy)
 
     object GuildRolesGet
-        : Route<List<DiscordRole>>(HttpMethod.Get, "/guilds/$GuildId/roles", ArrayListSerializer(DiscordRole.serializer()))
+        : Route<List<DiscordRole>>(HttpMethod.Get, "/guilds/$GuildId/roles", ListSerializer(DiscordRole.serializer()))
 
     object GuildRolePost
         : Route<DiscordRole>(HttpMethod.Post, "/guilds/$GuildId/roles", DiscordRole.serializer())
 
     object GuildRolesPatch
-        : Route<List<DiscordRole>>(HttpMethod.Patch, "/guilds/$GuildId/roles", ArrayListSerializer(DiscordRole.serializer()))
+        : Route<List<DiscordRole>>(HttpMethod.Patch, "/guilds/$GuildId/roles", ListSerializer(DiscordRole.serializer()))
 
     object GuildRolePatch
         : Route<DiscordRole>(HttpMethod.Patch, "/guilds/$GuildId/roles/$RoleId", DiscordRole.serializer())
@@ -225,13 +228,13 @@ sealed class Route<T>(
         : Route<PruneResponse>(HttpMethod.Post, "/guilds/$GuildId/prune", PruneResponse.serializer())
 
     object GuildVoiceRegionsGet
-        : Route<List<VoiceRegion>>(HttpMethod.Get, "/guilds/$GuildId/regions", ArrayListSerializer(VoiceRegion.serializer()))
+        : Route<List<VoiceRegion>>(HttpMethod.Get, "/guilds/$GuildId/regions", ListSerializer(VoiceRegion.serializer()))
 
     object GuildInvitesGet
-        : Route<List<InviteResponse>>(HttpMethod.Get, "/guilds/$GuildId/invites", ArrayListSerializer(InviteResponse.serializer()))
+        : Route<List<InviteResponse>>(HttpMethod.Get, "/guilds/$GuildId/invites", ListSerializer(InviteResponse.serializer()))
 
     object GuildIntegrationGet
-        : Route<List<DiscordGuildIntegrations>>(HttpMethod.Get, "/guilds/$GuildId/integrations", ArrayListSerializer(DiscordGuildIntegrations.serializer()))
+        : Route<List<DiscordGuildIntegrations>>(HttpMethod.Get, "/guilds/$GuildId/integrations", ListSerializer(DiscordGuildIntegrations.serializer()))
 
     object GuildIntegrationPost
         : Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations", NoStrategy)
@@ -259,10 +262,10 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Get, "/guilds/$GuildId/widget", NoStrategy)
 
     object ChannelWebhooksGet
-        : Route<List<DiscordWebhook>>(HttpMethod.Get, "/channels/$ChannelId/webhooks", ArrayListSerializer(DiscordWebhook.serializer()))
+        : Route<List<DiscordWebhook>>(HttpMethod.Get, "/channels/$ChannelId/webhooks", ListSerializer(DiscordWebhook.serializer()))
 
     object GuildWebhooksGet
-        : Route<List<DiscordWebhook>>(HttpMethod.Get, "/guild/$GuildId/webhooks", ArrayListSerializer(DiscordWebhook.serializer()))
+        : Route<List<DiscordWebhook>>(HttpMethod.Get, "/guild/$GuildId/webhooks", ListSerializer(DiscordWebhook.serializer()))
 
     object WebhookGet
         : Route<DiscordWebhook>(HttpMethod.Get, "/webhooks/$WebhookId", DiscordWebhook.serializer())
@@ -297,7 +300,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
 
     object VoiceRegionsGet
-        : Route<List<VoiceRegion>>(HttpMethod.Get, "/voice/regions", ArrayListSerializer(VoiceRegion.serializer()))
+        : Route<List<VoiceRegion>>(HttpMethod.Get, "/voice/regions", ListSerializer(VoiceRegion.serializer()))
 
     object CurrentApplicationInfo
         : Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())

@@ -26,7 +26,7 @@ enum class WebhookType(val code: Int) {
     companion object WebhookTypeSerializer : KSerializer<WebhookType> {
 
         override val descriptor: SerialDescriptor
-            get() = IntDescriptor.withName("type")
+            get() = PrimitiveDescriptor("type", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): WebhookType {
             val code = decoder.decodeInt()

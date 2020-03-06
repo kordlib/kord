@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("gradle-plugin-api", version = "1.3.61"))
+    implementation(kotlin("gradle-plugin-api", version = "1.3.70"))
     implementation(gradleApi())
     implementation(localGroovy())
 }

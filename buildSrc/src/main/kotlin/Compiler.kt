@@ -1,7 +1,7 @@
 object CompilerArguments {
     const val inlineClasses = "-XXLanguage:+InlineClasses"
-    const val coroutines = "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
-    const val time = "-Xuse-experimental=kotlin.time.ExperimentalTime"
+    const val coroutines = "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+    const val time = "-Xopt-in=kotlin.time.ExperimentalTime"
 }
 
 object Jvm {

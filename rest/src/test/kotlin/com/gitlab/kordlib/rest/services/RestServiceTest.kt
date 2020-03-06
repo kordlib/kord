@@ -43,11 +43,6 @@ class RestServiceTest {
 
     private lateinit var userId: String
 
-    @BeforeEach
-    fun enableOnlyOnMerge() {
-        Assumptions.assumeTrue { System.getProperty("CI_MERGE_REQUEST_ID") != null }
-    }
-
     @BeforeAll
     fun setup() = runBlocking {
         client = HttpClient(CIO) {
