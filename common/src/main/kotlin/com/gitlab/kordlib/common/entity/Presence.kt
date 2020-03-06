@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.StringDescriptor
 import kotlinx.serialization.json.JsonElement
 
 @Serializable
@@ -45,7 +44,7 @@ enum class Status {
 
         @Serializer(forClass = Status::class)
         companion object StatusSerializer : KSerializer<Status> {
-                override val descriptor: SerialDescriptor = StringDescriptor.withName("Status")
+                override val descriptor: SerialDescriptor = PrimitiveDescriptor("Status", PrimitiveKind.STRING)
 
                 override fun deserialize(decoder: Decoder): Status {
                         val name = decoder.decodeString()

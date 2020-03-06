@@ -1,12 +1,13 @@
 object Versions {
-    const val kotlin = "1.3.61"
-    const val kotlinxSerialization = "0.14.0"
+    const val kotlin = "1.3.70"
+    const val kotlinxSerialization = "0.20.0"
     const val ktor = "1.3.1"
-    const val kotlinxCoroutines = "1.3.3"
+    const val kotlinxCoroutines = "1.3.4"
     const val kotlinLogging = "1.7.8"
 
+    //test deps
     const val kotlinTest = kotlin
-    const val junit5 = "5.6.0-M1"
+    const val junit5 = "5.6.0"
     const val kotlinxCoroutinesTest = kotlinxCoroutines
     const val kotlinReflect = kotlin
     const val junitJupiterApi = junit5

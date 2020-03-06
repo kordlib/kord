@@ -22,7 +22,7 @@ enum class OpCode(val code: Int) {
     @Serializer(forClass = OpCode::class)
     companion object OpCodeSerializer : KSerializer<OpCode> {
         override val descriptor: SerialDescriptor
-            get() = IntDescriptor.withName("op")
+            get() = PrimitiveDescriptor("op", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): OpCode {
             val code = decoder.decodeInt()

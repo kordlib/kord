@@ -2,9 +2,9 @@ package com.gitlab.kordlib.rest.json.response
 
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.ArrayListSerializer
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.internal.IntDescriptor
-import kotlinx.serialization.internal.SerialClassDescImpl
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonElementSerializer
@@ -42,12 +42,10 @@ sealed class AuditLogChangeResponse<T> {
 
     @Serializer(forClass = AuditLogChangeResponse::class)
     companion object AuditLogChangeSerializer : KSerializer<AuditLogChangeResponse<*>> {
-        override val descriptor: SerialDescriptor = object : SerialClassDescImpl("AuditLogChange") {
-            init {
-                addElement("key")
-                addElement("old_value", true)
-                addElement("new_value", true)
-            }
+        override val descriptor: SerialDescriptor = SerialDescriptor("AuditLogChange") {
+            element("key", String.serializer().descriptor)
+            element("old_value", JsonElement.serializer().descriptor, isOptional = true)
+            element("new_value", JsonElement.serializer().descriptor, isOptional = true)
 
         }
 
@@ -122,7 +120,7 @@ sealed class AuditLogChangeResponse<T> {
         @UnstableDefault
         private fun <T> listFromJson(serializer: KSerializer<T>, element: JsonElement?): List<T>? {
             return if (element != null) {
-                val asListSerializer = ArrayListSerializer(serializer)
+                val asListSerializer = ListSerializer(serializer)
                 Json.nonstrict.fromJson(asListSerializer, element)
             } else null
         }
@@ -267,7 +265,7 @@ enum class AuditLogEventResponse(val code: Int) {
 
     @Serializer(forClass = AuditLogEventResponse::class)
     companion object AuditLogEventSerializer : KSerializer<AuditLogEventResponse> {
-        override val descriptor: SerialDescriptor = IntDescriptor.withName("AuditLogEvent")
+        override val descriptor: SerialDescriptor = PrimitiveDescriptor("AuditLogEvent", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): AuditLogEventResponse {
             val code = decoder.decodeInt()

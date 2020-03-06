@@ -15,7 +15,7 @@ data class MessageCreateRequest(
 
 data class MultipartMessageCreateRequest(
         val request: MessageCreateRequest,
-        val files: List<Pair<String, InputStream>> = emptyList()
+        val files: List<Pair<String, java.io.InputStream>> = emptyList()
 )
 
 @Serializable

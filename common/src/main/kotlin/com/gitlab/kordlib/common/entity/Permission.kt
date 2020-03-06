@@ -36,7 +36,7 @@ class Permissions constructor(val code: Int) {
         }
 
         override val descriptor: SerialDescriptor
-            get() = IntDescriptor.withName("permission")
+            get() = PrimitiveDescriptor("permission", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): Permissions {
             return Permissions(decoder.decodeInt())

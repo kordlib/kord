@@ -1,3 +1,20 @@
+#0.4.4
+
+## Additions
+
+* Added `MessageBehavior.withTyping`.
+
+## Changes
+
+* usage of `kotlinx.io.inputstream` has been replaced with `java.io.inputstream` following the internalization
+of the typealias.
+
+## Dependencies
+
+* kotlin 1.3.61 -> 1.3.70
+* kotlinx.serialization 0.14.0 -> 0.20.0
+* kotlinx.coroutines 1.3.3 -> 1.3.4
+
 #0.4.3
 
 ## Additions
