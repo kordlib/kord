@@ -38,7 +38,7 @@ subprojects {
         mavenCentral()
         jcenter()
         maven(url = "https://kotlin.bintray.com/kotlinx")
-        maven(url = "https://jitpack.io")
+        maven(url = "https://dl.bintray.com/kordlib/Kord")
     }
 
     dependencies {

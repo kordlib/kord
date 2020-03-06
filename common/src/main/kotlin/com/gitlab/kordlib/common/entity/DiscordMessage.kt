@@ -314,7 +314,7 @@ enum class MessageType(val code: Int) {
     companion object MessageTypeSerializer : KSerializer<MessageType> {
 
         override val descriptor: SerialDescriptor
-            get() = IntDescriptor.withName("type")
+            get() = PrimitiveDescriptor("type", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): MessageType {
             val code = decoder.decodeInt()
