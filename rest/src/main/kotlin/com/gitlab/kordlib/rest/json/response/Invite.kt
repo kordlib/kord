@@ -31,7 +31,7 @@ enum class TargetUserType(val code: Int) {
 
     @Serializer(forClass = TargetUserType::class)
     companion object TargetUserTypeSerializer : KSerializer<TargetUserType> {
-        override val descriptor: SerialDescriptor = IntDescriptor.withName("TargetUserType")
+        override val descriptor: SerialDescriptor = PrimitiveDescriptor("TargetUserType", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): TargetUserType {
             val code = decoder.decodeInt()

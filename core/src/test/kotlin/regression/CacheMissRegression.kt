@@ -36,7 +36,8 @@ import kotlin.test.BeforeTest
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-private val parser = Json(JsonConfiguration(encodeDefaults = false, strictMode = false))
+
+private val parser = Json(JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true))
 
 object FakeGateway : Gateway {
 

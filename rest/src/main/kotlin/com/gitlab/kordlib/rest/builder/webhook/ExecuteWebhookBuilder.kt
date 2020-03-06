@@ -18,7 +18,7 @@ class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
     var username: String? = null
     var avatarUrl: String? = null
     var tts: Boolean? = null
-    private var file: Pair<String, InputStream>? = null
+    private var file: Pair<String, java.io.InputStream>? = null
     val embeds: MutableList<EmbedRequest> = mutableListOf()
 
     fun setFile(name: String, content: java.io.InputStream) {

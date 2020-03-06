@@ -28,5 +28,5 @@ data class WebhookExecuteRequest(
 
 data class MultiPartWebhookExecuteRequest(
         val request: WebhookExecuteRequest,
-        val file: Pair<String, InputStream>?
+        val file: Pair<String, java.io.InputStream>?
 )

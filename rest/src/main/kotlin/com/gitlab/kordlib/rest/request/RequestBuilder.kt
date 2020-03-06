@@ -14,7 +14,7 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     private val parameters = ParametersBuilder()
 
     private var body: RequestBody<*>? = null
-    private val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+    private val files: MutableList<Pair<String, java.io.InputStream>> = mutableListOf()
 
     operator fun MutableMap<String, String>.set(key: Route.Key, value: String) = set(key.identifier, value)
 
@@ -26,11 +26,11 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
 
     fun header(key: String, value: String) = headers.append(key, value)
 
-    fun file(name: String, input: InputStream) {
+    fun file(name: String, input: java.io.InputStream) {
         files.add(name to input)
     }
 
-    fun file(pair: Pair<String, InputStream>) {
+    fun file(pair: Pair<String, java.io.InputStream>) {
         files.add(pair)
     }
 

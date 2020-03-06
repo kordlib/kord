@@ -47,7 +47,7 @@ repositories {
 
 ```groovy
 dependencies {
-   implementation("com.gitlab.kordlib:kord-core:{version}")
+   implementation("com.gitlab.kordlib.kord:kord-core:{version}")
 }
 ```
 
@@ -61,7 +61,7 @@ repositories {
 
 ```kotlin
 dependencies {
-   implementation("com.gitlab.kordlib:kord-core:{version}")
+   implementation("com.gitlab.kordlib.kord:kord-core:{version}")
 }
 ```
 

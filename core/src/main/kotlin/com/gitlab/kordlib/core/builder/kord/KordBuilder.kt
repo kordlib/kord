@@ -29,6 +29,7 @@ import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.defaultRequest
 import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -37,6 +38,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import mu.KotlinLogging
 import kotlin.concurrent.thread
 import kotlin.time.seconds
@@ -161,7 +164,11 @@ class KordBuilder(val token: String) {
         val client = httpClient?.let {
             it.config { defaultConfig() }
         } ?: run {
-            HttpClient(CIO) { defaultConfig() }
+            HttpClient(CIO) { defaultConfig()
+                install(JsonFeature) {
+                    serializer = KotlinxSerializer(Json(JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true)))
+                }
+            }
         }
 
         val response = client.get<BotGatewayResponse>("${Route.baseUrl}/gateway/bot")
