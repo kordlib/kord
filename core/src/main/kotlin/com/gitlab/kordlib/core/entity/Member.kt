@@ -7,10 +7,7 @@ import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.cache.data.MemberData
 import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.toInstant
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
@@ -57,6 +54,11 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(
      * The [roles][Role] that apply to this user.
      */
     val roles: Flow<Role> get() = roleIds.asFlow().map { kord.getRole(guildId, it) }.filterNotNull()
+
+    /**
+     * Whether this member's [id] equals the [Guild.ownerId]
+     */
+    suspend fun isOwner(): Boolean = getGuild().ownerId == id
 
     /**
      * Returns this member.
