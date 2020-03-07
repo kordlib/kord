@@ -13,6 +13,10 @@
 
 * `Message#guildId` and `Message#guild` are deprecated due to inconsistent availability.
 
+## Fixes
+
+* Guild emojis update correctly on `GuildEmojisUpdate` event.
+
 # 0.4.4
 
 ## Additions
