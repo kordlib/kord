@@ -1,8 +1,19 @@
+# 0.4.5
+
+## Additions
+
+* Added `Member#roleBehaviors`
+* You can now add or remove entire `Permissions` to/from the `PermissionsBuilder`
+* Added `Member#isOwner`
+* Added `Member#getPermissions`
+* Added `Message.isPinned`
+* Added `GuildChannel#getEffectivePermissions`
+
 # 0.4.4
 
 ## Additions
 
-* Added `MessageBehavior.withTyping`.
+* Added `MessageBehavior#withTyping`.
 
 ## Changes
 
