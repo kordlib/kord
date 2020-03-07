@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.entity
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
+import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.cache.data.MemberData
 import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.toInstant
@@ -45,6 +46,12 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(
      * The ids of the [roles][Role] that apply to this user.
      */
     val roleIds: Set<Snowflake> get() = memberData.roles.asSequence().map { Snowflake(it) }.toSet()
+
+    /**
+     * The behaviors of the [roles][Role] that apply to this user.
+     */
+    val roleBehaviors: Set<RoleBehavior>
+        get() = memberData.roles.asSequence().map { RoleBehavior(guildId = guildId, id = Snowflake(it), kord = kord) }.toSet()
 
     /**
      * The [roles][Role] that apply to this user.
