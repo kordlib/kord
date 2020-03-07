@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.entity.Permission
+import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
@@ -59,6 +61,25 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(
      * Whether this member's [id] equals the [Guild.ownerId]
      */
     suspend fun isOwner(): Boolean = getGuild().ownerId == id
+
+    /**
+     * Requests to calculate a summation of the permissions of this member's [roles].
+     */
+    suspend fun getPermissions(): Permissions {
+        val guild = getGuild()
+        val owner = guild.ownerId == this.id
+        if (owner) return Permissions {
+            +Permission.All
+        }
+
+        val everyone = guild.getEveryoneRole().permissions
+        val roles = roles.map { it.permissions }.toList()
+
+        return Permissions {
+            +everyone
+            roles.forEach { +it }
+        }
+    }
 
     /**
      * Returns this member.
