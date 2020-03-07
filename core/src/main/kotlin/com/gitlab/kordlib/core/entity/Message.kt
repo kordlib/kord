@@ -9,15 +9,15 @@ import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
-import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.DmChannel
-import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
-import com.gitlab.kordlib.core.entity.channel.MessageChannel
+import com.gitlab.kordlib.core.entity.channel.*
+import com.gitlab.kordlib.core.getChannel
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.Instant
 import java.time.format.DateTimeFormatter
+
+private const val guildDeprecationMessage = "Guild ids aren't consistently present, user getGuild() instead."
 
 /**
  * An instance of a [Discord Message][https://discordapp.com/developers/docs/resources/channel#message-object].
@@ -41,6 +41,7 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
      *
      * Returns null if this message was send in a [DmChannel].
      */
+    @Deprecated(guildDeprecationMessage, ReplaceWith("getGuild()?.id"), DeprecationLevel.WARNING)
     val guildId: Snowflake? get() = data.guildId?.toSnowflakeOrNull()
 
     /**
@@ -82,6 +83,7 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
      *
      * Returns null if this message was send in a [DmChannel].
      */
+    @Deprecated("guildDeprecationMessage", ReplaceWith("getGuild()"), DeprecationLevel.WARNING)
     val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
     /**
@@ -207,12 +209,16 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
      *
      * Returns null if the message was not send in a [GuildMessageChannel], or if the [author] is not a [User].
      */
-    suspend fun getAuthorAsMember(): Member? = data.guildId?.let { author?.asMember(Snowflake(it)) }
+    suspend fun getAuthorAsMember(): Member? {
+        val author = author ?: return null
+        val guildId = getGuild()?.id ?: return null
+        return author.asMember(guildId)
+    }
 
     /**
      * Requests to get the [Guild] this message was send in.
      *
      * Returns null if the message was not send in a [GuildMessageChannel].
      */
-    suspend fun getGuild(): Guild? = guildId?.let { kord.getGuild(it) }
+    suspend fun getGuild(): Guild? =  kord.getChannel<GuildChannel>(channelId)?.getGuild()
 }

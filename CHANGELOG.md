@@ -9,6 +9,10 @@
 * Added `Message.isPinned`
 * Added `GuildChannel#getEffectivePermissions`
 
+## Changes
+
+* `Message#guildId` and `Message#guild` are deprecated due to inconsistent availability.
+
 # 0.4.4
 
 ## Additions
@@ -92,7 +96,6 @@ part of the rest module.
 * Fixed an issue where disconnecting from the `DefaultGateway` 
 without closing the connection (i.e. dropping your internet connection) would indefinitely suspend the `DefaultGateway`,
 making it unusable.
->>>>>>> 2eb939d... Fix DiscordAddedGuildMember and gateway deadlock
 
 # 0.3.2
 
