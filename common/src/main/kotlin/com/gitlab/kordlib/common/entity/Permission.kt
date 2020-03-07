@@ -48,6 +48,16 @@ class Permissions constructor(val code: Int) {
     }
 
     class PermissionsBuilder(internal var code: Int = 0) {
+        operator fun Permissions.unaryPlus() {
+            this@PermissionsBuilder.code = this@PermissionsBuilder.code or code
+        }
+
+        operator fun Permissions.unaryMinus() {
+            if (this@PermissionsBuilder.code and code == code) {
+                this@PermissionsBuilder.code = this@PermissionsBuilder.code xor code
+            }
+        }
+
         operator fun Permission.unaryPlus() {
             this@PermissionsBuilder.code = this@PermissionsBuilder.code or code
         }
