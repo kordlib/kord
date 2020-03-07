@@ -161,6 +161,11 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
         }
 
     /**
+     * Whether the message was pinned in its [channel].
+     */
+    val isPinned get() = data.pinned
+
+    /**
      * The reactions to this message.
      */
     val reactions: Set<Reaction> get() = data.reactions.orEmpty().asSequence().map { Reaction(it, kord) }.toSet()
