@@ -64,7 +64,7 @@ internal class GuildEventHandler(
         }
 
         for (channel in channels.orEmpty()) {
-            cache.put(ChannelData.from(channel))
+            cache.put(ChannelData.from(channel.copy(guildId = this.id))) //guild id always empty
         }
 
         for (presence in presences.orEmpty()) {
