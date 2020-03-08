@@ -12,6 +12,7 @@
 ## Changes
 
 * `Message#guildId` and `Message#guild` are deprecated due to inconsistent availability.
+* removed `ReactionEmoji.id` due to compiler issues regarding nullable inline classes, check for Custom type instead.
 
 ## Fixes
 
