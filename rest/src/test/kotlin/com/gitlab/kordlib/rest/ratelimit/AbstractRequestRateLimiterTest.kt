@@ -6,9 +6,11 @@ import com.gitlab.kordlib.rest.route.Route
 import io.ktor.util.StringValues
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.withTimeout
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
+import kotlin.IllegalStateException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.ExperimentalTime
@@ -67,5 +69,24 @@ abstract class AbstractRequestRateLimiterTest {
         rateLimiter.sendRequest(clock, 2, rateLimit = RateLimit.exhausted)
 
         assertEquals(0, currentTime)
+    }
+
+    @Test
+    fun `an exception during the handling won't lock the handler`() = runBlockingTest {
+        val clock = TestClock(instant, this, ZoneOffset.UTC)
+        val rateLimiter = newRequestRateLimiter(clock)
+
+        rateLimiter.sendRequest(clock, 1, rateLimit = RateLimit(Total(5), Remaining(5)))
+        val request = JsonRequest<Unit, DiscordGuild>(Route.GuildGet, mapOf(Route.GuildId to "1"), StringValues.Empty, StringValues.Empty, null)
+
+        try {
+            rateLimiter.consume(request) {
+                throw IllegalStateException("something went wrong")
+            }
+        } catch (_: IllegalStateException) {}
+
+        withTimeout(1_000_000) {
+            rateLimiter.sendRequest(clock, 1, rateLimit = RateLimit.exhausted)
+        }
     }
 }

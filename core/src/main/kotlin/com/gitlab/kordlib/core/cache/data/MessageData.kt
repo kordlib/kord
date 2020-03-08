@@ -11,6 +11,7 @@ internal val MessageData.authorId get() = author?.id
 data class MessageData(
         val id: Long,
         val channelId: Long,
+        @Deprecated("guildId's presence is inconsistent and will be removed in later versions")
         val guildId: Long? = null,
         val author: UserData?,
         val content: String,

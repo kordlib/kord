@@ -1,8 +1,29 @@
-#0.4.4
+# 0.4.5
 
 ## Additions
 
-* Added `MessageBehavior.withTyping`.
+* Added `Member#roleBehaviors`
+* You can now add or remove entire `Permissions` to/from the `PermissionsBuilder`
+* Added `Member#isOwner`
+* Added `Member#getPermissions`
+* Added `Message.isPinned`
+* Added `GuildChannel#getEffectivePermissions`
+
+## Changes
+
+* `Message#guildId` and `Message#guild` are deprecated due to inconsistent availability.
+* removed `ReactionEmoji.id` due to compiler issues regarding nullable inline classes, check for Custom type instead.
+
+## Fixes
+
+* Guild emojis update correctly on `GuildEmojisUpdate` event.
+* Ratelimiters should no longer lock up when throwing an exception during requests.
+
+# 0.4.4
+
+## Additions
+
+* Added `MessageBehavior#withTyping`.
 
 ## Changes
 
@@ -15,7 +36,7 @@ of the typealias.
 * kotlinx.serialization 0.14.0 -> 0.20.0
 * kotlinx.coroutines 1.3.3 -> 1.3.4
 
-#0.4.3
+# 0.4.3
 
 ## Additions
 
@@ -81,7 +102,6 @@ part of the rest module.
 * Fixed an issue where disconnecting from the `DefaultGateway` 
 without closing the connection (i.e. dropping your internet connection) would indefinitely suspend the `DefaultGateway`,
 making it unusable.
->>>>>>> 2eb939d... Fix DiscordAddedGuildMember and gateway deadlock
 
 # 0.3.2
 
