@@ -65,34 +65,43 @@ private class ExclusionRequestToken(
     override suspend fun complete(response: RequestResponse) {
         logger.trace { response.toString() }
 
-        if (response.rateLimit?.isExhausted == true) {
-            response.bucketKey?.let { rateLimiter.buckets[it] = response.reset.toResetPoint() }
-            logger.trace { "[RATE LIMIT]:[BUCKET]:${response.bucketKey?.value} was exhausted until ${response.reset.value}" }
+        if (response is RequestResponse.Error) return run {
+            completedAtomic.compareAndSet(expect = false, update = true)
+            rateLimiter.mutex.unlock()
         }
 
-        if (response.bucketKey != null) {
-            val buckets = rateLimiter.requestBuckets.getOrPut(identity, ::mutableSetOf)
-            if (response.bucketKey!! !in buckets) {
-                logger.trace { "[DISCOVERED]:[BUCKET]:Bucket ${response.bucketKey?.value} discovered for $identity" }
+        try {
+            if (response.rateLimit?.isExhausted == true) {
+                response.bucketKey?.let { rateLimiter.buckets[it] = response.reset!!.toResetPoint() }
+                logger.trace { "[RATE LIMIT]:[BUCKET]:${response.bucketKey?.value} was exhausted until ${response.reset!!.value}" }
             }
-            buckets.add(response.bucketKey!!)
+
+            if (response.bucketKey != null) {
+                val buckets = rateLimiter.requestBuckets.getOrPut(identity, ::mutableSetOf)
+                if (response.bucketKey!! !in buckets) {
+                    logger.trace { "[DISCOVERED]:[BUCKET]:Bucket ${response.bucketKey?.value} discovered for $identity" }
+                }
+                buckets.add(response.bucketKey!!)
+            }
+
+            when (response) {
+                is RequestResponse.GlobalRateLimit -> {
+                    logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
+                    rateLimiter.globalPoint = response.reset.toResetPoint()
+                    rateLimiter.autoBanRateLimiter.consume()
+                }
+                is RequestResponse.BucketRateLimit -> {
+                    logger.trace { "[RATE LIMIT]:[BUCKET]:${response.bucketKey.value} was already exhausted" }
+                    rateLimiter.buckets[response.bucketKey] = response.reset.toResetPoint()
+                    rateLimiter.autoBanRateLimiter.consume()
+                }
+            }
+        } finally {
+            completedAtomic.compareAndSet(expect = false, update = true)
+            rateLimiter.mutex.unlock()
         }
 
-        when (response) {
-            is RequestResponse.GlobalRateLimit -> {
-                logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
-                rateLimiter.globalPoint = response.reset.toResetPoint()
-                rateLimiter.autoBanRateLimiter.consume()
-            }
-            is RequestResponse.BucketRateLimit -> {
-                logger.trace { "[RATE LIMIT]:[BUCKET]:${response.bucketKey.value} was already exhausted" }
-                rateLimiter.buckets[response.bucketKey] = response.reset.toResetPoint()
-                rateLimiter.autoBanRateLimiter.consume()
-            }
-        }
 
-        completedAtomic.compareAndSet(expect = false, update = true)
-        rateLimiter.mutex.unlock()
     }
 
 }

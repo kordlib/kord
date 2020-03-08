@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.gateway.handler
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.api.put
+import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
@@ -119,6 +120,10 @@ internal class GuildEventHandler(
     private suspend fun handle(event: GuildEmojisUpdate) = with(event.emoji) {
         val guildId = Snowflake(guildId)
         val emojis = emojis.map { GuildEmoji(EmojiData.from(it.id!!, it), guildId, kord) }.toSet()
+
+        cache.query<GuildData> { GuildData::id eq guildId.longValue }.update {
+            it.copy(emojis = emojis.map { emoji -> emoji.data })
+        }
 
         coreEventChannel.send(EmojisUpdateEvent(guildId, emojis, kord))
     }

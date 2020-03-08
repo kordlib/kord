@@ -1,15 +1,15 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.entity.Permission
+import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
+import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.cache.data.MemberData
 import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.toInstant
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
@@ -47,9 +47,39 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(
     val roleIds: Set<Snowflake> get() = memberData.roles.asSequence().map { Snowflake(it) }.toSet()
 
     /**
+     * The behaviors of the [roles][Role] that apply to this user.
+     */
+    val roleBehaviors: Set<RoleBehavior>
+        get() = memberData.roles.asSequence().map { RoleBehavior(guildId = guildId, id = Snowflake(it), kord = kord) }.toSet()
+
+    /**
      * The [roles][Role] that apply to this user.
      */
     val roles: Flow<Role> get() = roleIds.asFlow().map { kord.getRole(guildId, it) }.filterNotNull()
+
+    /**
+     * Whether this member's [id] equals the [Guild.ownerId]
+     */
+    suspend fun isOwner(): Boolean = getGuild().ownerId == id
+
+    /**
+     * Requests to calculate a summation of the permissions of this member's [roles].
+     */
+    suspend fun getPermissions(): Permissions {
+        val guild = getGuild()
+        val owner = guild.ownerId == this.id
+        if (owner) return Permissions {
+            +Permission.All
+        }
+
+        val everyone = guild.getEveryoneRole().permissions
+        val roles = roles.map { it.permissions }.toList()
+
+        return Permissions {
+            +everyone
+            roles.forEach { +it }
+        }
+    }
 
     /**
      * Returns this member.

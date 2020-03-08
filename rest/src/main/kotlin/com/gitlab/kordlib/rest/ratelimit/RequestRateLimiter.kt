@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.ratelimit
 
 import com.gitlab.kordlib.rest.request.Request
+import java.lang.Exception
 import java.time.Instant
 
 /**
@@ -26,9 +27,18 @@ suspend inline fun <T> RequestRateLimiter.consume(
         consumer: (token: RequestToken) -> T
 ): T {
     val token = await(request)
-    val result = consumer(token)
-    check(token.completed) { "token was not completed" }
-    return result
+    try {
+        val result = consumer(token)
+        check(token.completed) {
+            token.complete(RequestResponse.Error)
+            "token was not completed"
+        }
+        return result
+    } catch (exception: Throwable) {
+        if (!token.completed) token.complete(RequestResponse.Error)
+        throw exception
+    }
+
 }
 
 data class RateLimit(val total: Total, val remaining: Remaining) {
@@ -63,12 +73,16 @@ inline class Reset(val value: Instant) {
 sealed class RequestResponse {
     abstract val bucketKey: BucketKey?
     abstract val rateLimit: RateLimit?
-    abstract val reset: Reset
+    abstract val reset: Reset?
 
     /**
      * The request returned a non-rate limit error code.
      */
-    data class Error(override val bucketKey: BucketKey?, override val rateLimit: RateLimit?, override val reset: Reset) : RequestResponse()
+    object Error : RequestResponse() {
+        override val bucketKey: BucketKey? = null
+        override val rateLimit: RateLimit? = null
+        override val reset: Reset? = null
+    }
 
     /**
      * The request returned a response without errors.
