@@ -16,6 +16,7 @@
 ## Fixes
 
 * Guild emojis update correctly on `GuildEmojisUpdate` event.
+* Ratelimiters should no longer lock up when throwing an exception during requests.
 
 # 0.4.4
 

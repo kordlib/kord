@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.rest.ratelimit
 
 import com.gitlab.kordlib.common.annotation.KordUnsafe
-import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.rest.request.Request
 import com.gitlab.kordlib.rest.request.RequestIdentifier
 import com.gitlab.kordlib.rest.request.identifier
@@ -10,7 +9,6 @@ import kotlinx.coroutines.sync.Mutex
 import mu.KotlinLogging
 import java.time.Clock
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.time.minutes
 
 private val logger = KotlinLogging.logger("[R]:[ParallelRequestRateLimiter]")
 
@@ -65,32 +63,41 @@ private class ParallelRequestToken(
     override suspend fun complete(response: RequestResponse) {
         logger.trace { response.toString() }
 
-        if (response.rateLimit?.isExhausted == true) {
-            response.bucketKey?.let { rateLimiter.buckets[it] = response.reset.toResetPoint() }
-            logger.trace { "[RATE LIMIT]:[BUCKET]:${response.bucketKey?.value} was exhausted until ${response.reset.value}" }
+        try {
+            if (response is RequestResponse.Error) return run {
+                completedAtomic.compareAndSet(expect = false, update = true)
+                mutexes.forEach { it.unlock() }
+            }
+
+            if (response.rateLimit?.isExhausted == true) {
+                response.bucketKey?.let { rateLimiter.buckets[it] = response.reset!!.toResetPoint() }
+                logger.trace { "[RATE LIMIT]:[BUCKET]:${response.bucketKey?.value} was exhausted until ${response.reset!!.value}" }
+            }
+
+            if (response.bucketKey != null) {
+                val buckets = rateLimiter.requestBuckets.getOrPut(identity, ::mutableSetOf)
+                if (response.bucketKey!! !in buckets) {
+                    logger.trace { "[DISCOVERED]:[BUCKET]:Bucket ${response.bucketKey?.value} discovered for $identity" }
+                }
+                buckets.add(response.bucketKey!!)
+            }
+
+            when (response) {
+                is RequestResponse.GlobalRateLimit -> {
+                    logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
+                    rateLimiter.globalPoint = response.reset.toResetPoint()
+                }
+                is RequestResponse.BucketRateLimit -> {
+                    logger.trace { "[RATE LIMIT]:[BUCKET]:${response.bucketKey.value} was already exhausted" }
+                    rateLimiter.buckets[response.bucketKey] = response.reset.toResetPoint()
+                }
+            }
+        } finally {
+            completedAtomic.compareAndSet(expect = false, update = true)
+            mutexes.forEach { it.unlock() }
         }
 
-        if (response.bucketKey != null) {
-            val buckets = rateLimiter.requestBuckets.getOrPut(identity, ::mutableSetOf)
-            if (response.bucketKey!! !in buckets) {
-                logger.trace { "[DISCOVERED]:[BUCKET]:Bucket ${response.bucketKey?.value} discovered for $identity" }
-            }
-            buckets.add(response.bucketKey!!)
-        }
 
-        when (response) {
-            is RequestResponse.GlobalRateLimit -> {
-                logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
-                rateLimiter.globalPoint = response.reset.toResetPoint()
-            }
-            is RequestResponse.BucketRateLimit -> {
-                logger.trace { "[RATE LIMIT]:[BUCKET]:${response.bucketKey.value} was already exhausted" }
-                rateLimiter.buckets[response.bucketKey] = response.reset.toResetPoint()
-            }
-        }
-
-        completedAtomic.compareAndSet(expect = false, update = true)
-        mutexes.forEach { it.unlock() }
     }
 
 }
