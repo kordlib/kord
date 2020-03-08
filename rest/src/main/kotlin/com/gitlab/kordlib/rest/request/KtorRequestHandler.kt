@@ -111,7 +111,7 @@ fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): Reques
         response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
         response.isRateLimit -> RequestResponse.BucketRateLimit(bucket
                 ?: BucketKey("missing"), rateLimit, reset)
-        response.isError -> RequestResponse.Error(bucket, rateLimit, reset)
+        response.isError -> RequestResponse.Error
         else -> RequestResponse.Accepted(bucket, rateLimit, reset)
     }
 }
