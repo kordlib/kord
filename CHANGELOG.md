@@ -1,3 +1,13 @@
+# 0.4.6
+
+## Changes
+
+* `MessageChannel#withTyping` should now properly stop when cancelling the coroutine context
+
+## Fixes
+
+* Fixed channels cached in guild create events not having a guild id.
+
 # 0.4.5
 
 ## Additions
