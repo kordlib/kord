@@ -131,10 +131,6 @@ class Kord internal constructor(
                 ?: requestMessage(channelId = channelId, messageId = messageId)
     }
 
-    @Deprecated(message = "use regions instead", level = DeprecationLevel.WARNING, replaceWith = ReplaceWith("regions"))
-    suspend fun getRegions(): Flow<Region> =
-            rest.voice.getVoiceRegions().asFlow().map { RegionData.from(it) }.map { Region(it, this) }
-
     override suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role? {
         return cache.getRole(guildId = guildId, roleId = roleId) ?: requestRole(guildId = guildId, roleId = roleId)
     }
@@ -142,10 +138,6 @@ class Kord internal constructor(
     override suspend fun getSelf(): User = cache.getSelf() ?: User(UserData.from(rest.user.getCurrentUser()), this)
 
     override suspend fun getUser(id: Snowflake): User? = cache.getUser(id) ?: requestUser(id)
-
-    @Deprecated("use cache.users instead", ReplaceWith("cache.users"), DeprecationLevel.WARNING)
-    suspend fun getUsers(): Flow<User> =
-            cache.find<UserData>().asFlow().map { User(it, this) }
 
     suspend inline fun editPresence(builder: PresenceUpdateBuilder.() -> Unit) {
         val request = PresenceUpdateBuilder().apply(builder).toRequest()
