@@ -46,7 +46,7 @@ enum class Premium(val code: Int) {
     @Serializer(forClass = Premium::class)
     companion object PremiumSerializer : KSerializer<Premium> {
         override val descriptor: SerialDescriptor
-            get() = IntDescriptor.withName("premium_type")
+            get() = PrimitiveDescriptor("premium_type", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): Premium {
             val code = decoder.decodeInt()

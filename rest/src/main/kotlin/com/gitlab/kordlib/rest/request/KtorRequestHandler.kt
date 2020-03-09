@@ -16,6 +16,8 @@ import kotlinx.serialization.json.JsonConfiguration
 import mu.KotlinLogging
 import java.time.Clock
 
+internal val jsonConfig = JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true)
+
 /**
  * A [RequestHandler] that uses ktor's [HttpClient][client] to execute requests and accepts a [requestRateLimiter]
  * to schedule requests.
@@ -29,7 +31,7 @@ class KtorRequestHandler(
         private val client: HttpClient,
         private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
         private val clock: Clock = Clock.systemUTC(),
-        private val parser: Json = Json(JsonConfiguration(encodeDefaults = false, strictMode = false))
+        private val parser: Json = Json(jsonConfig)
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
 
@@ -86,7 +88,7 @@ class KtorRequestHandler(
                 token: String,
                 requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
                 clock: Clock = Clock.systemUTC(),
-                parser: Json = Json(JsonConfiguration(encodeDefaults = false, strictMode = false))
+                parser: Json = Json(jsonConfig)
         ): KtorRequestHandler {
             val client = HttpClient(CIO) { defaultRequest { header("Authorization", "Bot $token") } }
             return KtorRequestHandler(client, requestRateLimiter, clock, parser)
@@ -109,7 +111,7 @@ fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): Reques
         response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
         response.isRateLimit -> RequestResponse.BucketRateLimit(bucket
                 ?: BucketKey("missing"), rateLimit, reset)
-        response.isError -> RequestResponse.Error(bucket, rateLimit, reset)
+        response.isError -> RequestResponse.Error
         else -> RequestResponse.Accepted(bucket, rateLimit, reset)
     }
 }

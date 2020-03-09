@@ -1,10 +1,12 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.common.entity.Permission
+import com.gitlab.kordlib.common.entity.Permissions
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
 import com.gitlab.kordlib.core.entity.PermissionOverwrite
 import com.gitlab.kordlib.core.entity.PermissionOverwriteEntity
-import com.gitlab.kordlib.common.entity.Snowflake
 
 /**
  * An instance of a Discord channel associated to a [guild].
@@ -32,6 +34,42 @@ interface GuildChannel : Channel, GuildChannelBehavior {
                 .map { PermissionOverwriteData(it.id, it.type, it.allowed, it.denied) }
                 .map { PermissionOverwriteEntity(guildId, id, it, kord) }
                 .toSet()
+
+    /**
+     * Calculates the effective permissions of the [memberId] in this channel, applying the overwrite for the member
+     * and their roles on top of the base permissions.
+     */
+    suspend fun getEffectivePermissions(memberId: Snowflake): Permissions {
+        val member = kord.getMember(guildId, memberId)
+        require(member != null) {
+            "member ${memberId.value} is not in guild ${guildId.value}"
+        }
+
+        val base = member.getPermissions()
+
+        if (Permission.Administrator in base) return Permissions { +Permission.All }
+
+        val everyoneOverwrite = getPermissionOverwritesForRole(guildId)
+        val roleOverwrites = member.roleIds.mapNotNull { getPermissionOverwritesForRole(it) }
+        val memberOverwrite = getPermissionOverwritesForMember(memberId)
+
+        return Permissions {
+            +base
+            everyoneOverwrite?.let {
+                +it.allowed
+                -it.denied
+            }
+            roleOverwrites.map {
+                +it.allowed
+                -it.denied
+            }
+            memberOverwrite?.let {
+                +it.allowed
+                +it.denied
+            }
+        }
+
+    }
 
     /**
      * Gets the permission overwrite for the [memberId] in this channel, if present.

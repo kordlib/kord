@@ -57,7 +57,7 @@ enum class ChannelType(val code: Int) {
     @Serializer(forClass = ChannelType::class)
     companion object ChannelTypeSerializer : KSerializer<ChannelType> {
         override val descriptor: SerialDescriptor
-            get() = IntDescriptor.withName("type")
+            get() = PrimitiveDescriptor("type", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ChannelType {
             val code = decoder.decodeInt()

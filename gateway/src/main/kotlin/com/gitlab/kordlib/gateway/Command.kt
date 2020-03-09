@@ -2,14 +2,14 @@ package com.gitlab.kordlib.gateway
 
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.IntDescriptor
-import kotlinx.serialization.internal.SerialClassDescImpl
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.json.JsonObject
 
 sealed class Command {
     internal data class Heartbeat(val sequenceNumber: Int? = null) : Command() {
 
         companion object : SerializationStrategy<Heartbeat> {
-            override val descriptor: SerialDescriptor = IntDescriptor.withName("Heartbeat")
+            override val descriptor: SerialDescriptor = PrimitiveDescriptor("Heartbeat", PrimitiveKind.INT)
 
             override fun serialize(encoder: Encoder, obj: Heartbeat) {
                 encoder.encodeNullableSerializableValue(Int.serializer(), obj.sequenceNumber)
@@ -20,11 +20,9 @@ sealed class Command {
 
     companion object : SerializationStrategy<Command> {
 
-        override val descriptor: SerialDescriptor = object : SerialClassDescImpl("Command") {
-            init {
-                addElement("op")
-                addElement("d")
-            }
+        override val descriptor: SerialDescriptor = SerialDescriptor("Command") {
+            element("op", OpCode.descriptor)
+            element("d", JsonObject.serializer().descriptor)
         }
 
         override fun serialize(encoder: Encoder, obj: Command) {

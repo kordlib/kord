@@ -16,7 +16,7 @@ sealed class Request<B : Any, R> {
     abstract val headers: StringValues
     abstract val parameters: StringValues
     abstract val body: RequestBody<B>?
-    abstract val files: List<Pair<String, InputStream>>?
+    abstract val files: List<Pair<String, java.io.InputStream>>?
 
     val path: String
         get() {
@@ -57,7 +57,7 @@ class JsonRequest<B : Any, R>(
         override val headers: StringValues,
         override val body: RequestBody<B>?
 ) : Request<B, R>() {
-    override val files: List<Pair<String, InputStream>>? = null
+    override val files: List<Pair<String, java.io.InputStream>>? = null
 }
 
 class MultipartRequest<B : Any, R>(
@@ -66,7 +66,7 @@ class MultipartRequest<B : Any, R>(
         override val parameters: StringValues,
         override val headers: StringValues,
         override val body: RequestBody<B>?,
-        override val files: List<Pair<String, InputStream>> = emptyList()
+        override val files: List<Pair<String, java.io.InputStream>> = emptyList()
 ) : Request<B, R>() {
 
     val data = formData {

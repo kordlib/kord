@@ -2,8 +2,7 @@ package com.gitlab.kordlib.rest.json.request
 
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.ArrayListClassDesc
-import kotlinx.serialization.internal.ArrayListSerializer
+import kotlinx.serialization.builtins.ListSerializer
 
 @Serializable
 data class GuildCreateRequest(
@@ -41,11 +40,12 @@ data class GuildChannelPositionModifyRequest(val swaps: List<Pair<String, Int>>)
 
     companion object Serializer : SerializationStrategy<GuildChannelPositionModifyRequest> {
         override val descriptor: SerialDescriptor
-            get() = ArrayListClassDesc(ChannelPosition.serializer().descriptor)
+
+            get() = SerialDescriptor("GuildChannelPosition", StructureKind.LIST)
 
         override fun serialize(encoder: Encoder, obj: GuildChannelPositionModifyRequest) {
             val positions = obj.swaps.map { ChannelPosition(it.first, it.second) }
-            ArrayListSerializer(ChannelPosition.serializer()).serialize(encoder, positions)
+            ListSerializer(ChannelPosition.serializer()).serialize(encoder, positions)
         }
 
     }
@@ -95,11 +95,11 @@ data class GuildRolePositionModifyRequest(val swaps: List<Pair<String, Int>>) {
 
     companion object Serializer : SerializationStrategy<GuildRolePositionModifyRequest> {
         override val descriptor: SerialDescriptor
-            get() = ArrayListClassDesc(RolePosition.serializer().descriptor)
+            get() = SerialDescriptor("GuildRolePosition", StructureKind.LIST)
 
         override fun serialize(encoder: Encoder, obj: GuildRolePositionModifyRequest) {
             val positions = obj.swaps.map { RolePosition(it.first, it.second) }
-            ArrayListSerializer(RolePosition.serializer()).serialize(encoder, positions)
+            ListSerializer(RolePosition.serializer()).serialize(encoder, positions)
         }
 
     }
