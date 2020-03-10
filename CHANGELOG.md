@@ -1,8 +1,12 @@
 # 0.4.6
 
+## Additions
+
+* Added `Guild#memberCount`.
+
 ## Changes
 
-* `MessageChannel#withTyping` should now properly stop when cancelling the coroutine context
+* `MessageChannel#withTyping` should now properly stop when cancelling the coroutine context.
 
 ## Fixes
 
