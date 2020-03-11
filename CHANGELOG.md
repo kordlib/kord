@@ -15,6 +15,7 @@
 
 * Fixed channels cached in guild create events not having a guild id.
 * Fixed `DiscordCreatedInvite#maxUses` serialization typo.
+* Fixed an issue where editing a guild channel would reset permissions.
 
 # 0.4.5
 
