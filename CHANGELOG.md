@@ -4,6 +4,8 @@
 
 * Added `Guild#memberCount`.
 * Added `GuildEmoji#isAvaiable`. #84
+* Added allowed mentions to message create. #83
+
 
 ## Changes
 
