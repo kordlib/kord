@@ -1,13 +1,14 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.*
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
 import com.gitlab.kordlib.core.behavior.channel.TextChannelBehavior
+import com.gitlab.kordlib.core.behavior.channel.VoiceChannelBehavior
 import com.gitlab.kordlib.core.cache.data.EmojiData
 import com.gitlab.kordlib.core.cache.data.GuildData
 import com.gitlab.kordlib.core.catchNotFound
@@ -15,6 +16,7 @@ import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
+import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.core.switchIfEmpty
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.rest.Image
@@ -34,6 +36,9 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      * The id of the afk voice channel, if present.
      */
     val afkChannelId: Snowflake? get() = data.afkChannelId.toSnowflakeOrNull()
+
+    val afkChannel: VoiceChannelBehavior?
+        get() = afkChannelId?.let { VoiceChannelBehavior(guildId = id, id = it, kord = kord) }
 
     /**
      * The afk timeout in seconds.
@@ -117,10 +122,18 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     val owner: MemberBehavior get() = MemberBehavior(guildId = id, id = ownerId, kord = kord)
 
     /**
+     * The number of members in the guild, if present.
+     *
+     *  > This value is only present when the [Kord.cache] stores guilds and the client has been logged in. It
+     *  will not be updated throughout the lifetime of the gateway and should thus be seen as an approximation rather
+     *  than a precise value.
+     */
+    val memberCount: Int? get() = data.memberCount
+
+    /**
      * The required multi-factor authentication level of this guild.
      */
     val mfaLevel: MFALevel get() = data.mfaLevel
-
 
     override val members: Flow<Member>
         get() {

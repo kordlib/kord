@@ -1,3 +1,22 @@
+# 0.4.6
+
+## Additions
+
+* Added `Guild#memberCount`.
+* Added `GuildEmoji#isAvaiable`. #84
+* Added allowed mentions to message create. #83
+
+
+## Changes
+
+* `MessageChannel#withTyping` should now properly stop when cancelling the coroutine context.
+
+## Fixes
+
+* Fixed channels cached in guild create events not having a guild id.
+* Fixed `DiscordCreatedInvite#maxUses` serialization typo.
+* Fixed an issue where editing a guild channel would reset permissions.
+
 # 0.4.5
 
 ## Additions
