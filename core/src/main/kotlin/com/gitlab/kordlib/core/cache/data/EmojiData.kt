@@ -12,7 +12,8 @@ data class EmojiData(
         val roles: List<Long>,
         val requireColons: Boolean,
         val managed: Boolean,
-        val animated: Boolean
+        val animated: Boolean,
+        val available: Boolean
 ) {
     companion object {
         val description get() = description(EmojiData::id)
@@ -26,7 +27,8 @@ data class EmojiData(
                             roles.orEmpty().map { it.toLong() },
                             requireColons ?: false,
                             managed ?: false,
-                            animated ?: false
+                            animated ?: false,
+                            available ?: false
                     )
                 }
     }

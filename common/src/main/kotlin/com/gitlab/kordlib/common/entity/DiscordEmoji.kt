@@ -12,7 +12,8 @@ data class DiscordEmoji(
         @SerialName("require_colons")
         val requireColons: Boolean? = null,
         val managed: Boolean? = null,
-        val animated: Boolean? = null
+        val animated: Boolean? = null,
+        val available: Boolean? = null
 )
 
 @Serializable

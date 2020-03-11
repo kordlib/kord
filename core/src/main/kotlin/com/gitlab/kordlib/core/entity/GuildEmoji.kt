@@ -20,6 +20,11 @@ class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord:
         get() = Snowflake(data.id)
 
     /**
+     * Whether this emoji can be used, may be false due to loss of Server Boosts.
+     */
+    val isAvailable: Boolean get() = data.available
+    
+    /**
      * Whether is emoji is animated.
      */
     val isAnimated: Boolean get() = data.animated

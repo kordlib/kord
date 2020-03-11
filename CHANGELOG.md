@@ -3,6 +3,7 @@
 ## Additions
 
 * Added `Guild#memberCount`.
+* Added `GuildEmoji#isAvaiable`. #84
 
 ## Changes
 
