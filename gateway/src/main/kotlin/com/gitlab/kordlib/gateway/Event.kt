@@ -280,7 +280,7 @@ data class DiscordCreatedInvite(
         /**
          * The maximum number of times the invite can be used.
          */
-        @SerialName("ma_uses")
+        @SerialName("max_uses")
         val maxUses: Int,
         /**
          * Whether or not the invite is temporary (invited users will be kicked on disconnect unless they're assigned a role).

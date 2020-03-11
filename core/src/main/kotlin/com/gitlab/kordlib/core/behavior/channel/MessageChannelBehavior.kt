@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.time.Instant
+import kotlin.coroutines.coroutineContext
 import kotlin.time.ClockMark
 import kotlin.time.seconds
 
@@ -182,10 +183,10 @@ suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> 
  * }
  * ```
  */
-suspend inline fun<T: MessageChannelBehavior> T.withTyping(block: T.() -> Unit) {
+suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() -> Unit) {
     var typing = true
 
-    kord.launch {
+    kord.launch(context = coroutineContext) {
         while (typing) {
             type()
             delay(8.seconds.toLongMilliseconds())
@@ -194,7 +195,7 @@ suspend inline fun<T: MessageChannelBehavior> T.withTyping(block: T.() -> Unit) 
 
     try {
         block()
-    }  finally {
+    } finally {
         typing = false
     }
 }
