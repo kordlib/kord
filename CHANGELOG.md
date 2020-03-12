@@ -1,3 +1,11 @@
+# 0.4.7
+
+## Fixes
+
+* Fixed an issue where editing a guild category would reset permissions.
+* Fixed an issue where editing a guild emoji would reset permissions.
+* Fixed an issue where editing a guild member would reset permissions.
+
 # 0.4.6
 
 ## Additions

@@ -22,26 +22,26 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
     /**
      *  The permission overwrites for this category.
      */
-    val permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
+    var permissionOverwrites: MutableSet<Overwrite>? = null
 
 
     /**
      * adds a [Overwrite] for the [memberId].
      */
     inline fun addMemberOverwrite(memberId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit){
-        permissionOverwrites += PermissionOverwriteBuilder("member", memberId).apply(builder).toOverwrite()
+        permissionOverwrites = (permissionOverwrites ?: mutableSetOf()).also { it.add(PermissionOverwriteBuilder("member", memberId).apply(builder).toOverwrite()) }
     }
 
     /**
      * adds a [Overwrite] for the [roleId].
      */
     inline fun addRoleOverwrite(roleId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit){
-        permissionOverwrites += PermissionOverwriteBuilder("role", roleId).apply(builder).toOverwrite()
+        permissionOverwrites = (permissionOverwrites ?: mutableSetOf()).also { PermissionOverwriteBuilder("role", roleId).apply(builder).toOverwrite() }
     }
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
-            permissionOverwrites = permissionOverwrites.toList()
+            permissionOverwrites = permissionOverwrites?.toList()
     )
 }
