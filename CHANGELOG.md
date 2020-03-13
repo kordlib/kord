@@ -1,3 +1,9 @@
+# 0.4.8
+
+## Changes
+
+* `KtorRequestHandler` will now log the body of requests and responses.
+
 # 0.4.7
 
 ## Fixes
