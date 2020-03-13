@@ -1,8 +1,17 @@
 # 0.4.8
 
+## Additions
+
+* Added Integrations.
+* Guilds can now request their own Integrations with `GuildBhehavior#integrations`.
+
 ## Changes
 
 * `KtorRequestHandler` will now log the body of requests and responses.
+
+## Fixes
+
+* The GuildService now returns the correct type of integration objects
 
 # 0.4.7
 

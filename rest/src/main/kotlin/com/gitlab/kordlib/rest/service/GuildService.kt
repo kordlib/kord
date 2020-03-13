@@ -5,6 +5,7 @@ import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
+import com.gitlab.kordlib.rest.builder.integration.IntegrationModifyBuilder
 import com.gitlab.kordlib.rest.builder.member.MemberAddBuilder
 import com.gitlab.kordlib.rest.builder.member.MemberModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
@@ -184,10 +185,21 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         body(GuildIntegrationCreateRequest.serializer(), integration)
     }
 
+    @Deprecated("use the inline builder instead", ReplaceWith("""modifyGuildIntegration(guildId, integrationId) {
+        | this.expireBehavior = integration.expireBehavior,
+        | this.expirePeriod = integration.expirePeriod,
+        | this.emoticons = integration.emoticons
+        |})"""), DeprecationLevel.WARNING)
     suspend fun modifyGuildIntegration(guildId: String, integrationId: String, integration: GuildIntegrationModifyRequest) = call(Route.GuildIntegrationPatch) {
         keys[Route.GuildId] = guildId
         keys[Route.IntegrationId] = integrationId
         body(GuildIntegrationModifyRequest.serializer(), integration)
+    }
+
+    suspend inline fun modifyGuildIntegration(guildId: String, integrationId: String, builder: IntegrationModifyBuilder.() -> Unit) = call(Route.GuildIntegrationPatch) {
+        keys[Route.GuildId] = guildId
+        keys[Route.IntegrationId] = integrationId
+        body(GuildIntegrationModifyRequest.serializer(), IntegrationModifyBuilder().apply(builder).toRequest())
     }
 
     suspend fun deleteGuildIntegration(guildId: String, integrationId: String) = call(Route.GuildIntegrationDelete) {
