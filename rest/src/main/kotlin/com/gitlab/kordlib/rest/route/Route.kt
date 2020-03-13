@@ -3,9 +3,7 @@ package com.gitlab.kordlib.rest.route
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.json.response.*
 import io.ktor.http.HttpMethod
-import kotlinx.serialization.Decoder
-import kotlinx.serialization.DeserializationStrategy
-import kotlinx.serialization.SerialDescriptor
+import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
@@ -330,7 +328,7 @@ sealed class Route<T>(
 
 internal object NoStrategy : DeserializationStrategy<Unit> {
     override val descriptor: SerialDescriptor
-        get() = UnitDescriptor
+        get() = SerialDescriptor("NoStrategy", StructureKind.OBJECT)
 
     override fun deserialize(decoder: Decoder) {}
 
