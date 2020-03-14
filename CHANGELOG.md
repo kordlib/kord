@@ -12,6 +12,11 @@
 ## Fixes
 
 * The GuildService now returns the correct type of integration objects
+* Fixed a typo in the `Embed#type` property kdocs.
+
+## Deprecations
+
+* `Embed#type` has been deprecated. #80
 
 # 0.4.7
 
