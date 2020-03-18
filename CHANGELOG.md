@@ -4,6 +4,7 @@
 
 * Added Integrations.
 * Guilds can now request their own Integrations with `GuildBhehavior#integrations`.
+* Added `preferredLocale` and `publicUpdatesChannelId` to `Guild` and `GuildModifyBuilder`.
 
 ## Changes
 

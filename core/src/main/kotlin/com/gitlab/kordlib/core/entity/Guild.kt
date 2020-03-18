@@ -5,10 +5,7 @@ import com.gitlab.kordlib.core.*
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
-import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.TextChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.VoiceChannelBehavior
+import com.gitlab.kordlib.core.behavior.channel.*
 import com.gitlab.kordlib.core.cache.data.EmojiData
 import com.gitlab.kordlib.core.cache.data.GuildData
 import com.gitlab.kordlib.core.catchNotFound
@@ -23,6 +20,7 @@ import com.gitlab.kordlib.rest.Image
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 /**
  * An instance of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
@@ -146,6 +144,20 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      * The name of this guild.
      */
     val name: String get() = data.name
+
+    /**
+     * the id of the channel where guild notices such as welcome messages and boost events are posted.
+     */
+    val publicUpdatesChannelId: Snowflake? get() = data.publicUpdatesChannelId.toSnowflakeOrNull()
+
+    /**
+     * The behavior of the channel where guild notices such as welcome messages and boost events are posted.
+     */
+    val publicUpdatesChannel: GuildMessageChannelBehavior? get() = publicUpdatesChannelId?.let {
+        GuildMessageChannelBehavior(guildId = id, id = it, kord = kord)
+    }
+
+    val preferredLocale: Locale get() = Locale.forLanguageTag(data.preferredLocale)
 
     /**
      * The behaviors of all [channels][GuildChannel].
@@ -299,6 +311,11 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      * Requests to get the owner as member.
      */
     suspend fun getOwner(): Member = kord.getMember(id, ownerId)!!
+
+    /**
+     * Requests to get The channel where guild notices such as welcome messages and boost events are posted.
+     */
+    suspend fun getPublicUpdatesChannel(): GuildMessageChannel? = publicUpdatesChannel?.asChannel()
 
     /**
      * Requests to get the voice region for this guild.
