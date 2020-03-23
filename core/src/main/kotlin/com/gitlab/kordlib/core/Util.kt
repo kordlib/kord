@@ -70,6 +70,7 @@ internal fun <C : Collection<T>, T> paginate(
         start: String,
         batchSize: Int,
         idSelector: (T) -> String,
+        itemSelector: (Collection<T>) -> T?,
         directionSelector: (String) -> Position,
         request: suspend (position: Position) -> C
 ): Flow<T> = flow {
@@ -79,7 +80,8 @@ internal fun <C : Collection<T>, T> paginate(
     while (true) {
         val response = request(position)
         for (item in response) emit(item)
-        val id = response.lastOrNull()?.let(idSelector) ?: break
+
+        val id =  itemSelector(response)?.let(idSelector) ?: break
         position = directionSelector(id)
 
         if (response.size < size) break
@@ -87,14 +89,40 @@ internal fun <C : Collection<T>, T> paginate(
     }
 }
 
+
+
+/**
+ * Discord returns values in order newest -> oldest (big -> small) (confirmed for messages),
+ * meaning that the first item returned is the one last created (youngest) in the batch.
+ */
+internal fun<T> youngestItem(): (Collection<T>) -> T? = { it.firstOrNull() }
+
+/**
+ * Discord returns values in order oldest -> newest (big -> small) (confirmed for messages),
+ * meaning that the last item returned is the one first created (oldest) in the batch.
+ */
+internal fun<T> oldestItem(): (Collection<T>) -> T? = { it.lastOrNull() }
+
+/**
+ *  Selects the [Position.After] the youngest item in the batch.
+ */
 internal fun <C : Collection<T>, T> paginateForwards(start: Snowflake = Snowflake("0"), batchSize: Int, idSelector: (T) -> String, request: suspend (position: Position) -> C): Flow<T> =
-        paginate(start.value, batchSize, idSelector, Position::After, request)
+        paginate(start.value, batchSize, idSelector, youngestItem(), Position::After, request)
 
+/**
+ *  Selects the [Position.After] the youngest item in the batch.
+ */
 internal fun <C : Collection<T>, T : Entity> paginateForwards(start: Snowflake = Snowflake("0"), batchSize: Int, request: suspend (position: Position) -> C): Flow<T> =
-        paginate(start.value, batchSize, { it.id.value }, Position::After, request)
+        paginate(start.value, batchSize, { it.id.value }, youngestItem(), Position::After, request)
 
+/**
+ *  Selects the [Position.Before] the oldest item in the batch.
+ */
 internal fun <C : Collection<T>, T> paginateBackwards(start: Snowflake = Snowflake(Long.MAX_VALUE), batchSize: Int, idSelector: (T) -> String, request: suspend (position: Position) -> C): Flow<T> =
-        paginate(start.value, batchSize, idSelector, Position::Before, request)
+        paginate(start.value, batchSize, idSelector, oldestItem(), Position::Before, request)
 
+/**
+ *  Selects the [Position.Before] the oldest item in the batch.
+ */
 internal fun <C : Collection<T>, T : Entity> paginateBackwards(start: Snowflake = Snowflake(Long.MAX_VALUE), batchSize: Int, request: suspend (position: Position) -> C): Flow<T> =
-        paginate(start.value, batchSize, { it.id.value }, Position::Before, request)
+        paginate(start.value, batchSize, { it.id.value }, oldestItem(), Position::Before, request)

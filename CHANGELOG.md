@@ -12,8 +12,9 @@
 
 ## Fixes
 
-* The GuildService now returns the correct type of integration objects
+* The GuildService now returns the correct type of integration objects.
 * Fixed a typo in the `Embed#type` property kdocs.
+* Fixed an issue where paginated flows would emit duplicate items.
 
 ## Deprecations
 
