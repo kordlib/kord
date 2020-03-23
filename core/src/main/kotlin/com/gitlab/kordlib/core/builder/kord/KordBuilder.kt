@@ -152,11 +152,16 @@ class KordBuilder(val token: String) {
     }
 
     private fun HttpClientConfig<*>.defaultConfig() {
+        expectSuccess = false
         defaultRequest {
             header("Authorization", "Bot $token")
         }
 
-        install(JsonFeature)
+        install(JsonFeature) {
+            if (serializer == null) {
+                serializer = KotlinxSerializer(Json(JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true)))
+            }
+        }
         install(WebSockets)
     }
 
@@ -164,11 +169,7 @@ class KordBuilder(val token: String) {
         val client = httpClient?.let {
             it.config { defaultConfig() }
         } ?: run {
-            HttpClient(CIO) { defaultConfig()
-                install(JsonFeature) {
-                    serializer = KotlinxSerializer(Json(JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true)))
-                }
-            }
+            HttpClient(CIO) { defaultConfig() }
         }
 
         val response = client.get<BotGatewayResponse>("${Route.baseUrl}/gateway/bot")

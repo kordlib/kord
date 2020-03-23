@@ -17,7 +17,7 @@ sealed class DispatchEvent : Event() {
 
 private object NullDecoder : DeserializationStrategy<Nothing?> {
     override val descriptor: SerialDescriptor
-        get() = StringDescriptor
+        get() = PrimitiveDescriptor("null", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): Nothing? {
         return decoder.decodeNull()

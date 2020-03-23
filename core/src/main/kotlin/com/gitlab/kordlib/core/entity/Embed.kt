@@ -7,6 +7,12 @@ import com.gitlab.kordlib.core.toInstant
 import java.awt.Color
 import java.time.Instant
 
+internal const val embedDeprecationMessage = """
+Embed types should be considered deprecated and might be removed in a future API version.
+
+https://discordapp.com/developers/docs/resources/channel#embed-object-embed-types
+"""
+
 /**
  * An instance of a [Discord Embed](https://discordapp.com/developers/docs/resources/channel#embed-object).
  */
@@ -18,8 +24,10 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
     val title: String? get() = data.title
 
     /*
-     * The type, [Embed.Type.Rich] for webhook and bot created embets. Null if unknown.
+     * The type, [Embed.Type.Rich] for webhook and bot created embeds. Null if unknown.
      */
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated(embedDeprecationMessage)
     val type: Type? get() = Type.values().firstOrNull { it.value == data.type }
 
     /**
@@ -80,11 +88,15 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
     /**
      * The type of embeds, this is an non-exhaustive list.
      */
+    @Deprecated(embedDeprecationMessage)
     enum class Type(val value: String) {
         Image("image"),
         Link("link"),
         Rich("rich"),
-        Video("video")
+        Video("video"),
+        @Suppress("SpellCheckingInspection")
+        Gifv("gifv"),
+        Article("article")
     }
 
     data class Footer(val data: EmbedFooterData, override val kord: Kord) : KordObject {

@@ -79,7 +79,9 @@ data class DiscordGuild(
         @SerialName("premium_subscription_count")
         val premiumSubscriptionCount: Int? = null,
         @SerialName("preferred_locale")
-        val preferredLocale: String
+        val preferredLocale: String,
+        @SerialName("public_updates_channel_id")
+        val publicUpdatesChannelId: String? = null
 )
 
 @Serializable(with = GuildFeature.Companion::class)

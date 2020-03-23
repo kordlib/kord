@@ -3,13 +3,10 @@ package com.gitlab.kordlib.rest.route
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.json.response.*
 import io.ktor.http.HttpMethod
-import kotlinx.serialization.Decoder
-import kotlinx.serialization.DeserializationStrategy
-import kotlinx.serialization.SerialDescriptor
+import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.internal.*
 import com.gitlab.kordlib.common.entity.DiscordEmoji as EmojiEntity
 
 sealed class Route<T>(
@@ -234,7 +231,7 @@ sealed class Route<T>(
         : Route<List<InviteResponse>>(HttpMethod.Get, "/guilds/$GuildId/invites", ListSerializer(InviteResponse.serializer()))
 
     object GuildIntegrationGet
-        : Route<List<DiscordGuildIntegrations>>(HttpMethod.Get, "/guilds/$GuildId/integrations", ListSerializer(DiscordGuildIntegrations.serializer()))
+        : Route<List<IntegrationResponse>>(HttpMethod.Get, "/guilds/$GuildId/integrations", ListSerializer(IntegrationResponse.serializer()))
 
     object GuildIntegrationPost
         : Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations", NoStrategy)
@@ -330,7 +327,7 @@ sealed class Route<T>(
 
 internal object NoStrategy : DeserializationStrategy<Unit> {
     override val descriptor: SerialDescriptor
-        get() = UnitDescriptor
+        get() = SerialDescriptor("NoStrategy", StructureKind.OBJECT)
 
     override fun deserialize(decoder: Decoder) {}
 
