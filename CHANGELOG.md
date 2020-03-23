@@ -6,6 +6,7 @@
 * Guilds can now request their own Integrations with `GuildBhehavior#integrations`.
 * Added `preferredLocale` and `publicUpdatesChannelId` to `Guild` and `GuildModifyBuilder`.
 * Added some utility functions to the `KordCacheBuilder`.
+* Added `GuildDiscoveryDisqualified` and `GuildDiscoveryRequalified` to `MessageType`. #79
 
 ## Changes
 
