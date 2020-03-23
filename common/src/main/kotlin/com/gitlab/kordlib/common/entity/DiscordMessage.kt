@@ -308,7 +308,10 @@ enum class MessageType(val code: Int) {
     UserPremiumGuildSubscriptionTierOne(9),
     UserPremiumGuildSubscriptionTwo(10),
     UserPremiumGuildSubscriptionThree(11),
-    ChannelFollowAdd(12);
+    ChannelFollowAdd(12),
+    GuildDiscoveryDisqualified(14),
+    @Suppress("SpellCheckingInspection")
+    GuildDiscoveryRequalified(15);
 
     @Serializer(forClass = MessageType::class)
     companion object MessageTypeSerializer : KSerializer<MessageType> {

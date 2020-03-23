@@ -1,3 +1,30 @@
+# 0.4.8
+
+## Additions
+
+* Added Integrations.
+* Guilds can now request their own Integrations with `GuildBhehavior#integrations`.
+* Added `preferredLocale` and `publicUpdatesChannelId` to `Guild` and `GuildModifyBuilder`.
+* Added some utility functions to the `KordCacheBuilder`.
+* Added `GuildDiscoveryDisqualified` and `GuildDiscoveryRequalified` to `MessageType`. #79
+
+## Changes
+
+* `KtorRequestHandler` will now log the body of requests and responses.
+
+## Fixes
+
+* The GuildService now returns the correct type of integration objects.
+* Fixed a typo in the `Embed#type` property kdocs.
+* Fixed an issue where paginated flows would emit duplicate items.
+
+## Deprecations
+
+* `Embed#type` has been deprecated. #80
+* `LiveNewsChannel`, `LiveStoreChannel` and `LiveTextChannel` have been deprecated. Message channels in guilds can 
+change type during their lifetime, which means type can't be guaranteed. `LiveGuildMessageChannel` has been introduced as
+an alternative.
+
 # 0.4.7
 
 ## Fixes

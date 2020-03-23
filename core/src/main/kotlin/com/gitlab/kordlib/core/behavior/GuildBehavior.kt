@@ -4,17 +4,17 @@ import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
-import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
-import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
-import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.core.sorted
+import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
+import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
+import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
+import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
 import com.gitlab.kordlib.rest.service.createCategory
 import com.gitlab.kordlib.rest.service.createNewsChannel
@@ -48,9 +48,9 @@ interface GuildBehavior : Entity {
 
     val webhooks: Flow<Webhook>
         get() = flow {
-            for(response in kord.rest.webhook.getGuildWebhooks(id.value)) {
+            for (response in kord.rest.webhook.getGuildWebhooks(id.value)) {
                 val data = WebhookData.from(response)
-                emit(Webhook(data,kord))
+                emit(Webhook(data, kord))
             }
 
         }
@@ -71,6 +71,16 @@ interface GuildBehavior : Entity {
         }
 
     /**
+     * Requests to get the integrations of this guild.
+     */
+    val integrations: Flow<Integration>
+        get() = flow {
+            kord.rest.guild.getGuildIntegrations(id.value).forEach {
+                emit(Integration(IntegrationData.from(id.longValue, it), kord))
+            }
+        }
+
+    /**
      * Requests to get the cached presences of this guild, if cached.
      */
     val presences: Flow<Presence>
@@ -78,6 +88,7 @@ interface GuildBehavior : Entity {
             kord.cache.find<PresenceData> { PresenceData::guildId eq id.longValue }
                     .asFlow()
                     .map { Presence(it, kord) }
+
     /**
      * Requests to get all members in this guild.
      *

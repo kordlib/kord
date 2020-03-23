@@ -45,12 +45,7 @@ class RestServiceTest {
 
     @BeforeAll
     fun setup() = runBlocking {
-        client = HttpClient(CIO) {
-            defaultRequest {
-                header("Authorization", "Bot $token")
-            }
-        }
-        requestHandler = KtorRequestHandler(client, ExclusionRequestRateLimiter())
+        requestHandler = KtorRequestHandler(token, ExclusionRequestRateLimiter())
         rest = RestClient(requestHandler)
 
         userId = rest.user.getCurrentUser().id
@@ -415,11 +410,6 @@ class RestServiceTest {
         rest.guild.deleteGuild(guildId)
 
         Unit
-    }
-
-    @AfterAll
-    fun close() {
-        client.close()
     }
 
 }

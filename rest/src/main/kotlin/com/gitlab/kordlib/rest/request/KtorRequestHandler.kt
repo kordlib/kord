@@ -14,6 +14,7 @@ import io.ktor.http.takeFrom
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import mu.KotlinLogging
+import java.awt.Color
 import java.time.Clock
 
 internal val jsonConfig = JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true)
@@ -36,23 +37,22 @@ class KtorRequestHandler(
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
 
     override tailrec suspend fun <B : Any, R> handle(request: Request<B, R>): R {
-        logger.trace { request.logString }
-
         val response = requestRateLimiter.consume(request) {
             val httpRequest = client.createRequest(request)
             val response = httpRequest.execute()
 
             it.complete(RequestResponse.from(response, clock))
 
-            logger.trace { response.logString }
-
             response
         }
+
+        val responseBody = response.readText()
+        logger.trace { response.logString(responseBody) }
 
         return when {
             response.isRateLimit -> handle(request)
             response.isError -> throw KtorRequestException(response, response.errorString())
-            else -> parser.parse(request.route.strategy, response.readText())
+            else -> parser.parse(request.route.strategy, responseBody)
         }
     }
 
@@ -68,6 +68,7 @@ class KtorRequestHandler(
         }
 
         request.body?.let {
+            val body = parser.stringify(it.strategy, it.body)
             when (request) {
                 is MultipartRequest<*, *> -> {
                     headers.append("payload_json", parser.stringify(it.strategy, it.body))
@@ -79,6 +80,9 @@ class KtorRequestHandler(
                     this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
                 }
             }
+            logger.trace { request.logString(body) }
+        } ?: kotlin.run {
+            logger.trace { request.logString("") }
         }
     }
 
@@ -90,7 +94,10 @@ class KtorRequestHandler(
                 clock: Clock = Clock.systemUTC(),
                 parser: Json = Json(jsonConfig)
         ): KtorRequestHandler {
-            val client = HttpClient(CIO) { defaultRequest { header("Authorization", "Bot $token") } }
+            val client = HttpClient(CIO) {
+                expectSuccess = false
+                defaultRequest { header("Authorization", "Bot $token") }
+            }
             return KtorRequestHandler(client, requestRateLimiter, clock, parser)
         }
     }

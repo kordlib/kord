@@ -5,6 +5,7 @@ package com.gitlab.kordlib.rest.request
 import com.gitlab.kordlib.rest.ratelimit.BucketKey
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readBytes
+import io.ktor.client.statement.readText
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
@@ -45,7 +46,10 @@ fun HttpResponse.globalSuspensionPoint(clock: Clock): Long {
     return msWait + clock.millis()
 }
 
+@Deprecated("use the function instead", ReplaceWith("""logString("")"""), DeprecationLevel.WARNING)
 val HttpResponse.logString get() = "[RESPONSE]:${status.value}:${call.request.method.value}:${call.request.url}"
+
+fun HttpResponse.logString(body: String) = "[RESPONSE]:${status.value}:${call.request.method.value}:${call.request.url} body:$body"
 
 suspend fun HttpResponse.errorString(): String {
     val message = String(this.readBytes())
@@ -53,6 +57,7 @@ suspend fun HttpResponse.errorString(): String {
     else "$logString $message"
 }
 
+@Deprecated("deprecated, use the function instead", ReplaceWith("""logString("")"""), DeprecationLevel.WARNING)
 val Request<*, *>.logString
     get() : String {
         val method = route.method.value
@@ -62,3 +67,12 @@ val Request<*, *>.logString
 
         return "[REQUEST]:$method:$path params:$params"
     }
+
+fun Request<*,*>.logString(body: String): String {
+    val method = route.method.value
+    val path = route.path
+    val params = routeParams.entries
+            .joinToString(",", "[", "]") { (key, value) -> "$key=$value" }
+
+    return "[REQUEST]:$method:$path params:$params body:$body"
+}
