@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
+import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
@@ -145,7 +146,7 @@ class Kord internal constructor(
 
     @Deprecated("use cache.users instead", ReplaceWith("cache.users"), DeprecationLevel.WARNING)
     suspend fun getUsers(): Flow<User> =
-            cache.find<UserData>().asFlow().map { User(it, this) }
+            cache.query<UserData>().asFlow().map { User(it, this) }
 
     suspend inline fun editPresence(builder: PresenceUpdateBuilder.() -> Unit) {
         val request = PresenceUpdateBuilder().apply(builder).toRequest()
