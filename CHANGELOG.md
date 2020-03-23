@@ -19,6 +19,9 @@
 ## Deprecations
 
 * `Embed#type` has been deprecated. #80
+* `LiveNewsChannel`, `LiveStoreChannel` and `LiveTextChannel` have been deprecated. Message channels in guilds can 
+change type during their lifetime, which means type can't be guaranteed. `LiveGuildMessageChannel` has been introduced as
+an alternative.
 
 # 0.4.7
 
