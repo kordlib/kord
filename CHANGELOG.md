@@ -1,3 +1,12 @@
+# 0.4.9
+
+ID collections in modify builders have undergone a breaking critical bug fix.
+
+## Fixes
+
+* Fixed `permissionOverwrites` in `TextChannelModifyBuilder`, `VoiceChannelModifyBuilder`, `NewsChannelModifyBuilder` being final.
+* Fixed `roles` in `EmojiModifyBuilder` and `MemberModifyBuilder` being final.
+
 # 0.4.8
 
 ## Additions
