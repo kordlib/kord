@@ -1,3 +1,9 @@
+# 0.5.0
+
+## Changes
+
+* Changed `GuildCreateBuilder` to be more inline with recent api changes. #77
+
 # 0.4.6
 
 ## Changes
