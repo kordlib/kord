@@ -119,3 +119,5 @@ data class MessageData(
         }
     }
 }
+
+fun DiscordMessage.toData() = MessageData.from(this)

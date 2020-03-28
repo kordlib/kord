@@ -5,6 +5,7 @@ import com.gitlab.kordlib.rest.builder.channel.NewsChannelModifyBuilder
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.entity.channel.NewsChannel
 import com.gitlab.kordlib.rest.service.patchNewsChannel
 
@@ -13,9 +14,20 @@ import com.gitlab.kordlib.rest.service.patchNewsChannel
  */
 interface NewsChannelBehavior : GuildMessageChannelBehavior {
 
-    override suspend fun asChannel(): NewsChannel {
-        return super.asChannel() as NewsChannel
-    }
+    /**
+     * Requests to get the this behavior as a [NewsChannel].
+     *
+     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
+     */
+    override suspend fun asChannel(): NewsChannel =  super.asChannel() as NewsChannel
+
+    /**
+     * Requests to get this behavior as a [NewsChannel].
+     *
+     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
+     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
+     */
+    override suspend fun requestChannel(): NewsChannel = super.requestChannel() as NewsChannel
 
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): NewsChannelBehavior = object : NewsChannelBehavior {

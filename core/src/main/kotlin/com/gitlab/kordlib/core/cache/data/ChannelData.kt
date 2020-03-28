@@ -56,3 +56,5 @@ data class ChannelData(
     }
 
 }
+
+fun DiscordChannel.toData() = ChannelData.from(this)

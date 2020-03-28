@@ -3,7 +3,7 @@ package com.gitlab.kordlib.core.behavior
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.*
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
@@ -13,7 +13,6 @@ import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.paginateForwards
-import com.gitlab.kordlib.core.sorted
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
 import com.gitlab.kordlib.rest.service.createCategory
@@ -134,9 +133,19 @@ interface GuildBehavior : Entity {
                 .map { VoiceState(it, kord) }
 
     /**
-     * Requests to get this behavior as a [Guild].
+     * Requests to get the this behavior as a [Guild].
+     *
+     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asGuild(): Guild = kord.getGuild(id)!!
+    suspend fun asGuild() : Guild = kord.getGuild(id)!!
+
+    /**
+     * Requests to get the this behavior as a [Guild].
+     *
+     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
+     * Unless the currency of data is important, it is advised to use [asGuild] instead to reduce unneeded API calls.
+     */
+    suspend fun requestGuild() : Guild = kord.rest.getGuild(id)!!
 
     /**
      * Requests to delete this guild.

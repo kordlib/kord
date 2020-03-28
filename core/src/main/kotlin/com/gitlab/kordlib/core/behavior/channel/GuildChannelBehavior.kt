@@ -4,7 +4,9 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.cache.data.InviteData
+import com.gitlab.kordlib.core.cache.data.toData
 import com.gitlab.kordlib.core.entity.*
+import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.indexOfFirstOrNull
 import com.gitlab.kordlib.rest.builder.channel.ChannelPermissionModifyBuilder
@@ -39,9 +41,20 @@ interface GuildChannelBehavior : ChannelBehavior {
         }
     }
 
-    override suspend fun asChannel(): GuildChannel {
-        return super.asChannel() as GuildChannel
-    }
+    /**
+     * Requests to get this behavior as a [GuildChannel].
+     *
+     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
+     */
+    override suspend fun asChannel(): GuildChannel = super.asChannel() as GuildChannel
+
+    /**
+     * Requests to get this behavior as a [Channel].
+     *
+     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
+     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
+     */
+    override suspend fun requestChannel(): GuildChannel = super.requestChannel() as GuildChannel
 
     /**
      * Requests to get this behavior as a [Guild].

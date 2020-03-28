@@ -5,6 +5,8 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
+import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.paginateBackwards
 import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
@@ -25,9 +27,20 @@ import kotlin.time.seconds
  */
 interface MessageChannelBehavior : ChannelBehavior {
 
-    override suspend fun asChannel(): Channel {
-        return super.asChannel()
-    }
+    /**
+     * Requests to get the this behavior as a [MessageChannel].
+     *
+     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
+     */
+    override suspend fun asChannel(): MessageChannel =  super.asChannel() as MessageChannel
+
+    /**
+     * Requests to get this behavior as a [MessageChannel].
+     *
+     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
+     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
+     */
+    override suspend fun requestChannel(): MessageChannel = super.requestChannel() as MessageChannel
 
     /**
      * Requests to get all messages in this channel.

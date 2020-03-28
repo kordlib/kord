@@ -18,8 +18,6 @@ interface EntitySupplier {
 
     suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message?
 
-    suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role?
-
     suspend fun getSelf(): User?
 
     suspend fun getUser(id: Snowflake): User?

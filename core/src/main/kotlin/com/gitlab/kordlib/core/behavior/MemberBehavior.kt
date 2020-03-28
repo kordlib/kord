@@ -7,6 +7,7 @@ import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.member.MemberModifyBuilder
 import com.gitlab.kordlib.core.cache.data.PresenceData
 import com.gitlab.kordlib.core.cache.data.VoiceStateData
+import com.gitlab.kordlib.core.cache.data.toData
 import com.gitlab.kordlib.core.entity.*
 
 /**
@@ -29,9 +30,19 @@ interface MemberBehavior : Entity, UserBehavior {
     val nicknameMention get() = "<@!${id.value}>"
 
     /**
-     * Requests to get this behaviour as a member.
+     * Requests to get the this behavior as a [Member].
+     *
+     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asMember(): Member = kord.getMember(guildId, id)!!
+    suspend fun asMember() : Member = kord.getMember(guildId, id)!!
+
+    /**
+     * Requests to get the this behavior as a [Member].
+     *
+     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
+     * Unless the currency of data is important, it is advised to use [asMember] instead to reduce unneeded API calls.
+     */
+    suspend fun requestMember() : Member = kord.rest.getMember(guildId = guildId, userId = id)!!
 
     /**
      * Requests to unban this member from its guild.

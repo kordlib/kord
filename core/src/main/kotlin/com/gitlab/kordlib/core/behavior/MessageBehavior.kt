@@ -5,6 +5,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.cache.data.UserData
+import com.gitlab.kordlib.core.cache.data.toData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
@@ -27,9 +28,19 @@ interface MessageBehavior : Entity {
     val channel get() = MessageChannelBehavior(channelId, kord)
 
     /**
-     * Requests to get this behavior as a [Channel].
+     * Requests to get the this behavior as a [Message].
+     *
+     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asMessage(): Message = kord.getMessage(channelId, id)!!
+    suspend fun asMessage() : Message = kord.getMessage(channelId = channelId, messageId = id)!!
+
+    /**
+     * Requests to get the this behavior as a [Message].
+     *
+     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
+     * Unless the currency of data is important, it is advised to use [asMessage] instead to reduce unneeded API calls.
+     */
+    suspend fun requestMessage() : Message = kord.rest.getMessage(channelId = channelId, messageId = id)!!
 
     /**
      * Requests to delete this message.

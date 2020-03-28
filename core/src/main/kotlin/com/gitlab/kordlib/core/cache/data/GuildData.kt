@@ -102,3 +102,5 @@ data class GuildData(
         }
     }
 }
+
+fun DiscordGuild.toData() = GuildData.from(this)

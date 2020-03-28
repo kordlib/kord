@@ -1,22 +1,23 @@
 package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
-import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.builder.presence.PresenceUpdateBuilder
 import com.gitlab.kordlib.core.cache.KordCache
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
+import com.gitlab.kordlib.core.rest.KordRestClient
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.start
+import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -30,12 +31,11 @@ import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 val kordLogger = KotlinLogging.logger { }
 
-
 class Kord internal constructor(
         val resources: ClientResources,
         cache: DataCache,
         val gateway: Gateway,
-        val rest: RestClient,
+        rest: RestClient,
         val selfId: Snowflake,
         private val eventPublisher: BroadcastChannel<Event>,
         private val dispatcher: CoroutineDispatcher
@@ -47,6 +47,8 @@ class Kord internal constructor(
     }
 
     val cache: KordCache = KordCache(this, cache)
+
+    val rest: KordRestClient = KordRestClient(this, rest)
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     val unsafe: Unsafe = Unsafe(this)
@@ -118,26 +120,26 @@ class Kord internal constructor(
         return Guild(data, this)
     }
 
-    override suspend fun getChannel(id: Snowflake): Channel? = cache.getChannel(id) ?: requestsChannel(id)
+    override suspend fun getChannel(id: Snowflake): Channel? = cache.getChannel(id) ?: rest.getChannel(id)
 
-    override suspend fun getGuild(id: Snowflake): Guild? = cache.getGuild(id) ?: requestGuild(id)
+    override suspend fun getGuild(id: Snowflake): Guild? = cache.getGuild(id) ?: rest.getGuild(id)
 
     override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member? {
-        return cache.getMember(guildId = guildId, userId = userId) ?: requestMember(guildId = guildId, userId = userId)
+        return cache.getMember(guildId = guildId, userId = userId) ?: rest.getMember(guildId = guildId, userId = userId)
     }
 
     override suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message? {
         return cache.getMessage(channelId = channelId, messageId = messageId)
-                ?: requestMessage(channelId = channelId, messageId = messageId)
+                ?: rest.getMessage(channelId = channelId, messageId = messageId)
     }
 
-    override suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role? {
+    suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role? {
         return cache.getRole(guildId = guildId, roleId = roleId) ?: requestRole(guildId = guildId, roleId = roleId)
     }
 
     override suspend fun getSelf(): User = cache.getSelf() ?: User(UserData.from(rest.user.getCurrentUser()), this)
 
-    override suspend fun getUser(id: Snowflake): User? = cache.getUser(id) ?: requestUser(id)
+    override suspend fun getUser(id: Snowflake): User? = cache.getUser(id) ?: rest.getUser(id)
 
     suspend inline fun editPresence(builder: PresenceUpdateBuilder.() -> Unit) {
         val request = PresenceUpdateBuilder().apply(builder).toRequest()
@@ -150,52 +152,12 @@ class Kord internal constructor(
         return resources.token == kord.resources.token
     }
 
-    internal suspend fun requestsChannel(id: Snowflake): Channel? {
-        val data = catchNotFound { rest.channel.getChannel(id.value).let { ChannelData.from(it) } } ?: return null
-        return Channel.from(data, this)
-    }
+    internal suspend fun requestRole(guildId: Snowflake, roleId: Snowflake): Role? = catchNotFound {
+        val response = rest.guild.getGuildRoles(guildId.value)
+                .firstOrNull { it.id == roleId.value } ?: return@catchNotFound null
 
-    internal suspend fun requestGuild(id: Snowflake): Guild? {
-        val data = catchNotFound { rest.guild.getGuild(id.value).let { GuildData.from(it) } } ?: return null
-        return Guild(data, this)
-    }
-
-    internal suspend fun requestMember(guildId: Snowflake, userId: Snowflake): Member? {
-        val response = catchNotFound {
-            rest.guild.getGuildMember(guildId = guildId.value, userId = userId.value)
-        } ?: return null
-
-        val memberData = MemberData.from(guildId = guildId.value, userId = userId.value, entity = response)
-        val userData = response.user?.let { UserData.from(it) } ?: catchNotFound {
-            rest.user.getUser(userId.value).let { UserData.from(it) }
-        } ?: return null //this shouldn't happen, since we already know the member to exist.
-
-        return Member(memberData, userData, this)
-    }
-
-    internal suspend fun requestMessage(channelId: Snowflake, messageId: Snowflake): Message? {
-        val data = catchNotFound {
-            val response = rest.channel.getMessage(channelId.value, messageId.value)
-            MessageData.from(response)
-        } ?: return null
-
-        return Message(data, this)
-    }
-
-    internal suspend fun requestRole(guildId: Snowflake, roleId: Snowflake): Role? {
-        val data = catchNotFound {
-            val response = rest.guild.getGuildRoles(guildId.value)
-                    .firstOrNull { it.id == roleId.value } ?: return@catchNotFound null
-
-            RoleData.from(guildId.value, response)
-        } ?: return null
-
+        val data = RoleData.from(guildId.value, response)
         return Role(data, this)
-    }
-
-    internal suspend fun requestUser(id: Snowflake): User? {
-        val data = catchNotFound { rest.user.getUser(id.value).let { UserData.from(it) } } ?: return null
-        return User(data, this)
     }
 
     companion object {

@@ -5,6 +5,9 @@ import com.gitlab.kordlib.rest.builder.webhook.WebhookCreateBuilder
 import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.Webhook
+import com.gitlab.kordlib.core.entity.channel.Category
+import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.rest.json.request.BulkDeleteRequest
 import kotlinx.coroutines.flow.Flow
@@ -31,9 +34,20 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
         }
 
 
-    override suspend fun asChannel(): GuildMessageChannel {
-        return super<GuildChannelBehavior>.asChannel() as GuildMessageChannel
-    }
+    /**
+     * Requests to get the this behavior as a [GuildMessageChannel].
+     *
+     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
+     */
+    override suspend fun asChannel(): GuildMessageChannel =  super<GuildChannelBehavior>.asChannel() as GuildMessageChannel
+
+    /**
+     * Requests to get this behavior as a [GuildMessageChannel].
+     *
+     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
+     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
+     */
+    override suspend fun requestChannel(): GuildMessageChannel = super<MessageChannelBehavior>.requestChannel() as GuildMessageChannel
 
     /**
      * Requests to bulk delete the [messages]. Sequentially deletes messages older than 14 days.

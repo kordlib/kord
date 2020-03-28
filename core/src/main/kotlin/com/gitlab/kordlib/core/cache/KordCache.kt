@@ -73,7 +73,7 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         return Message(data, kord)
     }
 
-    override suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role? {
+    suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role? {
         val data = find<RoleData> {
             RoleData::id eq roleId.longValue
             RoleData::guildId eq guildId.longValue

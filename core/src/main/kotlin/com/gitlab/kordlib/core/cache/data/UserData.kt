@@ -35,3 +35,5 @@ data class UserData(
 
     }
 }
+
+fun DiscordUser.toData() = UserData.from(this)
