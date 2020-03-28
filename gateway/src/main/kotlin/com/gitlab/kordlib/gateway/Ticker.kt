@@ -18,7 +18,7 @@ private val logger = KotlinLogging.logger {  }
  * @param dispatcher The dispatchers the events will be fired on.
  */
 @ObsoleteCoroutinesApi
-class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : CoroutineScope {
+class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.Default) : CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Job() + dispatcher

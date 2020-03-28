@@ -71,9 +71,9 @@ class KordBuilder(val token: String) {
     var enableShutdownHook: Boolean = true
 
     /**
-     * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.IO] by default.
+     * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
      */
-    var defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+    var defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 
     /**
      * The client used for building [Gateways][Gateway] and [RequestHandlers][RequestHandler]. A default implementation
