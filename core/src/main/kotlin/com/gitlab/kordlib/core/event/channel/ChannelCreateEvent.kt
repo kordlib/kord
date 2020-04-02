@@ -10,9 +10,9 @@ interface ChannelCreateEvent : Event {
         get() = channel.kord
 }
 
-class CategoryCreateEvent internal constructor(override val channel: Category) : ChannelCreateEvent
-class DMChannelCreateEvent internal constructor(override val channel: DmChannel) : ChannelCreateEvent
-class NewsChannelCreateEvent internal constructor(override val channel: NewsChannel) : ChannelCreateEvent
-class StoreChannelCreateEvent internal constructor(override val channel: StoreChannel) : ChannelCreateEvent
-class TextChannelCreateEvent internal constructor(override val channel: TextChannel) : ChannelCreateEvent
-class VoiceChannelCreateEvent internal constructor(override val channel: VoiceChannel) : ChannelCreateEvent
+class CategoryCreateEvent (override val channel: Category, override val shard: Int) : ChannelCreateEvent
+class DMChannelCreateEvent (override val channel: DmChannel, override val shard: Int) : ChannelCreateEvent
+class NewsChannelCreateEvent (override val channel: NewsChannel, override val shard: Int) : ChannelCreateEvent
+class StoreChannelCreateEvent (override val channel: StoreChannel, override val shard: Int) : ChannelCreateEvent
+class TextChannelCreateEvent (override val channel: TextChannel, override val shard: Int) : ChannelCreateEvent
+class VoiceChannelCreateEvent (override val channel: VoiceChannel, override val shard: Int) : ChannelCreateEvent

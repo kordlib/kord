@@ -12,7 +12,7 @@ import com.gitlab.kordlib.core.entity.Guild
 /**
  * Sent when an invite is deleted.
  */
-class InviteDeleteEvent(val data: InviteDeleteData, override val kord: Kord) : Event {
+class InviteDeleteEvent(val data: InviteDeleteData, override val kord: Kord, override val shard: Int) : Event {
     /**
      * The [GuildChannel] of the invite.
      */

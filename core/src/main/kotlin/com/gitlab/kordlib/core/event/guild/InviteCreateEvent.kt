@@ -20,7 +20,7 @@ import kotlin.time.seconds
 /**
  * Sent when a new invite to a channel is created.
  */
-class InviteCreateEvent(val data: InviteCreateData, override val kord: Kord) : Event {
+class InviteCreateEvent(val data: InviteCreateData, override val kord: Kord, override val shard: Int) : Event {
 
     /**
      * The [GuildChannel] the invite is for.

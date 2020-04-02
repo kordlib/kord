@@ -11,12 +11,13 @@ import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.event.Event
 import java.time.Instant
 
- class TypingStartEvent internal constructor(
+ class TypingStartEvent (
          val channelId: Snowflake,
          val userId: Snowflake,
          val guildId: Snowflake?,
          val started: Instant,
-         override val kord: Kord
+         override val kord: Kord,
+         override val shard: Int
 ) : Event {
 
     val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)

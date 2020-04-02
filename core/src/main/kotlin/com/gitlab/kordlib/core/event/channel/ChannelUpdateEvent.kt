@@ -10,9 +10,9 @@ interface ChannelUpdateEvent : Event {
         get() = channel.kord
 }
 
-class CategoryUpdateEvent internal constructor(override val channel: Category) : ChannelUpdateEvent
-class DMChannelUpdateEvent internal constructor(override val channel: DmChannel) : ChannelUpdateEvent
-class NewsChannelUpdateEvent internal constructor(override val channel: NewsChannel) : ChannelUpdateEvent
-class StoreChannelUpdateEvent internal constructor(override val channel: StoreChannel) : ChannelUpdateEvent
-class TextChannelUpdateEvent internal constructor(override val channel: TextChannel) : ChannelUpdateEvent
-class VoiceChannelUpdateEvent internal constructor(override val channel: VoiceChannel) : ChannelUpdateEvent
+class CategoryUpdateEvent (override val channel: Category, override val shard: Int) : ChannelUpdateEvent
+class DMChannelUpdateEvent (override val channel: DmChannel, override val shard: Int) : ChannelUpdateEvent
+class NewsChannelUpdateEvent (override val channel: NewsChannel, override val shard: Int) : ChannelUpdateEvent
+class StoreChannelUpdateEvent (override val channel: StoreChannel, override val shard: Int) : ChannelUpdateEvent
+class TextChannelUpdateEvent (override val channel: TextChannel, override val shard: Int) : ChannelUpdateEvent
+class VoiceChannelUpdateEvent (override val channel: VoiceChannel, override val shard: Int) : ChannelUpdateEvent

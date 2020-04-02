@@ -39,7 +39,7 @@ internal class HandshakeHandler(
             }
         }
 
-        on<SessionClose> {
+        on<Close.SessionReset> {
             session.update { null }
         }
     }

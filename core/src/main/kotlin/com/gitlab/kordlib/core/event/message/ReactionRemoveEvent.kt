@@ -11,13 +11,14 @@ import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.event.Event
 
-class ReactionRemoveEvent internal constructor(
+class ReactionRemoveEvent (
         val userId: Snowflake,
         val channelId: Snowflake,
         val messageId: Snowflake,
         val guildId: Snowflake?,
         val emoji: ReactionEmoji,
-        override val kord: Kord
+        override val kord: Kord,
+        override val shard: Int
 ) : Event {
 
     val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)

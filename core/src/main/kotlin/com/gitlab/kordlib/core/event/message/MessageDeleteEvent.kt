@@ -14,7 +14,8 @@ class MessageDeleteEvent(
         val channelId: Snowflake,
         val guildId: Snowflake?,
         val message: Message?,
-        override val kord: Kord
+        override val kord: Kord,
+        override val shard: Int
 ): Event {
 
     val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)

@@ -15,7 +15,8 @@ import com.gitlab.kordlib.core.event.Event
 
 class ReactionRemoveEmojiEvent(
         val data: ReactionRemoveEmojiData,
-        override val kord: Kord
+        override val kord: Kord,
+        override val shard: Int
 ) : Event {
 
     /**

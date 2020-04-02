@@ -7,7 +7,7 @@ import com.gitlab.kordlib.core.entity.Member
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.event.Event
 
-class MemberJoinEvent internal constructor(val member: Member) : Event {
+class MemberJoinEvent (val member: Member, override val shard: Int) : Event {
 
     override val kord: Kord get() = member.kord
 

@@ -4,11 +4,8 @@ import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.ActivityType
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
-import com.gitlab.kordlib.gateway.DefaultGateway
-import com.gitlab.kordlib.gateway.MessageCreate
-import com.gitlab.kordlib.gateway.UpdateStatus
+import com.gitlab.kordlib.gateway.*
 import com.gitlab.kordlib.gateway.retry.LinearRetry
-import com.gitlab.kordlib.gateway.start
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
@@ -54,7 +51,7 @@ class DefaultGatewayTest {
             val words = it.message.content.split(' ')
             when (words.firstOrNull()) {
                 "!close" -> gateway.stop()
-                "!restart" -> gateway.restart()
+                "!restart" -> gateway.restart(Close.Reconnecting)
                 "!detach" -> gateway.detach()
                 "!status" -> when (words.getOrNull(1)) {
                     "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Kord", ActivityType.Game)))

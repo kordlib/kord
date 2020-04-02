@@ -126,9 +126,53 @@ sealed class Event {
 
 }
 
-sealed class Close : Event()
-object SessionClose : Close()
-object CloseForReconnect : Close()
+
+sealed class Close : Event() {
+
+    /**
+     * The Gateway was detached, all resources tied to the gateway should be freed.
+     */
+    object Detach: Close()
+
+    /**
+     * The user closed the Gateway connection.
+     */
+    object UserClose: Close()
+
+    /**
+     * The connection was closed because of a timeout, probably due to a loss of internet connection.
+     */
+    object Timeout: Close()
+
+    /**
+     * Discord closed the connection with a [closeCode].
+     *
+     * @param recoverable true if the gateway will automatically try to reconnect.
+     */
+    class DiscordClose(val closeCode: GatewayCloseCode, val recoverable: Boolean): Close()
+
+    /**
+     * The gateway closed and will attempt to resume the session.
+     */
+    object Reconnecting : Close()
+
+    /**
+     * The gateway closed and will attempt to start a new session.
+     */
+    object SessionReset : Close()
+
+    /**
+     * Discord is no longer responding to the gateway commands, the connection will be closed and an attempt to resume the session will be made.
+     * Any [commands][Command] send recently might not complete, and won't be automatically requeued.
+     */
+    object ZombieConnection : Close()
+
+    /**
+     *  The Gateway has failed to establish a connection too many times and will not try to reconnect anymore.
+     *  The user is free to manually connect again using [Gateway.start], otherwise all resources linked to the Gateway should free and the Gateway [detached][Gateway.detach].
+     */
+    object RetryLimitReached: Close()
+}
 
 object HeartbeatACK : Event()
 object Reconnect : Event()

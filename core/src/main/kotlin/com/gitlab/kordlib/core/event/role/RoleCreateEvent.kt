@@ -6,7 +6,7 @@ import com.gitlab.kordlib.core.entity.Role
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.event.Event
 
- class RoleCreateEvent internal constructor(val role: Role) : Event {
+ class RoleCreateEvent (val role: Role, override val shard: Int) : Event {
 
      override val kord: Kord get() = role.kord
 

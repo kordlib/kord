@@ -11,9 +11,9 @@ interface ChannelDeleteEvent : Event {
         get() = channel.kord
 }
 
-class CategoryDeleteEvent internal constructor(override val channel: Category) : ChannelDeleteEvent
-class DMChannelDeleteEvent internal constructor(override val channel: DmChannel) : ChannelDeleteEvent
-class NewsChannelDeleteEvent internal constructor(override val channel: NewsChannel) : ChannelDeleteEvent
-class StoreChannelDeleteEvent internal constructor(override val channel: StoreChannel) : ChannelDeleteEvent
-class TextChannelDeleteEvent internal constructor(override val channel: TextChannel) : ChannelDeleteEvent
-class VoiceChannelDeleteEvent internal constructor(override val channel: VoiceChannel) : ChannelDeleteEvent
+class CategoryDeleteEvent (override val channel: Category, override val shard: Int) : ChannelDeleteEvent
+class DMChannelDeleteEvent (override val channel: DmChannel, override val shard: Int) : ChannelDeleteEvent
+class NewsChannelDeleteEvent (override val channel: NewsChannel, override val shard: Int) : ChannelDeleteEvent
+class StoreChannelDeleteEvent (override val channel: StoreChannel, override val shard: Int) : ChannelDeleteEvent
+class TextChannelDeleteEvent (override val channel: TextChannel, override val shard: Int) : ChannelDeleteEvent
+class VoiceChannelDeleteEvent (override val channel: VoiceChannel, override val shard: Int) : ChannelDeleteEvent

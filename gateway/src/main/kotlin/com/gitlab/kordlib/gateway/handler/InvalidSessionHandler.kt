@@ -10,8 +10,8 @@ internal class InvalidSessionHandler(
 
     override fun start() {
         on<InvalidSession> {
-            if (it.resumable) restart(CloseForReconnect)
-            else restart(SessionClose)
+            if (it.resumable) restart(Close.Reconnecting)
+            else restart(Close.SessionReset)
         }
     }
 

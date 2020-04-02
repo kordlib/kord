@@ -10,7 +10,8 @@ import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 class WebhookUpdateEvent(
         val guildId: Snowflake,
         val channelId: Snowflake,
-        override val kord: Kord
+        override val kord: Kord,
+        override val shard: Int
 ) : Event {
 
     val channel: GuildMessageChannelBehavior get() = GuildMessageChannelBehavior(guildId, channelId, kord)

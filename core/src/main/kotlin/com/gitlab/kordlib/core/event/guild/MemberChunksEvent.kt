@@ -6,10 +6,11 @@ import com.gitlab.kordlib.core.entity.Member
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.event.Event
 
- class MemberChunksEvent internal constructor(
+ class MemberChunksEvent (
          val guildId: Snowflake,
          val members: Set<Member>,
-         override val kord: Kord
+         override val kord: Kord,
+         override val shard: Int
 ) : Event {
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)

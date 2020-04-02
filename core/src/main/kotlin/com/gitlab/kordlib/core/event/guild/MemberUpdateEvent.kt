@@ -14,14 +14,15 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import java.time.Instant
 
-class MemberUpdateEvent internal constructor(
+class MemberUpdateEvent (
         val old: Member?,
         val guildId: Snowflake,
         val memberId: Snowflake,
         val currentRoleIds: Set<Snowflake>,
         val currentNickName: String,
         val premiumSince: Instant?,
-        override val kord: Kord
+        override val kord: Kord,
+        override val shard: Int
 ) : Event {
 
     val member: MemberBehavior get() = MemberBehavior(guildId, memberId, kord)

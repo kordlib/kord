@@ -9,7 +9,8 @@ class VoiceServerUpdateEvent(
         val token: String,
         val guildId: Snowflake,
         val endpoint: String,
-        override val kord: Kord
+        override val kord: Kord,
+        override val shard: Int
 ) : Event {
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)

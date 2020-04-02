@@ -1,42 +1,35 @@
 package com.gitlab.kordlib.core.gateway
 
-import com.gitlab.kordlib.gateway.Command
-import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.Gateway
-import com.gitlab.kordlib.gateway.GatewayConfiguration
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.delay
+import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.flow.*
-import kotlin.time.Duration
 import kotlin.time.milliseconds
 
+data class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
+
 class MasterGateway(
-        private val gateways: List<Gateway>,
-        private val shards: List<Int>
-) : Gateway {
+        val gateways: Map<Int, Gateway>
+) {
 
-    init {
-        require(gateways.size == shards.size) { "amount of gateways must equal amount of shards" }
+    val averagePing get() = gateways.values.asSequence().map { it.ping.inMilliseconds }.average().milliseconds
+
+    val events: Flow<ShardEvent> = gateways.entries.asFlow()
+            .flatMapMerge(gateways.size) { (shard, gateway) -> gateway.events.map { event -> ShardEvent(event, gateway, shard) } }
+
+    suspend fun start(configuration: GatewayConfiguration) =  gateways.entries.forEach { (shard, gateway) ->
+                val config = configuration.copy(shard = configuration.shard.copy(index = shard))
+                gateway.start(config)
+            }
+
+    suspend inline fun start(token: String, config: GatewayConfigurationBuilder.() -> Unit = {}) {
+        val builder = GatewayConfigurationBuilder(token)
+        builder.apply(config)
+        start(builder.build())
     }
 
-    override val ping: Duration
-        get() = gateways.sumByDouble { it.ping.inMilliseconds }.milliseconds
+    suspend fun sendAll(command: Command) = gateways.values.forEach { it.send(command) }
 
-    @FlowPreview
-    override val events: Flow<Event>
-        get() = gateways.asFlow().flatMapMerge(gateways.size) { it.events }
+    suspend fun detachAll() = gateways.values.forEach { it.detach() }
 
-    override suspend fun start(configuration: GatewayConfiguration) = gateways.forEachIndexed { index, gateway ->
-        val config = configuration.copy(shard = configuration.shard.copy(index = shards[index]))
-        gateway.start(config)
-    }
-
-    override suspend fun send(command: Command) = gateways.forEach { it.send(command) }
-
-    override suspend fun detach() = gateways.forEach { it.detach() }
-
-    override suspend fun stop() = gateways.forEach { it.stop() }
+    suspend fun stopAll() = gateways.values.forEach { it.stop() }
 
 }
-
-

@@ -14,7 +14,8 @@ class ReactionRemoveAllEvent(
         val channelId: Snowflake,
         val messageId: Snowflake,
         val guildId: Snowflake?,
-        override val kord: Kord
+        override val kord: Kord,
+        override val shard: Int
 ) : Event {
 
     val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)

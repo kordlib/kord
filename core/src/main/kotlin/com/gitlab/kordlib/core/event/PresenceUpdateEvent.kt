@@ -6,12 +6,13 @@ import com.gitlab.kordlib.core.entity.Presence
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.User
 
-class PresenceUpdateEvent internal constructor(
+class PresenceUpdateEvent (
         val oldUser: User?,
         val user: DiscordPresenceUser,
         val guildId: Snowflake,
         val old: Presence?,
-        val presence: Presence
+        val presence: Presence,
+        override val shard: Int
 ) : Event {
     override val kord: Kord get() = presence.kord
 }
