@@ -3,12 +3,27 @@ package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Snowflake
+import com.gitlab.kordlib.core.event.Event
+import com.gitlab.kordlib.core.event.PresenceUpdateEvent
+import com.gitlab.kordlib.core.event.VoiceStateUpdateEvent
+import com.gitlab.kordlib.core.event.WebhookUpdateEvent
+import com.gitlab.kordlib.core.event.channel.*
+import com.gitlab.kordlib.core.event.guild.*
+import com.gitlab.kordlib.core.event.message.*
+import com.gitlab.kordlib.core.event.role.RoleCreateEvent
+import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
+import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
+import com.gitlab.kordlib.gateway.DefaultGateway
+import com.gitlab.kordlib.gateway.Intent.*
+import com.gitlab.kordlib.gateway.Intents
+import com.gitlab.kordlib.gateway.MessageDelete
 import com.gitlab.kordlib.rest.request.RequestException
 import com.gitlab.kordlib.rest.route.Position
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
+import kotlin.reflect.KClass
 
 internal fun String?.toSnowflakeOrNull(): Snowflake? = when {
     this == null -> null
@@ -98,3 +113,78 @@ internal fun <C : Collection<T>, T> paginateBackwards(start: Snowflake = Snowfla
 
 internal fun <C : Collection<T>, T : Entity> paginateBackwards(start: Snowflake = Snowflake(Long.MAX_VALUE), batchSize: Int, request: suspend (position: Position) -> C): Flow<T> =
         paginate(start.value, batchSize, { it.id.value }, Position::Before, request)
+
+inline fun<reified T: Event> Intents.IntentsBuilder.enableEvent() = enableEvent(T::class)
+
+fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>) = events.forEach { enableEvent(it) }
+fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>) = events.forEach { enableEvent(it) }
+
+fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>) = when (event) {
+    GuildCreateEvent::class,
+    GuildDeleteEvent::class,
+    RoleCreateEvent::class,
+    RoleUpdateEvent::class,
+    RoleDeleteEvent::class,
+
+    ChannelCreateEvent::class,
+    CategoryCreateEvent::class,
+    DMChannelCreateEvent::class,
+    NewsChannelCreateEvent::class,
+    StoreChannelCreateEvent::class,
+    TextChannelCreateEvent::class,
+    VoiceChannelCreateEvent::class,
+
+    ChannelUpdateEvent::class,
+    CategoryUpdateEvent::class,
+    DMChannelUpdateEvent::class,
+    NewsChannelUpdateEvent::class,
+    StoreChannelUpdateEvent::class,
+    TextChannelUpdateEvent::class,
+    VoiceChannelUpdateEvent::class,
+
+    ChannelDeleteEvent::class,
+    CategoryDeleteEvent::class,
+    DMChannelDeleteEvent::class,
+    NewsChannelDeleteEvent::class,
+    StoreChannelDeleteEvent::class,
+    TextChannelDeleteEvent::class,
+    VoiceChannelDeleteEvent::class,
+
+    ChannelPinsUpdateEvent::class
+    -> {
+        +Guilds
+        +DirectMessages
+    }
+
+    MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
+
+    BanEvent::class, UnbanEvent::class -> +GuildBans
+
+    EmojisUpdateEvent::class -> +GuildEmojis
+
+    IntegrationsUpdateEvent::class -> +GuildIntegrations
+
+    WebhookUpdateEvent::class -> +GuildWebhooks
+
+    //TODO add invite create/delete events
+
+    VoiceStateUpdateEvent::class -> +GuildVoiceStates
+
+    PresenceUpdateEvent::class -> +GuildPresences
+
+    MessageCreateEvent::class, MessageUpdateEvent::class, MessageDelete::class -> {
+        +GuildMessages
+        +DirectMessages
+    }
+
+    //TODO MESSAGE_REACTION_REMOVE_EMOJI
+    ReactionAddEvent::class, ReactionRemoveEvent::class, ReactionRemoveAllEvent::class -> {
+        +GuildMessageReactions
+        +DirectMessagesReactions
+    }
+
+    TypingStartEvent::class -> +GuildMessageTyping
+
+    else -> Unit
+
+}

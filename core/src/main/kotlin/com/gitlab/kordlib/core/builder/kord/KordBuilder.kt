@@ -10,6 +10,7 @@ import com.gitlab.kordlib.core.cache.CachingGateway
 import com.gitlab.kordlib.core.cache.KordCacheBuilder
 import com.gitlab.kordlib.core.cache.createView
 import com.gitlab.kordlib.core.cache.registerKordData
+import com.gitlab.kordlib.core.enableEvent
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.MasterGateway
@@ -17,6 +18,7 @@ import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.gateway.DefaultGateway
 import com.gitlab.kordlib.gateway.DefaultGatewayData
 import com.gitlab.kordlib.gateway.Gateway
+import com.gitlab.kordlib.gateway.Intents
 import com.gitlab.kordlib.gateway.retry.LinearRetry
 import com.gitlab.kordlib.gateway.retry.Retry
 import com.gitlab.kordlib.rest.json.response.BotGatewayResponse
@@ -80,6 +82,11 @@ class KordBuilder(val token: String) {
     var httpClient: HttpClient? = null
 
     /**
+     * The enabled gateway intents, setting intents to null will disable the feature.
+     */
+    var intents: Intents? = null
+
+    /**
      * Configures the shards this client will connect to, by default `0 until recommended`.
      * This can be used to break up to client into multiple processes.
      *
@@ -113,6 +120,15 @@ class KordBuilder(val token: String) {
      */
     fun gateways(gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway>) {
         this.gatewayBuilder = gatewayBuilder
+    }
+
+    /**
+     * Configures the enabled intents across all gateways.
+     *
+     * Use [enableEvent] to enable intents based on events.
+     */
+    inline fun intents (builder: Intents.IntentsBuilder.() -> Unit) {
+        intents = Intents { builder() }
     }
 
     /**
@@ -176,7 +192,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token, shards.count(), client)
+        val resources = ClientResources(token, shards.count(), client, intents)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()

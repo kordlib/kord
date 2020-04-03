@@ -4,6 +4,15 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 /**
+ * Some intents are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without enabling them.
+ *
+ * See [the official documentation](https://discordapp.com/developers/docs/topics/gateway#privileged-intents) for more info on
+ * how to enable these.
+ */
+@Experimental(Experimental.Level.WARNING)
+annotation class PrivilegedIntent
+
+/**
  * Values that enable a group of events as [defined by Discord](https://github.com/discordapp/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents).
  */
 enum class Intent(val code: Int) {
@@ -27,6 +36,7 @@ enum class Intent(val code: Int) {
      * - [GuildMemberUpdate]
      * - [GuildMemberRemove]
      */
+    @PrivilegedIntent
     GuildMembers(1 shl 1),
 
     /**
@@ -44,7 +54,7 @@ enum class Intent(val code: Int) {
 
     /**
      * Enables the following events:
-     * - GUILD_INTEGRATIONS_UPDATE
+     * - [GuildIntegrationsUpdate]
      */
     GuildIntegrations(1 shl 4),
 
@@ -71,6 +81,7 @@ enum class Intent(val code: Int) {
      * Enables the following events:
      * - [PresenceUpdate]
      */
+    @PrivilegedIntent
     GuildPresences(1 shl 8),
 
     /**
@@ -158,9 +169,19 @@ data class Intents internal constructor(val code: Int) {
 
     companion object {
 
+        @PrivilegedIntent
         val all: Intents
             get() = invoke {
                 Intent.values().forEach { +it }
+            }
+
+        @Suppress("EXPERIMENTAL_API_USAGE")
+        val nonPrivileged
+            get() = invoke {
+                Intent.values().forEach { +it }
+
+                -Intent.GuildPresences
+                -Intent.GuildMembers
             }
 
         inline operator fun invoke(builder: IntentsBuilder.() -> Unit): Intents {
@@ -169,6 +190,10 @@ data class Intents internal constructor(val code: Int) {
     }
 
     class IntentsBuilder(internal var code: Int = 0) {
+        operator fun Intents.unaryPlus() {
+            this@IntentsBuilder.code = this@IntentsBuilder.code or code
+        }
+
         operator fun Intent.unaryPlus() {
             this@IntentsBuilder.code = this@IntentsBuilder.code or code
         }
