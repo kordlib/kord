@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.request
 
+import com.gitlab.kordlib.rest.json.response.DiscordRequestException
 import com.gitlab.kordlib.rest.ratelimit.*
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -14,7 +15,6 @@ import io.ktor.http.takeFrom
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import mu.KotlinLogging
-import java.awt.Color
 import java.time.Clock
 
 internal val jsonConfig = JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true)
@@ -51,7 +51,7 @@ class KtorRequestHandler(
 
         return when {
             response.isRateLimit -> handle(request)
-            response.isError -> throw KtorRequestException(response, response.errorString())
+            response.isError -> throw parser.parse(DiscordRequestException.DiscordRequestExceptionSerializer,responseBody)
             else -> parser.parse(request.route.strategy, responseBody)
         }
     }
