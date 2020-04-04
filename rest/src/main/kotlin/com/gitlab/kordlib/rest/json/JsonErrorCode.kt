@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.json
 //https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json
 enum class JsonErrorCode(val code: Int) {
+    Unknown(0),
     UnknownAccount(10001),
     UnknownApplication(10002),
     UnknownChannel(10003),
@@ -67,6 +68,6 @@ enum class JsonErrorCode(val code: Int) {
     NonBotGuildInviteAccepted(50036),
     InvalidAPIVersion(50041),
     ReactionBlocked(90001),
-    APIResourceOverloaded(130000),
+    APIResourceOverloaded(130000)
     
 }
