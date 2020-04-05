@@ -39,7 +39,7 @@ class Kord internal constructor(
         val selfId: Snowflake,
         private val eventPublisher: BroadcastChannel<Event>,
         private val dispatcher: CoroutineDispatcher
-) : CoroutineScope, EntitySupplier {
+) : CoroutineScope {
     private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventPublisher)
 
     init {
@@ -59,32 +59,14 @@ class Kord internal constructor(
         get() = dispatcher + Job()
 
 
-    override val regions: Flow<Region>
-        get() = flow {
-            val request = flow {
-                rest.voice.getVoiceRegions().forEach { emit(it) }
-            }.map { RegionData.from(it) }.map { Region(it, this@Kord) }
-
-            val flow = cache.regions.switchIfEmpty(request)
-
-            emitAll(flow)
-        }
+    val regions: Flow<Region>
+        get() = resources.defaultStrategy.supply(this).regions
 
     /**
-     * Gets all guilds that are currently cached, if none are cached a request will be send to get all guilds.
+     * Gets all guilds from the [ClientResources.defaultStrategy].
      */
-    override val guilds: Flow<Guild>
-        get() = flow {
-            //backup if we're not caching
-            val request = paginateForwards(idSelector = DiscordPartialGuild::id, batchSize = 100) { position -> rest.user.getCurrentUserGuilds(position, 100) }
-                    .map { rest.guild.getGuild(it.id) }
-                    .map { GuildData.from(it) }
-                    .map { Guild(it, this@Kord) }
-
-            val flow = cache.guilds.switchIfEmpty(request)
-
-            emitAll(flow)
-        }
+    val guilds: Flow<Guild>
+        get() = resources.defaultStrategy.supply(this).guilds
 
     /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
@@ -108,6 +90,8 @@ class Kord internal constructor(
         this.eventPublisher.close()
     }
 
+    fun with(strategy: EntitySupplyStrategy) = strategy.supply(this)
+
     suspend fun getApplicationInfo(): ApplicationInfo {
         val response = rest.application.getCurrentApplicationInfo()
         return ApplicationInfo(ApplicationInfoData.from(response), this)
@@ -120,26 +104,24 @@ class Kord internal constructor(
         return Guild(data, this)
     }
 
-    override suspend fun getChannel(id: Snowflake): Channel? = cache.getChannel(id) ?: rest.getChannel(id)
+    suspend fun getChannel(id: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Channel? = strategy.supply(this).getChannel(id)
 
-    override suspend fun getGuild(id: Snowflake): Guild? = cache.getGuild(id) ?: rest.getGuild(id)
+    suspend fun getGuild(id: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Guild? = strategy.supply(this).getGuild(id)
 
-    override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member? {
-        return cache.getMember(guildId = guildId, userId = userId) ?: rest.getMember(guildId = guildId, userId = userId)
-    }
+    suspend fun getMember(guildId: Snowflake, userId: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Member? =
+            strategy.supply(this).getMember(guildId, userId)
 
-    override suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message? {
-        return cache.getMessage(channelId = channelId, messageId = messageId)
-                ?: rest.getMessage(channelId = channelId, messageId = messageId)
-    }
+    suspend fun getMessage(channelId: Snowflake, messageId: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Message? =
+            strategy.supply(this).getMessage(channelId, messageId)
 
-    suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role? {
-        return cache.getRole(guildId = guildId, roleId = roleId) ?: requestRole(guildId = guildId, roleId = roleId)
-    }
+    suspend fun getRole(guildId: Snowflake, roleId: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Role? =
+        strategy.supply(this).getRole(guildId, roleId)
 
-    override suspend fun getSelf(): User = cache.getSelf() ?: User(UserData.from(rest.user.getCurrentUser()), this)
+    suspend fun getSelf(strategy: EntitySupplyStrategy = resources.defaultStrategy): User =
+            strategy.supply(this).getSelf() ?: rest.getSelf()
 
-    override suspend fun getUser(id: Snowflake): User? = cache.getUser(id) ?: rest.getUser(id)
+        suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): User? =
+                strategy.supply(this).getUser(id)
 
     suspend inline fun editPresence(builder: PresenceUpdateBuilder.() -> Unit) {
         val request = PresenceUpdateBuilder().apply(builder).toRequest()
@@ -150,14 +132,6 @@ class Kord internal constructor(
         val kord = other as? Kord ?: return false
 
         return resources.token == kord.resources.token
-    }
-
-    internal suspend fun requestRole(guildId: Snowflake, roleId: Snowflake): Role? = catchNotFound {
-        val response = rest.guild.getGuildRoles(guildId.value)
-                .firstOrNull { it.id == roleId.value } ?: return@catchNotFound null
-
-        val data = RoleData.from(guildId.value, response)
-        return Role(data, this)
     }
 
     companion object {

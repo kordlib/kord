@@ -21,6 +21,8 @@ interface EntitySupplier {
     suspend fun getSelf(): User?
 
     suspend fun getUser(id: Snowflake): User?
+
+    suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role?
 }
 
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")

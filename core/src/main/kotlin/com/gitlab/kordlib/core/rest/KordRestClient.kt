@@ -3,10 +3,7 @@ package com.gitlab.kordlib.core.rest
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.*
-import com.gitlab.kordlib.core.cache.data.ApplicationInfoData
-import com.gitlab.kordlib.core.cache.data.GuildData
-import com.gitlab.kordlib.core.cache.data.RegionData
-import com.gitlab.kordlib.core.cache.data.toData
+import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.rest.request.RequestException
@@ -111,6 +108,23 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * @throws RequestException when the request failed.
      */
     override suspend fun getUser(id: Snowflake): User? = catchNotFound { User(user.getUser(id.value).toData(), kord) }
+
+    /**
+     * Requests to get the role with the given [roleId] in the given [guildId].
+     *
+     * Entities will be fetched from Discord directly, ignoring any cached values.
+     *
+     * Note that this will effectively request all roles at once and then filter on the given id
+     *
+     * @return the role with the given [roleId], or null if the request returns a 404.
+     * @throws RequestException when the request failed.
+     */
+    override suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role? = catchNotFound {
+        val response = guild.getGuildRoles(guildId.value)
+                .firstOrNull { it.id == roleId.value } ?: return@catchNotFound null
+
+        return Role(RoleData.from(guildId.value, response), kord)
+    }
 
     /**
      * Requests to get the information of the current application.
