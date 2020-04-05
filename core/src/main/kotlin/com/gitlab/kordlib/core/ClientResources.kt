@@ -5,5 +5,6 @@ import io.ktor.client.HttpClient
 class ClientResources(
         val token: String,
         val shardCount: Int,
-        val httpClient: HttpClient
+        val httpClient: HttpClient,
+        val defaultStrategy: EntitySupplyStrategy
 )

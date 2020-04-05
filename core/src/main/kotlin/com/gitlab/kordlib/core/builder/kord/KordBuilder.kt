@@ -6,6 +6,7 @@ import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.core.ClientResources
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.CachingGateway
 import com.gitlab.kordlib.core.cache.KordCacheBuilder
@@ -74,6 +75,11 @@ class KordBuilder(val token: String) {
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.IO] by default.
      */
     var defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+
+    /**
+     * The default strategy used by entities to retrieve entities. [EntitySupplyStrategy.CacheWithRestFallback] by default.
+     */
+    var defaultStrategy: EntitySupplyStrategy = EntitySupplyStrategy.CacheWithRestFallback
 
     /**
      * The client used for building [Gateways][Gateway] and [RequestHandlers][RequestHandler]. A default implementation
@@ -183,7 +189,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token, shards.count(), client)
+        val resources = ClientResources(token, shards.count(), client, defaultStrategy)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
