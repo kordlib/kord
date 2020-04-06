@@ -108,10 +108,14 @@ class KordCacheBuilder {
      * The default behavior for all types not explicitly configured, by default a [ConcurrentHashMap] is supplied.
      */
     var defaultGenerator: Generator<Any, Any> = { cache, description ->
-        MapEntryCache(cache, description, MapLikeCollection.fromThreadSafe(ConcurrentHashMap()))
+        MapEntryCache(cache, description, MapLikeCollection.concurrentHashMap())
     }
 
     private val descriptionGenerators: MutableMap<DataDescription<*, *>, Generator<*, *>> = mutableMapOf()
+
+    init {
+        messages { _, _ -> DataEntryCache.none() }
+    }
 
     /**
      * Disables caching for all entries, clearing all custom generators and setting the default to [none].

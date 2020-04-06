@@ -48,7 +48,7 @@ operator fun DefaultGateway.Companion.invoke(resources: ClientResources, retry: 
         DefaultGateway(DefaultGatewayData("wss://gateway.discord.gg/", resources.httpClient, retry, BucketRateLimiter(120, 60.seconds), BucketRateLimiter(1, 5.seconds)))
 
 private val logger = KotlinLogging.logger { }
-
+    
 class KordBuilder(val token: String) {
     private var shardRange: (recommended: Int) -> Iterable<Int> = { 0 until it }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> = { resources, shards ->
@@ -63,6 +63,7 @@ class KordBuilder(val token: String) {
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
             { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter()) }
+
     private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
 
     /**
@@ -85,16 +86,9 @@ class KordBuilder(val token: String) {
      * Configures the shards this client will connect to, by default `0 until recommended`.
      * This can be used to break up to client into multiple processes.
      *
-     * ```
+     * ```kotlin
      * cache {
-     *  defaultGenerator = lruCache(10)
-     *  forDescription(UserData.description) { cache, description ->  DataEntryCache.none() }
-     *  forDescription(MessageData.description) { cache, description ->
-     *      MapEntryCache(cache, description, MapLikeCollection.lruLinkedHashMap(100))
-     *  }
-     *  forDescription(UserData.description) { cache, description ->
-     *      MapEntryCache(cache, description, MapLikeCollection.weakHashMap())
-     *  }
+     *  sharding { recommended -> 0 until recommended }
      *}
      * ```
      */
@@ -105,7 +99,7 @@ class KordBuilder(val token: String) {
     /**
      * Configures the [Gateway] for each shard.
      *
-     * ```
+     * ```kotlin
      * Kord(token) {
      *     gateway { resources, shards ->
      *         shards.map { DefaultGateway(resources) }
@@ -120,9 +114,9 @@ class KordBuilder(val token: String) {
     /**
      * Configures the [RequestHandler] for the [RestClient].
      *
-     * ```
+     * ```kotlin
      * Kord(token) {
-     *     { resources -> ExclusionRequestHandler(resources.httpClient) }
+     *     { resources -> KtorRequestHandler(resources.httpClient, ExclusionRequestRateLimiter()) }
      * }
      * ```
      */
@@ -131,14 +125,14 @@ class KordBuilder(val token: String) {
     }
 
     /**
-     * Configures the [DataCache] for caching.
+     * Configures the [DataCache] for caching gateway entities.
      *
-     *  ```
+     *  ```kotlin
      * Kord(token) {
      *     cache {
      *         defaultGenerator = lruCache()
-     *         forDescription(MessageData.description) { cache, description -> DataEntryCache.none() }
-     *         forDescription(UserData.description) { cache, description -> MapEntryCache(cache, description, MapLikeCollection.weakHashMap()) }
+     *         messages { cache, description -> DataEntryCache.none() }
+     *         users { cache, description -> MapEntryCache(cache, description, MapLikeCollection.weakHashMap()) }
      *     }
      * }
      * ```
@@ -180,7 +174,7 @@ class KordBuilder(val token: String) {
             logger.warn {
                 """
                 kord's http client is currently using ${client.engine.config.threadsCount} threads, 
-                which is less than the advised threadcount of ${shards.size + 1} (number of shards + 1)""".trimIndent()
+                which is less than the advised thread count of ${shards.size + 1} (number of shards + 1)""".trimIndent()
             }
         }
 
@@ -202,9 +196,7 @@ class KordBuilder(val token: String) {
 
         if (enableShutdownHook) {
             Runtime.getRuntime().addShutdownHook(thread(false) {
-                runBlocking {
-                    gateway.detach()
-                }
+                runBlocking { gateway.detach() }
             })
         }
 

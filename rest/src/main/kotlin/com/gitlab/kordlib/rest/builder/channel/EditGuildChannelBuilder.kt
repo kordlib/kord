@@ -15,7 +15,7 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
     var nsfw: Boolean? = null
     var parentId: Snowflake? = null
     var rateLimitPerUser: Int? = null
-    val permissionOverwrites: MutableSet<Overwrite>? = null
+    var permissionOverwrites: Set<Overwrite>? = null
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
@@ -37,7 +37,7 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     var parentId: Snowflake? = null
     var bitrate: Int? = null
     var userLimit: Int? = null
-    val permissionOverwrites: MutableSet<Overwrite>? = null
+    var permissionOverwrites: Set<Overwrite>? = null
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
@@ -57,7 +57,7 @@ class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
     var topic: String? = null
     var nsfw: Boolean? = null
     var parentId: Snowflake? = null
-    val permissionOverwrites: MutableSet<Overwrite>? = null
+    var permissionOverwrites: Set<Overwrite>? = null
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
