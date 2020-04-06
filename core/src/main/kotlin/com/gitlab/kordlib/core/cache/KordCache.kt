@@ -104,10 +104,6 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
 
 class KordCacheBuilder {
 
-    init {
-        messages { _, _ -> DataEntryCache.none() }
-    }
-
     /**
      * The default behavior for all types not explicitly configured, by default a [ConcurrentHashMap] is supplied.
      */
@@ -116,6 +112,10 @@ class KordCacheBuilder {
     }
 
     private val descriptionGenerators: MutableMap<DataDescription<*, *>, Generator<*, *>> = mutableMapOf()
+
+    init {
+        messages { _, _ -> DataEntryCache.none() }
+    }
 
     /**
      * Disables caching for all entries, clearing all custom generators and setting the default to [none].
