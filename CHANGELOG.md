@@ -1,3 +1,7 @@
+# 0.4.10
+### Fixes
+* `DiscordErrorResponse` incorrect serialization
+
 # 0.4.9
 
 ID collections in modify builders have undergone a breaking critical bug fix.

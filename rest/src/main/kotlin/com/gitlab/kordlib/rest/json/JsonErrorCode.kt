@@ -1,10 +1,13 @@
 package com.gitlab.kordlib.rest.json
 
+import kotlinx.serialization.*
+
 /**
  * Detailed error codes sent Discord API  in the JSON error response.
  *
  * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
  * */
+@Serializable(with = JsonErrorCode.JsonErrorCodeSerializer::class)
 enum class JsonErrorCode(val code: Int) {
     /**
      * Undocumented error
@@ -389,6 +392,21 @@ enum class JsonErrorCode(val code: Int) {
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
-    APIResourceOverloaded(130000),
+    APIResourceOverloaded(130000);
+
+    @Serializer(forClass = JsonErrorCode::class)
+    companion object JsonErrorCodeSerializer : KSerializer<JsonErrorCode>  {
+        override val descriptor = PrimitiveDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)
+
+
+        override fun deserialize(decoder: Decoder): JsonErrorCode {
+            val code = decoder.decodeInt()
+            return values().firstOrNull { it.code == code } ?: Unknown
+        }
+
+        override fun serialize(encoder: Encoder, value: JsonErrorCode) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+    }
 
 }
