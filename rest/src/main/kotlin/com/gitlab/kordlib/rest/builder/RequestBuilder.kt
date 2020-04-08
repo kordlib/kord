@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.rest.builder
 
+import com.gitlab.kordlib.common.annotation.KordDsl
+
 @KordDsl
 interface RequestBuilder<T> {
     fun toRequest() : T

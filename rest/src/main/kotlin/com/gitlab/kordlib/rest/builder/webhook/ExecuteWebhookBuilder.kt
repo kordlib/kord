@@ -1,6 +1,6 @@
 package com.gitlab.kordlib.rest.builder.webhook
 
-import com.gitlab.kordlib.rest.builder.KordDsl
+import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
 import com.gitlab.kordlib.rest.json.request.EmbedRequest

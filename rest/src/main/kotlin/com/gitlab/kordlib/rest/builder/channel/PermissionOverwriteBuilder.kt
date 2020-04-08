@@ -3,7 +3,7 @@ package com.gitlab.kordlib.rest.builder.channel
 import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.rest.builder.KordDsl
+import com.gitlab.kordlib.common.annotation.KordDsl
 
 @KordDsl
 class PermissionOverwriteBuilder(private val type: String, private val id: Snowflake) {

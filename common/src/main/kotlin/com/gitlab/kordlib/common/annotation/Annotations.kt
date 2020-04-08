@@ -1,6 +1,13 @@
 package com.gitlab.kordlib.common.annotation
 
 /**
+ * Dsl marker for Kord dsls.
+ */
+@DslMarker
+@Target(AnnotationTarget.CLASS)
+annotation class KordDsl
+
+/**
  * Marks a Kord-related API as a feature preview.
  *
  * A Kord preview has **no** backward compatibility guarantees, including both binary and source compatibility.

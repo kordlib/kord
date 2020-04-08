@@ -3,7 +3,7 @@ package com.gitlab.kordlib.rest.builder.guild
 import com.gitlab.kordlib.common.entity.DefaultMessageNotificationLevel
 import com.gitlab.kordlib.common.entity.VerificationLevel
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.rest.builder.KordDsl
+import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.json.request.GuildModifyRequest

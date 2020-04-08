@@ -8,7 +8,7 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
-import com.gitlab.kordlib.core.builder.presence.PresenceUpdateBuilder
+import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 import com.gitlab.kordlib.core.cache.KordCache
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
@@ -87,9 +87,9 @@ class Kord internal constructor(
     /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
-    suspend inline fun login(builder: PresenceUpdateBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
+    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
         shard = DiscordShard(0, resources.shardCount)
-        presence = PresenceUpdateBuilder().apply(builder).toGatewayPresence()
+        presence(builder)
         name = "kord"
     }
 
@@ -139,9 +139,9 @@ class Kord internal constructor(
 
     override suspend fun getUser(id: Snowflake): User? = cache.getUser(id) ?: requestUser(id)
 
-    suspend inline fun editPresence(builder: PresenceUpdateBuilder.() -> Unit) {
-        val request = PresenceUpdateBuilder().apply(builder).toRequest()
-        gateway.send(request)
+    suspend inline fun editPresence(builder: PresenceBuilder.() -> Unit) {
+        val status = PresenceBuilder().apply(builder).toUpdateStatus()
+        gateway.send(status)
     }
 
     override fun equals(other: Any?): Boolean {

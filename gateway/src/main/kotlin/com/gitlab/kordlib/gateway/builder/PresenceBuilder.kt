@@ -1,16 +1,15 @@
-package com.gitlab.kordlib.core.builder.presence
+package com.gitlab.kordlib.gateway.builder
 
+import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.ActivityType
 import com.gitlab.kordlib.common.entity.Status
-import com.gitlab.kordlib.rest.builder.KordDsl
-import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.gateway.Presence
 import com.gitlab.kordlib.gateway.UpdateStatus
 import java.time.Instant
 
 @KordDsl
-class PresenceUpdateBuilder : RequestBuilder<UpdateStatus> {
+class PresenceBuilder  {
     private var game: DiscordActivity? = null
     var status: Status = Status.Online
     var afk: Boolean = false
@@ -32,7 +31,7 @@ class PresenceUpdateBuilder : RequestBuilder<UpdateStatus> {
         game = DiscordActivity(name, ActivityType.Watching)
     }
 
-    override fun toRequest(): UpdateStatus = UpdateStatus(since?.toEpochMilli(), game, status, afk)
+    fun toUpdateStatus(): UpdateStatus = UpdateStatus(since?.toEpochMilli(), game, status, afk)
 
-    fun toGatewayPresence(): Presence = Presence(status, afk, since?.toEpochMilli(), game)
+    fun toPresence(): Presence = Presence(status, afk, since?.toEpochMilli(), game)
 }
