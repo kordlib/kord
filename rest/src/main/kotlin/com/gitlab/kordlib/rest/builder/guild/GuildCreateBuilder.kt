@@ -1,7 +1,10 @@
 package com.gitlab.kordlib.rest.builder.guild
 
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.rest.builder.KordDsl
+import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.entity.DefaultMessageNotificationLevel
+import com.gitlab.kordlib.common.entity.ExplicitContentFilter
+import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.VerificationLevel
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.builder.channel.CategoryCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.NewsChannelCreateBuilder
@@ -10,7 +13,6 @@ import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.json.request.GuildCreateChannelRequest
 import com.gitlab.kordlib.rest.json.request.GuildCreateRequest
 import com.gitlab.kordlib.rest.json.request.GuildRoleCreateRequest
-import java.awt.Color
 import kotlin.random.Random
 
 @KordDsl
@@ -63,17 +65,17 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
         return id
     }
 
-    inline fun newsChannel(id: Snowflake = newUniqueSnowflake(), builder: NewsChannelCreateBuilder.() -> Unit) : Snowflake {
+    inline fun newsChannel(id: Snowflake = newUniqueSnowflake(), builder: NewsChannelCreateBuilder.() -> Unit): Snowflake {
         channels.add(NewsChannelCreateBuilder().apply(builder).toRequest().copy(id = id.value))
         return id
     }
 
-    inline fun category(id: Snowflake = newUniqueSnowflake(), builder: CategoryCreateBuilder.() -> Unit) : Snowflake {
+    inline fun category(id: Snowflake = newUniqueSnowflake(), builder: CategoryCreateBuilder.() -> Unit): Snowflake {
         channels.add(CategoryCreateBuilder().apply(builder).toRequest().copy(id = id.value))
         return id
     }
 
-    inline fun role(id: Snowflake = newUniqueSnowflake(), builder: RoleCreateBuilder.() -> Unit) : Snowflake {
+    inline fun role(id: Snowflake = newUniqueSnowflake(), builder: RoleCreateBuilder.() -> Unit): Snowflake {
         roles += RoleCreateBuilder().apply(builder).toRequest().copy(id = id.value)
         return id
     }

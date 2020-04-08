@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.rest.builder.ban
 
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.rest.builder.KordDsl
+import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.rest.json.request.GuildBanAddRequest
 
 @KordDsl

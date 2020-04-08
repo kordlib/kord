@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.gateway
 
+import com.gitlab.kordlib.common.entity.DiscordShard
+import com.gitlab.kordlib.common.entity.Status
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -54,14 +56,31 @@ interface Gateway {
      * Closes the Gateway and ends the current session, suspending until the underlying webSocket is closed.
      */
     suspend fun stop()
+
+    companion object
 }
 
 /**
  * Starts a reconnecting gateway connection with the given parameters.
  * This function will suspend until the lifecycle of the gateway has ended.
  *
- * @param token the configuration for this gateway session.
- * @param config additional configuration for the gateway, using sensible defaults
+ * ```kotlin
+ * gateway.start("your_token") {
+ *     shard = DiscordShard(0,1)
+ *
+ *     presence {
+ *         afk = false
+ *         status = Status.Online
+ *         watching("you :eyes:")
+ *     }
+ *
+ * }
+ *
+ * //gateway has disconnected
+ * ```
+ *
+ * @param token The Discord token of the bot.
+ * @param config additional configuration for the gateway.
  */
 suspend inline fun Gateway.start(token: String, config: GatewayConfigurationBuilder.() -> Unit = {}) {
     val builder = GatewayConfigurationBuilder(token)

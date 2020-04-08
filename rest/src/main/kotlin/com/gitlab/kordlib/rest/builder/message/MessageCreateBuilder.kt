@@ -1,6 +1,6 @@
 package com.gitlab.kordlib.rest.builder.message
 
-import com.gitlab.kordlib.rest.builder.KordDsl
+import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.MessageCreateRequest
 import com.gitlab.kordlib.rest.json.request.MultipartMessageCreateRequest

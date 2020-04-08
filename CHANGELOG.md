@@ -3,6 +3,7 @@
 ## Changes
 
 * Changed `GuildCreateBuilder` to be more inline with recent api changes. #77
+* `Gateway` now accepts a `PresenceBuilder` to configure its original presence. #72
 
 # 0.4.6
 
