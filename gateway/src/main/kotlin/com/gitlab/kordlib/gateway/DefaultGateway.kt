@@ -159,7 +159,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
 
         return outputStream.use {
-            outputStream.toString(Charset.defaultCharset())
+            outputStream.toString(Charset.defaultCharset().name())
         }
     }
 
