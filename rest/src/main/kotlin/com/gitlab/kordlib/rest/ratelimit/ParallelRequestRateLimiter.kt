@@ -63,12 +63,12 @@ private class ParallelRequestToken(
     override suspend fun complete(response: RequestResponse) {
         logger.trace { response.toString() }
 
-        try {
-            if (response is RequestResponse.Error) return run {
-                completedAtomic.compareAndSet(expect = false, update = true)
-                mutexes.forEach { it.unlock() }
-            }
+        if (response is RequestResponse.Error) return run {
+            completedAtomic.compareAndSet(expect = false, update = true)
+            mutexes.forEach { it.unlock() }
+        }
 
+        try {
             if (response.rateLimit?.isExhausted == true) {
                 response.bucketKey?.let { rateLimiter.buckets[it] = response.reset!!.toResetPoint() }
                 logger.trace { "[RATE LIMIT]:[BUCKET]:${response.bucketKey?.value} was exhausted until ${response.reset!!.value}" }
