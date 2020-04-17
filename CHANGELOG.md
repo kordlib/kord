@@ -1,5 +1,10 @@
+# 0.4.11
+
+## Fixes
+* `ParallelRequestRateLimiter` will no longer try to unlock a mutex twice on a error response
+
 # 0.4.10
-### Fixes
+## Fixes
 * `DiscordErrorResponse` incorrect serialization
 
 # 0.4.9

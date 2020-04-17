@@ -7,6 +7,7 @@ import io.ktor.util.StringValues
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
@@ -25,7 +26,7 @@ abstract class AbstractRequestRateLimiterTest {
 
     private val timeout = 1000.seconds
     private val instant = Instant.EPOCH
-    val RateLimit.Companion.exhausted get() = RateLimit(Total(5), Remaining(0))
+    private val RateLimit.Companion.exhausted get() = RateLimit(Total(5), Remaining(0))
 
     private suspend fun RequestRateLimiter.sendRequest(clock: TestClock, guildId: Long, bucketKey: Long = guildId, rateLimit: RateLimit) {
         val request = JsonRequest<Unit, DiscordGuild>(Route.GuildGet, mapOf(Route.GuildId to guildId.toString()), StringValues.Empty, StringValues.Empty, null)
@@ -34,6 +35,34 @@ abstract class AbstractRequestRateLimiterTest {
             true -> token.complete(RequestResponse.BucketRateLimit(BucketKey(bucketKey.toString()), rateLimit, Reset(clock.instant().plus(timeout.toJavaDuration()))))
             else -> token.complete(RequestResponse.Accepted(BucketKey(bucketKey.toString()), rateLimit, Reset(clock.instant().plus(timeout.toJavaDuration()))))
         }
+    }
+
+    private suspend fun RequestRateLimiter.sendRequest(guildId: Long) : RequestToken {
+        val request = JsonRequest<Unit, DiscordGuild>(Route.GuildGet, mapOf(Route.GuildId to guildId.toString()), StringValues.Empty, StringValues.Empty, null)
+        return await(request)
+    }
+
+    private suspend fun RequestToken.complete(clock: TestClock, bucketKey: Long, rateLimit: RateLimit) {
+        when (rateLimit.isExhausted) {
+            true -> complete(RequestResponse.BucketRateLimit(BucketKey(bucketKey.toString()), rateLimit, Reset(clock.instant().plus(timeout.toJavaDuration()))))
+            else -> complete(RequestResponse.Accepted(BucketKey(bucketKey.toString()), rateLimit, Reset(clock.instant().plus(timeout.toJavaDuration()))))
+        }
+    }
+
+    @Test
+    fun `concurrent requests on the same route are handled sequentially`() = runBlockingTest {
+        val clock = TestClock(instant, this, ZoneOffset.UTC)
+        val rateLimiter = newRequestRateLimiter(clock)
+
+        rateLimiter.sendRequest(1).complete(clock, 1, RateLimit.exhausted) //discovery
+
+        val token = rateLimiter.sendRequest(1) //keep the rate limiter busy
+
+        val token2 = withTimeoutOrNull(10_000) {
+            rateLimiter.sendRequest(1)
+        }
+
+        assertEquals(null, token2)
     }
 
     @Test
@@ -88,5 +117,16 @@ abstract class AbstractRequestRateLimiterTest {
         withTimeout(1_000_000) {
             rateLimiter.sendRequest(clock, 1, rateLimit = RateLimit.exhausted)
         }
+    }
+
+    @Test
+    fun `REGRESSION a RequestRateLimiter encountering a non 429 error response will not throw`() = runBlockingTest {
+        val clock = TestClock(instant, this, ZoneOffset.UTC)
+        val rateLimiter = newRequestRateLimiter(clock)
+
+        rateLimiter.sendRequest(clock, 1, rateLimit = RateLimit(Total(5), Remaining(5))) //discovery
+        val token = rateLimiter.sendRequest(1)
+
+        token.complete(RequestResponse.Error)
     }
 }
