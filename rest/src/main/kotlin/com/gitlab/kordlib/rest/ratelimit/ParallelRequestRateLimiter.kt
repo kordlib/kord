@@ -8,7 +8,7 @@ import mu.KLogger
 import mu.KotlinLogging
 import java.time.Clock
 
-private val parallelLogger = KotlinLogging.logger("[R]:[ParallelRequestRateLimiter]")
+private val parallelLogger = KotlinLogging.logger {}
 
 /**
  * A [RequestRateLimiter] that tries to handle [requests][Request] in a parallel order.

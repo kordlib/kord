@@ -11,7 +11,7 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 
-private val requestLogger = KotlinLogging.logger("[R]:[ExclusionRequestRateLimiter]")
+private val requestLogger = KotlinLogging.logger {}
 
 /**
  * A [RequestRateLimiter] that handles all [requests][Request] in sequential order,
