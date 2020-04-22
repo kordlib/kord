@@ -42,7 +42,7 @@ sealed class Event {
             var eventName: String? = null
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
+                    when (val index = decodeElementIndex(descriptor)) {//we assume the all fields to be present *before* the data field
                         CompositeDecoder.READ_DONE -> break@loop
                         0 -> {
                             op = OpCode.deserialize(decoder)
@@ -63,7 +63,15 @@ sealed class Event {
                             }
                             OpCode.InvalidSession -> decodeSerializableElement(descriptor, index, InvalidSession)
                             OpCode.Hello -> decodeSerializableElement(descriptor, index, Hello.serializer())
-                            else -> error("This op code ${op?.code} doesn't belong to an event.")
+                            //some events contain undocumented data fields, we'll only assume an unknown opcode with no data to be an error
+                            else -> if(data == null) {
+                                val element = decodeNullableSerializableElement(descriptor, index, JsonElementSerializer.nullable)
+                                error("Unknown 'd' field for Op code ${op?.code}: $element")
+                            } else {
+                                val element = decodeNullableSerializableElement(descriptor, index, JsonElementSerializer.nullable)
+                                jsonLogger.warn { "Ignored unexpected 'd' field for Op code ${op?.code}: $element" }
+                                data
+                            }
                         }
                     }
                 }
