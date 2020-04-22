@@ -4,6 +4,7 @@
 
 * Changed `GuildCreateBuilder` to be more inline with recent api changes. #77
 * `Gateway` now accepts a `PresenceBuilder` to configure its original presence. #72
+* `DefaultGateway` now supports zlib compression and enables it by default.
 
 # 0.4.6
 

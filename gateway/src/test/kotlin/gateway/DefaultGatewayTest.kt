@@ -12,6 +12,7 @@ import com.gitlab.kordlib.gateway.start
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.util.KtorExperimentalAPI
 import kotlinx.coroutines.*
@@ -20,6 +21,9 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.UnstableDefault
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.serializer
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.Duration
@@ -36,14 +40,15 @@ class DefaultGatewayTest {
     @Test
     @Disabled
     @ExperimentalTime
-    fun `default gateway functions normally`() {
+    fun `default gateway functions correctly`() {
         val token = System.getenv("token")
 
         val gateway = DefaultGateway {
-            url = "wss://gateway.discord.gg/"
             client = HttpClient(CIO) {
                 install(WebSockets)
-                install(JsonFeature)
+                install(JsonFeature) {
+                    serializer = KotlinxSerializer(Json(JsonConfiguration.Default))
+                }
             }
 
             reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
