@@ -7,10 +7,10 @@ import io.ktor.client.HttpClient
 import io.ktor.client.features.websocket.DefaultClientWebSocketSession
 import io.ktor.client.features.websocket.webSocketSession
 import io.ktor.client.request.url
+import io.ktor.http.URLBuilder
 import io.ktor.http.cio.websocket.CloseReason
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.close
-import io.ktor.http.cio.websocket.readText
 import io.ktor.util.error
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
@@ -24,7 +24,12 @@ import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import mu.KotlinLogging
+import java.io.ByteArrayOutputStream
+import java.nio.charset.Charset
+import java.util.zip.Inflater
+import java.util.zip.InflaterOutputStream
 import kotlin.time.Duration
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
@@ -57,6 +62,8 @@ data class DefaultGatewayData(
 @ObsoleteCoroutinesApi
 class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
+    private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
+
     private val channel = BroadcastChannel<Any>(Channel.CONFLATED)
 
     override var ping: Duration = Duration.INFINITE
@@ -68,6 +75,15 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private val state: AtomicRef<State> = atomic(State.Restart(true))
 
     private val handshakeHandler: HandshakeHandler
+
+    private lateinit var inflater: Inflater
+
+    private val jsonParser = Json(JsonConfiguration(
+            isLenient = true,
+            ignoreUnknownKeys = true,
+            serializeSpecialFloatingPointValues = true,
+            useArrayPolymorphism = true
+    ))
 
     init {
         channel.sendBlocking(Unit)
@@ -88,6 +104,12 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
             try {
                 socket = webSocket(data.url)
+                /**
+                 * https://discordapp.com/developers/docs/topics/gateway#transport-compression
+                 *
+                 * > Every connection to the gateway should use its own unique zlib context.
+                 */
+                inflater = Inflater()
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
                 data.reconnectRetry.retry()
@@ -120,15 +142,36 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private suspend fun readSocket() {
-        socket.incoming.asFlow().filterIsInstance<Frame.Text>().collect { read(it) }
+        socket.incoming.asFlow().collect {
+            when (it) {
+                is Frame.Binary, is Frame.Text -> read(it)
+                else -> { /*ignore*/
+                }
+            }
+        }
+
     }
 
-    @Suppress("EXPERIMENTAL_API_USAGE")
-    private suspend fun read(frame: Frame.Text) {
-        val json = frame.readText()
+    private fun Frame.deflateData(): String {
+        val outputStream = ByteArrayOutputStream()
+        InflaterOutputStream(outputStream, inflater).use {
+            it.write(data)
+        }
+
+        return outputStream.use {
+            outputStream.toString(Charset.defaultCharset().name())
+        }
+    }
+
+    private suspend fun read(frame: Frame) {
+        val json = when {
+            compression -> frame.deflateData()
+            else -> frame.data.toString(Charset.defaultCharset())
+        }
+
         try {
             defaultGatewayLogger.trace { "Gateway <<< $json" }
-            Json.nonstrict.parse(Event.Companion, json)?.let { channel.send(it) }
+            jsonParser.parse(Event.Companion, json)?.let { channel.send(it) }
         } catch (exception: Exception) {
             defaultGatewayLogger.error(exception)
         }

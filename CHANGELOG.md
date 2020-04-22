@@ -5,6 +5,7 @@
 * Changed `GuildCreateBuilder` to be more inline with recent api changes. #77
 * `Gateway` now accepts a `PresenceBuilder` to configure its original presence. #72
 * Rest Discord API version can now be configured by setting the `com.gitlab.kordlib.rest.version` system property, `v6` by default.
+* `DefaultGateway` now supports zlib compression and enables it by default.
 
 # 0.4.6
 
