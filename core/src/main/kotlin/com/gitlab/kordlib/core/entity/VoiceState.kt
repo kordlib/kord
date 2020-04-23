@@ -11,6 +11,8 @@ import com.gitlab.kordlib.core.toSnowflakeOrNull
 
 data class VoiceState(val data: VoiceStateData, override val kord: Kord) : KordObject {
 
+    var strategy = kord.resources.defaultStrategy
+
     val guildId: Snowflake get() = Snowflake(data.guildId)
 
     val channelId: Snowflake? get() = data.channelId.toSnowflakeOrNull()
@@ -38,10 +40,10 @@ data class VoiceState(val data: VoiceStateData, override val kord: Kord) : KordO
      */
     val isSelfSteaming: Boolean get() = data.selfStream
 
-    suspend fun getChannel(): VoiceChannel? = channelId?.let { kord.getChannel(it) } as? VoiceChannel
+    suspend fun getChannel(): VoiceChannel? = channelId?.let { strategy.supply(kord).getChannel(it) } as? VoiceChannel
 
-    suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
+    suspend fun getGuild(): Guild? = strategy.supply(kord).getGuild(guildId)
 
-    suspend fun getMember(): User = kord.getMember(guildId, userId)!!
+    suspend fun getMember(): User? = strategy.supply(kord).getMember(guildId, userId)
 
 }

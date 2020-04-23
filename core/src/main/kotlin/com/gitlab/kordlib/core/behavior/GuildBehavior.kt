@@ -4,16 +4,14 @@ import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.*
+import com.gitlab.kordlib.core.cache.data.*
+import com.gitlab.kordlib.core.entity.*
+import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
+import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
-import com.gitlab.kordlib.core.cache.data.*
-import com.gitlab.kordlib.core.catchNotFound
-import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.core.entity.channel.*
-import com.gitlab.kordlib.core.paginateForwards
-import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
 import com.gitlab.kordlib.rest.service.createCategory
 import com.gitlab.kordlib.rest.service.createNewsChannel
@@ -27,8 +25,8 @@ import kotlinx.coroutines.flow.map
 /**
  * The behavior of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
  */
-interface GuildBehavior : Entity {
-
+interface GuildBehavior : Entity, Strategilizable {
+ override val strategy: EntitySupplyStrategy
     /**
      * Requests to get all bans for this guild.
      */
@@ -137,7 +135,7 @@ interface GuildBehavior : Entity {
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asGuild() : Guild = kord.getGuild(id)!!
+    suspend fun asGuild() : Guild = strategy.supply(kord).getGuild(id)!!
 
     /**
      * Requests to get the this behavior as a [Guild].
@@ -160,12 +158,12 @@ interface GuildBehavior : Entity {
     /**
      * Requests to get the member represented by the [userId], if present.
      */
-    suspend fun getMember(userId: Snowflake): Member? = kord.getMember(id, userId)
+    suspend fun getMember(userId: Snowflake): Member? = strategy.supply(kord).getMember(id, userId)
 
     /**
      * Requests to get the role represented by the [roleId], if present.
      */
-    suspend fun getRole(roleId: Snowflake): Role? = kord.getRole(guildId = id, roleId = roleId)
+    suspend fun getRole(roleId: Snowflake): Role? = strategy.supply(kord).getRole(guildId = id, roleId = roleId)
 
     //TODO addGuildMember?
 
@@ -229,9 +227,10 @@ interface GuildBehavior : Entity {
     }
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord) = object : GuildBehavior {
+        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : GuildBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 

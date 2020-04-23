@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
@@ -15,7 +16,10 @@ import kotlinx.coroutines.flow.map
 /**
  * An instace of a [Discord emoji](https://discordapp.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
  */
-class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord: Kord) : Entity {
+class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : Entity, Strategilizable {
+
+
     override val id: Snowflake
         get() = Snowflake(data.id)
 
@@ -54,7 +58,7 @@ class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord:
     /**
      * The [roles][Role] for which this emoji was whitelisted.
      */
-    val roles: Flow<Role> get() = roleIds.asFlow().map { kord.getRole(guildId, id) }.filterNotNull()
+    val roles: Flow<Role> get() = roleIds.asFlow().map { strategy.supply(kord).getRole(guildId, id) }.filterNotNull()
 
     /**
      * The behavior of the [Member] who created the emote, if present.
@@ -74,11 +78,11 @@ class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord:
     /**
      * Requests to get the [Member] who created the emote, if present.
      */
-    suspend fun getMember(): Member? = userId?.let { kord.getMember(guildId = guildId, userId = it) }
+    suspend fun getMember(): Member? = userId?.let { strategy.supply(kord).getMember(guildId = guildId, userId = it) }
 
     /**
      * Requests to get the [User] who created the emote, if present.
      */
-    suspend fun getUser(): User? = userId?.let { kord.getUser(it) }
+    suspend fun getUser(): User? = userId?.let { strategy.supply(kord).getUser(it) }
 
 }

@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.cache.data.ClientStatusData
@@ -13,6 +14,8 @@ import kotlinx.coroutines.flow.map
 
 class Presence(val data: PresenceData, override val kord: Kord) : KordObject {
 
+    var strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+
     val activities: List<Activity> get() = data.activities.map { Activity(it) }
 
     val clientStatus: ClientStatus get() = ClientStatus(data.clientStatus)
@@ -23,13 +26,13 @@ class Presence(val data: PresenceData, override val kord: Kord) : KordObject {
 
     val roleIds: Set<Snowflake>? get() = data.roles?.asSequence()!!.map { Snowflake(it) }.toSet()
 
-    val roles: Flow<Role>? get() = roleIds?.asFlow()!!.map { kord.getRole(guildId!!, it) }.filterNotNull()
+    val roles: Flow<Role>? get() = roleIds?.asFlow()!!.map { strategy.supply(kord).getRole(guildId!!,it) }.filterNotNull()
 
     val status: Status get() = data.status
 
     val userId: Snowflake get() = Snowflake(data.userId)
 
-    suspend fun getUser(): User = kord.getUser(userId)!!
+    suspend fun getUser(): User? = strategy.supply(kord).getUser(userId)
 
 }
 

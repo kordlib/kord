@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
+import com.gitlab.kordlib.core.entity.Strategilizable
 import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.paginateBackwards
 import com.gitlab.kordlib.core.paginateForwards
@@ -25,7 +25,7 @@ import kotlin.time.seconds
 /**
  * The behavior of a Discord channel that can use messages.
  */
-interface MessageChannelBehavior : ChannelBehavior {
+interface MessageChannelBehavior : ChannelBehavior, Strategilizable {
 
     /**
      * Requests to get the this behavior as a [MessageChannel].
@@ -137,7 +137,7 @@ interface MessageChannelBehavior : ChannelBehavior {
     /**
      * Requests to get a message with the given [messageId], if present.
      */
-    suspend fun getMessage(messageId: Snowflake): Message? = kord.getMessage(id, messageId)
+    suspend fun getMessage(messageId: Snowflake): Message? = strategy.supply(kord).getMessage(id, messageId)
 
     /**
      * Requests to trigger the typing indicator for the bot in this channel. The typing status will persist for 10 seconds
@@ -162,9 +162,10 @@ interface MessageChannelBehavior : ChannelBehavior {
     }
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord) = object : MessageChannelBehavior {
+        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : MessageChannelBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 

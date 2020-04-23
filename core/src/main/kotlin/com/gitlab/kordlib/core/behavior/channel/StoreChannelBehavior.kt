@@ -1,12 +1,12 @@
 package com.gitlab.kordlib.core.behavior.channel
 
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.rest.builder.channel.StoreChannelModifyBuilder
-import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.NewsChannel
 import com.gitlab.kordlib.core.entity.channel.StoreChannel
+import com.gitlab.kordlib.rest.builder.channel.StoreChannelModifyBuilder
 import com.gitlab.kordlib.rest.service.patchStoreChannel
 
 /**
@@ -30,10 +30,11 @@ interface StoreChannelBehavior : GuildChannelBehavior {
     override suspend fun requestChannel(): StoreChannel = super.requestChannel() as StoreChannel
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): StoreChannelBehavior = object : StoreChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): StoreChannelBehavior = object : StoreChannelBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 

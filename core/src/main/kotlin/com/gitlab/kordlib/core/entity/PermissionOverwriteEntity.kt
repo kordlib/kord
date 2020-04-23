@@ -15,11 +15,13 @@ class PermissionOverwriteEntity(
         override val kord: Kord
 ) : PermissionOverwrite(data), KordObject {
 
+    var strategy = kord.resources.defaultStrategy
+
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
     val channel: GuildChannelBehavior get() = GuildChannelBehavior(guildId, channelId, kord)
 
-    suspend fun getChannel(): GuildChannel? = kord.getChannel(channelId) as? GuildChannel
-    suspend fun getGuild(): Guild? = kord.getGuild(guildId)
+    suspend fun getChannel(): GuildChannel? = strategy.supply(kord).getChannel(channelId) as? GuildChannel
+    suspend fun getGuild(): Guild? = strategy.supply(kord).getGuild(guildId)
 
     suspend fun delete(reason: String? = null) = kord.rest.channel.deleteChannelPermission(channelId.value, data.id.toString(), reason)
 

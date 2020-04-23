@@ -1,14 +1,15 @@
 package com.gitlab.kordlib.core.behavior
 
+import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.rest.builder.role.RoleModifyBuilder
-import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
 import com.gitlab.kordlib.core.cache.data.RoleData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Role
-import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.entity.Strategilizable
 import com.gitlab.kordlib.core.indexOfFirstOrNull
 import com.gitlab.kordlib.core.sorted
+import com.gitlab.kordlib.rest.builder.role.RoleModifyBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
@@ -17,7 +18,7 @@ import kotlinx.coroutines.flow.map
 /**
  * The behavior of a [Discord Role](https://discordapp.com/developers/docs/topics/permissions#role-object) associated to a [guild].
  */
-interface RoleBehavior : Entity {
+interface RoleBehavior : Entity, Strategilizable {
     /**
      * The id of the guild this channel is associated to.
      */
@@ -61,10 +62,11 @@ interface RoleBehavior : Entity {
 
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): RoleBehavior = object : RoleBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): RoleBehavior = object : RoleBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 }

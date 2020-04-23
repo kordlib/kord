@@ -11,6 +11,7 @@ import com.gitlab.kordlib.core.cache.data.BanData
  */
 class Ban(val data: BanData, override val kord: Kord) : KordObject {
 
+    var strategy = kord.resources.defaultStrategy
     /**
      * The id of the banned user.
      */
@@ -29,6 +30,6 @@ class Ban(val data: BanData, override val kord: Kord) : KordObject {
     /**
      * Requests to get the banned user.
      */
-    suspend fun getUser(): User = kord.getUser(id = userId)!!
+    suspend fun getUser(): User? = strategy.supply(kord).getUser(userId)
 
 }

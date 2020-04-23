@@ -1,10 +1,10 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.cache.data.InviteData
-import com.gitlab.kordlib.core.cache.data.toData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.flow
 /**
  * The behavior of a Discord channel associated to a [guild].
  */
-interface GuildChannelBehavior : ChannelBehavior {
+interface GuildChannelBehavior : ChannelBehavior, Strategilizable {
     /**
      * The id of the guild this channel is associated to.
      */
@@ -59,7 +59,7 @@ interface GuildChannelBehavior : ChannelBehavior {
     /**
      * Requests to get this behavior as a [Guild].
      */
-    suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
+    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)!!
 
     /**
      * Requests to add or replace a [PermissionOverwrite] to this entity.
@@ -83,10 +83,11 @@ interface GuildChannelBehavior : ChannelBehavior {
     }
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord) = object : GuildChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : GuildChannelBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 

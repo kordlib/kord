@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.MessageType
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MessageBehavior
@@ -22,7 +23,9 @@ private const val guildDeprecationMessage = "Guild ids aren't consistently prese
 /**
  * An instance of a [Discord Message][https://discordapp.com/developers/docs/resources/channel#message-object].
  */
-class Message(val data: MessageData, override val kord: Kord) : MessageBehavior {
+class Message(val data: MessageData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : MessageBehavior {
+
 
     /**
      * The id of this message.
@@ -42,7 +45,8 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
      * Returns null if this message was send in a [DmChannel].
      */
     @Deprecated(guildDeprecationMessage, ReplaceWith("getGuild()?.id"), DeprecationLevel.WARNING)
-    val guildId: Snowflake? get() = data.guildId?.toSnowflakeOrNull()
+    val guildId: Snowflake?
+        get() = data.guildId?.toSnowflakeOrNull()
 
     /**
      * The files attached to this message.
@@ -84,7 +88,8 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
      * Returns null if this message was send in a [DmChannel].
      */
     @Deprecated("guildDeprecationMessage", ReplaceWith("getGuild()"), DeprecationLevel.WARNING)
-    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
+    val guild: GuildBehavior?
+        get() = guildId?.let { GuildBehavior(it, kord) }
 
     /**
      * The ids of [Channels][Channel] specifically mentioned in this message.
@@ -109,7 +114,7 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
     val mentionedChannels: Flow<Channel>
         get() = flow<Channel> /*The plugin can infer the type, but the compiler can't, so leave this here for now*/ {
             for (id in mentionedChannelIds) {
-                val channel = kord.getChannel(id)
+                val channel = strategy.supply(kord).getChannel(id)
                 if (channel != null) emit(channel)
             }
         }
@@ -136,7 +141,7 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
     val mentionedRoles: Flow<Role>
         get() = flow {
             for (mentionRole in data.mentionRoles) {
-                val role = kord.getRole(guildId!!, Snowflake(mentionRole)) ?: continue
+                val role = strategy.supply(kord).getRole(guildId!!, Snowflake(mentionRole)) ?: continue
                 emit(role)
             }
         }
@@ -157,7 +162,7 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
     val mentionedUsers: Flow<User>
         get() = flow {
             for (mentionUser in data.mentions) {
-                val user = kord.getUser(Snowflake(mentionUser)) ?: continue
+                val user = strategy.supply(kord).getUser(Snowflake(mentionUser)) ?: continue
                 emit(user)
             }
         }
@@ -202,7 +207,7 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
     /**
      * Requests to get the channel this message was send in.
      */
-    suspend fun getChannel(): MessageChannel = kord.getChannel(channelId) as MessageChannel
+    suspend fun getChannel(): MessageChannel = strategy.supply(kord).getChannel(channelId) as MessageChannel
 
     /**
      * Requests to get the [author] as a member.
@@ -220,5 +225,5 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
      *
      * Returns null if the message was not send in a [GuildMessageChannel].
      */
-    suspend fun getGuild(): Guild? =  kord.getChannel<GuildChannel>(channelId)?.getGuild()
+    suspend fun getGuild(): Guild? = strategy.supply(kord).getChannel<GuildChannel>(channelId)?.getGuild()
 }

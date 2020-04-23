@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.TextChannelBehavior
 import com.gitlab.kordlib.core.cache.data.ChannelData
@@ -7,7 +8,7 @@ import com.gitlab.kordlib.core.cache.data.ChannelData
 /**
  * An instance of a Discord Text Channel associated to a guild.
  */
-data class TextChannel(override val data: ChannelData, override val kord: Kord) : GuildMessageChannel, TextChannelBehavior {
+data class TextChannel(override val data: ChannelData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : GuildMessageChannel, TextChannelBehavior {
 
     /**
      * Whether the channel is nsfw.

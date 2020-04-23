@@ -1,17 +1,14 @@
 package com.gitlab.kordlib.core.behavior.channel
 
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.rest.builder.webhook.WebhookCreateBuilder
-import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.Webhook
-import com.gitlab.kordlib.core.entity.channel.Category
-import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
+import com.gitlab.kordlib.rest.builder.webhook.WebhookCreateBuilder
 import com.gitlab.kordlib.rest.json.request.BulkDeleteRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlin.time.days
 
@@ -71,10 +68,11 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
     //TODO 1.3.50 add delete messages? partially bulkdelete, manually delete older ones
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord) = object : GuildMessageChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : GuildMessageChannelBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 }

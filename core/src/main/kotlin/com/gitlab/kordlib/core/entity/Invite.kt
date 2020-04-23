@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.behavior.GuildBehavior
@@ -15,6 +16,7 @@ import com.gitlab.kordlib.core.toSnowflakeOrNull
  */
 data class Invite(val data: InviteData, override val kord: Kord) : KordObject {
 
+    var strategy:EntitySupplyStrategy = kord.resources.defaultStrategy
     /**
      * The unique code of this invite.
      */
@@ -73,22 +75,22 @@ data class Invite(val data: InviteData, override val kord: Kord) : KordObject {
     /**
      * Requests to get the channel this invite is associated to.
      */
-    suspend fun getChannel(): GuildChannel = kord.getChannel(channelId) as GuildChannel
+    suspend fun getChannel(): GuildChannel = strategy.supply(kord).getChannel(channelId) as GuildChannel
 
     /**
      * Requests to get the guild this invite is associated to.
      */
-    suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
+    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)!!
 
     /**
      * Requests to get the user who created this invite, if present.
      */
-    suspend fun getInviter(): User? = inviterId?.let { kord.getUser(it) }
+    suspend fun getInviter(): User? = inviterId?.let { strategy.supply(kord).getUser(it) }
 
     /**
      * Requests to get the target user this invite is associated to, if present.
      */
-    suspend fun getTargetUser(): User? = targetUserId?.let { kord.getUser(it) }
+    suspend fun getTargetUser(): User? = targetUserId?.let { strategy.supply(kord).getUser(it) }
 
     /**
      * Requests to delete the invite.

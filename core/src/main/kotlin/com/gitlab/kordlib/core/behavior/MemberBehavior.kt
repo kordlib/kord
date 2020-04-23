@@ -2,18 +2,18 @@ package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
-import com.gitlab.kordlib.rest.builder.member.MemberModifyBuilder
 import com.gitlab.kordlib.core.cache.data.PresenceData
 import com.gitlab.kordlib.core.cache.data.VoiceStateData
-import com.gitlab.kordlib.core.cache.data.toData
 import com.gitlab.kordlib.core.entity.*
+import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
+import com.gitlab.kordlib.rest.builder.member.MemberModifyBuilder
 
 /**
  * The behavior of a [Discord Member](https://discordapp.com/developers/docs/resources/guild#guild-member-object).
  */
-interface MemberBehavior : Entity, UserBehavior {
+interface MemberBehavior : Entity, UserBehavior, Strategilizable {
     /**
      * The id of the guild this channel is associated to.
      */
@@ -34,7 +34,7 @@ interface MemberBehavior : Entity, UserBehavior {
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asMember() : Member = kord.getMember(guildId, id)!!
+    suspend fun asMember() : Member = strategy.supply(kord).getMember(guildId, id)!!
 
     /**
      * Requests to get the this behavior as a [Member].
@@ -61,7 +61,7 @@ interface MemberBehavior : Entity, UserBehavior {
         kord.rest.guild.addRoleToGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value)
     }
 
-    suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
+    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)!!
 
     /**
      * Requests to remove a [role][roleId] from this member.
@@ -95,10 +95,11 @@ interface MemberBehavior : Entity, UserBehavior {
     }
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): MemberBehavior = object : MemberBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): MemberBehavior = object : MemberBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 

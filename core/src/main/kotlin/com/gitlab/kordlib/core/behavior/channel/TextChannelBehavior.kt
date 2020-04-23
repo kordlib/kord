@@ -1,12 +1,12 @@
 package com.gitlab.kordlib.core.behavior.channel
 
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.rest.builder.channel.TextChannelModifyBuilder
-import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.StoreChannel
 import com.gitlab.kordlib.core.entity.channel.TextChannel
+import com.gitlab.kordlib.rest.builder.channel.TextChannelModifyBuilder
 import com.gitlab.kordlib.rest.service.patchTextChannel
 
 
@@ -28,11 +28,11 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
     override suspend fun requestChannel(): TextChannel = super.requestChannel() as TextChannel
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): TextChannelBehavior = object : TextChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): TextChannelBehavior = object : TextChannelBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
-        }
+            override val strategy: EntitySupplyStrategy = strategy        }
     }
 
 }

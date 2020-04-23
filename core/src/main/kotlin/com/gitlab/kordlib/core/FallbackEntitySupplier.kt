@@ -29,5 +29,8 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override suspend fun getUser(id: Snowflake): User? = first.getUser(id) ?: second.getUser(id)
 
+    override suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role? = first.getRole(guildId,roleId) ?: second.getRole(guildId,roleId)
+
+
 }
 

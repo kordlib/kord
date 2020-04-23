@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.entity
 import com.gitlab.kordlib.common.entity.Permission
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
@@ -16,7 +17,9 @@ import java.time.format.DateTimeFormatter
 /**
  * An instance of a [Discord Member](https://discordapp.com/developers/docs/resources/guild#guild-member-object).
  */
-class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(userData, kord), MemberBehavior {
+class Member(val memberData: MemberData, userData: UserData, kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : User(userData, kord, strategy), MemberBehavior {
+
 
     override val guildId: Snowflake
         get() = Snowflake(memberData.guildId)
@@ -55,7 +58,7 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(
     /**
      * The [roles][Role] that apply to this user.
      */
-    val roles: Flow<Role> get() = roleIds.asFlow().map { kord.getRole(guildId, it) }.filterNotNull()
+    val roles: Flow<Role> get() = roleIds.asFlow().map { strategy.supply(kord).getRole(guildId, it) }.filterNotNull()
 
     /**
      * Whether this member's [id] equals the [Guild.ownerId]
@@ -92,7 +95,7 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(
      */
     override suspend fun asMember(guildId: Snowflake): Member? = when (guildId) {
         this.guildId -> this
-        else -> kord.getMember(guildId, id)
+        else -> strategy.supply(kord).getMember(guildId, id)
     }
 
 }

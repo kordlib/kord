@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.cache.data.UserData
-import com.gitlab.kordlib.core.cache.data.toData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.map
  * The behavior of a [Discord Message](https://discordapp.com/developers/docs/resources/channel#message-object).
  */
 
-interface MessageBehavior : Entity {
+interface MessageBehavior : Entity, Strategilizable {
     /**
      * The channel id this message belongs to.
      */
@@ -32,7 +32,7 @@ interface MessageBehavior : Entity {
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asMessage() : Message = kord.getMessage(channelId = channelId, messageId = id)!!
+    suspend fun asMessage() : Message = strategy.supply(kord).getMessage(channelId = channelId, messageId = id)!!
 
     /**
      * Requests to get the this behavior as a [Message].
@@ -120,10 +120,11 @@ interface MessageBehavior : Entity {
     }
 
     companion object {
-        internal operator fun invoke(channelId: Snowflake, messageId: Snowflake, kord: Kord) = object : MessageBehavior {
+        internal operator fun invoke(channelId: Snowflake, messageId: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : MessageBehavior {
             override val channelId: Snowflake = channelId
             override val id: Snowflake = messageId
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 

@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.WebhookType
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.WebhookBehavior
@@ -9,7 +10,7 @@ import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
 import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 
-data class Webhook(val data: WebhookData, override val kord: Kord) : WebhookBehavior {
+data class Webhook(val data: WebhookData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : WebhookBehavior, Strategilizable {
 
     override val id: Snowflake get() = Snowflake(data.id)
 
@@ -29,8 +30,8 @@ data class Webhook(val data: WebhookData, override val kord: Kord) : WebhookBeha
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
+    suspend fun getGuild(): Guild? = strategy.supply(kord).getGuild(guildId)
 
-    suspend fun getChannel(): GuildMessageChannel = kord.getChannel(channelId) as GuildMessageChannel
+    suspend fun getChannel(): GuildMessageChannel? = strategy.supply(kord).getChannel(channelId) as? GuildMessageChannel
 
 }

@@ -40,7 +40,7 @@ interface GuildChannel : Channel, GuildChannelBehavior {
      * and their roles on top of the base permissions.
      */
     suspend fun getEffectivePermissions(memberId: Snowflake): Permissions {
-        val member = kord.getMember(guildId, memberId)
+        val member = strategy.supply(kord).getMember(guildId, memberId)
         require(member != null) {
             "member ${memberId.value} is not in guild ${guildId.value}"
         }

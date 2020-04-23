@@ -1,14 +1,14 @@
 package com.gitlab.kordlib.core.behavior.channel
 
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.rest.builder.channel.CategoryModifyBuilder
-import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.cache.data.toData
+import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.channel.CategorizableChannel
 import com.gitlab.kordlib.core.entity.channel.Category
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.getChannel
+import com.gitlab.kordlib.rest.builder.channel.CategoryModifyBuilder
 import com.gitlab.kordlib.rest.service.patchCategory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -24,7 +24,7 @@ interface CategoryBehavior : GuildChannelBehavior {
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    override suspend fun asChannel() : Category = kord.getChannel<Category>(id)!!
+    override suspend fun asChannel() : Category = strategy.supply(kord).getChannel<Category>(id)!!
 
     /**
      * Requests to get the this behavior as a [Category].
@@ -40,10 +40,11 @@ interface CategoryBehavior : GuildChannelBehavior {
     val channels: Flow<CategorizableChannel> get() = guild.channels.filterIsInstance<CategorizableChannel>().filter { it.categoryId == id }
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord): CategoryBehavior = object : CategoryBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): CategoryBehavior = object : CategoryBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 }

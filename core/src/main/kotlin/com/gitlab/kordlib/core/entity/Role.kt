@@ -2,12 +2,15 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.cache.data.RoleData
 import java.awt.Color
 
-data class Role(val data: RoleData, override val kord: Kord) : RoleBehavior {
+data class Role(val data: RoleData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : RoleBehavior {
+
     override val id: Snowflake
         get() = Snowflake(data.id)
 

@@ -1,22 +1,21 @@
 package com.gitlab.kordlib.core.behavior
 
+import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Member
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.cache.data.toData
-import com.gitlab.kordlib.core.entity.Message
+import com.gitlab.kordlib.core.entity.Strategilizable
 import com.gitlab.kordlib.core.entity.User
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.DmChannel
 import com.gitlab.kordlib.rest.json.request.DMCreateRequest
-import kotlinx.serialization.builtins.UnitSerializer
 
 /**
  * The behavior of a [Discord User](https://discordapp.com/developers/docs/resources/user)
  */
-interface UserBehavior : Entity {
+interface UserBehavior : Entity,Strategilizable {
 
     val mention: String get() = "<@${id.value}>"
 
@@ -24,7 +23,7 @@ interface UserBehavior : Entity {
      * Requests this user as a member of the [guild][guildId].
      * Returns null when the user is not a member of the guild.
      */
-    suspend fun asMember(guildId: Snowflake): Member? = kord.getMember(guildId, id)
+    suspend fun asMember(guildId: Snowflake): Member? = strategy.supply(kord).getMember(guildId, id)
 
     /**
      * Requests this user as a member of the [guild][guildId].
@@ -39,7 +38,7 @@ interface UserBehavior : Entity {
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asUser() : User = kord.getUser(id)!!
+    suspend fun asUser() : User = strategy.supply(kord).getUser(id)!!
 
     /**
      * Requests to get the this behavior as a [User].
@@ -60,9 +59,10 @@ interface UserBehavior : Entity {
     }
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord): UserBehavior = object : UserBehavior {
+        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): UserBehavior = object : UserBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 

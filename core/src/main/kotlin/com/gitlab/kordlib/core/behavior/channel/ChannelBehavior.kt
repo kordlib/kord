@@ -1,15 +1,16 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.toData
 import com.gitlab.kordlib.core.entity.Entity
+import com.gitlab.kordlib.core.entity.Strategilizable
 import com.gitlab.kordlib.core.entity.channel.Channel
 
 /**
  * The behavior of a [Discord Channel](https://discordapp.com/developers/docs/resources/channel)
  */
-interface ChannelBehavior : Entity {
+interface ChannelBehavior : Entity, Strategilizable {
     /**
      * The raw mention of this entity.
      */
@@ -20,7 +21,7 @@ interface ChannelBehavior : Entity {
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asChannel(): Channel = kord.getChannel(id)!!
+    suspend fun asChannel(): Channel = strategy.supply(kord).getChannel(id)!!
 
     /**
      * Requests to get this behavior as a [Channel].
@@ -38,9 +39,11 @@ interface ChannelBehavior : Entity {
     }
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord) = object : ChannelBehavior {
+        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : ChannelBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
+
         }
     }
 }
