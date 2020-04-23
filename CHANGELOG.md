@@ -1,3 +1,9 @@
+# 0.4.12
+
+## Fixes
+* Fix unexpected data fields throwing exceptions when parsing `Gateway` `Events`. This should now be limited to
+unknown opcodes only.
+
 # 0.4.11
 
 ## Fixes
