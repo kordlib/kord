@@ -6,7 +6,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.RoleData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Role
-import com.gitlab.kordlib.core.entity.Strategilizable
+import com.gitlab.kordlib.core.entity.Strategizable
 import com.gitlab.kordlib.core.indexOfFirstOrNull
 import com.gitlab.kordlib.core.sorted
 import com.gitlab.kordlib.rest.builder.role.RoleModifyBuilder
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.map
 /**
  * The behavior of a [Discord Role](https://discordapp.com/developers/docs/topics/permissions#role-object) associated to a [guild].
  */
-interface RoleBehavior : Entity, Strategilizable {
+interface RoleBehavior : Entity, Strategizable {
     /**
      * The id of the guild this channel is associated to.
      */

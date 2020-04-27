@@ -7,7 +7,7 @@ import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.ApplicationInfoData
 
 class ApplicationInfo(val data: ApplicationInfoData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
-) : Entity, Strategilizable {
+) : Entity, Strategizable {
 
     override val id: Snowflake
         get() = Snowflake(data.id)

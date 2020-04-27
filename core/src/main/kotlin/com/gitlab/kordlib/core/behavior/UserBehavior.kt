@@ -6,7 +6,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Member
-import com.gitlab.kordlib.core.entity.Strategilizable
+import com.gitlab.kordlib.core.entity.Strategizable
 import com.gitlab.kordlib.core.entity.User
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.DmChannel
@@ -15,7 +15,7 @@ import com.gitlab.kordlib.rest.json.request.DMCreateRequest
 /**
  * The behavior of a [Discord User](https://discordapp.com/developers/docs/resources/user)
  */
-interface UserBehavior : Entity,Strategilizable {
+interface UserBehavior : Entity,Strategizable {
 
     val mention: String get() = "<@${id.value}>"
 

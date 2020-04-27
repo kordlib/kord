@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
 class Presence(val data: PresenceData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
-) : KordObject, Strategilizable {
+) : KordObject, Strategizable {
 
 
     val activities: List<Activity> get() = data.activities.map { Activity(it) }

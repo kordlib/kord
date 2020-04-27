@@ -13,7 +13,7 @@ import com.gitlab.kordlib.rest.builder.member.MemberModifyBuilder
 /**
  * The behavior of a [Discord Member](https://discordapp.com/developers/docs/resources/guild#guild-member-object).
  */
-interface MemberBehavior : Entity, UserBehavior, Strategilizable {
+interface MemberBehavior : Entity, UserBehavior, Strategizable {
     /**
      * The id of the guild this channel is associated to.
      */

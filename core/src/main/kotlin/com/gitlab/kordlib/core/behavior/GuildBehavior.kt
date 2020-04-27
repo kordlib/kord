@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.map
 /**
  * The behavior of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
  */
-interface GuildBehavior : Entity, Strategilizable {
+interface GuildBehavior : Entity, Strategizable {
  override val strategy: EntitySupplyStrategy
     /**
      * Requests to get all bans for this guild.

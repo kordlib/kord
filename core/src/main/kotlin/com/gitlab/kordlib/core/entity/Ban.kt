@@ -10,7 +10,7 @@ import com.gitlab.kordlib.core.cache.data.BanData
 /**
  * An instance of a [Discord Ban](https://discordapp.com/developers/docs/resources/guild#ban-object).
  */
-class Ban(val data: BanData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : KordObject, Strategilizable {
+class Ban(val data: BanData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : KordObject, Strategizable {
     /**
      * The id of the banned user.
      */

@@ -5,7 +5,7 @@ import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.core.entity.Strategilizable
+import com.gitlab.kordlib.core.entity.Strategizable
 import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.paginateBackwards
 import com.gitlab.kordlib.core.paginateForwards
@@ -25,7 +25,7 @@ import kotlin.time.seconds
 /**
  * The behavior of a Discord channel that can use messages.
  */
-interface MessageChannelBehavior : ChannelBehavior, Strategilizable {
+interface MessageChannelBehavior : ChannelBehavior, Strategizable {
 
     /**
      * Requests to get the this behavior as a [MessageChannel].

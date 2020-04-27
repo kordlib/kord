@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.flow
 /**
  * The behavior of a Discord channel associated to a [guild].
  */
-interface GuildChannelBehavior : ChannelBehavior, Strategilizable {
+interface GuildChannelBehavior : ChannelBehavior, Strategizable {
     /**
      * The id of the guild this channel is associated to.
      */

@@ -4,13 +4,13 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Strategilizable
+import com.gitlab.kordlib.core.entity.Strategizable
 import com.gitlab.kordlib.core.entity.channel.Channel
 
 /**
  * The behavior of a [Discord Channel](https://discordapp.com/developers/docs/resources/channel)
  */
-interface ChannelBehavior : Entity, Strategilizable {
+interface ChannelBehavior : Entity, Strategizable {
     /**
      * The raw mention of this entity.
      */

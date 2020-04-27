@@ -15,7 +15,7 @@ class PermissionOverwriteEntity(
         data: PermissionOverwriteData,
         override val kord: Kord,
         override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
-) : PermissionOverwrite(data), KordObject, Strategilizable {
+) : PermissionOverwrite(data), KordObject, Strategizable {
 
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)

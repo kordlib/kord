@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.map
  * An instace of a [Discord emoji](https://discordapp.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
  */
 class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
-) : Entity, Strategilizable {
+) : Entity, Strategizable {
 
 
     override val id: Snowflake

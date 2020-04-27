@@ -10,7 +10,7 @@ import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
 import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 
-data class Webhook(val data: WebhookData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : WebhookBehavior, Strategilizable {
+data class Webhook(val data: WebhookData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : WebhookBehavior, Strategizable {
 
     override val id: Snowflake get() = Snowflake(data.id)
 
