@@ -1,8 +1,13 @@
 # 0.5.0
+## Additions
+
+* `withStrategy(EntitySupplyStrategy)` to change the `EntitySupplyStrategy`.
+* `strategy` property to hold the `EntitySupplyStrategy` of an entity.
 
 ## Changes
 
 * Changed `GuildCreateBuilder` to be more inline with recent api changes. #77
+* Changed `Entity` to fetch entities using a strategy. #74
 
 # 0.4.6
 

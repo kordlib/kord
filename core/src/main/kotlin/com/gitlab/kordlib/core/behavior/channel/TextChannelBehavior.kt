@@ -27,6 +27,13 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
      */
     override suspend fun requestChannel(): TextChannel = super.requestChannel() as TextChannel
 
+    /**
+     * returns a new [TextChannelBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): TextChannelBehavior = TextChannelBehavior(guildId, id, kord, strategy)
+
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): TextChannelBehavior = object : TextChannelBehavior {
             override val guildId: Snowflake = guildId

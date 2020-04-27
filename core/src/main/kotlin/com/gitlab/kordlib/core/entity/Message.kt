@@ -226,4 +226,13 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
      * Returns null if the message was not send in a [GuildMessageChannel].
      */
     suspend fun getGuild(): Guild? = strategy.supply(kord).getChannel<GuildChannel>(channelId)?.getGuild()
+
+    /**
+     * returns a new [Message] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+
+    override fun withStrategy(strategy: EntitySupplyStrategy): Message = Message(data,kord,strategy)
 }
+

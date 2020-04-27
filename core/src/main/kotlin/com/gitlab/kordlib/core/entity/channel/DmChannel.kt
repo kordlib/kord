@@ -25,4 +25,11 @@ data class DmChannel(override val data: ChannelData, override val kord: Kord, ov
      */
     val recipients: Flow<User> get() = recipientIds.asFlow().map { strategy.supply(kord).getUser(it) }.filterNotNull()
 
+    /**
+     * returns a new [DmChannel] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): DmChannel = DmChannel(data,kord,strategy)
+
 }

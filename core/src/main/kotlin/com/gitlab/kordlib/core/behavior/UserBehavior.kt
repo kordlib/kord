@@ -58,6 +58,13 @@ interface UserBehavior : Entity,Strategilizable {
         return Channel.from(data, kord) as DmChannel
     }
 
+    /**
+     * returns a new [UserBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    fun withStrategy(strategy: EntitySupplyStrategy) = UserBehavior(id,kord,strategy)
+
     companion object {
         internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): UserBehavior = object : UserBehavior {
             override val id: Snowflake = id
@@ -67,3 +74,4 @@ interface UserBehavior : Entity,Strategilizable {
     }
 
 }
+

@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
-class Presence(val data: PresenceData, override val kord: Kord) : KordObject {
+class Presence(val data: PresenceData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : KordObject, Strategilizable {
 
-    var strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
 
     val activities: List<Activity> get() = data.activities.map { Activity(it) }
 
@@ -26,7 +26,7 @@ class Presence(val data: PresenceData, override val kord: Kord) : KordObject {
 
     val roleIds: Set<Snowflake>? get() = data.roles?.asSequence()!!.map { Snowflake(it) }.toSet()
 
-    val roles: Flow<Role>? get() = roleIds?.asFlow()!!.map { strategy.supply(kord).getRole(guildId!!,it) }.filterNotNull()
+    val roles: Flow<Role>? get() = roleIds?.asFlow()!!.map { strategy.supply(kord).getRole(guildId!!, it) }.filterNotNull()
 
     val status: Status get() = data.status
 

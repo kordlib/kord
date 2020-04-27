@@ -22,4 +22,12 @@ data class TextChannel(override val data: ChannelData, override val kord: Kord, 
 
     override suspend fun asChannel(): TextChannel = this
 
+    /**
+     * returns a new [TextChannel] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): TextChannel = TextChannel(data, kord, strategy)
+
+
 }

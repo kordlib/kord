@@ -44,6 +44,14 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
      */
     override suspend fun requestChannel(): VoiceChannel = super.requestChannel() as VoiceChannel
 
+    /**
+     * returns a new [VoiceChannelBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+
+    override fun withStrategy(strategy: EntitySupplyStrategy): VoiceChannelBehavior = VoiceChannelBehavior(guildId, id, kord, strategy)
+
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : VoiceChannelBehavior {
             override val guildId: Snowflake = guildId

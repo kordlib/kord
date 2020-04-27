@@ -29,6 +29,13 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
      */
     override suspend fun requestChannel(): NewsChannel = super.requestChannel() as NewsChannel
 
+    /**
+     * returns a new [NewsChannelBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): NewsChannelBehavior = NewsChannelBehavior(guildId, id, kord, strategy)
+
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): NewsChannelBehavior = object : NewsChannelBehavior {
             override val guildId: Snowflake = guildId
@@ -51,3 +58,4 @@ suspend inline fun NewsChannelBehavior.edit(builder: NewsChannelModifyBuilder.()
 
     return Channel.from(data, kord) as NewsChannel
 }
+

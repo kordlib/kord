@@ -161,6 +161,14 @@ interface MessageChannelBehavior : ChannelBehavior, Strategilizable {
         }
     }
 
+    /**
+     * returns a new [MessageChannelBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+
+    override fun withStrategy(strategy: EntitySupplyStrategy): MessageChannelBehavior = MessageChannelBehavior(id,kord,strategy)
+
     companion object {
         internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : MessageChannelBehavior {
             override val id: Snowflake = id

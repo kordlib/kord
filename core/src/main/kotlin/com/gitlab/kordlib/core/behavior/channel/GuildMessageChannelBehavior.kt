@@ -67,6 +67,14 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
 
     //TODO 1.3.50 add delete messages? partially bulkdelete, manually delete older ones
 
+    /**
+     * returns a new [GuildMessageChannelBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+
+    override fun withStrategy(strategy: EntitySupplyStrategy): GuildMessageChannelBehavior = GuildMessageChannelBehavior(guildId, id, kord, strategy)
+
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : GuildMessageChannelBehavior {
             override val guildId: Snowflake = guildId
@@ -89,3 +97,4 @@ suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCre
 
     return Webhook(data, kord)
 }
+

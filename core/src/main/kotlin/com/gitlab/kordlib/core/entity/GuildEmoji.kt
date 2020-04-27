@@ -85,4 +85,12 @@ class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord:
      */
     suspend fun getUser(): User? = userId?.let { strategy.supply(kord).getUser(it) }
 
+    /**
+     * returns a new [GuildEmoji] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    fun withStrategy(strategy: EntitySupplyStrategy) = GuildEmoji(data, guildId, kord, strategy)
+
 }
+

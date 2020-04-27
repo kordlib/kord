@@ -39,6 +39,15 @@ interface CategoryBehavior : GuildChannelBehavior {
      */
     val channels: Flow<CategorizableChannel> get() = guild.channels.filterIsInstance<CategorizableChannel>().filter { it.categoryId == id }
 
+
+    /**
+     * returns a new [CategoryBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+
+    override fun withStrategy(strategy: EntitySupplyStrategy):CategoryBehavior = CategoryBehavior(guildId, id, kord, strategy)
+
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): CategoryBehavior = object : CategoryBehavior {
             override val guildId: Snowflake = guildId
@@ -61,3 +70,4 @@ suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Ca
 
     return Channel.from(data, kord) as Category
 }
+

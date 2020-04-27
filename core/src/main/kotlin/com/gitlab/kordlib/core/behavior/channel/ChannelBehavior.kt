@@ -38,6 +38,15 @@ interface ChannelBehavior : Entity, Strategilizable {
         kord.rest.channel.deleteChannel(id.value)
     }
 
+
+    /**
+     * returns a new [ChannelBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+
+    fun withStrategy(strategy: EntitySupplyStrategy) = ChannelBehavior(id, kord, strategy)
+
     companion object {
         internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : ChannelBehavior {
             override val id: Snowflake = id
@@ -47,3 +56,4 @@ interface ChannelBehavior : Entity, Strategilizable {
         }
     }
 }
+

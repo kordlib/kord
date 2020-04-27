@@ -36,4 +36,12 @@ data class Role(val data: RoleData, override val kord: Kord, override val strate
         else -> super.compareTo(other)
     }
 
+    /**
+     * returns a new [Role] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): Role = Role(data,kord,strategy)
+
 }
+

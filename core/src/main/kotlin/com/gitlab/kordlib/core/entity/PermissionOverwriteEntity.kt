@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.behavior.GuildBehavior
@@ -12,10 +13,10 @@ class PermissionOverwriteEntity(
         val guildId: Snowflake,
         val channelId: Snowflake,
         data: PermissionOverwriteData,
-        override val kord: Kord
-) : PermissionOverwrite(data), KordObject {
+        override val kord: Kord,
+        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : PermissionOverwrite(data), KordObject, Strategilizable {
 
-    var strategy = kord.resources.defaultStrategy
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
     val channel: GuildChannelBehavior get() = GuildChannelBehavior(guildId, channelId, kord)

@@ -226,6 +226,13 @@ interface GuildBehavior : Entity, Strategilizable {
         return "https://discord.gg/$identifier"
     }
 
+    /**
+     * returns a new [GuildBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    fun withStrategy(strategy: EntitySupplyStrategy) = GuildBehavior(id,kord,strategy)
+
     companion object {
         internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : GuildBehavior {
             override val id: Snowflake = id
@@ -343,3 +350,4 @@ suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit):
 suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
     kord.rest.guild.addGuildBan(guildId = id.value, userId = userId.value, builder = builder)
 }
+

@@ -29,6 +29,13 @@ interface StoreChannelBehavior : GuildChannelBehavior {
      */
     override suspend fun requestChannel(): StoreChannel = super.requestChannel() as StoreChannel
 
+    /**
+     * returns a new [StoreChannelBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): StoreChannelBehavior = StoreChannelBehavior(guildId, id, kord, strategy)
+
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): StoreChannelBehavior = object : StoreChannelBehavior {
             override val guildId: Snowflake = guildId
@@ -51,3 +58,4 @@ suspend inline fun StoreChannelBehavior.edit(builder: StoreChannelModifyBuilder.
 
     return Channel.from(data, kord) as StoreChannel
 }
+

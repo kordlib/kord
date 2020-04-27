@@ -119,6 +119,14 @@ interface MessageBehavior : Entity, Strategilizable {
         kord.rest.channel.deletePinnedMessage(channelId = channelId.value, messageId = id.value)
     }
 
+    /**
+     * returns a new [MessageBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+
+    fun withStrategy(strategy: EntitySupplyStrategy) = MessageBehavior(channelId,id,kord,strategy)
+
     companion object {
         internal operator fun invoke(channelId: Snowflake, messageId: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : MessageBehavior {
             override val channelId: Snowflake = channelId

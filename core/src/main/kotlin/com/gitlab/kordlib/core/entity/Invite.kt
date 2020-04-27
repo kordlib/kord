@@ -14,9 +14,9 @@ import com.gitlab.kordlib.core.toSnowflakeOrNull
 /**
  * An instance of a [Discord Invite](https://discordapp.com/developers/docs/resources/invite).
  */
-data class Invite(val data: InviteData, override val kord: Kord) : KordObject {
+data class Invite(val data: InviteData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : KordObject,Strategilizable {
 
-    var strategy:EntitySupplyStrategy = kord.resources.defaultStrategy
     /**
      * The unique code of this invite.
      */

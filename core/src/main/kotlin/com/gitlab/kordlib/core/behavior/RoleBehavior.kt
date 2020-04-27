@@ -60,6 +60,12 @@ interface RoleBehavior : Entity, Strategilizable {
         kord.rest.guild.deleteGuildRole(guildId = guildId.value, roleId = id.value)
     }
 
+    /**
+     * returns a new [RoleBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    fun withStrategy(strategy: EntitySupplyStrategy) = RoleBehavior(guildId, id, kord, strategy)
 
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): RoleBehavior = object : RoleBehavior {

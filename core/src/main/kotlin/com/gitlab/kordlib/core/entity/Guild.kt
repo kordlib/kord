@@ -315,4 +315,11 @@ class Guild(val data: GuildData, override val kord: Kord,     override val strat
      */
     suspend fun getSystemChannel(): TextChannel? = strategy.supply(kord).getChannel(id) as? TextChannel
 
+    /**
+     * returns a new [Guild] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): Guild = Guild(data,kord,strategy)
+
 }

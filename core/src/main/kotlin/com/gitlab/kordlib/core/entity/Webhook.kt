@@ -34,4 +34,11 @@ data class Webhook(val data: WebhookData, override val kord: Kord, override val 
 
     suspend fun getChannel(): GuildMessageChannel? = strategy.supply(kord).getChannel(channelId) as? GuildMessageChannel
 
+    /**
+     * returns a new [Webhook] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    fun withStrategy(strategy: EntitySupplyStrategy) = Webhook(data,kord,strategy)
+
 }

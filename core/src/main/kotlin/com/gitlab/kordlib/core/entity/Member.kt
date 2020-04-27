@@ -98,4 +98,11 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord, overrid
         else -> strategy.supply(kord).getMember(guildId, id)
     }
 
+    /**
+     * returns a new [Member] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): Member = Member(memberData, data, kord, strategy)
+
 }

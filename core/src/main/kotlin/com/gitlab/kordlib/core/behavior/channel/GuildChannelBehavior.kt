@@ -82,6 +82,14 @@ interface GuildChannelBehavior : ChannelBehavior, Strategilizable {
         return discordOrder.compare(this, other)
     }
 
+    /**
+     * returns a new [GuildChannelBehavior] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+
+    override fun withStrategy(strategy: EntitySupplyStrategy): GuildChannelBehavior = GuildChannelBehavior(guildId, id, kord, strategy)
+
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : GuildChannelBehavior {
             override val guildId: Snowflake = guildId

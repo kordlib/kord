@@ -45,6 +45,13 @@ open class User(val data: UserData, override val kord: Kord, override val strate
         return id == other.id
     }
 
+    /**
+     * returns a new [User] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): User = User(data,kord,strategy)
+
     data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 
         /**
