@@ -1,3 +1,8 @@
+# 0.4.13
+
+## Fixes
+* Fix guild emojis not having their correct id.
+
 # 0.4.12
 
 ## Fixes
