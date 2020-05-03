@@ -2,17 +2,21 @@ import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Disabled
 class StrategyTest {
 
 
     lateinit var kord: Kord
 
-    @BeforeEach
+    @BeforeAll
      fun setup() = runBlocking {
         kord = Kord(System.getenv("token"))
     }
@@ -25,6 +29,7 @@ class StrategyTest {
     }
 
     @Test
+    @Disabled
     fun `cache only`()  = runBlocking {
         val self = kord.with(EntitySupplyStrategy.Rest).getSelf()
         kord.cache.put(self!!.data)
