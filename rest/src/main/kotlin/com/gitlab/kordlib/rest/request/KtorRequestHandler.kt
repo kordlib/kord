@@ -90,7 +90,10 @@ class KtorRequestHandler(
                 clock: Clock = Clock.systemUTC(),
                 parser: Json = Json(jsonConfig)
         ): KtorRequestHandler {
-            val client = HttpClient(CIO) { defaultRequest { header("Authorization", "Bot $token") } }
+            val client = HttpClient(CIO) {
+                expectSuccess = false
+                defaultRequest { header("Authorization", "Bot $token") }
+            }
             return KtorRequestHandler(client, requestRateLimiter, clock, parser)
         }
     }

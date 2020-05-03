@@ -158,6 +158,7 @@ class KordBuilder(val token: String) {
     }
 
     private fun HttpClientConfig<*>.defaultConfig() {
+        expectSuccess = false
         defaultRequest {
             header("Authorization", "Bot $token")
         }
