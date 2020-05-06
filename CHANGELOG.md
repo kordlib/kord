@@ -1,3 +1,9 @@
+# 0.4.14
+
+## Fixes
+* Fix `GuildMessageChannelBehavior#bulkDelete` manually deleting messages younger than 14 days and trying to bulk delete messages 
+older than 14 days, instead of the other way around. 
+
 # 0.4.13
 
 ## Fixes
