@@ -48,13 +48,6 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
      */
     override suspend fun asChannel(): GuildChannel = super.asChannel() as GuildChannel
 
-    /**
-     * Requests to get this behavior as a [Channel].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
-     */
-    override suspend fun requestChannel(): GuildChannel = super.requestChannel() as GuildChannel
 
     /**
      * Requests to get this behavior as a [Guild].
