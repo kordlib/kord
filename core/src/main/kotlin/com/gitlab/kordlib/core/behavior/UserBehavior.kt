@@ -40,13 +40,6 @@ interface UserBehavior : Entity,Strategizable {
      */
     suspend fun asUser() : User = strategy.supply(kord).getUser(id)!!
 
-    /**
-     * Requests to get the this behavior as a [User].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asUser] instead to reduce unneeded API calls.
-     */
-    suspend fun requestUser() : User = kord.rest.getUser(id)!!
 
     /**
      * Requests to get or create a [DmChannel] between this bot and the user.
