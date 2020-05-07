@@ -26,13 +26,6 @@ interface CategoryBehavior : GuildChannelBehavior {
      */
     override suspend fun asChannel() : Category = strategy.supply(kord).getChannel<Category>(id)!!
 
-    /**
-     * Requests to get the this behavior as a [Category].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
-     */
-    override suspend fun requestChannel() : Category = super.requestChannel() as Category
 
     /**
      * Requests to get the channels that belong to this category.
