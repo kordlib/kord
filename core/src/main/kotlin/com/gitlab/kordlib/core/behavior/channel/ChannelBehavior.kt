@@ -23,13 +23,6 @@ interface ChannelBehavior : Entity, Strategizable {
      */
     suspend fun asChannel(): Channel = strategy.supply(kord).getChannel(id)!!
 
-    /**
-     * Requests to get this behavior as a [Channel].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
-     */
-    suspend fun requestChannel(): Channel = kord.rest.getChannel(id)!!
 
     /**
      * Requests to delete a channel (or close it if this is a dm channel).
