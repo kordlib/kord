@@ -136,13 +136,6 @@ interface GuildBehavior : Entity, Strategizable {
      */
     suspend fun asGuild() : Guild = strategy.supply(kord).getGuild(id)!!
 
-    /**
-     * Requests to get the this behavior as a [Guild].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asGuild] instead to reduce unneeded API calls.
-     */
-    suspend fun requestGuild() : Guild = kord.rest.getGuild(id)!!
 
     /**
      * Requests to delete this guild.
