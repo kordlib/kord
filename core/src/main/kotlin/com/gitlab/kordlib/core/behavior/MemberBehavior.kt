@@ -36,13 +36,6 @@ interface MemberBehavior : Entity, UserBehavior, Strategizable {
      */
     suspend fun asMember() : Member = strategy.supply(kord).getMember(guildId, id)!!
 
-    /**
-     * Requests to get the this behavior as a [Member].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asMember] instead to reduce unneeded API calls.
-     */
-    suspend fun requestMember() : Member = kord.rest.getMember(guildId = guildId, userId = id)!!
 
     /**
      * Requests to unban this member from its guild.
