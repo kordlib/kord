@@ -6,6 +6,7 @@ import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.rest.Image
+import java.util.*
 
 /**
  * An instance of a [Discord User](https://discordapp.com/developers/docs/resources/user#user-object).
@@ -39,9 +40,11 @@ open class User(val data: UserData, override val kord: Kord) : UserBehavior {
 
     override suspend fun asUser(): User = this
 
-    override fun equals(other: Any?): Boolean {
-        if (other !is UserBehavior) return false
-        return id == other.id
+    override fun hashCode(): Int = Objects.hash(id)
+
+    override fun equals(other: Any?): Boolean = when (other) {
+        is UserBehavior -> other.id == id
+        else -> false
     }
 
     data class Avatar(val data: UserData, override val kord: Kord) : KordObject {

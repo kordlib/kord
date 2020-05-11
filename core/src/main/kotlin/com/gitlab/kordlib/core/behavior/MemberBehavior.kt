@@ -8,6 +8,7 @@ import com.gitlab.kordlib.rest.builder.member.MemberModifyBuilder
 import com.gitlab.kordlib.core.cache.data.PresenceData
 import com.gitlab.kordlib.core.cache.data.VoiceStateData
 import com.gitlab.kordlib.core.entity.*
+import java.util.*
 
 /**
  * The behavior of a [Discord Member](https://discordapp.com/developers/docs/resources/guild#guild-member-object).
@@ -88,6 +89,14 @@ interface MemberBehavior : Entity, UserBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+            override fun hashCode(): Int = Objects.hash(id, guildId)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is MemberBehavior -> other.id == id && other.guildId == guildId
+                is UserBehavior -> other.id == id
+                else -> false
+            }
         }
     }
 
