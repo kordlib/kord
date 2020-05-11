@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.Instant
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 private const val guildDeprecationMessage = "Guild ids aren't consistently present, user getGuild() instead."
 
@@ -221,4 +222,11 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
      * Returns null if the message was not send in a [GuildMessageChannel].
      */
     suspend fun getGuild(): Guild? =  kord.getChannel<GuildChannel>(channelId)?.getGuild()
+
+    override fun hashCode(): Int = Objects.hash(id)
+
+    override fun equals(other: Any?): Boolean = when(other) {
+        is MessageBehavior ->  other.id == id && other.channelId == channelId
+        else -> false
+    }
 }

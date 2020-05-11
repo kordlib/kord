@@ -7,6 +7,7 @@ import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Webhook
 import com.gitlab.kordlib.rest.builder.webhook.ExecuteWebhookBuilder
 import com.gitlab.kordlib.rest.builder.webhook.WebhookModifyBuilder
+import java.util.*
 
 /**
  * The behavior of a [Discord Webhook](https://discordapp.com/developers/docs/resources/webhook).
@@ -31,6 +32,13 @@ interface WebhookBehavior : Entity {
         internal operator fun invoke(id: Snowflake, kord: Kord): WebhookBehavior = object : WebhookBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+            override fun hashCode(): Int = Objects.hash(id)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is WebhookBehavior -> other.id == id
+                else -> false
+            }
         }
     }
 

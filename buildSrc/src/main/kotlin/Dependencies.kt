@@ -14,6 +14,7 @@ object Versions {
     const val junitJupiterEngine = junit5
     const val sl4j = "1.7.29"
     const val bintray = "1.8.1"
+    const val mockk = "1.10.0"
 }
 
 @Suppress("ObjectPropertyName")
@@ -42,6 +43,8 @@ object Dependencies {
 
     const val `cache-api` = "com.gitlab.kordlib.cache:api"
     const val `cache-map` = "com.gitlab.kordlib.cache:map"
+
+    const val mockk = "io.mockk:mockk:${Versions.mockk}"
 }
 
 object Plugins {

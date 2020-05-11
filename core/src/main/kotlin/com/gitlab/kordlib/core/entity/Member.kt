@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.toInstant
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 /**
  * An instance of a [Discord Member](https://discordapp.com/developers/docs/resources/guild#guild-member-object).
@@ -93,6 +94,14 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(
     override suspend fun asMember(guildId: Snowflake): Member? = when (guildId) {
         this.guildId -> this
         else -> kord.getMember(guildId, id)
+    }
+
+
+    override fun hashCode(): Int = Objects.hash(id, guildId)
+
+    override fun equals(other: Any?): Boolean = when(other) {
+        is MemberBehavior -> other.id == id && other.guildId == guildId
+        else -> false
     }
 
 }
