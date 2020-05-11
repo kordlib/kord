@@ -347,4 +347,10 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      */
     suspend fun getSystemChannel(): TextChannel? = kord.getChannel(id) as? TextChannel
 
+    override fun hashCode(): Int = Objects.hash(id)
+
+    override fun equals(other: Any?): Boolean = when(other) {
+        is GuildBehavior -> other.id == id
+        else -> false
+    }
 }
