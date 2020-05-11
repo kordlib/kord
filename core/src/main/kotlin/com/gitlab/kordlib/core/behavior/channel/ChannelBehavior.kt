@@ -4,6 +4,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.Channel
+import java.util.*
 
 /**
  * The behavior of a [Discord Channel](https://discordapp.com/developers/docs/resources/channel)
@@ -30,6 +31,13 @@ interface ChannelBehavior : Entity {
         internal operator fun invoke(id: Snowflake, kord: Kord) = object : ChannelBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+            override fun hashCode(): Int = Objects.hash(id)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is ChannelBehavior -> other.id == id
+                else -> false
+            }
         }
     }
 }

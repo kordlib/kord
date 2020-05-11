@@ -4,10 +4,12 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.WebhookType
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
+import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.behavior.WebhookBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
 import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
+import java.util.*
 
 data class Webhook(val data: WebhookData, override val kord: Kord) : WebhookBehavior {
 
@@ -32,5 +34,12 @@ data class Webhook(val data: WebhookData, override val kord: Kord) : WebhookBeha
     suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
 
     suspend fun getChannel(): GuildMessageChannel = kord.getChannel(channelId) as GuildMessageChannel
+
+    override fun hashCode(): Int = Objects.hash(id)
+
+    override fun equals(other: Any?): Boolean = when(other) {
+        is WebhookBehavior -> other.id == id
+        else -> false
+    }
 
 }

@@ -1,3 +1,8 @@
+# 0.4.15
+
+## Changes
+* Classes implementing `Entity` now correctly implement equals and hashcode based on ids.
+
 # 0.4.14
 
 ## Fixes

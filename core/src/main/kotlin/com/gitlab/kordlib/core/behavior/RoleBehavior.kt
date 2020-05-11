@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.sorted
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
+import java.util.*
 
 
 /**
@@ -65,6 +66,13 @@ interface RoleBehavior : Entity {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+            override fun hashCode(): Int = Objects.hash(id, guildId)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is RoleBehavior -> other.id == id && other.guildId == guildId
+                else -> false
+            }
         }
     }
 }

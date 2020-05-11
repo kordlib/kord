@@ -12,6 +12,7 @@ import com.gitlab.kordlib.rest.json.response.IntegrationExpireBehavior
 import java.time.Duration
 import java.time.Instant
 import java.time.temporal.ChronoUnit
+import java.util.*
 
 /**
  * A [Discord integration](https://discordapp.com/developers/docs/resources/guild#get-guild-integrations).
@@ -125,6 +126,14 @@ class Integration(val data: IntegrationData, override val kord: Kord) : Entity {
      * Request to sync an integration.
      */
     suspend fun sync() = kord.rest.guild.syncGuildIntegration(guildId = guildId.value, integrationId = id.value)
+
+
+    override fun hashCode(): Int = Objects.hash(id)
+
+    override fun equals(other: Any?): Boolean = when(other) {
+        is Integration -> other.id == id && other.guildId == guildId
+        else -> false
+    }
 }
 
 suspend inline fun Integration.edit(builder: IntegrationModifyBuilder.() -> Unit) {

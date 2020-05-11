@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import java.time.Instant
+import java.util.*
 import kotlin.coroutines.coroutineContext
 import kotlin.math.min
 import kotlin.time.ClockMark
@@ -170,6 +171,14 @@ interface MessageChannelBehavior : ChannelBehavior {
         internal operator fun invoke(id: Snowflake, kord: Kord) = object : MessageChannelBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+
+            override fun hashCode(): Int = Objects.hash(id)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is ChannelBehavior -> other.id == id
+                else -> false
+            }
         }
     }
 

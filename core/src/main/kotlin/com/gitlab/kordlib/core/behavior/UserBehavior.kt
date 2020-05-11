@@ -9,6 +9,7 @@ import com.gitlab.kordlib.core.entity.User
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.DmChannel
 import com.gitlab.kordlib.rest.json.request.DMCreateRequest
+import java.util.*
 
 /**
  * The behavior of a [Discord User](https://discordapp.com/developers/docs/resources/user)
@@ -42,6 +43,13 @@ interface UserBehavior : Entity {
         internal operator fun invoke(id: Snowflake, kord: Kord): UserBehavior = object : UserBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+            override fun hashCode(): Int = Objects.hash(id)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is UserBehavior -> other.id == id
+                else -> false
+            }
         }
     }
 
