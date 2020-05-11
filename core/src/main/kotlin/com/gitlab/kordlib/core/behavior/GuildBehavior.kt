@@ -4,6 +4,7 @@ import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import java.util.*
 
 /**
  * The behavior of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
@@ -234,6 +236,13 @@ interface GuildBehavior : Entity {
         internal operator fun invoke(id: Snowflake, kord: Kord) = object : GuildBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+            override fun hashCode(): Int = Objects.hash(id)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is GuildBehavior -> other.id == id
+                else -> false
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import com.gitlab.kordlib.rest.builder.channel.ChannelPermissionModifyBuilder
 import com.gitlab.kordlib.rest.service.editRolePermission
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.util.*
 
 /**
  * The behavior of a Discord channel associated to a [guild].
@@ -74,6 +75,14 @@ interface GuildChannelBehavior : ChannelBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+            override fun hashCode(): Int = Objects.hash(id, guildId)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+                is ChannelBehavior -> other.id == id
+                else -> false
+            }
         }
     }
 
