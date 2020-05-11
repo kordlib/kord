@@ -10,6 +10,7 @@ import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.util.*
 
 /**
  * The behavior of a [Discord Message](https://discordapp.com/developers/docs/resources/channel#message-object).
@@ -113,6 +114,13 @@ interface MessageBehavior : Entity {
             override val channelId: Snowflake = channelId
             override val id: Snowflake = messageId
             override val kord: Kord = kord
+
+            override fun hashCode(): Int = Objects.hash(id)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is MessageBehavior -> other.id == id && other.channelId == channelId
+                else -> false
+            }
         }
     }
 
