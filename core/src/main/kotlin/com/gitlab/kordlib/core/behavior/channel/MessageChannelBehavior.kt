@@ -35,14 +35,6 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     override suspend fun asChannel(): MessageChannel =  super.asChannel() as MessageChannel
 
     /**
-     * Requests to get this behavior as a [MessageChannel].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
-     */
-    override suspend fun requestChannel(): MessageChannel = super.requestChannel() as MessageChannel
-
-    /**
      * Requests to get all messages in this channel.
      *
      * Messages retrieved by this function will be emitted in chronological older (oldest -> newest).

@@ -39,14 +39,6 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
     override suspend fun asChannel(): GuildMessageChannel =  super<GuildChannelBehavior>.asChannel() as GuildMessageChannel
 
     /**
-     * Requests to get this behavior as a [GuildMessageChannel].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
-     */
-    override suspend fun requestChannel(): GuildMessageChannel = super<MessageChannelBehavior>.requestChannel() as GuildMessageChannel
-
-    /**
      * Requests to bulk delete the [messages]. Sequentially deletes messages older than 14 days.
      */
     suspend fun bulkDelete(messages: Iterable<Snowflake>) {

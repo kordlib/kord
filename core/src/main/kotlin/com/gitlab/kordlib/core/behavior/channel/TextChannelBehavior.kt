@@ -19,13 +19,6 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
      */
     override suspend fun asChannel(): TextChannel =  super.asChannel() as TextChannel
 
-    /**
-     * Requests to get this behavior as a [TextChannel].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
-     */
-    override suspend fun requestChannel(): TextChannel = super.requestChannel() as TextChannel
 
     /**
      * returns a new [TextChannelBehavior] with the given [strategy].

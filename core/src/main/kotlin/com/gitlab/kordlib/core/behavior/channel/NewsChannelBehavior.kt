@@ -22,14 +22,6 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
     override suspend fun asChannel(): NewsChannel =  super.asChannel() as NewsChannel
 
     /**
-     * Requests to get this behavior as a [NewsChannel].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
-     */
-    override suspend fun requestChannel(): NewsChannel = super.requestChannel() as NewsChannel
-
-    /**
      * returns a new [NewsChannelBehavior] with the given [strategy].
      *
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].

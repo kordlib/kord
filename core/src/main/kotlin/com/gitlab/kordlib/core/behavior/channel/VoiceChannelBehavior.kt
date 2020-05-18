@@ -8,7 +8,6 @@ import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.cache.data.VoiceStateData
 import com.gitlab.kordlib.core.entity.VoiceState
 import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
 import com.gitlab.kordlib.rest.builder.channel.VoiceChannelModifyBuilder
 import com.gitlab.kordlib.rest.service.patchVoiceChannel
@@ -35,14 +34,6 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
     override suspend fun asChannel(): VoiceChannel = super.asChannel() as VoiceChannel
-
-    /**
-     * Requests to get this behavior as a [TextChannel].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asChannel] instead to reduce unneeded API calls.
-     */
-    override suspend fun requestChannel(): VoiceChannel = super.requestChannel() as VoiceChannel
 
     /**
      * returns a new [VoiceChannelBehavior] with the given [strategy].
