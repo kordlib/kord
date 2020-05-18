@@ -15,7 +15,10 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.rest.json.response.GetPruneResponse
+import com.gitlab.kordlib.rest.json.response.VoiceRegion
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
 import java.util.concurrent.ConcurrentHashMap
@@ -51,6 +54,22 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         return Channel.from(data, kord)
     }
 
+    override suspend fun getMessagesAfter(messageId: Snowflake, limit: Int): Flow<Message> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getMessagesBefore(messageId: Snowflake, limit: Int): Flow<Message> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getMessagesAround(messageId: Snowflake, limit: Int): Flow<Message> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getChannelPins(channelId: Snowflake): Flow<Message> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getGuild(id: Snowflake): Guild? {
         val data = find<GuildData> { GuildData::id eq id.longValue }.singleOrNull() ?: return null
         return Guild(data, kord)
@@ -80,6 +99,82 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         }.singleOrNull() ?: return null
 
         return Role(data, kord)
+    }
+
+    override suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): Ban? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getGuildRoles(guildId: Snowflake): Flow<Role> {
+        return find<RoleData>() {
+            RoleData::guildId eq guildId
+        }.asFlow().map { Role(it, kord) }
+    }
+
+    override suspend fun getGuildBans(guildId: Snowflake): Flow<Ban> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getGuildMembers(guildId: Snowflake): Flow<Member> {
+        return  find<UserData>().asFlow().flatMapConcat { userData ->
+            find<MemberData> {
+                MemberData::userId eq userData.id
+                MemberData::guildId eq guildId
+            }
+                    .asFlow().map { Member(it, userData, kord) }
+        }
+    }
+
+    override suspend fun getGuildVoiceRegions(guildId: Snowflake): Flow<VoiceRegion> {
+
+    }
+
+    override suspend fun getGuildPruneCount(guildId: Snowflake, days: Int): GetPruneResponse? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getReactors(channelId: Snowflake, messageId: Snowflake, emoji: ReactionEmoji): Flow<User> {
+        val message = find<MessageData> {
+                MessageData::id eq messageId.value
+                MessageData::channelId eq channelId.value
+        }.singleOrNull() ?: return emptyFlow()
+        message.reactions.map { it.id }
+    }
+
+    override suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): ReactionEmoji? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getEmojis(guildId: Snowflake): Flow<ReactionEmoji> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getCurrentUser(): User? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getCurrentUserGuilds(): Flow<Guild> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getWebhook(webhookId: Snowflake): Webhook? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getWebhookWithToken(webhookId: Snowflake, token: String): Webhook? {
+        TODO("Not yet implemented")
     }
 
     suspend fun getRole(id: Snowflake): Role? {
