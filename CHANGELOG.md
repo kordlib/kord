@@ -1,3 +1,9 @@
+# 0.4.16
+
+### Fixes
+* Unmatched data structure between VoiceState and its data.
+* ISO_INSTANT not being used to format and Instant object.
+
 # 0.4.15
 
 ## Changes
