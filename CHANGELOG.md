@@ -1,5 +1,6 @@
 # 0.4.16
-
+### Changes
+* Behaviors has been removed from VoiceState due to lack of guildId.
 ### Fixes
 * Unmatched data structure between VoiceState and its data.
 * ISO_INSTANT not being used to format and Instant object.
