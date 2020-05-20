@@ -97,7 +97,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
             "embed",
             description,
             url,
-            timestamp?.let { DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it) },
+            timestamp?.let { DateTimeFormatter.ISO_INSTANT.format(it) },
             color?.rgb?.and(0xFFFFFF),
             footer?.toRequest(),
             image?.let(::EmbedImageRequest),
