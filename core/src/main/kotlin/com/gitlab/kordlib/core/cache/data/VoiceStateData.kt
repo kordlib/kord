@@ -8,7 +8,7 @@ val VoiceStateData.id get() = "$userId$channelId$guildId"
 
 @Serializable
 data class VoiceStateData(
-        val guildId: Long,
+        val guildId: Long?,
         val channelId: Long?,
         val userId: Long,
         val sessionId: String,
@@ -25,7 +25,7 @@ data class VoiceStateData(
 
         fun from(entity: DiscordVoiceState) = with(entity) {
             VoiceStateData(
-                    guildId!!.toLong(),
+                    guildId?.toLong(),
                     channelId?.toLong(),
                     userId.toLong(),
                     sessionId,
