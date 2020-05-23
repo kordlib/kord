@@ -94,7 +94,17 @@ data class GuildMembersChunkData(
         val members: List<DiscordGuildMember>,
         @SerialName("not_found")
         val notFound: List<String>? = null,
-        val presences: List<Presence>? = null
+        val presences: List<Presence>? = null,
+        /**
+         * The chunk index in the expected chunks for this response.
+         */
+        @SerialName("chunk_index")
+        val chunkIndex: Int,
+        /**
+         * The total number of expected chunks for this response.
+         */
+        @SerialName("chunk_count")
+        val chunkCount: Int
 )
 
 @Serializable
