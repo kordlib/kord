@@ -12,6 +12,7 @@ through rest.
 * Added missing `PresenceUpdateEvent#member`, `PresenceUpdateEvent#guild`, `PresenceUpdateEvent#getUser`,
 `PresenceUpdateEvent#getMember`, `PresenceUpdateEvent#member`, `PresenceUpdateEvent#getGuild`.
 * Added `chunk_index` and `chunck_count` properties to `GuildMembersChunkData`.
+* Added `Invite#targetUserType`.
 
 # 0.4.16
 
