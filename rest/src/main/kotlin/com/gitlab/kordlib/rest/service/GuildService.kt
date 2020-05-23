@@ -15,6 +15,7 @@ import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
+import com.gitlab.kordlib.common.entity.DiscordGuild
 
 class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
@@ -22,6 +23,10 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         body(GuildCreateRequest.serializer(), GuildCreateBuilder().apply(builder).toRequest())
     }
 
+    /**
+     * @param withCounts whether to include the [DiscordGuild.approximateMemberCount]
+     * and [DiscordGuild.approximatePresenceCount] fields, `false` by default.
+     */
     suspend fun getGuild(guildId: String, withCounts: Boolean = false) = call(Route.GuildGet) {
         keys[Route.GuildId] = guildId
         parameter("with_count", withCounts.toString())

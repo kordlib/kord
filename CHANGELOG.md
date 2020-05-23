@@ -1,7 +1,18 @@
+# 0.4.20
+
+## Additions
+
+* Added error codes 10026(Unknown ban), 40002(You need to verify your account in order to perform this action) and
+30015(Maximum number of attachments in a message reached (10)) to the `JsonErrorCode`.
+* Added `approximate_member_count` `approximate_presence_count` to guilds, which will be present when requesting a guild
+through rest.
+
 # 0.4.16
-### Changes
-* Behaviors has been removed from VoiceState due to lack of guildId.
-### Fixes
+
+## Changes
+* Behaviors have been removed from VoiceState due to lack of guildId.
+
+## Fixes
 * Unmatched data structure between VoiceState and its data.
 * ISO_INSTANT not being used to format and Instant object.
 
