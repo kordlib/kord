@@ -6,6 +6,11 @@
 30015(Maximum number of attachments in a message reached (10)) to the `JsonErrorCode`.
 * Added `approximate_member_count` `approximate_presence_count` to guilds, which will be present when requesting a guild
 through rest.
+* Added missing `DmChannel#recipientBehaviors`.
+* Added missing `MessageUpdateEvent#message`, `MessageUpdateEvent#channel`, `MessageUpdateEvent#getMessage`,
+`MessageUpdateEvent#getChannel`.
+* Added missing `PresenceUpdateEvent#member`, `PresenceUpdateEvent#guild`, `PresenceUpdateEvent#getUser`,
+`PresenceUpdateEvent#getMember`, `PresenceUpdateEvent#member`, `PresenceUpdateEvent#getGuild`
 
 # 0.4.16
 
