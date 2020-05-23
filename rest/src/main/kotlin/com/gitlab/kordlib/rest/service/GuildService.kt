@@ -22,8 +22,9 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         body(GuildCreateRequest.serializer(), GuildCreateBuilder().apply(builder).toRequest())
     }
 
-    suspend fun getGuild(guildId: String) = call(Route.GuildGet) {
+    suspend fun getGuild(guildId: String, withCounts: Boolean = false) = call(Route.GuildGet) {
         keys[Route.GuildId] = guildId
+        parameter("with_count", withCounts.toString())
     }
 
     suspend inline fun modifyGuild(guildId: String, builder: GuildModifyBuilder.() -> Unit) = call(Route.GuildPatch) {

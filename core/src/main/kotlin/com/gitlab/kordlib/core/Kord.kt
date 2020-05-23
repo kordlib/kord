@@ -76,7 +76,7 @@ class Kord internal constructor(
         get() = flow {
             //backup if we're not caching
             val request = paginateForwards(idSelector = DiscordPartialGuild::id, batchSize = 100) { position -> rest.user.getCurrentUserGuilds(position, 100) }
-                    .map { rest.guild.getGuild(it.id) }
+                    .map { rest.guild.getGuild(it.id, true) }
                     .map { GuildData.from(it) }
                     .map { Guild(it, this@Kord) }
 
@@ -165,7 +165,7 @@ class Kord internal constructor(
     }
 
     internal suspend fun requestGuild(id: Snowflake): Guild? {
-        val data = catchNotFound { rest.guild.getGuild(id.value).let { GuildData.from(it) } } ?: return null
+        val data = catchNotFound { rest.guild.getGuild(id.value, true).let { GuildData.from(it) } } ?: return null
         return Guild(data, this)
     }
 

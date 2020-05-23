@@ -81,7 +81,21 @@ data class DiscordGuild(
         @SerialName("preferred_locale")
         val preferredLocale: String,
         @SerialName("public_updates_channel_id")
-        val publicUpdatesChannelId: String? = null
+        val publicUpdatesChannelId: String? = null,
+
+        /**
+         * Approximate number of members in this guild,
+         * returned from the GET /guild/<id> endpoint when with_counts is true
+         */
+        @SerialName("approximate_member_count")
+        val approximateMemberCount: Int? = null,
+
+        /**
+         * Approximate number of online members in this guild,
+         * returned from the GET /guild/<id> endpoint when with_counts is true
+         */
+        @SerialName("approximate_presence_count")
+        val approximatePresenceCount: Int? = null
 )
 
 @Serializable(with = GuildFeature.Companion::class)

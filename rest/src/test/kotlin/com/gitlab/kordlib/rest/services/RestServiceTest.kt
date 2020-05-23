@@ -71,7 +71,7 @@ class RestServiceTest {
 
         guildId = guild.id
 
-        rest.guild.getGuild(guildId)
+        rest.guild.getGuild(guildId, true)
 
         rest.guild.modifyGuild(guildId) {
             name = "Edited Guild Test"

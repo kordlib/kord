@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -46,7 +47,19 @@ data class GuildData(
         val rulesChannelId: Long? = null,
         val discoverySplash: String? = null,
         val publicUpdatesChannelId: Long? = null,
-        val preferredLocale: String
+        val preferredLocale: String,
+
+        /**
+         * Approximate number of members in this guild,
+         * returned from the GET /guild/<id> endpoint when with_counts is true
+         */
+        val approximateMemberCount: Int? = null,
+
+        /**
+         * Approximate number of online members in this guild,
+         * returned from the GET /guild/<id> endpoint when with_counts is true
+         */
+        val approximatePresenceCount: Int? = null
 ) {
     companion object {
 
@@ -101,7 +114,9 @@ data class GuildData(
                     rulesChannelId?.toLong(),
                     discoverySplash,
                     publicUpdatesChannelId?.toLong(),
-                    preferredLocale
+                    preferredLocale,
+                    approximateMemberCount = approximateMemberCount,
+                    approximatePresenceCount = approximatePresenceCount
             )
         }
     }
