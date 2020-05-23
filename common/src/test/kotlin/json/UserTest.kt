@@ -3,6 +3,7 @@
 package json
 
 import com.gitlab.kordlib.common.entity.DiscordUser
+import com.gitlab.kordlib.common.entity.UserFlags
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
@@ -24,7 +25,7 @@ class UserTest {
             avatar shouldBe "8342729096ea3675442027381ff50dfe"
             verified shouldBe true
             email shouldBe "nelly@discordapp.com"
-            flags shouldBe 64
+            flags shouldBe UserFlags(64)
             premiumType!!.code shouldBe 1
         }
 

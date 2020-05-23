@@ -13,6 +13,7 @@ through rest.
 `PresenceUpdateEvent#getMember`, `PresenceUpdateEvent#member`, `PresenceUpdateEvent#getGuild`.
 * Added `chunk_index` and `chunck_count` properties to `GuildMembersChunkData`.
 * Added `Invite#targetUserType`.
+* Added `User#flag`.
 
 # 0.4.16
 
