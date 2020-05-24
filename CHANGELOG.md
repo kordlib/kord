@@ -1,7 +1,15 @@
+# 0.4.17
+
+## Fixes
+
+* Fixed REST throwing an exception when parsing an error without code.
+
 # 0.4.16
-### Changes
-* Behaviors has been removed from VoiceState due to lack of guildId.
-### Fixes
+
+## Changes
+* Behaviors have been removed from VoiceState due to lack of guildId.
+
+## Fixes
 * Unmatched data structure between VoiceState and its data.
 * ISO_INSTANT not being used to format and Instant object.
 
