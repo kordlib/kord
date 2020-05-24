@@ -71,7 +71,9 @@ data class EmbedFieldRequest(
 data class MessageEditPatchRequest(
         val content: String? = null,
         val embed: EmbedRequest? = null,
-        val flags: Flags? = null
+        val flags: Flags? = null,
+        @SerialName("allowed_mentions")
+        val allowedMentions: AllowedMentions? = null
 )
 
 @Serializable

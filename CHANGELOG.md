@@ -15,6 +15,11 @@ through rest.
 * Added `Invite#targetUserType`.
 * Added `User#flag`.
 * Added `GuildFeature.WelcomeScreenEnabled`.
+* Added `MessageModifyBuilder#allowedMentions`.
+
+## Fixes
+
+* Fixed `MessageModifyBuilder` ignoring flags.
 
 # 0.4.16
 
