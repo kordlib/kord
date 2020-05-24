@@ -51,7 +51,15 @@ class KtorRequestHandler(
 
         return when {
             response.isRateLimit -> handle(request)
-            response.isError -> throw KtorRequestException(response, response.errorString(), parser.parse(DiscordErrorResponse.serializer(),responseBody))
+            response.isError -> {
+                val error = runCatching {
+                    parser.parse(DiscordErrorResponse.serializer(),responseBody)
+                }.onFailure {
+                    logger.error(it) { "error while parsing REST error response" }
+                }
+
+                throw KtorRequestException(response, response.errorString(), error.getOrDefault(DiscordErrorResponse()))
+            }
             else -> parser.parse(request.route.strategy, responseBody)
         }
     }
