@@ -21,12 +21,12 @@ data class PresenceData(
     companion object {
         val description = description(PresenceData::id)
 
-        fun from(entity: DiscordPresenceUpdateData) = with(entity) {
+        fun from(guildId: String, entity: DiscordPresenceUpdateData) = with(entity) {
             PresenceData(
                     user.id.toLong(),
                     roles?.map { it.toLong() },
                     game?.let { ActivityData.from(it) },
-                    guildId?.toLong(),
+                    guildId.toLong(),
                     status,
                     activities.map { ActivityData.from(it) },
                     ClientStatusData.from(clientStatus)
