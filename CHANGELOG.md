@@ -14,6 +14,7 @@ through rest.
 * Added `chunk_index` and `chunck_count` properties to `GuildMembersChunkData`.
 * Added `Invite#targetUserType`.
 * Added `User#flag`.
+* Added `GuildFeature.WelcomeScreenEnabled`.
 
 # 0.4.16
 

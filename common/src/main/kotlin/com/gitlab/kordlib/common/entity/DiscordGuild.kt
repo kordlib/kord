@@ -113,7 +113,12 @@ enum class GuildFeature(val value: String) {
     Featureable("FEATURABLE"),
     AnimatedIcon("ANIMATED_ICON"),
     Banner("BANNER"),
-    PublicDisabled("PUBLIC_DISABLED");
+    PublicDisabled("PUBLIC_DISABLED"),
+
+    /**
+     * guild has enabled the welcome screen
+     */
+    WelcomeScreenEnabled("WELCOME_SCREEN_ENABLED");
 
     @Serializer(forClass = GuildFeature::class)
     companion object : KSerializer<GuildFeature> {
