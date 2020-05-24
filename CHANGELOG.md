@@ -1,3 +1,9 @@
+# 0.4.18
+
+## Fixes
+
+* Fixed an issue where presences from guild creates were cached without guild id.
+
 # 0.4.17
 
 ## Fixes

@@ -91,7 +91,7 @@ data class GuildData(
                     voiceStates.orEmpty().map { VoiceStateData.from(it) },
                     members.orEmpty().map { MemberData.from(userId = it.user!!.id, guildId = id, entity = it) },
                     channels.orEmpty().map { it.id.toLong() },
-                    presences.orEmpty().map { PresenceData.from(it) },
+                    presences.orEmpty().map { PresenceData.from(id, it) },
                     maxPresences,
                     maxMembers,
                     vanityUrlCode,
