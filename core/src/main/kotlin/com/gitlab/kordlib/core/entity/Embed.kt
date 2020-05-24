@@ -4,6 +4,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.toInstant
+import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
 import java.awt.Color
 import java.time.Instant
 
@@ -141,5 +142,54 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
         val name: String get() = data.name
         val value: String get() = data.value
         val inline: Boolean? get() = data.inline
+    }
+
+    /**
+     * Applies this embed to the [builder], copying its properties to it.
+     *
+     * Properties that are part of this embed but not present in the [builder] will be ignored.
+     */
+    fun apply(builder: EmbedBuilder) {
+        builder.color = color
+
+        author?.let { author ->
+            builder.author {
+                this.icon = author.iconUrl
+                this.url = author.url
+                this.name = author.name
+            }
+        }
+
+        thumbnail?.let { thumbnail ->
+            builder.thumbnail {
+                this.url = thumbnail.url ?: ""
+            }
+        }
+
+        builder.title = title
+
+        builder.url = url
+
+        builder.description = description
+
+        fields.forEach { field ->
+            builder.field {
+                name = field.name
+                value = field.value
+                inline = field.inline ?: false
+            }
+        }
+
+        builder.image = image?.url
+
+        footer?.let { footer ->
+            builder.footer {
+                this.text = footer.text
+                this.icon = footer.iconUrl
+            }
+        }
+
+        builder.timestamp = timestamp
+
     }
 }
