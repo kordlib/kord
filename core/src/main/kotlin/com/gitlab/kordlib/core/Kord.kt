@@ -18,6 +18,7 @@ import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.start
+import com.gitlab.kordlib.rest.request.RequestException
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -122,6 +123,17 @@ class Kord internal constructor(
     override suspend fun getChannel(id: Snowflake): Channel? = cache.getChannel(id) ?: requestsChannel(id)
 
     override suspend fun getGuild(id: Snowflake): Guild? = cache.getGuild(id) ?: requestGuild(id)
+
+    /**
+     * Returns the preview of the guild matching the [guildId]. The bot does not need to present in this guild
+     * for this to complete successfully.
+     *
+     * @throws RequestException if the guild does not exist or is not public.
+     */
+    suspend fun getGuildPreview(guildId: Snowflake): GuildPreview? = catchNotFound {
+        val discordPreview = rest.guild.getGuildPreview(guildId.value)
+        return GuildPreview(GuildPreviewData.from(discordPreview), this)
+    }
 
     override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member? {
         return cache.getMember(guildId = guildId, userId = userId) ?: requestMember(guildId = guildId, userId = userId)

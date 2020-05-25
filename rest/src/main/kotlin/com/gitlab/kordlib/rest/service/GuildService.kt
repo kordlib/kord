@@ -32,6 +32,13 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         parameter("with_count", withCounts.toString())
     }
 
+    /**
+     * Returns the preview of this [guildId].
+     */
+    suspend fun getGuildPreview(guildId: String) = call(Route.GuildPreviewGet) {
+        keys[Route.GuildId] = guildId
+    }
+
     suspend inline fun modifyGuild(guildId: String, builder: GuildModifyBuilder.() -> Unit) = call(Route.GuildPatch) {
         keys[Route.GuildId] = guildId
         val modifyBuilder = GuildModifyBuilder().apply(builder)

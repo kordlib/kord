@@ -18,6 +18,7 @@ through rest.
 * Added `MessageModifyBuilder#allowedMentions`.
 * `Embeds` can now copy their contents over to builders by using `Embed#apply(EmbedBuilder)`.
 * Added `User#premiumType`.
+* Added `GuildPreview` and the ability to get previews for public guilds via `Kord#getGuildPreview`.
 
 ## Fixes
 

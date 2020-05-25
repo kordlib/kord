@@ -27,6 +27,8 @@ fun image(path: String): String {
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RestServiceTest {
 
+    private val publicGuildId = Snowflake(322850917248663552)
+
     private val token = System.getenv("token")
 
     private lateinit var requestHandler: RequestHandler
@@ -384,6 +386,13 @@ class RestServiceTest {
 
             Unit
         }
+    }
+
+    @Test
+    @Order(20)
+    fun `get public guild preview`() = runBlocking {
+        val preview = rest.guild.getGuildPreview(publicGuildId.value)
+        Unit
     }
 
 
