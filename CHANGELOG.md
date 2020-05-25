@@ -1,3 +1,9 @@
+# 0.4.19
+
+## Fixes
+
+* Fixed an issue where `ClientStatus` would only display the desktop status.
+
 # 0.4.18
 
 ## Fixes
