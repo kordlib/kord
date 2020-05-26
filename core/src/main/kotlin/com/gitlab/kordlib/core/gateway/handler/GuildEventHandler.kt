@@ -68,7 +68,7 @@ internal class GuildEventHandler(
         }
 
         for (presence in presences.orEmpty()) {
-            cache.put(PresenceData.from(presence))
+            cache.put(PresenceData.from(id, presence))
         }
 
         for (voiceState in voiceStates.orEmpty()) {
@@ -222,7 +222,7 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: PresenceUpdate) = with(event.presence) {
-        val data = PresenceData.from(this)
+        val data = PresenceData.from(this.guildId!!, this)
 
         val old = cache.find<PresenceData> { PresenceData::id eq data.id }
                 .asFlow().map { Presence(it, kord) }.singleOrNull()

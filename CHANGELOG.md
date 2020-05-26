@@ -24,6 +24,26 @@ through rest.
 
 * Fixed `MessageModifyBuilder` ignoring flags.
 
+
+# 0.4.19
+
+## Fixes
+
+* Fixed an issue where `ClientStatus` would only display the desktop status.
+
+# 0.4.18
+
+## Fixes
+
+* Fixed an issue where presences from guild creates were cached without guild id.
+
+# 0.4.17
+
+## Fixes
+
+* Fixed REST throwing an exception when parsing an error without code.
+>>>>>>> CHANGELOG.md
+
 # 0.4.16
 
 ## Changes
