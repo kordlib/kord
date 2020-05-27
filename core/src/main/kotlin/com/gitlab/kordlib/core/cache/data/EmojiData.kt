@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EmojiData(
         val id: Long,
+        val guildId: Long,
         val name: String? = null,
         val user: UserData?,
         val roles: List<Long>,
@@ -17,10 +18,11 @@ data class EmojiData(
     companion object {
         val description get() = description(EmojiData::id)
 
-        fun from(id: String, entity: DiscordEmoji) =
+        fun from(guildId: String, id: String, entity: DiscordEmoji) =
                 with(entity) {
                     EmojiData(
                             id.toLong(),
+                            guildId.toLong(),
                             name,
                             user?.let { UserData.from(it) },
                             roles.orEmpty().map { it.toLong() },

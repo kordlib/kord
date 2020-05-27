@@ -23,9 +23,9 @@ import java.time.format.DateTimeFormatter
  * An instance of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
  */
 @Suppress("MemberVisibilityCanBePrivate")
-class Guild(val data: GuildData, override val kord: Kord,     override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+class Guild(val data: GuildData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
 ) : GuildBehavior {
-    
+
     override val id: Snowflake get() = Snowflake(data.id)
 
     /**
@@ -82,7 +82,7 @@ class Guild(val data: GuildData, override val kord: Kord,     override val strat
     /**
      * The custom emojis in this guild.
      */
-    val emojis: List<GuildEmoji> get() = data.emojis.map { GuildEmoji(it, id, kord) }
+    val emojis: List<GuildEmoji> get() = data.emojis.map { GuildEmoji(it, kord) }
 
     /**
      * The behavior of the @everyone role.
@@ -208,7 +208,7 @@ class Guild(val data: GuildData, override val kord: Kord,     override val strat
     val roleBehaviors: Set<RoleBehavior> get() = data.roles.asSequence().map { RoleBehavior(id = Snowflake(it), guildId = id, kord = kord) }.toSet()
 
     override suspend fun asGuild(): Guild = this
-    
+
     /**
      * Requests to get the afk channel, if present.
      */
@@ -241,9 +241,9 @@ class Guild(val data: GuildData, override val kord: Kord,     override val strat
             kord.rest.emoji.getEmoji(guildId = id.value, emojiId = emojiId.value)
         } ?: return null
 
-        val data = EmojiData.from(emojiId.value, response)
+        val data = EmojiData.from(id.value, emojiId.value, response)
 
-        return GuildEmoji(data, id, kord)
+        return GuildEmoji(data, kord)
     }
 
     /**
@@ -320,6 +320,6 @@ class Guild(val data: GuildData, override val kord: Kord,     override val strat
      *
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): Guild = Guild(data,kord,strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy): Guild = Guild(data, kord, strategy)
 
 }

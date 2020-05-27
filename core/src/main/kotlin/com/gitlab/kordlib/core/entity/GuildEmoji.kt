@@ -16,12 +16,15 @@ import kotlinx.coroutines.flow.map
 /**
  * An instace of a [Discord emoji](https://discordapp.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
  */
-class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+class GuildEmoji(val data: EmojiData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
 ) : Entity, Strategizable {
 
 
     override val id: Snowflake
         get() = Snowflake(data.id)
+
+    val guildId: Snowflake
+        get() = Snowflake(data.guildId)
 
     /**
      * Whether is emoji is animated.
@@ -90,7 +93,7 @@ class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord:
      *
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
-    fun withStrategy(strategy: EntitySupplyStrategy) = GuildEmoji(data, guildId, kord, strategy)
+    fun withStrategy(strategy: EntitySupplyStrategy) = GuildEmoji(data, kord, strategy)
 
 }
 

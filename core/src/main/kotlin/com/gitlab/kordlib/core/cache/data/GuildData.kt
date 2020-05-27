@@ -76,7 +76,7 @@ data class GuildData(
                     defaultMessageNotifications,
                     explicitContentFilter,
                     roles.map { it.id.toLong() },
-                    emojis.map { EmojiData.from(id, it) },
+                    emojis.map { EmojiData.from(guildId = id, id = it.id!!, entity = it) },
                     features,
                     mfaLevel,
                     applicationId?.toLong(),
