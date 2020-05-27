@@ -6,13 +6,12 @@ import com.gitlab.kordlib.core.*
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.rest.json.response.VoiceRegion
+import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.rest.request.RequestException
+import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.service.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
+import kotlin.math.min
 
 class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
 
@@ -45,7 +44,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
     override val regions: Flow<Region>
         get() = flow {
             client.voice.getVoiceRegions().forEach { emit(it) }
-        }.map { RegionData.from(it) }.map { Region(it, kord) }
+        }.map { RegionData.from(null,it) }.map { Region(it, kord) }
 
     /**
      * Requests to get the channel with the given [id].
@@ -57,21 +56,20 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      */
     override suspend fun getChannel(id: Snowflake): Channel? = catchNotFound { Channel.from(channel.getChannel(id.value).toData(), kord) }
 
-    override suspend fun getMessagesAfter(messageId: Snowflake, limit: Int): Flow<Message> {
-        TODO("Not yet implemented")
-    }
+    override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = catchNotFound {
+        flow {
+            for (channelData in guild.getGuildChannels(guildId.value))
+                emit(Channel.from(ChannelData.from(channelData), kord) as GuildChannel)
+        }
+    } ?: emptyFlow()
 
-    override suspend fun getMessagesBefore(messageId: Snowflake, limit: Int): Flow<Message> {
-        TODO("Not yet implemented")
-    }
+    override fun getChannelPins(channelId: Snowflake): Flow<Message> = catchNotFound {
+        flow {
+            for (messageData in channel.getChannelPins(channelId.value))
+                emit(Message(MessageData.from(messageData), kord))
+        }
+    } ?: emptyFlow()
 
-    override suspend fun getMessagesAround(messageId: Snowflake, limit: Int): Flow<Message> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getChannelPins(channelId: Snowflake): Flow<Message> {
-        TODO("Not yet implemented")
-    }
 
     /**
      * Requests to get the guild with the given [id].
@@ -109,6 +107,41 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
         Message(channel.getMessage(channelId = channelId.value, messageId = messageId.value).toData(), kord)
     }
 
+    override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int) = catchNotFound {
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+        val batchSize = min(100, limit)
+
+        val flow = paginateForwards(messageId, batchSize, idSelector = { it.id }) { position ->
+            kord.rest.channel.getMessages(channelId.value, position, batchSize)
+        }.map { MessageData.from(it) }.map { Message(it, kord) }
+
+        if (limit != Int.MAX_VALUE) flow.take(limit) else flow
+    } ?: emptyFlow()
+
+
+    override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int) = catchNotFound {
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+        val batchSize = min(100, limit)
+
+        val flow = paginateBackwards(messageId, batchSize, idSelector = { it.id }) { position ->
+            kord.rest.channel.getMessages(channelId.value, position, batchSize)
+        }.map { MessageData.from(it) }.map { Message(it, kord) }
+
+        if (limit != Int.MAX_VALUE) flow.take(limit) else flow
+    } ?: emptyFlow()
+
+    override fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int) = catchNotFound {
+        flow {
+            val responses = kord.rest.channel.getMessages(channelId.value, Position.Around(messageId.value))
+
+            for (response in responses) {
+                val data = MessageData.from(response)
+                emit(Message(data, kord))
+            }
+
+        }
+    } ?: emptyFlow()
+
     /**
      * Requests to get the user linked to the current [ClientResources.token].
      *
@@ -126,6 +159,9 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * @throws RequestException when the request failed.
      */
     override suspend fun getUser(id: Snowflake): User? = catchNotFound { User(user.getUser(id.value).toData(), kord) }
+    override suspend fun getCurrentUser(): User? = catchNotFound {
+        User(user.getCurrentUser().toData(), kord)
+    }
 
     /**
      * Requests to get the role with the given [roleId] in the given [guildId].
@@ -144,29 +180,45 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
         return Role(RoleData.from(guildId.value, response), kord)
     }
 
-    override suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): Ban {
+    override suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake) = catchNotFound {
         val response = guild.getGuildBan(guildId.value, userId.value)
-        val data = BanData.from(response)
-        return Ban(data, kord)
+        val data = BanData.from(guildId.value, response)
+        Ban(data, kord)
 
     }
 
-    override suspend fun getGuildRoles(guildId: Snowflake): Flow<Role> =
-            guild.getGuildRoles(guildId.value).asFlow().map { Role(RoleData.from(guildId.value, it), kord) }
+    override fun getGuildRoles(guildId: Snowflake): Flow<Role> = catchNotFound {
+        flow {
+            for (roleData in guild.getGuildRoles(guildId.value))
+                emit(Role(RoleData.from(guildId.value, roleData), kord))
 
+        }
+    } ?: emptyFlow()
 
-    override suspend fun getGuildBans(guildId: Snowflake): Flow<Ban> =
-            guild.getGuildBans(guildId.value).asFlow().map { Ban(BanData.from(it), kord) }
+    override fun getGuildBans(guildId: Snowflake): Flow<Ban> = catchNotFound {
+        flow {
+            for (banData in guild.getGuildBans(guildId.value))
+                emit(Ban(BanData.from(guildId.value,banData), kord))
+        }
+    } ?: emptyFlow()
 
-    override suspend fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> =
-            guild.getGuildMembers(guildId.value).asFlow().map { Member(MemberData.from(it.user!!.id, guildId.value, it), UserData.from(it.user!!), kord) }
+    override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> = catchNotFound {
+        flow {
+            for (memberData in guild.getGuildMembers(guildId.value))
+                emit(Member(memberData.toData(memberData.user!!.id, guildId.value), memberData.user!!.toData(), kord))
+        }
+    } ?: emptyFlow()
 
+    override  fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = catchNotFound {
+        flow {
+            for (region in guild.getGuildVoiceRegions(guildId.value)) {
+                val data = RegionData.from(guildId.value, region)
+                emit(Region(data, kord))
+            }
+        }
+    } ?: emptyFlow()
 
-    override suspend fun getGuildVoiceRegions(guildId: Snowflake): Flow<VoiceRegion> =
-            guild.getGuildVoiceRegions(guildId.value).asFlow()
-
-
-    override suspend fun getReactors(channelId: Snowflake, messageId: Snowflake, emoji: ReactionEmoji): Flow<User> =
+    fun getReactors(channelId: Snowflake, messageId: Snowflake, emoji: ReactionEmoji): Flow<User> =
             paginateForwards(batchSize = 100, idSelector = { it.id }) { position ->
                 kord.rest.channel.getReactions(
                         channelId = channelId.value,
@@ -177,37 +229,62 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
                 )
             }.map { UserData.from(it) }.map { User(it, kord) }
 
-    override suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): ReactionEmoji? {
-        TODO("Not yet implemented")
+    override suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake) = catchNotFound {
+        val data = EmojiData.from(guildId.value, emojiId.value, emoji.getEmoji(guildId.value, emojiId.value))
+        GuildEmoji(data, kord)
     }
 
-    override suspend fun getEmojis(guildId: Snowflake): Flow<ReactionEmoji> {
-        TODO("Not yet implemented")
+    override fun getEmojis(guildId: Snowflake) = catchNotFound {
+        flow {
+            for (emoji in emoji.getEmojis(guildId.value)) {
+                val data = EmojiData.from(guildId = guildId.value, id = emoji.id!!, entity = emoji)
+                emit(GuildEmoji(data, kord))
+            }
+        }
+    } ?: emptyFlow()
+
+    override fun getCurrentUserGuilds(limit: Int): Flow<Guild> = catchNotFound {
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+        val batchSize = min(100, limit)
+
+        val flow = paginateForwards(batchSize = batchSize, idSelector = { it.id.value }) { position ->
+            user.getCurrentUserGuilds(position, batchSize).map { Guild(guild.getGuild(it.id).toData(), kord) }
+
+        }
+
+        return if (limit != Int.MAX_VALUE) flow.take(limit)
+        else flow
+    } ?: emptyFlow()
+
+    override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> = catchNotFound {
+        flow {
+            for (webhook in webhook.getChannelWebhooks(channelId.value)) {
+                val data = WebhookData.from(webhook)
+                emit(Webhook(data, kord))
+            }
+        }
+    } ?: emptyFlow()
+
+    override fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook> = catchNotFound {
+        flow {
+            for (webhook in webhook.getGuildWebhooks(guildId.value)) {
+                val data = WebhookData.from(webhook)
+                emit(Webhook(data, kord))
+            }
+        }
+    } ?: emptyFlow()
+
+
+    override suspend fun getWebhook(webhookId: Snowflake): Webhook? = catchNotFound {
+        val data = WebhookData.from(webhook.getWebhook(webhookId.value))
+        return Webhook(data, kord)
     }
 
-    override suspend fun getCurrentUser(): User? {
-        TODO("Not yet implemented")
+    override suspend fun getWebhookWithToken(webhookId: Snowflake, token: String): Webhook? = catchNotFound {
+        val data = WebhookData.from(webhook.getWebhookWithToken(webhookId.value, token))
+        return Webhook(data, kord)
     }
 
-    override suspend fun getCurrentUserGuilds(): Flow<Guild> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getWebhook(webhookId: Snowflake): Webhook? {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getWebhookWithToken(webhookId: Snowflake, token: String): Webhook? {
-        TODO("Not yet implemented")
-    }
 
     /**
      * Requests to get the information of the current application.
