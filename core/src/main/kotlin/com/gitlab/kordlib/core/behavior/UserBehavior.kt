@@ -26,19 +26,11 @@ interface UserBehavior : Entity,Strategizable {
     suspend fun asMember(guildId: Snowflake): Member? = strategy.supply(kord).getMember(guildId, id)
 
     /**
-     * Requests this user as a member of the [guild][guildId].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asUser] instead to reduce unneeded API calls.
-     */
-    suspend fun requestMember(guildId: Snowflake): Member? = kord.rest.getMember(guildId = guildId, userId = id)
-
-    /**
      * Requests to get the this behavior as a [User].
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asUser() : User = strategy.supply(kord).getUser(id)!!
+    suspend fun asUser() : User? = strategy.supply(kord).getUser(id)
 
 
     /**

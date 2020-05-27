@@ -35,14 +35,6 @@ interface MessageBehavior : Entity, Strategizable {
     suspend fun asMessage() : Message = strategy.supply(kord).getMessage(channelId = channelId, messageId = id)!!
 
     /**
-     * Requests to get the this behavior as a [Message].
-     *
-     * Entities will be fetched from the [RestClient][Kord.rest] directly, ignoring the [cache][Kord.cache].
-     * Unless the currency of data is important, it is advised to use [asMessage] instead to reduce unneeded API calls.
-     */
-    suspend fun requestMessage() : Message = kord.rest.getMessage(channelId = channelId, messageId = id)!!
-
-    /**
      * Requests to delete this message.
      */
     suspend fun delete() {

@@ -3,10 +3,12 @@ package com.gitlab.kordlib.core.behavior
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.*
+import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
+import com.gitlab.kordlib.core.sorted
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
@@ -19,7 +21,6 @@ import com.gitlab.kordlib.rest.service.createTextChannel
 import com.gitlab.kordlib.rest.service.createVoiceChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 /**
@@ -30,41 +31,20 @@ interface GuildBehavior : Entity, Strategizable {
      * Requests to get all bans for this guild.
      */
     val bans: Flow<Ban>
-        get() = flow {
-            for (guildBan in strategy.getGuildBans(id.value)) {
-                val data = BanData.from(guildBan)
-
-                emit(Ban(data, kord))
-            }
-        }
+        get() = strategy.supply(kord).getGuildBans(id)
 
     /**
      * Requests to get all webhooks for this guild.
      */
 
     val webhooks: Flow<Webhook>
-        get() = flow {
-            for (response in kord.rest.webhook.getGuildWebhooks(id.value)) {
-                val data = WebhookData.from(response)
-                emit(Webhook(data, kord))
-            }
-
-        }
+        get() = strategy.supply(kord).getGuildWebhooks(id)
 
     /**
      * Requests to get all channels in this guild in an unspecified order, call [sorted] to get a consistent order.
      */
     val channels: Flow<GuildChannel>
-        get() = flow<GuildChannel /*Kotlin compiler bug, don't remove*/> {
-            for (response in strategy.getGuildChannels(id.value)) {
-                val data = ChannelData.from(response)
-                val channel = Channel.from(data, kord)
-
-                if (channel is GuildChannel) {
-                    emit(channel)
-                }
-            }
-        }
+        get() = strategy.supply(kord).getGuildChannels(id)
 
     /**
      * Requests to get the cached presences of this guild, if cached.
@@ -88,38 +68,20 @@ interface GuildBehavior : Entity, Strategizable {
      */
 
     val members: Flow<Member>
-        get() = paginateForwards(batchSize = 10000, idSelector = { it.user!!.id }) { position ->
-            strategy.getGuildMembers(id, 1000)
-        }.map {
-            val memberData = MemberData.from(it.user!!.id, id.value, it)
-            val userData = UserData.from(it.user!!)
-
-            Member(memberData, userData, kord)
-        }
+        get() = strategy.supply(kord).getGuildMembers(id,1000)
 
     /**
      * Requests to get the voice regions for this guild.
      */
     val regions: Flow<Region>
-        get() = flow {
-            for (response in strategy.getGuildVoiceRegions(id.value)) {
-                val data = RegionData.from(response)
+        get() = strategy.supply(kord).getGuildVoiceRegions(id)
 
-                emit(Region(data, kord))
-            }
-        }
 
     /**
      * Requests to get all roles in the guild.
      */
     val roles: Flow<Role>
-        get() = flow {
-            for (response in strategy.getGuildRoles(id.value)) {
-                val data = RoleData.from(id.value, response)
-
-                emit(Role(data, kord))
-            }
-        }
+        get() = strategy.supply(kord).getGuildRoles(id)
 
     /**
      * Requests to get the cached voice states of this guild, if cached.
@@ -177,12 +139,9 @@ interface GuildBehavior : Entity, Strategizable {
     /**
      * Requests to get the ban for the given [userId], if present.
      */
-    suspend fun getBan(userId: Snowflake): Ban? {
-        val response = catchNotFound { strategy.getGuildBan(id.value, userId.value) } ?: return null
-        val data = BanData.from(response)
+    suspend fun getBan(userId: Snowflake): Ban? = strategy.supply(kord).getGuildBan(id, userId)
 
-        return Ban(data, kord)
-    }
+
 
     /**
      * Requests to unban the given [userId].
@@ -198,7 +157,7 @@ interface GuildBehavior : Entity, Strategizable {
      * and don't have a [Role] assigned in this guild.
      */
     suspend fun getPruneCount(days: Int = 7): Int {
-        return strategy.getGuildPruneCount(id.value, days).pruned
+        return kord.rest.guild.getGuildPruneCount(id.value, days).pruned
     }
 
     /**
@@ -215,7 +174,7 @@ interface GuildBehavior : Entity, Strategizable {
      * Requests to get the vanity url of this guild, if present.
      */
     suspend fun getVanityUrl(): String? {
-        val identifier = strategy.getVanityInvite(id.value).code ?: return null
+        val identifier = kord.rest.guild.getVanityInvite(id.value).code ?: return null
         return "https://discord.gg/$identifier"
     }
 
