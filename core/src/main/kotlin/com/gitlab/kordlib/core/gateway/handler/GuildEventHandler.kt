@@ -74,6 +74,9 @@ internal class GuildEventHandler(
         for (voiceState in voiceStates.orEmpty()) {
             cache.put(VoiceStateData.from(voiceState))
         }
+        for (emoji in emojis) {
+            cache.put(EmojiData.from(id, emoji.id!!, emoji))
+        }
     }
 
     private suspend fun handle(event: GuildCreate) {
@@ -119,7 +122,7 @@ internal class GuildEventHandler(
 
     private suspend fun handle(event: GuildEmojisUpdate) = with(event.emoji) {
         val guildId = Snowflake(guildId)
-        val emojis = emojis.map { GuildEmoji(EmojiData.from(it.id!!, it), guildId, kord) }.toSet()
+        val emojis = emojis.map { GuildEmoji(EmojiData.from(guildId.value, it.id!!, it), kord) }.toSet()
 
         cache.query<GuildData> { GuildData::id eq guildId.longValue }.update {
             it.copy(emojis = emojis.map { emoji -> emoji.data })
