@@ -1,6 +1,6 @@
 package com.gitlab.kordlib.rest.json.request
 
-import com.gitlab.kordlib.rest.json.response.TargetUserType
+import com.gitlab.kordlib.common.entity.TargetUserType
 import kotlinx.serialization.*
 
 @Serializable

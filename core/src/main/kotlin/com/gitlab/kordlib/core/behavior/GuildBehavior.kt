@@ -4,7 +4,6 @@ import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*
@@ -26,6 +25,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.util.*
+import com.gitlab.kordlib.rest.request.RequestException
 
 /**
  * The behavior of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
@@ -205,6 +205,14 @@ interface GuildBehavior : Entity {
     }
 
     /**
+     * Returns the preview of this guild. The bot does not need to present in this guild
+     * for this to complete successfully.
+     *
+     * @throws RequestException if the guild does not exist or is not public.
+     */
+    suspend fun getPreview(): GuildPreview = kord.getGuildPreview(id)!!
+
+    /**
      * Requests to get the amount of users that would be pruned in this guild.
      *
      * A user is pruned if they have not been seen within the given [days]
@@ -239,7 +247,7 @@ interface GuildBehavior : Entity {
 
             override fun hashCode(): Int = Objects.hash(id)
 
-            override fun equals(other: Any?): Boolean = when(other) {
+            override fun equals(other: Any?): Boolean = when (other) {
                 is GuildBehavior -> other.id == id
                 else -> false
             }

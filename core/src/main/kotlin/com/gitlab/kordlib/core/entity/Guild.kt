@@ -49,6 +49,18 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     val applicationId: Snowflake? get() = data.applicationId.toSnowflakeOrNull()
 
     /**
+     * The approximate number of members in this guild. Present if this guild was requested through
+     * [rest][com.gitlab.kordlib.rest.service.RestClient] with the flag `with_counts`.
+     */
+    val approximateMemberCount: Int? get() = data.approximateMemberCount
+
+    /**
+     * The approximate number of online members in this guild. Present if this guild was requested through
+     * [rest][com.gitlab.kordlib.rest.service.RestClient] with the flag `with_counts`.
+     */
+    val approximatePresenceCount: Int? get() = data.approximatePresenceCount
+
+    /**
      * The banner hash, if present.
      */
     val bannerHash: String? get() = data.banner
@@ -153,9 +165,10 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     /**
      * The behavior of the channel where guild notices such as welcome messages and boost events are posted.
      */
-    val publicUpdatesChannel: GuildMessageChannelBehavior? get() = publicUpdatesChannelId?.let {
-        GuildMessageChannelBehavior(guildId = id, id = it, kord = kord)
-    }
+    val publicUpdatesChannel: GuildMessageChannelBehavior?
+        get() = publicUpdatesChannelId?.let {
+            GuildMessageChannelBehavior(guildId = id, id = it, kord = kord)
+        }
 
     val preferredLocale: Locale get() = Locale.forLanguageTag(data.preferredLocale)
 
@@ -349,7 +362,7 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildBehavior -> other.id == id
         else -> false
     }

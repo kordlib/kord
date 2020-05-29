@@ -18,6 +18,7 @@ import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.start
+import com.gitlab.kordlib.rest.request.RequestException
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -76,7 +77,7 @@ class Kord internal constructor(
         get() = flow {
             //backup if we're not caching
             val request = paginateForwards(idSelector = DiscordPartialGuild::id, batchSize = 100) { position -> rest.user.getCurrentUserGuilds(position, 100) }
-                    .map { rest.guild.getGuild(it.id) }
+                    .map { rest.guild.getGuild(it.id, true) }
                     .map { GuildData.from(it) }
                     .map { Guild(it, this@Kord) }
 
@@ -123,6 +124,17 @@ class Kord internal constructor(
 
     override suspend fun getGuild(id: Snowflake): Guild? = cache.getGuild(id) ?: requestGuild(id)
 
+    /**
+     * Returns the preview of the guild matching the [guildId]. The bot does not need to present in this guild
+     * for this to complete successfully.
+     *
+     * @throws RequestException if the guild does not exist or is not public.
+     */
+    suspend fun getGuildPreview(guildId: Snowflake): GuildPreview? = catchNotFound {
+        val discordPreview = rest.guild.getGuildPreview(guildId.value)
+        return GuildPreview(GuildPreviewData.from(discordPreview), this)
+    }
+
     override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member? {
         return cache.getMember(guildId = guildId, userId = userId) ?: requestMember(guildId = guildId, userId = userId)
     }
@@ -165,7 +177,7 @@ class Kord internal constructor(
     }
 
     internal suspend fun requestGuild(id: Snowflake): Guild? {
-        val data = catchNotFound { rest.guild.getGuild(id.value).let { GuildData.from(it) } } ?: return null
+        val data = catchNotFound { rest.guild.getGuild(id.value, true).let { GuildData.from(it) } } ?: return null
         return Guild(data, this)
     }
 

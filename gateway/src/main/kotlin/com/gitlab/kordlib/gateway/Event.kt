@@ -4,7 +4,6 @@ import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.internal.*
 import kotlinx.serialization.json.JsonElementSerializer
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
@@ -297,7 +296,19 @@ data class DiscordCreatedInvite(
         /**
          * How many times the invite has been used (always will be 0).
          */
-        val uses: Int
+        val uses: Int,
+
+        /**
+         * The target user for this invite.
+         */
+        @SerialName("target_user")
+        val targetUser: DiscordInviteUser,
+
+        /**
+         * The type of user target for this invite.
+         */
+        @SerialName("target_user_type")
+        val targetUserType: TargetUserType? = null
 )
 
 @Serializable

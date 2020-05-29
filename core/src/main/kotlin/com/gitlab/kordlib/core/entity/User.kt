@@ -1,6 +1,8 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.entity.Premium
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.UserFlags
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.behavior.UserBehavior
@@ -27,6 +29,16 @@ open class User(val data: UserData, override val kord: Kord) : UserBehavior {
      * The 4-digit code at the end of the user's discord tag.
      */
     val discriminator: String get() = data.discriminator
+
+    /**
+     * The flags on a user's account, if present.
+     */
+    val flags: UserFlags? get() = data.flags
+
+    /**
+     * The type of Nitro subscription on a user's account, if present.
+     */
+    val premiumType: Premium? get() = data.premium
 
     /**
      * The complete user tag.

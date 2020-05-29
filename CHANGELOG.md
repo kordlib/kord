@@ -1,3 +1,30 @@
+# 0.4.20
+
+## Additions
+
+* Added error codes 10026(Unknown ban), 40002(You need to verify your account in order to perform this action) and
+30015(Maximum number of attachments in a message reached (10)) to the `JsonErrorCode`.
+* Added `approximate_member_count` `approximate_presence_count` to guilds, which will be present when requesting a guild
+through rest.
+* Added missing `DmChannel#recipientBehaviors`.
+* Added missing `MessageUpdateEvent#message`, `MessageUpdateEvent#channel`, `MessageUpdateEvent#getMessage`,
+`MessageUpdateEvent#getChannel`.
+* Added missing `PresenceUpdateEvent#member`, `PresenceUpdateEvent#guild`, `PresenceUpdateEvent#getUser`,
+`PresenceUpdateEvent#getMember`, `PresenceUpdateEvent#member`, `PresenceUpdateEvent#getGuild`.
+* Added `chunk_index` and `chunck_count` properties to `GuildMembersChunkData`.
+* Added `Invite#targetUserType`.
+* Added `User#flag`.
+* Added `GuildFeature.WelcomeScreenEnabled`.
+* Added `MessageModifyBuilder#allowedMentions`.
+* `Embeds` can now copy their contents over to builders by using `Embed#apply(EmbedBuilder)`.
+* Added `User#premiumType`.
+* Added `GuildPreview` and the ability to get previews for public guilds via `Kord#getGuildPreview`.
+
+## Fixes
+
+* Fixed `MessageModifyBuilder` ignoring flags.
+
+
 # 0.4.19
 
 ## Fixes
@@ -15,6 +42,7 @@
 ## Fixes
 
 * Fixed REST throwing an exception when parsing an error without code.
+>>>>>>> CHANGELOG.md
 
 # 0.4.16
 
