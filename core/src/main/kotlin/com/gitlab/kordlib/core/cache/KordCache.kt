@@ -22,22 +22,39 @@ import java.util.concurrent.ConcurrentHashMap
 typealias Generator<I, T> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>
 
 class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, EntitySupplier {
-
+    /**
+     *  Returns a [Flow] of [Channel]s fetched from cache.
+     */
     val channels: Flow<Channel>
         get() = find<ChannelData>().asFlow().map { Channel.from(it, kord) }
 
+    /**
+     *  fetches all cached [Guild]s
+     */
     override val guilds: Flow<Guild>
         get() = find<GuildData>().asFlow().map { Guild(it, kord) }
 
+    /**
+     *  fetches all cached [Region]s
+     */
     override val regions: Flow<Region>
         get() = find<RegionData>().asFlow().map { Region(it, kord) }
 
+    /**
+     *  fetches all cached [Role]s
+     */
     val roles: Flow<Role>
         get() = find<RoleData>().asFlow().map { Role(it, kord) }
 
+    /**
+     *  fetches all cached [User]s
+     */
     val users: Flow<User>
         get() = find<UserData>().asFlow().map { User(it, kord) }
 
+    /**
+     *  fetches all cached [Member]s
+     */
     @Suppress("EXPERIMENTAL_API_USAGE")
     val members: Flow<Member>
         get() = find<UserData>().asFlow().flatMapConcat { userData ->
@@ -45,10 +62,17 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
                     .asFlow().map { Member(it, userData, kord) }
         }
 
-    override suspend fun getChannel(id: Snowflake): Channel? {
+    /**
+     *  fetches a single [Channel]
+     */
+    override suspend fun getChannelOrNull(id: Snowflake): Channel? {
         val data = find<ChannelData> { ChannelData::id eq id.longValue }.singleOrNull() ?: return null
         return Channel.from(data, kord)
     }
+
+    override suspend fun getGuild(id: Snowflake): Guild = getGuildOrNull(id)!!
+
+    override suspend fun getChannel(id: Snowflake): Channel = getChannelOrNull(id)!!
 
     override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = find<ChannelData> {
         ChannelData::guildId eq guildId.longValue
@@ -59,12 +83,12 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         MessageData::pinned eq true
     }.asFlow().map { Message(it, kord) }
 
-    override suspend fun getGuild(id: Snowflake): Guild? {
+    override suspend fun getGuildOrNull(id: Snowflake): Guild? {
         val data = find<GuildData> { GuildData::id eq id.longValue }.singleOrNull() ?: return null
         return Guild(data, kord)
     }
 
-    override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member? {
+    override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? {
         val userData = find<UserData> { UserData::id eq userId.longValue }.singleOrNull() ?: return null
 
         val memberData = find<MemberData> {
@@ -75,11 +99,15 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         return Member(memberData, userData, kord)
     }
 
-    override suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message? {
+    override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
         val data = find<MessageData> { MessageData::id eq messageId.longValue }.singleOrNull() ?: return null
 
         return Message(data, kord)
     }
+
+    override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member = getMemberOrNull(guildId, userId)!!
+
+    override suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message = getMessageOrNull(channelId, messageId)!!
 
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
         require(limit > 0) { "At least 1 item should be requested, but got $limit." }
@@ -106,7 +134,7 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         }
     }
 
-    override suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role? {
+    override suspend fun getRoleOrNull(guildId: Snowflake, roleId: Snowflake): Role? {
         val data = find<RoleData> {
             RoleData::id eq roleId.longValue
             RoleData::guildId eq guildId.longValue
@@ -115,17 +143,23 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         return Role(data, kord)
     }
 
+    override suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role {
+        TODO("Not yet implemented")
+    }
+
     override fun getGuildRoles(guildId: Snowflake): Flow<Role> = find<RoleData> {
         RoleData::guildId eq guildId.longValue
     }.asFlow().map { Role(it, kord) }
 
-    override suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): Ban? {
+    override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? {
         val data = find<BanData> {
             BanData::userId eq userId.longValue
             BanData::guildId eq guildId.longValue
         }.singleOrNull() ?: return null
         return Ban(data, kord)
     }
+
+    override suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): Ban = getGuildBanOrNull(guildId, userId)!!
 
     override fun getGuildBans(guildId: Snowflake): Flow<Ban> = find<BanData> {
         BanData::guildId eq guildId.longValue
@@ -140,11 +174,11 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         }
     }
 
-    override  fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = find<RegionData> {
+    override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = find<RegionData> {
         RegionData::guildId eq guildId.longValue
     }.asFlow().map { Region(it, kord) }
 
-    override suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): GuildEmoji? {
+    override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake): GuildEmoji? {
         val data = find<EmojiData> {
             EmojiData::guildId eq guildId.longValue
             EmojiData::id eq emojiId.longValue
@@ -152,6 +186,8 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
 
         return GuildEmoji(data, kord)
     }
+
+    override suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): GuildEmoji = getEmojiOrNull(guildId, emojiId)!!
 
 
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> = find<EmojiData> {
@@ -172,14 +208,20 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
     }.asFlow().map { Webhook(it, kord) }
 
 
-    override suspend fun getCurrentUser(): User? {
+    override suspend fun getCurrentUserOrNull(): User? {
         val data = find<UserData> {
             UserData::id eq kord.selfId.longValue
         }.singleOrNull() ?: return null
         return User(data, kord)
     }
 
-    override suspend fun getWebhook(webhookId: Snowflake): Webhook? {
+    override suspend fun getSelf(): User = getSelfOrNull()!!
+
+    override suspend fun getUser(id: Snowflake): User = getUserOrNull(id)!!
+
+    override suspend fun getCurrentUser(): User = getCurrentUserOrNull()!!
+
+    override suspend fun getWebhookOrNull(webhookId: Snowflake): Webhook? {
         val data = find<WebhookData> {
             WebhookData::id eq webhookId.longValue
         }.singleOrNull() ?: return null
@@ -187,7 +229,7 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         return Webhook(data, kord)
     }
 
-    override suspend fun getWebhookWithToken(webhookId: Snowflake, token: String): Webhook? {
+    override suspend fun getWebhookWithTokenOrNull(webhookId: Snowflake, token: String): Webhook? {
         val data = find<WebhookData> {
             WebhookData::id eq webhookId.longValue
             WebhookData::token eq token
@@ -196,15 +238,19 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         return Webhook(data, kord)
     }
 
+    override suspend fun getWebhook(webhookId: Snowflake): Webhook = getWebhookOrNull(webhookId)!!
+
+    override suspend fun getWebhookWithToken(webhookId: Snowflake, token: String): Webhook = getWebhookWithTokenOrNull(webhookId, token)!!
+
     suspend fun getRole(id: Snowflake): Role? {
         val data = find<RoleData> { RoleData::id eq id.longValue }.singleOrNull() ?: return null
 
         return Role(data, kord)
     }
 
-    override suspend fun getSelf(): User? = getUser(kord.selfId)
+    override suspend fun getSelfOrNull(): User? = getUserOrNull(kord.selfId)
 
-    override suspend fun getUser(id: Snowflake): User? {
+    override suspend fun getUserOrNull(id: Snowflake): User? {
         val data = find<UserData> { UserData::id eq id.longValue }.singleOrNull() ?: return null
 
         return User(data, kord)

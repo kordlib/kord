@@ -54,7 +54,10 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * @return the channel with the given [id], or null if the request returns a 404.
      * @throws RequestException when the request failed.
      */
-    override suspend fun getChannel(id: Snowflake): Channel? = catchNotFound { Channel.from(channel.getChannel(id.value).toData(), kord) }
+    override suspend fun getChannelOrNull(id: Snowflake): Channel? = catchNotFound { Channel.from(channel.getChannel(id.value).toData(), kord) }
+    override suspend fun getGuild(id: Snowflake): Guild = getGuildOrNull(id)!!
+
+    override suspend fun getChannel(id: Snowflake): Channel = getChannelOrNull(id)!!
 
     override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = catchNotFound {
         flow {
@@ -79,7 +82,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * @return the guild with the given [id], or null if the request returns a 404.
      * @throws RequestException when the request failed.
      */
-    override suspend fun getGuild(id: Snowflake): Guild? = catchNotFound { Guild(guild.getGuild(id.value).toData(), kord) }
+    override suspend fun getGuildOrNull(id: Snowflake): Guild? = catchNotFound { Guild(guild.getGuild(id.value).toData(), kord) }
 
     /**
      * Requests to get the member with the given [userId] in the [guildId].
@@ -89,7 +92,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * @return the member with the given [userId], or null if the request returns a 404.
      * @throws RequestException when the request failed.
      */
-    override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member? = catchNotFound {
+    override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? = catchNotFound {
         val memberData = guild.getGuildMember(guildId = guildId.value, userId = userId.value).toData(guildId = guildId.value, userId = userId.value)
         val userData = user.getUser(userId.value).toData()
         return Member(memberData, userData, kord)
@@ -103,10 +106,13 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * @return the message with the given [messageId], or null if the request returns a 404.
      * @throws RequestException when the request failed.
      */
-    override suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message? = catchNotFound {
+    override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? = catchNotFound {
         Message(channel.getMessage(channelId = channelId.value, messageId = messageId.value).toData(), kord)
     }
 
+    override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member = getMemberOrNull(guildId, userId)!!
+
+    override suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message = getMessageOrNull(channelId, messageId)!!
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int) = catchNotFound {
         require(limit > 0) { "At least 1 item should be requested, but got $limit." }
         val batchSize = min(100, limit)
@@ -148,7 +154,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * Entities will be fetched from Discord directly, ignoring any cached values.
      * @throws RequestException when the request failed.
      */
-    override suspend fun getSelf(): User = User(user.getCurrentUser().toData(), kord)
+    override suspend fun getSelfOrNull(): User = User(user.getCurrentUser().toData(), kord)
 
     /**
      * Requests to get the user with the given [id].
@@ -158,10 +164,16 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * @return the user with the given [id], or null if the request returns a 404.
      * @throws RequestException when the request failed.
      */
-    override suspend fun getUser(id: Snowflake): User? = catchNotFound { User(user.getUser(id.value).toData(), kord) }
-    override suspend fun getCurrentUser(): User? = catchNotFound {
+    override suspend fun getUserOrNull(id: Snowflake): User? = catchNotFound { User(user.getUser(id.value).toData(), kord) }
+    override suspend fun getCurrentUserOrNull(): User? = catchNotFound {
         User(user.getCurrentUser().toData(), kord)
     }
+
+    override suspend fun getSelf(): User = getSelfOrNull()!!
+
+    override suspend fun getUser(id: Snowflake): User = getUserOrNull(id)!!
+
+    override suspend fun getCurrentUser(): User  = getCurrentUserOrNull()!!
 
     /**
      * Requests to get the role with the given [roleId] in the given [guildId].
@@ -173,18 +185,26 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * @return the role with the given [roleId], or null if the request returns a 404.
      * @throws RequestException when the request failed.
      */
-    override suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role? = catchNotFound {
+    override suspend fun getRoleOrNull(guildId: Snowflake, roleId: Snowflake): Role? = catchNotFound {
         val response = guild.getGuildRoles(guildId.value)
                 .firstOrNull { it.id == roleId.value } ?: return@catchNotFound null
 
         return Role(RoleData.from(guildId.value, response), kord)
     }
 
-    override suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake) = catchNotFound {
+    override suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake) = catchNotFound {
         val response = guild.getGuildBan(guildId.value, userId.value)
         val data = BanData.from(guildId.value, response)
         Ban(data, kord)
 
+    }
+
+    override suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): Ban {
+        TODO("Not yet implemented")
     }
 
     override fun getGuildRoles(guildId: Snowflake): Flow<Role> = catchNotFound {
@@ -229,9 +249,13 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
                 )
             }.map { UserData.from(it) }.map { User(it, kord) }
 
-    override suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake) = catchNotFound {
+    override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake) = catchNotFound {
         val data = EmojiData.from(guildId.value, emojiId.value, emoji.getEmoji(guildId.value, emojiId.value))
         GuildEmoji(data, kord)
+    }
+
+    override suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): GuildEmoji {
+        TODO("Not yet implemented")
     }
 
     override fun getEmojis(guildId: Snowflake) = catchNotFound {
@@ -275,14 +299,22 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
     } ?: emptyFlow()
 
 
-    override suspend fun getWebhook(webhookId: Snowflake): Webhook? = catchNotFound {
+    override suspend fun getWebhookOrNull(webhookId: Snowflake): Webhook? = catchNotFound {
         val data = WebhookData.from(webhook.getWebhook(webhookId.value))
         return Webhook(data, kord)
     }
 
-    override suspend fun getWebhookWithToken(webhookId: Snowflake, token: String): Webhook? = catchNotFound {
+    override suspend fun getWebhookWithTokenOrNull(webhookId: Snowflake, token: String): Webhook? = catchNotFound {
         val data = WebhookData.from(webhook.getWebhookWithToken(webhookId.value, token))
         return Webhook(data, kord)
+    }
+
+    override suspend fun getWebhook(webhookId: Snowflake): Webhook {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getWebhookWithToken(webhookId: Snowflake, token: String): Webhook {
+        TODO("Not yet implemented")
     }
 
 
