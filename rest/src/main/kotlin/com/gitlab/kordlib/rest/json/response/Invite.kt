@@ -3,6 +3,7 @@ package com.gitlab.kordlib.rest.json.response
 import com.gitlab.kordlib.common.entity.DiscordChannel
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.DiscordUser
+import com.gitlab.kordlib.common.entity.TargetUserType
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
@@ -23,28 +24,6 @@ data class InviteResponse(
         val uses: Int? = null
 )
 
-@Serializable(with = TargetUserType.TargetUserTypeSerializer::class)
-enum class TargetUserType(val code: Int) {
-    /** The default code for unknown values. */
-    Unknown(Int.MIN_VALUE),
-    STREAM(1);
-
-    @Serializer(forClass = TargetUserType::class)
-    companion object TargetUserTypeSerializer : KSerializer<TargetUserType> {
-        override val descriptor: SerialDescriptor = PrimitiveDescriptor("TargetUserType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): TargetUserType {
-            val code = decoder.decodeInt()
-
-            return values().firstOrNull { it.code == code } ?: Unknown
-        }
-
-        override fun serialize(encoder: Encoder, obj: TargetUserType) {
-            encoder.encodeInt(obj.code)
-        }
-    }
-
-}
 
 @Serializable
 data class InviteMetaDataResponse(

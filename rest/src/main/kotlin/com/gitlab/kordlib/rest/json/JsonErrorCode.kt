@@ -109,6 +109,14 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     UnknownWebhook(10015),
+
+    /**
+     * Unknown ban.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownBan(10026),
+
     /**
      * Unknown SKU.
      *
@@ -205,6 +213,14 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     MaxGuildChannels(30013),
+
+    /**
+     * Maximum number of attachments in a message reached (10).
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxAttachments(30015),
+
     /**
      * Maximum number of invites reached (1000).
      *
@@ -217,6 +233,14 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     Unauthorized(40001),
+
+    /**
+     * You need to verify your account in order to perform this action.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    VerifyAccount(40002),
+
     /**
      * Request entity too large. Try sending something smaller in size.
      *

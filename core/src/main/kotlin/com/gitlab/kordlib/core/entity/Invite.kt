@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.TargetUserType
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.behavior.GuildBehavior
@@ -59,6 +60,11 @@ data class Invite(val data: InviteData, override val kord: Kord) : KordObject {
      * The user behavior of the target user this invite is associated to, if present.
      */
     val targetUser: UserBehavior? get() = targetUserId?.let { UserBehavior(it, kord) }
+
+    /**
+     * The type of user target for this invite, if present.
+     */
+    val targetUserType: TargetUserType? get() = data.targetUserType
 
     /**
      * Approximate count of members in the channel this invite is associated to, if present.

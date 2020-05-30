@@ -258,6 +258,14 @@ sealed class Route<T>(
     object GuildWidgetGet
         : Route<Unit>(HttpMethod.Get, "/guilds/$GuildId/widget", NoStrategy)
 
+    /**
+     * Returns the guild preview object for the given id, even if the user is not in the guild.
+     *
+     * This endpoint is only for Public guilds.
+     */
+    object GuildPreviewGet
+        : Route<DiscordGuildPreview>(HttpMethod.Get, "/guilds/${GuildId}/preview", DiscordGuildPreview.serializer())
+
     object ChannelWebhooksGet
         : Route<List<DiscordWebhook>>(HttpMethod.Get, "/channels/$ChannelId/webhooks", ListSerializer(DiscordWebhook.serializer()))
 
