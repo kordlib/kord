@@ -1,14 +1,11 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.EntitySupplyStrategy
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
+import com.gitlab.kordlib.core.*
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.cache.data.VoiceStateData
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
-import com.gitlab.kordlib.core.toSnowflakeOrNull
 
 data class VoiceState(val data: VoiceStateData, override val kord: Kord, val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : KordObject {
 
@@ -39,11 +36,18 @@ data class VoiceState(val data: VoiceStateData, override val kord: Kord, val str
      */
     val isSelfSteaming: Boolean get() = data.selfStream
 
-    suspend fun getChannel(): VoiceChannel? = channelId?.let { strategy.supply(kord).getChannel(it) } as? VoiceChannel
+    suspend fun getChannel(): VoiceChannel =  strategy.supply(kord).getChannelOf(channelId!!)
 
-    suspend fun getGuild(): Guild? = strategy.supply(kord).getGuild(guildId)
+    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
 
-    suspend fun getMember(): User? = strategy.supply(kord).getMember(guildId, userId)
+    suspend fun getMember(): User = strategy.supply(kord).getMember(guildId, userId)
+
+    suspend fun getChannelOrNull(): VoiceChannel? = channelId?.let { strategy.supply(kord).getChannelOfOrNull(it) }
+
+    suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
+
+    suspend fun getMemberOrNull(): User? = strategy.supply(kord).getMemberOrNull(guildId, userId)
+
 
     /**
      * returns a new [VoiceState] with the given [strategy].

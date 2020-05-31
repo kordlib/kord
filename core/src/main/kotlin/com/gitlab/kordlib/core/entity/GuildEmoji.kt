@@ -61,7 +61,7 @@ class GuildEmoji(val data: EmojiData, override val kord: Kord, override val stra
     /**
      * The [roles][Role] for which this emoji was whitelisted.
      */
-    val roles: Flow<Role> get() = roleIds.asFlow().map { strategy.supply(kord).getRole(guildId, id) }.filterNotNull()
+    val roles: Flow<Role> get() = roleIds.asFlow().map { strategy.supply(kord).getRoleOrNull(guildId, id) }.filterNotNull()
 
     /**
      * The behavior of the [Member] who created the emote, if present.
@@ -81,12 +81,12 @@ class GuildEmoji(val data: EmojiData, override val kord: Kord, override val stra
     /**
      * Requests to get the [Member] who created the emote, if present.
      */
-    suspend fun getMember(): Member? = userId?.let { strategy.supply(kord).getMember(guildId = guildId, userId = it) }
+    suspend fun getMember(): Member? = userId?.let { strategy.supply(kord).getMemberOrNull(guildId = guildId, userId = it) }
 
     /**
      * Requests to get the [User] who created the emote, if present.
      */
-    suspend fun getUser(): User? = userId?.let { strategy.supply(kord).getUser(it) }
+    suspend fun getUser(): User? = userId?.let { strategy.supply(kord).getUserOrNull(it) }
 
     /**
      * returns a new [GuildEmoji] with the given [strategy].

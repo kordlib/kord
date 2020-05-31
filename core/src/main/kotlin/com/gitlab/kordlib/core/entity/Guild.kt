@@ -139,7 +139,7 @@ class Guild(val data: GuildData, override val kord: Kord, override val strategy:
         get() = data.channels.asSequence().map { GuildChannelBehavior(id = Snowflake(it), guildId = id, kord = kord) }.toSet()
 
     override val channels: Flow<GuildChannel>
-        get() = data.channels.asFlow().map { strategy.supply(kord).getChannel(Snowflake(it)) }.filterIsInstance<GuildChannel>().switchIfEmpty(super.channels)
+        get() = strategy.supply(kord).getGuildChannels(id)
 
     /**
      * The default message notification level.
@@ -195,7 +195,7 @@ class Guild(val data: GuildData, override val kord: Kord, override val strategy:
     val verificationLevel: VerificationLevel get() = data.verificationLevel
 
     override val roles: Flow<Role>
-        get() = roleIds.asFlow().map { strategy.supply(kord).getRole(id, it)!! }
+        get() = strategy.supply(kord).getGuildRoles(id)
 
     /**
      * The ids of the roles.
@@ -212,7 +212,7 @@ class Guild(val data: GuildData, override val kord: Kord, override val strategy:
     /**
      * Requests to get the afk channel, if present.
      */
-    suspend fun getAfkChannel(): VoiceChannel? = afkChannelId?.let { strategy.supply(kord).getChannel(it) as? VoiceChannel }
+    suspend fun getAfkChannel(): VoiceChannel? = afkChannelId?.let { strategy.supply(kord).getChannelOfOrNull(it) }
 
     /**
      * Gets the banner url in the specified format.
@@ -231,7 +231,10 @@ class Guild(val data: GuildData, override val kord: Kord, override val strategy:
     /**
      * Requests to get the embed channel, if present.
      */
-    suspend fun getEmbedChannel(): GuildChannel? = embedChannelId?.let { strategy.supply(kord).getChannel(it) } as? GuildChannel
+    suspend fun getEmbedChannelOrNull(): GuildChannel? = embedChannelId?.let { strategy.supply(kord).getChannelOfOrNull(it) }
+
+    suspend fun getEmbedChannel(): GuildChannel = strategy.supply(kord).getChannelOf(embedChannelId!!)
+
 
     /**
      * Requests to get the emoji with given [emojiId], if present.
@@ -249,7 +252,7 @@ class Guild(val data: GuildData, override val kord: Kord, override val strategy:
     /**
      * Requests to get the @everyone role.
      */
-    suspend fun getEveryoneRole(): Role = strategy.supply(kord).getRole(id, id)!!
+    suspend fun getEveryoneRole(): Role = strategy.supply(kord).getRole(id, id)
 
     /**
      * Gets the discovery splash url in the specified [format], if present.
@@ -283,7 +286,7 @@ class Guild(val data: GuildData, override val kord: Kord, override val strategy:
     /**
      * Requests to get the owner as member.
      */
-    suspend fun getOwner(): Member = strategy.supply(kord).getMember(id, ownerId)!!
+    suspend fun getOwner(): Member = strategy.supply(kord).getMember(id, ownerId)
 
     /**
      * Requests to get the voice region for this guild.
@@ -313,7 +316,10 @@ class Guild(val data: GuildData, override val kord: Kord, override val strategy:
     /**
      * Requests to get the channel of system messages, if present.
      */
-    suspend fun getSystemChannel(): TextChannel? = strategy.supply(kord).getChannel(id) as? TextChannel
+    suspend fun getSystemChannelOrNull(): TextChannel? = strategy.supply(kord).getChannelOfOrNull(id)
+
+    suspend fun getSystemChannel(): TextChannel = strategy.supply(kord).getChannelOf(id)
+
 
     /**
      * returns a new [Guild] with the given [strategy].

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Disabled
@@ -25,7 +26,7 @@ class StrategyTest {
     fun `rest only`() = runBlocking {
         kord.with(EntitySupplyStrategy.Rest).getSelf()
         val incache = kord.cache.getSelf()
-        assertEquals(null, incache)
+        assertNull(incache)
     }
 
     @Test
@@ -43,7 +44,7 @@ class StrategyTest {
         val cache = kord.with(EntitySupplyStrategy.Cache)
         val incache = cache.getSelf()
 
-        assertEquals(null, incache)
+        assertNull( incache)
 
         val self = kord.getSelf()
         assertNotNull(self)

@@ -35,7 +35,7 @@ interface MessageChannel : Channel, MessageChannelBehavior {
     suspend fun getLastMessage(): Message? {
         val messageId = lastMessageId ?: return null
 
-        return strategy.supply(kord).getMessage(id, messageId)
+        return strategy.supply(kord).getMessageOrNull(id, messageId)
     }
 
 }

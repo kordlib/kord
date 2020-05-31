@@ -7,7 +7,7 @@ import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.channel.CategorizableChannel
 import com.gitlab.kordlib.core.entity.channel.Category
 import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.getChannel
+import com.gitlab.kordlib.core.getChannelOf
 import com.gitlab.kordlib.rest.builder.channel.CategoryModifyBuilder
 import com.gitlab.kordlib.rest.service.patchCategory
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +24,9 @@ interface CategoryBehavior : GuildChannelBehavior {
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    override suspend fun asChannel() : Category = strategy.supply(kord).getChannel<Category>(id)!!
+    override suspend fun asChannel() : Category = strategy.supply(kord).getChannelOf<Category>(id)
+    override suspend fun asChannelOrNull() : Category? = strategy.supply(kord).getChannelOf<Category>(id)
+
 
 
     /**

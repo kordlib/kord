@@ -29,7 +29,10 @@ class Ban(val data: BanData, override val kord: Kord, override val strategy: Ent
     /**
      * Requests to get the banned user.
      */
-    suspend fun getUser(): User? = strategy.supply(kord).getUser(userId)
+    suspend fun getUser(): User = strategy.supply(kord).getUser(userId)
+
+    suspend fun getUserOrNull(): User? = strategy.supply(kord).getUserOrNull(userId)
+
 
     /**
      * returns a new [Ban] with the given [strategy].

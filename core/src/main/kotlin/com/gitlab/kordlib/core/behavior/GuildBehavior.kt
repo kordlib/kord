@@ -97,7 +97,9 @@ interface GuildBehavior : Entity, Strategizable {
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asGuild(): Guild = strategy.supply(kord).getGuild(id)!!
+    suspend fun asGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(id)
+    suspend fun asGuild(): Guild = strategy.supply(kord).getGuild(id)
+
 
 
     /**
@@ -113,12 +115,18 @@ interface GuildBehavior : Entity, Strategizable {
     /**
      * Requests to get the member represented by the [userId], if present.
      */
-    suspend fun getMember(userId: Snowflake): Member? = strategy.supply(kord).getMember(id, userId)
+    suspend fun getMember(userId: Snowflake): Member = strategy.supply(kord).getMember(id, userId)
+
+    suspend fun getMemberOrNull(userId: Snowflake): Member? = strategy.supply(kord).getMemberOrNull(id, userId)
+
 
     /**
      * Requests to get the role represented by the [roleId], if present.
      */
-    suspend fun getRole(roleId: Snowflake): Role? = strategy.supply(kord).getRole(guildId = id, roleId = roleId)
+    suspend fun getRole(roleId: Snowflake): Role = strategy.supply(kord).getRole(guildId = id, roleId = roleId)
+
+    suspend fun getRoleOrNull(roleId: Snowflake): Role? = strategy.supply(kord).getRoleOrNull(guildId = id, roleId = roleId)
+
 
     //TODO addGuildMember?
 
@@ -139,7 +147,10 @@ interface GuildBehavior : Entity, Strategizable {
     /**
      * Requests to get the ban for the given [userId], if present.
      */
-    suspend fun getBan(userId: Snowflake): Ban? = strategy.supply(kord).getGuildBan(id, userId)
+    suspend fun getBan(userId: Snowflake): Ban = strategy.supply(kord).getGuildBan(id, userId)
+
+    suspend fun getBanOrNull(userId: Snowflake): Ban? = strategy.supply(kord).getGuildBanOrNull(id, userId)
+
 
 
 

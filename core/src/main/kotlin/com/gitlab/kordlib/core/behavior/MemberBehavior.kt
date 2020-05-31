@@ -34,7 +34,9 @@ interface MemberBehavior : Entity, UserBehavior, Strategizable {
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asMember() : Member = strategy.supply(kord).getMember(guildId, id)!!
+    suspend fun asMember(): Member = strategy.supply(kord).getMember(guildId, id)
+
+    suspend fun asMemberOrNull(): Member? = strategy.supply(kord).getMemberOrNull(guildId, id)
 
 
     /**
@@ -54,7 +56,9 @@ interface MemberBehavior : Entity, UserBehavior, Strategizable {
         kord.rest.guild.addRoleToGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value)
     }
 
-    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)!!
+    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
+
+    suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
 
     /**
      * Requests to remove a [role][roleId] from this member.
@@ -93,7 +97,7 @@ interface MemberBehavior : Entity, UserBehavior, Strategizable {
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
 
-    override fun withStrategy(strategy: EntitySupplyStrategy): MemberBehavior = MemberBehavior(guildId,id,kord,strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy): MemberBehavior = MemberBehavior(guildId, id, kord, strategy)
 
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): MemberBehavior = object : MemberBehavior {

@@ -44,7 +44,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
     override val regions: Flow<Region>
         get() = flow {
             client.voice.getVoiceRegions().forEach { emit(it) }
-        }.map { RegionData.from(null,it) }.map { Region(it, kord) }
+        }.map { RegionData.from(null, it) }.map { Region(it, kord) }
 
     /**
      * Requests to get the channel with the given [id].
@@ -154,7 +154,9 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * Entities will be fetched from Discord directly, ignoring any cached values.
      * @throws RequestException when the request failed.
      */
-    override suspend fun getSelfOrNull(): User = User(user.getCurrentUser().toData(), kord)
+    override suspend fun getSelfOrNull(): User? = catchNotFound {
+        User(user.getCurrentUser().toData(), kord)
+    }
 
     /**
      * Requests to get the user with the given [id].
@@ -165,15 +167,10 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * @throws RequestException when the request failed.
      */
     override suspend fun getUserOrNull(id: Snowflake): User? = catchNotFound { User(user.getUser(id.value).toData(), kord) }
-    override suspend fun getCurrentUserOrNull(): User? = catchNotFound {
-        User(user.getCurrentUser().toData(), kord)
-    }
 
     override suspend fun getSelf(): User = getSelfOrNull()!!
 
     override suspend fun getUser(id: Snowflake): User = getUserOrNull(id)!!
-
-    override suspend fun getCurrentUser(): User  = getCurrentUserOrNull()!!
 
     /**
      * Requests to get the role with the given [roleId] in the given [guildId].
@@ -218,7 +215,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
     override fun getGuildBans(guildId: Snowflake): Flow<Ban> = catchNotFound {
         flow {
             for (banData in guild.getGuildBans(guildId.value))
-                emit(Ban(BanData.from(guildId.value,banData), kord))
+                emit(Ban(BanData.from(guildId.value, banData), kord))
         }
     } ?: emptyFlow()
 
@@ -229,7 +226,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
         }
     } ?: emptyFlow()
 
-    override  fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = catchNotFound {
+    override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = catchNotFound {
         flow {
             for (region in guild.getGuildVoiceRegions(guildId.value)) {
                 val data = RegionData.from(guildId.value, region)
@@ -328,5 +325,4 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
         val response = application.getCurrentApplicationInfo()
         return ApplicationInfo(ApplicationInfoData.from(response), kord)
     }
-
 }

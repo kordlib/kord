@@ -24,5 +24,7 @@ class ApplicationInfo(val data: ApplicationInfoData, override val kord: Kord, ov
 
     val owner: UserBehavior get() = UserBehavior(ownerId, kord)
 
-    suspend fun getOwner(): User? = strategy.supply(kord).getUser(ownerId)
+    suspend fun getOwner(): User = strategy.supply(kord).getUser(ownerId)
+
+    suspend fun getOwnerOrNull(): User? = strategy.supply(kord).getUserOrNull(ownerId)
 }

@@ -1,9 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.EntitySupplyStrategy
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
+import com.gitlab.kordlib.core.*
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
@@ -21,7 +19,8 @@ class PermissionOverwriteEntity(
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
     val channel: GuildChannelBehavior get() = GuildChannelBehavior(guildId, channelId, kord)
 
-    suspend fun getChannel(): GuildChannel? = strategy.supply(kord).getChannel(channelId) as? GuildChannel
+    suspend fun getChannelOrNull(): GuildChannel? = strategy.supply(kord).getChannelOfOrNull(channelId)
+    suspend fun getChannel(): GuildChannel = strategy.supply(kord).getChannelOf(channelId)
     suspend fun getGuild(): Guild? = strategy.supply(kord).getGuild(guildId)
 
     suspend fun delete(reason: String? = null) = kord.rest.channel.deleteChannelPermission(channelId.value, data.id.toString(), reason)

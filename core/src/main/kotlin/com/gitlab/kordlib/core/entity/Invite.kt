@@ -1,15 +1,12 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.EntitySupplyStrategy
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
+import com.gitlab.kordlib.core.*
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.cache.data.InviteData
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
-import com.gitlab.kordlib.core.toSnowflakeOrNull
 
 /**
  * An instance of a [Discord Invite](https://discordapp.com/developers/docs/resources/invite).
@@ -75,22 +72,27 @@ data class Invite(val data: InviteData, override val kord: Kord, override val st
     /**
      * Requests to get the channel this invite is associated to.
      */
-    suspend fun getChannel(): GuildChannel = strategy.supply(kord).getChannel(channelId) as GuildChannel
+    suspend fun getChannel(): GuildChannel = strategy.supply(kord).getChannelOf(channelId)
+
+    suspend fun getChannelOrNull(): GuildChannel? = strategy.supply(kord).getChannelOfOrNull(channelId)
+
 
     /**
      * Requests to get the guild this invite is associated to.
      */
-    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)!!
+    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
+
+    suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
 
     /**
      * Requests to get the user who created this invite, if present.
      */
-    suspend fun getInviter(): User? = inviterId?.let { strategy.supply(kord).getUser(it) }
+    suspend fun getInviter(): User? = inviterId?.let { strategy.supply(kord).getUserOrNull(it) }
 
     /**
      * Requests to get the target user this invite is associated to, if present.
      */
-    suspend fun getTargetUser(): User? = targetUserId?.let { strategy.supply(kord).getUser(it) }
+    suspend fun getTargetUser(): User? = targetUserId?.let { strategy.supply(kord).getUserOrNull(it) }
 
     /**
      * Requests to delete the invite.

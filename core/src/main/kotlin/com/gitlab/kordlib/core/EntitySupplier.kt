@@ -43,13 +43,9 @@ interface EntitySupplier {
 
     suspend fun getUserOrNull(id: Snowflake): User?
 
-    suspend fun getCurrentUserOrNull(): User?
-
     suspend fun getSelf(): User
 
     suspend fun getUser(id: Snowflake): User
-
-    suspend fun getCurrentUser(): User
 
     suspend fun getRoleOrNull(guildId: Snowflake, roleId: Snowflake): Role?
 
@@ -88,5 +84,6 @@ interface EntitySupplier {
     suspend fun getWebhookWithToken(webhookId: Snowflake, token: String): Webhook
 }
 
-@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
-suspend inline fun <reified T : Channel> EntitySupplier.getChannelOrNull(id: Snowflake) = getChannelOrNull(id) as? T
+suspend inline fun <reified T : Channel> EntitySupplier.getChannelOfOrNull(id: Snowflake) = getChannelOrNull(id) as? T
+
+suspend inline fun <reified T : Channel> EntitySupplier.getChannelOf(id: Snowflake) = getChannelOrNull(id) as T

@@ -23,14 +23,18 @@ interface UserBehavior : Entity,Strategizable {
      * Requests this user as a member of the [guild][guildId].
      * Returns null when the user is not a member of the guild.
      */
-    suspend fun asMember(guildId: Snowflake): Member? = strategy.supply(kord).getMember(guildId, id)
+    suspend fun asMember(guildId: Snowflake): Member = strategy.supply(kord).getMember(guildId, id)
+
+    suspend fun asMemberOrNull(guildId: Snowflake): Member? = strategy.supply(kord).getMemberOrNull(guildId, id)
 
     /**
      * Requests to get the this behavior as a [User].
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asUser() : User? = strategy.supply(kord).getUser(id)
+    suspend fun asUser() : User = strategy.supply(kord).getUser(id)
+
+    suspend fun asUserOrNull() : User? = strategy.supply(kord).getUserOrNull(id)
 
 
     /**

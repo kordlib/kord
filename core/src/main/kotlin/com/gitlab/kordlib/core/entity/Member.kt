@@ -58,7 +58,7 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord, overrid
     /**
      * The [roles][Role] that apply to this user.
      */
-    val roles: Flow<Role> get() = roleIds.asFlow().map { strategy.supply(kord).getRole(guildId, it) }.filterNotNull()
+    val roles: Flow<Role> get() = roleIds.asFlow().map { strategy.supply(kord).getRoleOrNull(guildId, it) }.filterNotNull()
 
     /**
      * Whether this member's [id] equals the [Guild.ownerId]
@@ -93,9 +93,15 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord, overrid
      * Requests this user as a member of the guild, or returns itself when the [guildId] matches this member's [guild].
      * Returns null when the user is not a member of the guild.
      */
-    override suspend fun asMember(guildId: Snowflake): Member? = when (guildId) {
+    override suspend fun asMember(guildId: Snowflake): Member = when (guildId) {
         this.guildId -> this
         else -> strategy.supply(kord).getMember(guildId, id)
+    }
+
+
+    override suspend fun asMemberOrNull(guildId: Snowflake): Member? = when (guildId) {
+        this.guildId -> this
+        else -> strategy.supply(kord).getMemberOrNull(guildId, id)
     }
 
     /**

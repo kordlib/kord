@@ -129,7 +129,10 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     /**
      * Requests to get a message with the given [messageId], if present.
      */
-    suspend fun getMessage(messageId: Snowflake): Message? = strategy.supply(kord).getMessage(id, messageId)
+    suspend fun getMessage(messageId: Snowflake): Message = strategy.supply(kord).getMessage(id, messageId)
+
+    suspend fun getMessageOrNull(messageId: Snowflake): Message? = strategy.supply(kord).getMessageOrNull(id, messageId)
+
 
     /**
      * Requests to trigger the typing indicator for the bot in this channel. The typing status will persist for 10 seconds

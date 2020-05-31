@@ -12,6 +12,7 @@ import com.gitlab.kordlib.cache.map.lruLinkedHashMap
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.EntitySupplier
 import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.any
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
@@ -196,7 +197,10 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
 
 
     override fun getCurrentUserGuilds(limit: Int): Flow<Guild> {
-        return emptyFlow()
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+        return guilds.filter {
+            members.any { it.id == kord.selfId }
+        }.take(limit)
     }
 
     override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> = find<WebhookData> {
@@ -207,19 +211,10 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
         WebhookData::guildId eq guildId.longValue
     }.asFlow().map { Webhook(it, kord) }
 
-
-    override suspend fun getCurrentUserOrNull(): User? {
-        val data = find<UserData> {
-            UserData::id eq kord.selfId.longValue
-        }.singleOrNull() ?: return null
-        return User(data, kord)
-    }
-
     override suspend fun getSelf(): User = getSelfOrNull()!!
 
     override suspend fun getUser(id: Snowflake): User = getUserOrNull(id)!!
 
-    override suspend fun getCurrentUser(): User = getCurrentUserOrNull()!!
 
     override suspend fun getWebhookOrNull(webhookId: Snowflake): Webhook? {
         val data = find<WebhookData> {

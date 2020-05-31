@@ -9,6 +9,8 @@ import com.gitlab.kordlib.core.behavior.WebhookBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
 import com.gitlab.kordlib.core.cache.data.WebhookData
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
+import com.gitlab.kordlib.core.getChannelOf
+import com.gitlab.kordlib.core.getChannelOfOrNull
 
 data class Webhook(val data: WebhookData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : WebhookBehavior, Strategizable {
 
@@ -30,9 +32,12 @@ data class Webhook(val data: WebhookData, override val kord: Kord, override val 
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    suspend fun getGuild(): Guild? = strategy.supply(kord).getGuild(guildId)
+    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
+    suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
 
-    suspend fun getChannel(): GuildMessageChannel? = strategy.supply(kord).getChannel(channelId) as? GuildMessageChannel
+    suspend fun getChannel(): GuildMessageChannel = strategy.supply(kord).getChannelOf(channelId)
+    suspend fun getChannelOrNull(): GuildMessageChannel? = strategy.supply(kord).getChannelOfOrNull(channelId)
+
 
     /**
      * returns a new [Webhook] with the given [strategy].

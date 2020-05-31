@@ -33,6 +33,8 @@ interface MessageBehavior : Entity, Strategizable {
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
     suspend fun asMessage() : Message = strategy.supply(kord).getMessage(channelId = channelId, messageId = id)!!
+    suspend fun asMessageOrNull() : Message = strategy.supply(kord).getMessageOrNull(channelId = channelId, messageId = id)!!
+
 
     /**
      * Requests to delete this message.

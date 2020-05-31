@@ -21,7 +21,9 @@ interface ChannelBehavior : Entity, Strategizable {
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asChannel(): Channel = strategy.supply(kord).getChannel(id)!!
+    suspend fun asChannel(): Channel = strategy.supply(kord).getChannel(id)
+
+    suspend fun asChannelOrNull(): Channel? = strategy.supply(kord).getChannelOrNull(id)
 
 
     /**

@@ -6,7 +6,6 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.cache.data.InviteData
 import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.indexOfFirstOrNull
 import com.gitlab.kordlib.rest.builder.channel.ChannelPermissionModifyBuilder
@@ -52,7 +51,9 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
     /**
      * Requests to get this behavior as a [Guild].
      */
-    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)!!
+    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
+
+    suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
 
     /**
      * Requests to add or replace a [PermissionOverwrite] to this entity.

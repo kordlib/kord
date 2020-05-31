@@ -2,8 +2,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.MessageType
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.EntitySupplyStrategy
-import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.*
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
@@ -11,8 +10,6 @@ import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.channel.*
-import com.gitlab.kordlib.core.getChannel
-import com.gitlab.kordlib.core.toSnowflakeOrNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.Instant
@@ -114,7 +111,7 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
     val mentionedChannels: Flow<Channel>
         get() = flow<Channel> /*The plugin can infer the type, but the compiler can't, so leave this here for now*/ {
             for (id in mentionedChannelIds) {
-                val channel = strategy.supply(kord).getChannel(id)
+                val channel = strategy.supply(kord).getChannelOrNull(id)
                 if (channel != null) emit(channel)
             }
         }
@@ -141,7 +138,7 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
     val mentionedRoles: Flow<Role>
         get() = flow {
             for (mentionRole in data.mentionRoles) {
-                val role = strategy.supply(kord).getRole(guildId!!, Snowflake(mentionRole)) ?: continue
+                val role = strategy.supply(kord).getRoleOrNull(guildId!!, Snowflake(mentionRole)) ?: continue
                 emit(role)
             }
         }
@@ -162,7 +159,7 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
     val mentionedUsers: Flow<User>
         get() = flow {
             for (mentionUser in data.mentions) {
-                val user = strategy.supply(kord).getUser(Snowflake(mentionUser)) ?: continue
+                val user = strategy.supply(kord).getUserOrNull(Snowflake(mentionUser)) ?: continue
                 emit(user)
             }
         }
@@ -207,7 +204,10 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
     /**
      * Requests to get the channel this message was send in.
      */
-    suspend fun getChannel(): MessageChannel = strategy.supply(kord).getChannel(channelId) as MessageChannel
+    suspend fun getChannel(): MessageChannel = strategy.supply(kord).getChannelOf(channelId)
+
+    suspend fun getChannelOrNull(): MessageChannel? = strategy.supply(kord).getChannelOfOrNull(channelId)
+
 
     /**
      * Requests to get the [author] as a member.
@@ -225,7 +225,7 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
      *
      * Returns null if the message was not send in a [GuildMessageChannel].
      */
-    suspend fun getGuild(): Guild? = strategy.supply(kord).getChannel<GuildChannel>(channelId)?.getGuild()
+    suspend fun getGuild(): Guild? = strategy.supply(kord).getChannelOfOrNull<GuildChannel>(channelId)?.getGuild()
 
     /**
      * returns a new [Message] with the given [strategy].

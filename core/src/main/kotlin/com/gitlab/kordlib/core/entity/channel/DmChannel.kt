@@ -23,7 +23,7 @@ data class DmChannel(override val data: ChannelData, override val kord: Kord, ov
     /**
      * Requests to get the recipients of the channel.
      */
-    val recipients: Flow<User> get() = recipientIds.asFlow().map { strategy.supply(kord).getUser(it) }.filterNotNull()
+    val recipients: Flow<User> get() = recipientIds.asFlow().map { strategy.supply(kord).getUserOrNull(it) }.filterNotNull()
 
     /**
      * returns a new [DmChannel] with the given [strategy].
