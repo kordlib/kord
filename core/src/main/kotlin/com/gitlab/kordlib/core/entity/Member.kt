@@ -93,16 +93,12 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord, overrid
      * Requests this user as a member of the guild, or returns itself when the [guildId] matches this member's [guild].
      * Returns null when the user is not a member of the guild.
      */
-    override suspend fun asMember(guildId: Snowflake): Member = when (guildId) {
-        this.guildId -> this
-        else -> strategy.supply(kord).getMember(guildId, id)
-    }
+    override suspend fun asMember(guildId: Snowflake): Member = strategy.supply(kord).getMember(guildId = guildId, userId = id)
 
 
-    override suspend fun asMemberOrNull(guildId: Snowflake): Member? = when (guildId) {
-        this.guildId -> this
-        else -> strategy.supply(kord).getMemberOrNull(guildId, id)
-    }
+
+    override suspend fun asMemberOrNull(guildId: Snowflake): Member? = strategy.supply(kord).getMemberOrNull(guildId, userId = id)
+
 
     /**
      * returns a new [Member] with the given [strategy].

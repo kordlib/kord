@@ -15,7 +15,7 @@ import com.gitlab.kordlib.rest.json.request.DMCreateRequest
 /**
  * The behavior of a [Discord User](https://discordapp.com/developers/docs/resources/user)
  */
-interface UserBehavior : Entity,Strategizable {
+interface UserBehavior : Entity, Strategizable {
 
     val mention: String get() = "<@${id.value}>"
 
@@ -23,18 +23,18 @@ interface UserBehavior : Entity,Strategizable {
      * Requests this user as a member of the [guild][guildId].
      * Returns null when the user is not a member of the guild.
      */
-    suspend fun asMember(guildId: Snowflake): Member = strategy.supply(kord).getMember(guildId, id)
+    suspend fun asMember(guildId: Snowflake): Member = strategy.supply(kord).getMember(guildId = guildId, userId = id)
 
-    suspend fun asMemberOrNull(guildId: Snowflake): Member? = strategy.supply(kord).getMemberOrNull(guildId, id)
+    suspend fun asMemberOrNull(guildId: Snowflake): Member? = strategy.supply(kord).getMemberOrNull(guildId = guildId, userId = id)
 
     /**
      * Requests to get the this behavior as a [User].
      *
      * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
      */
-    suspend fun asUser() : User = strategy.supply(kord).getUser(id)
+    suspend fun asUser(): User = strategy.supply(kord).getUser(id)
 
-    suspend fun asUserOrNull() : User? = strategy.supply(kord).getUserOrNull(id)
+    suspend fun asUserOrNull(): User? = strategy.supply(kord).getUserOrNull(id)
 
 
     /**
@@ -52,7 +52,7 @@ interface UserBehavior : Entity,Strategizable {
      *
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
-    fun withStrategy(strategy: EntitySupplyStrategy) = UserBehavior(id,kord,strategy)
+    fun withStrategy(strategy: EntitySupplyStrategy) = UserBehavior(id, kord, strategy)
 
     companion object {
         internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): UserBehavior = object : UserBehavior {

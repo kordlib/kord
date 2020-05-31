@@ -81,12 +81,17 @@ class GuildEmoji(val data: EmojiData, override val kord: Kord, override val stra
     /**
      * Requests to get the [Member] who created the emote, if present.
      */
-    suspend fun getMember(): Member? = userId?.let { strategy.supply(kord).getMemberOrNull(guildId = guildId, userId = it) }
+    suspend fun getMemberOrNull(): Member? = userId?.let { strategy.supply(kord).getMemberOrNull(guildId = guildId, userId = it) }
+
+    suspend fun getMember(): Member =  strategy.supply(kord).getMember(guildId = guildId, userId = userId!!)
 
     /**
      * Requests to get the [User] who created the emote, if present.
      */
-    suspend fun getUser(): User? = userId?.let { strategy.supply(kord).getUserOrNull(it) }
+    suspend fun getUserOrNull(): User? = userId?.let { strategy.supply(kord).getUserOrNull(it) }
+
+    suspend fun getUser(): User =  strategy.supply(kord).getUser(userId!!)
+
 
     /**
      * returns a new [GuildEmoji] with the given [strategy].

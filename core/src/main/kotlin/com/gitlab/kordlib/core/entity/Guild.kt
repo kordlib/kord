@@ -254,6 +254,8 @@ class Guild(val data: GuildData, override val kord: Kord, override val strategy:
      */
     suspend fun getEveryoneRole(): Role = strategy.supply(kord).getRole(id, id)
 
+    suspend fun getEveryoneRoleOrNull(): Role? = strategy.supply(kord).getRoleOrNull(id, id)
+
     /**
      * Gets the discovery splash url in the specified [format], if present.
      */
@@ -287,6 +289,8 @@ class Guild(val data: GuildData, override val kord: Kord, override val strategy:
      * Requests to get the owner as member.
      */
     suspend fun getOwner(): Member = strategy.supply(kord).getMember(id, ownerId)
+
+    suspend fun getOwnerOrNull(): Member? = strategy.supply(kord).getMemberOrNull(id, ownerId)
 
     /**
      * Requests to get the voice region for this guild.

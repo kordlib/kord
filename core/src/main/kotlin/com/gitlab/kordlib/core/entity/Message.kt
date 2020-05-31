@@ -11,6 +11,7 @@ import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.channel.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -136,12 +137,7 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
      * The [roles][Role] mentioned in this message.
      */
     val mentionedRoles: Flow<Role>
-        get() = flow {
-            for (mentionRole in data.mentionRoles) {
-                val role = strategy.supply(kord).getRoleOrNull(guildId!!, Snowflake(mentionRole)) ?: continue
-                emit(role)
-            }
-        }
+        get() = strategy.supply(kord).getGuildRoles(guildId!!).filter { it.id in mentionedRoleIds }
 
     /**
      * The [ids][User.id] of users mentioned in this message.
@@ -225,7 +221,10 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
      *
      * Returns null if the message was not send in a [GuildMessageChannel].
      */
-    suspend fun getGuild(): Guild? = strategy.supply(kord).getChannelOfOrNull<GuildChannel>(channelId)?.getGuild()
+    suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
+
+    suspend fun getGuild(): Guild = strategy.supply(kord).getChannelOf<GuildChannel>(channelId).getGuild()
+
 
     /**
      * returns a new [Message] with the given [strategy].
