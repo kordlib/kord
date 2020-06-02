@@ -1,3 +1,9 @@
+# 0.4.21
+
+## Fixes
+
+* Fixed cache not removing messages deleted from a `MessageDeleteBulk`.
+
 # 0.4.20
 
 ## Additions

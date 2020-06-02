@@ -72,7 +72,7 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageDeleteBulk) = with(event.messageBulk) {
-        val query = cache.find<MessageData> { MessageData::id `in` ids }
+        val query = cache.find<MessageData> { MessageData::id `in` ids.map { it.toLong() } }
 
         val removed = query.asFlow().map { Message(it, kord) }.toSet()
         query.remove()
