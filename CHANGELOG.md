@@ -1,3 +1,20 @@
+# 0.4.22
+
+This release contains breaking changes related to webhooks.
+
+## Additions
+
+* Added `WebhookBehavior#executeIgnored` which does not wait for the message to be processed.
+
+## Changes
+
+* `WebhookBehavior#execute` will now return a `Message`.
+
+## Fixes
+
+* Fixed an issue when deserializing a Webhook would throw an exception.
+* Fixed an issue where endpoints returning nullable types would throw an exception.
+
 # 0.4.21
 
 ## Fixes

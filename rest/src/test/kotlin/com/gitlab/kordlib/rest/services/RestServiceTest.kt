@@ -395,6 +395,26 @@ class RestServiceTest {
         Unit
     }
 
+    @Test
+    @Order(20)
+    fun `webhooks tests`() = runBlocking {
+        val webhook = rest.webhook.createWebhook(channelId) {
+            name = "Test webhook"
+        }
+
+        rest.webhook.executeWebhook(webhook.id, webhook.token!!, wait = true) {
+            content = "hello world!"
+        }!! //angry shouting to make sure this doesn't return null
+
+        rest.webhook.executeWebhook(webhook.id, webhook.token!!, wait = false) {
+            content = "hello world, I don't want to hear back from you!"
+        }
+
+        rest.webhook.deleteWebhook(webhook.id, reason = "test")
+
+        Unit
+    }
+
 
     @Test
     @Order(Int.MAX_VALUE - 2)

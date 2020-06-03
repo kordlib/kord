@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.rest.route
 
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.rest.json.optional
 import com.gitlab.kordlib.rest.json.response.*
 import io.ktor.http.HttpMethod
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import com.gitlab.kordlib.common.entity.DiscordEmoji as EmojiEntity
 
@@ -174,7 +174,7 @@ sealed class Route<T>(
         : Route<List<DiscordGuildMember>>(HttpMethod.Get, "/guilds/$GuildId/members", ListSerializer(DiscordGuildMember.serializer()))
 
     object GuildMemberPut
-        : Route<DiscordGuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", DiscordGuildMember.serializer().nullable)
+        : Route<DiscordGuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", DiscordGuildMember.serializer().optional)
 
     object GuildMemberPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/$UserId", NoStrategy)
@@ -296,7 +296,7 @@ sealed class Route<T>(
     //TODO Make sure of the return of these routes below
 
     object ExecuteWebhookPost
-        : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
+        : Route<DiscordMessage?>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", DiscordMessage.serializer().optional)
 
     object ExecuteSlackWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken/slack", NoStrategy)
