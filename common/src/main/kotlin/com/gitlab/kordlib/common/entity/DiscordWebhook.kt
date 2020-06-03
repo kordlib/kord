@@ -9,6 +9,7 @@ data class DiscordWebhook(
         val type: WebhookType,
         @SerialName("guild_id")
         val guildId: String? = null,
+        @SerialName("channel_id")
         val channelId: String,
         val user: DiscordUser? = null,
         val name: String? = null,
