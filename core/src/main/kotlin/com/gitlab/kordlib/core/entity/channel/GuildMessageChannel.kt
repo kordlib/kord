@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
 
 /**
@@ -12,6 +13,9 @@ interface GuildMessageChannel : CategorizableChannel, MessageChannel, GuildMessa
      */
     val topic: String? get() = data.topic
 
-    override suspend fun asChannel(): GuildMessageChannel = this
+    /**
+     * Returns a new [GuildMessageChannel] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): GuildMessageChannel
 
 }

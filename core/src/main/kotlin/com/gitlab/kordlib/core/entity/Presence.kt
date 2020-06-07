@@ -9,9 +9,11 @@ import com.gitlab.kordlib.core.cache.data.ClientStatusData
 import com.gitlab.kordlib.core.cache.data.PresenceData
 import kotlinx.coroutines.flow.Flow
 
-class Presence(val data: PresenceData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+class Presence(
+        val data: PresenceData,
+        override val kord: Kord,
+        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
 ) : KordObject, Strategizable {
-
 
     val activities: List<Activity> get() = data.activities.map { Activity(it) }
 
@@ -29,8 +31,27 @@ class Presence(val data: PresenceData, override val kord: Kord, override val str
 
     val userId: Snowflake get() = Snowflake(data.userId)
 
+    /**
+     * Requests to get the user of this presence through the [strategy].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [User] wasn't present.
+     */
     suspend fun getUser(): User = strategy.supply(kord).getUser(userId)
+
+    /**
+     * Requests to get the user of this presence through the [strategy],
+     * returns null if the [User] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     suspend fun getUserOrNull(): User? = strategy.supply(kord).getUserOrNull(userId)
+
+    /**
+     * Returns a new [Presence] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): Presence =
+            Presence(data, kord, strategy)
 
 }
 

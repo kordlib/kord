@@ -1,10 +1,10 @@
 package com.gitlab.kordlib.core.event
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
 import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 
 class WebhookUpdateEvent(

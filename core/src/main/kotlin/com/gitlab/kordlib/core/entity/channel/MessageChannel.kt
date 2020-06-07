@@ -1,6 +1,8 @@
 package com.gitlab.kordlib.core.entity.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
+import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
 import com.gitlab.kordlib.core.entity.Message
@@ -26,16 +28,24 @@ interface MessageChannel : Channel, MessageChannelBehavior {
     /**
      * The timestamp of the last pin
      */
-    val lastPintTimeStamp: Instant? get() =
-        data.lastPinTimestamp?.toInstant()
+    val lastPintTimeStamp: Instant?
+        get() = data.lastPinTimestamp?.toInstant()
 
     /**
-     * Requests to get the last message sent to this channel, if present.
+     * Requests to get the last message sent to this channel through the [strategy],
+     * return null if no [lastMessageId] is present or if the message itself isn't present.
+     *
+     * @throws [RequestException] if something went wrong during the request.
      */
     suspend fun getLastMessage(): Message? {
         val messageId = lastMessageId ?: return null
 
         return strategy.supply(kord).getMessageOrNull(id, messageId)
     }
+
+    /**
+     * Returns a new [MessageChannel] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): MessageChannel
 
 }

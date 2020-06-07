@@ -22,16 +22,30 @@ interface Channel : ChannelBehavior {
      */
     val type: ChannelType get() = data.type
 
+    /**
+     * Returns a new [Channel] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): Channel =
+            from(data, kord, strategy)
+
     companion object {
-        @Suppress("EXPERIMENTAL_API_USAGE")
-        fun from(data: ChannelData, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): Channel = when (data.type) {
+
+        /**
+         * Creates a [Channel] of the type defined in the [ChannelData.type].
+         * If the type is not any known type, then an anonymous channel will be created.
+         */
+        fun from(
+                data: ChannelData,
+                kord: Kord,
+                strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+        ): Channel = when (data.type) {
             GuildText -> TextChannel(data, kord)
             DM, GroupDm -> DmChannel(data, kord)
             GuildVoice -> VoiceChannel(data, kord)
             GuildCategory -> Category(data, kord)
             GuildNews -> NewsChannel(data, kord)
             GuildStore -> StoreChannel(data, kord)
-            else -> object: Channel {
+            else -> object : Channel {
                 override val data: ChannelData = data
                 override val kord: Kord = kord
                 override val strategy: EntitySupplyStrategy = strategy

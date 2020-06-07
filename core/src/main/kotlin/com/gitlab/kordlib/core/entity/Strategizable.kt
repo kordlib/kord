@@ -5,4 +5,7 @@ import com.gitlab.kordlib.core.EntitySupplyStrategy
 interface Strategizable {
 
     val strategy: EntitySupplyStrategy
+
+    fun withStrategy(strategy: EntitySupplyStrategy) : Strategizable
+
 }

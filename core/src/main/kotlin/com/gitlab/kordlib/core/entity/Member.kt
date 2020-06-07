@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.entity
 import com.gitlab.kordlib.common.entity.Permission
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
@@ -17,9 +18,12 @@ import java.time.format.DateTimeFormatter
 /**
  * An instance of a [Discord Member](https://discordapp.com/developers/docs/resources/guild#guild-member-object).
  */
-class Member(val memberData: MemberData, userData: UserData, kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+class Member(
+        val memberData: MemberData,
+        userData: UserData,
+        kord: Kord,
+        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
 ) : User(userData, kord, strategy), MemberBehavior {
-
 
     override val guildId: Snowflake
         get() = Snowflake(memberData.guildId)
@@ -57,16 +61,23 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord, overrid
 
     /**
      * The [roles][Role] that apply to this user.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val roles: Flow<Role> get() = roleIds.asFlow().map { strategy.supply(kord).getRoleOrNull(guildId, it) }.filterNotNull()
 
     /**
-     * Whether this member's [id] equals the [Guild.ownerId]
+     * Whether this member's [id] equals the [Guild.ownerId].
+     *
+     * @throws [RequestException] if something went wrong during the request.
      */
     suspend fun isOwner(): Boolean = getGuild().ownerId == id
 
     /**
      * Requests to calculate a summation of the permissions of this member's [roles].
+     *
+     * @throws [RequestException] if something went wrong during the request.
      */
     suspend fun getPermissions(): Permissions {
         val guild = getGuild()
@@ -85,25 +96,7 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord, overrid
     }
 
     /**
-     * Returns this member.
-     */
-    override suspend fun asMember(): Member = this
-
-    /**
-     * Requests this user as a member of the guild, or returns itself when the [guildId] matches this member's [guild].
-     * Returns null when the user is not a member of the guild.
-     */
-    override suspend fun asMember(guildId: Snowflake): Member = strategy.supply(kord).getMember(guildId = guildId, userId = id)
-
-
-
-    override suspend fun asMemberOrNull(guildId: Snowflake): Member? = strategy.supply(kord).getMemberOrNull(guildId, userId = id)
-
-
-    /**
-     * returns a new [Member] with the given [strategy].
-     *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * Returns a new [Member] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy): Member = Member(memberData, data, kord, strategy)
 

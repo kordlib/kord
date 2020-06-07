@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.MessageType
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.*
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MessageBehavior
@@ -10,20 +11,23 @@ import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.channel.*
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
-private const val guildDeprecationMessage = "Guild ids aren't consistently present, user getGuild() instead."
+private const val guildDeprecationMessage = "Guild ids aren't consistently present, use getGuild() instead."
 
 /**
  * An instance of a [Discord Message][https://discordapp.com/developers/docs/resources/channel#message-object].
  */
-class Message(val data: MessageData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+class Message(
+        val data: MessageData,
+        override val kord: Kord,
+        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
 ) : MessageBehavior {
-
 
     /**
      * The id of this message.
@@ -135,6 +139,9 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
 
     /**
      * The [roles][Role] mentioned in this message.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val mentionedRoles: Flow<Role>
         get() = strategy.supply(kord).getGuildRoles(guildId!!).filter { it.id in mentionedRoleIds }
@@ -151,6 +158,9 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
 
     /**
      * The [users][User] mentioned in this message.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val mentionedUsers: Flow<User>
         get() = flow {
@@ -204,7 +214,6 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
 
     suspend fun getChannelOrNull(): MessageChannel? = strategy.supply(kord).getChannelOfOrNull(channelId)
 
-
     /**
      * Requests to get the [author] as a member.
      *
@@ -217,21 +226,25 @@ class Message(val data: MessageData, override val kord: Kord, override val strat
     }
 
     /**
-     * Requests to get the [Guild] this message was send in.
+     * Requests to get the guild of this message through the [strategy].
      *
-     * Returns null if the message was not send in a [GuildMessageChannel].
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Guild] wasn't present.
+     * @throws [ClassCastException] if this message wasn't made in a guild.
+     */
+    suspend fun getGuild(): Guild = strategy.supply(kord).getChannelOf<GuildChannel>(channelId).getGuild()
+
+    /**
+     * Requests to get the guild of this message through the [strategy],
+     * returns null if the [Guild] isn't present or this message wasn't made in a guild.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
 
-    suspend fun getGuild(): Guild = strategy.supply(kord).getChannelOf<GuildChannel>(channelId).getGuild()
-
-
     /**
-     * returns a new [Message] with the given [strategy].
-     *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * Returns a new [Message] with the given [strategy].
      */
+    override fun withStrategy(strategy: EntitySupplyStrategy): Message = Message(data, kord, strategy)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy): Message = Message(data,kord,strategy)
 }
-

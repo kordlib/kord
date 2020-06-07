@@ -1,12 +1,12 @@
 package com.gitlab.kordlib.core.builder.presence
 
-import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.ActivityType
+import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.Status
-import com.gitlab.kordlib.rest.builder.KordDsl
-import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.gateway.Presence
 import com.gitlab.kordlib.gateway.UpdateStatus
+import com.gitlab.kordlib.rest.builder.KordDsl
+import com.gitlab.kordlib.rest.builder.RequestBuilder
 import java.time.Instant
 
 @KordDsl

@@ -12,7 +12,11 @@ import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.core.getChannelOf
 import com.gitlab.kordlib.core.getChannelOfOrNull
 
-data class Webhook(val data: WebhookData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : WebhookBehavior, Strategizable {
+data class Webhook(
+        val data: WebhookData,
+        override val kord: Kord,
+        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : WebhookBehavior, Strategizable {
 
     override val id: Snowflake get() = Snowflake(data.id)
 
@@ -32,18 +36,42 @@ data class Webhook(val data: WebhookData, override val kord: Kord, override val 
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
+    /**
+     * Requests to get the guild this webhook belongs to through the [strategy].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Guild] wasn't present.
+     */
     suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
+
+    /**
+     * Requests to get the guild this webhook belongs to through the [strategy],
+     * returns null if the [Guild] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
 
+    /**
+     * Requests to get the channel this webhook operates in through the [strategy].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [GuildMessageChannel] wasn't present.
+     */
     suspend fun getChannel(): GuildMessageChannel = strategy.supply(kord).getChannelOf(channelId)
+
+    /**
+     * Requests to get the channel this webhook operates in through the [strategy],
+     * returns null if the [GuildMessageChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     suspend fun getChannelOrNull(): GuildMessageChannel? = strategy.supply(kord).getChannelOfOrNull(channelId)
 
 
     /**
-     * returns a new [Webhook] with the given [strategy].
-     *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * Returns a new [Webhook] with the given [strategy].
      */
-    fun withStrategy(strategy: EntitySupplyStrategy) = Webhook(data,kord,strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy):Webhook = Webhook(data, kord, strategy)
 
 }

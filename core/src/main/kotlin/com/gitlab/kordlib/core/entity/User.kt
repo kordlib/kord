@@ -11,7 +11,10 @@ import com.gitlab.kordlib.rest.Image
 /**
  * An instance of a [Discord User](https://discordapp.com/developers/docs/resources/user#user-object).
  */
-open class User(val data: UserData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : UserBehavior {
+open class User(
+        val data: UserData,
+        override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : UserBehavior {
 
     override val id: Snowflake
         get() = Snowflake(data.id)
@@ -46,11 +49,9 @@ open class User(val data: UserData, override val kord: Kord, override val strate
     }
 
     /**
-     * returns a new [User] with the given [strategy].
-     *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * Returns a new [User] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): User = User(data,kord,strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy): User = User(data, kord, strategy)
 
     data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 

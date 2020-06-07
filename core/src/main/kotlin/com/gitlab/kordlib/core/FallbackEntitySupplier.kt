@@ -109,17 +109,17 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook> =
             first.getGuildWebhooks(guildId).switchIfEmpty(second.getGuildWebhooks(guildId))
 
-    override suspend fun getWebhookOrNull(webhookId: Snowflake): Webhook? =
-            first.getWebhookOrNull(webhookId) ?: second.getWebhookOrNull(webhookId)
+    override suspend fun getWebhookOrNull(id: Snowflake): Webhook? =
+            first.getWebhookOrNull(id) ?: second.getWebhookOrNull(id)
 
-    override suspend fun getWebhookWithTokenOrNull(webhookId: Snowflake, token: String): Webhook? =
-            first.getWebhookWithTokenOrNull(webhookId, token) ?: second.getWebhookWithTokenOrNull(webhookId, token)
+    override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? =
+            first.getWebhookWithTokenOrNull(id, token) ?: second.getWebhookWithTokenOrNull(id, token)
 
-    override suspend fun getWebhook(webhookId: Snowflake): Webhook =
-            getWebhookOrNull(webhookId)!!
+    override suspend fun getWebhook(id: Snowflake): Webhook =
+            getWebhookOrNull(id)!!
 
-    override suspend fun getWebhookWithToken(webhookId: Snowflake, token: String): Webhook =
-            getWebhookWithTokenOrNull(webhookId, token)!!
+    override suspend fun getWebhookWithToken(id: Snowflake, token: String): Webhook =
+            getWebhookWithTokenOrNull(id, token)!!
 
 }
 

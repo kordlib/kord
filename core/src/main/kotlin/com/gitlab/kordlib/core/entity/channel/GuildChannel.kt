@@ -7,6 +7,10 @@ import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
 import com.gitlab.kordlib.core.entity.PermissionOverwrite
 import com.gitlab.kordlib.core.entity.PermissionOverwriteEntity
+import com.gitlab.kordlib.common.exception.RequestException
+import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.rest.request.RestRequestException
 
 /**
  * An instance of a Discord channel associated to a [guild].
@@ -38,6 +42,9 @@ interface GuildChannel : Channel, GuildChannelBehavior {
     /**
      * Calculates the effective permissions of the [memberId] in this channel, applying the overwrite for the member
      * and their roles on top of the base permissions.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws IllegalArgumentException if the [memberId] is not part of this guild.
      */
     suspend fun getEffectivePermissions(memberId: Snowflake): Permissions {
         val member = strategy.supply(kord).getMemberOrNull(guildId, memberId)
@@ -85,4 +92,7 @@ interface GuildChannel : Channel, GuildChannelBehavior {
 
     private fun getPermissionOverwritesForType(id: Snowflake, type: PermissionOverwrite.Type): PermissionOverwriteEntity? =
             permissionOverwrites.firstOrNull { it.target == id && it.type == type }
+
+    override fun withStrategy(strategy: EntitySupplyStrategy): GuildChannel
+
 }

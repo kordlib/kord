@@ -8,7 +8,11 @@ import com.gitlab.kordlib.core.cache.data.ChannelData
 /**
  * An instance of a Discord Text Channel associated to a guild.
  */
-data class TextChannel(override val data: ChannelData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) : GuildMessageChannel, TextChannelBehavior {
+class TextChannel(
+        override val data: ChannelData,
+        override val kord: Kord,
+        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : GuildMessageChannel, TextChannelBehavior {
 
     /**
      * Whether the channel is nsfw.
@@ -20,14 +24,11 @@ data class TextChannel(override val data: ChannelData, override val kord: Kord, 
      */
     val userRateLimit: Int get() = data.rateLimitPerUser!!
 
-    override suspend fun asChannel(): TextChannel = this
-
     /**
      * returns a new [TextChannel] with the given [strategy].
      *
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy): TextChannel = TextChannel(data, kord, strategy)
-
 
 }

@@ -7,14 +7,21 @@ import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Webhook
 import com.gitlab.kordlib.rest.builder.webhook.ExecuteWebhookBuilder
 import com.gitlab.kordlib.rest.builder.webhook.WebhookModifyBuilder
+import com.gitlab.kordlib.common.exception.RequestException
+import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.entity.Strategizable
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.rest.request.RestRequestException
 
 /**
  * The behavior of a [Discord Webhook](https://discordapp.com/developers/docs/resources/webhook).
  */
-interface WebhookBehavior : Entity {
+interface WebhookBehavior : Entity, Strategizable {
 
     /**
      * Requests to delete this webhook, this user must be the creator.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete(reason: String? = null) {
         kord.rest.webhook.deleteWebhook(id.value, reason)
@@ -22,15 +29,28 @@ interface WebhookBehavior : Entity {
 
     /**
      * Requests to delete this webhook.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete(token: String, reason: String? = null) {
         kord.rest.webhook.deleteWebhookWithToken(id.value, token, reason)
     }
 
+    /**
+     * Returns a new [WebhookBehavior] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): WebhookBehavior =
+            WebhookBehavior(id, kord, strategy)
+
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord): WebhookBehavior = object : WebhookBehavior {
+        internal operator fun invoke(
+                id: Snowflake,
+                kord: Kord,
+                strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+        ): WebhookBehavior = object : WebhookBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val strategy: EntitySupplyStrategy = strategy
         }
     }
 
@@ -40,8 +60,9 @@ interface WebhookBehavior : Entity {
  * Requests to edit the webhook, this user must be the creator.
  *
  * @return The updated [Webhook].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
 suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit): Webhook {
     val response = kord.rest.webhook.modifyWebhook(id.value, builder)
     val data = WebhookData.from(response)
@@ -53,8 +74,9 @@ suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit
  * Requests to edit the webhook.
  *
  * @return The updated [Webhook].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
 suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBuilder.() -> Unit): Webhook {
     val response = kord.rest.webhook.modifyWebhookWithToken(id.value, token, builder)
     val data = WebhookData.from(response)
@@ -64,6 +86,8 @@ suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBui
 
 /**
  * Requests to execute this webhook.
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
 suspend inline fun WebhookBehavior.execute(token: String, builder: ExecuteWebhookBuilder.() -> Unit) {
     kord.rest.webhook.executeWebhook(token = token, webhookId = id.value, wait = true, builder = builder)

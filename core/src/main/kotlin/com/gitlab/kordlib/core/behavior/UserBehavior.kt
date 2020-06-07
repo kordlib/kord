@@ -1,16 +1,17 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Member
-import com.gitlab.kordlib.core.entity.Strategizable
-import com.gitlab.kordlib.core.entity.User
+import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.DmChannel
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.rest.json.request.DMCreateRequest
+import com.gitlab.kordlib.rest.request.RestRequestException
+import com.gitlab.kordlib.rest.service.RestClient
 
 /**
  * The behavior of a [Discord User](https://discordapp.com/developers/docs/resources/user)
@@ -20,25 +21,45 @@ interface UserBehavior : Entity, Strategizable {
     val mention: String get() = "<@${id.value}>"
 
     /**
-     * Requests this user as a member of the [guild][guildId].
-     * Returns null when the user is not a member of the guild.
+     * Requests to get the this behavior as a [Member] in the [Guild] with the [guildId] through the [strategy].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the member wasn't present.
      */
     suspend fun asMember(guildId: Snowflake): Member = strategy.supply(kord).getMember(guildId = guildId, userId = id)
 
+    /**
+     * Requests to get this behavior as a [Member] in the [Guild] with the [guildId] through the [strategy],
+     * returns null if the member isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     suspend fun asMemberOrNull(guildId: Snowflake): Member? = strategy.supply(kord).getMemberOrNull(guildId = guildId, userId = id)
 
+
     /**
-     * Requests to get the this behavior as a [User].
+     * Requests to get the this behavior as a [User] through the [strategy].
      *
-     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
      */
     suspend fun asUser(): User = strategy.supply(kord).getUser(id)
 
+    /**
+     * Requests to get this behavior as a [User] through the [strategy],
+     * returns null if the user isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     suspend fun asUserOrNull(): User? = strategy.supply(kord).getUserOrNull(id)
 
 
     /**
      * Requests to get or create a [DmChannel] between this bot and the user.
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun getDmChannel(): DmChannel {
         val response = kord.rest.user.createDM(DMCreateRequest(id.value))
@@ -52,7 +73,7 @@ interface UserBehavior : Entity, Strategizable {
      *
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
-    fun withStrategy(strategy: EntitySupplyStrategy) = UserBehavior(id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy): UserBehavior = UserBehavior(id, kord, strategy)
 
     companion object {
         internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): UserBehavior = object : UserBehavior {
@@ -63,4 +84,3 @@ interface UserBehavior : Entity, Strategizable {
     }
 
 }
-

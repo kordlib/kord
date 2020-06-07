@@ -7,12 +7,18 @@ import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.cache.data.InviteData
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
+import com.gitlab.kordlib.common.exception.RequestException
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.rest.request.RestRequestException
 
 /**
  * An instance of a [Discord Invite](https://discordapp.com/developers/docs/resources/invite).
  */
-data class Invite(val data: InviteData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
-) : KordObject,Strategizable {
+data class Invite(
+        val data: InviteData,
+        override val kord: Kord,
+        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+) : KordObject, Strategizable {
 
     /**
      * The unique code of this invite.
@@ -70,32 +76,63 @@ data class Invite(val data: InviteData, override val kord: Kord, override val st
     val approximatePresenceCount: Int? get() = data.approximatePresenceCount
 
     /**
-     * Requests to get the channel this invite is associated to.
+     * Requests to get the channel this invite is for through the [strategy].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [GuildChannel] wasn't present.
      */
     suspend fun getChannel(): GuildChannel = strategy.supply(kord).getChannelOf(channelId)
 
+    /**
+     * Requests to get the channel this invite is for through the [strategy],
+     * returns null if the [GuildChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     suspend fun getChannelOrNull(): GuildChannel? = strategy.supply(kord).getChannelOfOrNull(channelId)
 
-
     /**
-     * Requests to get the guild this invite is associated to.
+     * Requests to get the [Guild] for this invite through the [strategy].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Guild] wasn't present.
      */
     suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
 
+    /**
+     * Requests to get the [Guild] for this invite through the [strategy],
+     * returns null if the [Guild] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
 
     /**
-     * Requests to get the user who created this invite, if present.
-     */
-    suspend fun getInviter(): User? = inviterId?.let { strategy.supply(kord).getUserOrNull(it) }
+     * Requests to get the creator of the invite for through the [strategy],
+     * returns null if the [User] isn't present or [inviterId] is null.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */    suspend fun getInviter(): User? = inviterId?.let { strategy.supply(kord).getUserOrNull(it) }
 
     /**
-     * Requests to get the target user this invite is associated to, if present.
+     * Requests to get the user this invite was created for through the [strategy],
+     * returns null if the [User] isn't present or [targetUserId] is null.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getTargetUser(): User? = targetUserId?.let { strategy.supply(kord).getUserOrNull(it) }
 
     /**
      * Requests to delete the invite.
      */
-    suspend fun delete(reason: String? = null) = kord.rest.invite.deleteInvite(data.code, reason)
+    suspend fun delete(reason: String? = null) {
+        kord.rest.invite.deleteInvite(data.code, reason)
+    }
+
+    /**
+     * Returns a new [Invite] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy): Invite =
+            Invite(data, kord, strategy)
+
 }

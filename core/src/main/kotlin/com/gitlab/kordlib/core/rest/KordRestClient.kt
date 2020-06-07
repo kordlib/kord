@@ -7,7 +7,7 @@ import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
-import com.gitlab.kordlib.rest.request.RequestException
+import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.service.*
 import kotlinx.coroutines.flow.Flow
@@ -55,7 +55,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * Entities will be fetched from Discord directly, ignoring any cached values.
      *
      * @return the channel with the given [id], or null if the request returns a 404.
-     * @throws RequestException when the request failed.
+     * @throws RestRequestException when the request failed.
      */
     override suspend fun getChannelOrNull(id: Snowflake): Channel? = catchNotFound { Channel.from(channel.getChannel(id.value).toData(), kord) }
 
@@ -77,7 +77,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * Entities will be fetched from Discord directly, ignoring any cached values.
      *
      * @return the guild with the given [id], or null if the request returns a 404.
-     * @throws RequestException when the request failed.
+     * @throws RestRequestException when the request failed.
      */
     override suspend fun getGuildOrNull(id: Snowflake): Guild? = catchNotFound { Guild(guild.getGuild(id.value).toData(), kord) }
 
@@ -87,7 +87,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * Entities will be fetched from Discord directly, ignoring any cached values.
      *
      * @return the member with the given [userId], or null if the request returns a 404.
-     * @throws RequestException when the request failed.
+     * @throws RestRequestException when the request failed.
      */
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? = catchNotFound {
         val memberData = guild.getGuildMember(guildId = guildId.value, userId = userId.value).toData(guildId = guildId.value, userId = userId.value)
@@ -101,7 +101,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * Entities will be fetched from Discord directly, ignoring any cached values.
      *
      * @return the message with the given [messageId], or null if the request returns a 404.
-     * @throws RequestException when the request failed.
+     * @throws RestRequestException when the request failed.
      */
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? = catchNotFound {
         Message(channel.getMessage(channelId = channelId.value, messageId = messageId.value).toData(), kord)
@@ -146,7 +146,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * Requests to get the user linked to the current [ClientResources.token].
      *
      * Entities will be fetched from Discord directly, ignoring any cached values.
-     * @throws RequestException when the request failed.
+     * @throws RestRequestException when the request failed.
      */
     override suspend fun getSelfOrNull(): User? = catchNotFound {
         User(user.getCurrentUser().toData(), kord)
@@ -158,7 +158,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * Entities will be fetched from Discord directly, ignoring any cached values.
      *
      * @return the user with the given [id], or null if the request returns a 404.
-     * @throws RequestException when the request failed.
+     * @throws RestRequestException when the request failed.
      */
     override suspend fun getUserOrNull(id: Snowflake): User? = catchNotFound { User(user.getUser(id.value).toData(), kord) }
 
@@ -171,7 +171,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * Note that this will effectively request all roles at once and then filter on the given id
      *
      * @return the role with the given [roleId], or null if the request returns a 404.
-     * @throws RequestException when the request failed.
+     * @throws RestRequestException when the request failed.
      */
     override suspend fun getRoleOrNull(guildId: Snowflake, roleId: Snowflake): Role? = catchNotFound {
         val response = guild.getGuildRoles(guildId.value)
@@ -268,13 +268,13 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
     }
 
 
-    override suspend fun getWebhookOrNull(webhookId: Snowflake): Webhook? = catchNotFound {
-        val data = WebhookData.from(webhook.getWebhook(webhookId.value))
+    override suspend fun getWebhookOrNull(id: Snowflake): Webhook? = catchNotFound {
+        val data = WebhookData.from(webhook.getWebhook(id.value))
         return Webhook(data, kord)
     }
 
-    override suspend fun getWebhookWithTokenOrNull(webhookId: Snowflake, token: String): Webhook? = catchNotFound {
-        val data = WebhookData.from(webhook.getWebhookWithToken(webhookId.value, token))
+    override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? = catchNotFound {
+        val data = WebhookData.from(webhook.getWebhookWithToken(id.value, token))
         return Webhook(data, kord)
     }
 
@@ -283,7 +283,7 @@ class KordRestClient(val kord: Kord, val client: RestClient) : EntitySupplier {
      * Requests to get the information of the current application.
      *
      * Entities will be fetched from Discord directly, ignoring any cached values.
-     * @throws RequestException when the request failed.
+     * @throws RestRequestException when the request failed.
      */
     suspend fun getApplicationInfo(): ApplicationInfo {
         val response = application.getCurrentApplicationInfo()

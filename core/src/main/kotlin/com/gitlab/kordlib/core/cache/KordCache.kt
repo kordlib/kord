@@ -182,7 +182,6 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
     }
 
 
-
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> = find<EmojiData> {
         EmojiData::guildId eq guildId.longValue
     }.asFlow().map { GuildEmoji(it, kord) }
@@ -204,17 +203,17 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
     }.asFlow().map { Webhook(it, kord) }
 
 
-    override suspend fun getWebhookOrNull(webhookId: Snowflake): Webhook? {
+    override suspend fun getWebhookOrNull(id: Snowflake): Webhook? {
         val data = find<WebhookData> {
-            WebhookData::id eq webhookId.longValue
+            WebhookData::id eq id.longValue
         }.singleOrNull() ?: return null
 
         return Webhook(data, kord)
     }
 
-    override suspend fun getWebhookWithTokenOrNull(webhookId: Snowflake, token: String): Webhook? {
+    override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? {
         val data = find<WebhookData> {
-            WebhookData::id eq webhookId.longValue
+            WebhookData::id eq id.longValue
             WebhookData::token eq token
         }.singleOrNull() ?: return null
 
@@ -226,7 +225,7 @@ class KordCache(val kord: Kord, val cache: DataCache) : DataCache by cache, Enti
 
         return Role(data, kord)
     }
-    
+
 
     override suspend fun getUserOrNull(id: Snowflake): User? {
         val data = find<UserData> { UserData::id eq id.longValue }.singleOrNull() ?: return null

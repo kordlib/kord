@@ -1,289 +1,367 @@
 package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
-import com.gitlab.kordlib.rest.request.RequestException
+import com.gitlab.kordlib.core.entity.channel.MessageChannel
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * An abstraction that allows for requesting Discord entities.
+ *
+ * @see com.gitlab.kordlib.core.cache.KordCache
+ * @see com.gitlab.kordlib.core.rest.KordRestClient
+ */
 interface EntitySupplier {
+
+    /**
+     * Requests all [guilds][Guild] this bot is known to be part of.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
     val guilds: Flow<Guild>
 
+    /**
+     * Requests all [regions][Region] known to this bot.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
     val regions: Flow<Region>
 
     /**
-     * Returns the [Guild] associated with the given [id] if present.
+     * Requests the [Guild] with the given [id], returns `null` when the guild isn't present.
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * @throws RequestException if something went wrong while retrieving the guild.
      */
     suspend fun getGuildOrNull(id: Snowflake): Guild?
 
     /**
-     * Returns the [Guild] associated with the given [id] if present.
+     * Requests the [Guild] with the given [id].
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     */
-    suspend fun getChannelOrNull(id: Snowflake): Channel?
-
-    /**
-     * Returns the [Guild] associated with the given [id] if present.
-     *
-     * @throws [RequestException] if retrieving an entity failed.
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
+     * @throws RequestException if something went wrong while retrieving the guild.
+     * @throws EntityNotFoundException if the guild is null.
      */
     suspend fun getGuild(id: Snowflake): Guild = getGuildOrNull(id)!!
 
     /**
-     * Returns the [Channel] associated with the given [id] if present.
+     * Requests the [Channel] with the given [id], returns `null` when the channel isn't present.
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
+     * @throws RequestException if something went wrong while retrieving the channel.
+     */
+    suspend fun getChannelOrNull(id: Snowflake): Channel?
+
+    /**
+     * Requests the [Channel] with the given [id].
+     *
+     * @throws RequestException if something went wrong while retrieving the channel.
+     * @throws EntityNotFoundException if the channel is null.
      */
     suspend fun getChannel(id: Snowflake): Channel = getChannelOrNull(id)!!
 
     /**
-     * Returns a flow of [Channel]s in the [Guild] associated with [guildId].
+     * Requests the [channels][GuildChannel] of the [Guild] with the given [guildId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel>
 
     /**
-     * Returns a [Flow] of [Message] pinned in the [Channel] associated with the given [channelId] if present.
+     * Requests the pinned [messages][Message] of the [Channel] with the given [channelId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     fun getChannelPins(channelId: Snowflake): Flow<Message>
 
     /**
-     * Returns the [Member] associated with the given [guildId] and [userId] if present.
+     * Requests the [Member] with the given [userId] in the [Guild] wit the given [guildId],
+     * returns `null` when the member isn't present.
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * @throws RequestException if something went wrong while retrieving the member.
      */
     suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member?
 
     /**
-     * Returns the [Message] associated with the given [channelId] and [messageId] if present.
+     * Requests the [Member] with the given [userId] in the [Guild] wit the given [guildId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * @throws RequestException if something went wrong while retrieving the member.
+     * @throws EntityNotFoundException if the member was null.
+     */
+    suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member =
+            getMemberOrNull(guildId, userId)
+                    ?: EntityNotFoundException.memberNotFound(guildId = guildId, userId = userId)
+
+    /**
+     * Requests the [Message] with the given [messageId] in the [MessageChannel] with the given [channelId],
+     * returns `null` when the message isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the message.
      */
     suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message?
 
     /**
-     * Returns a [Member] associated with the given [id] if present.
+     * Requests the [Message] with the given [messageId] in the [MessageChannel] with the given [channelId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
+     * @throws RequestException if something went wrong while retrieving the message.
+     * @throws EntityNotFoundException if the message is null.
      */
-    suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member = getMemberOrNull(guildId, userId)!!
+    suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message =
+            getMessageOrNull(channelId, messageId) ?: EntityNotFoundException.messageNotFound(channelId, messageId)
 
     /**
-     * Returns the [Message] associated with the given [channelId] and [messageId] if present.
+     * Requests a flow of messages created after the [Message] with the [messageId]
+     * in the [channel][MessageChannel] with the [channelId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
-     */
-    suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message = getMessageOrNull(channelId, messageId)!!
-
-
-    /**
-     * Returns a [Flow] of [Message]s from the [Channel] associated with [channelId]
-     * after the [Message] with [messageId].
+     * The flow may use paginated requests to supply messages, [limit] will limit the maximum number of messages
+     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
      *
-     * @param limit a strictly positive number representing the bound for the retrieved elements.
-     * @throws [RequestException] if retrieving an entity failed.
-
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     *
+     * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
     fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message>
 
     /**
-     * Returns a [Flow] of [Message]s from the [Channel] associated with [channelId]
-     * before the [Message] with [messageId].
+     * Requests a flow of messages created before the [Message] with the [messageId]
+     * in the [channel][MessageChannel] with the [channelId].
      *
-     * @param limit a strictly positive number representing the bound for the retrieved elements.
-     * @throws [RequestException] if retrieving an entity failed.
-
+     * The flow may use paginated requests to supply messages, [limit] will limit the maximum number of messages
+     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     *
+     * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
     fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message>
 
     /**
-     * Returns a [Flow] of [Message]s from the [Channel] associated with [channelId]
-     * around the [Message] with [messageId].
+     * Requests a flow of messages created around the [Message] with the [messageId]
+     * in the [channel][MessageChannel] with the [channelId].
      *
-     * @param limit a strictly positive number representing the bound for the retrieved elements.
-     * @throws [RequestException] if retrieving an entity failed.
+     * Unlike [getMessagesAfter] and [getMessagesBefore], this flow can return **a maximum of 100 messages**.
+     * As such, the accepted range of [limit] is reduced to 1..100.
+     *
+     * Supplied messages will be equally distributed
+     * before and after the [messageId]. The remaining message for an odd [limit] is undefined and may appear on either
+     * side.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     *
+     * @throws IllegalArgumentException if the [limit] is outside the range of 1..100.
      */
-    fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message>
+    fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int = 100): Flow<Message>
 
     /**
-     * Returns the [User] associated with this Kord instance if present.
+     * Requests the [User] this bot represents, returns null when the user isn't present.
      *
-     * @throws [RequestException] if retrieving an entity failed.
-
+     * @throws RequestException if something went wrong while retrieving the user.
      */
     suspend fun getSelfOrNull(): User?
 
     /**
-     * Returns the [User] associated with the given [id] if present.
+     * Requests the [User] this bot represents.
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * @throws RequestException if something went wrong while retrieving the user.
+     * @throws EntityNotFoundException if the user was null.
+     */
+    suspend fun getSelf(): User = getSelfOrNull() ?: EntityNotFoundException.selfNotFound()
 
+    /**
+     * Requests the [User] with the given [id], returns null when the user isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the user.
      */
     suspend fun getUserOrNull(id: Snowflake): User?
 
     /**
-     * Returns the [User] of the current Kord instance if present.
+     * Requests the [User] with the given [id].
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
+     * @throws RequestException if something went wrong while retrieving the user.
+     * @throws EntityNotFoundException if the user was null.
      */
-    suspend fun getSelf(): User = getSelfOrNull()!!
+    suspend fun getUser(id: Snowflake): User = getUserOrNull(id) ?: EntityNotFoundException.userNotFound(id)
 
     /**
-     * Returns the [User] associated with the given [id] if present.
+     * Requests the [Role] with the given [roleId] in the [Guild] wit the given [guildId],
+     * returns null when the role isn't present.
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
-     */
-    suspend fun getUser(id: Snowflake): User = getUserOrNull(id)!!
-
-    /**
-     * Returns the [Role] associated with the given [guildId] and [roleId] if present.
-     *
-     * @throws [RequestException] if retrieving an entity failed.
-
+     * @throws RequestException if something went wrong while retrieving the role.
      */
     suspend fun getRoleOrNull(guildId: Snowflake, roleId: Snowflake): Role?
 
     /**
-     * Returns the [Role] associated with the given [guildId] and [roleId] if present.
+     * Requests the [Role] with the given [roleId] in the [Guild] wit the given [guildId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
+     * @throws RequestException if something went wrong while retrieving the role.
+     * @throws EntityNotFoundException if the role was null.
      */
-    suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role = getRoleOrNull(guildId, roleId)!!
+    suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role =
+            getRoleOrNull(guildId, roleId) ?: EntityNotFoundException.roleNotFound(guildId, roleId)
 
     /**
-     * Returns a [Flow] of the [Role]s in the [Guild] associated with the given [guildId] if present.
+     * Requests the [roles][Role] of the [Guild] with the given [guildId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
-
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     fun getGuildRoles(guildId: Snowflake): Flow<Role>
 
     /**
-     * Returns the [Ban] associated with the given [userId] in the [Guild] with [guildId] if present.
+     * Requests the [Ban] for the user the given [userId] in the [Guild] wit the given [guildId],
+     * returns null when the ban isn't present.
      *
-     * @throws [RequestException] if retrieving an entity failed.
-
+     * @throws RequestException if something went wrong while retrieving the ban.
      */
     suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban?
 
     /**
-     * Returns the [Ban] for the [User] associated with the given [userId] in the [Guild] with [guildId] if present.
+     * Requests the [Ban] for the user the given [userId] in the [Guild] wit the given [guildId],
+     * returns null when the ban isn't present.
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
+     * @throws RequestException if something went wrong while retrieving the ban.
+     * @throws EntityNotFoundException if the ban was null.
      */
-    suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): Ban = getGuildBanOrNull(guildId, userId)!!
+    suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): Ban = getGuildBanOrNull(guildId, userId)
+            ?: EntityNotFoundException.banNotFound(guildId, userId)
 
     /**
-     * Returns a [Flow] of the [Ban]s for the [Guild] associated with the given [guildId] if present.
-     * @throws [RequestException] if retrieving an entity failed.
+     * Requests the [bans][Ban] of the [Guild] with the given [guildId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     fun getGuildBans(guildId: Snowflake): Flow<Ban>
 
     /**
-     * Returns a [Flow] of the [Member]s for the [Guild] associated with the given [guildId] if present.
-     * @param limit a strictly positive number representing the bound for the retrieved elements.
-     * @throws [RequestException] if retrieving an entity failed.
+     * Requests the [members][Member] of the [Guild] with the given [guildId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     fun getGuildMembers(guildId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Member>
 
     /**
-     * Returns a [Flow] of the [Region]s for the [Guild] associated with the given [guildId] if present.
-     *@throws [RequestException] if retrieving an entity failed.
+     * Requests the [regions][Region] of the [Guild] with the given [guildId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region>
 
     /**
-     * Returns the [GuildEmoji] associated with the given [guildId] and [emojiId] if present.
+     * Requests the [GuildEmoji] with the [emojiId] in the [Guild] wit the given [guildId],
+     * returns null when the emoji isn't present.
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * @throws RequestException if something went wrong while retrieving the emoji.
      */
     suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake): GuildEmoji?
 
     /**
-     * Returns the [GuildEmoji] associated with the given [guildId] and [emojiId] if present.
+     * Requests the [GuildEmoji] with the [emojiId] in the [Guild] wit the given [guildId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     *
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
+     * @throws RequestException if something went wrong while retrieving the emoji.
+     * @throws EntityNotFoundException if the emoji was null.
      */
-    suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): GuildEmoji = getEmojiOrNull(guildId, emojiId)!!
+    suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): GuildEmoji =
+            getEmojiOrNull(guildId, emojiId) ?: EntityNotFoundException.emojiNotFound(guildId, emojiId)
 
     /**
-     * Returns a [Flow] of the [GuildEmoji]s for the [Guild] associated with the given [guildId] if present.
+     * Requests the [guild emojis][GuildEmoji] of the [Guild] with the given [guildId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     fun getEmojis(guildId: Snowflake): Flow<GuildEmoji>
 
     /**
-     * Returns a [Flow] of the [Guild]s for the bot (This Kord instance).
+     * Requests the [guild emojis][GuildEmoji] of the [Guild] with the given [guildId].
      *
-     * @param limit a strictly positive number representing the bound for the retrieved elements.
+     *  The flow may use paginated requests to supply guilds, [limit] will limit the maximum number of guilds
+     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     *
+     * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
     fun getCurrentUserGuilds(limit: Int = Int.MAX_VALUE): Flow<Guild>
 
     /**
-     * Returns a [Flow] of the [Webhook]s for the [Channel] associated with the given [channelId] if present.
+     * Requests the [webhooks][Webhook] of the [MessageChannel] with the given [channelId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook>
 
     /**
-     * Returns a [Flow] of the [Webhook]s for the [Guild] associated with the given [guildId] if present.
+     * Requests the [webhooks][Webhook] of the [Guild] with the given [guildId].
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook>
 
     /**
-     * Returns the [Webhook] associated with the given [webhookId] if present.
+     * Requests the [Webhook] with the given [id], returns `null` when the webhook isn't present.
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * @throws RequestException if something went wrong while retrieving the webhook.
      */
-    suspend fun getWebhookOrNull(webhookId: Snowflake): Webhook?
+    suspend fun getWebhookOrNull(id: Snowflake): Webhook?
 
     /**
-     * Returns the [Webhook] associated with the given [webhookId] and [token] if present.
+     * Requests the [Webhook] with the given [id].
      *
-     * @throws [RequestException] if retrieving an entity failed.
+     * @throws RequestException if something went wrong while retrieving the webhook.
+     * @throws EntityNotFoundException if the webhook was null.
      */
-    suspend fun getWebhookWithTokenOrNull(webhookId: Snowflake, token: String): Webhook?
+    suspend fun getWebhook(id: Snowflake): Webhook =
+            getWebhookOrNull(id) ?: EntityNotFoundException.webhookNotFound(id)
 
     /**
-     * Returns the [Webhook] associated with the given [webhookId] if present.
+     * Requests the [Webhook] with the given [id] using the [token] for authentication,
+     * returns null when the webhook isn't present.
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
+     * @throws RequestException if something went wrong while retrieving the webhook.
      */
-    suspend fun getWebhook(webhookId: Snowflake): Webhook = getWebhookOrNull(webhookId)!!
+    suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook?
 
     /**
-     * Returns the [Webhook] associated with the given [webhookId] and [token] if present.
+     * Requests the [Webhook] with the given [id] using the [token] for authentication.
      *
-     * @throws [RequestException] if retrieving an entity failed.
-     * @throws [KotlinNullPointerException] if the entity retrieved was null.
+     * @throws RequestException if something went wrong while retrieving the webhook.
+     * @throws EntityNotFoundException if the webhook was null.
      */
-    suspend fun getWebhookWithToken(webhookId: Snowflake, token: String): Webhook = getWebhookWithTokenOrNull(webhookId, token)!!
+    suspend fun getWebhookWithToken(id: Snowflake, token: String): Webhook =
+            getWebhookWithTokenOrNull(id, token) ?: EntityNotFoundException.webhookNotFound(id)
+
 }
 
-suspend inline fun <reified T : Channel> EntitySupplier.getChannelOfOrNull(id: Snowflake) = getChannelOrNull(id) as? T
 
-suspend inline fun <reified T : Channel> EntitySupplier.getChannelOf(id: Snowflake) = getChannelOrNull(id) as T
+/**
+ * Requests the [Channel] with the given [id] as type [T], returns null if the
+ * channel isn't present or if the channel is not of type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the channel.
+ */
+suspend inline fun <reified T : Channel> EntitySupplier.getChannelOfOrNull(id: Snowflake): T? =
+        getChannelOrNull(id) as? T
+
+/**
+ * Requests the [Channel] with the given [id] as type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the channel.
+ * @throws EntityNotFoundException if the channel is null.
+ * @throws ClassCastException if the returned Channel is not of type [T].
+ */
+suspend inline fun <reified T : Channel> EntitySupplier.getChannelOf(id: Snowflake): T =
+        (getChannelOrNull(id) ?: EntityNotFoundException.channelNotFound<T>(id)) as T

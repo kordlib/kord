@@ -2,17 +2,11 @@ package com.gitlab.kordlib.core.live
 
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.MessageBehavior
-import com.gitlab.kordlib.core.cache.data.ReactionData
 import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.core.entity.ReactionEmoji
 import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.channel.ChannelDeleteEvent
-import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
-import com.gitlab.kordlib.core.event.message.*
+import com.gitlab.kordlib.core.event.message.MessageUpdateEvent
+import com.gitlab.kordlib.core.event.message.ReactionAddEvent
 import com.gitlab.kordlib.core.kordLogger
-import com.gitlab.kordlib.core.on
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.CoroutineScope
@@ -57,7 +51,7 @@ abstract class AbstractLiveEntity : LiveEntity {
  * or [Kord] by default and will not propagate any exceptions.
  */
 @KordPreview
-inline fun <reified T : Event> LiveEntity.on(scope: CoroutineScope = kord,  noinline consumer: suspend (T) -> Unit) =
+inline fun <reified T : Event> LiveEntity.on(scope: CoroutineScope = kord, noinline consumer: suspend (T) -> Unit) =
         events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
             runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
         }.catch { kordLogger.catching(it) }.launchIn(scope)

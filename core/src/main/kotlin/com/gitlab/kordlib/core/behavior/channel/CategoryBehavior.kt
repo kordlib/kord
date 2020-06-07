@@ -1,14 +1,17 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.channel.CategorizableChannel
 import com.gitlab.kordlib.core.entity.channel.Category
 import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.getChannelOf
 import com.gitlab.kordlib.rest.builder.channel.CategoryModifyBuilder
+import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.patchCategory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -20,31 +23,51 @@ import kotlinx.coroutines.flow.filterIsInstance
 interface CategoryBehavior : GuildChannelBehavior {
 
     /**
-     * Requests to get the this behavior as a [Category].
+     * Requests to get this behavior as a [Category] through the [strategy].
      *
-     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the channel wasn't present.
+     * @throws [ClassCastException] if the channel wasn't a category.
      */
-    override suspend fun asChannel() : Category = strategy.supply(kord).getChannelOf<Category>(id)
-    override suspend fun asChannelOrNull() : Category? = strategy.supply(kord).getChannelOf<Category>(id)
+    override suspend fun asChannel(): Category = strategy.supply(kord).getChannelOf(id)
 
+    /**
+     * Requests to get this behavior as a [Category] through the [strategy],
+     * returns null if the channel isn't present or is not a category.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the channel wasn't present.
+     * @throws [ClassCastException] if the channel wasn't a category.
+     */
+    override suspend fun asChannelOrNull(): Category? = strategy.supply(kord).getChannelOf(id)
 
 
     /**
-     * Requests to get the channels that belong to this category.
+     * Requests to get the channels that belong to this [Category].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val channels: Flow<CategorizableChannel> get() = guild.channels.filterIsInstance<CategorizableChannel>().filter { it.categoryId == id }
+    val channels: Flow<CategorizableChannel>
+        get() = guild.withStrategy(strategy).channels
+                .filterIsInstance<CategorizableChannel>()
+                .filter { it.categoryId == id }
 
 
     /**
-     * returns a new [CategoryBehavior] with the given [strategy].
-     *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * Returns a new [CategoryBehavior] with the given [strategy].
      */
-
-    override fun withStrategy(strategy: EntitySupplyStrategy):CategoryBehavior = CategoryBehavior(guildId, id, kord, strategy)
+    override fun withStrategy(
+            strategy: EntitySupplyStrategy
+    ): CategoryBehavior = CategoryBehavior(guildId, id, kord, strategy)
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): CategoryBehavior = object : CategoryBehavior {
+        internal operator fun invoke(
+                guildId: Snowflake,
+                id: Snowflake,
+                kord: Kord,
+                strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+        ): CategoryBehavior = object : CategoryBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
@@ -56,7 +79,8 @@ interface CategoryBehavior : GuildChannelBehavior {
 /**
  * Requests to edit this category.
  *
- * @return The edited [category].
+ * @return The edited [Category].
+ * @throws [RestRequestException] if something went wrong during the request.
  */
 @Suppress("NAME_SHADOWING")
 suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Category {

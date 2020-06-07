@@ -8,7 +8,10 @@ import com.gitlab.kordlib.core.cache.data.ChannelData
 /**
  * An instance of a Discord Voice Channel associated to a guild.
  */
-data class VoiceChannel(override val data: ChannelData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+class VoiceChannel(
+        override val data: ChannelData,
+        override val kord: Kord,
+        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
 ) : CategorizableChannel, VoiceChannelBehavior {
 
 
@@ -22,13 +25,11 @@ data class VoiceChannel(override val data: ChannelData, override val kord: Kord,
      */
     val userLimit: Int get() = data.userLimit!!
 
-    override suspend fun asChannel(): VoiceChannel = this
-
     /**
      * returns a new [VoiceChannel] with the given [strategy].
      *
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy): VoiceChannel = VoiceChannel(data, kord, strategy)
-}
 
+}

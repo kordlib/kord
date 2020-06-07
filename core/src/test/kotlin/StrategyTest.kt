@@ -18,7 +18,7 @@ class StrategyTest {
     lateinit var kord: Kord
 
     @BeforeAll
-     fun setup() = runBlocking {
+    fun setup() = runBlocking {
         kord = Kord(System.getenv("token"))
     }
 
@@ -31,7 +31,7 @@ class StrategyTest {
 
     @Test
     @Disabled
-    fun `cache only`()  = runBlocking {
+    fun `cache only`() = runBlocking {
         val self = kord.with(EntitySupplyStrategy.Rest).getSelf()
         kord.cache.put(self!!.data)
 
@@ -40,11 +40,11 @@ class StrategyTest {
     }
 
     @Test
-     fun `cache fallsback to rest`() = runBlocking {
+    fun `cache fallsback to rest`() = runBlocking {
         val cache = kord.with(EntitySupplyStrategy.Cache)
         val incache = cache.getSelf()
 
-        assertNull( incache)
+        assertNull(incache)
 
         val self = kord.getSelf()
         assertNotNull(self)

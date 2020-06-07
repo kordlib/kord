@@ -8,7 +8,10 @@ import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.cache.data.RoleData
 import java.awt.Color
 
-data class Role(val data: RoleData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+data class Role(
+        val data: RoleData,
+        override val kord: Kord,
+        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
 ) : RoleBehavior {
 
     override val id: Snowflake
@@ -37,11 +40,9 @@ data class Role(val data: RoleData, override val kord: Kord, override val strate
     }
 
     /**
-     * returns a new [Role] with the given [strategy].
-     *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * Returns a new [Role] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): Role = Role(data,kord,strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy): Role = Role(data, kord, strategy)
 
 }
 

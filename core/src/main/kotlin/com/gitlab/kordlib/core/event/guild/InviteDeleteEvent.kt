@@ -5,9 +5,9 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.cache.data.InviteDeleteData
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.entity.Guild
+import com.gitlab.kordlib.core.entity.channel.GuildChannel
+import com.gitlab.kordlib.core.event.Event
 
 /**
  * Sent when an invite is deleted.
@@ -41,11 +41,11 @@ class InviteDeleteEvent(val data: InviteDeleteData, override val kord: Kord) : E
     /**
      * Requests to get the [GuildChannel] of the invite.
      */
-    suspend fun getChannel() : GuildChannel = kord.getChannel(channelId) as GuildChannel
+    suspend fun getChannel(): GuildChannel = kord.getChannel(channelId) as GuildChannel
 
     /**
      * Requests to get the [Guild] of the invite.
      */
-    suspend fun getGuild() : Guild = kord.getGuild(guildId)!!
+    suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
 
 }

@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
@@ -14,11 +15,13 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
 /**
- * An instace of a [Discord emoji](https://discordapp.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
+ * An instance of a [Discord emoji](https://discordapp.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
  */
-class GuildEmoji(val data: EmojiData, override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+class GuildEmoji(
+        val data: EmojiData,
+        override val kord: Kord,
+        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
 ) : Entity, Strategizable {
-
 
     override val id: Snowflake
         get() = Snowflake(data.id)
@@ -79,26 +82,25 @@ class GuildEmoji(val data: EmojiData, override val kord: Kord, override val stra
     val user: UserBehavior? get() = userId?.let { UserBehavior(it, kord) }
 
     /**
-     * Requests to get the [Member] who created the emote, if present.
-     */
-    suspend fun getMemberOrNull(): Member? = userId?.let { strategy.supply(kord).getMemberOrNull(guildId = guildId, userId = it) }
-
-    suspend fun getMember(): Member =  strategy.supply(kord).getMember(guildId = guildId, userId = userId!!)
-
-    /**
-     * Requests to get the [User] who created the emote, if present.
-     */
-    suspend fun getUserOrNull(): User? = userId?.let { strategy.supply(kord).getUserOrNull(it) }
-
-    suspend fun getUser(): User =  strategy.supply(kord).getUser(userId!!)
-
-
-    /**
-     * returns a new [GuildEmoji] with the given [strategy].
+     * Requests to get the creator of the emoji through the [strategy] as a [Member],
+     * returns null if the [Member] isn't present or [userId] is null.
      *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * @throws [RequestException] if anything went wrong during the request.
      */
-    fun withStrategy(strategy: EntitySupplyStrategy) = GuildEmoji(data, kord, strategy)
+    suspend fun getMember(): Member? = userId?.let { strategy.supply(kord).getMemberOrNull(guildId = guildId, userId = it) }
+
+    /**
+     * Requests to get the creator of the emoji through the [strategy] as a [User],
+     * returns null if the [User] isn't present or [userId] is null.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getUser(): User? = userId?.let { strategy.supply(kord).getUserOrNull(it) }
+
+    /**
+     * Returns a new [GuildEmoji] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy) = GuildEmoji(data, kord, strategy)
 
 }
 

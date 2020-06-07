@@ -1,17 +1,16 @@
 package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.builder.presence.PresenceUpdateBuilder
 import com.gitlab.kordlib.core.cache.KordCache
-import com.gitlab.kordlib.core.cache.data.*
+import com.gitlab.kordlib.core.cache.data.ApplicationInfoData
+import com.gitlab.kordlib.core.cache.data.GuildData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.core.rest.KordRestClient
@@ -115,13 +114,13 @@ class Kord internal constructor(
             strategy.supply(this).getMessage(channelId, messageId)
 
     suspend fun getRole(guildId: Snowflake, roleId: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Role? =
-        strategy.supply(this).getRole(guildId, roleId)
+            strategy.supply(this).getRole(guildId, roleId)
 
     suspend fun getSelf(strategy: EntitySupplyStrategy = resources.defaultStrategy): User =
             strategy.supply(this).getSelf() ?: rest.getSelf()
 
-        suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): User? =
-                strategy.supply(this).getUser(id)
+    suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): User? =
+            strategy.supply(this).getUser(id)
 
     suspend inline fun editPresence(builder: PresenceUpdateBuilder.() -> Unit) {
         val request = PresenceUpdateBuilder().apply(builder).toRequest()

@@ -14,7 +14,7 @@ data class RegionData(
         val custom: Boolean
 ) {
     companion object {
-        fun from(guildId: String? ,region: VoiceRegion) = with(region) {
+        fun from(guildId: String?, region: VoiceRegion) = with(region) {
             RegionData(id.toLong(), guildId?.toLong(), name, vip, optimal, deprecated, custom)
         }
     }

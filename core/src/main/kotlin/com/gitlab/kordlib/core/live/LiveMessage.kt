@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.core.live
 
 import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.cache.data.ReactionData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Message

@@ -11,11 +11,9 @@ import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.UserUpdate
 import kotlinx.coroutines.channels.SendChannel
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import com.gitlab.kordlib.core.event.Event as CoreEvent
-import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class UserEventHandler(

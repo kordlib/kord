@@ -171,7 +171,8 @@ class KordBuilder(val token: String) {
         val client = httpClient?.let {
             it.config { defaultConfig() }
         } ?: run {
-            HttpClient(CIO) { defaultConfig()
+            HttpClient(CIO) {
+                defaultConfig()
                 install(JsonFeature) {
                     serializer = KotlinxSerializer(Json(JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true)))
                 }

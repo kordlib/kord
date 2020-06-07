@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.gateway.handler
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.api.put
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.cache.data.MessageData
@@ -10,7 +11,6 @@ import com.gitlab.kordlib.core.cache.data.ReactionData
 import com.gitlab.kordlib.core.cache.data.ReactionRemoveEmojiData
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.ReactionEmoji
-import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.gateway.*

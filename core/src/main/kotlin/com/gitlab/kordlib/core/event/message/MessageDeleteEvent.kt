@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.core.event.message
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
 import com.gitlab.kordlib.core.entity.Guild
 import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.event.Event
 
@@ -15,7 +15,7 @@ class MessageDeleteEvent(
         val guildId: Snowflake?,
         val message: Message?,
         override val kord: Kord
-): Event {
+) : Event {
 
     val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 

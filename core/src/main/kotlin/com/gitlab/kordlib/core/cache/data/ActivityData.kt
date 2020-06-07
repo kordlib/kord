@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.cache.data
 
-import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.ActivityType
+import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.DiscordPartialEmoji
 import kotlinx.serialization.Serializable
 

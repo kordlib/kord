@@ -1,22 +1,29 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.cache.data.InviteData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
-import com.gitlab.kordlib.core.indexOfFirstOrNull
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.rest.builder.channel.ChannelPermissionModifyBuilder
+import com.gitlab.kordlib.rest.request.RestRequestException
+import com.gitlab.kordlib.rest.service.RestClient
+import com.gitlab.kordlib.rest.service.editMemberPermissions
 import com.gitlab.kordlib.rest.service.editRolePermission
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.withIndex
 
 /**
  * The behavior of a Discord channel associated to a [guild].
  */
 interface GuildChannelBehavior : ChannelBehavior, Strategizable {
+
     /**
      * The id of the guild this channel is associated to.
      */
@@ -29,43 +36,72 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
 
     /**
      * Requests to get the invites of this channel.
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val invites: Flow<Invite> get() = flow {
-        val responses = kord.rest.channel.getChannelInvites(id.value)
+    val invites: Flow<Invite>
+        get() = flow {
+            val responses = kord.rest.channel.getChannelInvites(id.value)
 
-        for (response in responses) {
-            val data = InviteData.from(response)
+            for (response in responses) {
+                val data = InviteData.from(response)
 
-            emit(Invite(data, kord))
+                emit(Invite(data, kord))
+            }
         }
-    }
 
     /**
-     * Requests to get this behavior as a [GuildChannel].
+     * Requests to get this behavior as a [GuildChannel] through the [strategy].
      *
-     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the channel wasn't present.
+     * @throws [ClassCastException] if the channel isn't a guild channel.
      */
     override suspend fun asChannel(): GuildChannel = super.asChannel() as GuildChannel
 
+    /**
+     * Requests to get this behavior as a [GuildChannel] through the [strategy],
+     * returns null if the channel isn't present or if the channel isn't a guild channel.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
+    override suspend fun asChannelOrNull(): GuildChannel? = super.asChannelOrNull() as? GuildChannel
 
     /**
-     * Requests to get this behavior as a [Guild].
+     * Requests to get this channel's [Guild] through the [strategy].
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the guild wasn't present.
      */
     suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
 
+    /**
+     * Requests to get this channel's [Guild] through the [strategy],
+     * returns null if the guild isn't present.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
     suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
 
     /**
      * Requests to add or replace a [PermissionOverwrite] to this entity.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun addOverwrite(overwrite: PermissionOverwrite) {
         kord.rest.channel.editChannelPermissions(channelId = id.value, overwriteId = overwrite.target.value, permissions = overwrite.asRequest())
     }
 
     /**
-     * Requests to get the position of this channel in the [guild], as displayed in Discord.
+     * Requests to get the position of this channel in the [guild], as displayed in Discord,
+     * through the [strategy].
+     *
+     * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getPosition(): Int = guild.channels.indexOfFirstOrNull { it.id == id }!!
+    suspend fun getPosition(): Int = guild.withStrategy(strategy).channels.withIndex().first { it.value.id == id }.index
 
     override fun compareTo(other: Entity): Int {
         if (other !is GuildChannelBehavior) return super.compareTo(other)
@@ -77,15 +113,19 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
     }
 
     /**
-     * returns a new [GuildChannelBehavior] with the given [strategy].
-     *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * Returns a new [GuildChannelBehavior] with the given [strategy].
      */
-
-    override fun withStrategy(strategy: EntitySupplyStrategy): GuildChannelBehavior = GuildChannelBehavior(guildId, id, kord, strategy)
+    override fun withStrategy(
+            strategy: EntitySupplyStrategy
+    ): GuildChannelBehavior = GuildChannelBehavior(guildId, id, kord, strategy)
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : GuildChannelBehavior {
+        internal operator fun invoke(
+                guildId: Snowflake,
+                id: Snowflake,
+                kord: Kord,
+                strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+        ): GuildChannelBehavior = object : GuildChannelBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
@@ -97,6 +137,8 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
 
 /**
  * Requests to add or replace a [PermissionOverwrite] for the [roleId].
+ *
+ *  @throws [RestRequestException] if something went wrong during the request.
  */
 suspend inline fun GuildChannelBehavior.editRolePermission(roleId: Snowflake, builder: ChannelPermissionModifyBuilder.() -> Unit) {
     kord.rest.channel.editRolePermission(channelId = id.value, roleId = roleId.value, builder = builder)
@@ -104,7 +146,9 @@ suspend inline fun GuildChannelBehavior.editRolePermission(roleId: Snowflake, bu
 
 /**
  * Requests to add or replace a [PermissionOverwrite] for the [memberId].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
 suspend inline fun GuildChannelBehavior.editMemberPermission(memberId: Snowflake, builder: ChannelPermissionModifyBuilder.() -> Unit) {
-    kord.rest.channel.editRolePermission(channelId = id.value, roleId = memberId.value, builder = builder)
+    kord.rest.channel.editMemberPermissions(channelId = id.value, memberId = memberId.value, builder = builder)
 }

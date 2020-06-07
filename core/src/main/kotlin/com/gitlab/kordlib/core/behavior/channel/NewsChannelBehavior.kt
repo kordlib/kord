@@ -1,12 +1,15 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.NewsChannel
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.rest.builder.channel.NewsChannelModifyBuilder
+import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.patchNewsChannel
 
 /**
@@ -15,16 +18,24 @@ import com.gitlab.kordlib.rest.service.patchNewsChannel
 interface NewsChannelBehavior : GuildMessageChannelBehavior {
 
     /**
-     * Requests to get the this behavior as a [NewsChannel].
+     * Requests to get the this behavior as a [NewsChannel] through the [strategy].
      *
-     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the channel wasn't present.
+     * @throws [ClassCastException] if the channel isn't a [NewsChannel].
      */
-    override suspend fun asChannel(): NewsChannel =  super.asChannel() as NewsChannel
+    override suspend fun asChannel(): NewsChannel = super.asChannel() as NewsChannel
 
     /**
-     * returns a new [NewsChannelBehavior] with the given [strategy].
+     * Requests to get this behavior as a [NewsChannel] through the [strategy],
+     * returns null if the channel isn't present or if the channel isn't a news channel.
      *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * @throws [RequestException] if something went wrong during the request.
+     */
+    override suspend fun asChannelOrNull(): NewsChannel? = super.asChannelOrNull() as? NewsChannel
+
+    /**
+     * Returns a new [NewsChannelBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy): NewsChannelBehavior = NewsChannelBehavior(guildId, id, kord, strategy)
 
@@ -43,6 +54,8 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
  * Requests to edit this channel.
  *
  * @return The edited [NewsChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
 suspend inline fun NewsChannelBehavior.edit(builder: NewsChannelModifyBuilder.() -> Unit): NewsChannel {
     val response = kord.rest.channel.patchNewsChannel(id.value, builder)

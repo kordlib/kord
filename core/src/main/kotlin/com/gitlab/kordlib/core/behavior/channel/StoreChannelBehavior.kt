@@ -1,12 +1,15 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.StoreChannel
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.rest.builder.channel.StoreChannelModifyBuilder
+import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.patchStoreChannel
 
 /**
@@ -15,11 +18,21 @@ import com.gitlab.kordlib.rest.service.patchStoreChannel
 interface StoreChannelBehavior : GuildChannelBehavior {
 
     /**
-     * Requests to get the this behavior as a [StoreChannel].
+     * Requests to get the this behavior as a [StoreChannel] through the [strategy].
      *
-     * Entities will be fetched from the [cache][Kord.cache] firstly and the [RestClient][Kord.rest] secondly.
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the channel wasn't present.
+     * @throws [ClassCastException] if the channel isn't a [StoreChannel].
      */
-    override suspend fun asChannel(): StoreChannel =  super.asChannel() as StoreChannel
+    override suspend fun asChannel(): StoreChannel = super.asChannel() as StoreChannel
+
+    /**
+     * Requests to get this behavior as a [StoreChannel] through the [strategy],
+     * returns null if the channel isn't present or if the channel isn't a [StoreChannel].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun asChannelOrNull(): StoreChannel? = super.asChannelOrNull() as? StoreChannel
 
     /**
      * returns a new [StoreChannelBehavior] with the given [strategy].
@@ -43,6 +56,8 @@ interface StoreChannelBehavior : GuildChannelBehavior {
  * Requests to edit this channel.
  *
  * @return The edited [StoreChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
 suspend inline fun StoreChannelBehavior.edit(builder: StoreChannelModifyBuilder.() -> Unit): StoreChannel {
     val response = kord.rest.channel.patchStoreChannel(id.value, builder)
