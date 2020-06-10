@@ -1,12 +1,13 @@
-package com.gitlab.kordlib.core
+package com.gitlab.kordlib.core.supplier
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
+import com.gitlab.kordlib.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
 
-fun EntitySupplier.withFallback(other: EntitySupplier): EntitySupplier = FallbackEntitySupplier(this, other)
+infix fun EntitySupplier.withFallback(other: EntitySupplier): EntitySupplier = FallbackEntitySupplier(this, other)
 
 private class FallbackEntitySupplier(val first: EntitySupplier, val second: EntitySupplier) : EntitySupplier {
 
@@ -19,10 +20,8 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getGuildOrNull(id: Snowflake): Guild? =
             first.getGuildOrNull(id) ?: second.getGuildOrNull(id)
 
-
     override suspend fun getChannelOrNull(id: Snowflake): Channel? =
             first.getChannelOrNull(id) ?: second.getChannelOrNull(id)
-
 
     override suspend fun getChannel(id: Snowflake): Channel = getChannelOrNull(id)!!
 
@@ -58,7 +57,6 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getSelfOrNull(): User? =
             first.getSelfOrNull() ?: second.getSelfOrNull()
 
-
     override suspend fun getUserOrNull(id: Snowflake): User? =
             first.getUserOrNull(id) ?: second.getUserOrNull(id)
 
@@ -92,7 +90,6 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake): GuildEmoji? =
             first.getEmojiOrNull(guildId, emojiId) ?: second.getEmojiOrNull(guildId, emojiId)
-
 
     override suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): GuildEmoji =
             getEmojiOrNull(guildId, emojiId)!!

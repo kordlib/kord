@@ -3,15 +3,15 @@ package com.gitlab.kordlib.core.behavior.channel
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.KordCache
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.cache.data.VoiceStateData
 import com.gitlab.kordlib.core.entity.VoiceState
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.rest.builder.channel.VoiceChannelModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.patchVoiceChannel
@@ -37,7 +37,7 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
                 .map { VoiceState(it, kord) }
 
     /**
-     * Requests to get the this behavior as a [VoiceChannel] through the [strategy].
+     * Requests to get the this behavior as a [VoiceChannel].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
@@ -46,7 +46,7 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
     override suspend fun asChannel(): VoiceChannel = super.asChannel() as VoiceChannel
 
     /**
-     * Requests to get this behavior as a [VoiceChannel] through the [strategy],
+     * Requests to get this behavior as a [VoiceChannel],
      * returns null if the channel isn't present or if the channel isn't a [VoiceChannel].
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -56,14 +56,14 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
     /**
      * Returns a new [VoiceChannelBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): VoiceChannelBehavior = VoiceChannelBehavior(guildId, id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceChannelBehavior = VoiceChannelBehavior(guildId, id, kord, strategy)
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : VoiceChannelBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : VoiceChannelBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
-            override val strategy: EntitySupplyStrategy = strategy
+            override val supplier: EntitySupplier = strategy.supply(kord)
         }
     }
 

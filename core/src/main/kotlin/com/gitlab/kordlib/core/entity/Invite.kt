@@ -9,7 +9,10 @@ import com.gitlab.kordlib.core.cache.data.InviteData
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.rest.request.RestRequestException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.getChannelOf
+import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 
 /**
  * An instance of a [Discord Invite](https://discordapp.com/developers/docs/resources/invite).
@@ -17,7 +20,7 @@ import com.gitlab.kordlib.rest.request.RestRequestException
 data class Invite(
         val data: InviteData,
         override val kord: Kord,
-        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+        override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordObject, Strategizable {
 
     /**
@@ -76,51 +79,51 @@ data class Invite(
     val approximatePresenceCount: Int? get() = data.approximatePresenceCount
 
     /**
-     * Requests to get the channel this invite is for through the [strategy].
+     * Requests to get the channel this invite is for.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [GuildChannel] wasn't present.
      */
-    suspend fun getChannel(): GuildChannel = strategy.supply(kord).getChannelOf(channelId)
+    suspend fun getChannel(): GuildChannel = supplier.getChannelOf(channelId)
 
     /**
-     * Requests to get the channel this invite is for through the [strategy],
+     * Requests to get the channel this invite is for,
      * returns null if the [GuildChannel] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getChannelOrNull(): GuildChannel? = strategy.supply(kord).getChannelOfOrNull(channelId)
+    suspend fun getChannelOrNull(): GuildChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
-     * Requests to get the [Guild] for this invite through the [strategy].
+     * Requests to get the [Guild] for this invite.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Guild] wasn't present.
      */
-    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
+    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
-     * Requests to get the [Guild] for this invite through the [strategy],
+     * Requests to get the [Guild] for this invite,
      * returns null if the [Guild] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
+    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     /**
-     * Requests to get the creator of the invite for through the [strategy],
+     * Requests to get the creator of the invite for,
      * returns null if the [User] isn't present or [inviterId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
-     */    suspend fun getInviter(): User? = inviterId?.let { strategy.supply(kord).getUserOrNull(it) }
+     */    suspend fun getInviter(): User? = inviterId?.let { supplier.getUserOrNull(it) }
 
     /**
-     * Requests to get the user this invite was created for through the [strategy],
+     * Requests to get the user this invite was created for,
      * returns null if the [User] isn't present or [targetUserId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getTargetUser(): User? = targetUserId?.let { strategy.supply(kord).getUserOrNull(it) }
+    suspend fun getTargetUser(): User? = targetUserId?.let { supplier.getUserOrNull(it) }
 
     /**
      * Requests to delete the invite.
@@ -132,7 +135,7 @@ data class Invite(
     /**
      * Returns a new [Invite] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): Invite =
-            Invite(data, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Invite =
+            Invite(data, kord, strategy.supply(kord))
 
 }

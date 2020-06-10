@@ -6,7 +6,7 @@ import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.core.ClientResources
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.CachingGateway
 import com.gitlab.kordlib.core.cache.KordCacheBuilder
@@ -77,9 +77,9 @@ class KordBuilder(val token: String) {
     var defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     /**
-     * The default strategy used by entities to retrieve entities. [EntitySupplyStrategy.CacheWithRestFallback] by default.
+     * The default strategy used by entities to retrieve entities. [EntitySupplyStrategy.cacheWithRestFallback] by default.
      */
-    var defaultStrategy: EntitySupplyStrategy = EntitySupplyStrategy.CacheWithRestFallback
+    var defaultStrategy: EntitySupplyStrategy<*> = EntitySupplyStrategy.cacheWithRestFallback
 
     /**
      * The client used for building [Gateways][Gateway] and [RequestHandlers][RequestHandler]. A default implementation

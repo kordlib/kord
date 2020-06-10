@@ -7,10 +7,9 @@ import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Webhook
 import com.gitlab.kordlib.rest.builder.webhook.ExecuteWebhookBuilder
 import com.gitlab.kordlib.rest.builder.webhook.WebhookModifyBuilder
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.entity.Strategizable
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.rest.request.RestRequestException
 
 /**
@@ -39,18 +38,18 @@ interface WebhookBehavior : Entity, Strategizable {
     /**
      * Returns a new [WebhookBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): WebhookBehavior =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): WebhookBehavior =
             WebhookBehavior(id, kord, strategy)
 
     companion object {
         internal operator fun invoke(
                 id: Snowflake,
                 kord: Kord,
-                strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): WebhookBehavior = object : WebhookBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
-            override val strategy: EntitySupplyStrategy = strategy
+            override val supplier: EntitySupplier = strategy.supply(kord)
         }
     }
 

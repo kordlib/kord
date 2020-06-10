@@ -1,8 +1,8 @@
 package com.gitlab.kordlib.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.api.put
+import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
@@ -35,7 +35,7 @@ internal class VoiceEventHandler(
     private suspend fun handle(event: VoiceStateUpdate) {
         val data = VoiceStateData.from(event.voiceState)
 
-        val old = cache.find<VoiceStateData> { VoiceStateData::id eq data.id }
+        val old = cache.query<VoiceStateData> { VoiceStateData::id eq data.id }
                 .asFlow().map { VoiceState(it, kord) }.singleOrNull()
 
         cache.put(data)

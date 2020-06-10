@@ -1,15 +1,16 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.ApplicationInfoData
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 
 class ApplicationInfo(
         val data: ApplicationInfoData,
         override val kord: Kord,
-        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+        override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Entity, Strategizable {
 
     override val id: Snowflake
@@ -27,13 +28,13 @@ class ApplicationInfo(
 
     val owner: UserBehavior get() = UserBehavior(ownerId, kord)
 
-    suspend fun getOwner(): User = strategy.supply(kord).getUser(ownerId)
+    suspend fun getOwner(): User = supplier.getUser(ownerId)
 
-    suspend fun getOwnerOrNull(): User? = strategy.supply(kord).getUserOrNull(ownerId)
+    suspend fun getOwnerOrNull(): User? = supplier.getUserOrNull(ownerId)
 
     /**
      * Returns a new [ApplicationInfo] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): ApplicationInfo =
-            ApplicationInfo(data, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ApplicationInfo =
+            ApplicationInfo(data, kord, strategy.supply(kord))
 }

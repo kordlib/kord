@@ -4,14 +4,14 @@ import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.KordCache
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.sorted
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
@@ -30,32 +30,32 @@ import kotlinx.coroutines.flow.*
  */
 interface GuildBehavior : Entity, Strategizable {
     /**
-     * Requests to get all present bans for this guild through the [strategy].
+     * Requests to get all present bans for this guild.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val bans: Flow<Ban>
-        get() = strategy.supply(kord).getGuildBans(id)
+        get() = supplier.getGuildBans(id)
 
     /**
-     * Requests to get all present webhooks for this guild through the [strategy].
+     * Requests to get all present webhooks for this guild.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val webhooks: Flow<Webhook>
-        get() = strategy.supply(kord).getGuildWebhooks(id)
+        get() = supplier.getGuildWebhooks(id)
 
     /**
-     * Requests to get all present channels in this guild through the [strategy] in an unspecified order,
+     * Requests to get all present channels in this guild in an unspecified order,
      * call [sorted] to get a consistent order.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val channels: Flow<GuildChannel>
-        get() = strategy.supply(kord).getGuildChannels(id)
+        get() = supplier.getGuildChannels(id)
 
     /**
      * Requests to get all present presences of this guild.
@@ -68,7 +68,7 @@ interface GuildBehavior : Entity, Strategizable {
                 .map { Presence(it, kord) }
 
     /**
-     * Requests to get all present members in this guild through the [strategy].
+     * Requests to get all present members in this guild.
      *
      * Unrestricted consumption of the returned [Flow] is a potentially performance intensive operation, it is thus recommended
      * to limit the amount of messages requested by using [Flow.take], [Flow.takeWhile] or other functions that limit the amount
@@ -82,25 +82,25 @@ interface GuildBehavior : Entity, Strategizable {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val members: Flow<Member>
-        get() = strategy.supply(kord).getGuildMembers(id, 1000)
+        get() = supplier.getGuildMembers(id, 1000)
 
     /**
-     * Requests to get the present voice regions for this guild through the [strategy].
+     * Requests to get the present voice regions for this guild.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val regions: Flow<Region>
-        get() = strategy.supply(kord).getGuildVoiceRegions(id)
+        get() = supplier.getGuildVoiceRegions(id)
 
     /**
-     * Requests to get all present roles in the guild through the [strategy].
+     * Requests to get all present roles in the guild.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val roles: Flow<Role>
-        get() = strategy.supply(kord).getGuildRoles(id)
+        get() = supplier.getGuildRoles(id)
 
     /**
      * Requests to get the present voice states of this guild.
@@ -118,20 +118,20 @@ interface GuildBehavior : Entity, Strategizable {
 
 
     /**
-     * Requests to get the this behavior as a [Guild] through the [strategy].
+     * Requests to get the this behavior as a [Guild].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the guild wasn't present.
      */
-    suspend fun asGuild(): Guild = strategy.supply(kord).getGuild(id)
+    suspend fun asGuild(): Guild = supplier.getGuild(id)
 
     /**
-     * Requests to get this behavior as a [Guild] through the [strategy],
+     * Requests to get this behavior as a [Guild],
      * returns null if the guild isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(id)
+    suspend fun asGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
 
     /**
      * Requests to delete this guild.
@@ -148,37 +148,37 @@ interface GuildBehavior : Entity, Strategizable {
     suspend fun leave() = kord.rest.user.leaveGuild(id.value)
 
     /**
-     * Requests to get the [Member] represented by the [userId] through the [strategy].
+     * Requests to get the [Member] represented by the [userId].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the member wasn't present.
      */
-    suspend fun getMember(userId: Snowflake): Member = strategy.supply(kord).getMember(id, userId)
+    suspend fun getMember(userId: Snowflake): Member = supplier.getMember(id, userId)
 
     /**
-     * Requests to get the [Member] represented by the [userId] through the [strategy],
+     * Requests to get the [Member] represented by the [userId],
      * returns null if the [Member] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getMemberOrNull(userId: Snowflake): Member? = strategy.supply(kord).getMemberOrNull(id, userId)
+    suspend fun getMemberOrNull(userId: Snowflake): Member? = supplier.getMemberOrNull(id, userId)
 
 
     /**
-     * Requests to get the [Role] represented by the [roleId] through the [strategy].
+     * Requests to get the [Role] represented by the [roleId].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Role] wasn't present.
      */
-    suspend fun getRole(roleId: Snowflake): Role = strategy.supply(kord).getRole(guildId = id, roleId = roleId)
+    suspend fun getRole(roleId: Snowflake): Role = supplier.getRole(guildId = id, roleId = roleId)
 
     /**
-     * Requests to get the [Role] represented by the [roleId] through the [strategy],
+     * Requests to get the [Role] represented by the [roleId],
      * returns null if the [Role] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getRoleOrNull(roleId: Snowflake): Role? = strategy.supply(kord).getRoleOrNull(guildId = id, roleId = roleId)
+    suspend fun getRoleOrNull(roleId: Snowflake): Role? = supplier.getRoleOrNull(guildId = id, roleId = roleId)
 
     /**
      *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
@@ -200,20 +200,20 @@ interface GuildBehavior : Entity, Strategizable {
 
 
     /**
-     * Requests to get the [Ban] of the [User] represented by the [userId] through the [strategy].
+     * Requests to get the [Ban] of the [User] represented by the [userId].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Ban] wasn't present.
      */
-    suspend fun getBan(userId: Snowflake): Ban = strategy.supply(kord).getGuildBan(id, userId)
+    suspend fun getBan(userId: Snowflake): Ban = supplier.getGuildBan(id, userId)
 
     /**
-     * Requests to get the [Ban] of the [User] represented by the [userId] through the [strategy],
+     * Requests to get the [Ban] of the [User] represented by the [userId],
      * returns null if the [Ban] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getBanOrNull(userId: Snowflake): Ban? = strategy.supply(kord).getGuildBanOrNull(id, userId)
+    suspend fun getBanOrNull(userId: Snowflake): Ban? = supplier.getGuildBanOrNull(id, userId)
 
 
     /**
@@ -261,13 +261,13 @@ interface GuildBehavior : Entity, Strategizable {
     /**
      * Returns a new [GuildBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): GuildBehavior = GuildBehavior(id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : GuildBehavior {
+        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : GuildBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
-            override val strategy: EntitySupplyStrategy = strategy
+            override val supplier: EntitySupplier = strategy.supply(kord)
         }
     }
 

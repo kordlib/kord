@@ -2,17 +2,17 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.EmojiData
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
 
 /**
  * An instance of a [Discord emoji](https://discordapp.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.map
 class GuildEmoji(
         val data: EmojiData,
         override val kord: Kord,
-        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+        override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Entity, Strategizable {
 
     override val id: Snowflake
@@ -63,8 +63,16 @@ class GuildEmoji(
 
     /**
      * The [roles][Role] for which this emoji was whitelisted.
+     *
+     * This request uses state [data] to resolve the entities belonging to the flow,
+     * as such it can't guarantee an up to date representation if the [data] is outdated.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val roles: Flow<Role> get() = roleIds.asFlow().map { strategy.supply(kord).getRoleOrNull(guildId, id) }.filterNotNull()
+    val roles: Flow<Role>
+        get() = if (roleIds.isEmpty()) emptyFlow()
+        else supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
     /**
      * The behavior of the [Member] who created the emote, if present.
@@ -82,25 +90,24 @@ class GuildEmoji(
     val user: UserBehavior? get() = userId?.let { UserBehavior(it, kord) }
 
     /**
-     * Requests to get the creator of the emoji through the [strategy] as a [Member],
+     * Requests to get the creator of the emoji as a [Member],
      * returns null if the [Member] isn't present or [userId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getMember(): Member? = userId?.let { strategy.supply(kord).getMemberOrNull(guildId = guildId, userId = it) }
+    suspend fun getMember(): Member? = userId?.let { supplier.getMemberOrNull(guildId = guildId, userId = it) }
 
     /**
-     * Requests to get the creator of the emoji through the [strategy] as a [User],
+     * Requests to get the creator of the emoji as a [User],
      * returns null if the [User] isn't present or [userId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getUser(): User? = userId?.let { strategy.supply(kord).getUserOrNull(it) }
+    suspend fun getUser(): User? = userId?.let { supplier.getUserOrNull(it) }
 
     /**
      * Returns a new [GuildEmoji] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy) = GuildEmoji(data, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>) = GuildEmoji(data, kord, strategy.supply(kord))
 
 }
-

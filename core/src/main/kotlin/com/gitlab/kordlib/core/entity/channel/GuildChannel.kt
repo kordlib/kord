@@ -8,9 +8,9 @@ import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
 import com.gitlab.kordlib.core.entity.PermissionOverwrite
 import com.gitlab.kordlib.core.entity.PermissionOverwriteEntity
 import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.rest.request.RestRequestException
+import com.gitlab.kordlib.core.entity.Member
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import java.lang.IllegalArgumentException
 
 /**
  * An instance of a Discord channel associated to a [guild].
@@ -47,7 +47,7 @@ interface GuildChannel : Channel, GuildChannelBehavior {
      * @throws IllegalArgumentException if the [memberId] is not part of this guild.
      */
     suspend fun getEffectivePermissions(memberId: Snowflake): Permissions {
-        val member = strategy.supply(kord).getMemberOrNull(guildId, memberId)
+        val member = supplier.getMemberOrNull(guildId, memberId)
         require(member != null) {
             "member ${memberId.value} is not in guild ${guildId.value}"
         }
@@ -93,6 +93,6 @@ interface GuildChannel : Channel, GuildChannelBehavior {
     private fun getPermissionOverwritesForType(id: Snowflake, type: PermissionOverwrite.Type): PermissionOverwriteEntity? =
             permissionOverwrites.firstOrNull { it.target == id && it.type == type }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy): GuildChannel
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildChannel
 
 }

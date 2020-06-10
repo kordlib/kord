@@ -2,13 +2,14 @@ package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.Strategizable
 import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
 import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
@@ -21,7 +22,6 @@ import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import java.time.Instant
 import kotlin.coroutines.coroutineContext
-import kotlin.time.ClockMark
 import kotlin.time.TimeMark
 import kotlin.time.seconds
 
@@ -31,7 +31,7 @@ import kotlin.time.seconds
 interface MessageChannelBehavior : ChannelBehavior, Strategizable {
 
     /**
-     * Requests to get the this behavior as a [MessageChannel] through the [strategy].
+     * Requests to get the this behavior as a [MessageChannel].
      *
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
@@ -40,7 +40,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     override suspend fun asChannel(): MessageChannel = super.asChannel() as MessageChannel
 
     /**
-     * Requests to get this behavior as a [MessageChannel] through the [strategy],
+     * Requests to get this behavior as a [MessageChannel],
      * returns null if the channel isn't present or if the channel isn't a guild channel.
      *
      * @throws [RequestException] if something went wrong during the request.
@@ -48,7 +48,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     override suspend fun asChannelOrNull(): MessageChannel? = super.asChannelOrNull() as? MessageChannel
 
     /**
-     * Requests to get all messages in this channel through the [strategy].
+     * Requests to get all messages in this channel.
      *
      * Messages retrieved by this function will be emitted in chronological order (oldest -> newest).
      * Unrestricted consumption of the returned [Flow] is a potentially performance intensive operation, it is thus recommended
@@ -97,7 +97,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     suspend fun deleteMessage(id: Snowflake): Unit = kord.rest.channel.deleteMessage(this.id.value, id.value)
 
     /**
-     * Requests to get all messages in this channel that were created **before** [messageId] through the [strategy].
+     * Requests to get all messages in this channel that were created **before** [messageId].
      *
      * Messages retrieved by this function will be emitted in reverse-chronological older (newest -> oldest).
      *
@@ -118,10 +118,10 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
     fun getMessagesBefore(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
-            strategy.supply(kord).getMessagesBefore(channelId = id, messageId = messageId, limit = limit)
+            supplier.getMessagesBefore(channelId = id, messageId = messageId, limit = limit)
 
     /**
-     * Requests to get all messages in this channel that were created **after** [messageId] through the [strategy].
+     * Requests to get all messages in this channel that were created **after** [messageId].
      *
      * Messages retrieved by this function will be emitted in chronological older (oldest -> newest).
      *
@@ -141,10 +141,10 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
     fun getMessagesAfter(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
-            strategy.supply(kord).getMessagesAfter(channelId = id, messageId = messageId, limit = limit)
+            supplier.getMessagesAfter(channelId = id, messageId = messageId, limit = limit)
 
     /**
-     * Requests to get messages around (both older and newer) the [messageId] through the [strategy].
+     * Requests to get messages around (both older and newer) the [messageId].
      *
      * Messages retrieved by this function will be emitted in chronological older (oldest -> newest).
      *
@@ -160,23 +160,23 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws IllegalArgumentException if the [limit] is outside the range of 1..100.
      */
     fun getMessagesAround(messageId: Snowflake, limit: Int = 100): Flow<Message> =
-            strategy.supply(kord).getMessagesAround(channelId = id, messageId = messageId, limit = 100)
+            supplier.getMessagesAround(channelId = id, messageId = messageId, limit = 100)
 
     /**
-     * Requests to get a message with the given [messageId] through the [strategy].
+     * Requests to get a message with the given [messageId].
      *
      * @throws RequestException if something went wrong during the request.
      * @throws EntityNotFoundException if the message is null.
      */
-    suspend fun getMessage(messageId: Snowflake): Message = strategy.supply(kord).getMessage(id, messageId)
+    suspend fun getMessage(messageId: Snowflake): Message = supplier.getMessage(id, messageId)
 
     /**
-     * Requests to get a message with the given [messageId] through the [strategy],
+     * Requests to get a message with the given [messageId],
      * returns null if the message isn't present or is not part of this channel.
      *
      * @throws RequestException if something went wrong during the request.
      */
-    suspend fun getMessageOrNull(messageId: Snowflake): Message? = strategy.supply(kord).getMessageOrNull(id, messageId)
+    suspend fun getMessageOrNull(messageId: Snowflake): Message? = supplier.getMessageOrNull(id, messageId)
 
     /**
      * Requests to trigger the typing indicator for the bot in this channel.
@@ -217,13 +217,13 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     /**
      * Returns a new [MessageChannelBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): MessageChannelBehavior = MessageChannelBehavior(id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageChannelBehavior = MessageChannelBehavior(id, kord, strategy)
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : MessageChannelBehavior {
+        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : MessageChannelBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
-            override val strategy: EntitySupplyStrategy = strategy
+            override val supplier: EntitySupplier = strategy.supply(kord)
         }
     }
 

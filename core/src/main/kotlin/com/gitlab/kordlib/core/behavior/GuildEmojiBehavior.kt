@@ -1,12 +1,13 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.EmojiData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.GuildEmoji
 import com.gitlab.kordlib.core.entity.Strategizable
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
 
@@ -37,7 +38,7 @@ interface GuildEmojiBehavior : Entity, Strategizable {
     /**
      * Returns a new [GuildEmojiBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): GuildEmojiBehavior =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildEmojiBehavior =
             GuildEmojiBehavior(guildId = guildId, id = id, kord = kord, strategy = strategy)
 
     companion object {
@@ -45,12 +46,12 @@ interface GuildEmojiBehavior : Entity, Strategizable {
                 guildId: Snowflake,
                 id: Snowflake,
                 kord: Kord,
-                strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): GuildEmojiBehavior = object : GuildEmojiBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
-            override val strategy: EntitySupplyStrategy = strategy
+            override val supplier: EntitySupplier = strategy.supply(kord)
         }
     }
 }

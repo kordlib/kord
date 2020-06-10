@@ -2,14 +2,15 @@ package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.entity.channel.CategorizableChannel
 import com.gitlab.kordlib.core.entity.channel.Category
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.getChannelOf
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.rest.builder.channel.CategoryModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.patchCategory
@@ -23,23 +24,23 @@ import kotlinx.coroutines.flow.filterIsInstance
 interface CategoryBehavior : GuildChannelBehavior {
 
     /**
-     * Requests to get this behavior as a [Category] through the [strategy].
+     * Requests to get this behavior as a [Category].
      *
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
      * @throws [ClassCastException] if the channel wasn't a category.
      */
-    override suspend fun asChannel(): Category = strategy.supply(kord).getChannelOf(id)
+    override suspend fun asChannel(): Category = supplier.getChannelOf(id)
 
     /**
-     * Requests to get this behavior as a [Category] through the [strategy],
+     * Requests to get this behavior as a [Category],
      * returns null if the channel isn't present or is not a category.
      *
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
      * @throws [ClassCastException] if the channel wasn't a category.
      */
-    override suspend fun asChannelOrNull(): Category? = strategy.supply(kord).getChannelOf(id)
+    override suspend fun asChannelOrNull(): Category? = supplier.getChannelOf(id)
 
 
     /**
@@ -49,7 +50,7 @@ interface CategoryBehavior : GuildChannelBehavior {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val channels: Flow<CategorizableChannel>
-        get() = guild.withStrategy(strategy).channels
+        get() = supplier.getGuildChannels(guildId)
                 .filterIsInstance<CategorizableChannel>()
                 .filter { it.categoryId == id }
 
@@ -58,7 +59,7 @@ interface CategoryBehavior : GuildChannelBehavior {
      * Returns a new [CategoryBehavior] with the given [strategy].
      */
     override fun withStrategy(
-            strategy: EntitySupplyStrategy
+            strategy: EntitySupplyStrategy<*>
     ): CategoryBehavior = CategoryBehavior(guildId, id, kord, strategy)
 
     companion object {
@@ -66,12 +67,12 @@ interface CategoryBehavior : GuildChannelBehavior {
                 guildId: Snowflake,
                 id: Snowflake,
                 kord: Kord,
-                strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): CategoryBehavior = object : CategoryBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
-            override val strategy: EntitySupplyStrategy = strategy
+            override val supplier: EntitySupplier = strategy.supply(kord)
         }
     }
 }

@@ -1,16 +1,15 @@
 package com.gitlab.kordlib.core.behavior
 
-import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.KordCache
 import com.gitlab.kordlib.core.cache.data.PresenceData
 import com.gitlab.kordlib.core.cache.data.VoiceStateData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.member.MemberModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
@@ -36,20 +35,20 @@ interface MemberBehavior : Entity, UserBehavior {
     val nicknameMention get() = "<@!${id.value}>"
 
     /**
-     * Requests to get the this behavior as a [Member] through the [strategy].
+     * Requests to get the this behavior as a [Member].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the member wasn't present.
      */
-    suspend fun asMember(): Member = strategy.supply(kord).getMember(guildId, id)
+    suspend fun asMember(): Member = supplier.getMember(guildId, id)
 
     /**
-     * Requests to get this behavior as a [Member] through the [strategy],
+     * Requests to get this behavior as a [Member],
      * returns null if the member isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asMemberOrNull(): Member? = strategy.supply(kord).getMemberOrNull(guildId, id)
+    suspend fun asMemberOrNull(): Member? = supplier.getMemberOrNull(guildId, id)
 
 
     /**
@@ -76,20 +75,20 @@ interface MemberBehavior : Entity, UserBehavior {
     }
 
     /**
-     * Requests to get the [Guild] this member is part of through the [strategy].
+     * Requests to get the [Guild] this member is part of.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Guild] wasn't present.
      */
-    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
+    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
-     * Requests to get the [Guild] this member is part of through the [strategy],
+     * Requests to get the [Guild] this member is part of,
      * returns null if the [Guild] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
+    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     /**
      * Requests to remove the [Role] with the [roleId] from this member.
@@ -101,7 +100,7 @@ interface MemberBehavior : Entity, UserBehavior {
     }
 
     /**
-     * Requests to get the [Presence] of this member in the [guild] through the [strategy].
+     * Requests to get the [Presence] of this member in the [guild].
      *
      * This property is not resolvable through REST and will always use the [KordCache] instead.
      *
@@ -115,7 +114,7 @@ interface MemberBehavior : Entity, UserBehavior {
     )
 
     /**
-     * Requests to get the [Presence] of this member in the [guild] through the [strategy],
+     * Requests to get the [Presence] of this member in the [guild],
      * returns null if the [Presence] isn't present.
      *
      * This property is not resolvable through REST and will always use the [KordCache] instead.
@@ -132,7 +131,7 @@ interface MemberBehavior : Entity, UserBehavior {
     }
 
     /**
-     * Requests to get the [VoiceState] of this member in the [guild] through the [strategy].
+     * Requests to get the [VoiceState] of this member in the [guild].
      *
      * This property is not resolvable through REST and will always use the [KordCache] instead.
      *
@@ -146,7 +145,7 @@ interface MemberBehavior : Entity, UserBehavior {
     )
 
     /**
-     * Requests to get the [VoiceState] of this member in the [guild] through the [strategy],
+     * Requests to get the [VoiceState] of this member in the [guild],
      * returns null if the [VoiceState] isn't present.
      *
      * This property is not resolvable through REST and will always use the [KordCache] instead.
@@ -154,7 +153,7 @@ interface MemberBehavior : Entity, UserBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getVoiceStateOrNull(): VoiceState? {
-        val data = kord.cache.find<VoiceStateData> {
+        val data = kord.cache.query<VoiceStateData> {
             VoiceStateData::userId eq id.longValue
             VoiceStateData::guildId eq guildId.longValue
         }.singleOrNull() ?: return null
@@ -165,14 +164,14 @@ interface MemberBehavior : Entity, UserBehavior {
     /**
      * Returns a new [MemberBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): MemberBehavior = MemberBehavior(guildId = guildId, id = id, kord = kord, strategy = strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberBehavior = MemberBehavior(guildId = guildId, id = id, kord = kord, strategy = strategy)
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): MemberBehavior = object : MemberBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): MemberBehavior = object : MemberBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
-            override val strategy: EntitySupplyStrategy = strategy
+            override val supplier: EntitySupplier = strategy.supply(kord)
         }
     }
 

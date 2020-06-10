@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Strategizable
@@ -9,6 +9,7 @@ import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.common.exception.RequestException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 
 /**
  * The behavior of a [Discord Channel](https://discordapp.com/developers/docs/resources/channel)
@@ -22,20 +23,20 @@ interface ChannelBehavior : Entity, Strategizable {
     val mention get() = "<#${id.value}>"
 
     /**
-     * Requests to get this behavior as a [Channel]  through the [strategy].
+     * Requests to get this behavior as a [Channel] .
      *
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
      */
-    suspend fun asChannel(): Channel = strategy.supply(kord).getChannel(id)
+    suspend fun asChannel(): Channel = supplier.getChannel(id)
 
     /**
-     * Requests to get this behavior as a [Channel] through the [strategy],
+     * Requests to get this behavior as a [Channel],
      * returns null if the channel isn't present.
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun asChannelOrNull(): Channel? = strategy.supply(kord).getChannelOrNull(id)
+    suspend fun asChannelOrNull(): Channel? = supplier.getChannelOrNull(id)
 
     /**
      * Requests to delete a channel (or close it if this is a dm channel).
@@ -49,13 +50,13 @@ interface ChannelBehavior : Entity, Strategizable {
     /**
      * Returns a new [ChannelBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy) : ChannelBehavior = ChannelBehavior(id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>) : ChannelBehavior = ChannelBehavior(id, kord, strategy)
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy) = object : ChannelBehavior {
+        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : ChannelBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
-            override val strategy: EntitySupplyStrategy = strategy
+            override val supplier: EntitySupplier = strategy.supply(kord)
 
         }
     }

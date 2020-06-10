@@ -1,5 +1,5 @@
 import com.gitlab.kordlib.cache.api.put
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
@@ -14,7 +14,6 @@ import kotlin.test.assertNull
 @Disabled
 class StrategyTest {
 
-
     lateinit var kord: Kord
 
     @BeforeAll
@@ -24,27 +23,27 @@ class StrategyTest {
 
     @Test
     fun `rest only`() = runBlocking {
-        kord.with(EntitySupplyStrategy.Rest).getSelf()
-        val incache = kord.cache.getSelf()
-        assertNull(incache)
+        kord.with(EntitySupplyStrategy.rest).getSelf()
+        val inCache = kord.with(EntitySupplyStrategy.cache).getSelfOrNull()
+        assertNull(inCache)
     }
 
     @Test
     @Disabled
     fun `cache only`() = runBlocking {
-        val self = kord.with(EntitySupplyStrategy.Rest).getSelf()
-        kord.cache.put(self!!.data)
+        val self = kord.with(EntitySupplyStrategy.rest).getSelf()
+        kord.cache.put(self.data)
 
-        val incache = kord.with(EntitySupplyStrategy.Cache).getSelf()
-        assertEquals(self, incache)
+        val inCache = kord.with(EntitySupplyStrategy.cache).getSelf()
+        assertEquals(self, inCache)
     }
 
     @Test
-    fun `cache fallsback to rest`() = runBlocking {
-        val cache = kord.with(EntitySupplyStrategy.Cache)
-        val incache = cache.getSelf()
+    fun `cache falls back to rest`() = runBlocking {
+        val cache = kord.with(EntitySupplyStrategy.cache)
+        val inCache = cache.getSelf()
 
-        assertNull(incache)
+        assertNull(inCache)
 
         val self = kord.getSelf()
         assertNotNull(self)

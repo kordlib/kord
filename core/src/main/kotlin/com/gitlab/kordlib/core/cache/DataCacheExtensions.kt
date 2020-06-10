@@ -1,7 +1,7 @@
 package com.gitlab.kordlib.core.cache
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.find
+import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.core.cache.data.*
 
 /**
@@ -24,16 +24,16 @@ internal suspend fun DataCache.registerKordData() = register(
  * Removes all cached Kord data instances from this cache
  */
 internal suspend fun DataCache.removeKordData() {
-    find<RoleData>().remove()
-    find<ChannelData>().remove()
-    find<GuildData>().remove()
-    find<MemberData>().remove()
-    find<UserData>().remove()
-    find<MessageData>().remove()
-    find<EmojiData>().remove()
-    find<WebhookData>().remove()
-    find<PresenceData>().remove()
-    find<VoiceStateData>().remove()
+    query<RoleData>().remove()
+    query<ChannelData>().remove()
+    query<GuildData>().remove()
+    query<MemberData>().remove()
+    query<UserData>().remove()
+    query<MessageData>().remove()
+    query<EmojiData>().remove()
+    query<WebhookData>().remove()
+    query<PresenceData>().remove()
+    query<VoiceStateData>().remove()
 }
 
 /**

@@ -1,6 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
 
 /**
@@ -16,6 +16,6 @@ interface GuildMessageChannel : CategorizableChannel, MessageChannel, GuildMessa
     /**
      * Returns a new [GuildMessageChannel] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): GuildMessageChannel
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildMessageChannel
 
 }

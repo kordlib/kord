@@ -1,11 +1,12 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.UserData
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.rest.Image
 
 /**
@@ -13,7 +14,7 @@ import com.gitlab.kordlib.rest.Image
  */
 open class User(
         val data: UserData,
-        override val kord: Kord, override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+        override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier
 ) : UserBehavior {
 
     override val id: Snowflake
@@ -51,7 +52,7 @@ open class User(
     /**
      * Returns a new [User] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): User = User(data, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): User = User(data, kord, strategy.supply(kord))
 
     data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 

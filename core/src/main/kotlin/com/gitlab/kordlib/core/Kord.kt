@@ -1,19 +1,20 @@
 package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
+import com.gitlab.kordlib.common.annotation.KordUnsafe
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.builder.presence.PresenceUpdateBuilder
-import com.gitlab.kordlib.core.cache.KordCache
 import com.gitlab.kordlib.core.cache.data.ApplicationInfoData
 import com.gitlab.kordlib.core.cache.data.GuildData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
-import com.gitlab.kordlib.core.rest.KordRestClient
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.start
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
@@ -30,11 +31,11 @@ import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 val kordLogger = KotlinLogging.logger { }
 
-class Kord internal constructor(
+class Kord(
         val resources: ClientResources,
-        cache: DataCache,
+        val cache: DataCache,
         val gateway: Gateway,
-        rest: RestClient,
+        val rest: RestClient,
         val selfId: Snowflake,
         private val eventPublisher: BroadcastChannel<Event>,
         private val dispatcher: CoroutineDispatcher
@@ -45,11 +46,9 @@ class Kord internal constructor(
         launch { interceptor.start() }
     }
 
-    val cache: KordCache = KordCache(this, cache)
+    val defaultSupplier: EntitySupplier = resources.defaultStrategy.supply(this)
 
-    val rest: KordRestClient = KordRestClient(this, rest)
-
-    @Suppress("EXPERIMENTAL_API_USAGE")
+    @OptIn(KordUnsafe::class)
     val unsafe: Unsafe = Unsafe(this)
 
     val events get() = eventPublisher.asFlow()
@@ -57,13 +56,9 @@ class Kord internal constructor(
     override val coroutineContext: CoroutineContext
         get() = dispatcher + Job()
 
-
     val regions: Flow<Region>
         get() = resources.defaultStrategy.supply(this).regions
 
-    /**
-     * Gets all guilds from the [ClientResources.defaultStrategy].
-     */
     val guilds: Flow<Guild>
         get() = resources.defaultStrategy.supply(this).guilds
 
@@ -89,12 +84,9 @@ class Kord internal constructor(
         this.eventPublisher.close()
     }
 
-    fun with(strategy: EntitySupplyStrategy) = strategy.supply(this)
+    fun <T : EntitySupplier> with(strategy: EntitySupplyStrategy<T>): T = strategy.supply(this)
 
-    suspend fun getApplicationInfo(): ApplicationInfo {
-        val response = rest.application.getCurrentApplicationInfo()
-        return ApplicationInfo(ApplicationInfoData.from(response), this)
-    }
+    suspend fun getApplicationInfo(): ApplicationInfo = with(EntitySupplyStrategy.rest).getApplicationInfo()
 
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         val response = rest.guild.createGuild(builder)
@@ -103,24 +95,15 @@ class Kord internal constructor(
         return Guild(data, this)
     }
 
-    suspend fun getChannel(id: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Channel? = strategy.supply(this).getChannel(id)
+    suspend fun getChannel(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Channel? = strategy.supply(this).getChannelOrNull(id)
 
-    suspend fun getGuild(id: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Guild? = strategy.supply(this).getGuild(id)
+    suspend fun getGuild(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Guild? = strategy.supply(this).getGuildOrNull(id)
 
-    suspend fun getMember(guildId: Snowflake, userId: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Member? =
-            strategy.supply(this).getMember(guildId, userId)
+    suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =
+            strategy.supply(this).getSelf()
 
-    suspend fun getMessage(channelId: Snowflake, messageId: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Message? =
-            strategy.supply(this).getMessage(channelId, messageId)
-
-    suspend fun getRole(guildId: Snowflake, roleId: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): Role? =
-            strategy.supply(this).getRole(guildId, roleId)
-
-    suspend fun getSelf(strategy: EntitySupplyStrategy = resources.defaultStrategy): User =
-            strategy.supply(this).getSelf() ?: rest.getSelf()
-
-    suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy = resources.defaultStrategy): User? =
-            strategy.supply(this).getUser(id)
+    suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User? =
+            strategy.supply(this).getUserOrNull(id)
 
     suspend inline fun editPresence(builder: PresenceUpdateBuilder.() -> Unit) {
         val request = PresenceUpdateBuilder().apply(builder).toRequest()

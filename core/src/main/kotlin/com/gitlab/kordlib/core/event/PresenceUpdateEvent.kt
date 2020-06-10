@@ -6,7 +6,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.entity.Presence
 import com.gitlab.kordlib.core.entity.User
 
-class PresenceUpdateEvent internal constructor(
+class PresenceUpdateEvent(
         val oldUser: User?,
         val user: DiscordPresenceUser,
         val guildId: Snowflake,

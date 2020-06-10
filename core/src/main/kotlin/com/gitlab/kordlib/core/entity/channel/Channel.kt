@@ -3,10 +3,11 @@ package com.gitlab.kordlib.core.entity.channel
 import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.common.entity.ChannelType.*
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.ChannelData
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 
 /**
  * An instance of a [Discord Channel](https://discordapp.com/developers/docs/resources/channel)
@@ -25,7 +26,7 @@ interface Channel : ChannelBehavior {
     /**
      * Returns a new [Channel] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): Channel =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Channel =
             from(data, kord, strategy)
 
     companion object {
@@ -37,7 +38,7 @@ interface Channel : ChannelBehavior {
         fun from(
                 data: ChannelData,
                 kord: Kord,
-                strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): Channel = when (data.type) {
             GuildText -> TextChannel(data, kord)
             DM, GroupDm -> DmChannel(data, kord)
@@ -48,7 +49,7 @@ interface Channel : ChannelBehavior {
             else -> object : Channel {
                 override val data: ChannelData = data
                 override val kord: Kord = kord
-                override val strategy: EntitySupplyStrategy = strategy
+                override val supplier: EntitySupplier = strategy.supply(kord)
             }
         }
     }

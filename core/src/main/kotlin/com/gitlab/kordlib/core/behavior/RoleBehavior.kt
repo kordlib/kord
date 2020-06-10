@@ -1,8 +1,7 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.RoleData
 import com.gitlab.kordlib.core.entity.Entity
@@ -10,6 +9,7 @@ import com.gitlab.kordlib.core.entity.Role
 import com.gitlab.kordlib.core.entity.Strategizable
 import com.gitlab.kordlib.core.indexOfFirstOrNull
 import com.gitlab.kordlib.core.sorted
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.rest.builder.role.RoleModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
 import kotlinx.coroutines.flow.Flow
@@ -56,7 +56,7 @@ interface RoleBehavior : Entity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun getPosition(): Int = guild.withStrategy(strategy).roles.sorted().indexOfFirstOrNull { it.id == id }!!
+    suspend fun getPosition(): Int = supplier.getGuildRoles(guildId).sorted().indexOfFirstOrNull { it.id == id }!!
 
     /**
      * Requests to delete this role.
@@ -70,14 +70,14 @@ interface RoleBehavior : Entity, Strategizable {
     /**
      * Returns a new [RoleBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): RoleBehavior = RoleBehavior(guildId, id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleBehavior = RoleBehavior(guildId, id, kord, strategy)
 
     companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy = kord.resources.defaultStrategy): RoleBehavior = object : RoleBehavior {
+        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): RoleBehavior = object : RoleBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
-            override val strategy: EntitySupplyStrategy = strategy
+            override val supplier: EntitySupplier = strategy.supply(kord)
         }
     }
 }

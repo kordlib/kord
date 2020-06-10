@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.core
+package com.gitlab.kordlib.core.supplier
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.Flow
 /**
  * An abstraction that allows for requesting Discord entities.
  *
- * @see com.gitlab.kordlib.core.cache.KordCache
- * @see com.gitlab.kordlib.core.rest.KordRestClient
+ * @see RestEntitySupplier
+ * @see CacheEntitySupplier
  */
 interface EntitySupplier {
 

@@ -15,6 +15,9 @@ import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.flow.first
@@ -27,7 +30,7 @@ import java.time.format.DateTimeFormatter
 class Guild(
         val data: GuildData,
         override val kord: Kord,
-        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+        override val supplier: EntitySupplier = kord.defaultSupplier
 ) : GuildBehavior {
 
     override val id: Snowflake get() = Snowflake(data.id)
@@ -198,13 +201,13 @@ class Guild(
     val roleBehaviors: Set<RoleBehavior> get() = data.roles.asSequence().map { RoleBehavior(id = Snowflake(it), guildId = id, kord = kord) }.toSet()
 
     /**
-     * Requests to get the [VoiceChannel] represented by the [afkChannelId] through the [strategy],
+     * Requests to get the [VoiceChannel] represented by the [afkChannelId],
      * returns null if the [afkChannelId] isn't present or the channel itself isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [VoiceChannel] wasn't present.
      */
-    suspend fun getAfkChannel(): VoiceChannel? = afkChannelId?.let { strategy.supply(kord).getChannelOfOrNull(it) }
+    suspend fun getAfkChannel(): VoiceChannel? = afkChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Gets the banner url in the specified format.
@@ -221,47 +224,47 @@ class Guild(
     }
 
     /**
-     * Requests to get the [GuildChannel] represented by the [embedChannel] through the [strategy],
+     * Requests to get the [GuildChannel] represented by the [embedChannel],
      * returns null if the [GuildChannel] isn't present or [embedChannel] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getEmbedChannel(): GuildChannel? = embedChannelId?.let { strategy.supply(kord).getChannelOfOrNull(it) }
+    suspend fun getEmbedChannel(): GuildChannel? = embedChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
-     * Requests to get the [GuildEmoji] represented by the [emojiId] in this guild through the [strategy].
+     * Requests to get the [GuildEmoji] represented by the [emojiId] in this guild.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [GuildEmoji] wasn't present.
      */
     suspend fun getEmoji(emojiId: Snowflake): GuildEmoji =
-            strategy.supply(kord).getEmoji(guildId = id, emojiId = emojiId)
+            supplier.getEmoji(guildId = id, emojiId = emojiId)
 
     /**
-     * Requests to get the [GuildEmoji] represented by the [emojiId] in this guild through the [strategy],
+     * Requests to get the [GuildEmoji] represented by the [emojiId] in this guild,
      * returns null if the [GuildEmoji] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getEmojiOrNull(emojiId: Snowflake): GuildEmoji? =
-            strategy.supply(kord).getEmojiOrNull(guildId = id, emojiId = emojiId)
+            supplier.getEmojiOrNull(guildId = id, emojiId = emojiId)
 
 
     /**
-     * Requests to get the `@everyone` [Role] through the [strategy].
+     * Requests to get the `@everyone` [Role].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Role] wasn't present.
      */
-    suspend fun getEveryoneRole(): Role = strategy.supply(kord).getRole(id, id)
+    suspend fun getEveryoneRole(): Role = supplier.getRole(id, id)
 
     /**
-     * Requests to get the `@everyone` [Role] through the [strategy],
+     * Requests to get the `@everyone` [Role],
      * returns null if the [Role] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getEveryoneRoleOrNull(): Role? = strategy.supply(kord).getRoleOrNull(id, id)
+    suspend fun getEveryoneRoleOrNull(): Role? = supplier.getRoleOrNull(id, id)
 
     /**
      * Gets the discovery splash url in the specified [format], if present.
@@ -295,23 +298,23 @@ class Guild(
     }
 
     /**
-     * Requests to get the owner of this guild as a [Member] through the [strategy].
+     * Requests to get the owner of this guild as a [Member].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Member] wasn't present.
      */
-    suspend fun getOwner(): Member = strategy.supply(kord).getMember(id, ownerId)
+    suspend fun getOwner(): Member = supplier.getMember(id, ownerId)
 
     /**
-     * Requests to get the owner of this guild as a [Member] through the [strategy],
+     * Requests to get the owner of this guild as a [Member],
      * returns null if the [Member] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getOwnerOrNull(): Member? = strategy.supply(kord).getMemberOrNull(id, ownerId)
+    suspend fun getOwnerOrNull(): Member? = supplier.getMemberOrNull(id, ownerId)
 
     /**
-     * Requests to get the [voice region][Region] of this guild through the [strategy].
+     * Requests to get the [voice region][Region] of this guild.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Region] wasn't present.
@@ -321,7 +324,7 @@ class Guild(
 
     /**
      * Requests to get the the channel in which a discoverable server's rules should be found represented
-     * through the [strategy], returns null if the [GuildMessageChannel] isn't present, or [rulesChannelId] is null.
+     *, returns null if the [GuildMessageChannel] isn't present, or [rulesChannelId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -343,18 +346,18 @@ class Guild(
     }
 
     /**
-     * Requests to get the channel where system messages (member joins, server boosts, etc) through the [strategy],
+     * Requests to get the channel where system messages (member joins, server boosts, etc),
      * returns null if the [TextChannel] isn't present or the [systemChannelId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getSystemChannel(): TextChannel? =
-            systemChannelId?.let { strategy.supply(kord).getChannelOfOrNull(it) }
+            systemChannelId?.let { supplier.getChannelOfOrNull(it) }
 
 
     /**
      * Returns a new [Guild] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): Guild = Guild(data, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Guild = Guild(data, kord, strategy.supply(kord))
 
 }

@@ -2,13 +2,14 @@ package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.cache.data.InviteData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.rest.builder.channel.ChannelPermissionModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.RestClient
@@ -54,7 +55,7 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
         }
 
     /**
-     * Requests to get this behavior as a [GuildChannel] through the [strategy].
+     * Requests to get this behavior as a [GuildChannel].
      *
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
@@ -63,7 +64,7 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
     override suspend fun asChannel(): GuildChannel = super.asChannel() as GuildChannel
 
     /**
-     * Requests to get this behavior as a [GuildChannel] through the [strategy],
+     * Requests to get this behavior as a [GuildChannel],
      * returns null if the channel isn't present or if the channel isn't a guild channel.
      *
      * @throws [RequestException] if something went wrong during the request.
@@ -71,20 +72,20 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
     override suspend fun asChannelOrNull(): GuildChannel? = super.asChannelOrNull() as? GuildChannel
 
     /**
-     * Requests to get this channel's [Guild] through the [strategy].
+     * Requests to get this channel's [Guild].
      *
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the guild wasn't present.
      */
-    suspend fun getGuild(): Guild = strategy.supply(kord).getGuild(guildId)
+    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
-     * Requests to get this channel's [Guild] through the [strategy],
+     * Requests to get this channel's [Guild],
      * returns null if the guild isn't present.
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = strategy.supply(kord).getGuildOrNull(guildId)
+    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     /**
      * Requests to add or replace a [PermissionOverwrite] to this entity.
@@ -97,11 +98,11 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
 
     /**
      * Requests to get the position of this channel in the [guild], as displayed in Discord,
-     * through the [strategy].
+     *.
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getPosition(): Int = guild.withStrategy(strategy).channels.withIndex().first { it.value.id == id }.index
+    suspend fun getPosition(): Int = supplier.getGuildChannels(guildId).withIndex().first { it.value.id == id }.index
 
     override fun compareTo(other: Entity): Int {
         if (other !is GuildChannelBehavior) return super.compareTo(other)
@@ -116,7 +117,7 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
      * Returns a new [GuildChannelBehavior] with the given [strategy].
      */
     override fun withStrategy(
-            strategy: EntitySupplyStrategy
+            strategy: EntitySupplyStrategy<*>
     ): GuildChannelBehavior = GuildChannelBehavior(guildId, id, kord, strategy)
 
     companion object {
@@ -124,12 +125,12 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
                 guildId: Snowflake,
                 id: Snowflake,
                 kord: Kord,
-                strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
+                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): GuildChannelBehavior = object : GuildChannelBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
-            override val strategy: EntitySupplyStrategy = strategy
+            override val supplier: EntitySupplier = strategy.supply(kord)
         }
     }
 

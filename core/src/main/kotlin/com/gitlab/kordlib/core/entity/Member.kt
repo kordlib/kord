@@ -4,12 +4,13 @@ import com.gitlab.kordlib.common.entity.Permission
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.EntitySupplyStrategy
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.cache.data.MemberData
 import com.gitlab.kordlib.core.cache.data.UserData
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.toInstant
 import kotlinx.coroutines.flow.*
 import java.time.Instant
@@ -22,8 +23,8 @@ class Member(
         val memberData: MemberData,
         userData: UserData,
         kord: Kord,
-        override val strategy: EntitySupplyStrategy = kord.resources.defaultStrategy
-) : User(userData, kord, strategy), MemberBehavior {
+        supplier: EntitySupplier = kord.defaultSupplier
+) : User(userData, kord, supplier), MemberBehavior {
 
     override val guildId: Snowflake
         get() = Snowflake(memberData.guildId)
@@ -62,10 +63,15 @@ class Member(
     /**
      * The [roles][Role] that apply to this user.
      *
+     * This request uses state [data] to resolve the entities belonging to the flow,
+     * as such it can't guarantee an up to date representation if the [data] is outdated.
+     *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val roles: Flow<Role> get() = roleIds.asFlow().map { strategy.supply(kord).getRoleOrNull(guildId, it) }.filterNotNull()
+    val roles: Flow<Role>
+        get() = if (roleIds.isEmpty()) emptyFlow()
+        else supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
     /**
      * Whether this member's [id] equals the [Guild.ownerId].
@@ -98,6 +104,6 @@ class Member(
     /**
      * Returns a new [Member] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy): Member = Member(memberData, data, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Member = Member(memberData, data, kord, strategy.supply(kord))
 
 }
