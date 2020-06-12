@@ -1,12 +1,11 @@
 package com.gitlab.kordlib.rest.builder.message
 
+import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.rest.builder.KordDsl
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.AllowedMentions
 import com.gitlab.kordlib.rest.json.request.MessageCreateRequest
 import com.gitlab.kordlib.rest.json.request.MultipartMessageCreateRequest
-import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
@@ -19,19 +18,11 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     var nonce: String? = null
     var tts: Boolean? = null
     var embed: EmbedBuilder? = null
-    private val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+    var allowedMentions: AllowedMentionsBuilder? = null
+    val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
     inline fun embed(block: EmbedBuilder.() -> Unit) {
         embed = (embed ?: EmbedBuilder()).apply(block)
-    }
-
-    /**
-     * Configures the mentions that should trigger a ping. Not calling this function will result in the default behavior
-     * (ping everything), calling this function but not configuring it before the request is build will result in all
-     * pings being ignored.
-     */
-    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
-        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
     fun addFile(name: String, content: InputStream) {
@@ -77,7 +68,7 @@ class AllowedMentionsBuilder {
      */
     operator fun MentionTypes.unaryPlus() = types.add(this)
 
-    fun build() : AllowedMentions = AllowedMentions(
+    fun build(): AllowedMentions = AllowedMentions(
             parse = types.map { it.serialName },
             users = users.map { it.value },
             roles = roles.map { it.value }

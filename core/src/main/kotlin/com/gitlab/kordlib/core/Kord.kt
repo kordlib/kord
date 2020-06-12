@@ -1,15 +1,11 @@
 package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.find
-import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
-import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
-import com.gitlab.kordlib.core.builder.presence.PresenceUpdateBuilder
 import com.gitlab.kordlib.core.cache.KordCache
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
@@ -17,7 +13,9 @@ import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.gateway.Gateway
+import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 import com.gitlab.kordlib.gateway.start
+import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.rest.request.RequestException
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.CoroutineDispatcher
@@ -89,9 +87,9 @@ class Kord internal constructor(
     /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
-    suspend inline fun login(builder: PresenceUpdateBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
+    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
         shard = DiscordShard(0, resources.shardCount)
-        presence = PresenceUpdateBuilder().apply(builder).toGatewayPresence()
+        presence(builder)
         name = "kord"
     }
 
