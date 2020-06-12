@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.entity
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.AttachmentData
+import java.util.*
 
 /**
  * An instance of a [Discord Attachment](https://discordapp.com/developers/docs/resources/channel#attachment-object).
@@ -53,5 +54,12 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : Entit
      * If this file is an image. Denoted by the presence of a [width] and [height].
      */
     val isImage: Boolean get() = height == width && height == null
+
+    override fun hashCode(): Int = Objects.hash(id)
+
+    override fun equals(other: Any?): Boolean = when(other) {
+        is Attachment -> other.id == id
+        else -> false
+    }
 
 }

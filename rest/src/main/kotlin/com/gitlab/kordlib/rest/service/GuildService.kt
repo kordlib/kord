@@ -5,6 +5,7 @@ import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
+import com.gitlab.kordlib.rest.builder.integration.IntegrationModifyBuilder
 import com.gitlab.kordlib.rest.builder.member.MemberAddBuilder
 import com.gitlab.kordlib.rest.builder.member.MemberModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
@@ -14,6 +15,7 @@ import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
+import com.gitlab.kordlib.common.entity.DiscordGuild
 
 class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
@@ -21,7 +23,19 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         body(GuildCreateRequest.serializer(), GuildCreateBuilder().apply(builder).toRequest())
     }
 
-    suspend fun getGuild(guildId: String) = call(Route.GuildGet) {
+    /**
+     * @param withCounts whether to include the [DiscordGuild.approximateMemberCount]
+     * and [DiscordGuild.approximatePresenceCount] fields, `false` by default.
+     */
+    suspend fun getGuild(guildId: String, withCounts: Boolean = false) = call(Route.GuildGet) {
+        keys[Route.GuildId] = guildId
+        parameter("with_count", withCounts.toString())
+    }
+
+    /**
+     * Returns the preview of this [guildId].
+     */
+    suspend fun getGuildPreview(guildId: String) = call(Route.GuildPreviewGet) {
         keys[Route.GuildId] = guildId
     }
 
@@ -184,10 +198,21 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         body(GuildIntegrationCreateRequest.serializer(), integration)
     }
 
+    @Deprecated("use the inline builder instead", ReplaceWith("""modifyGuildIntegration(guildId, integrationId) {
+        | this.expireBehavior = integration.expireBehavior,
+        | this.expirePeriod = integration.expirePeriod,
+        | this.emoticons = integration.emoticons
+        |})"""), DeprecationLevel.WARNING)
     suspend fun modifyGuildIntegration(guildId: String, integrationId: String, integration: GuildIntegrationModifyRequest) = call(Route.GuildIntegrationPatch) {
         keys[Route.GuildId] = guildId
         keys[Route.IntegrationId] = integrationId
         body(GuildIntegrationModifyRequest.serializer(), integration)
+    }
+
+    suspend inline fun modifyGuildIntegration(guildId: String, integrationId: String, builder: IntegrationModifyBuilder.() -> Unit) = call(Route.GuildIntegrationPatch) {
+        keys[Route.GuildId] = guildId
+        keys[Route.IntegrationId] = integrationId
+        body(GuildIntegrationModifyRequest.serializer(), IntegrationModifyBuilder().apply(builder).toRequest())
     }
 
     suspend fun deleteGuildIntegration(guildId: String, integrationId: String) = call(Route.GuildIntegrationDelete) {

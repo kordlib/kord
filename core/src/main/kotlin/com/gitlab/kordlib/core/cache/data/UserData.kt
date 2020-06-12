@@ -2,6 +2,9 @@ package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.DiscordUser
+import com.gitlab.kordlib.common.entity.Premium
+import com.gitlab.kordlib.common.entity.UserFlag
+import com.gitlab.kordlib.common.entity.UserFlags
 import com.gitlab.kordlib.gateway.DiscordInviteUser
 import kotlinx.serialization.Serializable
 
@@ -11,7 +14,9 @@ data class UserData(
         val username: String,
         val discriminator: String,
         val avatar: String? = null,
-        val bot: Boolean? = null
+        val bot: Boolean? = null,
+        val flags: UserFlags? = null,
+        val premium: Premium? = null
 ) {
     companion object {
 
@@ -29,7 +34,9 @@ data class UserData(
                     username,
                     discriminator,
                     avatar,
-                    bot
+                    bot,
+                    flags,
+                    premiumType
             )
         }
 

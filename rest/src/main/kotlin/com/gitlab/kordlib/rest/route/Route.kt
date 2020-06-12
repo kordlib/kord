@@ -1,15 +1,12 @@
 package com.gitlab.kordlib.rest.route
 
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.rest.json.optional
 import com.gitlab.kordlib.rest.json.response.*
 import io.ktor.http.HttpMethod
-import kotlinx.serialization.Decoder
-import kotlinx.serialization.DeserializationStrategy
-import kotlinx.serialization.SerialDescriptor
+import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.internal.*
 import com.gitlab.kordlib.common.entity.DiscordEmoji as EmojiEntity
 
 internal const val REST_VERSION_PROPERTY_NAME = "com.gitlab.kordlib.rest.version"
@@ -180,7 +177,7 @@ sealed class Route<T>(
         : Route<List<DiscordGuildMember>>(HttpMethod.Get, "/guilds/$GuildId/members", ListSerializer(DiscordGuildMember.serializer()))
 
     object GuildMemberPut
-        : Route<DiscordGuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", DiscordGuildMember.serializer().nullable)
+        : Route<DiscordGuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", DiscordGuildMember.serializer().optional)
 
     object GuildMemberPatch
         : Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/members/$UserId", NoStrategy)
@@ -237,7 +234,7 @@ sealed class Route<T>(
         : Route<List<InviteResponse>>(HttpMethod.Get, "/guilds/$GuildId/invites", ListSerializer(InviteResponse.serializer()))
 
     object GuildIntegrationGet
-        : Route<List<DiscordGuildIntegrations>>(HttpMethod.Get, "/guilds/$GuildId/integrations", ListSerializer(DiscordGuildIntegrations.serializer()))
+        : Route<List<IntegrationResponse>>(HttpMethod.Get, "/guilds/$GuildId/integrations", ListSerializer(IntegrationResponse.serializer()))
 
     object GuildIntegrationPost
         : Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations", NoStrategy)
@@ -263,6 +260,14 @@ sealed class Route<T>(
     //TODO must return an image
     object GuildWidgetGet
         : Route<Unit>(HttpMethod.Get, "/guilds/$GuildId/widget", NoStrategy)
+
+    /**
+     * Returns the guild preview object for the given id, even if the user is not in the guild.
+     *
+     * This endpoint is only for Public guilds.
+     */
+    object GuildPreviewGet
+        : Route<DiscordGuildPreview>(HttpMethod.Get, "/guilds/${GuildId}/preview", DiscordGuildPreview.serializer())
 
     object ChannelWebhooksGet
         : Route<List<DiscordWebhook>>(HttpMethod.Get, "/channels/$ChannelId/webhooks", ListSerializer(DiscordWebhook.serializer()))
@@ -294,7 +299,7 @@ sealed class Route<T>(
     //TODO Make sure of the return of these routes below
 
     object ExecuteWebhookPost
-        : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
+        : Route<DiscordMessage?>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", DiscordMessage.serializer().optional)
 
     object ExecuteSlackWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken/slack", NoStrategy)
@@ -333,7 +338,7 @@ sealed class Route<T>(
 
 internal object NoStrategy : DeserializationStrategy<Unit> {
     override val descriptor: SerialDescriptor
-        get() = UnitDescriptor
+        get() = SerialDescriptor("NoStrategy", StructureKind.OBJECT)
 
     override fun deserialize(decoder: Decoder) {}
 

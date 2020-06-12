@@ -2,6 +2,8 @@
 
 package json
 
+import com.gitlab.kordlib.common.entity.UserFlag
+import com.gitlab.kordlib.common.entity.UserFlags
 import com.gitlab.kordlib.gateway.*
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
@@ -53,7 +55,7 @@ class SerializationTest {
                     avatar shouldBe "8342729096ea3675442027381ff50dfe"
                     verified shouldBe true
                     email shouldBe "nelly@discordapp.com"
-                    flags shouldBe 64
+                    flags shouldBe UserFlags(64)
                     premiumType!!.code shouldBe 1
                 }
                 privateChannels shouldBe listOf()

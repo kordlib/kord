@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -44,7 +45,21 @@ data class GuildData(
         val banner: String? = null,
         val systemChannelFlags: SystemChannelFlags? = null,
         val rulesChannelId: Long? = null,
-        val discoverySplash: String? = null
+        val discoverySplash: String? = null,
+        val publicUpdatesChannelId: Long? = null,
+        val preferredLocale: String,
+
+        /**
+         * Approximate number of members in this guild,
+         * returned from the GET /guild/<id> endpoint when with_counts is true
+         */
+        val approximateMemberCount: Int? = null,
+
+        /**
+         * Approximate number of online members in this guild,
+         * returned from the GET /guild/<id> endpoint when with_counts is true
+         */
+        val approximatePresenceCount: Int? = null
 ) {
     companion object {
 
@@ -76,7 +91,7 @@ data class GuildData(
                     defaultMessageNotifications,
                     explicitContentFilter,
                     roles.map { it.id.toLong() },
-                    emojis.map { EmojiData.from(id, it) },
+                    emojis.map { EmojiData.from(it.id!!, it) },
                     features,
                     mfaLevel,
                     applicationId?.toLong(),
@@ -89,7 +104,7 @@ data class GuildData(
                     voiceStates.orEmpty().map { VoiceStateData.from(it) },
                     members.orEmpty().map { MemberData.from(userId = it.user!!.id, guildId = id, entity = it) },
                     channels.orEmpty().map { it.id.toLong() },
-                    presences.orEmpty().map { PresenceData.from(it) },
+                    presences.orEmpty().map { PresenceData.from(id, it) },
                     maxPresences,
                     maxMembers,
                     vanityUrlCode,
@@ -97,7 +112,11 @@ data class GuildData(
                     banner,
                     systemChannelFlags,
                     rulesChannelId?.toLong(),
-                    discoverySplash
+                    discoverySplash,
+                    publicUpdatesChannelId?.toLong(),
+                    preferredLocale,
+                    approximateMemberCount = approximateMemberCount,
+                    approximatePresenceCount = approximatePresenceCount
             )
         }
     }

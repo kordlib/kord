@@ -79,7 +79,23 @@ data class DiscordGuild(
         @SerialName("premium_subscription_count")
         val premiumSubscriptionCount: Int? = null,
         @SerialName("preferred_locale")
-        val preferredLocale: String
+        val preferredLocale: String,
+        @SerialName("public_updates_channel_id")
+        val publicUpdatesChannelId: String? = null,
+
+        /**
+         * Approximate number of members in this guild,
+         * returned from the GET /guild/<id> endpoint when with_counts is true
+         */
+        @SerialName("approximate_member_count")
+        val approximateMemberCount: Int? = null,
+
+        /**
+         * Approximate number of online members in this guild,
+         * returned from the GET /guild/<id> endpoint when with_counts is true
+         */
+        @SerialName("approximate_presence_count")
+        val approximatePresenceCount: Int? = null
 )
 
 @Serializable(with = GuildFeature.Companion::class)
@@ -97,7 +113,12 @@ enum class GuildFeature(val value: String) {
     Featureable("FEATURABLE"),
     AnimatedIcon("ANIMATED_ICON"),
     Banner("BANNER"),
-    PublicDisabled("PUBLIC_DISABLED");
+    PublicDisabled("PUBLIC_DISABLED"),
+
+    /**
+     * guild has enabled the welcome screen
+     */
+    WelcomeScreenEnabled("WELCOME_SCREEN_ENABLED");
 
     @Serializer(forClass = GuildFeature::class)
     companion object : KSerializer<GuildFeature> {

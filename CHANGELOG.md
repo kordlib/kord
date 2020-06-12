@@ -7,7 +7,171 @@
 * Rest Discord API version can now be configured by setting the `com.gitlab.kordlib.rest.version` system property, `v6` by default.
 * `DefaultGateway` now supports zlib compression and enables it by default.
 
+# 0.4.22
+
+This release contains breaking changes related to webhooks.
+
+## Additions
+
+* Added `WebhookBehavior#executeIgnored` which does not wait for the message to be processed.
+
+## Changes
+
+* `WebhookBehavior#execute` will now return a `Message`.
+
+## Fixes
+
+* Fixed an issue when deserializing a Webhook would throw an exception.
+* Fixed an issue where endpoints returning nullable types would throw an exception.
+
+# 0.4.21
+
+## Fixes
+
+* Fixed cache not removing messages deleted from a `MessageDeleteBulk`.
+
+# 0.4.20
+
+## Additions
+
+* Added error codes 10026(Unknown ban), 40002(You need to verify your account in order to perform this action) and
+30015(Maximum number of attachments in a message reached (10)) to the `JsonErrorCode`.
+* Added `approximate_member_count` `approximate_presence_count` to guilds, which will be present when requesting a guild
+through rest.
+* Added missing `DmChannel#recipientBehaviors`.
+* Added missing `MessageUpdateEvent#message`, `MessageUpdateEvent#channel`, `MessageUpdateEvent#getMessage`,
+`MessageUpdateEvent#getChannel`.
+* Added missing `PresenceUpdateEvent#member`, `PresenceUpdateEvent#guild`, `PresenceUpdateEvent#getUser`,
+`PresenceUpdateEvent#getMember`, `PresenceUpdateEvent#member`, `PresenceUpdateEvent#getGuild`.
+* Added `chunk_index` and `chunck_count` properties to `GuildMembersChunkData`.
+* Added `Invite#targetUserType`.
+* Added `User#flag`.
+* Added `GuildFeature.WelcomeScreenEnabled`.
+* Added `MessageModifyBuilder#allowedMentions`.
+* `Embeds` can now copy their contents over to builders by using `Embed#apply(EmbedBuilder)`.
+* Added `User#premiumType`.
+* Added `GuildPreview` and the ability to get previews for public guilds via `Kord#getGuildPreview`.
+
+## Fixes
+
+* Fixed `MessageModifyBuilder` ignoring flags.
+
+
+# 0.4.19
+
+## Fixes
+
+* Fixed an issue where `ClientStatus` would only display the desktop status.
+
+# 0.4.18
+
+## Fixes
+
+* Fixed an issue where presences from guild creates were cached without guild id.
+
+# 0.4.17
+
+## Fixes
+
+* Fixed REST throwing an exception when parsing an error without code.
+>>>>>>> CHANGELOG.md
+
+# 0.4.16
+
+## Changes
+* Behaviors have been removed from VoiceState due to lack of guildId.
+
+## Fixes
+* Unmatched data structure between VoiceState and its data.
+* ISO_INSTANT not being used to format and Instant object.
+
+# 0.4.15
+
+## Changes
+* Classes implementing `Entity` now correctly implement equals and hashcode based on ids.
+
+# 0.4.14
+
+## Fixes
+* Fix `GuildMessageChannelBehavior#bulkDelete` manually deleting messages younger than 14 days and trying to bulk delete messages 
+older than 14 days, instead of the other way around. 
+
+# 0.4.13
+
+## Fixes
+* Fix guild emojis not having their correct id.
+
+# 0.4.12
+
+## Fixes
+* Fix unexpected data fields throwing exceptions when parsing `Gateway` `Events`. This should now be limited to
+unknown opcodes only.
+
+# 0.4.11
+
+## Fixes
+* `ParallelRequestRateLimiter` will no longer try to unlock a mutex twice on a error response
+
+# 0.4.10
+## Fixes
+* `DiscordErrorResponse` incorrect serialization
+
+# 0.4.9
+
+ID collections in modify builders have undergone a breaking critical bug fix.
+## Additions
+* Added `JsonErrorCode` and `DiscordErrorResponse` to map Discord's Json error messages.
+
+## Changes
+* Added `error` field to `KtorRequestException` to include `DiscordErrorResponse`   
+## Fixes
+
+* Fixed `permissionOverwrites` in `TextChannelModifyBuilder`, `VoiceChannelModifyBuilder`, `NewsChannelModifyBuilder` being final.
+* Fixed `roles` in `EmojiModifyBuilder` and `MemberModifyBuilder` being final.
+
+# 0.4.8
+
+## Additions
+
+* Added Integrations.
+* Guilds can now request their own Integrations with `GuildBhehavior#integrations`.
+* Added `preferredLocale` and `publicUpdatesChannelId` to `Guild` and `GuildModifyBuilder`.
+* Added some utility functions to the `KordCacheBuilder`.
+* Added `GuildDiscoveryDisqualified` and `GuildDiscoveryRequalified` to `MessageType`. #79
+
+## Changes
+
+* `KtorRequestHandler` will now log the body of requests and responses.
+
+## Fixes
+
+* The GuildService now returns the correct type of integration objects.
+* Fixed a typo in the `Embed#type` property kdocs.
+* Fixed an issue where paginated flows would emit duplicate items.
+
+## Deprecations
+
+* `Embed#type` has been deprecated. #80
+* `LiveNewsChannel`, `LiveStoreChannel` and `LiveTextChannel` have been deprecated. Message channels in guilds can 
+change type during their lifetime, which means type can't be guaranteed. `LiveGuildMessageChannel` has been introduced as
+an alternative.
+
+# 0.4.7
+
+## Fixes
+
+* Fixed an issue where editing a guild category would reset permissions.
+* Fixed an issue where editing a guild emoji would reset permissions.
+* Fixed an issue where editing a guild member would reset permissions.
+
 # 0.4.6
+
+## Additions
+
+* Added `Guild#memberCount`.
+* Added `GuildEmoji#isAvaiable`. #84
+* Added allowed mentions to message create. #83
+
 
 ## Changes
 
@@ -16,6 +180,8 @@
 ## Fixes
 
 * Fixed channels cached in guild create events not having a guild id.
+* Fixed `DiscordCreatedInvite#maxUses` serialization typo.
+* Fixed an issue where editing a guild channel would reset permissions.
 
 # 0.4.5
 
@@ -55,14 +221,7 @@ of the typealias.
 * kotlinx.serialization 0.14.0 -> 0.20.0
 * kotlinx.coroutines 1.3.3 -> 1.3.4
 
-
-#0.4.4
-
-## Additions
-
-* Added `MessageBehavior.withTyping`.
-
-#0.4.3
+# 0.4.3
 
 ## Additions
 

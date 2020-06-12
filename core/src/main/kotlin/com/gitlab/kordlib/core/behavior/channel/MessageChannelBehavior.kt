@@ -14,9 +14,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 import java.time.Instant
+import java.util.*
 import kotlin.coroutines.coroutineContext
+import kotlin.math.min
 import kotlin.time.ClockMark
 import kotlin.time.seconds
 
@@ -79,12 +82,20 @@ interface MessageChannelBehavior : ChannelBehavior {
      * ```
      *
      * @param limit a custom limit useful for requesting an amount of messages less than the default request limit (100). A value of
-     * [Int.MAX_VALUE] means all messages before the [messageId].
+     * [Int.MAX_VALUE] means all messages before the [messageId]. An [IllegalArgumentException] will be thrown for values smaller than 1.
      */
-    fun getMessagesBefore(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
-            paginateBackwards(messageId, 100, idSelector = { it.id }) { position ->
-                kord.rest.channel.getMessages(id.value, position, 100)
-            }.map { MessageData.from(it) }.map { Message(it, kord) }
+    fun getMessagesBefore(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> {
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+        val batchSize = min(100, limit)
+
+        val flow = paginateBackwards(messageId, batchSize, idSelector = { it.id }) { position ->
+            kord.rest.channel.getMessages(id.value, position, batchSize)
+        }.map { MessageData.from(it) }.map { Message(it, kord) }
+
+        return if (limit != Int.MAX_VALUE) flow.take(limit)
+        else flow
+    }
+
 
     /**
      * Requests to get all messages in this channel that were created *after* [messageId].
@@ -99,12 +110,20 @@ interface MessageChannelBehavior : ChannelBehavior {
      * ```
      *
      * @param limit a custom limit useful for requesting an amount of messages less than the default request limit (100). A value of
-     * [Int.MAX_VALUE] means all messages after the [messageId].
+     * [Int.MAX_VALUE] means all messages after the [messageId]. An [IllegalArgumentException] will be thrown for values smaller than 1.
      */
-    fun getMessagesAfter(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
-            paginateForwards(messageId, 100, idSelector = { it.id }) { position ->
-                kord.rest.channel.getMessages(id.value, position, 100)
-            }.map { MessageData.from(it) }.map { Message(it, kord) }
+    fun getMessagesAfter(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> {
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+        val batchSize = min(100, limit)
+
+        val flow = paginateForwards(messageId, batchSize, idSelector = { it.id }) { position ->
+            kord.rest.channel.getMessages(id.value, position, batchSize)
+        }.map { MessageData.from(it) }.map { Message(it, kord) }
+
+        return if (limit != Int.MAX_VALUE) flow.take(limit)
+        else flow
+    }
+
 
     /**
      * Requests to get messages around (both older and newer) the [messageId].
@@ -152,6 +171,14 @@ interface MessageChannelBehavior : ChannelBehavior {
         internal operator fun invoke(id: Snowflake, kord: Kord) = object : MessageChannelBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+
+            override fun hashCode(): Int = Objects.hash(id)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is ChannelBehavior -> other.id == id
+                else -> false
+            }
         }
     }
 

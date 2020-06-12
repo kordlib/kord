@@ -10,8 +10,13 @@ data class MessageCreateRequest(
         val content: String? = null,
         val nonce: String? = null,
         val tts: Boolean? = null,
-        val embed: EmbedRequest? = null
+        val embed: EmbedRequest? = null,
+        @SerialName("allowed_mentions")
+        val allowedMentions: AllowedMentions? = null
 )
+
+@Serializable
+data class AllowedMentions(val parse: List<String>, val users: List<String>, val roles: List<String>)
 
 data class MultipartMessageCreateRequest(
         val request: MessageCreateRequest,
@@ -66,7 +71,9 @@ data class EmbedFieldRequest(
 data class MessageEditPatchRequest(
         val content: String? = null,
         val embed: EmbedRequest? = null,
-        val flags: Flags? = null
+        val flags: Flags? = null,
+        @SerialName("allowed_mentions")
+        val allowedMentions: AllowedMentions? = null
 )
 
 @Serializable

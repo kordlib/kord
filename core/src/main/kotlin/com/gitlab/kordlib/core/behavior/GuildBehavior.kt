@@ -4,17 +4,17 @@ import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
-import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
-import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
-import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.core.sorted
+import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
+import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
+import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
+import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
 import com.gitlab.kordlib.rest.service.createCategory
 import com.gitlab.kordlib.rest.service.createNewsChannel
@@ -24,6 +24,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import java.util.*
+import com.gitlab.kordlib.rest.request.RequestException
 
 /**
  * The behavior of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
@@ -48,9 +50,9 @@ interface GuildBehavior : Entity {
 
     val webhooks: Flow<Webhook>
         get() = flow {
-            for(response in kord.rest.webhook.getGuildWebhooks(id.value)) {
+            for (response in kord.rest.webhook.getGuildWebhooks(id.value)) {
                 val data = WebhookData.from(response)
-                emit(Webhook(data,kord))
+                emit(Webhook(data, kord))
             }
 
         }
@@ -71,6 +73,16 @@ interface GuildBehavior : Entity {
         }
 
     /**
+     * Requests to get the integrations of this guild.
+     */
+    val integrations: Flow<Integration>
+        get() = flow {
+            kord.rest.guild.getGuildIntegrations(id.value).forEach {
+                emit(Integration(IntegrationData.from(id.longValue, it), kord))
+            }
+        }
+
+    /**
      * Requests to get the cached presences of this guild, if cached.
      */
     val presences: Flow<Presence>
@@ -78,6 +90,7 @@ interface GuildBehavior : Entity {
             kord.cache.find<PresenceData> { PresenceData::guildId eq id.longValue }
                     .asFlow()
                     .map { Presence(it, kord) }
+
     /**
      * Requests to get all members in this guild.
      *
@@ -192,6 +205,14 @@ interface GuildBehavior : Entity {
     }
 
     /**
+     * Returns the preview of this guild. The bot does not need to present in this guild
+     * for this to complete successfully.
+     *
+     * @throws RequestException if the guild does not exist or is not public.
+     */
+    suspend fun getPreview(): GuildPreview = kord.getGuildPreview(id)!!
+
+    /**
      * Requests to get the amount of users that would be pruned in this guild.
      *
      * A user is pruned if they have not been seen within the given [days]
@@ -223,6 +244,13 @@ interface GuildBehavior : Entity {
         internal operator fun invoke(id: Snowflake, kord: Kord) = object : GuildBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+            override fun hashCode(): Int = Objects.hash(id)
+
+            override fun equals(other: Any?): Boolean = when (other) {
+                is GuildBehavior -> other.id == id
+                else -> false
+            }
         }
     }
 

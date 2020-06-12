@@ -27,6 +27,8 @@ fun image(path: String): String {
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RestServiceTest {
 
+    private val publicGuildId = Snowflake(322850917248663552)
+
     private val token = System.getenv("token")
 
     private lateinit var requestHandler: RequestHandler
@@ -45,12 +47,7 @@ class RestServiceTest {
 
     @BeforeAll
     fun setup() = runBlocking {
-        client = HttpClient(CIO) {
-            defaultRequest {
-                header("Authorization", "Bot $token")
-            }
-        }
-        requestHandler = KtorRequestHandler(client, ExclusionRequestRateLimiter())
+        requestHandler = KtorRequestHandler(token, ExclusionRequestRateLimiter())
         rest = RestClient(requestHandler)
 
         userId = rest.user.getCurrentUser().id
@@ -76,7 +73,7 @@ class RestServiceTest {
 
         guildId = guild.id
 
-        rest.guild.getGuild(guildId)
+        rest.guild.getGuild(guildId, true)
 
         rest.guild.modifyGuild(guildId) {
             name = "Edited Guild Test"
@@ -391,6 +388,33 @@ class RestServiceTest {
         }
     }
 
+    @Test
+    @Order(20)
+    fun `get public guild preview`() = runBlocking {
+        val preview = rest.guild.getGuildPreview(publicGuildId.value)
+        Unit
+    }
+
+    @Test
+    @Order(20)
+    fun `webhooks tests`() = runBlocking {
+        val webhook = rest.webhook.createWebhook(channelId) {
+            name = "Test webhook"
+        }
+
+        rest.webhook.executeWebhook(webhook.id, webhook.token!!, wait = true) {
+            content = "hello world!"
+        }!! //angry shouting to make sure this doesn't return null
+
+        rest.webhook.executeWebhook(webhook.id, webhook.token!!, wait = false) {
+            content = "hello world, I don't want to hear back from you!"
+        }
+
+        rest.webhook.deleteWebhook(webhook.id, reason = "test")
+
+        Unit
+    }
+
 
     @Test
     @Order(Int.MAX_VALUE - 2)
@@ -415,11 +439,6 @@ class RestServiceTest {
         rest.guild.deleteGuild(guildId)
 
         Unit
-    }
-
-    @AfterAll
-    fun close() {
-        client.close()
     }
 
 }

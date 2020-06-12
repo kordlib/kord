@@ -12,13 +12,13 @@ class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest> {
     var muted: Boolean? = null
     var deafened: Boolean? = null
     var nickname: String? = null
-    val roles: MutableSet<Snowflake> = mutableSetOf()
+    var roles: Set<Snowflake>? = null
 
     override fun toRequest(): GuildMemberModifyRequest = GuildMemberModifyRequest(
             nick = nickname,
             channelId = voiceChannelId?.value,
             mute = muted,
             deaf = deafened,
-            roles = roles.map { it.value }
+            roles = roles?.map { it.value }
     )
 }

@@ -1,13 +1,11 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.*
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
-import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.TextChannelBehavior
+import com.gitlab.kordlib.core.behavior.channel.*
 import com.gitlab.kordlib.core.cache.data.EmojiData
 import com.gitlab.kordlib.core.cache.data.GuildData
 import com.gitlab.kordlib.core.catchNotFound
@@ -15,12 +13,14 @@ import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
+import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.core.switchIfEmpty
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.rest.Image
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 /**
  * An instance of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
@@ -35,6 +35,9 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      */
     val afkChannelId: Snowflake? get() = data.afkChannelId.toSnowflakeOrNull()
 
+    val afkChannel: VoiceChannelBehavior?
+        get() = afkChannelId?.let { VoiceChannelBehavior(guildId = id, id = it, kord = kord) }
+
     /**
      * The afk timeout in seconds.
      */
@@ -44,6 +47,18 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      *  The id of the guild creator if it is bot-created.
      */
     val applicationId: Snowflake? get() = data.applicationId.toSnowflakeOrNull()
+
+    /**
+     * The approximate number of members in this guild. Present if this guild was requested through
+     * [rest][com.gitlab.kordlib.rest.service.RestClient] with the flag `with_counts`.
+     */
+    val approximateMemberCount: Int? get() = data.approximateMemberCount
+
+    /**
+     * The approximate number of online members in this guild. Present if this guild was requested through
+     * [rest][com.gitlab.kordlib.rest.service.RestClient] with the flag `with_counts`.
+     */
+    val approximatePresenceCount: Int? get() = data.approximatePresenceCount
 
     /**
      * The banner hash, if present.
@@ -117,10 +132,18 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     val owner: MemberBehavior get() = MemberBehavior(guildId = id, id = ownerId, kord = kord)
 
     /**
+     * The number of members in the guild, if present.
+     *
+     *  > This value is only present when the [Kord.cache] stores guilds and the client has been logged in. It
+     *  will not be updated throughout the lifetime of the gateway and should thus be seen as an approximation rather
+     *  than a precise value.
+     */
+    val memberCount: Int? get() = data.memberCount
+
+    /**
      * The required multi-factor authentication level of this guild.
      */
     val mfaLevel: MFALevel get() = data.mfaLevel
-
 
     override val members: Flow<Member>
         get() {
@@ -133,6 +156,21 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      * The name of this guild.
      */
     val name: String get() = data.name
+
+    /**
+     * the id of the channel where guild notices such as welcome messages and boost events are posted.
+     */
+    val publicUpdatesChannelId: Snowflake? get() = data.publicUpdatesChannelId.toSnowflakeOrNull()
+
+    /**
+     * The behavior of the channel where guild notices such as welcome messages and boost events are posted.
+     */
+    val publicUpdatesChannel: GuildMessageChannelBehavior?
+        get() = publicUpdatesChannelId?.let {
+            GuildMessageChannelBehavior(guildId = id, id = it, kord = kord)
+        }
+
+    val preferredLocale: Locale get() = Locale.forLanguageTag(data.preferredLocale)
 
     /**
      * The behaviors of all [channels][GuildChannel].
@@ -288,6 +326,11 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     suspend fun getOwner(): Member = kord.getMember(id, ownerId)!!
 
     /**
+     * Requests to get The channel where guild notices such as welcome messages and boost events are posted.
+     */
+    suspend fun getPublicUpdatesChannel(): GuildMessageChannel? = publicUpdatesChannel?.asChannel()
+
+    /**
      * Requests to get the voice region for this guild.
      */
     suspend fun getRegion(): Region = regions.first { it.id == regionId }
@@ -317,4 +360,10 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      */
     suspend fun getSystemChannel(): TextChannel? = kord.getChannel(id) as? TextChannel
 
+    override fun hashCode(): Int = Objects.hash(id)
+
+    override fun equals(other: Any?): Boolean = when (other) {
+        is GuildBehavior -> other.id == id
+        else -> false
+    }
 }

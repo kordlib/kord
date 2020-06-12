@@ -35,8 +35,8 @@ class Presence(val data: PresenceData, override val kord: Kord) : KordObject {
 
 class ClientStatus(val data: ClientStatusData) {
     val desktop: Client.Desktop? get() = data.desktop?.let { Client.Desktop(it) }
-    val mobile: Client.Mobile? get() = data.desktop?.let { Client.Mobile(it) }
-    val web: Client.Web? get() = data.desktop?.let { Client.Web(it) }
+    val mobile: Client.Mobile? get() = data.mobile?.let { Client.Mobile(it) }
+    val web: Client.Web? get() = data.web?.let { Client.Web(it) }
 
     sealed class Client(val status: Status) {
         class Desktop(status: Status) : Client(status)

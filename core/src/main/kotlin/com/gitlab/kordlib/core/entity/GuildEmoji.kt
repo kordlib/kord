@@ -11,14 +11,20 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import java.util.*
 
 /**
- * An instace of a [Discord emoji](https://discordapp.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
+ * An instance of a [Discord emoji](https://discordapp.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
  */
 class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord: Kord) : Entity {
     override val id: Snowflake
         get() = Snowflake(data.id)
 
+    /**
+     * Whether this emoji can be used, may be false due to loss of Server Boosts.
+     */
+    val isAvailable: Boolean get() = data.available
+    
     /**
      * Whether is emoji is animated.
      */
@@ -80,5 +86,12 @@ class GuildEmoji(val data: EmojiData, val guildId: Snowflake, override val kord:
      * Requests to get the [User] who created the emote, if present.
      */
     suspend fun getUser(): User? = userId?.let { kord.getUser(it) }
+
+    override fun hashCode(): Int = Objects.hash(id, guildId)
+
+    override fun equals(other: Any?): Boolean = when(other) {
+        is GuildEmoji -> other.id == id && other.guildId == guildId
+        else -> super.equals(other)
+    }
 
 }

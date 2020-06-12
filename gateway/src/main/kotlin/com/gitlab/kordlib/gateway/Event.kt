@@ -4,7 +4,6 @@ import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.internal.*
 import kotlinx.serialization.json.JsonElementSerializer
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
@@ -17,7 +16,7 @@ sealed class DispatchEvent : Event() {
 
 private object NullDecoder : DeserializationStrategy<Nothing?> {
     override val descriptor: SerialDescriptor
-        get() = StringDescriptor
+        get() = PrimitiveDescriptor("null", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): Nothing? {
         return decoder.decodeNull()
@@ -42,7 +41,7 @@ sealed class Event {
             var eventName: String? = null
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
+                    when (val index = decodeElementIndex(descriptor)) {//we assume the all fields to be present *before* the data field
                         CompositeDecoder.READ_DONE -> break@loop
                         0 -> {
                             op = OpCode.deserialize(decoder)
@@ -63,7 +62,15 @@ sealed class Event {
                             }
                             OpCode.InvalidSession -> decodeSerializableElement(descriptor, index, InvalidSession)
                             OpCode.Hello -> decodeSerializableElement(descriptor, index, Hello.serializer())
-                            else -> error("This op code ${op?.code} doesn't belong to an event.")
+                            //some events contain undocumented data fields, we'll only assume an unknown opcode with no data to be an error
+                            else -> if(data == null) {
+                                val element = decodeNullableSerializableElement(descriptor, index, JsonElementSerializer.nullable)
+                                error("Unknown 'd' field for Op code ${op?.code}: $element")
+                            } else {
+                                val element = decodeNullableSerializableElement(descriptor, index, JsonElementSerializer.nullable)
+                                jsonLogger.warn { "Ignored unexpected 'd' field for Op code ${op?.code}: $element" }
+                                data
+                            }
                         }
                     }
                 }
@@ -280,7 +287,7 @@ data class DiscordCreatedInvite(
         /**
          * The maximum number of times the invite can be used.
          */
-        @SerialName("ma_uses")
+        @SerialName("max_uses")
         val maxUses: Int,
         /**
          * Whether or not the invite is temporary (invited users will be kicked on disconnect unless they're assigned a role).
@@ -289,7 +296,19 @@ data class DiscordCreatedInvite(
         /**
          * How many times the invite has been used (always will be 0).
          */
-        val uses: Int
+        val uses: Int,
+
+        /**
+         * The target user for this invite.
+         */
+        @SerialName("target_user")
+        val targetUser: DiscordInviteUser,
+
+        /**
+         * The type of user target for this invite.
+         */
+        @SerialName("target_user_type")
+        val targetUserType: TargetUserType? = null
 )
 
 @Serializable

@@ -22,6 +22,8 @@ dependencies {
             prefer("latest.release")
         }
     }
+
+    testImplementation(Dependencies.mockk)
 }
 
 tasks.withType<KotlinCompile> {

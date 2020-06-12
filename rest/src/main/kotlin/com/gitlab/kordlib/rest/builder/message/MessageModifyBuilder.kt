@@ -10,10 +10,21 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     var content: String? = null
     var embed: EmbedBuilder? = null
     var flags: Flags? = null
+    var allowedMentions: AllowedMentionsBuilder? = null
 
-    fun embed(block: EmbedBuilder.() -> Unit) {
+    inline fun embed(block: EmbedBuilder.() -> Unit) {
         embed = (embed ?: EmbedBuilder()).also(block)
     }
 
-    override fun toRequest(): MessageEditPatchRequest = MessageEditPatchRequest(content, embed?.toRequest())
+    /**
+     * Configures the mentions that should trigger a ping. Not calling this function will result in the default behavior
+     * (ping everything), calling this function but not configuring it before the request is build will result in all
+     * pings being ignored.
+     */
+    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
+    }
+
+
+    override fun toRequest(): MessageEditPatchRequest = MessageEditPatchRequest(content, embed?.toRequest(), flags, allowedMentions?.build())
 }

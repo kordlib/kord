@@ -2,9 +2,9 @@ package com.gitlab.kordlib.rest.builder.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.entity.TargetUserType
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.InviteCreateRequest
-import com.gitlab.kordlib.rest.json.response.TargetUserType
 
 @KordDsl
 class InviteCreateBuilder : RequestBuilder<InviteCreateRequest> {

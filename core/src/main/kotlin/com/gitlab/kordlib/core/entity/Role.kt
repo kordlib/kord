@@ -3,9 +3,11 @@ package com.gitlab.kordlib.core.entity
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.cache.data.RoleData
 import java.awt.Color
+import java.util.*
 
 data class Role(val data: RoleData, override val kord: Kord) : RoleBehavior {
     override val id: Snowflake
@@ -31,6 +33,13 @@ data class Role(val data: RoleData, override val kord: Kord) : RoleBehavior {
     override fun compareTo(other: Entity): Int = when (other) {
         is Role -> compareBy<Role> { it.rawPosition }.thenBy { it.guildId }.compare(this, other)
         else -> super.compareTo(other)
+    }
+
+    override fun hashCode(): Int = Objects.hash(id, guildId)
+
+    override fun equals(other: Any?): Boolean = when(other) {
+        is RoleBehavior -> other.id == id && other.guildId == guildId
+        else -> false
     }
 
 }

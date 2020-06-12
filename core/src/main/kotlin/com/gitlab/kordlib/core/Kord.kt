@@ -2,13 +2,14 @@ package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
+import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
-import com.gitlab.kordlib.gateway.builder.PresenceBuilder
+import com.gitlab.kordlib.core.builder.presence.PresenceUpdateBuilder
 import com.gitlab.kordlib.core.cache.KordCache
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.entity.*
@@ -17,6 +18,7 @@ import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.start
+import com.gitlab.kordlib.rest.request.RequestException
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -87,9 +89,9 @@ class Kord internal constructor(
     /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
-    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
+    suspend inline fun login(builder: PresenceUpdateBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
         shard = DiscordShard(0, resources.shardCount)
-        presence(builder)
+        presence = PresenceUpdateBuilder().apply(builder).toGatewayPresence()
         name = "kord"
     }
 
@@ -121,6 +123,17 @@ class Kord internal constructor(
     override suspend fun getChannel(id: Snowflake): Channel? = cache.getChannel(id) ?: requestsChannel(id)
 
     override suspend fun getGuild(id: Snowflake): Guild? = cache.getGuild(id) ?: requestGuild(id)
+
+    /**
+     * Returns the preview of the guild matching the [guildId]. The bot does not need to present in this guild
+     * for this to complete successfully.
+     *
+     * @throws RequestException if the guild does not exist or is not public.
+     */
+    suspend fun getGuildPreview(guildId: Snowflake): GuildPreview? = catchNotFound {
+        val discordPreview = rest.guild.getGuildPreview(guildId.value)
+        return GuildPreview(GuildPreviewData.from(discordPreview), this)
+    }
 
     override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member? {
         return cache.getMember(guildId = guildId, userId = userId) ?: requestMember(guildId = guildId, userId = userId)
@@ -156,7 +169,7 @@ class Kord internal constructor(
     }
 
     internal suspend fun requestGuild(id: Snowflake): Guild? {
-        val data = catchNotFound { rest.guild.getGuild(id.value).let { GuildData.from(it) } } ?: return null
+        val data = catchNotFound { rest.guild.getGuild(id.value, true).let { GuildData.from(it) } } ?: return null
         return Guild(data, this)
     }
 

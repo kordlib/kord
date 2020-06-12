@@ -168,5 +168,9 @@ data class GuildModifyRequest(
         val spalsh: String? = null,
         @SerialName("system_channel_id")
         val systemChannelId: String? = null,
-        var banner: String? = null
+        val banner: String? = null,
+        @SerialName("preferred_locale")
+        val preferredLocale: String? = null,
+        @SerialName("public_updates_channel_id")
+        val publicUpdatesChannelId: String? = null
 )

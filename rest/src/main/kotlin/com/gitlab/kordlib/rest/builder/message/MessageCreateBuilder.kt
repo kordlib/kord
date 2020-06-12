@@ -1,9 +1,12 @@
 package com.gitlab.kordlib.rest.builder.message
 
-import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.rest.builder.KordDsl
 import com.gitlab.kordlib.rest.builder.RequestBuilder
+import com.gitlab.kordlib.rest.json.request.AllowedMentions
 import com.gitlab.kordlib.rest.json.request.MessageCreateRequest
 import com.gitlab.kordlib.rest.json.request.MultipartMessageCreateRequest
+import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
@@ -22,6 +25,15 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
         embed = (embed ?: EmbedBuilder()).apply(block)
     }
 
+    /**
+     * Configures the mentions that should trigger a ping. Not calling this function will result in the default behavior
+     * (ping everything), calling this function but not configuring it before the request is build will result in all
+     * pings being ignored.
+     */
+    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
+    }
+
     fun addFile(name: String, content: InputStream) {
         files += name to content
     }
@@ -31,8 +43,49 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     }
 
     override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
-            MessageCreateRequest(content, nonce, tts, embed?.toRequest()),
+            MessageCreateRequest(content, nonce, tts, embed?.toRequest(), allowedMentions?.build()),
             files
     )
 
+}
+
+/**
+ * The mentions that should trigger a ping. See the [Discord documentation](https://discordapp.com/developers/docs/resources/channel#allowed-mentions-object).
+ *
+ */
+class AllowedMentionsBuilder {
+    /**
+     * The roles that should be mentioned in this message, any id that is mentioned in this list but not present in the
+     * [MessageCreateBuilder] will be ignored.
+     */
+    val roles: MutableSet<Snowflake> = mutableSetOf()
+
+    /**
+     * The users that should be mentioned in this message, any id that is mentioned in this list but not present in the
+     * [MessageCreateBuilder] will be ignored.
+     */
+    val users: MutableSet<Snowflake> = mutableSetOf()
+
+    /**
+     * The types of pings that should trigger in this message. Selecting [MentionTypes.Users] or [MentionTypes.Roles]
+     * together with any value in [users] or [roles] respectively will result in an error.
+     */
+    val types: MutableSet<MentionTypes> = mutableSetOf()
+
+    /**
+     * Adds the type to the list of types that should receive a ping.
+     */
+    operator fun MentionTypes.unaryPlus() = types.add(this)
+
+    fun build() : AllowedMentions = AllowedMentions(
+            parse = types.map { it.serialName },
+            users = users.map { it.value },
+            roles = roles.map { it.value }
+    )
+
+}
+
+
+enum class MentionTypes(val serialName: String) {
+    Roles("roles"), Users("users"), Everyone("everyone")
 }

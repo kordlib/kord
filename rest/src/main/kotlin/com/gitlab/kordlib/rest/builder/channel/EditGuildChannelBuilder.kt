@@ -15,7 +15,7 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
     var nsfw: Boolean? = null
     var parentId: Snowflake? = null
     var rateLimitPerUser: Int? = null
-    val permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
+    var permissionOverwrites: Set<Overwrite>? = null
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
@@ -23,7 +23,7 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
             topic = topic,
             nsfw = nsfw,
             rateLimitPerUser = rateLimitPerUser,
-            permissionOverwrites = permissionOverwrites.toList(),
+            permissionOverwrites = permissionOverwrites?.toList(),
             parentId = parentId?.value
     )
 
@@ -37,7 +37,7 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     var parentId: Snowflake? = null
     var bitrate: Int? = null
     var userLimit: Int? = null
-    val permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
+    var permissionOverwrites: Set<Overwrite>? = null
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
@@ -45,7 +45,7 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
             parentId = parentId?.value,
             bitrate = bitrate,
             userLimit = userLimit,
-            permissionOverwrites = permissionOverwrites.toList()
+            permissionOverwrites = permissionOverwrites?.toList()
     )
 }
 
@@ -57,14 +57,14 @@ class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
     var topic: String? = null
     var nsfw: Boolean? = null
     var parentId: Snowflake? = null
-    val permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
+    var permissionOverwrites: Set<Overwrite>? = null
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
             topic = topic,
             nsfw = nsfw,
-            permissionOverwrites = permissionOverwrites.toList(),
+            permissionOverwrites = permissionOverwrites?.toList(),
             parentId = parentId?.value
     )
 }
@@ -74,11 +74,11 @@ class StoreChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     override var reason: String? = null
     var name: String? = null
     var position: Int? = null
-    val permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
+    val permissionOverwrites: MutableSet<Overwrite>? = null
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
-            permissionOverwrites = permissionOverwrites.toList()
+            permissionOverwrites = permissionOverwrites?.toList()
     )
 }

@@ -8,8 +8,8 @@ import com.gitlab.kordlib.core.entity.Webhook
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.rest.json.request.BulkDeleteRequest
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
+import java.util.*
 import kotlin.time.days
 
 /**
@@ -40,27 +40,35 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
      */
     suspend fun bulkDelete(messages: Iterable<Snowflake>) {
         //split up in bulk delete and manual delete
+        // if message.timeMark + 14 days > now, then the message isn't 14 days old yet, and we can add it to the bulk delete
+        // if message.timeMark + 14 days < now, then the message is more than 14 days old, and we'll have to manually delete them
         val messagesByRemoval = messages.groupBy { it.timeMark.plus(14.days).hasPassedNow() }
+        val younger = messagesByRemoval[true].orEmpty()
+        val older = messagesByRemoval[false].orEmpty()
 
-        val bulk = messagesByRemoval[false].orEmpty()
         when {
-            bulk.size < 2 -> bulk.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
-            else -> bulk.map { it.value }.chunked(100)
+            younger.size < 2 -> younger.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
+            else -> younger.map { it.value }.chunked(100)
                     .map { BulkDeleteRequest(it) }
                     .forEach { kord.rest.channel.bulkDelete(id.value, it) }
         }
 
-        val manual = messagesByRemoval[true].orEmpty()
-        manual.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
+        older.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
     }
-
-    //TODO 1.3.50 add delete messages? partially bulkdelete, manually delete older ones
 
     companion object {
         internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord) = object : GuildMessageChannelBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
             override val kord: Kord = kord
+
+            override fun hashCode(): Int = Objects.hash(id, guildId)
+
+            override fun equals(other: Any?): Boolean = when(other) {
+                is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+                is ChannelBehavior -> other.id == id
+                else -> false
+            }
         }
     }
 }
