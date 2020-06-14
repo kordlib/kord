@@ -98,17 +98,6 @@ class Kord(
 
     suspend fun getChannel(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Channel? = strategy.supply(this).getChannelOrNull(id)
 
-    /**
-     * Returns the preview of the guild matching the [guildId]. The bot does not need to present in this guild
-     * for this to complete successfully.
-     *
-     * @throws RequestException if the guild does not exist or is not public.
-     */
-    suspend fun getGuildPreview(guildId: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): GuildPreview? = catchNotFound {
-        val discordPreview = rest.guild.getGuildPreview(guildId.value)
-        return GuildPreview(GuildPreviewData.from(discordPreview), this, strategy.supply(this))
-    }
-
     suspend fun getGuild(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Guild? = strategy.supply(this).getGuildOrNull(id)
 
     suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =

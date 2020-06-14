@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.util.*
+import com.gitlab.kordlib.rest.service.RestClient
 
 /**
  * The behavior of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
@@ -243,9 +244,22 @@ interface GuildBehavior : Entity, Strategizable {
      * Returns the preview of this guild. The bot does not need to present in this guild
      * for this to complete successfully.
      *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
+     * @throws RequestException if the guild does not exist or is not public.
+     * @throws [EntityNotFoundException] if the preview was not found.
+     */
+    suspend fun getPreview(): GuildPreview = kord.with(EntitySupplyStrategy.rest).getGuildPreview(id)
+
+    /**
+     * Returns the preview of this guild. The bot does not need to present in this guild
+     * for this to complete successfully. Returns null if the preview doesn't exist.
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
      * @throws RequestException if the guild does not exist or is not public.
      */
-    suspend fun getPreview(): GuildPreview = kord.getGuildPreview(id)!!
+    suspend fun getPreviewOrNull(): GuildPreview? = kord.with(EntitySupplyStrategy.rest).getGuildPreviewOrNull(id)
 
     /**
      * Requests to get the amount of users that would be pruned in this guild.

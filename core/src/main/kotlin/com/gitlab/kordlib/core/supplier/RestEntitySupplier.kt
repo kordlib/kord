@@ -8,6 +8,7 @@ import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.paginateBackwards
 import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.rest.request.RestRequestException
@@ -64,6 +65,27 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getGuildOrNull(id: Snowflake): Guild? = catchNotFound { Guild(guild.getGuild(id.value).toData(), kord) }
+
+    /**
+     * Returns the preview of the guild matching the [id]. The bot does not need to present in this guild
+     * for this to complete successfully.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the preview was not found.
+     */
+     suspend fun getGuildPreview(id: Snowflake): GuildPreview = getGuildPreviewOrNull(id)
+             ?: EntityNotFoundException.entityNotFound("Guild preview", id)
+
+    /**
+     * Returns the preview of the guild matching the [id]. The bot does not need to present in this guild
+     * for this to complete successfully. Returns null if the preview was not found.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    suspend fun getGuildPreviewOrNull(id: Snowflake): GuildPreview? = catchNotFound {
+        val discordPreview = guild.getGuildPreview(id.value)
+        return GuildPreview(GuildPreviewData.from(discordPreview), kord)
+    }
 
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? = catchNotFound {
         val memberData = guild.getGuildMember(guildId = guildId.value, userId = userId.value).toData(guildId = guildId.value, userId = userId.value)
