@@ -23,6 +23,7 @@ class MemberUpdateEvent(
         val currentNickName: String,
         val premiumSince: Instant?,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -51,6 +52,7 @@ class MemberUpdateEvent(
                     currentNickName,
                     premiumSince,
                     kord,
+                    shard,
                     strategy.supply(kord)
             )
 }

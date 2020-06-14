@@ -14,6 +14,7 @@ class MemberChunksEvent(
         val guildId: Snowflake,
         val members: Set<Member>,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -24,5 +25,5 @@ class MemberChunksEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberChunksEvent =
-            MemberChunksEvent(guildId, members, kord, strategy.supply(kord))
+            MemberChunksEvent(guildId, members, kord, shard, strategy.supply(kord))
 }

@@ -20,6 +20,7 @@ import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 class InviteDeleteEvent(
         val data: InviteDeleteData,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -63,6 +64,6 @@ class InviteDeleteEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteDeleteEvent =
-            InviteDeleteEvent(data, kord, strategy.supply(kord))
+            InviteDeleteEvent(data, kord, shard, strategy.supply(kord))
 
 }

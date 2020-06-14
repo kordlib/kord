@@ -21,6 +21,10 @@ exist. #74
 ## Changes
 
 * Changed `GuildCreateBuilder` to be more inline with recent api changes. #77
+* `core` Event constructors are no longer internal.
+* `Kord#gateway` is now a `MasterGateway`, exposing all sharded gateways #65
+* `core` Events now expose their shard index as well as the `Gateway` they were spawned from. #65
+* `DisconnectEvent` and `Close` have been extended with more detailed implementations #65
 * `Gateway` now accepts a `PresenceBuilder` to configure its original presence. #72
 * Rest Discord API version can now be configured by setting the `com.gitlab.kordlib.rest.version` system property, `v6` by default.
 * `DefaultGateway` now supports zlib compression and enables it by default.

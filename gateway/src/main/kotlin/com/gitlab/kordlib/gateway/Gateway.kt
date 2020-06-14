@@ -87,3 +87,23 @@ suspend inline fun Gateway.start(token: String, config: GatewayConfigurationBuil
     builder.apply(config)
     start(builder.build())
 }
+
+/**
+ * Enum representation of Discord's [Gateway close event codes](https://discordapp.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes).
+ */
+enum class GatewayCloseCode(val code: Int) {
+    Unknown(4000),
+    UnknownOpCode(4001),
+    DecodeError(4002),
+    NotAuthenticated(4003),
+    AuthenticationFailed(4004),
+    AlreadyAuthenticated(4005),
+    InvalidSeq(4007),
+    RateLimited(4008),
+    SessionTimeout(4009),
+    InvalidShard(4010),
+    ShardingRequired(4011),
+    InvalidApiVersion(4012),
+    InvalidIntents(4013),
+    DisallowedIntents(4014)
+}

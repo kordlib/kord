@@ -30,6 +30,7 @@ import kotlin.time.seconds
 class InviteCreateEvent(
         val data: InviteCreateData,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -162,7 +163,6 @@ class InviteCreateEvent(
      */
     suspend fun getInviterAsMemberOrNull(): Member? = supplier.getMemberOrNull(guildId = guildId, userId = inviterId)
 
-
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteCreateEvent =
-            InviteCreateEvent(data, kord, supplier)
+            InviteCreateEvent(data, kord, shard, supplier)
 }

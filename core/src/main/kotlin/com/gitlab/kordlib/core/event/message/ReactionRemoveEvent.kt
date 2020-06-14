@@ -22,6 +22,7 @@ class ReactionRemoveEvent(
         val guildId: Snowflake?,
         val emoji: ReactionEmoji,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -53,5 +54,5 @@ class ReactionRemoveEvent(
             guildId?.let { supplier.getMemberOrNull(guildId = guildId, userId = userId) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveEvent =
-            ReactionRemoveEvent(userId, channelId, messageId, guildId, emoji, kord, strategy.supply(kord))
+            ReactionRemoveEvent(userId, channelId, messageId, guildId, emoji, kord, shard, strategy.supply(kord))
 }

@@ -13,6 +13,7 @@ class VoiceServerUpdateEvent(
         val guildId: Snowflake,
         val endpoint: String,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -23,5 +24,5 @@ class VoiceServerUpdateEvent(
     suspend fun getGuildOrNull():Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceServerUpdateEvent =
-            VoiceServerUpdateEvent(token, guildId, endpoint, kord, strategy.supply(kord))
+            VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, strategy.supply(kord))
 }

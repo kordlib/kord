@@ -20,6 +20,7 @@ class ReactionRemoveAllEvent(
         val messageId: Snowflake,
         val guildId: Snowflake?,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -38,5 +39,5 @@ class ReactionRemoveAllEvent(
     suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveAllEvent =
-            ReactionRemoveAllEvent(channelId, messageId, guildId, kord, strategy.supply(kord))
+            ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, strategy.supply(kord))
 }

@@ -14,6 +14,7 @@ class EmojisUpdateEvent(
         val guildId: Snowflake,
         val emojis: Set<GuildEmoji>,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -24,5 +25,5 @@ class EmojisUpdateEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): EmojisUpdateEvent =
-            EmojisUpdateEvent(guildId, emojis, kord, strategy.supply(kord))
+            EmojisUpdateEvent(guildId, emojis, kord, shard, strategy.supply(kord))
 }

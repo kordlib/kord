@@ -22,6 +22,7 @@ class ReactionAddEvent(
         val guildId: Snowflake?,
         val emoji: ReactionEmoji,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -50,5 +51,5 @@ class ReactionAddEvent(
     suspend fun getUserAsMember(): Member? = guildId?.let { supplier.getMemberOrNull(it, userId) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionAddEvent =
-            ReactionAddEvent(userId, channelId, messageId, guildId, emoji, kord, strategy.supply(kord))
+            ReactionAddEvent(userId, channelId, messageId, guildId, emoji, kord, shard, strategy.supply(kord))
 }

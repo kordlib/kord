@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 class IntegrationsUpdateEvent(
         val guildId: Snowflake,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -22,5 +23,5 @@ class IntegrationsUpdateEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): IntegrationsUpdateEvent =
-            IntegrationsUpdateEvent(guildId, kord, strategy.supply(kord))
+            IntegrationsUpdateEvent(guildId, kord, shard, strategy.supply(kord))
 }

@@ -16,6 +16,7 @@ class ChannelPinsUpdateEvent(
         val channelId: Snowflake,
         val lastPinTimestamp: Instant?,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -26,5 +27,5 @@ class ChannelPinsUpdateEvent(
     suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ChannelPinsUpdateEvent =
-            ChannelPinsUpdateEvent(channelId, lastPinTimestamp, kord, strategy.supply(kord))
+            ChannelPinsUpdateEvent(channelId, lastPinTimestamp, kord, shard, strategy.supply(kord))
 }

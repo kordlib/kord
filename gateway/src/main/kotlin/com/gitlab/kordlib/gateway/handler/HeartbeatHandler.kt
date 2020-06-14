@@ -5,9 +5,7 @@ import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlin.time.ClockMark
-import kotlin.time.Duration
-import kotlin.time.MonoClock
+import kotlin.time.*
 
 @ObsoleteCoroutinesApi
 internal class HeartbeatHandler(
@@ -16,11 +14,12 @@ internal class HeartbeatHandler(
         private val restart: suspend () -> Unit,
         private val ping: (Duration) -> Unit,
         private val sequence: Sequence,
-        private val ticker: Ticker = Ticker()
+        private val ticker: Ticker = Ticker(),
+        private val timeSource: TimeSource = TimeSource.Monotonic
 ) : Handler(flow, "HeartbeatHandler") {
 
     private val possibleZombie = atomic(false)
-    private var timestamp: ClockMark = MonoClock.markNow()
+    private var timestamp: TimeMark = timeSource.markNow()
 
     override fun start() {
         on<Event> {
@@ -33,7 +32,7 @@ internal class HeartbeatHandler(
                     restart()
                 } else {
                     possibleZombie.update { true }
-                    timestamp = MonoClock.markNow()
+                    timestamp = timeSource.markNow()
                     send(Command.Heartbeat(sequence.value))
                 }
             }

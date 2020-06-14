@@ -196,11 +196,16 @@ class KordBuilder(val token: String) {
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
         val gateway = run {
-            val gateways = gatewayBuilder(resources, shards)
-                    .map { CachingGateway(cache.createView(), it) }
-                    .onEach { it.registerKordData() }
+            val gateways = buildMap<Int, Gateway> {
+                val gateways = gatewayBuilder(resources, shards)
+                        .map { CachingGateway(cache.createView(), it) }
+                        .onEach { it.registerKordData() }
 
-            MasterGateway(gateways, shards)
+                shards.forEachIndexed { index, shard ->
+                    put(shard, gateways[index])
+                }
+            }
+            MasterGateway(gateways)
         }
 
         val self = rest.user.getCurrentUser().id
@@ -210,7 +215,7 @@ class KordBuilder(val token: String) {
         if (enableShutdownHook) {
             Runtime.getRuntime().addShutdownHook(thread(false) {
                 runBlocking {
-                    gateway.detach()
+                    gateway.detachAll()
                 }
             })
         }

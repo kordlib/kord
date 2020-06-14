@@ -15,6 +15,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 class BanAddEvent(
         val user: User,
         val guildId: Snowflake,
+        override val shard: Int,
         override val supplier: EntitySupplier = user.kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -39,5 +40,5 @@ class BanAddEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): BanAddEvent =
-            BanAddEvent(user, guildId, strategy.supply(kord))
+            BanAddEvent(user, guildId, shard, strategy.supply(kord))
 }

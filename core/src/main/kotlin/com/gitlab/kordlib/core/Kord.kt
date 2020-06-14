@@ -11,6 +11,7 @@ import com.gitlab.kordlib.core.cache.data.GuildPreviewData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.event.Event
+import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
@@ -34,7 +35,7 @@ val kordLogger = KotlinLogging.logger { }
 class Kord(
         val resources: ClientResources,
         val cache: DataCache,
-        val gateway: Gateway,
+        val gateway: MasterGateway,
         val rest: RestClient,
         val selfId: Snowflake,
         private val eventPublisher: BroadcastChannel<Event>,
@@ -74,13 +75,13 @@ class Kord(
     /**
      * Logs out to the configured [Gateways][Gateway].
      */
-    suspend fun logout() = gateway.stop()
+    suspend fun logout() = gateway.stopAll()
 
     /**
      * Logs out of all connected [Gateways][Gateway] and frees all resources.
      */
     suspend fun shutdown() {
-        gateway.detach()
+        gateway.detachAll()
         this.eventPublisher.close()
     }
 
@@ -118,7 +119,7 @@ class Kord(
 
     suspend inline fun editPresence(builder: PresenceBuilder.() -> Unit) {
         val status = PresenceBuilder().apply(builder).toUpdateStatus()
-        gateway.send(status)
+        gateway.sendAll(status)
     }
 
     override fun equals(other: Any?): Boolean {

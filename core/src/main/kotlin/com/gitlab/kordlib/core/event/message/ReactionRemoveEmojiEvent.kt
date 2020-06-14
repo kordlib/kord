@@ -20,6 +20,7 @@ import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 class ReactionRemoveEmojiEvent(
         val data: ReactionRemoveEmojiData,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -62,5 +63,5 @@ class ReactionRemoveEmojiEvent(
     suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveAllEvent =
-            ReactionRemoveAllEvent(channelId, messageId, guildId, kord, strategy.supply(kord))
+            ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, strategy.supply(kord))
 }

@@ -4,6 +4,6 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.event.Event
 
-class MessageCreateEvent(val message: Message) : Event {
+class MessageCreateEvent(val message: Message, override val shard: Int) : Event {
     override val kord: Kord get() = message.kord
 }

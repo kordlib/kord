@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 
 class RoleUpdateEvent(
         val role: Role,
+        override val shard: Int,
         override val supplier: EntitySupplier = role.kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -26,5 +27,5 @@ class RoleUpdateEvent(
     suspend fun getGuildOrNull():Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleUpdateEvent =
-            RoleUpdateEvent(role, strategy.supply(kord))
+            RoleUpdateEvent(role, shard, strategy.supply(kord))
 }

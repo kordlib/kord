@@ -15,6 +15,7 @@ class RoleDeleteEvent(
         val roleId: Snowflake,
         val role: Role?,
         override val kord: Kord,
+        override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -25,5 +26,5 @@ class RoleDeleteEvent(
     suspend fun getGuildOrNull():Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleDeleteEvent =
-            RoleDeleteEvent(guildId, roleId, role, kord, strategy.supply(kord))
+            RoleDeleteEvent(guildId, roleId, role, kord, shard, strategy.supply(kord))
 }

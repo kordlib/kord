@@ -15,12 +15,10 @@ class PresenceUpdateEvent(
         val guildId: Snowflake,
         val old: Presence?,
         val presence: Presence,
+        override val shard: Int,
         override val supplier: EntitySupplier = presence.kord.defaultSupplier
-
 ) : Event, Strategizable {
     override val kord: Kord get() = presence.kord
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): PresenceUpdateEvent =
-            PresenceUpdateEvent(oldUser, user, guildId, old, presence, strategy.supply(kord))
 
     /**
      * The behavior of the member whose presence was updated.
@@ -47,4 +45,6 @@ class PresenceUpdateEvent(
      */
     suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
 
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): PresenceUpdateEvent =
+            PresenceUpdateEvent(oldUser, user, guildId, old, presence, shard, strategy.supply(kord))
 }

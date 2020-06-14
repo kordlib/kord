@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 
 class MemberJoinEvent(
         val member: Member,
+        override val shard: Int,
         override val supplier: EntitySupplier = member.kord.defaultSupplier
 ) : Event, Strategizable {
 
@@ -26,6 +27,6 @@ class MemberJoinEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberJoinEvent =
-            MemberJoinEvent(member, strategy.supply(kord))
+            MemberJoinEvent(member, shard, strategy.supply(kord))
 
 }
