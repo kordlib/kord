@@ -6,11 +6,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ReactionData(
-    val count: Int,
-    val me: Boolean,
-    val emojiId: Long? = null,
-    val emojiName: String? = null,
-    val emojiAnimated: Boolean
+        val count: Int,
+        val me: Boolean,
+        val emojiId: Long? = null,
+        val emojiName: String? = null,
+        val emojiAnimated: Boolean
 ) {
     companion object {
         fun from(entity: Reaction) = with(entity) {

@@ -1,16 +1,17 @@
 package com.gitlab.kordlib.gateway
 
 import com.gitlab.kordlib.common.ratelimit.RateLimiter
+import com.gitlab.kordlib.gateway.GatewayCloseCode.*
 import com.gitlab.kordlib.gateway.handler.*
 import com.gitlab.kordlib.gateway.retry.Retry
 import io.ktor.client.HttpClient
 import io.ktor.client.features.websocket.DefaultClientWebSocketSession
 import io.ktor.client.features.websocket.webSocketSession
 import io.ktor.client.request.url
+import io.ktor.http.URLBuilder
 import io.ktor.http.cio.websocket.CloseReason
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.close
-import io.ktor.http.cio.websocket.readText
 import io.ktor.util.error
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
@@ -22,16 +23,23 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import mu.KotlinLogging
+import java.io.ByteArrayOutputStream
+import java.nio.charset.Charset
+import java.util.zip.Inflater
+import java.util.zip.InflaterOutputStream
 import kotlin.time.Duration
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
 
 private sealed class State(val retry: Boolean) {
-    object ShutDown : State(false)
-    class Restart(retry: Boolean) : State(retry)
+    object Stopped : State(false)
+    class Running(retry: Boolean) : State(retry)
     object Detached : State(false)
 }
 
@@ -57,6 +65,8 @@ data class DefaultGatewayData(
 @ObsoleteCoroutinesApi
 class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
+    private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
+
     private val channel = BroadcastChannel<Any>(Channel.CONFLATED)
 
     override var ping: Duration = Duration.INFINITE
@@ -65,31 +75,48 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private lateinit var socket: DefaultClientWebSocketSession
 
-    private val state: AtomicRef<State> = atomic(State.Restart(true))
+    private val state: AtomicRef<State> = atomic(State.Stopped)
 
     private val handshakeHandler: HandshakeHandler
+
+    private lateinit var inflater: Inflater
+
+    private val jsonParser = Json(JsonConfiguration(
+            isLenient = true,
+            ignoreUnknownKeys = true,
+            serializeSpecialFloatingPointValues = true,
+            useArrayPolymorphism = true
+    ))
+    private val stateMutex = Mutex()
 
     init {
         channel.sendBlocking(Unit)
         val sequence = Sequence()
         SequenceHandler(events, sequence)
-        handshakeHandler = HandshakeHandler(events, ::send, sequence, data.identifyRateLimiter)
-        HeartbeatHandler(events, ::send, { restart() }, { ping = it }, sequence)
-        ReconnectHandler(events) { restart() }
+        handshakeHandler = HandshakeHandler(events, ::trySend, sequence, data.identifyRateLimiter)
+        HeartbeatHandler(events, ::trySend, { restart(Close.ZombieConnection) }, { ping = it }, sequence)
+        ReconnectHandler(events) { restart(Close.Reconnecting) }
         InvalidSessionHandler(events) { restart(it) }
     }
 
     override suspend fun start(configuration: GatewayConfiguration) {
-        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
-        handshakeHandler.configuration = configuration
-        data.reconnectRetry.reset()
-        state.update { State.Restart(true) } //resetting state
-        while (data.reconnectRetry.hasNext && state.value is State.Restart) {
+        resetState(configuration)
 
+        while (data.reconnectRetry.hasNext && state.value is State.Running) {
             try {
                 socket = webSocket(data.url)
+                /**
+                 * https://discordapp.com/developers/docs/topics/gateway#transport-compression
+                 *
+                 * > Every connection to the gateway should use its own unique zlib context.
+                 */
+                inflater = Inflater()
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
+                if (exception is java.nio.channels.UnresolvedAddressException) {
+                    channel.send(Close.Timeout)
+                }
+
                 data.reconnectRetry.retry()
                 continue //can't handle a close code if you've got no socket
             }
@@ -112,6 +139,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             defaultGatewayLogger.trace { "handled gateway connection closed" }
 
             if (state.value.retry) data.reconnectRetry.retry()
+            else channel.send(Close.RetryLimitReached)
         }
 
         if (!data.reconnectRetry.hasNext) {
@@ -119,16 +147,51 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
     }
 
-    private suspend fun readSocket() {
-        socket.incoming.asFlow().filterIsInstance<Frame.Text>().collect { read(it) }
+    private suspend fun resetState(configuration: GatewayConfiguration) = stateMutex.withLock {
+        @Suppress("UNUSED_VARIABLE")
+        val exhaustive = when (state.value) { //exhaustive state checking
+            is State.Running -> throw IllegalStateException(gatewayRunningError)
+            State.Detached -> throw IllegalStateException(gatewayDetachedError)
+            State.Stopped -> Unit
+        }
+
+        handshakeHandler.configuration = configuration
+        data.reconnectRetry.reset()
+        state.update { State.Running(true) } //resetting state
     }
 
-    @Suppress("EXPERIMENTAL_API_USAGE")
-    private suspend fun read(frame: Frame.Text) {
-        val json = frame.readText()
+
+    private suspend fun readSocket() {
+        socket.incoming.asFlow().collect {
+            when (it) {
+                is Frame.Binary, is Frame.Text -> read(it)
+                else -> { /*ignore*/
+                }
+            }
+        }
+
+    }
+
+    private fun Frame.deflateData(): String {
+        val outputStream = ByteArrayOutputStream()
+        InflaterOutputStream(outputStream, inflater).use {
+            it.write(data)
+        }
+
+        return outputStream.use {
+            outputStream.toString(Charset.defaultCharset().name())
+        }
+    }
+
+    private suspend fun read(frame: Frame) {
+        val json = when {
+            compression -> frame.deflateData()
+            else -> frame.data.toString(Charset.defaultCharset())
+        }
+
         try {
             defaultGatewayLogger.trace { "Gateway <<< $json" }
-            Json.nonstrict.parse(Event.Companion, json)?.let { channel.send(it) }
+            jsonParser.parse(Event.Companion, json)?.let { channel.send(it) }
         } catch (exception: Exception) {
             defaultGatewayLogger.error(exception)
         }
@@ -141,16 +204,17 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         } ?: return
 
         defaultGatewayLogger.trace { "Gateway closed: ${reason.code} ${reason.message}" }
-        val discordReason = GatewayCloseCode.values().firstOrNull { it.code == reason.code } ?: return
+        val discordReason = values().firstOrNull { it.code == reason.code.toInt() } ?: return
+
+        channel.send(Close.DiscordClose(discordReason, discordReason.retry))
 
         when {
             !discordReason.retry -> {
-                state.update { State.ShutDown }
+                state.update { State.Stopped }
                 throw  IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
             }
             discordReason.resetSession -> {
-                state.update { State.Restart(true) }
-                channel.send(SessionClose)
+                state.update { State.Running(true) }
             }
         }
     }
@@ -167,33 +231,42 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override suspend fun stop() {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
-        channel.send(SessionClose)
-        state.update { State.ShutDown }
+        channel.send(Close.UserClose)
+        state.update { State.Stopped }
         if (socketOpen) socket.close(CloseReason(1000, "leaving"))
     }
 
-    internal suspend fun restart(code: Close = CloseForReconnect) {
+    internal suspend fun restart(code: Close) {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
-        state.update { State.Restart(false) }
+        state.update { State.Running(false) }
         if (socketOpen) {
             channel.send(code)
-            socket.close(CloseReason(1000, "reconnecting"))
+            socket.close(CloseReason(4900, "reconnecting"))
         }
     }
 
     override suspend fun detach() {
         if (state.value is State.Detached) return
         state.update { State.Detached }
-        channel.cancel()
+        channel.send(Close.Detach)
         if (::socket.isInitialized) {
             socket.close()
         }
+        channel.cancel()
+    }
+
+    override suspend fun send(command: Command) = stateMutex.withLock {
+        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
+        sendUnsafe(command)
+    }
+
+    private suspend fun trySend(command: Command) = stateMutex.withLock {
+        if (state.value !is State.Running) return@withLock
+        sendUnsafe(command)
     }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    override suspend fun send(command: Command) {
-        check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
-        if (!socketOpen) error("call 'start' before sending messages")
+    private suspend fun sendUnsafe(command: Command) = stateMutex.withLock {
         data.sendRateLimiter.consume()
         val json = Json.stringify(Command.Companion, command)
         if (command is Identify) defaultGatewayLogger.trace { "Gateway >>> Identify" }
@@ -208,7 +281,8 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         inline operator fun invoke(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway =
                 DefaultGatewayBuilder().apply(builder).build()
 
-
+        private const val gatewayRunningError = "The Gateway is already running, call stop() first."
+        private const val gatewayDetachedError = "The Gateway has been detached and can no longer be used, create a new instance instead."
     }
 }
 
@@ -216,65 +290,38 @@ internal val GatewayConfiguration.identify get() = Identify(token, IdentifyPrope
 
 internal val os: String get() = System.getProperty("os.name")
 
-/**
- * Enum representation of https://discordapp.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes
- *
- * @param retry Whether the error is caused by the user or by Kord.
- * If we caused it, we should consider restarting the gateway.
- */
-internal enum class GatewayCloseCode(val code: Short, val retry: Boolean = true, val resetSession: Boolean = false) {
-    /**
-     * ¯\_(ツ)_/¯
-     */
-    Unknown(4000),
+internal val GatewayCloseCode.retry
+    get() = when (this) { //this statement is intentionally structured to ensure we consider the retry for every new code
+        Unknown -> true
+        UnknownOpCode -> true
+        DecodeError -> true
+        NotAuthenticated -> true
+        AuthenticationFailed -> false
+        AlreadyAuthenticated -> true
+        InvalidSeq -> true
+        RateLimited -> true
+        SessionTimeout -> true
+        InvalidShard -> false
+        ShardingRequired -> false
+        InvalidApiVersion -> false
+        InvalidIntents -> false
+        DisallowedIntents -> false
+    }
 
-    /**
-     * We're sending the wrong opCode, this shouldn't happen unless we seriously broke something.
-     */
-    UnknownOpCode(4001),
-
-    /**
-     * We're sending malformed data, this shouldn't happen unless we seriously broke something.
-     */
-    DecodeError(4002),
-
-    /**
-     * We're sending data without starting a session, this shouldn't happen unless we seriously broke something.
-     */
-    NotAuthenticated(4003),
-
-    /**
-     * User send wrong token.
-     */
-    AuthenticationFailed(4004, false),
-
-    /**
-     * We're identifying more than once, this shouldn't happen unless we seriously broke something.
-     */
-    AlreadyAuthenticated(4005),
-
-    /**
-     * Send wrong sequence, restart and reset sequence number.
-     */
-    InvalidSeq(4007, true, true),
-
-    /**
-     * We're sending too fast, this means the user passed a wrongly configured rate limiter, we'll just ignore that though.
-     */
-    RateLimited(4008),
-
-    /**
-     * Timeout, Heartbeat handling is probably at fault, restart and reset sequence number.
-     */
-    SessionTimeout(4009, true, resetSession = true),
-
-    /**
-     * User supplied the wrong sharding info, we can't fix this on our end so we'll just stop.
-     */
-    InvalidShard(4010),
-
-    /**
-     * User didn't supply sharding info when it was required, we can't fix this on our end so we'll just stop.
-     */
-    ShardingRequired(4011)
-}
+internal val GatewayCloseCode.resetSession
+    get() = when (this) { //this statement is intentionally structured to ensure we consider the reset for every new code
+        Unknown -> false
+        UnknownOpCode -> false
+        DecodeError -> false
+        NotAuthenticated -> false
+        AuthenticationFailed -> false
+        AlreadyAuthenticated -> false
+        InvalidSeq -> true
+        RateLimited -> false
+        SessionTimeout -> false
+        InvalidShard -> false
+        ShardingRequired -> false
+        InvalidApiVersion -> false
+        InvalidIntents -> false
+        DisallowedIntents -> false
+    }

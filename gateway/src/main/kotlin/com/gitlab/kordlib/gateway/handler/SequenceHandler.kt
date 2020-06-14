@@ -1,11 +1,9 @@
 package com.gitlab.kordlib.gateway.handler
 
+import com.gitlab.kordlib.gateway.Close
 import com.gitlab.kordlib.gateway.DispatchEvent
 import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Sequence
-import com.gitlab.kordlib.gateway.SessionClose
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
 internal class SequenceHandler(
@@ -18,7 +16,7 @@ internal class SequenceHandler(
             sequence.value = event.sequence ?: sequence.value
         }
 
-        on<SessionClose> {
+        on<Close.SessionReset> {
             sequence.value = null
         }
     }

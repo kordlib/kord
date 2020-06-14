@@ -1,21 +1,24 @@
 package com.gitlab.kordlib.core.behavior
 
-import com.gitlab.kordlib.cache.api.find
+import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
-import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
-import com.gitlab.kordlib.core.paginateForwards
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.sorted
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
+import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.createCategory
 import com.gitlab.kordlib.rest.service.createNewsChannel
 import com.gitlab.kordlib.rest.service.createTextChannel
@@ -25,52 +28,39 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.util.*
-import com.gitlab.kordlib.rest.request.RequestException
+import com.gitlab.kordlib.rest.service.RestClient
 
 /**
  * The behavior of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
  */
-interface GuildBehavior : Entity {
-
+interface GuildBehavior : Entity, Strategizable {
     /**
-     * Requests to get all bans for this guild.
+     * Requests to get all present bans for this guild.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val bans: Flow<Ban>
-        get() = flow {
-            for (guildBan in kord.rest.guild.getGuildBans(id.value)) {
-                val data = BanData.from(guildBan)
-
-                emit(Ban(data, kord))
-            }
-        }
+        get() = supplier.getGuildBans(id)
 
     /**
-     * Requests to get all webhooks for this guild.
+     * Requests to get all present webhooks for this guild.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-
     val webhooks: Flow<Webhook>
-        get() = flow {
-            for (response in kord.rest.webhook.getGuildWebhooks(id.value)) {
-                val data = WebhookData.from(response)
-                emit(Webhook(data, kord))
-            }
-
-        }
+        get() = supplier.getGuildWebhooks(id)
 
     /**
-     * Requests to get all channels in this guild in an unspecified order, call [sorted] to get a consistent order.
+     * Requests to get all present channels in this guild in an unspecified order,
+     * call [sorted] to get a consistent order.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val channels: Flow<GuildChannel>
-        get() = flow<GuildChannel /*Kotlin compiler bug, don't remove*/> {
-            for (response in kord.rest.guild.getGuildChannels(id.value)) {
-                val data = ChannelData.from(response)
-                val channel = Channel.from(data, kord)
-
-                if (channel is GuildChannel) {
-                    emit(channel)
-                }
-            }
-        }
+        get() = supplier.getGuildChannels(id)
 
     /**
      * Requests to get the integrations of this guild.
@@ -78,21 +68,22 @@ interface GuildBehavior : Entity {
     val integrations: Flow<Integration>
         get() = flow {
             kord.rest.guild.getGuildIntegrations(id.value).forEach {
-                emit(Integration(IntegrationData.from(id.longValue, it), kord))
+                emit(Integration(IntegrationData.from(id.longValue, it), kord, supplier))
             }
         }
 
     /**
-     * Requests to get the cached presences of this guild, if cached.
+     * Requests to get all present presences of this guild.
+     *
+     * This property is not resolvable through REST and will always use [KordCache] instead.
      */
     val presences: Flow<Presence>
-        get() =
-            kord.cache.find<PresenceData> { PresenceData::guildId eq id.longValue }
-                    .asFlow()
-                    .map { Presence(it, kord) }
+        get() = kord.cache.query<PresenceData> { PresenceData::guildId eq id.longValue }
+                .asFlow()
+                .map { Presence(it, kord) }
 
     /**
-     * Requests to get all members in this guild.
+     * Requests to get all present members in this guild.
      *
      * Unrestricted consumption of the returned [Flow] is a potentially performance intensive operation, it is thus recommended
      * to limit the amount of messages requested by using [Flow.take], [Flow.takeWhile] or other functions that limit the amount
@@ -101,80 +92,113 @@ interface GuildBehavior : Entity {
      * ```kotlin
      *  guild.members.first { it.displayName == targetName }
      * ```
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-
     val members: Flow<Member>
-        get() = paginateForwards(batchSize = 10000, idSelector = { it.user!!.id }) { position ->
-            kord.rest.guild.getGuildMembers(id.value, position, 1000)
-        }.map {
-            val memberData = MemberData.from(it.user!!.id, id.value, it)
-            val userData = UserData.from(it.user!!)
-
-            Member(memberData, userData, kord)
-        }
+        get() = supplier.getGuildMembers(id, 1000)
 
     /**
-     * Requests to get the voice regions for this guild.
+     * Requests to get the present voice regions for this guild.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val regions: Flow<Region>
-        get() = flow {
-            for (response in kord.rest.guild.getGuildVoiceRegions(id.value)) {
-                val data = RegionData.from(response)
-
-                emit(Region(data, kord))
-            }
-        }
+        get() = supplier.getGuildVoiceRegions(id)
 
     /**
-     * Requests to get all roles in the guild.
+     * Requests to get all present roles in the guild.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val roles: Flow<Role>
-        get() = flow {
-            for (response in kord.rest.guild.getGuildRoles(id.value)) {
-                val data = RoleData.from(id.value, response)
-
-                emit(Role(data, kord))
-            }
-        }
+        get() = supplier.getGuildRoles(id)
 
     /**
-     * Requests to get the cached voice states of this guild, if cached.
+     * Requests to get the present voice states of this guild.
+     *
+     * This property is not resolvable through REST and will always use [KordCache] instead.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val voiceStates: Flow<VoiceState>
         get() = kord.cache
-                .find<VoiceStateData> { VoiceStateData::guildId eq id.longValue }
+                .query<VoiceStateData> { VoiceStateData::guildId eq id.longValue }
                 .asFlow()
                 .map { VoiceState(it, kord) }
 
+
     /**
-     * Requests to get this behavior as a [Guild].
+     * Requests to get the this behavior as a [Guild].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the guild wasn't present.
      */
-    suspend fun asGuild(): Guild = kord.getGuild(id)!!
+    suspend fun asGuild(): Guild = supplier.getGuild(id)
+
+    /**
+     * Requests to get this behavior as a [Guild],
+     * returns null if the guild isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun asGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
 
     /**
      * Requests to delete this guild.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete() = kord.rest.guild.deleteGuild(id.value)
 
     /**
      * Requests to leave this guild.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun leave() = kord.rest.user.leaveGuild(id.value)
 
     /**
-     * Requests to get the member represented by the [userId], if present.
+     * Requests to get the [Member] represented by the [userId].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the member wasn't present.
      */
-    suspend fun getMember(userId: Snowflake): Member? = kord.getMember(id, userId)
+    suspend fun getMember(userId: Snowflake): Member = supplier.getMember(id, userId)
 
     /**
-     * Requests to get the role represented by the [roleId], if present.
+     * Requests to get the [Member] represented by the [userId],
+     * returns null if the [Member] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getRole(roleId: Snowflake): Role? = kord.getRole(guildId = id, roleId = roleId)
+    suspend fun getMemberOrNull(userId: Snowflake): Member? = supplier.getMemberOrNull(id, userId)
 
-    //TODO addGuildMember?
+
+    /**
+     * Requests to get the [Role] represented by the [roleId].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Role] wasn't present.
+     */
+    suspend fun getRole(roleId: Snowflake): Role = supplier.getRole(guildId = id, roleId = roleId)
+
+    /**
+     * Requests to get the [Role] represented by the [roleId],
+     * returns null if the [Role] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getRoleOrNull(roleId: Snowflake): Role? = supplier.getRoleOrNull(guildId = id, roleId = roleId)
 
     /**
      *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun modifySelfNickname(newNickName: String?): String {
         return kord.rest.guild.modifyCurrentUserNickname(id.value, CurrentUserNicknameModifyRequest(newNickName))
@@ -182,23 +206,35 @@ interface GuildBehavior : Entity {
 
     /**
      * Requests to kick the given [userId].
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun kick(userId: Snowflake) {
         kord.rest.guild.deleteGuildMember(guildId = id.value, userId = userId.value)
     }
 
-    /**
-     * Requests to get the ban for the given [userId], if present.
-     */
-    suspend fun getBan(userId: Snowflake): Ban? {
-        val response = catchNotFound { kord.rest.guild.getGuildBan(id.value, userId.value) } ?: return null
-        val data = BanData.from(response)
 
-        return Ban(data, kord)
-    }
+    /**
+     * Requests to get the [Ban] of the [User] represented by the [userId].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Ban] wasn't present.
+     */
+    suspend fun getBan(userId: Snowflake): Ban = supplier.getGuildBan(id, userId)
+
+    /**
+     * Requests to get the [Ban] of the [User] represented by the [userId],
+     * returns null if the [Ban] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getBanOrNull(userId: Snowflake): Ban? = supplier.getGuildBanOrNull(id, userId)
+
 
     /**
      * Requests to unban the given [userId].
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun unBan(userId: Snowflake) {
         kord.rest.guild.deleteGuildBan(guildId = id.value, userId = userId.value)
@@ -208,25 +244,41 @@ interface GuildBehavior : Entity {
      * Returns the preview of this guild. The bot does not need to present in this guild
      * for this to complete successfully.
      *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
+     * @throws RequestException if the guild does not exist or is not public.
+     * @throws [EntityNotFoundException] if the preview was not found.
+     */
+    suspend fun getPreview(): GuildPreview = kord.with(EntitySupplyStrategy.rest).getGuildPreview(id)
+
+    /**
+     * Returns the preview of this guild. The bot does not need to present in this guild
+     * for this to complete successfully. Returns null if the preview doesn't exist.
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
      * @throws RequestException if the guild does not exist or is not public.
      */
-    suspend fun getPreview(): GuildPreview = kord.getGuildPreview(id)!!
+    suspend fun getPreviewOrNull(): GuildPreview? = kord.with(EntitySupplyStrategy.rest).getGuildPreviewOrNull(id)
 
     /**
      * Requests to get the amount of users that would be pruned in this guild.
      *
      * A user is pruned if they have not been seen within the given [days]
      * and don't have a [Role] assigned in this guild.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun getPruneCount(days: Int = 7): Int {
-        return kord.rest.guild.getGuildPruneCount(id.value, days).pruned
-    }
+    suspend fun getPruneCount(days: Int = 7): Int =
+            kord.rest.guild.getGuildPruneCount(id.value, days).pruned
 
     /**
      * Requests to prune users in this guild.
      *
      * A user is pruned if they have not been seen within the given [days]
      * and don't have a [Role] assigned in this guild.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun prune(days: Int = 7): Int {
         return kord.rest.guild.beginGuildPrune(id.value, days, true).pruned!!
@@ -234,16 +286,24 @@ interface GuildBehavior : Entity {
 
     /**
      * Requests to get the vanity url of this guild, if present.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun getVanityUrl(): String? {
         val identifier = kord.rest.guild.getVanityInvite(id.value).code ?: return null
         return "https://discord.gg/$identifier"
     }
 
+    /**
+     * Returns a new [GuildBehavior] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
+
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord) = object : GuildBehavior {
+        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : GuildBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
+            override val supplier: EntitySupplier = strategy.supply(kord)
 
             override fun hashCode(): Int = Objects.hash(id)
 
@@ -260,8 +320,9 @@ interface GuildBehavior : Entity {
  * Requests to edit this guild.
  *
  * @return The edited [Guild].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): Guild {
     val response = kord.rest.guild.modifyGuild(id.value, builder)
     val data = GuildData.from(response)
@@ -273,8 +334,9 @@ suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): G
  * Requests to create a new text channel.
  *
  * @return The created [TextChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
     val response = kord.rest.guild.createTextChannel(id.value, builder)
     val data = ChannelData.from(response)
@@ -286,6 +348,8 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
  * Requests to create a new voice channel.
  *
  * @return The created [VoiceChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
@@ -299,9 +363,10 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
  * Requests to create a new news channel.
  *
  * @return The created [NewsChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
 @KordPreview
-@Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
     val response = kord.rest.guild.createNewsChannel(id.value, builder)
     val data = ChannelData.from(response)
@@ -313,8 +378,9 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
  * Requests to create a new category.
  *
  * @return The created [Category].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
     val response = kord.rest.guild.createCategory(id.value, builder)
     val data = ChannelData.from(response)
@@ -324,8 +390,9 @@ suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.(
 
 /**
  * Requests to swap positions of channels in this guild.
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPositionModifyBuilder.() -> Unit) {
     kord.rest.guild.modifyGuildChannelPosition(id.value, builder)
 }
@@ -336,6 +403,8 @@ suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPosit
  * This request will execute regardless of the consumption of the return value.
  *
  * @return the roles of this guild after the update in an unspecified order, call [sorted] to get a consistent order.
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyBuilder.() -> Unit): Flow<Role> {
@@ -348,6 +417,8 @@ suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyB
  * Requests to add a new role to this guild.
  *
  * @return The created [Role].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit): Role {
@@ -359,6 +430,8 @@ suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit):
 
 /**
  * Requests to ban the given [userId] in this guild.
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
 suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
     kord.rest.guild.addGuildBan(guildId = id.value, userId = userId.value, builder = builder)

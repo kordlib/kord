@@ -42,7 +42,7 @@ suspend fun main() {
         rateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
     }
 
-    gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.IO).onEach {
+    gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.Default).onEach {
         val words = it.message.content.split(' ')
         when (words.firstOrNull()) {
             "!close" -> gateway.stop()

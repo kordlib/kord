@@ -4,8 +4,12 @@ import com.gitlab.kordlib.common.entity.GuildFeature
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.GuildPreviewData
+import com.gitlab.kordlib.core.supplier.EntitySupplier
 
-class GuildPreview(val data: GuildPreviewData, override val kord: Kord) : Entity {
+class GuildPreview(
+        val data: GuildPreviewData,
+        override val kord: Kord
+) : Entity {
 
     override val id: Snowflake
         get() = Snowflake(data.id)
@@ -33,7 +37,7 @@ class GuildPreview(val data: GuildPreviewData, override val kord: Kord) : Entity
     /**
      * Ids of custom guild emojis.
      */
-    val emojis: Set<GuildEmoji> get() = data.emojis.map { GuildEmoji(it, id, kord) }.toSet()
+    val emojis: Set<GuildEmoji> get() = data.emojis.map { GuildEmoji(it, kord) }.toSet()
 
     /**
      * Enabled guild features.

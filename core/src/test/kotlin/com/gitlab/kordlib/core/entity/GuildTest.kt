@@ -2,17 +2,17 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.cache.data.GuildData
-import com.gitlab.kordlib.core.cache.data.UserData
 import equality.BehaviorEqualityTest
 import equality.EntityEqualityTest
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions.*
+import mockKord
 
 internal class GuildTest: EntityEqualityTest<Guild> by EntityEqualityTest({
+    val kord = mockKord()
     val data = mockk<GuildData>()
     every { data.id } returns it.longValue
-    Guild(data, mockk())
+    Guild(data, kord)
 }), BehaviorEqualityTest<Guild> {
     override fun Guild.behavior(): Entity = GuildBehavior(id, kord)
 }

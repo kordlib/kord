@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.MessageType
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MessageBehavior
@@ -10,20 +11,27 @@ import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.channel.*
-import com.gitlab.kordlib.core.getChannel
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.getChannelOf
+import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.core.toSnowflakeOrNull
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-private const val guildDeprecationMessage = "Guild ids aren't consistently present, user getGuild() instead."
+private const val guildDeprecationMessage = "Guild ids aren't consistently present, use getGuild() instead."
 
 /**
  * An instance of a [Discord Message][https://discordapp.com/developers/docs/resources/channel#message-object].
  */
-class Message(val data: MessageData, override val kord: Kord) : MessageBehavior {
+class Message(
+        val data: MessageData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier
+) : MessageBehavior {
 
     /**
      * The id of this message.
@@ -43,7 +51,8 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
      * Returns null if this message was send in a [DmChannel].
      */
     @Deprecated(guildDeprecationMessage, ReplaceWith("getGuild()?.id"), DeprecationLevel.WARNING)
-    val guildId: Snowflake? get() = data.guildId?.toSnowflakeOrNull()
+    val guildId: Snowflake?
+        get() = data.guildId?.toSnowflakeOrNull()
 
     /**
      * The files attached to this message.
@@ -84,36 +93,40 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
      *
      * Returns null if this message was send in a [DmChannel].
      */
-    @Deprecated("guildDeprecationMessage", ReplaceWith("getGuild()"), DeprecationLevel.WARNING)
-    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
+    @Deprecated(guildDeprecationMessage, ReplaceWith("getGuild()"), DeprecationLevel.WARNING)
+    val guild: GuildBehavior?
+        get() = guildId?.let { GuildBehavior(it, kord) }
 
     /**
      * The ids of [Channels][Channel] specifically mentioned in this message.
      *
-     * This collection can only contain values on crossposted messages.
+     * This collection can only contain values on crossposted messages, channels
+     * mentioned inside the same guild will not be present.
      */
     val mentionedChannelIds: Set<Snowflake> get() = data.mentionedChannels.orEmpty().map { Snowflake(it) }.toSet()
 
     /**
      * The [Channels][ChannelBehavior] specifically mentioned in this message.
      *
-     * This collection can only contain values on crossposted messages.
+     * This collection can only contain values on crossposted messages, channels
+     * mentioned inside the same guild will not be present.
      */
     val mentionedChannelBehaviors: Set<ChannelBehavior> get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(Snowflake(it), kord) }.toSet()
 
     /**
      * The [Channels][Channel] specifically mentioned in this message.
      *
-     * This property will only emit values on crossposted messages.
+     * This property will only emit values on crossposted messages, channels
+     * mentioned inside the same guild will not be present.
+     *
+     * This request uses state [data] to resolve the entities belonging to the flow,
+     * as such it can't guarantee an up to date representation if the [data] is outdated.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    @Suppress("RemoveExplicitTypeArguments")
     val mentionedChannels: Flow<Channel>
-        get() = flow<Channel> /*The plugin can infer the type, but the compiler can't, so leave this here for now*/ {
-            for (id in mentionedChannelIds) {
-                val channel = kord.getChannel(id)
-                if (channel != null) emit(channel)
-            }
-        }
+        get() = mentionedChannelIds.asFlow().map { supplier.getChannel(it) }
 
     /**
      * True if this message mentions `@everyone`.
@@ -128,18 +141,29 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
     /**
      * The [Behaviors][RoleBehavior] of roles mentioned in this message.
      */
+    @Deprecated(
+            "Guild ids aren't consistently present",
+            ReplaceWith("roles.toSet()", "kotlinx.coroutines.flow.*"),
+            DeprecationLevel.ERROR
+    )
     val mentionedRoleBehaviors: Set<RoleBehavior>
-        get() = data.mentionRoles.map { RoleBehavior(guildId = guildId!!, id = Snowflake(it), kord = kord) }.toSet()
+        get() = error("Guild ids aren't consistently present, use `roles.toSet()` instead")
 
     /**
      * The [roles][Role] mentioned in this message.
+     *
+     * This request uses state [data] to resolve the entities belonging to the flow,
+     * as such it can't guarantee an up to date representation if the [data] is outdated.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val mentionedRoles: Flow<Role>
         get() = flow {
-            for (mentionRole in data.mentionRoles) {
-                val role = kord.getRole(guildId!!, Snowflake(mentionRole)) ?: continue
-                emit(role)
-            }
+            if (mentionedRoleIds.isEmpty()) return@flow
+
+            val guild = getGuild()
+            supplier.getGuildRoles(guild.id).filter { it.id in mentionedRoleIds }
         }
 
     /**
@@ -154,14 +178,15 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
 
     /**
      * The [users][User] mentioned in this message.
+     *
+     * This request uses state [data] to resolve the entities belonging to the flow,
+     * as such it can't guarantee an up to date representation if the [data] is outdated.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val mentionedUsers: Flow<User>
-        get() = flow {
-            for (mentionUser in data.mentions) {
-                val user = kord.getUser(Snowflake(mentionUser)) ?: continue
-                emit(user)
-            }
-        }
+        get() = data.mentions.asFlow().map { supplier.getUser(Snowflake(it)) }
 
     /**
      * Whether the message was pinned in its [channel].
@@ -203,7 +228,9 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
     /**
      * Requests to get the channel this message was send in.
      */
-    suspend fun getChannel(): MessageChannel = kord.getChannel(channelId) as MessageChannel
+    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+
+    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
      * Requests to get the [author] as a member.
@@ -212,16 +239,31 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
      */
     suspend fun getAuthorAsMember(): Member? {
         val author = author ?: return null
-        val guildId = getGuild()?.id ?: return null
+        val guildId = getGuild().id
         return author.asMember(guildId)
     }
 
     /**
-     * Requests to get the [Guild] this message was send in.
+     * Requests to get the guild of this message.
      *
-     * Returns null if the message was not send in a [GuildMessageChannel].
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Guild] wasn't present.
+     * @throws [ClassCastException] if this message wasn't made in a guild.
      */
-    suspend fun getGuild(): Guild? =  kord.getChannel<GuildChannel>(channelId)?.getGuild()
+    suspend fun getGuild(): Guild = supplier.getChannelOf<GuildChannel>(channelId).getGuild()
+
+    /**
+     * Requests to get the guild of this message,
+     * returns null if the [Guild] isn't present or this message wasn't made in a guild.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
+
+    /**
+     * Returns a new [Message] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Message = Message(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id)
 
@@ -229,4 +271,5 @@ class Message(val data: MessageData, override val kord: Kord) : MessageBehavior 
         is MessageBehavior ->  other.id == id && other.channelId == channelId
         else -> false
     }
+
 }

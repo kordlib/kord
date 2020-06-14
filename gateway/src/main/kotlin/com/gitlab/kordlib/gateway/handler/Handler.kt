@@ -13,7 +13,7 @@ import kotlin.coroutines.CoroutineContext
 
 private val logger = KotlinLogging.logger("[Handler]")
 
-internal abstract class Handler(val flow: Flow<Event>, val name: String, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : CoroutineScope {
+internal abstract class Handler(val flow: Flow<Event>, val name: String, private val dispatcher: CoroutineDispatcher = Dispatchers.Default) : CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Job() + dispatcher

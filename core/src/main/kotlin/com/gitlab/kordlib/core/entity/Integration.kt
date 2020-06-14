@@ -1,11 +1,15 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.IntegrationData
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.toInstant
 import com.gitlab.kordlib.rest.builder.integration.IntegrationModifyBuilder
 import com.gitlab.kordlib.rest.json.response.IntegrationExpireBehavior
@@ -17,7 +21,11 @@ import java.util.*
 /**
  * A [Discord integration](https://discordapp.com/developers/docs/resources/guild#get-guild-integrations).
  */
-class Integration(val data: IntegrationData, override val kord: Kord) : Entity {
+class Integration(
+        val data: IntegrationData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier
+) : Entity, Strategizable {
 
     override val id: Snowflake
         get() = Snowflake(data.id)
@@ -109,28 +117,53 @@ class Integration(val data: IntegrationData, override val kord: Kord) : Entity {
 
     /**
      * Requests to get the guild this integration is tied to.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the guild isn't present.
      */
-    suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
+    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-        /**
-     * Requests to get the role used for 'subscribers' of the integration.
+    /**
+     * Requests to get the guild this integration is tied to, returns null if the guild isn't present.
+     *
+     * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getRole(): Role = kord.getRole(guildId = guildId, roleId = roleId)!!
+    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+
+    /**
+     * Requests to get the role used for 'subscribers' of the integration.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the role isn't present.
+     */
+    suspend fun getRole(): Role = supplier.getRole(guildId = guildId, roleId = roleId)
+
+    /**
+     * Requests to get the role used for 'subscribers' of the integration,
+     * returns null if the role isn't present.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
+    suspend fun getRoleOrNull(): Role? = supplier.getRoleOrNull(guildId = guildId, roleId = roleId)
 
     /**
      * Requests to delete the integration.
      */
-    suspend fun delete() = kord.rest.guild.deleteGuildIntegration(guildId = guildId.value, integrationId = id.value)
+    suspend fun delete() {
+        kord.rest.guild.deleteGuildIntegration(guildId = guildId.value, integrationId = id.value)
+    }
 
     /**
      * Request to sync an integration.
      */
     suspend fun sync() = kord.rest.guild.syncGuildIntegration(guildId = guildId.value, integrationId = id.value)
 
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Integration =
+            Integration(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is Integration -> other.id == id && other.guildId == guildId
         else -> false
     }

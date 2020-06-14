@@ -17,7 +17,7 @@ import kotlin.coroutines.CoroutineContext
 class CachingGateway(
         private val cache: DataCache,
         private val gateway: Gateway,
-        private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+        private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : DataCache by cache, Gateway by gateway, CoroutineScope {
 
     override val coroutineContext: CoroutineContext

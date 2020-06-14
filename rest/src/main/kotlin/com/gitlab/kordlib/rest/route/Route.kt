@@ -9,6 +9,9 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import com.gitlab.kordlib.common.entity.DiscordEmoji as EmojiEntity
 
+internal const val REST_VERSION_PROPERTY_NAME = "com.gitlab.kordlib.rest.version"
+internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v6"
+
 sealed class Route<T>(
         val method: HttpMethod,
         val path: String,
@@ -311,7 +314,7 @@ sealed class Route<T>(
         : Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())
 
     companion object {
-        const val baseUrl = "https://discordapp.com/api/v6"
+        val baseUrl = "https://discordapp.com/api/$restVersion"
     }
 
     open class Key(val identifier: String, val isMajor: Boolean = false) {

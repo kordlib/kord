@@ -32,7 +32,8 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf(
                 CompilerArguments.inlineClasses,
                 CompilerArguments.coroutines,
-                CompilerArguments.time
+                CompilerArguments.time,
+                CompilerArguments.stdLib
         )
     }
 }

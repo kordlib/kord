@@ -15,7 +15,13 @@ data class GuildCreateRequest(
         val defaultNotificationLevel: DefaultMessageNotificationLevel? = null,
         val explicitContentFilter: ExplicitContentFilter? = null,
         val roles: List<GuildRoleCreateRequest>? = null,
-        val channels: List<GuildCreateChannelRequest>? = null
+        val channels: List<GuildCreateChannelRequest>? = null,
+        @SerialName("afk_channel_id")
+        val afkChannelId: String? = null,
+        @SerialName("afk_timeout")
+        val afkTimeout: Int? = null,
+        @SerialName("system_channel_id")
+        val systemChannelId: String? = null
 )
 
 @Serializable
@@ -33,14 +39,14 @@ data class GuildCreateChannelRequest(
         val permissionOverwrite: List<Overwrite>? = null,
         @SerialName("parent_id")
         val parentId: String? = null,
-        val nsfw: Boolean? = null
+        val nsfw: Boolean? = null,
+        val id: String? = null
 )
 
 data class GuildChannelPositionModifyRequest(val swaps: List<Pair<String, Int>>) {
 
     companion object Serializer : SerializationStrategy<GuildChannelPositionModifyRequest> {
         override val descriptor: SerialDescriptor
-
             get() = SerialDescriptor("GuildChannelPosition", StructureKind.LIST)
 
         override fun serialize(encoder: Encoder, obj: GuildChannelPositionModifyRequest) {
@@ -88,7 +94,8 @@ data class GuildRoleCreateRequest(
         val color: Int = 0,
         @SerialName("hoist")
         val separate: Boolean = false,
-        val mentionable: Boolean = false
+        val mentionable: Boolean = false,
+        val id: String? = null
 )
 
 data class GuildRolePositionModifyRequest(val swaps: List<Pair<String, Int>>) {

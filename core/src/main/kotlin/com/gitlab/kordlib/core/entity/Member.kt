@@ -3,11 +3,14 @@ package com.gitlab.kordlib.core.entity
 import com.gitlab.kordlib.common.entity.Permission
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.cache.data.MemberData
 import com.gitlab.kordlib.core.cache.data.UserData
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.toInstant
 import kotlinx.coroutines.flow.*
 import java.time.Instant
@@ -17,7 +20,12 @@ import java.util.*
 /**
  * An instance of a [Discord Member](https://discordapp.com/developers/docs/resources/guild#guild-member-object).
  */
-class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(userData, kord), MemberBehavior {
+class Member(
+        val memberData: MemberData,
+        userData: UserData,
+        kord: Kord,
+        supplier: EntitySupplier = kord.defaultSupplier
+) : User(userData, kord, supplier), MemberBehavior {
 
     override val guildId: Snowflake
         get() = Snowflake(memberData.guildId)
@@ -55,16 +63,28 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(
 
     /**
      * The [roles][Role] that apply to this user.
+     *
+     * This request uses state [data] to resolve the entities belonging to the flow,
+     * as such it can't guarantee an up to date representation if the [data] is outdated.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val roles: Flow<Role> get() = roleIds.asFlow().map { kord.getRole(guildId, it) }.filterNotNull()
+    val roles: Flow<Role>
+        get() = if (roleIds.isEmpty()) emptyFlow()
+        else supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
     /**
-     * Whether this member's [id] equals the [Guild.ownerId]
+     * Whether this member's [id] equals the [Guild.ownerId].
+     *
+     * @throws [RequestException] if something went wrong during the request.
      */
     suspend fun isOwner(): Boolean = getGuild().ownerId == id
 
     /**
      * Requests to calculate a summation of the permissions of this member's [roles].
+     *
+     * @throws [RequestException] if something went wrong during the request.
      */
     suspend fun getPermissions(): Permissions {
         val guild = getGuild()
@@ -83,18 +103,9 @@ class Member(val memberData: MemberData, userData: UserData, kord: Kord) : User(
     }
 
     /**
-     * Returns this member.
+     * Returns a new [Member] with the given [strategy].
      */
-    override suspend fun asMember(): Member = this
-
-    /**
-     * Requests this user as a member of the guild, or returns itself when the [guildId] matches this member's [guild].
-     * Returns null when the user is not a member of the guild.
-     */
-    override suspend fun asMember(guildId: Snowflake): Member? = when (guildId) {
-        this.guildId -> this
-        else -> kord.getMember(guildId, id)
-    }
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Member = Member(memberData, data, kord, strategy.supply(kord))
 
 
     override fun hashCode(): Int = Objects.hash(id, guildId)

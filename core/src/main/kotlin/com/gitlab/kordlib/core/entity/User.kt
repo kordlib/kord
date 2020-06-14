@@ -7,13 +7,18 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.UserData
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.rest.Image
 import java.util.*
 
 /**
  * An instance of a [Discord User](https://discordapp.com/developers/docs/resources/user#user-object).
  */
-open class User(val data: UserData, override val kord: Kord) : UserBehavior {
+open class User(
+        val data: UserData,
+        override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier
+) : UserBehavior {
 
     override val id: Snowflake
         get() = Snowflake(data.id)
@@ -58,6 +63,11 @@ open class User(val data: UserData, override val kord: Kord) : UserBehavior {
         is UserBehavior -> other.id == id
         else -> false
     }
+
+    /**
+     * Returns a new [User] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): User = User(data, kord, strategy.supply(kord))
 
     data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 

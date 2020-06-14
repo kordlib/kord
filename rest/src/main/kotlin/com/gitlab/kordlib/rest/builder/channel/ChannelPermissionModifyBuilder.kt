@@ -2,8 +2,7 @@ package com.gitlab.kordlib.rest.builder.channel
 
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.rest.builder.KordDsl
-import com.gitlab.kordlib.rest.builder.RequestBuilder
+import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.rest.json.request.ChannelPermissionEditRequest
 
 @KordDsl

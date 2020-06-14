@@ -5,7 +5,6 @@ import com.gitlab.kordlib.cache.api.DataEntryCache
 import com.gitlab.kordlib.cache.api.Query
 import com.gitlab.kordlib.cache.api.QueryBuilder
 import com.gitlab.kordlib.cache.api.data.DataDescription
-import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KType
 
@@ -26,7 +25,7 @@ class DataCacheView(private val cache: DataCache) : DataCache by cache {
     private val descriptions = mutableMapOf<KType, DataDescription<out Any, out Any>>()
 
     @Suppress("UNCHECKED_CAST")
-    private fun<T: Any> getDescription(type: KType) = descriptions[type]!! as DataDescription<T, out Any>
+    private fun <T : Any> getDescription(type: KType) = descriptions[type]!! as DataDescription<T, out Any>
 
     override suspend fun register(description: DataDescription<out Any, out Any>) {
         descriptions[description.type] = description

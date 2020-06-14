@@ -1,3 +1,34 @@
+# 0.5.0
+
+## Performance
+
+* Getting entities from a flow of non-cached entities should be considerably faster.
+
+## Fixes
+
+* non-final socket closures use 4900 instead of 1000.
+
+## Additions
+
+* Added the `EntitySupplyStrategy`, entities will now keep a reference to 
+a `EntitySupplier` (fetched from the strategy) from which they'll be able to fetch other entities (`getX` methods). #74
+* Added `withStrategy(EntitySupplyStrategy)` to change the `EntitySupplier` of most entities. #74
+* Added a `CacheEntitySupplier` and `RestEntitySupplier` supplier that exclusively operates on Cache and REST
+respectively, as well as a strategy that prioritizes Cache over REST like previous versions. #74
+* Added `getXOrNull` variants to fetching entities that won't explode when trying to get an entity that doesn't
+exist. #74
+
+## Changes
+
+* Changed `GuildCreateBuilder` to be more inline with recent api changes. #77
+* `core` Event constructors are no longer internal.
+* `Kord#gateway` is now a `MasterGateway`, exposing all sharded gateways #65
+* `core` Events now expose their shard index as well as the `Gateway` they were spawned from. #65
+* `DisconnectEvent` and `Close` have been extended with more detailed implementations #65
+* `Gateway` now accepts a `PresenceBuilder` to configure its original presence. #72
+* Rest Discord API version can now be configured by setting the `com.gitlab.kordlib.rest.version` system property, `v6` by default.
+* `DefaultGateway` now supports zlib compression and enables it by default.
+
 # 0.4.22
 
 This release contains breaking changes related to webhooks.
@@ -155,6 +186,15 @@ an alternative.
 * Fixed an issue where editing a guild emoji would reset permissions.
 * Fixed an issue where editing a guild member would reset permissions.
 
+## Removals
+
+* Removed some `Kord` functions that fetched non 'top-level' entities. Kord is no longer
+the central source for getting entities and these changes try to reflect that. #74
+You should use the new entity suppliers for those instead. #74
+* `KordCache` has been removed, Kord now keeps a reference to a generic cache instead.
+You can still get similar behavior using `kord.with(EntitySupplyStrategy.cache)`. #74
+
+
 # 0.4.6
 
 ## Additions
@@ -166,7 +206,7 @@ an alternative.
 
 ## Changes
 
-* `MessageChannel#withTyping` should now properly stop when cancelling the coroutine context.
+* `MessageChannel#withTyping` should now properly stop when cancelling the coroutine context
 
 ## Fixes
 

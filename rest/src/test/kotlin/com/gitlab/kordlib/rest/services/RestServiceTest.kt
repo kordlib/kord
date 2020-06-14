@@ -228,7 +228,7 @@ class RestServiceTest {
     @Order(11)
     fun `member in guild`() = runBlocking {
         with(rest.guild) {
-            val members = getGuildMembers(guildId)
+            @Suppress("UNUSED_VARIABLE") val members = getGuildMembers(guildId)
             //TODO add member to guild
 
             modifyGuildMember(guildId, userId) {

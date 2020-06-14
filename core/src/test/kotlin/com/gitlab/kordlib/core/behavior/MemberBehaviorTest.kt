@@ -1,8 +1,9 @@
 package com.gitlab.kordlib.core.behavior
 
 import equality.GuildEntityEqualityTest
-import io.mockk.mockk
+import mockKord
 
 internal class MemberBehaviorTest : GuildEntityEqualityTest<MemberBehavior> by GuildEntityEqualityTest({ id, guildId ->
-    MemberBehavior(guildId = guildId, id = id, kord = mockk())
+    val kord = mockKord()
+    MemberBehavior(guildId = guildId, id = id, kord = kord)
 })
