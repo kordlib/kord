@@ -2,16 +2,22 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.cache.data.ClientStatusData
 import com.gitlab.kordlib.core.cache.data.PresenceData
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.emptyFlow
 
-class Presence(val data: PresenceData, override val kord: Kord) : KordObject {
+class Presence(
+        val data: PresenceData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier
+) : KordObject, Strategizable {
 
     val activities: List<Activity> get() = data.activities.map { Activity(it) }
 
@@ -23,13 +29,35 @@ class Presence(val data: PresenceData, override val kord: Kord) : KordObject {
 
     val roleIds: Set<Snowflake>? get() = data.roles?.asSequence()!!.map { Snowflake(it) }.toSet()
 
-    val roles: Flow<Role>? get() = roleIds?.asFlow()!!.map { kord.getRole(guildId!!, it) }.filterNotNull()
+    val roles: Flow<Role>
+        get() = if (guildId == null) emptyFlow()
+        else supplier.getGuildRoles(guildId!!)
 
     val status: Status get() = data.status
 
     val userId: Snowflake get() = Snowflake(data.userId)
 
-    suspend fun getUser(): User = kord.getUser(userId)!!
+    /**
+     * Requests to get the user of this presence.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [User] wasn't present.
+     */
+    suspend fun getUser(): User = supplier.getUser(userId)
+
+    /**
+     * Requests to get the user of this presence,
+     * returns null if the [User] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
+
+    /**
+     * Returns a new [Presence] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Presence =
+            Presence(data, kord, strategy.supply(kord))
 
 }
 

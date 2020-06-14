@@ -2,7 +2,6 @@ package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 internal val MessageData.authorId get() = author?.id
@@ -33,7 +32,7 @@ data class MessageData(
         val mentionedChannels: List<Long>? = null
 ) {
 
-    fun plus(selfId: Snowflake, reaction: MessageReaction) : MessageData {
+    fun plus(selfId: Snowflake, reaction: MessageReaction): MessageData {
         val isMe = selfId.value == reaction.userId
 
         val reactions = if (reactions.isNullOrEmpty()) {
@@ -119,3 +118,5 @@ data class MessageData(
         }
     }
 }
+
+fun DiscordMessage.toData() = MessageData.from(this)

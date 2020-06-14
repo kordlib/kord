@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.Snowflake
@@ -74,6 +73,9 @@ internal class GuildEventHandler(
         for (voiceState in voiceStates.orEmpty()) {
             cache.put(VoiceStateData.from(voiceState))
         }
+        for (emoji in emojis) {
+            cache.put(EmojiData.from(id, emoji.id!!, emoji))
+        }
     }
 
     private suspend fun handle(event: GuildCreate) {
@@ -93,7 +95,7 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: GuildDelete) = with(event.guild) {
-        val query = cache.find<GuildData> { GuildData::id eq id.toLong() }
+        val query = cache.query<GuildData> { GuildData::id eq id.toLong() }
 
         val old = query.asFlow().map { Guild(it, kord) }.singleOrNull()
         query.remove()
@@ -119,7 +121,7 @@ internal class GuildEventHandler(
 
     private suspend fun handle(event: GuildEmojisUpdate) = with(event.emoji) {
         val guildId = Snowflake(guildId)
-        val emojis = emojis.map { GuildEmoji(EmojiData.from(it.id!!, it), guildId, kord) }.toSet()
+        val emojis = emojis.map { GuildEmoji(EmojiData.from(guildId.value, it.id!!, it), kord) }.toSet()
 
         cache.query<GuildData> { GuildData::id eq guildId.longValue }.update {
             it.copy(emojis = emojis.map { emoji -> emoji.data })
@@ -146,7 +148,7 @@ internal class GuildEventHandler(
 
     private suspend fun handle(event: GuildMemberRemove) = with(event.member) {
         val userData = UserData.from(user)
-        cache.find<UserData> { UserData::id eq userData.id }.remove()
+        cache.query<UserData> { UserData::id eq userData.id }.remove()
         val user = User(userData, kord)
 
         coreEventChannel.send(MemberLeaveEvent(user, Snowflake(guildId)))
@@ -156,12 +158,12 @@ internal class GuildEventHandler(
         val userData = UserData.from(user)
         cache.put(userData)
 
-        val old = cache.find<MemberData> {
+        val old = cache.query<MemberData> {
             MemberData::userId eq userData.id
             MemberData::guildId eq guildId.toLong()
         }.asFlow().map { Member(it, userData, kord) }.singleOrNull()
 
-        cache.find<MemberData> {
+        cache.query<MemberData> {
             MemberData::userId eq userData.id
             MemberData::guildId eq guildId.toLong()
         }.update { it + this }
@@ -196,7 +198,7 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: GuildRoleDelete) = with(event.role) {
-        val query = cache.find<RoleData> { RoleData::id eq event.role.id.toLong() }
+        val query = cache.query<RoleData> { RoleData::id eq event.role.id.toLong() }
 
         val old = kotlin.run {
             val data = query.singleOrNull() ?: return@run null
@@ -224,14 +226,14 @@ internal class GuildEventHandler(
     private suspend fun handle(event: PresenceUpdate) = with(event.presence) {
         val data = PresenceData.from(this.guildId!!, this)
 
-        val old = cache.find<PresenceData> { PresenceData::id eq data.id }
+        val old = cache.query<PresenceData> { PresenceData::id eq data.id }
                 .asFlow().map { Presence(it, kord) }.singleOrNull()
 
         cache.put(data)
         val new = Presence(data, kord)
 
         val user = cache
-                .find<UserData> { UserData::id eq event.presence.user.id.toLong() }
+                .query<UserData> { UserData::id eq event.presence.user.id.toLong() }
                 .singleOrNull()
                 ?.let { User(it, kord) }
 
@@ -242,7 +244,7 @@ internal class GuildEventHandler(
         val data = InviteCreateData.from(invite)
 
         with(invite.inviter) {
-            cache.find<UserData> { UserData::id eq id.toLong() }
+            cache.query<UserData> { UserData::id eq id.toLong() }
                     .update { it.copy(discriminator = discriminator, username = username, avatar = avatar) }
         }
 

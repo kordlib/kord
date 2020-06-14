@@ -3,11 +3,12 @@ package com.gitlab.kordlib.core.entity.channel
 import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import equality.GuildChannelEqualityTest
-import io.mockk.mockk
+import mockKord
 
 @Suppress("DELEGATED_MEMBER_HIDES_SUPERTYPE_OVERRIDE")
 internal class CategoryTest : GuildChannelEqualityTest<Category> by GuildChannelEqualityTest ({ id, guildId ->
-    Category(ChannelData(id.longValue, guildId = guildId.longValue, type = ChannelType.GuildCategory), mockk())
+    val kord = mockKord()
+    Category(ChannelData(id.longValue, guildId = guildId.longValue, type = ChannelType.GuildCategory), kord)
 }) {
 
 }

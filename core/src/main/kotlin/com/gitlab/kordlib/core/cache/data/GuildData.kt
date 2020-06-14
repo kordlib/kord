@@ -2,7 +2,6 @@ package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -91,7 +90,7 @@ data class GuildData(
                     defaultMessageNotifications,
                     explicitContentFilter,
                     roles.map { it.id.toLong() },
-                    emojis.map { EmojiData.from(it.id!!, it) },
+                    emojis.map { EmojiData.from(guildId = id, id = it.id!!, entity = it) },
                     features,
                     mfaLevel,
                     applicationId?.toLong(),
@@ -121,3 +120,5 @@ data class GuildData(
         }
     }
 }
+
+fun DiscordGuild.toData() = GuildData.from(this)

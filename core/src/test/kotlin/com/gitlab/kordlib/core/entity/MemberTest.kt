@@ -7,8 +7,10 @@ import equality.BehaviorEqualityTest
 import equality.GuildEntityEqualityTest
 import io.mockk.every
 import io.mockk.mockk
+import mockKord
 
 internal class MemberTest : GuildEntityEqualityTest<Member> by GuildEntityEqualityTest({ id, guildId ->
+    val kord = mockKord()
     val memberData = mockk<MemberData>()
     every { memberData.userId } returns id.longValue
     every { memberData.guildId } returns guildId.longValue
@@ -16,7 +18,7 @@ internal class MemberTest : GuildEntityEqualityTest<Member> by GuildEntityEquali
     val userData = mockk<UserData>()
     every { userData.id } returns id.longValue
 
-    Member(memberData, userData, mockk())
+    Member(memberData, userData, kord)
 }), BehaviorEqualityTest<Member> {
     override fun Member.behavior(): Entity = MemberBehavior(guildId = guildId, id = id, kord = kord)
 }

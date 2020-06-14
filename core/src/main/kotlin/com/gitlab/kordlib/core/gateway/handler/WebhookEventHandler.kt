@@ -1,8 +1,8 @@
 package com.gitlab.kordlib.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.event.WebhookUpdateEvent
 import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Gateway

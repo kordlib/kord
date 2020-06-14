@@ -3,9 +3,7 @@ package com.gitlab.kordlib.core.cache.data
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.DiscordUser
 import com.gitlab.kordlib.common.entity.Premium
-import com.gitlab.kordlib.common.entity.UserFlag
 import com.gitlab.kordlib.common.entity.UserFlags
-import com.gitlab.kordlib.gateway.DiscordInviteUser
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -42,3 +40,5 @@ data class UserData(
 
     }
 }
+
+fun DiscordUser.toData() = UserData.from(this)

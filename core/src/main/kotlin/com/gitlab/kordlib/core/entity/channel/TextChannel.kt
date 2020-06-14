@@ -3,15 +3,20 @@ package com.gitlab.kordlib.core.entity.channel
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.NewsChannelBehavior
 import com.gitlab.kordlib.core.behavior.channel.TextChannelBehavior
 import com.gitlab.kordlib.core.cache.data.ChannelData
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import java.util.*
 
 /**
  * An instance of a Discord Text Channel associated to a guild.
  */
-data class TextChannel(override val data: ChannelData, override val kord: Kord) : GuildMessageChannel, TextChannelBehavior {
+class TextChannel(
+        override val data: ChannelData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier
+) : GuildMessageChannel, TextChannelBehavior {
 
     /**
      * Whether the channel is nsfw.
@@ -23,7 +28,13 @@ data class TextChannel(override val data: ChannelData, override val kord: Kord) 
      */
     val userRateLimit: Int get() = data.rateLimitPerUser!!
 
-    override suspend fun asChannel(): TextChannel = this
+    /**
+     * returns a new [TextChannel] with the given [strategy].
+     *
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannel =
+            TextChannel(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 

@@ -6,6 +6,8 @@ import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.IntegrationData
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.toInstant
 import com.gitlab.kordlib.rest.builder.integration.IntegrationModifyBuilder
 import com.gitlab.kordlib.rest.json.response.IntegrationExpireBehavior
@@ -17,7 +19,11 @@ import java.util.*
 /**
  * A [Discord integration](https://discordapp.com/developers/docs/resources/guild#get-guild-integrations).
  */
-class Integration(val data: IntegrationData, override val kord: Kord) : Entity {
+class Integration(
+        val data: IntegrationData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier
+) : Entity, Strategizable {
 
     override val id: Snowflake
         get() = Snowflake(data.id)
@@ -112,10 +118,10 @@ class Integration(val data: IntegrationData, override val kord: Kord) : Entity {
      */
     suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
 
-        /**
+    /**
      * Requests to get the role used for 'subscribers' of the integration.
      */
-    suspend fun getRole(): Role = kord.getRole(guildId = guildId, roleId = roleId)!!
+    suspend fun getRole(): Role = supplier.getRole(guildId = guildId, roleId = roleId)!!
 
     /**
      * Requests to delete the integration.
@@ -127,10 +133,12 @@ class Integration(val data: IntegrationData, override val kord: Kord) : Entity {
      */
     suspend fun sync() = kord.rest.guild.syncGuildIntegration(guildId = guildId.value, integrationId = id.value)
 
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Integration =
+            Integration(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is Integration -> other.id == id && other.guildId == guildId
         else -> false
     }

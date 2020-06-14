@@ -1,10 +1,10 @@
 package com.gitlab.kordlib.rest.request
 
-import com.gitlab.kordlib.rest.json.response.DiscordErrorResponse
 import com.gitlab.kordlib.rest.ratelimit.*
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.defaultRequest
+import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.header
 import io.ktor.client.request.request
 import io.ktor.client.statement.HttpResponse
@@ -46,21 +46,10 @@ class KtorRequestHandler(
             response
         }
 
-        val responseBody = response.readText()
-        logger.trace { response.logString(responseBody) }
-
         return when {
             response.isRateLimit -> handle(request)
-            response.isError -> {
-                val error = runCatching {
-                    parser.parse(DiscordErrorResponse.serializer(),responseBody)
-                }.onFailure {
-                    logger.error(it) { "error while parsing REST error response" }
-                }
-
-                throw KtorRequestException(response, response.errorString(), error.getOrDefault(DiscordErrorResponse()))
-            }
-            else -> parser.parse(request.route.strategy, responseBody)
+            response.isError -> throw KtorRequestException(response, response.errorString())
+            else -> parser.parse(request.route.strategy, response.readText())
         }
     }
 
@@ -76,11 +65,10 @@ class KtorRequestHandler(
         }
 
         request.body?.let {
-            val body = parser.stringify(it.strategy, it.body)
             when (request) {
                 is MultipartRequest<*, *> -> {
                     headers.append("payload_json", parser.stringify(it.strategy, it.body))
-                    this.body = io.ktor.client.request.forms.MultiPartFormDataContent(request.data)
+                    this.body = MultiPartFormDataContent(request.data)
                 }
 
                 is JsonRequest<*, *> -> {
@@ -88,9 +76,6 @@ class KtorRequestHandler(
                     this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
                 }
             }
-            logger.trace { request.logString(body) }
-        } ?: kotlin.run {
-            logger.trace { request.logString("") }
         }
     }
 

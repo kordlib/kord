@@ -35,3 +35,5 @@ data class MemberData(
 
     }
 }
+
+fun DiscordGuildMember.toData(userId: String, guildId: String) = MemberData.from(userId, guildId, this)

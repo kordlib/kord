@@ -5,8 +5,9 @@ import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.GatewayConfiguration
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlin.time.Duration
 import kotlin.time.milliseconds
 

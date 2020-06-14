@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.core.live
 
 import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.cache.data.ReactionData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Message
@@ -57,10 +56,10 @@ class LiveMessage(message: Message) : AbstractLiveEntity(), Entity by message {
         val animated = this is ReactionEmoji.Custom && isAnimated
 
         val present = message.data.reactions
-                ?.firstOrNull { it.emojiName == name && it.emojiId == id?.longValue }
+                ?.firstOrNull { it.emojiName == name && it.emojiId == id.longValue }
 
         val reactions = when (present) {
-            null -> message.data.reactions.orEmpty() + ReactionData(1, event.userId == kord.selfId, id?.longValue, name, animated)
+            null -> message.data.reactions.orEmpty() + ReactionData(1, event.userId == kord.selfId, id.longValue, name, animated)
             else -> {
                 val updated = present.copy(count = present.count + 1)
                 message.data.reactions.orEmpty() - present + updated
@@ -72,7 +71,7 @@ class LiveMessage(message: Message) : AbstractLiveEntity(), Entity by message {
 
     private fun process(event: ReactionRemoveEvent) = with(event.emoji) {
         val present = message.data.reactions
-                ?.firstOrNull { it.emojiName == name && it.emojiId == id?.longValue }
+                ?.firstOrNull { it.emojiName == name && it.emojiId == id.longValue }
 
         val reactions = when (present) {
             null -> message.data.reactions

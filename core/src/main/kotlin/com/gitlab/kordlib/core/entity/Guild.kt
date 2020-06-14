@@ -1,23 +1,28 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.core.*
+import com.gitlab.kordlib.common.exception.RequestException
+import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
-import com.gitlab.kordlib.core.behavior.channel.*
-import com.gitlab.kordlib.core.cache.data.EmojiData
+import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
+import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
+import com.gitlab.kordlib.core.behavior.channel.TextChannelBehavior
+import com.gitlab.kordlib.core.behavior.channel.VoiceChannelBehavior
 import com.gitlab.kordlib.core.cache.data.GuildData
-import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
 import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
-import com.gitlab.kordlib.core.paginateForwards
-import com.gitlab.kordlib.core.switchIfEmpty
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.rest.Image
-import kotlinx.coroutines.flow.*
+import com.gitlab.kordlib.rest.service.RestClient
+import kotlinx.coroutines.flow.first
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -25,8 +30,11 @@ import java.util.*
 /**
  * An instance of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
  */
-@Suppress("MemberVisibilityCanBePrivate")
-class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
+class Guild(
+        val data: GuildData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier
+) : GuildBehavior {
 
     override val id: Snowflake get() = Snowflake(data.id)
 
@@ -99,7 +107,7 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     /**
      * The custom emojis in this guild.
      */
-    val emojis: List<GuildEmoji> get() = data.emojis.map { GuildEmoji(it, id, kord) }
+    val emojis: List<GuildEmoji> get() = data.emojis.map { GuildEmoji(it, kord) }
 
     /**
      * The behavior of the @everyone role.
@@ -145,13 +153,6 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      */
     val mfaLevel: MFALevel get() = data.mfaLevel
 
-    override val members: Flow<Member>
-        get() {
-            if (data.members.isEmpty()) return super.members
-
-            return data.members.asFlow().map { getMember(Snowflake(it.userId)) }.filterNotNull()
-        }
-
     /**
      * The name of this guild.
      */
@@ -177,9 +178,6 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      */
     val channelBehaviors: Set<GuildChannelBehavior>
         get() = data.channels.asSequence().map { GuildChannelBehavior(id = Snowflake(it), guildId = id, kord = kord) }.toSet()
-
-    override val channels: Flow<GuildChannel>
-        get() = data.channels.asFlow().map { kord.getChannel(Snowflake(it)) }.filterIsInstance<GuildChannel>().switchIfEmpty(super.channels)
 
     /**
      * The default message notification level.
@@ -234,9 +232,6 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      */
     val verificationLevel: VerificationLevel get() = data.verificationLevel
 
-    override val roles: Flow<Role>
-        get() = roleIds.asFlow().map { kord.getRole(id, it)!! }
-
     /**
      * The ids of the roles.
      */
@@ -247,12 +242,14 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
      */
     val roleBehaviors: Set<RoleBehavior> get() = data.roles.asSequence().map { RoleBehavior(id = Snowflake(it), guildId = id, kord = kord) }.toSet()
 
-    override suspend fun asGuild(): Guild = this
-
     /**
-     * Requests to get the afk channel, if present.
+     * Requests to get the [VoiceChannel] represented by the [afkChannelId],
+     * returns null if the [afkChannelId] isn't present or the channel itself isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [VoiceChannel] wasn't present.
      */
-    suspend fun getAfkChannel(): VoiceChannel? = afkChannelId?.let { kord.getChannel(it) as? VoiceChannel }
+    suspend fun getAfkChannel(): VoiceChannel? = afkChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Gets the banner url in the specified format.
@@ -269,27 +266,47 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     }
 
     /**
-     * Requests to get the embed channel, if present.
+     * Requests to get the [GuildChannel] represented by the [embedChannel],
+     * returns null if the [GuildChannel] isn't present or [embedChannel] is null.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getEmbedChannel(): GuildChannel? = embedChannelId?.let { kord.getChannel(it) } as? GuildChannel
+    suspend fun getEmbedChannel(): GuildChannel? = embedChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
-     * Requests to get the emoji with given [emojiId], if present.
+     * Requests to get the [GuildEmoji] represented by the [emojiId] in this guild.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [GuildEmoji] wasn't present.
      */
-    suspend fun getEmoji(emojiId: Snowflake): GuildEmoji? {
-        val response = catchNotFound {
-            kord.rest.emoji.getEmoji(guildId = id.value, emojiId = emojiId.value)
-        } ?: return null
-
-        val data = EmojiData.from(emojiId.value, response)
-
-        return GuildEmoji(data, id, kord)
-    }
+    suspend fun getEmoji(emojiId: Snowflake): GuildEmoji =
+            supplier.getEmoji(guildId = id, emojiId = emojiId)
 
     /**
-     * Requests to get the @everyone role.
+     * Requests to get the [GuildEmoji] represented by the [emojiId] in this guild,
+     * returns null if the [GuildEmoji] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getEveryoneRole(): Role = kord.getRole(id, id)!!
+    suspend fun getEmojiOrNull(emojiId: Snowflake): GuildEmoji? =
+            supplier.getEmojiOrNull(guildId = id, emojiId = emojiId)
+
+
+    /**
+     * Requests to get the `@everyone` [Role].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Role] wasn't present.
+     */
+    suspend fun getEveryoneRole(): Role = supplier.getRole(id, id)
+
+    /**
+     * Requests to get the `@everyone` [Role],
+     * returns null if the [Role] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getEveryoneRoleOrNull(): Role? = supplier.getRoleOrNull(id, id)
 
     /**
      * Gets the discovery splash url in the specified [format], if present.
@@ -299,6 +316,8 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
 
     /**
      * Requests to get the splash image in the specified [format], if present.
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
      */
     suspend fun getDiscoverySplash(format: Image.Format): Image? {
         val url = getDiscoverySplashUrl(format) ?: return null
@@ -321,9 +340,12 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     }
 
     /**
-     * Requests to get the owner as member.
+     * Requests to get the owner of this guild as a [Member].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Member] wasn't present.
      */
-    suspend fun getOwner(): Member = kord.getMember(id, ownerId)!!
+    suspend fun getOwner(): Member = supplier.getMember(id, ownerId)
 
     /**
      * Requests to get The channel where guild notices such as welcome messages and boost events are posted.
@@ -331,13 +353,28 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     suspend fun getPublicUpdatesChannel(): GuildMessageChannel? = publicUpdatesChannel?.asChannel()
 
     /**
-     * Requests to get the voice region for this guild.
+     * Requests to get the owner of this guild as a [Member],
+     * returns null if the [Member] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getOwnerOrNull(): Member? = supplier.getMemberOrNull(id, ownerId)
+
+    /**
+     * Requests to get the [voice region][Region] of this guild.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Region] wasn't present.
+     * @throws [NoSuchElementException] if the [regionId] is not in the available [regions].
      */
     suspend fun getRegion(): Region = regions.first { it.id == regionId }
 
     /**
-     * Requests to get the channel in which a discoverable server's rules should be found, if present.
-     **/
+     * Requests to get the the channel in which a discoverable server's rules should be found represented
+     *, returns null if the [GuildMessageChannel] isn't present, or [rulesChannelId] is null.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     suspend fun getRulesChannel(): GuildMessageChannel? = rulesChannel?.asChannel()
 
     /**
@@ -356,9 +393,19 @@ class Guild(val data: GuildData, override val kord: Kord) : GuildBehavior {
     }
 
     /**
-     * Requests to get the channel of system messages, if present.
+     * Requests to get the channel where system messages (member joins, server boosts, etc),
+     * returns null if the [TextChannel] isn't present or the [systemChannelId] is null.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getSystemChannel(): TextChannel? = kord.getChannel(id) as? TextChannel
+    suspend fun getSystemChannel(): TextChannel? =
+            systemChannelId?.let { supplier.getChannelOfOrNull(it) }
+
+
+    /**
+     * Returns a new [Guild] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Guild = Guild(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id)
 

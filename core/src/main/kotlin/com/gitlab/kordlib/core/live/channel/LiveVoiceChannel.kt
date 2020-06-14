@@ -2,10 +2,8 @@ package com.gitlab.kordlib.core.live.channel
 
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
 import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.VoiceStateUpdateEvent
 import com.gitlab.kordlib.core.event.channel.VoiceChannelCreateEvent
 import com.gitlab.kordlib.core.event.channel.VoiceChannelDeleteEvent
 import com.gitlab.kordlib.core.event.channel.VoiceChannelUpdateEvent

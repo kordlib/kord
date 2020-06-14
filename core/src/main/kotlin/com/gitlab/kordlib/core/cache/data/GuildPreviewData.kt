@@ -1,9 +1,7 @@
 package com.gitlab.kordlib.core.cache.data
 
-import com.gitlab.kordlib.common.entity.DiscordEmoji
 import com.gitlab.kordlib.common.entity.DiscordGuildPreview
 import com.gitlab.kordlib.common.entity.GuildFeature
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -65,7 +63,7 @@ class GuildPreviewData(
                                 icon,
                                 splash,
                                 discoverySplash,
-                                emojis.map { EmojiData.from(it.id!!, it) },
+                                emojis.map { EmojiData.from(guildId = id ,id = it.id!!, entity = it) },
                                 features,
                                 approximateMemberCount,
                                 approximatePresenceCount,

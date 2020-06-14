@@ -9,10 +9,10 @@ import com.gitlab.kordlib.gateway.Command
 import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.GatewayConfiguration
-import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.request.JsonRequest
 import com.gitlab.kordlib.rest.request.MultipartRequest
 import com.gitlab.kordlib.rest.request.Request
+import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.MultiPartFormDataContent
@@ -31,7 +31,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalStateException
 import kotlin.test.BeforeTest
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -77,19 +76,19 @@ class CrashingHandler(val client: HttpClient) : RequestHandler {
             }
 
 
-                request.body?.let {
-                    when (request) {
-                        is MultipartRequest<*, *> -> {
-                            headers.append("payload_json", parser.stringify(it.strategy as SerializationStrategy<Any>, it.body))
-                            this.body = MultiPartFormDataContent(request.data)
-                        }
+            request.body?.let {
+                when (request) {
+                    is MultipartRequest<*, *> -> {
+                        headers.append("payload_json", parser.stringify(it.strategy as SerializationStrategy<Any>, it.body))
+                        this.body = MultiPartFormDataContent(request.data)
+                    }
 
-                        is JsonRequest<*, *> -> {
-                            val json = parser.stringify(it.strategy as SerializationStrategy<Any>, it.body)
-                            this.body = TextContent(json, ContentType.Application.Json)
-                        }
+                    is JsonRequest<*, *> -> {
+                        val json = parser.stringify(it.strategy as SerializationStrategy<Any>, it.body)
+                        this.body = TextContent(json, ContentType.Application.Json)
                     }
                 }
+            }
 
 
         }.execute()
