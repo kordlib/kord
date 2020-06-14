@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.IntegrationData
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.toInstant
@@ -115,18 +117,41 @@ class Integration(
 
     /**
      * Requests to get the guild this integration is tied to.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the guild isn't present.
      */
-    suspend fun getGuild(): Guild = kord.getGuild(guildId)!!
+    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+
+    /**
+     * Requests to get the guild this integration is tied to, returns null if the guild isn't present.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
+    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     /**
      * Requests to get the role used for 'subscribers' of the integration.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the role isn't present.
      */
-    suspend fun getRole(): Role = supplier.getRole(guildId = guildId, roleId = roleId)!!
+    suspend fun getRole(): Role = supplier.getRole(guildId = guildId, roleId = roleId)
+
+    /**
+     * Requests to get the role used for 'subscribers' of the integration,
+     * returns null if the role isn't present.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
+    suspend fun getRoleOrNull(): Role? = supplier.getRoleOrNull(guildId = guildId, roleId = roleId)
 
     /**
      * Requests to delete the integration.
      */
-    suspend fun delete() = kord.rest.guild.deleteGuildIntegration(guildId = guildId.value, integrationId = id.value)
+    suspend fun delete() {
+        kord.rest.guild.deleteGuildIntegration(guildId = guildId.value, integrationId = id.value)
+    }
 
     /**
      * Request to sync an integration.
