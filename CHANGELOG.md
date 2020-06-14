@@ -4,6 +4,10 @@
 
 * Getting entities from a flow of non-cached entities should be considerably faster.
 
+## Fixes
+
+* non-final socket closures use 4900 instead of 1000.
+
 ## Additions
 
 * Added the `EntitySupplyStrategy`, entities will now keep a reference to 

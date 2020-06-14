@@ -220,7 +220,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         state.update { State.Restart(false) }
         if (socketOpen) {
             channel.send(code)
-            socket.close(CloseReason(1000, "reconnecting"))
+            socket.close(CloseReason(4900, "reconnecting"))
         }
     }
 
