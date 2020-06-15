@@ -70,7 +70,8 @@ internal data class Identify(
         @SerialName("large_threshold")
         val largeThreshold: Int = 50,
         val shard: DiscordShard? = null,
-        val presence: Presence? = null
+        val presence: Presence? = null,
+        val intents: Intents? = null
 ) : Command() {
     override fun toString(): String = "Identify(token=hunter2,properties=$properties,compress=$compress,largeThreshold=$largeThreshold," +
             "shard=$shard,presence=$presence"

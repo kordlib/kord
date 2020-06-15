@@ -269,7 +269,12 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private suspend fun sendUnsafe(command: Command) = stateMutex.withLock {
         data.sendRateLimiter.consume()
         val json = Json.stringify(Command.Companion, command)
-        if (command is Identify) defaultGatewayLogger.trace { "Gateway >>> Identify" }
+        if (command is Identify) {
+            defaultGatewayLogger.trace {
+                val copy = command.copy(token = "token")
+                "Gateway >>> ${Json.stringify(Command.Companion, copy)}"
+            }
+        }
         else defaultGatewayLogger.trace { "Gateway >>> $json" }
         socket.send(Frame.Text(json))
     }
@@ -286,7 +291,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 }
 
-internal val GatewayConfiguration.identify get() = Identify(token, IdentifyProperties(os, name, name), false, 50, shard, presence)
+internal val GatewayConfiguration.identify get() = Identify(token, IdentifyProperties(os, name, name), false, 50, shard, presence, intents)
 
 internal val os: String get() = System.getProperty("os.name")
 

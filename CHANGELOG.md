@@ -10,6 +10,7 @@
 
 ## Additions
 
+* Added [Gateway Intents](https://github.com/discordapp/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents), allowing users to filter events send by Discord. #60
 * Added the `EntitySupplyStrategy`, entities will now keep a reference to 
 a `EntitySupplier` (fetched from the strategy) from which they'll be able to fetch other entities (`getX` methods). #74
 * Added `withStrategy(EntitySupplyStrategy)` to change the `EntitySupplier` of most entities. #74
@@ -96,7 +97,6 @@ through rest.
 ## Fixes
 
 * Fixed REST throwing an exception when parsing an error without code.
->>>>>>> CHANGELOG.md
 
 # 0.4.16
 

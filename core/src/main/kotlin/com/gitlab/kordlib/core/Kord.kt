@@ -69,6 +69,7 @@ class Kord(
     suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
         shard = DiscordShard(0, resources.shardCount)
         presence(builder)
+        intents = resources.intents
         name = "kord"
     }
 

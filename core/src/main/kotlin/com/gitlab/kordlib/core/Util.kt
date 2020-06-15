@@ -3,12 +3,28 @@ package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.Entity
+import com.gitlab.kordlib.core.event.Event
+import com.gitlab.kordlib.core.event.PresenceUpdateEvent
+import com.gitlab.kordlib.core.event.VoiceStateUpdateEvent
+import com.gitlab.kordlib.core.event.WebhookUpdateEvent
+import com.gitlab.kordlib.core.event.channel.*
+import com.gitlab.kordlib.core.event.guild.*
+import com.gitlab.kordlib.core.event.message.*
+import com.gitlab.kordlib.core.event.role.RoleCreateEvent
+import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
+import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
+import com.gitlab.kordlib.gateway.Intent
+import com.gitlab.kordlib.gateway.Intent.*
+import com.gitlab.kordlib.gateway.Intents
+import com.gitlab.kordlib.gateway.MessageDelete
+import com.gitlab.kordlib.gateway.PrivilegedIntent
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.route.Position
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
+import kotlin.reflect.KClass
 
 internal fun String?.toSnowflakeOrNull(): Snowflake? = when {
     this == null -> null
@@ -81,7 +97,7 @@ internal fun <C : Collection<T>, T> paginate(
         val response = request(position)
         for (item in response) emit(item)
 
-        val id =  itemSelector(response)?.let(idSelector) ?: break
+        val id = itemSelector(response)?.let(idSelector) ?: break
         position = directionSelector(id)
 
         if (response.size < size) break
@@ -90,18 +106,17 @@ internal fun <C : Collection<T>, T> paginate(
 }
 
 
-
 /**
  * Discord returns values in order newest -> oldest (big -> small) (confirmed for messages),
  * meaning that the first item returned is the one last created (youngest) in the batch.
  */
-internal fun<T> youngestItem(): (Collection<T>) -> T? = { it.firstOrNull() }
+internal fun <T> youngestItem(): (Collection<T>) -> T? = { it.firstOrNull() }
 
 /**
  * Discord returns values in order oldest -> newest (big -> small) (confirmed for messages),
  * meaning that the last item returned is the one first created (oldest) in the batch.
  */
-internal fun<T> oldestItem(): (Collection<T>) -> T? = { it.lastOrNull() }
+internal fun <T> oldestItem(): (Collection<T>) -> T? = { it.lastOrNull() }
 
 /**
  *  Selects the [Position.After] the youngest item in the batch.
@@ -126,3 +141,78 @@ internal fun <C : Collection<T>, T> paginateBackwards(start: Snowflake = Snowfla
  */
 internal fun <C : Collection<T>, T : Entity> paginateBackwards(start: Snowflake = Snowflake(Long.MAX_VALUE), batchSize: Int, request: suspend (position: Position) -> C): Flow<T> =
         paginate(start.value, batchSize, { it.id.value }, oldestItem(), Position::Before, request)
+
+inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent() = enableEvent(T::class)
+
+fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>) = events.forEach { enableEvent(it) }
+fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>) = events.forEach { enableEvent(it) }
+
+@OptIn(PrivilegedIntent::class)
+fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>) = when (event) {
+    GuildCreateEvent::class,
+    GuildDeleteEvent::class,
+    RoleCreateEvent::class,
+    RoleUpdateEvent::class,
+    RoleDeleteEvent::class,
+
+    ChannelCreateEvent::class,
+    CategoryCreateEvent::class,
+    DMChannelCreateEvent::class,
+    NewsChannelCreateEvent::class,
+    StoreChannelCreateEvent::class,
+    TextChannelCreateEvent::class,
+    VoiceChannelCreateEvent::class,
+
+    ChannelUpdateEvent::class,
+    CategoryUpdateEvent::class,
+    DMChannelUpdateEvent::class,
+    NewsChannelUpdateEvent::class,
+    StoreChannelUpdateEvent::class,
+    TextChannelUpdateEvent::class,
+    VoiceChannelUpdateEvent::class,
+
+    ChannelDeleteEvent::class,
+    CategoryDeleteEvent::class,
+    DMChannelDeleteEvent::class,
+    NewsChannelDeleteEvent::class,
+    StoreChannelDeleteEvent::class,
+    TextChannelDeleteEvent::class,
+    VoiceChannelDeleteEvent::class,
+
+    ChannelPinsUpdateEvent::class
+    -> {
+        +Guilds
+        +DirectMessages
+    }
+
+    MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
+
+    BanAddEvent::class, BanRemoveEvent::class -> +GuildBans
+
+    EmojisUpdateEvent::class -> +GuildEmojis
+
+    IntegrationsUpdateEvent::class -> +GuildIntegrations
+
+    WebhookUpdateEvent::class -> +GuildWebhooks
+
+    InviteCreateEvent::class, InviteDeleteEvent::class -> +GuildInvites
+
+    VoiceStateUpdateEvent::class -> +GuildVoiceStates
+
+    PresenceUpdateEvent::class -> +GuildPresences
+
+    MessageCreateEvent::class, MessageUpdateEvent::class, MessageDelete::class -> {
+        +GuildMessages
+        +DirectMessages
+    }
+
+    ReactionAddEvent::class, ReactionRemoveEvent::class, ReactionRemoveAllEvent::class, ReactionRemoveEmojiEvent::class -> {
+        +GuildMessageReactions
+        +DirectMessagesReactions
+    }
+
+    TypingStartEvent::class -> +GuildMessageTyping
+
+    else -> Unit
+
+}
