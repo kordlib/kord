@@ -266,7 +266,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    private suspend fun sendUnsafe(command: Command) = stateMutex.withLock {
+    private suspend fun sendUnsafe(command: Command) {
         data.sendRateLimiter.consume()
         val json = Json.stringify(Command.Companion, command)
         if (command is Identify) {
