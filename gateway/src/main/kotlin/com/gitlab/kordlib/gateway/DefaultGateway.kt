@@ -16,8 +16,7 @@ import io.ktor.util.error
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -25,7 +24,6 @@ import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import mu.KotlinLogging
@@ -99,7 +97,8 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         InvalidSessionHandler(events) { restart(it) }
     }
 
-    override suspend fun start(configuration: GatewayConfiguration) {
+    //running on default dispatchers because ktor does *not* like running on an EmptyCoroutineContext from main
+    override suspend fun start(configuration: GatewayConfiguration): Unit = withContext(Dispatchers.Default) {
         resetState(configuration)
 
         while (data.reconnectRetry.hasNext && state.value is State.Running) {
