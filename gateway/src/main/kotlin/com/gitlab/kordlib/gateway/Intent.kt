@@ -2,6 +2,7 @@ package com.gitlab.kordlib.gateway
 
 import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
+import kotlin.RequiresOptIn.*
 
 /**
  * Some intents are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without enabling them.
@@ -9,7 +10,11 @@ import kotlinx.serialization.internal.IntDescriptor
  * See [the official documentation](https://discordapp.com/developers/docs/topics/gateway#privileged-intents) for more info on
  * how to enable these.
  */
-@Experimental(Experimental.Level.WARNING)
+@RequiresOptIn("""
+    Some intents are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without enabling them.
+    
+    See https://discordapp.com/developers/docs/topics/gateway#privileged-intents for more info on how to enable these.
+""", Level.ERROR)
 annotation class PrivilegedIntent
 
 /**
@@ -175,7 +180,7 @@ data class Intents internal constructor(val code: Int) {
                 Intent.values().forEach { +it }
             }
 
-        @Suppress("EXPERIMENTAL_API_USAGE")
+        @OptIn(PrivilegedIntent::class)
         val nonPrivileged
             get() = invoke {
                 Intent.values().forEach { +it }

@@ -14,7 +14,6 @@ import com.gitlab.kordlib.core.enableEvent
 import com.gitlab.kordlib.core.entity.Snowflake
 import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.gateway.DefaultGateway
 import com.gitlab.kordlib.gateway.DefaultGatewayData
 import com.gitlab.kordlib.gateway.Gateway
@@ -23,7 +22,6 @@ import com.gitlab.kordlib.gateway.retry.LinearRetry
 import com.gitlab.kordlib.gateway.retry.Retry
 import com.gitlab.kordlib.rest.json.response.BotGatewayResponse
 import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
-import com.gitlab.kordlib.rest.ratelimit.ParallelRequestHandler
 import com.gitlab.kordlib.rest.ratelimit.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 import com.gitlab.kordlib.rest.service.RestClient
@@ -39,7 +37,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
 import kotlin.concurrent.thread
@@ -127,7 +124,7 @@ class KordBuilder(val token: String) {
      *
      * Use [enableEvent] to enable intents based on events.
      */
-    inline fun intents (builder: Intents.IntentsBuilder.() -> Unit) {
+    inline fun intents(builder: Intents.IntentsBuilder.() -> Unit) {
         intents = Intents { builder() }
     }
 
