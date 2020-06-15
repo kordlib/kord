@@ -5,10 +5,8 @@ import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.cache.data.MessageData
-import com.gitlab.kordlib.core.cache.data.ReactionData
-import com.gitlab.kordlib.core.cache.data.ReactionRemoveEmojiData
+import com.gitlab.kordlib.core.cache.data.*
+import com.gitlab.kordlib.core.entity.Member
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.ReactionEmoji
 import com.gitlab.kordlib.core.event.message.*
@@ -49,7 +47,19 @@ internal class MessageEventHandler(
             it.copy(lastMessageId = data.id)
         }
 
-        coreEventChannel.send(MessageCreateEvent(Message(data, kord), shard))
+        //get the user data only if it exists and the user isn't a webhook
+        val userData =  if (author != null && webhookId == null) {
+            UserData.from(author!!).also { cache.put(it) }
+        } else null
+
+        //get the member and cache the member. We need the user, guild id and member to be present
+        val member = if (userData != null && guildId != null && member != null) {
+            val memberData = MemberData.from(author!!.id, guildId!!, member!!)
+            cache.put(memberData)
+            Member(memberData, userData, kord)
+        } else null
+
+        coreEventChannel.send(MessageCreateEvent(Message(data, kord), guildId.toSnowflakeOrNull(), member, shard))
     }
 
     private suspend fun handle(event: MessageUpdate, shard: Int) = with(event.message) {

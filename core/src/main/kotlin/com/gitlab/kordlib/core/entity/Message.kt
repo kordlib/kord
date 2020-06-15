@@ -22,8 +22,6 @@ import java.time.Instant
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-private const val guildDeprecationMessage = "Guild ids aren't consistently present, use getGuild() instead."
-
 /**
  * An instance of a [Discord Message][https://discordapp.com/developers/docs/resources/channel#message-object].
  */
@@ -46,15 +44,6 @@ class Message(
         get() = Snowflake(data.channelId)
 
     /**
-     * The id of the [Guild] this message was send in, if it was send in a [GuildMessageChannel].
-     *
-     * Returns null if this message was send in a [DmChannel].
-     */
-    @Deprecated(guildDeprecationMessage, ReplaceWith("getGuild()?.id"), DeprecationLevel.WARNING)
-    val guildId: Snowflake?
-        get() = data.guildId?.toSnowflakeOrNull()
-
-    /**
      * The files attached to this message.
      */
     val attachments: Set<Attachment> get() = data.attachments.asSequence().map { Attachment(it, kord) }.toSet()
@@ -64,7 +53,9 @@ class Message(
      *
      * Returns null if the author is not a Discord account, like a [Webhook] or systems message.
      */
-    val author: User? get() = data.author?.let { User(it, kord) }
+    val author: User?
+        get() = if (data.webhookId == data.author.id) null
+        else User(data.author, kord)
 
     /**
      * The content of this message.
@@ -87,15 +78,6 @@ class Message(
      * This includes automatically embedded [videos][Embed.video] and [urls][Embed.Provider].
      */
     val embeds: List<Embed> get() = data.embeds.map { Embed(it, kord) }
-
-    /**
-     * The behavior of the [Guild] this message was send in, if it was send in a [GuildMessageChannel].
-     *
-     * Returns null if this message was send in a [DmChannel].
-     */
-    @Deprecated(guildDeprecationMessage, ReplaceWith("getGuild()"), DeprecationLevel.WARNING)
-    val guild: GuildBehavior?
-        get() = guildId?.let { GuildBehavior(it, kord) }
 
     /**
      * The ids of [Channels][Channel] specifically mentioned in this message.
@@ -137,17 +119,6 @@ class Message(
      * The [ids][Role.id] of roles mentioned in this message.
      */
     val mentionedRoleIds: Set<Snowflake> get() = data.mentionRoles.map { Snowflake(it) }.toSet()
-
-    /**
-     * The [Behaviors][RoleBehavior] of roles mentioned in this message.
-     */
-    @Deprecated(
-            "Guild ids aren't consistently present",
-            ReplaceWith("roles.toSet()", "kotlinx.coroutines.flow.*"),
-            DeprecationLevel.ERROR
-    )
-    val mentionedRoleBehaviors: Set<RoleBehavior>
-        get() = error("Guild ids aren't consistently present, use `roles.toSet()` instead")
 
     /**
      * The [roles][Role] mentioned in this message.
@@ -267,8 +238,8 @@ class Message(
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
-        is MessageBehavior ->  other.id == id && other.channelId == channelId
+    override fun equals(other: Any?): Boolean = when (other) {
+        is MessageBehavior -> other.id == id && other.channelId == channelId
         else -> false
     }
 

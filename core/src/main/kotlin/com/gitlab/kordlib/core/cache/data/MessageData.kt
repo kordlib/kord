@@ -12,7 +12,7 @@ data class MessageData(
         val channelId: Long,
         @Deprecated("guildId's presence is inconsistent and will be removed in later versions")
         val guildId: Long? = null,
-        val author: UserData?,
+        val author: UserData,
         val content: String,
         val timestamp: String,
         val editedTimestamp: String? = null,
@@ -96,7 +96,7 @@ data class MessageData(
                     id.toLong(),
                     channelId.toLong(),
                     guildId?.toLong(),
-                    author?.let { UserData.from(it) },
+                    UserData.from(author),
                     content,
                     timestamp,
                     editedTimestamp,

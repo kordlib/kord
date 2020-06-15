@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.live
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.cache.data.ReactionData
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Message
@@ -9,13 +10,14 @@ import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.event.channel.ChannelDeleteEvent
 import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
 import com.gitlab.kordlib.core.event.message.*
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 
 @KordPreview
-fun Message.live() = LiveMessage(this)
+suspend fun Message.live() = LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id)
 
 @KordPreview
-class LiveMessage(message: Message) : AbstractLiveEntity(), Entity by message {
+class LiveMessage(message: Message, val guildId: Snowflake?) : AbstractLiveEntity(), Entity by message {
 
     var message: Message = message
         private set
@@ -34,7 +36,7 @@ class LiveMessage(message: Message) : AbstractLiveEntity(), Entity by message {
 
         is ChannelDeleteEvent -> event.channel.id == message.channelId
 
-        is GuildDeleteEvent -> event.guildId == message.guildId
+        is GuildDeleteEvent -> event.guildId == guildId
         else -> false
     }
 

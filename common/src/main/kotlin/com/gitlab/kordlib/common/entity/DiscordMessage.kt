@@ -10,7 +10,7 @@ data class DiscordMessage(
         val channelId: String,
         @SerialName("guild_id")
         val guildId: String? = null,
-        val author: DiscordUser? = null,
+        val author: DiscordUser,
         val member: DiscordPartialGuildMember? = null,
         val content: String,
         val timestamp: String,

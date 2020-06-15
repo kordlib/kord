@@ -4,6 +4,8 @@
 
 * Added [Gateway Intents](https://github.com/discordapp/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents), allowing users to filter events send by Discord. #60
 * Added `VIEW_GUILD_INSIGHTS` permission #88
+* Added `MessageCreateEvent#guildId` to replace the removed `Message#guildId`.
+* Added `MessageCreateEvent#member`.
 
 ## Removals
 
