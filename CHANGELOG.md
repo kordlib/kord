@@ -5,6 +5,10 @@
 * Added [Gateway Intents](https://github.com/discordapp/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents), allowing users to filter events send by Discord. #60
 * Added `VIEW_GUILD_INSIGHTS` permission #88
 
+## Removals
+
+* Removed deprecated API from 0.4.x
+
 ## Dependencies
 
 * kotlin 1.3.70 -> 1.3.72
