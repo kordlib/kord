@@ -8,7 +8,8 @@ data class GatewayConfiguration(
         val name: String,
         val shard: DiscordShard,
         val presence: Presence?,
-        val threshold: Int
+        val threshold: Int,
+        val intents: Intents?
 )
 
 data class GatewayConfigurationBuilder(
@@ -32,7 +33,9 @@ data class GatewayConfigurationBuilder(
          * A value between 50 and 250, representing the maximum amount of members in a guild
          * before the gateway will stop sending info on offline members.
          */
-        var threshold: Int = 250
+        var threshold: Int = 250,
+
+        var intents: Intents? = null
 ) {
 
     /**
@@ -45,7 +48,7 @@ data class GatewayConfigurationBuilder(
     /**
      * Returns an immutable version of this builder.
      */
-    fun build(): GatewayConfiguration = GatewayConfiguration(token, name, shard, presence, threshold)
+    fun build(): GatewayConfiguration = GatewayConfiguration(token, name, shard, presence, threshold, intents)
 
     companion object
 }

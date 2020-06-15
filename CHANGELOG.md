@@ -1,4 +1,24 @@
-# 0.5.0
+# 0.5.0-rc2
+
+## Additions
+
+* Added [Gateway Intents](https://github.com/discordapp/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents), allowing users to filter events send by Discord. #60
+* Added `VIEW_GUILD_INSIGHTS` permission #88
+* Added `MessageCreateEvent#guildId` to replace the removed `Message#guildId`.
+* Added `MessageCreateEvent#member`.
+
+## Removals
+
+* Removed deprecated API from 0.4.x
+
+## Dependencies
+
+* kotlin 1.3.70 -> 1.3.72
+* ktor 1.3.1 -> 1.3.2
+* kotlinx.coroutines 1.3.4 -> 1.3.7
+* kotlin-logging 1.7.8 -> 1.7.10
+
+# 0.5.0-rc1
 
 ## Performance
 
@@ -96,7 +116,6 @@ through rest.
 ## Fixes
 
 * Fixed REST throwing an exception when parsing an error without code.
->>>>>>> CHANGELOG.md
 
 # 0.4.16
 

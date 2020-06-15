@@ -50,7 +50,7 @@ class LiveGuild(guild: Guild) : AbstractLiveEntity(), Entity by guild {
         is ReactionRemoveEvent -> event.guildId == guild.id
         is ReactionRemoveAllEvent -> event.guildId == guild.id
 
-        is MessageCreateEvent -> event.message.guildId == guild.id
+        is MessageCreateEvent -> event.guildId == guild.id
         is MessageUpdateEvent -> event.new.guildId == guild.id.value
         is MessageDeleteEvent -> event.guildId == guild.id
 

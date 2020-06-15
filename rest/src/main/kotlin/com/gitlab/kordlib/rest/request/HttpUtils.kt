@@ -46,27 +46,13 @@ fun HttpResponse.globalSuspensionPoint(clock: Clock): Long {
     return msWait + clock.millis()
 }
 
-@Deprecated("use the function instead", ReplaceWith("""logString("")"""), DeprecationLevel.WARNING)
-val HttpResponse.logString get() = "[RESPONSE]:${status.value}:${call.request.method.value}:${call.request.url}"
-
 fun HttpResponse.logString(body: String) = "[RESPONSE]:${status.value}:${call.request.method.value}:${call.request.url} body:$body"
 
 suspend fun HttpResponse.errorString(): String {
     val message = String(this.readBytes())
-    return if (message.isBlank()) logString
-    else "$logString $message"
+    return if (message.isBlank()) "${logString(message)}"
+    else "${logString(message)}"
 }
-
-@Deprecated("deprecated, use the function instead", ReplaceWith("""logString("")"""), DeprecationLevel.WARNING)
-val Request<*, *>.logString
-    get() : String {
-        val method = route.method.value
-        val path = route.path
-        val params = routeParams.entries
-                .joinToString(",", "[", "]") { (key, value) -> "$key=$value" }
-
-        return "[REQUEST]:$method:$path params:$params"
-    }
 
 fun Request<*,*>.logString(body: String): String {
     val method = route.method.value

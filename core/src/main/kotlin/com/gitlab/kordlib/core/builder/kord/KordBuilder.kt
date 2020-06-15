@@ -17,6 +17,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.gateway.DefaultGateway
 import com.gitlab.kordlib.gateway.DefaultGatewayData
 import com.gitlab.kordlib.gateway.Gateway
+import com.gitlab.kordlib.gateway.Intents
 import com.gitlab.kordlib.gateway.retry.LinearRetry
 import com.gitlab.kordlib.gateway.retry.Retry
 import com.gitlab.kordlib.rest.json.response.BotGatewayResponse
@@ -88,6 +89,11 @@ class KordBuilder(val token: String) {
     var httpClient: HttpClient? = null
 
     /**
+     * The enabled gateway intents, setting intents to null will disable the feature.
+     */
+    var intents: Intents? = null
+
+    /**
      * Configures the shards this client will connect to, by default `0 until recommended`.
      * This can be used to break up to client into multiple processes.
      *
@@ -121,6 +127,25 @@ class KordBuilder(val token: String) {
      */
     fun gateways(gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway>) {
         this.gatewayBuilder = gatewayBuilder
+    }
+
+    /**
+     * Configures the enabled intents across all gateways.
+     *
+     * ```kotlin
+     * intents {
+     *     +Intent.DirectMessages
+     *
+     *     +Intents.nonPrivileged
+     *
+     *     enableEvent<MessageCreateEvent>()
+     *
+     *     enableEvents(TypingStartEvent::class, MessageDeleteEvent::class)
+     * }
+     * ```
+     */
+    inline fun intents(builder: Intents.IntentsBuilder.() -> Unit) {
+        intents = Intents { builder() }
     }
 
     /**
@@ -191,7 +216,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token, shards.count(), client, defaultStrategy)
+        val resources = ClientResources(token, shards.count(), client, defaultStrategy, intents)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()

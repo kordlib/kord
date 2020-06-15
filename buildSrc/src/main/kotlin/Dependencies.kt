@@ -1,9 +1,9 @@
 object Versions {
-    const val kotlin = "1.3.70"
+    const val kotlin = "1.3.72"
     const val kotlinxSerialization = "0.20.0"
-    const val ktor = "1.3.1"
-    const val kotlinxCoroutines = "1.3.4"
-    const val kotlinLogging = "1.7.8"
+    const val ktor = "1.3.2"
+    const val kotlinxCoroutines = "1.3.7"
+    const val kotlinLogging = "1.7.10"
 
     //test deps
     const val kotlinTest = kotlin
@@ -12,8 +12,8 @@ object Versions {
     const val kotlinReflect = kotlin
     const val junitJupiterApi = junit5
     const val junitJupiterEngine = junit5
-    const val sl4j = "1.7.29"
-    const val bintray = "1.8.1"
+    const val sl4j = "1.7.30"
+    const val bintray = "1.8.5"
     const val mockk = "1.10.0"
 }
 
