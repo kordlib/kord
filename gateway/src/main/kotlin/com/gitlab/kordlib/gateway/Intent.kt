@@ -94,6 +94,7 @@ enum class Intent(val code: Int) {
      * - [MessageCreate]
      * - [MessageUpdate]
      * - [MessageDelete]
+     * - [MessageDeleteBulk]
      */
     GuildMessages(1 shl 9),
 
