@@ -31,6 +31,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.test.BeforeTest
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -105,7 +106,7 @@ class CacheMissingRegressions {
     @BeforeTest
     fun setup() {
         runBlocking {
-            kord = Kord(System.getenv("token")) {
+            kord = Kord(System.getenv("KORD_TEST_TOKEN")) {
                 gateways { _, shards -> shards.map { FakeGateway } }
                 requestHandler { CrashingHandler(it.httpClient) }
             }
@@ -114,6 +115,7 @@ class CacheMissingRegressions {
 
 
     @Test
+    @EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
     fun `if data not in cache explode`() {
         val id = 5L
         assertThrows<IllegalStateException> {
@@ -124,6 +126,7 @@ class CacheMissingRegressions {
     }
 
     @Test
+    @EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
     fun `if data in cache don't fetch from rest`() {
         runBlocking {
             val id = 5L

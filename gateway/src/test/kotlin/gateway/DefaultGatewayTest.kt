@@ -1,7 +1,7 @@
 package gateway
 
-import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.ActivityType
+import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.gateway.*
@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.serializer
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.Duration
@@ -38,7 +37,7 @@ class DefaultGatewayTest {
     @Disabled
     @ExperimentalTime
     fun `default gateway functions correctly`() {
-        val token = System.getenv("token")
+        val token = System.getenv("KORD_TEST_TOKEN")
 
         val gateway = DefaultGateway {
             client = HttpClient(CIO) {
