@@ -1,10 +1,10 @@
 package com.gitlab.kordlib.rest.builder.role
 
+import com.gitlab.kordlib.common.Color
+import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.rest.json.request.GuildRoleCreateRequest
-import java.awt.Color
 
 @KordDsl
 class RoleCreateBuilder : AuditRequestBuilder<GuildRoleCreateRequest>{
