@@ -1,9 +1,9 @@
 package com.gitlab.kordlib.rest.builder.message
 
+import com.gitlab.kordlib.common.Color
 import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.*
-import java.awt.Color
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 

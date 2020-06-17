@@ -1,11 +1,11 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.Color
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.toInstant
 import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
-import java.awt.Color
 import java.time.Instant
 
 internal const val embedDeprecationMessage = """
@@ -49,7 +49,7 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
     /**
      * The color of the embed, if present.
      */
-    val color: Color? get() = data.color?.let { Color(it, true) }
+    val color: Color? get() = data.color?.let { Color(it) }
 
     /**
      * The footer, if present.

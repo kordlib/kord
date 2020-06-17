@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.services
 
+import com.gitlab.kordlib.common.Color
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.json.request.*
@@ -11,7 +12,6 @@ import io.ktor.client.HttpClient
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
-import java.awt.Color
 import java.util.*
 
 fun image(path: String): String {
@@ -264,7 +264,7 @@ class RestServiceTest {
             val role = createGuildRole(guildId) {
                 name = "Sudoers"
                 permissions = Permissions { +Permission.Administrator }
-                color = Color.RED
+                color = Color(0xFF0000)
                 hoist = true
                 mentionable = true
             }
