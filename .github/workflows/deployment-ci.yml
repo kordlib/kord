@@ -13,6 +13,8 @@ jobs:
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+      BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
+      BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
 
     steps:
       - run: echo ::set-output name=RELEASE_TAG::${GITHUB_REF/refs\/tags\//}

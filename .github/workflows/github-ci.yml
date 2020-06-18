@@ -21,6 +21,9 @@ jobs:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
       TARGET_BRANCH: ${{ github.event.pull_request.base.ref }}
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
+      BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
+      BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
+
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
