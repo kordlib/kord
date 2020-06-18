@@ -7,11 +7,9 @@ import com.gitlab.kordlib.rest.request.KtorRequestHandler
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.defaultRequest
-import io.ktor.client.request.header
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import java.awt.Color
 import java.util.*
 
@@ -25,11 +23,12 @@ fun image(path: String): String {
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
 class RestServiceTest {
 
     private val publicGuildId = Snowflake(322850917248663552)
 
-    private val token = System.getenv("token")
+    private val token = System.getenv("KORD_TEST_TOKEN")
 
     private lateinit var requestHandler: RequestHandler
 
