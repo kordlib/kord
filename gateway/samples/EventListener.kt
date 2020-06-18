@@ -29,7 +29,7 @@ import kotlin.time.toKotlinDuration
 @ExperimentalCoroutinesApi
 @ObsoleteCoroutinesApi
 suspend fun main() {
-    val token = System.getenv("token")
+    val token = System.getenv("KORD_TEST_TOKEN")
 
     val gateway = DefaultGateway {
         url = "wss://gateway.discord.gg/"
