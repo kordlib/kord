@@ -43,6 +43,7 @@ Replace `{version}` with the latest version number on bintray. [![Download](http
 
 ```groovy
 repositories {
+    jcenter()
     maven {
         url = "https://dl.bintray.com/kordlib/Kord"
     }
@@ -59,6 +60,7 @@ dependencies {
 
 ```kotlin
 repositories {
+   jcenter()
    maven(url = "https://dl.bintray.com/kordlib/Kord")
 }
 ```
@@ -72,6 +74,10 @@ dependencies {
 ### Maven
 
 ```xml
+<repository>
+    <id>jcenter</id>
+    <url>https://jcenter.bintray.com/</url>
+</repository>
 <repository>
     <id>bintray-kord</id>
     <url>https://dl.bintray.com/kordlib/Kord</url>
