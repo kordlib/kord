@@ -9,12 +9,16 @@ class Color(val rgb: Int) {
     val blue: Int get() = (rgb shr 0) and 0xFF
 
     init {
-        if (rgb < 0 || rgb > 0xFFFFFF) throw IllegalArgumentException("Color is invalid.")
+        require(rgb in 0..0xFFFFFF) { "RGB should be in range of 0..16777215 but was $rgb" }
     }
 }
 
-
 private fun rgb(red: Int, green: Int, blue: Int): Int {
+    require(red in 0..255) { "Red should be in range of 0..255 but was $red" }
+    require(green in 0..255) { "Green should be in range of 0..255 but was $green" }
+    require(blue in 0..255) { "Red should be in range of 0..255 but was $blue" }
+
+
     return red and 0xFF shl 16 or
             (green and 0xFF shl 8) or
             (blue and 0xFF) shl 0
