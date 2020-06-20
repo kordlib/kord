@@ -4,19 +4,27 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.cache.data.RemovedReactionData
 
 sealed class ReactionEmoji {
-    abstract val formatted: String
+    abstract val urlFormat: String
     abstract val name: String
 
     data class Custom(val id: Snowflake, override val name: String, val isAnimated: Boolean) : ReactionEmoji() {
-        override val formatted: String
+        /**
+         *
+         * Format used in HTTP queries.
+         *
+         */
+        override val urlFormat: String
             get() = "$name:${id.value}"
+
+        val mention: String
+            get() = if (isAnimated) "<a:$name:${id.value}>" else "<:$name:${id.value}>"
 
 
         override fun toString() = "Custom(id=$id, name=$name, isAnimated=$isAnimated)"
     }
 
     class Unicode(override val name: String) : ReactionEmoji() {
-        override val formatted: String get() = name
+        override val urlFormat: String get() = name
     }
 
     companion object {

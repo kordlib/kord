@@ -175,7 +175,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
                 kord.rest.channel.getReactions(
                         channelId = channelId.value,
                         messageId = messageId.value,
-                        emoji = emoji.formatted,
+                        emoji = emoji.urlFormat,
                         limit = 100,
                         position = position
                 )
