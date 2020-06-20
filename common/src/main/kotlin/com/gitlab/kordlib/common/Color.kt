@@ -16,7 +16,7 @@ class Color(val rgb: Int) {
 private fun rgb(red: Int, green: Int, blue: Int): Int {
     require(red in 0..255) { "Red should be in range of 0..255 but was $red" }
     require(green in 0..255) { "Green should be in range of 0..255 but was $green" }
-    require(blue in 0..255) { "Red should be in range of 0..255 but was $blue" }
+    require(blue in 0..255) { "Blue should be in range of 0..255 but was $blue" }
 
 
     return red and 0xFF shl 16 or
