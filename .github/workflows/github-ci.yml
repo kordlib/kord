@@ -16,6 +16,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
+    if: "!contains(github.event.commits[0].message, '[skip ci]')"
     runs-on: ubuntu-latest
     env:
       GRADLE_OPTS: "-Dorg.gradle.daemon=false"
@@ -29,7 +30,7 @@ jobs:
     steps:
 
       - run: export GRADLE_USER_HOME=`pwd`/.gradle
-      - run: echo ::set-output name=RELEASE_TAG::${GITHUB_REF/refs\/tags\//}
+      - run: echo ::set-env name=RELEASE_TAG::${GITHUB_REF#refs/tags/}
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
