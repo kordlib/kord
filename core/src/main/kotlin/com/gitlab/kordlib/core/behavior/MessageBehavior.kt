@@ -70,7 +70,7 @@ interface MessageBehavior : Entity, Strategizable {
                 kord.rest.channel.getReactions(
                         channelId = channelId.value,
                         messageId = id.value,
-                        emoji = emoji.formatted,
+                        emoji = emoji.urlFormat,
                         limit = 100,
                         position = position
                 )
@@ -82,7 +82,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun addReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.createReaction(channelId = channelId.value, messageId = id.value, emoji = emoji.formatted)
+        kord.rest.channel.createReaction(channelId = channelId.value, messageId = id.value, emoji = emoji.urlFormat)
     }
 
     /**
@@ -100,7 +100,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteReaction(userId: Snowflake, emoji: ReactionEmoji) {
-        kord.rest.channel.deleteReaction(channelId = channelId.value, messageId = id.value, userId = userId.value, emoji = emoji.formatted)
+        kord.rest.channel.deleteReaction(channelId = channelId.value, messageId = id.value, userId = userId.value, emoji = emoji.urlFormat)
     }
 
     /**
@@ -109,7 +109,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteOwnReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.deleteOwnReaction(channelId = channelId.value, messageId = id.value, emoji = emoji.formatted)
+        kord.rest.channel.deleteOwnReaction(channelId = channelId.value, messageId = id.value, emoji = emoji.urlFormat)
     }
 
     /**
@@ -127,7 +127,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.deleteAllReactionsForEmoji(channelId = channelId.value, messageId = id.value, emoji = emoji.formatted)
+        kord.rest.channel.deleteAllReactionsForEmoji(channelId = channelId.value, messageId = id.value, emoji = emoji.urlFormat)
     }
 
     /**

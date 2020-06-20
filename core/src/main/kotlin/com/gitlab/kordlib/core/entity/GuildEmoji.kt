@@ -30,6 +30,9 @@ class GuildEmoji(
     val guildId: Snowflake
         get() = Snowflake(data.guildId)
 
+    val mention: String
+        get() = if (isAnimated) "<a:$name:${id.value}>" else "<:$name:${id.value}>"
+
     /**
      * Whether this emoji can be used, may be false due to loss of Server Boosts.
      */
@@ -118,7 +121,7 @@ class GuildEmoji(
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildEmoji -> other.id == id && other.guildId == guildId
         else -> super.equals(other)
     }
