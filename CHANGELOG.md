@@ -1,6 +1,14 @@
+# 0.5.1
+
+## Fixes
+
+* `DiscordInvite#targetUser` is now correctly nullable.
+
 # 0.5.0
+
 ## Additions
-`mention` properties for `GuildEmoji` and `ReactionEmoji`
+
+* `mention` properties for `GuildEmoji` and `ReactionEmoji`
 
 # 0.5.0-rc2
 
