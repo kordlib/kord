@@ -1,5 +1,10 @@
 # 0.5.1
 
+## Additions
+
+* Added `GuildBehavior.createEmoji`
+* Added `GuildEmoji.delete` and `GuildEmoji.edit`
+
 ## Fixes
 
 * `DiscordInvite#targetUser` is now correctly nullable.

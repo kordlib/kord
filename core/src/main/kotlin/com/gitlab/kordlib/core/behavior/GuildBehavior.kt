@@ -14,6 +14,8 @@ import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
+import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
+import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
@@ -328,6 +330,10 @@ suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): G
     val data = GuildData.from(response)
 
     return Guild(data, kord)
+}
+
+suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit) {
+    kord.rest.emoji.createEmoji(guildId = id.value, builder = builder)
 }
 
 /**

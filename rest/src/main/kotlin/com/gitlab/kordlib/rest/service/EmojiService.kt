@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.service
 
+import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
 import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
 import com.gitlab.kordlib.rest.json.request.EmojiCreateRequest
 import com.gitlab.kordlib.rest.json.request.EmojiModifyRequest
@@ -8,6 +9,16 @@ import com.gitlab.kordlib.rest.route.Route
 
 class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
+
+    suspend inline fun createEmoji(guildId: String, builder: EmojiCreateBuilder.() -> Unit) = call(Route.GuildEmojiPost) {
+        keys[Route.GuildId] = guildId
+        val emoji = EmojiCreateBuilder().apply(builder)
+
+        body(EmojiCreateRequest.serializer(), emoji.toRequest())
+        emoji.reason?.let { header("X-Audit-Log-Reason", it) }
+    }
+
+    @Deprecated("use the inline builder instead",  ReplaceWith("createEmoji(guildId) {  }") ,level = DeprecationLevel.WARNING)
     suspend fun createEmoji(guildId: String, emoji: EmojiCreateRequest, reason: String? = null) = call(Route.GuildEmojiPost) {
         keys[Route.GuildId] = guildId
         body(EmojiCreateRequest.serializer(), emoji)

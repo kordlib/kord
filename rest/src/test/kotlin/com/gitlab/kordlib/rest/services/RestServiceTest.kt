@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.services
 
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestRateLimiter
 import com.gitlab.kordlib.rest.request.KtorRequestHandler
@@ -19,6 +20,14 @@ fun image(path: String): String {
     val encoded = Base64.getEncoder().encodeToString(image)
     val imageType = path.split(".").last()
     return "data:image/$imageType;base64, $encoded"
+}
+
+fun imageBinary(path: String) : Image {
+    val loader = Unit::class.java.classLoader
+    val image = loader?.getResource(path)?.readBytes()
+    val imageType = path.split(".").last()
+    val format = Image.Format.fromContentType(imageType)
+    return Image.raw(image!!, format)
 }
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
@@ -371,7 +380,11 @@ class RestServiceTest {
     fun `emojis in guilds`() = runBlocking {
         with(rest.emoji) {
 
-            val emoji = createEmoji(guildId, EmojiCreateRequest("kord", image("images/kord.png"), listOf(guildId)))
+            val emoji = createEmoji(guildId) {
+                name = "kord"
+                image = imageBinary("images/kord.png")
+                roles = setOf(Snowflake(guildId))
+            }
 
             modifyEmoji(guildId, emoji.id!!) {
                 name = "edited"
