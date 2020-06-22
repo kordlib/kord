@@ -346,7 +346,7 @@ data class DiscordCreatedInvite(
          * The target user for this invite.
          */
         @SerialName("target_user")
-        val targetUser: DiscordInviteUser,
+        val targetUser: DiscordInviteUser? = null,
 
         /**
          * The type of user target for this invite.

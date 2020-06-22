@@ -65,16 +65,9 @@ interface MessageBehavior : Entity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
+
     fun getReactors(emoji: ReactionEmoji): Flow<User> =
-            paginateForwards(batchSize = 100, idSelector = { it.id }) { position ->
-                kord.rest.channel.getReactions(
-                        channelId = channelId.value,
-                        messageId = id.value,
-                        emoji = emoji.urlFormat,
-                        limit = 100,
-                        position = position
-                )
-            }.map { UserData.from(it) }.map { User(it, kord) }
+            kord.with(EntitySupplyStrategy.rest).getReactors(channelId, id, emoji)
 
     /**
      * Requests to add an [emoji] to this message.
@@ -153,7 +146,7 @@ interface MessageBehavior : Entity, Strategizable {
      */
     override fun withStrategy(
             strategy: EntitySupplyStrategy<*>
-    ) : MessageBehavior = MessageBehavior(channelId, id, kord, strategy)
+    ): MessageBehavior = MessageBehavior(channelId, id, kord, strategy)
 
     companion object {
         internal operator fun invoke(
@@ -169,7 +162,7 @@ interface MessageBehavior : Entity, Strategizable {
 
             override fun hashCode(): Int = Objects.hash(id)
 
-            override fun equals(other: Any?): Boolean = when(other) {
+            override fun equals(other: Any?): Boolean = when (other) {
                 is MessageBehavior -> other.id == id && other.channelId == channelId
                 else -> false
             }

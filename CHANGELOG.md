@@ -1,6 +1,22 @@
-# 0.5.0
+# 0.5.1
+
 ## Additions
-`mention` properties for `GuildEmoji` and `ReactionEmoji`
+* Added `PartialGuild` in `Invite`
+* Added `GuildBehavior.createEmoji`
+* Added `GuildEmoji.delete` and `GuildEmoji.edit`
+* Added `getInviteOrNull` method to `RestEntitySupplier`
+
+## Fixes
+
+* `DiscordInvite#targetUser` is now correctly nullable.
+* `PermissionOverwriteEntity#getGuildOrNull` uses the correct supplier method.
+## Changes
+* `Invite` now uses a `Channel` instead of `GuildChannel`.
+# 0.5.0
+
+## Additions
+
+* `mention` properties for `GuildEmoji` and `ReactionEmoji`
 
 # 0.5.0-rc2
 

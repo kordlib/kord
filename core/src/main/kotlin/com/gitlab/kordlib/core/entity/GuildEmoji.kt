@@ -10,6 +10,8 @@ import com.gitlab.kordlib.core.cache.data.EmojiData
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.toSnowflakeOrNull
+import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
+import io.ktor.utils.io.bits.withMemory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
@@ -97,6 +99,24 @@ class GuildEmoji(
      * The [User] who created the emote, if present.
      */
     val user: UserBehavior? get() = userId?.let { UserBehavior(it, kord) }
+
+    /**
+     * Requests to delete this emoji, with the given [reason].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     */
+    suspend fun delete(reason: String? = null) {
+        kord.rest.emoji.deleteEmoji(guildId = guildId.value, emojiId = id.value, reason = reason)
+    }
+
+    /**
+     *  Requests to edit the emoji.
+     *
+     *  @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend inline fun edit(builder: EmojiModifyBuilder.() -> Unit) {
+        kord.rest.emoji.modifyEmoji(guildId = guildId.value, emojiId = id.value, builder = builder)
+    }
 
     /**
      * Requests to get the creator of the emoji as a [Member],

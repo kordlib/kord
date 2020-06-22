@@ -5,11 +5,10 @@ import com.gitlab.kordlib.common.entity.TargetUserType
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
-import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
+import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.InviteData
-import com.gitlab.kordlib.core.entity.channel.GuildChannel
+import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
@@ -37,9 +36,9 @@ data class Invite(
     val channelId: Snowflake get() = Snowflake(data.channelId)
 
     /**
-     * The id of the guild this invite is associated to.
+     * Returns [PartialGuild] if the invite was made in a guild, or null if not.
      */
-    val guildId: Snowflake get() = Snowflake(data.guildId!!)
+    val partialGuild: PartialGuild? get() = data.guild?.let { PartialGuild(it, kord) }
 
     /**
      * The id of the user who created this invite, if present.
@@ -54,12 +53,8 @@ data class Invite(
     /**
      * The behavior of the channel this invite is associated to.
      */
-    val channel: GuildChannelBehavior get() = GuildChannelBehavior(guildId, channelId, kord)
+    val channel: ChannelBehavior get() = ChannelBehavior(channelId, kord)
 
-    /**
-     * The behavior of the guild this invite is associated to.
-     */
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /**
      * The user behavior of the user who created this invite, if present.
@@ -90,40 +85,25 @@ data class Invite(
      * Requests to get the channel this invite is for.
      *
      * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the [GuildChannel] wasn't present.
+     * @throws [EntityNotFoundException] if the [Channel] wasn't present.
      */
-    suspend fun getChannel(): GuildChannel = supplier.getChannelOf(channelId)
+    suspend fun getChannel(): Channel = supplier.getChannelOf(channelId)
 
     /**
      * Requests to get the channel this invite is for,
-     * returns null if the [GuildChannel] isn't present.
+     * returns null if the [Channel] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getChannelOrNull(): GuildChannel? = supplier.getChannelOfOrNull(channelId)
-
-    /**
-     * Requests to get the [Guild] for this invite.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the [Guild] wasn't present.
-     */
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
-
-    /**
-     * Requests to get the [Guild] for this invite,
-     * returns null if the [Guild] isn't present.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     */
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    suspend fun getChannelOrNull(): Channel? = supplier.getChannelOfOrNull(channelId)
 
     /**
      * Requests to get the creator of the invite for,
      * returns null if the [User] isn't present or [inviterId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
-     */    suspend fun getInviter(): User? = inviterId?.let { supplier.getUserOrNull(it) }
+     */
+    suspend fun getInviter(): User? = inviterId?.let { supplier.getUserOrNull(it) }
 
     /**
      * Requests to get the user this invite was created for,

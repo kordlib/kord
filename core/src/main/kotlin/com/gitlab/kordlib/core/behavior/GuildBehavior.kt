@@ -12,8 +12,11 @@ import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.sorted
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.rest
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
+import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
+import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
@@ -196,6 +199,30 @@ interface GuildBehavior : Entity, Strategizable {
     suspend fun getRoleOrNull(roleId: Snowflake): Role? = supplier.getRoleOrNull(guildId = id, roleId = roleId)
 
     /**
+     * Requests to get the [Invite] represented by the [code].
+     *
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Invite] wasn't present.
+     */
+    suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
+            kord.with(rest).getInvite(code, withCounts)
+
+    /**
+     * Requests to get the [Invite] represented by the [code],
+     * returns null if the [Invite] isn't present.
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getInviteOrNull(code: String, withCounts: Boolean = true): Invite? =
+            kord.with(rest).getInviteOrNull(code, withCounts)
+
+
+    /**
      *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
      *
      * @throws [RestRequestException] if something went wrong during the request.
@@ -249,7 +276,7 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws RequestException if the guild does not exist or is not public.
      * @throws [EntityNotFoundException] if the preview was not found.
      */
-    suspend fun getPreview(): GuildPreview = kord.with(EntitySupplyStrategy.rest).getGuildPreview(id)
+    suspend fun getPreview(): GuildPreview = kord.with(rest).getGuildPreview(id)
 
     /**
      * Returns the preview of this guild. The bot does not need to present in this guild
@@ -259,7 +286,7 @@ interface GuildBehavior : Entity, Strategizable {
      *
      * @throws RequestException if the guild does not exist or is not public.
      */
-    suspend fun getPreviewOrNull(): GuildPreview? = kord.with(EntitySupplyStrategy.rest).getGuildPreviewOrNull(id)
+    suspend fun getPreviewOrNull(): GuildPreview? = kord.with(rest).getGuildPreviewOrNull(id)
 
     /**
      * Requests to get the amount of users that would be pruned in this guild.
@@ -309,6 +336,7 @@ interface GuildBehavior : Entity, Strategizable {
 
             override fun equals(other: Any?): Boolean = when (other) {
                 is GuildBehavior -> other.id == id
+                is PartialGuild -> other.id == id
                 else -> false
             }
         }
@@ -328,6 +356,10 @@ suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): G
     val data = GuildData.from(response)
 
     return Guild(data, kord)
+}
+
+suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit) {
+    kord.rest.emoji.createEmoji(guildId = id.value, builder = builder)
 }
 
 /**
