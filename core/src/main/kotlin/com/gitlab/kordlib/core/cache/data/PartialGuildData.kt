@@ -22,5 +22,3 @@ class PartialGuildData(
 
 
 }
-
-val InviteData.guildId get() = guild?.id
