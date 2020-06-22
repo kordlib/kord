@@ -9,9 +9,9 @@ import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class InviteResponse(
-        val code: String? = null,
+        val code: String,
         val guild: DiscordPartialGuild? = null,
-        val channel: DiscordChannel? = null,
+        val channel: DiscordChannel,
         val inviter: DiscordUser? = null,
         @SerialName("target_user")
         val targetUser: DiscordUser? = null,

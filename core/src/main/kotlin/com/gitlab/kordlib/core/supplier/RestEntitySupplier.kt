@@ -73,8 +73,8 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
      * @throws [RestRequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the preview was not found.
      */
-     suspend fun getGuildPreview(id: Snowflake): GuildPreview = getGuildPreviewOrNull(id)
-             ?: EntityNotFoundException.entityNotFound("Guild preview", id)
+    suspend fun getGuildPreview(id: Snowflake): GuildPreview = getGuildPreviewOrNull(id)
+            ?: EntityNotFoundException.entityNotFound("Guild preview", id)
 
     /**
      * Returns the preview of the guild matching the [id]. The bot does not need to present in this guild
@@ -228,6 +228,14 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         val data = WebhookData.from(webhook.getWebhookWithToken(id.value, token))
         return Webhook(data, kord)
     }
+
+    suspend fun getInviteOrNull(code: String, withCounts: Boolean): Invite? = catchNotFound {
+        val response = invite.getInvite(code, withCounts)
+        return Invite(InviteData.from(response), kord)
+    }
+
+    suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
+            getInviteOrNull(code, withCounts) ?: EntityNotFoundException.inviteNotFound(code)
 
     /**
      * Requests to get the information of the current application.

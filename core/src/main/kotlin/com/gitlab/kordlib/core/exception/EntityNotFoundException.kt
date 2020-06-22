@@ -50,6 +50,9 @@ class EntityNotFoundException : Exception {
         fun webhookNotFound(webhookId: Snowflake): Nothing =
                 entityNotFound("Webhook", webhookId)
 
+        fun inviteNotFound(code: String): Nothing =
+                throw EntityNotFoundException("Invite with code $code was not found.")
+
     }
 
 }

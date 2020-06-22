@@ -23,8 +23,6 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getChannelOrNull(id: Snowflake): Channel? =
             first.getChannelOrNull(id) ?: second.getChannelOrNull(id)
 
-    override suspend fun getChannel(id: Snowflake): Channel = getChannelOrNull(id)!!
-
     override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> =
             first.getGuildChannels(guildId).switchIfEmpty(second.getGuildChannels(guildId))
 
@@ -37,13 +35,8 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? =
             first.getMessageOrNull(channelId, messageId) ?: second.getMessageOrNull(channelId, messageId)
 
-    override suspend fun getGuild(id: Snowflake): Guild = getGuildOrNull(id)!!
-
     override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member =
             getMemberOrNull(guildId, userId)!!
-
-    override suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message =
-            getMessageOrNull(channelId, messageId)!!
 
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> =
             first.getMessagesAfter(messageId, channelId, limit).switchIfEmpty(second.getMessagesAfter(messageId, channelId, limit))
@@ -60,24 +53,15 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getUserOrNull(id: Snowflake): User? =
             first.getUserOrNull(id) ?: second.getUserOrNull(id)
 
-    override suspend fun getSelf(): User = getSelfOrNull()!!
-
-    override suspend fun getUser(id: Snowflake): User = getUserOrNull(id)!!
-
     override suspend fun getRoleOrNull(guildId: Snowflake, roleId: Snowflake): Role? =
             first.getRoleOrNull(guildId, roleId) ?: second.getRoleOrNull(guildId, roleId)
 
-    override suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role =
-            getRoleOrNull(guildId, roleId)!!
 
     override fun getGuildRoles(guildId: Snowflake): Flow<Role> =
             first.getGuildRoles(guildId).switchIfEmpty(second.getGuildRoles(guildId))
 
     override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? =
             first.getGuildBanOrNull(guildId, userId) ?: second.getGuildBanOrNull(guildId, userId)
-
-    override suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): Ban =
-            getGuildBanOrNull(guildId, userId)!!
 
     override fun getGuildBans(guildId: Snowflake): Flow<Ban> =
             first.getGuildBans(guildId).switchIfEmpty(second.getGuildBans(guildId))
@@ -90,9 +74,6 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake): GuildEmoji? =
             first.getEmojiOrNull(guildId, emojiId) ?: second.getEmojiOrNull(guildId, emojiId)
-
-    override suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): GuildEmoji =
-            getEmojiOrNull(guildId, emojiId)!!
 
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> =
             first.getEmojis(guildId).switchIfEmpty(second.getEmojis(guildId))
@@ -111,12 +92,6 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? =
             first.getWebhookWithTokenOrNull(id, token) ?: second.getWebhookWithTokenOrNull(id, token)
-
-    override suspend fun getWebhook(id: Snowflake): Webhook =
-            getWebhookOrNull(id)!!
-
-    override suspend fun getWebhookWithToken(id: Snowflake, token: String): Webhook =
-            getWebhookWithTokenOrNull(id, token)!!
 
 }
 

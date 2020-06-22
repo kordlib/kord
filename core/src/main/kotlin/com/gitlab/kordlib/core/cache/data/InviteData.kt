@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.TargetUserType
 import com.gitlab.kordlib.rest.json.response.InviteResponse
 import kotlinx.serialization.Serializable
@@ -7,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class InviteData(
         val code: String,
-        val guildId: Long?,
+        val guild: PartialGuildData?,
         val channelId: Long,
         val targetUserId: Long?,
         val inviterId: Long?,
@@ -15,12 +16,14 @@ data class InviteData(
         val approximateMemberCount: Int?,
         val targetUserType: TargetUserType?
 ) {
+
     companion object {
+
         fun from(entity: InviteResponse) = with(entity) {
             InviteData(
-                    code!!,
-                    guild!!.id.toLong(),
-                    channel!!.id.toLong(),
+                    code,
+                    guild?.let { PartialGuildData.from(it) },
+                    channel.id.toLong(),
                     targetUser?.id?.toLong(),
                     inviter?.id?.toLong(),
                     approximatePresenceCount,

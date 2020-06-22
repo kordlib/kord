@@ -343,7 +343,6 @@ interface EntitySupplier {
      */
     suspend fun getWebhookWithToken(id: Snowflake, token: String): Webhook =
             getWebhookWithTokenOrNull(id, token) ?: EntityNotFoundException.webhookNotFound(id)
-
 }
 
 
