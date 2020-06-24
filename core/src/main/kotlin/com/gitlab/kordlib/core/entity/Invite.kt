@@ -41,6 +41,13 @@ data class Invite(
     val partialGuild: PartialGuild? get() = data.guild?.let { PartialGuild(it, kord) }
 
     /**
+     * The id of the [Guild] if the invite was made in a guild, or null if not.
+     */
+    @Deprecated("Moved to the PartialGuild", ReplaceWith("partialGuild?.id"))
+
+    val guildId: Snowflake? get() = partialGuild?.id
+
+    /**
      * The id of the user who created this invite, if present.
      */
     val inviterId: Snowflake? get() = data.inviterId.toSnowflakeOrNull()

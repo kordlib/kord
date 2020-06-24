@@ -6,6 +6,7 @@ import com.gitlab.kordlib.core.cache.data.RemovedReactionData
 sealed class ReactionEmoji {
     abstract val urlFormat: String
     abstract val name: String
+    abstract val mention: String
 
     data class Custom(val id: Snowflake, override val name: String, val isAnimated: Boolean) : ReactionEmoji() {
         /**
@@ -16,7 +17,7 @@ sealed class ReactionEmoji {
         override val urlFormat: String
             get() = "$name:${id.value}"
 
-        val mention: String
+        override val mention: String
             get() = if (isAnimated) "<a:$name:${id.value}>" else "<:$name:${id.value}>"
 
 
@@ -25,6 +26,7 @@ sealed class ReactionEmoji {
 
     class Unicode(override val name: String) : ReactionEmoji() {
         override val urlFormat: String get() = name
+        override val mention: String get() = name
     }
 
     companion object {
