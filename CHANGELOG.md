@@ -1,10 +1,14 @@
+# 0.5.2
+## Additions
+* Add missing mention property for unicode emojis.
+* Re-add `guildId` to `Invite` for compatibility.
+
 # 0.5.1
 
 ## Additions
 * Added `PartialGuild` in `Invite`
 * Added `GuildBehavior.createEmoji`
 * Added `GuildEmoji.delete` and `GuildEmoji.edit`
-* Added `getInviteOrNull` method to `RestEntitySupplier`
 
 ## Fixes
 
