@@ -22,11 +22,11 @@ fun image(path: String): String {
     return "data:image/$imageType;base64, $encoded"
 }
 
-fun imageBinary(path: String) : Image {
+fun imageBinary(path: String): Image {
     val loader = Unit::class.java.classLoader
     val image = loader?.getResource(path)?.readBytes()
     val imageType = path.split(".").last()
-    val format = Image.Format.fromContentType(imageType)
+    val format = Image.Format.fromContentType("image/$imageType")
     return Image.raw(image!!, format)
 }
 
@@ -98,7 +98,9 @@ class RestServiceTest {
     fun `create invite`() = runBlocking {
         val generalId = rest.guild.getGuildChannels(guildId).first { it.type == ChannelType.GuildText }.id
 
-        rest.channel.createInvite(generalId)
+        val invite = rest.channel.createInvite(generalId)
+
+        rest.invite.getInvite(invite.code, true)
 
         Unit
     }
