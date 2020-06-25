@@ -100,7 +100,7 @@ interface GuildBehavior : Entity, Strategizable {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val members: Flow<Member>
-        get() = supplier.getGuildMembers(id, 1000)
+        get() = supplier.getGuildMembers(id)
 
     /**
      * Requests to get the present voice regions for this guild.

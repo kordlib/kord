@@ -1,3 +1,9 @@
+# 0.5.3
+
+## Fixes
+
+* `getGuildMembers` returns the correct limit for both Cache and Rest suppliers.
+
 # 0.5.2
 ## Additions
 * Add missing mention property for unicode emojis.

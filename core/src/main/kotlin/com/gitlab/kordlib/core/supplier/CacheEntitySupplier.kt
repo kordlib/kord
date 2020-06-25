@@ -176,11 +176,12 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }.asFlow().map { Ban(it, kord) }
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> {
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
         return kord.cache.query<UserData>().asFlow().flatMapConcat { userData ->
             kord.cache.query<MemberData> {
                 MemberData::userId eq userData.id
                 MemberData::guildId eq guildId
-            }.asFlow().map { Member(it, userData, kord) }
+            }.asFlow().map { Member(it, userData, kord) }.take(limit)
         }
     }
 

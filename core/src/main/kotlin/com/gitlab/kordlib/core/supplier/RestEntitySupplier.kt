@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.supplier
 
+import com.gitlab.kordlib.common.entity.DiscordGuildMember
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
@@ -88,8 +89,9 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? = catchNotFound {
-        val memberData = guild.getGuildMember(guildId = guildId.value, userId = userId.value).toData(guildId = guildId.value, userId = userId.value)
-        val userData = user.getUser(userId.value).toData()
+        val member = guild.getGuildMember(guildId = guildId.value, userId = userId.value)
+        val memberData = member.toData(guildId = guildId.value, userId = userId.value)
+        val userData = member.user!!.toData()
         return Member(memberData, userData, kord)
     }
 
@@ -158,10 +160,23 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
             emit(Ban(BanData.from(guildId.value, banData), kord))
     }
 
-    override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> = flow {
-        for (memberData in guild.getGuildMembers(guildId.value))
-            emit(Member(memberData.toData(memberData.user!!.id, guildId.value), memberData.user!!.toData(), kord))
+    override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> {
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+        val batchSize = min(1000, limit)
+
+        val flow = paginateForwards(idSelector = { it.user!!.id }, batchSize = batchSize) { position ->
+            kord.rest.guild.getGuildMembers(guildId = guildId.value, position = position, limit = batchSize)
+        }.map {
+            val userData = it.user!!.toData()
+            val memberData = it.toData(guildId = guildId.value, userId = it.user!!.id)
+            Member(memberData, userData, kord)
+        }
+
+
+        return if (limit != Int.MAX_VALUE) flow.take(limit)
+        else flow
     }
+
 
     override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = flow {
         for (region in guild.getGuildVoiceRegions(guildId.value)) {
