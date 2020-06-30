@@ -1,3 +1,13 @@
+# 0.5.4
+
+## Additions
+
+* Added `GuildBehavior#getChannel`, `GuildBehavior#getChannelOf` and their nullable variants.
+
+## Deprecations
+
+* `GuildBehavior#unBan` has been deprecated for `GuildBehavior#unban`.
+
 # 0.5.3
 
 ## Fixes

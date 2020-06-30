@@ -13,6 +13,8 @@ import com.gitlab.kordlib.core.sorted
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.rest
+import com.gitlab.kordlib.core.supplier.getChannelOf
+import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
@@ -257,13 +259,50 @@ interface GuildBehavior : Entity, Strategizable {
      */
     suspend fun getBanOrNull(userId: Snowflake): Ban? = supplier.getGuildBanOrNull(id, userId)
 
+    /**
+     * Requests to get the [GuildChannel] represented by the [id].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [GuildChannel] wasn't present.
+     * @throws [ClassCastException] if the channel is not a [GuildChannel].
+     * @throws [IllegalArgumentException] if the channel is not part of this guild.
+     */
+    suspend fun getChannel(id: Snowflake) : GuildChannel {
+        val channel = supplier.getChannelOf<GuildChannel>(id)
+        require(channel.guildId == id) { "channel ${id.value} is not in guild ${id.value}" }
+        return channel
+    }
+
+    /**
+     * Requests to get the [GuildChannel] represented by the [id],
+     * returns null if the [GuildChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [ClassCastException] if the channel is not a [GuildChannel].
+     * @throws [IllegalArgumentException] if the channel is not part of this guild.
+     */
+    suspend fun getChannelOrNull(id: Snowflake) : GuildChannel? {
+        val channel = supplier.getChannelOfOrNull<GuildChannel>(id) ?: return null
+        require(channel.guildId == id) { "channel ${id.value} is not in guild ${id.value}" }
+        return channel
+    }
 
     /**
      * Requests to unban the given [userId].
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
+    @Deprecated("unBan is a typo", ReplaceWith("unban"))
     suspend fun unBan(userId: Snowflake) {
+        kord.rest.guild.deleteGuildBan(guildId = id.value, userId = userId.value)
+    }
+
+    /**
+     * Requests to unban the given [userId].
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    suspend fun unban(userId: Snowflake) {
         kord.rest.guild.deleteGuildBan(guildId = id.value, userId = userId.value)
     }
 
@@ -467,4 +506,32 @@ suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit):
  */
 suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
     kord.rest.guild.addGuildBan(guildId = id.value, userId = userId.value, builder = builder)
+}
+
+/**
+ * Requests to get the [GuildChannel] represented by the [id] as type [T].
+ *
+ * @throws [RequestException] if anything went wrong during the request.
+ * @throws [EntityNotFoundException] if the [T] wasn't present.
+ * @throws [ClassCastException] if the channel is not of type [T].
+ * @throws [IllegalArgumentException] if the channel is not part of this guild.
+ */
+suspend inline fun<reified T: GuildChannel> GuildBehavior.getChannelOf(id: Snowflake) : T {
+    val channel = supplier.getChannelOf<T>(id)
+    require(channel.guildId == id) { "channel ${id.value} is not in guild ${id.value}" }
+    return channel
+}
+
+/**
+ * Requests to get the [GuildChannel] represented by the [id] as type [T],
+ * returns null if the [GuildChannel] isn't present.
+ *
+ * @throws [RequestException] if anything went wrong during the request.
+ * @throws [ClassCastException] if the channel is not of type [T].
+ * @throws [IllegalArgumentException] if the channel is not part of this guild.
+ */
+suspend inline fun<reified T: GuildChannel> GuildBehavior.getChannelOfOrNull(id: Snowflake) : T? {
+    val channel = supplier.getChannelOfOrNull<T>(id) ?: return null
+    require(channel.guildId == id) { "channel ${id.value} is not in guild ${id.value}" }
+    return channel
 }
