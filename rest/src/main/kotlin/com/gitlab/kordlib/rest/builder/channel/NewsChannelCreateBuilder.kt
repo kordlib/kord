@@ -4,6 +4,7 @@ import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.rest.json.request.GuildCreateChannelRequest
 
 @KordDsl
@@ -22,6 +23,7 @@ class NewsChannelCreateBuilder: AuditRequestBuilder<GuildCreateChannelRequest> {
             nsfw = nsfw,
             parentId = parentId?.value,
             position = position,
-            permissionOverwrite = permissionOverwrites
+            permissionOverwrite = permissionOverwrites,
+            type = ChannelType.GuildNews
     )
 }

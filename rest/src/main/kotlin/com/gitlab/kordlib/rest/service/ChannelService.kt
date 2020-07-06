@@ -1,9 +1,12 @@
 package com.gitlab.kordlib.rest.service
 
+import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.entity.DiscordMessage
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
 import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
 import com.gitlab.kordlib.rest.json.request.*
+import com.gitlab.kordlib.rest.json.response.FollowedChannelResponse
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
@@ -162,6 +165,18 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPatchRequest.serializer(), channel)
         reason?.let { header("X-Audit-Log-Reason", reason) }
+    }
+
+    @KordPreview
+    suspend fun crossPost(channelId: String, messageId: String) : DiscordMessage = call(Route.MessageCrosspost) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.MessageId] = messageId
+    }
+
+    @KordPreview
+    suspend fun followNewsChannel(channelId: String, request: ChannelFollowRequest): FollowedChannelResponse = call(Route.NewsChannelFollow) {
+        keys[Route.ChannelId] = channelId
+        body(ChannelFollowRequest.serializer(), request)
     }
 
 }

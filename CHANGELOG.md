@@ -1,3 +1,10 @@
+# 0.5.5
+
+## Additions
+
+* Added `MessageBehavior#publish` to publish a message in an announcement channel.
+* Added `NewsChannelBehavior#follow` to follow an announcement channel in another text channel.
+
 # 0.5.4
 
 ## Additions

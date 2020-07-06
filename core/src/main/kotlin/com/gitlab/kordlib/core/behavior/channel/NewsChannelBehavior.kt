@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior.channel
 
+import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -13,6 +14,8 @@ import com.gitlab.kordlib.rest.builder.channel.NewsChannelModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.patchNewsChannel
 import java.util.*
+import com.gitlab.kordlib.common.entity.Permission
+import com.gitlab.kordlib.rest.json.request.ChannelFollowRequest
 
 /**
  * The behavior of a Discord News Channel associated to a guild.
@@ -35,6 +38,19 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
      * @throws [RequestException] if something went wrong during the request.
      */
     override suspend fun asChannelOrNull(): NewsChannel? = super.asChannelOrNull() as? NewsChannel
+
+
+    /**
+     * Requests to follow this channel, publishing cross posted messages to the [target] channel.
+     *
+     * This call requires the bot to have the [Permission.ManageWebhooks] permission.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
+    @KordPreview
+    suspend fun follow(target: Snowflake) {
+        kord.rest.channel.followNewsChannel(id.value, ChannelFollowRequest(webhookChannelId = target.value))
+    }
 
     /**
      * Returns a new [NewsChannelBehavior] with the given [strategy].

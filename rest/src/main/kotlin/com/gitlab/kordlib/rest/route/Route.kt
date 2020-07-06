@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.route
 
+import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.json.optional
 import com.gitlab.kordlib.rest.json.response.*
@@ -256,6 +257,14 @@ sealed class Route<T>(
 
     object GuildVanityInviteGet
         : Route<InviteResponse>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", InviteResponse.serializer())
+
+    @KordPreview
+    object MessageCrosspost
+        : Route<DiscordMessage>(HttpMethod.Post, "/channels/$ChannelId/messages/$MessageId/crosspost", DiscordMessage.serializer())
+
+    @KordPreview
+    object NewsChannelFollow
+        : Route<FollowedChannelResponse>(HttpMethod.Post, "/channels/$ChannelId/followers", FollowedChannelResponse.serializer())
 
     //TODO must return an image
     object GuildWidgetGet

@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior
 
+import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -16,6 +17,8 @@ import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*
+import com.gitlab.kordlib.rest.request.RestRequestException
+import com.gitlab.kordlib.common.entity.Permission
 
 /**
  * The behavior of a [Discord Message](https://discordapp.com/developers/docs/resources/channel#message-object).
@@ -85,6 +88,24 @@ interface MessageBehavior : Entity, Strategizable {
      */
     suspend fun addReaction(emoji: GuildEmoji) {
         addReaction(ReactionEmoji.from(emoji))
+    }
+
+    /**
+     * Requests to publish this message to following channels, this function assumes the message was created
+     * in an announcement channel.
+     *
+     * Requires the [Permission.SendMessages] permission if the bot created the message,
+     * or the [Permission.ManageChannels] permission otherwise.
+     *
+     * @return The updated message after publishing.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    @KordPreview
+    suspend fun publish() : Message {
+        val response = kord.rest.channel.crossPost(channelId =  channelId.value, messageId = id.value)
+        val data = MessageData.from(response)
+        return Message(data, kord)
     }
 
     /**
