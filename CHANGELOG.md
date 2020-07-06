@@ -1,3 +1,8 @@
+# 0.5.6
+
+## Fixes
+* Fixed incorrect calculations of denied `Permissions`. 
+
 # 0.5.5
 
 ## Additions

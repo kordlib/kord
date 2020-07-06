@@ -5,15 +5,11 @@ import kotlinx.serialization.*
 @Serializable(with = Permissions.Companion::class)
 class Permissions constructor(val code: Int) {
 
-    operator fun plus(permission: Permission): Permissions = when {
-        code and permission.code == permission.code -> this
-        else -> Permissions(this.code or permission.code)
-    }
+    operator fun plus(permission: Permission): Permissions = Permissions(this.code or permission.code)
 
-    operator fun minus(permission: Permission): Permissions = when {
-        code and permission.code == permission.code -> Permissions(code xor permission.code)
-        else -> this
-    }
+
+    operator fun minus(permission: Permission): Permissions = Permissions(code xor (code and permission.code))
+
 
     operator fun contains(permission: Permission): Boolean {
         return this.code and permission.code == permission.code
@@ -52,9 +48,7 @@ class Permissions constructor(val code: Int) {
         }
 
         operator fun Permissions.unaryMinus() {
-            if (this@PermissionsBuilder.code and code == code) {
-                this@PermissionsBuilder.code = this@PermissionsBuilder.code xor code
-            }
+            this@PermissionsBuilder.code = this@PermissionsBuilder.code xor (this@PermissionsBuilder.code and code)
         }
 
         operator fun Permission.unaryPlus() {
@@ -62,9 +56,7 @@ class Permissions constructor(val code: Int) {
         }
 
         operator fun Permission.unaryMinus() {
-            if (this@PermissionsBuilder.code and code == code) {
-                this@PermissionsBuilder.code = this@PermissionsBuilder.code xor code
-            }
+            this@PermissionsBuilder.code = this@PermissionsBuilder.code xor (this@PermissionsBuilder.code and code)
         }
 
         fun permissions() = Permissions(code)
