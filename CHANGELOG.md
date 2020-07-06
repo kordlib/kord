@@ -5,6 +5,10 @@
 * Added `MessageBehavior#publish` to publish a message in an announcement channel.
 * Added `NewsChannelBehavior#follow` to follow an announcement channel in another text channel.
 
+## Fixes
+
+* Fixed `GuildChannel#getEffectivePermissions` not correctly denying permissions denied for the user specifically.
+
 # 0.5.4
 
 ## Additions

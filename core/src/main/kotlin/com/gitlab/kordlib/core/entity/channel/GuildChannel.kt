@@ -70,7 +70,7 @@ interface GuildChannel : Channel, GuildChannelBehavior {
             }
             memberOverwrite?.let {
                 +it.allowed
-                +it.denied
+                -it.denied
             }
         }
 
