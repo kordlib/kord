@@ -4,6 +4,7 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
+import com.gitlab.kordlib.core.entity.Ban
 import com.gitlab.kordlib.core.entity.Guild
 import com.gitlab.kordlib.core.entity.Strategizable
 import com.gitlab.kordlib.core.entity.User
@@ -27,7 +28,7 @@ class BanAddEvent(
      * Requests to get the [Guild] this ban happened in.
      *
      * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the  wasn't present.
+     * @throws [EntityNotFoundException] if the guild wasn't present.
      */
     suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
@@ -38,6 +39,22 @@ class BanAddEvent(
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+
+    /**
+     * Requests to get the [Ban] entity this event represents.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the ban wasn't present.
+     */
+    suspend fun getBan(): Ban = supplier.getGuildBan(guildId, user.id)
+
+    /**
+     * Requests to get the [Ban] entity this event represents.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the ban wasn't present.
+     */
+    suspend fun getBanOrNull(): Ban? = supplier.getGuildBanOrNull(guildId, user.id)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): BanAddEvent =
             BanAddEvent(user, guildId, shard, strategy.supply(kord))

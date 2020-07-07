@@ -1,3 +1,9 @@
+# 0.5.7
+
+## Additions
+
+* Added `BanAddEvent#getBan` to get the full ban object.    
+
 # 0.5.6
 
 ## Fixes
