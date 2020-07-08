@@ -2,7 +2,8 @@
 
 ## Additions
 
-* Added `BanAddEvent#getBan` to get the full ban object.    
+* Added `BanAddEvent#getBan` to get the full ban object.
+* Re-added `MessageCreateBuilder#allowedMentions` after removal in 0.5.0.
 
 # 0.5.6
 

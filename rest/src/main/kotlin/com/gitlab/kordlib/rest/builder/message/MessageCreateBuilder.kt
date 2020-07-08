@@ -33,6 +33,15 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
         addFile(path.fileName.toString(), Files.newInputStream(path))
     }
 
+    /**
+     * Configures the mentions that should trigger a ping. Not calling this function will result in the default behavior
+     * (ping everything), calling this function but not configuring it before the request is build will result in all
+     * pings being ignored.
+     */
+    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
+    }
+
     override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
             MessageCreateRequest(content, nonce, tts, embed?.toRequest(), allowedMentions?.build()),
             files
