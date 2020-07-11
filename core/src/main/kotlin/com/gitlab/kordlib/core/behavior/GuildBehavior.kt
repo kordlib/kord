@@ -18,7 +18,6 @@ import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
-import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
@@ -509,29 +508,29 @@ suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilde
 }
 
 /**
- * Requests to get the [GuildChannel] represented by the [id] as type [T].
+ * Requests to get the [GuildChannel] represented by the [channelId] as type [T].
  *
  * @throws [RequestException] if anything went wrong during the request.
  * @throws [EntityNotFoundException] if the [T] wasn't present.
  * @throws [ClassCastException] if the channel is not of type [T].
  * @throws [IllegalArgumentException] if the channel is not part of this guild.
  */
-suspend inline fun<reified T: GuildChannel> GuildBehavior.getChannelOf(id: Snowflake) : T {
-    val channel = supplier.getChannelOf<T>(id)
-    require(channel.guildId == id) { "channel ${id.value} is not in guild ${id.value}" }
+suspend inline fun<reified T: GuildChannel> GuildBehavior.getChannelOf(channelId: Snowflake) : T {
+    val channel = supplier.getChannelOf<T>(channelId)
+    require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id.value}" }
     return channel
 }
 
 /**
- * Requests to get the [GuildChannel] represented by the [id] as type [T],
+ * Requests to get the [GuildChannel] represented by the [channelId] as type [T],
  * returns null if the [GuildChannel] isn't present.
  *
  * @throws [RequestException] if anything went wrong during the request.
  * @throws [ClassCastException] if the channel is not of type [T].
  * @throws [IllegalArgumentException] if the channel is not part of this guild.
  */
-suspend inline fun<reified T: GuildChannel> GuildBehavior.getChannelOfOrNull(id: Snowflake) : T? {
-    val channel = supplier.getChannelOfOrNull<T>(id) ?: return null
-    require(channel.guildId == id) { "channel ${id.value} is not in guild ${id.value}" }
+suspend inline fun<reified T: GuildChannel> GuildBehavior.getChannelOfOrNull(channelId: Snowflake) : T? {
+    val channel = supplier.getChannelOfOrNull<T>(channelId) ?: return null
+    require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id.value}" }
     return channel
 }
