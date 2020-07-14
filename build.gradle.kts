@@ -1,5 +1,8 @@
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
+import org.jetbrains.dokka.gradle.DokkaTask
+import org.ajoberstar.gradle.git.publish.GitPublishExtension
+import org.ajoberstar.gradle.git.publish.tasks.GitPublishPush
 
 buildscript {
     repositories {
@@ -15,14 +18,21 @@ buildscript {
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
+    id("org.jetbrains.dokka") version "1.4.0-M3-dev-61"
+    id("org.ajoberstar.git-publish") version "2.1.3"
 }
 
 repositories {
+    maven(url = "https://dl.bintray.com/kotlin/kotlin-dev/")
     mavenCentral()
     jcenter()
+    mavenLocal()
 }
 
-dependencies { api(Dependencies.jdk8) }
+dependencies {
+    api(Dependencies.jdk8)
+    dokkaPlugins("org.jetbrains.dokka:dokka-base:0.11.0-SNAPSHOT")
+}
 
 group = Library.group
 version = Library.version
@@ -39,6 +49,7 @@ subprojects {
         jcenter()
         maven(url = "https://kotlin.bintray.com/kotlinx")
         maven(url = "https://dl.bintray.com/kordlib/Kord")
+        maven(url = "https://dl.bintray.com/kotlin/kotlin-dev/")
     }
 
     dependencies {
@@ -109,3 +120,37 @@ subprojects {
     }
 }
 
+tasks {
+    val dokkaOutputDir = "dokka"
+
+    val clean = getByName("clean", Delete::class) {
+        delete(rootProject.buildDir)
+        delete(dokkaOutputDir)
+    }
+
+    val dokka by getting(DokkaTask::class) {
+        dependsOn(clean)
+        outputDirectory = dokkaOutputDir
+        outputFormat = "html"
+        subProjects = listOf("core", "rest", "gateway", "common")
+    }
+
+    val fixIndex by register<DocsTask>("fixIndex") {
+        dependsOn(dokka)
+    }
+
+    val gitPublishPush by getting(GitPublishPush::class) {
+        dependsOn(fixIndex)
+    }
+}
+
+configure<GitPublishExtension> {
+    repoUri.set("https://github.com/kordlib/kord.git")
+    branch.set("gh-pages")
+
+    contents {
+        from("dokka")
+    }
+
+    commitMessage.set("Update Docs")
+}
