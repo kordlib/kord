@@ -259,30 +259,30 @@ interface GuildBehavior : Entity, Strategizable {
     suspend fun getBanOrNull(userId: Snowflake): Ban? = supplier.getGuildBanOrNull(id, userId)
 
     /**
-     * Requests to get the [GuildChannel] represented by the [id].
+     * Requests to get the [GuildChannel] represented by the [channelId].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [GuildChannel] wasn't present.
      * @throws [ClassCastException] if the channel is not a [GuildChannel].
      * @throws [IllegalArgumentException] if the channel is not part of this guild.
      */
-    suspend fun getChannel(id: Snowflake) : GuildChannel {
-        val channel = supplier.getChannelOf<GuildChannel>(id)
-        require(channel.guildId == id) { "channel ${id.value} is not in guild ${id.value}" }
+    suspend fun getChannel(channelId: Snowflake) : GuildChannel {
+        val channel = supplier.getChannelOf<GuildChannel>(channelId)
+        require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id.value}" }
         return channel
     }
 
     /**
-     * Requests to get the [GuildChannel] represented by the [id],
+     * Requests to get the [GuildChannel] represented by the [channelId],
      * returns null if the [GuildChannel] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [ClassCastException] if the channel is not a [GuildChannel].
      * @throws [IllegalArgumentException] if the channel is not part of this guild.
      */
-    suspend fun getChannelOrNull(id: Snowflake) : GuildChannel? {
-        val channel = supplier.getChannelOfOrNull<GuildChannel>(id) ?: return null
-        require(channel.guildId == id) { "channel ${id.value} is not in guild ${id.value}" }
+    suspend fun getChannelOrNull(channelId: Snowflake) : GuildChannel? {
+        val channel = supplier.getChannelOfOrNull<GuildChannel>(channelId) ?: return null
+        require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id.value}" }
         return channel
     }
 

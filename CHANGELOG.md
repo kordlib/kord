@@ -1,3 +1,11 @@
+# 0.5.9
+
+## Fixes
+
+* Fixed an issue where getting a channel from a guild would incorrectly throw an exception during the guild id check. 
+(again)
+
+
 # 0.5.8
 
 ## Fixes
