@@ -1,3 +1,9 @@
+# 0.5.10
+
+## Fixes
+
+* Fixed an issue with entity flows requested from REST duplicating entities.
+
 # 0.5.9
 
 ## Fixes
