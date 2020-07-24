@@ -1,3 +1,11 @@
+# 0.5.11
+
+## Fixes
+
+* Fixed an issue where multiple voice states could be present per user per guild.
+* Fixed an issue where presences would be incorrectly deserialized in guild member chunk events.
+* Fixes member chunk events not caching presences.
+
 # 0.5.10
 
 ## Fixes
