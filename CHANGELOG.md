@@ -1,3 +1,9 @@
+# 0.5.12
+
+## Fixes
+
+* Fixed an issue where Invite events would not fire if the invited user didn't have an avatar.
+
 # 0.5.11
 
 ## Fixes

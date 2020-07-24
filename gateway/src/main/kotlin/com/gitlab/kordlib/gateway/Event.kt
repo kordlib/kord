@@ -357,7 +357,7 @@ data class DiscordCreatedInvite(
 
 @Serializable
 data class DiscordInviteUser(
-        val avatar: String,
+        val avatar: String? = null,
         val discriminator: String,
         val id: String,
         val username: String
