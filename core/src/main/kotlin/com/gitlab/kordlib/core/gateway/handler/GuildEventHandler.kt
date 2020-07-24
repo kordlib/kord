@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
+import com.gitlab.kordlib.cache.api.putAll
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
@@ -213,6 +214,9 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: GuildMembersChunk, shard: Int) = with(event.data) {
+        val presences = presences.orEmpty().map { PresenceData.from(guildId, it) }
+        cache.putAll(presences)
+
         val members = members.asFlow().map { member ->
             val memberData = MemberData.from(member.user!!.id, guildId, member)
             cache.put(memberData)
