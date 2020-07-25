@@ -68,7 +68,7 @@ sealed class Event {
                                 error("Unknown 'd' field for Op code ${op?.code}: $element")
                             } else {
                                 val element = decodeNullableSerializableElement(descriptor, index, JsonElementSerializer.nullable)
-                                jsonLogger.warn { "Ignored unexpected 'd' field for Op code ${op?.code}: $element" }
+                                // jsonLogger.warn { "Ignored unexpected 'd' field for Op code ${op?.code}: $element" }
                                 data
                             }
                         }
