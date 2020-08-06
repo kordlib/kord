@@ -237,8 +237,8 @@ interface GuildBehavior : Entity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun kick(userId: Snowflake) {
-        kord.rest.guild.deleteGuildMember(guildId = id.value, userId = userId.value)
+    suspend fun kick(userId: Snowflake, reason: String? = null) {
+        kord.rest.guild.deleteGuildMember(guildId = id.value, userId = userId.value, reason = reason)
     }
 
 
