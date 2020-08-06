@@ -64,7 +64,7 @@ interface MemberBehavior : Entity, UserBehavior {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun kick() = guild.kick(id)
+    suspend fun kick(reason: String? = null) = guild.kick(id, reason)
 
     /**
      * Requests to add the [Role] with the [roleId] to this member.
