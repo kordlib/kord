@@ -7,17 +7,19 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.cache.data.GuildData
-import com.gitlab.kordlib.core.cache.data.GuildPreviewData
-import com.gitlab.kordlib.core.entity.*
+import com.gitlab.kordlib.core.entity.ApplicationInfo
+import com.gitlab.kordlib.core.entity.Guild
+import com.gitlab.kordlib.core.entity.Region
+import com.gitlab.kordlib.core.entity.User
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.event.Event
+import com.gitlab.kordlib.core.exception.KordInitializationException
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
-import com.gitlab.kordlib.gateway.start
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.CoroutineDispatcher
@@ -119,6 +121,10 @@ class Kord(
     }
 
     companion object {
+
+        /**
+         * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
+         */
         suspend inline operator fun invoke(token: String, builder: KordBuilder.() -> Unit = {}) =
                 KordBuilder(token).apply(builder).build()
     }

@@ -1,5 +1,10 @@
 # 0.5.12
 
+## Changes
+
+* `Member#kick` and `Guild#kick` now have an optional reason.
+* `KordBuilder` now throws a (more) useful exception when building a bot with an invalid token.
+
 ## Fixes
 
 * Fixed an issue where Invite events would not fire if the invited user didn't have an avatar.

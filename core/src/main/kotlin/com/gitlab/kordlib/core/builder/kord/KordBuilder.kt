@@ -12,6 +12,7 @@ import com.gitlab.kordlib.core.cache.KordCacheBuilder
 import com.gitlab.kordlib.core.cache.createView
 import com.gitlab.kordlib.core.cache.registerKordData
 import com.gitlab.kordlib.core.event.Event
+import com.gitlab.kordlib.core.exception.KordInitializationException
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.gateway.DefaultGateway
@@ -24,6 +25,7 @@ import com.gitlab.kordlib.rest.json.response.BotGatewayResponse
 import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestRateLimiter
 import com.gitlab.kordlib.rest.request.KtorRequestHandler
 import com.gitlab.kordlib.rest.request.RequestHandler
+import com.gitlab.kordlib.rest.request.isError
 import com.gitlab.kordlib.rest.route.Route
 import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.HttpClient
@@ -35,6 +37,9 @@ import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.readText
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -192,6 +197,31 @@ class KordBuilder(val token: String) {
         install(WebSockets)
     }
 
+    /**
+     * Requests the gateway info for the bot, or throws a [KordInitializationException] when something went wrong.
+     */
+    private suspend fun HttpClient.getGatewayInfo(): BotGatewayResponse {
+        val response = get<HttpResponse>("${Route.baseUrl}${Route.GatewayBotGet.path}")
+        val responseBody = response.readText()
+        if (response.isError) {
+            val message = buildString {
+                append("Something went wrong while initializing Kord.")
+                if (response.status == HttpStatusCode.Unauthorized) {
+                    append(", make sure the bot token you entered is valid.")
+                }
+
+                appendln(responseBody)
+            }
+
+            throw KordInitializationException(message)
+        }
+
+        return Json.parse(BotGatewayResponse.serializer(), responseBody)
+    }
+
+    /**
+     * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
+     */
     suspend fun build(): Kord {
         val client = httpClient?.let {
             it.config { defaultConfig() }
@@ -204,8 +234,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val response = client.get<BotGatewayResponse>("${Route.baseUrl}/gateway/bot")
-        val recommendedShards = response.shards
+        val recommendedShards = client.getGatewayInfo().shards
         val shards = shardRange(recommendedShards).toList()
 
         if (client.engine.config.threadsCount < shards.size + 1) {
