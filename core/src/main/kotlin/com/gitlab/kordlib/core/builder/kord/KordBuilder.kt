@@ -216,7 +216,7 @@ class KordBuilder(val token: String) {
             throw KordInitializationException(message)
         }
 
-        return Json.parse(BotGatewayResponse.serializer(), responseBody)
+        return Json(JsonConfiguration(ignoreUnknownKeys = true)).parse(BotGatewayResponse.serializer(), responseBody)
     }
 
     /**
