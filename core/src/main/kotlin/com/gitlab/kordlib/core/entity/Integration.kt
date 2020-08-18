@@ -13,6 +13,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.toInstant
 import com.gitlab.kordlib.rest.builder.integration.IntegrationModifyBuilder
 import com.gitlab.kordlib.rest.json.response.IntegrationExpireBehavior
+import com.gitlab.kordlib.rest.request.RestRequestException
 import java.time.Duration
 import java.time.Instant
 import java.time.temporal.ChronoUnit
@@ -169,6 +170,13 @@ class Integration(
     }
 }
 
+/**
+ * Requests to edit this integration.
+ *
+ * @return The edited [Integration].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
 suspend inline fun Integration.edit(builder: IntegrationModifyBuilder.() -> Unit) {
     kord.rest.guild.modifyGuildIntegration(guildId.value, id.value, builder)
 }

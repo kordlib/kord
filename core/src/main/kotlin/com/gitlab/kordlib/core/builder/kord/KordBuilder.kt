@@ -158,7 +158,7 @@ class KordBuilder(val token: String) {
      *
      * ```
      * Kord(token) {
-     *     { resources -> ExclusionRequestHandler(resources.httpClient) }
+     *     { resources -> KtorRequestHandler(resources.httpClient, ExclusionRequestRateLimiter()) }
      * }
      * ```
      */

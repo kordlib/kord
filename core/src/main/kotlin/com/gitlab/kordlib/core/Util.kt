@@ -54,13 +54,31 @@ fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
     }
 }
 
+/**
+ * The terminal operator that returns the first element emitted by the flow that matches the [predicate]
+ * and then cancels flow's collection.
+ * Returns `null` if the flow was empty.
+ */
 suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: suspend (T) -> Boolean): T? =
-        filter { predicate(it) }.take(1).singleOrNull()
+        filter { predicate(it) }.firstOrNull()
 
-
+/**
+ * The terminal operator that returns `true` if any of the elements match [predicate].
+ * The flow's collection is cancelled when a match is found.
+ */
 suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
         firstOrNull(predicate) != null
 
+/**
+ * The non-terminal operator that returns a new flow that will emit values of the second [flow] only after the first
+ * flow finished collecting without values.
+ *
+ * ```kotlin
+ * emptyFlow<String>().switchIfEmpty(flowOf("hello", "world")) //["hello", "world"]
+ *
+ * flowOf("hello", "world").switchIfEmpty(flowOf("goodbye", "world")) //["hello", "world"]
+ * ```
+ */
 internal fun <T> Flow<T>.switchIfEmpty(flow: Flow<T>): Flow<T> = flow {
     var empty = true
     collect {
@@ -75,6 +93,11 @@ internal fun <T> Flow<T>.switchIfEmpty(flow: Flow<T>): Flow<T> = flow {
     }
 }
 
+/**
+ * The terminal operator that returns the index of the first element emitted by the flow that matches the [predicate]
+ * and then cancels flow's collection.
+ * Returns `null` if the flow was empty or no element matched the [predicate].
+ */
 internal suspend inline fun <T> Flow<T>.indexOfFirstOrNull(crossinline predicate: suspend (T) -> Boolean): Int? {
     val counter = atomic(0)
     return map { counter.getAndIncrement() to it }

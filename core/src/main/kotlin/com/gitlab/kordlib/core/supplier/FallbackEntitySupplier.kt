@@ -4,9 +4,16 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.cache
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.rest
 import com.gitlab.kordlib.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Creates supplier providing a strategy which will first operate on this supplier. When an entity
+ * is not present from the first supplier it will be fetched from [other] instead. Operations that return flows
+ * will only fall back to [other] when the returned flow contained no elements.
+ */
 infix fun EntitySupplier.withFallback(other: EntitySupplier): EntitySupplier = FallbackEntitySupplier(this, other)
 
 private class FallbackEntitySupplier(val first: EntitySupplier, val second: EntitySupplier) : EntitySupplier {

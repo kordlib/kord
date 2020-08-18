@@ -93,7 +93,6 @@ interface CategoryBehavior : GuildChannelBehavior {
  * @return The edited [Category].
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
 suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Category {
     val response = kord.rest.channel.patchCategory(id.value, builder)
     val data = ChannelData.from(response)

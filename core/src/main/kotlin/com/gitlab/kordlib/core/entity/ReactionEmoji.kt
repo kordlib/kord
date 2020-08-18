@@ -4,16 +4,21 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.cache.data.RemovedReactionData
 
 sealed class ReactionEmoji {
+    /**
+     * Format used in HTTP queries.
+     */
     abstract val urlFormat: String
+
+    /**
+     * Either the unicode representation if it's a [Unicode] emoji or the emoji name if it's a [Custom] emoji.
+     */
     abstract val name: String
+
+
     abstract val mention: String
 
     data class Custom(val id: Snowflake, override val name: String, val isAnimated: Boolean) : ReactionEmoji() {
-        /**
-         *
-         * Format used in HTTP queries.
-         *
-         */
+
         override val urlFormat: String
             get() = "$name:${id.value}"
 
