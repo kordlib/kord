@@ -10,7 +10,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 
 /**
- * An instance of a [Discord Channel](https://discordapp.com/developers/docs/resources/channel)
+ * An instance of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
  */
 interface Channel : ChannelBehavior {
     val data: ChannelData

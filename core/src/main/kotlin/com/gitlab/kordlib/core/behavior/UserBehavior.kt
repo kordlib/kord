@@ -17,7 +17,7 @@ import io.ktor.http.HttpStatusCode
 import java.util.*
 
 /**
- * The behavior of a [Discord User](https://discordapp.com/developers/docs/resources/user)
+ * The behavior of a [Discord User](https://discord.com/developers/docs/resources/user)
  */
 interface UserBehavior : Entity, Strategizable {
 

@@ -13,7 +13,7 @@ import com.gitlab.kordlib.rest.request.RestRequestException
 import java.util.*
 
 /**
- * The behavior of a [Discord Emoij](https://discordapp.com/developers/docs/resources/emoji).
+ * The behavior of a [Discord Emoij](https://discord.com/developers/docs/resources/emoji).
  */
 interface GuildEmojiBehavior : Entity, Strategizable {
 

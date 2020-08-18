@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.filter
 import java.util.*
 
 /**
- * An instance of a [Discord emoji](https://discordapp.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
+ * An instance of a [Discord emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
  */
 class GuildEmoji(
         val data: EmojiData,

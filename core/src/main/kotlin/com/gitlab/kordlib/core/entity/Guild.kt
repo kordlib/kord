@@ -28,7 +28,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
- * An instance of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
+ * An instance of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
  */
 class Guild(
         val data: GuildData,

@@ -7,7 +7,7 @@ import kotlin.time.toKotlinDuration
 
 
 /**
- * A unique identifier for entities [used by discord](https://discordapp.com/developers/docs/reference#snowflakes).
+ * A unique identifier for entities [used by discord](https://discord.com/developers/docs/reference#snowflakes).
  */
 inline class Snowflake(val longValue: Long) : Comparable<Snowflake> {
     constructor(value: String) : this(value.toLong())

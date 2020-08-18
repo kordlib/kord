@@ -34,7 +34,7 @@ val Request<*, *>.identifier get() = when { //The major identifier is always the
 }
 
 /**
- * A ['per-route'](https://discordapp.com/developers/docs/topics/rate-limits) identifier for rate limiting purposes.
+ * A ['per-route'](https://discord.com/developers/docs/topics/rate-limits) identifier for rate limiting purposes.
  */
 sealed class RequestIdentifier {
     /**

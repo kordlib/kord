@@ -35,7 +35,7 @@ import java.util.*
 import com.gitlab.kordlib.rest.service.RestClient
 
 /**
- * The behavior of a [Discord Guild](https://discordapp.com/developers/docs/resources/guild).
+ * The behavior of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
  */
 interface GuildBehavior : Entity, Strategizable {
     /**

@@ -13,7 +13,7 @@ import com.gitlab.kordlib.rest.request.RestRequestException
 import java.util.*
 
 /**
- * The behavior of a [Discord Channel](https://discordapp.com/developers/docs/resources/channel)
+ * The behavior of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
  */
 interface ChannelBehavior : Entity, Strategizable {
 

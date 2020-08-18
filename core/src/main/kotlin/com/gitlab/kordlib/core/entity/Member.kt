@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
- * An instance of a [Discord Member](https://discordapp.com/developers/docs/resources/guild#guild-member-object).
+ * An instance of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
  */
 class Member(
         val memberData: MemberData,

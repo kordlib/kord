@@ -323,7 +323,7 @@ sealed class Route<T>(
         : Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())
 
     companion object {
-        val baseUrl = "https://discordapp.com/api/$restVersion"
+        val baseUrl = "https://discord.com/api/$restVersion"
     }
 
     open class Key(val identifier: String, val isMajor: Boolean = false) {

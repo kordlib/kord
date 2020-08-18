@@ -11,7 +11,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 
 /**
- * An instance of a [Discord Ban](https://discordapp.com/developers/docs/resources/guild#ban-object).
+ * An instance of a [Discord Ban](https://discord.com/developers/docs/resources/guild#ban-object).
  */
 class Ban(
         val data: BanData,

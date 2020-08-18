@@ -13,7 +13,7 @@ import com.gitlab.kordlib.rest.Image
 import java.util.*
 
 /**
- * An instance of a [Discord User](https://discordapp.com/developers/docs/resources/user#user-object).
+ * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
  */
 open class User(
         val data: UserData,

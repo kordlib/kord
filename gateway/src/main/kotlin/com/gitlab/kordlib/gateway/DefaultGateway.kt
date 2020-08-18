@@ -105,7 +105,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             try {
                 socket = webSocket(data.url)
                 /**
-                 * https://discordapp.com/developers/docs/topics/gateway#transport-compression
+                 * https://discord.com/developers/docs/topics/gateway#transport-compression
                  *
                  * > Every connection to the gateway should use its own unique zlib context.
                  */

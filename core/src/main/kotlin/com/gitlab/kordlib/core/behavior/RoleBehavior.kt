@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.map
 import java.util.*
 
 /**
- * The behavior of a [Discord Role](https://discordapp.com/developers/docs/topics/permissions#role-object) associated to a [guild].
+ * The behavior of a [Discord Role](https://discord.com/developers/docs/topics/permissions#role-object) associated to a [guild].
  */
 interface RoleBehavior : Entity, Strategizable {
     /**

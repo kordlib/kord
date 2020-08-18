@@ -16,7 +16,7 @@ import com.gitlab.kordlib.rest.request.RestRequestException
 import java.util.*
 
 /**
- * The behavior of a [Discord Member](https://discordapp.com/developers/docs/resources/guild#guild-member-object).
+ * The behavior of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
  */
 interface MemberBehavior : Entity, UserBehavior {
 

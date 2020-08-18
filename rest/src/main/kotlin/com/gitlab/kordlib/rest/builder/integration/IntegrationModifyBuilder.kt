@@ -5,7 +5,7 @@ import com.gitlab.kordlib.rest.json.request.GuildIntegrationModifyRequest
 import com.gitlab.kordlib.rest.json.response.IntegrationExpireBehavior
 
 /**
- * Builder for [modifying an integration](https://discordapp.com/developers/docs/resources/guild#modify-guild-integration).
+ * Builder for [modifying an integration](https://discord.com/developers/docs/resources/guild#modify-guild-integration).
  */
 class IntegrationModifyBuilder : RequestBuilder<GuildIntegrationModifyRequest> {
 

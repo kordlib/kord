@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
- * An instance of a [Discord Message][https://discordapp.com/developers/docs/resources/channel#message-object].
+ * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
  */
 class Message(
         val data: MessageData,

@@ -8,15 +8,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlin.time.Duration
 
 /**
- * An implementation of the Discord [Gateway](https://discordapp.com/developers/docs/topics/gateway) and its lifecycle.
+ * An implementation of the Discord [Gateway](https://discord.com/developers/docs/topics/gateway) and its lifecycle.
  *
- * Allows consumers to receive [events](https://discordapp.com/developers/docs/topics/gateway#commands-and-events-gateway-events)
- * through [events] and send [commands](https://discordapp.com/developers/docs/topics/gateway#commands-and-events-gateway-commands)
+ * Allows consumers to receive [events](https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events)
+ * through [events] and send [commands](https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-commands)
  * through [send].
  */
 interface Gateway {
     /**
-     * The incoming [events](https://discordapp.com/developers/docs/topics/gateway#commands-and-events-gateway-events)
+     * The incoming [events](https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events)
      * of the Gateway. Users should expect these [Flows](Flow) to be hot and remain open for the entire lifecycle of the
      * Gateway.
      */
@@ -89,7 +89,7 @@ suspend inline fun Gateway.start(token: String, config: GatewayConfigurationBuil
 }
 
 /**
- * Enum representation of Discord's [Gateway close event codes](https://discordapp.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes).
+ * Enum representation of Discord's [Gateway close event codes](https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes).
  */
 enum class GatewayCloseCode(val code: Int) {
     Unknown(4000),

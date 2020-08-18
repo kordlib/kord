@@ -16,7 +16,7 @@ import com.gitlab.kordlib.rest.request.RestRequestException
 import java.util.*
 
 /**
- * The behavior of a [Discord Webhook](https://discordapp.com/developers/docs/resources/webhook).
+ * The behavior of a [Discord Webhook](https://discord.com/developers/docs/resources/webhook).
  */
 interface WebhookBehavior : Entity, Strategizable {
 

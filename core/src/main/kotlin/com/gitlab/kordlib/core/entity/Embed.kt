@@ -11,11 +11,11 @@ import java.time.Instant
 internal const val embedDeprecationMessage = """
 Embed types should be considered deprecated and might be removed in a future API version.
 
-https://discordapp.com/developers/docs/resources/channel#embed-object-embed-types
+https://discord.com/developers/docs/resources/channel#embed-object-embed-types
 """
 
 /**
- * An instance of a [Discord Embed](https://discordapp.com/developers/docs/resources/channel#embed-object).
+ * An instance of a [Discord Embed](https://discord.com/developers/docs/resources/channel#embed-object).
  */
 data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
 

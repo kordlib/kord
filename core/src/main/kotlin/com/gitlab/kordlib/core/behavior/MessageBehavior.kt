@@ -21,7 +21,7 @@ import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.common.entity.Permission
 
 /**
- * The behavior of a [Discord Message](https://discordapp.com/developers/docs/resources/channel#message-object).
+ * The behavior of a [Discord Message](https://discord.com/developers/docs/resources/channel#message-object).
  */
 interface MessageBehavior : Entity, Strategizable {
     /**

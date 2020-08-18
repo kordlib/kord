@@ -5,7 +5,7 @@ import java.lang.Exception
 import java.time.Instant
 
 /**
- * A rate limiter that follows [Discord's rate limits](https://discordapp.com/developers/docs/topics/rate-limits) for
+ * A rate limiter that follows [Discord's rate limits](https://discord.com/developers/docs/topics/rate-limits) for
  * the REST api.
  */
 interface RequestRateLimiter {

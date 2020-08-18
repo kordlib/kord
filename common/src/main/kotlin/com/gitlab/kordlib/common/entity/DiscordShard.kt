@@ -6,7 +6,7 @@ import kotlinx.serialization.json.JsonLiteral
 import kotlinx.serialization.json.jsonArray
 
 /**
- * An instance of a [Discord shard](https://discordapp.com/developers/docs/topics/gateway#sharding).
+ * An instance of a [Discord shard](https://discord.com/developers/docs/topics/gateway#sharding).
  */
 @Serializable
 data class DiscordShard(val index: Int, val count: Int) {

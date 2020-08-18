@@ -6,7 +6,7 @@ import com.gitlab.kordlib.core.cache.data.AttachmentData
 import java.util.*
 
 /**
- * An instance of a [Discord Attachment](https://discordapp.com/developers/docs/resources/channel#attachment-object).
+ * An instance of a [Discord Attachment](https://discord.com/developers/docs/resources/channel#attachment-object).
  *
  * A file attached to a [Message].
  */

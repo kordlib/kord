@@ -20,7 +20,7 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 
 /**
- * A [Discord integration](https://discordapp.com/developers/docs/resources/guild#get-guild-integrations).
+ * A [Discord integration](https://discord.com/developers/docs/resources/guild#get-guild-integrations).
  */
 class Integration(
         val data: IntegrationData,

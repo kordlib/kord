@@ -7,18 +7,18 @@ import kotlin.RequiresOptIn.*
 /**
  * Some intents are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without enabling them.
  *
- * See [the official documentation](https://discordapp.com/developers/docs/topics/gateway#privileged-intents) for more info on
+ * See [the official documentation](https://discord.com/developers/docs/topics/gateway#privileged-intents) for more info on
  * how to enable these.
  */
 @RequiresOptIn("""
     Some intents are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without enabling them.
     
-    See https://discordapp.com/developers/docs/topics/gateway#privileged-intents for more info on how to enable these.
+    See https://discord.com/developers/docs/topics/gateway#privileged-intents for more info on how to enable these.
 """, Level.ERROR)
 annotation class PrivilegedIntent
 
 /**
- * Values that enable a group of events as [defined by Discord](https://github.com/discordapp/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents).
+ * Values that enable a group of events as [defined by Discord](https://github.com/discord/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents).
  */
 enum class Intent(val code: Int) {
     /**

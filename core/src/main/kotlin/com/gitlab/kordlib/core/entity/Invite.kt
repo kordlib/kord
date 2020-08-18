@@ -17,7 +17,7 @@ import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 
 /**
- * An instance of a [Discord Invite](https://discordapp.com/developers/docs/resources/invite).
+ * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite).
  */
 data class Invite(
         val data: InviteData,

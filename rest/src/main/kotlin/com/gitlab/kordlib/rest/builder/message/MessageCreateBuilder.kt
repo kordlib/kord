@@ -50,7 +50,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
 }
 
 /**
- * The mentions that should trigger a ping. See the [Discord documentation](https://discordapp.com/developers/docs/resources/channel#allowed-mentions-object).
+ * The mentions that should trigger a ping. See the [Discord documentation](https://discord.com/developers/docs/resources/channel#allowed-mentions-object).
  *
  */
 class AllowedMentionsBuilder {
