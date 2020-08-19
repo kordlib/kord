@@ -1,7 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.IntDescriptor
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class DiscordChannel(
@@ -53,19 +57,19 @@ enum class ChannelType(val code: Int) {
     GuildCategory(4),
     GuildNews(5),
     GuildStore(6);
-
     @Serializer(forClass = ChannelType::class)
     companion object ChannelTypeSerializer : KSerializer<ChannelType> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("type", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ChannelType {
             val code = decoder.decodeInt()
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: ChannelType) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: ChannelType) {
+            encoder.encodeInt(value.code)
         }
     }
+
 }

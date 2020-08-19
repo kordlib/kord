@@ -4,10 +4,15 @@ import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.encoding.CompositeDecoder
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.internal.IntDescriptor
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonElementSerializer
+import kotlinx.serialization.json.*
 import mu.KotlinLogging
 
 private val auditLogger = KotlinLogging.logger { }
@@ -24,7 +29,7 @@ data class AuditLogResponse(
 data class AuditLogEntryResponse(
         @SerialName("target_id")
         val targetId: String?,
-        val changes: List<AuditLogChangeResponse<out @ContextualSerialization Any?>>? = null,
+        val changes: List<AuditLogChangeResponse<out @Contextual Any?>>? = null,
         @SerialName("user_id")
         val userId: String,
         val id: String,
@@ -42,14 +47,13 @@ sealed class AuditLogChangeResponse<T> {
 
     @Serializer(forClass = AuditLogChangeResponse::class)
     companion object AuditLogChangeSerializer : KSerializer<AuditLogChangeResponse<*>> {
-        override val descriptor: SerialDescriptor = SerialDescriptor("AuditLogChange") {
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("AuditLogChange") {
             element("key", String.serializer().descriptor)
             element("old_value", JsonElement.serializer().descriptor, isOptional = true)
             element("new_value", JsonElement.serializer().descriptor, isOptional = true)
 
         }
 
-        @UnstableDefault
         override fun deserialize(decoder: Decoder): AuditLogChangeResponse<*> {
             lateinit var key: String
             var new: JsonElement? = null
@@ -57,55 +61,55 @@ sealed class AuditLogChangeResponse<T> {
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
-                        CompositeDecoder.READ_DONE -> break@loop
+                        CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> key = decodeStringElement(descriptor, index)
-                        1 -> old = decodeSerializableElement(descriptor, index, JsonElementSerializer)
-                        2 -> new = decodeSerializableElement(descriptor, index, JsonElementSerializer)
+                        1 -> old = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                        2 -> new = decodeSerializableElement(descriptor, index, JsonElement.serializer())
                     }
                 }
                 endStructure(descriptor)
             }
             return when (key) {
-                "name" -> NameLogChange(old?.primitive?.content, new?.primitive?.content)
-                "icon_hash" -> IconHashLogChange(old?.primitive?.content, new?.primitive?.content)
-                "splash_hash" -> SplashHashLogChange(old?.primitive?.content, new?.primitive?.content)
-                "owner_id" -> OwnerLogChange(old?.primitive?.content, new?.primitive?.content)
-                "region" -> RegionLogChange(old?.primitive?.content, new?.primitive?.content)
-                "afk_channel_id" -> AFKChannelLogChange(old?.primitive?.content, new?.primitive?.content)
-                "vanity_url_code" -> VanityUrlLogChange(old?.primitive?.content, new?.primitive?.content)
-                "widget_channel_id" -> WidgetChannelLogChange(old?.primitive?.content, new?.primitive?.content)
-                "application_id" -> ApplicationLogChange(old?.primitive?.content, new?.primitive?.content)
-                "code" -> CodeLogChange(old?.primitive?.content, new?.primitive?.content)
-                "channel_id" -> ChannelLogChange(old?.primitive?.content, new?.primitive?.content)
-                "inviter_id" -> InviterLogChange(old?.primitive?.content, new?.primitive?.content)
-                "nick" -> NickLogChange(old?.primitive?.content, new?.primitive?.content)
-                "topic" -> TopicLogChange(old?.primitive?.content, new?.primitive?.content)
-                "avatar_hash" -> AvatarHashLogChange(old?.primitive?.content, new?.primitive?.content)
-                "id" -> IdLogChange(old?.primitive?.content, new?.primitive?.content)
+                "name" -> NameLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "icon_hash" -> IconHashLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "splash_hash" -> SplashHashLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "owner_id" -> OwnerLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "region" -> RegionLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "afk_channel_id" -> AFKChannelLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "vanity_url_code" -> VanityUrlLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "widget_channel_id" -> WidgetChannelLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "application_id" -> ApplicationLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "code" -> CodeLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "channel_id" -> ChannelLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "inviter_id" -> InviterLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "nick" -> NickLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "topic" -> TopicLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "avatar_hash" -> AvatarHashLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "id" -> IdLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
 
-                "widget_enabled" -> WidgetEnabledLogChange(old?.primitive?.boolean, new?.primitive?.boolean)
-                "nsfw" -> NSFWLogChange(old?.primitive?.boolean, new?.primitive?.boolean)
-                "hoist" -> HoistLogChange(old?.primitive?.boolean, new?.primitive?.boolean)
-                "mentionable" -> MentionableLogChange(old?.primitive?.boolean, new?.primitive?.boolean)
-                "temporary" -> TemporaryLogChange(old?.primitive?.boolean, new?.primitive?.boolean)
-                "deaf" -> DeafLogChange(old?.primitive?.boolean, new?.primitive?.boolean)
-                "mute" -> MuteLogChange(old?.primitive?.boolean, new?.primitive?.boolean)
+                "widget_enabled" -> WidgetEnabledLogChange(old?.jsonPrimitive?.boolean, new?.jsonPrimitive?.boolean)
+                "nsfw" -> NSFWLogChange(old?.jsonPrimitive?.boolean, new?.jsonPrimitive?.boolean)
+                "hoist" -> HoistLogChange(old?.jsonPrimitive?.boolean, new?.jsonPrimitive?.boolean)
+                "mentionable" -> MentionableLogChange(old?.jsonPrimitive?.boolean, new?.jsonPrimitive?.boolean)
+                "temporary" -> TemporaryLogChange(old?.jsonPrimitive?.boolean, new?.jsonPrimitive?.boolean)
+                "deaf" -> DeafLogChange(old?.jsonPrimitive?.boolean, new?.jsonPrimitive?.boolean)
+                "mute" -> MuteLogChange(old?.jsonPrimitive?.boolean, new?.jsonPrimitive?.boolean)
 
-                "position" -> PositionLogChange(old?.primitive?.int, new?.primitive?.int)
-                "max_uses" -> MaxUsesLogChange(old?.primitive?.int, new?.primitive?.int)
-                "uses" -> UsesLogChange(old?.primitive?.int, new?.primitive?.int)
-                "max_age" -> MaxAgeLogChange(old?.primitive?.int, new?.primitive?.int)
-                "color" -> ColorLogChange(old?.primitive?.int, new?.primitive?.int)
-                "bitrate" -> BitrateLogChange(old?.primitive?.int, new?.primitive?.int)
-                "prune_delete_days" -> PruneDeleteDaysLogChange(old?.primitive?.int, new?.primitive?.int)
-                "afk_timeout" -> AFKTimeoutLogChange(old?.primitive?.int, new?.primitive?.int)
-                "explicit_content_filter" -> ExplicitContentFilterLogChange(old?.primitive?.int, new?.primitive?.int)
-                "default_message_notifications" -> DefaultMessageNotificationLevelLogChange(old?.primitive?.int, new?.primitive?.int)
-                "mfa_level" -> MFALogChange(old?.primitive?.int, new?.primitive?.int)
-                "permissions" -> PermissionsLogChange(old?.primitive?.int, new?.primitive?.int)
-                "allow" -> AllowLogChange(old?.primitive?.int, new?.primitive?.int)
-                "deny" -> DenyLogChange(old?.primitive?.int, new?.primitive?.int)
-                "verification_level" -> VerificationLevelLogChange(old?.primitive?.int, new?.primitive?.int)
+                "position" -> PositionLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "max_uses" -> MaxUsesLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "uses" -> UsesLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "max_age" -> MaxAgeLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "color" -> ColorLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "bitrate" -> BitrateLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "prune_delete_days" -> PruneDeleteDaysLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "afk_timeout" -> AFKTimeoutLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "explicit_content_filter" -> ExplicitContentFilterLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "default_message_notifications" -> DefaultMessageNotificationLevelLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "mfa_level" -> MFALogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "permissions" -> PermissionsLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "allow" -> AllowLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "deny" -> DenyLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "verification_level" -> VerificationLevelLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
 
                 "\$remove" -> AddLogChange(listFromJson(DiscordAuditLogRoleChange.serializer(), old), listFromJson(DiscordAuditLogRoleChange.serializer(), new))
                 "\$add" -> RemoveLogChange(listFromJson(DiscordAuditLogRoleChange.serializer(), old), listFromJson(DiscordAuditLogRoleChange.serializer(), new))
@@ -117,11 +121,15 @@ sealed class AuditLogChangeResponse<T> {
 
         }
 
-        @UnstableDefault
         private fun <T> listFromJson(serializer: KSerializer<T>, element: JsonElement?): List<T>? {
             return if (element != null) {
                 val asListSerializer = ListSerializer(serializer)
-                Json.nonstrict.fromJson(asListSerializer, element)
+                Json {
+                    ignoreUnknownKeys = true
+                    allowStructuredMapKeys = true
+                    allowSpecialFloatingPointValues = true
+                    isLenient = true
+                }.decodeFromJsonElement(asListSerializer, element)
             } else null
         }
     }
@@ -265,7 +273,7 @@ enum class AuditLogEventResponse(val code: Int) {
 
     @Serializer(forClass = AuditLogEventResponse::class)
     companion object AuditLogEventSerializer : KSerializer<AuditLogEventResponse> {
-        override val descriptor: SerialDescriptor = PrimitiveDescriptor("AuditLogEvent", PrimitiveKind.INT)
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("AuditLogEvent", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): AuditLogEventResponse {
             val code = decoder.decodeInt()

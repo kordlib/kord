@@ -1,9 +1,7 @@
 package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.annotation.KordExperimental
-import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.annotation.KordUnsafe
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
@@ -11,7 +9,6 @@ import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.builder.kord.KordRestOnlyBuilder
 import com.gitlab.kordlib.core.cache.data.GuildData
-import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.ApplicationInfo
 import com.gitlab.kordlib.core.entity.Guild
 import com.gitlab.kordlib.core.entity.Region
@@ -46,7 +43,7 @@ class Kord(
         val rest: RestClient,
         val selfId: Snowflake,
         private val eventPublisher: BroadcastChannel<Event>,
-        private val dispatcher: CoroutineDispatcher
+        private val dispatcher: CoroutineDispatcher,
 ) : CoroutineScope {
     private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventPublisher)
 

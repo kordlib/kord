@@ -1,7 +1,11 @@
 package com.gitlab.kordlib.gateway
 
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.IntDescriptor
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlin.RequiresOptIn.*
 
 /**
@@ -219,7 +223,7 @@ data class Intents internal constructor(val code: Int) {
 
 @Serializer(forClass = Intents::class)
 object IntentsSerializer : KSerializer<Intents> {
-    override val descriptor: SerialDescriptor = IntDescriptor
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("intents", PrimitiveKind.INT)
 
     override fun deserialize(decoder: Decoder): Intents {
         val flags = decoder.decodeInt()

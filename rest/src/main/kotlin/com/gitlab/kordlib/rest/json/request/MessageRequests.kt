@@ -1,7 +1,6 @@
 package com.gitlab.kordlib.rest.json.request
 
 import com.gitlab.kordlib.common.entity.Flags
-import kotlinx.io.InputStream
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

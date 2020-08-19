@@ -1,6 +1,6 @@
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
-import org.jetbrains.dokka.gradle.DokkaTask
+//import org.jetbrains.dokka.gradle.DokkaTask
 import org.ajoberstar.gradle.git.publish.GitPublishExtension
 import org.ajoberstar.gradle.git.publish.tasks.GitPublishPush
 
@@ -13,6 +13,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.bintray}")
+        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:${Versions.atomicFu}")
     }
 }
 
@@ -43,6 +44,7 @@ subprojects {
     apply(plugin = "kotlinx-serialization")
     apply(plugin = "com.jfrog.bintray")
     apply(plugin = "maven-publish")
+    apply(plugin = "kotlinx-atomicfu")
 
     repositories {
         mavenCentral()
@@ -56,6 +58,7 @@ subprojects {
         api(Dependencies.jdk8)
         api(Dependencies.`kotlinx-serialization`)
         api(Dependencies.`kotlinx-coroutines`)
+        implementation("org.jetbrains.kotlinx:atomicfu-jvm:${Versions.atomicFu}")
         implementation(Dependencies.`kotlin-logging`)
 
         testImplementation(Dependencies.`kotlin-test`)
@@ -120,37 +123,37 @@ subprojects {
     }
 }
 
-tasks {
-    val dokkaOutputDir = "dokka"
+//tasks {
+//    val dokkaOutputDir = "dokka"
+//
+//    val clean = getByName("clean", Delete::class) {
+//        delete(rootProject.buildDir)
+//        delete(dokkaOutputDir)
+//    }
+//
+//    val dokka by getting(DokkaTask::class) {
+//        dependsOn(clean)
+//        outputDirectory = dokkaOutputDir
+//        outputFormat = "html"
+//        subProjects = listOf("core", "rest", "gateway", "common")
+//    }
+//
+//    val fixIndex by register<DocsTask>("fixIndex") {
+//        dependsOn(dokka)
+//    }
+//
+//    val gitPublishPush by getting(GitPublishPush::class) {
+//        dependsOn(fixIndex)
+//    }
+//}
 
-    val clean = getByName("clean", Delete::class) {
-        delete(rootProject.buildDir)
-        delete(dokkaOutputDir)
-    }
-
-    val dokka by getting(DokkaTask::class) {
-        dependsOn(clean)
-        outputDirectory = dokkaOutputDir
-        outputFormat = "html"
-        subProjects = listOf("core", "rest", "gateway", "common")
-    }
-
-    val fixIndex by register<DocsTask>("fixIndex") {
-        dependsOn(dokka)
-    }
-
-    val gitPublishPush by getting(GitPublishPush::class) {
-        dependsOn(fixIndex)
-    }
-}
-
-configure<GitPublishExtension> {
-    repoUri.set("https://github.com/kordlib/kord.git")
-    branch.set("gh-pages")
-
-    contents {
-        from("dokka")
-    }
-
-    commitMessage.set("Update Docs")
-}
+//configure<GitPublishExtension> {
+//    repoUri.set("https://github.com/kordlib/kord.git")
+//    branch.set("gh-pages")
+//
+//    contents {
+//        from("dokka")
+//    }
+//
+//    commitMessage.set("Update Docs")
+//}

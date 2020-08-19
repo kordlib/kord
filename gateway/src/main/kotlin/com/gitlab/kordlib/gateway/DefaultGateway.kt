@@ -26,6 +26,8 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.parse
+import kotlinx.serialization.stringify
 import mu.KotlinLogging
 import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
@@ -69,6 +71,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override var ping: Duration = Duration.INFINITE
 
+    @OptIn(FlowPreview::class)
     override val events: Flow<Event> = channel.asFlow().drop(1).filterIsInstance()
 
     private lateinit var socket: DefaultClientWebSocketSession
@@ -79,12 +82,13 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private lateinit var inflater: Inflater
 
-    private val jsonParser = Json(JsonConfiguration(
-            isLenient = true,
-            ignoreUnknownKeys = true,
-            serializeSpecialFloatingPointValues = true,
+    private val jsonParser = Json {
+            isLenient = true
+            ignoreUnknownKeys = true
+            allowSpecialFloatingPointValues = true
             useArrayPolymorphism = true
-    ))
+    }
+
     private val stateMutex = Mutex()
 
     init {
@@ -190,7 +194,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
         try {
             defaultGatewayLogger.trace { "Gateway <<< $json" }
-            jsonParser.parse(Event.Companion, json)?.let { channel.send(it) }
+            jsonParser.decodeFromString(Event.Companion, json)?.let { channel.send(it) }
         } catch (exception: Exception) {
             defaultGatewayLogger.error(exception)
         }
@@ -267,11 +271,11 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun sendUnsafe(command: Command) {
         data.sendRateLimiter.consume()
-        val json = Json.stringify(Command.Companion, command)
+        val json = Json.encodeToString(Command.Companion, command)
         if (command is Identify) {
             defaultGatewayLogger.trace {
                 val copy = command.copy(token = "token")
-                "Gateway >>> ${Json.stringify(Command.Companion, copy)}"
+                "Gateway >>> ${Json.encodeToString(Command.Companion, copy)}"
             }
         }
         else defaultGatewayLogger.trace { "Gateway >>> $json" }

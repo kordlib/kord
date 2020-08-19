@@ -4,6 +4,7 @@ import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.HeartbeatACK
 import com.gitlab.kordlib.gateway.Reconnect
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 
 private fun file(name: String): String {
@@ -14,7 +15,7 @@ private fun file(name: String): String {
 class RegressionTests {
     @Test
     fun `Resume command serialization`() {
-        val event = Json.parse(Event.Companion, file("eventWithDataThatShouldNotHaveData"))
+        val event = Json.decodeFromString(Event.Companion, file("eventWithDataThatShouldNotHaveData"))
         event shouldBe Reconnect
     }
 

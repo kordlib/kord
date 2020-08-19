@@ -1,6 +1,11 @@
 package com.gitlab.kordlib.gateway
 
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable(with = OpCode.OpCodeSerializer::class)
@@ -22,7 +27,7 @@ enum class OpCode(val code: Int) {
     @Serializer(forClass = OpCode::class)
     companion object OpCodeSerializer : KSerializer<OpCode> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("op", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("op", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): OpCode {
             val code = decoder.decodeInt()

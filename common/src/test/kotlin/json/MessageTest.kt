@@ -18,7 +18,7 @@ class MessageTest {
 
     @Test
     fun `Message serialization`() {
-        val message: DiscordMessage = Json.parse(DiscordMessage.serializer(), file("message"))
+        val message: DiscordMessage = Json.decodeFromString(DiscordMessage.serializer(), file("message"))
 
         with(message) {
             reactions!!.size shouldBe 1
@@ -56,7 +56,7 @@ class MessageTest {
 
 @Test
 fun `User serialization`() {
-    val message = Json.parse(DiscordMessage.serializer(), file("crossposted"))
+    val message = Json.decodeFromString(DiscordMessage.serializer(), file("crossposted"))
 
     with(message) {
         reactions!!.size shouldBe 1

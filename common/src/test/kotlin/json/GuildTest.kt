@@ -16,7 +16,7 @@ class GuildTest {
 
     @Test
     fun `Guild serialization`() {
-        val guild = Json.parse(DiscordGuild.serializer(), file("guild"))
+        val guild = Json.decodeFromString(DiscordGuild.serializer(), file("guild"))
 
         with(guild) {
             id shouldBe "41771983423143937"
@@ -47,7 +47,7 @@ class GuildTest {
 
 @Test
 fun `UnavailableGuild serialization`() {
-    val guild = Json.parse(DiscordUnavailableGuild.serializer(), file("unavailableguild"))
+    val guild = Json.decodeFromString(DiscordUnavailableGuild.serializer(), file("unavailableguild"))
 
     with(guild) {
         id shouldBe "41771983423143937"
@@ -59,7 +59,7 @@ fun `UnavailableGuild serialization`() {
 
 @Test
 fun `GuildMember serialization`() {
-    val member = Json.parse(DiscordGuildMember.serializer(), file("guildmember"))
+    val member = Json.decodeFromString(DiscordGuildMember.serializer(), file("guildmember"))
 
     with(member) {
         nick shouldBe "NOT API SUPPORT"
@@ -73,7 +73,7 @@ fun `GuildMember serialization`() {
 
 @Test
 fun `PartialGuild serialization`() {
-    val guild = Json.parse(DiscordPartialGuild.serializer(), file("partialguild"))
+    val guild = Json.decodeFromString(DiscordPartialGuild.serializer(), file("partialguild"))
 
     with(guild) {
         id shouldBe "80351110224678912"

@@ -16,7 +16,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         freeCompilerArgs = listOf(
                 CompilerArguments.inlineClasses,
                 CompilerArguments.coroutines,
-                CompilerArguments.time
+                CompilerArguments.time,
+                CompilerArguments.optIn
         )
     }
 }

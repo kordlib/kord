@@ -1,6 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
@@ -69,7 +74,7 @@ data class UserFlags constructor(val code: Int) {
             return UserFlagsBuilder().apply(builder).flags()
         }
 
-        override val descriptor: SerialDescriptor = IntDescriptor
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("userFlag", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): UserFlags {
             val flags = decoder.decodeInt()
@@ -122,15 +127,15 @@ enum class Premium(val code: Int) {
     @Serializer(forClass = Premium::class)
     companion object PremiumSerializer : KSerializer<Premium> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("premium_type", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("premium_type", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): Premium {
             val code = decoder.decodeInt()
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: Premium) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: Premium) {
+            encoder.encodeInt(value.code)
         }
     }
 }

@@ -6,20 +6,18 @@ import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.gateway.*
 import com.gitlab.kordlib.gateway.retry.LinearRetry
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.features.websocket.WebSockets
-import io.ktor.util.KtorExperimentalAPI
+import io.ktor.client.features.json.serializer.*
+import io.ktor.client.features.websocket.*
+import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.Duration
@@ -28,7 +26,6 @@ import kotlin.time.seconds
 import kotlin.time.toKotlinDuration
 
 @FlowPreview
-@UnstableDefault
 @KtorExperimentalAPI
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
@@ -43,7 +40,7 @@ class DefaultGatewayTest {
             client = HttpClient(CIO) {
                 install(WebSockets)
                 install(JsonFeature) {
-                    serializer = KotlinxSerializer(Json(JsonConfiguration.Default))
+                    serializer = KotlinxSerializer(Json)
                 }
             }
 
@@ -60,7 +57,7 @@ class DefaultGatewayTest {
                 "!status" -> when (words.getOrNull(1)) {
                     "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Kord", ActivityType.Game)))
                 }
-                "!ping" ->  gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Ping is ${gateway.ping.toLongMilliseconds()}", ActivityType.Game)))
+                "!ping" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Ping is ${gateway.ping.toLongMilliseconds()}", ActivityType.Game)))
             }
         }.launchIn(GlobalScope)
 

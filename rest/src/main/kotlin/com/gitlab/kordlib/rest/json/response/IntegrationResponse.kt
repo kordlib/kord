@@ -2,6 +2,11 @@ package com.gitlab.kordlib.rest.json.response
 
 import com.gitlab.kordlib.common.entity.DiscordUser
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class IntegrationResponse(
@@ -31,7 +36,7 @@ enum class IntegrationExpireBehavior(val code: Int) {
 
     companion object Serializer : KSerializer<IntegrationExpireBehavior> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("expire_behavior", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("expire_behavior", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): IntegrationExpireBehavior {
             val code = decoder.decodeInt()

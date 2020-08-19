@@ -1,6 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
@@ -130,7 +135,7 @@ data class Flags internal constructor(val code: Int) {
             return FlagsBuilder().apply(builder).flags()
         }
 
-        override val descriptor: SerialDescriptor = IntDescriptor
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("flags", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): Flags {
             val flags = decoder.decodeInt()
@@ -317,7 +322,7 @@ enum class MessageType(val code: Int) {
     companion object MessageTypeSerializer : KSerializer<MessageType> {
 
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("type", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): MessageType {
             val code = decoder.decodeInt()

@@ -16,7 +16,7 @@ class EmojiTest {
 
     @Test
     fun `Emoji serialization`() {
-        val emoji = Json.parse(DiscordEmoji.serializer(), file("customemoji"))
+        val emoji = Json.decodeFromString(DiscordEmoji.serializer(), file("customemoji"))
 
         with(emoji) {
             id shouldBe "41771983429993937"
@@ -28,7 +28,7 @@ class EmojiTest {
 
 @Test
 fun `Standard Emoji serialization`() {
-    val emoji = Json.parse(DiscordEmoji.serializer(), file("standardemoji"))
+    val emoji = Json.decodeFromString(DiscordEmoji.serializer(), file("standardemoji"))
 
     with(emoji) {
         id shouldBe null
@@ -40,7 +40,7 @@ fun `Standard Emoji serialization`() {
 
 @Test
 fun `Emoji serialization`() {
-    val emoji = Json.parse(DiscordEmoji.serializer(), file("emoji"))
+    val emoji = Json.decodeFromString(DiscordEmoji.serializer(), file("emoji"))
 
     with(emoji) {
         id shouldBe "41771983429993937"

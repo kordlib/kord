@@ -17,7 +17,7 @@ tasks.withType<KotlinCompile> {
                 CompilerArguments.inlineClasses,
                 CompilerArguments.coroutines,
                 CompilerArguments.time,
-                CompilerArguments.unstableDefault
+                CompilerArguments.optIn
         )
     }
 }

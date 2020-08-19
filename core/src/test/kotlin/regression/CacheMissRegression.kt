@@ -19,14 +19,12 @@ import com.gitlab.kordlib.rest.request.Request
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 import com.gitlab.kordlib.rest.service.RestClient
-import io.ktor.client.HttpClient
-import io.ktor.client.request.forms.MultiPartFormDataContent
-import io.ktor.client.request.request
-import io.ktor.client.statement.HttpStatement
-import io.ktor.client.statement.readText
-import io.ktor.content.TextContent
-import io.ktor.http.ContentType
-import io.ktor.http.takeFrom
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.content.*
+import io.ktor.http.*
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -37,7 +35,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
@@ -46,7 +43,12 @@ import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 
-private val parser = Json(JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true))
+private val parser = Json {
+    encodeDefaults = false
+    allowStructuredMapKeys = true
+    ignoreUnknownKeys = true
+    isLenient = true
+}
 
 object FakeGateway : Gateway {
 
@@ -89,12 +91,12 @@ class CrashingHandler(val client: HttpClient) : RequestHandler {
             request.body?.let {
                 when (request) {
                     is MultipartRequest<*, *> -> {
-                        headers.append("payload_json", parser.stringify(it.strategy as SerializationStrategy<Any>, it.body))
+                        headers.append("payload_json", parser.encodeToString(it.strategy as SerializationStrategy<Any>, it.body))
                         this.body = MultiPartFormDataContent(request.data)
                     }
 
                     is JsonRequest<*, *> -> {
-                        val json = parser.stringify(it.strategy as SerializationStrategy<Any>, it.body)
+                        val json = parser.encodeToString(it.strategy as SerializationStrategy<Any>, it.body)
                         this.body = TextContent(json, ContentType.Application.Json)
                     }
                 }
@@ -103,7 +105,7 @@ class CrashingHandler(val client: HttpClient) : RequestHandler {
 
         }.execute()
 
-        return parser.parse(request.route.strategy, response.readText())
+        return parser.decodeFromString(request.route.strategy, response.readText())
 
 
     }

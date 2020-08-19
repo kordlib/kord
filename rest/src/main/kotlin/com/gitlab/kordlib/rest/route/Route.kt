@@ -8,6 +8,10 @@ import io.ktor.http.HttpMethod
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.StructureKind
+import kotlinx.serialization.descriptors.buildSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
 import com.gitlab.kordlib.common.entity.DiscordEmoji as EmojiEntity
 
 internal const val REST_VERSION_PROPERTY_NAME = "com.gitlab.kordlib.rest.version"
@@ -346,8 +350,9 @@ sealed class Route<T>(
 }
 
 internal object NoStrategy : DeserializationStrategy<Unit> {
+    @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
     override val descriptor: SerialDescriptor
-        get() = SerialDescriptor("NoStrategy", StructureKind.OBJECT)
+        get() = buildSerialDescriptor("NoStrategy", StructureKind.OBJECT) {}
 
     override fun deserialize(decoder: Decoder) {}
 

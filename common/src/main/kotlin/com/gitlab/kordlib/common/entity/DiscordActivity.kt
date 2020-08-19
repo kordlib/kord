@@ -1,7 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.IntDescriptor
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class DiscordActivity(
@@ -65,15 +69,15 @@ enum class ActivityType(val code: Int) {
     @Serializer(forClass = ActivityType::class)
     companion object ActivityTypeSerializer : KSerializer<ActivityType> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("op", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("op", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ActivityType {
             val code = decoder.decodeInt()
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: ActivityType) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: ActivityType) {
+            encoder.encodeInt(value.code)
         }
     }
 

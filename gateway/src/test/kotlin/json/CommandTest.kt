@@ -16,15 +16,15 @@ class CommandTest {
         val sessionId = "session"
         val sequence = 1337
 
-        val resume = Json.stringify(Command.Companion, Resume(token, sessionId, sequence))
+        val resume = Json.encodeToString(Command.Companion, Resume(token, sessionId, sequence))
 
-        val json = Json.stringify(JsonObject.serializer(), json {
-            "op" to OpCode.Resume.code
-            "d" to json {
-                "token" to token
-                "session_id" to sessionId
-                "seq" to sequence
-            }
+        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+            put("op", OpCode.Resume.code)
+            put("d", buildJsonObject {
+                put("token", token)
+                put("session_id", sessionId)
+                put("seq", sequence)
+            })
         })
 
         assertEquals(json, resume)
@@ -35,11 +35,11 @@ class CommandTest {
     fun `Heartbeat command serialization`() {
         val interval = 1337
 
-        val heartbeat = Json.stringify(Command.Companion, Command.Heartbeat(interval))
+        val heartbeat = Json.encodeToString(Command.Companion, Command.Heartbeat(interval))
 
-        val json = Json.stringify(JsonObject.serializer(), json {
-            "op" to OpCode.Heartbeat.code
-            "d" to interval
+        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+            put("op", OpCode.Heartbeat.code)
+            put("d", interval)
         })
 
         assertEquals(json, heartbeat)
@@ -52,19 +52,19 @@ class CommandTest {
         val query = "test"
         val limit = 1337
 
-        val request = Json.stringify(Command.Companion, RequestGuildMembers(listOf(guildId), query, limit))
+        val request = Json.encodeToString(Command.Companion, RequestGuildMembers(listOf(guildId), query, limit))
 
-        val json = Json.stringify(JsonObject.serializer(), json {
-            "op" to OpCode.RequestGuildMembers.code
-            "d" to json {
-                "guild_id" to jsonArray {
-                    +guildId
-                }
-                "query" to query
-                "limit" to limit
-                "presences" to null as Int?
-                "user_ids" to null as Int?
-            }
+        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+            put("op", OpCode.RequestGuildMembers.code)
+            put("d", buildJsonObject {
+                put("guild_id", buildJsonArray {
+                    add(guildId)
+                })
+                put("query", query)
+                put("limit", limit)
+                put("presences", null as Int?)
+                put("user_ids", null as Int?)
+            })
         })
 
         assertEquals(json, request)
@@ -78,16 +78,16 @@ class CommandTest {
         val selfMute = true
         val selfDeaf = false
 
-        val status = Json.stringify(Command.Companion, UpdateVoiceStatus(guildId, channelId, selfMute, selfDeaf))
+        val status = Json.encodeToString(Command.Companion, UpdateVoiceStatus(guildId, channelId, selfMute, selfDeaf))
 
-        val json = Json.stringify(JsonObject.serializer(), json {
-            "op" to OpCode.VoiceStateUpdate.code
-            "d" to json {
-                "guild_id" to guildId
-                "channel_id" to channelId
-                "self_mute" to selfMute
-                "self_deaf" to selfDeaf
-            }
+        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+            put("op", OpCode.VoiceStateUpdate.code)
+            put("d", buildJsonObject {
+                put("guild_id", guildId)
+                put("channel_id", channelId)
+                put("self_mute", selfMute)
+                put("self_deaf", selfDeaf)
+            })
         })
 
         assertEquals(json, status)
@@ -101,16 +101,16 @@ class CommandTest {
         val status = Status.Online
         val afk = false
 
-        val updateStatus = Json.stringify(Command.Companion, UpdateStatus(since, game, status, afk))
+        val updateStatus = Json.encodeToString(Command.Companion, UpdateStatus(since, game, status, afk))
 
-        val json = Json.stringify(JsonObject.serializer(), json {
-            "op" to OpCode.StatusUpdate.code
-            "d" to json {
-                "since" to since
-                "game" to null as String?
-                "status" to status.name.toLowerCase()
-                "afk" to afk
-            }
+        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+            put("op", OpCode.StatusUpdate.code)
+            put("d", buildJsonObject {
+                put("since", since)
+                put("game", null as String?)
+                put("status", status.name.toLowerCase())
+                put("afk", afk)
+            })
         })
 
         assertEquals(json, updateStatus)
@@ -127,26 +127,26 @@ class CommandTest {
         val shard = DiscordShard(0, 1)
         val presence = null
 
-        val identify = Json.stringify(Command.Companion, Identify(token, properties, compress, largeThreshold, shard, presence, Intents.all))
+        val identify = Json.encodeToString(Command.Companion, Identify(token, properties, compress, largeThreshold, shard, presence, Intents.all))
 
-        val json = Json.stringify(JsonObject.serializer(), json {
-            "op" to OpCode.Identify.code
-            "d" to json {
-                "token" to token
-                "properties" to json {
-                    "\$os" to "os"
-                    "\$browser" to "browser"
-                    "\$device" to "device"
-                }
-                "compress" to compress
-                "large_threshold" to largeThreshold
-                "shard" to jsonArray {
-                    +JsonLiteral(0)
-                    +JsonLiteral(1)
-                }
-                "presence" to null as String?
-                "intents" to Intents.all.code
-            }
+        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+            put("op", OpCode.Identify.code)
+            put("d", buildJsonObject {
+                put("token", token)
+                put("properties", buildJsonObject {
+                    put("\$os", "os")
+                    put("\$browser", "browser")
+                    put("\$device", "device")
+                })
+                put("compress", compress)
+                put("large_threshold", largeThreshold)
+                put("shard", buildJsonArray {
+                    add(JsonPrimitive(0))
+                    add(JsonPrimitive(1))
+                })
+                put("presence", null as String?)
+                put("intents", Intents.all.code)
+            })
         })
 
         assertEquals(json, identify)

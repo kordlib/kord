@@ -12,8 +12,8 @@ private val linearRetryLogger = KotlinLogging.logger { }
 /**
  * A Retry that linearly increases the delay time between a given minimum and maximum over a given amount of tries.
  *
- * @param firstBackoffMillis the initial delay for a [retry] invocation.
- * @param maxBackoffMillis the maximum delay for a [retry] invocation.
+ * @param firstBackoff the initial delay for a [retry] invocation.
+ * @param maxBackoff the maximum delay for a [retry] invocation.
  * @param maxTries the maximum amount of consecutive retries before [hasNext] returns false.
  */
 class LinearRetry constructor(
@@ -32,7 +32,7 @@ class LinearRetry constructor(
         require(maxTries > 0) { "maxTries needs to be positive but was $maxTries" }
     }
 
-    private var tries = atomic(0)
+    private val tries = atomic(0)
 
     override val hasNext: Boolean
         get() = tries.value < maxTries

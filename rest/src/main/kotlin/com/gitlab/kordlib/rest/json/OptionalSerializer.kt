@@ -1,6 +1,9 @@
 package com.gitlab.kordlib.rest.json
 
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 /**
  * This is a very stupid serializer and you should feel ashamed for calling this.
@@ -12,6 +15,7 @@ import kotlinx.serialization.*
  * swallow any exceptions while doing so, returning null instead. This is incredibly bad because we won't propagate any
  * actual bugs.
  */
+@OptIn(ExperimentalSerializationApi::class)
 internal val <T> KSerializer<T>.optional: KSerializer<T?>
     get() = object: KSerializer<T?> {
 
@@ -19,13 +23,13 @@ internal val <T> KSerializer<T>.optional: KSerializer<T?>
             get() = this@optional.descriptor
 
         override fun deserialize(decoder: Decoder): T? = try {
-            decoder.decode(this@optional)
+            decoder.decodeSerializableValue(this@optional)
         } catch (e :Exception) {
             null
         }
 
         override fun serialize(encoder: Encoder, value: T?) {
             if (value == null) return encoder.encodeNull()
-            else encoder.encode(this@optional, value)
+            else encoder.encodeSerializableValue<T>(this@optional, value)
         }
     }

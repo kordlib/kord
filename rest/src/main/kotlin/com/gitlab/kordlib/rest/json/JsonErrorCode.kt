@@ -1,6 +1,10 @@
 package com.gitlab.kordlib.rest.json
 
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 /**
  * Detailed error codes sent Discord API  in the JSON error response.
@@ -420,7 +424,7 @@ enum class JsonErrorCode(val code: Int) {
 
     @Serializer(forClass = JsonErrorCode::class)
     companion object JsonErrorCodeSerializer : KSerializer<JsonErrorCode>  {
-        override val descriptor = PrimitiveDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)
+        override val descriptor = PrimitiveSerialDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)
 
 
         override fun deserialize(decoder: Decoder): JsonErrorCode {
@@ -429,7 +433,7 @@ enum class JsonErrorCode(val code: Int) {
         }
 
         override fun serialize(encoder: Encoder, value: JsonErrorCode) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            encoder.encodeInt(value.code)
         }
     }
 

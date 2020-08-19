@@ -33,7 +33,8 @@ tasks.withType<KotlinCompile> {
                 CompilerArguments.inlineClasses,
                 CompilerArguments.coroutines,
                 CompilerArguments.time,
-                CompilerArguments.stdLib
+                CompilerArguments.stdLib,
+                CompilerArguments.optIn
         )
     }
 }

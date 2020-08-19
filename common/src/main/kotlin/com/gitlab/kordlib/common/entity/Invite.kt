@@ -1,6 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = TargetUserType.TargetUserTypeSerializer::class)
 enum class TargetUserType(val code: Int) {
@@ -10,7 +15,7 @@ enum class TargetUserType(val code: Int) {
 
     @Serializer(forClass = TargetUserType::class)
     companion object TargetUserTypeSerializer : KSerializer<TargetUserType> {
-        override val descriptor: SerialDescriptor = PrimitiveDescriptor("TargetUserType", PrimitiveKind.INT)
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("TargetUserType", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): TargetUserType {
             val code = decoder.decodeInt()
@@ -18,8 +23,8 @@ enum class TargetUserType(val code: Int) {
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: TargetUserType) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: TargetUserType) {
+            encoder.encodeInt(value.code)
         }
     }
 

@@ -3,7 +3,6 @@ package com.gitlab.kordlib.rest.request
 import com.gitlab.kordlib.rest.route.Route
 import io.ktor.http.HeadersBuilder
 import io.ktor.http.ParametersBuilder
-import kotlinx.io.InputStream
 import kotlinx.serialization.SerializationStrategy
 
 class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {

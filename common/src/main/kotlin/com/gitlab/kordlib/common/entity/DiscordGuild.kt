@@ -1,6 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.internal.IntDescriptor
 import kotlinx.serialization.internal.StringDescriptor
 
@@ -123,7 +128,7 @@ enum class GuildFeature(val value: String) {
     @Serializer(forClass = GuildFeature::class)
     companion object : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("feature", PrimitiveKind.STRING)
+            get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
 
         override fun deserialize(decoder: Decoder): GuildFeature {
             val name = decoder.decodeString()
@@ -147,7 +152,7 @@ class SystemChannelFlags constructor(val code: Int) {
     companion object : KSerializer<SystemChannelFlags> {
 
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("system_channel_flags", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("system_channel_flags", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): SystemChannelFlags {
             return SystemChannelFlags(decoder.decodeInt())
@@ -245,7 +250,7 @@ enum class PremiumTier(val level: Int) {
     @Serializer(forClass = PremiumTier::class)
     companion object PremiumTierSerializer : KSerializer<PremiumTier> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("premium_tier", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("premium_tier", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): PremiumTier {
             val level = decoder.decodeInt()
@@ -269,7 +274,7 @@ enum class DefaultMessageNotificationLevel(val code: Int) {
     @Serializer(forClass = DefaultMessageNotificationLevel::class)
     companion object DefaultMessageNotificationLevelSerializer : KSerializer<DefaultMessageNotificationLevel> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("default_message_notifications", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("default_message_notifications", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel {
             val code = decoder.decodeInt()
@@ -295,7 +300,7 @@ enum class ExplicitContentFilter(val code: Int) {
     companion object ExplicitContentFilterSerializer : KSerializer<ExplicitContentFilter> {
 
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("explicit_content_filter", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("explicit_content_filter", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ExplicitContentFilter {
             val code = decoder.decodeInt()
@@ -320,7 +325,7 @@ enum class MFALevel(val code: Int) {
     object MFALevelSerializer : KSerializer<MFALevel> {
 
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("mfa_level", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("mfa_level", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): MFALevel {
             val code = decoder.decodeInt()
@@ -348,7 +353,7 @@ enum class VerificationLevel(val code: Int) {
     companion object VerificationLevelSerializer : KSerializer<VerificationLevel> {
 
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("verification_level", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("verification_level", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): VerificationLevel {
             val code = decoder.decodeInt()

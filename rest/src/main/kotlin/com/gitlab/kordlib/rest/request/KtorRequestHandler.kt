@@ -13,11 +13,17 @@ import io.ktor.client.statement.readText
 import io.ktor.content.TextContent
 import io.ktor.http.takeFrom
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
+import kotlinx.serialization.parse
+import kotlinx.serialization.stringify
 import mu.KotlinLogging
 import java.time.Clock
 
-internal val jsonConfig = JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true)
+internal val jsonDefault = Json {
+    encodeDefaults = false
+    allowStructuredMapKeys = true
+    ignoreUnknownKeys = true
+    isLenient = true
+}
 
 /**
  * A [RequestHandler] that uses ktor's [HttpClient][client] to execute requests and accepts a [requestRateLimiter]
@@ -32,7 +38,7 @@ class KtorRequestHandler(
         private val client: HttpClient,
         private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
         private val clock: Clock = Clock.systemUTC(),
-        private val parser: Json = Json(jsonConfig)
+        private val parser: Json = jsonDefault
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
 
@@ -49,7 +55,7 @@ class KtorRequestHandler(
         return when {
             response.isRateLimit -> handle(request)
             response.isError -> throw KtorRequestException(response, response.errorString())
-            else -> parser.parse(request.route.strategy, response.readText())
+            else -> parser.decodeFromString(request.route.strategy, response.readText())
         }
     }
 
@@ -67,12 +73,12 @@ class KtorRequestHandler(
         request.body?.let {
             when (request) {
                 is MultipartRequest<*, *> -> {
-                    headers.append("payload_json", parser.stringify(it.strategy, it.body))
+                    headers.append("payload_json", parser.encodeToString(it.strategy, it.body))
                     this.body = MultiPartFormDataContent(request.data)
                 }
 
                 is JsonRequest<*, *> -> {
-                    val json = parser.stringify(it.strategy, it.body)
+                    val json = parser.encodeToString(it.strategy, it.body)
                     this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
                 }
             }
@@ -85,7 +91,7 @@ class KtorRequestHandler(
                 token: String,
                 requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
                 clock: Clock = Clock.systemUTC(),
-                parser: Json = Json(jsonConfig)
+                parser: Json = jsonDefault
         ): KtorRequestHandler {
             val client = HttpClient(CIO) {
                 expectSuccess = false

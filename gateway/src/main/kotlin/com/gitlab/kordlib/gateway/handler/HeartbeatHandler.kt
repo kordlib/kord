@@ -37,12 +37,12 @@ internal class HeartbeatHandler(
                 }
             }
 
-            timestamp = MonoClock.markNow()
+            timestamp = TimeSource.Monotonic.markNow()
             send(Command.Heartbeat(sequence.value))
         }
 
         on<Heartbeat> {
-            timestamp = MonoClock.markNow()
+            timestamp = TimeSource.Monotonic.markNow()
             send(Command.Heartbeat(sequence.value))
         }
 

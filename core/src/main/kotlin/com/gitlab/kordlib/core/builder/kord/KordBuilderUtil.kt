@@ -9,7 +9,6 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.request.header
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import java.util.*
@@ -29,15 +28,12 @@ internal fun HttpClient?.configure(token: String): HttpClient {
         defaultConfig(token)
     }
 
-    @OptIn(UnstableDefault::class)
-    val jsonConfig = JsonConfiguration(
-            encodeDefaults = false,
-            allowStructuredMapKeys = true,
-            ignoreUnknownKeys = true,
-            isLenient = true
-    )
-
-    val json = Json(jsonConfig)
+    val json = Json {
+        encodeDefaults = false
+        allowStructuredMapKeys = true
+        ignoreUnknownKeys = true
+        isLenient = true
+    }
 
     return HttpClient(CIO) {
         defaultConfig(token)

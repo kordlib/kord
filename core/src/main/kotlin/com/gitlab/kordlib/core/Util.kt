@@ -18,7 +18,6 @@ import com.gitlab.kordlib.gateway.MessageDelete
 import com.gitlab.kordlib.gateway.PrivilegedIntent
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.route.Position
-import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -95,9 +94,13 @@ internal fun <T> Flow<T>.switchIfEmpty(flow: Flow<T>): Flow<T> = flow {
  * and then cancels flow's collection.
  * Returns `null` if the flow was empty or no element matched the [predicate].
  */
-internal suspend inline fun <T> Flow<T>.indexOfFirstOrNull(crossinline predicate: suspend (T) -> Boolean): Int? {
-    val counter = atomic(0)
-    return map { counter.getAndIncrement() to it }
+internal suspend fun <T> Flow<T>.indexOfFirstOrNull(predicate: suspend (T) -> Boolean): Int? {
+    var counter = 0
+    return map {
+        val pair = counter to it
+        counter += 1
+        pair
+    }
             .filter { predicate(it.second) }
             .take(1)
             .singleOrNull()?.first
@@ -109,7 +112,7 @@ internal fun <C : Collection<T>, T> paginate(
         idSelector: (T) -> String,
         itemSelector: (Collection<T>) -> T?,
         directionSelector: (String) -> Position,
-        request: suspend (position: Position) -> C
+        request: suspend (position: Position) -> C,
 ): Flow<T> = flow {
     var position = directionSelector(start)
     var size = batchSize
@@ -221,7 +224,7 @@ fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>) = when (event) 
     TextChannelDeleteEvent::class,
     VoiceChannelDeleteEvent::class,
 
-    ChannelPinsUpdateEvent::class
+    ChannelPinsUpdateEvent::class,
     -> {
         +Guilds
         +DirectMessages

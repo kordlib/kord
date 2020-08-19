@@ -16,7 +16,7 @@ class UserTest {
 
     @Test
     fun `User serialization`() {
-        val user = Json.parse(DiscordUser.serializer(), file("user"))
+        val user = Json.decodeFromString(DiscordUser.serializer(), file("user"))
 
         with(user) {
             id shouldBe "80351110224678912"

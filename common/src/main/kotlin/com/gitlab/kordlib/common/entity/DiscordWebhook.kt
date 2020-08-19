@@ -1,6 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
@@ -27,7 +32,7 @@ enum class WebhookType(val code: Int) {
     companion object WebhookTypeSerializer : KSerializer<WebhookType> {
 
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("type", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): WebhookType {
             val code = decoder.decodeInt()

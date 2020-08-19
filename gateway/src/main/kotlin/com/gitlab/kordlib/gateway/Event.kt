@@ -4,7 +4,13 @@ import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.json.JsonElementSerializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.encoding.CompositeDecoder
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
 
@@ -16,8 +22,9 @@ sealed class DispatchEvent : Event() {
 
 private object NullDecoder : DeserializationStrategy<Nothing?> {
     override val descriptor: SerialDescriptor
-        get() = PrimitiveDescriptor("null", PrimitiveKind.STRING)
+        get() = PrimitiveSerialDescriptor("null", PrimitiveKind.STRING)
 
+    @OptIn(ExperimentalSerializationApi::class)
     override fun deserialize(decoder: Decoder): Nothing? {
         return decoder.decodeNull()
     }
@@ -27,13 +34,14 @@ private object NullDecoder : DeserializationStrategy<Nothing?> {
 
 sealed class Event {
     companion object : DeserializationStrategy<Event?> {
-        override val descriptor: SerialDescriptor = SerialDescriptor("Event") {
-                element("op", OpCode.descriptor)
-                element("t", String.serializer().descriptor, isOptional = true)
-                element("s", Int.serializer().descriptor, isOptional =  true)
-                element("d", JsonObject.serializer().descriptor,  isOptional = true)
-            }
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
+            element("op", OpCode.descriptor)
+            element("t", String.serializer().descriptor, isOptional = true)
+            element("s", Int.serializer().descriptor, isOptional = true)
+            element("d", JsonObject.serializer().descriptor, isOptional = true)
+        }
 
+        @OptIn(ExperimentalSerializationApi::class)
         override fun deserialize(decoder: Decoder): Event? {
             var op: OpCode? = null
             var data: Event? = null
@@ -42,7 +50,7 @@ sealed class Event {
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
                     when (val index = decodeElementIndex(descriptor)) {//we assume the all fields to be present *before* the data field
-                        CompositeDecoder.READ_DONE -> break@loop
+                        CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> {
                             op = OpCode.deserialize(decoder)
                             @Suppress("NON_EXHAUSTIVE_WHEN")
@@ -64,11 +72,10 @@ sealed class Event {
                             OpCode.Hello -> decodeSerializableElement(descriptor, index, Hello.serializer())
                             //some events contain undocumented data fields, we'll only assume an unknown opcode with no data to be an error
                             else -> if(data == null) {
-                                val element = decodeNullableSerializableElement(descriptor, index, JsonElementSerializer.nullable)
+                                val element = decodeNullableSerializableElement(descriptor, index, JsonElement.serializer().nullable)
                                 error("Unknown 'd' field for Op code ${op?.code}: $element")
                             } else {
-                                val element = decodeNullableSerializableElement(descriptor, index, JsonElementSerializer.nullable)
-                                // jsonLogger.warn { "Ignored unexpected 'd' field for Op code ${op?.code}: $element" }
+                                decodeNullableSerializableElement(descriptor, index, JsonElement.serializer().nullable)
                                 data
                             }
                         }
@@ -123,7 +130,7 @@ sealed class Event {
             else -> {
                 jsonLogger.warn { "unknown gateway event name $name" }
                 // consume json elements that are unknown to us
-                decoder.decodeSerializableElement(descriptor, index, JsonElementSerializer.nullable)
+                decoder.decodeSerializableElement(descriptor, index, JsonElement.serializer().nullable)
                 null
             }
         }
@@ -213,7 +220,7 @@ data class Heartbeat(val data: Long) : Event() {
     @Serializer(Heartbeat::class)
     companion object : DeserializationStrategy<Heartbeat> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
+            get() = PrimitiveSerialDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
 
         override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
     }
@@ -230,7 +237,7 @@ data class ResumedData(
     @Serializer(Heartbeat::class)
     companion object : DeserializationStrategy<Heartbeat> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
+            get() = PrimitiveSerialDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
 
         override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
     }
@@ -242,7 +249,7 @@ data class InvalidSession(val resumable: Boolean) : Event() {
     @Serializer(InvalidSession::class)
     companion object : DeserializationStrategy<InvalidSession> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("InvalidSession", PrimitiveKind.BOOLEAN)
+            get() = PrimitiveSerialDescriptor("InvalidSession", PrimitiveKind.BOOLEAN)
 
         override fun deserialize(decoder: Decoder) = InvalidSession(decoder.decodeBoolean())
     }

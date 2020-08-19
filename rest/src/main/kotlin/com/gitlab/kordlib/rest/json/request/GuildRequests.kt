@@ -3,6 +3,10 @@ package com.gitlab.kordlib.rest.json.request
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.StructureKind
+import kotlinx.serialization.descriptors.buildSerialDescriptor
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class GuildCreateRequest(
@@ -46,11 +50,12 @@ data class GuildCreateChannelRequest(
 data class GuildChannelPositionModifyRequest(val swaps: List<Pair<String, Int>>) {
 
     companion object Serializer : SerializationStrategy<GuildChannelPositionModifyRequest> {
+        @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
         override val descriptor: SerialDescriptor
-            get() = SerialDescriptor("GuildChannelPosition", StructureKind.LIST)
+            get() = buildSerialDescriptor("GuildChannelPosition", StructureKind.LIST)
 
-        override fun serialize(encoder: Encoder, obj: GuildChannelPositionModifyRequest) {
-            val positions = obj.swaps.map { ChannelPosition(it.first, it.second) }
+        override fun serialize(encoder: Encoder, value: GuildChannelPositionModifyRequest) {
+            val positions = value.swaps.map { ChannelPosition(it.first, it.second) }
             ListSerializer(ChannelPosition.serializer()).serialize(encoder, positions)
         }
 
@@ -101,8 +106,9 @@ data class GuildRoleCreateRequest(
 data class GuildRolePositionModifyRequest(val swaps: List<Pair<String, Int>>) {
 
     companion object Serializer : SerializationStrategy<GuildRolePositionModifyRequest> {
+        @OptIn(ExperimentalSerializationApi::class, InternalSerializationApi::class)
         override val descriptor: SerialDescriptor
-            get() = SerialDescriptor("GuildRolePosition", StructureKind.LIST)
+            get() = buildSerialDescriptor("GuildRolePosition", StructureKind.LIST)
 
         override fun serialize(encoder: Encoder, obj: GuildRolePositionModifyRequest) {
             val positions = obj.swaps.map { RolePosition(it.first, it.second) }

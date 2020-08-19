@@ -8,6 +8,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.websocket.WebSockets
+import io.ktor.util.*
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import java.time.Duration
 import kotlin.time.seconds
 import kotlin.time.toKotlinDuration
@@ -20,6 +22,7 @@ class DefaultGatewayBuilder {
     var identifyRateLimiter: RateLimiter? = null
 
 
+    @OptIn(KtorExperimentalAPI::class, ObsoleteCoroutinesApi::class)
     fun build(): DefaultGateway {
         val client = client ?: HttpClient(CIO) {
             install(WebSockets)

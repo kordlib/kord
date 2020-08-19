@@ -15,7 +15,7 @@ class VoiceStateTest {
 
     @Test
     fun `VoiceState serialization`() {
-        val state = Json.parse(DiscordVoiceState.serializer(), file("voicestate"))
+        val state = Json.decodeFromString(DiscordVoiceState.serializer(), file("voicestate"))
 
         with(state) {
             channelId shouldBe "157733188964188161"

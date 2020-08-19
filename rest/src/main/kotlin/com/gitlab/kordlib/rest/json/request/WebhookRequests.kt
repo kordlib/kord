@@ -1,9 +1,7 @@
 package com.gitlab.kordlib.rest.json.request
 
-import com.gitlab.kordlib.rest.Image
-import kotlinx.io.InputStream
 import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx. serialization.Serializable
 
 @Serializable
 data class WebhookCreateRequest(val name: String, val avatar: String?)

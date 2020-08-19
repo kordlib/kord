@@ -1,6 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = Permissions.Companion::class)
 class Permissions constructor(val code: Int) {
@@ -31,14 +36,14 @@ class Permissions constructor(val code: Int) {
         }
 
         override val descriptor: SerialDescriptor
-            get() = PrimitiveDescriptor("permission", PrimitiveKind.INT)
+            get() = PrimitiveSerialDescriptor("permission", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): Permissions {
             return Permissions(decoder.decodeInt())
         }
 
-        override fun serialize(encoder: Encoder, obj: Permissions) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: Permissions) {
+            encoder.encodeInt(value.code)
         }
     }
 
