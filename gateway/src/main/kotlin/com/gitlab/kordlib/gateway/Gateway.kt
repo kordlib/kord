@@ -2,9 +2,14 @@ package com.gitlab.kordlib.gateway
 
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Status
+import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlin.time.Duration
 
 /**
@@ -57,7 +62,35 @@ interface Gateway {
      */
     suspend fun stop()
 
-    companion object
+    companion object {
+        private object None : Gateway {
+
+            override val events: Flow<Event>
+                get() = emptyFlow()
+
+            override val ping: Duration
+                get() = Duration.ZERO
+
+            override suspend fun send(command: Command) {}
+
+            override suspend fun start(configuration: GatewayConfiguration) {}
+
+            override suspend fun stop() {}
+
+            override suspend fun detach() {}
+        }
+
+        /**
+         * Returns a [Gateway] with no-op behavior, an empty [Gateway.events] flow and a ping of [Duration.ZERO].
+         */
+        fun none() : Gateway = None
+
+    }
+}
+
+suspend inline fun Gateway.editPresence(builder: PresenceBuilder.() -> Unit) {
+    val status = PresenceBuilder().apply(builder).toUpdateStatus()
+    send(status)
 }
 
 /**
