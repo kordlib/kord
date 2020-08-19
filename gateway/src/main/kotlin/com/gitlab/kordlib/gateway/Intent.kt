@@ -182,7 +182,7 @@ data class Intents internal constructor(val code: Int) {
             }
 
         @OptIn(PrivilegedIntent::class)
-        val nonPrivileged
+        val nonPrivileged: Intents
             get() = invoke {
                 Intent.values().forEach { +it }
 
@@ -190,7 +190,9 @@ data class Intents internal constructor(val code: Int) {
                 -Intent.GuildMembers
             }
 
-        inline operator fun invoke(builder: IntentsBuilder.() -> Unit): Intents {
+        val none: Intents = invoke()
+
+        inline operator fun invoke(builder: IntentsBuilder.() -> Unit = {}): Intents {
             return IntentsBuilder().apply(builder).flags()
         }
     }
