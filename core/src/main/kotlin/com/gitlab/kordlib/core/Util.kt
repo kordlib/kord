@@ -1,6 +1,5 @@
 package com.gitlab.kordlib.core
 
-
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.event.Event
@@ -13,7 +12,6 @@ import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.event.role.RoleCreateEvent
 import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
 import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
-import com.gitlab.kordlib.gateway.Intent
 import com.gitlab.kordlib.gateway.Intent.*
 import com.gitlab.kordlib.gateway.Intents
 import com.gitlab.kordlib.gateway.MessageDelete
@@ -24,7 +22,6 @@ import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
-import kotlin.math.max
 import kotlin.reflect.KClass
 
 internal fun String?.toSnowflakeOrNull(): Snowflake? = when {
@@ -153,14 +150,14 @@ internal fun <T> youngestItem(idSelector: (T) -> String): (Collection<T>) -> T? 
  */
 internal fun <T> oldestItem(idSelector: (T) -> String): (Collection<T>) -> T? = function@{
     if (it.size <= 1) return@function it.firstOrNull()
-        val first = it.first()
-        val last = it.last()
+    val first = it.first()
+    val last = it.last()
 
-        val firstId = idSelector(first).toLong()
-        val lastId = idSelector(last).toLong()
+    val firstId = idSelector(first).toLong()
+    val lastId = idSelector(last).toLong()
 
-        if (firstId < lastId) first
-        else last
+    if (firstId < lastId) first
+    else last
 }
 
 /**
