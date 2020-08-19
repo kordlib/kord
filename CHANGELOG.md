@@ -4,10 +4,23 @@
 
 * `Member#kick` and `Guild#kick` now have an optional reason.
 * `KordBuilder` now throws a (more) useful exception when building a bot with an invalid token.
+* The REST module will now use `discord.com/api` instead of the deprecated `discordapp.com/api`.
+* Kord now uses `Dispatchers.default` as the default dispatcher.
 
 ## Fixes
 
 * Fixed an issue where Invite events would not fire if the invited user didn't have an avatar.
+* Fixed some outdated docs on the `KordBuilder`.
+
+## Additions
+
+* Introduced an experimental REST-only variant of the Kord builder. This will automatically disable gateway and cache
+related APIs and replace them with a no-op implementation.
+* Introduced a no-op `Gateway` implementation.
+
+## Performance
+
+* Removed an unneeded REST call when building Kord.
 
 # 0.5.11
 
