@@ -3,7 +3,6 @@
 package com.gitlab.kordlib.core.builder.kord
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.core.ClientResources
 import com.gitlab.kordlib.core.Kord
@@ -29,14 +28,7 @@ import com.gitlab.kordlib.rest.request.isError
 import com.gitlab.kordlib.rest.route.Route
 import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.HttpClient
-import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.defaultRequest
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.request.get
-import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readText
 import io.ktor.http.HttpStatusCode
@@ -78,9 +70,9 @@ class KordBuilder(val token: String) {
     var enableShutdownHook: Boolean = true
 
     /**
-     * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.IO] by default.
+     * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
      */
-    var defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+    var defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 
     /**
      * The default strategy used by entities to retrieve entities. [EntitySupplyStrategy.cacheWithRestFallback] by default.
@@ -187,15 +179,6 @@ class KordBuilder(val token: String) {
         }
     }
 
-    private fun HttpClientConfig<*>.defaultConfig() {
-        expectSuccess = false
-        defaultRequest {
-            header("Authorization", "Bot $token")
-        }
-
-        install(JsonFeature)
-        install(WebSockets)
-    }
 
     /**
      * Requests the gateway info for the bot, or throws a [KordInitializationException] when something went wrong.
@@ -223,16 +206,7 @@ class KordBuilder(val token: String) {
      * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
      */
     suspend fun build(): Kord {
-        val client = httpClient?.let {
-            it.config { defaultConfig() }
-        } ?: run {
-            HttpClient(CIO) {
-                defaultConfig()
-                install(JsonFeature) {
-                    serializer = KotlinxSerializer(Json(JsonConfiguration(encodeDefaults = false, allowStructuredMapKeys = true, ignoreUnknownKeys = true, isLenient = true)))
-                }
-            }
-        }
+        val client = httpClient.configure(token)
 
         val recommendedShards = client.getGatewayInfo().shards
         val shards = shardRange(recommendedShards).toList()
@@ -262,7 +236,7 @@ class KordBuilder(val token: String) {
             MasterGateway(gateways)
         }
 
-        val self = rest.user.getCurrentUser().id
+        val self = getBotIdFromToken(token)
 
         val eventPublisher = BroadcastChannel<Event>(Channel.CONFLATED)
 
@@ -279,7 +253,7 @@ class KordBuilder(val token: String) {
                 cache,
                 gateway,
                 rest,
-                Snowflake(self),
+                self,
                 eventPublisher,
                 defaultDispatcher
         )

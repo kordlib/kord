@@ -1,12 +1,17 @@
 package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
+import com.gitlab.kordlib.cache.api.query
+import com.gitlab.kordlib.common.annotation.KordExperimental
+import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.annotation.KordUnsafe
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
+import com.gitlab.kordlib.core.builder.kord.KordRestOnlyBuilder
 import com.gitlab.kordlib.core.cache.data.GuildData
+import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.ApplicationInfo
 import com.gitlab.kordlib.core.entity.Guild
 import com.gitlab.kordlib.core.entity.Region
@@ -123,10 +128,25 @@ class Kord(
     companion object {
 
         /**
+         * Builds a [Kord] instance configured by the [builder].
+         *
          * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
          */
-        suspend inline operator fun invoke(token: String, builder: KordBuilder.() -> Unit = {}) =
+        suspend inline operator fun invoke(token: String, builder: KordBuilder.() -> Unit = {}): Kord =
                 KordBuilder(token).apply(builder).build()
+
+        /**
+         * Builds a [Kord] instance configured by the [builder].
+         *
+         * The instance only allows for configuration of REST related APIs,
+         * interacting with the [gateway][Kord.gateway] or its [events][Kord.events] will result in no-ops.
+         *
+         * Similarly, [cache][Kord.cache] related functionality has been disabled and
+         * replaced with a no-op implementation.
+         */
+        @KordExperimental
+        inline fun restOnly(token: String, builder: KordRestOnlyBuilder.() -> Unit = {}): Kord =
+                KordRestOnlyBuilder(token).apply(builder).build()
     }
 
 }

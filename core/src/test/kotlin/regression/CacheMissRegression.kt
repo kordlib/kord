@@ -1,19 +1,24 @@
 package regression
 
 import com.gitlab.kordlib.cache.api.put
+import com.gitlab.kordlib.cache.map.MapDataCache
 import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.core.ClientResources
 import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.builder.kord.configure
+import com.gitlab.kordlib.core.builder.kord.getBotIdFromToken
 import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.gateway.Command
-import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.Gateway
-import com.gitlab.kordlib.gateway.GatewayConfiguration
+import com.gitlab.kordlib.core.cache.registerKordData
+import com.gitlab.kordlib.core.gateway.MasterGateway
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.gateway.*
 import com.gitlab.kordlib.rest.request.JsonRequest
 import com.gitlab.kordlib.rest.request.MultipartRequest
 import com.gitlab.kordlib.rest.request.Request
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
+import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.request
@@ -23,9 +28,13 @@ import io.ktor.content.TextContent
 import io.ktor.http.ContentType
 import io.ktor.http.takeFrom
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
@@ -100,22 +109,27 @@ class CrashingHandler(val client: HttpClient) : RequestHandler {
     }
 }
 
+@EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
 class CacheMissingRegressions {
     lateinit var kord: Kord
 
     @BeforeTest
-    fun setup() {
-        runBlocking {
-            kord = Kord(System.getenv("KORD_TEST_TOKEN")) {
-                gateways { _, shards -> shards.map { FakeGateway } }
-                requestHandler { CrashingHandler(it.httpClient) }
-            }
-        }
+    fun setup() = runBlockingTest { //TODO, move this over to entity supplier tests instead, eventually.
+        val token = System.getenv("KORD_TEST_TOKEN")
+        val resources = ClientResources(token, 1, null.configure(token), EntitySupplyStrategy.cacheWithRestFallback, Intents.nonPrivileged)
+        kord = Kord(
+                resources,
+                MapDataCache().also { it.registerKordData() },
+                MasterGateway(mapOf(0 to FakeGateway)),
+                RestClient(CrashingHandler(resources.httpClient)),
+                getBotIdFromToken(token),
+                BroadcastChannel(Channel.CONFLATED),
+                Dispatchers.Default
+        )
     }
 
 
     @Test
-    @EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
     fun `if data not in cache explode`() {
         val id = 5L
         assertThrows<IllegalStateException> {
@@ -126,7 +140,6 @@ class CacheMissingRegressions {
     }
 
     @Test
-    @EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
     fun `if data in cache don't fetch from rest`() {
         runBlocking {
             val id = 5L

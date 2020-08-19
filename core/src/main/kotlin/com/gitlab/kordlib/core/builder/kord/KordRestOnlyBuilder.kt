@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.builder.kord
 
 import com.gitlab.kordlib.cache.api.DataCache
+import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.core.ClientResources
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.event.Event
@@ -14,16 +15,12 @@ import com.gitlab.kordlib.rest.request.KtorRequestHandler
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 
+@KordExperimental
 class KordRestOnlyBuilder(val token: String) {
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
