@@ -1,6 +1,8 @@
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
-//import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.gradle.DokkaMultimoduleTask
+
 import org.ajoberstar.gradle.git.publish.GitPublishExtension
 import org.ajoberstar.gradle.git.publish.tasks.GitPublishPush
 
@@ -19,7 +21,7 @@ buildscript {
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
-    id("org.jetbrains.dokka") version "1.4.0-M3-dev-61"
+    id("org.jetbrains.dokka") version "1.4.0-rc"
     id("org.ajoberstar.git-publish") version "2.1.3"
 }
 
@@ -32,7 +34,6 @@ repositories {
 
 dependencies {
     api(Dependencies.jdk8)
-    dokkaPlugins("org.jetbrains.dokka:dokka-base:0.11.0-SNAPSHOT")
 }
 
 group = Library.group
@@ -45,6 +46,7 @@ subprojects {
     apply(plugin = "com.jfrog.bintray")
     apply(plugin = "maven-publish")
     apply(plugin = "kotlinx-atomicfu")
+    apply(plugin = "org.jetbrains.dokka")
 
     repositories {
         mavenCentral()
@@ -78,6 +80,27 @@ subprojects {
             includeEngines.plusAssign("junit-jupiter")
         }
     }
+
+    tasks.dokkaHtml.configure {
+        outputDirectory = "${rootProject.projectDir}/dokka/kord/"
+        dokkaSourceSets {
+            configureEach {
+                platform = org.jetbrains.dokka.Platform.jvm.name
+
+                //doesn't work for whatever reason
+                sourceLink {
+                    val relativePath = project.projectDir.relativeTo(project.rootProject.projectDir).path
+                    path = "$relativePath/src/main/kotlin"
+                    url = "https://github.com/kordlib/kord/blob/master/${project.name}/src/main/kotlin"
+
+                    lineSuffix = "#L"
+                }
+
+                jdkVersion = 8
+            }
+        }
+    }
+
 
     val sourcesJar by tasks.registering(Jar::class) {
         archiveClassifier.set("sources")
@@ -123,37 +146,37 @@ subprojects {
     }
 }
 
-//tasks {
-//    val dokkaOutputDir = "dokka"
-//
-//    val clean = getByName("clean", Delete::class) {
-//        delete(rootProject.buildDir)
-//        delete(dokkaOutputDir)
-//    }
-//
-//    val dokka by getting(DokkaTask::class) {
-//        dependsOn(clean)
-//        outputDirectory = dokkaOutputDir
-//        outputFormat = "html"
-//        subProjects = listOf("core", "rest", "gateway", "common")
-//    }
-//
-//    val fixIndex by register<DocsTask>("fixIndex") {
-//        dependsOn(dokka)
-//    }
-//
-//    val gitPublishPush by getting(GitPublishPush::class) {
-//        dependsOn(fixIndex)
-//    }
-//}
+tasks {
+    val dokkaOutputDir = "${rootProject.projectDir}/dokka"
 
-//configure<GitPublishExtension> {
-//    repoUri.set("https://github.com/kordlib/kord.git")
-//    branch.set("gh-pages")
-//
-//    contents {
-//        from("dokka")
-//    }
-//
-//    commitMessage.set("Update Docs")
-//}
+    val clean = getByName("clean", Delete::class) {
+        delete(rootProject.buildDir)
+        delete(dokkaOutputDir)
+    }
+
+    dokkaHtmlMultimodule.configure {
+        dependsOn(clean)
+        outputDirectory = dokkaOutputDir
+        documentationFileName = "DokkaDescription.md"
+    }
+
+
+    val fixIndex by register<DocsTask>("fixIndex") {
+        dependsOn(dokkaHtmlMultimodule)
+    }
+
+    val gitPublishPush by getting(GitPublishPush::class) {
+        dependsOn(fixIndex)
+    }
+}
+
+configure<GitPublishExtension> {
+    repoUri.set("https://github.com/kordlib/kord.git")
+    branch.set("gh-pages")
+
+    contents {
+        from("dokka")
+    }
+
+    commitMessage.set("Update Docs")
+}
