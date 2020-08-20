@@ -22,6 +22,13 @@ related APIs and replace them with a no-op implementation.
 
 * Removed an unneeded REST call when building Kord.
 
+## Dependencies
+
+* kotlin 1.3.72 -> 1.4.0
+* ktor 1.3.2 -> 1.4.0
+* kotlinx.serialization 0.2.0 -> 1.0.0-RC
+* kotlinx.coroutines 1.3.7 -> 1.3.9
+
 # 0.5.11
 
 ## Fixes
