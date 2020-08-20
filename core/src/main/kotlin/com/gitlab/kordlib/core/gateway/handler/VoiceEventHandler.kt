@@ -34,7 +34,7 @@ internal class VoiceEventHandler(
     }
 
     private suspend fun handle(event: VoiceStateUpdate, shard: Int) {
-        val data = VoiceStateData.from(event.voiceState)
+        val data = VoiceStateData.from(event.voiceState.guildId, event.voiceState)
 
         val old = cache.query<VoiceStateData> { VoiceStateData::id eq data.id }
                 .asFlow().map { VoiceState(it, kord) }.singleOrNull()

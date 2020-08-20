@@ -73,7 +73,7 @@ internal class GuildEventHandler(
         }
 
         for (voiceState in voiceStates.orEmpty()) {
-            cache.put(VoiceStateData.from(voiceState))
+            cache.put(VoiceStateData.from(id, voiceState))
         }
         for (emoji in emojis) {
             cache.put(EmojiData.from(id, emoji.id!!, emoji))

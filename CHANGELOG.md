@@ -11,6 +11,7 @@
 
 * Fixed an issue where Invite events would not fire if the invited user didn't have an avatar.
 * Fixed some outdated docs on the `KordBuilder`.
+* Fixed an issue where voice states from guild creates were not getting cached.
 
 ## Additions
 

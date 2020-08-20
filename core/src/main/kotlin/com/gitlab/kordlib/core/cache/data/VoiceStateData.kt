@@ -23,7 +23,7 @@ data class VoiceStateData(
     companion object {
         val description = description(VoiceStateData::id)
 
-        fun from(entity: DiscordVoiceState) = with(entity) {
+        fun from(guildId: String?, entity: DiscordVoiceState) = with(entity) {
             VoiceStateData(
                     guildId?.toLong(),
                     channelId?.toLong(),

@@ -100,7 +100,7 @@ data class GuildData(
                     joinedAt,
                     large,
                     memberCount,
-                    voiceStates.orEmpty().map { VoiceStateData.from(it) },
+                    voiceStates.orEmpty().map { VoiceStateData.from(id, it) },
                     members.orEmpty().map { MemberData.from(userId = it.user!!.id, guildId = id, entity = it) },
                     channels.orEmpty().map { it.id.toLong() },
                     presences.orEmpty().map { PresenceData.from(id, it) },
