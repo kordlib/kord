@@ -44,14 +44,19 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
 
     override val guilds: Flow<Guild>
         get() = paginateForwards(idSelector = DiscordPartialGuild::id, batchSize = 100) { position -> user.getCurrentUserGuilds(position, 100) }
-                .map { guild.getGuild(it.id) }
-                .map { GuildData.from(it) }
-                .map { Guild(it, kord) }
+                .map {
+                    val guild = guild.getGuild(it.id)
+                    val data = GuildData.from(guild)
+                    Guild(data, kord)
+                }
 
     override val regions: Flow<Region>
         get() = flow {
-            voice.getVoiceRegions().forEach { emit(it) }
-        }.map { RegionData.from(null, it) }.map { Region(it, kord) }
+            voice.getVoiceRegions().forEach {
+                val data = RegionData.from(null, it)
+                emit(Region(data, kord))
+            }
+        }
 
     override suspend fun getChannelOrNull(id: Snowflake): Channel? = catchNotFound { Channel.from(channel.getChannel(id.value).toData(), kord) }
 
@@ -105,7 +110,10 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
 
         val flow = paginateForwards(messageId, batchSize, idSelector = { it.id }) { position ->
             kord.rest.channel.getMessages(channelId.value, position, batchSize)
-        }.map { MessageData.from(it) }.map { Message(it, kord) }
+        }.map {
+            val data = MessageData.from(it)
+            Message(data, kord)
+        }
 
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
     }
@@ -116,7 +124,10 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
 
         val flow = paginateBackwards(messageId, batchSize, idSelector = { it.id }) { position ->
             kord.rest.channel.getMessages(channelId.value, position, batchSize)
-        }.map { MessageData.from(it) }.map { Message(it, kord) }
+        }.map {
+            val data = MessageData.from(it)
+            Message(data, kord)
+        }
 
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
     }
@@ -194,7 +205,10 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
                         limit = 100,
                         position = position
                 )
-            }.map { UserData.from(it) }.map { User(it, kord) }
+            }.map {
+                val data = UserData.from(it)
+                User(data, kord)
+            }
 
     override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake) = catchNotFound {
         val data = EmojiData.from(guildId.value, emojiId.value, emoji.getEmoji(guildId.value, emojiId.value))

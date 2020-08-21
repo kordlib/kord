@@ -8,6 +8,16 @@
 
 * `ReactionEmoji.Unicode` now correctly compares on name for equality.
 
+## Performance
+
+* `CacheEntitySupplier#getGuildMembers` will no longer query MemberData on each user.
+* Reduced the number of mappings inside suppliers.
+
+## Fixes
+
+* Fixed type mismatch when comparing guildId in `CacheEntitySupplier#getGuildMembers`
+
+
 # 0.6.0
 
 ## Changes
