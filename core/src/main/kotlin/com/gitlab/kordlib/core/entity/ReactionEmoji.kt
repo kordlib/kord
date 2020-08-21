@@ -29,7 +29,7 @@ sealed class ReactionEmoji {
         override fun toString() = "Custom(id=$id, name=$name, isAnimated=$isAnimated)"
     }
 
-    class Unicode(override val name: String) : ReactionEmoji() {
+    data class Unicode(override val name: String) : ReactionEmoji() {
         override val urlFormat: String get() = name
         override val mention: String get() = name
     }

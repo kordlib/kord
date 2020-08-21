@@ -4,6 +4,10 @@
 
 * Added `Team` and other properties to ApplicationInfo.
 
+## Changes
+
+* `ReactionEmoji.Unicode` now correctly compares on name for equality.
+
 # 0.6.0
 
 ## Changes
