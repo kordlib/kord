@@ -1,3 +1,9 @@
+# 0.6.1 
+
+## Additions
+
+* Added `Team` and other properties to ApplicationInfo.
+
 # 0.6.0
 
 ## Changes

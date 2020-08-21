@@ -5,11 +5,15 @@ import com.gitlab.kordlib.common.entity.TeamMembershipState
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.TeamData
 import com.gitlab.kordlib.core.cache.data.TeamMemberData
+import com.gitlab.kordlib.common.exception.RequestException
+import com.gitlab.kordlib.core.supplier.EntitySupplier
+import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 
 /**
  * A Discord [developer team](https://discord.com/developers/docs/topics/teams) which can own applications.
  */
-class Team(val data: TeamData, override val kord: Kord) : Entity {
+class Team(val data: TeamData, override val kord: Kord, override val supplier: EntitySupplier) : Entity, Strategizable {
     /**
      * The unique ID of this team.
      */
@@ -33,10 +37,24 @@ class Team(val data: TeamData, override val kord: Kord) : Entity {
     val ownerUserId: Snowflake
         get() = Snowflake(data.id)
 
+
     /**
-     * Utility method that gets the owner user from Kord.
-     */
-    suspend fun getUser() = kord.getUser(ownerUserId)
+     * Requests to get the team owner through the [supplier].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [User] wasn't present.
+    */
+    suspend fun getUser(): User = supplier.getUser(ownerUserId)
+
+    /**
+     * Requests to get the team owner through the [supplier],
+     * returns null if the [User] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+    */
+    suspend fun getUserOrNUll(): User? = supplier.getUserOrNull(ownerUserId)
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Team = Team(data, kord, strategy.supply(kord))
 }
 
 /**
