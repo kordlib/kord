@@ -1,0 +1,72 @@
+package com.gitlab.kordlib.core.entity
+
+import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.TeamMembershipState
+import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.cache.data.TeamData
+import com.gitlab.kordlib.core.cache.data.TeamMemberData
+
+/**
+ * A Discord [developer team](https://discord.com/developers/docs/topics/teams) which can own applications.
+ */
+class Team(val data: TeamData, override val kord: Kord) : Entity {
+    /**
+     * The unique ID of this team.
+     */
+    override val id: Snowflake
+        get() = Snowflake(data.id)
+
+    /**
+     * The hash of this team's icon.
+     */
+    val icon: String? get() = data.icon
+
+    /**
+     * A collection of all members of this team.
+     */
+    val members: List<TeamMember>
+        get() = data.members.map { TeamMember(it, kord) }
+
+    /**
+     * The ID of the user that owns the team.
+     */
+    val ownerUserId: Snowflake
+        get() = Snowflake(data.id)
+
+    /**
+     * Utility method that gets the owner user from Kord.
+     */
+    suspend fun getUser() = kord.getUser(ownerUserId)
+}
+
+/**
+ * A member of a Discord developer team.
+ */
+class TeamMember(val data: TeamMemberData, val kord: Kord) {
+    /**
+     * An enumeration representing the membership state of this user.
+     */
+    val membershipState: TeamMembershipState get() = data.membershipState
+
+    /**
+     * A collection of permissions granted to this member.
+     * At the moment, this collection will only have one element: `*`, meaning the member has all permissions.
+     * This is because right now there are no other permissions. Read mode [here](https://discord.com/developers/docs/topics/teams#data-models-team-members-object)
+     */
+    val permissions: List<String> get() = data.permissions
+
+    /**
+     * The unique ID that this member belongs to.
+     */
+    val teamId: Long get() = data.teamId
+
+    /**
+     * The ID of the user this member represents.
+     */
+    val userId: Snowflake get() = Snowflake(data.userId)
+
+    /**
+     * Utility method that gets the user from Kord.
+     */
+    suspend fun getUser() = kord.getUser(userId)
+}

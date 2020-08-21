@@ -2,10 +2,14 @@
 
 package com.gitlab.kordlib.rest.json.response
 
+import com.gitlab.kordlib.common.entity.DiscordTeam
 import com.gitlab.kordlib.common.entity.DiscordUser
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Payload gotten from [GET /oauth2/applications/@me](https://discord.com/developers/docs/topics/oauth2#get-current-application-information)
+ */
 @Serializable
 data class ApplicationInfoResponse(
         val id: String,
@@ -18,5 +22,16 @@ data class ApplicationInfoResponse(
         val botPublic: Boolean,
         @SerialName("bot_require_code_grant")
         val botRequireCodeGrant: Boolean,
-        val owner: DiscordUser
+        val owner: DiscordUser,
+        val summary: String,
+        @SerialName("verify_key")
+        val verifyKey: String,
+        val team: DiscordTeam?,
+        @SerialName("guild_id")
+        val guildId: String? = null,
+        @SerialName("primary_sku_id")
+        val primarySkuId: String? = null,
+        val slug: String? = null,
+        @SerialName("cover_image")
+        val coverImage: String? = null
 )
