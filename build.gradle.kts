@@ -12,6 +12,9 @@ buildscript {
         maven(url = "https://plugins.gradle.org/m2/")
     }
     dependencies {
+        //https://github.com/melix/japicmp-gradle-plugin/issues/36
+        classpath("com.google.guava:guava:28.2-jre")
+
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.bintray}")
@@ -23,6 +26,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
     id("org.jetbrains.dokka") version "1.4.0-rc"
     id("org.ajoberstar.git-publish") version "2.1.3"
+    id("me.champeau.gradle.japicmp") version "0.2.8"
 }
 
 repositories {
@@ -47,6 +51,7 @@ subprojects {
     apply(plugin = "maven-publish")
     apply(plugin = "kotlinx-atomicfu")
     apply(plugin = "org.jetbrains.dokka")
+    apply(plugin = "me.champeau.gradle.japicmp")
 
     repositories {
         mavenCentral()
@@ -79,6 +84,36 @@ subprojects {
         useJUnitPlatform {
             includeEngines.plusAssign("junit-jupiter")
         }
+    }
+
+    val japicmp by tasks.register<me.champeau.gradle.japicmp.JapicmpTask>("japicmp") {
+        dependsOn(tasks.jar)
+
+        fun baselineJar(project: Project, version: String): File {
+            val oldGroup = project.group
+            val group = Library.group
+            val artifactId = "kord-${project.name}"
+
+            try {
+                val jarFile = "$artifactId-$version.jar"
+                project.group = "virtual_group_for_japicmp" // Prevent it from resolving the current version.
+                val dependency = project.dependencies.create("$group:$artifactId:$version@jar")
+                return project.configurations.detachedConfiguration(dependency).files
+                        .find { (it.name == jarFile) }.also {
+                            println(it?.absolutePath)
+                        } ?: error("$dependency not found")
+            } finally {
+                project.group = oldGroup
+            }
+        }
+
+        oldClasspath = files(baselineJar(project, Versions.baselineVersion))
+        newClasspath = files(tasks.jar.get().archiveFile)
+
+        ignoreMissingClasses = true
+        includeSynthetic = true
+        onlyBinaryIncompatibleModified = true
+        txtOutputFile = file("$buildDir/reports/japi.txt")
     }
 
     tasks.dokkaHtml.configure {
@@ -168,6 +203,7 @@ tasks {
     val gitPublishPush by getting(GitPublishPush::class) {
         dependsOn(fixIndex)
     }
+
 }
 
 configure<GitPublishExtension> {
