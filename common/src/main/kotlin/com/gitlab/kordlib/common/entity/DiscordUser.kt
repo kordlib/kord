@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -9,6 +10,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
+@KordUnstableApi
 data class DiscordUser(
         val id: String,
         val username: String,
@@ -101,6 +103,7 @@ data class UserFlags constructor(val code: Int) {
 
 
 @Serializable
+@KordUnstableApi
 data class DiscordOptionallyMemberUser(
         val id: String,
         val username: String,

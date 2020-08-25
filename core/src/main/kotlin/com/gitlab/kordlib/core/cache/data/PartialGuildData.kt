@@ -1,17 +1,18 @@
 package com.gitlab.kordlib.core.cache.data
 
-import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.Permissions
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 class PartialGuildData(
         val id: Long,
         val name: String,
         val icon: String? = null,
         val owner: Boolean? = null,
-        val permissions: Permissions? = null
+        val permissions: Permissions? = null,
 ) {
     companion object {
 

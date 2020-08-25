@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.GuildFeature
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.GuildPreviewData
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 
+@OptIn(KordUnstableApi::class)
 class GuildPreview(
         val data: GuildPreviewData,
         override val kord: Kord

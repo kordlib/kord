@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.supplier
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.query
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -28,6 +29,7 @@ import kotlinx.coroutines.flow.*
  * Returned flows without entities will not throw an [EntityNotFoundException]
  * if none are presented like other `getX` functions. Instead, the flow will be empty.
  */
+@OptIn(KordUnstableApi::class)
 class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     /**
      *

@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
@@ -10,6 +11,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 
+@OptIn(KordUnstableApi::class)
 class VoiceState(
         val data: VoiceStateData,
         override val kord: Kord,

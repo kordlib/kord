@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -30,6 +31,7 @@ import java.util.*
 /**
  * An instance of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
  */
+@OptIn(KordUnstableApi::class)
 class Guild(
         val data: GuildData,
         override val kord: Kord,

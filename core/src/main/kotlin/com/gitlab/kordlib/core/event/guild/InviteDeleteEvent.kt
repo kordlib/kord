@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.event.guild
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
@@ -17,6 +18,7 @@ import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 /**
  * Sent when an invite is deleted.
  */
+@OptIn(KordUnstableApi::class)
 class InviteDeleteEvent(
         val data: InviteDeleteData,
         override val kord: Kord,

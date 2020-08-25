@@ -1,9 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class DiscordRole(
         val id: String,
         val name: String,
@@ -16,6 +18,7 @@ data class DiscordRole(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordAuditLogRoleChange(
         val id: String,
         val name: String? = null,
@@ -28,6 +31,7 @@ data class DiscordAuditLogRoleChange(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordGuildRole(
         @SerialName("guild_id")
         val guildId: String,
@@ -35,6 +39,7 @@ data class DiscordGuildRole(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordDeletedGuildRole(
         @SerialName("guild_id")
         val guildId: String,

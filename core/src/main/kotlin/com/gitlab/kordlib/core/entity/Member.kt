@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Permission
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
@@ -20,6 +21,7 @@ import java.util.*
 /**
  * An instance of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
  */
+@OptIn(KordUnstableApi::class)
 class Member(
         val memberData: MemberData,
         userData: UserData,

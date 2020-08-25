@@ -4,10 +4,11 @@ import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.json.request.ChannelModifyPatchRequest
 
 @KordDsl
-class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
+class CategoryModifyBuilder: AuditRequestBuilder<@OptIn(KordUnstableApi::class) ChannelModifyPatchRequest> {
     override var reason: String? = null
     /**
      * The name of the category.
@@ -22,6 +23,7 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
     /**
      *  The permission overwrites for this category.
      */
+    @OptIn(KordUnstableApi::class)
     var permissionOverwrites: MutableSet<Overwrite>? = null
 
 
@@ -39,6 +41,7 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
         permissionOverwrites = (permissionOverwrites ?: mutableSetOf()).also { PermissionOverwriteBuilder("role", roleId).apply(builder).toOverwrite() }
     }
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,

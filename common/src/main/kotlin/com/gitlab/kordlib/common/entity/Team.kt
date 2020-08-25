@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -11,6 +12,7 @@ import kotlinx.serialization.encoding.Encoder
  * The raw developer team data gotten from the API.
  */
 @Serializable
+@KordUnstableApi
 data class DiscordTeam(
         /**
          * The unique ID of this team.
@@ -73,6 +75,7 @@ enum class TeamMembershipState(val value: Int) {
  * The raw developer team member data gotten from the API.
  */
 @Serializable
+@KordUnstableApi
 class DiscordTeamMember(
         /**
          * An integer enum representing the state of membership of this user.

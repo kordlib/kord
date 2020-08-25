@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.builder.webhook
 
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
 import com.gitlab.kordlib.rest.json.request.EmbedRequest
@@ -12,12 +13,13 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 @KordDsl
-class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
+class ExecuteWebhookBuilder: RequestBuilder<@OptIn(KordUnstableApi::class) MultiPartWebhookExecuteRequest> {
     var content: String? = null
     var username: String? = null
     var avatarUrl: String? = null
     var tts: Boolean? = null
     private var file: Pair<String, java.io.InputStream>? = null
+    @OptIn(KordUnstableApi::class)
     val embeds: MutableList<EmbedRequest> = mutableListOf()
 
     fun setFile(name: String, content: java.io.InputStream) {
@@ -32,6 +34,7 @@ class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
         embeds += EmbedBuilder().apply(builder).toRequest()
     }
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest() : MultiPartWebhookExecuteRequest = MultiPartWebhookExecuteRequest(
         WebhookExecuteRequest(content, username, avatarUrl, tts, embeds), file
     )

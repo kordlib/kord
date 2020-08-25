@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -9,6 +10,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
 
 @Serializable
+@KordUnstableApi
 data class DiscordPresenceUpdateData(
         val user: DiscordPresenceUser,
         val roles: List<String>? = null,
@@ -22,6 +24,7 @@ data class DiscordPresenceUpdateData(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordPresenceUser(
         val id: String,
         val username: JsonElement? = null,
@@ -39,6 +42,7 @@ data class DiscordPresenceUser(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordClientStatus(val desktop: Status? = null, val mobile: Status? = null, val web: Status? = null)
 
 @Serializable(with = Status.StatusSerializer::class)

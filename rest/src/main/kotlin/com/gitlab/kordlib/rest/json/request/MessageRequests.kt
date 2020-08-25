@@ -1,10 +1,12 @@
 package com.gitlab.kordlib.rest.json.request
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Flags
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class MessageCreateRequest(
         val content: String? = null,
         val nonce: String? = null,
@@ -15,14 +17,17 @@ data class MessageCreateRequest(
 )
 
 @Serializable
+@KordUnstableApi
 data class AllowedMentions(val parse: List<String>, val users: List<String>, val roles: List<String>)
 
+@KordUnstableApi
 data class MultipartMessageCreateRequest(
         val request: MessageCreateRequest,
         val files: List<Pair<String, java.io.InputStream>> = emptyList()
 )
 
 @Serializable
+@KordUnstableApi
 data class EmbedRequest(
         val title: String?,
         val type: String?,
@@ -39,6 +44,7 @@ data class EmbedRequest(
 
 
 @Serializable
+@KordUnstableApi
 data class EmbedFooterRequest(
         val text: String,
         @SerialName("icon_url")
@@ -46,12 +52,15 @@ data class EmbedFooterRequest(
 )
 
 @Serializable
+@KordUnstableApi
 data class EmbedImageRequest(val url: String)
 
 @Serializable
+@KordUnstableApi
 data class EmbedThumbnailRequest(val url: String)
 
 @Serializable
+@KordUnstableApi
 data class EmbedAuthorRequest(
         val name: String? = null,
         val url: String? = null,
@@ -60,6 +69,7 @@ data class EmbedAuthorRequest(
 )
 
 @Serializable
+@KordUnstableApi
 data class EmbedFieldRequest(
         val name: String,
         val value: String,
@@ -67,6 +77,7 @@ data class EmbedFieldRequest(
 )
 
 @Serializable
+@KordUnstableApi
 data class MessageEditPatchRequest(
         val content: String? = null,
         val embed: EmbedRequest? = null,
@@ -76,4 +87,5 @@ data class MessageEditPatchRequest(
 )
 
 @Serializable
+@KordUnstableApi
 data class BulkDeleteRequest(val messages: List<String>)

@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.CategoryBehavior
@@ -14,6 +15,7 @@ import java.util.*
 /**
  * An instance of a Discord category associated to a [guild].
  */
+@OptIn(KordUnstableApi::class)
 class Category(
         override val data: ChannelData,
         override val kord: Kord,

@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -23,6 +24,7 @@ import com.gitlab.kordlib.common.entity.Permission
 /**
  * The behavior of a [Discord Message](https://discord.com/developers/docs/resources/channel#message-object).
  */
+@OptIn(KordUnstableApi::class)
 interface MessageBehavior : Entity, Strategizable {
     /**
      * The channel id this message belongs to.
@@ -199,6 +201,7 @@ interface MessageBehavior : Entity, Strategizable {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(KordUnstableApi::class)
 suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit): Message {
     val response = kord.rest.channel.editMessage(channelId = channelId.value, messageId = id.value, builder = builder)
     val data = MessageData.from(response)

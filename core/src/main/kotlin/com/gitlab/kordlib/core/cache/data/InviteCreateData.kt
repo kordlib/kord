@@ -1,9 +1,11 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.gateway.DiscordCreatedInvite
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class InviteCreateData(
         /**
          * The channel the invite is for.

@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
@@ -15,6 +16,7 @@ import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.rest.Image
 import java.util.*
 
+@OptIn(KordUnstableApi::class)
 class PartialGuild(
         val data: PartialGuildData,
         override val kord: Kord,

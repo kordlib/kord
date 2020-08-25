@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.annotation.KordExperimental
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.builder.webhook.ExecuteWebhookBuilder
 import com.gitlab.kordlib.rest.builder.webhook.WebhookCreateBuilder
 import com.gitlab.kordlib.rest.builder.webhook.WebhookModifyBuilder
@@ -13,6 +14,7 @@ import kotlinx.serialization.json.JsonObject
 
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
+    @KordUnstableApi
     suspend inline fun createWebhook(channelId: String, builder: WebhookCreateBuilder.() -> Unit) = call(Route.WebhookPost) {
         keys[Route.ChannelId] = channelId
         val createBuilder = WebhookCreateBuilder().apply(builder)
@@ -37,6 +39,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.WebhookToken] = token
     }
 
+    @KordUnstableApi
     suspend inline fun modifyWebhook(webhookId: String, builder: WebhookModifyBuilder.() -> Unit) = call(Route.WebhookPatch) {
         keys[Route.WebhookId] = webhookId
         val modifyBuilder = WebhookModifyBuilder().apply(builder)
@@ -44,6 +47,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
+    @KordUnstableApi
     suspend inline fun modifyWebhookWithToken(webhookId: String, token: String, builder: WebhookModifyBuilder.() -> Unit) = call(Route.WebhookByTokenPatch) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token
@@ -63,6 +67,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
+    @KordUnstableApi
     suspend inline fun executeWebhook(webhookId: String, token: String, wait: Boolean, builder: ExecuteWebhookBuilder.() -> Unit) = call(Route.ExecuteWebhookPost) {
         keys[Route.WebhookId] = webhookId
         keys[Route.WebhookToken] = token

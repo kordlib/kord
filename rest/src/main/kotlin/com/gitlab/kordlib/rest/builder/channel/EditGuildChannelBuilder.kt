@@ -4,10 +4,11 @@ import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.json.request.ChannelModifyPatchRequest
 
 @KordDsl
-class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+class TextChannelModifyBuilder : AuditRequestBuilder<@OptIn(KordUnstableApi::class) ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
     var position: Int? = null
@@ -15,8 +16,10 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
     var nsfw: Boolean? = null
     var parentId: Snowflake? = null
     var rateLimitPerUser: Int? = null
+    @OptIn(KordUnstableApi::class)
     var permissionOverwrites: Set<Overwrite>? = null
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
@@ -30,15 +33,17 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
 }
 
 @KordDsl
-class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+class VoiceChannelModifyBuilder : AuditRequestBuilder<@OptIn(KordUnstableApi::class) ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
     var position: Int? = null
     var parentId: Snowflake? = null
     var bitrate: Int? = null
     var userLimit: Int? = null
+    @OptIn(KordUnstableApi::class)
     var permissionOverwrites: Set<Overwrite>? = null
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
@@ -50,15 +55,17 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
 }
 
 @KordDsl
-class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+class NewsChannelModifyBuilder : AuditRequestBuilder<@OptIn(KordUnstableApi::class) ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
     var position: Int? = null
     var topic: String? = null
     var nsfw: Boolean? = null
     var parentId: Snowflake? = null
+    @OptIn(KordUnstableApi::class)
     var permissionOverwrites: Set<Overwrite>? = null
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
@@ -70,12 +77,14 @@ class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
 }
 
 @KordDsl
-class StoreChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+class StoreChannelModifyBuilder : AuditRequestBuilder<@OptIn(KordUnstableApi::class) ChannelModifyPatchRequest> {
     override var reason: String? = null
     var name: String? = null
     var position: Int? = null
+    @OptIn(KordUnstableApi::class)
     val permissionOverwrites: MutableSet<Overwrite>? = null
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,

@@ -1,10 +1,12 @@
 package com.gitlab.kordlib.rest.json.response
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordGuildIntegrations
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class Connection(val id: String,
                       val name: String,
                       val type: String,
@@ -15,5 +17,6 @@ data class Connection(val id: String,
                       val friendSync: Boolean,
                       @SerialName("show_activity")
                       val showActivity: Boolean,
-                      val visibility: Int)
+                      val visibility: Int
+)
 //TODO add a visibility enum class

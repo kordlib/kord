@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.MessageData
@@ -72,6 +73,7 @@ interface WebhookBehavior : Entity, Strategizable {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(KordUnstableApi::class)
 @Suppress("NAME_SHADOWING")
 suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit): Webhook {
     val response = kord.rest.webhook.modifyWebhook(id.value, builder)
@@ -88,6 +90,7 @@ suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @Suppress("NAME_SHADOWING")
+@OptIn(KordUnstableApi::class)
 suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBuilder.() -> Unit): Webhook {
     val response = kord.rest.webhook.modifyWebhookWithToken(id.value, token, builder)
     val data = WebhookData.from(response)
@@ -100,6 +103,7 @@ suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBui
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(KordUnstableApi::class)
 suspend inline fun WebhookBehavior.execute(token: String, builder: ExecuteWebhookBuilder.() -> Unit): Message {
     val response = kord.rest.webhook.executeWebhook(
             token = token,
@@ -119,6 +123,7 @@ suspend inline fun WebhookBehavior.execute(token: String, builder: ExecuteWebhoo
  * This is a 'fire and forget' variant of [execute]. It will not wait for a response and might not throw an
  * Exception if the request wasn't executed.
  */
+@OptIn(KordUnstableApi::class)
 suspend inline fun WebhookBehavior.executeIgnored(token: String, builder: ExecuteWebhookBuilder.() -> Unit) {
     kord.rest.webhook.executeWebhook(token = token, webhookId = id.value, wait = false, builder = builder)
 }

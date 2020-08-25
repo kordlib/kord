@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -93,7 +94,8 @@ interface CategoryBehavior : GuildChannelBehavior {
  * @return The edited [Category].
  * @throws [RestRequestException] if something went wrong during the request.
  */
-suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Category {
+@OptIn(KordUnstableApi::class)
+suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Category {//TODO, inline this
     val response = kord.rest.channel.patchCategory(id.value, builder)
     val data = ChannelData.from(response)
 

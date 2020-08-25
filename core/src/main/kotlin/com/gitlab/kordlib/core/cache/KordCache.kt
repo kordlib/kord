@@ -8,11 +8,13 @@ import com.gitlab.kordlib.cache.api.delegate.EntrySupplier
 import com.gitlab.kordlib.cache.map.MapLikeCollection
 import com.gitlab.kordlib.cache.map.internal.MapEntryCache
 import com.gitlab.kordlib.cache.map.lruLinkedHashMap
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.core.cache.data.*
 import java.util.concurrent.ConcurrentHashMap
 
 typealias Generator<I, T> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>
 
+@OptIn(KordUnstableApi::class)
 class KordCacheBuilder {
 
     /**

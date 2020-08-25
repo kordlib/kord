@@ -1,10 +1,12 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordClientStatus
 import com.gitlab.kordlib.common.entity.Status
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class ClientStatusData(
         val desktop: Status?,
         val mobile: Status?,

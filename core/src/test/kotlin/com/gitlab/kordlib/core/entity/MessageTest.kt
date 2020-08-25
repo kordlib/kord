@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
 import equality.BehaviorEqualityTest
@@ -8,6 +9,7 @@ import io.mockk.every
 import io.mockk.mockk
 import mockKord
 
+@OptIn(KordUnstableApi::class)
 internal class MessageTest : EntityEqualityTest<Message> by EntityEqualityTest({
     val kord = mockKord()
     val data = mockk<MessageData>()

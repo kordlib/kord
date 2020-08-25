@@ -1,9 +1,11 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Overwrite
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class PermissionOverwriteData(
         val id: Long,
         val type: String,

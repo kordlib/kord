@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -22,6 +23,7 @@ import java.util.*
 /**
  * A [Discord integration](https://discord.com/developers/docs/resources/guild#get-guild-integrations).
  */
+@OptIn(KordUnstableApi::class)
 class Integration(
         val data: IntegrationData,
         override val kord: Kord,

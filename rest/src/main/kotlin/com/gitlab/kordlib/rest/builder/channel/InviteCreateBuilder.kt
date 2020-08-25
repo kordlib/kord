@@ -2,12 +2,13 @@ package com.gitlab.kordlib.rest.builder.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.TargetUserType
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.InviteCreateRequest
 
 @KordDsl
-class InviteCreateBuilder : RequestBuilder<InviteCreateRequest> {
+class InviteCreateBuilder : RequestBuilder<@OptIn(KordUnstableApi::class) InviteCreateRequest> {
     /**
      * The duration of invite in seconds before expiry, or 0 for never. 86400 (24 hours) by default.
      */
@@ -38,6 +39,7 @@ class InviteCreateBuilder : RequestBuilder<InviteCreateRequest> {
      */
     var reason: String? = null
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest(): InviteCreateRequest = InviteCreateRequest(
             temporary = temporary,
             age = age,

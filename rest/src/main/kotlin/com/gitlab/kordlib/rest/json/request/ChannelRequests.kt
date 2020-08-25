@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.rest.json.request
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.Permissions
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class ChannelModifyPutRequest(
         val name: String,
         val position: Int,
@@ -23,6 +25,7 @@ data class ChannelModifyPutRequest(
 )
 
 @Serializable
+@KordUnstableApi
 data class ChannelModifyPatchRequest(
         val name: String? = null,
         val position: Int? = null,
@@ -40,4 +43,5 @@ data class ChannelModifyPatchRequest(
 )
 
 @Serializable
+@KordUnstableApi
 data class ChannelPermissionEditRequest(val allow: Permissions, val deny: Permissions, val type: String)

@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.live
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Guild
 import com.gitlab.kordlib.core.event.*
@@ -17,6 +18,7 @@ import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
 fun Guild.live(): LiveGuild = LiveGuild(this)
 
 @KordPreview
+@OptIn(KordUnstableApi::class)
 class LiveGuild(guild: Guild) : AbstractLiveEntity(), Entity by guild {
 
     var guild: Guild = guild

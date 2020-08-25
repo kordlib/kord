@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
@@ -12,6 +13,7 @@ import java.util.*
 /**
  * An instance of a Discord Text Channel associated to a guild.
  */
+@OptIn(KordUnstableApi::class)
 class TextChannel(
         override val data: ChannelData,
         override val kord: Kord,

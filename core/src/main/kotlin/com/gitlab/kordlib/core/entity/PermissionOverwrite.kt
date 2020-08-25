@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
 import com.gitlab.kordlib.rest.json.request.ChannelPermissionEditRequest
 
+@OptIn(KordUnstableApi::class)
 open class PermissionOverwrite constructor(
         val data: PermissionOverwriteData
 ) {
@@ -14,8 +16,10 @@ open class PermissionOverwrite constructor(
     val target: Snowflake get() = Snowflake(data.id)
     val type: Type get() = Type.from(data.type)
 
+    @KordUnstableApi
     internal fun asRequest() = ChannelPermissionEditRequest(allowed, denied, type.value)
 
+    @KordUnstableApi
     internal fun toOverwrite() = Overwrite(id = target.value, type = type.value, allow = allowed.code, deny = denied.code)
 
     override fun hashCode(): Int = target.hashCode()

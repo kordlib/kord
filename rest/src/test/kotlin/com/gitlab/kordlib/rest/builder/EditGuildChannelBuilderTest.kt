@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.builder
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.builder.channel.NewsChannelModifyBuilder
 import com.gitlab.kordlib.rest.builder.channel.StoreChannelModifyBuilder
 import com.gitlab.kordlib.rest.builder.channel.TextChannelModifyBuilder
@@ -7,6 +8,7 @@ import com.gitlab.kordlib.rest.builder.channel.VoiceChannelModifyBuilder
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
+@OptIn(KordUnstableApi::class)
 class EditGuildChannelBuilderTest {
 
     @Test

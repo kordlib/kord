@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -8,6 +9,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
+@KordUnstableApi
 data class DiscordChannel(
         val id: String,
         val type: ChannelType,
@@ -39,6 +41,7 @@ data class DiscordChannel(
 )
 
 @Serializable
+@KordUnstableApi
 data class Overwrite(
         val id: String,
         val type: String,

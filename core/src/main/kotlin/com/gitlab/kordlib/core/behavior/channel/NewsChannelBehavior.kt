@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -20,6 +21,7 @@ import com.gitlab.kordlib.rest.json.request.ChannelFollowRequest
 /**
  * The behavior of a Discord News Channel associated to a guild.
  */
+@OptIn(KordUnstableApi::class)
 interface NewsChannelBehavior : GuildMessageChannelBehavior {
 
     /**
@@ -83,6 +85,8 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+
+@OptIn(KordUnstableApi::class)
 suspend inline fun NewsChannelBehavior.edit(builder: NewsChannelModifyBuilder.() -> Unit): NewsChannel {
     val response = kord.rest.channel.patchNewsChannel(id.value, builder)
     val data = ChannelData.from(response)

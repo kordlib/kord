@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -21,6 +22,7 @@ import kotlin.time.days
 /**
  * The behavior of a Discord message channel associated to a [guild].
  */
+@OptIn(KordUnstableApi::class)
 interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBehavior {
 
     /**
@@ -111,6 +113,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(KordUnstableApi::class)
 suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCreateBuilder.() -> Unit): Webhook {
     val response = kord.rest.webhook.createWebhook(id.value, builder)
     val data = WebhookData.from(response)

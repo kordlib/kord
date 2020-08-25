@@ -1,10 +1,12 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordEmoji
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class EmojiData(
         val id: Long,
         val guildId: Long,

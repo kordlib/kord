@@ -1,9 +1,11 @@
 package com.gitlab.kordlib.rest.json.request
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.TargetUserType
 import kotlinx.serialization.*
 
 @Serializable
+@KordUnstableApi
 data class InviteCreateRequest(
         @SerialName("max_age")
         val age: Int? = null,

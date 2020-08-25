@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.live
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.cache.data.ReactionData
 import com.gitlab.kordlib.core.entity.Entity
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.Flow
 suspend fun Message.live() = LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id)
 
 @KordPreview
+@OptIn(KordUnstableApi::class)
 class LiveMessage(message: Message, val guildId: Snowflake?) : AbstractLiveEntity(), Entity by message {
 
     var message: Message = message

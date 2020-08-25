@@ -1,21 +1,22 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.internal.IntDescriptor
-import kotlinx.serialization.internal.StringDescriptor
 
 @Serializable
+@KordUnstableApi
 data class DiscordUnavailableGuild(
         val id: String,
         val unavailable: Boolean? = null
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordGuild(
         val id: String,
         val name: String,
@@ -173,6 +174,7 @@ enum class SystemChannelFlag(val code: Int) {
 }
 
 @Serializable
+@KordUnstableApi
 data class DiscordPartialGuild(
         val id: String,
         val name: String,
@@ -182,6 +184,7 @@ data class DiscordPartialGuild(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordGuildBan(
         @SerialName("guild_id")
         val guildId: String,
@@ -189,17 +192,20 @@ data class DiscordGuildBan(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordGuildIntegrations(
         @SerialName("guild_id")
         val guildId: String
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordIntegrationAccount(val id: String,
                                      val name: String)
 
 
 @Serializable
+@KordUnstableApi
 data class DiscordVoiceServerUpdateData(
         val token: String,
         @SerialName("guild_id")
@@ -208,6 +214,7 @@ data class DiscordVoiceServerUpdateData(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordWebhooksUpdateData(
         @SerialName("guild_id")
         val guildId: String,
@@ -216,6 +223,7 @@ data class DiscordWebhooksUpdateData(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordVoiceState(
         @SerialName("guild_id")
         val guildId: String? = null,

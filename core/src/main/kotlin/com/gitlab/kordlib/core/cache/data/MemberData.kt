@@ -1,15 +1,18 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordAddedGuildMember
 import com.gitlab.kordlib.common.entity.DiscordGuildMember
 import com.gitlab.kordlib.common.entity.DiscordPartialGuildMember
 import com.gitlab.kordlib.common.entity.DiscordUpdatedGuildMember
 import kotlinx.serialization.Serializable
 
+@OptIn(KordUnstableApi::class)
 private val MemberData.id get() = "$userId$guildId"
 
 @Serializable
+@KordUnstableApi
 data class MemberData(
         val userId: Long,
         val guildId: Long,
@@ -36,4 +39,5 @@ data class MemberData(
     }
 }
 
+@OptIn(KordUnstableApi::class)
 fun DiscordGuildMember.toData(userId: String, guildId: String) = MemberData.from(userId, guildId, this)

@@ -1,9 +1,11 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Attachment
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class AttachmentData(
         val id: Long,
         val filename: String,

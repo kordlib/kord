@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.event
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordPresenceUser
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
@@ -11,6 +12,7 @@ import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 
+@OptIn(KordUnstableApi::class)
 class PresenceUpdateEvent(
         val oldUser: User?,
         val user: DiscordPresenceUser,

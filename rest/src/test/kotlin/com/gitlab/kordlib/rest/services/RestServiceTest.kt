@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.services
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.json.request.*
@@ -33,6 +34,7 @@ fun imageBinary(path: String): Image {
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
+@OptIn(KordUnstableApi::class)
 class RestServiceTest {
 
     private val publicGuildId = Snowflake(322850917248663552)

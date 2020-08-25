@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.ratelimit
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordGuild
 import com.gitlab.kordlib.rest.request.JsonRequest
 import com.gitlab.kordlib.rest.route.Route
@@ -20,6 +21,7 @@ import kotlin.time.toJavaDuration
 
 @ExperimentalTime
 @ExperimentalCoroutinesApi
+@OptIn(KordUnstableApi::class)
 abstract class AbstractRequestRateLimiterTest {
 
     abstract fun newRequestRateLimiter(clock: Clock) : RequestRateLimiter

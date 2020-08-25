@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.UserBehavior
@@ -12,6 +13,7 @@ import java.util.*
 /**
  * The details of a [Discord OAuth2](https://discord.com/developers/docs/topics/oauth2) application.
  */
+@OptIn(KordUnstableApi::class)
 class ApplicationInfo(
         val data: ApplicationInfoData,
         override val kord: Kord,

@@ -1,12 +1,15 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordVoiceState
 import kotlinx.serialization.Serializable
 
+@OptIn(KordUnstableApi::class)
 val VoiceStateData.id get() = "$userId$guildId"
 
 @Serializable
+@KordUnstableApi
 data class VoiceStateData(
         val guildId: Long?,
         val channelId: Long?,

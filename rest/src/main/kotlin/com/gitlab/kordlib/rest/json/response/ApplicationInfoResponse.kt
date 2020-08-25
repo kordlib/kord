@@ -2,6 +2,7 @@
 
 package com.gitlab.kordlib.rest.json.response
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordTeam
 import com.gitlab.kordlib.common.entity.DiscordUser
 import kotlinx.serialization.SerialName
@@ -11,6 +12,7 @@ import kotlinx.serialization.Serializable
  * Payload gotten from [GET /oauth2/applications/@me](https://discord.com/developers/docs/topics/oauth2#get-current-application-information)
  */
 @Serializable
+@KordUnstableApi
 data class ApplicationInfoResponse(
         val id: String,
         val name: String,

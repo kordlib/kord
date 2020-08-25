@@ -1,10 +1,12 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordGuildPreview
 import com.gitlab.kordlib.common.entity.GuildFeature
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 class GuildPreviewData(
         /**
          * Guild id.

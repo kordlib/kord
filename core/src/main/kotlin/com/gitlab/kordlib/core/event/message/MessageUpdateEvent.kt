@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.event.message
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordPartialMessage
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
@@ -11,6 +12,7 @@ import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 
+@OptIn(KordUnstableApi::class)
 class MessageUpdateEvent (
         val messageId: Snowflake,
         val channelId: Snowflake,

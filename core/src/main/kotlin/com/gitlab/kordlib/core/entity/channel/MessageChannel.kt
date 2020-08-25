@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.behavior.MessageBehavior
@@ -13,6 +14,7 @@ import java.time.Instant
 /**
  * An instance of a Discord channel that can use messages.
  */
+@OptIn(KordUnstableApi::class)
 interface MessageChannel : Channel, MessageChannelBehavior {
 
     /**

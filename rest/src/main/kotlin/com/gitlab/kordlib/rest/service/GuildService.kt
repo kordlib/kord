@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.service
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordChannel
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
@@ -20,6 +21,7 @@ import com.gitlab.kordlib.common.entity.DiscordGuild
 class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit) = call(Route.GuildPost) {
+        @OptIn(KordUnstableApi::class)
         body(GuildCreateRequest.serializer(), GuildCreateBuilder().apply(builder).toRequest())
     }
 
@@ -54,6 +56,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
+    @OptIn(KordUnstableApi::class)
     suspend fun createGuildChannel(guildId: String, channel: GuildCreateChannelRequest, reason: String? = null) = call(Route.GuildChannelsPost) {
         keys[Route.GuildId] = guildId
         body(GuildCreateChannelRequest.serializer(), channel)
@@ -234,21 +237,25 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
 
 }
 
+@OptIn(KordUnstableApi::class)
 suspend inline fun GuildService.createTextChannel(guildId: String, builder: TextChannelCreateBuilder.() -> Unit): DiscordChannel {
     val createBuilder = TextChannelCreateBuilder().apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
+@OptIn(KordUnstableApi::class)
 suspend inline fun GuildService.createNewsChannel(guildId: String, builder: NewsChannelCreateBuilder.() -> Unit): DiscordChannel {
     val createBuilder = NewsChannelCreateBuilder().apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
+@OptIn(KordUnstableApi::class)
 suspend inline fun GuildService.createVoiceChannel(guildId: String, builder: VoiceChannelCreateBuilder.() -> Unit): DiscordChannel {
     val createBuilder = VoiceChannelCreateBuilder().apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
+@OptIn(KordUnstableApi::class)
 suspend inline fun GuildService.createCategory(guildId: String, builder: CategoryCreateBuilder.() -> Unit): DiscordChannel {
     val createBuilder = CategoryCreateBuilder().apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)

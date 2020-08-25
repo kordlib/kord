@@ -1,7 +1,9 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.json.response.ApplicationInfoResponse
 
+@KordUnstableApi
 data class ApplicationInfoData(
         val id: Long,
         val name: String,

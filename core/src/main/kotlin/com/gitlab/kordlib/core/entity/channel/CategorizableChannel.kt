@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.behavior.channel.CategoryBehavior
 import com.gitlab.kordlib.core.cache.data.InviteData
@@ -11,6 +12,7 @@ import com.gitlab.kordlib.rest.request.RestRequestException
 /**
  * An instance of a Discord channel associated to a [category].
  */
+@OptIn(KordUnstableApi::class)
 interface CategorizableChannel : GuildChannel {
 
     /**

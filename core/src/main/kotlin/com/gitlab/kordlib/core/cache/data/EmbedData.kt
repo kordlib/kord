@@ -1,9 +1,11 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Embed
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class EmbedData(
         val title: String? = null,
         val type: String? = null,
@@ -41,6 +43,7 @@ data class EmbedData(
 }
 
 @Serializable
+@KordUnstableApi
 data class EmbedFooterData(
         val text: String,
         val iconUrl: String? = null,
@@ -54,6 +57,7 @@ data class EmbedFooterData(
 }
 
 @Serializable
+@KordUnstableApi
 data class EmbedImageData(
         val url: String? = null,
         val proxyUrl: String? = null,
@@ -68,6 +72,7 @@ data class EmbedImageData(
 }
 
 @Serializable
+@KordUnstableApi
 data class EmbedThumbnailData(
         val url: String? = null,
         val proxyUrl: String? = null,
@@ -82,6 +87,7 @@ data class EmbedThumbnailData(
 }
 
 @Serializable
+@KordUnstableApi
 data class EmbedVideoData(
         val url: String? = null,
         val height: Int? = null,
@@ -95,6 +101,7 @@ data class EmbedVideoData(
 }
 
 @Serializable
+@KordUnstableApi
 data class EmbedProviderData(
         val name: String? = null,
         val url: String? = null
@@ -107,6 +114,7 @@ data class EmbedProviderData(
 }
 
 @Serializable
+@KordUnstableApi
 data class EmbedAuthorData(
         val name: String? = null,
         val url: String? = null,
@@ -121,6 +129,7 @@ data class EmbedAuthorData(
 }
 
 @Serializable
+@KordUnstableApi
 data class EmbedFieldData(
         val name: String,
         val value: String,

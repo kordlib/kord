@@ -1,12 +1,15 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.Serializable
 
+@OptIn(KordUnstableApi::class)
 internal val MessageData.authorId get() = author?.id
 
 @Serializable
+@KordUnstableApi
 data class MessageData(
         val id: Long,
         val channelId: Long,
@@ -119,4 +122,5 @@ data class MessageData(
     }
 }
 
+@OptIn(KordUnstableApi::class)
 fun DiscordMessage.toData() = MessageData.from(this)

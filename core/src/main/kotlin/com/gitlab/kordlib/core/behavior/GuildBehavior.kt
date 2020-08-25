@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -37,6 +38,7 @@ import com.gitlab.kordlib.rest.service.RestClient
 /**
  * The behavior of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
  */
+@OptIn(KordUnstableApi::class)
 interface GuildBehavior : Entity, Strategizable {
     /**
      * Requests to get all present bans for this guild.
@@ -389,6 +391,7 @@ interface GuildBehavior : Entity, Strategizable {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(KordUnstableApi::class)
 suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): Guild {
     val response = kord.rest.guild.modifyGuild(id.value, builder)
     val data = GuildData.from(response)
@@ -407,6 +410,7 @@ suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> U
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(KordUnstableApi::class)
 suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
     val response = kord.rest.guild.createTextChannel(id.value, builder)
     val data = ChannelData.from(response)
@@ -422,6 +426,7 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @Suppress("NAME_SHADOWING")
+@OptIn(KordUnstableApi::class)
 suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
     val response = kord.rest.guild.createVoiceChannel(id.value, builder)
     val data = ChannelData.from(response)
@@ -437,6 +442,7 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @KordPreview
+@OptIn(KordUnstableApi::class)
 suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
     val response = kord.rest.guild.createNewsChannel(id.value, builder)
     val data = ChannelData.from(response)
@@ -451,6 +457,7 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(KordUnstableApi::class)
 suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
     val response = kord.rest.guild.createCategory(id.value, builder)
     val data = ChannelData.from(response)
@@ -476,6 +483,7 @@ suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPosit
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(KordUnstableApi::class)
 @Suppress("NAME_SHADOWING")
 suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyBuilder.() -> Unit): Flow<Role> {
     val response = kord.rest.guild.modifyGuildRolePosition(id.value, builder)
@@ -491,6 +499,7 @@ suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyB
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @Suppress("NAME_SHADOWING")
+@KordUnstableApi
 suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit): Role {
     val response = kord.rest.guild.createGuildRole(id.value, builder)
     val data = RoleData.from(id.value, response)

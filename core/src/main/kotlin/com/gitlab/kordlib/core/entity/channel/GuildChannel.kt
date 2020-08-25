@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Permission
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
@@ -13,6 +14,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 /**
  * An instance of a Discord channel associated to a [guild].
  */
+@OptIn(KordUnstableApi::class)
 interface GuildChannel : Channel, GuildChannelBehavior {
 
     override val guildId: Snowflake

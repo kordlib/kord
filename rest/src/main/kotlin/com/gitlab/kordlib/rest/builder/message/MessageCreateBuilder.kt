@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.builder.message
 
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.AllowedMentions
@@ -13,7 +14,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 @KordDsl
-class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
+class MessageCreateBuilder : RequestBuilder<@OptIn(KordUnstableApi::class)  MultipartMessageCreateRequest> {
     var content: String? = null
     var nonce: String? = null
     var tts: Boolean? = null
@@ -42,6 +43,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
         allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
             MessageCreateRequest(content, nonce, tts, embed?.toRequest(), allowedMentions?.build()),
             files
@@ -77,6 +79,7 @@ class AllowedMentionsBuilder {
      */
     operator fun MentionTypes.unaryPlus() = types.add(this)
 
+    @OptIn(KordUnstableApi::class)
     fun build(): AllowedMentions = AllowedMentions(
             parse = types.map { it.serialName },
             users = users.map { it.value },

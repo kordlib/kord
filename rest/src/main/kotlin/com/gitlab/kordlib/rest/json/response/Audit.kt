@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.json.response
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
@@ -18,6 +19,7 @@ import mu.KotlinLogging
 private val auditLogger = KotlinLogging.logger { }
 
 @Serializable
+@KordUnstableApi
 data class AuditLogResponse(
         val webhooks: List<DiscordWebhook>,
         val users: List<DiscordUser>,
@@ -26,6 +28,7 @@ data class AuditLogResponse(
 )
 
 @Serializable
+@KordUnstableApi
 data class AuditLogEntryResponse(
         @SerialName("target_id")
         val targetId: String?,
@@ -39,6 +42,7 @@ data class AuditLogEntryResponse(
         val reason: String? = null
 )
 
+@KordUnstableApi
 @Serializable(with = AuditLogChangeResponse.AuditLogChangeSerializer::class)
 sealed class AuditLogChangeResponse<T> {
     abstract val old: T?
@@ -136,60 +140,131 @@ sealed class AuditLogChangeResponse<T> {
 }
 
 
+@KordUnstableApi
 data class HoistLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
+
+@KordUnstableApi
 data class NSFWLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
+
+@KordUnstableApi
 data class MentionableLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
+
+@KordUnstableApi
 data class TemporaryLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
+
+@KordUnstableApi
 data class DeafLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
+
+@KordUnstableApi
 data class MuteLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
+
+@KordUnstableApi
 data class WidgetEnabledLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
+
+@KordUnstableApi
 data class PermissionsLogChange(override val old: Permissions?, override val new: Permissions?) : AuditLogChangeResponse<Permissions>() {
     internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions { +it } },
             new?.let { Permissions { +it } }
     )
 }
 
+@KordUnstableApi
 data class AllowLogChange(override val old: Permissions?, override val new: Permissions?) : AuditLogChangeResponse<Permissions>() {
     internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions { +it } },
             new?.let { Permissions { +it } }
     )
 }
 
-
+@KordUnstableApi
 data class DenyLogChange(override val old: Permissions?, override val new: Permissions?) : AuditLogChangeResponse<Permissions>() {
     internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions { +it } },
             new?.let { Permissions { +it } }
     )
 }
 
+@KordUnstableApi
 data class NameLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class VanityUrlLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class SplashHashLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class RegionLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class AFKChannelLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class WidgetChannelLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class IconHashLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class OwnerLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class TopicLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class ApplicationLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class CodeLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class ChannelLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class InviterLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class NickLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class AvatarHashLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class IdLogChange(override val old: String?, override val new: String?) : AuditLogChangeResponse<String>()
+
+@KordUnstableApi
 data class AFKTimeoutLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
+
+@KordUnstableApi
 data class PruneDeleteDaysLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
+
+@KordUnstableApi
 data class PositionLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
+
+@KordUnstableApi
 data class BitrateLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
+
+@KordUnstableApi
 data class MaxUsesLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
+
+@KordUnstableApi
 data class UsesLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
+
+@KordUnstableApi
 data class MaxAgeLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
+
+@KordUnstableApi
 data class ColorLogChange(override val old: Int?, override val new: Int?) : AuditLogChangeResponse<Int>()
+
+@KordUnstableApi
 data class AddLogChange(override val old: List<DiscordAuditLogRoleChange>?, override val new: List<DiscordAuditLogRoleChange>?) : AuditLogChangeResponse<List<DiscordAuditLogRoleChange>>()
+
+@KordUnstableApi
 data class RemoveLogChange(override val old: List<DiscordAuditLogRoleChange>?, override val new: List<DiscordAuditLogRoleChange>?) : AuditLogChangeResponse<List<DiscordAuditLogRoleChange>>()
+
+@KordUnstableApi
 data class PermissionOverwriteLogChange(override val old: List<Overwrite>?, override val new: List<Overwrite>?) : AuditLogChangeResponse<List<Overwrite>>()
 
+
+@KordUnstableApi
 data class MFALogChange(override val old: MFALevel?, override val new: MFALevel?) : AuditLogChangeResponse<MFALevel>() {
     internal constructor(old: Int?, new: Int?) : this(
             MFALevel.values().firstOrNull { it.code == new },
@@ -197,6 +272,8 @@ data class MFALogChange(override val old: MFALevel?, override val new: MFALevel?
     )
 }
 
+
+@KordUnstableApi
 data class DefaultMessageNotificationLevelLogChange(override val old: DefaultMessageNotificationLevel?, override val new: DefaultMessageNotificationLevel?) : AuditLogChangeResponse<DefaultMessageNotificationLevel>() {
     internal constructor(old: Int?, new: Int?) : this(
             DefaultMessageNotificationLevel.values().firstOrNull { it.code == new },
@@ -204,6 +281,8 @@ data class DefaultMessageNotificationLevelLogChange(override val old: DefaultMes
     )
 }
 
+
+@KordUnstableApi
 data class VerificationLevelLogChange(override val old: VerificationLevel?, override val new: VerificationLevel?) : AuditLogChangeResponse<VerificationLevel>() {
     internal constructor(old: Int?, new: Int?) : this(
             VerificationLevel.values().firstOrNull { it.code == new },
@@ -211,6 +290,8 @@ data class VerificationLevelLogChange(override val old: VerificationLevel?, over
     )
 }
 
+
+@KordUnstableApi
 data class ExplicitContentFilterLogChange(override val old: ExplicitContentFilter?, override val new: ExplicitContentFilter?) : AuditLogChangeResponse<ExplicitContentFilter>() {
     internal constructor(old: Int?, new: Int?) : this(
             ExplicitContentFilter.values().firstOrNull { it.code == new },
@@ -218,6 +299,8 @@ data class ExplicitContentFilterLogChange(override val old: ExplicitContentFilte
     )
 }
 
+
+@KordUnstableApi
 object Unknown : AuditLogChangeResponse<Nothing>() {
     override val old = null
     override val new = null
@@ -289,6 +372,7 @@ enum class AuditLogEventResponse(val code: Int) {
 }
 
 @Serializable
+@KordUnstableApi
 data class AuditEntryInfoResponse(
         @SerialName("delete_member_days")
         val deleteMemberDays: String? = null,

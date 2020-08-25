@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.builder.message
 
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.*
 import java.awt.Color
@@ -13,7 +14,7 @@ import java.time.format.DateTimeFormatter
  * Inline Markdown links are supported in in all description-like fields.
  */
 @KordDsl
-class EmbedBuilder : RequestBuilder<EmbedRequest> {
+class EmbedBuilder : RequestBuilder<@OptIn(KordUnstableApi::class) EmbedRequest> {
     /**
      * The title of the embed. Limited to the length of [Limits.title].
      */
@@ -92,6 +93,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         fields += Field().apply(builder)
     }
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest(): EmbedRequest = EmbedRequest(
             title,
             "embed",
@@ -107,18 +109,19 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
     )
 
     @KordDsl
-    class Thumbnail : RequestBuilder<EmbedThumbnailRequest> {
+    class Thumbnail : RequestBuilder<@OptIn(KordUnstableApi::class) EmbedThumbnailRequest> {
 
         /**
          * The image url of the thumbnail. This field is required.
          */
         lateinit var url: String
 
+        @OptIn(KordUnstableApi::class)
         override fun toRequest() = EmbedThumbnailRequest(url)
     }
 
     @KordDsl
-    class Footer : RequestBuilder<EmbedFooterRequest> {
+    class Footer : RequestBuilder<@OptIn(KordUnstableApi::class) EmbedFooterRequest> {
 
         /**
          * The text of the footer. This field is required and limited to the length of [Limits.text].
@@ -126,10 +129,11 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         lateinit var text: String
 
         /**
-         * The icon url to displqy.
+         * The icon url to display.
          */
         var icon: String? = null
 
+        @OptIn(KordUnstableApi::class)
         override fun toRequest() = EmbedFooterRequest(text, icon)
 
         object Limits {
@@ -138,7 +142,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
     }
 
     @KordDsl
-    class Author : RequestBuilder<EmbedAuthorRequest> {
+    class Author : RequestBuilder<@OptIn(KordUnstableApi::class) EmbedAuthorRequest> {
 
         /**
          * The name of the author. This field is required if [url] is not null.
@@ -155,6 +159,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
          */
         var icon: String? = null
 
+        @OptIn(KordUnstableApi::class)
         override fun toRequest() = EmbedAuthorRequest(name, url, icon)
 
         object Limits {
@@ -166,7 +171,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
     }
 
     @KordDsl
-    class Field : RequestBuilder<EmbedFieldRequest> {
+    class Field : RequestBuilder<@OptIn(KordUnstableApi::class) EmbedFieldRequest> {
 
         /**
          *  The value or 'description' of the [Field]. Limited to the length of [Limits.value].
@@ -179,6 +184,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         lateinit var name: String
         var inline: Boolean = false
 
+        @OptIn(KordUnstableApi::class)
         override fun toRequest() = EmbedFieldRequest(name, value, inline)
 
         object Limits {

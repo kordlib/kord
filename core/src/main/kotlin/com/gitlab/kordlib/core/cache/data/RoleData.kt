@@ -1,12 +1,14 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordGuildRole
 import com.gitlab.kordlib.common.entity.DiscordRole
 import com.gitlab.kordlib.common.entity.Permissions
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class RoleData(
         val id: Long,
         val guildId: Long,

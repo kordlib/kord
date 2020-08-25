@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.common.entity.ChannelType.*
 import com.gitlab.kordlib.common.entity.Snowflake
@@ -12,6 +13,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 /**
  * An instance of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
  */
+@OptIn(KordUnstableApi::class)
 interface Channel : ChannelBehavior {
     val data: ChannelData
 

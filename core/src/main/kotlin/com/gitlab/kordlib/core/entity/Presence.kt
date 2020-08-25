@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.common.exception.RequestException
@@ -13,6 +14,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
+@OptIn(KordUnstableApi::class)
 class Presence(
         val data: PresenceData,
         override val kord: Kord,
@@ -61,6 +63,7 @@ class Presence(
 
 }
 
+@OptIn(KordUnstableApi::class)
 class ClientStatus(val data: ClientStatusData) {
     val desktop: Client.Desktop? get() = data.desktop?.let { Client.Desktop(it) }
     val mobile: Client.Mobile? get() = data.mobile?.let { Client.Mobile(it) }

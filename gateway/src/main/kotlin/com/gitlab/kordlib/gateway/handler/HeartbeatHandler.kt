@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.gateway.handler
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.gateway.*
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlin.time.*
 
 @ObsoleteCoroutinesApi
+@OptIn(KordUnstableApi::class)
 internal class HeartbeatHandler(
         flow: Flow<Event>,
         private val send: suspend (Command) -> Unit,

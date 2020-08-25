@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.TargetUserType
 import com.gitlab.kordlib.common.exception.RequestException
@@ -19,6 +20,7 @@ import com.gitlab.kordlib.core.toSnowflakeOrNull
 /**
  * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite).
  */
+@OptIn(KordUnstableApi::class)
 data class Invite(
         val data: InviteData,
         override val kord: Kord,

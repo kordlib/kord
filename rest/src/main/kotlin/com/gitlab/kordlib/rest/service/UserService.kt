@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.service
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.builder.user.CurrentUserModifyBuilder
 import com.gitlab.kordlib.rest.builder.user.GroupDMCreateBuilder
 import com.gitlab.kordlib.rest.json.request.CurrentUserModifyRequest
@@ -31,14 +32,17 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
 
     suspend fun getUserConnections() = call(Route.UserConnectionsGet)
 
+    @OptIn(KordUnstableApi::class)
     suspend fun createDM(dm: DMCreateRequest) = call(Route.DMPost) {
         body(DMCreateRequest.serializer(), dm)
     }
 
+    @OptIn(KordUnstableApi::class)
     suspend inline fun createGroupDM(builder: GroupDMCreateBuilder.() -> Unit) = call(Route.DMPost) {
         body(GroupDMCreateRequest.serializer(), GroupDMCreateBuilder().apply(builder).toRequest())
     }
 
+    @OptIn(KordUnstableApi::class)
     suspend inline fun modifyCurrentUser(builder: CurrentUserModifyBuilder.() -> Unit) = call(Route.CurrentUserPatch) {
         body(CurrentUserModifyRequest.serializer(), CurrentUserModifyBuilder().apply(builder).toRequest())
     }

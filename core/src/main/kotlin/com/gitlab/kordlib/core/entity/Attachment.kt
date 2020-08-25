@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.AttachmentData
@@ -10,6 +11,7 @@ import java.util.*
  *
  * A file attached to a [Message].
  */
+@OptIn(KordUnstableApi::class)
 data class Attachment(val data: AttachmentData, override val kord: Kord) : Entity {
 
     override val id: Snowflake

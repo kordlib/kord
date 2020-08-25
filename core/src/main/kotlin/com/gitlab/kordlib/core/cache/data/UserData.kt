@@ -1,12 +1,14 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordUser
 import com.gitlab.kordlib.common.entity.Premium
 import com.gitlab.kordlib.common.entity.UserFlags
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class UserData(
         val id: Long,
         val username: String,
@@ -41,4 +43,5 @@ data class UserData(
     }
 }
 
+@OptIn(KordUnstableApi::class)
 fun DiscordUser.toData() = UserData.from(this)

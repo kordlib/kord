@@ -3,11 +3,13 @@ package com.gitlab.kordlib.core.cache
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.api.query
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.core.cache.data.*
 
 /**
  * Registers all Kord data classes for this cache
  */
+@OptIn(KordUnstableApi::class)
 internal suspend fun DataCache.registerKordData() = register(
         RoleData.description,
         ChannelData.description,
@@ -24,6 +26,7 @@ internal suspend fun DataCache.registerKordData() = register(
 /**
  * Removes all cached Kord data instances from this cache
  */
+@OptIn(KordUnstableApi::class)
 internal suspend fun DataCache.removeKordData() {
     query<RoleData>().remove()
     query<ChannelData>().remove()

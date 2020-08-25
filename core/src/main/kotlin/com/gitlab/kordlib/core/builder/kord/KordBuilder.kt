@@ -3,6 +3,7 @@
 package com.gitlab.kordlib.core.builder.kord
 
 import com.gitlab.kordlib.cache.api.DataCache
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.core.ClientResources
 import com.gitlab.kordlib.core.Kord
@@ -49,6 +50,7 @@ operator fun DefaultGateway.Companion.invoke(resources: ClientResources, retry: 
 
 private val logger = KotlinLogging.logger { }
 
+@OptIn(KordUnstableApi::class)
 class KordBuilder(val token: String) {
     private var shardRange: (recommended: Int) -> Iterable<Int> = { 0 until it }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> = { resources, shards ->

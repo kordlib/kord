@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.ActivityType
 import com.gitlab.kordlib.common.entity.DiscordPartialEmoji
 import com.gitlab.kordlib.core.cache.data.ActivityData
 import com.gitlab.kordlib.core.toInstant
 import java.time.Instant
 
+@OptIn(KordUnstableApi::class)
 class Activity(val data: ActivityData) {
 
     val name: String get() = data.name

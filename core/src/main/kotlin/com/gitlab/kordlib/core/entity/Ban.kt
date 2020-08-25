@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -13,6 +14,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 /**
  * An instance of a [Discord Ban](https://discord.com/developers/docs/resources/guild#ban-object).
  */
+@OptIn(KordUnstableApi::class)
 class Ban(
         val data: BanData,
         override val kord: Kord,

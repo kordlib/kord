@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.gateway
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -9,6 +10,7 @@ import kotlin.time.milliseconds
 
 data class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
 
+@OptIn(KordUnstableApi::class)
 class MasterGateway(
         val gateways: Map<Int, Gateway>
 ) {

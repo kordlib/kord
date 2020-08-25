@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.cache.data.MemberData
 import com.gitlab.kordlib.core.cache.data.UserData
@@ -9,6 +10,7 @@ import io.mockk.every
 import io.mockk.mockk
 import mockKord
 
+@OptIn(KordUnstableApi::class)
 internal class MemberTest : GuildEntityEqualityTest<Member> by GuildEntityEqualityTest({ id, guildId ->
     val kord = mockKord()
     val memberData = mockk<MemberData>()

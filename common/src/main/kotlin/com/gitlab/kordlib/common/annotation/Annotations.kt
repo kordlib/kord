@@ -51,3 +51,20 @@ annotation class KordExperimental
 @Experimental(level = Experimental.Level.WARNING)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
 annotation class KordUnsafe
+
+/**
+ * Marks a Kord-related API as unstable.
+ *
+ * Kord marks targets as unstable if they are subject to changes outside the development process.
+ * They offer no binary compatibility between versions.
+ *
+ * Consumers of this API are advised to lock the Kord dependency to a fixed version as even [patch](https://semver.org/)
+ * versions are allowed to make changes to fields annotated with [KordUnstableApi].
+ *
+ * Compared to [KordExperimental] and [KordPreview], targets annotated with [KordUnstableApi] have no intention
+ * to mature into stable and only serve as a warning to the user.
+ */
+@MustBeDocumented
+@Retention(value = AnnotationRetention.BINARY)
+@RequiresOptIn(level = RequiresOptIn.Level.WARNING)
+annotation class KordUnstableApi

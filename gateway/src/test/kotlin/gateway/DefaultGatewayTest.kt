@@ -1,5 +1,6 @@
 package gateway
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.ActivityType
 import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.Status
@@ -29,6 +30,7 @@ import kotlin.time.toKotlinDuration
 @KtorExperimentalAPI
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
+@KordUnstableApi
 class DefaultGatewayTest {
     @Test
     @Disabled

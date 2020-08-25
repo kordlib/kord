@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.event.message
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
@@ -17,6 +18,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 
+@OptIn(KordUnstableApi::class)
 class ReactionRemoveEmojiEvent(
         val data: ReactionRemoveEmojiData,
         override val kord: Kord,

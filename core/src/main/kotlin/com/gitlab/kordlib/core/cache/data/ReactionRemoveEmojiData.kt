@@ -1,10 +1,12 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.gateway.DiscordRemovedEmoji
 import com.gitlab.kordlib.gateway.DiscordRemovedReactionEmoji
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class RemovedReactionData(val id: Long?, val name: String) {
     companion object {
         fun from(entity: DiscordRemovedReactionEmoji): RemovedReactionData = with(entity) {
@@ -14,6 +16,7 @@ data class RemovedReactionData(val id: Long?, val name: String) {
 }
 
 @Serializable
+@KordUnstableApi
 data class ReactionRemoveEmojiData(
         /**
          * The id of the channel.

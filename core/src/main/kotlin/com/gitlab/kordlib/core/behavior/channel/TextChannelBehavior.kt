@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -70,6 +71,7 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(KordUnstableApi::class)
 suspend inline fun TextChannelBehavior.edit(builder: TextChannelModifyBuilder.() -> Unit): TextChannel {
     val response = kord.rest.channel.patchTextChannel(id.value, builder)
 

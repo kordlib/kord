@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -8,6 +9,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
+@KordUnstableApi
 data class DiscordActivity(
         val name: String,
         val type: ActivityType,
@@ -26,18 +28,21 @@ data class DiscordActivity(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordActivityTimeStamps(
         val start: Long? = null,
         val end: Long? = null
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordActivityParty(
         val id: String? = null,
         val size: List<Int>? = null
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordActivityAssets(
         @SerialName("large_image")
         val largeImage: String? = null,
@@ -50,6 +55,7 @@ data class DiscordActivityAssets(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordActivitySecrets(
         val join: String? = null,
         val spectate: String? = null,

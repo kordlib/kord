@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.TargetUserType
 import com.gitlab.kordlib.rest.json.response.InviteResponse
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class InviteData(
         val code: String,
         val guild: PartialGuildData?,

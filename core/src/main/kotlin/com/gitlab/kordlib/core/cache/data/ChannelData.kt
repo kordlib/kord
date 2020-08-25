@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.common.entity.DiscordChannel
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class ChannelData(
         val id: Long,
         val type: ChannelType,
@@ -57,4 +59,5 @@ data class ChannelData(
 
 }
 
+@OptIn(KordUnstableApi::class)
 fun DiscordChannel.toData() = ChannelData.from(this)

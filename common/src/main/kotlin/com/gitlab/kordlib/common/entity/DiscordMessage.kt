@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -9,6 +10,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
+@KordUnstableApi
 data class DiscordMessage(
         val id: String,
         @SerialName("channel_id")
@@ -44,6 +46,7 @@ data class DiscordMessage(
         val flags: Flags? = null
 )
 @Serializable
+@KordUnstableApi
 data class DiscordPartialMessage(
         val id: String,
         @SerialName("channel_id")
@@ -80,6 +83,7 @@ data class DiscordPartialMessage(
 )
 
 @Serializable
+@KordUnstableApi
 data class MessageReference(
         @SerialName("message_id")
         val id: String? = null,
@@ -90,6 +94,7 @@ data class MessageReference(
 )
 
 @Serializable
+@KordUnstableApi
 data class MentionedChannel(
         val id: String,
         @SerialName("guild_id")
@@ -161,6 +166,7 @@ data class Flags internal constructor(val code: Int) {
 }
 
 @Serializable
+@KordUnstableApi
 data class Attachment(
         val id: String,
         val filename: String? = null,
@@ -173,6 +179,7 @@ data class Attachment(
 )
 
 @Serializable
+@KordUnstableApi
 data class Embed(
         val title: String? = null,
         val type: String? = null,
@@ -189,6 +196,7 @@ data class Embed(
         val fields: List<Field>? = null
 ) {
     @Serializable
+    @KordUnstableApi
     data class Footer(
             val text: String,
             @SerialName("icon_url")
@@ -198,6 +206,7 @@ data class Embed(
     )
 
     @Serializable
+    @KordUnstableApi
     data class Image(
             val url: String? = null,
             @SerialName("proxy_url")
@@ -207,6 +216,7 @@ data class Embed(
     )
 
     @Serializable
+    @KordUnstableApi
     data class Thumbnail(
             val url: String? = null,
             @SerialName("proxy_url")
@@ -216,12 +226,15 @@ data class Embed(
     )
 
     @Serializable
+    @KordUnstableApi
     data class Video(val url: String? = null, val height: Int? = null, val width: Int? = null)
 
     @Serializable
+    @KordUnstableApi
     data class Provider(val name: String? = null, val url: String? = null)
 
     @Serializable
+    @KordUnstableApi
     data class Author(
             val name: String? = null,
             val url: String? = null,
@@ -232,10 +245,12 @@ data class Embed(
     )
 
     @Serializable
+    @KordUnstableApi
     data class Field(val name: String, val value: String, val inline: Boolean? = null)
 }
 
 @Serializable
+@KordUnstableApi
 data class Reaction(
         val count: Int,
         val me: Boolean,
@@ -243,9 +258,11 @@ data class Reaction(
 )
 
 @Serializable
+@KordUnstableApi
 data class MessageActivity(val type: Int, @SerialName("party_id") val partyId: String? = null)
 
 @Serializable
+@KordUnstableApi
 data class MessageApplication(
         val id: String,
         @SerialName("cover_image")
@@ -256,6 +273,7 @@ data class MessageApplication(
 )
 
 @Serializable
+@KordUnstableApi
 data class DeletedMessage(
         val id: String,
         @SerialName("channel_id")
@@ -265,6 +283,7 @@ data class DeletedMessage(
 )
 
 @Serializable
+@KordUnstableApi
 data class BulkDeleteData(
         val ids: List<String>,
         @SerialName("channel_id")
@@ -274,6 +293,7 @@ data class BulkDeleteData(
 )
 
 @Serializable
+@KordUnstableApi
 data class MessageReaction(
         @SerialName("user_id")
         val userId: String,
@@ -288,6 +308,7 @@ data class MessageReaction(
 )
 
 @Serializable
+@KordUnstableApi
 data class AllRemovedMessageReactions(
         @SerialName("channel_id")
         val channelId: String,

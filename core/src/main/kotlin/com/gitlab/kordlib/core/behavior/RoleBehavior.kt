@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.RoleData
@@ -20,6 +21,7 @@ import java.util.*
 /**
  * The behavior of a [Discord Role](https://discord.com/developers/docs/topics/permissions#role-object) associated to a [guild].
  */
+@OptIn(KordUnstableApi::class)
 interface RoleBehavior : Entity, Strategizable {
     /**
      * The id of the guild this channel is associated to.
@@ -98,6 +100,7 @@ interface RoleBehavior : Entity, Strategizable {
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @Suppress("NAME_SHADOWING")
+@OptIn(KordUnstableApi::class)
 suspend inline fun RoleBehavior.edit(builder: RoleModifyBuilder.() -> Unit): Role {
     val response = kord.rest.guild.modifyGuildRole(guildId = guildId.value, roleId = id.value, builder = builder)
     val data = RoleData.from(id.value, response)

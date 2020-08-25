@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.*
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -9,6 +10,7 @@ import kotlinx.serialization.json.*
  * An instance of a [Discord shard](https://discord.com/developers/docs/topics/gateway#sharding).
  */
 @Serializable
+@KordUnstableApi
 data class DiscordShard(val index: Int, val count: Int) {
 
     @Serializer(forClass = DiscordShard::class)

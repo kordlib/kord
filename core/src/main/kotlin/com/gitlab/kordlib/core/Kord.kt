@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordUnsafe
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
@@ -36,6 +37,7 @@ import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 val kordLogger = KotlinLogging.logger { }
 
+@OptIn(KordUnstableApi::class)
 class Kord(
         val resources: ClientResources,
         val cache: DataCache,
@@ -53,7 +55,7 @@ class Kord(
 
     val defaultSupplier: EntitySupplier = resources.defaultStrategy.supply(this)
 
-    @OptIn(KordUnsafe::class)
+    @OptIn(KordUnsafe::class, KordExperimental::class)
     val unsafe: Unsafe = Unsafe(this)
 
     val events get() = eventPublisher.asFlow()

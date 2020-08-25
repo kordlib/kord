@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.builder.guild
 
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DefaultMessageNotificationLevel
 import com.gitlab.kordlib.common.entity.ExplicitContentFilter
 import com.gitlab.kordlib.common.entity.Snowflake
@@ -16,11 +17,12 @@ import com.gitlab.kordlib.rest.json.request.GuildRoleCreateRequest
 import kotlin.random.Random
 
 @KordDsl
-class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
+class GuildCreateBuilder : RequestBuilder<@OptIn(KordUnstableApi::class) GuildCreateRequest> {
 
     /**
      * Iterator that generates unique ids for roles and channels..
      */
+    @OptIn(KordUnstableApi::class)
     val snowflakeGenerator by lazy(LazyThreadSafetyMode.NONE) {
         generateSequence { Random.nextLong(0, Long.MAX_VALUE) }.filter {
             it !in roles.map { role -> role.id?.toLong() }
@@ -43,6 +45,7 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
     var explicitContentFilter: ExplicitContentFilter? = null
     var everyoneRole: RoleCreateBuilder? = null
     val roles: MutableList<GuildRoleCreateRequest> = mutableListOf()
+    @OptIn(KordUnstableApi::class)
     val channels: MutableList<GuildCreateChannelRequest> = mutableListOf()
 
     /**
@@ -60,21 +63,25 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
      */
     val systemChannelId: Snowflake? = null
 
+    @OptIn(KordUnstableApi::class)//TODO, replace 'copy'
     inline fun textChannel(id: Snowflake = newUniqueSnowflake(), builder: TextChannelCreateBuilder.() -> Unit): Snowflake {
         channels.add(TextChannelCreateBuilder().apply(builder).toRequest().copy(id = id.value))
         return id
     }
 
+    @OptIn(KordUnstableApi::class)//TODO, replace 'copy'
     inline fun newsChannel(id: Snowflake = newUniqueSnowflake(), builder: NewsChannelCreateBuilder.() -> Unit): Snowflake {
         channels.add(NewsChannelCreateBuilder().apply(builder).toRequest().copy(id = id.value))
         return id
     }
 
+    @OptIn(KordUnstableApi::class)//TODO, replace 'copy'
     inline fun category(id: Snowflake = newUniqueSnowflake(), builder: CategoryCreateBuilder.() -> Unit): Snowflake {
         channels.add(CategoryCreateBuilder().apply(builder).toRequest().copy(id = id.value))
         return id
     }
 
+    @OptIn(KordUnstableApi::class)//TODO, replace 'copy'
     inline fun role(id: Snowflake = newUniqueSnowflake(), builder: RoleCreateBuilder.() -> Unit): Snowflake {
         roles += RoleCreateBuilder().apply(builder).toRequest().copy(id = id.value)
         return id
@@ -84,6 +91,7 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
         everyoneRole = RoleCreateBuilder().apply(builder)
     }
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest(): GuildCreateRequest = GuildCreateRequest(
             name,
             region,

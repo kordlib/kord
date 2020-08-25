@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -18,6 +19,7 @@ import java.util.*
 /**
  * An instance of a Discord DM channel.
  */
+@OptIn(KordUnstableApi::class)
 data class DmChannel(
         override val data: ChannelData,
         override val kord: Kord,

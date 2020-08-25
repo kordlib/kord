@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.gateway
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
@@ -31,6 +32,7 @@ sealed class Command {
             element("d", JsonObject.serializer().descriptor)
         }
 
+        @OptIn(KordUnstableApi::class)
         override fun serialize(encoder: Encoder, obj: Command) {
             val composite = encoder.beginStructure(descriptor)
             when (obj) {
@@ -69,6 +71,7 @@ sealed class Command {
 
 
 @Serializable
+@KordUnstableApi
 internal data class Identify(
         internal val token: String,
         val properties: IdentifyProperties,
@@ -84,6 +87,7 @@ internal data class Identify(
 }
 
 @Serializable
+@KordUnstableApi
 data class IdentifyProperties(
         @Required
         @SerialName("\$os")
@@ -95,6 +99,7 @@ data class IdentifyProperties(
 )
 
 @Serializable
+@KordUnstableApi
 data class GuildMembersChunkData(
         @SerialName("guild_id")
         val guildId: String,
@@ -115,6 +120,7 @@ data class GuildMembersChunkData(
 )
 
 @Serializable
+@KordUnstableApi
 data class Presence(
         val status: Status,
         val afk: Boolean,
@@ -123,6 +129,7 @@ data class Presence(
 )
 
 @Serializable
+@KordUnstableApi
 internal data class Resume(
         val token: String,
         @SerialName("session_id")
@@ -134,6 +141,7 @@ internal data class Resume(
 }
 
 @Serializable
+@KordUnstableApi
 data class RequestGuildMembers(
         @SerialName("guild_id")
         val guildId: List<String>,
@@ -145,6 +153,7 @@ data class RequestGuildMembers(
 ) : Command()
 
 @Serializable
+@KordUnstableApi
 data class UpdateVoiceStatus(
         @SerialName("guild_id")
         val guildId: String,
@@ -157,6 +166,7 @@ data class UpdateVoiceStatus(
 ) : Command()
 
 @Serializable
+@KordUnstableApi
 data class UpdateStatus(
         val since: Long? = null,
         val game: DiscordActivity? = null,

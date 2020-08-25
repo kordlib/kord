@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.json.response
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordChannel
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.DiscordUser
@@ -8,6 +9,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
+@KordUnstableApi
 data class InviteResponse(
         val code: String,
         val guild: DiscordPartialGuild? = null,
@@ -26,6 +28,7 @@ data class InviteResponse(
 
 
 @Serializable
+@KordUnstableApi
 data class InviteMetaDataResponse(
         val inviter: DiscordUser,
         val uses: Int,
@@ -39,4 +42,5 @@ data class InviteMetaDataResponse(
 )
 
 @Serializable
+@KordUnstableApi
 data class PartialInvite(val code: String? = null)

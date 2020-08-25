@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.gateway
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
@@ -41,7 +42,7 @@ sealed class Event {
             element("d", JsonObject.serializer().descriptor, isOptional = true)
         }
 
-        @OptIn(ExperimentalSerializationApi::class)
+        @OptIn(ExperimentalSerializationApi::class, KordUnstableApi::class)
         override fun deserialize(decoder: Decoder): Event? {
             var op: OpCode? = null
             var data: Event? = null
@@ -86,7 +87,7 @@ sealed class Event {
             }
         }
 
-
+        @OptIn(KordUnstableApi::class)
         private fun getByDispatchEvent(index: Int, decoder: CompositeDecoder, name: String?, sequence: Int?) = when (name) {
             "RESUMED" -> Resumed(decoder.decodeSerializableElement(descriptor, index, ResumedData.serializer()), sequence)
             "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
@@ -192,6 +193,7 @@ object HeartbeatACK : Event()
 object Reconnect : Event()
 
 @Serializable
+@KordUnstableApi
 data class Hello(
         @SerialName("heartbeat_interval")
         val heartbeatInterval: Long,
@@ -199,9 +201,11 @@ data class Hello(
         val traces: List<String>
 ) : Event()
 
+@OptIn(KordUnstableApi::class)
 data class Ready(val data: ReadyData, override val sequence: Int?) : DispatchEvent()
 
 @Serializable
+@KordUnstableApi
 data class ReadyData(
         @SerialName("v")
         val version: Int,
@@ -216,6 +220,7 @@ data class ReadyData(
         val shard: DiscordShard?)
 
 @Serializable
+@KordUnstableApi
 data class Heartbeat(val data: Long) : Event() {
     @Serializer(Heartbeat::class)
     companion object : DeserializationStrategy<Heartbeat> {
@@ -227,9 +232,11 @@ data class Heartbeat(val data: Long) : Event() {
 }
 
 @Serializable
+@KordUnstableApi
 data class Resumed(val data: ResumedData, override val sequence: Int?) : DispatchEvent()
 
 @Serializable
+@KordUnstableApi
 data class ResumedData(
         @SerialName("_trace")
         val traces: List<String>
@@ -245,6 +252,7 @@ data class ResumedData(
 
 
 @Serializable
+@KordUnstableApi
 data class InvalidSession(val resumable: Boolean) : Event() {
     @Serializer(InvalidSession::class)
     companion object : DeserializationStrategy<InvalidSession> {
@@ -255,39 +263,77 @@ data class InvalidSession(val resumable: Boolean) : Event() {
     }
 }
 
-
+@OptIn(KordUnstableApi::class)
 data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class ChannelDelete(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class ChannelPinsUpdate(val pins: DiscordPinsUpdateData, override val sequence: Int?) : DispatchEvent()
 
+@OptIn(KordUnstableApi::class)
 data class TypingStart(val data: DiscordTyping, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildCreate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildUpdate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildDelete(val guild: DiscordUnavailableGuild, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildBanAdd(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegrations, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildMemberAdd(val member: DiscordAddedGuildMember, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildMemberRemove(val member: DiscordRemovedGuildMember, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildMemberUpdate(val member: DiscordUpdatedGuildMember, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildRoleCreate(val role: DiscordGuildRole, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildRoleUpdate(val role: DiscordGuildRole, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildRoleDelete(val role: DiscordDeletedGuildRole, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class GuildMembersChunk(val data: GuildMembersChunkData, override val sequence: Int?) : DispatchEvent()
 
 /**
  * Sent when a new invite to a channel is created.
  */
+@KordUnstableApi
 data class InviteCreate(val invite: DiscordCreatedInvite, override val sequence: Int?) : DispatchEvent()
 
 /**
  * Sent when an invite is deleted.
  */
+@KordUnstableApi
 data class InviteDelete(val invite: DiscordDeletedInvite, override val sequence: Int?) : DispatchEvent()
 
 @Serializable
+@KordUnstableApi
 data class DiscordDeletedInvite(
         /**
          * The channel of the invite.
@@ -306,6 +352,7 @@ data class DiscordDeletedInvite(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordCreatedInvite(
         /**
          * The channel the invite is for.
@@ -363,6 +410,7 @@ data class DiscordCreatedInvite(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordInviteUser(
         val avatar: String? = null,
         val discriminator: String,
@@ -370,16 +418,32 @@ data class DiscordInviteUser(
         val username: String
 )
 
-data class MessageCreate(val message: DiscordMessage, override val sequence: Int?) : DispatchEvent()
+@OptIn(KordUnstableApi::class)
+data class MessageCreate (val message: DiscordMessage, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class MessageUpdate(val message: DiscordPartialMessage, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class MessageDelete(val message: DeletedMessage, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class MessageDeleteBulk(val messageBulk: BulkDeleteData, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class MessageReactionAdd(val reaction: MessageReaction, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class MessageReactionRemove(val reaction: MessageReaction, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class MessageReactionRemoveAll(val reactions: AllRemovedMessageReactions, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class MessageReactionRemoveEmoji(val reaction: DiscordRemovedEmoji, override val sequence: Int?) : DispatchEvent()
 
 @Serializable
+@KordUnstableApi
 data class DiscordRemovedEmoji(
         /**
          * The id of the channel.
@@ -406,6 +470,7 @@ data class DiscordRemovedEmoji(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordRemovedReactionEmoji(
         /**
          * The id of the emoji.
@@ -417,8 +482,17 @@ data class DiscordRemovedReactionEmoji(
         val name: String
 )
 
+@OptIn(KordUnstableApi::class)
 data class PresenceUpdate(val presence: DiscordPresenceUpdateData, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class UserUpdate(val user: DiscordUser, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class VoiceStateUpdate(val voiceState: DiscordVoiceState, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class VoiceServerUpdate(val voiceServerUpdateData: DiscordVoiceServerUpdateData, override val sequence: Int?) : DispatchEvent()
+
+@OptIn(KordUnstableApi::class)
 data class WebhooksUpdate(val webhooksUpdateData: DiscordWebhooksUpdateData, override val sequence: Int?) : DispatchEvent()

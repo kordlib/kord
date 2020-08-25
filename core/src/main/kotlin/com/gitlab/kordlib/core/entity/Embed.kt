@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.cache.data.*
@@ -17,6 +18,7 @@ https://discord.com/developers/docs/resources/channel#embed-object-embed-types
 /**
  * An instance of a [Discord Embed](https://discord.com/developers/docs/resources/channel#embed-object).
  */
+@OptIn(KordUnstableApi::class)
 data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
 
     /**

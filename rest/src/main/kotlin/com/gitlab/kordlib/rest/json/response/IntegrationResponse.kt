@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.json.response
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordUser
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -9,6 +10,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
+@KordUnstableApi
 data class IntegrationResponse(
         val id: String,
         val name: String,
@@ -52,4 +54,5 @@ enum class IntegrationExpireBehavior(val code: Int) {
 }
 
 @Serializable
+@KordUnstableApi
 data class DiscordIntegrationsAccount(val id: String, val name: String)

@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.route
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.json.optional
 import com.gitlab.kordlib.rest.json.response.*
@@ -17,6 +18,7 @@ import com.gitlab.kordlib.common.entity.DiscordEmoji as EmojiEntity
 internal const val REST_VERSION_PROPERTY_NAME = "com.gitlab.kordlib.rest.version"
 internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v6"
 
+@OptIn(KordUnstableApi::class)
 sealed class Route<T>(
         val method: HttpMethod,
         val path: String,

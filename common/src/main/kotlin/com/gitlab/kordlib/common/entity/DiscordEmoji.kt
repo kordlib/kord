@@ -1,9 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class DiscordEmoji(
         val id: String? = null,
         val name: String? = null,
@@ -17,6 +19,7 @@ data class DiscordEmoji(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordUpdatedEmojis(
         @SerialName("guild_id")
         val guildId: String,
@@ -24,6 +27,7 @@ data class DiscordUpdatedEmojis(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordPartialEmoji(
         val id: String? = null,
         val name: String? = null,

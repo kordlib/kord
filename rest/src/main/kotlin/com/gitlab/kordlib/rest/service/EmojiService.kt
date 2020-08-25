@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.service
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
 import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
 import com.gitlab.kordlib.rest.json.request.EmojiCreateRequest
@@ -9,7 +10,7 @@ import com.gitlab.kordlib.rest.route.Route
 
 class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-
+    @OptIn(KordUnstableApi::class)
     suspend inline fun createEmoji(guildId: String, builder: EmojiCreateBuilder.() -> Unit) = call(Route.GuildEmojiPost) {
         keys[Route.GuildId] = guildId
         val emoji = EmojiCreateBuilder().apply(builder)
@@ -18,6 +19,7 @@ class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler)
         emoji.reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
+    @OptIn(KordUnstableApi::class)
     @Deprecated("use the inline builder instead",  ReplaceWith("createEmoji(guildId) {  }") ,level = DeprecationLevel.WARNING)
     suspend fun createEmoji(guildId: String, emoji: EmojiCreateRequest, reason: String? = null) = call(Route.GuildEmojiPost) {
         keys[Route.GuildId] = guildId
@@ -31,6 +33,7 @@ class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler)
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
+    @OptIn(KordUnstableApi::class)
     suspend inline fun modifyEmoji(guildId: String, emojiId: String, builder: EmojiModifyBuilder.() -> Unit) = call(Route.GuildEmojiPatch) {
         keys[Route.GuildId] = guildId
         keys[Route.EmojiId] = emojiId

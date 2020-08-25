@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.cache.data.RegionData
 import java.util.*
 
+@OptIn(KordUnstableApi::class)
 class Region(val data: RegionData, override val kord: Kord) : Entity {
     override val id: Snowflake
         get() = Snowflake(data.id)

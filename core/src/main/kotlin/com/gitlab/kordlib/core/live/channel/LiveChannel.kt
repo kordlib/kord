@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.live.channel
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.event.VoiceStateUpdateEvent
@@ -24,6 +25,7 @@ fun Channel.live() = when (this) {
 }
 
 @KordPreview
+@OptIn(KordUnstableApi::class)
 abstract class LiveChannel : AbstractLiveEntity() {
 
     abstract val channel: Channel

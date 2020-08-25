@@ -2,11 +2,12 @@ package com.gitlab.kordlib.rest.builder.message
 
 import com.gitlab.kordlib.common.entity.Flags
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.MessageEditPatchRequest
 
 @KordDsl
-class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
+class MessageModifyBuilder : RequestBuilder<@OptIn(KordUnstableApi::class) MessageEditPatchRequest> {
     var content: String? = null
     var embed: EmbedBuilder? = null
     var flags: Flags? = null
@@ -26,5 +27,6 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     }
 
 
+    @OptIn(KordUnstableApi::class)
     override fun toRequest(): MessageEditPatchRequest = MessageEditPatchRequest(content, embed?.toRequest(), flags, allowedMentions?.build())
 }

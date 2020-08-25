@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Premium
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.UserFlags
@@ -15,6 +16,7 @@ import java.util.*
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
  */
+@OptIn(KordUnstableApi::class)
 open class User(
         val data: UserData,
         override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier

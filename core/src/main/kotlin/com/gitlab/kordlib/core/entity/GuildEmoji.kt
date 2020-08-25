@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -20,6 +21,7 @@ import java.util.*
 /**
  * An instance of a [Discord emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
  */
+@OptIn(KordUnstableApi::class)
 class GuildEmoji(
         val data: EmojiData,
         override val kord: Kord,

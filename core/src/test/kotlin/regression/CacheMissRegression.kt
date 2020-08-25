@@ -2,6 +2,7 @@ package regression
 
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.map.MapDataCache
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.ClientResources
@@ -50,6 +51,7 @@ private val parser = Json {
     isLenient = true
 }
 
+@OptIn(KordUnstableApi::class)
 object FakeGateway : Gateway {
 
     val deferred = CompletableDeferred<Unit>()
@@ -111,6 +113,7 @@ class CrashingHandler(val client: HttpClient) : RequestHandler {
     }
 }
 
+@OptIn(KordUnstableApi::class)
 @EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
 class CacheMissingRegressions {
     lateinit var kord: Kord

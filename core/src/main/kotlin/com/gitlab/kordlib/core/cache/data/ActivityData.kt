@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.ActivityType
 import com.gitlab.kordlib.common.entity.DiscordActivity
 import com.gitlab.kordlib.common.entity.DiscordPartialEmoji
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class ActivityData(
         val name: String,
         val type: ActivityType,

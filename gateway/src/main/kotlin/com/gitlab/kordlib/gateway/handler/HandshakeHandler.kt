@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.gateway.handler
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.ratelimit.RateLimiter
 import com.gitlab.kordlib.common.ratelimit.consume
 import com.gitlab.kordlib.gateway.*
@@ -8,6 +9,7 @@ import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.flow.Flow
 
+@OptIn(KordUnstableApi::class)
 internal class HandshakeHandler(
         flow: Flow<Event>,
         private val send: suspend (Command) -> Unit,

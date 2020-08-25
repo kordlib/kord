@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.gateway.handler
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
@@ -15,6 +16,7 @@ import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.channels.SendChannel
 import com.gitlab.kordlib.core.event.Event as CoreEvent
 
+@OptIn(KordUnstableApi::class)
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class ChannelEventHandler(
         kord: Kord,

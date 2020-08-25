@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.supplier
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordGuildMember
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.Snowflake
@@ -30,6 +31,7 @@ import kotlin.math.min
  * This supplier will always be able to resolve entities if they exist according
  * to Discord, entities will always be up to date at the moment of the call.
  */
+@OptIn(KordUnstableApi::class)
 class RestEntitySupplier(val kord: Kord) : EntitySupplier {
 
     private val auditLog: AuditLogService get() = kord.rest.auditLog

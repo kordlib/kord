@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.json.request
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
@@ -9,6 +10,7 @@ import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
+@KordUnstableApi
 data class GuildCreateRequest(
         val name: String,
         val region: String? = null,
@@ -29,6 +31,7 @@ data class GuildCreateRequest(
 )
 
 @Serializable
+@KordUnstableApi
 data class GuildCreateChannelRequest(
         val name: String,
         val type: ChannelType? = null,

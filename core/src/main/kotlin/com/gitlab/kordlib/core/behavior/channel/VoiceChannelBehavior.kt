@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.cache.api.query
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -22,6 +23,7 @@ import java.util.*
 /**
  * The behavior of a Discord Voice Channel associated to a guild.
  */
+@OptIn(KordUnstableApi::class)
 interface VoiceChannelBehavior : GuildChannelBehavior {
 
     /**
@@ -85,6 +87,7 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(KordUnstableApi::class)
 suspend inline fun VoiceChannelBehavior.edit(builder: VoiceChannelModifyBuilder.() -> Unit): VoiceChannel {
     val response = kord.rest.channel.patchVoiceChannel(id.value, builder)
 

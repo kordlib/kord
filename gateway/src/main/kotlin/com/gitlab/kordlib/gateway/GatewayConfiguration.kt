@@ -1,12 +1,15 @@
 package com.gitlab.kordlib.gateway
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 
 data class GatewayConfiguration(
         val token: String,
         val name: String,
+        @OptIn(KordUnstableApi::class)
         val shard: DiscordShard,
+        @OptIn(KordUnstableApi::class)
         val presence: Presence?,
         val threshold: Int,
         val intents: Intents?
@@ -24,10 +27,12 @@ data class GatewayConfigurationBuilder(
         /**
          * The shard the gateway will connect to.
          */
+        @OptIn(KordUnstableApi::class)
         var shard: DiscordShard = DiscordShard(0, 1),
         /**
          * The presence the bot should show on login.
          */
+        @OptIn(KordUnstableApi::class)
         var presence: Presence? = null,
         /**
          * A value between 50 and 250, representing the maximum amount of members in a guild

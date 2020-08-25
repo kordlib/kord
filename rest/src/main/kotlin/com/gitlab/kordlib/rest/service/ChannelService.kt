@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.DiscordMessage
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
@@ -13,6 +14,7 @@ import com.gitlab.kordlib.rest.route.Route
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
+    @OptIn(KordUnstableApi::class)
     suspend inline fun createMessage(channelId: String, builder: MessageCreateBuilder.() -> Unit) = call(Route.MessagePost) {
         keys[Route.ChannelId] = channelId
         val multipartRequest = MessageCreateBuilder().apply(builder).toRequest()
@@ -92,6 +94,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
+    @OptIn(KordUnstableApi::class)
     suspend fun bulkDelete(channelId: String, messages: BulkDeleteRequest) = call(Route.BulkMessageDeletePost) {
         keys[Route.ChannelId] = channelId
         body(BulkDeleteRequest.serializer(), messages)
@@ -108,6 +111,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
+    @OptIn(KordUnstableApi::class)
     suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: ChannelPermissionEditRequest, reason: String? = null) = call(Route.ChannelPermissionPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
@@ -135,12 +139,14 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.UserId] = userId
     }
 
+    @OptIn(KordUnstableApi::class)
     suspend fun addToGroup(channelId: String, userId: String, addUser: UserAddDMRequest) = call(Route.GroupDMUserPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.UserId] = userId
         body(UserAddDMRequest.serializer(), addUser)
     }
 
+    @OptIn(KordUnstableApi::class)
     suspend inline fun createInvite(channelId: String, builder: InviteCreateBuilder.() -> Unit = {}) = call(Route.InvitePost) {
         keys[Route.ChannelId] = channelId
         val request = InviteCreateBuilder().apply(builder)
@@ -148,6 +154,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         request.reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
+    @OptIn(KordUnstableApi::class)
     suspend inline fun editMessage(channelId: String, messageId: String, builder: MessageModifyBuilder.() -> Unit) = call(Route.EditMessagePatch) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
@@ -155,12 +162,14 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
 
+    @OptIn(KordUnstableApi::class)
     suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest, reason: String? = null) = call(Route.ChannelPut) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPutRequest.serializer(), channel)
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
+    @OptIn(KordUnstableApi::class)
     suspend fun patchChannel(channelId: String, channel: ChannelModifyPatchRequest, reason: String? = null) = call(Route.ChannelPatch) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPatchRequest.serializer(), channel)
@@ -168,12 +177,14 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     @KordPreview
+    @OptIn(KordUnstableApi::class)
     suspend fun crossPost(channelId: String, messageId: String) : DiscordMessage = call(Route.MessageCrosspost) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
     }
 
     @KordPreview
+    @OptIn(KordUnstableApi::class)
     suspend fun followNewsChannel(channelId: String, request: ChannelFollowRequest): FollowedChannelResponse = call(Route.NewsChannelFollow) {
         keys[Route.ChannelId] = channelId
         body(ChannelFollowRequest.serializer(), request)

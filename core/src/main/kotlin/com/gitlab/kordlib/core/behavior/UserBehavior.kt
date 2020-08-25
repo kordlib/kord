@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -19,6 +20,7 @@ import java.util.*
 /**
  * The behavior of a [Discord User](https://discord.com/developers/docs/resources/user)
  */
+@OptIn(KordUnstableApi::class)
 interface UserBehavior : Entity, Strategizable {
 
     val mention: String get() = "<@${id.value}>"

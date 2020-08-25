@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior.channel
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -24,6 +25,7 @@ import java.util.*
 /**
  * The behavior of a Discord channel associated to a [guild].
  */
+@OptIn(KordUnstableApi::class)
 interface GuildChannelBehavior : ChannelBehavior, Strategizable {
 
     /**

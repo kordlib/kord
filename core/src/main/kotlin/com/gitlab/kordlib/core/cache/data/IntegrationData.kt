@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.rest.json.response.DiscordIntegrationsAccount
 import com.gitlab.kordlib.rest.json.response.IntegrationExpireBehavior
 import com.gitlab.kordlib.rest.json.response.IntegrationResponse
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class IntegrationData(
         val id: Long,
         val name: String,

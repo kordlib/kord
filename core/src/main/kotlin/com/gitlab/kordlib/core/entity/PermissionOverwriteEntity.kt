@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -15,6 +16,7 @@ import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.rest.request.RestRequestException
 
+@OptIn(KordUnstableApi::class)
 class PermissionOverwriteEntity(
         val guildId: Snowflake,
         val channelId: Snowflake,

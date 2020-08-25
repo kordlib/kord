@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
@@ -9,6 +10,7 @@ import com.gitlab.kordlib.core.toSnowflakeOrNull
 /**
  * An instance of a [Discord Reaction](https://discord.com/developers/docs/resources/channel#reaction-object).
  */
+@OptIn(KordUnstableApi::class)
 class Reaction(val data: ReactionData, override val kord: Kord) : KordObject {
 
     /**

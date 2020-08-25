@@ -1,9 +1,11 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordUnstableApi
 data class DiscordPinsUpdateData(
         @SerialName("guild_id")
         val guildId: String,
@@ -14,6 +16,7 @@ data class DiscordPinsUpdateData(
 )
 
 @Serializable
+@KordUnstableApi
 data class DiscordTyping(
         @SerialName("channel_id")
         val channelId: String,

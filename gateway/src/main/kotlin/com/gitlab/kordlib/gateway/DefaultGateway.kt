@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.gateway
 
+import com.gitlab.kordlib.common.annotation.KordUnstableApi
 import com.gitlab.kordlib.common.ratelimit.RateLimiter
 import com.gitlab.kordlib.gateway.GatewayCloseCode.*
 import com.gitlab.kordlib.gateway.handler.*
@@ -294,6 +295,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 }
 
+@OptIn(KordUnstableApi::class)
 internal val GatewayConfiguration.identify get() = Identify(token, IdentifyProperties(os, name, name), false, 50, shard, presence, intents)
 
 internal val os: String get() = System.getProperty("os.name")
