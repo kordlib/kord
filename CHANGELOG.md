@@ -1,3 +1,9 @@
+# 0.6.2
+
+## Additions
+
+* Added  a new `Field` builder function with optional value. 
+
 # 0.6.1 
 
 ## Additions
