@@ -2,7 +2,11 @@
 
 ## Additions
 
-* Added  a new `Field` builder function with optional value. 
+* Added  a new `Field` builder function. #57
+
+## Changes
+
+* `name` and `value` default to empty space. 
 
 # 0.6.1 
 

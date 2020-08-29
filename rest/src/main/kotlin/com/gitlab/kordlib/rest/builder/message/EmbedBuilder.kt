@@ -14,8 +14,9 @@ import java.time.format.DateTimeFormatter
  */
 @KordDsl
 class EmbedBuilder : RequestBuilder<EmbedRequest> {
-
-    val ZERO_WIDTH_SPACE = "\u200E"
+    companion object {
+        val ZERO_WIDTH_SPACE = "\u200E"
+    }
 
     /**
      * The title of the embed. Limited to the length of [Limits.title].
@@ -91,7 +92,6 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
     /**
      * Adds a new [Field] configured by the [builder].
      */
-    @Deprecated("This is deprecated in favor of field(name, inline,value)")
     inline fun field(builder: Field.() -> Unit) {
         fields += Field().apply(builder)
     }
@@ -192,12 +192,12 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         /**
          *  The value or 'description' of the [Field]. Limited to the length of [Limits.value].
          */
-        lateinit var value: String
+        var value = ZERO_WIDTH_SPACE
 
         /**
          * The name or 'title' of the [Field]. Limited in to the length of [Limits.name].
          */
-        lateinit var name: String
+        var name = ZERO_WIDTH_SPACE
         var inline: Boolean = false
 
         override fun toRequest() = EmbedFieldRequest(name, value, inline)
