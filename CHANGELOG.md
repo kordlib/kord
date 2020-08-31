@@ -7,6 +7,7 @@
 ## Changes
 
 * `name` and `value` default to empty space. 
+* `PRESENCES_REPLACE` event will be ignored. #42
 
 # 0.6.1 
 

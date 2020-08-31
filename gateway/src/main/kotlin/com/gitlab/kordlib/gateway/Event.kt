@@ -88,6 +88,7 @@ sealed class Event {
 
 
         private fun getByDispatchEvent(index: Int, decoder: CompositeDecoder, name: String?, sequence: Int?) = when (name) {
+            "PRESENCES_REPLACE" -> null //https://github.com/kordlib/kord/issues/42
             "RESUMED" -> Resumed(decoder.decodeSerializableElement(descriptor, index, ResumedData.serializer()), sequence)
             "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
             "CHANNEL_CREATE" -> ChannelCreate(decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()), sequence)
