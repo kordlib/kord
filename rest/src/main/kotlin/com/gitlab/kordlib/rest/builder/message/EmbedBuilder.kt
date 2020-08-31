@@ -13,9 +13,14 @@ import java.time.format.DateTimeFormatter
  * Inline Markdown links are supported in in all description-like fields.
  */
 @KordDsl
+@Suppress("unused")
 class EmbedBuilder : RequestBuilder<EmbedRequest> {
     companion object {
-        val ZERO_WIDTH_SPACE = "\u200E"
+        /**
+         * Utility default value for fields.
+         * While blank values are not allowed, this value can be used to trick Discord into rendering a Field as empty.
+         */
+        const val ZERO_WIDTH_SPACE = "\u200E"
     }
 
     /**
@@ -99,9 +104,13 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
     /**
      * Adds a new [Field] using the given [name] and [value].
      *
-     * [inline] defines wither a field should be inlined with the default  value set to false.
+     * @param inline Whether the field should be rendered inline, `false` by default.
      *
-     * **[value] defaults to [ZERO_WIDTH_SPACE] which is an empty field value.**
+     * @param value The value or 'description' of the [Field], [ZERO_WIDTH_SPACE] by default.
+     * Limited to the length of [Field.Limits.value].
+     *
+     * @param name The name or 'title' of the [Field], [ZERO_WIDTH_SPACE] by default.
+     * Limited in to the length of [Field.Limits.name].
      *
      */
     inline fun field(name: String, inline: Boolean = false, value: () -> String = { ZERO_WIDTH_SPACE }) {
@@ -147,7 +156,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         lateinit var text: String
 
         /**
-         * The icon url to displqy.
+         * The icon url to display.
          */
         var icon: String? = null
 
@@ -190,14 +199,26 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
     class Field : RequestBuilder<EmbedFieldRequest> {
 
         /**
-         *  The value or 'description' of the [Field]. Limited to the length of [Limits.value].
+         *  The value or 'description' of the [Field], [ZERO_WIDTH_SPACE] by default.
+         *  Limited to the length of [Limits.value].
+         *
+         *  Blank values are not allowed, resulting an exception being thrown on the completion of the request.
+         *  Use [ZERO_WIDTH_SPACE] instead to simulate an empty [value].
          */
         var value = ZERO_WIDTH_SPACE
 
         /**
-         * The name or 'title' of the [Field]. Limited in to the length of [Limits.name].
+         * The name or 'title' of the [Field], [ZERO_WIDTH_SPACE] by default.
+         * Limited in to the length of [Limits.name].
+         *
+         * Blank values are not allowed, resulting an exception being thrown on the completion of the request.
+         * Use [ZERO_WIDTH_SPACE] instead to simulate an empty [value].
          */
         var name = ZERO_WIDTH_SPACE
+
+        /**
+         * Whether the field should be rendered inline, `false` by default.
+         */
         var inline: Boolean = false
 
         override fun toRequest() = EmbedFieldRequest(name, value, inline)
