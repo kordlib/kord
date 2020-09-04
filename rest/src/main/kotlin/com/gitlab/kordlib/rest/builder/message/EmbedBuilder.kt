@@ -205,7 +205,8 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
          *  Blank values are not allowed, resulting an exception being thrown on the completion of the request.
          *  Use [ZERO_WIDTH_SPACE] instead to simulate an empty [value].
          */
-        var value = ZERO_WIDTH_SPACE
+        @Suppress("JoinDeclarationAndAssignment", "UNNECESSARY_LATEINIT")
+        lateinit var value: String
 
         /**
          * The name or 'title' of the [Field], [ZERO_WIDTH_SPACE] by default.
@@ -214,12 +215,22 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
          * Blank values are not allowed, resulting an exception being thrown on the completion of the request.
          * Use [ZERO_WIDTH_SPACE] instead to simulate an empty [value].
          */
-        var name = ZERO_WIDTH_SPACE
+        @Suppress("JoinDeclarationAndAssignment", "UNNECESSARY_LATEINIT")
+        lateinit var name: String
 
         /**
          * Whether the field should be rendered inline, `false` by default.
          */
         var inline: Boolean = false
+
+        init {
+            //these declarations and assignments are separated to maintain binary compatibility.
+            //`lateinit` fields expose the JVM fields, and this was the cleanest solution I could think of
+            // to maintain that field access.
+            value = ZERO_WIDTH_SPACE
+            name = ZERO_WIDTH_SPACE
+        }
+
 
         override fun toRequest() = EmbedFieldRequest(name, value, inline)
 
