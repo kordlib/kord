@@ -2,7 +2,8 @@
 
 ## Additions
 
-* Added  a new `Field` builder function. #57
+* Added a new `Field` builder function. #57
+* Added `Kord#getChannelOf` to request a type of channel.
 
 ## Changes
 

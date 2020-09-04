@@ -6,6 +6,7 @@ import com.gitlab.kordlib.common.annotation.KordUnsafe
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.builder.kord.KordRestOnlyBuilder
 import com.gitlab.kordlib.core.cache.data.GuildData
@@ -20,6 +21,7 @@ import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
@@ -102,6 +104,17 @@ class Kord(
     }
 
     suspend fun getChannel(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Channel? = strategy.supply(this).getChannelOrNull(id)
+
+    /**
+     * Requests to get the [Channel] as type [T] through the [strategy],
+     * returns null if the [Channel] isn't present or is not of type [T].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend inline fun <reified T : Channel> getChannelOf(
+            id: Snowflake,
+            strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+    ): T? = strategy.supply(this).getChannelOfOrNull(id)
 
     suspend fun getGuild(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Guild? = strategy.supply(this).getGuildOrNull(id)
 
