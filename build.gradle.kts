@@ -1,7 +1,7 @@
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
-import org.jetbrains.dokka.gradle.DokkaTask
-import org.jetbrains.dokka.gradle.DokkaMultimoduleTask
+import japicmp.filter.ClassFilter
+import javassist.CtClass
 
 import org.ajoberstar.gradle.git.publish.GitPublishExtension
 import org.ajoberstar.gradle.git.publish.tasks.GitPublishPush
@@ -26,7 +26,12 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
     id("org.jetbrains.dokka") version "1.4.0-rc"
     id("org.ajoberstar.git-publish") version "2.1.3"
-    id("me.champeau.gradle.japicmp") version "0.2.8"
+    id("me.champeau.gradle.japicmp")
+}
+
+apply<BinaryCompatibilityPlugin>()
+configure<BinaryCompatibilityExtension> {
+    disableRootProject = true
 }
 
 repositories {
@@ -51,7 +56,6 @@ subprojects {
     apply(plugin = "maven-publish")
     apply(plugin = "kotlinx-atomicfu")
     apply(plugin = "org.jetbrains.dokka")
-    apply(plugin = "me.champeau.gradle.japicmp")
 
     repositories {
         mavenCentral()
@@ -80,41 +84,13 @@ subprojects {
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target
 
+
     tasks.withType<Test> {
         useJUnitPlatform {
             includeEngines.plusAssign("junit-jupiter")
         }
     }
 
-    val japicmp by tasks.register<me.champeau.gradle.japicmp.JapicmpTask>("japicmp") {
-        dependsOn(tasks.jar)
-
-        fun baselineJar(project: Project, version: String): File {
-            val oldGroup = project.group
-            val group = Library.group
-            val artifactId = "kord-${project.name}"
-
-            try {
-                val jarFile = "$artifactId-$version.jar"
-                project.group = "virtual_group_for_japicmp" // Prevent it from resolving the current version.
-                val dependency = project.dependencies.create("$group:$artifactId:$version@jar")
-                return project.configurations.detachedConfiguration(dependency).files
-                        .find { (it.name == jarFile) }.also {
-                            println(it?.absolutePath)
-                        } ?: error("$dependency not found")
-            } finally {
-                project.group = oldGroup
-            }
-        }
-
-        oldClasspath = files(baselineJar(project, Versions.baselineVersion))
-        newClasspath = files(tasks.jar.get().archiveFile)
-
-        ignoreMissingClasses = true
-        includeSynthetic = true
-        onlyBinaryIncompatibleModified = true
-        txtOutputFile = file("$buildDir/reports/japi.txt")
-    }
 
     tasks.dokkaHtml.configure {
         outputDirectory = "${rootProject.projectDir}/dokka/kord/"
