@@ -68,8 +68,8 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
         // if message.timeMark + 14 days > now, then the message isn't 14 days old yet, and we can add it to the bulk delete
         // if message.timeMark + 14 days < now, then the message is more than 14 days old, and we'll have to manually delete them
         val messagesByRemoval = messages.groupBy { it.timeMark.plus(14.days).hasPassedNow() }
-        val younger = messagesByRemoval[true].orEmpty()
-        val older = messagesByRemoval[false].orEmpty()
+        val younger = messagesByRemoval[false].orEmpty()
+        val older = messagesByRemoval[true].orEmpty()
 
         when {
             younger.size < 2 -> younger.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }

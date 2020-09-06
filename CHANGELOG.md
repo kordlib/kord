@@ -1,3 +1,10 @@
+# 0.6.3
+
+## Fixes
+
+* Fixed incorrect message aging in `GuildMessageChannelBehavior#bulkDelete`
+
+
 # 0.6.2
 
 ## Additions
