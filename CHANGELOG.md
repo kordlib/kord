@@ -1,3 +1,10 @@
+# 0.6.3
+
+## Fixes
+
+* Fixed GuildMessageChannelBehavior#bulkdelete  incorrectly deleting messages older than 14 days
+
+
 # 0.6.2
 
 ## Additions
