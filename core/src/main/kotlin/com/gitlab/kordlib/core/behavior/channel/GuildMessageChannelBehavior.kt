@@ -15,8 +15,10 @@ import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.time.Instant
 import java.util.*
 import kotlin.time.days
+import kotlin.time.toJavaDuration
 
 /**
  * The behavior of a Discord message channel associated to a [guild].
@@ -64,19 +66,24 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun bulkDelete(messages: Iterable<Snowflake>) {
+        val daysLimit = Instant.now().minus(14.days.toJavaDuration())
         //split up in bulk delete and manual delete
         // if message.timeMark + 14 days > now, then the message isn't 14 days old yet, and we can add it to the bulk delete
         // if message.timeMark + 14 days < now, then the message is more than 14 days old, and we'll have to manually delete them
-        val messagesByRemoval = messages.groupBy { it.timeMark.plus(14.days).hasPassedNow() }
-        val younger = messagesByRemoval[false].orEmpty()
-        val older = messagesByRemoval[true].orEmpty()
+        val messagesByRemoval = messages.groupBy { it.timeStamp.isAfter(daysLimit) }
+        val younger = messagesByRemoval[true].orEmpty()
+        val older = messagesByRemoval[false].orEmpty()
 
-        when {
-            younger.size < 2 -> younger.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
-            else -> younger.map { it.value }.chunked(100)
-                    .map { BulkDeleteRequest(it) }
-                    .forEach { kord.rest.channel.bulkDelete(id.value, it) }
-        }
+        val chunks = younger.map { it.value }.chunked(100)
+
+        val lastChunk = chunks.last()
+
+        val eligible = if (lastChunk.size < 2) {
+            lastChunk.forEach { kord.rest.channel.deleteMessage(id.value, it) }
+            chunks.dropLast(1)
+        } else chunks
+
+        eligible.map { BulkDeleteRequest(it) }.forEach { kord.rest.channel.bulkDelete(id.value, it) }
 
         older.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
     }
@@ -95,7 +102,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
 
             override fun hashCode(): Int = Objects.hash(id, guildId)
 
-            override fun equals(other: Any?): Boolean = when(other) {
+            override fun equals(other: Any?): Boolean = when (other) {
                 is GuildChannelBehavior -> other.id == id && other.guildId == guildId
                 is ChannelBehavior -> other.id == id
                 else -> false
