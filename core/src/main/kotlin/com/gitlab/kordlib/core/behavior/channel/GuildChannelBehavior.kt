@@ -20,6 +20,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.withIndex
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a Discord channel associated to a [guild].
@@ -150,7 +153,11 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
  *
  *  @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildChannelBehavior.editRolePermission(roleId: Snowflake, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     kord.rest.channel.editRolePermission(channelId = id.value, roleId = roleId.value, builder = builder)
 }
 
@@ -159,6 +166,10 @@ suspend inline fun GuildChannelBehavior.editRolePermission(roleId: Snowflake, bu
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildChannelBehavior.editMemberPermission(memberId: Snowflake, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     kord.rest.channel.editMemberPermissions(channelId = id.value, memberId = memberId.value, builder = builder)
 }

@@ -18,6 +18,9 @@ import com.gitlab.kordlib.rest.service.patchVoiceChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a Discord Voice Channel associated to a guild.
@@ -85,7 +88,11 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun VoiceChannelBehavior.edit(builder: VoiceChannelModifyBuilder.() -> Unit): VoiceChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.channel.patchVoiceChannel(id.value, builder)
 
     val data = ChannelData.from(response)

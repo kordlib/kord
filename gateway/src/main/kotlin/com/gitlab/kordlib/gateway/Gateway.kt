@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.Duration
 
 /**
@@ -88,7 +91,11 @@ interface Gateway {
     }
 }
 
+@OptIn(ExperimentalContracts::class)
 suspend inline fun Gateway.editPresence(builder: PresenceBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val status = PresenceBuilder().apply(builder).toUpdateStatus()
     send(status)
 }
@@ -115,7 +122,11 @@ suspend inline fun Gateway.editPresence(builder: PresenceBuilder.() -> Unit) {
  * @param token The Discord token of the bot.
  * @param config additional configuration for the gateway.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun Gateway.start(token: String, config: GatewayConfigurationBuilder.() -> Unit = {}) {
+    contract {
+        callsInPlace(config, InvocationKind.EXACTLY_ONCE)
+    }
     val builder = GatewayConfigurationBuilder(token)
     builder.apply(config)
     start(builder.build())

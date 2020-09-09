@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a [Discord Role](https://discord.com/developers/docs/topics/permissions#role-object) associated to a [guild].
@@ -97,8 +100,11 @@ interface RoleBehavior : Entity, Strategizable {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
+@OptIn(ExperimentalContracts::class)
 suspend inline fun RoleBehavior.edit(builder: RoleModifyBuilder.() -> Unit): Role {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.guild.modifyGuildRole(guildId = guildId.value, roleId = id.value, builder = builder)
     val data = RoleData.from(id.value, response)
 

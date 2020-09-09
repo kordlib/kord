@@ -14,6 +14,9 @@ import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.member.MemberModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
@@ -191,13 +194,23 @@ interface MemberBehavior : Entity, UserBehavior {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-suspend inline fun MemberBehavior.ban(builder: BanCreateBuilder.() -> Unit = {}) = guild.ban(id, builder)
+@OptIn(ExperimentalContracts::class)
+suspend inline fun MemberBehavior.ban(builder: BanCreateBuilder.() -> Unit = {}) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    guild.ban(id, builder)
+}
 
 /**
  * Requests to edit this member.
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun MemberBehavior.edit(builder: MemberModifyBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     kord.rest.guild.modifyGuildMember(guildId.value, id.value, builder)
 }

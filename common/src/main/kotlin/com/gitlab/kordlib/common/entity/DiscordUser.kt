@@ -7,6 +7,9 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.internal.IntDescriptor
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 @Serializable
 data class DiscordUser(
@@ -60,7 +63,11 @@ data class UserFlags constructor(val code: Int) {
         else -> this
     }
 
+    @OptIn(ExperimentalContracts::class)
     inline fun copy(block: UserFlagsBuilder.() -> Unit): UserFlags {
+        contract {
+            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        }
         val builder = UserFlagsBuilder(code)
         builder.apply(block)
         return builder.flags()

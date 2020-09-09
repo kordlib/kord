@@ -18,6 +18,9 @@ import kotlinx.coroutines.flow.flow
 import java.time.Duration
 import java.time.Instant
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.days
 import kotlin.time.toJavaDuration
 
@@ -111,7 +114,11 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCreateBuilder.() -> Unit): Webhook {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.webhook.createWebhook(id.value, builder)
     val data = WebhookData.from(response)
 

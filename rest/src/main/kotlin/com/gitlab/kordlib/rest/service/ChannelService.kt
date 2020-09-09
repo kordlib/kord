@@ -1,23 +1,34 @@
 package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.entity.DiscordChannel
 import com.gitlab.kordlib.common.entity.DiscordMessage
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
 import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
 import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.json.response.FollowedChannelResponse
+import com.gitlab.kordlib.rest.json.response.InviteResponse
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend inline fun createMessage(channelId: String, builder: MessageCreateBuilder.() -> Unit) = call(Route.MessagePost) {
-        keys[Route.ChannelId] = channelId
-        val multipartRequest = MessageCreateBuilder().apply(builder).toRequest()
-        body(MessageCreateRequest.serializer(), multipartRequest.request)
-        multipartRequest.files.forEach { file(it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createMessage(channelId: String, builder: MessageCreateBuilder.() -> Unit): DiscordMessage {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        return call(Route.MessagePost) {
+            keys[Route.ChannelId] = channelId
+            val multipartRequest = MessageCreateBuilder().apply(builder).toRequest()
+            body(MessageCreateRequest.serializer(), multipartRequest.request)
+            multipartRequest.files.forEach { file(it) }
+        }
     }
 
     suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
@@ -141,17 +152,29 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         body(UserAddDMRequest.serializer(), addUser)
     }
 
-    suspend inline fun createInvite(channelId: String, builder: InviteCreateBuilder.() -> Unit = {}) = call(Route.InvitePost) {
-        keys[Route.ChannelId] = channelId
-        val request = InviteCreateBuilder().apply(builder)
-        body(InviteCreateRequest.serializer(), request.toRequest())
-        request.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createInvite(channelId: String, builder: InviteCreateBuilder.() -> Unit = {}): InviteResponse {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        return call(Route.InvitePost) {
+            keys[Route.ChannelId] = channelId
+            val request = InviteCreateBuilder().apply(builder)
+            body(InviteCreateRequest.serializer(), request.toRequest())
+            request.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
-    suspend inline fun editMessage(channelId: String, messageId: String, builder: MessageModifyBuilder.() -> Unit) = call(Route.EditMessagePatch) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.MessageId] = messageId
-        body(MessageEditPatchRequest.serializer(), MessageModifyBuilder().apply(builder).toRequest())
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun editMessage(channelId: String, messageId: String, builder: MessageModifyBuilder.() -> Unit): DiscordMessage {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        return call(Route.EditMessagePatch) {
+            keys[Route.ChannelId] = channelId
+            keys[Route.MessageId] = messageId
+            body(MessageEditPatchRequest.serializer(), MessageModifyBuilder().apply(builder).toRequest())
+        }
     }
 
 
@@ -181,27 +204,60 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
 
 }
 
-suspend inline fun ChannelService.patchTextChannel(channelId: String, builder: TextChannelModifyBuilder.() -> Unit) =
-        patchChannel(channelId, TextChannelModifyBuilder().apply(builder).toRequest())
+@OptIn(ExperimentalContracts::class)
+suspend inline fun ChannelService.patchTextChannel(channelId: String, builder: TextChannelModifyBuilder.() -> Unit): DiscordChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    return patchChannel(channelId, TextChannelModifyBuilder().apply(builder).toRequest())
+}
 
-suspend inline fun ChannelService.patchVoiceChannel(channelId: String, builder: VoiceChannelModifyBuilder.() -> Unit) =
-        patchChannel(channelId, VoiceChannelModifyBuilder().apply(builder).toRequest())
+@OptIn(ExperimentalContracts::class)
+suspend inline fun ChannelService.patchVoiceChannel(channelId: String, builder: VoiceChannelModifyBuilder.() -> Unit) : DiscordChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    return patchChannel(channelId, VoiceChannelModifyBuilder().apply(builder).toRequest())
+}
 
-suspend inline fun ChannelService.patchStoreChannel(channelId: String, builder: StoreChannelModifyBuilder.() -> Unit) =
-        patchChannel(channelId, StoreChannelModifyBuilder().apply(builder).toRequest())
+@OptIn(ExperimentalContracts::class)
+suspend inline fun ChannelService.patchStoreChannel(channelId: String, builder: StoreChannelModifyBuilder.() -> Unit): DiscordChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    return patchChannel(channelId, StoreChannelModifyBuilder().apply(builder).toRequest())
+}
 
-suspend inline fun ChannelService.patchNewsChannel(channelId: String, builder: NewsChannelModifyBuilder.() -> Unit) =
-        patchChannel(channelId, NewsChannelModifyBuilder().apply(builder).toRequest())
+@OptIn(ExperimentalContracts::class)
+suspend inline fun ChannelService.patchNewsChannel(channelId: String, builder: NewsChannelModifyBuilder.() -> Unit): DiscordChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    return patchChannel(channelId, NewsChannelModifyBuilder().apply(builder).toRequest())
+}
 
-suspend inline fun ChannelService.patchCategory(channelId: String, builder: CategoryModifyBuilder.() -> Unit) =
-        patchChannel(channelId, CategoryModifyBuilder().apply(builder).toRequest())
+@OptIn(ExperimentalContracts::class)
+suspend inline fun ChannelService.patchCategory(channelId: String, builder: CategoryModifyBuilder.() -> Unit) : DiscordChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    return patchChannel(channelId, CategoryModifyBuilder().apply(builder).toRequest())
+}
 
+@OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.editMemberPermissions(channelId: String, memberId: String, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val modifyBuilder = ChannelPermissionModifyBuilder("member").apply(builder)
     editChannelPermissions(channelId, memberId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
+@OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.editRolePermission(channelId: String, roleId: String, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val modifyBuilder = ChannelPermissionModifyBuilder("role").apply(builder)
     editChannelPermissions(channelId, roleId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }

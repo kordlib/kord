@@ -19,6 +19,9 @@ import kotlinx.coroutines.flow.map
 import java.util.*
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.common.entity.Permission
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a [Discord Message](https://discord.com/developers/docs/resources/channel#message-object).
@@ -199,7 +202,11 @@ interface MessageBehavior : Entity, Strategizable {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit): Message {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.channel.editMessage(channelId = channelId.value, messageId = id.value, builder = builder)
     val data = MessageData.from(response)
 

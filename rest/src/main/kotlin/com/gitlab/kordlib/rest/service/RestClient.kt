@@ -6,6 +6,9 @@ import com.gitlab.kordlib.rest.request.KtorRequestHandler
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.request.RequestBuilder
 import com.gitlab.kordlib.rest.route.Route
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
     val auditLog: AuditLogService = AuditLogService(requestHandler)
@@ -27,10 +30,16 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
      * @param route The route to which to send a request.
      * @param block The configuration for this request.
      */
+    @OptIn(ExperimentalContracts::class)
     @KordUnsafe
     @KordExperimental
-    suspend inline fun <T> unsafe(route: Route<T>, block: RequestBuilder<T>.() -> Unit): T = call(route) {
-        block()
+    suspend inline fun <T> unsafe(route: Route<T>, block: RequestBuilder<T>.() -> Unit): T {
+        contract {
+            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        }
+        return call(route) {
+            block()
+        }
     }
 
     companion object {

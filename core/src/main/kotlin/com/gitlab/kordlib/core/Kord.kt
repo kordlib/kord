@@ -33,6 +33,9 @@ import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
@@ -72,11 +75,17 @@ class Kord(
     /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
-    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
-        shard = DiscordShard(0, resources.shardCount)
-        presence(builder)
-        intents = resources.intents
-        name = "kord"
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = Status.Online }) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        gateway.start(resources.token) {
+            shard = DiscordShard(0, resources.shardCount)
+            presence(builder)
+            intents = resources.intents
+            name = "kord"
+        }
     }
 
     /**
@@ -96,7 +105,11 @@ class Kord(
 
     suspend fun getApplicationInfo(): ApplicationInfo = with(EntitySupplyStrategy.rest).getApplicationInfo()
 
+    @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         val response = rest.guild.createGuild(builder)
         val data = GuildData.from(response)
 
@@ -124,7 +137,11 @@ class Kord(
     suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User? =
             strategy.supply(this).getUserOrNull(id)
 
+    @OptIn(ExperimentalContracts::class)
     suspend inline fun editPresence(builder: PresenceBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         val status = PresenceBuilder().apply(builder).toUpdateStatus()
         gateway.sendAll(status)
     }
@@ -154,9 +171,14 @@ class Kord(
          * Similarly, [cache][Kord.cache] related functionality has been disabled and
          * replaced with a no-op implementation.
          */
+        @OptIn(ExperimentalContracts::class)
         @KordExperimental
-        inline fun restOnly(token: String, builder: KordRestOnlyBuilder.() -> Unit = {}): Kord =
-                KordRestOnlyBuilder(token).apply(builder).build()
+        inline fun restOnly(token: String, builder: KordRestOnlyBuilder.() -> Unit = {}): Kord {
+            contract {
+                callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+            }
+            return KordRestOnlyBuilder(token).apply(builder).build()
+        }
     }
 
 }
