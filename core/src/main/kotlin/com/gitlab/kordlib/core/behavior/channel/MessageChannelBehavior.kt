@@ -265,7 +265,7 @@ suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> 
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
     }
-    createMessage { embed(block) }
+    return createMessage { embed(block) }
 }
 
 /**

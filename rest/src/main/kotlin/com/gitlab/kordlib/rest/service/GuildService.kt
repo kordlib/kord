@@ -24,11 +24,11 @@ import kotlin.contracts.contract
 class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit) {
+    suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): DiscordGuild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        call(Route.GuildPost) {
+        return call(Route.GuildPost) {
             body(GuildCreateRequest.serializer(), GuildCreateBuilder().apply(builder).toRequest())
         }
     }
