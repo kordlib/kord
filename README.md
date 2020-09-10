@@ -2,8 +2,7 @@
 
 [![Discord](https://img.shields.io/discord/556525343595298817.svg?color=&label=Kord&logo=discord&style=for-the-badge)](https://discord.gg/6jcx5ev)
 [![Download](https://img.shields.io/bintray/v/kordlib/Kord/Kord?color=&style=for-the-badge) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion)
-[![JitPack](https://img.shields.io/jitpack/v/gitlab/hopebaron/Kord.svg?color=&style=for-the-badge)](https://jitpack.io/#com.gitlab.kordlib/Kord)
-[![Gitlab pipeline status (branch)](https://img.shields.io/gitlab/pipeline/HopeBaron/kord/master.svg?style=for-the-badge)]()
+[![Github CI status (branch)](https://img.shields.io/github/workflow/status/kordlib/kord/CI/master?label=CI&style=for-the-badge)]()
 
 __Kord is still in an experimental stage, as such we can't guarantee API stability between releases.
 While we'd love for you to try out our library, we don't recommend you use this in production just yet.__
@@ -12,7 +11,7 @@ If you have any feedback, we'd love to hear it, hit us up on discord or write up
 
 ## What is Kord
 
-Kord is a [coroutine](https://kotlinlang.org/docs/reference/coroutines-overview.html)-based, modularized implementation of the Discord API, written 100% in [Kotlin](https://kotlinlang.org/).
+Kord is a [coroutine-based](https://kotlinlang.org/docs/reference/coroutines-overview.html), modularized implementation of the Discord API, written 100% in [Kotlin](https://kotlinlang.org/).
 
 ## Why use Kord
 
@@ -24,29 +23,26 @@ Sometimes you have to do some unconventional things, and we want to allow you to
 
 ## Status of Kord
 
-* [X] [Discord Gateway](https://gitlab.com/kordlib/kord/-/tree/master/gateway)
-* [x] [Discord Rest API](https://gitlab.com/kordlib/kord/-/tree/master/rest)
-* [X] [High level abstraction + caching](https://gitlab.com/kordlib/kord/-/tree/master/core)
-* [ ] [Test Framework](https://gitlab.com/kordlib/kordx.test) (WIP) #49
-* [ ] [Command Framework](https://gitlab.com/kordlib/kordx.commands) (WIP) #36
-* [ ] Discord Voice
-* [ ] Support for multiple processes #55
+* [X] [Discord Gateway](https://github.com/kordlib/kord/tree/master/gateway)
+* [x] [Discord Rest API](https://github.com/kordlib/kord/tree/master/rest)
+* [X] [High level abstraction + caching](https://github.com/kordlib/kord/tree/master/core)
+* [ ] Discord Voice (WIP)
+* [ ] Support for multiple processes #7
 
 Right now Kord *should* provide a full mapping of the non-voice API.
 We're currently working on a testing library for easy bot testing against a semi mocked client as well as our own command system to facilitate more complex bot development.
 
 ## Installation
 
-Replace `{version}` with the latest version number on bintray. [![Download](https://img.shields.io/bintray/v/kordlib/Kord/Kord?color=&style=for-the-badge) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion)
+Replace `{version}` with the latest version number on bintray. 
+
+[![Download](https://img.shields.io/bintray/v/kordlib/Kord/Kord?color=&style=for-the-badge) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion)
 
 ### Gradle (groovy)
 
 ```groovy
 repositories {
     jcenter()
-    maven {
-        url = "https://dl.bintray.com/kordlib/Kord"
-    }
 }
 ```
 
@@ -61,7 +57,6 @@ dependencies {
 ```kotlin
 repositories {
    jcenter()
-   maven(url = "https://dl.bintray.com/kordlib/Kord")
 }
 ```
 
@@ -77,10 +72,6 @@ dependencies {
 <repository>
     <id>jcenter</id>
     <url>https://jcenter.bintray.com/</url>
-</repository>
-<repository>
-    <id>bintray-kord</id>
-    <url>https://dl.bintray.com/kordlib/Kord</url>
 </repository>
 ```
 
