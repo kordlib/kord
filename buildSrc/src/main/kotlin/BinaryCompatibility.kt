@@ -73,7 +73,21 @@ class BinaryCompatibilityPlugin : Plugin<Project> {
                         }
                     }
 
+                    class IgnoreGenerated : japicmp.filter.ClassFilter {
+
+                        //ClassName$lowerCaseMethodName$optionalNumber
+                        val generatedNestedClass = Regex(pattern = """\w+(\$\p{Lower}\w*)+(\$\d+)*""")
+                        override fun matches(classBinary: CtClass): Boolean {
+                            return when {
+                                classBinary.name.any { it.isDigit() } -> true
+                                classBinary.name.matches(generatedNestedClass) -> true
+                                else -> false
+                            }
+                        }
+                    }
+
                     addExcludeFilter(IgnoreInlinedLambdaFilter::class.java)
+                    addExcludeFilter(IgnoreGenerated::class.java)
 
                 }
 
