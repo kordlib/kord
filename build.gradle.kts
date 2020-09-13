@@ -1,10 +1,7 @@
 import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
-import japicmp.filter.ClassFilter
-import javassist.CtClass
-
 import org.ajoberstar.gradle.git.publish.GitPublishExtension
-import org.ajoberstar.gradle.git.publish.tasks.GitPublishPush
+import org.ajoberstar.gradle.git.publish.tasks.GitPublishReset
 
 buildscript {
     repositories {
@@ -24,7 +21,7 @@ buildscript {
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
-    id("org.jetbrains.dokka") version "1.4.0-rc"
+    id("org.jetbrains.dokka") version "1.4.0"
     id("org.ajoberstar.git-publish") version "2.1.3"
     id("me.champeau.gradle.japicmp")
 }
@@ -93,21 +90,20 @@ subprojects {
 
 
     tasks.dokkaHtml.configure {
-        outputDirectory = "${rootProject.projectDir}/dokka/kord/"
+        this.outputDirectory.set(file("${project.projectDir}/dokka/kord/"))
+
         dokkaSourceSets {
             configureEach {
-                platform = org.jetbrains.dokka.Platform.jvm.name
+                platform.set(org.jetbrains.dokka.Platform.jvm)
 
-                //doesn't work for whatever reason
                 sourceLink {
-                    val relativePath = project.projectDir.relativeTo(project.rootProject.projectDir).path
-                    path = "$relativePath/src/main/kotlin"
-                    url = "https://github.com/kordlib/kord/blob/master/${project.name}/src/main/kotlin"
+                    localDirectory.set(file("src/main/kotlin"))
+                    remoteUrl.set(uri("https://github.com/kordlib/kord/tree/master/${project.name}/src/main/kotlin/").toURL())
 
-                    lineSuffix = "#L"
+                    remoteLineSuffix.set("#L")
                 }
 
-                jdkVersion = 8
+                jdkVersion.set(8)
             }
         }
     }
@@ -165,10 +161,10 @@ tasks {
         delete(dokkaOutputDir)
     }
 
-    dokkaHtmlMultimodule.configure {
+    dokkaHtmlMultiModule.configure {
         dependsOn(clean)
-        outputDirectory = dokkaOutputDir
-        documentationFileName = "DokkaDescription.md"
+        outputDirectory.set(file(dokkaOutputDir))
+        documentationFileName.set("DokkaDescription.md")
     }
 
 
@@ -176,7 +172,7 @@ tasks {
         dependsOn(dokkaHtmlMultimodule)
     }
 
-    val gitPublishPush by getting(GitPublishPush::class) {
+    val gitPublishReset by getting(GitPublishReset::class) {
         dependsOn(fixIndex)
     }
 
@@ -187,7 +183,7 @@ configure<GitPublishExtension> {
     branch.set("gh-pages")
 
     contents {
-        from("dokka")
+        from(file("${project.projectDir}/dokka"))
     }
 
     commitMessage.set("Update Docs")
