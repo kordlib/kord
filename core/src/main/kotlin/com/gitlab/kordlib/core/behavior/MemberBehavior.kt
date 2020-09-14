@@ -74,8 +74,17 @@ interface MemberBehavior : Entity, UserBehavior {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun addRole(roleId: Snowflake) {
+    suspend fun addRole(roleId: Snowflake) {//TODO remove in Kord 0.7.0
         kord.rest.guild.addRoleToGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value)
+    }
+
+    /**
+     * Requests to add the [Role] with the [roleId] to this member.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    suspend fun addRole(roleId: Snowflake, reason: String? = null) {
+        kord.rest.guild.addRoleToGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value, reason = reason)
     }
 
     /**
@@ -99,8 +108,17 @@ interface MemberBehavior : Entity, UserBehavior {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun removeRole(roleId: Snowflake) {
+    suspend fun removeRole(roleId: Snowflake) {//TODO remove in Kord 0.7.0
         kord.rest.guild.deleteRoleFromGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value)
+    }
+
+    /**
+     * Requests to remove the [Role] with the [roleId] from this member.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
+    suspend fun removeRole(roleId: Snowflake, reason: String) {
+        kord.rest.guild.deleteRoleFromGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value, reason = reason)
     }
 
     /**
