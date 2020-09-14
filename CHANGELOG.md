@@ -1,3 +1,9 @@
+# 0.6.4
+
+## Additions
+
+* Added a `MemberBehavior#addRole` and `MemberBehavior#removeRole` variant which accepts an audit log message.
+
 # 0.6.3
 
 ## Fixes
