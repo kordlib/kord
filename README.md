@@ -32,6 +32,11 @@ Sometimes you have to do some unconventional things, and we want to allow you to
 Right now Kord *should* provide a full mapping of the non-voice API.
 We're currently working on a testing library for easy bot testing against a semi mocked client as well as our own command system to facilitate more complex bot development.
 
+## Documentation
+
+* [Dokka docs](https://kordlib.github.io/kord/)
+* [Wiki](https://github.com/kordlib/kord/wiki)
+
 ## Installation
 
 Replace `{version}` with the latest version number on bintray. 
@@ -155,13 +160,10 @@ suspend fun main() {
 
 ## FAQ
 
-### Will you support kotlin multi-platform
+## Will you support kotlin multi-platform
 
-We originally intended to. We exclusively depend on multi-platform libraries and try to minimize JVM exclusive code.
-However, we've found support for multi-platform and non-JVM platforms to be lacking (too experimental).
-We'll revisit multi-platform support once IR (intermediate representation) has been implemented, or our library is feature complete, whichever comes first.
+We will, there's an [issue](https://github.com/kordlib/kord/issues/69) open to track the features we want/need to make a transition to MPP smooth.
 
-### Will you publish your kotlin docs online
+## When will you document your code
 
-The only real documentation engine for kotlin is [Dokka](https://github.com/Kotlin/dokka).
-It's currently not in a happy place, but we've been told it'll get a rather extensive release sooner than later, so we're holding off until that happens.
+Yes.
