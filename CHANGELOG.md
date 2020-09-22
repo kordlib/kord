@@ -1,3 +1,9 @@
+# 0.6.5
+
+## Fixes
+
+* Fixed an issue where `LiveMessage` would not filter its event flow. #70
+
 # 0.6.4
 
 ## Additions
