@@ -34,7 +34,7 @@ abstract class AbstractLiveEntity : LiveEntity {
     private val running = atomic(true)
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    final override val events: Flow<Event>
+    override val events: Flow<Event>
         get() = kord.events
                 .takeWhile { running.value }
                 .filter { filter(it) }
