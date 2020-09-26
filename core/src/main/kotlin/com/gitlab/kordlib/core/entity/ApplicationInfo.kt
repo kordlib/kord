@@ -38,7 +38,7 @@ class ApplicationInfo(
 
     val verifyKey: String get() = data.verifyKey
 
-    val team: DiscordTeam? = data.team
+    val team: DiscordTeam? get() = data.team
 
     val teamId: Long? get() = team?.id?.toLong()
 
