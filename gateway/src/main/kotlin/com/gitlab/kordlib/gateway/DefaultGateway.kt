@@ -182,14 +182,14 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
 
         return outputStream.use {
-            outputStream.toString(Charset.defaultCharset().name())
+            outputStream.toString(Charsets.UTF_8)
         }
     }
 
     private suspend fun read(frame: Frame) {
         val json = when {
             compression -> frame.deflateData()
-            else -> frame.data.toString(Charset.defaultCharset())
+            else -> String(frame.data, Charsets.UTF_8)
         }
 
         try {
