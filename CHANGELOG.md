@@ -3,6 +3,7 @@
 ## Fixes
 
 * Fixed an issue where `LiveMessage` would not filter its event flow. #70
+* Fixed an issue where emojis from events would be decoded incorrectly.
 
 # 0.6.4
 
