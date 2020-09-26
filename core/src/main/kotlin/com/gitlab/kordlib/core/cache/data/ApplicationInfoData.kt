@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.entity.DiscordTeam
 import com.gitlab.kordlib.rest.json.response.ApplicationInfoResponse
 
 data class ApplicationInfoData(
@@ -12,7 +13,7 @@ data class ApplicationInfoData(
         val ownerId: Long,
         val summary: String,
         val verifyKey: String,
-        val teamId: Long?,
+        val team: DiscordTeam?,
         val guildId: Long? = null,
         val primarySkuId: Long? = null,
         val slug: String? = null,
@@ -31,7 +32,7 @@ data class ApplicationInfoData(
                     owner.id.toLong(),
                     summary,
                     verifyKey,
-                    team?.id?.toLong(),
+                    team,
                     guildId?.toLong(),
                     primarySkuId?.toLong(),
                     slug,

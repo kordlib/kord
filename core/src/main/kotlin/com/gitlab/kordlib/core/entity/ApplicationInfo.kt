@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.entity.DiscordTeam
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.UserBehavior
@@ -37,7 +38,9 @@ class ApplicationInfo(
 
     val verifyKey: String get() = data.verifyKey
 
-    val teamId: Long? get() = data.teamId
+    val team: DiscordTeam? = data.team
+
+    val teamId: Long? get() = team?.id?.toLong()
 
     val guildId: Long? get() = data.guildId
 
