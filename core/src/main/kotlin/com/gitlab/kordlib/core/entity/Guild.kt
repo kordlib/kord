@@ -74,6 +74,29 @@ class Guild(
     val bannerHash: String? get() = data.banner
 
     /**
+     * The [PremiumTier] from Nitro boosts,
+     */
+    val premiumTier: PremiumTier get() = data.premiumTier
+
+    /**
+     * Maximal amount of server emotes based on [premiumTier].
+     *
+     * [PremiumTier.Unknown] -> [Int.MIN_VALUE]
+     * [PremiumTier.None] -> 50
+     * [PremiumTier.One] -> 100
+     * [PremiumTier.Two] -> 150
+     * [PremiumTier.Three] -> 250
+     */
+    val maxEmotes: Int
+        get() = when (premiumTier) {
+            PremiumTier.Unknown -> Int.MIN_VALUE
+            PremiumTier.None -> 50
+            PremiumTier.One -> 100
+            PremiumTier.Two -> 150
+            PremiumTier.Three -> 250
+        }
+
+    /**
      * The ids of all [channels][GuildChannel].
      */
     val channelIds: Set<Snowflake> get() = data.channels.asSequence().map { Snowflake(it) }.toSet()
@@ -225,7 +248,8 @@ class Guild(
             TextChannelBehavior(guildId = id, id = it, kord = kord)
         }
 
-    val systemChannelFlags: SystemChannelFlags get() = data.systemChannelFlags ?: SystemChannelFlags(0)
+    val systemChannelFlags: SystemChannelFlags
+        get() = data.systemChannelFlags ?: SystemChannelFlags(0)
 
     /**
      * The verification level required for the guild.
