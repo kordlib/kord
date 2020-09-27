@@ -1,3 +1,9 @@
+# 0.6.6
+
+## Fixes
+
+* Fixed an issue where `Members` would not consider `Users` with the same ID equal.
+ 
 # 0.6.5
 
 ## Fixes
