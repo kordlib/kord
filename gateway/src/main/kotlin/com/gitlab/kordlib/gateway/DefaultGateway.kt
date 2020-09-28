@@ -182,7 +182,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
 
         return outputStream.use {
-            outputStream.toString(Charsets.UTF_8)
+            String(outputStream.toByteArray(), 0, outputStream.size(), Charsets.UTF_8)
         }
     }
 
