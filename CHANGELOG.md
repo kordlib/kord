@@ -3,6 +3,7 @@
 ## Fixes
 
 * Fixed an issue where `Members` would not consider `Users` with the same ID equal.
+* Removed a dependency on Java 10 introduced in 0.6.5. #78
  
 # 0.6.5
 
