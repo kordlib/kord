@@ -189,7 +189,7 @@ class Kord(
  * The events are buffered in an [unlimited][CoroutineChannel.UNLIMITED] [buffer][Flow.buffer] and
  * [launched][CoroutineScope.launch] in the supplied [scope], which is [Kord] by default.
  * Each event will be [launched][CoroutineScope.launch] inside the [scope] separately and
- * any thrown [Throwable] will be caught and logged. The flow will [retry][Flow.retry] infinitely on error.
+ * any thrown [Throwable] will be caught and logged.
  *
  * The returned [Job] is a reference to the created coroutine, call [Job.cancel] to cancel the processing of any further
  * events.
@@ -198,9 +198,5 @@ inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline co
         events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
                 .onEach {
                     scope.launch { runCatching { consumer(it) }.onFailure { kordLogger.catching(it) } }
-                }
-                .retry {
-                    kordLogger.catching(it)
-                    true
                 }
                 .launchIn(scope)
