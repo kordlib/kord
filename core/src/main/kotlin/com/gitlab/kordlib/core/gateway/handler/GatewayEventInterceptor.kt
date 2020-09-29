@@ -4,10 +4,11 @@ import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.Gateway
-import io.ktor.util.error
+import io.ktor.util.*
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import mu.KotlinLogging
@@ -20,7 +21,7 @@ class GatewayEventInterceptor(
         kord: Kord,
         private val gateway: MasterGateway,
         cache: DataCache,
-        coreEventChannel: SendChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>,
 ) {
 
     private val listeners = listOf(
@@ -34,7 +35,10 @@ class GatewayEventInterceptor(
     )
 
     suspend fun start() = coroutineScope {
-        gateway.events.onEach { (event, _, shard) -> dispatch(event, shard) }.launchIn(this)
+        gateway.events
+                .buffer(Channel.UNLIMITED)
+                .onEach { (event, _, shard) -> dispatch(event, shard) }
+                .launchIn(this)
     }
 
     private suspend fun dispatch(event: Event, shard: Int) {
