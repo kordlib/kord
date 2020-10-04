@@ -246,7 +246,7 @@ class KordBuilder(val token: String) {
 
         val self = getBotIdFromToken(token)
 
-        val eventPublisher = BroadcastChannel<Event>(Channel.CONFLATED)
+        val eventPublisher = BroadcastChannel<Event>(1)
 
         if (enableShutdownHook) {
             Runtime.getRuntime().addShutdownHook(thread(false) {

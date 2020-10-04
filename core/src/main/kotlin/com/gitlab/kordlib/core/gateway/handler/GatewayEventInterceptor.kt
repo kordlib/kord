@@ -18,7 +18,7 @@ private val logger = KotlinLogging.logger { }
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class GatewayEventInterceptor(
-        kord: Kord,
+        private val kord: Kord,
         private val gateway: MasterGateway,
         cache: DataCache,
         coreEventChannel: SendChannel<CoreEvent>,
@@ -34,12 +34,10 @@ class GatewayEventInterceptor(
             WebhookEventHandler(kord, gateway, cache, coreEventChannel)
     )
 
-    suspend fun start() = coroutineScope {
-        gateway.events
+    suspend fun start() = gateway.events
                 .buffer(Channel.UNLIMITED)
                 .onEach { (event, _, shard) -> dispatch(event, shard) }
-                .launchIn(this)
-    }
+                .launchIn(kord)
 
     private suspend fun dispatch(event: Event, shard: Int) {
         runCatching {
