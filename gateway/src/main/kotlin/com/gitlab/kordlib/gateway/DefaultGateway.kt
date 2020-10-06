@@ -67,12 +67,12 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
 
-    private val channel = BroadcastChannel<Any>(Channel.CONFLATED)
+    private val channel = BroadcastChannel<Event>(1)
 
     override var ping: Duration = Duration.INFINITE
 
     @OptIn(FlowPreview::class)
-    override val events: Flow<Event> = channel.asFlow().drop(1).filterIsInstance()
+    override val events: Flow<Event> = channel.asFlow().buffer(Channel.UNLIMITED).filterIsInstance()
 
     private lateinit var socket: DefaultClientWebSocketSession
 
@@ -92,7 +92,6 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private val stateMutex = Mutex()
 
     init {
-        channel.sendBlocking(Unit)
         val sequence = Sequence()
         SequenceHandler(events, sequence)
         handshakeHandler = HandshakeHandler(events, ::trySend, sequence, data.identifyRateLimiter)

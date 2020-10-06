@@ -61,7 +61,7 @@ class KordRestOnlyBuilder(val token: String) {
         val rest = RestClient(handlerBuilder(resources))
         val selfId = getBotIdFromToken(token)
 
-        val eventPublisher = BroadcastChannel<Event>(Channel.CONFLATED)
+        val eventPublisher = BroadcastChannel<Event>(1)
 
         return Kord(
                 resources,

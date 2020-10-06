@@ -61,7 +61,7 @@ class Kord(
     @OptIn(KordUnsafe::class)
     val unsafe: Unsafe = Unsafe(this)
 
-    val events get() = eventPublisher.asFlow()
+    val events get() = eventPublisher.asFlow().buffer(CoroutineChannel.UNLIMITED)
 
     override val coroutineContext: CoroutineContext
         get() = dispatcher + Job()
