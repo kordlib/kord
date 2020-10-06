@@ -17,7 +17,7 @@ data class WebhookData(
         val token: String? = null
 ) {
     companion object {
-        val description get() = description(WebhookData::id)
+        val description = description(WebhookData::id)
 
         fun from(entity: DiscordWebhook) = with(entity) { WebhookData(id.toLong(), type, guildId!!.toLong(), channelId.toLong(), user!!.id.toLong(), name, avatar, token) }
     }
