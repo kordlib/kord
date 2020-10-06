@@ -19,7 +19,7 @@ data class RoleData(
         val mentionable: Boolean
 ) {
     companion object {
-        val description get() = description(RoleData::id)
+        val description = description(RoleData::id)
         fun from(guildId: String, entity: DiscordRole) = with(entity) { RoleData(id.toLong(), guildId.toLong(), name, color, hoist, position, permissions, managed, mentionable) }
         fun from(entity: DiscordGuildRole) = from(entity.guildId, entity.role)
 

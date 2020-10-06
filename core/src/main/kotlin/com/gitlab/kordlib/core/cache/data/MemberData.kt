@@ -22,7 +22,7 @@ data class MemberData(
             copy(nick = update.nick, roles = update.roles, premiumSince = update.premiumSince)
 
     companion object {
-        val description get() = description(MemberData::id)
+        val description = description(MemberData::id)
 
         fun from(userId: String, guildId: String, entity: DiscordGuildMember) =
                 with(entity) { MemberData(userId.toLong(), guildId.toLong(), nick, roles, joinedAt, premiumSince) }
