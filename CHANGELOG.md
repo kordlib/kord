@@ -4,6 +4,8 @@
 
 * Fixed an issue where `Members` would not consider `Users` with the same ID equal.
 * Removed a dependency on Java 10 introduced in 0.6.5. #78
+* Fixed the event flow dropping events under too much pressure. #81
+* Fixed the `KordCacheBuilder` ignoring configuration #82
  
 # 0.6.5
 
