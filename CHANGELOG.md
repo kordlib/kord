@@ -1,3 +1,7 @@
+# 0.6.7
+
+* Fixed removed channels not being removed from cache. #84
+
 # 0.6.6
 
 ## Fixes
