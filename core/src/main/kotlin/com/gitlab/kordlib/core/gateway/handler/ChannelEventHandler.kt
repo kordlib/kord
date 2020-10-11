@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.gateway.handler
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
+import com.gitlab.kordlib.cache.api.remove
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
@@ -67,8 +68,8 @@ internal class ChannelEventHandler(
     }
 
     private suspend fun handle(event: ChannelDelete, shard: Int) {
+        cache.remove<ChannelData> { ChannelData::id eq event.channel.id.toLong() }
         val data = ChannelData.from(event.channel)
-        cache.put(data)
 
         val event = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelDeleteEvent(channel, shard)
