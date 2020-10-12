@@ -1,4 +1,12 @@
+# 0.6.8
+
+## Fixes
+
+* Fixed rest action reasons not encoding properly. #86
+
 # 0.6.7
+
+## Fixes
 
 * Fixed removed channels not being removed from cache. #84
 
