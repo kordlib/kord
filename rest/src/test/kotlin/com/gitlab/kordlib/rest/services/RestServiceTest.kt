@@ -7,6 +7,7 @@ import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestRateLimiter
 import com.gitlab.kordlib.rest.request.KtorRequestHandler
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
+import com.gitlab.kordlib.rest.service.createTextChannel
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
@@ -108,7 +109,16 @@ class RestServiceTest {
     @Test
     @Order(3)
     fun `create channel`() = runBlocking {
-        val channel = rest.guild.createGuildChannel(guildId, GuildCreateChannelRequest("BOT TEST RUN"))
+        val channel = rest.guild.createTextChannel(guildId) {
+            name = "BOT TEST RUN"
+            reason = """
+                a multiline
+                
+                reason
+                
+                to check if encoding is okay
+            """.trimIndent()
+        }
         channelId = channel.id
 
         rest.channel.getChannel(channel.id)

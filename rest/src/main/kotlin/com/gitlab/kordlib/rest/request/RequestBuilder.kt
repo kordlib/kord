@@ -1,8 +1,7 @@
 package com.gitlab.kordlib.rest.request
 
 import com.gitlab.kordlib.rest.route.Route
-import io.ktor.http.HeadersBuilder
-import io.ktor.http.ParametersBuilder
+import io.ktor.http.*
 import kotlinx.serialization.SerializationStrategy
 
 class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
@@ -23,7 +22,7 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
 
     fun parameter(key: String, value: Any) = parameters.append(key, value.toString())
 
-    fun header(key: String, value: String) = headers.append(key, value)
+    fun header(key: String, value: String) = headers.append(key, value.encodeURLQueryComponent())
 
     fun file(name: String, input: java.io.InputStream) {
         files.add(name to input)
