@@ -125,7 +125,7 @@ class CacheMissingRegressions {
                 MasterGateway(mapOf(0 to FakeGateway)),
                 RestClient(CrashingHandler(resources.httpClient)),
                 getBotIdFromToken(token),
-                BroadcastChannel(Channel.CONFLATED),
+                BroadcastChannel(1),
                 Dispatchers.Default
         )
     }

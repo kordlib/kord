@@ -17,7 +17,7 @@ data class EmojiData(
         val available: Boolean
 ) {
     companion object {
-        val description get() = description(EmojiData::id)
+        val description = description(EmojiData::id)
 
         fun from(guildId: String, id: String, entity: DiscordEmoji) =
                 with(entity) {

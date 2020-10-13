@@ -22,9 +22,6 @@ class LiveMessage(message: Message, val guildId: Snowflake?) : AbstractLiveEntit
     var message: Message = message
         private set
 
-    override val events: Flow<Event>
-        get() = message.kord.events
-
     override fun filter(event: Event): Boolean = when (event) {
         is ReactionAddEvent -> event.messageId == message.id
         is ReactionRemoveEvent -> event.messageId == message.id

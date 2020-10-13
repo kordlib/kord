@@ -10,6 +10,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 @KordDsl
 class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
@@ -28,7 +31,11 @@ class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
         setFile(path.fileName.toString(), Files.newInputStream(path))
     }
 
+    @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         embeds += EmbedBuilder().apply(builder).toRequest()
     }
 

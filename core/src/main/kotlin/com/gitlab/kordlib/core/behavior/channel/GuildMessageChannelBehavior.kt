@@ -15,8 +15,14 @@ import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.time.Duration
+import java.time.Instant
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.days
+import kotlin.time.toJavaDuration
 
 /**
  * The behavior of a Discord message channel associated to a [guild].
@@ -64,18 +70,15 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun bulkDelete(messages: Iterable<Snowflake>) {
+        val daysLimit = Instant.now() - Duration.ofDays(14)
         //split up in bulk delete and manual delete
         // if message.timeMark + 14 days > now, then the message isn't 14 days old yet, and we can add it to the bulk delete
         // if message.timeMark + 14 days < now, then the message is more than 14 days old, and we'll have to manually delete them
-        val messagesByRemoval = messages.groupBy { it.timeMark.plus(14.days).hasPassedNow() }
-        val younger = messagesByRemoval[true].orEmpty()
-        val older = messagesByRemoval[false].orEmpty()
+        val (younger, older) = messages.partition { it.timeStamp.isAfter(daysLimit) }
 
-        when {
-            younger.size < 2 -> younger.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
-            else -> younger.map { it.value }.chunked(100)
-                    .map { BulkDeleteRequest(it) }
-                    .forEach { kord.rest.channel.bulkDelete(id.value, it) }
+        younger.map { it.value }.chunked(100).forEach {
+            if (it.size < 2) kord.rest.channel.deleteMessage(id.value, it.first())
+            else kord.rest.channel.bulkDelete(id.value, BulkDeleteRequest(it))
         }
 
         older.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
@@ -95,7 +98,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
 
             override fun hashCode(): Int = Objects.hash(id, guildId)
 
-            override fun equals(other: Any?): Boolean = when(other) {
+            override fun equals(other: Any?): Boolean = when (other) {
                 is GuildChannelBehavior -> other.id == id && other.guildId == guildId
                 is ChannelBehavior -> other.id == id
                 else -> false
@@ -111,7 +114,11 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCreateBuilder.() -> Unit): Webhook {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.webhook.createWebhook(id.value, builder)
     val data = WebhookData.from(response)
 

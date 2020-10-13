@@ -29,6 +29,14 @@ import kotlinx.coroutines.flow.*
  * if none are presented like other `getX` functions. Instead, the flow will be empty.
  */
 class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
+    /**
+     *
+     * The Cache this [CacheEntitySupplier] operates on.
+     *
+     * short-hand for [Kord.cache]
+     *
+     */
+    private val cache: DataCache = kord.cache
 
     /**
      *  Returns a [Flow] of [Channel]s fetched from cache.
@@ -37,7 +45,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val channels: Flow<Channel>
-        get() = kord.cache.query<ChannelData>().asFlow().map { Channel.from(it, kord) }
+        get() = cache.query<ChannelData>().asFlow().map { Channel.from(it, kord) }
 
     /**
      *  fetches all cached [Guild]s
@@ -46,7 +54,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     override val guilds: Flow<Guild>
-        get() = kord.cache.query<GuildData>().asFlow().map { Guild(it, kord) }
+        get() = cache.query<GuildData>().asFlow().map { Guild(it, kord) }
 
     /**
      *  fetches all cached [Region]s
@@ -55,60 +63,60 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     override val regions: Flow<Region>
-        get() = kord.cache.query<RegionData>().asFlow().map { Region(it, kord) }
+        get() = cache.query<RegionData>().asFlow().map { Region(it, kord) }
 
     /**
      *  fetches all cached [Role]s
      */
     val roles: Flow<Role>
-        get() = kord.cache.query<RoleData>().asFlow().map { Role(it, kord) }
+        get() = cache.query<RoleData>().asFlow().map { Role(it, kord) }
 
     /**
      *  fetches all cached [User]s
      */
     val users: Flow<User>
-        get() = kord.cache.query<UserData>().asFlow().map { User(it, kord) }
+        get() = cache.query<UserData>().asFlow().map { User(it, kord) }
 
     /**
      *  fetches all cached [Member]s
      */
     @OptIn(FlowPreview::class)
     val members: Flow<Member>
-        get() = kord.cache.query<UserData>().asFlow().flatMapConcat { userData ->
-            kord.cache.query<MemberData> { MemberData::userId eq userData.id }
-                    .asFlow().map { Member(it, userData, kord) }
+        get() = cache.query<MemberData>().asFlow().mapNotNull {
+            val userData = cache.query<UserData> { UserData::id eq it.userId }.singleOrNull() ?: return@mapNotNull null
+            Member(it, userData, kord)
         }
 
 
     suspend fun getRole(id: Snowflake): Role? {
-        val data = kord.cache.query<RoleData> { RoleData::id eq id.longValue }.singleOrNull() ?: return null
+        val data = cache.query<RoleData> { RoleData::id eq id.longValue }.singleOrNull() ?: return null
 
         return Role(data, kord)
     }
 
     override suspend fun getChannelOrNull(id: Snowflake): Channel? {
-        val data = kord.cache.query<ChannelData> { ChannelData::id eq id.longValue }.singleOrNull() ?: return null
+        val data = cache.query<ChannelData> { ChannelData::id eq id.longValue }.singleOrNull() ?: return null
         return Channel.from(data, kord)
     }
 
-    override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = kord.cache.query<ChannelData> {
+    override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = cache.query<ChannelData> {
         ChannelData::guildId eq guildId.longValue
     }.asFlow().map { Channel.from(it, kord) as GuildChannel }
 
-    override fun getChannelPins(channelId: Snowflake): Flow<Message> = kord.cache.query<MessageData> {
+    override fun getChannelPins(channelId: Snowflake): Flow<Message> = cache.query<MessageData> {
         MessageData::channelId eq channelId.longValue
         MessageData::pinned eq true
     }.asFlow().map { Message(it, kord) }
 
     override suspend fun getGuildOrNull(id: Snowflake): Guild? {
-        val data = kord.cache.query<GuildData> { GuildData::id eq id.longValue }.singleOrNull() ?: return null
+        val data = cache.query<GuildData> { GuildData::id eq id.longValue }.singleOrNull() ?: return null
         return Guild(data, kord)
     }
 
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? {
-        val userData = kord.cache.query<UserData> { UserData::id eq userId.longValue }.singleOrNull() ?: return null
+        val userData = cache.query<UserData> { UserData::id eq userId.longValue }.singleOrNull() ?: return null
 
-        val memberData = kord.cache.query<MemberData> {
+        val memberData = cache.query<MemberData> {
             MemberData::userId eq userId.longValue
             MemberData::guildId eq guildId.longValue
         }.singleOrNull() ?: return null
@@ -117,7 +125,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
-        val data = kord.cache.query<MessageData> { MessageData::id eq messageId.longValue }.singleOrNull()
+        val data = cache.query<MessageData> { MessageData::id eq messageId.longValue }.singleOrNull()
                 ?: return null
 
         return Message(data, kord)
@@ -125,7 +133,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
         require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        return kord.cache.query<MessageData> {
+        return cache.query<MessageData> {
             MessageData::channelId eq channelId.longValue
             MessageData::id gt messageId.longValue
         }.asFlow().map { Message(it, kord) }.take(limit)
@@ -133,7 +141,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
         require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        return kord.cache.query<MessageData> {
+        return cache.query<MessageData> {
             MessageData::channelId eq channelId.longValue
             MessageData::id lt messageId.longValue
         }.asFlow().map { Message(it, kord) }.take(limit)
@@ -151,7 +159,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override suspend fun getSelfOrNull(): User? = getUserOrNull(kord.selfId)
 
     override suspend fun getRoleOrNull(guildId: Snowflake, roleId: Snowflake): Role? {
-        val data = kord.cache.query<RoleData> {
+        val data = cache.query<RoleData> {
             RoleData::id eq roleId.longValue
             RoleData::guildId eq guildId.longValue
         }.singleOrNull() ?: return null
@@ -159,38 +167,36 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Role(data, kord)
     }
 
-    override fun getGuildRoles(guildId: Snowflake): Flow<Role> = kord.cache.query<RoleData> {
+    override fun getGuildRoles(guildId: Snowflake): Flow<Role> = cache.query<RoleData> {
         RoleData::guildId eq guildId.longValue
     }.asFlow().map { Role(it, kord) }
 
     override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? {
-        val data = kord.cache.query<BanData> {
+        val data = cache.query<BanData> {
             BanData::userId eq userId.longValue
             BanData::guildId eq guildId.longValue
         }.singleOrNull() ?: return null
         return Ban(data, kord)
     }
 
-    override fun getGuildBans(guildId: Snowflake): Flow<Ban> = kord.cache.query<BanData> {
+    override fun getGuildBans(guildId: Snowflake): Flow<Ban> = cache.query<BanData> {
         BanData::guildId eq guildId.longValue
     }.asFlow().map { Ban(it, kord) }
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> {
         require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        return kord.cache.query<UserData>().asFlow().flatMapConcat { userData ->
-            kord.cache.query<MemberData> {
-                MemberData::userId eq userData.id
-                MemberData::guildId eq guildId
-            }.asFlow().map { Member(it, userData, kord) }.take(limit)
+        return cache.query<MemberData> { MemberData::guildId eq guildId.longValue }.asFlow().mapNotNull {
+            val userData = cache.query<UserData> { UserData::id eq it.userId }.singleOrNull() ?: return@mapNotNull null
+            Member(it, userData, kord)
         }
     }
 
-    override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = kord.cache.query<RegionData> {
+    override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = cache.query<RegionData> {
         RegionData::guildId eq guildId.longValue
     }.asFlow().map { Region(it, kord) }
 
     override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake): GuildEmoji? {
-        val data = kord.cache.query<EmojiData> {
+        val data = cache.query<EmojiData> {
             EmojiData::guildId eq guildId.longValue
             EmojiData::id eq emojiId.longValue
         }.singleOrNull() ?: return null
@@ -198,7 +204,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return GuildEmoji(data, kord)
     }
 
-    override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> = kord.cache.query<EmojiData> {
+    override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> = cache.query<EmojiData> {
         EmojiData::guildId eq guildId.longValue
     }.asFlow().map { GuildEmoji(it, kord) }
 
@@ -209,16 +215,16 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.take(limit)
     }
 
-    override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> = kord.cache.query<WebhookData> {
+    override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> = cache.query<WebhookData> {
         WebhookData::channelId eq channelId.longValue
     }.asFlow().map { Webhook(it, kord) }
 
-    override fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook> = kord.cache.query<WebhookData> {
+    override fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook> = cache.query<WebhookData> {
         WebhookData::guildId eq guildId.longValue
     }.asFlow().map { Webhook(it, kord) }
 
     override suspend fun getWebhookOrNull(id: Snowflake): Webhook? {
-        val data = kord.cache.query<WebhookData> {
+        val data = cache.query<WebhookData> {
             WebhookData::id eq id.longValue
         }.singleOrNull() ?: return null
 
@@ -226,7 +232,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? {
-        val data = kord.cache.query<WebhookData> {
+        val data = cache.query<WebhookData> {
             WebhookData::id eq id.longValue
             WebhookData::token eq token
         }.singleOrNull() ?: return null
@@ -235,7 +241,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getUserOrNull(id: Snowflake): User? {
-        val data = kord.cache.query<UserData> { UserData::id eq id.longValue }.singleOrNull() ?: return null
+        val data = cache.query<UserData> { UserData::id eq id.longValue }.singleOrNull() ?: return null
 
         return User(data, kord)
     }

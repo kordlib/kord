@@ -7,6 +7,7 @@ import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.RoleBehavior
+import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.MemberData
 import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.supplier.EntitySupplier
@@ -112,6 +113,7 @@ class Member(
 
     override fun equals(other: Any?): Boolean = when(other) {
         is MemberBehavior -> other.id == id && other.guildId == guildId
+        is UserBehavior -> other.id == id
         else -> false
     }
 

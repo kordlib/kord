@@ -1,6 +1,8 @@
 package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.annotation.KordExperimental
+import com.gitlab.kordlib.common.entity.DiscordMessage
+import com.gitlab.kordlib.common.entity.DiscordWebhook
 import com.gitlab.kordlib.rest.builder.webhook.ExecuteWebhookBuilder
 import com.gitlab.kordlib.rest.builder.webhook.WebhookCreateBuilder
 import com.gitlab.kordlib.rest.builder.webhook.WebhookModifyBuilder
@@ -10,14 +12,24 @@ import com.gitlab.kordlib.rest.json.request.WebhookModifyRequest
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
 import kotlinx.serialization.json.JsonObject
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend inline fun createWebhook(channelId: String, builder: WebhookCreateBuilder.() -> Unit) = call(Route.WebhookPost) {
-        keys[Route.ChannelId] = channelId
-        val createBuilder = WebhookCreateBuilder().apply(builder)
-        body(WebhookCreateRequest.serializer(), createBuilder.toRequest())
-        createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createWebhook(channelId: String, builder: WebhookCreateBuilder.() -> Unit): DiscordWebhook {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return call(Route.WebhookPost) {
+            keys[Route.ChannelId] = channelId
+            val createBuilder = WebhookCreateBuilder().apply(builder)
+            body(WebhookCreateRequest.serializer(), createBuilder.toRequest())
+            createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
     suspend fun getChannelWebhooks(channelId: String) = call(Route.ChannelWebhooksGet) {
@@ -37,19 +49,33 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.WebhookToken] = token
     }
 
-    suspend inline fun modifyWebhook(webhookId: String, builder: WebhookModifyBuilder.() -> Unit) = call(Route.WebhookPatch) {
-        keys[Route.WebhookId] = webhookId
-        val modifyBuilder = WebhookModifyBuilder().apply(builder)
-        body(WebhookModifyRequest.serializer(), modifyBuilder.toRequest())
-        modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun modifyWebhook(webhookId: String, builder: WebhookModifyBuilder.() -> Unit): DiscordWebhook {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return call(Route.WebhookPatch) {
+            keys[Route.WebhookId] = webhookId
+            val modifyBuilder = WebhookModifyBuilder().apply(builder)
+            body(WebhookModifyRequest.serializer(), modifyBuilder.toRequest())
+            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
-    suspend inline fun modifyWebhookWithToken(webhookId: String, token: String, builder: WebhookModifyBuilder.() -> Unit) = call(Route.WebhookByTokenPatch) {
-        keys[Route.WebhookId] = webhookId
-        keys[Route.WebhookToken] = token
-        val modifyBuilder = WebhookModifyBuilder().apply(builder)
-        body(WebhookModifyRequest.serializer(), modifyBuilder.toRequest())
-        modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun modifyWebhookWithToken(webhookId: String, token: String, builder: WebhookModifyBuilder.() -> Unit): DiscordWebhook {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return call(Route.WebhookByTokenPatch) {
+            keys[Route.WebhookId] = webhookId
+            keys[Route.WebhookToken] = token
+            val modifyBuilder = WebhookModifyBuilder().apply(builder)
+            body(WebhookModifyRequest.serializer(), modifyBuilder.toRequest())
+            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
     suspend fun deleteWebhook(webhookId: String, reason: String? = null) = call(Route.WebhookDelete) {
@@ -63,13 +89,20 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend inline fun executeWebhook(webhookId: String, token: String, wait: Boolean, builder: ExecuteWebhookBuilder.() -> Unit) = call(Route.ExecuteWebhookPost) {
-        keys[Route.WebhookId] = webhookId
-        keys[Route.WebhookToken] = token
-        parameter("wait", "$wait")
-        val request = ExecuteWebhookBuilder().apply(builder).toRequest()
-        body(WebhookExecuteRequest.serializer(), request.request)
-        request.file?.let { file(it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun executeWebhook(webhookId: String, token: String, wait: Boolean, builder: ExecuteWebhookBuilder.() -> Unit): DiscordMessage? {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return call(Route.ExecuteWebhookPost) {
+            keys[Route.WebhookId] = webhookId
+            keys[Route.WebhookToken] = token
+            parameter("wait", "$wait")
+            val request = ExecuteWebhookBuilder().apply(builder).toRequest()
+            body(WebhookExecuteRequest.serializer(), request.request)
+            request.file?.let { file(it) }
+        }
     }
 
     @KordExperimental

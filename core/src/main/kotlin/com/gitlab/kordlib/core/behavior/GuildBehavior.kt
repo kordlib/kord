@@ -33,6 +33,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.util.*
 import com.gitlab.kordlib.rest.service.RestClient
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
@@ -389,14 +392,22 @@ interface GuildBehavior : Entity, Strategizable {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): Guild {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.guild.modifyGuild(id.value, builder)
     val data = GuildData.from(response)
 
     return Guild(data, kord)
 }
 
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     kord.rest.emoji.createEmoji(guildId = id.value, builder = builder)
 }
 
@@ -407,7 +418,11 @@ suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> U
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.guild.createTextChannel(id.value, builder)
     val data = ChannelData.from(response)
 
@@ -421,8 +436,11 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.guild.createVoiceChannel(id.value, builder)
     val data = ChannelData.from(response)
 
@@ -436,8 +454,12 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 @KordPreview
 suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.guild.createNewsChannel(id.value, builder)
     val data = ChannelData.from(response)
 
@@ -451,7 +473,11 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.guild.createCategory(id.value, builder)
     val data = ChannelData.from(response)
 
@@ -463,7 +489,11 @@ suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPositionModifyBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     kord.rest.guild.modifyGuildChannelPosition(id.value, builder)
 }
 
@@ -476,8 +506,11 @@ suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPosit
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyBuilder.() -> Unit): Flow<Role> {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.guild.modifyGuildRolePosition(id.value, builder)
     return response.asFlow().map { RoleData.from(id.value, it) }.map { Role(it, kord) }
 
@@ -490,8 +523,11 @@ suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyB
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit): Role {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.guild.createGuildRole(id.value, builder)
     val data = RoleData.from(id.value, response)
 
@@ -503,7 +539,11 @@ suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit):
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     kord.rest.guild.addGuildBan(guildId = id.value, userId = userId.value, builder = builder)
 }
 

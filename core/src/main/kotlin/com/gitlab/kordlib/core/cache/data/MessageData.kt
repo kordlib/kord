@@ -89,7 +89,7 @@ data class MessageData(
     }
 
     companion object {
-        val description get() = description(MessageData::id)
+        val description = description(MessageData::id)
 
         fun from(entity: DiscordMessage) = with(entity) {
             MessageData(

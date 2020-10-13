@@ -21,6 +21,9 @@ import com.gitlab.kordlib.rest.route.Position
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.reflect.KClass
 
 internal fun String?.toSnowflakeOrNull(): Snowflake? = when {
@@ -37,11 +40,17 @@ internal fun String.toInstant() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(t
 internal fun Int.toInstant() = Instant.ofEpochMilli(toLong())
 internal fun Long.toInstant() = Instant.ofEpochMilli(this)
 
-internal inline fun <T> catchNotFound(block: () -> T): T? = try {
-    block()
-} catch (exception: RestRequestException) {
-    if (exception.code == 404) null
-    else throw exception
+@OptIn(ExperimentalContracts::class)
+internal inline fun <T> catchNotFound(block: () -> T): T?  {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    return try {
+        block()
+    } catch (exception: RestRequestException) {
+        if (exception.code == 404) null
+        else throw exception
+    }
 }
 
 fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {

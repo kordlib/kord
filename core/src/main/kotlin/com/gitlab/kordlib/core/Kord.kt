@@ -6,6 +6,7 @@ import com.gitlab.kordlib.common.annotation.KordUnsafe
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.builder.kord.KordRestOnlyBuilder
 import com.gitlab.kordlib.core.cache.data.GuildData
@@ -20,6 +21,7 @@ import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
@@ -31,6 +33,9 @@ import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
@@ -56,7 +61,7 @@ class Kord(
     @OptIn(KordUnsafe::class)
     val unsafe: Unsafe = Unsafe(this)
 
-    val events get() = eventPublisher.asFlow()
+    val events get() = eventPublisher.asFlow().buffer(CoroutineChannel.UNLIMITED)
 
     override val coroutineContext: CoroutineContext
         get() = dispatcher + Job()
@@ -70,11 +75,17 @@ class Kord(
     /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
-    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = Status.Online }) = gateway.start(resources.token) {
-        shard = DiscordShard(0, resources.shardCount)
-        presence(builder)
-        intents = resources.intents
-        name = "kord"
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = Status.Online }) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        gateway.start(resources.token) {
+            shard = DiscordShard(0, resources.shardCount)
+            presence(builder)
+            intents = resources.intents
+            name = "kord"
+        }
     }
 
     /**
@@ -94,7 +105,11 @@ class Kord(
 
     suspend fun getApplicationInfo(): ApplicationInfo = with(EntitySupplyStrategy.rest).getApplicationInfo()
 
+    @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         val response = rest.guild.createGuild(builder)
         val data = GuildData.from(response)
 
@@ -102,6 +117,17 @@ class Kord(
     }
 
     suspend fun getChannel(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Channel? = strategy.supply(this).getChannelOrNull(id)
+
+    /**
+     * Requests to get the [Channel] as type [T] through the [strategy],
+     * returns null if the [Channel] isn't present or is not of type [T].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend inline fun <reified T : Channel> getChannelOf(
+            id: Snowflake,
+            strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+    ): T? = strategy.supply(this).getChannelOfOrNull(id)
 
     suspend fun getGuild(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Guild? = strategy.supply(this).getGuildOrNull(id)
 
@@ -111,7 +137,11 @@ class Kord(
     suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User? =
             strategy.supply(this).getUserOrNull(id)
 
+    @OptIn(ExperimentalContracts::class)
     suspend inline fun editPresence(builder: PresenceBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         val status = PresenceBuilder().apply(builder).toUpdateStatus()
         gateway.sendAll(status)
     }
@@ -141,18 +171,32 @@ class Kord(
          * Similarly, [cache][Kord.cache] related functionality has been disabled and
          * replaced with a no-op implementation.
          */
+        @OptIn(ExperimentalContracts::class)
         @KordExperimental
-        inline fun restOnly(token: String, builder: KordRestOnlyBuilder.() -> Unit = {}): Kord =
-                KordRestOnlyBuilder(token).apply(builder).build()
+        inline fun restOnly(token: String, builder: KordRestOnlyBuilder.() -> Unit = {}): Kord {
+            contract {
+                callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+            }
+            return KordRestOnlyBuilder(token).apply(builder).build()
+        }
     }
 
 }
 
 /**
- * Convenience method that will invoke the [consumer] on every event [T], the consumer is launched in the given [scope]
- * or [Kord] by default and will not propagate any exceptions.
+ * Convenience method that will invoke the [consumer] on every event [T] created by [Kord.events].
+ *
+ * The events are buffered in an [unlimited][CoroutineChannel.UNLIMITED] [buffer][Flow.buffer] and
+ * [launched][CoroutineScope.launch] in the supplied [scope], which is [Kord] by default.
+ * Each event will be [launched][CoroutineScope.launch] inside the [scope] separately and
+ * any thrown [Throwable] will be caught and logged.
+ *
+ * The returned [Job] is a reference to the created coroutine, call [Job.cancel] to cancel the processing of any further
+ * events.
  */
-inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline consumer: suspend T.() -> Unit) =
-        events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>().onEach {
-            runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
-        }.catch { kordLogger.catching(it) }.launchIn(scope)
+inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline consumer: suspend T.() -> Unit): Job =
+        events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
+                .onEach {
+                    scope.launch { runCatching { consumer(it) }.onFailure { kordLogger.catching(it) } }
+                }
+                .launchIn(scope)

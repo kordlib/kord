@@ -7,6 +7,9 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.RequiresOptIn.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * Some intents are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without enabling them.
@@ -171,7 +174,11 @@ data class Intents internal constructor(val code: Int) {
     /**
      * copy this [Intents] and apply the [block] to it.
      */
+    @OptIn(ExperimentalContracts::class)
     inline fun copy(block: IntentsBuilder.() -> Unit): Intents {
+        contract {
+            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        }
         val builder = IntentsBuilder(code)
         builder.apply(block)
         return builder.flags()

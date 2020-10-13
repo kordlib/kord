@@ -3,6 +3,9 @@ package com.gitlab.kordlib.rest.ratelimit
 import com.gitlab.kordlib.rest.request.Request
 import java.lang.Exception
 import java.time.Instant
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * A rate limiter that follows [Discord's rate limits](https://discord.com/developers/docs/topics/rate-limits) for
@@ -22,10 +25,14 @@ interface RequestRateLimiter {
  * [Awaits][RequestRateLimiter.await] the rate limits for the [request] and then runs [consumer].
  * Throws an [IllegalStateException] if the supplied [RequestToken] was not completed.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun <T> RequestRateLimiter.consume(
         request: Request<*, *>,
         consumer: (token: RequestToken) -> T
 ): T {
+    contract {
+        callsInPlace(consumer, InvocationKind.EXACTLY_ONCE)
+    }
     val token = await(request)
     try {
         val result = consumer(token)

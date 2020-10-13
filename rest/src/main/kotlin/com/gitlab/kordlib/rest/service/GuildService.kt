@@ -1,6 +1,8 @@
 package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.entity.DiscordChannel
+import com.gitlab.kordlib.common.entity.DiscordGuild
+import com.gitlab.kordlib.common.entity.DiscordRole
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
@@ -15,12 +17,20 @@ import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
-import com.gitlab.kordlib.common.entity.DiscordGuild
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit) = call(Route.GuildPost) {
-        body(GuildCreateRequest.serializer(), GuildCreateBuilder().apply(builder).toRequest())
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): DiscordGuild {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        return call(Route.GuildPost) {
+            body(GuildCreateRequest.serializer(), GuildCreateBuilder().apply(builder).toRequest())
+        }
     }
 
     /**
@@ -39,11 +49,18 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend inline fun modifyGuild(guildId: String, builder: GuildModifyBuilder.() -> Unit) = call(Route.GuildPatch) {
-        keys[Route.GuildId] = guildId
-        val modifyBuilder = GuildModifyBuilder().apply(builder)
-        body(GuildModifyRequest.serializer(), modifyBuilder.toRequest())
-        modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun modifyGuild(guildId: String, builder: GuildModifyBuilder.() -> Unit): DiscordGuild {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return call(Route.GuildPatch) {
+            keys[Route.GuildId] = guildId
+            val modifyBuilder = GuildModifyBuilder().apply(builder)
+            body(GuildModifyRequest.serializer(), modifyBuilder.toRequest())
+            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
     suspend fun deleteGuild(guildId: String) = call(Route.GuildDelete) {
@@ -60,11 +77,18 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         reason?.let { header("X-Audit-Log-Reason", it) }
     }
 
-    suspend inline fun modifyGuildChannelPosition(guildId: String, builder: GuildChannelPositionModifyBuilder.() -> Unit) = call(Route.GuildChannelsPatch) {
-        keys[Route.GuildId] = guildId
-        val modifyBuilder = GuildChannelPositionModifyBuilder().apply(builder)
-        body(GuildChannelPositionModifyRequest.Serializer, modifyBuilder.toRequest())
-        modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun modifyGuildChannelPosition(guildId: String, builder: GuildChannelPositionModifyBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        call(Route.GuildChannelsPatch) {
+            keys[Route.GuildId] = guildId
+            val modifyBuilder = GuildChannelPositionModifyBuilder().apply(builder)
+            body(GuildChannelPositionModifyRequest.Serializer, modifyBuilder.toRequest())
+            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
     suspend fun getGuildMember(guildId: String, userId: String) = call(Route.GuildMemberGet) {
@@ -86,12 +110,19 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         body(GuildMemberAddRequest.serializer(), MemberAddBuilder().also(builder).toRequest())
     }
 
-    suspend inline fun modifyGuildMember(guildId: String, userId: String, builder: MemberModifyBuilder.() -> Unit) = call(Route.GuildMemberPatch) {
-        keys[Route.GuildId] = guildId
-        keys[Route.UserId] = userId
-        val modifyBuilder = MemberModifyBuilder().apply(builder)
-        body(GuildMemberModifyRequest.serializer(), modifyBuilder.toRequest())
-        modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun modifyGuildMember(guildId: String, userId: String, builder: MemberModifyBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        call(Route.GuildMemberPatch) {
+            keys[Route.GuildId] = guildId
+            keys[Route.UserId] = userId
+            val modifyBuilder = MemberModifyBuilder().apply(builder)
+            body(GuildMemberModifyRequest.serializer(), modifyBuilder.toRequest())
+            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
     suspend fun addRoleToGuildMember(guildId: String, userId: String, roleId: String, reason: String? = null) = call(Route.GuildMemberRolePut) {
@@ -123,12 +154,19 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.UserId] = userId
     }
 
-    suspend inline fun addGuildBan(guildId: String, userId: String, builder: BanCreateBuilder.() -> Unit) = call(Route.GuildBanPut) {
-        keys[Route.GuildId] = guildId
-        keys[Route.UserId] = userId
-        val createBuilder = BanCreateBuilder().apply(builder)
-        body(GuildBanAddRequest.serializer(), createBuilder.toRequest())
-        createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun addGuildBan(guildId: String, userId: String, builder: BanCreateBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        call(Route.GuildBanPut) {
+            keys[Route.GuildId] = guildId
+            keys[Route.UserId] = userId
+            val createBuilder = BanCreateBuilder().apply(builder)
+            body(GuildBanAddRequest.serializer(), createBuilder.toRequest())
+            createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
     suspend fun deleteGuildBan(guildId: String, userId: String, reason: String? = null) = call(Route.GuildBanDelete) {
@@ -141,11 +179,18 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend inline fun createGuildRole(guildId: String, builder: RoleCreateBuilder.() -> Unit = {}) = call(Route.GuildRolePost) {
-        keys[Route.GuildId] = guildId
-        val createBuilder = RoleCreateBuilder().apply(builder)
-        body(GuildRoleCreateRequest.serializer(), createBuilder.toRequest())
-        createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createGuildRole(guildId: String, builder: RoleCreateBuilder.() -> Unit = {}): DiscordRole {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return call(Route.GuildRolePost) {
+            keys[Route.GuildId] = guildId
+            val createBuilder = RoleCreateBuilder().apply(builder)
+            body(GuildRoleCreateRequest.serializer(), createBuilder.toRequest())
+            createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
     suspend inline fun modifyGuildRolePosition(guildId: String, builder: RolePositionsModifyBuilder.() -> Unit) = call(Route.GuildRolesPatch) {

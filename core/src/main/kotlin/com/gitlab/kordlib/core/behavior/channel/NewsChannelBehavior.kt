@@ -16,6 +16,9 @@ import com.gitlab.kordlib.rest.service.patchNewsChannel
 import java.util.*
 import com.gitlab.kordlib.common.entity.Permission
 import com.gitlab.kordlib.rest.json.request.ChannelFollowRequest
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a Discord News Channel associated to a guild.
@@ -83,7 +86,11 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun NewsChannelBehavior.edit(builder: NewsChannelModifyBuilder.() -> Unit): NewsChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.channel.patchNewsChannel(id.value, builder)
     val data = ChannelData.from(response)
 

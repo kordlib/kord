@@ -29,7 +29,7 @@ data class ChannelData(
 
 
     companion object {
-        val description get() = description(ChannelData::id)
+        val description = description(ChannelData::id)
 
         fun from(entity: DiscordChannel) = with(entity) {
             ChannelData(

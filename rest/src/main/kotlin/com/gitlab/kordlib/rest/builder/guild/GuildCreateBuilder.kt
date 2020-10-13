@@ -13,6 +13,9 @@ import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.json.request.GuildCreateChannelRequest
 import com.gitlab.kordlib.rest.json.request.GuildCreateRequest
 import com.gitlab.kordlib.rest.json.request.GuildRoleCreateRequest
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.random.Random
 
 @KordDsl
@@ -60,27 +63,47 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
      */
     val systemChannelId: Snowflake? = null
 
+    @OptIn(ExperimentalContracts::class)
     inline fun textChannel(id: Snowflake = newUniqueSnowflake(), builder: TextChannelCreateBuilder.() -> Unit): Snowflake {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         channels.add(TextChannelCreateBuilder().apply(builder).toRequest().copy(id = id.value))
         return id
     }
 
+    @OptIn(ExperimentalContracts::class)
     inline fun newsChannel(id: Snowflake = newUniqueSnowflake(), builder: NewsChannelCreateBuilder.() -> Unit): Snowflake {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         channels.add(NewsChannelCreateBuilder().apply(builder).toRequest().copy(id = id.value))
         return id
     }
 
+    @OptIn(ExperimentalContracts::class)
     inline fun category(id: Snowflake = newUniqueSnowflake(), builder: CategoryCreateBuilder.() -> Unit): Snowflake {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         channels.add(CategoryCreateBuilder().apply(builder).toRequest().copy(id = id.value))
         return id
     }
 
+    @OptIn(ExperimentalContracts::class)
     inline fun role(id: Snowflake = newUniqueSnowflake(), builder: RoleCreateBuilder.() -> Unit): Snowflake {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         roles += RoleCreateBuilder().apply(builder).toRequest().copy(id = id.value)
         return id
     }
 
+    @OptIn(ExperimentalContracts::class)
     inline fun everyoneRole(builder: RoleCreateBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         everyoneRole = RoleCreateBuilder().apply(builder)
     }
 

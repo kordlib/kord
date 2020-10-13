@@ -42,6 +42,9 @@ import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.parse
 import mu.KotlinLogging
 import kotlin.concurrent.thread
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.seconds
 
 operator fun DefaultGateway.Companion.invoke(resources: ClientResources, retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)) =
@@ -142,7 +145,11 @@ class KordBuilder(val token: String) {
      * }
      * ```
      */
+    @OptIn(ExperimentalContracts::class)
     inline fun intents(builder: Intents.IntentsBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         intents = Intents { builder() }
     }
 
@@ -239,7 +246,7 @@ class KordBuilder(val token: String) {
 
         val self = getBotIdFromToken(token)
 
-        val eventPublisher = BroadcastChannel<Event>(Channel.CONFLATED)
+        val eventPublisher = BroadcastChannel<Event>(1)
 
         if (enableShutdownHook) {
             Runtime.getRuntime().addShutdownHook(thread(false) {

@@ -1,4 +1,77 @@
-# 0.5.12
+# 0.6.8
+
+## Fixes
+
+* Fixed rest action reasons not encoding properly. #86
+
+# 0.6.7
+
+## Fixes
+
+* Fixed removed channels not being removed from cache. #84
+
+# 0.6.6
+
+## Fixes
+
+* Fixed an issue where `Members` would not consider `Users` with the same ID equal.
+* Removed a dependency on Java 10 introduced in 0.6.5. #78
+* Fixed the event flow dropping events under too much pressure. #81
+* Fixed the `KordCacheBuilder` ignoring configuration #82
+ 
+# 0.6.5
+
+## Fixes
+
+* Fixed an issue where `LiveMessage` would not filter its event flow. #70
+* Fixed an issue where emojis from events would be decoded incorrectly.
+
+# 0.6.4
+
+## Additions
+
+* Added a `MemberBehavior#addRole` and `MemberBehavior#removeRole` variant which accepts an audit log message.
+
+# 0.6.3
+
+## Fixes
+
+* Fixed GuildMessageChannelBehavior#bulkdelete  incorrectly deleting messages older than 14 days
+
+
+# 0.6.2
+
+## Additions
+
+* Added a new `Field` builder function. #57
+* Added `Kord#getChannelOf` to request a type of channel.
+
+## Changes
+
+* `name` and `value` default to empty space. 
+* `PRESENCES_REPLACE` event will be ignored. #42
+
+# 0.6.1 
+
+## Additions
+
+* Added `Team` and other properties to ApplicationInfo.
+
+## Changes
+
+* `ReactionEmoji.Unicode` now correctly compares on name for equality.
+
+## Performance
+
+* `CacheEntitySupplier#getGuildMembers` will no longer query MemberData on each user.
+* Reduced the number of mappings inside suppliers.
+
+## Fixes
+
+* Fixed type mismatch when comparing guildId in `CacheEntitySupplier#getGuildMembers`
+
+
+# 0.6.0
 
 ## Changes
 

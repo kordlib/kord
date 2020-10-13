@@ -20,6 +20,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.coroutines.coroutineContext
 import kotlin.time.TimeMark
 import kotlin.time.seconds
@@ -241,7 +244,11 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun MessageChannelBehavior.createMessage(builder: MessageCreateBuilder.() -> Unit): Message {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.channel.createMessage(id.value, builder)
     val data = MessageData.from(response)
 
@@ -253,7 +260,13 @@ suspend inline fun MessageChannelBehavior.createMessage(builder: MessageCreateBu
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> Unit): Message = createMessage { embed(block) }
+@OptIn(ExperimentalContracts::class)
+suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> Unit): Message {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    return createMessage { embed(block) }
+}
 
 /**
  * Requests to trigger the typing indicator for the bot in this channel.
@@ -268,7 +281,11 @@ suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> 
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() -> Unit) {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
     var typing = true
 
     kord.launch(context = coroutineContext) {

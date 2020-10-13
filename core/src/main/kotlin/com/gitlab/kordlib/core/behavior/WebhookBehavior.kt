@@ -14,6 +14,9 @@ import com.gitlab.kordlib.rest.builder.webhook.ExecuteWebhookBuilder
 import com.gitlab.kordlib.rest.builder.webhook.WebhookModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a [Discord Webhook](https://discord.com/developers/docs/resources/webhook).
@@ -72,8 +75,11 @@ interface WebhookBehavior : Entity, Strategizable {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
+@OptIn(ExperimentalContracts::class)
 suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit): Webhook {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.webhook.modifyWebhook(id.value, builder)
     val data = WebhookData.from(response)
 
@@ -87,8 +93,11 @@ suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Suppress("NAME_SHADOWING")
+@OptIn(ExperimentalContracts::class)
 suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBuilder.() -> Unit): Webhook {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.webhook.modifyWebhookWithToken(id.value, token, builder)
     val data = WebhookData.from(response)
 
@@ -100,7 +109,11 @@ suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBui
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun WebhookBehavior.execute(token: String, builder: ExecuteWebhookBuilder.() -> Unit): Message {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     val response = kord.rest.webhook.executeWebhook(
             token = token,
             webhookId = id.value,
@@ -119,7 +132,11 @@ suspend inline fun WebhookBehavior.execute(token: String, builder: ExecuteWebhoo
  * This is a 'fire and forget' variant of [execute]. It will not wait for a response and might not throw an
  * Exception if the request wasn't executed.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun WebhookBehavior.executeIgnored(token: String, builder: ExecuteWebhookBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
     kord.rest.webhook.executeWebhook(token = token, webhookId = id.value, wait = false, builder = builder)
 }
 

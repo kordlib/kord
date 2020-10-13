@@ -1,4 +1,4 @@
-object Versions {
+object  Versions {
     const val kotlin = "1.4.0"
     const val kotlinxSerialization = "1.0.0-RC"
     const val ktor = "1.4.0"

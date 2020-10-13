@@ -6,8 +6,12 @@ import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.ApplicationInfoData
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.rest.Image
 import java.util.*
 
+/**
+ * The details of a [Discord OAuth2](https://discord.com/developers/docs/topics/oauth2) application.
+ */
 class ApplicationInfo(
         val data: ApplicationInfoData,
         override val kord: Kord,
@@ -29,9 +33,25 @@ class ApplicationInfo(
 
     val owner: UserBehavior get() = UserBehavior(ownerId, kord)
 
+    val summary: String get() = data.summary
+
+    val verifyKey: String get() = data.verifyKey
+
+    val teamId: Long? get() = data.teamId
+
+    val guildId: Long? get() = data.guildId
+
+    val primarySkuId: Long? get() = data.primarySkuId
+
+    val slug: String? get() = data.slug
+
+    val coverImage: String? get() = data.coverImage
+
     suspend fun getOwner(): User = supplier.getUser(ownerId)
 
     suspend fun getOwnerOrNull(): User? = supplier.getUserOrNull(ownerId)
+
+    suspend fun getCoverImage(): Image? = coverImage?.let { Image.fromUrl(kord.resources.httpClient, it) }
 
     /**
      * Returns a new [ApplicationInfo] with the given [strategy].
@@ -41,7 +61,7 @@ class ApplicationInfo(
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is ApplicationInfo -> other.id == id
         else -> false
     }
