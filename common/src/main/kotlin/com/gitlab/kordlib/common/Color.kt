@@ -9,7 +9,22 @@ class Color(val rgb: Int) {
     val blue: Int get() = (rgb shr 0) and 0xFF
 
     init {
-        require(rgb in 0..0xFFFFFF) { "RGB should be in range of 0..16777215 but was $rgb" }
+        require(rgb in MIN_COLOR..MAX_COLOR) { "RGB should be in range of $MIN_COLOR..$MAX_COLOR but was $rgb" }
+    }
+
+    override fun toString(): String = "Color(red=$red,blue=$blue,green=$green)"
+
+    override fun hashCode(): Int = rgb.hashCode()
+
+    override fun equals(other: Any?): Boolean {
+        val color = other as? Color ?: return false
+
+        return color.rgb == rgb
+    }
+
+    companion object {
+        private const val MIN_COLOR = 0
+        private const val MAX_COLOR = 0xFFFFFF
     }
 }
 
