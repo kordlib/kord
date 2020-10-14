@@ -13,8 +13,6 @@ import io.ktor.client.statement.readText
 import io.ktor.content.TextContent
 import io.ktor.http.takeFrom
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import mu.KotlinLogging
 import java.time.Clock
 

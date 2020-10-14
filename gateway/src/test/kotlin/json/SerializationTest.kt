@@ -6,7 +6,6 @@ import com.gitlab.kordlib.common.entity.UserFlag
 import com.gitlab.kordlib.common.entity.UserFlags
 import com.gitlab.kordlib.gateway.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 
 private fun file(name: String): String {

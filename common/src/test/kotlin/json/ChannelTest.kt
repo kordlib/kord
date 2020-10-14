@@ -4,7 +4,6 @@ package json
 
 import com.gitlab.kordlib.common.entity.DiscordChannel
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 
 private fun file(name: String): String {
