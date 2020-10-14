@@ -27,12 +27,9 @@ import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.rest.service.RestClient
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import mu.KotlinLogging
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -59,9 +56,10 @@ class Kord(
 
     val defaultSupplier: EntitySupplier = resources.defaultStrategy.supply(this)
 
-    @OptIn(KordUnsafe::class)
+    @OptIn(KordUnsafe::class, KordExperimental::class)
     val unsafe: Unsafe = Unsafe(this)
 
+    @OptIn(FlowPreview::class)
     val events get() = eventPublisher.asFlow().buffer(CoroutineChannel.UNLIMITED)
 
     override val coroutineContext: CoroutineContext

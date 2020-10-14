@@ -44,13 +44,15 @@ sealed class AuditLogChangeResponse<T> {
     abstract val new: T?
 
 
-    @Serializer(forClass = AuditLogChangeResponse::class)
     companion object AuditLogChangeSerializer : KSerializer<AuditLogChangeResponse<*>> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("AuditLogChange") {
             element("key", String.serializer().descriptor)
             element("old_value", JsonElement.serializer().descriptor, isOptional = true)
             element("new_value", JsonElement.serializer().descriptor, isOptional = true)
+        }
 
+        override fun serialize(encoder: Encoder, value: AuditLogChangeResponse<*>) {
+            error("encoding for Audit logs is not implemented")
         }
 
         override fun deserialize(decoder: Decoder): AuditLogChangeResponse<*> {
@@ -270,7 +272,6 @@ enum class AuditLogEventResponse(val code: Int) {
     IntegrationUpdate(81),
     IntegrationDelete(82);
 
-    @Serializer(forClass = AuditLogEventResponse::class)
     companion object AuditLogEventSerializer : KSerializer<AuditLogEventResponse> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("AuditLogEvent", PrimitiveKind.INT)
 
@@ -280,8 +281,8 @@ enum class AuditLogEventResponse(val code: Int) {
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: AuditLogEventResponse) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: AuditLogEventResponse) {
+            encoder.encodeInt(value.code)
         }
 
     }

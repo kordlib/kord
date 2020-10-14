@@ -47,7 +47,6 @@ enum class Status {
         Unknown,
         Online, DnD, Idle, Invisible, Offline;
 
-        @Serializer(forClass = Status::class)
         companion object StatusSerializer : KSerializer<Status> {
                 override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Status", PrimitiveKind.STRING)
 

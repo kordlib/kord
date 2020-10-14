@@ -9,9 +9,11 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.request.header
+import io.ktor.util.*
 import kotlinx.serialization.json.Json
 import java.util.*
 
+@OptIn(KtorExperimentalAPI::class)
 internal fun HttpClientConfig<*>.defaultConfig(token: String) {
     expectSuccess = false
     defaultRequest {
@@ -22,6 +24,7 @@ internal fun HttpClientConfig<*>.defaultConfig(token: String) {
     install(WebSockets)
 }
 
+@OptIn(KtorExperimentalAPI::class)
 internal fun HttpClient?.configure(token: String): HttpClient {
     if (this != null) return this.config {
         defaultConfig(token)

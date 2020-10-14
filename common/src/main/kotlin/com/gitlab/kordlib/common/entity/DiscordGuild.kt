@@ -123,7 +123,6 @@ enum class GuildFeature(val value: String) {
      */
     WelcomeScreenEnabled("WELCOME_SCREEN_ENABLED");
 
-    @Serializer(forClass = GuildFeature::class)
     companion object : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
@@ -133,8 +132,8 @@ enum class GuildFeature(val value: String) {
             return values().firstOrNull { it.value == name } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: GuildFeature) {
-            encoder.encodeString(obj.value)
+        override fun serialize(encoder: Encoder, value: GuildFeature) {
+            encoder.encodeString(value.value)
         }
     }
 }
@@ -146,7 +145,6 @@ class SystemChannelFlags constructor(val code: Int) {
         return this.code and flag.code == flag.code
     }
 
-    @Serializer(forClass = SystemChannelFlags::class)
     companion object : KSerializer<SystemChannelFlags> {
 
         override val descriptor: SerialDescriptor
@@ -245,7 +243,6 @@ enum class PremiumTier(val level: Int) {
     Two(2),
     Three(3);
 
-    @Serializer(forClass = PremiumTier::class)
     companion object PremiumTierSerializer : KSerializer<PremiumTier> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("premium_tier", PrimitiveKind.INT)
@@ -269,7 +266,6 @@ enum class DefaultMessageNotificationLevel(val code: Int) {
     AllMessages(0),
     OnlyMentions(1);
 
-    @Serializer(forClass = DefaultMessageNotificationLevel::class)
     companion object DefaultMessageNotificationLevelSerializer : KSerializer<DefaultMessageNotificationLevel> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("default_message_notifications", PrimitiveKind.INT)
@@ -279,8 +275,8 @@ enum class DefaultMessageNotificationLevel(val code: Int) {
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: DefaultMessageNotificationLevel) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: DefaultMessageNotificationLevel) {
+            encoder.encodeInt(value.code)
         }
     }
 
@@ -294,7 +290,6 @@ enum class ExplicitContentFilter(val code: Int) {
     MembersWithoutRoles(1),
     AllMembers(2);
 
-    @Serializer(forClass = ExplicitContentFilter::class)
     companion object ExplicitContentFilterSerializer : KSerializer<ExplicitContentFilter> {
 
         override val descriptor: SerialDescriptor
@@ -319,7 +314,6 @@ enum class MFALevel(val code: Int) {
     None(0),
     Elevated(1);
 
-    @Serializer(forClass = MFALevel::class)
     object MFALevelSerializer : KSerializer<MFALevel> {
 
         override val descriptor: SerialDescriptor
@@ -330,8 +324,8 @@ enum class MFALevel(val code: Int) {
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: MFALevel) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: MFALevel) {
+            encoder.encodeInt(value.code)
         }
     }
 }
@@ -347,7 +341,6 @@ enum class VerificationLevel(val code: Int) {
     High(3),
     VeryHigh(4);
 
-    @Serializer(forClass = VerificationLevel::class)
     companion object VerificationLevelSerializer : KSerializer<VerificationLevel> {
 
         override val descriptor: SerialDescriptor
@@ -358,8 +351,8 @@ enum class VerificationLevel(val code: Int) {
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: VerificationLevel) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: VerificationLevel) {
+            encoder.encodeInt(value.code)
         }
 
     }

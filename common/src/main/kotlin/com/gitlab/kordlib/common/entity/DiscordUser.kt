@@ -130,7 +130,6 @@ enum class Premium(val code: Int) {
     NitroClassic(1),
     Nitro(2);
 
-    @Serializer(forClass = Premium::class)
     companion object PremiumSerializer : KSerializer<Premium> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("premium_type", PrimitiveKind.INT)

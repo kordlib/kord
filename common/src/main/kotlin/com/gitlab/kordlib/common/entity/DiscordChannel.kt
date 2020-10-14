@@ -57,7 +57,7 @@ enum class ChannelType(val code: Int) {
     GuildCategory(4),
     GuildNews(5),
     GuildStore(6);
-    @Serializer(forClass = ChannelType::class)
+
     companion object ChannelTypeSerializer : KSerializer<ChannelType> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)

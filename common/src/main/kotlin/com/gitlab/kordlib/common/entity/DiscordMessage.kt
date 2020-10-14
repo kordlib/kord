@@ -126,9 +126,7 @@ data class Flags internal constructor(val code: Int) {
         return builder.flags()
     }
 
-
-    @Serializer(forClass = Flags::class)
-    companion object FlagsSerializer : DeserializationStrategy<Flags> {
+    companion object FlagsSerializer : KSerializer<Flags> {
 
         inline operator fun invoke(builder: FlagsBuilder.() -> Unit): Flags {
             return FlagsBuilder().apply(builder).flags()
@@ -141,6 +139,9 @@ data class Flags internal constructor(val code: Int) {
             return Flags(flags)
         }
 
+        override fun serialize(encoder: Encoder, value: Flags) {
+            encoder.encodeInt(value.code)
+        }
     }
 
     class FlagsBuilder(internal var code: Int = 0) {
@@ -317,7 +318,6 @@ enum class MessageType(val code: Int) {
     @Suppress("SpellCheckingInspection")
     GuildDiscoveryRequalified(15);
 
-    @Serializer(forClass = MessageType::class)
     companion object MessageTypeSerializer : KSerializer<MessageType> {
 
         override val descriptor: SerialDescriptor
@@ -328,8 +328,8 @@ enum class MessageType(val code: Int) {
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: MessageType) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: MessageType) {
+            encoder.encodeInt(value.code)
         }
     }
 }

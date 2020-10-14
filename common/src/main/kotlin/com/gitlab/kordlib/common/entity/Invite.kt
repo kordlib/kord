@@ -13,7 +13,6 @@ enum class TargetUserType(val code: Int) {
     Unknown(Int.MIN_VALUE),
     STREAM(1);
 
-    @Serializer(forClass = TargetUserType::class)
     companion object TargetUserTypeSerializer : KSerializer<TargetUserType> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("TargetUserType", PrimitiveKind.INT)
 

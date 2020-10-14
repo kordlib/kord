@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.common.entity
 
 import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.*
@@ -8,16 +9,19 @@ import kotlinx.serialization.json.*
 /**
  * An instance of a [Discord shard](https://discord.com/developers/docs/topics/gateway#sharding).
  */
-@Serializable
+@Serializable(with = DiscordShard.Companion::class)
 data class DiscordShard(val index: Int, val count: Int) {
 
-    @Serializer(forClass = DiscordShard::class)
     companion object : KSerializer<DiscordShard> {
 
-        override fun serialize(encoder: Encoder, obj: DiscordShard) {
+        @OptIn(ExperimentalSerializationApi::class)
+        override val descriptor: SerialDescriptor
+            get() = listSerialDescriptor(PrimitiveSerialDescriptor("DiscordShardElement", PrimitiveKind.INT))
+
+        override fun serialize(encoder: Encoder, value: DiscordShard) {
             val array = buildJsonArray {
-                add(JsonPrimitive(obj.index))
-                add(JsonPrimitive(obj.count))
+                add(JsonPrimitive(value.index))
+                add(JsonPrimitive(value.count))
             }
 
             encoder.encodeSerializableValue(JsonArray.serializer(), array)

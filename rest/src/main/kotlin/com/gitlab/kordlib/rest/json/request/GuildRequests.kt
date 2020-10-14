@@ -110,8 +110,8 @@ data class GuildRolePositionModifyRequest(val swaps: List<Pair<String, Int>>) {
         override val descriptor: SerialDescriptor
             get() = buildSerialDescriptor("GuildRolePosition", StructureKind.LIST)
 
-        override fun serialize(encoder: Encoder, obj: GuildRolePositionModifyRequest) {
-            val positions = obj.swaps.map { RolePosition(it.first, it.second) }
+        override fun serialize(encoder: Encoder, value: GuildRolePositionModifyRequest) {
+            val positions = value.swaps.map { RolePosition(it.first, it.second) }
             ListSerializer(RolePosition.serializer()).serialize(encoder, positions)
         }
 

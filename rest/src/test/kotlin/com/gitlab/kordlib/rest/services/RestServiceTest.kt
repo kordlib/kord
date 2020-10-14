@@ -141,7 +141,7 @@ class RestServiceTest {
             deleteOwnReaction(channelId, message.id, "\ud83d\udc4e")
 
             createReaction(channelId, message.id, "\ud83d\udc4d")
-            deleteReaction(channelId, message.id, message.author!!.id, "\ud83d\udc4d")
+            deleteReaction(channelId, message.id, message.author.id, "\ud83d\udc4d")
 
             createReaction(channelId, message.id, "\ud83d\udc4e")
             getReactions(channelId, message.id, "\ud83d\udc4e")
@@ -415,6 +415,7 @@ class RestServiceTest {
     @Test
     @Order(20)
     fun `get public guild preview`() = runBlocking {
+        @Suppress("UNUSED_VARIABLE")
         val preview = rest.guild.getGuildPreview(publicGuildId.value)
         Unit
     }

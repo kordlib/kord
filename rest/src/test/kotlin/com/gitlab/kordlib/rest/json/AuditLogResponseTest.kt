@@ -10,7 +10,8 @@ object AuditLogResponseTest {
     fun `AuditLogResponseSerialization serialization`() {
 
         val json = file("auditlog")
-            val log = Json.decodeFromString(AuditLogResponse.serializer(), json)
+        @Suppress("UNUSED_VARIABLE")
+        val log = Json.decodeFromString(AuditLogResponse.serializer(), json)
 
 
     }

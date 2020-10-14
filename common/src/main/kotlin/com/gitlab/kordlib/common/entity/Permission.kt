@@ -41,7 +41,6 @@ class Permissions constructor(val code: Int) {
         return "Permissions(values=${values.joinToString(", ")})"
     }
 
-    @Serializer(forClass = Permissions::class)
     companion object : KSerializer<Permissions> {
 
         inline operator fun invoke(block: PermissionsBuilder.() -> Unit = {}): Permissions {

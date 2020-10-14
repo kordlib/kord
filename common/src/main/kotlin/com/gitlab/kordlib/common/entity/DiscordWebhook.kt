@@ -27,7 +27,6 @@ enum class WebhookType(val code: Int) {
     Incoming(1),
     ChannelOrder(2);
 
-    @Serializer(forClass = MessageType::class)
     companion object WebhookTypeSerializer : KSerializer<WebhookType> {
 
         override val descriptor: SerialDescriptor
