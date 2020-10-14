@@ -4,7 +4,6 @@ import com.gitlab.kordlib.gateway.Event
 import com.gitlab.kordlib.gateway.HeartbeatACK
 import com.gitlab.kordlib.gateway.Reconnect
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 
 private fun file(name: String): String {

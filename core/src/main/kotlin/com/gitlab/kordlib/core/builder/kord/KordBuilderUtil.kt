@@ -10,7 +10,6 @@ import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.request.header
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
 import java.util.*
 
 internal fun HttpClientConfig<*>.defaultConfig(token: String) {

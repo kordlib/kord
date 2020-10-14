@@ -29,7 +29,6 @@ private object NullDecoder : DeserializationStrategy<Nothing?> {
         return decoder.decodeNull()
     }
 
-    override fun patch(decoder: Decoder, old: Nothing?): Nothing? = throw NotImplementedError()
 }
 
 sealed class Event {
@@ -136,7 +135,6 @@ sealed class Event {
             }
         }
 
-        override fun patch(decoder: Decoder, old: Event?): Event? = error("")
     }
 
 }

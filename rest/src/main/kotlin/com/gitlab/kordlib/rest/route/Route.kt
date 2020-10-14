@@ -356,5 +356,4 @@ internal object NoStrategy : DeserializationStrategy<Unit> {
 
     override fun deserialize(decoder: Decoder) {}
 
-    override fun patch(decoder: Decoder, old: Unit) {}
 }

@@ -9,6 +9,8 @@ import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
+private val json = Json { encodeDefaults = true }
+
 class CommandTest {
     @Test
     fun `Resume command serialization`() {
@@ -16,9 +18,9 @@ class CommandTest {
         val sessionId = "session"
         val sequence = 1337
 
-        val resume = Json.encodeToString(Command.Companion, Resume(token, sessionId, sequence))
+        val resume = json.encodeToString(Command.Companion, Resume(token, sessionId, sequence))
 
-        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+        val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.Resume.code)
             put("d", buildJsonObject {
                 put("token", token)
@@ -35,9 +37,9 @@ class CommandTest {
     fun `Heartbeat command serialization`() {
         val interval = 1337
 
-        val heartbeat = Json.encodeToString(Command.Companion, Command.Heartbeat(interval))
+        val heartbeat = json.encodeToString(Command.Companion, Command.Heartbeat(interval))
 
-        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+        val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.Heartbeat.code)
             put("d", interval)
         })
@@ -52,9 +54,9 @@ class CommandTest {
         val query = "test"
         val limit = 1337
 
-        val request = Json.encodeToString(Command.Companion, RequestGuildMembers(listOf(guildId), query, limit))
+        val request = json.encodeToString(Command.Companion, RequestGuildMembers(listOf(guildId), query, limit))
 
-        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+        val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.RequestGuildMembers.code)
             put("d", buildJsonObject {
                 put("guild_id", buildJsonArray {
@@ -78,9 +80,9 @@ class CommandTest {
         val selfMute = true
         val selfDeaf = false
 
-        val status = Json.encodeToString(Command.Companion, UpdateVoiceStatus(guildId, channelId, selfMute, selfDeaf))
+        val status = json.encodeToString(Command.Companion, UpdateVoiceStatus(guildId, channelId, selfMute, selfDeaf))
 
-        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+        val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.VoiceStateUpdate.code)
             put("d", buildJsonObject {
                 put("guild_id", guildId)
@@ -101,9 +103,9 @@ class CommandTest {
         val status = Status.Online
         val afk = false
 
-        val updateStatus = Json.encodeToString(Command.Companion, UpdateStatus(since, game, status, afk))
+        val updateStatus = json.encodeToString(Command.Companion, UpdateStatus(since, game, status, afk))
 
-        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+        val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.StatusUpdate.code)
             put("d", buildJsonObject {
                 put("since", since)
@@ -127,9 +129,9 @@ class CommandTest {
         val shard = DiscordShard(0, 1)
         val presence = null
 
-        val identify = Json.encodeToString(Command.Companion, Identify(token, properties, compress, largeThreshold, shard, presence, Intents.all))
+        val identify = json.encodeToString(Command.Companion, Identify(token, properties, compress, largeThreshold, shard, presence, Intents.all))
 
-        val json = Json.encodeToString(JsonObject.serializer(), buildJsonObject {
+        val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.Identify.code)
             put("d", buildJsonObject {
                 put("token", token)

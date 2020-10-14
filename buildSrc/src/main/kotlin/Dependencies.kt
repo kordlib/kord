@@ -1,9 +1,9 @@
 object  Versions {
-    const val kotlin = "1.4.0"
-    const val kotlinxSerialization = "1.0.0-RC"
-    const val ktor = "1.4.0"
-    const val kotlinxCoroutines = "1.3.9"
-    const val kotlinLogging = "1.7.10"
+    const val kotlin = "1.4.10"
+    const val kotlinxSerialization = "1.0.0"
+    const val ktor = "1.4.1"
+    const val kotlinxCoroutines = "1.4.0-M1"
+    const val kotlinLogging = "2.0.3"
     const val atomicFu = "0.14.4"
 
     //test deps
@@ -22,6 +22,7 @@ object  Versions {
 object Dependencies {
     const val jdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     const val `kotlinx-serialization` = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}"
+    const val `kotlinx-serialization-json` = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxSerialization}"
     const val `kotlinx-coroutines` = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinxCoroutines}"
     const val `kotlinx-atomicfu` = ""
 

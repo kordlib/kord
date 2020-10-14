@@ -5,7 +5,6 @@ import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.DiscordUser
 import com.gitlab.kordlib.common.entity.TargetUserType
 import kotlinx.serialization.*
-import kotlinx.serialization.internal.IntDescriptor
 
 @Serializable
 data class InviteResponse(

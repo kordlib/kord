@@ -2,7 +2,6 @@ package com.gitlab.kordlib.rest.json
 
 import com.gitlab.kordlib.rest.json.response.DiscordErrorResponse
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

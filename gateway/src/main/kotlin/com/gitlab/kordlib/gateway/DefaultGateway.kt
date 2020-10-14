@@ -20,17 +20,12 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import mu.KotlinLogging
 import java.io.ByteArrayOutputStream
-import java.nio.charset.Charset
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
 import kotlin.time.Duration
@@ -83,6 +78,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private lateinit var inflater: Inflater
 
     private val jsonParser = Json {
+            encodeDefaults = true
             isLenient = true
             ignoreUnknownKeys = true
             allowSpecialFloatingPointValues = true
