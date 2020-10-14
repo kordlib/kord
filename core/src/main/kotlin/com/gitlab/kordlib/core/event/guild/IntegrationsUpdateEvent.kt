@@ -24,4 +24,8 @@ class IntegrationsUpdateEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): IntegrationsUpdateEvent =
             IntegrationsUpdateEvent(guildId, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "IntegrationsUpdateEvent(guildId=$guildId, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

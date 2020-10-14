@@ -86,4 +86,8 @@ data class Webhook(
         else -> false
     }
 
+    override fun toString(): String {
+        return "Webhook(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

@@ -60,7 +60,7 @@ interface CategoryBehavior : GuildChannelBehavior {
      * Returns a new [CategoryBehavior] with the given [strategy].
      */
     override fun withStrategy(
-            strategy: EntitySupplyStrategy<*>
+            strategy: EntitySupplyStrategy<*>,
     ): CategoryBehavior = CategoryBehavior(guildId, id, kord, strategy)
 
     companion object {
@@ -68,7 +68,7 @@ interface CategoryBehavior : GuildChannelBehavior {
                 guildId: Snowflake,
                 id: Snowflake,
                 kord: Kord,
-                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
         ): CategoryBehavior = object : CategoryBehavior {
             override val guildId: Snowflake = guildId
             override val id: Snowflake = id
@@ -77,10 +77,14 @@ interface CategoryBehavior : GuildChannelBehavior {
 
             override fun hashCode(): Int = Objects.hash(id, guildId)
 
-            override fun equals(other: Any?): Boolean = when(other) {
+            override fun equals(other: Any?): Boolean = when (other) {
                 is GuildChannelBehavior -> other.id == id && other.guildId == guildId
                 is ChannelBehavior -> other.id == id
                 else -> false
+            }
+
+            override fun toString(): String {
+                return "CategoryBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
             }
 
         }

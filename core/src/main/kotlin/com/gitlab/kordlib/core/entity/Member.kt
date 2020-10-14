@@ -117,4 +117,8 @@ class Member(
         else -> false
     }
 
+    override fun toString(): String {
+        return "Member(memberData=$memberData)"
+    }
+
 }

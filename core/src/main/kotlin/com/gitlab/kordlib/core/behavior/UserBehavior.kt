@@ -13,7 +13,6 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.rest.json.request.DMCreateRequest
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.RestClient
-import io.ktor.http.HttpStatusCode
 import java.util.*
 
 /**
@@ -101,6 +100,10 @@ interface UserBehavior : Entity, Strategizable {
             override fun equals(other: Any?): Boolean = when(other) {
                 is UserBehavior -> other.id == id
                 else -> false
+            }
+
+            override fun toString(): String {
+                return "UserBehavior(id=$id, kord=kord, supplier=$supplier)"
             }
         }
     }

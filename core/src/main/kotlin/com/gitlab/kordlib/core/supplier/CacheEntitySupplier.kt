@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.supplier
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.query
+
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -244,6 +245,10 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         val data = cache.query<UserData> { UserData::id eq id.longValue }.singleOrNull() ?: return null
 
         return User(data, kord)
+    }
+
+    override fun toString(): String {
+        return "CacheEntitySupplier(kord=$kord, cache=$cache)"
     }
 
 

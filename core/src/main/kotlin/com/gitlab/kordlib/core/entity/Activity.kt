@@ -27,6 +27,10 @@ class Activity(val data: ActivityData) {
     internal fun toGatewayActivity() =
             com.gitlab.kordlib.common.entity.DiscordActivity(name, type, url)
 
+    override fun toString(): String {
+        return "Activity(data=$data)"
+    }
+
     data class Party(val id: String, val currentSize: Int, val maxSize: Int)
     data class Assets(val largeImage: String?, val largeText: String?, val smallImage: String?, val smallText: String?)
     data class Secrets(val join: String?, val spectate: String?, val match: String?)

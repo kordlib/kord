@@ -76,4 +76,8 @@ class PermissionOverwriteEntity(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PermissionOverwriteEntity =
             PermissionOverwriteEntity(guildId, channelId, data, kord, strategy.supply(kord))
 
+    override fun toString(): String {
+        return "PermissionOverwriteEntity(target=$target, type=$type, allowed=$allowed, denied=$denied, kord=$kord, supplier=$supplier)"
+    }
+
 }

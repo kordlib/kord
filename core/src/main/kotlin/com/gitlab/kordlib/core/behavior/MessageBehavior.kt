@@ -1,24 +1,21 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.entity.Permission
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
-import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.paginateForwards
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
+import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import java.util.*
-import com.gitlab.kordlib.rest.request.RestRequestException
-import com.gitlab.kordlib.common.entity.Permission
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -189,6 +186,10 @@ interface MessageBehavior : Entity, Strategizable {
             override fun equals(other: Any?): Boolean = when (other) {
                 is MessageBehavior -> other.id == id && other.channelId == channelId
                 else -> false
+            }
+
+            override fun toString(): String {
+                return "MessageBehavior(id=$id, channelId=$channelId, kord=$kord, supplier=$supplier)"
             }
         }
     }

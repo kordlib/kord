@@ -28,4 +28,8 @@ class ChannelPinsUpdateEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ChannelPinsUpdateEvent =
             ChannelPinsUpdateEvent(channelId, lastPinTimestamp, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "ChannelPinsUpdateEvent(channelId=$channelId, lastPinTimestamp=$lastPinTimestamp, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

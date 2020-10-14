@@ -53,4 +53,8 @@ data class Role(
         else -> false
     }
 
+    override fun toString(): String {
+        return "Role(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

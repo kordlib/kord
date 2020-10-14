@@ -133,4 +133,8 @@ data class Invite(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Invite =
             Invite(data, kord, strategy.supply(kord))
 
+    override fun toString(): String {
+        return "Invite(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

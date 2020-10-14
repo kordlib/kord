@@ -58,6 +58,10 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
                 is ChannelBehavior -> other.id == id
                 else -> false
             }
+
+            override fun toString(): String {
+                return "TextChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier$supplier)"
+            }
         }
     }
 

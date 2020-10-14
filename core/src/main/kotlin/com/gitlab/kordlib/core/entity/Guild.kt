@@ -413,4 +413,9 @@ class Guild(
         is GuildBehavior -> other.id == id
         else -> false
     }
+
+    override fun toString(): String {
+        return "Guild(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

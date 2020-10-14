@@ -44,4 +44,8 @@ class TextChannel(
         else -> false
     }
 
+    override fun toString(): String {
+        return "TextChannel(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

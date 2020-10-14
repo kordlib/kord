@@ -85,4 +85,8 @@ class TypingStartEvent(
                     supplier
             )
 
+    override fun toString(): String {
+        return "TypingStartEvent(channelId=$channelId, userId=$userId, guildId=$guildId, started=$started, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
+
 }

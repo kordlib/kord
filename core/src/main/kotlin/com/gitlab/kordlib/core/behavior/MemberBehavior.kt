@@ -204,6 +204,10 @@ interface MemberBehavior : Entity, UserBehavior {
                 is UserBehavior -> other.id == id
                 else -> false
             }
+
+            override fun toString(): String {
+                return "MemberBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
+            }
         }
     }
 

@@ -36,4 +36,8 @@ class MessageDeleteEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageDeleteEvent =
             MessageDeleteEvent(messageId, channelId, guildId, message, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "MessageDeleteEvent(messageId=$messageId, channelId=$channelId, guildId=$guildId, message=$message, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

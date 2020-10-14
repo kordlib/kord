@@ -40,5 +40,8 @@ class Reaction(val data: ReactionData, override val kord: Kord) : KordObject {
      */
     val isAnimated: Boolean get() = data.emojiAnimated
 
+    override fun toString(): String {
+        return "Reaction(data=$data, kord=$kord)"
+    }
 
 }

@@ -9,4 +9,8 @@ class VoiceStateUpdateEvent(
         override val shard: Int
 ) : Event {
     override val kord: Kord get() = state.kord
+
+    override fun toString(): String {
+        return "VoiceStateUpdateEvent(old=$old, state=$state, shard=$shard)"
+    }
 }

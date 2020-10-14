@@ -51,7 +51,7 @@ interface WebhookBehavior : Entity, Strategizable {
         internal operator fun invoke(
                 id: Snowflake,
                 kord: Kord,
-                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
         ): WebhookBehavior = object : WebhookBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
@@ -63,9 +63,13 @@ interface WebhookBehavior : Entity, Strategizable {
                 is WebhookBehavior -> other.id == id
                 else -> false
             }
-        }
-    }
 
+            override fun toString(): String {
+                return "WebhookBehavior(id=$id, kord=$kord, supplier=$supplier)"
+            }
+        }
+
+    }
 }
 
 /**

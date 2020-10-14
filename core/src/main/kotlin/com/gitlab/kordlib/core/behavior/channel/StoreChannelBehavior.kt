@@ -57,6 +57,10 @@ interface StoreChannelBehavior : GuildChannelBehavior {
                 is ChannelBehavior -> other.id == id
                 else -> false
             }
+
+            override fun toString(): String {
+                return "StoreChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
+            }
         }
     }
 

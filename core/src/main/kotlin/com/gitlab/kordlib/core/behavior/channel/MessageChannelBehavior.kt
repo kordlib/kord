@@ -234,6 +234,10 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
                 is ChannelBehavior -> other.id == id
                 else -> false
             }
+
+            override fun toString(): String {
+                return "MessageChannelBehavior(id=$id, kord=$kord, supplier=$supplier)"
+            }
         }
     }
 

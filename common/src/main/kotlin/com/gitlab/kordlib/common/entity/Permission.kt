@@ -1,6 +1,8 @@
 package com.gitlab.kordlib.common.entity
 
-import kotlinx.serialization.*
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -12,6 +14,8 @@ import kotlin.contracts.contract
 
 @Serializable(with = Permissions.Companion::class)
 class Permissions constructor(val code: Int) {
+
+    val values: Set<Permission> get() = Permission.values().filter { it.code and code == it.code }.toSet()
 
     operator fun plus(permission: Permission): Permissions = Permissions(this.code or permission.code)
 
@@ -31,6 +35,10 @@ class Permissions constructor(val code: Int) {
         val builder = PermissionsBuilder(code)
         builder.apply(block)
         return builder.permissions()
+    }
+
+    override fun toString(): String {
+        return "Permissions(values=${values.joinToString(", ")})"
     }
 
     @Serializer(forClass = Permissions::class)

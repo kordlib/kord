@@ -60,6 +60,10 @@ interface GuildEmojiBehavior : Entity, Strategizable {
                 is GuildEmojiBehavior -> other.id == id
                 else -> false
             }
+
+            override fun toString(): String {
+                return "GuildEmoijBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
+            }
         }
     }
 }

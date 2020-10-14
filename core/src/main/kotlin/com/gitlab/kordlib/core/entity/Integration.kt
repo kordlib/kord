@@ -171,6 +171,11 @@ class Integration(
         is Integration -> other.id == id && other.guildId == guildId
         else -> false
     }
+
+    override fun toString(): String {
+        return "Integration(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }
 
 /**

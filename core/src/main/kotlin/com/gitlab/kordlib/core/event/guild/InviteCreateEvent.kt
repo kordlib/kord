@@ -165,4 +165,8 @@ class InviteCreateEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteCreateEvent =
             InviteCreateEvent(data, kord, shard, supplier)
+
+    override fun toString(): String {
+        return "InviteCreateEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

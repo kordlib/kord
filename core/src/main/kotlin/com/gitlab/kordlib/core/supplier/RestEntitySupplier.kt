@@ -277,4 +277,9 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         return ApplicationInfo(ApplicationInfoData.from(response), kord)
     }
 
+
+    override fun toString(): String {
+        return "RestEntitySupplier(kord=$kord, rest=$kord.rest)"
+    }
+
 }

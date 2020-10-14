@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.cache.api.query
+
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -75,6 +76,10 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
                 is GuildChannelBehavior -> other.id == id && other.guildId == guildId
                 is ChannelBehavior -> other.id == id
                 else -> false
+            }
+
+            override fun toString(): String {
+                return "VoiceChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
             }
         }
     }

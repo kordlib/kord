@@ -7,9 +7,6 @@ import com.gitlab.kordlib.core.entity.Invite
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.rest.builder.channel.InviteCreateBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 /**
  * An instance of a Discord channel associated to a [category].

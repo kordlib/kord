@@ -59,12 +59,20 @@ class Presence(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Presence =
             Presence(data, kord, strategy.supply(kord))
 
+    override fun toString(): String {
+        return "Presence(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }
 
 class ClientStatus(val data: ClientStatusData) {
     val desktop: Client.Desktop? get() = data.desktop?.let { Client.Desktop(it) }
     val mobile: Client.Mobile? get() = data.mobile?.let { Client.Mobile(it) }
     val web: Client.Web? get() = data.web?.let { Client.Web(it) }
+
+    override fun toString(): String {
+        return "ClientStatus(data=$data)"
+    }
 
     sealed class Client(val status: Status) {
         class Desktop(status: Status) : Client(status)

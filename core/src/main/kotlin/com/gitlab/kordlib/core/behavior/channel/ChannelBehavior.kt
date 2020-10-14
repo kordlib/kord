@@ -51,7 +51,7 @@ interface ChannelBehavior : Entity, Strategizable {
     /**
      * Returns a new [ChannelBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>) : ChannelBehavior = ChannelBehavior(id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ChannelBehavior = ChannelBehavior(id, kord, strategy)
 
     companion object {
         internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : ChannelBehavior {
@@ -62,9 +62,13 @@ interface ChannelBehavior : Entity, Strategizable {
 
             override fun hashCode(): Int = Objects.hash(id)
 
-            override fun equals(other: Any?): Boolean = when(other) {
+            override fun equals(other: Any?): Boolean = when (other) {
                 is ChannelBehavior -> other.id == id
                 else -> false
+            }
+
+            override fun toString(): String {
+                return "ChannelBehavior(id=$id, kord=$kord, supplier=$supplier)"
             }
         }
     }

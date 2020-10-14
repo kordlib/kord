@@ -11,7 +11,6 @@ import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
-import io.ktor.utils.io.bits.withMemory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
@@ -151,6 +150,10 @@ class GuildEmoji(
     override fun equals(other: Any?): Boolean = when (other) {
         is GuildEmoji -> other.id == id && other.guildId == guildId
         else -> super.equals(other)
+    }
+
+    override fun toString(): String {
+        return "GuildEmoji(data=$data, kord=$kord, supplier=$supplier)"
     }
 
 }

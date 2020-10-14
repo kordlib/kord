@@ -10,4 +10,8 @@ class ClientResources(
         val httpClient: HttpClient,
         val defaultStrategy: EntitySupplyStrategy<*>,
         val intents: Intents?
-)
+) {
+    override fun toString(): String {
+        return "ClientResources(token='$token', shardCount=$shardCount, httpClient=$httpClient, defaultStrategy=$defaultStrategy, intents=$intents)"
+    }
+}

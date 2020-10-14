@@ -55,4 +55,8 @@ class MemberUpdateEvent(
                     shard,
                     strategy.supply(kord)
             )
+
+    override fun toString(): String {
+        return "MemberUpdateEvent(old=$old, guildId=$guildId, memberId=$memberId, currentRoleIds=$currentRoleIds, currentNickName='$currentNickName', premiumSince=$premiumSince, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

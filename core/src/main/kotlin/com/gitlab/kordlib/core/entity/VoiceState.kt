@@ -84,4 +84,8 @@ class VoiceState(
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceState = VoiceState(data, kord, strategy.supply(kord))
 
+    override fun toString(): String {
+        return "VoiceState(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

@@ -28,4 +28,8 @@ class RoleUpdateEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleUpdateEvent =
             RoleUpdateEvent(role, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "RoleUpdateEvent(role=$role, shard=$shard, supplier=$supplier)"
+    }
 }

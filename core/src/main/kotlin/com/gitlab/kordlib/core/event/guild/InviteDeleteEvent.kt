@@ -66,4 +66,8 @@ class InviteDeleteEvent(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteDeleteEvent =
             InviteDeleteEvent(data, kord, shard, strategy.supply(kord))
 
+    override fun toString(): String {
+        return "InviteDeleteEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
+
 }

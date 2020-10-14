@@ -192,4 +192,8 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
         builder.timestamp = timestamp
 
     }
+
+    override fun toString(): String {
+        return "Embed(data=$data, kord=$kord, fields=$fields)"
+    }
 }

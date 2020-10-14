@@ -26,4 +26,8 @@ class MemberChunksEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberChunksEvent =
             MemberChunksEvent(guildId, members, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "MemberChunksEvent(guildId=$guildId, members=$members, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

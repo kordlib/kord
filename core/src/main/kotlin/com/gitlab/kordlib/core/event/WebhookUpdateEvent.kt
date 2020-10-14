@@ -35,4 +35,8 @@ class WebhookUpdateEvent(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): WebhookUpdateEvent =
             WebhookUpdateEvent(guildId, channelId, kord, shard, strategy.supply(kord))
 
+    override fun toString(): String {
+        return "WebhookUpdateEvent(guildId=$guildId, channelId=$channelId, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
+
 }

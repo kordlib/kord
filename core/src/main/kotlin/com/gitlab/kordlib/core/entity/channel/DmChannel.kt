@@ -63,4 +63,9 @@ data class DmChannel(
         is ChannelBehavior -> other.id == id
         else -> false
     }
+
+    override fun toString(): String {
+        return "DmChannel(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

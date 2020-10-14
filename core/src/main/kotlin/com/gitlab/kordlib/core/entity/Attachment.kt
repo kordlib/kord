@@ -62,4 +62,8 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : Entit
         else -> false
     }
 
+    override fun toString(): String {
+        return "Attachment(data=$data, kord=$kord)"
+    }
+
 }

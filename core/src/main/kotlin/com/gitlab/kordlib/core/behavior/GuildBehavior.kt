@@ -23,16 +23,12 @@ import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
 import com.gitlab.kordlib.rest.request.RestRequestException
-import com.gitlab.kordlib.rest.service.createCategory
-import com.gitlab.kordlib.rest.service.createNewsChannel
-import com.gitlab.kordlib.rest.service.createTextChannel
-import com.gitlab.kordlib.rest.service.createVoiceChannel
+import com.gitlab.kordlib.rest.service.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.util.*
-import com.gitlab.kordlib.rest.service.RestClient
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -379,6 +375,10 @@ interface GuildBehavior : Entity, Strategizable {
                 is GuildBehavior -> other.id == id
                 is PartialGuild -> other.id == id
                 else -> false
+            }
+
+            override fun toString(): String {
+                return "GuildBehavior(id=$id, kord=$kord, supplier$supplier)"
             }
         }
     }

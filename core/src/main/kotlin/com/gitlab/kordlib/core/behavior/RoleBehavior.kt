@@ -89,6 +89,11 @@ interface RoleBehavior : Entity, Strategizable {
                 is RoleBehavior -> other.id == id && other.guildId == guildId
                 else -> false
             }
+
+            override fun toString(): String {
+                return "RoleBehavior(id=$id, guildId=$guildId, kord=$kord, "
+            }
+
         }
     }
 }

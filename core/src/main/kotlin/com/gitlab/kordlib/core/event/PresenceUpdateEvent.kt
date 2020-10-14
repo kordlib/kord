@@ -79,4 +79,8 @@ class PresenceUpdateEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PresenceUpdateEvent =
             PresenceUpdateEvent(oldUser, user, guildId, old, presence, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "PresenceUpdateEvent(oldUser=$oldUser, user=$user, guildId=$guildId, old=$old, presence=$presence, shard=$shard, supplier=$supplier)"
+    }
 }

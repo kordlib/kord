@@ -69,6 +69,10 @@ open class User(
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): User = User(data, kord, strategy.supply(kord))
 
+    override fun toString(): String {
+        return "User(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
     data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 
         /**
@@ -125,6 +129,11 @@ open class User(
          * Requests to get the avatar of the user as an [Image], prioritizing gif for animated avatars and png for others.
          */
         suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, url)
+
+        override fun toString(): String {
+            return "Avatar(data=$data, kord=$kord)"
+        }
+
     }
 
 }

@@ -100,5 +100,9 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? =
             first.getWebhookWithTokenOrNull(id, token) ?: second.getWebhookWithTokenOrNull(id, token)
 
+    override fun toString(): String = buildToString("FallbackEntitySupplier"){
+        property("first", first)
+        property("second", second)
+    }
 }
 

@@ -2,13 +2,13 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.TeamMembershipState
+import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.TeamData
 import com.gitlab.kordlib.core.cache.data.TeamMemberData
-import com.gitlab.kordlib.common.exception.RequestException
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
 
 /**
  * A Discord [developer team](https://discord.com/developers/docs/topics/teams) which can own applications.
@@ -55,6 +55,11 @@ class Team(val data: TeamData, override val kord: Kord, override val supplier: E
     suspend fun getUserOrNUll(): User? = supplier.getUserOrNull(ownerUserId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Team = Team(data, kord, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "Team(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }
 
 /**
@@ -87,4 +92,9 @@ class TeamMember(val data: TeamMemberData, val kord: Kord) {
      * Utility method that gets the user from Kord.
      */
     suspend fun getUser() = kord.getUser(userId)
+
+    override fun toString(): String {
+        return "TeamMember(data=$data, kord=$kord)"
+    }
+
 }

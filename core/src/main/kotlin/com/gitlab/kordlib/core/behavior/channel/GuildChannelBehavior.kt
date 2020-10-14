@@ -143,6 +143,10 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
                 is ChannelBehavior -> other.id == id
                 else -> false
             }
+
+            override fun toString(): String {
+                return "GuildChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
+            }
         }
     }
 

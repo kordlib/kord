@@ -52,4 +52,8 @@ class ReactionAddEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionAddEvent =
             ReactionAddEvent(userId, channelId, messageId, guildId, emoji, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "ReactionAddEvent(userId=$userId, channelId=$channelId, messageId=$messageId, guildId=$guildId, emoji=$emoji, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

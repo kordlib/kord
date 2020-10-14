@@ -21,8 +21,6 @@ import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.time.days
-import kotlin.time.toJavaDuration
 
 /**
  * The behavior of a Discord message channel associated to a [guild].
@@ -102,6 +100,10 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
                 is GuildChannelBehavior -> other.id == id && other.guildId == guildId
                 is ChannelBehavior -> other.id == id
                 else -> false
+            }
+
+            override fun toString(): String {
+                return "GuildMessageChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
             }
         }
     }

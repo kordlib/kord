@@ -2,7 +2,6 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.cache.data.RegionData
 import java.util.*
 
@@ -26,4 +25,9 @@ class Region(val data: RegionData, override val kord: Kord) : Entity {
         is Region -> other.id == id
         else -> false
     }
+
+    override fun toString(): String {
+        return "Region(data=$data, kord=$kord)"
+    }
+
 }

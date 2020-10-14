@@ -34,4 +34,9 @@ data class StoreChannel(
         is ChannelBehavior -> other.id == id
         else -> false
     }
+
+    override fun toString(): String {
+        return "StoreChannel(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

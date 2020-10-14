@@ -9,4 +9,8 @@ class UserUpdateEvent(
         override val shard: Int
 ) : Event {
     override val kord: Kord get() = user.kord
+
+    override fun toString(): String {
+        return "UserUpdateEvent(old=$old, user=$user, shard=$shard)"
+    }
 }

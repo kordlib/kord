@@ -11,4 +11,10 @@ class GuildDeleteEvent(
         val guild: Guild?,
         override val kord: Kord,
         override val shard: Int
-) : Event
+) : Event {
+
+    override fun toString(): String {
+        return "GuildDeleteEvent(guildId=$guildId, unavailable=$unavailable, guild=$guild, kord=$kord, shard=$shard)"
+    }
+
+}

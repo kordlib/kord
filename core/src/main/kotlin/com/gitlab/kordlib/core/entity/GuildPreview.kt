@@ -4,7 +4,6 @@ import com.gitlab.kordlib.common.entity.GuildFeature
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.GuildPreviewData
-import com.gitlab.kordlib.core.supplier.EntitySupplier
 
 class GuildPreview(
         val data: GuildPreviewData,
@@ -58,5 +57,9 @@ class GuildPreview(
      * The description for the guild.
      */
     val description: String? get() = data.description
+
+    override fun toString(): String {
+        return "GuildPreview(data=$data, kord=$kord)"
+    }
 
 }

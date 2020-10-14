@@ -4,19 +4,19 @@ import com.gitlab.kordlib.common.entity.MessageType
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MessageBehavior
-import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
-import com.gitlab.kordlib.core.entity.channel.*
+import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.entity.channel.GuildChannel
+import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
+import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
-import com.gitlab.kordlib.core.toSnowflakeOrNull
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -241,6 +241,10 @@ class Message(
     override fun equals(other: Any?): Boolean = when (other) {
         is MessageBehavior -> other.id == id && other.channelId == channelId
         else -> false
+    }
+
+    override fun toString(): String {
+        return "Message(data=$data, kord=$kord, supplier=$supplier)"
     }
 
 }

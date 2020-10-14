@@ -38,4 +38,8 @@ class MessageUpdateEvent (
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageUpdateEvent =
             MessageUpdateEvent(messageId, channelId, new, old, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "MessageUpdateEvent(messageId=$messageId, channelId=$channelId, new=$new, old=$old, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

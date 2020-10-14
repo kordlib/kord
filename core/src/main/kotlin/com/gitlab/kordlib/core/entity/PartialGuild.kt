@@ -6,12 +6,9 @@ import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.cache.data.PartialGuildData
-import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.core.supplier.getChannelOf
-import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.rest.Image
 import java.util.*
 
@@ -88,5 +85,9 @@ class PartialGuild(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PartialGuild =
             PartialGuild(data, kord, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "PartialGuild(data=$data, kord=$kord, supplier=$supplier)"
+    }
 
 }

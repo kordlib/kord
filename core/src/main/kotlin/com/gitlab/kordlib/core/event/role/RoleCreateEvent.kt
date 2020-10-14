@@ -10,10 +10,10 @@ import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 
-class RoleCreateEvent (
+class RoleCreateEvent(
         val role: Role,
         override val shard: Int,
-        override val supplier: EntitySupplier = role.kord.defaultSupplier
+        override val supplier: EntitySupplier = role.kord.defaultSupplier,
 ) : Event, Strategizable {
 
     override val kord: Kord get() = role.kord
@@ -24,8 +24,12 @@ class RoleCreateEvent (
 
     suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull():Guild? = supplier.getGuildOrNull(guildId)
+    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleCreateEvent =
             RoleCreateEvent(role, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "RoleCreateEvent(role=$role, shard=$shard, supplier=$supplier)"
+    }
 }

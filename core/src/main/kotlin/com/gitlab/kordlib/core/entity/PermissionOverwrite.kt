@@ -7,7 +7,7 @@ import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
 import com.gitlab.kordlib.rest.json.request.ChannelPermissionEditRequest
 
 open class PermissionOverwrite constructor(
-        val data: PermissionOverwriteData
+        val data: PermissionOverwriteData,
 ) {
     val allowed: Permissions get() = Permissions(data.allowed)
     val denied: Permissions get() = Permissions(data.denied)
@@ -48,5 +48,15 @@ open class PermissionOverwrite constructor(
                 else -> throw IllegalArgumentException("unknown PermissionOverwrite.Type: $type")
             }
         }
+
+        override fun toString(): String {
+            return "Type(value='$value')"
+        }
+
     }
+
+    override fun toString(): String {
+        return "PermissionOverwrite(target=$target, type=$type, allowed=$allowed, denied$denied)"
+    }
+
 }

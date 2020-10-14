@@ -65,4 +65,9 @@ class ApplicationInfo(
         is ApplicationInfo -> other.id == id
         else -> false
     }
+
+    override fun toString(): String {
+        return "ApplicationInfo(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

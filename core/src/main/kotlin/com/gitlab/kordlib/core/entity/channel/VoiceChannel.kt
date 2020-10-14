@@ -45,4 +45,9 @@ class VoiceChannel(
         is ChannelBehavior -> other.id == id
         else -> false
     }
+
+    override fun toString(): String {
+        return "VoiceChannel(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

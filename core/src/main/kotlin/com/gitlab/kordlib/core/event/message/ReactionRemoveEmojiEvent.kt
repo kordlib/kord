@@ -64,4 +64,8 @@ class ReactionRemoveEmojiEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveAllEvent =
             ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "ReactionRemoveEmojiEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

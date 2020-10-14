@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordUnsafe
+
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
@@ -150,6 +151,10 @@ class Kord(
         val kord = other as? Kord ?: return false
 
         return resources.token == kord.resources.token
+    }
+
+    override fun toString(): String {
+        return "Kord(resources=$resources, cache=$cache, gateway=$gateway, rest=$rest, selfId=$selfId, eventPublisher=$eventPublisher, dispatcher=$dispatcher, interceptor=$interceptor, defaultSupplier=$defaultSupplier, unsafe=$unsafe)"
     }
 
     companion object {
