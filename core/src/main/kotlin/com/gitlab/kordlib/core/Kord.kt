@@ -154,7 +154,7 @@ class Kord(
     }
 
     override fun toString(): String {
-        return "Kord(resources=$resources, cache=$cache, gateway=$gateway, rest=$rest, selfId=$selfId, eventPublisher=$eventPublisher, dispatcher=$dispatcher, interceptor=$interceptor, defaultSupplier=$defaultSupplier, unsafe=$unsafe)"
+        return "Kord(resources=$resources, cache=$cache, gateway=$gateway, rest=$rest, selfId=$selfId)"
     }
 
     companion object {
