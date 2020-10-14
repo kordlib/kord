@@ -35,4 +35,8 @@ class MasterGateway(
 
     suspend fun stopAll() = gateways.values.forEach { it.stop() }
 
+    override fun toString(): String {
+        return "MasterGateway(gateways=$gateways)"
+    }
+
 }

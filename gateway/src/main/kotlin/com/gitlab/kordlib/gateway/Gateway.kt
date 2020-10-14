@@ -81,6 +81,10 @@ interface Gateway {
             override suspend fun stop() {}
 
             override suspend fun detach() {}
+
+            override fun toString(): String {
+                return "Gateway.None"
+            }
         }
 
         /**
