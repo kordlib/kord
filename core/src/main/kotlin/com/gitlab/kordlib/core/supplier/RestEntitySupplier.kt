@@ -279,7 +279,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
 
 
     override fun toString(): String {
-        return "RestEntitySupplier(kord=$kord, rest=$kord.rest)"
+        return "RestEntitySupplier(rest=${kord.rest})"
     }
 
 }

@@ -248,7 +248,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override fun toString(): String {
-        return "CacheEntitySupplier(kord=$kord, cache=$cache)"
+        return "CacheEntitySupplier(cache=$cache)"
     }
 
 

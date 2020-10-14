@@ -4,8 +4,6 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.cache
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.rest
 import com.gitlab.kordlib.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
 
@@ -100,9 +98,8 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? =
             first.getWebhookWithTokenOrNull(id, token) ?: second.getWebhookWithTokenOrNull(id, token)
 
-    override fun toString(): String = buildToString("FallbackEntitySupplier"){
-        property("first", first)
-        property("second", second)
+    override fun toString(): String {
+        return "FallbackEntitySupplier(first=$first, second=$second)"
     }
 }
 

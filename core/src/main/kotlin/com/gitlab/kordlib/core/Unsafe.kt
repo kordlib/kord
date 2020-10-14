@@ -68,7 +68,7 @@ class Unsafe(private val kord: Kord) {
             WebhookBehavior(id, kord)
 
     override fun toString(): String {
-        return "Unsafe(kord=$kord)"
+        return "Unsafe"
     }
 
 }
