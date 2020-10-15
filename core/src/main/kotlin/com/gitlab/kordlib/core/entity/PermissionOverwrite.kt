@@ -56,7 +56,7 @@ open class PermissionOverwrite constructor(
     }
 
     override fun toString(): String {
-        return "PermissionOverwrite(target=$target, type=$type, allowed=$allowed, denied$denied)"
+        return "PermissionOverwrite(target=$target, type=$type, allowed=$allowed, denied=$denied)"
     }
 
 }
