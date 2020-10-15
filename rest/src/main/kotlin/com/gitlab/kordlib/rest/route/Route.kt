@@ -23,6 +23,7 @@ sealed class Route<T>(
         val strategy: DeserializationStrategy<T>
 ) {
 
+    @OptIn(ExperimentalSerializationApi::class)
     override fun toString(): String = "Route(method:${method.value},path:$path,strategy:${strategy.descriptor.serialName})"
 
     object GatewayGet
@@ -260,7 +261,7 @@ sealed class Route<T>(
         : Route<EmbedResponse>(HttpMethod.Patch, "/guilds/$GuildId/embed", EmbedResponse.serializer())
 
     object GuildVanityInviteGet
-        : Route<InviteResponse>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", InviteResponse.serializer())
+        : Route<PartialInviteResponse>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", PartialInviteResponse.serializer())
 
     @KordPreview
     object MessageCrosspost

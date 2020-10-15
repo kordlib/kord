@@ -7,6 +7,7 @@ import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestRateLimiter
 import com.gitlab.kordlib.rest.request.KtorRequestHandler
 import com.gitlab.kordlib.rest.request.RequestHandler
+import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.RestClient
 import com.gitlab.kordlib.rest.service.createTextChannel
 import io.ktor.client.HttpClient
@@ -440,6 +441,15 @@ class RestServiceTest {
         Unit
     }
 
+    @Test
+    @Order(21)
+    fun `errors are thrown correctly`() = runBlocking {
+        val exception = assertThrows<RestRequestException> {
+            runBlocking { rest.guild.getVanityInvite(guildId) }
+        }
+
+        assert(exception.error != null)
+    }
 
     @Test
     @Order(Int.MAX_VALUE - 2)

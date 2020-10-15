@@ -6,6 +6,8 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
+import com.gitlab.kordlib.core.catchDiscordError
+import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
@@ -21,6 +23,7 @@ import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
+import com.gitlab.kordlib.rest.json.JsonErrorCode
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.*
@@ -351,10 +354,16 @@ interface GuildBehavior : Entity, Strategizable {
     /**
      * Requests to get the vanity url of this guild, if present.
      *
+     * This function is not resolvable through cache and will always use the [RestClient] instead.
+     * Request exceptions containing the [JsonErrorCode.InviteCodeInvalidOrTaken] reason will be transformed
+     * into `null` instead.
+     *
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun getVanityUrl(): String? {
-        val identifier = kord.rest.guild.getVanityInvite(id.value).code ?: return null
+        val identifier = catchDiscordError(JsonErrorCode.InviteCodeInvalidOrTaken) {
+            kord.rest.guild.getVanityInvite(id.value).code
+        } ?: return null
         return "https://discord.gg/$identifier"
     }
 

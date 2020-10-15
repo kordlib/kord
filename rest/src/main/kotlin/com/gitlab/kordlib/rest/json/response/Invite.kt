@@ -23,6 +23,12 @@ data class InviteResponse(
         val uses: Int? = null
 )
 
+@Serializable
+data class PartialInviteResponse(
+        val code: String? = null,
+        val uses: Int
+)
+
 
 @Serializable
 data class InviteMetaDataResponse(

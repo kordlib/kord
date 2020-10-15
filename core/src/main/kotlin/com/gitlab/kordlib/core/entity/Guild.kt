@@ -243,6 +243,16 @@ class Guild(
     val roleBehaviors: Set<RoleBehavior> get() = data.roles.asSequence().map { RoleBehavior(id = Snowflake(it), guildId = id, kord = kord) }.toSet()
 
     /**
+     * The vanity code of this server used in the [vanityUrl], if present.
+     */
+    val vanityCode: String? get() = data.vanityUrlCode
+
+    /**
+     * The vanity invite URL of this server, if present.
+     */
+    val vanityUrl: String? get() = data.vanityUrlCode?.let { "https://discord.gg/$it" }
+
+    /**
      * Requests to get the [VoiceChannel] represented by the [afkChannelId],
      * returns null if the [afkChannelId] isn't present or the channel itself isn't present.
      *
