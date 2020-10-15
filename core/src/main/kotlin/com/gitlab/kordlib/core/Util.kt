@@ -16,6 +16,7 @@ import com.gitlab.kordlib.gateway.Intent.*
 import com.gitlab.kordlib.gateway.Intents
 import com.gitlab.kordlib.gateway.MessageDelete
 import com.gitlab.kordlib.gateway.PrivilegedIntent
+import com.gitlab.kordlib.rest.json.JsonErrorCode
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.route.Position
 import kotlinx.coroutines.flow.*
@@ -48,10 +49,28 @@ internal inline fun <T> catchNotFound(block: () -> T): T?  {
     return try {
         block()
     } catch (exception: RestRequestException) {
-        if (exception.code == 404) null
+        if (exception.status.code == 404) null
         else throw exception
     }
 }
+
+@OptIn(ExperimentalContracts::class)
+internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: () -> T): T?  {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    return try {
+        block()
+    } catch (exception: RestRequestException) {
+        when {
+            codes.isEmpty() -> null
+            exception.error?.code in codes -> null
+            else -> throw exception
+        }
+    }
+}
+
+
 
 fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
     for (entity in toList().sorted()) {

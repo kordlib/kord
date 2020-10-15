@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.rest.request
 
+import com.gitlab.kordlib.rest.json.optional
+import com.gitlab.kordlib.rest.json.response.DiscordErrorResponse
 import com.gitlab.kordlib.rest.ratelimit.*
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -7,11 +9,10 @@ import io.ktor.client.features.defaultRequest
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.header
 import io.ktor.client.request.request
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.HttpStatement
-import io.ktor.client.statement.readText
+import io.ktor.client.statement.*
 import io.ktor.content.TextContent
 import io.ktor.http.takeFrom
+import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import java.time.Clock
@@ -52,7 +53,9 @@ class KtorRequestHandler(
 
         return when {
             response.isRateLimit -> handle(request)
-            response.isError -> throw KtorRequestException(response, response.errorString())
+            response.isError -> {
+                throw KtorRequestException(response, Json.decodeFromString(DiscordErrorResponse.serializer().optional, String(response.readBytes())))
+            }
             else -> parser.decodeFromString(request.route.strategy, response.readText())
         }
     }

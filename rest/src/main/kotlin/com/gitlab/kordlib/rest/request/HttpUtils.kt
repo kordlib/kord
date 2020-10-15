@@ -50,8 +50,8 @@ fun HttpResponse.logString(body: String) = "[RESPONSE]:${status.value}:${call.re
 
 suspend fun HttpResponse.errorString(): String {
     val message = String(this.readBytes())
-    return if (message.isBlank()) "${logString(message)}"
-    else "${logString(message)}"
+    return if (message.isBlank()) logString(message)
+    else logString(message)
 }
 
 fun Request<*,*>.logString(body: String): String {
