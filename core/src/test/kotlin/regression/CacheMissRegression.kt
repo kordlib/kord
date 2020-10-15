@@ -89,6 +89,7 @@ class CrashingHandler(val client: HttpClient) : RequestHandler {
 
 
             request.body?.let {
+                @Suppress("UNCHECKED_CAST")
                 when (request) {
                     is MultipartRequest<*, *> -> {
                         headers.append("payload_json", parser.encodeToString(it.strategy as SerializationStrategy<Any>, it.body))

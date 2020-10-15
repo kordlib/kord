@@ -13,6 +13,7 @@ import com.gitlab.kordlib.rest.request.KtorRequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -33,6 +34,7 @@ class KordEventDropTest {
     object SpammyGateway : Gateway {
         val channel = BroadcastChannel<Event>(1)
 
+        @OptIn(FlowPreview::class)
         override val events: Flow<Event>
             get() = channel.asFlow().buffer(Channel.UNLIMITED)
 
