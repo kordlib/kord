@@ -37,7 +37,7 @@ internal class ChannelEventHandler(
         val data = ChannelData.from(event.channel)
         cache.put(data)
 
-        val event = when (val channel = Channel.from(data, kord)) {
+        val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelCreateEvent(channel, shard)
             is StoreChannel -> StoreChannelCreateEvent(channel, shard)
             is DmChannel -> DMChannelCreateEvent(channel, shard)
@@ -47,14 +47,14 @@ internal class ChannelEventHandler(
             else -> error("unknown channel: $channel")
         }
 
-        coreEventChannel.send(event)
+        coreEventChannel.send(coreEvent)
     }
 
     private suspend fun handle(event: ChannelUpdate, shard: Int) {
         val data = ChannelData.from(event.channel)
         cache.put(data)
 
-        val event = when (val channel = Channel.from(data, kord)) {
+        val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelUpdateEvent(channel, shard)
             is StoreChannel -> StoreChannelUpdateEvent(channel, shard)
             is DmChannel -> DMChannelUpdateEvent(channel, shard)
@@ -64,14 +64,14 @@ internal class ChannelEventHandler(
             else -> error("unknown channel: $channel")
         }
 
-        coreEventChannel.send(event)
+        coreEventChannel.send(coreEvent)
     }
 
     private suspend fun handle(event: ChannelDelete, shard: Int) {
         cache.remove<ChannelData> { ChannelData::id eq event.channel.id.toLong() }
         val data = ChannelData.from(event.channel)
 
-        val event = when (val channel = Channel.from(data, kord)) {
+        val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelDeleteEvent(channel, shard)
             is StoreChannel -> StoreChannelDeleteEvent(channel, shard)
             is DmChannel -> DMChannelDeleteEvent(channel, shard)
@@ -81,21 +81,21 @@ internal class ChannelEventHandler(
             else -> error("unknown channel: $channel")
         }
 
-        coreEventChannel.send(event)
+        coreEventChannel.send(coreEvent)
     }
 
     private suspend fun handle(event: ChannelPinsUpdate, shard: Int) = with(event.pins) {
-        val event = ChannelPinsUpdateEvent(Snowflake(channelId), lastPinTimestamp?.toInstant(), kord, shard)
+        val coreEvent = ChannelPinsUpdateEvent(Snowflake(channelId), lastPinTimestamp?.toInstant(), kord, shard)
 
         cache.query<ChannelData> { ChannelData::id eq channelId.toLong() }.update {
             it.copy(lastPinTimestamp = lastPinTimestamp ?: it.lastPinTimestamp)
         }
 
-        coreEventChannel.send(event)
+        coreEventChannel.send(coreEvent)
     }
 
     private suspend fun handle(event: TypingStart, shard: Int) = with(event.data) {
-        val event = TypingStartEvent(
+        val coreEvent = TypingStartEvent(
                 Snowflake(channelId),
                 Snowflake(userId),
                 guildId.toSnowflakeOrNull(),
@@ -104,7 +104,7 @@ internal class ChannelEventHandler(
                 shard
         )
 
-        coreEventChannel.send(event)
+        coreEventChannel.send(coreEvent)
     }
 
 }

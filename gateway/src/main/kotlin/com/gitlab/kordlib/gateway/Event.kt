@@ -10,6 +10,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
@@ -44,8 +45,10 @@ sealed class Event {
         override fun deserialize(decoder: Decoder): Event? {
             var op: OpCode? = null
             var data: Event? = null
-            var sequence: Int? = null
-            var eventName: String? = null
+            @Suppress("UNUSED_VARIABLE")
+            var sequence: Int? = null //this isn't actually unused but seems to be a compiler bug
+            @Suppress("UNUSED_VARIABLE")
+            var eventName: String? = null //this isn't actually unused but seems to be a compiler bug
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
                     when (val index = decodeElementIndex(descriptor)) {//we assume the all fields to be present *before* the data field

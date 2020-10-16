@@ -48,13 +48,13 @@ internal class MessageEventHandler(
         }
 
         //get the user data only if it exists and the user isn't a webhook
-        val userData =  if (author != null && webhookId == null) {
-            UserData.from(author!!).also { cache.put(it) }
+        val userData =  if (webhookId == null) {
+            UserData.from(author).also { cache.put(it) }
         } else null
 
         //get the member and cache the member. We need the user, guild id and member to be present
         val member = if (userData != null && guildId != null && member != null) {
-            val memberData = MemberData.from(author!!.id, guildId!!, member!!)
+            val memberData = MemberData.from(author.id, guildId!!, member!!)
             cache.put(memberData)
             Member(memberData, userData, kord)
         } else null
@@ -112,14 +112,14 @@ internal class MessageEventHandler(
                 listOf(ReactionData.from(1, isMe, emoji))
             } else {
                 val reactions = it.reactions.orEmpty()
-                val reaction = reactions.firstOrNull { reaction ->
+                val reactionData = reactions.firstOrNull { reaction ->
                     if (emoji.id == null) reaction.emojiName == emoji.name
                     else reaction.emojiId?.toString() == emoji.id && reaction.emojiName == emoji.name
                 }
 
-                when (reaction) {
+                when (reactionData) {
                     null -> reactions + ReactionData.from(1, isMe, emoji)
-                    else -> (reactions - reaction) + reaction.copy(count = reaction.count + 1, me = isMe)
+                    else -> (reactions - reactionData) + reactionData.copy(count = reactionData.count + 1, me = isMe)
                 }
             }
 
@@ -155,14 +155,14 @@ internal class MessageEventHandler(
             val me = kord.selfId.value == event.reaction.userId
 
             val oldReactions = it.reactions.orEmpty()
-            val reaction = oldReactions.firstOrNull { reaction ->
+            val reactionData = oldReactions.firstOrNull { reaction ->
                 if (emoji.id == null) reaction.emojiName == emoji.name
                 else reaction.emojiId?.toString() == emoji.id && reaction.emojiName == emoji.name
             } ?: return@update it
 
-            val reactions = when (val count = reaction.count - 1) {
-                0 -> (oldReactions - reaction)
-                else -> (oldReactions - reaction) + reaction.copy(count = count, me = reaction.me xor me)
+            val reactions = when (val count = reactionData.count - 1) {
+                0 -> (oldReactions - reactionData)
+                else -> (oldReactions - reactionData) + reactionData.copy(count = count, me = reactionData.me xor me)
             }
 
             it.copy(reactions = reactions)
