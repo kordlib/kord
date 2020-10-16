@@ -214,14 +214,17 @@ data class ReadyData(
         val traces: List<String>,
         val shard: DiscordShard?)
 
-@Serializable
+@Serializable(with = Heartbeat.Companion::class)
 data class Heartbeat(val data: Long) : Event() {
-    @Serializer(Heartbeat::class)
-    companion object : DeserializationStrategy<Heartbeat> {
+    companion object : KSerializer<Heartbeat> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
 
         override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
+
+        override fun serialize(encoder: Encoder, value: Heartbeat) {
+            encoder.encodeLong(value.data)
+        }
     }
 }
 
@@ -232,25 +235,21 @@ data class Resumed(val data: ResumedData, override val sequence: Int?) : Dispatc
 data class ResumedData(
         @SerialName("_trace")
         val traces: List<String>
-) {
-    @Serializer(Heartbeat::class)
-    companion object : DeserializationStrategy<Heartbeat> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
-
-        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
-    }
-}
+)
 
 
-@Serializable
+@Serializable(with = InvalidSession.Companion::class)
 data class InvalidSession(val resumable: Boolean) : Event() {
-    @Serializer(InvalidSession::class)
-    companion object : DeserializationStrategy<InvalidSession> {
+
+    companion object : KSerializer<InvalidSession> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("InvalidSession", PrimitiveKind.BOOLEAN)
 
         override fun deserialize(decoder: Decoder) = InvalidSession(decoder.decodeBoolean())
+
+        override fun serialize(encoder: Encoder, value: InvalidSession) {
+            encoder.encodeBoolean(value.resumable)
+        }
     }
 }
 

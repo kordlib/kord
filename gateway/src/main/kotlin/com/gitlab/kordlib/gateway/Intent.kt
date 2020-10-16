@@ -228,7 +228,6 @@ data class Intents internal constructor(val code: Int) {
 
 }
 
-@Serializer(forClass = Intents::class)
 object IntentsSerializer : KSerializer<Intents> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("intents", PrimitiveKind.INT)
 
