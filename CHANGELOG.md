@@ -1,3 +1,17 @@
+# 0.7.0
+
+## Changes
+
+* Added a meaningful toString to many classes
+
+## Dependencies
+
+* Kotlin 1.4.0 -> 1.4.10
+* ktor 1.4.0 -> 1.4.1
+* kotlinx.serialization 1.0.0-RC -> 1.0.0
+* kotlinx.coroutines 1.3.9 -> 1.4.0-M1
+* kotlinLogging 1.7.10 -> 2.0.3
+
 # 0.6.8
 
 ## Fixes
