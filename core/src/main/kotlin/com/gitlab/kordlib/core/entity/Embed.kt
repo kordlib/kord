@@ -27,7 +27,7 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
     /*
      * The type, [Embed.Type.Rich] for webhook and bot created embeds. Null if unknown.
      */
-    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
     @Deprecated(embedDeprecationMessage)
     val type: Type? get() = Type.values().firstOrNull { it.value == data.type }
 
@@ -90,6 +90,7 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
      * The type of embeds, this is an non-exhaustive list.
      */
     @Deprecated(embedDeprecationMessage)
+    @Suppress("DEPRECATION")
     enum class Type(val value: String) {
         Image("image"),
         Link("link"),

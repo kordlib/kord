@@ -199,7 +199,7 @@ class KordBuilder(val token: String) {
                     append(", make sure the bot token you entered is valid.")
                 }
 
-                appendln(responseBody)
+                appendLine(responseBody)
             }
 
             throw KordInitializationException(message)

@@ -4,7 +4,7 @@ import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.Serializable
 
-internal val MessageData.authorId get() = author?.id
+internal val MessageData.authorId get() = author.id
 
 @Serializable
 data class MessageData(
@@ -66,6 +66,7 @@ data class MessageData(
         return MessageData(
                 id,
                 channelId,
+                @Suppress("DEPRECATION")
                 guildId,
                 author,
                 content,
