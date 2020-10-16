@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.gateway
 
 import com.gitlab.kordlib.gateway.*
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapMerge
@@ -15,6 +16,7 @@ class MasterGateway(
 
     val averagePing get() = gateways.values.asSequence().map { it.ping.inMilliseconds }.average().milliseconds
 
+    @OptIn(FlowPreview::class)
     val events: Flow<ShardEvent> = gateways.entries.asFlow()
             .flatMapMerge(gateways.size) { (shard, gateway) -> gateway.events.map { event -> ShardEvent(event, gateway, shard) } }
 
