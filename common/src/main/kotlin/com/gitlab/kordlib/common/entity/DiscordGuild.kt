@@ -154,8 +154,8 @@ class SystemChannelFlags constructor(val code: Int) {
             return SystemChannelFlags(decoder.decodeInt())
         }
 
-        override fun serialize(encoder: Encoder, obj: SystemChannelFlags) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: SystemChannelFlags) {
+            encoder.encodeInt(value.code)
         }
     }
 
@@ -252,8 +252,8 @@ enum class PremiumTier(val level: Int) {
             return values().firstOrNull { it.level == level } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: PremiumTier) {
-            encoder.encodeInt(obj.level)
+        override fun serialize(encoder: Encoder, value: PremiumTier) {
+            encoder.encodeInt(value.level)
         }
 
     }
@@ -300,8 +300,8 @@ enum class ExplicitContentFilter(val code: Int) {
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: ExplicitContentFilter) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: ExplicitContentFilter) {
+            encoder.encodeInt(value.code)
         }
 
     }

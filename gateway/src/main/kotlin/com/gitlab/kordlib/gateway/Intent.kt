@@ -236,7 +236,7 @@ object IntentsSerializer : KSerializer<Intents> {
         return Intents(flags)
     }
 
-    override fun serialize(encoder: Encoder, obj: Intents) {
-        encoder.encodeInt(obj.code)
+    override fun serialize(encoder: Encoder, value: Intents) {
+        encoder.encodeInt(value.code)
     }
 }

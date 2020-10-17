@@ -37,8 +37,8 @@ enum class WebhookType(val code: Int) {
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: WebhookType) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: WebhookType) {
+            encoder.encodeInt(value.code)
         }
     }
 }

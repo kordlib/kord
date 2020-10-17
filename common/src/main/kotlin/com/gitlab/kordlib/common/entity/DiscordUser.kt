@@ -73,8 +73,7 @@ data class UserFlags constructor(val code: Int) {
     }
 
 
-    @Serializer(forClass = UserFlags::class)
-    companion object UserFlagsSerializer : DeserializationStrategy<UserFlags> {
+    companion object UserFlagsSerializer : KSerializer<UserFlags> {
 
         inline operator fun invoke(builder: UserFlagsBuilder.() -> Unit): UserFlags {
             return UserFlagsBuilder().apply(builder).flags()
@@ -85,6 +84,10 @@ data class UserFlags constructor(val code: Int) {
         override fun deserialize(decoder: Decoder): UserFlags {
             val flags = decoder.decodeInt()
             return UserFlags(flags)
+        }
+
+        override fun serialize(encoder: Encoder, value: UserFlags) {
+            encoder.encodeInt(value.code)
         }
 
     }

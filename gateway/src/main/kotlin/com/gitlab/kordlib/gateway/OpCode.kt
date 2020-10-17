@@ -32,8 +32,8 @@ enum class OpCode(val code: Int) {
             return values().firstOrNull { it.code == code } ?: Unknown
         }
 
-        override fun serialize(encoder: Encoder, obj: OpCode) {
-            encoder.encodeInt(obj.code)
+        override fun serialize(encoder: Encoder, value: OpCode) {
+            encoder.encodeInt(value.code)
         }
     }
 

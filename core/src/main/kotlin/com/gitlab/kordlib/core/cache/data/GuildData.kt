@@ -66,6 +66,7 @@ data class GuildData(
             link(GuildData::id to RoleData::guildId)
             link(GuildData::id to ChannelData::guildId)
             link(GuildData::id to MemberData::guildId)
+            @Suppress("DEPRECATION")
             link(GuildData::id to MessageData::guildId)
             link(GuildData::id to WebhookData::guildId)
             link(GuildData::id to VoiceStateData::guildId)
