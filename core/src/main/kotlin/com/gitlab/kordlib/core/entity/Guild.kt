@@ -74,7 +74,7 @@ class Guild(
     val bannerHash: String? get() = data.banner
 
     /**
-     * The [PremiumTier] from Nitro boosts,
+     * The [PremiumTier] from Nitro boosts.
      */
     val premiumTier: PremiumTier get() = data.premiumTier
 
