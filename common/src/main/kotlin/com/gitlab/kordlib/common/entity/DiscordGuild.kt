@@ -1,6 +1,8 @@
 package com.gitlab.kordlib.common.entity
 
-import kotlinx.serialization.*
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -164,6 +166,7 @@ class SystemChannelFlags constructor(val code: Int) {
 enum class SystemChannelFlag(val code: Int) {
     /** Suppress member join notifications. **/
     SuppressJoinNotifications(1.shl(0)),
+
     /** Suppress server boost notifications. **/
     SuppressPremiumSubscriptions(1.shl(1))
 }
@@ -234,28 +237,60 @@ data class DiscordVoiceState(
         val suppress: Boolean
 )
 
+/**
+ * Nitro boosting tier of a Guild.
+ *
+ * @property level the boost level of the guild.
+ * @property maxEmotes Maximal amount of server emotes. Source: https://support.discord.com/hc/en-us/articles/360028038352-Server-Boosting-#h_419c3bd5-addd-4989-b7cf-c7957ef92583
+ */
 @Serializable(with = PremiumTier.PremiumTierSerializer::class)
-enum class PremiumTier(val level: Int) {
+sealed class PremiumTier {
+    abstract val level: Int?
+    abstract val maxEmotes: Int?
+
     /** The default code for unknown values. */
-    Unknown(Int.MIN_VALUE),
-    None(0),
-    One(1),
-    Two(2),
-    Three(3);
+    object Unknown : PremiumTier() {
+        override val level: Int? = null
+        override val maxEmotes: Int? = null
+    }
+
+    object None : PremiumTier() {
+        override val level: Int = 0
+        override val maxEmotes: Int = 50
+    }
+
+    object One : PremiumTier() {
+        override val level: Int = 1
+        override val maxEmotes: Int = 100
+    }
+
+    object Two : PremiumTier() {
+        override val level: Int = 2
+        override val maxEmotes: Int = 150
+    }
+
+    object Three : PremiumTier() {
+        override val level: Int  = 3
+        override val maxEmotes: Int = 250
+    }
 
     companion object PremiumTierSerializer : KSerializer<PremiumTier> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("premium_tier", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): PremiumTier {
-            val level = decoder.decodeInt()
-            return values().firstOrNull { it.level == level } ?: Unknown
+            return when (decoder.decodeInt()) {
+                0 -> None
+                1 -> One
+                2 -> Two
+                3 -> Three
+                else -> Unknown
+            }
         }
 
         override fun serialize(encoder: Encoder, value: PremiumTier) {
-            encoder.encodeInt(value.level)
+            encoder.encodeInt(value.level ?: error("Cannot encode unkown tier"))
         }
-
     }
 }
 

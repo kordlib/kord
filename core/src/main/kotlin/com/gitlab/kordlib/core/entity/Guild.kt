@@ -79,24 +79,6 @@ class Guild(
     val premiumTier: PremiumTier get() = data.premiumTier
 
     /**
-     * Maximal amount of server emotes based on [premiumTier].
-     *
-     * [PremiumTier.Unknown] -> [Int.MIN_VALUE]
-     * [PremiumTier.None] -> 50
-     * [PremiumTier.One] -> 100
-     * [PremiumTier.Two] -> 150
-     * [PremiumTier.Three] -> 250
-     */
-    val maxEmotes: Int
-        get() = when (premiumTier) {
-            PremiumTier.Unknown -> Int.MIN_VALUE
-            PremiumTier.None -> 50
-            PremiumTier.One -> 100
-            PremiumTier.Two -> 150
-            PremiumTier.Three -> 250
-        }
-
-    /**
      * The ids of all [channels][GuildChannel].
      */
     val channelIds: Set<Snowflake> get() = data.channels.asSequence().map { Snowflake(it) }.toSet()
