@@ -26,12 +26,6 @@ plugins {
     id("org.ajoberstar.git-publish") version "2.1.3"
 }
 
-tasks.whenTaskAdded {
-    if(this.name == "ApiDump") {
-        this.enabled = Library.stableApi
-    }
-}
-
 apply(plugin = "binary-compatibility-validator")
 
 repositories {
@@ -81,6 +75,8 @@ subprojects {
         testRuntimeOnly(Dependencies.`kotlin-reflect`)
         testRuntimeOnly(Dependencies.sl4j)
     }
+
+    tasks.getByName("apiCheck").onlyIf { Library.stableApi }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target
