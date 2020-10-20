@@ -10,4 +10,6 @@ object Library {
     const val group = "com.gitlab.kordlib.kord"
     val version = System.getenv("RELEASE_TAG") ?: System.getenv("GITHUB_SHA") ?: "undefined"
     const val description = "Idiomatic Kotlin Wrapper for The Discord API"
+
+    const val stableApi: Boolean = false
 }

@@ -5,6 +5,7 @@ object  Versions {
     const val kotlinxCoroutines = "1.4.0-M1"
     const val kotlinLogging = "2.0.3"
     const val atomicFu = "0.14.4"
+    const val binaryCompatibilityValidator = "0.2.3"
 
     //test deps
     const val kotlinTest = kotlin

@@ -16,6 +16,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.bintray}")
         classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:${Versions.atomicFu}")
+        classpath("org.jetbrains.kotlinx:binary-compatibility-validator:${Versions.binaryCompatibilityValidator}")
     }
 }
 
@@ -23,13 +24,15 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
     id("org.jetbrains.dokka") version "1.4.0"
     id("org.ajoberstar.git-publish") version "2.1.3"
-    id("me.champeau.gradle.japicmp")
 }
 
-apply<BinaryCompatibilityPlugin>()
-configure<BinaryCompatibilityExtension> {
-    disableRootProject = true
+tasks.whenTaskAdded {
+    if(this.name == "ApiDump") {
+        this.enabled = Library.stableApi
+    }
 }
+
+apply(plugin = "binary-compatibility-validator")
 
 repositories {
     maven(url = "https://dl.bintray.com/kotlin/kotlin-dev/")
