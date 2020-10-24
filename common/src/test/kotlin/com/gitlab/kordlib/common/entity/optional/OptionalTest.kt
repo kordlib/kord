@@ -1,6 +1,5 @@
-package com.gitlab.kordlib.common.entity
+package com.gitlab.kordlib.common.entity.optional
 
-import com.gitlab.kordlib.common.entity.optional.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
