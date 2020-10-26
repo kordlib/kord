@@ -1,3 +1,9 @@
+# 0.6.9
+
+## Fixes
+
+* Fixed `Rolebehavior#mention` for `everyone` roles. #96
+
 # 0.6.8
 
 ## Fixes
