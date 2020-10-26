@@ -11,15 +11,13 @@ dependencies {
 
     api(Dependencies.`cache-api`) {
         version {
-            strictly("[0.1.0, 0.2.0[")
-            prefer("latest.release")
+            strictly("0.1.4")
         }
     }
 
     api(Dependencies.`cache-map`) {
         version {
-            strictly("[0.1.0, 0.2.0[")
-            prefer("latest.release")
+            strictly("0.1.4")
         }
     }
 
