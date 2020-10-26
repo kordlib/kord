@@ -60,6 +60,9 @@ class Image private constructor(val data: ByteArray, val format: Format, val res
         }
     }
 
+    /**
+     * Exact resolution of the Image.
+     */
     data class Resolution(val width: Int, val height: Int) {
 
         companion object {
