@@ -37,7 +37,11 @@ interface RoleBehavior : Entity, Strategizable {
     /**
      * The raw mention of this entity.
      */
-    val mention: String get() = "<@&${id.value}>"
+    val mention: String
+        get() {
+            return if (guildId.value == id.value) "@everyone"
+            else "<@&${id.value}>"
+        }
 
     /**
      * Requests to change the [position] of this role.
