@@ -6,10 +6,17 @@ import io.ktor.client.statement.*
 import io.ktor.http.HttpMethod
 import io.ktor.util.toByteArray
 import kotlinx.coroutines.Dispatchers
+import mu.KotlinLogging
+import java.awt.Dimension
+import java.io.File
+import java.io.IOException
 import java.util.*
+import javax.imageio.ImageIO
+import javax.imageio.stream.ImageInputStream
 
+private val logger = KotlinLogging.logger { }
 
-class Image private constructor(val data: ByteArray, val format: Format, val size: Size) {
+class Image private constructor(val data: ByteArray, val format: Format, val resolution: Resolution) {
 
     val dataUri: String
         get() {
@@ -18,42 +25,21 @@ class Image private constructor(val data: ByteArray, val format: Format, val siz
         }
 
     companion object {
-        fun raw(data: ByteArray, format: Format, size: Size): Image {
-            return Image(data, format, size)
+        fun raw(data: ByteArray, format: Format): Image {
+            return Image(data, format, Resolution.fromImageData(data, format))
         }
 
         suspend fun fromUrl(client: HttpClient, url: String): Image = with(Dispatchers.IO) {
             val call = client.request<HttpResponse>(url) { method = HttpMethod.Get }
-            val size = Size.fromResolution(call.request.url.parameters["size"])
             val contentType = call.headers["Content-Type"]
                 ?: error("expected 'Content-Type' header in image request")
 
             @Suppress("EXPERIMENTAL_API_USAGE")
             val bytes = call.content.toByteArray()
+            val format = Format.fromContentType(contentType)
+            val resolution = Resolution.fromImageData(bytes, format)
 
-            Image(bytes, Format.fromContentType(contentType), size)
-        }
-    }
-
-    /**
-     * Represents size of the Image as specified by
-     */
-    enum class Size(val resolution: String) {
-        SIZE_16("16"),
-        SIZE_32("32"),
-        SIZE_64("64"),
-        SIZE_128("128"),
-        SIZE_256("256"),
-        SIZE_512("512"),
-        SIZE_1024("1024"),
-        SIZE_2048("2048"),
-        SIZE_4096("4096");
-
-        companion object {
-            fun fromResolution(resolution: String?): Size {
-                return if (resolution == null) SIZE_128
-                else values().first { it.resolution == resolution }
-            }
+            Image(bytes, format, resolution)
         }
     }
 
@@ -72,5 +58,48 @@ class Image private constructor(val data: ByteArray, val format: Format, val siz
                 else -> error(type)
             }
         }
+    }
+
+    data class Resolution(val width: Int, val height: Int) {
+
+        companion object {
+            val UnknownResolution = Resolution(0, 0)
+
+            /**
+             * Reads the resolution of the image from its header.
+             */
+            fun fromImageData(array: ByteArray, format: Format): Resolution {
+                val iter = ImageIO.getImageReadersBySuffix(format.extension)
+                for (reader in iter) {
+                    try {
+                        reader.input = ImageIO.createImageInputStream(array.inputStream())
+                        return Resolution(reader.getWidth(reader.minIndex), reader.getHeight(reader.minIndex))
+                    } catch (e: IOException) {
+                        logger.error(e) { e.message }
+                    } finally {
+                        reader.dispose()
+                    }
+                }
+
+                return UnknownResolution
+            }
+        }
+
+    }
+
+    /**
+     * Represents size of the [Image], for requesting different sizes from the discord.
+     * [Image.Resolution] (both height and width) will always be smaller than or equal to [maxRes] of the [Size].
+     */
+    enum class Size(val maxRes: Int) {
+        Size16(16),
+        Size32(32),
+        Size64(64),
+        Size128(128),
+        Size256(256),
+        Size512(512),
+        Size1024(1024),
+        Size2048(2048),
+        Size4096(4096),
     }
 }

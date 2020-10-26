@@ -91,31 +91,52 @@ open class User(
         val isAnimated: Boolean get() = data.avatar?.startsWith("a_") ?: false
 
         /**
-         * Get supported format, prioritizing [Image.Format.GIF] for animated avatars and [Image.Format.PNG] for others.
+         * A supported format, prioritizing [Image.Format.GIF] for animated avatars and [Image.Format.PNG] for others.
          */
-        val format: Image.Format
+        val supportedFormat: Image.Format
             get() = when {
                 isAnimated -> Image.Format.GIF
                 else -> Image.Format.PNG
             }
 
         /**
-         * Gets the avatar url in supported format with default behavior of [format] and size [Image.Size.SIZE_128].
+         * Gets the avatar url in a supported format (defined by [supportedFormat]) and default size.
          */
         val url: String
-            get() = getUrl()!!
+            get() = getUrl(supportedFormat) ?: defaultUrl
+
+        /**
+         * Gets the avatar url in given [format], or returns null if the [format] is not supported.
+         *
+         * @param format    The requested image format.
+         */
+        fun getUrl(format: Image.Format): String? {
+            val hash = data.avatar ?: return defaultUrl
+            if (!isAnimated && format == Image.Format.GIF) return null
+
+            return "https://cdn.discordapp.com/avatars/${data.id}/$hash.${format.extension}"
+        }
+
+        /**
+         * Gets the avatar url in a supported format and given [size].
+         *
+         * @param size      The requested image size.
+         */
+        fun getUrl(size: Image.Size): String {
+            return getUrl(supportedFormat, size)!!
+        }
 
         /**
          * Gets the avatar url in given [format] and [size], or returns null if the [format] is not supported.
          *
-         * @param format    The requested image format, defaults to the behavior of [Avatar.format] if not specified.
-         * @param size      The requested image resolution, defaults to [Image.Size.SIZE_128] if not specified.
+         * @param format    The requested image format.
+         * @param size      The requested image resolution.
          */
-        fun getUrl(format: Image.Format = this.format, size: Image.Size = Image.Size.SIZE_128): String? {
+        fun getUrl(format: Image.Format, size: Image.Size): String? {
             val hash = data.avatar ?: return defaultUrl
             if (!isAnimated && format == Image.Format.GIF) return null
 
-            return "https://cdn.discordapp.com/avatars/${data.id}/$hash.${format.extension}?size=${size.resolution}"
+            return "https://cdn.discordapp.com/avatars/${data.id}/$hash.${format.extension}?size=${size.maxRes}"
         }
 
         /**
@@ -124,13 +145,38 @@ open class User(
         suspend fun getDefaultImage(): Image = Image.fromUrl(kord.resources.httpClient, defaultUrl)
 
         /**
-         * Requests to get the avatar of the user as an [Image] given [format] and [size], or returns null if the
-         * format is not supported.
-         *
-         * @param format    The requested image format, defaults to the behavior of [format] if not specified.
-         * @param size      The requested image resolution, defaults to [Image.Size.SIZE_128] if not specified.
+         * Requests to get the avatar of the user as an [Image], prioritizing gif for animated avatars and png for others.
          */
-        suspend fun getImage(format: Image.Format = this.format, size: Image.Size = Image.Size.SIZE_128): Image? {
+        suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, url)
+
+        /**
+         * Requests to get the avatar of the user as an [Image] given [format], or returns null if the format is not supported.
+         *
+         * @param format    The requested image format.
+         */
+        suspend fun getImage(format: Image.Format): Image? {
+            val url = getUrl(format) ?: return null
+
+            return Image.fromUrl(kord.resources.httpClient, url)
+        }
+
+        /**
+         * Requests to get the avatar of the user as an [Image] in given [size].
+         *
+         * @param size      The requested image resolution.
+         */
+        suspend fun getImage(size: Image.Size): Image {
+            return Image.fromUrl(kord.resources.httpClient, getUrl(size))
+        }
+
+        /**
+         * Requests to get the avatar of the user as an [Image] given [format] and [size], or returns null if the
+         * [format] is not supported.
+         *
+         * @param format    The requested image format.
+         * @param size      The requested image resolution.
+         */
+        suspend fun getImage(format: Image.Format, size: Image.Size): Image? {
             val url = getUrl(format, size) ?: return null
 
             return Image.fromUrl(kord.resources.httpClient, url)
