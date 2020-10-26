@@ -29,7 +29,7 @@ fun imageBinary(path: String): Image {
     val image = loader?.getResource(path)?.readBytes()
     val imageType = path.split(".").last()
     val format = Image.Format.fromContentType("image/$imageType")
-    return Image.raw(image!!, format)
+    return Image.raw(image!!, format, Image.Size.SIZE_1024)
 }
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)

@@ -16,8 +16,8 @@ import java.util.*
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
  */
 open class User(
-        val data: UserData,
-        override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: UserData,
+    override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier
 ) : UserBehavior {
 
     override val id: Snowflake
@@ -69,10 +69,6 @@ open class User(
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): User = User(data, kord, strategy.supply(kord))
 
-    override fun toString(): String {
-        return "User(data=$data, kord=$kord, supplier=$supplier)"
-    }
-
     data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 
         /**
@@ -91,22 +87,31 @@ open class User(
         val isAnimated: Boolean get() = data.avatar?.startsWith("a_") ?: false
 
         /**
-         * Gets the avatar url in a supported format, prioritizing [Image.Format.GIF] for animated avatars and [Image.Format.PNG] for others.
+         * Get supported format, prioritizing [Image.Format.GIF] for animated avatars and [Image.Format.PNG] for others.
          */
-        val url: String
+        val format: Image.Format
             get() = when {
-                isAnimated -> getUrl(Image.Format.GIF)
-                else -> getUrl(Image.Format.PNG)
-            } ?: defaultUrl
+                isAnimated -> Image.Format.GIF
+                else -> Image.Format.PNG
+            }
 
         /**
-         * Gets the avatar url in a supported [Image.Format], or returns null if the [format] is not supported.
+         * Gets the avatar url in supported format with default behavior of [format] and size [Image.Size.SIZE_128].
          */
-        fun getUrl(format: Image.Format): String? {
+        val url: String
+            get() = getUrl()!!
+
+        /**
+         * Gets the avatar url in given [format] and [size], or returns null if the [format] is not supported.
+         *
+         * @param format    The requested image format, defaults to the behavior of [Avatar.format] if not specified.
+         * @param size      The requested image resolution, defaults to [Image.Size.SIZE_128] if not specified.
+         */
+        fun getUrl(format: Image.Format = this.format, size: Image.Size = Image.Size.SIZE_128): String? {
             val hash = data.avatar ?: return defaultUrl
             if (!isAnimated && format == Image.Format.GIF) return null
 
-            return "https://cdn.discordapp.com/avatars/${data.id}/$hash.${format.extension}"
+            return "https://cdn.discordapp.com/avatars/${data.id}/$hash.${format.extension}?size=${size.resolution}"
         }
 
         /**
@@ -115,25 +120,21 @@ open class User(
         suspend fun getDefaultImage(): Image = Image.fromUrl(kord.resources.httpClient, defaultUrl)
 
         /**
-         * Requests to get the avatar of the user as an [Image], or returns null if the format is not supported.
+         * Requests to get the avatar of the user as an [Image] given [format] and [size], or returns null if the
+         * format is not supported.
          *
-         * @param format the requested image format, defaults to the behavior of [url] if null.
+         * @param format    The requested image format, defaults to the behavior of [format] if not specified.
+         * @param size      The requested image resolution, defaults to [Image.Size.SIZE_128] if not specified.
          */
-        suspend fun getImage(format: Image.Format): Image? {
-            val url = getUrl(format) ?: return null
+        suspend fun getImage(format: Image.Format = this.format, size: Image.Size = Image.Size.SIZE_128): Image? {
+            val url = getUrl(format, size) ?: return null
 
             return Image.fromUrl(kord.resources.httpClient, url)
         }
-
-        /**
-         * Requests to get the avatar of the user as an [Image], prioritizing gif for animated avatars and png for others.
-         */
-        suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, url)
 
         override fun toString(): String {
             return "Avatar(data=$data, kord=$kord)"
         }
 
     }
-
 }
