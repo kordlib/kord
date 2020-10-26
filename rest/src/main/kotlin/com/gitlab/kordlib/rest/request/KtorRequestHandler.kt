@@ -52,10 +52,20 @@ class KtorRequestHandler(
             response
         }
 
+        val body = response.readText()
         return when {
-            response.isRateLimit -> handle(request)
-            response.isError -> throw KtorRequestException(response, response.errorString())
-            else -> parser.decodeFromString(request.route.strategy, response.readText())
+            response.isRateLimit -> {
+                logger.debug { response.logString(body) }
+                handle(request)
+            }
+            response.isError -> {
+                logger.debug { response.logString(body) }
+                throw KtorRequestException(response, body)
+            }
+            else -> {
+                logger.debug { response.logString(body) }
+                parser.decodeFromString(request.route.strategy, body)
+            }
         }
     }
 
@@ -71,15 +81,16 @@ class KtorRequestHandler(
         }
 
         request.body?.let {
+            val body = parser.encodeToString(it.strategy, it.body)
+            logger.debug { request.logString(body) }
             when (request) {
                 is MultipartRequest<*, *> -> {
-                    headers.append("payload_json", parser.encodeToString(it.strategy, it.body))
+                    headers.append("payload_json", body)
                     this.body = MultiPartFormDataContent(request.data)
                 }
 
                 is JsonRequest<*, *> -> {
-                    val json = parser.encodeToString(it.strategy, it.body)
-                    this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
+                    this.body = TextContent(body, io.ktor.http.ContentType.Application.Json)
                 }
             }
         }
