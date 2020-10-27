@@ -16,7 +16,7 @@ import javax.imageio.stream.ImageInputStream
 
 private val logger = KotlinLogging.logger { }
 
-class Image private constructor(val data: ByteArray, val format: Format, val resolution: Resolution) {
+class Image private constructor(val data: ByteArray, val format: Format) {
 
     val dataUri: String
         get() {
@@ -26,7 +26,7 @@ class Image private constructor(val data: ByteArray, val format: Format, val res
 
     companion object {
         fun raw(data: ByteArray, format: Format): Image {
-            return Image(data, format, Resolution.fromImageData(data, format))
+            return Image(data, format)
         }
 
         suspend fun fromUrl(client: HttpClient, url: String): Image = with(Dispatchers.IO) {
@@ -37,9 +37,8 @@ class Image private constructor(val data: ByteArray, val format: Format, val res
             @Suppress("EXPERIMENTAL_API_USAGE")
             val bytes = call.content.toByteArray()
             val format = Format.fromContentType(contentType)
-            val resolution = Resolution.fromImageData(bytes, format)
 
-            Image(bytes, format, resolution)
+            Image(bytes, format)
         }
     }
 
@@ -58,48 +57,6 @@ class Image private constructor(val data: ByteArray, val format: Format, val res
                 else -> error(type)
             }
         }
-    }
-
-    /**
-     * Exact resolution of the Image.
-     */
-    data class Resolution(val width: Int, val height: Int) {
-
-        companion object {
-            val UnknownResolution = Resolution(0, 0)
-
-            /**
-             * Reads the resolution of the image from its header.
-             */
-            fun fromImageData(data: ByteArray, format: Format): Resolution {
-                val iter = ImageIO.getImageReadersBySuffix(format.extension)
-                for (reader in iter) {
-                    try {
-                        reader.input = ImageIO.createImageInputStream(data.inputStream())
-                        return Resolution(reader.getWidth(reader.minIndex), reader.getHeight(reader.minIndex))
-                    } catch (e: IOException) {
-                        logger.error(e) { e.message }
-                    } finally {
-                        reader.dispose()
-                    }
-                }
-
-                // Manual header parsing of WebP images, as not supported by ImageIO
-                if (String(ByteArray(4, data::get)) == "RIFF" && data[15].toChar() == 'X') {
-                    val width = 1 + get24bit(data, 24)
-                    val height = 1 + get24bit(data, 27)
-
-                    if (width.toLong() * height <= 4294967296L) return Resolution(width, height)
-                }
-
-                return UnknownResolution
-            }
-
-            private fun get24bit(data: ByteArray, index: Int): Int {
-                return ((data[index].toInt() and 0xFF) or (data[index + 1].toInt() and 0xFF shl 8) or (data[index + 2].toInt() and 0xFF shl 16))
-            }
-        }
-
     }
 
     /**
