@@ -245,14 +245,11 @@ data class DiscordVoiceState(
  */
 @Serializable(with = PremiumTier.PremiumTierSerializer::class)
 sealed class PremiumTier {
-    abstract val level: Int?
+    abstract val level: Int
     abstract val maxEmotes: Int?
 
     /** The default code for unknown values. */
-    object Unknown : PremiumTier() {
-        override val level: Int? = null
-        override val maxEmotes: Int? = null
-    }
+    class Unknown(override val level: Int, override val maxEmotes: Int?) : PremiumTier()
 
     object None : PremiumTier() {
         override val level: Int = 0
@@ -279,17 +276,17 @@ sealed class PremiumTier {
             get() = PrimitiveSerialDescriptor("premium_tier", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): PremiumTier {
-            return when (decoder.decodeInt()) {
+            return when (val level = decoder.decodeInt()) {
                 0 -> None
                 1 -> One
                 2 -> Two
                 3 -> Three
-                else -> Unknown
+                else -> Unknown(level, null)
             }
         }
 
         override fun serialize(encoder: Encoder, value: PremiumTier) {
-            encoder.encodeInt(value.level ?: error("Cannot encode unkown tier"))
+            encoder.encodeInt(value.level)
         }
     }
 }
