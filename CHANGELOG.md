@@ -4,6 +4,7 @@
 
 * Fixed `Rolebehavior#mention` for `everyone` roles. #96
 * Fixed NPE being thrown when trying to query data types that were not cached.
+* Fixed message content not being sent when uploading a file. #99
 
 # 0.6.8
 
