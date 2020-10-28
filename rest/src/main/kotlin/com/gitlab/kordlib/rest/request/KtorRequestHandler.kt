@@ -77,12 +77,11 @@ class KtorRequestHandler(
         }
 
         when (request) {
-            is JsonRequest -> {
-                request.body?.let {
-                    val json = parser.encodeToString(it.strategy, it.body)
-                    logger.debug { request.logString(json) }
-                    this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
-                }
+            is JsonRequest -> run {
+                val requestBody = request.body ?: return@run
+                val json = parser.encodeToString(requestBody.strategy, requestBody.body)
+                logger.debug { request.logString(json) }
+                this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
             }
             is MultipartRequest -> {
                 val content = request.data
