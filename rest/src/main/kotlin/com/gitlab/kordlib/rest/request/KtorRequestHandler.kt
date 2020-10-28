@@ -1,20 +1,16 @@
 package com.gitlab.kordlib.rest.request
 
 import com.gitlab.kordlib.rest.ratelimit.*
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.defaultRequest
-import io.ktor.client.request.forms.MultiPartFormDataContent
-import io.ktor.client.request.header
-import io.ktor.client.request.request
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.HttpStatement
-import io.ktor.client.statement.readText
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.features.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
 import io.ktor.content.TextContent
+import io.ktor.http.content.*
 import io.ktor.http.takeFrom
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
-import kotlinx.serialization.stringify
 import mu.KotlinLogging
 import java.time.Clock
 
@@ -38,7 +34,7 @@ class KtorRequestHandler(
         private val client: HttpClient,
         private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
         private val clock: Clock = Clock.systemUTC(),
-        private val parser: Json = jsonDefault
+        private val parser: Json = jsonDefault,
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
 
@@ -80,20 +76,25 @@ class KtorRequestHandler(
             parameters.appendAll(request.parameters)
         }
 
-        request.body?.let {
-            val body = parser.encodeToString(it.strategy, it.body)
-            logger.debug { request.logString(body) }
-            when (request) {
-                is MultipartRequest<*, *> -> {
-                    headers.append("payload_json", body)
-                    this.body = MultiPartFormDataContent(request.data)
+        when (request) {
+            is JsonRequest -> {
+                request.body?.let {
+                    val json = parser.encodeToString(it.strategy, it.body)
+                    logger.debug { request.logString(json) }
+                    this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
                 }
-
-                is JsonRequest<*, *> -> {
-                    this.body = TextContent(body, io.ktor.http.ContentType.Application.Json)
+            }
+            is MultipartRequest -> {
+                val content = request.data
+                this.body = MultiPartFormDataContent(content)
+                logger.debug {
+                    val json = content.filterIsInstance<PartData.FormItem>()
+                            .firstOrNull { it.name == "payload_json" }?.value
+                    request.logString(json ?: "")
                 }
             }
         }
+
     }
 
     companion object {
@@ -102,7 +103,7 @@ class KtorRequestHandler(
                 token: String,
                 requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
                 clock: Clock = Clock.systemUTC(),
-                parser: Json = jsonDefault
+                parser: Json = jsonDefault,
         ): KtorRequestHandler {
             val client = HttpClient(CIO) {
                 expectSuccess = false

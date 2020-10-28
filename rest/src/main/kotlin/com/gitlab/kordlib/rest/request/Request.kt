@@ -7,6 +7,7 @@ import io.ktor.http.encodeURLQueryComponent
 import io.ktor.util.StringValues
 import io.ktor.utils.io.streams.outputStream
 import kotlinx.serialization.SerializationStrategy
+import kotlinx.serialization.json.Json
 
 sealed class Request<B : Any, R> {
     abstract val route: Route<R>
@@ -68,6 +69,9 @@ class MultipartRequest<B : Any, R>(
 ) : Request<B, R>() {
 
     val data = formData {
+        body?.let {
+            append("payload_json", Json.encodeToString(it.strategy, it.body))
+        }
         if (files.size == 1) append("file", filename = files[0].first) {
             files[0].second.copyTo(outputStream())
         } else files.forEachIndexed { index, pair ->

@@ -8,12 +8,13 @@ import com.gitlab.kordlib.rest.request.KtorRequestHandler
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
 import com.gitlab.kordlib.rest.service.createTextChannel
-import io.ktor.client.HttpClient
+import io.ktor.client.*
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import java.awt.Color
 import java.util.*
+import kotlin.test.assertEquals
 
 fun image(path: String): String {
     val loader = Unit::class.java.classLoader
@@ -438,6 +439,44 @@ class RestServiceTest {
 
         Unit
     }
+
+    @Test
+    @Order(21)
+    fun `message with file and content serializes correctly`(): Unit = runBlocking {
+        val message = rest.channel.createMessage(channelId) {
+            content = "TEST"
+
+            addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+        }
+
+        assertEquals("TEST", message.content)
+        assertEquals(1, message.attachments.size)
+        assertEquals("test.txt", message.attachments.first().filename)
+    }
+
+    @Test
+    @Order(22)
+    fun `message with only file correctly`(): Unit = runBlocking {
+        val message = rest.channel.createMessage(channelId) {
+            addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+        }
+
+        assertEquals(1, message.attachments.size)
+        assertEquals("test.txt", message.attachments.first().filename)
+    }
+
+    @Test
+    @Order(23)
+    fun `message with only content serializes correctly`(): Unit = runBlocking {
+        val message = rest.channel.createMessage(channelId) {
+            content = "TEST"
+
+            addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+        }
+
+        assertEquals("TEST", message.content)
+    }
+
 
 
     @Test
