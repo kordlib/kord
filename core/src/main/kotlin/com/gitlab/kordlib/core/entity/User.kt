@@ -107,8 +107,6 @@ open class User(
 
         /**
          * Gets the avatar url in given [format], or returns null if the [format] is not supported.
-         *
-         * @param format    The requested image format.
          */
         fun getUrl(format: Image.Format): String? {
             val hash = data.avatar ?: return defaultUrl
@@ -119,8 +117,6 @@ open class User(
 
         /**
          * Gets the avatar url in a supported format and given [size].
-         *
-         * @param size      The requested image size.
          */
         fun getUrl(size: Image.Size): String {
             return getUrl(supportedFormat, size)!!
@@ -128,9 +124,6 @@ open class User(
 
         /**
          * Gets the avatar url in given [format] and [size], or returns null if the [format] is not supported.
-         *
-         * @param format    The requested image format.
-         * @param size      The requested image size.
          */
         fun getUrl(format: Image.Format, size: Image.Size): String? {
             val hash = data.avatar ?: return defaultUrl
@@ -151,8 +144,6 @@ open class User(
 
         /**
          * Requests to get the avatar of the user as an [Image] given [format], or returns null if the format is not supported.
-         *
-         * @param format    The requested image format.
          */
         suspend fun getImage(format: Image.Format): Image? {
             val url = getUrl(format) ?: return null
@@ -162,8 +153,6 @@ open class User(
 
         /**
          * Requests to get the avatar of the user as an [Image] in given [size].
-         *
-         * @param size      The requested image size.
          */
         suspend fun getImage(size: Image.Size): Image {
             return Image.fromUrl(kord.resources.httpClient, getUrl(size))
@@ -172,9 +161,6 @@ open class User(
         /**
          * Requests to get the avatar of the user as an [Image] given [format] and [size], or returns null if the
          * [format] is not supported.
-         *
-         * @param format    The requested image format.
-         * @param size      The requested image size.
          */
         suspend fun getImage(format: Image.Format, size: Image.Size): Image? {
             val url = getUrl(format, size) ?: return null
