@@ -17,7 +17,6 @@ import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.*
@@ -28,6 +27,7 @@ import mu.KotlinLogging
 import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
+import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
@@ -51,7 +51,9 @@ data class DefaultGatewayData(
         val client: HttpClient,
         val reconnectRetry: Retry,
         val sendRateLimiter: RateLimiter,
-        val identifyRateLimiter: RateLimiter
+        val identifyRateLimiter: RateLimiter,
+        val dispatcher: CoroutineDispatcher,
+        val eventFlow: MutableSharedFlow<Event>
 )
 
 /**
@@ -60,14 +62,15 @@ data class DefaultGatewayData(
 @ObsoleteCoroutinesApi
 class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
+    override val coroutineContext: CoroutineContext = data.dispatcher + SupervisorJob()
+
     private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
 
-    private val channel = BroadcastChannel<Event>(1)
-
-    override var ping: Duration = Duration.INFINITE
+    private val _ping = MutableStateFlow<Duration?>(null)
+    override val ping: StateFlow<Duration?> get() = _ping
 
     @OptIn(FlowPreview::class)
-    override val events: Flow<Event> = channel.asFlow().buffer(Channel.UNLIMITED).filterIsInstance()
+    override val events: SharedFlow<Event> = data.eventFlow
 
     private lateinit var socket: DefaultClientWebSocketSession
 
@@ -91,7 +94,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         val sequence = Sequence()
         SequenceHandler(events, sequence)
         handshakeHandler = HandshakeHandler(events, ::trySend, sequence, data.identifyRateLimiter)
-        HeartbeatHandler(events, ::trySend, { restart(Close.ZombieConnection) }, { ping = it }, sequence)
+        HeartbeatHandler(events, ::trySend, { restart(Close.ZombieConnection) }, { _ping.value = it }, sequence)
         ReconnectHandler(events) { restart(Close.Reconnecting) }
         InvalidSessionHandler(events) { restart(it) }
     }
@@ -112,7 +115,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
                 if (exception is java.nio.channels.UnresolvedAddressException) {
-                    channel.send(Close.Timeout)
+                    data.eventFlow.emit(Close.Timeout)
                 }
 
                 data.reconnectRetry.retry()
@@ -137,9 +140,10 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             defaultGatewayLogger.trace { "handled gateway connection closed" }
 
             if (state.value.retry) data.reconnectRetry.retry()
-            else channel.send(Close.RetryLimitReached)
+            else data.eventFlow.emit(Close.RetryLimitReached)
         }
 
+        _ping.value = null
         if (!data.reconnectRetry.hasNext) {
             defaultGatewayLogger.warn { "retry limit exceeded, gateway closing" }
         }
@@ -160,7 +164,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
 
     private suspend fun readSocket() {
-        socket.incoming.asFlow().collect {
+        socket.incoming.asFlow().buffer(Channel.UNLIMITED).collect {
             when (it) {
                 is Frame.Binary, is Frame.Text -> read(it)
                 else -> { /*ignore*/
@@ -189,7 +193,8 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
         try {
             defaultGatewayLogger.trace { "Gateway <<< $json" }
-            jsonParser.decodeFromString(Event.Companion, json)?.let { channel.send(it) }
+            val event = jsonParser.decodeFromString(Event.Companion, json) ?: return
+            data.eventFlow.emit(event)
         } catch (exception: Exception) {
             defaultGatewayLogger.error(exception)
         }
@@ -204,7 +209,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         defaultGatewayLogger.trace { "Gateway closed: ${reason.code} ${reason.message}" }
         val discordReason = values().firstOrNull { it.code == reason.code.toInt() } ?: return
 
-        channel.send(Close.DiscordClose(discordReason, discordReason.retry))
+        data.eventFlow.emit(Close.DiscordClose(discordReason, discordReason.retry))
 
         when {
             !discordReason.retry -> {
@@ -229,8 +234,9 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override suspend fun stop() {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
-        channel.send(Close.UserClose)
+        data.eventFlow.emit(Close.UserClose)
         state.update { State.Stopped }
+        _ping.value = null
         if (socketOpen) socket.close(CloseReason(1000, "leaving"))
     }
 
@@ -238,19 +244,20 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         state.update { State.Running(false) }
         if (socketOpen) {
-            channel.send(code)
+            data.eventFlow.emit(code)
             socket.close(CloseReason(4900, "reconnecting"))
         }
     }
 
     override suspend fun detach() {
+        (this as CoroutineScope).cancel()
         if (state.value is State.Detached) return
         state.update { State.Detached }
-        channel.send(Close.Detach)
+        _ping.value = null
+        data.eventFlow.emit(Close.Detach)
         if (::socket.isInitialized) {
             socket.close()
         }
-        channel.cancel()
     }
 
     override suspend fun send(command: Command) = stateMutex.withLock {

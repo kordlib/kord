@@ -57,7 +57,7 @@ class DefaultGatewayTest {
                 "!status" -> when (words.getOrNull(1)) {
                     "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Kord", ActivityType.Game)))
                 }
-                "!ping" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Ping is ${gateway.ping.toLongMilliseconds()}", ActivityType.Game)))
+                "!ping" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Ping is ${gateway.ping.value?.toLongMilliseconds()}", ActivityType.Game)))
             }
         }.launchIn(GlobalScope)
 
