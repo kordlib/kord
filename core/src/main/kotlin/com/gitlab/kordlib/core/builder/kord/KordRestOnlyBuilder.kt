@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 @KordExperimental
 class KordRestOnlyBuilder(val token: String) {
@@ -61,15 +62,13 @@ class KordRestOnlyBuilder(val token: String) {
         val rest = RestClient(handlerBuilder(resources))
         val selfId = getBotIdFromToken(token)
 
-        val eventPublisher = BroadcastChannel<Event>(1)
-
         return Kord(
                 resources,
                 DataCache.none(),
                 MasterGateway(mapOf(0 to Gateway.none())),
                 rest,
                 selfId,
-                eventPublisher,
+                MutableSharedFlow(),
                 defaultDispatcher
         )
     }

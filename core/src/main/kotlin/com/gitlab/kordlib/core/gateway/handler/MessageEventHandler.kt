@@ -13,7 +13,7 @@ import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.gateway.*
-import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
@@ -24,8 +24,8 @@ internal class MessageEventHandler(
         kord: Kord,
         gateway: MasterGateway,
         cache: DataCache,
-        coreEventChannel: SendChannel<CoreEvent>
-) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
+        coreFlow: MutableSharedFlow<CoreEvent>
+) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
         is MessageCreate -> handle(event, shard)
@@ -59,7 +59,7 @@ internal class MessageEventHandler(
             Member(memberData, userData, kord)
         } else null
 
-        coreEventChannel.send(MessageCreateEvent(Message(data, kord), guildId.toSnowflakeOrNull(), member, shard))
+        coreFlow.emit(MessageCreateEvent(Message(data, kord), guildId.toSnowflakeOrNull(), member, shard))
     }
 
     private suspend fun handle(event: MessageUpdate, shard: Int) = with(event.message) {
@@ -68,7 +68,7 @@ internal class MessageEventHandler(
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
         query.update { it + this }
 
-        coreEventChannel.send(MessageUpdateEvent(Snowflake(id), Snowflake(channelId), this, old, kord, shard))
+        coreFlow.emit(MessageUpdateEvent(Snowflake(id), Snowflake(channelId), this, old, kord, shard))
     }
 
     private suspend fun handle(event: MessageDelete, shard: Int) = with(event.message) {
@@ -77,7 +77,7 @@ internal class MessageEventHandler(
         val removed = query.singleOrNull()?.let { Message(it, kord) }
         query.remove()
 
-        coreEventChannel.send(
+        coreFlow.emit(
                 MessageDeleteEvent(Snowflake(id), Snowflake(channelId), guildId.toSnowflakeOrNull(), removed, kord, shard)
         )
     }
@@ -90,7 +90,7 @@ internal class MessageEventHandler(
 
         val ids = ids.asSequence().map { Snowflake(it) }.toSet()
 
-        coreEventChannel.send(
+        coreFlow.emit(
                 MessageBulkDeleteEvent(ids, removed, Snowflake(channelId), guildId.toSnowflakeOrNull(), kord, shard)
         )
     }
@@ -126,7 +126,7 @@ internal class MessageEventHandler(
             it.copy(reactions = reactions)
         }
 
-        coreEventChannel.send(
+        coreFlow.emit(
                 ReactionAddEvent(
                         Snowflake(userId),
                         Snowflake(channelId),
@@ -168,7 +168,7 @@ internal class MessageEventHandler(
             it.copy(reactions = reactions)
         }
 
-        coreEventChannel.send(
+        coreFlow.emit(
                 ReactionRemoveEvent(
                         Snowflake(userId),
                         Snowflake(channelId),
@@ -184,7 +184,7 @@ internal class MessageEventHandler(
     private suspend fun handle(event: MessageReactionRemoveAll, shard: Int) = with(event.reactions) {
         cache.query<MessageData> { MessageData::id eq messageId.toLong() }.update { it.copy(reactions = emptyList()) }
 
-        coreEventChannel.send(
+        coreFlow.emit(
                 ReactionRemoveAllEvent(
                         Snowflake(channelId),
                         Snowflake(messageId),
@@ -199,7 +199,7 @@ internal class MessageEventHandler(
         cache.query<MessageData> { MessageData::id eq messageId.toLong() }.update { it.copy(reactions = it.reactions?.filter { it.emojiName != emoji.name }) }
 
         val data = ReactionRemoveEmojiData.from(this)
-        coreEventChannel.send(ReactionRemoveEmojiEvent(data, kord, shard))
+        coreFlow.emit(ReactionRemoveEmojiEvent(data, kord, shard))
     }
 
 }

@@ -3,7 +3,6 @@ package com.gitlab.kordlib.core
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordUnsafe
-
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.Status
@@ -28,7 +27,6 @@ import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.*
 import mu.KotlinLogging
 import kotlin.contracts.ExperimentalContracts
@@ -45,31 +43,44 @@ class Kord(
         val gateway: MasterGateway,
         val rest: RestClient,
         val selfId: Snowflake,
-        private val eventPublisher: BroadcastChannel<Event>,
-        private val dispatcher: CoroutineDispatcher,
+        private val eventFlow: MutableSharedFlow<Event>,
+        dispatcher: CoroutineDispatcher,
 ) : CoroutineScope {
-    private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventPublisher)
-
-    init {
-        launch { interceptor.start() }
-    }
+    private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventFlow)
 
     val defaultSupplier: EntitySupplier = resources.defaultStrategy.supply(this)
 
     @OptIn(KordUnsafe::class, KordExperimental::class)
     val unsafe: Unsafe = Unsafe(this)
 
-    @OptIn(FlowPreview::class)
-    val events get() = eventPublisher.asFlow().buffer(CoroutineChannel.UNLIMITED)
+    /**
+     * The events emitted from the [gateway]. Call [Kord.login] to start receiving events.
+     *
+     * Events emitted by this flow are guaranteed to follow the same order as they were received
+     * by the web socket. Any event flow order between multiple [MasterGateway.gateways] is not
+     * guaranteed.
+     *
+     * Subscriptions to this flow will not complete normally, as per design of [SharedFlow].
+     * Use [Flow.launchIn] with [Kord] as [CoroutineScope] to cease event processing
+     * on [Kord.shutdown].
+     *
+     * Behavior like replay cache size, buffer size and overflow behavior are dependant on the
+     * supplied [eventFlow]. See [KordBuilder.eventFlow] for more details.
+     */
+    val events: SharedFlow<Event>
+        get() = eventFlow
 
-    override val coroutineContext: CoroutineContext
-        get() = dispatcher + Job()
+    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob()
 
     val regions: Flow<Region>
         get() = resources.defaultStrategy.supply(this).regions
 
     val guilds: Flow<Guild>
         get() = resources.defaultStrategy.supply(this).guilds
+
+    init {
+        launch { interceptor.start() }
+    }
 
     /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
@@ -97,7 +108,9 @@ class Kord(
      */
     suspend fun shutdown() {
         gateway.detachAll()
-        this.eventPublisher.close()
+
+        // resolve ambiguous coroutineContext
+        (this as CoroutineScope).cancel()
     }
 
     fun <T : EntitySupplier> with(strategy: EntitySupplyStrategy<T>): T = strategy.supply(this)
@@ -195,7 +208,7 @@ class Kord(
  * any thrown [Throwable] will be caught and logged.
  *
  * The returned [Job] is a reference to the created coroutine, call [Job.cancel] to cancel the processing of any further
- * events.
+ * events for this [consumer].
  */
 inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline consumer: suspend T.() -> Unit): Job =
         events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()

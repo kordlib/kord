@@ -12,18 +12,15 @@ import com.gitlab.kordlib.gateway.*
 import com.gitlab.kordlib.rest.request.KtorRequestHandler
 import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.buffer
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.flow.*
 import java.time.Clock
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicInteger
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration
@@ -32,14 +29,12 @@ import kotlin.time.minutes
 class KordEventDropTest {
 
     object SpammyGateway : Gateway {
-        val channel = BroadcastChannel<Event>(1)
+        override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
 
         @OptIn(FlowPreview::class)
-        override val events: Flow<Event>
-            get() = channel.asFlow().buffer(Channel.UNLIMITED)
+        override val events: MutableSharedFlow<Event> = MutableSharedFlow()
 
-        override val ping: Duration
-            get() = Duration.ZERO
+        override val ping: StateFlow<Duration?> = MutableStateFlow(null)
 
         override suspend fun detach() {}
 
@@ -56,7 +51,7 @@ class KordEventDropTest {
             MasterGateway(mapOf(0 to SpammyGateway)),
             RestClient(KtorRequestHandler("token", clock = Clock.systemUTC())),
             Snowflake("420"),
-            BroadcastChannel(1),
+            MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
             Dispatchers.Default
     )
 
@@ -91,7 +86,7 @@ class KordEventDropTest {
         }
 
         repeat(amount) {
-            SpammyGateway.channel.send(event)
+            SpammyGateway.events.emit(event)
         }
 
         withTimeout(1.minutes) {
