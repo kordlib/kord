@@ -12,7 +12,7 @@ internal class KordTest {
     @Test
     @OptIn(KordExperimental::class)
     fun `Kord life cycle is correctly ended on shutdown`() {
-        val kord = Kord.restOnly(System.getenv("token"))
+        val kord = Kord.restOnly(System.getenv("KORD_TEST_TOKEN"))
         val lock = CountDownLatch(1)
         kord.events.onCompletion { lock.countDown() }.launchIn(kord)
 
