@@ -16,7 +16,7 @@ object  Versions {
     const val junitJupiterEngine = junit5
     const val sl4j = "1.7.30"
     const val bintray = "1.8.5"
-    const val mockk = "1.10.0"
+    const val mockk = "1.10.2"
 }
 
 @Suppress("ObjectPropertyName")
