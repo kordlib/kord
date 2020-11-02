@@ -358,7 +358,13 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun getVanityUrl(): String? {
-        val identifier = kord.rest.guild.getVanityInvite(id.value).code ?: return null
+        val identifier = try { //migration for 0.6.x, an actual proper fix is on the 0.7.x branch
+            kord.rest.guild.getVanityInvite(id.value).code
+        } catch(exception: RestRequestException){
+            if(exception.message.orEmpty().contains("50020")) return null
+            else throw exception
+        }
+
         return "https://discord.gg/$identifier"
     }
 
