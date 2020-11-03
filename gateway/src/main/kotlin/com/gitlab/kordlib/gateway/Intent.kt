@@ -158,18 +158,12 @@ data class Intents internal constructor(val code: Int) {
     /**
      * Returns an [Intents] that added the [intent] to this [code].
      */
-    operator fun plus(intent: Intent): Intents = when {
-        code and intent.code == intent.code -> this
-        else -> Intents(this.code or intent.code)
-    }
+    operator fun plus(intent: Intent): Intents = Intents(code or intent.code)
 
     /**
      * Returns an [Intents] that removed the [intent] from this [code].
      */
-    operator fun minus(intent: Intent): Intents = when {
-        code and intent.code == intent.code -> Intents(code xor intent.code)
-        else -> this
-    }
+    operator fun minus(intent: Intent): Intents = Intents(intent.code xor (code and intent.code))
 
     /**
      * copy this [Intents] and apply the [block] to it.
@@ -195,8 +189,7 @@ data class Intents internal constructor(val code: Int) {
         @OptIn(PrivilegedIntent::class)
         val nonPrivileged: Intents
             get() = invoke {
-                Intent.values().forEach { +it }
-
+                +all
                 -Intent.GuildPresences
                 -Intent.GuildMembers
             }
@@ -205,6 +198,24 @@ data class Intents internal constructor(val code: Int) {
 
         inline operator fun invoke(builder: IntentsBuilder.() -> Unit = {}): Intents {
             return IntentsBuilder().apply(builder).flags()
+        }
+
+        operator fun invoke(vararg intents: Intents) = invoke {
+            intents.forEach { +it }
+        }
+
+        operator fun invoke(vararg intents: Intent) = invoke {
+            intents.forEach { +it }
+        }
+
+        @JvmName("invokeWithIntents")
+        operator fun invoke(intents: Iterable<Intents>) = invoke {
+            intents.forEach { +it }
+        }
+
+
+        operator fun invoke(intents: Iterable<Intent>) = invoke {
+            intents.forEach { +it }
         }
     }
 

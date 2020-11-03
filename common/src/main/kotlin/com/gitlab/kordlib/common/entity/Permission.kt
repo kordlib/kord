@@ -49,6 +49,25 @@ class Permissions constructor(val code: Int) {
             return builder.permissions()
         }
 
+        operator fun invoke(vararg permissions: Permission) = Permissions {
+            permissions.forEach { +it }
+        }
+
+        operator fun invoke(vararg permissions: Permissions) = Permissions {
+            permissions.forEach { +it }
+        }
+
+        operator fun invoke(permissions: Iterable<Permission>) = Permissions {
+            permissions.forEach { +it }
+        }
+
+
+        @JvmName("invokeWithPermissions")
+        operator fun invoke(permissions: Iterable<Permissions>) = Permissions {
+            permissions.forEach { +it }
+        }
+
+
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("permission", PrimitiveKind.INT)
 

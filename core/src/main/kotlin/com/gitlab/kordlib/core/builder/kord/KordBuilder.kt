@@ -128,28 +128,7 @@ class KordBuilder(val token: String) {
         this.gatewayBuilder = gatewayBuilder
     }
 
-    /**
-     * Configures the enabled intents across all gateways.
-     *
-     * ```kotlin
-     * intents {
-     *     +Intent.DirectMessages
-     *
-     *     +Intents.nonPrivileged
-     *
-     *     enableEvent<MessageCreateEvent>()
-     *
-     *     enableEvents(TypingStartEvent::class, MessageDeleteEvent::class)
-     * }
-     * ```
-     */
-    @OptIn(ExperimentalContracts::class)
-    inline fun intents(builder: Intents.IntentsBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-        intents = Intents { builder() }
-    }
+
 
     /**
      * Configures the [RequestHandler] for the [RestClient].

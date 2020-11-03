@@ -145,21 +145,18 @@ data class DeafLogChange(override val old: Boolean?, override val new: Boolean?)
 data class MuteLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
 data class WidgetEnabledLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
 data class PermissionsLogChange(override val old: Permissions?, override val new: Permissions?) : AuditLogChangeResponse<Permissions>() {
-    internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions { +it } },
-            new?.let { Permissions { +it } }
+    internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions(it) }, new?.let { Permissions(it) }
     )
 }
 
 data class AllowLogChange(override val old: Permissions?, override val new: Permissions?) : AuditLogChangeResponse<Permissions>() {
-    internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions { +it } },
-            new?.let { Permissions { +it } }
+    internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions(it) }, new?.let { Permissions(it) }
     )
 }
 
 
 data class DenyLogChange(override val old: Permissions?, override val new: Permissions?) : AuditLogChangeResponse<Permissions>() {
-    internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions { +it } },
-            new?.let { Permissions { +it } }
+    internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions(it) }, new?.let { Permissions(it) }
     )
 }
 
