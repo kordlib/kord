@@ -15,16 +15,19 @@ class BitSet(size: Int = 0) {
     fun and(another: BitSet) {
         if (another.size > size) copyOf(another.size)
         for (i in another.data.indices) data[i] = data[i] and another.data[i]
+        cursor = size - 1
     }
 
     fun xor(another: BitSet) {
         if (another.size > size) copyOf(another.size)
         for (i in another.data.indices) data[i] = data[i] xor another.data[i]
+        cursor = size - 1
     }
 
     fun or(another: BitSet) {
         if (another.size > size) copyOf(another.size)
         for (i in another.data.indices) data[i] = data[i] or another.data[i]
+        cursor = size - 1
     }
 
 
@@ -49,10 +52,11 @@ class BitSet(size: Int = 0) {
 
     fun add(another: BitSet) {
         val available = size - cursor + 1
-        if (available < another.size) copyOf(size + another.size - available)
+        if (available < another.size) copyOf(another.size - available)
         for (i in 0 until another.size) {
             this[cursor + i + 1] = another[i]
         }
+        cursor = size - 1
     }
 
     operator fun get(index: Int): Boolean {
@@ -82,7 +86,7 @@ class BitSet(size: Int = 0) {
         val (longer, shorter) = if (size > other.size) Pair(data, other.data) else Pair(other.data, data)
         val paddedShort = shorter.copyOf(longer.size) // in-case longer had the delta filled with zeros only
         for (i in shorter.indices) {
-            if(longer[i] and paddedShort[i] != longer[i]) return false
+            if (longer[i] and paddedShort[i] != longer[i]) return false
         }
         return true
     }
