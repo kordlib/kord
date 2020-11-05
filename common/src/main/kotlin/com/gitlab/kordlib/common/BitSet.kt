@@ -18,12 +18,12 @@ class BitSet(size: Int = 0) {
     }
 
     fun xor(another: BitSet) {
-        if (another.size > size) copyOf(size + size - another.size)
+        if (another.size > size) copyOf(another.size)
         for (i in another.data.indices) data[i] = data[i] xor another.data[i]
     }
 
     fun or(another: BitSet) {
-        if (another.size > size) copyOf(size + size - another.size)
+        if (another.size > size) copyOf(another.size)
         for (i in another.data.indices) data[i] = data[i] or another.data[i]
     }
 
