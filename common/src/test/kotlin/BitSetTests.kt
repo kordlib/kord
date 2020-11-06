@@ -11,6 +11,7 @@ class BitSetTests {
         assert(one == bitSetOf(0b1))
 
     }
+
     @Test
     fun `and`() {
         val zero = bitSetOf(0)
@@ -19,6 +20,7 @@ class BitSetTests {
         assert(one == BitSet(0b0))
 
     }
+
     @Test
     fun `andNot`() {
         val zero = bitSetOf(0)
@@ -46,7 +48,7 @@ class BitSetTests {
 
     @Test
     fun `empty set`() {
-        val zero = bitSetOf(0,0,0,0)
+        val zero = bitSetOf(0, 0, 0, 0)
         assert(zero.isEmpty)
     }
 
@@ -54,11 +56,12 @@ class BitSetTests {
     fun `set a bit`() {
         val zero = bitSetOf(0)
         zero[0] = true
-        assert(zero == BitSet(0b1))
+        assert(zero == bitSetOf(0b1))
     }
+
     @Test
     fun `operate with longer set`() {
-        val first = bitSetOf(0,0,0,0)
+        val first = bitSetOf(0, 0, 0, 0)
         val second = bitSetOf(0)
         assert(first == second)
         first[3] = 1000
@@ -72,18 +75,29 @@ class BitSetTests {
         val b = bitSetOf(3)
         assert(a != b)
     }
+
     @Test
     fun `contains`() {
-        val a = bitSetOf(0b111,0)
+        val a = bitSetOf(0b111, 0)
         val b = bitSetOf(0b001)
         assert(b in a)
     }
 
     @Test
     fun `contains nothing`() {
-        val a = bitSetOf(0b111,0)
+        val a = bitSetOf(0b111, 0)
         val b = bitSetOf(0b0)
         assert(b in a)
+    }
+
+    @Test
+    fun `expand on set`() {
+        val a = bitSetOf(0)
+        println(a)
+        a[Long.SIZE_BITS + 1] = true
+        print(a)
+        assert(a.size == 2 * Long.SIZE_BITS)
+        assert(a[Long.SIZE_BITS + 1])
     }
 
 }
