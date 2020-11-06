@@ -36,8 +36,8 @@ class BitSet(size: Int = 0) {
 
 
     fun andNot(another: BitSet) {
-        and(another)
         flip()
+        and(another)
     }
 
     fun flip(index: Int) {
@@ -50,7 +50,7 @@ class BitSet(size: Int = 0) {
 
 
     private fun copyOf(newSize: Int = size) {
-        val width = if (newSize % WIDTH == 0) newSize / WIDTH else newSize / WIDTH + 1
+        val width = (newSize + 63) / WIDTH
         data = data.copyOf(width)
     }
 
@@ -74,21 +74,34 @@ class BitSet(size: Int = 0) {
         val bit = if (value) 1L else 0L
         val indexOfWidth = index / WIDTH
         val bitIndex = index % WIDTH
-        data[indexOfWidth] = data[indexOfWidth] and ((bit shl bitIndex))
+
+        if (index !in indices) {
+            copyOf(index + 1)
+            cursor = index
+        }
+
+        data[indexOfWidth] = data[indexOfWidth] or (bit shl bitIndex)
+    }
+
+
+    internal operator fun set(index: Int, value: Long) {
+        if (index !in data.indices) {
+            val newSize = index + 1
+            data.copyOf(newSize)
+            cursor = (newSize - 1) * WIDTH
+        }
+        data[index] = value
     }
 
     fun set(from: Int = 0, to: Int = size, value: Boolean = true) {
         for (i in from until to) this[i] = value
     }
 
-    operator fun set(index: Int, value: Long) {
-        data[index] = value
-    }
 
     operator fun contains(other: BitSet): Boolean {
         if (size < other.size && other.data.sumOf(size, other.size) != 0L) return false
         for (i in 0 until min(size, other.size)) {
-            if(!other[i]) continue
+            if (!other[i]) continue
             if (!this[i]) return false
         }
         return true
