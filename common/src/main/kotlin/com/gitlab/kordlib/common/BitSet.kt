@@ -87,8 +87,9 @@ class BitSet(size: Int = 0) {
 
     operator fun contains(other: BitSet): Boolean {
         if (size < other.size && other.data.sumOf(size, other.size) != 0L) return false
-        for (i in 0..min(size, other.size)) {
-            if (!(this[i] and other[i])) return false
+        for (i in 0 until min(size, other.size)) {
+            if(!other[i]) continue
+            if (!this[i]) return false
         }
         return true
     }
