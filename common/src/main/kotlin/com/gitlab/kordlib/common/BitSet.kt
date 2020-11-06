@@ -6,8 +6,12 @@ class BitSet(size: Int = 0) {
     private var data = LongArray(size)
     val size: Int
         get() = data.size * WIDTH
+
     val isEmpty: Boolean
         get() = data.all { it == 0L }
+
+    val indices: IntRange
+        get() = 0 until size
 
     private var cursor = size - 1
 
@@ -53,7 +57,7 @@ class BitSet(size: Int = 0) {
     fun add(another: BitSet) {
         val available = size - cursor + 1
         if (available < another.size) copyOf(another.size - available)
-        for (i in 0 until another.size) {
+        for (i in indices) {
             this[cursor + i + 1] = another[i]
         }
         cursor = size - 1
@@ -81,12 +85,21 @@ class BitSet(size: Int = 0) {
         data[index] = value
     }
 
+    operator fun contains(other: BitSet): Boolean {
+        if (size < other.size && other.data.sumOf(size, other.size) != 0L) return false
+        for (i in 0..min(size, other.size)) {
+            if (!(this[i] and other[i])) return false
+        }
+        return true
+    }
+
     override fun equals(other: Any?): Boolean {
         if (other !is BitSet) return false
-        val (longer, shorter) = if (size > other.size) Pair(data, other.data) else Pair(other.data, data)
-        val paddedShort = shorter.copyOf(longer.size) // in-case longer had the delta filled with zeros only
-        for (i in shorter.indices) {
-            if (longer[i] and paddedShort[i] != longer[i]) return false
+        val widthSize = data.size
+        val otherWidthSize = other.data.size
+        if (widthSize < otherWidthSize && other.data.sumOf(widthSize, otherWidthSize) != 0L) return false
+        for (i in 0 until min(widthSize, otherWidthSize)) {
+            if (data[i] != other.data[i]) return false
         }
         return true
     }
@@ -95,7 +108,7 @@ class BitSet(size: Int = 0) {
     override fun toString(): String {
         val builder = StringBuilder(size)
 
-        for (i in 0 until size) {
+        for (i in indices) {
             val bit = if (this[i]) 1 else 0
             builder.append(bit)
         }
@@ -120,4 +133,10 @@ fun bitSetOf(vararg bits: Long): BitSet {
         set[i] = bits[i]
     }
     return set
+}
+
+internal fun LongArray.sumOf(from: Int, to: Int): Long {
+    var sum = 0L
+    for (i in from until to) sum += this[i]
+    return sum
 }
