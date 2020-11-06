@@ -66,15 +66,23 @@ class BitSetTests {
         assert(first == bitSetOf(0))
     }
 
+    @Test
     fun `not equal sets`() {
         val a = bitSetOf(2)
         val b = bitSetOf(3)
         assert(a != b)
     }
-
+    @Test
     fun `contains`() {
         val a = bitSetOf(0b111,0)
-        val b = bitSetOf(0b010)
+        val b = bitSetOf(0b001)
+        assert(b in a)
+    }
+
+    @Test
+    fun `contains nothing`() {
+        val a = bitSetOf(0b111,0)
+        val b = bitSetOf(0b0)
         assert(b in a)
     }
 
