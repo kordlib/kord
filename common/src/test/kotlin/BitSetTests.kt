@@ -8,7 +8,7 @@ class BitSetTests {
         val zero = bitSetOf(0)
         val one = bitSetOf(1)
         one.or(zero)
-        assert(one == BitSet(0b1))
+        assert(one == bitSetOf(0b1))
 
     }
     @Test
@@ -33,7 +33,7 @@ class BitSetTests {
         val zero = bitSetOf(0)
         val one = bitSetOf(1)
         one.xor(zero)
-        assert(one == BitSet(0b1))
+        assert(one == bitSetOf(0b1))
     }
 
     @Test
@@ -64,6 +64,18 @@ class BitSetTests {
         first[3] = 1000
         first.and(second)
         assert(first == bitSetOf(0))
+    }
+
+    fun `not equal sets`() {
+        val a = bitSetOf(2)
+        val b = bitSetOf(3)
+        assert(a != b)
+    }
+
+    fun `contains`() {
+        val a = bitSetOf(0b111,0)
+        val b = bitSetOf(0b010)
+        assert(b in a)
     }
 
 }
