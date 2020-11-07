@@ -84,7 +84,7 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
     /**
      * The embed fields.
      */
-    val fields: List<Field> = emptyList()
+    val fields: List<Field> get() = data.fields.map { Field(it, kord) }
 
     /**
      * The type of embeds, this is an non-exhaustive list.
