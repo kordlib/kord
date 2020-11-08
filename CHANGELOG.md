@@ -1,3 +1,10 @@
+# 0.6.10
+
+## Fixes
+
+* Fixed `Guild#getVanityUrl` throwing an exception when a guild did not support vanity invites. #104
+* Fixed `Embed#fields` always returning empty. #105
+
 # 0.6.9
 
 ## Fixes
