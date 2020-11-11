@@ -9,8 +9,8 @@ import kotlinx.serialization.Serializable
 data class ReactionData(
         val count: Int,
         val me: Boolean,
-        val emojiId: Snowflake?,
-        val emojiName: String?,
+        val emojiId: Snowflake? = null,
+        val emojiName: String? = null,
         val emojiAnimated: Boolean
 ) {
     companion object {

@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BanData(
-        val reason: String?,
+        val reason: String? = null,
         val userId: Snowflake,
         val guildId: Snowflake,
 ) {

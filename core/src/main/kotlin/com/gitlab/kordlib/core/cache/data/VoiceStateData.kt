@@ -21,7 +21,7 @@ data class VoiceStateData(
          (And not just because this code would break).
          */
         val guildId: Snowflake,
-        val channelId: Snowflake?,
+        val channelId: Snowflake? = null,
         val userId: Snowflake,
         val memberId: OptionalSnowflake = OptionalSnowflake.Missing,
         val sessionId: String,

@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TeamData(
         val id: Snowflake,
-        val icon: String?,
+        val icon: String? = null,
         val members: List<TeamMemberData>,
         val ownerUserId: Snowflake,
 ) {

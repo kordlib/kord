@@ -6,7 +6,7 @@ import com.gitlab.kordlib.gateway.DiscordRemovedReactionEmoji
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RemovedReactionData(val id: Snowflake?, val name: String?) {
+data class RemovedReactionData(val id: Snowflake? = null, val name: String?) {
     companion object {
         fun from(entity: DiscordRemovedReactionEmoji): RemovedReactionData = with(entity) {
             RemovedReactionData(id, name)

@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 class PartialGuildData(
         val id: Snowflake,
         val name: String,
-        val icon: String?,
+        val icon: String? = null,
         val owner: OptionalBoolean = OptionalBoolean.Missing,
         val permissions: Optional<Permissions> = Optional.Missing(),
         val features: List<GuildFeature>,

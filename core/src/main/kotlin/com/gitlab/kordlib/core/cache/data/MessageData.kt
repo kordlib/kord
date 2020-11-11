@@ -15,7 +15,7 @@ data class MessageData(
         val author: UserData,
         val content: String,
         val timestamp: String,
-        val editedTimestamp: String?,
+        val editedTimestamp: String? = null,
         val tts: Boolean,
         val mentionEveryone: Boolean,
         val mentions: List<Snowflake>,

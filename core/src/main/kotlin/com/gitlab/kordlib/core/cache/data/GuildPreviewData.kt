@@ -11,14 +11,14 @@ import kotlinx.serialization.Serializable
 class GuildPreviewData(
         val id: Snowflake,
         val name: String,
-        val icon: String?,
-        val splash: String?,
-        val discoverySplash: String?,
+        val icon: String? = null,
+        val splash: String? = null,
+        val discoverySplash: String? = null,
         val emojis: List<EmojiData>,
         val features: List<GuildFeature>,
         val approximateMemberCount: Int,
         val approximatePresenceCount: Int,
-        val description: String?
+        val description: String? = null
 ) {
         companion object {
                 fun from(entity: DiscordGuildPreview) = with(entity) {

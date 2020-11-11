@@ -18,8 +18,8 @@ data class WebhookData(
         val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
         val channelId: Snowflake,
         val userId: OptionalSnowflake = OptionalSnowflake.Missing,
-        val name: String?,
-        val avatar: String?,
+        val name: String? = null,
+        val avatar: String? = null,
         val token: Optional<String> = Optional.Missing(),
         val applicationId: Snowflake?
 ) {

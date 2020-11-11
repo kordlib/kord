@@ -15,7 +15,7 @@ data class UserData(
         val id: Snowflake,
         val username: String,
         val discriminator: String,
-        val avatar: String?,
+        val avatar: String? = null,
         val bot: OptionalBoolean = OptionalBoolean.Missing,
         val publicFlags: Optional<UserFlags> = Optional.Missing(),
 ) {
