@@ -14,11 +14,11 @@ class EntityNotFoundException : Exception {
 
         @PublishedApi
         internal inline fun entityNotFound(entityType: String, id: Snowflake): Nothing =
-                throw EntityNotFoundException("$entityType with id ${id.value} was not found.")
+                throw EntityNotFoundException("$entityType with id ${id.asString} was not found.")
 
         @PublishedApi
         internal inline fun guildEntityNotFound(entityType: String, guildId: Snowflake, id: Snowflake): Nothing =
-                throw EntityNotFoundException("$entityType with id ${id.value} in guild ${guildId.value} was not found.")
+                throw EntityNotFoundException("$entityType with id ${id.asString} in guild ${guildId.asString} was not found.")
 
 
         inline fun guildNotFound(guildId: Snowflake): Nothing =
@@ -30,7 +30,7 @@ class EntityNotFoundException : Exception {
         inline fun memberNotFound(guildId: Snowflake, userId: Snowflake): Nothing =
                 guildEntityNotFound("Member", guildId = guildId, id = userId)
 
-        inline fun messageNotFound(channelId: Snowflake, messageId: Snowflake): Nothing = throw EntityNotFoundException("Message with id ${messageId.value} in channel ${channelId.value} was not found")
+        inline fun messageNotFound(channelId: Snowflake, messageId: Snowflake): Nothing = throw EntityNotFoundException("Message with id ${messageId.asString} in channel ${channelId.asString} was not found")
 
         inline fun userNotFound(userId: Snowflake): Nothing =
                 entityNotFound("User", userId)
@@ -52,6 +52,9 @@ class EntityNotFoundException : Exception {
 
         fun inviteNotFound(code: String): Nothing =
                 throw EntityNotFoundException("Invite with code $code was not found.")
+
+        fun widgetNotFound(id: Snowflake): Nothing =
+                throw EntityNotFoundException("Widget for guild ${id.value} was not found.")
 
     }
 

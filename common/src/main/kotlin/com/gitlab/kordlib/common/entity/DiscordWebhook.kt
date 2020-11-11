@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -9,36 +11,39 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class DiscordWebhook(
-        val id: String,
+        val id: Snowflake,
         val type: WebhookType,
         @SerialName("guild_id")
-        val guildId: String? = null,
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
         @SerialName("channel_id")
-        val channelId: String,
-        val user: DiscordUser? = null,
-        val name: String? = null,
-        val avatar: String? = null,
-        val token: String? = null
+        val channelId: Snowflake,
+        val user: Optional<DiscordUser> = Optional.Missing(),
+        val name: String?,
+        val avatar: String?,
+        val token: Optional<String> = Optional.Missing(),
+        @SerialName("application_id")
+        val applicationId: Snowflake?,
 )
 
-@Serializable(with = WebhookType.WebhookTypeSerializer::class)
-enum class WebhookType(val code: Int) {
-    Unknown(-1),
-    Incoming(1),
-    ChannelOrder(2);
+@Serializable(with = WebhookType.Serializer::class)
+sealed class WebhookType(val value: Int) {
+    class Unknown(value: Int): WebhookType(value)
+    object Incoming: WebhookType(1)
+    object ChannelFollower: WebhookType(2)
 
-    companion object WebhookTypeSerializer : KSerializer<WebhookType> {
+    internal object Serializer : KSerializer<WebhookType> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): WebhookType {
-            val code = decoder.decodeInt()
-            return values().firstOrNull { it.code == code } ?: Unknown
+        override fun deserialize(decoder: Decoder): WebhookType = when(val value = decoder.decodeInt()) {
+            0 -> Incoming
+            2 -> ChannelFollower
+            else -> Unknown(value)
         }
 
         override fun serialize(encoder: Encoder, value: WebhookType) {
-            encoder.encodeInt(value.code)
+            encoder.encodeInt(value.value)
         }
     }
 }

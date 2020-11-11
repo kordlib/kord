@@ -1,6 +1,10 @@
 package com.gitlab.kordlib.rest.json.request
 
+import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -44,7 +48,7 @@ data class GuildCreateChannelRequest(
         @SerialName("parent_id")
         val parentId: String? = null,
         val nsfw: Boolean? = null,
-        val id: String? = null
+        val id: String? = null,
 )
 
 data class GuildChannelPositionModifyRequest(val swaps: List<Pair<String, Int>>) {
@@ -71,7 +75,7 @@ data class GuildMemberAddRequest(
         val nick: String? = null,
         val roles: List<String>? = null,
         val mute: Boolean? = null,
-        val deaf: Boolean? = null
+        val deaf: Boolean? = null,
 )
 
 @Serializable
@@ -81,7 +85,7 @@ data class GuildMemberModifyRequest(
         val mute: Boolean? = null,
         val deaf: Boolean? = null,
         @SerialName("channel_id")
-        val channelId: String? = null
+        val channelId: String? = null,
 )
 
 
@@ -89,7 +93,7 @@ data class GuildMemberModifyRequest(
 data class GuildBanAddRequest(
         val reason: String? = null,
         @SerialName("delete-message-days")
-        val deleteMessagesDays: Int? = null
+        val deleteMessagesDays: Int? = null,
 )
 
 @Serializable
@@ -100,7 +104,7 @@ data class GuildRoleCreateRequest(
         @SerialName("hoist")
         val separate: Boolean = false,
         val mentionable: Boolean = false,
-        val id: String? = null
+        val id: String? = null,
 )
 
 data class GuildRolePositionModifyRequest(val swaps: List<Pair<String, Int>>) {
@@ -128,7 +132,7 @@ data class GuildRoleModifyRequest(
         val color: Int? = null,
         @SerialName("hoist")
         val separate: Boolean? = null,
-        val mentionable: Boolean? = null
+        val mentionable: Boolean? = null,
 )
 
 @Serializable
@@ -141,14 +145,23 @@ data class GuildIntegrationModifyRequest(
         @SerialName("expire_grace_period")
         val expirePeriod: Int? = null,
         @SerialName("enable_emoticons")
-        val emoticons: Boolean? = null
+        val emoticons: Boolean? = null,
 )
 
 @Serializable
+@DeprecatedSinceKord("0.7.0")
+@Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("GuildWidgetModifyRequest"), DeprecationLevel.ERROR)
 data class GuildEmbedModifyRequest(
         val enabled: Boolean,
         @SerialName("channel_id")
-        val channelId: String
+        val channelId: Snowflake,
+)
+
+@Serializable
+data class GuildWidgetModifyRequest(
+        val enabled: OptionalBoolean = OptionalBoolean.Missing,
+        @SerialName("channel_id")
+        val channelId: OptionalSnowflake? = OptionalSnowflake.Missing,
 )
 
 @Serializable
@@ -178,5 +191,5 @@ data class GuildModifyRequest(
         @SerialName("preferred_locale")
         val preferredLocale: String? = null,
         @SerialName("public_updates_channel_id")
-        val publicUpdatesChannelId: String? = null
+        val publicUpdatesChannelId: String? = null,
 )

@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.value
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.AttachmentData
 import java.util.*
@@ -13,7 +14,7 @@ import java.util.*
 data class Attachment(val data: AttachmentData, override val kord: Kord) : Entity {
 
     override val id: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     /**
      * The name of the file.
@@ -38,12 +39,12 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : Entit
     /**
      * The height of the file, if it is an image.
      */
-    val height: Int? get() = data.height
+    val height: Int? get() = data.height.value
 
     /**
      * The width of the file, if it is an image.
      */
-    val width: Int? get() = data.width
+    val width: Int? get() = data.width.value
 
     /**
      * If this file is displayed as a spoiler. Denoted by the `SPOILER_` prefix in the name.

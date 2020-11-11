@@ -68,7 +68,7 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        channels.add(TextChannelCreateBuilder().apply(builder).toRequest().copy(id = id.value))
+        channels.add(TextChannelCreateBuilder().apply(builder).toRequest().copy(id = id.asString))
         return id
     }
 
@@ -77,7 +77,7 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        channels.add(NewsChannelCreateBuilder().apply(builder).toRequest().copy(id = id.value))
+        channels.add(NewsChannelCreateBuilder().apply(builder).toRequest().copy(id = id.asString))
         return id
     }
 
@@ -86,7 +86,7 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        channels.add(CategoryCreateBuilder().apply(builder).toRequest().copy(id = id.value))
+        channels.add(CategoryCreateBuilder().apply(builder).toRequest().copy(id = id.asString))
         return id
     }
 
@@ -95,7 +95,7 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        roles += RoleCreateBuilder().apply(builder).toRequest().copy(id = id.value)
+        roles += RoleCreateBuilder().apply(builder).toRequest().copy(id = id.asString)
         return id
     }
 

@@ -4,6 +4,7 @@ import com.gitlab.kordlib.common.entity.optional.OptionalInt.Missing
 import com.gitlab.kordlib.common.entity.optional.OptionalInt.Value
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -94,12 +95,20 @@ sealed class OptionalInt {
         override fun deserialize(decoder: Decoder): OptionalInt = Value(decoder.decodeInt())
 
         override fun serialize(encoder: Encoder, value: OptionalInt) = when (value) {
-            Missing -> Unit//ignore value
+            Missing -> throw SerializationException("missing values cannot be serialized")
             is Value -> encoder.encodeInt(value.value)
         }
 
     }
 
+}
+
+/**
+ * returns `null` if this is `null` or [OptionalInt.Missing], calls [OptionalInt.Value.value] otherwise.
+ */
+val OptionalInt?.value: Int? get() = when(this){
+    is Value -> value
+    Missing, null -> null
 }
 
 /**
@@ -110,4 +119,21 @@ val OptionalInt?.asNullable: Int? get() = this?.asNullable
 /**
  * returns [default] if this is `null`, calls [OptionalInt.asNullable] otherwise.
  */
-fun OptionalInt?.orElse(default: Int) = this?.orElse(default) ?: default
+fun OptionalInt?.orElse(default: Int): Int  = this?.orElse(default) ?: default
+
+/**
+ * returns the value of the optional or throws a [IllegalStateException] if the optional doesn't contain a value or is `null`.
+ */
+fun OptionalInt?.getOrThrow(): Int = when(this){
+    Missing, null -> throw IllegalStateException("Optional did not contain a value")
+    is Value -> value
+}
+
+
+@Suppress("RemoveRedundantQualifierName")
+fun Int.optionalInt(): OptionalInt.Value = OptionalInt.Value(this)
+
+inline fun OptionalInt.map(mapper: (Int) -> Int): OptionalInt = when(this){
+    Missing -> Missing
+    is Value -> Value(mapper(value))
+}

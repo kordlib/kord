@@ -24,7 +24,7 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
             nsfw = nsfw,
             rateLimitPerUser = rateLimitPerUser,
             permissionOverwrites = permissionOverwrites?.toList(),
-            parentId = parentId?.value
+            parentId = parentId?.asString
     )
 
 }
@@ -42,7 +42,7 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = name,
             position = position,
-            parentId = parentId?.value,
+            parentId = parentId?.asString,
             bitrate = bitrate,
             userLimit = userLimit,
             permissionOverwrites = permissionOverwrites?.toList()
@@ -65,7 +65,7 @@ class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
             topic = topic,
             nsfw = nsfw,
             permissionOverwrites = permissionOverwrites?.toList(),
-            parentId = parentId?.value
+            parentId = parentId?.asString
     )
 }
 

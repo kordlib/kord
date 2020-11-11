@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.service
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.json.response.AuditLogEventResponse
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Route
@@ -7,8 +8,8 @@ import com.gitlab.kordlib.rest.route.Route
 class AuditLogService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
     suspend fun getAuditLogs(
-            guildId: String,
-            userId: String? = null,
+            guildId: Snowflake,
+            userId: Snowflake? = null,
             action: AuditLogEventResponse? = null,
             before: String? = null,
             limit: Int = 50

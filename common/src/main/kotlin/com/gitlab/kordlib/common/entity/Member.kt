@@ -1,62 +1,73 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.entity.optional.Optional
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class DiscordGuildMember(
-        val user: DiscordUser? = null,
-        val nick: String? = null,
-        val roles: List<String>,
+        val user: Optional<DiscordUser> = Optional.Missing(),
+        /*
+        Don't trust the docs:
+        2020-11-05 nick is only documented as nullable but can be missing through Gateway
+        */
+        val nick: Optional<String?> = Optional.Missing(),
+        val roles: List<Snowflake>,
         @SerialName("joined_at")
         val joinedAt: String,
         @SerialName("premium_since")
-        val premiumSince: String? = null,
+        val premiumSince: Optional<String?> = Optional.Missing(),
         val deaf: Boolean,
         val mute: Boolean
 )
 
 @Serializable
 data class DiscordAddedGuildMember(
-        val user: DiscordUser? = null,
-        val nick: String? = null,
-        val roles: List<String>,
+        val user: Optional<DiscordUser> = Optional.Missing(),
+        /*
+        Don't trust the docs:
+        2020-11-05 nick is only documented as nullable but can be missing through Gateway
+        */
+        val nick: Optional<String?> = Optional.Missing(),
+        val roles: List<Snowflake>,
         @SerialName("joined_at")
         val joinedAt: String,
+        /*
+        Don't trust the docs:
+
+        2020-11-5 This used to be optional back when it was introduced and members in memory
+        were being updated. That was over a year ago though.
+        */
         @SerialName("premium_since")
-        val premiumSince: String? = null,
+        val premiumSince: String?,
         val deaf: Boolean,
         val mute: Boolean,
         @SerialName("guild_id")
-        val guildId: String
+        val guildId: Snowflake
 )
 
 @Serializable
 data class DiscordRemovedGuildMember(
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: Snowflake,
         val user: DiscordUser
 )
 
 @Serializable
 data class DiscordUpdatedGuildMember(
         @SerialName("guild_id")
-        val guildId: String,
-        val roles: List<String>,
+        val guildId: Snowflake,
+        val roles: List<Snowflake>,
         val user: DiscordUser,
-        val nick: String? = null,
-        @SerialName("premium_since")
-        val premiumSince: String? = null
-)
-
-@Serializable
-data class DiscordPartialGuildMember(
-        val nick: String? = null,
-        val roles: List<String>,
+        val nick: Optional<String?> = Optional.Missing(),
         @SerialName("joined_at")
         val joinedAt: String,
-        val deaf: Boolean,
-        val mute: Boolean,
         @SerialName("premium_since")
-        val premiumSince: String? = null
+        /*
+        Don't trust the docs:
+
+        2020-11-5 This used to be optional back when it was introduced and members in memory
+        were being updated. That was over a year ago though.
+        */
+        val premiumSince: String?,
 )

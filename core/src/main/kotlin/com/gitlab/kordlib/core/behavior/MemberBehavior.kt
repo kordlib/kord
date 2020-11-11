@@ -36,7 +36,7 @@ interface MemberBehavior : Entity, UserBehavior {
     /**
      * The raw mention for this member's nickname.
      */
-    val nicknameMention get() = "<@!${id.value}>"
+    val nicknameMention get() = "<@!${id.asString}>"
 
     /**
      * Requests to get the this behavior as a [Member].
@@ -54,14 +54,6 @@ interface MemberBehavior : Entity, UserBehavior {
      */
     suspend fun asMemberOrNull(): Member? = supplier.getMemberOrNull(guildId, id)
 
-
-    /**
-     * Requests to unban this member from its guild.
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     */
-    suspend fun unban() = guild.unBan(id)
-
     /**
      * Requests to kick this member from its guild.
      *
@@ -76,7 +68,7 @@ interface MemberBehavior : Entity, UserBehavior {
      */
     @Deprecated("use the overload with reason instead", level = DeprecationLevel.HIDDEN)
     suspend fun addRole(roleId: Snowflake) {//TODO remove in Kord 0.7.0
-        kord.rest.guild.addRoleToGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value)
+        kord.rest.guild.addRoleToGuildMember(guildId = guildId, userId = id, roleId = roleId)
     }
 
     /**
@@ -85,7 +77,7 @@ interface MemberBehavior : Entity, UserBehavior {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun addRole(roleId: Snowflake, reason: String? = null) {
-        kord.rest.guild.addRoleToGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value, reason = reason)
+        kord.rest.guild.addRoleToGuildMember(guildId = guildId, userId = id, roleId = roleId, reason = reason)
     }
 
     /**
@@ -111,7 +103,7 @@ interface MemberBehavior : Entity, UserBehavior {
      */
     @Deprecated("use the overload with reason instead", level = DeprecationLevel.HIDDEN)
     suspend fun removeRole(roleId: Snowflake) {//TODO remove in Kord 0.7.0
-        kord.rest.guild.deleteRoleFromGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value)
+        kord.rest.guild.deleteRoleFromGuildMember(guildId = guildId, userId = id, roleId = roleId)
     }
 
     /**
@@ -120,7 +112,7 @@ interface MemberBehavior : Entity, UserBehavior {
      * @throws [RequestException] if something went wrong during the request.
      */
     suspend fun removeRole(roleId: Snowflake, reason: String? = null) {
-        kord.rest.guild.deleteRoleFromGuildMember(guildId = guildId.value, userId = id.value, roleId = roleId.value, reason = reason)
+        kord.rest.guild.deleteRoleFromGuildMember(guildId = guildId, userId = id, roleId = roleId, reason = reason)
     }
 
     /**
@@ -147,8 +139,8 @@ interface MemberBehavior : Entity, UserBehavior {
      */
     suspend fun getPresenceOrNull(): Presence? {
         val data = kord.cache.query<PresenceData> {
-            PresenceData::userId eq id.longValue
-            PresenceData::guildId eq guildId.longValue
+            PresenceData::userId eq id.value
+            PresenceData::guildId eq guildId.value
         }.singleOrNull() ?: return null
 
         return Presence(data, kord)
@@ -178,8 +170,8 @@ interface MemberBehavior : Entity, UserBehavior {
      */
     suspend fun getVoiceStateOrNull(): VoiceState? {
         val data = kord.cache.query<VoiceStateData> {
-            VoiceStateData::userId eq id.longValue
-            VoiceStateData::guildId eq guildId.longValue
+            VoiceStateData::userId eq id.value
+            VoiceStateData::guildId eq guildId.value
         }.singleOrNull() ?: return null
 
         return VoiceState(data, kord)
@@ -236,5 +228,5 @@ suspend inline fun MemberBehavior.edit(builder: MemberModifyBuilder.() -> Unit) 
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.guild.modifyGuildMember(guildId.value, id.value, builder)
+    kord.rest.guild.modifyGuildMember(guildId, id, builder)
 }

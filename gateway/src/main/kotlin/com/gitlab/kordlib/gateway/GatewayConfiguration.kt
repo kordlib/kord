@@ -1,6 +1,9 @@
 package com.gitlab.kordlib.gateway
 
 import com.gitlab.kordlib.common.entity.DiscordShard
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.coerceToMissing
+import com.gitlab.kordlib.common.entity.optional.optional
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -10,9 +13,9 @@ data class GatewayConfiguration(
         val token: String,
         val name: String,
         val shard: DiscordShard,
-        val presence: Presence?,
+        val presence: Optional<DiscordPresence> = Optional.Missing(),
         val threshold: Int,
-        val intents: Intents?
+        val intents: Intents
 )
 
 data class GatewayConfigurationBuilder(
@@ -31,14 +34,14 @@ data class GatewayConfigurationBuilder(
         /**
          * The presence the bot should show on login.
          */
-        var presence: Presence? = null,
+        var presence: DiscordPresence? = null,
         /**
          * A value between 50 and 250, representing the maximum amount of members in a guild
          * before the gateway will stop sending info on offline members.
          */
         var threshold: Int = 250,
 
-        var intents: Intents? = null
+        var intents: Intents = Intents.nonPrivileged
 ) {
 
     /**
@@ -55,7 +58,14 @@ data class GatewayConfigurationBuilder(
     /**
      * Returns an immutable version of this builder.
      */
-    fun build(): GatewayConfiguration = GatewayConfiguration(token, name, shard, presence, threshold, intents)
+    fun build(): GatewayConfiguration = GatewayConfiguration(
+            token,
+            name,
+            shard,
+            presence.optional().coerceToMissing(),
+            threshold,
+            intents
+    )
 
     companion object
 }

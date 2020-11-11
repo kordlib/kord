@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.orEmpty
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.MemberBehavior
@@ -29,28 +30,28 @@ class GuildEmoji(
 ) : Entity, Strategizable {
 
     override val id: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     val guildId: Snowflake
-        get() = Snowflake(data.guildId)
+        get() = data.guildId
 
     val mention: String
-        get() = if (isAnimated) "<a:$name:${id.value}>" else "<:$name:${id.value}>"
+        get() = if (isAnimated) "<a:$name:${id.asString}>" else "<:$name:${id.asString}>"
 
     /**
      * Whether this emoji can be used, may be false due to loss of Server Boosts.
      */
-    val isAvailable: Boolean get() = data.available
+    val isAvailable: Boolean get() = data.available.discordBoolean
 
     /**
      * Whether is emoji is animated.
      */
-    val isAnimated: Boolean get() = data.animated
+    val isAnimated: Boolean get() = data.animated.discordBoolean
 
     /**
      * Whether is emote is managed by Discord instead of the guild members.
      */
-    val isManaged: Boolean get() = data.managed
+    val isManaged: Boolean get() = data.managed.discordBoolean
 
     /**
      * The name of this emoji.
@@ -62,17 +63,17 @@ class GuildEmoji(
     /**
      * Whether this emoji needs to be wrapped in colons.
      */
-    val requiresColons: Boolean get() = data.requireColons
+    val requiresColons: Boolean get() = data.requireColons.discordBoolean
 
     /**
      * The ids of the [roles][Role] for which this emoji was whitelisted.
      */
-    val roleIds: Set<Snowflake> get() = data.roles.asSequence().map { Snowflake(it) }.toSet()
+    val roleIds: Set<Snowflake> get() = data.roles.orEmpty().toSet()
 
     /**
      * The behaviors of the [roles][Role] for which this emoji was whitelisted.
      */
-    val roleBehaviors: Set<RoleBehavior> get() = data.roles.asSequence().map { RoleBehavior(guildId = guildId, id = id, kord = kord) }.toSet()
+    val roleBehaviors: Set<RoleBehavior> get() = data.roles.orEmpty().map { RoleBehavior(guildId = guildId, id = id, kord = kord) }.toSet()
 
     /**
      * The [roles][Role] for which this emoji was whitelisted.
@@ -95,7 +96,7 @@ class GuildEmoji(
     /**
      * The id of the [User] who created the emote, if present.
      */
-    val userId: Snowflake? get() = data.user?.id.toSnowflakeOrNull()
+    val userId: Snowflake? get() = data.userId.value
 
     /**
      * The [User] who created the emote, if present.
@@ -108,7 +109,7 @@ class GuildEmoji(
      * @throws RequestException if anything went wrong during the request.
      */
     suspend fun delete(reason: String? = null) {
-        kord.rest.emoji.deleteEmoji(guildId = guildId.value, emojiId = id.value, reason = reason)
+        kord.rest.emoji.deleteEmoji(guildId = guildId, emojiId = id, reason = reason)
     }
 
     /**
@@ -121,7 +122,7 @@ class GuildEmoji(
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        kord.rest.emoji.modifyEmoji(guildId = guildId.value, emojiId = id.value, builder = builder)
+        kord.rest.emoji.modifyEmoji(guildId = guildId, emojiId = id, builder = builder)
     }
 
     /**

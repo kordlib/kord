@@ -7,5 +7,5 @@ import mockKord
 
 internal class DmChannelTest: ChannelEqualityTest<DmChannel> by ChannelEqualityTest ({ id ->
     val kord = mockKord()
-    DmChannel(ChannelData(id.longValue, type = ChannelType.DM), kord)
+    DmChannel(ChannelData(id, type = ChannelType.DM), kord)
 })

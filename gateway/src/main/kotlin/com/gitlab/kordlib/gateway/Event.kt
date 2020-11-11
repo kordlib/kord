@@ -1,6 +1,9 @@
 package com.gitlab.kordlib.gateway
 
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
@@ -45,8 +48,10 @@ sealed class Event {
         override fun deserialize(decoder: Decoder): Event? {
             var op: OpCode? = null
             var data: Event? = null
+
             @Suppress("UNUSED_VARIABLE")
             var sequence: Int? = null //this isn't actually unused but seems to be a compiler bug
+
             @Suppress("UNUSED_VARIABLE")
             var eventName: String? = null //this isn't actually unused but seems to be a compiler bug
             with(decoder.beginStructure(descriptor)) {
@@ -70,10 +75,10 @@ sealed class Event {
                                 this.decodeSerializableElement(descriptor, index, NullDecoder)
                                 HeartbeatACK
                             }
-                            OpCode.InvalidSession -> decodeSerializableElement(descriptor, index, InvalidSession)
+                            OpCode.InvalidSession -> decodeSerializableElement(descriptor, index, InvalidSession.Serializer)
                             OpCode.Hello -> decodeSerializableElement(descriptor, index, Hello.serializer())
                             //some events contain undocumented data fields, we'll only assume an unknown opcode with no data to be an error
-                            else -> if(data == null) {
+                            else -> if (data == null) {
                                 val element = decodeNullableSerializableElement(descriptor, index, JsonElement.serializer().nullable)
                                 error("Unknown 'd' field for Op code ${op?.code}: $element")
                             } else {
@@ -84,6 +89,7 @@ sealed class Event {
                     }
                 }
                 endStructure(descriptor)
+                if (op == OpCode.Dispatch && eventName == "RESUMED") return Resumed(sequence)
                 return data
             }
         }
@@ -91,7 +97,7 @@ sealed class Event {
 
         private fun getByDispatchEvent(index: Int, decoder: CompositeDecoder, name: String?, sequence: Int?) = when (name) {
             "PRESENCES_REPLACE" -> null //https://github.com/kordlib/kord/issues/42
-            "RESUMED" -> Resumed(decoder.decodeSerializableElement(descriptor, index, ResumedData.serializer()), sequence)
+            "RESUMED" -> Resumed(sequence)
             "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
             "CHANNEL_CREATE" -> ChannelCreate(decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()), sequence)
             "CHANNEL_UPDATE" -> ChannelUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()), sequence)
@@ -120,12 +126,12 @@ sealed class Event {
             "MESSAGE_UPDATE" -> MessageUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordPartialMessage.serializer()), sequence)
             "MESSAGE_DELETE" -> MessageDelete(decoder.decodeSerializableElement(descriptor, index, DeletedMessage.serializer()), sequence)
             "MESSAGE_DELETE_BULK" -> MessageDeleteBulk(decoder.decodeSerializableElement(descriptor, index, BulkDeleteData.serializer()), sequence)
-            "MESSAGE_REACTION_ADD" -> MessageReactionAdd(decoder.decodeSerializableElement(descriptor, index, MessageReaction.serializer()), sequence)
-            "MESSAGE_REACTION_REMOVE" -> MessageReactionRemove(decoder.decodeSerializableElement(descriptor, index, MessageReaction.serializer()), sequence)
+            "MESSAGE_REACTION_ADD" -> MessageReactionAdd(decoder.decodeSerializableElement(descriptor, index, MessageReactionAddData.serializer()), sequence)
+            "MESSAGE_REACTION_REMOVE" -> MessageReactionRemove(decoder.decodeSerializableElement(descriptor, index, MessageReactionRemoveData.serializer()), sequence)
             "MESSAGE_REACTION_REMOVE_EMOJI" -> MessageReactionRemoveEmoji(decoder.decodeSerializableElement(descriptor, index, DiscordRemovedEmoji.serializer()), sequence)
 
             "MESSAGE_REACTION_REMOVE_ALL" -> MessageReactionRemoveAll(decoder.decodeSerializableElement(descriptor, index, AllRemovedMessageReactions.serializer()), sequence)
-            "PRESENCE_UPDATE" -> PresenceUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordPresenceUpdateData.serializer()), sequence)
+            "PRESENCE_UPDATE" -> PresenceUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordPresenceUpdate.serializer()), sequence)
             "USER_UPDATE" -> UserUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordUser.serializer()), sequence)
             "VOICE_STATE_UPDATE" -> VoiceStateUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordVoiceState.serializer()), sequence)
             "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(decoder.decodeSerializableElement(descriptor, index, DiscordVoiceServerUpdateData.serializer()), sequence)
@@ -148,24 +154,24 @@ sealed class Close : Event() {
     /**
      * The Gateway was detached, all resources tied to the gateway should be freed.
      */
-    object Detach: Close()
+    object Detach : Close()
 
     /**
      * The user closed the Gateway connection.
      */
-    object UserClose: Close()
+    object UserClose : Close()
 
     /**
      * The connection was closed because of a timeout, probably due to a loss of internet connection.
      */
-    object Timeout: Close()
+    object Timeout : Close()
 
     /**
      * Discord closed the connection with a [closeCode].
      *
      * @param recoverable true if the gateway will automatically try to reconnect.
      */
-    class DiscordClose(val closeCode: GatewayCloseCode, val recoverable: Boolean): Close()
+    class DiscordClose(val closeCode: GatewayCloseCode, val recoverable: Boolean) : Close()
 
     /**
      * The gateway closed and will attempt to resume the session.
@@ -187,7 +193,7 @@ sealed class Close : Event() {
      *  The Gateway has failed to establish a connection too many times and will not try to reconnect anymore.
      *  The user is free to manually connect again using [Gateway.start], otherwise all resources linked to the Gateway should free and the Gateway [detached][Gateway.detach].
      */
-    object RetryLimitReached: Close()
+    object RetryLimitReached : Close()
 }
 
 object HeartbeatACK : Event()
@@ -196,9 +202,7 @@ object Reconnect : Event()
 @Serializable
 data class Hello(
         @SerialName("heartbeat_interval")
-        val heartbeatInterval: Long,
-        @SerialName("_trace")
-        val traces: List<String>
+        val heartbeatInterval: Int,
 ) : Event()
 
 data class Ready(val data: ReadyData, override val sequence: Int?) : DispatchEvent()
@@ -209,13 +213,19 @@ data class ReadyData(
         val version: Int,
         val user: DiscordUser,
         @SerialName("private_channels")
-        val privateChannels: List<DiscordChannel>, //TODO("Add DM Channel.")
+        val privateChannels: List<DiscordChannel>,
         val guilds: List<DiscordUnavailableGuild>,
         @SerialName("session_id")
         val sessionId: String,
+        @SerialName("geo_ordered_rtc_regions")
+        val geoOrderedRtcRegions: Optional<JsonElement?> = Optional.Missing(),
+        @SerialName("guild_hashes")
+        val guildHashes: Optional<JsonElement?> = Optional.Missing(),
+        val application: Optional<JsonElement?> = Optional.Missing(),
         @SerialName("_trace")
         val traces: List<String>,
-        val shard: DiscordShard?)
+        val shard: Optional<DiscordShard> = Optional.Missing(),
+)
 
 @Serializable(with = Heartbeat.Companion::class)
 data class Heartbeat(val data: Long) : Event() {
@@ -232,21 +242,16 @@ data class Heartbeat(val data: Long) : Event() {
 }
 
 @Serializable
-data class Resumed(val data: ResumedData, override val sequence: Int?) : DispatchEvent()
+data class Resumed(
+        override val sequence: Int?,
+) : DispatchEvent()
 
-@Serializable
-data class ResumedData(
-        @SerialName("_trace")
-        val traces: List<String>
-)
-
-
-@Serializable(with = InvalidSession.Companion::class)
+@Serializable(with = InvalidSession.Serializer::class)
 data class InvalidSession(val resumable: Boolean) : Event() {
 
-    companion object : KSerializer<InvalidSession> {
+    internal object Serializer : KSerializer<InvalidSession> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("InvalidSession", PrimitiveKind.BOOLEAN)
+            get() = PrimitiveSerialDescriptor("Kord.InvalidSession", PrimitiveKind.BOOLEAN)
 
         override fun deserialize(decoder: Decoder) = InvalidSession(decoder.decodeBoolean())
 
@@ -255,7 +260,6 @@ data class InvalidSession(val resumable: Boolean) : Event() {
         }
     }
 }
-
 
 data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
@@ -290,135 +294,73 @@ data class InviteDelete(val invite: DiscordDeletedInvite, override val sequence:
 
 @Serializable
 data class DiscordDeletedInvite(
-        /**
-         * The channel of the invite.
-         */
         @SerialName("channel_id")
-        val channelId: String,
-        /**
-         * The guild of the invite.
-         */
+        val channelId: Snowflake,
         @SerialName("guild_id")
-        val guildId: String,
-        /**
-         * The unique invite code.
-         */
-        val code: String
+        val guildId: Snowflake,
+        val code: String,
 )
 
 @Serializable
 data class DiscordCreatedInvite(
-        /**
-         * The channel the invite is for.
-         */
         @SerialName("channel_id")
-        val channelId: String,
-        /**
-         * The unique invite code.
-         */
+        val channelId: Snowflake,
         val code: String,
-        /**
-         * The time at which the invite was created.
-         */
         @SerialName("created_at")
         val createdAt: String,
-        /**
-         * The guild of the invite.
-         */
         @SerialName("guild_id")
-        val guildId: String,
-        /**
-         * The user that created the invite.
-         */
-        val inviter: DiscordInviteUser,
-        /**
-         * How long the invite is valid for (in seconds).
-         */
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val inviter: Optional<DiscordInviteUser> = Optional.Missing(),
         @SerialName("max_age")
         val maxAge: Int,
-        /**
-         * The maximum number of times the invite can be used.
-         */
         @SerialName("max_uses")
         val maxUses: Int,
-        /**
-         * Whether or not the invite is temporary (invited users will be kicked on disconnect unless they're assigned a role).
-         */
-        val temporary: Boolean,
-        /**
-         * How many times the invite has been used (always will be 0).
-         */
-        val uses: Int,
-
-        /**
-         * The target user for this invite.
-         */
         @SerialName("target_user")
-        val targetUser: DiscordInviteUser? = null,
-
-        /**
-         * The type of user target for this invite.
-         */
+        val targetUser: Optional<DiscordInviteUser> = Optional.Missing(),
         @SerialName("target_user_type")
-        val targetUserType: TargetUserType? = null
+        val targetUserType: Optional<TargetUserType> = Optional.Missing(),
+        val temporary: Boolean,
+        val uses: Int,
 )
 
 @Serializable
 data class DiscordInviteUser(
-        val avatar: String? = null,
+        val id: Snowflake,
+        val username: String,
         val discriminator: String,
-        val id: String,
-        val username: String
+        val avatar: String?,
+        val bot: OptionalBoolean = OptionalBoolean.Missing,
+        @SerialName("public_flags")
+        val publicFlags: Optional<UserFlags> = Optional.Missing(),
 )
 
 data class MessageCreate(val message: DiscordMessage, override val sequence: Int?) : DispatchEvent()
 data class MessageUpdate(val message: DiscordPartialMessage, override val sequence: Int?) : DispatchEvent()
 data class MessageDelete(val message: DeletedMessage, override val sequence: Int?) : DispatchEvent()
 data class MessageDeleteBulk(val messageBulk: BulkDeleteData, override val sequence: Int?) : DispatchEvent()
-data class MessageReactionAdd(val reaction: MessageReaction, override val sequence: Int?) : DispatchEvent()
-data class MessageReactionRemove(val reaction: MessageReaction, override val sequence: Int?) : DispatchEvent()
+data class MessageReactionAdd(val reaction: MessageReactionAddData, override val sequence: Int?) : DispatchEvent()
+data class MessageReactionRemove(val reaction: MessageReactionRemoveData, override val sequence: Int?) : DispatchEvent()
 data class MessageReactionRemoveAll(val reactions: AllRemovedMessageReactions, override val sequence: Int?) : DispatchEvent()
 data class MessageReactionRemoveEmoji(val reaction: DiscordRemovedEmoji, override val sequence: Int?) : DispatchEvent()
 
 @Serializable
 data class DiscordRemovedEmoji(
-        /**
-         * The id of the channel.
-         */
         @SerialName("channel_id")
-        val channelId: String,
-
-        /**
-         * The id of the guild.
-         */
+        val channelId: Snowflake,
         @SerialName("guild_id")
-        val guildId: String,
-
-        /**
-         * The id of the message.
-         */
+        val guildId: Snowflake,
         @SerialName("message_id")
-        val messageId: String,
-
-        /**
-         * The emoji that was removed.
-         */
-        val emoji: DiscordRemovedReactionEmoji
+        val messageId: Snowflake,
+        val emoji: DiscordRemovedReactionEmoji,
 )
 
 @Serializable
 data class DiscordRemovedReactionEmoji(
-        /**
-         * The id of the emoji.
-         */
-        val id: String?,
-        /**
-         * The name of the emoji.
-         */
-        val name: String
+        val id: Snowflake?,
+        val name: String?,
 )
 
-data class PresenceUpdate(val presence: DiscordPresenceUpdateData, override val sequence: Int?) : DispatchEvent()
+data class PresenceUpdate(val presence: DiscordPresenceUpdate, override val sequence: Int?) : DispatchEvent()
 data class UserUpdate(val user: DiscordUser, override val sequence: Int?) : DispatchEvent()
 data class VoiceStateUpdate(val voiceState: DiscordVoiceState, override val sequence: Int?) : DispatchEvent()
 data class VoiceServerUpdate(val voiceServerUpdateData: DiscordVoiceServerUpdateData, override val sequence: Int?) : DispatchEvent()

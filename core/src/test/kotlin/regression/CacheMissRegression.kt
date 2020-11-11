@@ -145,10 +145,10 @@ class CacheMissingRegressions {
     @Test
     fun `if data in cache don't fetch from rest`() {
         runBlocking {
-            val id = 5L
+            val id = Snowflake(5L)
             kord.cache.put(ChannelData(id, ChannelType.GuildText))
 
-            kord.getChannel(Snowflake(id))
+            kord.getChannel(id)
         }
     }
 

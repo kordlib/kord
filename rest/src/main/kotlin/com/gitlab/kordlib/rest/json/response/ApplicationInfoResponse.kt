@@ -4,6 +4,9 @@ package com.gitlab.kordlib.rest.json.response
 
 import com.gitlab.kordlib.common.entity.DiscordTeam
 import com.gitlab.kordlib.common.entity.DiscordUser
+import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -12,12 +15,12 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class ApplicationInfoResponse(
-        val id: String,
+        val id: Snowflake,
         val name: String,
-        val icon: String? = null,
-        val description: String? = null,
+        val icon: String?,
+        val description: String,
         @SerialName("rpc_origins")
-        val rpcOrigins: Array<String>? = null,
+        val rpcOrigins: List<String>?,
         @SerialName("bot_public")
         val botPublic: Boolean,
         @SerialName("bot_require_code_grant")
@@ -28,10 +31,10 @@ data class ApplicationInfoResponse(
         val verifyKey: String,
         val team: DiscordTeam?,
         @SerialName("guild_id")
-        val guildId: String? = null,
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
         @SerialName("primary_sku_id")
-        val primarySkuId: String? = null,
-        val slug: String? = null,
+        val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val slug: Optional<String> = Optional.Missing(),
         @SerialName("cover_image")
-        val coverImage: String? = null
+        val coverImage: Optional<String> = Optional.Missing()
 )

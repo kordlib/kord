@@ -104,13 +104,13 @@ sealed class AuditLogChangeResponse<T> {
                 "bitrate" -> BitrateLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
                 "prune_delete_days" -> PruneDeleteDaysLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
                 "afk_timeout" -> AFKTimeoutLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
-                "explicit_content_filter" -> ExplicitContentFilterLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
-                "default_message_notifications" -> DefaultMessageNotificationLevelLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
-                "mfa_level" -> MFALogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "explicit_content_filter" -> ExplicitContentFilterLogChange(TODO(), TODO())
+                "default_message_notifications" -> DefaultMessageNotificationLevelLogChange(TODO(), TODO())
+                "mfa_level" -> MFALogChange(TODO(),TODO())
                 "permissions" -> PermissionsLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
                 "allow" -> AllowLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
                 "deny" -> DenyLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
-                "verification_level" -> VerificationLevelLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "verification_level" -> VerificationLevelLogChange(TODO(), TODO())
 
                 "\$remove" -> AddLogChange(listFromJson(DiscordAuditLogRoleChange.serializer(), old), listFromJson(DiscordAuditLogRoleChange.serializer(), new))
                 "\$add" -> RemoveLogChange(listFromJson(DiscordAuditLogRoleChange.serializer(), old), listFromJson(DiscordAuditLogRoleChange.serializer(), new))
@@ -191,33 +191,13 @@ data class AddLogChange(override val old: List<DiscordAuditLogRoleChange>?, over
 data class RemoveLogChange(override val old: List<DiscordAuditLogRoleChange>?, override val new: List<DiscordAuditLogRoleChange>?) : AuditLogChangeResponse<List<DiscordAuditLogRoleChange>>()
 data class PermissionOverwriteLogChange(override val old: List<Overwrite>?, override val new: List<Overwrite>?) : AuditLogChangeResponse<List<Overwrite>>()
 
-data class MFALogChange(override val old: MFALevel?, override val new: MFALevel?) : AuditLogChangeResponse<MFALevel>() {
-    internal constructor(old: Int?, new: Int?) : this(
-            MFALevel.values().firstOrNull { it.code == new },
-            MFALevel.values().firstOrNull { it.code == old }
-    )
-}
+data class MFALogChange(override val old: MFALevel?, override val new: MFALevel?) : AuditLogChangeResponse<MFALevel>()
 
-data class DefaultMessageNotificationLevelLogChange(override val old: DefaultMessageNotificationLevel?, override val new: DefaultMessageNotificationLevel?) : AuditLogChangeResponse<DefaultMessageNotificationLevel>() {
-    internal constructor(old: Int?, new: Int?) : this(
-            DefaultMessageNotificationLevel.values().firstOrNull { it.code == new },
-            DefaultMessageNotificationLevel.values().firstOrNull { it.code == old }
-    )
-}
+data class DefaultMessageNotificationLevelLogChange(override val old: DefaultMessageNotificationLevel?, override val new: DefaultMessageNotificationLevel?) : AuditLogChangeResponse<DefaultMessageNotificationLevel>()
 
-data class VerificationLevelLogChange(override val old: VerificationLevel?, override val new: VerificationLevel?) : AuditLogChangeResponse<VerificationLevel>() {
-    internal constructor(old: Int?, new: Int?) : this(
-            VerificationLevel.values().firstOrNull { it.code == new },
-            VerificationLevel.values().firstOrNull { it.code == old }
-    )
-}
+data class VerificationLevelLogChange(override val old: VerificationLevel?, override val new: VerificationLevel?) : AuditLogChangeResponse<VerificationLevel>()
 
-data class ExplicitContentFilterLogChange(override val old: ExplicitContentFilter?, override val new: ExplicitContentFilter?) : AuditLogChangeResponse<ExplicitContentFilter>() {
-    internal constructor(old: Int?, new: Int?) : this(
-            ExplicitContentFilter.values().firstOrNull { it.code == new },
-            ExplicitContentFilter.values().firstOrNull { it.code == old }
-    )
-}
+data class ExplicitContentFilterLogChange(override val old: ExplicitContentFilter?, override val new: ExplicitContentFilter?) : AuditLogChangeResponse<ExplicitContentFilter>()
 
 object Unknown : AuditLogChangeResponse<Nothing>() {
     override val old = null

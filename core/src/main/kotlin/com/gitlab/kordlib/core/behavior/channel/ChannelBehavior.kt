@@ -45,7 +45,7 @@ interface ChannelBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete() {
-        kord.rest.channel.deleteChannel(id.value)
+        kord.rest.channel.deleteChannel(id)
     }
 
     /**

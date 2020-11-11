@@ -37,7 +37,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
      */
     val webhooks: Flow<Webhook>
         get() = flow {
-            for (response in kord.rest.webhook.getChannelWebhooks(id.value)) {
+            for (response in kord.rest.webhook.getChannelWebhooks(id)) {
                 val data = WebhookData.from(response)
                 emit(Webhook(data, kord))
             }
@@ -74,12 +74,12 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
         // if message.timeMark + 14 days < now, then the message is more than 14 days old, and we'll have to manually delete them
         val (younger, older) = messages.partition { it.timeStamp.isAfter(daysLimit) }
 
-        younger.map { it.value }.chunked(100).forEach {
-            if (it.size < 2) kord.rest.channel.deleteMessage(id.value, it.first())
-            else kord.rest.channel.bulkDelete(id.value, BulkDeleteRequest(it))
+        younger.chunked(100).forEach {
+            if (it.size < 2) kord.rest.channel.deleteMessage(id, it.first())
+            else kord.rest.channel.bulkDelete(id, BulkDeleteRequest(it))
         }
 
-        older.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
+        older.forEach { kord.rest.channel.deleteMessage(id, it) }
     }
 
     /**
@@ -121,7 +121,7 @@ suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCre
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.webhook.createWebhook(id.value, builder)
+    val response = kord.rest.webhook.createWebhook(id, builder)
     val data = WebhookData.from(response)
 
     return Webhook(data, kord)

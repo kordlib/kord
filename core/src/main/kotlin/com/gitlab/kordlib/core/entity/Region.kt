@@ -1,13 +1,13 @@
 package com.gitlab.kordlib.core.entity
 
-import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.cache.data.RegionData
 import java.util.*
 
-class Region(val data: RegionData, override val kord: Kord) : Entity {
-    override val id: Snowflake
-        get() = Snowflake(data.id)
+class Region(val data: RegionData, override val kord: Kord) : KordObject {
+    val id: String
+        get() = data.id
 
     val isCustom: Boolean get() = data.custom
 
@@ -21,7 +21,7 @@ class Region(val data: RegionData, override val kord: Kord) : Entity {
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is Region -> other.id == id
         else -> false
     }

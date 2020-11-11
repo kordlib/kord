@@ -4,7 +4,7 @@ import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.User
 import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.UserUpdateEvent
+import com.gitlab.kordlib.core.event.user.UserUpdateEvent
 
 
 @KordPreview

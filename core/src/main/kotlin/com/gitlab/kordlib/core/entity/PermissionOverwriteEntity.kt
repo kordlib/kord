@@ -67,7 +67,7 @@ class PermissionOverwriteEntity(
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete(reason: String? = null) {
-        kord.rest.channel.deleteChannelPermission(channelId.value, data.id.toString(), reason)
+        kord.rest.channel.deleteChannelPermission(channelId, data.id, reason)
     }
 
     /**

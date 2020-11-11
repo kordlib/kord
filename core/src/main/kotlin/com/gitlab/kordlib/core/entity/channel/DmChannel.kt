@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.orEmpty
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.UserBehavior
@@ -27,9 +28,7 @@ data class DmChannel(
      * The ids of the recipients of the channel.
      */
     val recipientIds: Set<Snowflake>
-        get() = data.recipients.orEmpty().asSequence()
-                .map { Snowflake(it) }
-                .toSet()
+        get() = data.recipients.orEmpty().toSet()
 
     /**
      * The behaviors of the recipients of the channel.
@@ -47,7 +46,7 @@ data class DmChannel(
      */
     val recipients: Flow<User>
         get() = data.recipients.orEmpty().asFlow()
-                .map { supplier.getUserOrNull(Snowflake(it)) }
+                .map { supplier.getUserOrNull(it) }
                 .filterNotNull()
 
     /**

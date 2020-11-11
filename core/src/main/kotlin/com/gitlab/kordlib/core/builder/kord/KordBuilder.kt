@@ -90,7 +90,7 @@ class KordBuilder(val token: String) {
     /**
      * The enabled gateway intents, setting intents to null will disable the feature.
      */
-    var intents: Intents? = null
+    var intents: Intents = Intents.nonPrivileged
 
     /**
      * Configures the shards this client will connect to, by default `0 until recommended`.

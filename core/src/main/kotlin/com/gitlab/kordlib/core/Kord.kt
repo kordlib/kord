@@ -3,18 +3,15 @@ package com.gitlab.kordlib.core
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordUnsafe
-
 import com.gitlab.kordlib.common.entity.DiscordShard
+import com.gitlab.kordlib.common.entity.PresenceStatus
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.builder.kord.KordRestOnlyBuilder
 import com.gitlab.kordlib.core.cache.data.GuildData
-import com.gitlab.kordlib.core.entity.ApplicationInfo
-import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.core.entity.Region
-import com.gitlab.kordlib.core.entity.User
+import com.gitlab.kordlib.core.cache.data.UserData
+import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.event.Event
 import com.gitlab.kordlib.core.exception.KordInitializationException
@@ -26,6 +23,7 @@ import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
+import com.gitlab.kordlib.rest.builder.user.CurrentUserModifyBuilder
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -60,22 +58,23 @@ class Kord(
     val unsafe: Unsafe = Unsafe(this)
 
     @OptIn(FlowPreview::class)
-    val events get() = eventPublisher.asFlow().buffer(CoroutineChannel.UNLIMITED)
+    val events
+        get() = eventPublisher.asFlow().buffer(CoroutineChannel.UNLIMITED)
 
     override val coroutineContext: CoroutineContext
         get() = dispatcher + Job()
 
     val regions: Flow<Region>
-        get() = resources.defaultStrategy.supply(this).regions
+        get() = defaultSupplier.regions
 
     val guilds: Flow<Guild>
-        get() = resources.defaultStrategy.supply(this).guilds
+        get() = defaultSupplier.guilds
 
     /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = Status.Online }) {
+    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = PresenceStatus.Online }) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -115,6 +114,11 @@ class Kord(
         return Guild(data, this)
     }
 
+    suspend fun getGuildPreview(guildId: Snowflake): GuildPreview = defaultSupplier.getGuildPreview(guildId)
+
+    suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? = defaultSupplier.getGuildPreviewOrNull(guildId)
+
+
     suspend fun getChannel(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Channel? = strategy.supply(this).getChannelOrNull(id)
 
     /**
@@ -132,6 +136,9 @@ class Kord(
 
     suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =
             strategy.supply(this).getSelf()
+
+    suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User =
+            User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
 
     suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User? =
             strategy.supply(this).getUserOrNull(id)

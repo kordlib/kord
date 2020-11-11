@@ -1,30 +1,30 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
-import com.gitlab.kordlib.common.entity.ChannelType
-import com.gitlab.kordlib.common.entity.DiscordChannel
+import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.common.entity.optional.*
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ChannelData(
-        val id: Long,
+        val id: Snowflake,
         val type: ChannelType,
-        val guildId: Long? = null,
-        val position: Int? = null,
-        val permissionOverwrites: List<PermissionOverwriteData> = emptyList(),
-        val name: String? = null,
-        val topic: String? = null,
-        val nsfw: Boolean? = null,
-        val lastMessageId: Long? = null,
-        val bitrate: Int? = null,
-        val userLimit: Int? = null,
-        val rateLimitPerUser: Int? = null,
-        val recipients: List<Long>? = null,
-        val icon: String? = null,
-        val ownerId: Long? = null,
-        val applicationId: Long? = null,
-        val parentId: Long? = null,
-        val lastPinTimestamp: String? = null
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val position: OptionalInt = OptionalInt.Missing,
+        val permissionOverwrites: Optional<List<Overwrite>> = Optional.Missing(),
+        val name: Optional<String> = Optional.Missing(),
+        val topic: Optional<String?> = Optional.Missing(),
+        val nsfw: OptionalBoolean = OptionalBoolean.Missing,
+        val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
+        val bitrate: OptionalInt = OptionalInt.Missing,
+        val userLimit: OptionalInt = OptionalInt.Missing,
+        val rateLimitPerUser: OptionalInt = OptionalInt.Missing,
+        val recipients: Optional<List<Snowflake>> = Optional.Missing(),
+        val icon: Optional<String?> = Optional.Missing(),
+        val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
+        val lastPinTimestamp: Optional<String?> = Optional.Missing(),
 ) {
 
 
@@ -33,23 +33,23 @@ data class ChannelData(
 
         fun from(entity: DiscordChannel) = with(entity) {
             ChannelData(
-                    id.toLong(),
+                    id,
                     type,
-                    guildId?.toLong(),
+                    guildId,
                     position,
-                    permissionOverwrites.orEmpty().map { PermissionOverwriteData.from(it) },
+                    permissionOverwrites,
                     name,
                     topic,
                     nsfw,
-                    lastMessageId?.toLong(),
+                    lastMessageId,
                     bitrate,
                     userLimit,
                     rateLimitPerUser,
-                    recipients?.map { it.id.toLong() },
+                    recipients.mapList { it.id },
                     icon,
-                    ownerId?.toLong(),
-                    applicationId?.toLong(),
-                    parentId?.toLong(),
+                    ownerId,
+                    applicationId,
+                    parentId,
                     lastPinTimestamp
             )
         }

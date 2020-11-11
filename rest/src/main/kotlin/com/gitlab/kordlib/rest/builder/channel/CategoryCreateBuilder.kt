@@ -4,6 +4,7 @@ import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.entity.OverwriteType
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.json.request.GuildCreateChannelRequest
 import kotlin.contracts.ExperimentalContracts
@@ -26,7 +27,7 @@ class CategoryCreateBuilder : AuditRequestBuilder<GuildCreateChannelRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        permissionOverwrites += PermissionOverwriteBuilder("member", memberId).apply(builder).toOverwrite()
+        permissionOverwrites += PermissionOverwriteBuilder(OverwriteType.Member, memberId).apply(builder).toOverwrite()
     }
 
     /**
@@ -37,7 +38,7 @@ class CategoryCreateBuilder : AuditRequestBuilder<GuildCreateChannelRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        permissionOverwrites += PermissionOverwriteBuilder("role", roleId).apply(builder).toOverwrite()
+        permissionOverwrites += PermissionOverwriteBuilder(OverwriteType.Role, roleId).apply(builder).toOverwrite()
     }
 
     override fun toRequest(): GuildCreateChannelRequest = GuildCreateChannelRequest(

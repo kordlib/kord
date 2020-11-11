@@ -21,7 +21,7 @@ class VoiceChannelCreateBuilder : AuditRequestBuilder<GuildCreateChannelRequest>
             name = name,
             bitrate = bitrate,
             userLimit = userLimit,
-            parentId = parentId?.value,
+            parentId = parentId?.asString,
             position = position,
             permissionOverwrite = permissionOverwrites,
             type = ChannelType.GuildVoice

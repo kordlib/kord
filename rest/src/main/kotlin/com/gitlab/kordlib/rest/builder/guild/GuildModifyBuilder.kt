@@ -39,15 +39,15 @@ class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
 
     override fun toRequest(): GuildModifyRequest = GuildModifyRequest(
             name = name,
-            region = region?.value,
+            region = region?.asString,
             verificationLevel = verificationLevel,
             defaultMessageNotificationLevel = notificationLevel,
-            afkChannel = afkChannelId?.value,
+            afkChannel = afkChannelId?.asString,
             afkTimeout = afkTimeout,
             icon = icon?.dataUri,
-            ownerId = ownerId?.value,
+            ownerId = ownerId?.asString,
             spalsh = splash?.dataUri,
             preferredLocale = preferredLocale?.let { listOf(it.language, it.country).joinToString("-") },
-            publicUpdatesChannelId = publicUpdatesChannelId?.value
+            publicUpdatesChannelId = publicUpdatesChannelId?.asString
     )
 }

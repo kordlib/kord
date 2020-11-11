@@ -23,7 +23,7 @@ internal class HandshakeHandler(
         get() = configuration.identify
 
     private val resume
-        get() = Resume(configuration.token, session.value!!, sequence.value)
+        get() = Resume(configuration.token, session.value!!, sequence.value ?: 0)
 
     private val sessionStart get() = session.value == null
 

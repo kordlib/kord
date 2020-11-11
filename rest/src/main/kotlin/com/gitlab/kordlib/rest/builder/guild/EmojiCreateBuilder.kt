@@ -5,7 +5,6 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
 import com.gitlab.kordlib.rest.json.request.EmojiCreateRequest
-import com.gitlab.kordlib.rest.json.request.EmojiModifyRequest
 
 @KordDsl
 class EmojiCreateBuilder : AuditRequestBuilder<EmojiCreateRequest> {
@@ -17,6 +16,6 @@ class EmojiCreateBuilder : AuditRequestBuilder<EmojiCreateRequest> {
     override fun toRequest(): EmojiCreateRequest = EmojiCreateRequest(
             name = name,
             image = image.dataUri,
-            roles = roles.map { it.value }
+            roles = roles.map { it.asString }
     )
 }

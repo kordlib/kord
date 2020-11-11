@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.entity.channel
 
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.value
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.behavior.MessageBehavior
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
@@ -18,7 +19,7 @@ interface MessageChannel : Channel, MessageChannelBehavior {
     /**
      * The id of the last message sent to this channel, if present.
      */
-    val lastMessageId: Snowflake? get() = data.lastMessageId.toSnowflakeOrNull()
+    val lastMessageId: Snowflake? get() = data.lastMessageId.value
 
     /**
      * The behavior of the last message sent to this channel, if present.
@@ -29,7 +30,7 @@ interface MessageChannel : Channel, MessageChannelBehavior {
      * The timestamp of the last pin
      */
     val lastPintTimeStamp: Instant?
-        get() = data.lastPinTimestamp?.toInstant()
+        get() = data.lastPinTimestamp.value?.toInstant()
 
     /**
      * Requests to get the last message sent to this channel,

@@ -14,6 +14,6 @@ class MemberAddBuilder : RequestBuilder<GuildMemberAddRequest> {
     var deafened: Boolean? = null
 
     override fun toRequest(): GuildMemberAddRequest =
-            GuildMemberAddRequest(token, nickname, roles.map { it.value }, mute = muted, deaf = deafened)
+            GuildMemberAddRequest(token, nickname, roles.map { it.asString }, mute = muted, deaf = deafened)
 
 }

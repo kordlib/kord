@@ -11,11 +11,11 @@ class RolePositionsModifyBuilder : AuditRequestBuilder<GuildRolePositionModifyRe
     private val swaps: MutableList<Pair<String, Int>> = mutableListOf()
 
     fun move(pair: Pair<Snowflake, Int>) {
-        swaps += pair.first.value to pair.second
+        swaps += pair.first.asString to pair.second
     }
 
     fun move(vararg pairs: Pair<Snowflake, Int>) {
-        swaps += pairs.map { it.first.value to it.second }
+        swaps += pairs.map { it.first.asString to it.second }
     }
 
     override fun toRequest(): GuildRolePositionModifyRequest =

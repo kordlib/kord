@@ -1,7 +1,8 @@
-package com.gitlab.kordlib.core.event
+package com.gitlab.kordlib.core.event.user
 
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.entity.VoiceState
+import com.gitlab.kordlib.core.event.Event
 
 class VoiceStateUpdateEvent(
         val old: VoiceState?,

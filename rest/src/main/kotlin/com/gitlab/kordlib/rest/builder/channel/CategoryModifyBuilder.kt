@@ -4,6 +4,7 @@ import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.entity.OverwriteType
 import com.gitlab.kordlib.rest.json.request.ChannelModifyPatchRequest
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -36,7 +37,7 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        permissionOverwrites = (permissionOverwrites ?: mutableSetOf()).also { it.add(PermissionOverwriteBuilder("member", memberId).apply(builder).toOverwrite()) }
+        permissionOverwrites = (permissionOverwrites ?: mutableSetOf()).also { it.add(PermissionOverwriteBuilder(OverwriteType.Member, memberId).apply(builder).toOverwrite()) }
     }
 
     /**
@@ -47,7 +48,7 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        permissionOverwrites = (permissionOverwrites ?: mutableSetOf()).also { PermissionOverwriteBuilder("role", roleId).apply(builder).toOverwrite() }
+        permissionOverwrites = (permissionOverwrites ?: mutableSetOf()).also { PermissionOverwriteBuilder(OverwriteType.Role, roleId).apply(builder).toOverwrite() }
     }
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(

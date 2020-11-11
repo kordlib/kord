@@ -6,10 +6,9 @@ import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.User
-import com.gitlab.kordlib.core.event.UserUpdateEvent
+import com.gitlab.kordlib.core.event.user.UserUpdateEvent
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.UserUpdate
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.map

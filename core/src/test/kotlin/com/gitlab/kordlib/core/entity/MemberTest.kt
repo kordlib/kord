@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.cache.data.MemberData
 import com.gitlab.kordlib.core.cache.data.UserData
@@ -14,11 +15,11 @@ import kotlin.test.assertEquals
 internal class MemberTest : GuildEntityEqualityTest<Member> by GuildEntityEqualityTest({ id, guildId ->
     val kord = mockKord()
     val memberData = mockk<MemberData>()
-    every { memberData.userId } returns id.longValue
-    every { memberData.guildId } returns guildId.longValue
+    every { memberData.userId } returns id
+    every { memberData.guildId } returns guildId
 
     val userData = mockk<UserData>()
-    every { userData.id } returns id.longValue
+    every { userData.id } returns id
 
     Member(memberData, userData, kord)
 }), BehaviorEqualityTest<Member> {
@@ -28,11 +29,11 @@ internal class MemberTest : GuildEntityEqualityTest<Member> by GuildEntityEquali
     fun `members equal users with the same ID`() {
         val kord = mockKord()
         val memberData = mockk<MemberData>()
-        every { memberData.userId } returns 0L
-        every { memberData.guildId } returns 1L
+        every { memberData.userId } returns Snowflake(0L)
+        every { memberData.guildId } returns Snowflake(1L)
 
         val userData = mockk<UserData>()
-        every { userData.id } returns 0L
+        every { userData.id } returns Snowflake(0L)
         val member = Member(memberData, userData, kord)
         val user = User(userData, kord)
 

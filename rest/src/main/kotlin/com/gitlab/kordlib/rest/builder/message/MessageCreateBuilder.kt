@@ -4,6 +4,7 @@ import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.AllowedMentions
+import com.gitlab.kordlib.rest.json.request.AllowedMentionType
 import com.gitlab.kordlib.rest.json.request.MessageCreateRequest
 import com.gitlab.kordlib.rest.json.request.MultipartMessageCreateRequest
 import kotlinx.coroutines.Dispatchers
@@ -67,25 +68,29 @@ class AllowedMentionsBuilder {
     val users: MutableSet<Snowflake> = mutableSetOf()
 
     /**
-     * The types of pings that should trigger in this message. Selecting [MentionTypes.Users] or [MentionTypes.Roles]
+     * The types of pings that should trigger in this message. Selecting [AllowedMentionType.UserMentions] or [AllowedMentionType.RoleMentions]
      * together with any value in [users] or [roles] respectively will result in an error.
      */
-    val types: MutableSet<MentionTypes> = mutableSetOf()
+    val types: MutableSet<AllowedMentionType> = mutableSetOf()
 
     /**
      * Adds the type to the list of types that should receive a ping.
      */
-    operator fun MentionTypes.unaryPlus() = types.add(this)
+    operator fun AllowedMentionType.unaryPlus() {
+        types.add(this)
+    }
+
+    /**
+     * Adds the type to the list of types that should receive a ping.
+     */
+    fun add(type: AllowedMentionType) {
+        type.unaryPlus()
+    }
 
     fun build(): AllowedMentions = AllowedMentions(
-            parse = types.map { it.serialName },
-            users = users.map { it.value },
-            roles = roles.map { it.value }
+            parse = types.toList(),
+            users = users.map { it.asString },
+            roles = roles.map { it.asString }
     )
 
-}
-
-
-enum class MentionTypes(val serialName: String) {
-    Roles("roles"), Users("users"), Everyone("everyone")
 }

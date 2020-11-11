@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.request
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.route.Route
 import io.ktor.http.*
 import kotlinx.serialization.SerializationStrategy
@@ -7,6 +8,8 @@ import kotlinx.serialization.SerializationStrategy
 class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
 
     val keys: MutableMap<Route.Key, String> = HashMap(keySize, 1f)
+
+    operator fun MutableMap<Route.Key, String>.set(key: Route.Key, value: Snowflake) = set(key, value.asString)
 
     private val headers = HeadersBuilder()
     private val parameters = ParametersBuilder()
@@ -19,6 +22,8 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     fun <E : Any> body(strategy: SerializationStrategy<E>, body: E) {
         this.body = RequestBody(strategy, body)
     }
+
+    fun parameter(key: String, value: Snowflake) = parameters.append(key, value.value.toString())
 
     fun parameter(key: String, value: Any) = parameters.append(key, value.toString())
 

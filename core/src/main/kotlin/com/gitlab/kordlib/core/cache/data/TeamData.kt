@@ -1,6 +1,9 @@
 package com.gitlab.kordlib.core.cache.data
 
 
+import com.gitlab.kordlib.common.entity.DiscordTeam
+import com.gitlab.kordlib.common.entity.DiscordTeamMember
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.TeamMembershipState
 import kotlinx.serialization.Serializable
 
@@ -9,45 +12,31 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class TeamData(
-        /**
-         * The unique ID of this team.
-         */
-        val id: Long,
-        /**
-         * The hash of this team's icon.
-         */
+        val id: Snowflake,
         val icon: String?,
-        /**
-         * A collection of all members of this team.
-         */
         val members: List<TeamMemberData>,
-        /**
-         * The ID of the user that owns the team.
-         */
-        val ownerUserId: Long
-)
+        val ownerUserId: Snowflake,
+) {
+    companion object {
+        fun from(entity: DiscordTeam): TeamData = with(entity) {
+            TeamData(id, icon, members.map { TeamMemberData.from(it) }, ownerUserId)
+        }
+    }
+}
 
 /**
  * A serializable data representation of a Discord developer team member.
  */
 @Serializable
 class TeamMemberData(
-        /**
-         * An enumeration representing the membership state of this user.
-         */
         val membershipState: TeamMembershipState,
-        /**
-         * A collection of permissions granted to this member.
-         * At the moment, this collection will only have one element: `*`, meaning the member has all permissions.
-         * This is because right now there are no other permissions. Read mode [here](https://discord.com/developers/docs/topics/teams#data-models-team-members-object)
-         */
         val permissions: List<String>,
-        /**
-         * The unique ID that this member belongs to.
-         */
-        val teamId: Long,
-        /**
-         * The ID of the user this member represents.
-         */
-        val userId: Long
-)
+        val teamId: Snowflake,
+        val userId: Snowflake,
+) {
+    companion object {
+        fun from(entity: DiscordTeamMember): TeamMemberData = with(entity) {
+            TeamMemberData(membershipState, permissions, teamId = teamId, userId = user.id)
+        }
+    }
+}

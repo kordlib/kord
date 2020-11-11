@@ -21,7 +21,7 @@ class NewsChannelCreateBuilder: AuditRequestBuilder<GuildCreateChannelRequest> {
             name = name,
             topic = topic,
             nsfw = nsfw,
-            parentId = parentId?.value,
+            parentId = parentId?.asString,
             position = position,
             permissionOverwrite = permissionOverwrites,
             type = ChannelType.GuildNews

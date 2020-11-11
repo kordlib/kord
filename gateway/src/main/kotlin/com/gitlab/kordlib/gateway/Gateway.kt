@@ -1,15 +1,8 @@
 package com.gitlab.kordlib.gateway
 
-import com.gitlab.kordlib.common.entity.DiscordShard
-import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

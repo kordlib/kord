@@ -106,6 +106,14 @@ sealed class OptionalLong {
 val OptionalLong?.asNullable: Long? get() = this?.asNullable
 
 /**
+ * returns `null` if this is `null`, calls [OptionalLong.asNullable] otherwise.
+ */
+val OptionalLong?.value: Long? get() = this?.asNullable
+
+/**
  * returns [default] if this is `null`, calls [OptionalLong.asNullable] otherwise.
  */
 fun OptionalLong?.orElse(default: Long) = this?.orElse(default) ?: default
+
+fun Long?.optional(): OptionalLong = if(this == null) OptionalLong.Missing
+else OptionalLong.Value(this)

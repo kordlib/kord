@@ -54,7 +54,7 @@ class KtorRequestHandler(
         return when {
             response.isRateLimit -> handle(request)
             response.isError -> {
-                throw KtorRequestException(response, Json.decodeFromString(DiscordErrorResponse.serializer().optional, String(response.readBytes())))
+                throw KtorRequestException(response, parser.decodeFromString(DiscordErrorResponse.serializer().optional, String(response.readBytes())))
             }
             else -> parser.decodeFromString(request.route.strategy, response.readText())
         }

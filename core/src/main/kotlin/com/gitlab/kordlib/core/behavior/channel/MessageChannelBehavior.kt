@@ -76,7 +76,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      */
     val pinnedMessages: Flow<Message>
         get() = flow {
-            val responses = kord.rest.channel.getChannelPins(id.value)
+            val responses = kord.rest.channel.getChannelPins(id)
 
             for (response in responses) {
                 val data = MessageData.from(response)
@@ -96,7 +96,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun deleteMessage(id: Snowflake): Unit = kord.rest.channel.deleteMessage(this.id.value, id.value)
+    suspend fun deleteMessage(id: Snowflake): Unit = kord.rest.channel.deleteMessage(this.id, id)
 
     /**
      * Requests to get all messages in this channel that were created **before** [messageId].
@@ -187,7 +187,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun type() {
-        kord.rest.channel.triggerTypingIndicator(id.value)
+        kord.rest.channel.triggerTypingIndicator(id)
     }
 
     /**
@@ -253,7 +253,7 @@ suspend inline fun MessageChannelBehavior.createMessage(builder: MessageCreateBu
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.channel.createMessage(id.value, builder)
+    val response = kord.rest.channel.createMessage(id, builder)
     val data = MessageData.from(response)
 
     return Message(data, kord)

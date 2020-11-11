@@ -3,7 +3,7 @@ package com.gitlab.kordlib.core.live.channel
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.VoiceStateUpdateEvent
+import com.gitlab.kordlib.core.event.user.VoiceStateUpdateEvent
 import com.gitlab.kordlib.core.event.channel.ChannelCreateEvent
 import com.gitlab.kordlib.core.event.channel.ChannelDeleteEvent
 import com.gitlab.kordlib.core.event.channel.ChannelUpdateEvent
@@ -36,16 +36,16 @@ abstract class LiveChannel : AbstractLiveEntity() {
         is ReactionRemoveAllEvent -> event.channelId == channel.id
 
         is MessageCreateEvent -> event.message.channelId == channel.id
-        is MessageUpdateEvent -> event.new.channelId == channel.id.value
+        is MessageUpdateEvent -> event.new.channelId == channel.id
         is MessageDeleteEvent -> event.channelId == channel.id
 
         is ChannelCreateEvent -> event.channel.id == channel.id
         is ChannelUpdateEvent -> event.channel.id == channel.id
         is ChannelDeleteEvent -> event.channel.id == channel.id
 
-        is GuildCreateEvent -> event.guild.id.longValue == channel.data.guildId
-        is GuildUpdateEvent -> event.guild.id.longValue == channel.data.guildId
-        is GuildDeleteEvent -> event.guildId.longValue == channel.data.guildId
+        is GuildCreateEvent -> event.guild.id == channel.data.guildId.value
+        is GuildUpdateEvent -> event.guild.id == channel.data.guildId.value
+        is GuildDeleteEvent -> event.guildId == channel.data.guildId.value
 
         else -> false
     }

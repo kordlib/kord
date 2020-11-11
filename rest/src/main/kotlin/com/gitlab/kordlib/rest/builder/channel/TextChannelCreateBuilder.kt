@@ -23,7 +23,7 @@ class TextChannelCreateBuilder : AuditRequestBuilder<GuildCreateChannelRequest> 
             topic = topic,
             rateLimitPerUser = rateLimitPerUser,
             position = position,
-            parentId = parentId?.value,
+            parentId = parentId?.asString,
             nsfw = nsfw,
             permissionOverwrite = permissionOverwrites,
             type = ChannelType.GuildText

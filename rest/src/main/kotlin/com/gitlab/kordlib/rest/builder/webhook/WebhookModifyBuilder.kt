@@ -16,6 +16,6 @@ class WebhookModifyBuilder: AuditRequestBuilder<WebhookModifyRequest> {
     override fun toRequest(): WebhookModifyRequest = WebhookModifyRequest(
             name = name,
             avatar = avatar?.dataUri,
-            channelId = channelId?.value
+            channelId = channelId?.asString
     )
 }

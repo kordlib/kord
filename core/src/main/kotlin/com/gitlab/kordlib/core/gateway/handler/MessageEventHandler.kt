@@ -3,15 +3,15 @@ package com.gitlab.kordlib.core.gateway.handler
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
-import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.*
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
+import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.entity.Member
 import com.gitlab.kordlib.core.entity.Message
 import com.gitlab.kordlib.core.entity.ReactionEmoji
 import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.map
@@ -24,7 +24,7 @@ internal class MessageEventHandler(
         kord: Kord,
         gateway: MasterGateway,
         cache: DataCache,
-        coreEventChannel: SendChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>,
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
@@ -43,42 +43,42 @@ internal class MessageEventHandler(
         val data = MessageData.from(this)
         cache.put(data)
 
-        cache.query<ChannelData> { ChannelData::id eq channelId.toLong() }.update {
-            it.copy(lastMessageId = data.id)
+        cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
+            it.copy(lastMessageId = data.id.optionalSnowflake())
         }
 
         //get the user data only if it exists and the user isn't a webhook
-        val userData =  if (webhookId == null) {
+        val userData = if (webhookId is OptionalSnowflake.Missing) {
             UserData.from(author).also { cache.put(it) }
         } else null
 
         //get the member and cache the member. We need the user, guild id and member to be present
-        val member = if (userData != null && guildId != null && member != null) {
-            val memberData = MemberData.from(author.id, guildId!!, member!!)
+        val member = if (userData != null && guildId is OptionalSnowflake.Missing && member !is Optional.Value) {
+            val memberData = MemberData.from(author.id, guildId.value!!, member.value!!)
             cache.put(memberData)
             Member(memberData, userData, kord)
         } else null
 
-        coreEventChannel.send(MessageCreateEvent(Message(data, kord), guildId.toSnowflakeOrNull(), member, shard))
+        coreEventChannel.send(MessageCreateEvent(Message(data, kord), guildId.value!!, member, shard))
     }
 
     private suspend fun handle(event: MessageUpdate, shard: Int) = with(event.message) {
-        val query = cache.query<MessageData> { MessageData::id eq id.toLong() }
+        val query = cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
         query.update { it + this }
 
-        coreEventChannel.send(MessageUpdateEvent(Snowflake(id), Snowflake(channelId), this, old, kord, shard))
+        coreEventChannel.send(MessageUpdateEvent(id, channelId, this, old, kord, shard))
     }
 
     private suspend fun handle(event: MessageDelete, shard: Int) = with(event.message) {
-        val query = cache.query<MessageData> { MessageData::id eq id.toLong() }
+        val query = cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val removed = query.singleOrNull()?.let { Message(it, kord) }
         query.remove()
 
         coreEventChannel.send(
-                MessageDeleteEvent(Snowflake(id), Snowflake(channelId), guildId.toSnowflakeOrNull(), removed, kord, shard)
+                MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard)
         )
     }
 
@@ -88,10 +88,10 @@ internal class MessageEventHandler(
         val removed = query.asFlow().map { Message(it, kord) }.toSet()
         query.remove()
 
-        val ids = ids.asSequence().map { Snowflake(it) }.toSet()
+        val ids = ids.asSequence().map { it }.toSet()
 
         coreEventChannel.send(
-                MessageBulkDeleteEvent(ids, removed, Snowflake(channelId), guildId.toSnowflakeOrNull(), kord, shard)
+                MessageBulkDeleteEvent(ids, removed, channelId, guildId.value, kord, shard)
         )
     }
 
@@ -102,19 +102,19 @@ internal class MessageEventHandler(
          **/
         val reaction = when (val id = emoji.id) {
             null -> ReactionEmoji.Unicode(emoji.name!!)
-            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name!!, emoji.animated ?: false)
+            else -> ReactionEmoji.Custom(id, emoji.name!!, emoji.animated.orElse(false))
         }
 
-        cache.query<MessageData> { MessageData::id eq messageId.toLong() }.update {
-            val isMe = kord.selfId.value == event.reaction.userId
+        cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+            val isMe = kord.selfId == event.reaction.userId
 
-            val reactions = if (it.reactions.isNullOrEmpty()) {
+            val reactions = if (it.reactions.value.isNullOrEmpty()) {
                 listOf(ReactionData.from(1, isMe, emoji))
             } else {
                 val reactions = it.reactions.orEmpty()
                 val reactionData = reactions.firstOrNull { reaction ->
                     if (emoji.id == null) reaction.emojiName == emoji.name
-                    else reaction.emojiId?.toString() == emoji.id && reaction.emojiName == emoji.name
+                    else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
                 }
 
                 when (reactionData) {
@@ -123,15 +123,15 @@ internal class MessageEventHandler(
                 }
             }
 
-            it.copy(reactions = reactions)
+            it.copy(reactions = Optional.Value(reactions))
         }
 
         coreEventChannel.send(
                 ReactionAddEvent(
-                        Snowflake(userId),
-                        Snowflake(channelId),
-                        Snowflake(messageId),
-                        guildId.toSnowflakeOrNull(),
+                        userId,
+                        channelId,
+                        messageId,
+                        guildId.value,
                         reaction,
                         kord,
                         shard
@@ -142,22 +142,22 @@ internal class MessageEventHandler(
     private suspend fun handle(event: MessageReactionRemove, shard: Int) = with(event.reaction) {
         /**
          * Reactions removed will *sometimes* have a name, the only case in which name is null is when a guild reaction
-         * no longer exists (only id is kept). Reomving a non-existing reaction *should* be possible.
+         * no longer exists (only id is kept). Removing a non-existing reaction *should* be possible.
          **/
         val reaction = when (val id = emoji.id) {
             null -> ReactionEmoji.Unicode(emoji.name!!)
-            else -> ReactionEmoji.Custom(Snowflake(id), emoji.name ?: "", emoji.animated ?: false)
+            else -> ReactionEmoji.Custom(id, emoji.name ?: "", emoji.animated.orElse(false))
         }
 
-        cache.query<MessageData> { MessageData::id eq messageId.toLong() }.update {
-            if (it.reactions.isNullOrEmpty()) return@update it
+        cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+            val oldReactions = it.reactions.value ?: return@update it
+            if (oldReactions.isEmpty()) return@update it
 
-            val me = kord.selfId.value == event.reaction.userId
+            val me = kord.selfId == event.reaction.userId
 
-            val oldReactions = it.reactions.orEmpty()
             val reactionData = oldReactions.firstOrNull { reaction ->
                 if (emoji.id == null) reaction.emojiName == emoji.name
-                else reaction.emojiId?.toString() == emoji.id && reaction.emojiName == emoji.name
+                else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
             } ?: return@update it
 
             val reactions = when (val count = reactionData.count - 1) {
@@ -165,15 +165,15 @@ internal class MessageEventHandler(
                 else -> (oldReactions - reactionData) + reactionData.copy(count = count, me = reactionData.me xor me)
             }
 
-            it.copy(reactions = reactions)
+            it.copy(reactions = Optional.Value(reactions))
         }
 
         coreEventChannel.send(
                 ReactionRemoveEvent(
-                        Snowflake(userId),
-                        Snowflake(channelId),
-                        Snowflake(messageId),
-                        guildId.toSnowflakeOrNull(),
+                        userId,
+                        channelId,
+                        messageId,
+                        guildId.value,
                         reaction,
                         kord,
                         shard
@@ -182,13 +182,13 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageReactionRemoveAll, shard: Int) = with(event.reactions) {
-        cache.query<MessageData> { MessageData::id eq messageId.toLong() }.update { it.copy(reactions = emptyList()) }
+        cache.query<MessageData> { idEq(MessageData::id, messageId) }.update { it.copy(reactions = Optional.Missing()) }
 
         coreEventChannel.send(
                 ReactionRemoveAllEvent(
-                        Snowflake(channelId),
-                        Snowflake(messageId),
-                        guildId.toSnowflakeOrNull(),
+                        channelId,
+                        messageId,
+                        guildId.value,
                         kord,
                         shard
                 )
@@ -196,7 +196,8 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageReactionRemoveEmoji, shard: Int) = with(event.reaction) {
-        cache.query<MessageData> { MessageData::id eq messageId.toLong() }.update { it.copy(reactions = it.reactions?.filter { it.emojiName != emoji.name }) }
+        cache.query<MessageData> { idEq(MessageData::id, messageId) }
+                .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
 
         val data = ReactionRemoveEmojiData.from(this)
         coreEventChannel.send(ReactionRemoveEmojiEvent(data, kord, shard))

@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.common.entity.optional
 
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.optional.Optional.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
@@ -174,10 +175,53 @@ sealed class Optional<out T> {
 
         @OptIn(ExperimentalSerializationApi::class)
         override fun serialize(encoder: Encoder, value: Optional<T>) = when (value) {
-            is Missing<*> -> Unit //ignore value
+            is Missing<*> -> throw SerializationException("missing values cannot be serialized")
             is Null<*> -> encoder.encodeNull()
             is Value -> encoder.encodeSerializableValue(contentSerializer, value.value)
         }
     }
 }
 
+fun<T: Any> Optional<T>.switchOnMissing(value: T): Optional<T> = when(this){
+    is Missing -> Value(value)
+    is Null<*>, is Value -> this
+}
+
+fun<E> Optional<List<E>>.orEmpty(): List<E> = when(this){
+    is Missing, is Null<*> -> emptyList()
+    is Value -> value
+}
+
+@Suppress("UNCHECKED_CAST")
+inline fun<E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<List<T>> = when(this){
+    is Missing, is Null<*> -> this as Optional<List<T>>
+    is Value -> Value(value.map(mapper))
+}
+
+@Suppress("UNCHECKED_CAST")
+inline fun<E, T: Any> Optional<E>.map(mapper: (E) -> T): Optional<T> = when(this){
+    is Missing, is Null<*> -> this as Optional<T>
+    is Value -> Value(mapper(value))
+}
+
+inline fun<E: Any> Optional<E>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake = when(this){
+    is Missing, is Null<*> -> OptionalSnowflake.Missing
+    is Value -> OptionalSnowflake.Value(mapper(value))
+}
+
+@JvmName("mapNullableSnowflake")
+inline fun<E: Any> Optional<E?>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake? = when(this){
+    is Missing, is Null<*> -> OptionalSnowflake.Missing
+    is Value -> OptionalSnowflake.Value(mapper(value!!))
+}
+
+@Suppress("UNCHECKED_CAST")
+fun<T: Any> Optional<T?>.coerceToMissing(): Optional<T> = when(this){
+    is Missing, is Null -> Missing()
+    is Value -> this as Value<T>
+}
+
+@Suppress("RemoveRedundantQualifierName")
+fun<T: Any> T.optional(): Optional.Value<T> = Optional.Value(this)
+
+fun<T: Any?> T?.optional(): Optional<T?> = Optional(this)

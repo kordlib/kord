@@ -19,7 +19,7 @@ class ApplicationInfo(
 ) : Entity, Strategizable {
 
     override val id: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     val name: String get() = data.name
 
@@ -29,7 +29,7 @@ class ApplicationInfo(
 
     val requireCodeGrant: Boolean get() = data.botRequireCodeGrant
 
-    val ownerId: Snowflake get() = Snowflake(data.ownerId)
+    val ownerId: Snowflake get() = data.ownerId
 
     val owner: UserBehavior get() = UserBehavior(ownerId, kord)
 
@@ -37,15 +37,15 @@ class ApplicationInfo(
 
     val verifyKey: String get() = data.verifyKey
 
-    val teamId: Long? get() = data.teamId
+    val teamId: Snowflake? get() = data.team?.id
 
-    val guildId: Long? get() = data.guildId
+    val guildId: Snowflake? get() = data.guildId.value
 
-    val primarySkuId: Long? get() = data.primarySkuId
+    val primarySkuId: Snowflake? get() = data.primarySkuId.value
 
-    val slug: String? get() = data.slug
+    val slug: String? get() = data.slug.value
 
-    val coverImage: String? get() = data.coverImage
+    val coverImage: String? get() = data.coverImage.value
 
     suspend fun getOwner(): User = supplier.getUser(ownerId)
 

@@ -13,6 +13,6 @@ class EmojiModifyBuilder : AuditRequestBuilder<EmojiModifyRequest> {
 
     override fun toRequest(): EmojiModifyRequest = EmojiModifyRequest(
             name = name,
-            roles = roles?.map { it.value }
+            roles = roles?.map { it.asString }
     )
 }

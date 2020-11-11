@@ -8,9 +8,12 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.*
+import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.core.supplier.getChannelOf
+import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.RestClient
@@ -35,6 +38,13 @@ interface MessageBehavior : Entity, Strategizable {
     val channel get() = MessageChannelBehavior(channelId, kord)
 
     /**
+     * Requests to get the channel this message was send in.
+     */
+    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+
+    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+
+    /**
      * Requests to get the this behavior as a [Message].
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -57,7 +67,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete() {
-        kord.rest.channel.deleteMessage(channelId = channelId.value, messageId = id.value)
+        kord.rest.channel.deleteMessage(channelId = channelId, messageId = id)
     }
 
     /**
@@ -78,7 +88,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun addReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.createReaction(channelId = channelId.value, messageId = id.value, emoji = emoji.urlFormat)
+        kord.rest.channel.createReaction(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
     }
 
     /**
@@ -103,7 +113,7 @@ interface MessageBehavior : Entity, Strategizable {
      */
     @KordPreview
     suspend fun publish() : Message {
-        val response = kord.rest.channel.crossPost(channelId =  channelId.value, messageId = id.value)
+        val response = kord.rest.channel.crossPost(channelId =  channelId, messageId = id)
         val data = MessageData.from(response)
         return Message(data, kord)
     }
@@ -114,7 +124,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteReaction(userId: Snowflake, emoji: ReactionEmoji) {
-        kord.rest.channel.deleteReaction(channelId = channelId.value, messageId = id.value, userId = userId.value, emoji = emoji.urlFormat)
+        kord.rest.channel.deleteReaction(channelId = channelId, messageId = id, userId = userId, emoji = emoji.urlFormat)
     }
 
     /**
@@ -123,7 +133,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteOwnReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.deleteOwnReaction(channelId = channelId.value, messageId = id.value, emoji = emoji.urlFormat)
+        kord.rest.channel.deleteOwnReaction(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
     }
 
     /**
@@ -132,7 +142,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteAllReactions() {
-        kord.rest.channel.deleteAllReactions(channelId = channelId.value, messageId = id.value)
+        kord.rest.channel.deleteAllReactions(channelId = channelId, messageId = id)
     }
 
     /**
@@ -141,7 +151,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.deleteAllReactionsForEmoji(channelId = channelId.value, messageId = id.value, emoji = emoji.urlFormat)
+        kord.rest.channel.deleteAllReactionsForEmoji(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
     }
 
     /**
@@ -150,7 +160,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun pin() {
-        kord.rest.channel.addPinnedMessage(channelId = channelId.value, messageId = id.value)
+        kord.rest.channel.addPinnedMessage(channelId = channelId, messageId = id)
     }
 
     /**
@@ -159,7 +169,7 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun unpin() {
-        kord.rest.channel.deletePinnedMessage(channelId = channelId.value, messageId = id.value)
+        kord.rest.channel.deletePinnedMessage(channelId = channelId, messageId = id)
     }
 
     /**
@@ -208,7 +218,7 @@ suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.channel.editMessage(channelId = channelId.value, messageId = id.value, builder = builder)
+    val response = kord.rest.channel.editMessage(channelId = channelId, messageId = id, builder = builder)
     val data = MessageData.from(response)
 
     return Message(data, kord)

@@ -12,44 +12,32 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable
 data class DiscordTeam(
-        /**
-         * The unique ID of this team.
-         */
-        val id: String,
-        /**
-         * The hash of this team's icon.
-         */
         val icon: String?,
-        /**
-         * A collection of all members of this team.
-         */
+        val id: Snowflake,
         val members: List<DiscordTeamMember>,
-        /**
-         * The ID of the user that owns the team.
-         */
         @SerialName("owner_user_id")
-        val ownerUserId: String
+        val ownerUserId: Snowflake,
 )
 
 /**
  * The state of membership on a Discord developer team.
  */
 @Serializable(with = TeamMembershipState.TeamMembershipStateSerializer::class)
-enum class TeamMembershipState(val value: Int) {
+sealed class TeamMembershipState(val value: Int) {
     /**
      * Unknown membership state.
      */
-    Unknown(-1),
+    class Unknown(value: Int) : TeamMembershipState(value)
 
     /**
      * The user has been invited.
      */
-    Invited(1),
+    object Invited : TeamMembershipState(1)
 
     /**
      * The user has accepted the invitation.
      */
-    Accepted(2);
+    object Accepted : TeamMembershipState(2)
 
     @OptIn(ExperimentalSerializationApi::class)
     @Serializer(forClass = TeamMembershipState::class)
@@ -58,9 +46,10 @@ enum class TeamMembershipState(val value: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("membership_state", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): TeamMembershipState {
-            val code = decoder.decodeInt()
-            return values().firstOrNull { it.value == code } ?: Unknown
+        override fun deserialize(decoder: Decoder): TeamMembershipState = when(val value = decoder.decodeInt()) {
+            1 -> Invited
+            2 -> Accepted
+            else -> Unknown(value)
         }
 
         override fun serialize(encoder: Encoder, value: TeamMembershipState) {
@@ -90,9 +79,9 @@ class DiscordTeamMember(
          * The unique ID that this member belongs to.
          */
         @SerialName("team_id")
-        val teamId: String,
+        val teamId: Snowflake,
         /**
          * Partial user data containing only the ID, username, discriminator and avatar.
          */
-        val user: DiscordUser
+        val user: DiscordUser,
 )

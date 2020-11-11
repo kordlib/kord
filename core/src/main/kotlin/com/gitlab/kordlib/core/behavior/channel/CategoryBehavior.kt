@@ -98,7 +98,7 @@ interface CategoryBehavior : GuildChannelBehavior {
  * @throws [RestRequestException] if something went wrong during the request.
  */
 suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Category {
-    val response = kord.rest.channel.patchCategory(id.value, builder)
+    val response = kord.rest.channel.patchCategory(id, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as Category

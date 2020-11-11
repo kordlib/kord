@@ -1,8 +1,9 @@
 package com.gitlab.kordlib.core.entity
 
-import com.gitlab.kordlib.common.entity.Premium
+import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.UserFlags
+import com.gitlab.kordlib.common.entity.UserPremium
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
 import com.gitlab.kordlib.core.behavior.UserBehavior
@@ -10,18 +11,17 @@ import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.rest.Image
-import java.util.*
 
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
  */
 open class User(
         val data: UserData,
-        override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier
+        override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : UserBehavior {
 
     override val id: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     val avatar: Avatar get() = Avatar(data, kord)
 
@@ -38,12 +38,23 @@ open class User(
     /**
      * The flags on a user's account, if present.
      */
-    val flags: UserFlags? get() = data.flags
+    @Deprecated("Use publicFlags instead.", ReplaceWith("publicFlags"), DeprecationLevel.ERROR)
+    @DeprecatedSinceKord("0.7.0")
+    val flags: UserFlags? by ::publicFlags
+
+    /**
+     * The flags on a user's account, if present.
+     */
+    val publicFlags: UserFlags? get() = data.publicFlags.value
 
     /**
      * The type of Nitro subscription on a user's account, if present.
      */
-    val premiumType: Premium? get() = data.premium
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated("premiumType is never present.", level = DeprecationLevel.ERROR)
+    @DeprecatedSinceKord("0.7.0")
+    val premiumType: UserPremium?
+        get() = throw NotImplementedError("premiumType is no longer supported.")
 
     /**
      * The complete user tag.
@@ -51,13 +62,11 @@ open class User(
     val tag: String get() = "$username#$discriminator"
 
     /**
-     * Whether this user is a bot, if present.
+     * Whether this user is a bot account.
      */
-    val isBot: Boolean? get() = data.bot
+    val isBot: Boolean get() = data.bot.discordBoolean
 
-    override suspend fun asUser(): User = this
-
-    override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = id.hashCode()
 
     override fun equals(other: Any?): Boolean = when (other) {
         is UserBehavior -> other.id == id

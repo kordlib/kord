@@ -7,8 +7,11 @@ import com.gitlab.kordlib.cache.api.remove
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
+import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.event.channel.*
+import com.gitlab.kordlib.core.event.channel.data.ChannelPinsUpdateEventData
+import com.gitlab.kordlib.core.event.channel.data.TypingStartEventData
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.core.toInstant
 import com.gitlab.kordlib.core.toSnowflakeOrNull
@@ -68,7 +71,7 @@ internal class ChannelEventHandler(
     }
 
     private suspend fun handle(event: ChannelDelete, shard: Int) {
-        cache.remove<ChannelData> { ChannelData::id eq event.channel.id.toLong() }
+        cache.remove<ChannelData> { idEq(ChannelData::id, event.channel.id) }
         val data = ChannelData.from(event.channel)
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
@@ -85,10 +88,10 @@ internal class ChannelEventHandler(
     }
 
     private suspend fun handle(event: ChannelPinsUpdate, shard: Int) = with(event.pins) {
-        val coreEvent = ChannelPinsUpdateEvent(Snowflake(channelId), lastPinTimestamp?.toInstant(), kord, shard)
+        val coreEvent = ChannelPinsUpdateEvent(ChannelPinsUpdateEventData.from(this), kord, shard)
 
-        cache.query<ChannelData> { ChannelData::id eq channelId.toLong() }.update {
-            it.copy(lastPinTimestamp = lastPinTimestamp ?: it.lastPinTimestamp)
+        cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
+            it.copy(lastPinTimestamp = lastPinTimestamp)
         }
 
         coreEventChannel.send(coreEvent)
@@ -96,10 +99,7 @@ internal class ChannelEventHandler(
 
     private suspend fun handle(event: TypingStart, shard: Int) = with(event.data) {
         val coreEvent = TypingStartEvent(
-                Snowflake(channelId),
-                Snowflake(userId),
-                guildId.toSnowflakeOrNull(),
-                timestamp.toInstant(),
+                TypingStartEventData.from(this),
                 kord,
                 shard
         )

@@ -1,62 +1,92 @@
 package com.gitlab.kordlib.common.entity
 
-import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.*
 
 @Serializable
-data class DiscordPresenceUpdateData(
+data class DiscordPresenceUpdate(
         val user: DiscordPresenceUser,
-        val roles: List<String>? = null,
-        val game: DiscordActivity? = null,
+        /*
+        Don't trust the docs:
+        2020-11-05: Discord documentation incorrectly claims this field is non-optional,
+        yet it is not present during the READY event.
+        */
         @SerialName("guild_id")
-        val guildId: String? = null, //don't trust the docs
-        val status: Status,
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val status: PresenceStatus,
         val activities: List<DiscordActivity>,
         @SerialName("client_status")
-        val clientStatus: DiscordClientStatus
+        val clientStatus: DiscordClientStatus,
 )
 
-@Serializable
+@Serializable(with = DiscordPresenceUser.Serializer::class)
 data class DiscordPresenceUser(
-        val id: String,
-        val username: JsonElement? = null,
-        val discriminator: JsonElement? = null,
-        val avatar: JsonElement? = null,
-        val bot: JsonElement? = null,
-        @SerialName("mfa_enable")
-        val mfaEnable: JsonElement? = null,
-        val locale: JsonElement? = null,
-        val flags: JsonElement? = null,
-        @SerialName("premium_type")
-        val premiumType: JsonElement? = null,
-        val verified: JsonElement? = null,
-        val email: JsonElement? = null
-)
+        val id: Snowflake,
+        val details: JsonObject,
+) {
+
+    internal object Serializer : KSerializer<DiscordPresenceUser> {
+
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Kord.DiscordPresenceUser") {
+            element<Snowflake>("id")
+            element<JsonElement>("details")
+        }
+
+        override fun deserialize(decoder: Decoder): DiscordPresenceUser {
+            val jsonDecoder = decoder as? JsonDecoder ?: error("Can be deserialized only by JSON")
+            val json = jsonDecoder.decodeJsonElement().jsonObject
+            val id = Snowflake(json.getValue("id").jsonPrimitive.content)
+            val details = json.toMutableMap()
+            details.remove("id")
+
+            return DiscordPresenceUser(id, JsonObject(details))
+        }
+
+        override fun serialize(encoder: Encoder, value: DiscordPresenceUser) {
+            val jsonEncoder = encoder as? JsonEncoder ?: error("Can be serialized only by JSON")
+            val details = value.details.toMutableMap()
+            details["id"] = JsonPrimitive(value.id.asString)
+
+            jsonEncoder.encodeJsonElement(JsonObject(details))
+        }
+    }
+
+}
 
 @Serializable
-data class DiscordClientStatus(val desktop: Status? = null, val mobile: Status? = null, val web: Status? = null)
+data class DiscordClientStatus(
+        val desktop: Optional<PresenceStatus> = Optional.Missing(),
+        val mobile: Optional<PresenceStatus> = Optional.Missing(),
+        val web: Optional<PresenceStatus> = Optional.Missing(),
+)
 
-@Serializable(with = Status.StatusSerializer::class)
-enum class Status {
-        /** The default code for unknown values. */
-        Unknown,
-        Online, DnD, Idle, Invisible, Offline;
+@Serializable(with = PresenceStatus.StatusSerializer::class)
+sealed class PresenceStatus(val value: String) {
 
-        companion object StatusSerializer : KSerializer<Status> {
-                override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Status", PrimitiveKind.STRING)
+    class Unknown(value: String) : PresenceStatus(value)
+    object Online : PresenceStatus("online")
+    object Idle : PresenceStatus("idle")
+    object DoNotDisturb : PresenceStatus("dnd")
 
-                override fun deserialize(decoder: Decoder): Status {
-                        val name = decoder.decodeString()
-                        return values().firstOrNull { it.name.toLowerCase() == name } ?: Unknown
-                }
+    companion object StatusSerializer : KSerializer<PresenceStatus> {
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Kord.ClientStatus", PrimitiveKind.STRING)
 
-                override fun serialize(encoder: Encoder, value: Status) {
-                        encoder.encodeString(value.name.toLowerCase())
-                }
+        override fun deserialize(decoder: Decoder): PresenceStatus = when (val value = decoder.decodeString()) {
+            "online" -> Online
+            "idle" -> Idle
+            "dnd" -> DoNotDisturb
+            else -> Unknown(value)
         }
+
+        override fun serialize(encoder: Encoder, value: PresenceStatus) {
+            encoder.encodeString(value.value)
+        }
+    }
 }

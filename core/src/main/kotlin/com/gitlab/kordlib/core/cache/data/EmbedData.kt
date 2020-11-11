@@ -1,26 +1,31 @@
+@file:Suppress("DEPRECATION")
+
 package com.gitlab.kordlib.core.cache.data
 
-import com.gitlab.kordlib.common.entity.Embed
+import com.gitlab.kordlib.common.entity.DiscordEmbed
+import com.gitlab.kordlib.common.entity.EmbedType
+import com.gitlab.kordlib.common.entity.optional.*
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class EmbedData(
-        val title: String? = null,
-        val type: String? = null,
-        val description: String? = null,
-        val url: String? = null,
-        val timestamp: String? = null,
-        val color: Int? = null,
-        val footer: EmbedFooterData? = null,
-        val image: EmbedImageData? = null,
-        val thumbnail: EmbedThumbnailData? = null,
-        val video: EmbedVideoData? = null,
-        val provider: EmbedProviderData? = null,
-        val author: EmbedAuthorData? = null,
-        val fields: List<EmbedFieldData> = emptyList()
+        val title: Optional<String> = Optional.Missing(),
+        @Suppress("DEPRECATION")
+        val type: Optional<EmbedType> = Optional.Missing(),
+        val description: Optional<String> = Optional.Missing(),
+        val url: Optional<String> = Optional.Missing(),
+        val timestamp: Optional<String> = Optional.Missing(),
+        val color: OptionalInt = OptionalInt.Missing,
+        val footer: Optional<EmbedFooterData> = Optional.Missing(),
+        val image: Optional<EmbedImageData> = Optional.Missing(),
+        val thumbnail: Optional<EmbedThumbnailData> = Optional.Missing(),
+        val video: Optional<EmbedVideoData> = Optional.Missing(),
+        val provider: Optional<EmbedProviderData> = Optional.Missing(),
+        val author: Optional<EmbedAuthorData> = Optional.Missing(),
+        val fields: Optional<List<EmbedFieldData>> = Optional.Missing(),
 ) {
     companion object {
-        fun from(entity: Embed) = with(entity) {
+        fun from(entity: DiscordEmbed) = with(entity) {
             EmbedData(
                     title,
                     type,
@@ -28,13 +33,13 @@ data class EmbedData(
                     url,
                     timestamp,
                     color,
-                    footer?.let { EmbedFooterData.from(it) },
-                    image?.let { EmbedImageData.from(it) },
-                    thumbnail?.let { EmbedThumbnailData.from(it) },
-                    video?.let { EmbedVideoData.from(it) },
-                    provider?.let { EmbedProviderData.from(it) },
-                    author?.let { EmbedAuthorData.from(it) },
-                    fields.orEmpty().map { EmbedFieldData.from(it) }
+                    footer.map { EmbedFooterData.from(it) },
+                    image.map { EmbedImageData.from(it) },
+                    thumbnail.map { EmbedThumbnailData.from(it) },
+                    video.map { EmbedVideoData.from(it) },
+                    provider.map { EmbedProviderData.from(it) },
+                    author.map { EmbedAuthorData.from(it) },
+                    fields.mapList { EmbedFieldData.from(it) },
             )
         }
     }
@@ -43,11 +48,11 @@ data class EmbedData(
 @Serializable
 data class EmbedFooterData(
         val text: String,
-        val iconUrl: String? = null,
-        val proxyIconUrl: String? = null
+        val iconUrl: Optional<String> = Optional.Missing(),
+        val proxyIconUrl: Optional<String> = Optional.Missing(),
 ) {
     companion object {
-        fun from(entity: Embed.Footer) = with(entity) {
+        fun from(entity: DiscordEmbed.Footer) = with(entity) {
             EmbedFooterData(text, iconUrl, proxyIconUrl)
         }
     }
@@ -55,13 +60,13 @@ data class EmbedFooterData(
 
 @Serializable
 data class EmbedImageData(
-        val url: String? = null,
-        val proxyUrl: String? = null,
-        val height: Int? = null,
-        val width: Int? = null
+        val url: Optional<String> = Optional.Missing(),
+        val proxyUrl: Optional<String> = Optional.Missing(),
+        val height: OptionalInt = OptionalInt.Missing,
+        val width: OptionalInt = OptionalInt.Missing,
 ) {
     companion object {
-        fun from(entity: Embed.Image) = with(entity) {
+        fun from(entity: DiscordEmbed.Image) = with(entity) {
             EmbedImageData(url, proxyUrl, height, width)
         }
     }
@@ -69,13 +74,13 @@ data class EmbedImageData(
 
 @Serializable
 data class EmbedThumbnailData(
-        val url: String? = null,
-        val proxyUrl: String? = null,
-        val height: Int? = null,
-        val width: Int? = null
+        val url: Optional<String> = Optional.Missing(),
+        val proxyUrl: Optional<String> = Optional.Missing(),
+        val height: OptionalInt = OptionalInt.Missing,
+        val width: OptionalInt = OptionalInt.Missing,
 ) {
     companion object {
-        fun from(entity: Embed.Thumbnail) = with(entity) {
+        fun from(entity: DiscordEmbed.Thumbnail) = with(entity) {
             EmbedThumbnailData(url, proxyUrl, height, width)
         }
     }
@@ -83,12 +88,12 @@ data class EmbedThumbnailData(
 
 @Serializable
 data class EmbedVideoData(
-        val url: String? = null,
-        val height: Int? = null,
-        val width: Int? = null
+        val url: Optional<String> = Optional.Missing(),
+        val height: OptionalInt = OptionalInt.Missing,
+        val width: OptionalInt = OptionalInt.Missing,
 ) {
     companion object {
-        fun from(entity: Embed.Video) = with(entity) {
+        fun from(entity: DiscordEmbed.Video) = with(entity) {
             EmbedVideoData(url, height, width)
         }
     }
@@ -96,11 +101,11 @@ data class EmbedVideoData(
 
 @Serializable
 data class EmbedProviderData(
-        val name: String? = null,
-        val url: String? = null
+        val name: Optional<String> = Optional.Missing(),
+        val url: Optional<String> = Optional.Missing(),
 ) {
     companion object {
-        fun from(entity: Embed.Provider) = with(entity) {
+        fun from(entity: DiscordEmbed.Provider) = with(entity) {
             EmbedProviderData(name, url)
         }
     }
@@ -108,13 +113,13 @@ data class EmbedProviderData(
 
 @Serializable
 data class EmbedAuthorData(
-        val name: String? = null,
-        val url: String? = null,
-        val iconUrl: String? = null,
-        val proxyIconUrl: String? = null
+        val name: Optional<String> = Optional.Missing(),
+        val url: Optional<String> = Optional.Missing(),
+        val iconUrl: Optional<String> = Optional.Missing(),
+        val proxyIconUrl: Optional<String> = Optional.Missing(),
 ) {
     companion object {
-        fun from(entity: Embed.Author) = with(entity) {
+        fun from(entity: DiscordEmbed.Author) = with(entity) {
             EmbedAuthorData(name, url, iconUrl, proxyIconUrl)
         }
     }
@@ -124,10 +129,10 @@ data class EmbedAuthorData(
 data class EmbedFieldData(
         val name: String,
         val value: String,
-        val inline: Boolean? = null
+        val inline: OptionalBoolean = OptionalBoolean.Missing,
 ) {
     companion object {
-        fun from(entity: Embed.Field) = with(entity) {
+        fun from(entity: DiscordEmbed.Field) = with(entity) {
             EmbedFieldData(name, value, inline)
         }
     }

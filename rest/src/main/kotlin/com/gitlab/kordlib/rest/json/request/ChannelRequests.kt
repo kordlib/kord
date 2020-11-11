@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.json.request
 
 import com.gitlab.kordlib.common.entity.Overwrite
+import com.gitlab.kordlib.common.entity.OverwriteType
 import com.gitlab.kordlib.common.entity.Permissions
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -40,4 +41,4 @@ data class ChannelModifyPatchRequest(
 )
 
 @Serializable
-data class ChannelPermissionEditRequest(val allow: Permissions, val deny: Permissions, val type: String)
+data class ChannelPermissionEditRequest(val allow: Permissions, val deny: Permissions, val type: OverwriteType)

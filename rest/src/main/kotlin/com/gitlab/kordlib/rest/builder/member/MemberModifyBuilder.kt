@@ -16,9 +16,9 @@ class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest> {
 
     override fun toRequest(): GuildMemberModifyRequest = GuildMemberModifyRequest(
             nick = nickname,
-            channelId = voiceChannelId?.value,
+            channelId = voiceChannelId?.asString,
             mute = muted,
             deaf = deafened,
-            roles = roles?.map { it.value }
+            roles = roles?.map { it.asString }
     )
 }

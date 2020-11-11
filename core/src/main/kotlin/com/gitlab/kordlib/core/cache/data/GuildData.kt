@@ -2,121 +2,117 @@ package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.common.entity.optional.*
 import kotlinx.serialization.Serializable
+
+private val MessageData.nullableGuildId get() = guildId.value
+private val ChannelData.nullableGuildId get() = guildId.value
+private val WebhookData.nullableGuildId get() = guildId.value
 
 @Serializable
 data class GuildData(
-        val id: Long,
+        val id: Snowflake,
         val name: String,
-        val icon: String? = null,
-        val splash: String? = null,
-        val owner: Boolean? = null,
-        val ownerId: Long,
-        val permissions: Permissions? = null,
+        val icon: String?,
+        val iconHash: Optional<String?> = Optional.Missing(),
+        val splash: Optional<String?> = Optional.Missing(),
+        val discoverySplash: Optional<String?> = Optional.Missing(),
+        //val owner: OptionalBoolean = OptionalBoolean.Missing, useless?
+        val ownerId: Snowflake,
+        val permissions: Optional<Permissions> = Optional.Missing(),
         val region: String,
-        val afkChannelId: Long? = null,
+        val afkChannelId: Snowflake?,
         val afkTimeout: Int,
-        //TODO, keep this?
-        val embedEnabled: Boolean? = null,
-        val embedChannelId: Long? = null,
+        val widgetEnabled: OptionalBoolean = OptionalBoolean.Missing,
+        val widgetChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
         val verificationLevel: VerificationLevel,
         val defaultMessageNotifications: DefaultMessageNotificationLevel,
         val explicitContentFilter: ExplicitContentFilter,
-        val roles: List<Long>,
-        val emojis: List<EmojiData>,
+        val roles: List<Snowflake>,
+        val emojis: List<Snowflake>,
         val features: List<GuildFeature>,
         val mfaLevel: MFALevel,
-        val applicationId: Long? = null,
-        val widgetEnabled: Boolean? = null,
-        val widgetChannelId: Long? = null,
-        val systemChannelId: Long? = null,
-        val joinedAt: String? = null,
-        val large: Boolean? = null,
-        val memberCount: Int? = null,
-        val voiceStates: List<VoiceStateData> = emptyList(),
-        val members: List<MemberData> = emptyList(),
-        val channels: List<Long> = emptyList(),
-        val presences: List<PresenceData> = emptyList(),
-        val maxPresences: Int? = null,
-        val maxMembers: Int? = null,
-        val vanityUrlCode: String? = null,
-        val description: String? = null,
-        val banner: String? = null,
-        val systemChannelFlags: SystemChannelFlags? = null,
-        val rulesChannelId: Long? = null,
-        val discoverySplash: String? = null,
-        val publicUpdatesChannelId: Long? = null,
+        val applicationId: Snowflake?,
+        val systemChannelId: Snowflake?,
+        val systemChannelFlags: SystemChannelFlags,
+        val rulesChannelId: Snowflake?,
+        val joinedAt: Optional<String> = Optional.Missing(),
+        val large: OptionalBoolean = OptionalBoolean.Missing,
+        //val unavailable: OptionalBoolean = OptionalBoolean.Missing, useless?
+        val memberCount: OptionalInt = OptionalInt.Missing,
+//        val members: Optional<List<Snowflake>> = Optional.Missing(),
+        val channels: Optional<List<Snowflake>> = Optional.Missing(),
+        val maxPresences: OptionalInt? = OptionalInt.Missing,
+        val maxMembers: OptionalInt = OptionalInt.Missing,
+        val vanityUrlCode: String?,
+        val description: String?,
+        val banner: String?,
+        val premiumTier: PremiumTier,
+        val premiumSubscriptionCount: OptionalInt = OptionalInt.Missing,
         val preferredLocale: String,
-
-        /**
-         * Approximate number of members in this guild,
-         * returned from the GET /guild/<id> endpoint when with_counts is true
-         */
-        val approximateMemberCount: Int? = null,
-
-        /**
-         * Approximate number of online members in this guild,
-         * returned from the GET /guild/<id> endpoint when with_counts is true
-         */
-        val approximatePresenceCount: Int? = null
+        val publicUpdatesChannelId: Snowflake?,
+        val maxVideoChannelUsers: OptionalInt = OptionalInt.Missing,
+        val approximateMemberCount: OptionalInt = OptionalInt.Missing,
+        val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
 ) {
     companion object {
 
         val description = description(GuildData::id) {
+
             link(GuildData::id to RoleData::guildId)
-            link(GuildData::id to ChannelData::guildId)
+            link(GuildData::id to ChannelData::nullableGuildId)
             link(GuildData::id to MemberData::guildId)
-            @Suppress("DEPRECATION")
-            link(GuildData::id to MessageData::guildId)
-            link(GuildData::id to WebhookData::guildId)
+            link(GuildData::id to MessageData::nullableGuildId)
+            link(GuildData::id to WebhookData::nullableGuildId)
             link(GuildData::id to VoiceStateData::guildId)
             link(GuildData::id to PresenceData::guildId)
         }
 
         fun from(entity: DiscordGuild) = with(entity) {
             GuildData(
-                    id.toLong(),
-                    name,
-                    icon,
-                    splash,
-                    owner,
-                    ownerId.toLong(),
-                    permissions,
-                    region,
-                    afkChannelId?.toLong(),
-                    afkTimeout,
-                    embedEnabled,
-                    embedChannelId?.toLong(),
-                    verificationLevel,
-                    defaultMessageNotifications,
-                    explicitContentFilter,
-                    roles.map { it.id.toLong() },
-                    emojis.map { EmojiData.from(guildId = id, id = it.id!!, entity = it) },
-                    features,
-                    mfaLevel,
-                    applicationId?.toLong(),
-                    widgetEnabled,
-                    widgetChannelId?.toLong(),
-                    systemChannelId?.toLong(),
-                    joinedAt,
-                    large,
-                    memberCount,
-                    voiceStates.orEmpty().map { VoiceStateData.from(id, it) },
-                    members.orEmpty().map { MemberData.from(userId = it.user!!.id, guildId = id, entity = it) },
-                    channels.orEmpty().map { it.id.toLong() },
-                    presences.orEmpty().map { PresenceData.from(id, it) },
-                    maxPresences,
-                    maxMembers,
-                    vanityUrlCode,
-                    description,
-                    banner,
-                    systemChannelFlags,
-                    rulesChannelId?.toLong(),
-                    discoverySplash,
-                    publicUpdatesChannelId?.toLong(),
-                    preferredLocale,
+                    id = id,
+                    name = name,
+                    icon = icon,
+                    iconHash = iconHash,
+                    splash = splash,
+                    discoverySplash = discoverySplash,
+                    //owner = owner,
+                    ownerId = ownerId,
+                    permissions = permissions,
+                    region = region,
+                    afkChannelId = afkChannelId,
+                    afkTimeout = afkTimeout,
+                    widgetEnabled = widgetEnabled,
+                    widgetChannelId = widgetChannelId,
+                    verificationLevel = verificationLevel,
+                    defaultMessageNotifications = defaultMessageNotifications,
+                    explicitContentFilter = explicitContentFilter,
+                    roles = roles.map { it.id },
+                    emojis = emojis.map { it.id!! },
+                    features = features,
+                    mfaLevel = mfaLevel,
+                    applicationId = applicationId,
+                    systemChannelId = systemChannelId,
+                    systemChannelFlags = systemChannelFlags,
+                    rulesChannelId = rulesChannelId,
+                    joinedAt = joinedAt,
+                    large = large,
+//                    unavailable = unavailable,
+                    memberCount = memberCount,
+//                    members = members.mapList { it.user.value!!.id },
+                    channels = channels.mapList { it.id },
+                    maxPresences = maxPresences,
+                    maxMembers = maxMembers,
+                    vanityUrlCode = vanityUrlCode,
+                    description = description,
+                    banner = banner,
+                    premiumTier = premiumTier,
+                    premiumSubscriptionCount = premiumSubscriptionCount,
+                    preferredLocale = preferredLocale,
+                    publicUpdatesChannelId = publicUpdatesChannelId,
+                    maxVideoChannelUsers = maxVideoChannelUsers,
                     approximateMemberCount = approximateMemberCount,
-                    approximatePresenceCount = approximatePresenceCount
+                    approximatePresenceCount = approximatePresenceCount,
             )
         }
     }

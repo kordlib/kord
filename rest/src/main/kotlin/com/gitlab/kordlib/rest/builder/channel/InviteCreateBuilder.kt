@@ -43,8 +43,8 @@ class InviteCreateBuilder : RequestBuilder<InviteCreateRequest> {
             age = age,
             unique = unique,
             uses = uses,
-            targetUser = targetUser?.value,
-            targetUserType = targetUser?.let { TargetUserType.STREAM }
+            targetUser = targetUser?.asString,
+            targetUserType = targetUser?.let { TargetUserType.Stream }
     )
 }
 

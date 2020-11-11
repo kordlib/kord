@@ -52,7 +52,7 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
      */
     @KordPreview
     suspend fun follow(target: Snowflake) {
-        kord.rest.channel.followNewsChannel(id.value, ChannelFollowRequest(webhookChannelId = target.value))
+        kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target.asString))
     }
 
     /**
@@ -95,7 +95,7 @@ suspend inline fun NewsChannelBehavior.edit(builder: NewsChannelModifyBuilder.()
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.channel.patchNewsChannel(id.value, builder)
+    val response = kord.rest.channel.patchNewsChannel(id, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as NewsChannel
