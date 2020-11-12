@@ -14,10 +14,21 @@ import kotlin.time.toKotlinDuration
 
 /**
  * A unique identifier for entities [used by discord](https://discord.com/developers/docs/reference#snowflakes).
+ *
+ * @constructor Creates a Snowflake from a given Long [value].
  */
 @Serializable(with = Snowflake.Serializer::class)
 class Snowflake(val value: Long) : Comparable<Snowflake> {
+
+    /**
+     * Creates a Snowflake from a given String [value], parsing it a [Long] value.
+     */
     constructor(value: String) : this(value.toLong())
+
+    /**
+     * Creates a Snowflake from a given [instant].
+     */
+    constructor(instant: Instant): this((instant.toEpochMilli() shl 22) - discordEpochLong)
 
     val asString get() = value.toString()
 
@@ -38,6 +49,19 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
     companion object {
         private const val discordEpochLong = 1420070400000L
         val discordEpochStart: Instant = Instant.ofEpochMilli(discordEpochLong)
+
+        /**
+         * The maximum value a Snowflake can hold.
+         * Useful when requesting paginated entities.
+         */
+        val max: Snowflake = Snowflake(Long.MAX_VALUE)
+
+        /**
+         * The minimum value a Snowflake can hold.
+         * Useful when requesting paginated entities.
+         */
+        val min: Snowflake = Snowflake(0)
+
     }
 
     internal class Serializer : KSerializer<Snowflake> {
