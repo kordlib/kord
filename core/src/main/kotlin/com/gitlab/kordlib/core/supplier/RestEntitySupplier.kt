@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.core.supplier
 
+import com.gitlab.kordlib.common.entity.AuditLogEvent
+import com.gitlab.kordlib.common.entity.DiscordAuditLogEntry
 import com.gitlab.kordlib.common.entity.DiscordPartialGuild
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
@@ -13,6 +15,8 @@ import com.gitlab.kordlib.core.entity.channel.GuildChannel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.paginateBackwards
 import com.gitlab.kordlib.core.paginateForwards
+import com.gitlab.kordlib.rest.builder.auditlog.AuditLogGetRequestBuilder
+import com.gitlab.kordlib.rest.json.request.AuditLogGetRequest
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.service.*
@@ -281,6 +285,18 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
     override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? = catchNotFound {
         val response = guild.getGuildWidget(guildId)
         return GuildWidget(GuildWidgetData.from(response), guildId, kord)
+    }
+
+    inline fun getAuditLogEntries(
+            guildId: Snowflake,
+            builder: AuditLogGetRequestBuilder.() -> Unit
+    ): Flow<DiscordAuditLogEntry> = getAuditLogEntries(guildId, AuditLogGetRequestBuilder().apply(builder).toRequest())
+
+    fun getAuditLogEntries(
+            guildId: Snowflake,
+            request: AuditLogGetRequest = AuditLogGetRequest()
+    ): Flow<DiscordAuditLogEntry> = paginateBackwards(Snowflake.max, batchSize = 100, DiscordAuditLogEntry::id) {
+        auditLog.getAuditLogs(guildId, request.copy(before = it.value)).auditLogEntries
     }
 
     override fun toString(): String {

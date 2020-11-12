@@ -15,7 +15,6 @@ import com.gitlab.kordlib.core.entity.channel.TextChannel
 import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.request.RestRequestException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
@@ -392,10 +391,9 @@ class RestServiceTest {
     @Test
     @Order(Int.MAX_VALUE - 1)
     fun `audit logs`() = runBlocking {
-        //TODO("core audit logs")
+        guild.getAuditLogEntries().toList()
         Unit
     }
-
 
     @Test
     @Order(Int.MAX_VALUE)

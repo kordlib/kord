@@ -34,7 +34,7 @@ sealed class Route<T>(
         : Route<BotGatewayResponse>(HttpMethod.Get, "/gateway/bot", BotGatewayResponse.serializer())
 
     object AuditLogGet
-        : Route<AuditLogResponse>(HttpMethod.Get, "/guilds/$GuildId/audit-logs", AuditLogResponse.serializer())
+        : Route<DiscordAuditLog>(HttpMethod.Get, "/guilds/$GuildId/audit-logs", DiscordAuditLog.serializer())
 
     object ChannelGet
         : Route<DiscordChannel>(HttpMethod.Get, "/channels/$ChannelId", DiscordChannel.serializer())

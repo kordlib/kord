@@ -18,6 +18,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.rest
 import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
+import com.gitlab.kordlib.rest.builder.auditlog.AuditLogGetRequestBuilder
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
@@ -639,3 +640,21 @@ suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfOrNull(c
 suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
     return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)
 }
+
+/**
+ * The [Audit log entries][AuditLogEntry] from this guild, configured by the [builder].
+ *
+ * The returned flow is lazily executed, any [RequestException] will be thrown on
+ * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+ *
+ * ```kotlin
+ *  val change = guild.getAuditLogEntries {
+ *      userId = user.id
+ *      action = AuditLogEvent.MemberUpdate
+ *  }.mapNotNull { it[AuditLogChangeKey.Nick] }.firstOrNull() ?: return
+ *
+ *  println("user changed nickname from $old to $new")
+ *  ```
+ */
+inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> =
+        kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }

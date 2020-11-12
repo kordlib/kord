@@ -1,5 +1,8 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalInt
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -14,6 +17,19 @@ data class DiscordRole(
         val managed: Boolean,
         val mentionable: Boolean
 )
+
+@Serializable
+data class DiscordPartialRole(
+        val id: Snowflake,
+        val name: Optional<String> = Optional.Missing(),
+        val color: OptionalInt = OptionalInt.Missing,
+        val hoist: OptionalBoolean = OptionalBoolean.Missing,
+        val position: OptionalInt = OptionalInt.Missing,
+        val permissions: Optional<Permissions> = Optional.Missing(),
+        val managed: OptionalBoolean = OptionalBoolean.Missing,
+        val mentionable: OptionalBoolean = OptionalBoolean.Missing
+)
+
 
 @Serializable
 data class DiscordAuditLogRoleChange(
