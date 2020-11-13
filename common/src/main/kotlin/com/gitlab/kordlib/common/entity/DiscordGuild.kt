@@ -14,6 +14,12 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
 
+/**
+ * A partial representation of a [DiscordGuild] that may be [unavailable].
+ *
+ * @param id the id of the Guild.
+ * @param unavailable Whether the Guild is unavailable. Contains a value on true.
+ */
 @Serializable
 data class DiscordUnavailableGuild(
         val id: Snowflake,
@@ -225,6 +231,23 @@ data class DiscordWebhooksUpdateData(
         val channelId: Snowflake,
 )
 
+/**
+ * A representation of the [Discord Voice State structure](https://discord.com/developers/docs/resources/voice#voice-state-object).
+ * Used to represent a user's voice connection status.
+ *
+ * @param guildId the guild id this voice state is for.
+ * @param channelId the channel id this user is connection to.
+ * @param userId The user id this voice state is for.
+ * @param member the guild member this voice state is for.
+ * @param sessionId The session id for this voice state.
+ * @param deaf Whether this user is deafened by the server.
+ * @param mute Whether this user is muted by the server.
+ * @param selfDeaf Whether this user is locally deafened.
+ * @param selfMute Whether this is locally muted
+ * @param selfStream Whether this user is stream using "Go Live".
+ * @param selfVideo Whether this user's camera is enabled.
+ * @param suppress Whether this user is muted by the current user.
+ */
 @Serializable
 data class DiscordVoiceState(
         @SerialName("guild_id")
@@ -243,11 +266,23 @@ data class DiscordVoiceState(
         val selfDeaf: Boolean,
         @SerialName("self_mute")
         val selfMute: Boolean,
+        @SerialName("self_video")
+        val selfVideo: Boolean,
         @SerialName("self_stream")
         val selfStream: OptionalBoolean = OptionalBoolean.Missing,
         val suppress: Boolean,
 )
 
+/**
+ * A representation of the [Discord Voice Region structure](https://discord.com/developers/docs/resources/voice#voice-region-object).
+ *
+ * @param id Unique id for the region.
+ * @param name Name of the region.
+ * @param vip True if this is a vip-only server.
+ * @param optimal True for a single server that is closest to the current user's client.
+ * @param deprecated Whether this is a deprecated voice server (avoid switching to these).
+ * @param custom Whether this is a custom voice region (used for events/etc).
+ */
 @Serializable
 data class DiscordVoiceRegion(
         val id: String,

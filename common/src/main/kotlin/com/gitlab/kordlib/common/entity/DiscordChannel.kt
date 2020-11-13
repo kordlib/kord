@@ -13,6 +13,29 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * A representation of a [Discord Channel Structure](https://discord.com/developers/docs/resources/channel).
+ *
+ * @param id The id of the channel.
+ * @param type the Type of channel.
+ * @param guildId the id of the guild.
+ * @param position The sorting position of the channel.
+ * @param permissionOverwrites The explicit permission overwrite for members and roles.
+ * @param name The name of the channel.
+ * @param topic The channel topic.
+ * @param nsfw Whether the channel is nsfw.
+ * @param lastMessageId The id of the last message sent in this channel (may not point to an existing or valid message).
+ * @param bitrate The bitrate (in bits) of the voice channel.
+ * @param userLimit The user limit of the voice channel.
+ * @param rateLimitPerUser amount of seconds a user has to wait before sending another message; bots,
+ * as well as users with the permission [Permission.ManageMessages] or [Permission.ManageChannels] are unaffected.
+ * @param recipients The recipients of the DM.
+ * @param icon The icon hash.
+ * @param ownerId The id of DM creator.
+ * @param applicationId The application id of the group DM creator if it is bot-created.
+ * @param parentId The id of the parent category for a channel.
+ * @param lastPinTimestamp When the last pinned message was pinned.
+ */
 @Serializable
 data class DiscordChannel(
         val id: Snowflake,
@@ -48,12 +71,25 @@ data class DiscordChannel(
 sealed class ChannelType(val value: Int) {
     /** The default code for unknown values. */
     class Unknown(value: Int) : ChannelType(value)
+
+    /** A text channel within a server. */
     object GuildText : ChannelType(0)
+
+    /** A direct message between users. */
     object DM : ChannelType(1)
+
+    /** A voice channel within a server. */
     object GuildVoice : ChannelType(2)
+    /** A direct message between multiple users. */
     object GroupDM : ChannelType(3)
+
+    /** An organization category. */
     object GuildCategory : ChannelType(4)
+
+    /** A channel that users can follow and crosspost into their own server. */
     object GuildNews : ChannelType(5)
+
+    /** A channel in which game developers can sell their game on Discord. */
     object GuildStore : ChannelType(6)
 
     companion object;

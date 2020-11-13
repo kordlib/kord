@@ -14,6 +14,23 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+/**
+ * A representation of the [Discord User structure](https://discord.com/developers/docs/resources/user).
+ *
+ * @param id The user's id.
+ * @param username the user's username, not unique across the platform.
+ * @param discriminator the 4-digit discord-tag.
+ * @param avatar the user's avatar hash.
+ * @param bot Whether the user belongs to an OAuth2 application.
+ * @param system whether the user is an Official Discord System user (part of the urgent message system).
+ * @param mfaEnabled Whether the user has two factor enabled on their account.
+ * @param locale The user's chosen language option.
+ * @param verified Whether the email on this account has been verified. Requires the `email` OAuth2 scope.
+ * @param email The user's email. Requires the `email` OAuth2 scope.
+ * @param flags The flags on a user's account. Unlike [publicFlags], these **are not** visible to other users.
+ * @param premiumType The type of Nitro subscription on a user's account.
+ * @param publicFlags The public flags on a user's account. Unlike [flags], these **are** visible ot other users.
+ */
 @Serializable
 data class DiscordUser(
         val id: Snowflake,
@@ -34,6 +51,24 @@ data class DiscordUser(
         val publicFlags: Optional<UserFlags> = Optional.Missing(),
 )
 
+/**
+ * A representation of the [Discord User structure](https://discord.com/developers/docs/resources/user).
+ * This instance also contains a [member].
+ *
+ * @param id The user's id.
+ * @param username the user's username, not unique across the platform.
+ * @param discriminator the 4-digit discord-tag.
+ * @param avatar the user's avatar hash.
+ * @param bot Whether the user belongs to an OAuth2 application.
+ * @param system whether the user is an Official Discord System user (part of the urgent message system).
+ * @param mfaEnabled Whether the user has two factor enabled on their account.
+ * @param locale The user's chosen language option.
+ * @param verified Whether the email on this account has been verified. Requires the `email` OAuth2 scope.
+ * @param email The user's email. Requires the `email` OAuth2 scope.
+ * @param flags The flags on a user's account. Unlike [publicFlags], these **are not** visible to other users.
+ * @param premiumType The type of Nitro subscription on a user's account.
+ * @param publicFlags The public flags on a user's account. Unlike [flags], these **are** visible ot other users.
+ */
 @Serializable
 data class DiscordOptionallyMemberUser(
         val id: Snowflake,
@@ -50,6 +85,8 @@ data class DiscordOptionallyMemberUser(
         val flags: Optional<UserFlags> = Optional.Missing(),
         @SerialName("premium_type")
         val premiumType: Optional<UserPremium> = Optional.Missing(),
+        @SerialName("public_flags")
+        val publicFlags: Optional<UserFlags> = Optional.Missing(),
         val member: Optional<DiscordGuildMember>,
 )
 
@@ -134,6 +171,11 @@ data class UserFlags constructor(val code: Int) {
 
 }
 
+/**
+ * An instance of [Discord Premium Types](https://discord.com/developers/docs/resources/user#user-object-premium-types).
+ *
+ * Premium types denote the level of premium a user has.
+ */
 @Serializable(with = UserPremium.Serialization::class)
 sealed class UserPremium(val value: Int) {
     class Unknown(value: Int) : UserPremium(value)

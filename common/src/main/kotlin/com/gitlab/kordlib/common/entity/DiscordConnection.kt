@@ -11,6 +11,20 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * A representation of the D[Discord Connection Object structure](https://discord.com/developers/docs/resources/user#connection-object).
+ * The connection object that the user has attached.
+ *
+ * @param id The id of the connection account.
+ * @param name the username of the connection account.
+ * @param type The service of the connection (twitch, youtube).
+ * @param revoked Whether the connection is revoked.
+ * @param integrations A list of partial server integrations.
+ * @param verified Whether the connection is verified.
+ * @param friendSync Whether friend sync is enabled for this connection.
+ * @param showActivity Whether activities related to this connection will be shown in presence updates.
+ * @param visibility The visibility of this connection.
+ */
 @Serializable
 data class DiscordConnection(
         val id: String,
@@ -23,13 +37,21 @@ data class DiscordConnection(
         val friendSync: Boolean,
         @SerialName("show_activity")
         val showActivity: Boolean,
-        val visiblity: DiscordConnectionVisibility,
+        val visibility: DiscordConnectionVisibility,
 )
 
 @Serializable(with = DiscordConnectionVisibility.Serializer::class)
 sealed class DiscordConnectionVisibility(val value: Int) {
     class Unknown(value: Int) : DiscordConnectionVisibility(value)
+
+    /**
+     * The connection is invisible to everyone except the user themselves.
+     */
     object None : DiscordConnectionVisibility(0)
+
+    /**
+     * The connection is visible to everyone.
+     */
     object Everyone : DiscordConnectionVisibility(1)
 
     internal object Serializer : KSerializer<DiscordConnectionVisibility> {
