@@ -12,7 +12,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.JsonElement
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -26,6 +25,55 @@ data class DiscordUnavailableGuild(
         val unavailable: OptionalBoolean = OptionalBoolean.Missing,
 )
 
+/**
+ * A representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object
+ *
+ * @param id The guild id.
+ * @param name The guild name (2-100 characters, excluding trailing and leading whitespace)
+ * @param icon The icon hash.
+ * @param iconHash The icon hash, returned when in the template object.
+ * @param splash The splash hash.
+ * @param discoverySplash The discovery splash hash; only present for guilds with the [GuildFeature.Discoverable] feature.
+ * @param owner True if [DiscordUser] is the owner of the guild.
+ * @param ownerId The id of the owner.
+ * @param permissions The total permissions for [DiscordUser] in the guild (excludes [overwrites][Overwrite]).
+ * @param region [DiscordVoiceRegion] id for the guild.
+ * @param afkChannelId The id of afk channel.
+ * @param afkTimeout The afk timeout in seconds.
+ * @param widgetEnabled True if the server widget is enabled.
+ * @param widgetChannelId The channel id that the widget will generate an invite to, or `null` if set to no invite.
+ * @param verificationLevel [VerificationLevel] required for the guild.
+ * @param defaultMessageNotifications The [DefaultMessageNotificationLevel].
+ * @param explicitContentFilter The [ExplicitContentFilter].
+ * @param roles The roles in the guild.
+ * @param emojis The custom guild emojis.
+ * @param features The enabled guild features.
+ * @param mfaLevel The required [MFALevel] for the guild.
+ * @param applicationId The application id of the guild creator if it is bot-created.
+ * @param systemChannelId The id of the channel where guild notices such as welcome messages and boost events are posted.
+ * @param systemChannelFlags [SystemChannelFlags].
+ * @param rulesChannelId The id of the channel where Community guilds can display rules and/or guidelines.
+ * @param joinedAt When this guild was joined at.
+ * @param large True if this is considered a large guild.
+ * @param unavailable True if this guild is unavailable due to an outage.
+ * @param memberCount The total number of members in this guild.
+ * @param voiceStates The states of members currently in voice channels; lacks the [DiscordVoiceState.guildId] key.
+ * @param members The users in the guild.
+ * @param channels The channels in the guild.
+ * @param presences The presences of the members in the guild, will only include non-offline members if the size is greater than `large threshold`.
+ * @param maxPresences The maximum number of presences for the guild (the default value, currently 25000, is in effect when `null` is returned).
+ * @param maxMembers The maximum number of members for the guild.
+ * @param vanityUrlCode The vanity url code for the guild.
+ * @param description The description for the guild, if the guild is discoverable.
+ * @param banner The banner hash.
+ * @param premiumTier The [PremiumTier] (Server Boost level).
+ * @param premiumSubscriptionCount The number of boosts this guild currently has.
+ * @param preferredLocale The preferred locale of a Community guild; used in server discovery and notices from Discord; defaults to "en-US".
+ * @param publicUpdatesChannelId The id of the channel where admins and moderators of Community guilds receive notices from Discord.
+ * @param maxVideoChannelUsers The maximum amount of users in a video channel.
+ * @param approximateMemberCount The approximate number of members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
+ * @param approximatePresenceCount The approximate number of non-offline members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
+ */
 @Serializable
 data class DiscordGuild(
         val id: Snowflake,
@@ -103,6 +151,15 @@ data class DiscordGuild(
         val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
 )
 
+/**
+ * A partial representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object
+ *
+ * @param id The guild id.
+ * @param name The guild name (2-100 characters, excluding trailing and leading whitespace)
+ * @param icon The icon hash.
+ * @param owner True if [DiscordUser] is the owner of the guild.
+ * @param features The enabled guild features.
+ */
 @Serializable
 class DiscordPartialGuild(
         val id: Snowflake,
@@ -113,24 +170,53 @@ class DiscordPartialGuild(
         val features: List<GuildFeature>
 )
 
+/**
+ * A representation of a [Discord Guild Feature](https://discord.com/developers/docs/resources/guild#guild-object-guild-features).
+ */
 @Serializable(with = GuildFeature.Serializer::class)
 sealed class GuildFeature(val value: String) {
 
     override fun toString(): String = "GuildFeature(value=$value)"
 
     class Unknown(value: String) : GuildFeature(value)
+
+    /** Guild has access to set an invite splash background */
     object InviteSplash : GuildFeature("INVITE_SPLASH")
+
+    /** Guild has access to set 384kbps bitrate in voice (previously VIP voice servers) */
     object VIPRegions : GuildFeature("VIP_REGIONS")
+
+    /** Guild has access to set a vanity URL */
     object VanityUrl : GuildFeature("VANITY_URL")
+
+    /** Guild is verified */
     object Verified : GuildFeature("VERIFIED")
+
+    /** Guild is partnered */
     object Partnered : GuildFeature("PARTNERED")
+
+    /** Guild can enable welcome screen and discovery, and receives community updates */
     object Community : GuildFeature("COMMUNITY")
+
+    /** Guild has access to use commerce features (i.e. create store channels) */
     object Commerce : GuildFeature("COMMERCE")
+
+    /** Guild has access to create news channels */
     object News : GuildFeature("NEWS")
+
+    /** Guild is lurkable and able to be discovered directly */
     object Discoverable : GuildFeature("DISCOVERABLE")
+
+    /** Guild is able to be featured in the directory */
     object Featurable : GuildFeature("FEATURABLE")
+
+    /** Guild has access to set an animated guild icon */
     object AnimatedIcon : GuildFeature("ANIMATED_ICON")
+
+    /** Guild has access to set a guild banner image */
     object Banner : GuildFeature("BANNER")
+
+    /** Guild has enabled the welcome screen */
     object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
 
     internal object Serializer : KSerializer<GuildFeature> {
@@ -187,6 +273,9 @@ class SystemChannelFlags constructor(val code: Int) {
 
 }
 
+/**
+ * A representation of a [Discord Channels Flag](https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags).
+ */
 enum class SystemChannelFlag(val code: Int) {
     /** Suppress member join notifications. **/
     SuppressJoinNotifications(1.shl(0)),
@@ -293,6 +382,9 @@ data class DiscordVoiceRegion(
         val custom: Boolean,
 )
 
+/**
+ * A representation of a [Discord Premium tier](https://discord.com/developers/docs/resources/guild#guild-object-premium-tier).
+ */
 @Serializable(with = PremiumTier.Serializer::class)
 sealed class PremiumTier(val value: Int) {
     class Unknown(value: Int) : PremiumTier(value)
@@ -393,13 +485,26 @@ sealed class MFALevel(val value: Int) {
 }
 
 
+/**
+ * A representation of a [Discord Verification Level](https://discord.com/developers/docs/resources/guild#guild-object-verification-level).
+ */
 @Serializable(with = VerificationLevel.Serializer::class)
 sealed class VerificationLevel(val value: Int) {
     class Unknown(value: Int) : VerificationLevel(value)
+
+    /** Unrestricted. */
     object None : VerificationLevel(0)
+
+    /** Must have verified email and account.  */
     object Low : VerificationLevel(1)
+
+    /** Must be registered on Discord for longer than 5 minutes. */
     object Medium : VerificationLevel(2)
+
+    /** Must be member of the server for longer than 10 minutes */
     object High : VerificationLevel(3)
+
+    /** Must have a verified phone number */
     object VeryHigh : VerificationLevel(4)
 
     internal object Serializer : KSerializer<VerificationLevel> {
