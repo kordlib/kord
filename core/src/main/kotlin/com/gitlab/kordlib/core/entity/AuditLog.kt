@@ -14,7 +14,7 @@ class AuditLog(val data: DiscordAuditLog, val guildId: Snowflake, override val k
 
     val webhooks: List<Webhook> get() = data.webhooks.map { Webhook(WebhookData.from(it), kord) }
 
-    val integrations: List<Integration> get() = data.integrations.map { Integration(IntegrationData.from(guildId, it), kord) }
+    val integrations: List<Snowflake> get() = data.integrations.map { it.id }
 
     val entries: List<AuditLogEntry> get() = data.auditLogEntries.map { AuditLogEntry(it, kord) }
 

@@ -36,6 +36,14 @@ data class DiscordIntegration(
 )
 
 @Serializable
+data class DiscordPartialIntegration(
+        val id: Snowflake,
+        val name: String,
+        val type: String,
+        val account: DiscordIntegrationsAccount,
+    )
+
+@Serializable
 data class IntegrationApplication(
         val id: Snowflake,
         val name: String,

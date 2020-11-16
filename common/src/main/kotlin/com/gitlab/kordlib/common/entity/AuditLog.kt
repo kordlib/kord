@@ -22,7 +22,7 @@ data class DiscordAuditLog(
         val users: List<DiscordUser>,
         @SerialName("audit_log_entries")
         val auditLogEntries: List<DiscordAuditLogEntry>,
-        val integrations: List<DiscordIntegration>,
+        val integrations: List<DiscordPartialIntegration>,
 )
 
 @Serializable
