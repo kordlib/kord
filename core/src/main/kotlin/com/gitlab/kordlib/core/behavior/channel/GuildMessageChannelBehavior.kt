@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior.channel
 
+import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -116,12 +117,29 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@Deprecated("channel name is a mandatory field.", ReplaceWith("createWebhook(\"name\", builder)"), DeprecationLevel.WARNING)
+@DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCreateBuilder.() -> Unit): Webhook {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.webhook.createWebhook(id, builder)
+    return createWebhook("name", builder)
+}
+
+/**
+ * Requests to create a new webhook configured by the [builder].
+ *
+ * @return The created [Webhook] with the [Webhook.token] field present.
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildMessageChannelBehavior.createWebhook(name: String, builder: WebhookCreateBuilder.() -> Unit): Webhook {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val response = kord.rest.webhook.createWebhook(id, name, builder)
     val data = WebhookData.from(response)
 
     return Webhook(data, kord)

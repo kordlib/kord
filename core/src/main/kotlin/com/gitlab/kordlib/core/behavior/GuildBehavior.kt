@@ -5,6 +5,7 @@ import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.DiscordEmoji
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.Optional
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
@@ -18,6 +19,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.rest
 import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
+import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.builder.auditlog.AuditLogGetRequestBuilder
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
@@ -257,9 +259,7 @@ interface GuildBehavior : Entity, Strategizable {
      */
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Use editSelfNickname.", ReplaceWith("editSelfNickname(newNickname)"), DeprecationLevel.ERROR)
-    suspend fun modifySelfNickname(newNickname: String? = null): String {
-        return kord.rest.guild.modifyCurrentUserNickname(id, CurrentUserNicknameModifyRequest(newNickname))
-    }
+    suspend fun modifySelfNickname(newNickname: String? = null): String = editSelfNickname(newNickname)
 
     /**
      *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
@@ -267,7 +267,7 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun editSelfNickname(newNickname: String? = null): String {
-        return kord.rest.guild.modifyCurrentUserNickname(id, CurrentUserNicknameModifyRequest(newNickname))
+        return kord.rest.guild.modifyCurrentUserNickname(id, CurrentUserNicknameModifyRequest(Optional(newNickname)))
     }
 
     /**
@@ -452,12 +452,22 @@ suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): G
     return Guild(data, kord)
 }
 
+@Deprecated("emoji name and image are mandatory fields.", ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)"))
+@DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val discordEmoji = kord.rest.emoji.createEmoji(guildId = id, builder)
+    return createEmoji("name", Image.raw(byteArrayOf(), Image.Format.PNG), builder)
+}
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createEmoji(name: String, image: Image, builder: EmojiCreateBuilder.() -> Unit = {}): GuildEmoji {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val discordEmoji = kord.rest.emoji.createEmoji(guildId = id, name, image,  builder)
     return GuildEmoji(EmojiData.from(guildId = id, id = discordEmoji.id!!, discordEmoji), kord)
 }
 
@@ -468,12 +478,30 @@ suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> U
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@Deprecated("channel name is a mandatory field", ReplaceWith("createTextChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.createTextChannel(id, builder)
+    return createTextChannel("name", builder)
+}
+
+/**
+ * Requests to create a new text channel.
+ *
+ * @return The created [TextChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createTextChannel(name: String, builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val response = kord.rest.guild.createTextChannel(id, name, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as TextChannel
@@ -486,12 +514,29 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@Deprecated("channel name is a mandatory field.", ReplaceWith("createVoiceChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.createVoiceChannel(id, builder)
+    return createVoiceChannel("name", builder)
+}
+
+/**
+ * Requests to create a new voice channel.
+ *
+ * @return The created [VoiceChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createVoiceChannel(name: String, builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val response = kord.rest.guild.createVoiceChannel(id, name, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as VoiceChannel
@@ -504,16 +549,50 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@Deprecated("channel name is a mandatory field.", ReplaceWith("createNewsChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
-@KordPreview
 suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.createNewsChannel(id, builder)
+    return createNewsChannel("name", builder)
+}
+
+/**
+ * Requests to create a new news channel.
+ *
+ * @return The created [NewsChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createNewsChannel(name: String, builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val response = kord.rest.guild.createNewsChannel(id, name, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as NewsChannel
+}
+
+
+/**
+ * Requests to create a new category.
+ *
+ * @return The created [Category].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+@Deprecated("channel name is a mandatory field.", ReplaceWith("createCategoryChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@DeprecatedSinceKord("0.7.0")
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    return createCategory("name", builder)
 }
 
 /**
@@ -524,11 +603,11 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
+suspend inline fun GuildBehavior.createCategory(name: String, builder: CategoryCreateBuilder.() -> Unit): Category {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.createCategory(id, builder)
+    val response = kord.rest.guild.createCategory(id, name, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as Category

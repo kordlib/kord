@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
+import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
 import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordUnsafe
 import com.gitlab.kordlib.common.entity.DiscordShard
@@ -123,12 +124,29 @@ class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      * @return The newly created Guild.
      */
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated("guild name is a mandatory field", ReplaceWith("createGuild(\"name\", builder)"), DeprecationLevel.WARNING)
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        val response = rest.guild.createGuild(builder)
+        return createGuild("name", builder)
+    }
+
+    /**
+     * Requests to create a new Guild configured through the [builder].
+     * At least the [GuildCreateBuilder.name] has to be set.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @return The newly created Guild.
+     */
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createGuild(name: String, builder: GuildCreateBuilder.() -> Unit): Guild {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        val response = rest.guild.createGuild(name, builder)
         val data = GuildData.from(response)
 
         return Guild(data, this)
