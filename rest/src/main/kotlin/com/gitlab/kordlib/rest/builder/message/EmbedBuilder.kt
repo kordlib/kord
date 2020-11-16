@@ -2,6 +2,11 @@ package com.gitlab.kordlib.rest.builder.message
 
 import com.gitlab.kordlib.common.Color
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.delegate.delegate
+import com.gitlab.kordlib.common.entity.optional.map
+import com.gitlab.kordlib.common.entity.optional.mapList
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.*
 import java.time.Instant
@@ -23,55 +28,75 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         const val ZERO_WIDTH_SPACE = "\u200E"
     }
 
+    private var _title: Optional<String> = Optional.Missing()
+
     /**
      * The title of the embed. Limited to the length of [Limits.title].
      */
-    var title: String? = null
+    var title: String? by ::_title.delegate()
+
+    private var _description: Optional<String> = Optional.Missing()
 
     /**
      * The description of the embed. Limited to the length of [Limits.description].
      */
-    var description: String? = null
+    var description: String? by ::_description.delegate()
+
+
+    private var _url: Optional<String> = Optional.Missing()
 
     /**
      * The url of the embed's [title].
      */
-    var url: String? = null
+    var url: String? by ::_url.delegate()
+
+    private var _timestamp: Optional<Instant> = Optional.Missing()
 
     /**
      * The timestamp displayed at the bottom of the embed.
      */
-    var timestamp: Instant? = null
+    var timestamp: Instant? by ::_timestamp.delegate()
+
+    private var _color: Optional<Color> = Optional.Missing()
 
     /**
      * The color of the embed.
      */
-    var color: Color? = null
+    var color: Color? by ::_color.delegate()
+
+
+    private var _image: Optional<String> = Optional.Missing()
 
     /**
      * The image url of the embed.
      */
-    var image: String? = null
+    var image: String? by ::_image.delegate()
+
+    private var _footer: Optional<Footer> = Optional.Missing()
 
     /**
      * The footer of the embed.
      */
-    var footer: Footer? = null
+    var footer: Footer? by ::_footer.delegate()
+
+    private var _thumbnail: Optional<Thumbnail> = Optional.Missing()
 
     /**
      * The thumbnail of the embed.
      */
-    var thumbnail: Thumbnail? = null
+    var thumbnail: Thumbnail? by ::_thumbnail.delegate()
+
+    private var _author: Optional<Author> = Optional.Missing()
 
     /**
      * The author of the embed.
      */
-    var author: Author? = null
+    var author: Author? by ::_author.delegate()
 
     /**
      * The embed fields.
      */
-    val fields: MutableList<Field> = mutableListOf()
+    var fields: MutableList<Field> = mutableListOf()
 
     /**
      * Adds or updates the [footer] as configured by the [builder].
@@ -98,7 +123,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
      * Adds a new [Field] configured by the [builder].
      */
     inline fun field(builder: Field.() -> Unit) {
-        fields += Field().apply(builder)
+        fields.add(Field().apply(builder))
     }
 
     /**
@@ -119,21 +144,21 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         field.inline = inline
         field.value = value()
 
-        fields += field
+        fields.add(field)
     }
 
     override fun toRequest(): EmbedRequest = EmbedRequest(
-            title,
-            "embed",
-            description,
-            url,
-            timestamp?.let { DateTimeFormatter.ISO_INSTANT.format(it) },
-            color?.rgb?.and(0xFFFFFF),
-            footer?.toRequest(),
-            image?.let(::EmbedImageRequest),
-            thumbnail?.toRequest(),
-            author?.toRequest(),
-            fields.map { it.toRequest() }
+            _title,
+            Optional.Value("embed"),
+            _description,
+            _url,
+            _timestamp.map { DateTimeFormatter.ISO_INSTANT.format(it) },
+            _color,
+            _footer.map { it.toRequest() },
+            _image.map { EmbedImageRequest(it) },
+            _thumbnail.map { it.toRequest() },
+            _author.map { it.toRequest() },
+            Optional.missingOnEmpty(fields).mapList { it.toRequest() }
     )
 
     @KordDsl
@@ -170,22 +195,26 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
     @KordDsl
     class Author : RequestBuilder<EmbedAuthorRequest> {
 
+        private var _name: Optional<String> = Optional.Missing()
         /**
          * The name of the author. This field is required if [url] is not null.
          */
-        var name: String? = null
+        var name: String? by ::_name.delegate()
 
+        private var _url: Optional<String> = Optional.Missing()
         /**
          * The link that will be applied to the author's [name]. [name] is a mandatory field if [url] is not null.
          */
-        var url: String? = null
+        var url: String? by ::_url.delegate()
 
+
+        private var _icon: Optional<String> = Optional.Missing()
         /**
          * The image url that will be displayed next to the author's name.
          */
-        var icon: String? = null
+        var icon: String? by ::_icon.delegate()
 
-        override fun toRequest() = EmbedAuthorRequest(name, url, icon)
+        override fun toRequest() = EmbedAuthorRequest(_name, _url, _icon)
 
         object Limits {
             /**
@@ -205,8 +234,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
          *  Blank values are not allowed, resulting an exception being thrown on the completion of the request.
          *  Use [ZERO_WIDTH_SPACE] instead to simulate an empty [value].
          */
-        @Suppress("JoinDeclarationAndAssignment", "UNNECESSARY_LATEINIT")
-        lateinit var value: String
+        var value: String = ZERO_WIDTH_SPACE
 
         /**
          * The name or 'title' of the [Field], [ZERO_WIDTH_SPACE] by default.
@@ -215,24 +243,23 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
          * Blank values are not allowed, resulting an exception being thrown on the completion of the request.
          * Use [ZERO_WIDTH_SPACE] instead to simulate an empty [value].
          */
-        @Suppress("JoinDeclarationAndAssignment", "UNNECESSARY_LATEINIT")
-        lateinit var name: String
+        var name: String = ZERO_WIDTH_SPACE
 
+
+        private var _inline: OptionalBoolean = OptionalBoolean.Missing
         /**
          * Whether the field should be rendered inline, `false` by default.
          */
-        var inline: Boolean = false
+        var inline: Boolean? by ::_inline.delegate()
 
         init {
             //these declarations and assignments are separated to maintain binary compatibility.
             //`lateinit` fields expose the JVM fields, and this was the cleanest solution I could think of
             // to maintain that field access.
-            value = ZERO_WIDTH_SPACE
-            name = ZERO_WIDTH_SPACE
         }
 
 
-        override fun toRequest() = EmbedFieldRequest(name, value, inline)
+        override fun toRequest() = EmbedFieldRequest(name, value, _inline)
 
         object Limits {
             /**

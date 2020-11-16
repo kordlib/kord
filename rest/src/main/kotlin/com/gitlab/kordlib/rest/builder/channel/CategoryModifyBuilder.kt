@@ -5,6 +5,9 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
 import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.OverwriteType
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalInt
+import com.gitlab.kordlib.common.entity.optional.delegate.delegate
 import com.gitlab.kordlib.rest.json.request.ChannelModifyPatchRequest
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -12,22 +15,26 @@ import kotlin.contracts.contract
 
 @KordDsl
 class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
+
     override var reason: String? = null
+
+    private var _name: Optional<String> = Optional.Missing()
     /**
      * The name of the category.
      */
-    var name: String? = null
+    var name: String? by ::_name.delegate()
+
+    private var _position: OptionalInt = OptionalInt.Missing
 
     /**
      * The position of this category in the guild's channel list.
      */
-    var position: Int? = null
+    var position: Int? by ::_position.delegate()
 
     /**
      *  The permission overwrites for this category.
      */
-    var permissionOverwrites: MutableSet<Overwrite>? = null
-
+    var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
     /**
      * adds a [Overwrite] for the [memberId].
@@ -37,7 +44,7 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        permissionOverwrites = (permissionOverwrites ?: mutableSetOf()).also { it.add(PermissionOverwriteBuilder(OverwriteType.Member, memberId).apply(builder).toOverwrite()) }
+        permissionOverwrites.add(PermissionOverwriteBuilder(OverwriteType.Member, memberId).apply(builder).toOverwrite())
     }
 
     /**
@@ -48,12 +55,12 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        permissionOverwrites = (permissionOverwrites ?: mutableSetOf()).also { PermissionOverwriteBuilder(OverwriteType.Role, roleId).apply(builder).toOverwrite() }
+        permissionOverwrites.add(PermissionOverwriteBuilder(OverwriteType.Role, roleId).apply(builder).toOverwrite())
     }
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
-            name = name,
-            position = position,
-            permissionOverwrites = permissionOverwrites?.toList()
+            name = _name,
+            position = _position,
+            permissionOverwrites = Optional.missingOnEmpty(permissionOverwrites)
     )
 }

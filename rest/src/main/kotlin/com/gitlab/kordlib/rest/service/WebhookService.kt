@@ -20,14 +20,14 @@ import kotlin.contracts.contract
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createWebhook(channelId: Snowflake, builder: WebhookCreateBuilder.() -> Unit): DiscordWebhook {
+    suspend inline fun createWebhook(channelId: Snowflake, name: String, builder: WebhookCreateBuilder.() -> Unit): DiscordWebhook {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
         return call(Route.WebhookPost) {
             keys[Route.ChannelId] = channelId
-            val createBuilder = WebhookCreateBuilder().apply(builder)
+            val createBuilder = WebhookCreateBuilder(name).apply(builder)
             body(WebhookCreateRequest.serializer(), createBuilder.toRequest())
             createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
         }

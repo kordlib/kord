@@ -5,25 +5,38 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
 import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.ChannelType
-import com.gitlab.kordlib.rest.json.request.GuildCreateChannelRequest
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalInt
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import com.gitlab.kordlib.common.entity.optional.delegate.delegate
+import com.gitlab.kordlib.rest.json.request.GuildChannelCreateRequest
 
 @KordDsl
-class NewsChannelCreateBuilder: AuditRequestBuilder<GuildCreateChannelRequest> {
+class NewsChannelCreateBuilder(var name: String): AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
-    lateinit var name: String
-    var topic: String? = null
-    var nsfw: Boolean? = null
-    var parentId: Snowflake? = null
-    var position: Int? = null
+
+    private var _topic: Optional<String> = Optional.Missing()
+    var topic: String? by ::_topic.delegate()
+    
+    private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
+    var nsfw: Boolean? by ::_nsfw.delegate()
+    
+    private var _parentId: OptionalSnowflake = OptionalSnowflake.Missing
+    var parentId: Snowflake? by ::_parentId.delegate()
+
+    private var _position: OptionalInt = OptionalInt.Missing
+    var position: Int? by ::_position.delegate()
+
     val permissionOverwrites: MutableList<Overwrite> = mutableListOf()
 
-    override fun toRequest(): GuildCreateChannelRequest = GuildCreateChannelRequest(
+    override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
             name = name,
-            topic = topic,
-            nsfw = nsfw,
-            parentId = parentId?.asString,
-            position = position,
-            permissionOverwrite = permissionOverwrites,
+            topic = _topic,
+            nsfw = _nsfw,
+            parentId = _parentId,
+            position = _position,
+            permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
             type = ChannelType.GuildNews
     )
 }

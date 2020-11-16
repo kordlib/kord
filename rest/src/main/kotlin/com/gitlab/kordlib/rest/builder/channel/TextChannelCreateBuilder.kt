@@ -1,31 +1,46 @@
 package com.gitlab.kordlib.rest.builder.channel
 
+import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.ChannelType
 import com.gitlab.kordlib.common.entity.Overwrite
-import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.rest.json.request.GuildCreateChannelRequest
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalInt
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import com.gitlab.kordlib.common.entity.optional.delegate.delegate
+import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
+import com.gitlab.kordlib.rest.json.request.GuildChannelCreateRequest
 
 @KordDsl
-class TextChannelCreateBuilder : AuditRequestBuilder<GuildCreateChannelRequest> {
+class TextChannelCreateBuilder(var name: String) : AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
-    lateinit var name: String
-    var topic: String? = null
-    var rateLimitPerUser: Int? = null
-    var position: Int? = null
-    var parentId: Snowflake? = null
-    var nsfw: Boolean? = null
+
+    private var _topic: Optional<String> = Optional.Missing()
+    var topic: String? by ::_topic.delegate()
+
+    private var _rateLimitPerUser: OptionalInt = OptionalInt.Missing
+    var rateLimitPerUser: Int? by ::_rateLimitPerUser.delegate()
+
+    private var _position: OptionalInt = OptionalInt.Missing
+    var position: Int? by ::_position.delegate()
+
+    private var _parentId: OptionalSnowflake = OptionalSnowflake.Missing
+    var parentId: Snowflake? by ::_parentId.delegate()
+
+    private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
+    var nsfw: Boolean? by ::_nsfw.delegate()
+
     val permissionOverwrites: MutableList<Overwrite> = mutableListOf()
 
-    override fun toRequest(): GuildCreateChannelRequest = GuildCreateChannelRequest(
-            name = name,
-            topic = topic,
-            rateLimitPerUser = rateLimitPerUser,
-            position = position,
-            parentId = parentId?.asString,
-            nsfw = nsfw,
-            permissionOverwrite = permissionOverwrites,
-            type = ChannelType.GuildText
+    override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
+            name,
+            ChannelType.GuildText,
+            _topic,
+            _rateLimitPerUser,
+            _position,
+            parentId = _parentId,
+            nsfw = _nsfw,
+            permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
     )
 }

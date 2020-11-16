@@ -335,6 +335,12 @@ sealed class Route<T>(
     object CurrentApplicationInfo
         : Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())
 
+    object TemplateGet
+        : Route<DiscordTemplate>(HttpMethod.Get, "guilds/templates/${TemplateCode}", DiscordTemplate.serializer())
+
+    object TemplatePost
+        : Route<DiscordGuild>(HttpMethod.Post, "guilds/templates/${TemplateCode}", DiscordGuild.serializer())
+
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"
     }
@@ -355,6 +361,7 @@ sealed class Route<T>(
     object IntegrationId : Key("{integration.id}")
     object WebhookId : Key("{webhook.id}", true)
     object WebhookToken : Key("{webhook.token}")
+    object TemplateCode: Key("{template.code}")
 
 }
 

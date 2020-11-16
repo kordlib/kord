@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.rest.json.request
 
+import com.gitlab.kordlib.common.entity.optional.Optional
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -17,8 +18,8 @@ data class GroupDMCreateRequest(
 
 @Serializable
 data class CurrentUserModifyRequest(
-        val username: String? = null,
-        val avatar: String? = null
+        val username: Optional<String> = Optional.Missing(),
+        val avatar: Optional<String?> = Optional.Missing()
 )
 
 @Serializable

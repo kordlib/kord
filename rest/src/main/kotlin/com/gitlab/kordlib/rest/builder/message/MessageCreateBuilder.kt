@@ -2,6 +2,10 @@ package com.gitlab.kordlib.rest.builder.message
 
 import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.delegate.delegate
+import com.gitlab.kordlib.common.entity.optional.map
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.AllowedMentions
 import com.gitlab.kordlib.rest.json.request.AllowedMentionType
@@ -15,11 +19,22 @@ import java.nio.file.Path
 
 @KordDsl
 class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
-    var content: String? = null
-    var nonce: String? = null
-    var tts: Boolean? = null
-    var embed: EmbedBuilder? = null
-    var allowedMentions: AllowedMentionsBuilder? = null
+
+    private var _content: Optional<String> = Optional.Missing()
+    var content: String? by ::_content.delegate()
+
+    private var _nonce: Optional<String> = Optional.Missing()
+    var nonce: String? by ::_nonce.delegate()
+
+    private var _tts: OptionalBoolean = OptionalBoolean.Missing
+    var tts: Boolean? by ::_tts.delegate()
+
+    private var _embed: Optional<EmbedBuilder> = Optional.Missing()
+    var embed: EmbedBuilder? by ::_embed.delegate()
+
+    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
     inline fun embed(block: EmbedBuilder.() -> Unit) {
@@ -44,7 +59,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     }
 
     override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
-            MessageCreateRequest(content, nonce, tts, embed?.toRequest(), allowedMentions?.build()),
+            MessageCreateRequest(_content, _nonce, _tts, _embed.map { it.toRequest() }, _allowedMentions.map { it.build() }),
             files
     )
 
