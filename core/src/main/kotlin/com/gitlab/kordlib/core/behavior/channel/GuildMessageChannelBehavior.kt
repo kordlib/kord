@@ -135,7 +135,7 @@ suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCre
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildMessageChannelBehavior.createWebhook(name: String, builder: WebhookCreateBuilder.() -> Unit): Webhook {
+suspend inline fun GuildMessageChannelBehavior.createWebhook(name: String, builder: WebhookCreateBuilder.() -> Unit = {}): Webhook {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

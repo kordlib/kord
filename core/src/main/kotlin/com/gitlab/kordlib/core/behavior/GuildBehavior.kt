@@ -497,7 +497,7 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createTextChannel(name: String, builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
+suspend inline fun GuildBehavior.createTextChannel(name: String, builder: TextChannelCreateBuilder.() -> Unit = {}): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -532,7 +532,7 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createVoiceChannel(name: String, builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
+suspend inline fun GuildBehavior.createVoiceChannel(name: String, builder: VoiceChannelCreateBuilder.() -> Unit = {}): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -567,7 +567,7 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createNewsChannel(name: String, builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
+suspend inline fun GuildBehavior.createNewsChannel(name: String, builder: NewsChannelCreateBuilder.() -> Unit = {}): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -603,7 +603,7 @@ suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createCategory(name: String, builder: CategoryCreateBuilder.() -> Unit): Category {
+suspend inline fun GuildBehavior.createCategory(name: String, builder: CategoryCreateBuilder.() -> Unit = {}): Category {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
