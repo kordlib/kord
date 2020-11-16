@@ -124,6 +124,10 @@ sealed class Optional<out T> {
 
     companion object {
 
+        fun <T, C : Collection<T>> missingOnEmpty(value: C): Optional<C> =
+                if (value.isEmpty()) Missing()
+                else Value(value)
+
         /**
          * Returns a [Missing] optional of type [T].
          */
@@ -182,46 +186,52 @@ sealed class Optional<out T> {
     }
 }
 
-fun<T: Any> Optional<T>.switchOnMissing(value: T): Optional<T> = when(this){
+fun <T : Any> Optional<T>.switchOnMissing(value: T): Optional<T> = when (this) {
     is Missing -> Value(value)
     is Null<*>, is Value -> this
 }
 
-fun<E> Optional<List<E>>.orEmpty(): List<E> = when(this){
+fun <E> Optional<List<E>>.orEmpty(): List<E> = when (this) {
     is Missing, is Null<*> -> emptyList()
     is Value -> value
 }
 
 @Suppress("UNCHECKED_CAST")
-inline fun<E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<List<T>> = when(this){
+inline fun <E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<List<T>> = when (this) {
     is Missing, is Null<*> -> this as Optional<List<T>>
     is Value -> Value(value.map(mapper))
 }
 
 @Suppress("UNCHECKED_CAST")
-inline fun<E, T: Any> Optional<E>.map(mapper: (E) -> T): Optional<T> = when(this){
+inline fun <E, T : Any> Optional<E>.map(mapper: (E) -> T): Optional<T> = when (this) {
     is Missing, is Null<*> -> this as Optional<T>
     is Value -> Value(mapper(value))
 }
 
-inline fun<E: Any> Optional<E>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake = when(this){
+@Suppress("UNCHECKED_CAST")
+inline fun <E, T> Optional<E>.mapNullable(mapper: (E) -> T): Optional<T?> = when (this) {
+    is Missing, is Null<*> -> this as Optional<T>
+    is Value -> Optional(mapper(value))
+}
+
+inline fun <E : Any> Optional<E>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake = when (this) {
     is Missing, is Null<*> -> OptionalSnowflake.Missing
     is Value -> OptionalSnowflake.Value(mapper(value))
 }
 
 @JvmName("mapNullableSnowflake")
-inline fun<E: Any> Optional<E?>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake? = when(this){
+inline fun <E : Any> Optional<E?>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake? = when (this) {
     is Missing, is Null<*> -> OptionalSnowflake.Missing
     is Value -> OptionalSnowflake.Value(mapper(value!!))
 }
 
 @Suppress("UNCHECKED_CAST")
-fun<T: Any> Optional<T?>.coerceToMissing(): Optional<T> = when(this){
+fun <T : Any> Optional<T?>.coerceToMissing(): Optional<T> = when (this) {
     is Missing, is Null -> Missing()
     is Value -> this as Value<T>
 }
 
 @Suppress("RemoveRedundantQualifierName")
-fun<T: Any> T.optional(): Optional.Value<T> = Optional.Value(this)
+fun <T : Any> T.optional(): Optional.Value<T> = Optional.Value(this)
 
-fun<T: Any?> T?.optional(): Optional<T?> = Optional(this)
+fun <T : Any?> T?.optional(): Optional<T?> = Optional(this)

@@ -117,3 +117,8 @@ fun Snowflake.optionalSnowflake() : OptionalSnowflake.Value = OptionalSnowflake.
 
 @JvmName("optionalNullable")
 fun Snowflake?.optionalSnowflake() : OptionalSnowflake.Value? = this?.optionalSnowflake()
+
+inline fun<T: Any> OptionalSnowflake.map(mapper: (Snowflake) -> T): Optional<T> = when(this){
+    OptionalSnowflake.Missing -> Optional.Missing()
+    is OptionalSnowflake.Value -> Optional.Value(mapper(value))
+}
