@@ -144,7 +144,7 @@ class Kord(
     suspend fun getGuildPreview(
             guildId: Snowflake,
             strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
-    ): GuildPreview = defaultSupplier.getGuildPreview(guildId)
+    ): GuildPreview = strategy.supply(this).getGuildPreview(guildId)
 
     /**
      * Requests to get the [GuildPreview] of a guild with the [guildId] through the [strategy],
