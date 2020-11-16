@@ -7,33 +7,29 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 
-operator fun <T> KMutableProperty0<OptionalBoolean>.provideDelegate(
-        thisRef: T, property: KProperty<*>,
-): ReadWriteProperty<T, Boolean?> = object : ReadWriteProperty<T, Boolean?> {
+fun KMutableProperty0<OptionalBoolean>.delegate(): ReadWriteProperty<Any?, Boolean?> = object : ReadWriteProperty<Any?, Boolean?> {
 
-    override fun getValue(thisRef: T, property: KProperty<*>): Boolean? {
-        return this@provideDelegate.get().value
+    override fun getValue(thisRef: Any?, property: KProperty<*>): Boolean? {
+        return this@delegate.get().value
     }
 
-    override fun setValue(thisRef: T, property: KProperty<*>, value: Boolean?) {
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: Boolean?) {
         val optional = if (value == null) OptionalBoolean.Missing
         else OptionalBoolean.Value(value)
-        this@provideDelegate.set(optional)
+        this@delegate.set(optional)
     }
 
 }
 
 @JvmName("provideNullableDelegate")
-operator fun <T> KMutableProperty0<OptionalBoolean?>.provideDelegate(
-        thisRef: T, property: KProperty<*>,
-): ReadWriteProperty<T, Boolean?> = object : ReadWriteProperty<T, Boolean?> {
+fun <T> KMutableProperty0<OptionalBoolean?>.delegate(): ReadWriteProperty<T, Boolean?> = object : ReadWriteProperty<T, Boolean?> {
 
     override fun getValue(thisRef: T, property: KProperty<*>): Boolean? {
-        return this@provideDelegate.get().value
+        return this@delegate.get().value
     }
 
     override fun setValue(thisRef: T, property: KProperty<*>, value: Boolean?) {
-        this@provideDelegate.set(value?.optional())
+        this@delegate.set(value?.optional())
     }
 
 }

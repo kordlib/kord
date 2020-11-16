@@ -7,33 +7,29 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 
-operator fun <T> KMutableProperty0<OptionalInt>.provideDelegate(
-        thisRef: T, property: KProperty<*>,
-): ReadWriteProperty<T, Int?> = object : ReadWriteProperty<T, Int?> {
+fun KMutableProperty0<OptionalInt>.delegate(): ReadWriteProperty<Any?, Int?> = object : ReadWriteProperty<Any?, Int?> {
 
-    override fun getValue(thisRef: T, property: KProperty<*>): Int? {
-        return this@provideDelegate.get().value
+    override fun getValue(thisRef: Any?, property: KProperty<*>): Int? {
+        return this@delegate.get().value
     }
 
-    override fun setValue(thisRef: T, property: KProperty<*>, value: Int?) {
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: Int?) {
         val optional = if (value == null) OptionalInt.Missing
         else OptionalInt.Value(value)
-        this@provideDelegate.set(optional)
+        this@delegate.set(optional)
     }
 
 }
 
 @JvmName("provideNullableDelegate")
-operator fun <T> KMutableProperty0<OptionalInt?>.provideDelegate(
-        thisRef: T, property: KProperty<*>,
-): ReadWriteProperty<T, Int?> = object : ReadWriteProperty<T, Int?> {
+fun KMutableProperty0<OptionalInt?>.delegate(): ReadWriteProperty<Any?, Int?> = object : ReadWriteProperty<Any?, Int?> {
 
-    override fun getValue(thisRef: T, property: KProperty<*>): Int? {
-        return this@provideDelegate.get().value
+    override fun getValue(thisRef: Any?, property: KProperty<*>): Int? {
+        return this@delegate.get().value
     }
 
-    override fun setValue(thisRef: T, property: KProperty<*>, value: Int?) {
-        this@provideDelegate.set(value?.optionalInt())
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: Int?) {
+        this@delegate.set(value?.optionalInt())
     }
 
 }
