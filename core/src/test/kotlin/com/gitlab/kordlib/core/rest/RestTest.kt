@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.rest
 
 import com.gitlab.kordlib.common.Color
+import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.*
@@ -55,6 +56,7 @@ class RestServiceTest {
     private lateinit var userId: Snowflake
 
     @BeforeAll
+    @OptIn(KordExperimental::class)
     fun setup() = runBlocking {
         kord = Kord.restOnly(token)
 
@@ -72,8 +74,7 @@ class RestServiceTest {
             it.delete()
         }
 
-        val guild = kord.createGuild {
-            name = "TEST GUILD"
+        val guild = kord.createGuild("TEST GUILD") {
             this.region = region.id
             verificationLevel = VerificationLevel.None
             defaultMessageNotificationLevel = DefaultMessageNotificationLevel.AllMessages
@@ -106,8 +107,7 @@ class RestServiceTest {
     @Test
     @Order(3)
     fun `create channel`() = runBlocking {
-        val channel = guild.createTextChannel {
-            name = "BOT TEST RUN"
+        val channel = guild.createTextChannel("BOT TEST RUN") {
             reason = """
                 a multiline
                 
@@ -302,6 +302,7 @@ class RestServiceTest {
     @Order(17)
     fun `embeds in guild`(): Unit = runBlocking {
 
+        @Suppress("UNUSED_VARIABLE")
         val widget = guild.getWidget().edit {
             this.enabled
         }
@@ -332,10 +333,8 @@ class RestServiceTest {
     @Test
     @Order(19)
     fun `emojis in guilds`(): Unit = runBlocking {
-        val emoji = guild.createEmoji {
-            name = "kord"
-            image = imageBinary("images/kord.png")
-            roles = setOf(guildId)
+        val emoji = guild.createEmoji("kord", imageBinary("images/kord.png")) {
+            roles.add(guildId)
         }
 
         emoji.edit { name = "edited" }
@@ -357,7 +356,7 @@ class RestServiceTest {
     @Test
     @Order(20)
     fun `webhooks tests`() = runBlocking {
-        val webhook = channel.createWebhook { name = "Test webhook" }
+        val webhook = channel.createWebhook("Test webhook")
 
         webhook.execute(webhook.token!!) {
             content = "hello world!"
