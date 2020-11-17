@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GRGIT_USER: ${{ secrets.GRGIT_USER }}
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
       - uses: actions/checkout@v2
