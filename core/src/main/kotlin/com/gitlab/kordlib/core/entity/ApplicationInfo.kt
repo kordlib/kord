@@ -2,8 +2,10 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.cache.data.ApplicationInfoData
+import com.gitlab.kordlib.core.cache.data.TeamData
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.rest.Image
@@ -15,7 +17,7 @@ import java.util.*
 class ApplicationInfo(
         val data: ApplicationInfoData,
         override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+        override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Entity, Strategizable {
 
     override val id: Snowflake
@@ -29,6 +31,11 @@ class ApplicationInfo(
 
     val requireCodeGrant: Boolean get() = data.botRequireCodeGrant
 
+    /**
+     * The rpc origins of this application, empty if disabled.
+     */
+    val rpcOrigins: List<String> get() = data.rpcOrigins.orEmpty()
+
     val ownerId: Snowflake get() = data.ownerId
 
     val owner: UserBehavior get() = UserBehavior(ownerId, kord)
@@ -39,19 +46,25 @@ class ApplicationInfo(
 
     val teamId: Snowflake? get() = data.team?.id
 
+    val team: Team? get() = data.team?.let { Team(TeamData.from(it), kord) }
+
     val guildId: Snowflake? get() = data.guildId.value
+
+    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
     val primarySkuId: Snowflake? get() = data.primarySkuId.value
 
     val slug: String? get() = data.slug.value
 
-    val coverImage: String? get() = data.coverImage.value
+    val coverImageHash: String? get() = data.coverImage.value
 
     suspend fun getOwner(): User = supplier.getUser(ownerId)
 
     suspend fun getOwnerOrNull(): User? = supplier.getUserOrNull(ownerId)
 
-    suspend fun getCoverImage(): Image? = coverImage?.let { Image.fromUrl(kord.resources.httpClient, it) }
+    suspend fun getGuildOrNull(): Guild? {
+        return supplier.getGuildOrNull(guildId ?: return null)
+    }
 
     /**
      * Returns a new [ApplicationInfo] with the given [strategy].
