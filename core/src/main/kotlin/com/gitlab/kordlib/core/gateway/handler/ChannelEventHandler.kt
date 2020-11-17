@@ -4,17 +4,15 @@ import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.cache.api.remove
-import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
+import com.gitlab.kordlib.core.cache.data.MemberData
 import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.event.channel.*
 import com.gitlab.kordlib.core.event.channel.data.ChannelPinsUpdateEventData
 import com.gitlab.kordlib.core.event.channel.data.TypingStartEventData
 import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.core.toInstant
-import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.channels.SendChannel
 import com.gitlab.kordlib.core.event.Event as CoreEvent
@@ -24,7 +22,7 @@ internal class ChannelEventHandler(
         kord: Kord,
         gateway: MasterGateway,
         cache: DataCache,
-        coreEventChannel: SendChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>,
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
@@ -98,6 +96,10 @@ internal class ChannelEventHandler(
     }
 
     private suspend fun handle(event: TypingStart, shard: Int) = with(event.data) {
+        member.value?.let {
+            cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
+        }
+
         val coreEvent = TypingStartEvent(
                 TypingStartEventData.from(this),
                 kord,

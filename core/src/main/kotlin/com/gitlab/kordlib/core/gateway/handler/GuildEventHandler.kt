@@ -11,12 +11,11 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.core.entity.Presence
-import com.gitlab.kordlib.core.event.user.PresenceUpdateEvent
 import com.gitlab.kordlib.core.event.guild.*
 import com.gitlab.kordlib.core.event.role.RoleCreateEvent
 import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
 import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
+import com.gitlab.kordlib.core.event.user.PresenceUpdateEvent
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.channels.SendChannel
@@ -32,7 +31,7 @@ internal class GuildEventHandler(
         kord: Kord,
         gateway: MasterGateway,
         cache: DataCache,
-        coreEventChannel: SendChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>,
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
@@ -124,7 +123,10 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: GuildEmojisUpdate, shard: Int) = with(event.emoji) {
-        val emojis = emojis.map { GuildEmoji(EmojiData.from(guildId, it.id!!, it), kord) }
+        val data = emojis.map { EmojiData.from(guildId, it.id!!, it) }
+        cache.putAll(data)
+
+        val emojis = data.map { GuildEmoji(it, kord) }
 
         cache.query<GuildData> { GuildData::id eq guildId.value }.update {
             it.copy(emojis = emojis.map { emoji -> emoji.id })
@@ -170,7 +172,7 @@ internal class GuildEventHandler(
         val new = Member(MemberData.from(this), userData, kord)
         cache.put(new.memberData)
 
-        coreEventChannel.send(MemberUpdateEvent(new,old,kord,shard))
+        coreEventChannel.send(MemberUpdateEvent(new, old, kord, shard))
     }
 
     private suspend fun handle(event: GuildRoleCreate, shard: Int) {
@@ -226,7 +228,7 @@ internal class GuildEventHandler(
         val new = Presence(data, kord)
 
         val user = cache
-                .query<UserData> {  idEq(UserData::id, event.presence.user.id) }
+                .query<UserData> { idEq(UserData::id, event.presence.user.id) }
                 .singleOrNull()
                 ?.let { User(it, kord) }
 
@@ -236,10 +238,8 @@ internal class GuildEventHandler(
     private suspend fun handle(event: InviteCreate, shard: Int) = with(event) {
         val data = InviteCreateData.from(invite)
 
-        invite.inviter.value?.apply {
-            cache.query<UserData> { idEq(UserData::id, id) }
-                    .update { it.copy(discriminator = discriminator, username = username, avatar = avatar) }
-        }
+        invite.inviter.value?.let { cache.put(UserData.from(it)) }
+        invite.targetUser.value?.let { cache.put(UserData.from(it)) }
 
         coreEventChannel.send(InviteCreateEvent(data, kord, shard))
     }

@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
+import com.gitlab.kordlib.common.entity.DiscordOptionallyMemberUser
 import com.gitlab.kordlib.common.entity.DiscordUser
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.UserFlags
 import com.gitlab.kordlib.common.entity.optional.Optional
 import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.gateway.DiscordInviteUser
 import kotlinx.serialization.Serializable
 
 private val WebhookData.nullableUserId get() = userId.value
@@ -30,7 +32,15 @@ data class UserData(
             }
 
         fun from(entity: DiscordUser) = with(entity) {
-            UserData(id,username,discriminator,avatar,bot,publicFlags)
+            UserData(id, username, discriminator, avatar, bot, publicFlags)
+        }
+
+        fun from(entity: DiscordInviteUser) = with(entity) {
+            UserData(id, username, discriminator, avatar, bot, publicFlags)
+        }
+
+        fun from(entity: DiscordOptionallyMemberUser) = with(entity) {
+            UserData(id, username, discriminator, avatar, bot, publicFlags)
         }
 
     }

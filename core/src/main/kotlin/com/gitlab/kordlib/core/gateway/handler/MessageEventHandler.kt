@@ -59,6 +59,14 @@ internal class MessageEventHandler(
             Member(memberData, userData, kord)
         } else null
 
+        mentions.forEach {
+            val user = UserData.from(it)
+            cache.put(user)
+            it.member.value?.let {
+                cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
+            }
+        }
+
         coreEventChannel.send(MessageCreateEvent(Message(data, kord), guildId.value!!, member, shard))
     }
 
@@ -67,6 +75,14 @@ internal class MessageEventHandler(
 
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
         query.update { it + this }
+
+        mentions.orEmpty().forEach {
+            val user = UserData.from(it)
+            cache.put(user)
+            it.member.value?.let {
+                cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
+            }
+        }
 
         coreEventChannel.send(MessageUpdateEvent(id, channelId, this, old, kord, shard))
     }
