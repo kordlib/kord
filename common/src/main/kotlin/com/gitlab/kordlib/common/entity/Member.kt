@@ -32,14 +32,8 @@ data class DiscordAddedGuildMember(
         val roles: List<Snowflake>,
         @SerialName("joined_at")
         val joinedAt: String,
-        /*
-        Don't trust the docs:
-
-        2020-11-5 This used to be optional back when it was introduced and members in memory
-        were being updated. That was over a year ago though.
-        */
         @SerialName("premium_since")
-        val premiumSince: String?,
+        val premiumSince: Optional<String?> = Optional.Missing(),
         val deaf: Boolean,
         val mute: Boolean,
         @SerialName("guild_id")
@@ -63,11 +57,5 @@ data class DiscordUpdatedGuildMember(
         @SerialName("joined_at")
         val joinedAt: String,
         @SerialName("premium_since")
-        /*
-        Don't trust the docs:
-
-        2020-11-5 This used to be optional back when it was introduced and members in memory
-        were being updated. That was over a year ago though.
-        */
-        val premiumSince: String?,
+        val premiumSince: Optional<String?> = Optional.Missing(),
 )
