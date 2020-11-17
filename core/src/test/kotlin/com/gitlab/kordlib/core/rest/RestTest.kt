@@ -5,10 +5,7 @@ import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.*
-import com.gitlab.kordlib.core.behavior.channel.createMessage
-import com.gitlab.kordlib.core.behavior.channel.createWebhook
-import com.gitlab.kordlib.core.behavior.channel.edit
-import com.gitlab.kordlib.core.behavior.channel.editRolePermission
+import com.gitlab.kordlib.core.behavior.channel.*
 import com.gitlab.kordlib.core.entity.Guild
 import com.gitlab.kordlib.core.entity.ReactionEmoji
 import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
@@ -378,6 +375,18 @@ class RestServiceTest {
         }
 
         assert(exception.error != null)
+    }
+
+    @Test
+    @Order(21)
+    fun `category channel creation`(): Unit = runBlocking {
+        val category = guild.createCategory("my category")
+
+        val textChannel = category.createTextChannel("test child text channel")
+        assert(textChannel.category == category)
+
+        val voiceChannel = category.createVoiceChannel("test child voice channel")
+        assert(voiceChannel.category == category)
     }
 
     @Test
