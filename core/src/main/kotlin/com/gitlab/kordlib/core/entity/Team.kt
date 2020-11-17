@@ -13,7 +13,11 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 /**
  * A Discord [developer team](https://discord.com/developers/docs/topics/teams) which can own applications.
  */
-class Team(val data: TeamData, override val kord: Kord, override val supplier: EntitySupplier) : Entity, Strategizable {
+class Team(
+        val data: TeamData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier,
+) : Entity, Strategizable {
     /**
      * The unique ID of this team.
      */
@@ -43,7 +47,7 @@ class Team(val data: TeamData, override val kord: Kord, override val supplier: E
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [User] wasn't present.
-    */
+     */
     suspend fun getUser(): User = supplier.getUser(ownerUserId)
 
     /**
@@ -51,7 +55,7 @@ class Team(val data: TeamData, override val kord: Kord, override val supplier: E
      * returns null if the [User] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
-    */
+     */
     suspend fun getUserOrNUll(): User? = supplier.getUserOrNull(ownerUserId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Team = Team(data, kord, strategy.supply(kord))
