@@ -101,7 +101,7 @@ data class GuildMemberModifyRequest(
 @Serializable
 data class GuildBanCreateRequest(
         val reason: Optional<String> = Optional.Missing(),
-        @SerialName("delete-message-days")
+        @SerialName("delete_message_days")
         val deleteMessagesDays: OptionalInt = OptionalInt.Missing,
 )
 
