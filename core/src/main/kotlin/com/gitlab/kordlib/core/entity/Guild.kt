@@ -317,6 +317,12 @@ class Guild(
      */
     val vanityUrl: String? get() = data.vanityUrlCode?.let { "https://discord.gg/$it" }
 
+
+    /**
+     * The maximum amount of users in a video channel, if present.
+     */
+    val maxVideoChannelUsers: Int? get() = data.maxVideoChannelUsers.value
+
     /**
      * Requests to get the [VoiceChannel] represented by the [afkChannelId],
      * returns null if the [afkChannelId] isn't present or the channel itself isn't present.
