@@ -32,6 +32,7 @@ data class MessageData(
         val application: Optional<MessageApplication> = Optional.Missing(),
         val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
         val flags: Optional<MessageFlags> = Optional.Missing(),
+        val referencedMessage: Optional<MessageData?> = Optional.Missing()
 ) {
 
     fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
@@ -95,7 +96,7 @@ data class MessageData(
     companion object {
         val description = description(MessageData::id)
 
-        fun from(entity: DiscordMessage) = with(entity) {
+        fun from(entity: DiscordMessage): MessageData = with(entity) {
             MessageData(
                     id,
                     channelId,
@@ -120,6 +121,7 @@ data class MessageData(
                     application,
                     messageReference,
                     flags,
+                    referencedMessage.mapNotNull { from(it) }
             )
         }
     }

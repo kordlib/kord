@@ -164,10 +164,15 @@ class RestServiceTest {
 
         channel.deleteMessage(message.id)
 
-        repeat(2) {
-            channel.createMessage {
+        run {
+            val message = channel.createMessage {
                 content = "TEST"
             }
+            val reply = message.reply {
+                content = "TEST REPLY"
+            }
+
+            assert(reply.referencedMessage?.id == message.id)
         }
 
         val messages = channel.messages.toList()

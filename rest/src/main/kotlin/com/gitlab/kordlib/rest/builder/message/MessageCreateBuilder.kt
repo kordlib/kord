@@ -1,9 +1,11 @@
 package com.gitlab.kordlib.rest.builder.message
 
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.entity.DiscordMessageReference
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.optional.Optional
 import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
 import com.gitlab.kordlib.common.entity.optional.delegate.delegate
 import com.gitlab.kordlib.common.entity.optional.map
 import com.gitlab.kordlib.rest.builder.RequestBuilder
@@ -37,6 +39,17 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
+    private var _messageReference: OptionalSnowflake = OptionalSnowflake.Missing
+
+    /**
+     * The id of the message being replied to.
+     * Requires the [ReadMessageHistory][com.gitlab.kordlib.common.entity.Permission.ReadMessageHistory] permission.
+     *
+     * Replying will not mention the author by default,
+     * set [AllowedMentionsBuilder.repliedUser] to `true` via [allowedMentions]  to mention the author.
+     */
+    var messageReference: Snowflake? by ::_messageReference.delegate()
+
     inline fun embed(block: EmbedBuilder.() -> Unit) {
         embed = (embed ?: EmbedBuilder()).apply(block)
     }
@@ -50,7 +63,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     }
 
     /**
-     * Configures the mentions that should trigger a ping. Not calling this function will result in the default behavior
+     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
      * (ping everything), calling this function but not configuring it before the request is build will result in all
      * pings being ignored.
      */
@@ -59,7 +72,14 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     }
 
     override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
-            MessageCreateRequest(_content, _nonce, _tts, _embed.map { it.toRequest() }, _allowedMentions.map { it.build() }),
+            MessageCreateRequest(
+                    _content,
+                    _nonce,
+                    _tts,
+                    _embed.map { it.toRequest() },
+                    _allowedMentions.map { it.build() },
+                    _messageReference.map { DiscordMessageReference(id = OptionalSnowflake.Value(it)) }
+            ),
             files
     )
 
@@ -88,6 +108,15 @@ class AllowedMentionsBuilder {
      */
     val types: MutableSet<AllowedMentionType> = mutableSetOf()
 
+    private var _repliedUser: OptionalBoolean = OptionalBoolean.Missing
+
+    /**
+     * Whether to mention the user being replied to.
+     *
+     * Only set this if [MessageCreateBuilder.messageReference] is not `null`.
+     */
+    var repliedUser: Boolean? by ::_repliedUser.delegate()
+
     /**
      * Adds the type to the list of types that should receive a ping.
      */
@@ -105,7 +134,8 @@ class AllowedMentionsBuilder {
     fun build(): AllowedMentions = AllowedMentions(
             parse = types.toList(),
             users = users.map { it.asString },
-            roles = roles.map { it.asString }
+            roles = roles.map { it.asString },
+            repliedUser = _repliedUser
     )
 
 }

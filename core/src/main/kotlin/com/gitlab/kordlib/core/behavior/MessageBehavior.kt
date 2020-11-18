@@ -6,6 +6,7 @@ import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
+import com.gitlab.kordlib.core.behavior.channel.createMessage
 import com.gitlab.kordlib.core.cache.data.MessageData
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.MessageChannel
@@ -14,6 +15,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
+import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
 import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.RestClient
@@ -112,8 +114,8 @@ interface MessageBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     @KordPreview
-    suspend fun publish() : Message {
-        val response = kord.rest.channel.crossPost(channelId =  channelId, messageId = id)
+    suspend fun publish(): Message {
+        val response = kord.rest.channel.crossPost(channelId = channelId, messageId = id)
         val data = MessageData.from(response)
         return Message(data, kord)
     }
@@ -176,15 +178,16 @@ interface MessageBehavior : Entity, Strategizable {
      * Returns a new [MessageBehavior] with the given [strategy].
      */
     override fun withStrategy(
-            strategy: EntitySupplyStrategy<*>
+            strategy: EntitySupplyStrategy<*>,
     ): MessageBehavior = MessageBehavior(channelId, id, kord, strategy)
 
     companion object {
         internal operator fun invoke(
                 channelId: Snowflake,
                 messageId: Snowflake,
-                kord: Kord, strategy:
-                EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+                kord: Kord,
+                strategy:
+                EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
         ) = object : MessageBehavior {
             override val channelId: Snowflake = channelId
             override val id: Snowflake = messageId
@@ -222,4 +225,20 @@ suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit
     val data = MessageData.from(response)
 
     return Message(data, kord)
+}
+
+/**
+ * Request to reply to this message, setting [MessageCreateBuilder.messageReference] to this message [id][MessageBehavior.id].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun MessageBehavior.reply(builder: MessageCreateBuilder.() -> Unit): Message {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    return channel.createMessage {
+        builder()
+        messageReference = this@reply.id
+    }
 }
