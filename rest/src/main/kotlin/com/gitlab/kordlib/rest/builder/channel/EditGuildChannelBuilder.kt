@@ -77,6 +77,7 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
             parentId = _parentId,
             bitrate = _bitrate,
             userLimit = _userLimit,
+            topic = _topic,
             permissionOverwrites = Optional.missingOnEmpty(permissionOverwrites)
     )
 
