@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.live
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.entity.optional.*
 import com.gitlab.kordlib.core.entity.Entity
 import com.gitlab.kordlib.core.entity.Guild
 import com.gitlab.kordlib.core.event.*
@@ -12,6 +13,8 @@ import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.event.role.RoleCreateEvent
 import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
 import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
+import com.gitlab.kordlib.core.event.user.PresenceUpdateEvent
+import com.gitlab.kordlib.core.event.user.VoiceStateUpdateEvent
 
 @KordPreview
 fun Guild.live(): LiveGuild = LiveGuild(this)
@@ -31,8 +34,6 @@ class LiveGuild(guild: Guild) : AbstractLiveEntity(), Entity by guild {
 
         is PresenceUpdateEvent -> event.guildId == guild.id
 
-        is UserUpdateEvent -> guild.data.members.any { it.userId == event.user.id.longValue }
-
         is VoiceServerUpdateEvent -> event.guildId == guild.id
         is VoiceStateUpdateEvent -> event.state.guildId == guild.id
 
@@ -51,12 +52,12 @@ class LiveGuild(guild: Guild) : AbstractLiveEntity(), Entity by guild {
         is ReactionRemoveAllEvent -> event.guildId == guild.id
 
         is MessageCreateEvent -> event.guildId == guild.id
-        is MessageUpdateEvent -> event.new.guildId == guild.id.value
+        is MessageUpdateEvent -> event.new.guildId.value == guild.id
         is MessageDeleteEvent -> event.guildId == guild.id
 
-        is ChannelCreateEvent -> event.channel.data.guildId == guild.id.longValue
-        is ChannelUpdateEvent -> event.channel.data.guildId == guild.id.longValue
-        is ChannelDeleteEvent -> event.channel.data.guildId == guild.id.longValue
+        is ChannelCreateEvent -> event.channel.data.guildId.value == guild.id
+        is ChannelUpdateEvent -> event.channel.data.guildId.value == guild.id
+        is ChannelDeleteEvent -> event.channel.data.guildId.value == guild.id
 
         is GuildCreateEvent -> event.guild.id == guild.id
         is GuildUpdateEvent -> event.guild.id == guild.id
@@ -66,54 +67,30 @@ class LiveGuild(guild: Guild) : AbstractLiveEntity(), Entity by guild {
     }
 
     override fun update(event: Event): Unit = when (event) {
-        is EmojisUpdateEvent -> guild = Guild(guild.data.copy(emojis = event.emojis.map { it.data }), kord)
+        is EmojisUpdateEvent -> guild = Guild(guild.data.copy(emojis = event.emojis.map { it.id }), kord)
 
         is RoleCreateEvent -> guild = Guild(guild.data.copy(
-                roles = guild.data.roles + event.guildId.longValue
+                roles = guild.data.roles + event.guildId
         ), kord)
 
         is RoleDeleteEvent -> guild = Guild(guild.data.copy(
-                roles = guild.data.roles - event.guildId.longValue
-        ), kord)
-
-        is PresenceUpdateEvent -> guild = Guild(guild.data.copy(
-                presences = guild.data.presences.map {
-                    when (it.userId) {
-                        event.user.id.toLong() -> event.presence.data
-                        else -> it
-                    }
-                }
-        ), kord)
-
-        is VoiceStateUpdateEvent -> guild = Guild(guild.data.copy(
-                voiceStates = guild.data.voiceStates.filter { it.userId == event.state.userId.longValue } + event.state.data
+                roles = guild.data.roles - event.guildId
         ), kord)
 
         is MemberJoinEvent -> guild = Guild(guild.data.copy(
-                memberCount = guild.data.memberCount?.inc(),
-                members = guild.data.members + event.member.memberData
-        ), kord)
-
-        is MemberUpdateEvent -> guild = Guild(guild.data.copy(
-                members = guild.data.members.map {
-                    when (it.userId) {
-                        event.memberId.longValue -> it.copy(nick = event.currentNickName, roles = event.currentRoleIds.map { it.value })
-                        else -> it
-                    }
-                }
+                memberCount = guild.data.memberCount.map { it + 1 },
         ), kord)
 
         is MemberLeaveEvent -> guild = Guild(guild.data.copy(
-                memberCount = guild.data.memberCount?.dec(),
-                members = guild.data.members.filter { it.userId != event.guildId.longValue }
+                memberCount = guild.data.memberCount.map { it - 1 }
         ), kord)
 
         is ChannelCreateEvent -> guild = Guild(guild.data.copy(
-                channels = guild.data.channels + event.channel.id.longValue
+                channels = guild.data.channels.map { it + event.channel.id }
         ), kord)
 
         is ChannelDeleteEvent -> guild = Guild(guild.data.copy(
-                channels = guild.data.channels - event.channel.id.longValue
+                channels = guild.data.channels.map { it - event.channel.id }
         ), kord)
 
         is GuildUpdateEvent -> guild = event.guild

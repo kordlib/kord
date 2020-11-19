@@ -1,6 +1,15 @@
 package com.gitlab.kordlib.common
 
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
+
+@Serializable(with = Color.Serializer::class)
 class Color(val rgb: Int) {
     constructor(red: Int, green: Int, blue: Int) : this(rgb(red, green, blue))
 
@@ -25,6 +34,17 @@ class Color(val rgb: Int) {
     companion object {
         private const val MIN_COLOR = 0
         private const val MAX_COLOR = 0xFFFFFF
+    }
+
+    internal object Serializer : KSerializer<Color> {
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("Kord.color", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): Color = Color(decoder.decodeInt())
+
+        override fun serialize(encoder: Encoder, value: Color) {
+            encoder.encodeInt(value.rgb)
+        }
     }
 }
 

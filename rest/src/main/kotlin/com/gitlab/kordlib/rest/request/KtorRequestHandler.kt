@@ -54,7 +54,7 @@ class KtorRequestHandler(
         return when {
             response.isRateLimit -> handle(request)
             response.isError -> {
-                throw KtorRequestException(response, Json.decodeFromString(DiscordErrorResponse.serializer().optional, String(response.readBytes())))
+                throw KtorRequestException(response, parser.decodeFromString(DiscordErrorResponse.serializer().optional, String(response.readBytes())))
             }
             else -> parser.decodeFromString(request.route.strategy, response.readText())
         }
@@ -62,7 +62,6 @@ class KtorRequestHandler(
 
     private suspend fun <B : Any, R> HttpClient.createRequest(request: Request<B, R>) = request<HttpStatement> {
         method = request.route.method
-        headers.append("X-RateLimit-Precision", "millisecond")
         headers.appendAll(request.headers)
 
         url {

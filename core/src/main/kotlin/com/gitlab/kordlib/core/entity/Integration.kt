@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.entity.IntegrationExpireBehavior
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -12,7 +13,6 @@ import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.toInstant
 import com.gitlab.kordlib.rest.builder.integration.IntegrationModifyBuilder
-import com.gitlab.kordlib.rest.json.response.IntegrationExpireBehavior
 import com.gitlab.kordlib.rest.request.RestRequestException
 import java.time.Duration
 import java.time.Instant
@@ -32,7 +32,7 @@ class Integration(
 ) : Entity, Strategizable {
 
     override val id: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     /**
      * The name of this integration.
@@ -62,7 +62,7 @@ class Integration(
      * The id of the [guild][Guild] this integration is tied to.
      */
     val guildId: Snowflake
-        get() = Snowflake(data.guildId)
+        get() = data.guildId
 
     /**
      * The behavior of the [guild][Guild] this integration is tied to.
@@ -74,7 +74,7 @@ class Integration(
      * The id of the [role][Role] used for 'subscribers' of the integration.
      */
     val roleId: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     /**
      * The behavior of the [role][Role] used for 'subscribers' of the integration.
@@ -87,7 +87,7 @@ class Integration(
      * Whether this integration requires emoticons to be synced, only supports Twitch right now.
      */
     val enablesEmoticons: Boolean
-        get() = data.enableEmoticons
+        get() = data.enableEmoticons.orElse(false)
 
     /**
      * The behavior used to expire subscribers.
@@ -105,7 +105,7 @@ class Integration(
      * The id of the [user][User] for this integration.
      */
     val userId: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     /**
      * The behavior of the [user][User] for this integration.
@@ -154,13 +154,13 @@ class Integration(
      * Requests to delete the integration.
      */
     suspend fun delete() {
-        kord.rest.guild.deleteGuildIntegration(guildId = guildId.value, integrationId = id.value)
+        kord.rest.guild.deleteGuildIntegration(guildId = guildId, integrationId = id)
     }
 
     /**
      * Request to sync an integration.
      */
-    suspend fun sync() = kord.rest.guild.syncGuildIntegration(guildId = guildId.value, integrationId = id.value)
+    suspend fun sync() = kord.rest.guild.syncGuildIntegration(guildId = guildId, integrationId = id)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Integration =
             Integration(data, kord, strategy.supply(kord))
@@ -190,7 +190,7 @@ suspend inline fun Integration.edit(builder: IntegrationModifyBuilder.() -> Unit
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.guild.modifyGuildIntegration(guildId.value, id.value, builder)
+    kord.rest.guild.modifyGuildIntegration(guildId = guildId, integrationId = id, builder)
 }
 
 

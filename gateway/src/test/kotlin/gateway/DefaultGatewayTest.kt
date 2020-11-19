@@ -1,8 +1,8 @@
 package gateway
 
 import com.gitlab.kordlib.common.entity.ActivityType
-import com.gitlab.kordlib.common.entity.DiscordActivity
-import com.gitlab.kordlib.common.entity.Status
+import com.gitlab.kordlib.common.entity.PresenceStatus
+import com.gitlab.kordlib.common.entity.DiscordBotActivity
 import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
 import com.gitlab.kordlib.gateway.*
 import com.gitlab.kordlib.gateway.retry.LinearRetry
@@ -55,14 +55,17 @@ class DefaultGatewayTest {
                 "!restart" -> gateway.restart(Close.Reconnecting)
                 "!detach" -> gateway.detach()
                 "!status" -> when (words.getOrNull(1)) {
-                    "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Kord", ActivityType.Game)))
+                    "playing" -> gateway.send(UpdateStatus(status = PresenceStatus.Online, afk = false, activities = listOf(DiscordBotActivity("Kord", ActivityType.Game)), since = null))
                 }
-                "!ping" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = DiscordActivity("Ping is ${gateway.ping.toLongMilliseconds()}", ActivityType.Game)))
+                "!ping" -> gateway.send(UpdateStatus(status = PresenceStatus.Online, afk = false, activities = listOf(DiscordBotActivity("Ping is ${gateway.ping.toLongMilliseconds()}", ActivityType.Game)), since = null))
             }
         }.launchIn(GlobalScope)
 
         runBlocking {
-            gateway.start(token)
+            gateway.start(token) {
+                @OptIn(PrivilegedIntent::class)
+                intents = Intents.all
+            }
         }
     }
 }

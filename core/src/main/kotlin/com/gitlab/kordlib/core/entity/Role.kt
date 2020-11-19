@@ -17,10 +17,10 @@ data class Role(
 ) : RoleBehavior {
 
     override val id: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     override val guildId: Snowflake
-        get() = Snowflake(data.guildId)
+        get() = data.guildId
 
     val color: Color get() = Color(data.color)
 

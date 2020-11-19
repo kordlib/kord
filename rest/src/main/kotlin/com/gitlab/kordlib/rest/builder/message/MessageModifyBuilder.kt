@@ -1,7 +1,11 @@
 package com.gitlab.kordlib.rest.builder.message
 
-import com.gitlab.kordlib.common.entity.Flags
+import com.gitlab.kordlib.common.entity.UserFlags
 import com.gitlab.kordlib.common.annotation.KordDsl
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.delegate.delegate
+import com.gitlab.kordlib.common.entity.optional.map
+import com.gitlab.kordlib.common.entity.optional.mapNullable
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.MessageEditPatchRequest
 import kotlin.contracts.ExperimentalContracts
@@ -10,10 +14,18 @@ import kotlin.contracts.contract
 
 @KordDsl
 class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
-    var content: String? = null
-    var embed: EmbedBuilder? = null
-    var flags: Flags? = null
-    var allowedMentions: AllowedMentionsBuilder? = null
+
+    private var _content: Optional<String?> = Optional.Missing()
+    var content: String? by ::_content.delegate()
+
+    private var _embed: Optional<EmbedBuilder?> = Optional.Missing()
+    var embed: EmbedBuilder? by ::_embed.delegate()
+
+    private var _flags: Optional<UserFlags?> = Optional.Missing()
+    var flags: UserFlags? by ::_flags.delegate()
+
+    private var _allowedMentions: Optional<AllowedMentionsBuilder?> = Optional.Missing()
+    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
@@ -37,5 +49,7 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     }
 
 
-    override fun toRequest(): MessageEditPatchRequest = MessageEditPatchRequest(content, embed?.toRequest(), flags, allowedMentions?.build())
+    override fun toRequest(): MessageEditPatchRequest = MessageEditPatchRequest(
+            _content, _embed.mapNullable { it?.toRequest() }, _flags, _allowedMentions.mapNullable { it?.build() }
+    )
 }

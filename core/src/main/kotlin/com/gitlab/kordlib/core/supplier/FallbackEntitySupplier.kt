@@ -98,6 +98,12 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? =
             first.getWebhookWithTokenOrNull(id, token) ?: second.getWebhookWithTokenOrNull(id, token)
 
+    override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? =
+            first.getGuildPreviewOrNull(guildId) ?: second.getGuildPreviewOrNull(guildId)
+
+    override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? =
+            first.getGuildWidgetOrNull(guildId) ?: second.getGuildWidgetOrNull(guildId)
+
     override fun toString(): String {
         return "FallbackEntitySupplier(first=$first, second=$second)"
     }

@@ -49,7 +49,7 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
      */
     val invites: Flow<Invite>
         get() = flow {
-            val responses = kord.rest.channel.getChannelInvites(id.value)
+            val responses = kord.rest.channel.getChannelInvites(id)
 
             for (response in responses) {
                 val data = InviteData.from(response)
@@ -97,7 +97,7 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun addOverwrite(overwrite: PermissionOverwrite) {
-        kord.rest.channel.editChannelPermissions(channelId = id.value, overwriteId = overwrite.target.value, permissions = overwrite.asRequest())
+        kord.rest.channel.editChannelPermissions(channelId = id, overwriteId = overwrite.target, permissions = overwrite.asRequest())
     }
 
     /**
@@ -162,7 +162,7 @@ suspend inline fun GuildChannelBehavior.editRolePermission(roleId: Snowflake, bu
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.channel.editRolePermission(channelId = id.value, roleId = roleId.value, builder = builder)
+    kord.rest.channel.editRolePermission(channelId = id, roleId = roleId, builder = builder)
 }
 
 /**
@@ -175,5 +175,5 @@ suspend inline fun GuildChannelBehavior.editMemberPermission(memberId: Snowflake
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.channel.editMemberPermissions(channelId = id.value, memberId = memberId.value, builder = builder)
+    kord.rest.channel.editMemberPermissions(channelId = id, memberId = memberId, builder = builder)
 }

@@ -11,8 +11,8 @@ import mockKord
 internal class RoleTest : GuildEntityEqualityTest<Role> by GuildEntityEqualityTest({ id, guildId ->
     val kord = mockKord()
     val data = mockk<RoleData>()
-    every { data.id } returns id.longValue
-    every { data.guildId } returns guildId.longValue
+    every { data.id } returns id
+    every { data.guildId } returns guildId
     Role(data, kord)
 }), BehaviorEqualityTest<Role> {
     override fun Role.behavior(): Entity = RoleBehavior(guildId = guildId, id = id, kord = kord)

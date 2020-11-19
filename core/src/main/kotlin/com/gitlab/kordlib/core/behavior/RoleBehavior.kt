@@ -37,7 +37,7 @@ interface RoleBehavior : Entity, Strategizable {
     /**
      * The raw mention of this entity.
      */
-    val mention: String get() = "<@&${id.value}>"
+    val mention: String get() = "<@&${id.asString}>"
 
     /**
      * Requests to change the [position] of this role.
@@ -49,10 +49,10 @@ interface RoleBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun changePosition(position: Int): Flow<Role> {
-        val response = kord.rest.guild.modifyGuildRolePosition(guildId.value) {
+        val response = kord.rest.guild.modifyGuildRolePosition(guildId) {
             move(id to position)
         }
-        return response.asFlow().map { RoleData.from(guildId.value, it) }.map { Role(it, kord) }.sorted()
+        return response.asFlow().map { RoleData.from(guildId, it) }.map { Role(it, kord) }.sorted()
     }
 
     /**
@@ -68,7 +68,7 @@ interface RoleBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete() {
-        kord.rest.guild.deleteGuildRole(guildId = guildId.value, roleId = id.value)
+        kord.rest.guild.deleteGuildRole(guildId = guildId, roleId = id)
     }
 
     /**
@@ -110,8 +110,8 @@ suspend inline fun RoleBehavior.edit(builder: RoleModifyBuilder.() -> Unit): Rol
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.modifyGuildRole(guildId = guildId.value, roleId = id.value, builder = builder)
-    val data = RoleData.from(id.value, response)
+    val response = kord.rest.guild.modifyGuildRole(guildId = guildId, roleId = id, builder = builder)
+    val data = RoleData.from(id, response)
 
     return Role(data, kord)
 }

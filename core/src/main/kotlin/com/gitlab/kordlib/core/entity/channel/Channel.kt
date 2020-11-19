@@ -16,7 +16,7 @@ interface Channel : ChannelBehavior {
     val data: ChannelData
 
     override val id: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     /**
      * The type of this channel.
@@ -41,7 +41,7 @@ interface Channel : ChannelBehavior {
                 strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): Channel = when (data.type) {
             GuildText -> TextChannel(data, kord)
-            DM, GroupDm -> DmChannel(data, kord)
+            DM, GroupDM -> DmChannel(data, kord)
             GuildVoice -> VoiceChannel(data, kord)
             GuildCategory -> Category(data, kord)
             GuildNews -> NewsChannel(data, kord)

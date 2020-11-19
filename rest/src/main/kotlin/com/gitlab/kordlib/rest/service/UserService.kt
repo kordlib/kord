@@ -2,6 +2,7 @@ package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.entity.DiscordChannel
 import com.gitlab.kordlib.common.entity.DiscordUser
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.rest.builder.user.CurrentUserModifyBuilder
 import com.gitlab.kordlib.rest.builder.user.GroupDMCreateBuilder
 import com.gitlab.kordlib.rest.json.request.CurrentUserModifyRequest
@@ -18,7 +19,7 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
 
     suspend fun getCurrentUser() = call(Route.CurrentUserGet)
 
-    suspend fun getUser(userId: String) = call(Route.UserGet) {
+    suspend fun getUser(userId: Snowflake) = call(Route.UserGet) {
         keys[Route.UserId] = userId
     }
 
@@ -30,7 +31,7 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
         parameter("limit", "$limit")
     }
 
-    suspend fun leaveGuild(guildId: String) = call(Route.GuildLeave) {
+    suspend fun leaveGuild(guildId: Snowflake) = call(Route.GuildLeave) {
         keys[Route.GuildId] = guildId
     }
 

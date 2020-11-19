@@ -74,7 +74,7 @@ interface StoreChannelBehavior : GuildChannelBehavior {
  * @throws [RestRequestException] if something went wrong during the request.
  */
 suspend inline fun StoreChannelBehavior.edit(builder: StoreChannelModifyBuilder.() -> Unit): StoreChannel {
-    val response = kord.rest.channel.patchStoreChannel(id.value, builder)
+    val response = kord.rest.channel.patchStoreChannel(id, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as StoreChannel

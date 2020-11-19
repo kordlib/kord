@@ -1,22 +1,21 @@
 package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.cache.api.DataCache
+import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
 import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordUnsafe
-
 import com.gitlab.kordlib.common.entity.DiscordShard
+import com.gitlab.kordlib.common.entity.PresenceStatus
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.builder.kord.KordBuilder
 import com.gitlab.kordlib.core.builder.kord.KordRestOnlyBuilder
 import com.gitlab.kordlib.core.cache.data.GuildData
-import com.gitlab.kordlib.core.entity.ApplicationInfo
-import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.core.entity.Region
-import com.gitlab.kordlib.core.entity.User
+import com.gitlab.kordlib.core.cache.data.UserData
+import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.event.Event
+import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.exception.KordInitializationException
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.core.gateway.handler.GatewayEventInterceptor
@@ -26,6 +25,7 @@ import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildCreateBuilder
+import com.gitlab.kordlib.rest.builder.user.CurrentUserModifyBuilder
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -39,6 +39,9 @@ import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 val kordLogger = KotlinLogging.logger { }
 
+/**
+ * The central adapter between other Kord modules and source of core [events].
+ */
 class Kord(
         val resources: ClientResources,
         val cache: DataCache,
@@ -54,28 +57,38 @@ class Kord(
         launch { interceptor.start() }
     }
 
+    /**
+     * The default supplier, obtained through Kord's [resources] and configured through [KordBuilder.defaultStrategy].
+     * By default a strategy from [EntitySupplyStrategy.rest].
+     *
+     * All [strategizable][Strategizable] [entities][Entity] created through this instance will use this supplier by default.
+     */
     val defaultSupplier: EntitySupplier = resources.defaultStrategy.supply(this)
 
+    /**
+     * A reference to all exposed [unsafe][KordUnsafe] entity constructors for this instance.
+     */
     @OptIn(KordUnsafe::class, KordExperimental::class)
     val unsafe: Unsafe = Unsafe(this)
 
     @OptIn(FlowPreview::class)
-    val events get() = eventPublisher.asFlow().buffer(CoroutineChannel.UNLIMITED)
+    val events
+        get() = eventPublisher.asFlow().buffer(CoroutineChannel.UNLIMITED)
 
     override val coroutineContext: CoroutineContext
         get() = dispatcher + Job()
 
     val regions: Flow<Region>
-        get() = resources.defaultStrategy.supply(this).regions
+        get() = defaultSupplier.regions
 
     val guilds: Flow<Guild>
-        get() = resources.defaultStrategy.supply(this).guilds
+        get() = defaultSupplier.guilds
 
     /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = Status.Online }) {
+    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = PresenceStatus.Online }) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -104,18 +117,74 @@ class Kord(
 
     suspend fun getApplicationInfo(): ApplicationInfo = with(EntitySupplyStrategy.rest).getApplicationInfo()
 
+    /**
+     * Requests to create a new Guild configured through the [builder].
+     * At least the [GuildCreateBuilder.name] has to be set.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @return The newly created Guild.
+     */
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated("guild name is a mandatory field", ReplaceWith("createGuild(\"name\", builder)"), DeprecationLevel.WARNING)
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        val response = rest.guild.createGuild(builder)
+        return createGuild("name", builder)
+    }
+
+    /**
+     * Requests to create a new Guild configured through the [builder].
+     * At least the [GuildCreateBuilder.name] has to be set.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @return The newly created Guild.
+     */
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createGuild(name: String, builder: GuildCreateBuilder.() -> Unit): Guild {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        val response = rest.guild.createGuild(name, builder)
         val data = GuildData.from(response)
 
         return Guild(data, this)
     }
 
-    suspend fun getChannel(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Channel? = strategy.supply(this).getChannelOrNull(id)
+    /**
+     * Requests to get the [GuildPreview] of a guild with the [guildId] through the [strategy],
+     * returns null if the [GuildPreview] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the preview wasn't present.
+     */
+    suspend fun getGuildPreview(
+            guildId: Snowflake,
+            strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+    ): GuildPreview = strategy.supply(this).getGuildPreview(guildId)
+
+    /**
+     * Requests to get the [GuildPreview] of a guild with the [guildId] through the [strategy],
+     * returns null if the [GuildPreview] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getGuildPreviewOrNull(
+            guildId: Snowflake,
+            strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+    ): GuildPreview? = strategy.supply(this).getGuildPreviewOrNull(guildId)
+
+
+    /**
+     * Requests to get the [Channel] with the [id] through the [strategy],
+     * returns null if the [Channel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the channel wasn't present.
+     */
+    suspend fun getChannel(id: Snowflake, strategy: EntitySupplyStrategy<*> =
+            resources.defaultStrategy): Channel? = strategy.supply(this).getChannelOrNull(id)
 
     /**
      * Requests to get the [Channel] as type [T] through the [strategy],
@@ -128,14 +197,37 @@ class Kord(
             strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): T? = strategy.supply(this).getChannelOfOrNull(id)
 
-    suspend fun getGuild(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): Guild? = strategy.supply(this).getGuildOrNull(id)
+    suspend fun getGuild(id: Snowflake, strategy: EntitySupplyStrategy<*> =
+            resources.defaultStrategy): Guild? = strategy.supply(this).getGuildOrNull(id)
 
+    /**
+     * Requests to get the [User] that represents this bot account through the [strategy],
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
     suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =
             strategy.supply(this).getSelf()
 
+    suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User =
+            User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
+
+    /**
+     * Requests to get the [User] that with the [id] through the [strategy],
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
     suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User? =
             strategy.supply(this).getUserOrNull(id)
 
+    /**
+     * Requests to edit the presence of the bot user configured by the [builder].
+     * The new presence will be shown on all shards. Use [MasterGateway.gateways] or [Event.gateway] to
+     * set the presence of a single shard.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     @OptIn(ExperimentalContracts::class)
     suspend inline fun editPresence(builder: PresenceBuilder.() -> Unit) {
         contract {

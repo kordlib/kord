@@ -66,7 +66,7 @@ class KordEventDropTest {
 
         val event = GuildCreate(
                 DiscordGuild(
-                        "1337",
+                        Snowflake("1337"),
                         "discord guild",
                         afkTimeout = 0,
                         defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
@@ -74,13 +74,22 @@ class KordEventDropTest {
                         explicitContentFilter = ExplicitContentFilter.AllMembers,
                         features = emptyList(),
                         mfaLevel = MFALevel.Elevated,
-                        ownerId = "123",
+                        ownerId = Snowflake("123"),
                         preferredLocale = "en",
                         description = "A not really real guild",
                         premiumTier = PremiumTier.None,
                         region = "idk",
                         roles = emptyList(),
-                        verificationLevel = VerificationLevel.High
+                        verificationLevel = VerificationLevel.High,
+                        icon = null,
+                        afkChannelId = null,
+                        applicationId = null,
+                        systemChannelFlags = SystemChannelFlags(0),
+                        systemChannelId = null,
+                        rulesChannelId = null,
+                        vanityUrlCode = null,
+                        banner = null,
+                        publicUpdatesChannelId = null
                 ), 0)
 
         val counter = AtomicInteger(0)

@@ -7,23 +7,21 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@Serializable(with = TargetUserType.TargetUserTypeSerializer::class)
-enum class TargetUserType(val code: Int) {
-    /** The default code for unknown values. */
-    Unknown(Int.MIN_VALUE),
-    STREAM(1);
+@Serializable(with = TargetUserType.Serializer::class)
+sealed class TargetUserType(val value: Int) {
+    class Unknown(value: Int) : TargetUserType(value)
+    object Stream : TargetUserType(1)
 
-    companion object TargetUserTypeSerializer : KSerializer<TargetUserType> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("TargetUserType", PrimitiveKind.INT)
+    internal object Serializer : KSerializer<TargetUserType> {
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Kord.TargetUserType", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): TargetUserType {
-            val code = decoder.decodeInt()
-
-            return values().firstOrNull { it.code == code } ?: Unknown
+        override fun deserialize(decoder: Decoder): TargetUserType = when(val value = decoder.decodeInt()) {
+            1 -> Stream
+            else -> Unknown(value)
         }
 
         override fun serialize(encoder: Encoder, value: TargetUserType) {
-            encoder.encodeInt(value.code)
+            encoder.encodeInt(value.value)
         }
     }
 

@@ -42,7 +42,7 @@ internal class LifeCycleEventHandler(
     }
 
     private suspend fun handle(event: Ready, shard: Int) = with(event.data) {
-        val guilds = guilds.map { Snowflake(it.id) }.toSet()
+        val guilds = guilds.map { it.id }.toSet()
         val self = UserData.from(event.data.user)
 
         cache.put(self)

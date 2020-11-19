@@ -1,6 +1,9 @@
 package com.gitlab.kordlib.gateway
 
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalInt
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -72,12 +75,12 @@ sealed class Command {
 internal data class Identify(
         internal val token: String,
         val properties: IdentifyProperties,
-        val compress: Boolean? = null,
+        val compress: OptionalBoolean = OptionalBoolean.Missing,
         @SerialName("large_threshold")
-        val largeThreshold: Int = 50,
-        val shard: DiscordShard? = null,
-        val presence: Presence? = null,
-        val intents: Intents? = null
+        val largeThreshold: OptionalInt = OptionalInt.Missing,
+        val shard: Optional<DiscordShard> = Optional.Missing(),
+        val presence: Optional<DiscordPresence> = Optional.Missing(),
+        val intents: Intents,
 ) : Command() {
     override fun toString(): String = "Identify(token=hunter2,properties=$properties,compress=$compress,largeThreshold=$largeThreshold," +
             "shard=$shard,presence=$presence"
@@ -91,35 +94,30 @@ data class IdentifyProperties(
         @SerialName("\$browser")
         val browser: String,
         @SerialName("\$device")
-        val device: String
+        val device: String,
 )
 
 @Serializable
 data class GuildMembersChunkData(
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: Snowflake,
         val members: List<DiscordGuildMember>,
-        @SerialName("not_found")
-        val notFound: List<String>? = null,
-        val presences: List<DiscordPresenceUpdateData>? = null,
-        /**
-         * The chunk index in the expected chunks for this response.
-         */
         @SerialName("chunk_index")
         val chunkIndex: Int,
-        /**
-         * The total number of expected chunks for this response.
-         */
         @SerialName("chunk_count")
-        val chunkCount: Int
+        val chunkCount: Int,
+        @SerialName("not_found")
+        val notFound: Optional<List<String>> = Optional.Missing(),
+        val presences: Optional<List<DiscordPresenceUpdate>> = Optional.Missing(),
+        val nonce: String
 )
 
 @Serializable
-data class Presence(
-        val status: Status,
+data class DiscordPresence(
+        val status: PresenceStatus,
         val afk: Boolean,
         val since: Long? = null,
-        val game: DiscordActivity? = null
+        val game: DiscordBotActivity? = null,
 )
 
 @Serializable
@@ -128,7 +126,7 @@ internal data class Resume(
         @SerialName("session_id")
         val sessionId: String,
         @SerialName("seq")
-        val sequenceNumber: Int?
+        val sequenceNumber: Int,
 ) : Command() {
     override fun toString(): String = "Resume(token=hunter2,sessionId=$sessionId,sequenceNumber:$sequenceNumber)"
 }
@@ -136,30 +134,31 @@ internal data class Resume(
 @Serializable
 data class RequestGuildMembers(
         @SerialName("guild_id")
-        val guildId: List<String>,
-        val query: String = "",
-        val limit: Int = 0,
-        val presences: Boolean? = null,
+        val guildId: Snowflake,
+        val query: Optional<String> = Optional.Missing(),
+        val limit: Int,
+        val presences: OptionalBoolean = OptionalBoolean.Missing,
         @SerialName("user_ids")
-        val userIds: List<String>? = null
+        val userIds: Optional<List<Snowflake>> = Optional.Missing(),
+        val nonce: Optional<String> = Optional.Missing()
 ) : Command()
 
 @Serializable
 data class UpdateVoiceStatus(
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: Snowflake,
         @SerialName("channel_id")
-        val channelId: String? = null,
+        val channelId: Snowflake,
         @SerialName("self_mute")
         val selfMute: Boolean,
         @SerialName("self_deaf")
-        val selfDeaf: Boolean
+        val selfDeaf: Boolean,
 ) : Command()
 
 @Serializable
 data class UpdateStatus(
-        val since: Long? = null,
-        val game: DiscordActivity? = null,
-        val status: Status,
-        val afk: Boolean
+        val since: Long?,
+        val activities: List<DiscordBotActivity>?,
+        val status: PresenceStatus,
+        val afk: Boolean,
 ) : Command()

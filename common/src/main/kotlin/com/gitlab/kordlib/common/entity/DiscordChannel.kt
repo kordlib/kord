@@ -1,76 +1,151 @@
 package com.gitlab.kordlib.common.entity
 
-import com.gitlab.kordlib.common.DiscordBitSet
-import kotlinx.serialization.*
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalInt
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * A representation of a [Discord Channel Structure](https://discord.com/developers/docs/resources/channel).
+ *
+ * @param id The id of the channel.
+ * @param type the Type of channel.
+ * @param guildId the id of the guild.
+ * @param position The sorting position of the channel.
+ * @param permissionOverwrites The explicit permission overwrite for members and roles.
+ * @param name The name of the channel.
+ * @param topic The channel topic.
+ * @param nsfw Whether the channel is nsfw.
+ * @param lastMessageId The id of the last message sent in this channel (may not point to an existing or valid message).
+ * @param bitrate The bitrate (in bits) of the voice channel.
+ * @param userLimit The user limit of the voice channel.
+ * @param rateLimitPerUser amount of seconds a user has to wait before sending another message; bots,
+ * as well as users with the permission [Permission.ManageMessages] or [Permission.ManageChannels] are unaffected.
+ * @param recipients The recipients of the DM.
+ * @param icon The icon hash.
+ * @param ownerId The id of DM creator.
+ * @param applicationId The application id of the group DM creator if it is bot-created.
+ * @param parentId The id of the parent category for a channel.
+ * @param lastPinTimestamp When the last pinned message was pinned.
+ */
 @Serializable
 data class DiscordChannel(
-        val id: String,
+        val id: Snowflake,
         val type: ChannelType,
         @SerialName("guild_id")
-        val guildId: String? = null,
-        val position: Int? = null,
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val position: OptionalInt = OptionalInt.Missing,
         @SerialName("permission_overwrites")
-        val permissionOverwrites: List<Overwrite>? = null,
-        val name: String? = null,
-        val topic: String? = null,
-        val nsfw: Boolean? = null,
+        val permissionOverwrites: Optional<List<Overwrite>> = Optional.Missing(),
+        val name: Optional<String> = Optional.Missing(),
+        val topic: Optional<String?> = Optional.Missing(),
+        val nsfw: OptionalBoolean = OptionalBoolean.Missing,
         @SerialName("last_message_id")
-        val lastMessageId: String? = null,
-        val bitrate: Int? = null,
+        val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
+        val bitrate: OptionalInt = OptionalInt.Missing,
         @SerialName("user_limit")
-        val userLimit: Int? = null,
+        val userLimit: OptionalInt = OptionalInt.Missing,
         @SerialName("rate_limit_per_user")
-        val rateLimitPerUser: Int? = null,
-        val recipients: List<DiscordUser>? = null,
-        val icon: String? = null,
+        val rateLimitPerUser: OptionalInt = OptionalInt.Missing,
+        val recipients: Optional<List<DiscordUser>> = Optional.Missing(),
+        val icon: Optional<String?> = Optional.Missing(),
         @SerialName("owner_id")
-        val ownerId: String? = null,
+        val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
         @SerialName("application_id")
-        val applicationId: String? = null,
+        val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
         @SerialName("parent_id")
-        val parentId: String? = null,
+        val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
         @SerialName("last_pin_timestamp")
-        val lastPinTimestamp: String? = null
+        val lastPinTimestamp: Optional<String?> = Optional.Missing(),
 )
 
-@Serializable
-data class Overwrite(
-        val id: String,
-        val type: String,
-        val allow: DiscordBitSet,
-        val deny: DiscordBitSet
-)
-
-@Serializable(with = ChannelType.ChannelTypeSerializer::class)
-enum class ChannelType(val code: Int) {
+@Serializable(with = ChannelType.Serializer::class)
+sealed class ChannelType(val value: Int) {
     /** The default code for unknown values. */
-    Unknown(Int.MIN_VALUE),
-    GuildText(0),
-    DM(1),
-    GuildVoice(2),
-    GroupDm(3),
-    GuildCategory(4),
-    GuildNews(5),
-    GuildStore(6);
+    class Unknown(value: Int) : ChannelType(value)
 
-    companion object ChannelTypeSerializer : KSerializer<ChannelType> {
+    /** A text channel within a server. */
+    object GuildText : ChannelType(0)
+
+    /** A direct message between users. */
+    object DM : ChannelType(1)
+
+    /** A voice channel within a server. */
+    object GuildVoice : ChannelType(2)
+    /** A direct message between multiple users. */
+    object GroupDM : ChannelType(3)
+
+    /** An organization category. */
+    object GuildCategory : ChannelType(4)
+
+    /** A channel that users can follow and crosspost into their own server. */
+    object GuildNews : ChannelType(5)
+
+    /** A channel in which game developers can sell their game on Discord. */
+    object GuildStore : ChannelType(6)
+
+    companion object;
+
+    internal object Serializer : KSerializer<ChannelType> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): ChannelType {
-            val code = decoder.decodeInt()
-            return values().firstOrNull { it.code == code } ?: Unknown
+        override fun deserialize(decoder: Decoder): ChannelType = when (val code = decoder.decodeInt()) {
+            0 -> GuildText
+            1 -> DM
+            2 -> GuildVoice
+            3 -> GroupDM
+            4 -> GuildCategory
+            5 -> GuildNews
+            6 -> GuildStore
+            else -> Unknown(code)
         }
 
-        override fun serialize(encoder: Encoder, value: ChannelType) {
-            encoder.encodeInt(value.code)
-        }
+        override fun serialize(encoder: Encoder, value: ChannelType) = encoder.encodeInt(value.value)
     }
 
+}
+
+@Serializable
+data class Overwrite(
+        val id: Snowflake,
+        val type: OverwriteType,
+        val allow: Permissions,
+        val deny: Permissions,
+) {
+    companion object;
+
+}
+
+@Serializable(with = OverwriteType.Serializer::class)
+sealed class OverwriteType(val value: Int) {
+
+    class Unknown(value: Int) : OverwriteType(value)
+    object Role : OverwriteType(0)
+    object Member : OverwriteType(1)
+
+    companion object;
+
+    internal object Serializer : KSerializer<OverwriteType> {
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("Kord.Overwrite.Type", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): OverwriteType = when (val value = decoder.decodeInt()) {
+            0 -> Role
+            1 -> Member
+            else -> Unknown(value)
+        }
+
+        override fun serialize(encoder: Encoder, value: OverwriteType) {
+            encoder.encodeInt(value.value)
+        }
+    }
 }

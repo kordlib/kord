@@ -9,6 +9,6 @@ import mockKord
 internal class AttachmentTest : EntityEqualityTest<Attachment> by EntityEqualityTest({
     val kord = mockKord()
     val data = mockk<AttachmentData>()
-    every { data.id } returns it.longValue
+    every { data.id } returns it
     Attachment(data, kord)
 })

@@ -11,7 +11,7 @@ import mockKord
 internal class GuildTest: EntityEqualityTest<Guild> by EntityEqualityTest({
     val kord = mockKord()
     val data = mockk<GuildData>()
-    every { data.id } returns it.longValue
+    every { data.id } returns it
     Guild(data, kord)
 }), BehaviorEqualityTest<Guild> {
     override fun Guild.behavior(): Entity = GuildBehavior(id, kord)

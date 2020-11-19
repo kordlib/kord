@@ -108,5 +108,16 @@
       "id":"595876141969965078",
       "action_type":40
     }
+  ],
+  "integrations": [
+    {
+      "id": "33590653072239123",
+      "name": "A Name",
+      "type": "twitch",
+      "account": {
+        "name": "twitchusername",
+        "id": "1234567"
+      }
+    }
   ]
 }

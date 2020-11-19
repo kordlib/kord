@@ -9,7 +9,7 @@ class ClientResources(
         val shardCount: Int,
         val httpClient: HttpClient,
         val defaultStrategy: EntitySupplyStrategy<*>,
-        val intents: Intents?
+        val intents: Intents
 ) {
     override fun toString(): String {
         return "ClientResources(shardCount=$shardCount, httpClient=$httpClient, defaultStrategy=$defaultStrategy, intents=$intents)"

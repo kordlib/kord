@@ -29,7 +29,7 @@ class Member(
 ) : User(userData, kord, supplier), MemberBehavior {
 
     override val guildId: Snowflake
-        get() = Snowflake(memberData.guildId)
+        get() = memberData.guildId
 
     /**
      * The name as shown in the discord client, prioritizing the [nickname] over the [use].
@@ -44,23 +44,23 @@ class Member(
     /**
      * The guild-specific nickname of the user, if present.
      */
-    val nickname: String? get() = memberData.nick
+    val nickname: String? get() = memberData.nick.value
 
     /**
      * When the user used their Nitro boost on the server.
      */
-    val premiumSince: Instant? get() = memberData.premiumSince?.toInstant()
+    val premiumSince: Instant? get() = memberData.premiumSince.value?.toInstant()
 
     /**
      * The ids of the [roles][Role] that apply to this user.
      */
-    val roleIds: Set<Snowflake> get() = memberData.roles.asSequence().map { Snowflake(it) }.toSet()
+    val roleIds: Set<Snowflake> get() = memberData.roles.toSet()
 
     /**
      * The behaviors of the [roles][Role] that apply to this user.
      */
     val roleBehaviors: Set<RoleBehavior>
-        get() = memberData.roles.asSequence().map { RoleBehavior(guildId = guildId, id = Snowflake(it), kord = kord) }.toSet()
+        get() = roleIds.map { RoleBehavior(guildId = guildId, id = it, kord = kord) }.toSet()
 
     /**
      * The [roles][Role] that apply to this user.

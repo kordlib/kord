@@ -1,51 +1,45 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.TargetUserType
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import com.gitlab.kordlib.common.entity.optional.mapSnowflake
 import com.gitlab.kordlib.gateway.DiscordCreatedInvite
+import com.gitlab.kordlib.gateway.DiscordInviteUser
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class InviteCreateData(
-        /**
-         * The channel the invite is for.
-         */
-        val channelId: Long,
-        /**
-         * The unique invite code.
-         */
+        val channelId: Snowflake,
         val code: String,
-        /**
-         * The time at which the invite was created.
-         */
         val createdAt: String,
-        /**
-         * The guild of the invite.
-         */
-        val guildId: Long,
-        /**
-         * The user that created the invite.
-         */
-        val inviterId: Long,
-        /**
-         * How long the invite is valid for (in seconds).
-         */
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val inviterId: OptionalSnowflake = OptionalSnowflake.Missing,
         val maxAge: Int,
-        /**
-         * The maximum number of times the invite can be used.
-         */
         val maxUses: Int,
-        /**
-         * Whether or not the invite is temporary (invited users will be kicked on disconnect unless they're assigned a role).
-         */
+        val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val targetUserType: Optional<TargetUserType> = Optional.Missing(),
         val temporary: Boolean,
-        /**
-         * How many times the invite has been used (always will be 0).
-         */
-        val uses: Int
+        val uses: Int,
 ) {
 
     companion object {
         fun from(entity: DiscordCreatedInvite): InviteCreateData = with(entity) {
-            InviteCreateData(channelId.toLong(), code, createdAt, guildId.toLong(), inviter.id.toLong(), maxAge, maxUses, temporary, uses)
+            InviteCreateData(
+                    channelId,
+                    code,
+                    createdAt,
+                    guildId,
+                    inviter.mapSnowflake { it.id },
+                    maxAge,
+                    maxUses,
+                    targetUser.mapSnowflake { it.id },
+                    targetUserType,
+                    temporary,
+                    uses
+            )
         }
     }
 

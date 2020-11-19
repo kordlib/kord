@@ -11,8 +11,8 @@ import mockKord
 internal class MessageTest : EntityEqualityTest<Message> by EntityEqualityTest({
     val kord = mockKord()
     val data = mockk<MessageData>()
-    every { data.id } returns it.longValue
-    every { data.channelId } returns it.longValue
+    every { data.id } returns it
+    every { data.channelId } returns it
     Message(data, kord)
 }), BehaviorEqualityTest<Message> {
     override fun Message.behavior(): Entity = MessageBehavior(messageId = id, channelId = id, kord = kord)

@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.value
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
@@ -24,7 +25,7 @@ class PartialGuild(
     val name: String get() = data.name
 
 
-    override val id: Snowflake get() = Snowflake(data.id)
+    override val id: Snowflake get() = data.id
 
     /**
      * The icon hash, if present.
@@ -35,18 +36,18 @@ class PartialGuild(
      * wither who created the invite is the owner or not.
      */
 
-    val owner: Boolean? get() = data.owner
+    val owner: Boolean? get() = data.owner.value
 
     /**
      * permissions that the invite creator has, if present.
      */
 
-    val permissions: Permissions? get() = data.permissions
+    val permissions: Permissions? get() = data.permissions.value
 
     /**
      * Gets the icon url, if present.
      */
-    fun getIconUrl(format: Image.Format): String? = data.icon?.let { "https://cdn.discordapp.com/icons/${id.value}/$it.${format.extension}" }
+    fun getIconUrl(format: Image.Format): String? = data.icon?.let { "https://cdn.discordapp.com/icons/${id.asString}/$it.${format.extension}" }
 
     /**
      * Requests to get the icon image in the specified [format], if present.

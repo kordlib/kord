@@ -33,7 +33,7 @@ interface GuildEmojiBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete() {
-        kord.rest.emoji.deleteEmoji(guildId = guildId.value, emojiId = id.value)
+        kord.rest.emoji.deleteEmoji(guildId = guildId, emojiId = id)
     }
 
     /**
@@ -76,8 +76,8 @@ interface GuildEmojiBehavior : Entity, Strategizable {
  * @throws [RestRequestException] if something went wrong during the request.
  */
 suspend inline fun GuildEmojiBehavior.edit(builder: EmojiModifyBuilder.() -> Unit): GuildEmoji {
-    val response = kord.rest.emoji.modifyEmoji(guildId.value, id.value, builder)
-    val data = EmojiData.from(guildId = guildId.value, id = id.value, entity = response)
+    val response = kord.rest.emoji.modifyEmoji(guildId, id, builder)
+    val data = EmojiData.from(guildId = guildId, id = id, entity = response)
 
     return GuildEmoji(data, kord)
 }

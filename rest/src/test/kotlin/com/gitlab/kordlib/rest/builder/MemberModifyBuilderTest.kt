@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.rest.builder
 
+import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.Optional
 import com.gitlab.kordlib.rest.builder.member.MemberModifyBuilder
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -12,7 +14,7 @@ class MemberModifyBuilderTest {
 
         val request = builder.toRequest()
 
-        Assertions.assertEquals(null, request.roles)
+        Assertions.assertEquals(Optional.Missing<Iterable<Snowflake>>(), request.roles)
     }
 
 }

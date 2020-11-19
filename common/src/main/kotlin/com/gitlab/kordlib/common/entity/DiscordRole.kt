@@ -1,11 +1,14 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalInt
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class DiscordRole(
-        val id: String,
+        val id: Snowflake,
         val name: String,
         val color: Int,
         val hoist: Boolean,
@@ -14,6 +17,19 @@ data class DiscordRole(
         val managed: Boolean,
         val mentionable: Boolean
 )
+
+@Serializable
+data class DiscordPartialRole(
+        val id: Snowflake,
+        val name: Optional<String> = Optional.Missing(),
+        val color: OptionalInt = OptionalInt.Missing,
+        val hoist: OptionalBoolean = OptionalBoolean.Missing,
+        val position: OptionalInt = OptionalInt.Missing,
+        val permissions: Optional<Permissions> = Optional.Missing(),
+        val managed: OptionalBoolean = OptionalBoolean.Missing,
+        val mentionable: OptionalBoolean = OptionalBoolean.Missing
+)
+
 
 @Serializable
 data class DiscordAuditLogRoleChange(
@@ -30,14 +46,14 @@ data class DiscordAuditLogRoleChange(
 @Serializable
 data class DiscordGuildRole(
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: Snowflake,
         val role: DiscordRole
 )
 
 @Serializable
 data class DiscordDeletedGuildRole(
         @SerialName("guild_id")
-        val guildId: String,
+        val guildId: Snowflake,
         @SerialName("role_id")
-        val id: String
+        val id: Snowflake
 )

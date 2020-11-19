@@ -1,14 +1,12 @@
 package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.common.entity.DiscordChannel
-import com.gitlab.kordlib.common.entity.DiscordMessage
+import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
 import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
 import com.gitlab.kordlib.rest.json.request.*
 import com.gitlab.kordlib.rest.json.response.FollowedChannelResponse
-import com.gitlab.kordlib.rest.json.response.InviteResponse
 import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.route.Position
 import com.gitlab.kordlib.rest.route.Route
@@ -19,7 +17,7 @@ import kotlin.contracts.contract
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createMessage(channelId: String, builder: MessageCreateBuilder.() -> Unit): DiscordMessage {
+    suspend inline fun createMessage(channelId: Snowflake, builder: MessageCreateBuilder.() -> Unit): DiscordMessage {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -31,7 +29,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         }
     }
 
-    suspend fun getMessages(channelId: String, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
+    suspend fun getMessages(channelId: Snowflake, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
         if (position != null) {
             parameter(position.key, position.value)
@@ -40,93 +38,93 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
 
     }
 
-    suspend fun getMessage(channelId: String, messageId: String) = call(Route.MessageGet) {
+    suspend fun getMessage(channelId: Snowflake, messageId: Snowflake) = call(Route.MessageGet) {
         keys[Route.MessageId] = messageId
         keys[Route.ChannelId] = channelId
     }
 
-    suspend fun getChannelInvites(channelId: String) = call(Route.InvitesGet) {
+    suspend fun getChannelInvites(channelId: Snowflake) = call(Route.InvitesGet) {
         keys[Route.ChannelId] = channelId
     }
 
-    suspend fun getChannel(channelId: String) = call(Route.ChannelGet) {
+    suspend fun getChannel(channelId: Snowflake) = call(Route.ChannelGet) {
         keys[Route.ChannelId] = channelId
     }
 
-    suspend fun addPinnedMessage(channelId: String, messageId: String) = call(Route.PinPut) {
+    suspend fun addPinnedMessage(channelId: Snowflake, messageId: Snowflake) = call(Route.PinPut) {
         keys[Route.MessageId] = messageId
         keys[Route.ChannelId] = channelId
     }
 
-    suspend fun getChannelPins(channelId: String) = call(Route.PinsGet) {
+    suspend fun getChannelPins(channelId: Snowflake) = call(Route.PinsGet) {
         keys[Route.ChannelId] = channelId
     }
 
-    suspend fun createReaction(channelId: String, messageId: String, emoji: String) = call(Route.ReactionPut) {
+    suspend fun createReaction(channelId: Snowflake, messageId: Snowflake, emoji: String) = call(Route.ReactionPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
     }
 
-    suspend fun deleteReaction(channelId: String, messageId: String, userId: String, emoji: String) = call(Route.ReactionDelete) {
+    suspend fun deleteReaction(channelId: Snowflake, messageId: Snowflake, userId: Snowflake, emoji: String) = call(Route.ReactionDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
         keys[Route.UserId] = userId
     }
 
-    suspend fun deleteOwnReaction(channelId: String, messageId: String, emoji: String) = call(Route.OwnReactionDelete) {
+    suspend fun deleteOwnReaction(channelId: Snowflake, messageId: Snowflake, emoji: String) = call(Route.OwnReactionDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
     }
 
-    suspend fun deleteAllReactionsForEmoji(channelId: String, messageId: String, emoji: String) = call(Route.DeleteAllReactionsForEmoji) {
+    suspend fun deleteAllReactionsForEmoji(channelId: Snowflake, messageId: Snowflake, emoji: String) = call(Route.DeleteAllReactionsForEmoji) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
     }
 
-    suspend fun deletePinnedMessage(channelId: String, messageId: String) = call(Route.PinDelete) {
+    suspend fun deletePinnedMessage(channelId: Snowflake, messageId: Snowflake) = call(Route.PinDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
     }
 
-    suspend fun deleteAllReactions(channelId: String, messageId: String) = call(Route.AllReactionsDelete) {
+    suspend fun deleteAllReactions(channelId: Snowflake, messageId: Snowflake) = call(Route.AllReactionsDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
     }
 
-    suspend fun deleteMessage(channelId: String, messageId: String, reason: String? = null) = call(Route.MessageDelete) {
+    suspend fun deleteMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null) = call(Route.MessageDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun bulkDelete(channelId: String, messages: BulkDeleteRequest) = call(Route.BulkMessageDeletePost) {
+    suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest) = call(Route.BulkMessageDeletePost) {
         keys[Route.ChannelId] = channelId
         body(BulkDeleteRequest.serializer(), messages)
     }
 
-    suspend fun deleteChannel(channelId: String, reason: String? = null) = call(Route.ChannelDelete) {
+    suspend fun deleteChannel(channelId: Snowflake, reason: String? = null) = call(Route.ChannelDelete) {
         keys[Route.ChannelId] = channelId
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun deleteChannelPermission(channelId: String, overwriteId: String, reason: String? = null) = call(Route.ChannelPermissionDelete) {
+    suspend fun deleteChannelPermission(channelId: Snowflake, overwriteId: Snowflake, reason: String? = null) = call(Route.ChannelPermissionDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun editChannelPermissions(channelId: String, overwriteId: String, permissions: ChannelPermissionEditRequest, reason: String? = null) = call(Route.ChannelPermissionPut) {
+    suspend fun editChannelPermissions(channelId: Snowflake, overwriteId: Snowflake, permissions: ChannelPermissionEditRequest, reason: String? = null) = call(Route.ChannelPermissionPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
         body(ChannelPermissionEditRequest.serializer(), permissions)
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun getReactions(channelId: String, messageId: String, emoji: String, position: Position? = null, limit: Int = 25) = call(Route.ReactionsGet) {
+    suspend fun getReactions(channelId: Snowflake, messageId: Snowflake, emoji: String, position: Position? = null, limit: Int = 25) = call(Route.ReactionsGet) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
@@ -137,23 +135,23 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         parameter("limit", "$limit")
     }
 
-    suspend fun triggerTypingIndicator(channelId: String) = call(Route.TypingIndicatorPost) {
+    suspend fun triggerTypingIndicator(channelId: Snowflake) = call(Route.TypingIndicatorPost) {
         keys[Route.ChannelId] = channelId
     }
 
-    suspend fun removeFromGroup(channelId: String, userId: String) = call(Route.GroupDMUserDelete) {
+    suspend fun removeFromGroup(channelId: Snowflake, userId: Snowflake) = call(Route.GroupDMUserDelete) {
         keys[Route.ChannelId] = channelId
         keys[Route.UserId] = userId
     }
 
-    suspend fun addToGroup(channelId: String, userId: String, addUser: UserAddDMRequest) = call(Route.GroupDMUserPut) {
+    suspend fun addToGroup(channelId: Snowflake, userId: Snowflake, addUser: UserAddDMRequest) = call(Route.GroupDMUserPut) {
         keys[Route.ChannelId] = channelId
         keys[Route.UserId] = userId
         body(UserAddDMRequest.serializer(), addUser)
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createInvite(channelId: String, builder: InviteCreateBuilder.() -> Unit = {}): InviteResponse {
+    suspend inline fun createInvite(channelId: Snowflake, builder: InviteCreateBuilder.() -> Unit = {}): DiscordInvite {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -166,7 +164,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun editMessage(channelId: String, messageId: String, builder: MessageModifyBuilder.() -> Unit): DiscordMessage {
+    suspend inline fun editMessage(channelId: Snowflake, messageId: Snowflake, builder: MessageModifyBuilder.() -> Unit): DiscordMessage {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -178,26 +176,26 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
 
-    suspend fun putChannel(channelId: String, channel: ChannelModifyPutRequest, reason: String? = null) = call(Route.ChannelPut) {
+    suspend fun putChannel(channelId: Snowflake, channel: ChannelModifyPutRequest, reason: String? = null) = call(Route.ChannelPut) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPutRequest.serializer(), channel)
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun patchChannel(channelId: String, channel: ChannelModifyPatchRequest, reason: String? = null) = call(Route.ChannelPatch) {
+    suspend fun patchChannel(channelId: Snowflake, channel: ChannelModifyPatchRequest, reason: String? = null) = call(Route.ChannelPatch) {
         keys[Route.ChannelId] = channelId
         body(ChannelModifyPatchRequest.serializer(), channel)
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
     @KordPreview
-    suspend fun crossPost(channelId: String, messageId: String) : DiscordMessage = call(Route.MessageCrosspost) {
+    suspend fun crossPost(channelId: Snowflake, messageId: Snowflake) : DiscordMessage = call(Route.MessageCrosspost) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
     }
 
     @KordPreview
-    suspend fun followNewsChannel(channelId: String, request: ChannelFollowRequest): FollowedChannelResponse = call(Route.NewsChannelFollow) {
+    suspend fun followNewsChannel(channelId: Snowflake, request: ChannelFollowRequest): FollowedChannelResponse = call(Route.NewsChannelFollow) {
         keys[Route.ChannelId] = channelId
         body(ChannelFollowRequest.serializer(), request)
     }
@@ -205,7 +203,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun ChannelService.patchTextChannel(channelId: String, builder: TextChannelModifyBuilder.() -> Unit): DiscordChannel {
+suspend inline fun ChannelService.patchTextChannel(channelId: Snowflake, builder: TextChannelModifyBuilder.() -> Unit): DiscordChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -213,7 +211,7 @@ suspend inline fun ChannelService.patchTextChannel(channelId: String, builder: T
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun ChannelService.patchVoiceChannel(channelId: String, builder: VoiceChannelModifyBuilder.() -> Unit) : DiscordChannel {
+suspend inline fun ChannelService.patchVoiceChannel(channelId: Snowflake, builder: VoiceChannelModifyBuilder.() -> Unit) : DiscordChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -221,7 +219,7 @@ suspend inline fun ChannelService.patchVoiceChannel(channelId: String, builder: 
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun ChannelService.patchStoreChannel(channelId: String, builder: StoreChannelModifyBuilder.() -> Unit): DiscordChannel {
+suspend inline fun ChannelService.patchStoreChannel(channelId: Snowflake, builder: StoreChannelModifyBuilder.() -> Unit): DiscordChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -229,7 +227,7 @@ suspend inline fun ChannelService.patchStoreChannel(channelId: String, builder: 
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun ChannelService.patchNewsChannel(channelId: String, builder: NewsChannelModifyBuilder.() -> Unit): DiscordChannel {
+suspend inline fun ChannelService.patchNewsChannel(channelId: Snowflake, builder: NewsChannelModifyBuilder.() -> Unit): DiscordChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -237,7 +235,7 @@ suspend inline fun ChannelService.patchNewsChannel(channelId: String, builder: N
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun ChannelService.patchCategory(channelId: String, builder: CategoryModifyBuilder.() -> Unit) : DiscordChannel {
+suspend inline fun ChannelService.patchCategory(channelId: Snowflake, builder: CategoryModifyBuilder.() -> Unit) : DiscordChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -245,19 +243,19 @@ suspend inline fun ChannelService.patchCategory(channelId: String, builder: Cate
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun ChannelService.editMemberPermissions(channelId: String, memberId: String, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+suspend inline fun ChannelService.editMemberPermissions(channelId: Snowflake, memberId: Snowflake, builder: ChannelPermissionModifyBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val modifyBuilder = ChannelPermissionModifyBuilder("member").apply(builder)
+    val modifyBuilder = ChannelPermissionModifyBuilder(OverwriteType.Member).apply(builder)
     editChannelPermissions(channelId, memberId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun ChannelService.editRolePermission(channelId: String, roleId: String, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+suspend inline fun ChannelService.editRolePermission(channelId: Snowflake, roleId: Snowflake, builder: ChannelPermissionModifyBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val modifyBuilder = ChannelPermissionModifyBuilder("role").apply(builder)
+    val modifyBuilder = ChannelPermissionModifyBuilder(OverwriteType.Role).apply(builder)
     editChannelPermissions(channelId, roleId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }

@@ -20,7 +20,7 @@ import java.util.*
  */
 interface UserBehavior : Entity, Strategizable {
 
-    val mention: String get() = "<@${id.value}>"
+    val mention: String get() = "<@${id.asString}>"
 
     /**
      * Requests to get the this behavior as a [Member] in the [Guild] with the [guildId].
@@ -76,7 +76,7 @@ interface UserBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun getDmChannel(): DmChannel {
-        val response = kord.rest.user.createDM(DMCreateRequest(id.value))
+        val response = kord.rest.user.createDM(DMCreateRequest(id.asString))
         val data = ChannelData.from(response)
 
         return Channel.from(data, kord) as DmChannel

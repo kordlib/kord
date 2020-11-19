@@ -5,17 +5,18 @@ import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.putAll
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.optionalSnowflake
+import com.gitlab.kordlib.common.entity.optional.orEmpty
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
+import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.core.entity.Presence
-import com.gitlab.kordlib.core.event.PresenceUpdateEvent
 import com.gitlab.kordlib.core.event.guild.*
 import com.gitlab.kordlib.core.event.role.RoleCreateEvent
 import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
 import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
+import com.gitlab.kordlib.core.event.user.PresenceUpdateEvent
 import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.core.toInstant
 import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.asFlow
@@ -30,7 +31,7 @@ internal class GuildEventHandler(
         kord: Kord,
         gateway: MasterGateway,
         cache: DataCache,
-        coreEventChannel: SendChannel<CoreEvent>
+        coreEventChannel: SendChannel<CoreEvent>,
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
@@ -56,8 +57,8 @@ internal class GuildEventHandler(
 
     private suspend fun GatewayGuild.cache() {
         for (member in members.orEmpty()) {
-            cache.put(MemberData.from(member.user!!.id, id, member))
-            cache.put(UserData.from(member.user!!))
+            cache.put(MemberData.from(member.user.value!!.id, id, member))
+            cache.put(UserData.from(member.user.value!!))
         }
 
         for (role in roles) {
@@ -65,7 +66,7 @@ internal class GuildEventHandler(
         }
 
         for (channel in channels.orEmpty()) {
-            cache.put(ChannelData.from(channel.copy(guildId = this.id))) //guild id always empty
+            cache.put(ChannelData.from(channel.copy(guildId = this.id.optionalSnowflake()))) //guild id always empty
         }
 
         for (presence in presences.orEmpty()) {
@@ -97,12 +98,12 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: GuildDelete, shard: Int) = with(event.guild) {
-        val query = cache.query<GuildData> { GuildData::id eq id.toLong() }
+        val query = cache.query<GuildData> { GuildData::id eq id }
 
         val old = query.asFlow().map { Guild(it, kord) }.singleOrNull()
         query.remove()
 
-        coreEventChannel.send(GuildDeleteEvent(Snowflake(id), unavailable ?: false, old, kord, shard))
+        coreEventChannel.send(GuildDeleteEvent(id, unavailable.orElse(false), old, kord, shard))
     }
 
     private suspend fun handle(event: GuildBanAdd, shard: Int) = with(event.ban) {
@@ -122,23 +123,25 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: GuildEmojisUpdate, shard: Int) = with(event.emoji) {
-        val guildId = Snowflake(guildId)
-        val emojis = emojis.map { GuildEmoji(EmojiData.from(guildId.value, it.id!!, it), kord) }.toSet()
+        val data = emojis.map { EmojiData.from(guildId, it.id!!, it) }
+        cache.putAll(data)
 
-        cache.query<GuildData> { GuildData::id eq guildId.longValue }.update {
-            it.copy(emojis = emojis.map { emoji -> emoji.data })
+        val emojis = data.map { GuildEmoji(it, kord) }
+
+        cache.query<GuildData> { GuildData::id eq guildId.value }.update {
+            it.copy(emojis = emojis.map { emoji -> emoji.id })
         }
 
-        coreEventChannel.send(EmojisUpdateEvent(guildId, emojis, kord, shard))
+        coreEventChannel.send(EmojisUpdateEvent(guildId, emojis.toSet(), kord, shard))
     }
 
     private suspend fun handle(event: GuildIntegrationsUpdate, shard: Int) {
-        coreEventChannel.send(IntegrationsUpdateEvent(Snowflake(event.integrations.guildId), kord, shard))
+        coreEventChannel.send(IntegrationsUpdateEvent(event.integrations.guildId, kord, shard))
     }
 
     private suspend fun handle(event: GuildMemberAdd, shard: Int) = with(event.member) {
-        val userData = UserData.from(user!!)
-        val memberData = MemberData.from(user!!.id, event.member)
+        val userData = UserData.from(user.value!!)
+        val memberData = MemberData.from(user.value!!.id, event.member)
 
         cache.put(userData)
         cache.put(memberData)
@@ -153,37 +156,23 @@ internal class GuildEventHandler(
         cache.query<UserData> { UserData::id eq userData.id }.remove()
         val user = User(userData, kord)
 
-        coreEventChannel.send(MemberLeaveEvent(user, Snowflake(guildId), shard))
+        coreEventChannel.send(MemberLeaveEvent(user, guildId, shard))
     }
 
     private suspend fun handle(event: GuildMemberUpdate, shard: Int) = with(event.member) {
         val userData = UserData.from(user)
         cache.put(userData)
 
-        val old = cache.query<MemberData> {
-            MemberData::userId eq userData.id
-            MemberData::guildId eq guildId.toLong()
-        }.asFlow().map { Member(it, userData, kord) }.singleOrNull()
+        val query = cache.query<MemberData> {
+            idEq(MemberData::userId, userData.id)
+            idEq(MemberData::guildId, guildId)
+        }
+        val old = query.asFlow().map { Member(it, userData, kord) }.singleOrNull()
 
-        cache.query<MemberData> {
-            MemberData::userId eq userData.id
-            MemberData::guildId eq guildId.toLong()
-        }.update { it + this }
+        val new = Member(MemberData.from(this), userData, kord)
+        cache.put(new.memberData)
 
-        val roles = roles.asSequence().map { Snowflake(it) }.toSet()
-
-        coreEventChannel.send(
-                MemberUpdateEvent(
-                        old,
-                        Snowflake(guildId),
-                        Snowflake(userData.id),
-                        roles,
-                        nick ?: userData.username,
-                        premiumSince?.toInstant(),
-                        kord,
-                        shard
-                )
-        )
+        coreEventChannel.send(MemberUpdateEvent(new, old, kord, shard))
     }
 
     private suspend fun handle(event: GuildRoleCreate, shard: Int) {
@@ -201,7 +190,7 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: GuildRoleDelete, shard: Int) = with(event.role) {
-        val query = cache.query<RoleData> { RoleData::id eq event.role.id.toLong() }
+        val query = cache.query<RoleData> { idEq(RoleData::id, event.role.id) }
 
         val old = run {
             val data = query.singleOrNull() ?: return@run null
@@ -210,7 +199,7 @@ internal class GuildEventHandler(
 
         query.remove()
 
-        coreEventChannel.send(RoleDeleteEvent(Snowflake(guildId), Snowflake(id), old, kord, shard))
+        coreEventChannel.send(RoleDeleteEvent(guildId, id, old, kord, shard))
     }
 
     private suspend fun handle(event: GuildMembersChunk, shard: Int) = with(event.data) {
@@ -218,19 +207,19 @@ internal class GuildEventHandler(
         cache.putAll(presences)
 
         val members = members.asFlow().map { member ->
-            val memberData = MemberData.from(member.user!!.id, guildId, member)
+            val memberData = MemberData.from(member.user.value!!.id, guildId, member)
             cache.put(memberData)
-            val userData = UserData.from(member.user!!)
+            val userData = UserData.from(member.user.value!!)
             cache.put(userData)
 
             Member(memberData, userData, kord)
         }.toSet()
 
-        coreEventChannel.send(MemberChunksEvent(Snowflake(guildId), members, kord, shard))
+        coreEventChannel.send(MemberChunksEvent(guildId, members, kord, shard))
     }
 
     private suspend fun handle(event: PresenceUpdate, shard: Int) = with(event.presence) {
-        val data = PresenceData.from(this.guildId!!, this)
+        val data = PresenceData.from(this.guildId.value!!, this)
 
         val old = cache.query<PresenceData> { PresenceData::id eq data.id }
                 .asFlow().map { Presence(it, kord) }.singleOrNull()
@@ -239,20 +228,18 @@ internal class GuildEventHandler(
         val new = Presence(data, kord)
 
         val user = cache
-                .query<UserData> { UserData::id eq event.presence.user.id.toLong() }
+                .query<UserData> { idEq(UserData::id, event.presence.user.id) }
                 .singleOrNull()
                 ?.let { User(it, kord) }
 
-        coreEventChannel.send(PresenceUpdateEvent(user, this.user, Snowflake(guildId!!), old, new, shard))
+        coreEventChannel.send(PresenceUpdateEvent(user, this.user, guildId.value!!, old, new, shard))
     }
 
     private suspend fun handle(event: InviteCreate, shard: Int) = with(event) {
         val data = InviteCreateData.from(invite)
 
-        with(invite.inviter) {
-            cache.query<UserData> { UserData::id eq id.toLong() }
-                    .update { it.copy(discriminator = discriminator, username = username, avatar = avatar) }
-        }
+        invite.inviter.value?.let { cache.put(UserData.from(it)) }
+        invite.targetUser.value?.let { cache.put(UserData.from(it)) }
 
         coreEventChannel.send(InviteCreateEvent(data, kord, shard))
     }

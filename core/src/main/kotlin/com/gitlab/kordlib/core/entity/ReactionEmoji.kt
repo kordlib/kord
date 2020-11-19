@@ -20,10 +20,10 @@ sealed class ReactionEmoji {
     data class Custom(val id: Snowflake, override val name: String, val isAnimated: Boolean) : ReactionEmoji() {
 
         override val urlFormat: String
-            get() = "$name:${id.value}"
+            get() = "$name:${id.asString}"
 
         override val mention: String
-            get() = if (isAnimated) "<a:$name:${id.value}>" else "<:$name:${id.value}>"
+            get() = if (isAnimated) "<a:$name:${id.asString}>" else "<:$name:${id.asString}>"
 
 
         override fun toString() = "Custom(id=$id, name=$name, isAnimated=$isAnimated)"
@@ -39,8 +39,8 @@ sealed class ReactionEmoji {
                 ?: error("emojis without name cannot be used to react"), guildEmoji.isAnimated)
 
         fun from(guildEmoji: RemovedReactionData) = when (guildEmoji.id) {
-            null -> Unicode(guildEmoji.name)
-            else -> Custom(Snowflake(guildEmoji.id), guildEmoji.name, false)
+            null -> Unicode(guildEmoji.name!!)
+            else -> Custom(guildEmoji.id, guildEmoji.name!!, false)
         }
     }
 }

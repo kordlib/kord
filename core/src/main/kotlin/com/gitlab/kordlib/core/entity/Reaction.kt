@@ -11,10 +11,7 @@ import com.gitlab.kordlib.core.toSnowflakeOrNull
  */
 class Reaction(val data: ReactionData, override val kord: Kord) : KordObject {
 
-    /**
-     *
-     */
-    val id: Snowflake? get() = data.emojiId.toSnowflakeOrNull()
+    val id: Snowflake? get() = data.emojiId
 
     /**
      * The amount of users that reacted this emoji to the message.
@@ -32,7 +29,7 @@ class Reaction(val data: ReactionData, override val kord: Kord) : KordObject {
     val emoji: ReactionEmoji
         get() = when (data.emojiId) {
             null -> ReactionEmoji.Unicode(data.emojiName!!)
-            else -> ReactionEmoji.Custom(Snowflake(data.emojiId), data.emojiName ?: "", data.emojiAnimated)
+            else -> ReactionEmoji.Custom(data.emojiId, data.emojiName ?: "", data.emojiAnimated)
         }
 
     /**

@@ -11,7 +11,7 @@ class GuildPreview(
 ) : Entity {
 
     override val id: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     /**
      * The name of the guild

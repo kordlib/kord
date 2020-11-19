@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -7,38 +9,62 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * A representation of the [Discord Webhook structure](https://discord.com/developers/docs/resources/webhook#webhook-object).
+ *
+ * @param id The id of the webhook.
+ * @param type The type of the webhook.
+ * @param guildId The guild id this webhook is for.
+ * @param channelId The channel id this webhook is for.
+ * @param user The user this webhook was created by (not present when getting a webhook with its [token]).
+ * @param name The default name of the webhook.
+ * @param avatar The default avatar of the webhook.
+ * @param token The secure token of this webhook (returned for [incoming webhooks][WebhookType.Incoming]).
+ * @param applicationId The bot/OAuth2 application that created this webhook.
+ */
 @Serializable
 data class DiscordWebhook(
-        val id: String,
+        val id: Snowflake,
         val type: WebhookType,
         @SerialName("guild_id")
-        val guildId: String? = null,
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
         @SerialName("channel_id")
-        val channelId: String,
-        val user: DiscordUser? = null,
-        val name: String? = null,
-        val avatar: String? = null,
-        val token: String? = null
+        val channelId: Snowflake,
+        val user: Optional<DiscordUser> = Optional.Missing(),
+        val name: String?,
+        val avatar: String?,
+        val token: Optional<String> = Optional.Missing(),
+        @SerialName("application_id")
+        val applicationId: Snowflake?,
 )
 
-@Serializable(with = WebhookType.WebhookTypeSerializer::class)
-enum class WebhookType(val code: Int) {
-    Unknown(-1),
-    Incoming(1),
-    ChannelOrder(2);
+@Serializable(with = WebhookType.Serializer::class)
+sealed class WebhookType(val value: Int) {
+    class Unknown(value: Int): WebhookType(value)
 
-    companion object WebhookTypeSerializer : KSerializer<WebhookType> {
+    /**
+     * Incoming Webhooks can post messages to channels with a generated token.
+     */
+    object Incoming: WebhookType(1)
+
+    /**
+     * 	Channel Follower Webhooks are internal webhooks used with Channel Following to post new messages into channels.
+     */
+    object ChannelFollower: WebhookType(2)
+
+    internal object Serializer : KSerializer<WebhookType> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): WebhookType {
-            val code = decoder.decodeInt()
-            return values().firstOrNull { it.code == code } ?: Unknown
+        override fun deserialize(decoder: Decoder): WebhookType = when(val value = decoder.decodeInt()) {
+            0 -> Incoming
+            2 -> ChannelFollower
+            else -> Unknown(value)
         }
 
         override fun serialize(encoder: Encoder, value: WebhookType) {
-            encoder.encodeInt(value.code)
+            encoder.encodeInt(value.value)
         }
     }
 }

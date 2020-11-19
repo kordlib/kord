@@ -1,13 +1,15 @@
 package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.cache.api.query
+import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.entity.DiscordEmoji
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.Optional
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.catchDiscordError
-import com.gitlab.kordlib.core.catchNotFound
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
@@ -17,10 +19,13 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.rest
 import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
+import com.gitlab.kordlib.rest.Image
+import com.gitlab.kordlib.rest.builder.auditlog.AuditLogGetRequestBuilder
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
 import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
 import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
+import com.gitlab.kordlib.rest.builder.guild.GuildWidgetModifyBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
 import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
 import com.gitlab.kordlib.rest.json.JsonErrorCode
@@ -69,12 +74,21 @@ interface GuildBehavior : Entity, Strategizable {
         get() = supplier.getGuildChannels(id)
 
     /**
+     * Requests to get all custom emojis in this guild in an unspecified order.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    val emojis: Flow<GuildEmoji>
+        get() = supplier.getEmojis(id)
+
+    /**
      * Requests to get the integrations of this guild.
      */
     val integrations: Flow<Integration>
         get() = flow {
-            kord.rest.guild.getGuildIntegrations(id.value).forEach {
-                emit(Integration(IntegrationData.from(id.longValue, it), kord, supplier))
+            kord.rest.guild.getGuildIntegrations(id).forEach {
+                emit(Integration(IntegrationData.from(id, it), kord, supplier))
             }
         }
 
@@ -84,7 +98,7 @@ interface GuildBehavior : Entity, Strategizable {
      * This property is not resolvable through REST and will always use [KordCache] instead.
      */
     val presences: Flow<Presence>
-        get() = kord.cache.query<PresenceData> { PresenceData::guildId eq id.longValue }
+        get() = kord.cache.query<PresenceData> { PresenceData::guildId eq id.value }
                 .asFlow()
                 .map { Presence(it, kord) }
 
@@ -133,10 +147,23 @@ interface GuildBehavior : Entity, Strategizable {
      */
     val voiceStates: Flow<VoiceState>
         get() = kord.cache
-                .query<VoiceStateData> { VoiceStateData::guildId eq id.longValue }
+                .query<VoiceStateData> { VoiceStateData::guildId eq id.value }
                 .asFlow()
                 .map { VoiceState(it, kord) }
-
+    /**
+     * Requests to get the present voice states of this guild.
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    val invites: Flow<Invite>
+        get() = flow {
+            kord.rest.guild.getGuildInvites(id).forEach {
+                emit(Invite(InviteData.from(it), kord))
+            }
+        }
 
     /**
      * Requests to get the this behavior as a [Guild].
@@ -159,14 +186,14 @@ interface GuildBehavior : Entity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete() = kord.rest.guild.deleteGuild(id.value)
+    suspend fun delete() = kord.rest.guild.deleteGuild(id)
 
     /**
      * Requests to leave this guild.
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun leave() = kord.rest.user.leaveGuild(id.value)
+    suspend fun leave() = kord.rest.user.leaveGuild(id)
 
     /**
      * Requests to get the [Member] represented by the [userId].
@@ -230,8 +257,17 @@ interface GuildBehavior : Entity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun modifySelfNickname(newNickName: String?): String {
-        return kord.rest.guild.modifyCurrentUserNickname(id.value, CurrentUserNicknameModifyRequest(newNickName))
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated("Use editSelfNickname.", ReplaceWith("editSelfNickname(newNickname)"), DeprecationLevel.ERROR)
+    suspend fun modifySelfNickname(newNickname: String? = null): String = editSelfNickname(newNickname)
+
+    /**
+     *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    suspend fun editSelfNickname(newNickname: String? = null): String {
+        return kord.rest.guild.modifyCurrentUserNickname(id, CurrentUserNicknameModifyRequest(Optional(newNickname)))
     }
 
     /**
@@ -240,7 +276,7 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun kick(userId: Snowflake, reason: String? = null) {
-        kord.rest.guild.deleteGuildMember(guildId = id.value, userId = userId.value, reason = reason)
+        kord.rest.guild.deleteGuildMember(guildId = id, userId = userId, reason = reason)
     }
 
 
@@ -268,9 +304,9 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [ClassCastException] if the channel is not a [GuildChannel].
      * @throws [IllegalArgumentException] if the channel is not part of this guild.
      */
-    suspend fun getChannel(channelId: Snowflake) : GuildChannel {
+    suspend fun getChannel(channelId: Snowflake): GuildChannel {
         val channel = supplier.getChannelOf<GuildChannel>(channelId)
-        require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id.value}" }
+        require(channel.guildId == this.id) { "channel ${channelId} is not in guild ${this.id}" }
         return channel
     }
 
@@ -282,9 +318,9 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [ClassCastException] if the channel is not a [GuildChannel].
      * @throws [IllegalArgumentException] if the channel is not part of this guild.
      */
-    suspend fun getChannelOrNull(channelId: Snowflake) : GuildChannel? {
+    suspend fun getChannelOrNull(channelId: Snowflake): GuildChannel? {
         val channel = supplier.getChannelOfOrNull<GuildChannel>(channelId) ?: return null
-        require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id.value}" }
+        require(channel.guildId == this.id) { "channel ${channelId} is not in guild ${this.id}" }
         return channel
     }
 
@@ -295,7 +331,7 @@ interface GuildBehavior : Entity, Strategizable {
      */
     @Deprecated("unBan is a typo", ReplaceWith("unban"))
     suspend fun unBan(userId: Snowflake) {
-        kord.rest.guild.deleteGuildBan(guildId = id.value, userId = userId.value)
+        kord.rest.guild.deleteGuildBan(guildId = id, userId = userId)
     }
 
     /**
@@ -304,7 +340,7 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun unban(userId: Snowflake) {
-        kord.rest.guild.deleteGuildBan(guildId = id.value, userId = userId.value)
+        kord.rest.guild.deleteGuildBan(guildId = id, userId = userId)
     }
 
     /**
@@ -337,7 +373,7 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun getPruneCount(days: Int = 7): Int =
-            kord.rest.guild.getGuildPruneCount(id.value, days).pruned
+            kord.rest.guild.getGuildPruneCount(id, days).pruned
 
     /**
      * Requests to prune users in this guild.
@@ -348,7 +384,7 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun prune(days: Int = 7): Int {
-        return kord.rest.guild.beginGuildPrune(id.value, days, true).pruned!!
+        return kord.rest.guild.beginGuildPrune(id, days, true).pruned!!
     }
 
     /**
@@ -362,10 +398,14 @@ interface GuildBehavior : Entity, Strategizable {
      */
     suspend fun getVanityUrl(): String? {
         val identifier = catchDiscordError(JsonErrorCode.InviteCodeInvalidOrTaken) {
-            kord.rest.guild.getVanityInvite(id.value).code
+            kord.rest.guild.getVanityInvite(id).code
         } ?: return null
         return "https://discord.gg/$identifier"
     }
+
+    suspend fun getWidget(): GuildWidget = supplier.getGuildWidget(id)
+
+    suspend fun getWidgetOrNull(): GuildWidget? = supplier.getGuildWidget(id)
 
     /**
      * Returns a new [GuildBehavior] with the given [strategy].
@@ -406,18 +446,29 @@ suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): G
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.modifyGuild(id.value, builder)
+    val response = kord.rest.guild.modifyGuild(id, builder)
     val data = GuildData.from(response)
 
     return Guild(data, kord)
 }
 
+@Deprecated("emoji name and image are mandatory fields.", ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)"))
+@DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit) {
+suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.emoji.createEmoji(guildId = id.value, builder = builder)
+    return createEmoji("name", Image.raw(byteArrayOf(), Image.Format.PNG), builder)
+}
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createEmoji(name: String, image: Image, builder: EmojiCreateBuilder.() -> Unit = {}): GuildEmoji {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val discordEmoji = kord.rest.emoji.createEmoji(guildId = id, name, image,  builder)
+    return GuildEmoji(EmojiData.from(guildId = id, id = discordEmoji.id!!, discordEmoji), kord)
 }
 
 /**
@@ -427,12 +478,30 @@ suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> U
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@Deprecated("channel name is a mandatory field", ReplaceWith("createTextChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.createTextChannel(id.value, builder)
+    return createTextChannel("name", builder)
+}
+
+/**
+ * Requests to create a new text channel.
+ *
+ * @return The created [TextChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createTextChannel(name: String, builder: TextChannelCreateBuilder.() -> Unit = {}): TextChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val response = kord.rest.guild.createTextChannel(id, name, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as TextChannel
@@ -445,12 +514,29 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@Deprecated("channel name is a mandatory field.", ReplaceWith("createVoiceChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.createVoiceChannel(id.value, builder)
+    return createVoiceChannel("name", builder)
+}
+
+/**
+ * Requests to create a new voice channel.
+ *
+ * @return The created [VoiceChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createVoiceChannel(name: String, builder: VoiceChannelCreateBuilder.() -> Unit = {}): VoiceChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val response = kord.rest.guild.createVoiceChannel(id, name, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as VoiceChannel
@@ -463,16 +549,50 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@Deprecated("channel name is a mandatory field.", ReplaceWith("createNewsChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
-@KordPreview
 suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.createNewsChannel(id.value, builder)
+    return createNewsChannel("name", builder)
+}
+
+/**
+ * Requests to create a new news channel.
+ *
+ * @return The created [NewsChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createNewsChannel(name: String, builder: NewsChannelCreateBuilder.() -> Unit = {}): NewsChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val response = kord.rest.guild.createNewsChannel(id, name, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as NewsChannel
+}
+
+
+/**
+ * Requests to create a new category.
+ *
+ * @return The created [Category].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+@Deprecated("channel name is a mandatory field.", ReplaceWith("createCategoryChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@DeprecatedSinceKord("0.7.0")
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    return createCategory("name", builder)
 }
 
 /**
@@ -483,11 +603,11 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
+suspend inline fun GuildBehavior.createCategory(name: String, builder: CategoryCreateBuilder.() -> Unit = {}): Category {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.createCategory(id.value, builder)
+    val response = kord.rest.guild.createCategory(id, name, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as Category
@@ -503,7 +623,7 @@ suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPosit
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.guild.modifyGuildChannelPosition(id.value, builder)
+    kord.rest.guild.modifyGuildChannelPosition(id, builder)
 }
 
 /**
@@ -520,8 +640,8 @@ suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyB
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.modifyGuildRolePosition(id.value, builder)
-    return response.asFlow().map { RoleData.from(id.value, it) }.map { Role(it, kord) }
+    val response = kord.rest.guild.modifyGuildRolePosition(id, builder)
+    return response.asFlow().map { RoleData.from(id, it) }.map { Role(it, kord) }
 
 }
 
@@ -533,12 +653,24 @@ suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyB
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit): Role {
+@DeprecatedSinceKord("0.7.0")
+@Deprecated("Use createRole instead.", ReplaceWith("createRole(builder)"), DeprecationLevel.ERROR)
+suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit = {}): Role = createRole(builder)
+
+/**
+ * Requests to add a new role to this guild.
+ *
+ * @return The created [Role].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createRole(builder: RoleCreateBuilder.() -> Unit = {}): Role {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.createGuildRole(id.value, builder)
-    val data = RoleData.from(id.value, response)
+    val response = kord.rest.guild.createGuildRole(id, builder)
+    val data = RoleData.from(id, response)
 
     return Role(data, kord)
 }
@@ -553,7 +685,7 @@ suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilde
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.guild.addGuildBan(guildId = id.value, userId = userId.value, builder = builder)
+    kord.rest.guild.addGuildBan(guildId = id, userId = userId, builder = builder)
 }
 
 /**
@@ -564,9 +696,9 @@ suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilde
  * @throws [ClassCastException] if the channel is not of type [T].
  * @throws [IllegalArgumentException] if the channel is not part of this guild.
  */
-suspend inline fun<reified T: GuildChannel> GuildBehavior.getChannelOf(channelId: Snowflake) : T {
+suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOf(channelId: Snowflake): T {
     val channel = supplier.getChannelOf<T>(channelId)
-    require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id.value}" }
+    require(channel.guildId == this.id) { "channel ${channelId} is not in guild ${this.id}" }
     return channel
 }
 
@@ -578,8 +710,30 @@ suspend inline fun<reified T: GuildChannel> GuildBehavior.getChannelOf(channelId
  * @throws [ClassCastException] if the channel is not of type [T].
  * @throws [IllegalArgumentException] if the channel is not part of this guild.
  */
-suspend inline fun<reified T: GuildChannel> GuildBehavior.getChannelOfOrNull(channelId: Snowflake) : T? {
+suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfOrNull(channelId: Snowflake): T? {
     val channel = supplier.getChannelOfOrNull<T>(channelId) ?: return null
-    require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id.value}" }
+    require(channel.guildId == this.id) { "channel ${channelId} is not in guild ${this.id}" }
     return channel
 }
+
+suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
+    return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)
+}
+
+/**
+ * The [Audit log entries][AuditLogEntry] from this guild, configured by the [builder].
+ *
+ * The returned flow is lazily executed, any [RequestException] will be thrown on
+ * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+ *
+ * ```kotlin
+ *  val change = guild.getAuditLogEntries {
+ *      userId = user.id
+ *      action = AuditLogEvent.MemberUpdate
+ *  }.mapNotNull { it[AuditLogChangeKey.Nick] }.firstOrNull() ?: return
+ *
+ *  println("user changed nickname from $old to $new")
+ *  ```
+ */
+inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> =
+        kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
