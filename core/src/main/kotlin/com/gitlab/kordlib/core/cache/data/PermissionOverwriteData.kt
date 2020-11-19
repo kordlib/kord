@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.DiscordBitSet
 import com.gitlab.kordlib.common.entity.Overwrite
 import kotlinx.serialization.Serializable
 
@@ -7,8 +8,8 @@ import kotlinx.serialization.Serializable
 data class PermissionOverwriteData(
         val id: Long,
         val type: String,
-        val allowed: Int,
-        val denied: Int
+        val allowed: DiscordBitSet,
+        val denied: DiscordBitSet
 ) {
     companion object {
         fun from(entity: Overwrite) = with(entity) {
