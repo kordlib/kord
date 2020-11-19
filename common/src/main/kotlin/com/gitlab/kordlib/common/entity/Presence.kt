@@ -74,6 +74,8 @@ sealed class PresenceStatus(val value: String) {
     object Online : PresenceStatus("online")
     object Idle : PresenceStatus("idle")
     object DoNotDisturb : PresenceStatus("dnd")
+    object Offline : PresenceStatus("offline")
+    object Invisible: PresenceStatus("invisible")
 
     companion object StatusSerializer : KSerializer<PresenceStatus> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Kord.ClientStatus", PrimitiveKind.STRING)
@@ -82,6 +84,8 @@ sealed class PresenceStatus(val value: String) {
             "online" -> Online
             "idle" -> Idle
             "dnd" -> DoNotDisturb
+            "offline" -> Offline
+            "invisible" -> Invisible
             else -> Unknown(value)
         }
 
