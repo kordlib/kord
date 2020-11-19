@@ -57,7 +57,7 @@ class DefaultGatewayTest {
                 "!status" -> when (words.getOrNull(1)) {
                     "playing" -> gateway.send(UpdateStatus(status = PresenceStatus.Online, afk = false, activities = listOf(DiscordBotActivity("Kord", ActivityType.Game)), since = null))
                 }
-                "!ping" -> gateway.send(UpdateStatus(status = PresenceStatus.Online, afk = false, activities = listOf(DiscordBotActivity("Ping is ${gateway.ping.toLongMilliseconds()}", ActivityType.Game)), since = null))
+                "!ping" -> gateway.send(UpdateStatus(status = PresenceStatus.Online, afk = false, activities = listOf(DiscordBotActivity("Ping is ${gateway.ping.value?.toLongMilliseconds()}", ActivityType.Game)), since = null))
             }
         }.launchIn(GlobalScope)
 

@@ -13,7 +13,7 @@ import com.gitlab.kordlib.core.entity.ReactionEmoji
 import com.gitlab.kordlib.core.event.message.*
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.gateway.*
-import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
@@ -24,8 +24,8 @@ internal class MessageEventHandler(
         kord: Kord,
         gateway: MasterGateway,
         cache: DataCache,
-        coreEventChannel: SendChannel<CoreEvent>,
-) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
+        coreFlow: MutableSharedFlow<CoreEvent>
+) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
         is MessageCreate -> handle(event, shard)
@@ -67,7 +67,7 @@ internal class MessageEventHandler(
             }
         }
 
-        coreEventChannel.send(MessageCreateEvent(Message(data, kord), guildId.value!!, member, shard))
+        coreFlow.emit(MessageCreateEvent(Message(data, kord), guildId.value!!, member, shard))
     }
 
     private suspend fun handle(event: MessageUpdate, shard: Int) = with(event.message) {
@@ -84,7 +84,7 @@ internal class MessageEventHandler(
             }
         }
 
-        coreEventChannel.send(MessageUpdateEvent(id, channelId, this, old, kord, shard))
+        coreFlow.emit(MessageUpdateEvent(id, channelId, this, old, kord, shard))
     }
 
     private suspend fun handle(event: MessageDelete, shard: Int) = with(event.message) {
@@ -93,7 +93,7 @@ internal class MessageEventHandler(
         val removed = query.singleOrNull()?.let { Message(it, kord) }
         query.remove()
 
-        coreEventChannel.send(
+        coreFlow.emit(
                 MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard)
         )
     }
@@ -106,7 +106,7 @@ internal class MessageEventHandler(
 
         val ids = ids.asSequence().map { it }.toSet()
 
-        coreEventChannel.send(
+        coreFlow.emit(
                 MessageBulkDeleteEvent(ids, removed, channelId, guildId.value, kord, shard)
         )
     }
@@ -142,7 +142,7 @@ internal class MessageEventHandler(
             it.copy(reactions = Optional.Value(reactions))
         }
 
-        coreEventChannel.send(
+        coreFlow.emit(
                 ReactionAddEvent(
                         userId,
                         channelId,
@@ -184,7 +184,7 @@ internal class MessageEventHandler(
             it.copy(reactions = Optional.Value(reactions))
         }
 
-        coreEventChannel.send(
+        coreFlow.emit(
                 ReactionRemoveEvent(
                         userId,
                         channelId,
@@ -200,7 +200,7 @@ internal class MessageEventHandler(
     private suspend fun handle(event: MessageReactionRemoveAll, shard: Int) = with(event.reactions) {
         cache.query<MessageData> { idEq(MessageData::id, messageId) }.update { it.copy(reactions = Optional.Missing()) }
 
-        coreEventChannel.send(
+        coreFlow.emit(
                 ReactionRemoveAllEvent(
                         channelId,
                         messageId,
@@ -216,7 +216,7 @@ internal class MessageEventHandler(
                 .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
 
         val data = ReactionRemoveEmojiData.from(this)
-        coreEventChannel.send(ReactionRemoveEmojiEvent(data, kord, shard))
+        coreFlow.emit(ReactionRemoveEmojiEvent(data, kord, shard))
     }
 
 }
