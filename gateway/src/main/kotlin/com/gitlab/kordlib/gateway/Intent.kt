@@ -1,12 +1,15 @@
 package com.gitlab.kordlib.gateway
 
-import kotlinx.serialization.*
+import com.gitlab.kordlib.common.DiscordBitSet
+import com.gitlab.kordlib.common.EmptyBitSet
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.RequiresOptIn.*
+import kotlin.RequiresOptIn.Level
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -27,7 +30,9 @@ annotation class PrivilegedIntent
 /**
  * Values that enable a group of events as [defined by Discord](https://github.com/discord/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents).
  */
-enum class Intent(val code: Int) {
+sealed class Intent(val code: DiscordBitSet) {
+    constructor(vararg code: Long) : this(DiscordBitSet(code))
+
     /**
      * Enables the following events:
      * - [GuildCreate]
@@ -40,7 +45,7 @@ enum class Intent(val code: Int) {
      * - [ChannelDelete]
      * - [ChannelPinsUpdate]
      */
-    Guilds(1 shl 0),
+    object Guilds : Intent(1 shl 0)
 
     /**
      * Enables the following events:
@@ -49,52 +54,52 @@ enum class Intent(val code: Int) {
      * - [GuildMemberRemove]
      */
     @PrivilegedIntent
-    GuildMembers(1 shl 1),
+    object GuildMembers : Intent(1 shl 1)
 
     /**
      * Enables the following events:
      * - [GuildBanAdd]
      * - [GuildBanRemove]
      */
-    GuildBans(1 shl 2),
+    object GuildBans : Intent(1 shl 2)
 
     /**
      * Enables the following events:
      * - [GuildEmojisUpdate]
      */
-    GuildEmojis(1 shl 3),
+    object GuildEmojis : Intent(1 shl 3)
 
     /**
      * Enables the following events:
      * - [GuildIntegrationsUpdate]
      */
-    GuildIntegrations(1 shl 4),
+    object GuildIntegrations : Intent(1 shl 4)
 
     /**
      * Enables the following events:
      * - [WebhooksUpdate]
      */
-    GuildWebhooks(1 shl 5),
+    object GuildWebhooks : Intent(1 shl 5)
 
     /**
      * Enables the following events:
      * - INVITE_CREATE
      * - INVITE_DELETE
      */
-    GuildInvites(1 shl 6),
+    object GuildInvites : Intent(1 shl 6)
 
     /**
      * Enables the following events:
      * - [VoiceStateUpdate]
      */
-    GuildVoiceStates(1 shl 7),
+    object GuildVoiceStates : Intent(1 shl 7)
 
     /**
      * Enables the following events:
      * - [PresenceUpdate]
      */
     @PrivilegedIntent
-    GuildPresences(1 shl 8),
+    object GuildPresences : Intent(1 shl 8)
 
     /**
      * Enables the following events:
@@ -103,7 +108,7 @@ enum class Intent(val code: Int) {
      * - [MessageDelete]
      * - [MessageDeleteBulk]
      */
-    GuildMessages(1 shl 9),
+    object GuildMessages : Intent(1 shl 9)
 
     /**
      * Enables the following events:
@@ -112,13 +117,13 @@ enum class Intent(val code: Int) {
      * - [MessageReactionRemoveAll]
      * - MESSAGE_REACTION_REMOVE_EMOJI
      */
-    GuildMessageReactions(1 shl 10),
+    object GuildMessageReactions : Intent(1 shl 10)
 
     /**
      * Enables the following events:
      * - [TypingStart]
      */
-    GuildMessageTyping(1 shl 11),
+    object GuildMessageTyping : Intent(1 shl 11)
 
     /**
      * Enables the following events:
@@ -127,7 +132,7 @@ enum class Intent(val code: Int) {
      * - [MessageUpdate]
      * - [MessageDelete]
      */
-    DirectMessages(1 shl 12),
+    object DirectMessages : Intent(1 shl 12)
 
     /**
      * Enables the following events:
@@ -136,40 +141,33 @@ enum class Intent(val code: Int) {
      * - [MessageReactionRemoveAll]
      * - MESSAGE_REACTION_REMOVE_EMOJI
      */
-    DirectMessagesReactions(1 shl 13),
+    object DirectMessagesReactions : Intent(1 shl 13)
 
     /**
      * Enables the following events:
      * - [TypingStart]
      */
-    DirectMessageTyping(1 shl 14)
+    object DirectMessageTyping : Intent(1 shl 14)
 }
 
 /**
  * A set of [intents][Intent] to be used while [identifying][Identify] a [Gateway] connection to communicate the events the client wishes to receive.
  */
 @Serializable(with = IntentsSerializer::class)
-data class Intents internal constructor(val code: Int) {
+data class Intents internal constructor(val code: DiscordBitSet) {
 
-    val intents = Intent.values().filter { code and it.code != 0 }.toSet()
 
-    operator fun contains(intent: Intent) = intent in intents
+    operator fun contains(intent: Intent) = intent.code in code
 
     /**
      * Returns an [Intents] that added the [intent] to this [code].
      */
-    operator fun plus(intent: Intent): Intents = when {
-        code and intent.code == intent.code -> this
-        else -> Intents(this.code or intent.code)
-    }
+    operator fun plus(intent: Intent): Intents = Intents(code + intent.code)
 
     /**
      * Returns an [Intents] that removed the [intent] from this [code].
      */
-    operator fun minus(intent: Intent): Intents = when {
-        code and intent.code == intent.code -> Intents(code xor intent.code)
-        else -> this
-    }
+    operator fun minus(intent: Intent): Intents = Intents(code - intent.code)
 
     /**
      * copy this [Intents] and apply the [block] to it.
@@ -189,14 +187,27 @@ data class Intents internal constructor(val code: Int) {
         @PrivilegedIntent
         val all: Intents
             get() = invoke {
-                Intent.values().forEach { +it }
+                +Intent.GuildMessageTyping
+                +Intent.GuildIntegrations
+                +Intent.GuildEmojis
+                +Intent.DirectMessageTyping
+                +Intent.DirectMessages
+                +Intent.DirectMessagesReactions
+                +Intent.GuildBans
+                +Intent.Guilds
+                +Intent.GuildVoiceStates
+                +Intent.GuildMessages
+                +Intent.GuildMessageReactions
+                +Intent.GuildMembers
+                +Intent.GuildWebhooks
+                +Intent.GuildInvites
+                +Intent.GuildPresences
             }
 
         @OptIn(PrivilegedIntent::class)
         val nonPrivileged: Intents
             get() = invoke {
-                Intent.values().forEach { +it }
-
+                +all
                 -Intent.GuildPresences
                 -Intent.GuildMembers
             }
@@ -206,21 +217,38 @@ data class Intents internal constructor(val code: Int) {
         inline operator fun invoke(builder: IntentsBuilder.() -> Unit = {}): Intents {
             return IntentsBuilder().apply(builder).flags()
         }
+
+        operator fun invoke(vararg intents: Intents) = invoke {
+            intents.forEach { +it }
+        }
+
+        operator fun invoke(vararg intents: Intent) = invoke {
+            intents.forEach { +it }
+        }
+
+        @JvmName("invokeWithIntents")
+        operator fun invoke(intents: Iterable<Intents>) = invoke {
+            intents.forEach { +it }
+        }
+
+        operator fun invoke(value: String) = Intents(DiscordBitSet(value))
+        operator fun invoke(intents: Iterable<Intent>) = invoke {
+            intents.forEach { +it }
+        }
     }
 
-    class IntentsBuilder(internal var code: Int = 0) {
+    class IntentsBuilder(internal var code: DiscordBitSet = EmptyBitSet()) {
         operator fun Intents.unaryPlus() {
-            this@IntentsBuilder.code = this@IntentsBuilder.code or code
+            this@IntentsBuilder.code.add(code)
         }
 
         operator fun Intent.unaryPlus() {
-            this@IntentsBuilder.code = this@IntentsBuilder.code or code
+            this@IntentsBuilder.code.add(code)
         }
 
         operator fun Intent.unaryMinus() {
-            if (this@IntentsBuilder.code and code == code) {
-                this@IntentsBuilder.code = this@IntentsBuilder.code xor code
-            }
+            this@IntentsBuilder.code.remove(code)
+
         }
 
         fun flags() = Intents(code)
@@ -229,14 +257,19 @@ data class Intents internal constructor(val code: Int) {
 }
 
 object IntentsSerializer : KSerializer<Intents> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("intents", PrimitiveKind.INT)
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("intents", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): Intents {
-        val flags = decoder.decodeInt()
-        return Intents(flags)
+        val intents = decoder.decodeString()
+        return Intents(intents)
     }
 
+
     override fun serialize(encoder: Encoder, value: Intents) {
-        encoder.encodeInt(value.code)
+        val intents = value.code
+        encoder.encodeString(intents.value)
+
     }
 }
+
+

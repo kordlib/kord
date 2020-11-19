@@ -1,7 +1,10 @@
 package com.gitlab.kordlib.rest.json.response
 
 import com.gitlab.kordlib.common.entity.*
-import kotlinx.serialization.*
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -107,9 +110,9 @@ sealed class AuditLogChangeResponse<T> {
                 "explicit_content_filter" -> ExplicitContentFilterLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
                 "default_message_notifications" -> DefaultMessageNotificationLevelLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
                 "mfa_level" -> MFALogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
-                "permissions" -> PermissionsLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
-                "allow" -> AllowLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
-                "deny" -> DenyLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
+                "permissions" -> PermissionsLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "allow" -> AllowLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
+                "deny" -> DenyLogChange(old?.jsonPrimitive?.content, new?.jsonPrimitive?.content)
                 "verification_level" -> VerificationLevelLogChange(old?.jsonPrimitive?.int, new?.jsonPrimitive?.int)
 
                 "\$remove" -> AddLogChange(listFromJson(DiscordAuditLogRoleChange.serializer(), old), listFromJson(DiscordAuditLogRoleChange.serializer(), new))
@@ -145,21 +148,18 @@ data class DeafLogChange(override val old: Boolean?, override val new: Boolean?)
 data class MuteLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
 data class WidgetEnabledLogChange(override val old: Boolean?, override val new: Boolean?) : AuditLogChangeResponse<Boolean>()
 data class PermissionsLogChange(override val old: Permissions?, override val new: Permissions?) : AuditLogChangeResponse<Permissions>() {
-    internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions { +it } },
-            new?.let { Permissions { +it } }
+    internal constructor(old: String?, new: String?) : this(old?.let { Permissions(it) }, new?.let { Permissions(it) }
     )
 }
 
 data class AllowLogChange(override val old: Permissions?, override val new: Permissions?) : AuditLogChangeResponse<Permissions>() {
-    internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions { +it } },
-            new?.let { Permissions { +it } }
+    internal constructor(old: String?, new: String?) : this(old?.let { Permissions(it) }, new?.let { Permissions(it) }
     )
 }
 
 
 data class DenyLogChange(override val old: Permissions?, override val new: Permissions?) : AuditLogChangeResponse<Permissions>() {
-    internal constructor(old: Int?, new: Int?) : this(old?.let { Permissions { +it } },
-            new?.let { Permissions { +it } }
+    internal constructor(old: String?, new: String?) : this(old?.let { Permissions(it) }, new?.let { Permissions(it) }
     )
 }
 

@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.common.entity
 
+import com.gitlab.kordlib.common.DiscordBitSet
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -42,8 +43,8 @@ data class DiscordChannel(
 data class Overwrite(
         val id: String,
         val type: String,
-        val allow: Int,
-        val deny: Int
+        val allow: DiscordBitSet,
+        val deny: DiscordBitSet
 )
 
 @Serializable(with = ChannelType.ChannelTypeSerializer::class)

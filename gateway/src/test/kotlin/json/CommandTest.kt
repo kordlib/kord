@@ -147,7 +147,7 @@ class CommandTest {
                     add(JsonPrimitive(1))
                 })
                 put("presence", null as String?)
-                put("intents", Intents.all.code)
+                put("intents", Intents.all.code.value)
             })
         })
 
