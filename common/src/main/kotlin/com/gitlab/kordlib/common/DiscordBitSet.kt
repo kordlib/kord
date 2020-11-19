@@ -1,5 +1,3 @@
-
-
 package com.gitlab.kordlib.common
 
 import kotlinx.serialization.KSerializer
@@ -11,9 +9,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.math.BigInteger
 import java.nio.ByteBuffer
-import kotlin.experimental.and
 import kotlin.math.max
 import kotlin.math.min
+
 private const val SAFE_LENGTH = 19
 private const val WIDTH = Byte.SIZE_BITS
 fun EmptyBitSet() = DiscordBitSet(0)
@@ -21,6 +19,9 @@ fun EmptyBitSet() = DiscordBitSet(0)
 @OptIn(ExperimentalUnsignedTypes::class)
 @Serializable(with = DiscordBitSetSerializer::class)
 class DiscordBitSet(internal var data: LongArray) {
+
+    val isEmpty: Boolean
+        get() = data.all { it == 0L }
 
     val value: String
         get() {
@@ -33,7 +34,7 @@ class DiscordBitSet(internal var data: LongArray) {
         get() = data.size * WIDTH
 
     val binary: String
-        get()  = data.joinToString("") { it.toULong().toString(2) }.reversed().padEnd(8,'0')
+        get() = data.joinToString("") { it.toULong().toString(2) }.reversed().padEnd(8, '0')
 
     override fun equals(other: Any?): Boolean {
         if (other !is DiscordBitSet) return false
@@ -113,7 +114,7 @@ class DiscordBitSet(internal var data: LongArray) {
         }
 
         operator fun invoke(value: String): DiscordBitSet {
-            if(value.length <= SAFE_LENGTH){// fast path
+            if (value.length <= SAFE_LENGTH) {// fast path
                 return DiscordBitSet(longArrayOf(value.toULong().toLong()))
             }
 
