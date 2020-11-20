@@ -33,6 +33,7 @@ annotation class PrivilegedIntent
 sealed class Intent(val code: DiscordBitSet) {
     constructor(vararg code: Long) : this(DiscordBitSet(code))
 
+
     /**
      * Enables the following events:
      * - [GuildCreate]
@@ -148,6 +149,26 @@ sealed class Intent(val code: DiscordBitSet) {
      * - [TypingStart]
      */
     object DirectMessageTyping : Intent(1 shl 14)
+    companion object {
+        @OptIn(PrivilegedIntent::class)
+        fun values() = listOf(
+                DirectMessageTyping,
+                GuildIntegrations,
+                GuildEmojis,
+                DirectMessageTyping,
+                DirectMessages,
+                DirectMessagesReactions,
+                GuildBans,
+                Guilds,
+                GuildVoiceStates,
+                GuildMessages,
+                GuildMessageReactions,
+                GuildWebhooks,
+                GuildInvites,
+                GuildPresences,
+                GuildMembers
+        )
+    }
 }
 
 /**
@@ -155,7 +176,11 @@ sealed class Intent(val code: DiscordBitSet) {
  */
 @Serializable(with = IntentsSerializer::class)
 data class Intents internal constructor(val code: DiscordBitSet) {
-
+    /**
+     *  Returns this [Intents] as a [Set] of [Intent]
+     */
+    @OptIn(PrivilegedIntent::class)
+    val intents = Intent.values().filter { it.code in code }.toSet()
 
     operator fun contains(intent: Intent) = intent.code in code
 
@@ -187,21 +212,7 @@ data class Intents internal constructor(val code: DiscordBitSet) {
         @PrivilegedIntent
         val all: Intents
             get() = invoke {
-                +Intent.GuildMessageTyping
-                +Intent.GuildIntegrations
-                +Intent.GuildEmojis
-                +Intent.DirectMessageTyping
-                +Intent.DirectMessages
-                +Intent.DirectMessagesReactions
-                +Intent.GuildBans
-                +Intent.Guilds
-                +Intent.GuildVoiceStates
-                +Intent.GuildMessages
-                +Intent.GuildMessageReactions
-                +Intent.GuildMembers
-                +Intent.GuildWebhooks
-                +Intent.GuildInvites
-                +Intent.GuildPresences
+                Intent.values().forEach { + it }
             }
 
         @OptIn(PrivilegedIntent::class)
