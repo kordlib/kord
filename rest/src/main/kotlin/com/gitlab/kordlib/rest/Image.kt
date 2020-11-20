@@ -50,4 +50,20 @@ class Image private constructor(val data: ByteArray, val format: Format) {
             }
         }
     }
+
+    /**
+     * Represents size of the [Image], for requesting different sizes of Image from the Discord.
+     * Both height and width of the [Image] will always be smaller than or equal to [maxRes] of the [Size].
+     */
+    enum class Size(val maxRes: Int) {
+        Size16(16),
+        Size32(32),
+        Size64(64),
+        Size128(128),
+        Size256(256),
+        Size512(512),
+        Size1024(1024),
+        Size2048(2048),
+        Size4096(4096),
+    }
 }

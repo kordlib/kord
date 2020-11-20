@@ -2,46 +2,48 @@ package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.common.entity.optional.*
 import kotlinx.serialization.Serializable
 
-internal val MessageData.authorId get() = author?.id
+internal val MessageData.authorId get() = author.id
 
 @Serializable
 data class MessageData(
-        val id: Long,
-        val channelId: Long,
-        @Deprecated("guildId's presence is inconsistent and will be removed in later versions")
-        val guildId: Long? = null,
+        val id: Snowflake,
+        val channelId: Snowflake,
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
         val author: UserData,
         val content: String,
         val timestamp: String,
         val editedTimestamp: String? = null,
         val tts: Boolean,
         val mentionEveryone: Boolean,
-        val mentions: List<Long>,
-        val mentionRoles: List<Long>,
+        val mentions: List<Snowflake>,
+        val mentionRoles: List<Snowflake>,
+        val mentionedChannels: Optional<List<Snowflake>> = Optional.Missing(),
         val attachments: List<AttachmentData>,
         val embeds: List<EmbedData>,
-        val reactions: List<ReactionData>? = null,
-        val nonce: Long? = null,
+        val reactions: Optional<List<ReactionData>> = Optional.Missing(),
+        val nonce: Optional<String> = Optional.Missing(),
         val pinned: Boolean,
-        val webhookId: Long?,
+        val webhookId: OptionalSnowflake = OptionalSnowflake.Missing,
         val type: MessageType,
-        val activity: MessageActivity? = null,
-        val application: MessageApplication? = null,
-        val mentionedChannels: List<Long>? = null
+        val activity: Optional<MessageActivity> = Optional.Missing(),
+        val application: Optional<MessageApplication> = Optional.Missing(),
+        val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
+        val flags: Optional<MessageFlags> = Optional.Missing(),
 ) {
 
-    fun plus(selfId: Snowflake, reaction: MessageReaction): MessageData {
-        val isMe = selfId.value == reaction.userId
+    fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
+        val isMe = selfId == reaction.userId
 
-        val reactions = if (reactions.isNullOrEmpty()) {
+        val reactions = if (reactions !is Optional.Value) {
             listOf(ReactionData.from(1, isMe, reaction.emoji))
         } else {
             val reactions = reactions.orEmpty()
             val data = reactions.firstOrNull { data ->
                 if (reaction.emoji.id == null) data.emojiName == reaction.emoji.name
-                else data.emojiId?.toString() == reaction.emoji.id && data.emojiName == reaction.emoji.name
+                else data.emojiId == reaction.emoji.id && data.emojiName == reaction.emoji.name
             }
 
             when (data) {
@@ -50,18 +52,18 @@ data class MessageData(
             }
         }
 
-        return copy(reactions = reactions)
+        return copy(reactions = Optional(reactions))
     }
 
     operator fun plus(partialMessage: DiscordPartialMessage): MessageData {
 
-        val editedTimestamp = partialMessage.editedTimestamp ?: editedTimestamp
-        val content = partialMessage.content ?: content
-        val mentions = partialMessage.mentions.orEmpty().map { it.id.toLong() }
-        val mentionEveryone = partialMessage.mentionEveryone ?: mentionEveryone
-        val embeds = partialMessage.embeds?.map { EmbedData.from(it) } ?: embeds
-        val mentionRoles = partialMessage.mentionRoles?.map { it.toLong() } ?: mentionRoles
-        val mentionedChannels = partialMessage.mentionedChannels?.map { it.id.toLong() } //can't figure out if list hasn't been updated or just isn't there, so we'll assume the former
+        val editedTimestamp = partialMessage.editedTimestamp.value ?: editedTimestamp
+        val content = partialMessage.content.value ?: content
+        val mentions = partialMessage.mentions.mapList { it.id }.value ?: mentions
+        val mentionEveryone = partialMessage.mentionEveryone.orElse(mentionEveryone)
+        val embeds = partialMessage.embeds.mapList { EmbedData.from(it) }.switchOnMissing(embeds).orEmpty()
+        val mentionRoles = partialMessage.mentionRoles.mapList { it }.value ?:  mentionRoles
+        val mentionedChannels = partialMessage.mentionedChannels.mapList { it.id }.switchOnMissing(mentionedChannels.value.orEmpty()).coerceToMissing()
 
         return MessageData(
                 id,
@@ -75,6 +77,7 @@ data class MessageData(
                 mentionEveryone,
                 mentions,
                 mentionRoles,
+                mentionedChannels,
                 attachments,
                 embeds,
                 reactions,
@@ -84,7 +87,8 @@ data class MessageData(
                 type,
                 activity,
                 application,
-                mentionedChannels
+                messageReference,
+                flags
         )
     }
 
@@ -93,27 +97,29 @@ data class MessageData(
 
         fun from(entity: DiscordMessage) = with(entity) {
             MessageData(
-                    id.toLong(),
-                    channelId.toLong(),
-                    guildId?.toLong(),
+                    id,
+                    channelId,
+                    guildId,
                     UserData.from(author),
                     content,
                     timestamp,
                     editedTimestamp,
                     tts,
                     mentionEveryone,
-                    mentions.map { it.id.toLong() },
-                    mentionRoles.map { it.toLong() },
+                    mentions.map { it.id },
+                    mentionRoles,
+                    mentionedChannels.mapList { it.id },
                     attachments.map { AttachmentData.from(it) },
                     embeds.map { EmbedData.from(it) },
-                    reactions?.map { ReactionData.from(it) },
-                    nonce?.toLong(),
+                    reactions.mapList { ReactionData.from(it) },
+                    nonce,
                     pinned,
-                    webhookId?.toLong(),
+                    webhookId,
                     type,
                     activity,
                     application,
-                    mentionedChannels?.map { it.id.toLong() }
+                    messageReference,
+                    flags,
             )
         }
     }

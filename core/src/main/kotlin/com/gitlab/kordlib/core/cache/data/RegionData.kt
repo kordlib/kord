@@ -1,21 +1,22 @@
 package com.gitlab.kordlib.core.cache.data
 
-import com.gitlab.kordlib.rest.json.response.VoiceRegion
+import com.gitlab.kordlib.common.entity.DiscordVoiceRegion
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class RegionData(
-        val id: Long,
-        val guildId: Long?,
+        val id: String,
+        val guildId: OptionalSnowflake,
         val name: String,
         val vip: Boolean,
         val optimal: Boolean,
         val deprecated: Boolean,
-        val custom: Boolean
+        val custom: Boolean,
 ) {
     companion object {
-        fun from(guildId: String?, region: VoiceRegion) = with(region) {
-            RegionData(id.toLong(), guildId?.toLong(), name, vip, optimal, deprecated, custom)
+        fun from(guildId: OptionalSnowflake, region: DiscordVoiceRegion) = with(region) {
+            RegionData(id, guildId, name, vip, optimal, deprecated, custom)
         }
     }
 }

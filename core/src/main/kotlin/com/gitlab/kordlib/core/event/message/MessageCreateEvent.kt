@@ -31,4 +31,8 @@ class MessageCreateEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
             MessageCreateEvent(message, guildId, member, shard, strategy.supply(message.kord))
+
+    override fun toString(): String {
+        return "MessageCreateEvent(message=$message, guildId=$guildId, member=$member, shard=$shard, supplier=$supplier)"
+    }
 }

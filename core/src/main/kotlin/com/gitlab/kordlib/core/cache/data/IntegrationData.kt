@@ -1,45 +1,49 @@
 package com.gitlab.kordlib.core.cache.data
 
-import com.gitlab.kordlib.rest.json.response.DiscordIntegrationsAccount
-import com.gitlab.kordlib.rest.json.response.IntegrationExpireBehavior
-import com.gitlab.kordlib.rest.json.response.IntegrationResponse
+import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class IntegrationData(
-        val id: Long,
+        val id: Snowflake,
+        val guildId: Snowflake,
         val name: String,
         val type: String,
         val enabled: Boolean,
         val syncing: Boolean,
-        val roleId: Long,
-        val guildId: Long,
-        val enableEmoticons: Boolean = false,
+        val roleId: Snowflake,
+        val enableEmoticons: OptionalBoolean = OptionalBoolean.Missing,
         val expireBehavior: IntegrationExpireBehavior,
         val expireGracePeriod: Int,
-        val userId: Long,
-        //no clue what this is, we'll ignore it for now
-        val account: DiscordIntegrationsAccount,
-        val syncedAt: String
+        val user: DiscordUser,
+        val account: IntegrationsAccountData,
+        val syncedAt: String,
+        val subscriberCount: Int,
+        val revoked: Boolean,
+        val application: IntegrationApplication,
 ) {
 
     companion object {
 
-        fun from(guildId: Long, response: IntegrationResponse) = with(response) {
+        fun from(guildId: Snowflake, response: DiscordIntegration) = with(response) {
             IntegrationData(
-                    id = id.toLong(),
-                    name = name,
-                    type=  type,
-                    guildId = guildId,
-                    roleId = roleId.toLong(),
-                    account = account,
-                    enabled = enabled,
-                    enableEmoticons = enableEmoticons ?: false,
-                    expireBehavior = expireBehavior,
-                    expireGracePeriod = expireGracePeriod,
-                    syncedAt = syncedAt,
-                    syncing = syncing,
-                    userId = user.id.toLong()
+                    id,
+                    guildId,
+                    name,
+                    type,
+                    enabled,
+                    syncing,
+                    roleId,
+                    enableEmoticons,
+                    expireBehavior,
+                    expireGracePeriod,
+                    user,
+                    IntegrationsAccountData.from(account),
+                    syncedAt,
+                    subscriberCount,
+                    revoked,
+                    application
             )
 
         }

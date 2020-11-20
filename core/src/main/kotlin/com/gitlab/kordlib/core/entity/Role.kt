@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.Color
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
@@ -7,7 +8,6 @@ import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.cache.data.RoleData
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import java.awt.Color
 import java.util.*
 
 data class Role(
@@ -17,12 +17,12 @@ data class Role(
 ) : RoleBehavior {
 
     override val id: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     override val guildId: Snowflake
-        get() = Snowflake(data.guildId)
+        get() = data.guildId
 
-    val color: Color get() = Color(data.color, true)
+    val color: Color get() = Color(data.color)
 
     val hoisted: Boolean get() = data.hoisted
 
@@ -51,6 +51,10 @@ data class Role(
     override fun equals(other: Any?): Boolean = when(other) {
         is RoleBehavior -> other.id == id && other.guildId == guildId
         else -> false
+    }
+
+    override fun toString(): String {
+        return "Role(data=$data, kord=$kord, supplier=$supplier)"
     }
 
 }

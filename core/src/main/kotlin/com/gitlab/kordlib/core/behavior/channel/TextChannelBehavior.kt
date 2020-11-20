@@ -58,6 +58,10 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
                 is ChannelBehavior -> other.id == id
                 else -> false
             }
+
+            override fun toString(): String {
+                return "TextChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier$supplier)"
+            }
         }
     }
 
@@ -71,7 +75,7 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
  * @throws [RestRequestException] if something went wrong during the request.
  */
 suspend inline fun TextChannelBehavior.edit(builder: TextChannelModifyBuilder.() -> Unit): TextChannel {
-    val response = kord.rest.channel.patchTextChannel(id.value, builder)
+    val response = kord.rest.channel.patchTextChannel(id, builder)
 
     val data = ChannelData.from(response)
     return Channel.from(data, kord) as TextChannel

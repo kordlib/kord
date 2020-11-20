@@ -9,18 +9,22 @@ import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.websocket.WebSockets
 import io.ktor.util.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import java.time.Duration
 import kotlin.time.seconds
 import kotlin.time.toKotlinDuration
 
 class DefaultGatewayBuilder {
-    var url = "wss://gateway.discord.gg/?v=6&encoding=json&compress=zlib-stream"
+    var url = "wss://gateway.discord.gg/?v=8&encoding=json&compress=zlib-stream"
     var client: HttpClient? = null
     var reconnectRetry: Retry? = null
     var sendRateLimiter: RateLimiter? = null
     var identifyRateLimiter: RateLimiter? = null
-
+    var dispatcher: CoroutineDispatcher = Dispatchers.Default
+    var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
     @OptIn(KtorExperimentalAPI::class, ObsoleteCoroutinesApi::class)
     fun build(): DefaultGateway {
@@ -32,7 +36,17 @@ class DefaultGatewayBuilder {
         val sendRateLimiter = sendRateLimiter ?: BucketRateLimiter(120, 60.seconds)
         val identifyRateLimiter = identifyRateLimiter ?: BucketRateLimiter(1, 5.seconds)
 
-        return DefaultGateway(DefaultGatewayData(url, client, retry, sendRateLimiter, identifyRateLimiter))
+        val data = DefaultGatewayData(
+                url,
+                client,
+                retry,
+                sendRateLimiter,
+                identifyRateLimiter,
+                dispatcher,
+                eventFlow
+        )
+
+        return DefaultGateway(data)
     }
 
 }

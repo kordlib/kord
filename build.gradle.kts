@@ -16,6 +16,7 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.bintray}")
         classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:${Versions.atomicFu}")
+        classpath("org.jetbrains.kotlinx:binary-compatibility-validator:${Versions.binaryCompatibilityValidator}")
     }
 }
 
@@ -23,13 +24,9 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
     id("org.jetbrains.dokka") version "1.4.0"
     id("org.ajoberstar.git-publish") version "2.1.3"
-    id("me.champeau.gradle.japicmp")
 }
 
-apply<BinaryCompatibilityPlugin>()
-configure<BinaryCompatibilityExtension> {
-    disableRootProject = true
-}
+apply(plugin = "binary-compatibility-validator")
 
 repositories {
     maven(url = "https://dl.bintray.com/kotlin/kotlin-dev/")
@@ -65,6 +62,7 @@ subprojects {
     dependencies {
         api(Dependencies.jdk8)
         api(Dependencies.`kotlinx-serialization`)
+        implementation(Dependencies.`kotlinx-serialization-json`)
         api(Dependencies.`kotlinx-coroutines`)
         implementation("org.jetbrains.kotlinx:atomicfu-jvm:${Versions.atomicFu}")
         implementation(Dependencies.`kotlin-logging`)
@@ -77,6 +75,8 @@ subprojects {
         testRuntimeOnly(Dependencies.`kotlin-reflect`)
         testRuntimeOnly(Dependencies.sl4j)
     }
+
+    tasks.getByName("apiCheck").onlyIf { Library.stableApi }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target

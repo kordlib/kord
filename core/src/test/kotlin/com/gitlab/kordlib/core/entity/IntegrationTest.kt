@@ -9,7 +9,7 @@ import mockKord
 internal class IntegrationTest : GuildEntityEqualityTest<Integration> by GuildEntityEqualityTest ({ id, guildId ->
     val kord = mockKord()
     val data = mockk<IntegrationData>()
-    every { data.id } returns id.longValue
-    every { data.guildId } returns guildId.longValue
+    every { data.id } returns id
+    every { data.guildId } returns guildId
     Integration(data, kord)
 })

@@ -27,21 +27,21 @@ class ReactionRemoveEmojiEvent(
     /**
      * The id of the [GuildMessageChannel].
      */
-    val channelId: Snowflake get() = Snowflake(data.channelId)
+    val channelId: Snowflake get() = data.channelId
 
     val channel: GuildMessageChannelBehavior get() = GuildMessageChannelBehavior(guildId = guildId, id = channelId, kord = kord)
 
     /**
      * The id of the [Guild].
      */
-    val guildId: Snowflake get() = Snowflake(data.guildId)
+    val guildId: Snowflake get() = data.guildId
 
     val guild: GuildBehavior get() = GuildBehavior(id = guildId, kord = kord)
 
     /**
      * The id of the message.
      */
-    val messageId: Snowflake get() = Snowflake(data.messageId)
+    val messageId: Snowflake get() = data.messageId
 
     val message: MessageBehavior get() = MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
 
@@ -64,4 +64,8 @@ class ReactionRemoveEmojiEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveAllEvent =
             ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "ReactionRemoveEmojiEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

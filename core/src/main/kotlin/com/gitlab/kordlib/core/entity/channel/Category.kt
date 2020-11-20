@@ -17,7 +17,7 @@ import java.util.*
 class Category(
         override val data: ChannelData,
         override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+        override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : GuildChannel, CategoryBehavior {
 
     override val guildId: Snowflake
@@ -45,6 +45,10 @@ class Category(
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false
+    }
+
+    override fun toString(): String {
+        return "Category(data=$data, kord=$kord, supplier=$supplier)"
     }
 
 }

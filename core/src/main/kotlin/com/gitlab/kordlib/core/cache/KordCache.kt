@@ -8,6 +8,7 @@ import com.gitlab.kordlib.cache.api.delegate.EntrySupplier
 import com.gitlab.kordlib.cache.map.MapLikeCollection
 import com.gitlab.kordlib.cache.map.internal.MapEntryCache
 import com.gitlab.kordlib.cache.map.lruLinkedHashMap
+import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.cache.data.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -69,22 +70,22 @@ class KordCacheBuilder {
      *  }
      *  ```
      */
-    fun messages(generator: Generator<MessageData, Long>) = forDescription(MessageData.description, generator)
+    fun messages(generator: Generator<MessageData, Snowflake>) = forDescription(MessageData.description, generator)
 
     /**
      *  Configures the caching for [RoleData].
      */
-    fun roles(generator: Generator<RoleData, Long>) = forDescription(RoleData.description, generator)
+    fun roles(generator: Generator<RoleData, Snowflake>) = forDescription(RoleData.description, generator)
 
     /**
      *  Configures the caching for [ChannelData].
      */
-    fun channels(generator: Generator<ChannelData, Long>) = forDescription(ChannelData.description, generator)
+    fun channels(generator: Generator<ChannelData, Snowflake>) = forDescription(ChannelData.description, generator)
 
     /**
      *  Configures the caching for [GuildData].
      */
-    fun guilds(generator: Generator<GuildData, Long>) = forDescription(GuildData.description, generator)
+    fun guilds(generator: Generator<GuildData, Snowflake>) = forDescription(GuildData.description, generator)
 
     /**
      *  Configures the caching for [MemberData].
@@ -98,18 +99,18 @@ class KordCacheBuilder {
      *  It's advised to configure user and member data similarly, so that every member in cache also has its user data cached.
      *  Failing to do so would result in a performance hit when fetching members.
      */
-    fun users(generator: Generator<UserData, Long>) = forDescription(UserData.description, generator)
+    fun users(generator: Generator<UserData, Snowflake>) = forDescription(UserData.description, generator)
 
 
     /**
      *  Configures the caching for [EmojiData].
      */
-    fun emojis(generator: Generator<EmojiData, Long>) = forDescription(EmojiData.description, generator)
+    fun emojis(generator: Generator<EmojiData, Snowflake>) = forDescription(EmojiData.description, generator)
 
     /**
      *  Configures the caching for [WebhookData].
      */
-    fun webhooks(generator: Generator<WebhookData, Long>) = forDescription(WebhookData.description, generator)
+    fun webhooks(generator: Generator<WebhookData, Snowflake>) = forDescription(WebhookData.description, generator)
 
     /**
      *  Configures the caching for [PresenceData].

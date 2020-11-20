@@ -1,11 +1,13 @@
 package com.gitlab.kordlib.core.event.guild
 
+import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MemberBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
+import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
 import com.gitlab.kordlib.core.cache.data.InviteCreateData
 import com.gitlab.kordlib.core.entity.Guild
@@ -31,18 +33,18 @@ class InviteCreateEvent(
         val data: InviteCreateData,
         override val kord: Kord,
         override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+        override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
     /**
      * The [GuildChannel] the invite is for.
      */
-    val channelId: Snowflake get() = Snowflake(data.channelId)
+    val channelId: Snowflake get() = data.channelId
 
     /**
      * The behavior of the [GuildChannel] the invite is for.
      */
-    val channel: GuildChannelBehavior get() = GuildChannelBehavior(guildId = guildId, id = channelId, kord = kord)
+    val channel: ChannelBehavior get() = ChannelBehavior(id = channelId, kord = kord)
 
     /**
      * The unique invite code.
@@ -57,27 +59,30 @@ class InviteCreateEvent(
     /**
      * The [Guild] of the invite.
      */
-    val guildId: Snowflake get() = Snowflake(data.guildId)
+    val guildId: Snowflake? get() = data.guildId.value
 
     /**
      * The behavior of the [Guild] of the invite.
      */
-    val guild: GuildBehavior get() = GuildBehavior(id = guildId, kord = kord)
+    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(id = it, kord = kord) }
 
     /**
-     * The [User] that created the invite.
+     * The [User] that created the invite, if present.
      */
-    val inviterId: Snowflake get() = Snowflake(data.inviterId)
+    val inviterId: Snowflake? get() = data.inviterId.value
 
     /**
-     * The behavior of the [User] that created the invite.
+     * The behavior of the [User] that created the invite, if present.
      */
-    val inviter: UserBehavior get() = UserBehavior(id = inviterId, kord = kord)
+    val inviter: UserBehavior? get() = inviterId?.let { UserBehavior(id = it, kord = kord) }
 
     /**
      * The behavior of the [Member] that created the invite.
      */
-    val inviterMember: MemberBehavior get() = MemberBehavior(guildId = guildId, id = inviterId, kord = kord)
+    val inviterMember: MemberBehavior?
+        get() {
+            return MemberBehavior(guildId = guildId ?: return null, id = inviterId ?: return null, kord = kord)
+        }
 
     /**
      * How long the invite is valid for (in seconds).
@@ -121,31 +126,35 @@ class InviteCreateEvent(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = DeprecationLevel.ERROR)
+    suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuild(it) }
 
     /**
-     * Requests to get the [Guild] of the invite,
-     * returns null if the guild isn't present.
+     * Requests to get the [Guild] of the invite.
+     * returns null if the guild isn't present, or if invite does not target a guild.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     /**
-     * Requests to get the [User] that created the invite.
+     * Requests to get the [User] that created the invite, or null if no inviter created this invite.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
-    suspend fun getInviter(): User = supplier.getUser(inviterId)
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated("Use getInviterOrNull instead.", ReplaceWith("getInviterOrNull()"), level = DeprecationLevel.ERROR)
+    suspend fun getInviter(): User? = inviterId?.let { supplier.getUser(it) }
 
     /**
      * Requests to get the [User] that created the invite,
-     * returns null if the user isn't present.
+     * returns null if the user isn't present or no inviter created this invite.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getInviterOrNull(): User? = supplier.getUserOrNull(inviterId)
+    suspend fun getInviterOrNull(): User? = inviterId?.let { supplier.getUserOrNull(it) }
 
     /**
      * Requests to get the [User] that created the invite as a [Member] of the [Guild][getGuild].
@@ -153,16 +162,26 @@ class InviteCreateEvent(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
-    suspend fun getInviterAsMember(): Member = supplier.getMember(guildId = guildId, userId = inviterId)
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated("Use getInviterAsMemberOrNull instead.", ReplaceWith("getInviterAsMemberOrNull()"), level = DeprecationLevel.ERROR)
+    suspend fun getInviterAsMember(): Member? {
+        return supplier.getMember(guildId = guildId ?: return null, userId = inviterId ?: return null)
+    }
 
     /**
      * Requests to get the [User] that created the invite as a [Member] of the [Guild][getGuild],
-     * returns null if the user isn't present.
+     * returns null if the user isn't present, the invite did not target a guild, or no inviter created the event.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getInviterAsMemberOrNull(): Member? = supplier.getMemberOrNull(guildId = guildId, userId = inviterId)
+    suspend fun getInviterAsMemberOrNull(): Member? {
+        return supplier.getMemberOrNull(guildId = guildId ?: return null, userId = inviterId ?: return null)
+    }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteCreateEvent =
             InviteCreateEvent(data, kord, shard, supplier)
+
+    override fun toString(): String {
+        return "InviteCreateEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

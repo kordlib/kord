@@ -1,5 +1,7 @@
 package com.gitlab.kordlib.rest.request
 
+import com.gitlab.kordlib.rest.json.optional
+import com.gitlab.kordlib.rest.json.response.DiscordErrorResponse
 import com.gitlab.kordlib.rest.ratelimit.*
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -56,7 +58,7 @@ class KtorRequestHandler(
             }
             response.isError -> {
                 logger.debug { response.logString(body) }
-                throw KtorRequestException(response, body)
+                throw KtorRequestException(response, parser.decodeFromString(DiscordErrorResponse.serializer().optional, body))
             }
             else -> {
                 logger.debug { response.logString(body) }
@@ -67,7 +69,6 @@ class KtorRequestHandler(
 
     private suspend fun <B : Any, R> HttpClient.createRequest(request: Request<B, R>) = request<HttpStatement> {
         method = request.route.method
-        headers.append("X-RateLimit-Precision", "millisecond")
         headers.appendAll(request.headers)
 
         url {

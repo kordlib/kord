@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.TargetUserType
+import com.gitlab.kordlib.common.entity.optional.value
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
@@ -33,12 +34,12 @@ data class Invite(
     /**
      * The id of the channel this invite is associated to.
      */
-    val channelId: Snowflake get() = Snowflake(data.channelId)
+    val channelId: Snowflake get() = data.channelId
 
     /**
      * Returns [PartialGuild] if the invite was made in a guild, or null if not.
      */
-    val partialGuild: PartialGuild? get() = data.guild?.let { PartialGuild(it, kord) }
+    val partialGuild: PartialGuild? get() = data.guild.value?.let { PartialGuild(it, kord) }
 
     /**
      * The id of the [Guild] if the invite was made in a guild, or null if not.
@@ -50,12 +51,12 @@ data class Invite(
     /**
      * The id of the user who created this invite, if present.
      */
-    val inviterId: Snowflake? get() = data.inviterId.toSnowflakeOrNull()
+    val inviterId: Snowflake? get() = data.inviterId.value
 
     /**
      * The id of the target user this invite is associated to, if present.
      */
-    val targetUserId: Snowflake? get() = data.targetUserId.toSnowflakeOrNull()
+    val targetUserId: Snowflake? get() = data.targetUserId.value
 
     /**
      * The behavior of the channel this invite is associated to.
@@ -76,17 +77,17 @@ data class Invite(
     /**
      * The type of user target for this invite, if present.
      */
-    val targetUserType: TargetUserType? get() = data.targetUserType
+    val targetUserType: TargetUserType? get() = data.targetUserType.value
 
     /**
      * Approximate count of members in the channel this invite is associated to, if present.
      */
-    val approximateMemberCount: Int? get() = data.approximateMemberCount
+    val approximateMemberCount: Int? get() = data.approximateMemberCount.value
 
     /**
      * Approximate count of members online in the channel this invite is associated to, if present. (only present when the target user isn't null)
      */
-    val approximatePresenceCount: Int? get() = data.approximatePresenceCount
+    val approximatePresenceCount: Int? get() = data.approximatePresenceCount.value
 
     /**
      * Requests to get the channel this invite is for.
@@ -132,5 +133,9 @@ data class Invite(
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Invite =
             Invite(data, kord, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "Invite(data=$data, kord=$kord, supplier=$supplier)"
+    }
 
 }

@@ -29,4 +29,8 @@ class MemberJoinEvent(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberJoinEvent =
             MemberJoinEvent(member, shard, strategy.supply(kord))
 
+    override fun toString(): String {
+        return "MemberJoinEvent(member=$member, shard=$shard, supplier=$supplier)"
+    }
+
 }

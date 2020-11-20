@@ -4,12 +4,13 @@ import com.gitlab.kordlib.cache.api.data.description
 import com.gitlab.kordlib.common.entity.DiscordGuildRole
 import com.gitlab.kordlib.common.entity.DiscordRole
 import com.gitlab.kordlib.common.entity.Permissions
+import com.gitlab.kordlib.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class RoleData(
-        val id: Long,
-        val guildId: Long,
+        val id: Snowflake,
+        val guildId: Snowflake,
         val name: String,
         val color: Int,
         val hoisted: Boolean,
@@ -20,7 +21,11 @@ data class RoleData(
 ) {
     companion object {
         val description = description(RoleData::id)
-        fun from(guildId: String, entity: DiscordRole) = with(entity) { RoleData(id.toLong(), guildId.toLong(), name, color, hoist, position, permissions, managed, mentionable) }
+
+        fun from(guildId: Snowflake, entity: DiscordRole) = with(entity) {
+            RoleData(id, guildId, name, color, hoist, position, permissions, managed, mentionable)
+        }
+
         fun from(entity: DiscordGuildRole) = from(entity.guildId, entity.role)
 
     }

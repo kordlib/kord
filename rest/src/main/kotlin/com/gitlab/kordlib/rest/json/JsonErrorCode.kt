@@ -422,7 +422,6 @@ enum class JsonErrorCode(val code: Int) {
      */
     APIResourceOverloaded(130000);
 
-    @Serializer(forClass = JsonErrorCode::class)
     companion object JsonErrorCodeSerializer : KSerializer<JsonErrorCode>  {
         override val descriptor = PrimitiveSerialDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)
 

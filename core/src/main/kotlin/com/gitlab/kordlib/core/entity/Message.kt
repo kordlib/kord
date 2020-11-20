@@ -2,21 +2,22 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.entity.MessageType
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.orEmpty
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.behavior.MessageBehavior
-import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.behavior.UserBehavior
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.cache.data.MessageData
-import com.gitlab.kordlib.core.entity.channel.*
+import com.gitlab.kordlib.core.entity.channel.Channel
+import com.gitlab.kordlib.core.entity.channel.GuildChannel
+import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
+import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
-import com.gitlab.kordlib.core.toSnowflakeOrNull
 import kotlinx.coroutines.flow.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -35,13 +36,13 @@ class Message(
      * The id of this message.
      */
     override val id: Snowflake
-        get() = Snowflake(data.id)
+        get() = data.id
 
     /**
      * The id of the [MessageChannel] this message was send in.
      */
     override val channelId: Snowflake
-        get() = Snowflake(data.channelId)
+        get() = data.channelId
 
     /**
      * The files attached to this message.
@@ -54,7 +55,7 @@ class Message(
      * Returns null if the author is not a Discord account, like a [Webhook] or systems message.
      */
     val author: User?
-        get() = if (data.webhookId == data.author.id) null
+        get() = if (data.webhookId.value == data.author.id) null
         else User(data.author, kord)
 
     /**
@@ -85,7 +86,7 @@ class Message(
      * This collection can only contain values on crossposted messages, channels
      * mentioned inside the same guild will not be present.
      */
-    val mentionedChannelIds: Set<Snowflake> get() = data.mentionedChannels.orEmpty().map { Snowflake(it) }.toSet()
+    val mentionedChannelIds: Set<Snowflake> get() = data.mentionedChannels.orEmpty().map { it }.toSet()
 
     /**
      * The [Channels][ChannelBehavior] specifically mentioned in this message.
@@ -93,7 +94,7 @@ class Message(
      * This collection can only contain values on crossposted messages, channels
      * mentioned inside the same guild will not be present.
      */
-    val mentionedChannelBehaviors: Set<ChannelBehavior> get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(Snowflake(it), kord) }.toSet()
+    val mentionedChannelBehaviors: Set<ChannelBehavior> get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(it, kord) }.toSet()
 
     /**
      * The [Channels][Channel] specifically mentioned in this message.
@@ -118,7 +119,7 @@ class Message(
     /**
      * The [ids][Role.id] of roles mentioned in this message.
      */
-    val mentionedRoleIds: Set<Snowflake> get() = data.mentionRoles.map { Snowflake(it) }.toSet()
+    val mentionedRoleIds: Set<Snowflake> get() = data.mentionRoles.map { it }.toSet()
 
     /**
      * The [roles][Role] mentioned in this message.
@@ -140,12 +141,12 @@ class Message(
     /**
      * The [ids][User.id] of users mentioned in this message.
      */
-    val mentionedUserIds: Set<Snowflake> get() = data.mentions.map { Snowflake(it) }.toSet()
+    val mentionedUserIds: Set<Snowflake> get() = data.mentions.map { it }.toSet()
 
     /**
      * The [Behaviors][UserBehavior] of users mentioned in this message.
      */
-    val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(Snowflake(it), kord) }.toSet()
+    val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(it, kord) }.toSet()
 
     /**
      * The [users][User] mentioned in this message.
@@ -157,7 +158,7 @@ class Message(
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val mentionedUsers: Flow<User>
-        get() = data.mentions.asFlow().map { supplier.getUser(Snowflake(it)) }
+        get() = data.mentions.asFlow().map { supplier.getUser(it) }
 
     /**
      * Whether the message was pinned in its [channel].
@@ -189,19 +190,12 @@ class Message(
      *
      * Returns null if this message was not send using a webhook.
      */
-    val webhookId: Snowflake? get() = data.webhookId?.let(::Snowflake)
+    val webhookId: Snowflake? get() = data.webhookId.value
 
     /**
      * Returns itself.
      */
     override suspend fun asMessage(): Message = this
-
-    /**
-     * Requests to get the channel this message was send in.
-     */
-    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
-
-    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
      * Requests to get the [author] as a member.
@@ -241,6 +235,10 @@ class Message(
     override fun equals(other: Any?): Boolean = when (other) {
         is MessageBehavior -> other.id == id && other.channelId == channelId
         else -> false
+    }
+
+    override fun toString(): String {
+        return "Message(data=$data, kord=$kord, supplier=$supplier)"
     }
 
 }

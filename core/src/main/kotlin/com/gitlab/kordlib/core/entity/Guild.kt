@@ -1,6 +1,10 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
 import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.common.entity.optional.orElse
+import com.gitlab.kordlib.common.entity.optional.orEmpty
+import com.gitlab.kordlib.common.entity.optional.value
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.GuildBehavior
@@ -19,7 +23,6 @@ import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
-import com.gitlab.kordlib.core.toSnowflakeOrNull
 import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.service.RestClient
 import kotlinx.coroutines.flow.first
@@ -33,15 +36,15 @@ import java.util.*
 class Guild(
         val data: GuildData,
         override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+        override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : GuildBehavior {
 
-    override val id: Snowflake get() = Snowflake(data.id)
+    override val id: Snowflake get() = data.id
 
     /**
      * The id of the afk voice channel, if present.
      */
-    val afkChannelId: Snowflake? get() = data.afkChannelId.toSnowflakeOrNull()
+    val afkChannelId: Snowflake? get() = data.afkChannelId
 
     val afkChannel: VoiceChannelBehavior?
         get() = afkChannelId?.let { VoiceChannelBehavior(guildId = id, id = it, kord = kord) }
@@ -54,19 +57,47 @@ class Guild(
     /**
      *  The id of the guild creator if it is bot-created.
      */
-    val applicationId: Snowflake? get() = data.applicationId.toSnowflakeOrNull()
+    val applicationId: Snowflake? get() = data.applicationId
 
     /**
      * The approximate number of members in this guild. Present if this guild was requested through
      * [rest][com.gitlab.kordlib.rest.service.RestClient] with the flag `with_counts`.
      */
-    val approximateMemberCount: Int? get() = data.approximateMemberCount
+    val approximateMemberCount: Int? get() = data.approximateMemberCount.value
 
     /**
      * The approximate number of online members in this guild. Present if this guild was requested through
      * [rest][com.gitlab.kordlib.rest.service.RestClient] with the flag `with_counts`.
      */
-    val approximatePresenceCount: Int? get() = data.approximatePresenceCount
+    val approximatePresenceCount: Int? get() = data.approximatePresenceCount.value
+
+    /**
+     * The maximum number of presences for this guild. 25000 By default.
+     */
+    val maxPresences: Int get() = data.maxPresences.orElse(25_000)
+
+    /**
+     * The maximum number of members for this guild.
+     */
+    val maxMembers: Int? get() = data.maxMembers.value
+
+    /**
+     * Total permissions of the bot in the Guild (excludes channel overrides).
+     *
+     * This field is only present if this guild was fetched through [Kord.guilds] with a
+     * [EntitySupplyStrategy.rest].
+     */
+    val permissions: Permissions? get() = data.permissions.value
+
+    /**
+     * The server boost level.
+     */
+    val premiumTier: PremiumTier get() = data.premiumTier
+
+    /**
+     * The number of boosts this guild has, if present.
+     */
+    val premiumSubscriptionCount: Int? get() = data.premiumSubscriptionCount.value
 
     /**
      * The banner hash, if present.
@@ -76,7 +107,7 @@ class Guild(
     /**
      * The ids of all [channels][GuildChannel].
      */
-    val channelIds: Set<Snowflake> get() = data.channels.asSequence().map { Snowflake(it) }.toSet()
+    val channelIds: Set<Snowflake> get() = data.channels.orEmpty().toSet()
 
     /**
      * The explicit content filter level.
@@ -89,25 +120,47 @@ class Guild(
     val description: String? get() = data.description
 
     /**
-     * The ID of the embedded channel, if present.
+     * Whether this guild has enabled its widget.
      */
-    val embedChannelId: Snowflake? get() = data.embedChannelId?.let(::Snowflake)
+    val isWidgetEnabled: Boolean get() = data.widgetEnabled.discordBoolean
+
+    /**
+     * The channel id that the guild's widget will generate an invite to, if set and enabled.
+     */
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated(
+            "Embed was renamed to widget.",
+            ReplaceWith("widgetChannelId"),
+            DeprecationLevel.ERROR
+    )
+    val embedChannelId: Snowflake? by ::widgetChannelId
+
+    /**
+     * The ID of the channel the widget will redirect users to, if present.
+     */
+    val widgetChannelId: Snowflake? get() = data.widgetChannelId.value
 
     /**
      * The behavior of the embedded channel, if present.
      */
-    val embedChannel: GuildChannelBehavior?
-        get() = embedChannelId?.let { GuildChannelBehavior(guildId = id, id = it, kord = kord) }
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated(
+            "Embed was renamed to widget.",
+            ReplaceWith("widgetChannelId"),
+            DeprecationLevel.ERROR
+    )
+    val embedChannel: GuildChannelBehavior? by ::widgetChannel
+
+    /**
+     * The behavior of the channel widgets will redirect users to, if present.
+     */
+    val widgetChannel: GuildChannelBehavior?
+        get() = widgetChannelId?.let { GuildChannelBehavior(guildId = id, id = it, kord = kord) }
 
     /**
      * The ids of custom emojis in this guild.
      */
-    val emojiIds: Set<Snowflake> get() = data.emojis.asSequence().map { it.id.toSnowflakeOrNull() }.filterNotNull().toSet()
-
-    /**
-     * The custom emojis in this guild.
-     */
-    val emojis: List<GuildEmoji> get() = data.emojis.map { GuildEmoji(it, kord) }
+    val emojiIds: Set<Snowflake> get() = data.emojis.toSet()
 
     /**
      * The behavior of the @everyone role.
@@ -127,12 +180,24 @@ class Guild(
     /**
      * The time at which this guild was joined, if present.
      */
-    val joinedTime: Instant? get() = data.joinedAt?.let { DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(it, Instant::from) }
+    val joinedTime: Instant? get() = data.joinedAt.value?.let { DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(it, Instant::from) }
 
     /**
      * The id of the owner.
      */
-    val ownerId: Snowflake get() = Snowflake(data.ownerId)
+    val ownerId: Snowflake get() = data.ownerId
+
+    /**
+     * Whether this bot is the owner of the server
+     */
+    val isOwner: Boolean get() = ownerId == kord.selfId
+
+    /**
+     * True if the guild is considered large, if present.
+     *
+     * This field is only present on Guilds created through [com.gitlab.kordlib.core.event.guild.GuildCreateEvent].
+     */
+    val isLarge: Boolean? get() = data.large.value
 
     /**
      * The behavior of the owner.
@@ -146,7 +211,7 @@ class Guild(
      *  will not be updated throughout the lifetime of the gateway and should thus be seen as an approximation rather
      *  than a precise value.
      */
-    val memberCount: Int? get() = data.memberCount
+    val memberCount: Int? get() = data.memberCount.value
 
     /**
      * The required multi-factor authentication level of this guild.
@@ -161,7 +226,7 @@ class Guild(
     /**
      * the id of the channel where guild notices such as welcome messages and boost events are posted.
      */
-    val publicUpdatesChannelId: Snowflake? get() = data.publicUpdatesChannelId.toSnowflakeOrNull()
+    val publicUpdatesChannelId: Snowflake? get() = data.publicUpdatesChannelId
 
     /**
      * The behavior of the channel where guild notices such as welcome messages and boost events are posted.
@@ -177,7 +242,7 @@ class Guild(
      * The behaviors of all [channels][GuildChannel].
      */
     val channelBehaviors: Set<GuildChannelBehavior>
-        get() = data.channels.asSequence().map { GuildChannelBehavior(id = Snowflake(it), guildId = id, kord = kord) }.toSet()
+        get() = data.channels.orEmpty().asSequence().map { GuildChannelBehavior(id = it, guildId = id, kord = kord) }.toSet()
 
     /**
      * The default message notification level.
@@ -187,35 +252,35 @@ class Guild(
     /**
      * The voice region id for the guild.
      */
-    val regionId: Snowflake get() = Snowflake(data.region)
+    val regionId: String get() = data.region
 
     /**
      * The id of the channel in which a discoverable server's rules should be found
      **/
-    val rulesChannelId: Snowflake? get() = data.rulesChannelId.toSnowflakeOrNull()
+    val rulesChannelId: Snowflake? get() = data.rulesChannelId
 
     /**
      * The channel behavior in which a discoverable server's rules should be found.
      **/
     val rulesChannel: GuildMessageChannelBehavior?
-        get() = data.rulesChannelId.toSnowflakeOrNull()?.let {
+        get() = data.rulesChannelId?.let {
             GuildMessageChannelBehavior(id, it, kord)
         }
 
     /**
      * The splash hash, if present.
      */
-    val splashHash: String? get() = data.splash
+    val splashHash: String? get() = data.splash.value
 
     /**
      * The hash of the discovery splash, if present.
      */
-    val discoverySplashHash: String? get() = data.discoverySplash
+    val discoverySplashHash: String? get() = data.discoverySplash.value
 
     /**
      * The id of the channel to which system messages are sent.
      */
-    val systemChannelId: Snowflake? get() = data.systemChannelId.toSnowflakeOrNull()
+    val systemChannelId: Snowflake? get() = data.systemChannelId
 
     /**
      * The behavior of the channel to which system messages are sent.
@@ -225,7 +290,7 @@ class Guild(
             TextChannelBehavior(guildId = id, id = it, kord = kord)
         }
 
-    val systemChannelFlags: SystemChannelFlags get() = data.systemChannelFlags ?: SystemChannelFlags(0)
+    val systemChannelFlags: SystemChannelFlags get() = data.systemChannelFlags
 
     /**
      * The verification level required for the guild.
@@ -235,12 +300,28 @@ class Guild(
     /**
      * The ids of the roles.
      */
-    val roleIds: Set<Snowflake> get() = data.roles.asSequence().map { Snowflake(it) }.toSet()
+    val roleIds: Set<Snowflake> get() = data.roles.asSequence().map { it }.toSet()
 
     /**
      * The behaviors of the [roles][Role].
      */
-    val roleBehaviors: Set<RoleBehavior> get() = data.roles.asSequence().map { RoleBehavior(id = Snowflake(it), guildId = id, kord = kord) }.toSet()
+    val roleBehaviors: Set<RoleBehavior> get() = data.roles.asSequence().map { RoleBehavior(id = it, guildId = id, kord = kord) }.toSet()
+
+    /**
+     * The vanity code of this server used in the [vanityUrl], if present.
+     */
+    val vanityCode: String? get() = data.vanityUrlCode
+
+    /**
+     * The vanity invite URL of this server, if present.
+     */
+    val vanityUrl: String? get() = data.vanityUrlCode?.let { "https://discord.gg/$it" }
+
+
+    /**
+     * The maximum amount of users in a video channel, if present.
+     */
+    val maxVideoChannelUsers: Int? get() = data.maxVideoChannelUsers.value
 
     /**
      * Requests to get the [VoiceChannel] represented by the [afkChannelId],
@@ -254,7 +335,7 @@ class Guild(
     /**
      * Gets the banner url in the specified format.
      */
-    fun getBannerUrl(format: Image.Format): String? = data.banner?.let { "https://cdn.discordapp.com/banners/${id.value}/$it.${format.extension}" }
+    fun getBannerUrl(format: Image.Format): String? = data.banner?.let { "https://cdn.discordapp.com/banners/${id.asString}/$it.${format.extension}" }
 
     /**
      * Requests to get the banner image in the specified [format], if present.
@@ -271,7 +352,7 @@ class Guild(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getEmbedChannel(): GuildChannel? = embedChannelId?.let { supplier.getChannelOfOrNull(it) }
+    suspend fun getEmbedChannel(): GuildChannel? = widgetChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Requests to get the [GuildEmoji] represented by the [emojiId] in this guild.
@@ -312,7 +393,7 @@ class Guild(
      * Gets the discovery splash url in the specified [format], if present.
      */
     fun getDiscoverySplashUrl(format: Image.Format): String? =
-            data.splash?.let { "discovery-splashes/${id.value}/${it}.${format.extension}" }
+            data.splash.value?.let { "discovery-splashes/${id.asString}/${it}.${format.extension}" }
 
     /**
      * Requests to get the splash image in the specified [format], if present.
@@ -328,7 +409,7 @@ class Guild(
     /**
      * Gets the icon url, if present.
      */
-    fun getIconUrl(format: Image.Format): String? = data.icon?.let { "https://cdn.discordapp.com/icons/${id.value}/$it.${format.extension}" }
+    fun getIconUrl(format: Image.Format): String? = data.icon?.let { "https://cdn.discordapp.com/icons/${id.asString}/$it.${format.extension}" }
 
     /**
      * Requests to get the icon image in the specified [format], if present.
@@ -348,17 +429,17 @@ class Guild(
     suspend fun getOwner(): Member = supplier.getMember(id, ownerId)
 
     /**
-     * Requests to get The channel where guild notices such as welcome messages and boost events are posted.
-     */
-    suspend fun getPublicUpdatesChannel(): GuildMessageChannel? = publicUpdatesChannel?.asChannel()
-
-    /**
      * Requests to get the owner of this guild as a [Member],
      * returns null if the [Member] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getOwnerOrNull(): Member? = supplier.getMemberOrNull(id, ownerId)
+
+    /**
+     * Requests to get The channel where guild notices such as welcome messages and boost events are posted.
+     */
+    suspend fun getPublicUpdatesChannel(): GuildMessageChannel? = publicUpdatesChannel?.asChannel()
 
     /**
      * Requests to get the [voice region][Region] of this guild.
@@ -381,7 +462,7 @@ class Guild(
      * Gets the splash url in the specified [format], if present.
      */
     fun getSplashUrl(format: Image.Format): String? =
-            data.splash?.let { "https://cdn.discordapp.com/splashes/${id.value}/$it.${format.extension}" }
+            data.splash.value?.let { "https://cdn.discordapp.com/splashes/${id.asString}/$it.${format.extension}" }
 
     /**
      * Requests to get the splash image in the specified [format], if present.
@@ -393,7 +474,7 @@ class Guild(
     }
 
     /**
-     * Requests to get the channel where system messages (member joins, server boosts, etc),
+     * Requests to get the channel where system messages (member joins, server boosts, etc) are sent,
      * returns null if the [TextChannel] isn't present or the [systemChannelId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -401,6 +482,14 @@ class Guild(
     suspend fun getSystemChannel(): TextChannel? =
             systemChannelId?.let { supplier.getChannelOfOrNull(it) }
 
+    /**
+     * Requests to get the channel the widget will redirect users to,
+     * returns null if the [TextChannel] isn't present or the [widgetChannelId] is null.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getWidgetChannel(): GuildMessageChannel? =
+            widgetChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Returns a new [Guild] with the given [strategy].
@@ -413,4 +502,9 @@ class Guild(
         is GuildBehavior -> other.id == id
         else -> false
     }
+
+    override fun toString(): String {
+        return "Guild(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

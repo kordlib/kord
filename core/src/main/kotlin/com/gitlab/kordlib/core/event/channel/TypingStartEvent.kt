@@ -11,22 +11,29 @@ import com.gitlab.kordlib.core.entity.Strategizable
 import com.gitlab.kordlib.core.entity.User
 import com.gitlab.kordlib.core.entity.channel.MessageChannel
 import com.gitlab.kordlib.core.event.Event
+import com.gitlab.kordlib.core.event.channel.data.TypingStartEventData
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
+import com.gitlab.kordlib.core.toInstant
 import java.time.Instant
 
 class TypingStartEvent(
-        val channelId: Snowflake,
-        val userId: Snowflake,
-        val guildId: Snowflake?,
-        val started: Instant,
+        val data: TypingStartEventData,
         override val kord: Kord,
         override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+        override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
+
+    val channelId: Snowflake get() = data.channelId
+
+    val userId: Snowflake get() = data.userId
+
+    val guildId: Snowflake? get() = data.guildId.value
+
+    val started: Instant get() = data.timestamp.toInstant()
 
     val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
@@ -76,13 +83,14 @@ class TypingStartEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
             TypingStartEvent(
-                    channelId,
-                    userId,
-                    guildId,
-                    started,
+                    data,
                     kord,
                     shard,
                     supplier
             )
+
+    override fun toString(): String {
+        return "TypingStartEvent(channelId=$channelId, userId=$userId, guildId=$guildId, started=$started, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 
 }

@@ -22,6 +22,7 @@ interface EntitySupplyStrategy<T : EntitySupplier> {
 
             override fun supply(kord: Kord): RestEntitySupplier = RestEntitySupplier(kord)
 
+            override fun toString(): String = "EntitySupplyStrategy.rest"
         }
 
         /**
@@ -32,6 +33,7 @@ interface EntitySupplyStrategy<T : EntitySupplier> {
 
             override fun supply(kord: Kord): CacheEntitySupplier = CacheEntitySupplier(kord)
 
+            override fun toString(): String = "EntitySupplyStrategy.cache"
         }
 
         /**
@@ -43,6 +45,7 @@ interface EntitySupplyStrategy<T : EntitySupplier> {
 
             override fun supply(kord: Kord): EntitySupplier = cache.supply(kord).withFallback(rest.supply(kord))
 
+            override fun toString(): String = "EntitySupplyStrategy.cacheWithRestFallback"
         }
 
         /**

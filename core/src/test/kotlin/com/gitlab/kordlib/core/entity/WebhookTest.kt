@@ -11,7 +11,7 @@ import mockKord
 internal class WebhookTest : EntityEqualityTest<Webhook> by EntityEqualityTest({
     val kord = mockKord()
     val data = mockk<WebhookData>()
-    every { data.id } returns it.longValue
+    every { data.id } returns it
     Webhook(data, kord)
 }), BehaviorEqualityTest<Webhook> {
     override fun Webhook.behavior(): Entity = WebhookBehavior(id = id, kord = kord)

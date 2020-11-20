@@ -1,7 +1,9 @@
 package com.gitlab.kordlib.rest.route
 
-sealed class Position(val key: String, val value: String) {
-    class Before(id: String) : Position("before", id)
-    class After(id: String) : Position("after", id)
-    class Around(id: String) : Position("around", id)
+import com.gitlab.kordlib.common.entity.Snowflake
+
+sealed class Position(val key: String, val value: Snowflake) {
+    class Before(id: Snowflake) : Position("before", id)
+    class After(id: Snowflake) : Position("after", id)
+    class Around(id: Snowflake) : Position("around", id)
 }

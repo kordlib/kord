@@ -1,8 +1,7 @@
 package com.gitlab.kordlib.rest.json
 
-import com.gitlab.kordlib.rest.json.response.AuditLogResponse
+import com.gitlab.kordlib.common.entity.DiscordAuditLog
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 
 object AuditLogResponseTest {
@@ -11,7 +10,8 @@ object AuditLogResponseTest {
     fun `AuditLogResponseSerialization serialization`() {
 
         val json = file("auditlog")
-            val log = Json.decodeFromString(AuditLogResponse.serializer(), json)
+        @Suppress("UNUSED_VARIABLE")
+        val log = Json.decodeFromString(DiscordAuditLog.serializer(), json)
 
 
     }

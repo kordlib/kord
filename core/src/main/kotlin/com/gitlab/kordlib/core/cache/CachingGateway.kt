@@ -25,4 +25,8 @@ class CachingGateway(
     init {
         gateway.events.filterIsInstance<Close>().onEach { removeKordData() }.launchIn(this)
     }
+
+    override fun toString(): String {
+        return "CachingGateway(cache=$cache, gateway=$gateway)"
+    }
 }

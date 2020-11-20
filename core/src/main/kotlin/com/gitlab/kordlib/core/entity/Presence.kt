@@ -1,7 +1,8 @@
 package com.gitlab.kordlib.core.entity
 
+import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
+import com.gitlab.kordlib.common.entity.PresenceStatus
 import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.Status
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
@@ -23,19 +24,23 @@ class Presence(
 
     val clientStatus: ClientStatus get() = ClientStatus(data.clientStatus)
 
-    val game: Activity? get() = data.game?.let { Activity(it) }
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated("Game field is no longer present.", ReplaceWith("activities.firstOrNull()"), DeprecationLevel.ERROR)
+    val game: Activity? get() = activities.firstOrNull()
 
-    val guildId: Snowflake? get() = data.guildId?.let { Snowflake(it) }
+    val guildId: Snowflake? get() = data.guildId
 
-    val roleIds: Set<Snowflake>? get() = data.roles?.asSequence()!!.map { Snowflake(it) }.toSet()
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated("role ids are no longer present.",  ReplaceWith("emptySet()") , DeprecationLevel.ERROR)
+    val roleIds: Set<Snowflake>? get() = emptySet()
 
-    val roles: Flow<Role>
-        get() = if (guildId == null) emptyFlow()
-        else supplier.getGuildRoles(guildId!!)
+    @DeprecatedSinceKord("0.7.0")
+    @Deprecated("role ids are no longer present.",  ReplaceWith("emptyFlow()") , DeprecationLevel.ERROR)
+    val roles: Flow<Role> get() = emptyFlow()
 
-    val status: Status get() = data.status
+    val status: PresenceStatus get() = data.status
 
-    val userId: Snowflake get() = Snowflake(data.userId)
+    val userId: Snowflake get() = data.userId
 
     /**
      * Requests to get the user of this presence.
@@ -59,16 +64,24 @@ class Presence(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Presence =
             Presence(data, kord, strategy.supply(kord))
 
+    override fun toString(): String {
+        return "Presence(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }
 
 class ClientStatus(val data: ClientStatusData) {
-    val desktop: Client.Desktop? get() = data.desktop?.let { Client.Desktop(it) }
-    val mobile: Client.Mobile? get() = data.mobile?.let { Client.Mobile(it) }
-    val web: Client.Web? get() = data.web?.let { Client.Web(it) }
+    val desktop: Client.Desktop? get() = data.desktop.value?.let { Client.Desktop(it) }
+    val mobile: Client.Mobile? get() = data.mobile.value?.let { Client.Mobile(it) }
+    val web: Client.Web? get() = data.web.value?.let { Client.Web(it) }
 
-    sealed class Client(val status: Status) {
-        class Desktop(status: Status) : Client(status)
-        class Mobile(status: Status) : Client(status)
-        class Web(status: Status) : Client(status)
+    override fun toString(): String {
+        return "ClientStatus(data=$data)"
+    }
+
+    sealed class Client(val status: PresenceStatus) {
+        class Desktop(status: PresenceStatus) : Client(status)
+        class Mobile(status: PresenceStatus) : Client(status)
+        class Web(status: PresenceStatus) : Client(status)
     }
 }

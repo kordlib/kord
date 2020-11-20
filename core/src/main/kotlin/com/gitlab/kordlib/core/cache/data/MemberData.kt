@@ -1,39 +1,39 @@
 package com.gitlab.kordlib.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
-import com.gitlab.kordlib.common.entity.DiscordAddedGuildMember
-import com.gitlab.kordlib.common.entity.DiscordGuildMember
-import com.gitlab.kordlib.common.entity.DiscordPartialGuildMember
-import com.gitlab.kordlib.common.entity.DiscordUpdatedGuildMember
+import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.optional
 import kotlinx.serialization.Serializable
 
 private val MemberData.id get() = "$userId$guildId"
 
 @Serializable
 data class MemberData(
-        val userId: Long,
-        val guildId: Long,
-        val nick: String? = null,
-        val roles: List<String>,
+        val userId: Snowflake,
+        val guildId: Snowflake,
+        val nick: Optional<String?> = Optional.Missing(),
+        val roles: List<Snowflake>,
         val joinedAt: String,
-        val premiumSince: String?
+        val premiumSince: Optional<String?>,
 ) {
-    operator fun plus(update: DiscordUpdatedGuildMember) =
-            copy(nick = update.nick, roles = update.roles, premiumSince = update.premiumSince)
 
     companion object {
         val description = description(MemberData::id)
 
-        fun from(userId: String, guildId: String, entity: DiscordGuildMember) =
-                with(entity) { MemberData(userId.toLong(), guildId.toLong(), nick, roles, joinedAt, premiumSince) }
+        fun from(userId: Snowflake, guildId: Snowflake, entity: DiscordGuildMember) = with(entity) {
+            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
+        }
 
-        fun from(userId: String, entity: DiscordAddedGuildMember) =
-                with(entity) { MemberData(userId.toLong(), guildId.toLong(), nick, roles, joinedAt, premiumSince) }
+        fun from(userId: Snowflake, entity: DiscordAddedGuildMember) = with(entity) {
+            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
+        }
 
-        fun from(userId: String, guildId: String, entity: DiscordPartialGuildMember) =
-                with(entity) { MemberData(userId.toLong(), guildId.toLong(), nick, roles, joinedAt, premiumSince) }
+        fun from(entity: DiscordUpdatedGuildMember) = with(entity){
+            MemberData(userId = user.id, guildId = guildId, nick, roles, joinedAt, premiumSince)
+        }
 
     }
 }
 
-fun DiscordGuildMember.toData(userId: String, guildId: String) = MemberData.from(userId, guildId, this)
+fun DiscordGuildMember.toData(userId: Snowflake, guildId: Snowflake) = MemberData.from(userId, guildId, this)

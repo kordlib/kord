@@ -27,4 +27,8 @@ class RoleDeleteEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleDeleteEvent =
             RoleDeleteEvent(guildId, roleId, role, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "RoleDeleteEvent(guildId=$guildId, roleId=$roleId, role=$role, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

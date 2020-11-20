@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.common.entity.optional.getOrThrow
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
@@ -21,17 +22,17 @@ class TextChannel(
     /**
      * Whether the channel is nsfw.
      */
-    val isNsfw: Boolean get() = data.nsfw!!
+    val isNsfw: Boolean get() = data.nsfw.discordBoolean
 
     /**
      * The amount of seconds a user has to wait before sending another message.
      */
-    val userRateLimit: Int get() = data.rateLimitPerUser!!
+    val userRateLimit: Int get() = data.rateLimitPerUser.getOrThrow()
 
     /**
      * returns a new [TextChannel] with the given [strategy].
      *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.cacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannel =
             TextChannel(data, kord, strategy.supply(kord))
@@ -42,6 +43,10 @@ class TextChannel(
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false
+    }
+
+    override fun toString(): String {
+        return "TextChannel(data=$data, kord=$kord, supplier=$supplier)"
     }
 
 }

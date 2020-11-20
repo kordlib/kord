@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.behavior.channel
 
+import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -21,8 +22,6 @@ import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.time.days
-import kotlin.time.toJavaDuration
 
 /**
  * The behavior of a Discord message channel associated to a [guild].
@@ -39,7 +38,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
      */
     val webhooks: Flow<Webhook>
         get() = flow {
-            for (response in kord.rest.webhook.getChannelWebhooks(id.value)) {
+            for (response in kord.rest.webhook.getChannelWebhooks(id)) {
                 val data = WebhookData.from(response)
                 emit(Webhook(data, kord))
             }
@@ -76,12 +75,12 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
         // if message.timeMark + 14 days < now, then the message is more than 14 days old, and we'll have to manually delete them
         val (younger, older) = messages.partition { it.timeStamp.isAfter(daysLimit) }
 
-        younger.map { it.value }.chunked(100).forEach {
-            if (it.size < 2) kord.rest.channel.deleteMessage(id.value, it.first())
-            else kord.rest.channel.bulkDelete(id.value, BulkDeleteRequest(it))
+        younger.chunked(100).forEach {
+            if (it.size < 2) kord.rest.channel.deleteMessage(id, it.first())
+            else kord.rest.channel.bulkDelete(id, BulkDeleteRequest(it))
         }
 
-        older.forEach { kord.rest.channel.deleteMessage(id.value, it.value) }
+        older.forEach { kord.rest.channel.deleteMessage(id, it) }
     }
 
     /**
@@ -103,6 +102,10 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
                 is ChannelBehavior -> other.id == id
                 else -> false
             }
+
+            override fun toString(): String {
+                return "GuildMessageChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
+            }
         }
     }
 }
@@ -114,12 +117,29 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@Deprecated("channel name is a mandatory field.", ReplaceWith("createWebhook(\"name\", builder)"), DeprecationLevel.WARNING)
+@DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCreateBuilder.() -> Unit): Webhook {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.webhook.createWebhook(id.value, builder)
+    return createWebhook("name", builder)
+}
+
+/**
+ * Requests to create a new webhook configured by the [builder].
+ *
+ * @return The created [Webhook] with the [Webhook.token] field present.
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildMessageChannelBehavior.createWebhook(name: String, builder: WebhookCreateBuilder.() -> Unit = {}): Webhook {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val response = kord.rest.webhook.createWebhook(id, name, builder)
     val data = WebhookData.from(response)
 
     return Webhook(data, kord)

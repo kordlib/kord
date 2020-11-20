@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.cache.api.query
+
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -36,7 +37,7 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val voiceStates: Flow<VoiceState>
-        get() = kord.cache.query<VoiceStateData> { VoiceStateData::channelId eq id.longValue }
+        get() = kord.cache.query<VoiceStateData> { VoiceStateData::channelId eq id.value }
                 .asFlow()
                 .map { VoiceState(it, kord) }
 
@@ -76,6 +77,10 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
                 is ChannelBehavior -> other.id == id
                 else -> false
             }
+
+            override fun toString(): String {
+                return "VoiceChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
+            }
         }
     }
 
@@ -93,7 +98,7 @@ suspend inline fun VoiceChannelBehavior.edit(builder: VoiceChannelModifyBuilder.
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.channel.patchVoiceChannel(id.value, builder)
+    val response = kord.rest.channel.patchVoiceChannel(id, builder)
 
     val data = ChannelData.from(response)
     return Channel.from(data, kord) as VoiceChannel

@@ -13,14 +13,14 @@ internal class UtilKtTest {
     @ExperimentalStdlibApi
     fun `paginate forwards selects the right id`() = runBlockingTest {
 
-        val flow = paginateForwards(start = Snowflake(0), batchSize = 100, idSelector = { it.toString() }) {
-            var value = it.value.toLong()
+        val flow = paginateForwards(start = Snowflake(0), batchSize = 100, idSelector = { it }) {
+            var value = it.value.value
             if (value >= 1000) return@paginateForwards emptyList<Snowflake>()
             value += 1 //don't include the position id
 
             buildList(100) {
-                (value until (value + 100)).reversed().forEach { //biggest/youngest -> smallest/oldest
-                    add(it)
+                (value until (value + 100)).reversed().forEach { snowflake -> //biggest/youngest -> smallest/oldest
+                    add(Snowflake(snowflake))
                 }
             }
         }
@@ -32,14 +32,14 @@ internal class UtilKtTest {
     @ExperimentalStdlibApi
     fun `paginate backwards selects the right id`() = runBlockingTest {
 
-        val flow = paginateBackwards(start = Snowflake(1000), batchSize = 100, idSelector = { it.toString() }) {
-            var value = it.value.toLong()
+        val flow = paginateBackwards(start = Snowflake(1000), batchSize = 100, idSelector = { it }) {
+            var value = it.value.value
             if (value <= 0) return@paginateBackwards emptyList<Snowflake>()
             value -= 1 //don't include the position id
 
             buildList(100) {
-                ((value - 99 /*reverse until, don't count the lowest value*/)..value).reversed().forEach { //biggest/youngest -> smallest/oldest
-                    add(it)
+                ((value - 99 /*reverse until, don't count the lowest value*/)..value).reversed().forEach { snowflake -> //biggest/youngest -> smallest/oldest
+                    add(Snowflake(snowflake))
                 }
             }
         }

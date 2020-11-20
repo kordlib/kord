@@ -27,7 +27,7 @@ internal class HeartbeatHandler(
         }
 
         on<Hello> { hello ->
-            ticker.tickAt(hello.heartbeatInterval) {
+            ticker.tickAt(hello.heartbeatInterval.toLong()) {
                 if (possibleZombie.value) {
                     restart()
                 } else {

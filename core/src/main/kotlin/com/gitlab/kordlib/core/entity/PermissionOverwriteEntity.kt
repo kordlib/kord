@@ -67,7 +67,7 @@ class PermissionOverwriteEntity(
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete(reason: String? = null) {
-        kord.rest.channel.deleteChannelPermission(channelId.value, data.id.toString(), reason)
+        kord.rest.channel.deleteChannelPermission(channelId, data.id, reason)
     }
 
     /**
@@ -75,5 +75,9 @@ class PermissionOverwriteEntity(
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PermissionOverwriteEntity =
             PermissionOverwriteEntity(guildId, channelId, data, kord, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "PermissionOverwriteEntity(target=$target, type=$type, allowed=$allowed, denied=$denied, kord=$kord, supplier=$supplier)"
+    }
 
 }

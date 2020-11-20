@@ -5,7 +5,6 @@ package com.gitlab.kordlib.rest.request
 import com.gitlab.kordlib.rest.ratelimit.BucketKey
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readBytes
-import io.ktor.client.statement.readText
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
@@ -42,16 +41,15 @@ val HttpResponse.bucket: BucketKey? get() = headers[bucketRateLimitKey]?.let { B
  * The unix time (in ms) when the global rate limit gets reset.
  */
 fun HttpResponse.globalSuspensionPoint(clock: Clock): Long {
-    val msWait = headers[retryAfterHeader]?.toLong() ?: return 0
-    return msWait + clock.millis()
+    val secondsWait = headers[retryAfterHeader]?.toLong() ?: return clock.millis()
+    return (secondsWait * 1000) + clock.millis()
 }
 
 fun HttpResponse.logString(body: String) = "[RESPONSE]:${status.value}:${call.request.method.value}:${call.request.url} body:$body"
 
 suspend fun HttpResponse.errorString(): String {
     val message = String(this.readBytes())
-    return if (message.isBlank()) "${logString(message)}"
-    else "${logString(message)}"
+    return logString(message)
 }
 
 fun Request<*,*>.logString(body: String): String {

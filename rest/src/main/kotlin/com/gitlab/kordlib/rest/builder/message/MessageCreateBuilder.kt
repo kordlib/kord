@@ -2,8 +2,13 @@ package com.gitlab.kordlib.rest.builder.message
 
 import com.gitlab.kordlib.common.annotation.KordDsl
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.delegate.delegate
+import com.gitlab.kordlib.common.entity.optional.map
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.json.request.AllowedMentions
+import com.gitlab.kordlib.rest.json.request.AllowedMentionType
 import com.gitlab.kordlib.rest.json.request.MessageCreateRequest
 import com.gitlab.kordlib.rest.json.request.MultipartMessageCreateRequest
 import kotlinx.coroutines.Dispatchers
@@ -14,11 +19,22 @@ import java.nio.file.Path
 
 @KordDsl
 class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
-    var content: String? = null
-    var nonce: String? = null
-    var tts: Boolean? = null
-    var embed: EmbedBuilder? = null
-    var allowedMentions: AllowedMentionsBuilder? = null
+
+    private var _content: Optional<String> = Optional.Missing()
+    var content: String? by ::_content.delegate()
+
+    private var _nonce: Optional<String> = Optional.Missing()
+    var nonce: String? by ::_nonce.delegate()
+
+    private var _tts: OptionalBoolean = OptionalBoolean.Missing
+    var tts: Boolean? by ::_tts.delegate()
+
+    private var _embed: Optional<EmbedBuilder> = Optional.Missing()
+    var embed: EmbedBuilder? by ::_embed.delegate()
+
+    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
     inline fun embed(block: EmbedBuilder.() -> Unit) {
@@ -43,7 +59,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     }
 
     override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
-            MessageCreateRequest(content, nonce, tts, embed?.toRequest(), allowedMentions?.build()),
+            MessageCreateRequest(_content, _nonce, _tts, _embed.map { it.toRequest() }, _allowedMentions.map { it.build() }),
             files
     )
 
@@ -67,25 +83,29 @@ class AllowedMentionsBuilder {
     val users: MutableSet<Snowflake> = mutableSetOf()
 
     /**
-     * The types of pings that should trigger in this message. Selecting [MentionTypes.Users] or [MentionTypes.Roles]
+     * The types of pings that should trigger in this message. Selecting [AllowedMentionType.UserMentions] or [AllowedMentionType.RoleMentions]
      * together with any value in [users] or [roles] respectively will result in an error.
      */
-    val types: MutableSet<MentionTypes> = mutableSetOf()
+    val types: MutableSet<AllowedMentionType> = mutableSetOf()
 
     /**
      * Adds the type to the list of types that should receive a ping.
      */
-    operator fun MentionTypes.unaryPlus() = types.add(this)
+    operator fun AllowedMentionType.unaryPlus() {
+        types.add(this)
+    }
+
+    /**
+     * Adds the type to the list of types that should receive a ping.
+     */
+    fun add(type: AllowedMentionType) {
+        type.unaryPlus()
+    }
 
     fun build(): AllowedMentions = AllowedMentions(
-            parse = types.map { it.serialName },
-            users = users.map { it.value },
-            roles = roles.map { it.value }
+            parse = types.toList(),
+            users = users.map { it.asString },
+            roles = roles.map { it.asString }
     )
 
-}
-
-
-enum class MentionTypes(val serialName: String) {
-    Roles("roles"), Users("users"), Everyone("everyone")
 }

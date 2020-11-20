@@ -22,7 +22,7 @@ class Ban(
     /**
      * The id of the banned user.
      */
-    val userId: Snowflake get() = Snowflake(data.userId)
+    val userId: Snowflake get() = data.userId
 
     /**
      * The reason for the ban, if present.
@@ -55,6 +55,10 @@ class Ban(
      * Returns a new [Ban] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>) : Ban = Ban(data, kord, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "Ban(data=$data, kord=$kord, supplier=$supplier)"
+    }
 
 }
 

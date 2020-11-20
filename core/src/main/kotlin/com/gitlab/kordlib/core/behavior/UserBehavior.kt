@@ -10,10 +10,12 @@ import com.gitlab.kordlib.core.entity.channel.DmChannel
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import com.gitlab.kordlib.rest.json.JsonErrorCode
 import com.gitlab.kordlib.rest.json.request.DMCreateRequest
+import com.gitlab.kordlib.rest.request.HttpStatus
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.RestClient
-import io.ktor.http.HttpStatusCode
+import io.ktor.http.*
 import java.util.*
 
 /**
@@ -21,7 +23,7 @@ import java.util.*
  */
 interface UserBehavior : Entity, Strategizable {
 
-    val mention: String get() = "<@${id.value}>"
+    val mention: String get() = "<@${id.asString}>"
 
     /**
      * Requests to get the this behavior as a [Member] in the [Guild] with the [guildId].
@@ -62,25 +64,36 @@ interface UserBehavior : Entity, Strategizable {
      *
      * This property is not resolvable through cache and will always use the [RestClient] instead.
      *
-     * If a user does not allow you to send DM's to them, this method will throw a [RestRequestException] with
-     * [code][RestRequestException.code] 403. This can be used to handle the edge case accordingly:
-     * ```kotlin
-     * val channel = try {
-     *     user.getDmChannel()
-     * } catch (exception: RestRequestException) {
-     *     if(exception.code == HttpStatusCode.Forbidden.value) {
-     *         //user doesn't have DMs enabled
-     *         TODO("handle edge case")
-     *     } else throw exception
-     * }
+     * This method will throw a [RestRequestException] if a user does not allow you to send DM's to them,
+     * use [getDmChannelOrNull] instead to retrieve the [DmChannel] safely.
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun getDmChannel(): DmChannel {
-        val response = kord.rest.user.createDM(DMCreateRequest(id.value))
+        val response = kord.rest.user.createDM(DMCreateRequest(id.asString))
         val data = ChannelData.from(response)
 
         return Channel.from(data, kord) as DmChannel
+    }
+
+    /**
+     * Requests to get or create a [DmChannel] between this bot and the user, returns null if the user does not allow DMs.
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    suspend fun getDmChannelOrNull(): DmChannel? {
+        return try {
+            getDmChannel()
+        }catch (exception: RestRequestException){
+            val code = exception.error?.code
+            when {
+                code == JsonErrorCode.CannotSendMessagesToUser -> null
+                code == null && exception.status.code == HttpStatusCode.Forbidden.value -> null
+                else -> throw exception
+            }
+        }
     }
 
     /**
@@ -101,6 +114,10 @@ interface UserBehavior : Entity, Strategizable {
             override fun equals(other: Any?): Boolean = when(other) {
                 is UserBehavior -> other.id == id
                 else -> false
+            }
+
+            override fun toString(): String {
+                return "UserBehavior(id=$id, kord=kord, supplier=$supplier)"
             }
         }
     }

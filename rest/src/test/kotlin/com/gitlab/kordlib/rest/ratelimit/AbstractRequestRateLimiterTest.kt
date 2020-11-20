@@ -56,6 +56,7 @@ abstract class AbstractRequestRateLimiterTest {
 
         rateLimiter.sendRequest(1).complete(clock, 1, RateLimit.exhausted) //discovery
 
+        @Suppress("UNUSED_VARIABLE")
         val token = rateLimiter.sendRequest(1) //keep the rate limiter busy
 
         val token2 = withTimeoutOrNull(10_000) {

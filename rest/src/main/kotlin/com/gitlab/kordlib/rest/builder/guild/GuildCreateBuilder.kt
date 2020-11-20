@@ -5,12 +5,16 @@ import com.gitlab.kordlib.common.entity.DefaultMessageNotificationLevel
 import com.gitlab.kordlib.common.entity.ExplicitContentFilter
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.VerificationLevel
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.*
+import com.gitlab.kordlib.common.entity.optional.delegate.delegate
+import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.builder.RequestBuilder
 import com.gitlab.kordlib.rest.builder.channel.CategoryCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.NewsChannelCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.TextChannelCreateBuilder
 import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
-import com.gitlab.kordlib.rest.json.request.GuildCreateChannelRequest
+import com.gitlab.kordlib.rest.json.request.GuildChannelCreateRequest
 import com.gitlab.kordlib.rest.json.request.GuildCreateRequest
 import com.gitlab.kordlib.rest.json.request.GuildRoleCreateRequest
 import kotlin.contracts.ExperimentalContracts
@@ -19,15 +23,15 @@ import kotlin.contracts.contract
 import kotlin.random.Random
 
 @KordDsl
-class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
+class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> {
 
     /**
-     * Iterator that generates unique ids for roles and channels..
+     * Iterator that generates unique ids for roles and channels.
      */
     val snowflakeGenerator by lazy(LazyThreadSafetyMode.NONE) {
         generateSequence { Random.nextLong(0, Long.MAX_VALUE) }.filter {
-            it !in roles.map { role -> role.id?.toLong() }
-                    && it !in channels.map { channel -> channel.id?.toLong() }
+            it !in roles.map { role -> role.id.value?.value }
+                    && it !in channels.map { channel -> channel.id.value?.value }
                     && Snowflake(it) != systemChannelId
                     && Snowflake(it) != afkChannelId
         }.iterator()
@@ -38,55 +42,69 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
      */
     fun newUniqueSnowflake() = Snowflake(snowflakeGenerator.next())
 
-    lateinit var name: String
-    var region: String? = null
-    var icon: String? = null
-    var verificationLevel: VerificationLevel? = null
-    var defaultMessageNotificationLevel: DefaultMessageNotificationLevel? = null
-    var explicitContentFilter: ExplicitContentFilter? = null
-    var everyoneRole: RoleCreateBuilder? = null
-    val roles: MutableList<GuildRoleCreateRequest> = mutableListOf()
-    val channels: MutableList<GuildCreateChannelRequest> = mutableListOf()
+    private var _region: Optional<String> = Optional.Missing()
+    var region: String?  by ::_region.delegate()
 
+    private var _icon: Optional<Image> = Optional.Missing()
+    var icon: Image? by ::_icon.delegate()
+
+    private var _verificationLevel: Optional<VerificationLevel> = Optional.Missing()
+    var verificationLevel: VerificationLevel? by ::_verificationLevel.delegate()
+
+    private var _defaultMessageNotificationLevel: Optional<DefaultMessageNotificationLevel> = Optional.Missing()
+    var defaultMessageNotificationLevel: DefaultMessageNotificationLevel? by ::_defaultMessageNotificationLevel.delegate()
+
+    private var _explicitContentFilter: Optional<ExplicitContentFilter> = Optional.Missing()
+    var explicitContentFilter: ExplicitContentFilter? by ::_explicitContentFilter.delegate()
+
+    private var _everyoneRole: Optional<RoleCreateBuilder> = Optional.Missing()
+    var everyoneRole: RoleCreateBuilder? by ::_everyoneRole.delegate()
+
+    val roles: MutableList<GuildRoleCreateRequest> = mutableListOf()
+    val channels: MutableList<GuildChannelCreateRequest> = mutableListOf()
+
+    private var _afkChannelId: OptionalSnowflake = OptionalSnowflake.Missing
     /**
      * The id of the afk channel, this channel can be configured by supplying a channel with the same id.
      */
-    val afkChannelId: Snowflake? = null
+    var afkChannelId: Snowflake? by ::_afkChannelId.delegate()
 
+    private var _afkTimeout: OptionalInt = OptionalInt.Missing
     /**
      * The afk timeout in seconds.
      */
-    val afkTimeout: Int? = null
+    var afkTimeout: Int? by ::_afkTimeout.delegate()
 
+    private var _systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing
     /**
      * The id of the channel to which system messages are sent, this channel can be configured by supplying a channel with the same id.
      */
-    val systemChannelId: Snowflake? = null
+    var systemChannelId: Snowflake? by ::_systemChannelId.delegate()
 
     @OptIn(ExperimentalContracts::class)
-    inline fun textChannel(id: Snowflake = newUniqueSnowflake(), builder: TextChannelCreateBuilder.() -> Unit): Snowflake {
+    inline fun textChannel(name: String, id: Snowflake = newUniqueSnowflake(), builder: TextChannelCreateBuilder.() -> Unit): Snowflake {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        channels.add(TextChannelCreateBuilder().apply(builder).toRequest().copy(id = id.value))
+        channels.add(TextChannelCreateBuilder(name).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
         return id
     }
 
     @OptIn(ExperimentalContracts::class)
-    inline fun newsChannel(id: Snowflake = newUniqueSnowflake(), builder: NewsChannelCreateBuilder.() -> Unit): Snowflake {
+    inline fun newsChannel(name: String, id: Snowflake = newUniqueSnowflake(), builder: NewsChannelCreateBuilder.() -> Unit): Snowflake {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        channels.add(NewsChannelCreateBuilder().apply(builder).toRequest().copy(id = id.value))
+        channels.add(NewsChannelCreateBuilder(name).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
         return id
     }
 
     @OptIn(ExperimentalContracts::class)
-    inline fun category(id: Snowflake = newUniqueSnowflake(), builder: CategoryCreateBuilder.() -> Unit): Snowflake {
+    inline fun category(name: String, id: Snowflake = newUniqueSnowflake(), builder: CategoryCreateBuilder.() -> Unit): Snowflake {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        channels.add(CategoryCreateBuilder().apply(builder).toRequest().copy(id = id.value))
+        channels.add(CategoryCreateBuilder(name).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
         return id
     }
 
@@ -95,7 +113,7 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        roles += RoleCreateBuilder().apply(builder).toRequest().copy(id = id.value)
+        roles += RoleCreateBuilder().apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id))
         return id
     }
 
@@ -109,12 +127,21 @@ class GuildCreateBuilder : RequestBuilder<GuildCreateRequest> {
 
     override fun toRequest(): GuildCreateRequest = GuildCreateRequest(
             name,
-            region,
-            icon,
-            verificationLevel,
-            defaultMessageNotificationLevel,
-            explicitContentFilter,
-            if (roles.isEmpty()) null else everyoneRole?.let { roles + it.toRequest() } ?: roles,
-            if (channels.isEmpty()) null else channels
+            _region,
+            _icon.map { it.dataUri },
+            _verificationLevel,
+            _defaultMessageNotificationLevel,
+            _explicitContentFilter,
+            Optional.missingOnEmpty(roles).map { roles ->
+                when(val everyone = everyoneRole?.toRequest()) {
+                    null -> roles
+                    else -> mutableListOf(everyone).also { it.addAll(roles) }
+                }
+            },
+            Optional.missingOnEmpty(channels),
+            _afkChannelId,
+            _afkTimeout,
+            _systemChannelId,
+
     )
 }

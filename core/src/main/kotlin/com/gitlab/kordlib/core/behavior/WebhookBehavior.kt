@@ -29,7 +29,7 @@ interface WebhookBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete(reason: String? = null) {
-        kord.rest.webhook.deleteWebhook(id.value, reason)
+        kord.rest.webhook.deleteWebhook(id, reason)
     }
 
     /**
@@ -38,7 +38,7 @@ interface WebhookBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete(token: String, reason: String? = null) {
-        kord.rest.webhook.deleteWebhookWithToken(id.value, token, reason)
+        kord.rest.webhook.deleteWebhookWithToken(id, token, reason)
     }
 
     /**
@@ -51,7 +51,7 @@ interface WebhookBehavior : Entity, Strategizable {
         internal operator fun invoke(
                 id: Snowflake,
                 kord: Kord,
-                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
         ): WebhookBehavior = object : WebhookBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
@@ -63,9 +63,13 @@ interface WebhookBehavior : Entity, Strategizable {
                 is WebhookBehavior -> other.id == id
                 else -> false
             }
-        }
-    }
 
+            override fun toString(): String {
+                return "WebhookBehavior(id=$id, kord=$kord, supplier=$supplier)"
+            }
+        }
+
+    }
 }
 
 /**
@@ -80,7 +84,7 @@ suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.webhook.modifyWebhook(id.value, builder)
+    val response = kord.rest.webhook.modifyWebhook(id, builder)
     val data = WebhookData.from(response)
 
     return Webhook(data, kord)
@@ -98,7 +102,7 @@ suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBui
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.webhook.modifyWebhookWithToken(id.value, token, builder)
+    val response = kord.rest.webhook.modifyWebhookWithToken(id, token, builder)
     val data = WebhookData.from(response)
 
     return Webhook(data, kord)
@@ -116,7 +120,7 @@ suspend inline fun WebhookBehavior.execute(token: String, builder: ExecuteWebhoo
     }
     val response = kord.rest.webhook.executeWebhook(
             token = token,
-            webhookId = id.value,
+            webhookId = id,
             wait = true,
             builder = builder
     )!!
@@ -137,6 +141,6 @@ suspend inline fun WebhookBehavior.executeIgnored(token: String, builder: Execut
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.webhook.executeWebhook(token = token, webhookId = id.value, wait = false, builder = builder)
+    kord.rest.webhook.executeWebhook(token = token, webhookId = id, wait = false, builder = builder)
 }
 

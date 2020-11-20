@@ -46,7 +46,30 @@ interface EntitySupplier {
      * @throws RequestException if something went wrong while retrieving the guild.
      * @throws EntityNotFoundException if the guild is null.
      */
-    suspend fun getGuild(id: Snowflake): Guild = getGuildOrNull(id)!!
+    suspend fun getGuild(id: Snowflake): Guild = getGuildOrNull(id) ?: EntityNotFoundException.guildNotFound(id)
+
+    suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview?
+
+    suspend fun getGuildPreview(guildId: Snowflake): GuildPreview =
+            getGuildPreviewOrNull(guildId) ?: EntityNotFoundException.entityNotFound("Guild Preview", guildId)
+
+    /**
+     * Requests to get the widget of this guild through the [strategy],
+     * returns null if the [GuildWidget] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget?
+
+
+    /**
+     * Requests to get the widget of this [guildId].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [GuildWidget] wasn't present.
+     */
+    suspend fun getGuildWidget(guildId: Snowflake): GuildWidget =
+            getGuildWidgetOrNull(guildId) ?: EntityNotFoundException.widgetNotFound(guildId)
 
     /**
      * Requests the [Channel] with the given [id], returns `null` when the channel isn't present.

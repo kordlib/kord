@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.entity.channel
 
+import com.gitlab.kordlib.common.entity.optional.getOrThrow
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
 import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
@@ -22,12 +23,12 @@ class VoiceChannel(
     /**
      * The bitrate (in bits) of this channel.
      */
-    val bitrate: Int get() = data.bitrate!!
+    val bitrate: Int get() = data.bitrate.getOrThrow()
 
     /**
      * The user limit of the voice channel.
      */
-    val userLimit: Int get() = data.userLimit!!
+    val userLimit: Int get() = data.userLimit.getOrThrow()
 
     /**
      * returns a new [VoiceChannel] with the given [strategy].
@@ -45,4 +46,9 @@ class VoiceChannel(
         is ChannelBehavior -> other.id == id
         else -> false
     }
+
+    override fun toString(): String {
+        return "VoiceChannel(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

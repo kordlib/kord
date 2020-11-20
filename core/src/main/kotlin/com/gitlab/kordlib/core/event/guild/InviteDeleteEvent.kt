@@ -27,7 +27,7 @@ class InviteDeleteEvent(
     /**
      * The [GuildChannel] of the invite.
      */
-    val channelId: Snowflake get() = Snowflake(data.channelId)
+    val channelId: Snowflake get() = data.channelId
 
     /**
      * The behavior of the [GuildChannel] of the invite.
@@ -37,7 +37,7 @@ class InviteDeleteEvent(
     /**
      * The [Guild] of the invite.
      */
-    val guildId: Snowflake get() = Snowflake(data.guildId)
+    val guildId: Snowflake get() = data.guildId
 
     /**
      * The behavior of the [Guild] of the invite.
@@ -65,5 +65,9 @@ class InviteDeleteEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteDeleteEvent =
             InviteDeleteEvent(data, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "InviteDeleteEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 
 }

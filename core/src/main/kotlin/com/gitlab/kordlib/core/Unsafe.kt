@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core
 
 import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordUnsafe
+
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.behavior.*
 import com.gitlab.kordlib.core.behavior.channel.*
@@ -65,5 +66,9 @@ class Unsafe(private val kord: Kord) {
 
     fun webhook(id: Snowflake): WebhookBehavior =
             WebhookBehavior(id, kord)
+
+    override fun toString(): String {
+        return "Unsafe"
+    }
 
 }

@@ -27,4 +27,8 @@ class BanRemoveEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): BanRemoveEvent =
             BanRemoveEvent(user, guildId, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "BanRemoveEvent(user=$user, guildId=$guildId, shard=$shard, supplier=$supplier)"
+    }
 }

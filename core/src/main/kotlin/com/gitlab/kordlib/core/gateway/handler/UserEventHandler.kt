@@ -6,12 +6,11 @@ import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.entity.User
-import com.gitlab.kordlib.core.event.UserUpdateEvent
+import com.gitlab.kordlib.core.event.user.UserUpdateEvent
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.UserUpdate
-import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import com.gitlab.kordlib.core.event.Event as CoreEvent
@@ -21,8 +20,8 @@ internal class UserEventHandler(
         kord: Kord,
         gateway: MasterGateway,
         cache: DataCache,
-        coreEventChannel: SendChannel<CoreEvent>
-) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
+        coreFlow: MutableSharedFlow<CoreEvent>
+) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
         is UserUpdate -> handle(event, shard)
@@ -38,7 +37,7 @@ internal class UserEventHandler(
         cache.put(data)
         val new = User(data, kord)
 
-        coreEventChannel.send(UserUpdateEvent(old, new, shard))
+        coreFlow.emit(UserUpdateEvent(old, new, shard))
     }
 
 }

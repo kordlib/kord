@@ -58,4 +58,8 @@ class BanAddEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): BanAddEvent =
             BanAddEvent(user, guildId, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "BanAddEvent(user=$user, guildId=$guildId, shard=$shard, supplier=$supplier)"
+    }
 }

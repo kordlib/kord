@@ -43,6 +43,10 @@ class DataCacheView(private val cache: DataCache) : DataCache by cache {
         return cache.getEntry<T>(type)?.let { DataEntryCacheView(it, getDescription(type), keys) }
     }
 
+    override fun toString(): String {
+        return "DataCacheView(cache=$cache)"
+    }
+
 }
 
 private class DataEntryCacheView<T : Any>(

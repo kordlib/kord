@@ -26,4 +26,8 @@ class EmojisUpdateEvent(
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): EmojisUpdateEvent =
             EmojisUpdateEvent(guildId, emojis, kord, shard, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "EmojisUpdateEvent(guildId=$guildId, emojis=$emojis, kord=$kord, shard=$shard, supplier=$supplier)"
+    }
 }

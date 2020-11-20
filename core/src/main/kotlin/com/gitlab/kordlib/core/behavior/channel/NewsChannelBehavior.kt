@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.core.behavior.channel
 
 import com.gitlab.kordlib.common.annotation.KordPreview
+import com.gitlab.kordlib.common.entity.Permission
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
@@ -11,11 +12,10 @@ import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.rest.builder.channel.NewsChannelModifyBuilder
+import com.gitlab.kordlib.rest.json.request.ChannelFollowRequest
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.patchNewsChannel
 import java.util.*
-import com.gitlab.kordlib.common.entity.Permission
-import com.gitlab.kordlib.rest.json.request.ChannelFollowRequest
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -52,7 +52,7 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
      */
     @KordPreview
     suspend fun follow(target: Snowflake) {
-        kord.rest.channel.followNewsChannel(id.value, ChannelFollowRequest(webhookChannelId = target.value))
+        kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target.asString))
     }
 
     /**
@@ -74,6 +74,10 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
                 is ChannelBehavior -> other.id == id
                 else -> false
             }
+
+            override fun toString(): String {
+                return "NewsChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
+            }
         }
     }
 
@@ -91,7 +95,7 @@ suspend inline fun NewsChannelBehavior.edit(builder: NewsChannelModifyBuilder.()
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.channel.patchNewsChannel(id.value, builder)
+    val response = kord.rest.channel.patchNewsChannel(id, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as NewsChannel

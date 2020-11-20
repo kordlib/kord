@@ -33,4 +33,9 @@ data class NewsChannel(
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): NewsChannel =
             NewsChannel(data, kord, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "NewsChannel(data=$data, kord=$kord, supplier=$supplier)"
+    }
+
 }

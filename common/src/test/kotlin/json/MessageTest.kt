@@ -2,9 +2,7 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.Flag
-import com.gitlab.kordlib.common.entity.Flags
-import com.gitlab.kordlib.common.entity.DiscordMessage
+import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
@@ -21,8 +19,8 @@ class MessageTest {
         val message: DiscordMessage = Json.decodeFromString(DiscordMessage.serializer(), file("message"))
 
         with(message) {
-            reactions!!.size shouldBe 1
-            with(reactions!!.first()) {
+            reactions.value!!.size shouldBe 1
+            with(reactions.value!!.first()) {
                 count shouldBe 1
                 me shouldBe false
                 with(emoji) {
@@ -35,10 +33,10 @@ class MessageTest {
             embeds shouldBe emptyList()
             timestamp shouldBe "2017-07-11T17:27:07.299000+00:00"
             mentionEveryone shouldBe false
-            id shouldBe "334385199974967042"
+            id.asString shouldBe "334385199974967042"
             pinned shouldBe false
             editedTimestamp shouldBe null
-            with(author!!) {
+            with(author) {
                 username shouldBe "Mason"
                 discriminator shouldBe "9999"
                 id shouldBe "53908099506183680"
@@ -59,8 +57,8 @@ fun `User serialization`() {
     val message = Json.decodeFromString(DiscordMessage.serializer(), file("crossposted"))
 
     with(message) {
-        reactions!!.size shouldBe 1
-        with(reactions!!.first()) {
+        reactions.value!!.size shouldBe 1
+        with(reactions.value!!.first()) {
             count shouldBe 1
             me shouldBe false
             with(emoji) {
@@ -73,25 +71,25 @@ fun `User serialization`() {
         embeds shouldBe emptyList()
         timestamp shouldBe "2017-07-11T17:27:07.299000+00:00"
         mentionEveryone shouldBe false
-        id shouldBe "334385199974967042"
+        id.asString shouldBe "334385199974967042"
         pinned shouldBe false
         editedTimestamp shouldBe null
-        author?.let {
-            it.username shouldBe "Mason"
-            it.discriminator shouldBe "9999"
-            it.id shouldBe "53908099506183680"
-            it.avatar shouldBe "a_bab14f271d565501444b2ca3be944b25"
+        with(author) {
+            username shouldBe "Mason"
+            discriminator shouldBe "9999"
+            id.asString shouldBe "53908099506183680"
+            avatar shouldBe "a_bab14f271d565501444b2ca3be944b25"
         }
         mentionRoles shouldBe emptyList()
         content shouldBe "Big news! In this <#278325129692446722> channel!"
-        channelId shouldBe "290926798999357250"
+        channelId.asString shouldBe "290926798999357250"
         mentions shouldBe emptyList()
         type.code shouldBe 0
-        flags shouldBe Flags(Flag.IsCrossPost.code)
-        messageReference?.let {
-            it.channelId shouldBe "278325129692446722"
-            it.guildId shouldBe "278325129692446720"
-            it.id shouldBe "306588351130107906"
+        flags shouldBe MessageFlags(MessageFlag.IsCrossPost.code)
+        with(messageReference.value!!) {
+            channelId.asString shouldBe "278325129692446722"
+            guildId.value!!.asString shouldBe "278325129692446720"
+            id.value!!.asString shouldBe "306588351130107906"
         }
     }
 

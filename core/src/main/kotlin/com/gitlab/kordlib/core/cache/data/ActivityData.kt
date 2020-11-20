@@ -1,33 +1,27 @@
 package com.gitlab.kordlib.core.cache.data
 
-import com.gitlab.kordlib.common.entity.ActivityType
-import com.gitlab.kordlib.common.entity.DiscordActivity
-import com.gitlab.kordlib.common.entity.DiscordPartialEmoji
+import com.gitlab.kordlib.common.entity.*
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ActivityData(
         val name: String,
         val type: ActivityType,
-        val url: String? = null,
-        val start: Long? = null,
-        val stop: Long? = null,
-        val applicationId: String? = null,
-        val details: String? = null,
-        val emoji: DiscordPartialEmoji? = null,
-        val state: String? = null,
-        val partyId: String? = null,
-        val partyCurrentSize: Int? = null,
-        val partyMaxSize: Int? = null,
-        val largeImage: String? = null,
-        val largeText: String? = null,
-        val smallImage: String? = null,
-        val smallText: String? = null,
-        val secretsJoin: String? = null,
-        val secretsSpectate: String? = null,
-        val secretsMatch: String? = null,
-        val instance: Boolean? = null,
-        val flags: Int? = null
+        val url: Optional<String?> = Optional.Missing(),
+        val createdAt: Long,
+        val timestamps: Optional<DiscordActivityTimeStamps> = Optional.Missing(),
+        val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val details: Optional<String?> = Optional.Missing(),
+        val state: Optional<String?> = Optional.Missing(),
+        val emoji: Optional<DiscordActivityEmoji?> = Optional.Missing(),
+        val party: Optional<DiscordActivityParty> = Optional.Missing(),
+        val assets: Optional<DiscordActivityAssets> = Optional.Missing(),
+        val secrets: Optional<DiscordActivitySecrets> = Optional.Missing(),
+        val instance: OptionalBoolean = OptionalBoolean.Missing,
+        val flags: Optional<ActivityFlags> = Optional.Missing(),
 ) {
     companion object {
         fun from(entity: DiscordActivity) = with(entity) {
@@ -35,22 +29,15 @@ data class ActivityData(
                     name,
                     type,
                     url,
-                    timestamps?.start,
-                    timestamps?.end,
+                    createdAt,
+                    timestamps,
                     applicationId,
                     details,
-                    emoji,
                     state,
-                    party?.id,
-                    party?.size?.first(),
-                    party?.size?.last(),
-                    assets?.largeImage,
-                    assets?.largeText,
-                    assets?.smallImage,
-                    assets?.smallText,
-                    secrets?.join,
-                    secrets?.spectate,
-                    secrets?.match,
+                    emoji,
+                    party,
+                    assets,
+                    secrets,
                     instance,
                     flags
             )

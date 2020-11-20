@@ -11,7 +11,7 @@ interface GuildMessageChannel : CategorizableChannel, MessageChannel, GuildMessa
     /**
      * The channel topic, if present.
      */
-    val topic: String? get() = data.topic
+    val topic: String? get() = data.topic.value
 
     /**
      * Returns a new [GuildMessageChannel] with the given [strategy].
