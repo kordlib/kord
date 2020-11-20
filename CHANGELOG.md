@@ -1,15 +1,35 @@
-# 0.7.0
+# 0.7.0-M1
 
 ## Changes
 
-* Added a meaningful toString to many classes
+* Updated API to Discord V8. #108
+* Introduced Optionals in lower level API and core xData classes. #108 #95
+* De-inlined Snowflake and implemented it into the lower level API. #108
+* Rewrote `AuditLog` and its child classes and introduced them to to `core`. #108
+* `Kord#events` is now a `SharedFlow` which can be configured via `KordBuilder#eventFlow`. #102 
+* `Image` now supports image sizes that are common for Discord image resources. #98
+* `java.awt.Color` has been replaced with `com.gitlab.kordlib.common.Color`. #5
+* `core` Entities should have a meaningful `toString` representation. #88
+* Request builders no longer have `lateinit` fields, these are now required arguments in the builder DSLs. #108
+* `Permissions` and `Intents` now have more and easier constructors. #103
+
+## Additions
+
+* `RestRequestException` now holds a reference to an (optional) `DiscordErrorResponse` with a more specific error message and code.
+* `PremiumTier` now has a `maxEmotes` field. #74
+* Added a `getDmChannelOrNull` to `UserBehavior` to safely try and open a DmChannel with a user. #111
+
+## Fixes
+
+* `GuildBehavior#getVanityUrl` will now correctly return null when the guild does not have a vanity url.
+* Voice channels can now change their topic. 
 
 ## Dependencies
 
 * Kotlin 1.4.0 -> 1.4.10
 * ktor 1.4.0 -> 1.4.1
 * kotlinx.serialization 1.0.0-RC -> 1.0.0
-* kotlinx.coroutines 1.3.9 -> 1.4.0-M1
+* kotlinx.coroutines 1.3.9 -> 1.4.0
 * kotlinLogging 1.7.10 -> 2.0.3
 
 # 0.6.8
