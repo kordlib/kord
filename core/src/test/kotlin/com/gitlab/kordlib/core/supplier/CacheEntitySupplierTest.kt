@@ -13,6 +13,7 @@ import com.gitlab.kordlib.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
@@ -28,7 +29,7 @@ internal class CacheEntitySupplierTest {
                 MasterGateway(mapOf(0 to Gateway.none())),
                 RestClient(KtorRequestHandler("")),
                 Snowflake(0),
-                BroadcastChannel(1),
+                MutableSharedFlow(),
                 Dispatchers.Default
         )
 
