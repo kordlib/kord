@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 class BitSetTests {
     @Test
     fun `b contains a`() {
-        val a = DiscordBitSet(0b101, 0)
+        val a = DiscordBitSet(0b101)
         val b = DiscordBitSet(0b111)
         assert(a in b)
     }

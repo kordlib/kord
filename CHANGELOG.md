@@ -1,3 +1,9 @@
+# 0.7.0-M2
+
+## Additions
+
+* Re-added `values`  in `Intent` and `Intents`.
+
 # 0.7.0-M1
 
 ## Changes

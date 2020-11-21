@@ -54,7 +54,8 @@ class DiscordBitSet(internal var data: LongArray) {
     }
 
     operator fun contains(other: DiscordBitSet): Boolean {
-        for (i in 0 until min(data.size, other.data.size)) {
+        if(other.size > size) return false
+        for (i in other.data.indices) {
             if (data[i] and other.data[i] != other.data[i]) return false
         }
         return true
