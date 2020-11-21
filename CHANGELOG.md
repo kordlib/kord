@@ -3,6 +3,7 @@
 ## Additions
 
 * Re-added `values`  in `Intent` and `Intents`.
+* Added support for inline replies and `MessageBehavior#reply` to quickly create a reply to a message. #110
 
 # 0.7.0-M1
 
