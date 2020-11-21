@@ -87,7 +87,7 @@ fun `User serialization`() {
         type.code shouldBe 0
         flags shouldBe MessageFlags(MessageFlag.IsCrossPost.code)
         with(messageReference.value!!) {
-            channelId.asString shouldBe "278325129692446722"
+            channelId.value?.asString shouldBe "278325129692446722"
             guildId.value!!.asString shouldBe "278325129692446720"
             id.value!!.asString shouldBe "306588351130107906"
         }
