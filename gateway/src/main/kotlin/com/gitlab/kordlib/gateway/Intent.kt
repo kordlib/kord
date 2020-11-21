@@ -151,7 +151,7 @@ sealed class Intent(val code: DiscordBitSet) {
     object DirectMessageTyping : Intent(1 shl 14)
     companion object {
         @OptIn(PrivilegedIntent::class)
-        fun values() = listOf(
+        val values = setOf(
                 DirectMessageTyping,
                 GuildIntegrations,
                 GuildEmojis,
@@ -180,7 +180,7 @@ data class Intents internal constructor(val code: DiscordBitSet) {
      *  Returns this [Intents] as a [Set] of [Intent]
      */
     @OptIn(PrivilegedIntent::class)
-    val intents = Intent.values().filter { it.code in code }.toSet()
+    val values = Intent.values.filter { it.code in code }
 
     operator fun contains(intent: Intent) = intent.code in code
 
@@ -211,9 +211,7 @@ data class Intents internal constructor(val code: DiscordBitSet) {
 
         @PrivilegedIntent
         val all: Intents
-            get() = invoke {
-                Intent.values().forEach { + it }
-            }
+            get() = Intents(Intent.values)
 
         @OptIn(PrivilegedIntent::class)
         val nonPrivileged: Intents

@@ -2,8 +2,7 @@
 
 ## Additions
 
-* Re-added `values()` in `Intent` to replace enum values 
-* Re-added `intents` in `Intents` to get of `Intents`
+* Re-added `values`  in `Intent` and `Intents`.
 
 # 0.7.0-M1
 
