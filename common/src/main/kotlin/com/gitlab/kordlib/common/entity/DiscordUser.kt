@@ -87,7 +87,7 @@ data class DiscordOptionallyMemberUser(
         val premiumType: Optional<UserPremium> = Optional.Missing(),
         @SerialName("public_flags")
         val publicFlags: Optional<UserFlags> = Optional.Missing(),
-        val member: Optional<DiscordGuildMember>,
+        val member: Optional<DiscordGuildMember> = Optional.Missing(),
 )
 
 
