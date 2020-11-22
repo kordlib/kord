@@ -5,6 +5,7 @@ package json
 import com.gitlab.kordlib.common.entity.DiscordShard
 import com.gitlab.kordlib.common.entity.PresenceStatus
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.OptionalInt
 import com.gitlab.kordlib.common.entity.optional.coerceToMissing
 import com.gitlab.kordlib.common.entity.optional.optional
 import com.gitlab.kordlib.common.entity.optional.optionalInt
@@ -53,12 +54,13 @@ class CommandTest {
 
 
     @Test
+    @OptIn(PrivilegedIntent::class)
     fun `RequestGuildMembers command serialization`() {
         val guildId = "1337"
         val query = "test"
         val limit = 1337
 
-        val request = json.encodeToString(Command.Companion, RequestGuildMembers(Snowflake(guildId), query.optional(), limit))
+        val request = json.encodeToString(Command.Companion, RequestGuildMembers(Snowflake(guildId), query.optional(), OptionalInt.Value(limit)))
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.RequestGuildMembers.code)
