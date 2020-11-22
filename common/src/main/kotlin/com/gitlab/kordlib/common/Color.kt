@@ -10,18 +10,20 @@ import kotlinx.serialization.encoding.Encoder
 
 
 @Serializable(with = Color.Serializer::class)
-class Color(val rgb: Int) {
+class Color(rgb: Int) {
     constructor(red: Int, green: Int, blue: Int) : this(rgb(red, green, blue))
+
+    val rgb = rgb and 0xFFFFFF
 
     val red: Int get() = (rgb shr 16) and 0xFF
     val green: Int get() = (rgb shr 8) and 0xFF
     val blue: Int get() = (rgb shr 0) and 0xFF
 
     init {
-        require(rgb in MIN_COLOR..MAX_COLOR) { "RGB should be in range of $MIN_COLOR..$MAX_COLOR but was $rgb" }
+        require(this.rgb in MIN_COLOR..MAX_COLOR) { "RGB should be in range of $MIN_COLOR..$MAX_COLOR but was ${this.rgb}" }
     }
 
-    override fun toString(): String = "Color(red=$red,blue=$blue,green=$green)"
+    override fun toString(): String = "Color(red=$red,green=$green,blue=$blue)"
 
     override fun hashCode(): Int = rgb.hashCode()
 
