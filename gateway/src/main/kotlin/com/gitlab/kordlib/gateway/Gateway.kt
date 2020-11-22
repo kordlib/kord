@@ -1,11 +1,20 @@
 package com.gitlab.kordlib.gateway
 
+import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import com.gitlab.kordlib.common.entity.optional.OptionalInt
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import com.gitlab.kordlib.common.entity.optional.delegate.delegate
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
+import com.gitlab.kordlib.gateway.builder.RequestGuildMembersBuilder
 import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlinx.serialization.SerialName
 import mu.KotlinLogging
+import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -161,6 +170,61 @@ inline fun <reified T : Event> Gateway.on(scope: CoroutineScope = this, crossinl
     return this.events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
         launch { it.runCatching { it.consumer() }.onFailure(gatewayOnLogger::error) }
     }.launchIn(scope)
+}
+
+/**
+ * Executes a [RequestGuildMembers] command configured by the [builder] for the given [guildId]
+ * on this gateway, returning a flow of [GuildMembersChunk] responses.
+ *
+ * If no [builder] is specified, the request will be configured to fetch all members.
+ *
+ * The returned flow is cold, and will execute the request only on subscription.
+ * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
+ * will result in an [IllegalStateException] being thrown.
+ *
+ * Executing the request on a [Gateway] with a [Shard][com.gitlab.kordlib.common.entity.DiscordShard] that
+ * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
+ * can result in undefined behavior for the returned flow and inconsistencies in the cache.
+ *
+ * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
+ * If no nonce was provided one will be generated instead.
+ */
+@OptIn(PrivilegedIntent::class)
+fun Gateway.requestGuildMembers(
+        guildId: Snowflake,
+        builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }
+): Flow<GuildMembersChunk> {
+    val request = RequestGuildMembersBuilder(guildId).apply(builder).toRequest()
+    return requestGuildMembers(request)
+}
+
+/**
+ * Executes the [request] on this gateway, returning a flow of [GuildMembersChunk] responses.
+ *
+ * The returned flow is cold, and will execute the [request] only on subscription.
+ * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
+ * will result in an [IllegalStateException] being thrown.
+ *
+ * Executing the [request] on a [Gateway] with a [Shard][com.gitlab.kordlib.common.entity.DiscordShard] that
+ * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
+ * can result in undefined behavior for the returned flow and inconsistencies in the cache.
+ *
+ * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
+ * If no nonce was provided one will be generated instead.
+ */
+@OptIn(PrivilegedIntent::class)
+fun Gateway.requestGuildMembers(request: RequestGuildMembers): Flow<GuildMembersChunk> {
+    val nonce = request.nonce.value ?: UUID.randomUUID().toString()
+    val withNonce = request.copy(nonce = Optional.Value(nonce))
+
+    return events
+            .onSubscription { send(withNonce) } //send request on subscription
+            .filterIsInstance<GuildMembersChunk>()
+            .filter { it.data.nonce.value == nonce }
+            .transformWhile {
+                emit(it)
+                return@transformWhile (it.data.chunkIndex + 1) < it.data.chunkCount
+            }// 0 <= chunk_index < chunk_count
 }
 
 /**

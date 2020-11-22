@@ -2,8 +2,6 @@ package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.common.entity.DiscordEmoji
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.optional.Optional
 import com.gitlab.kordlib.common.exception.RequestException
@@ -12,6 +10,7 @@ import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.catchDiscordError
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
+import com.gitlab.kordlib.core.event.guild.MembersChunkEvent
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.sorted
 import com.gitlab.kordlib.core.supplier.EntitySupplier
@@ -19,6 +18,11 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.rest
 import com.gitlab.kordlib.core.supplier.getChannelOf
 import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
+import com.gitlab.kordlib.gateway.Gateway
+import com.gitlab.kordlib.gateway.PrivilegedIntent
+import com.gitlab.kordlib.gateway.RequestGuildMembers
+import com.gitlab.kordlib.gateway.builder.RequestGuildMembersBuilder
+import com.gitlab.kordlib.gateway.start
 import com.gitlab.kordlib.rest.Image
 import com.gitlab.kordlib.rest.builder.auditlog.AuditLogGetRequestBuilder
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
@@ -32,14 +36,12 @@ import com.gitlab.kordlib.rest.json.JsonErrorCode
 import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
 import com.gitlab.kordlib.rest.request.RestRequestException
 import com.gitlab.kordlib.rest.service.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.random.Random
 
 /**
  * The behavior of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
@@ -150,6 +152,7 @@ interface GuildBehavior : Entity, Strategizable {
                 .query<VoiceStateData> { VoiceStateData::guildId eq id.value }
                 .asFlow()
                 .map { VoiceState(it, kord) }
+
     /**
      * Requests to get the present voice states of this guild.
      *
@@ -164,6 +167,48 @@ interface GuildBehavior : Entity, Strategizable {
                 emit(Invite(InviteData.from(it), kord))
             }
         }
+
+    /**
+     * Returns the gateway this guild is part of as per the
+     * [Discord sharding rules](https://discord.com/developers/docs/topics/gateway#sharding).
+     * Returns `null` if no gateway for the shard is present in [kord].
+     */
+    val gateway: Gateway?
+        get() {
+            val shard = id.value.shr(22) % kord.resources.shardCount.coerceAtLeast(1)
+            return kord.gateway.gateways[shard.toInt()]
+        }
+
+    /**
+     * Executes the [request] on this gateway, returning a flow of [MembersChunkEvent] responses.
+     *
+     * The returned flow is cold, and will execute the [request] only on subscription.
+     * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
+     * will result in an [IllegalStateException] being thrown.
+     *
+     * Executing the [request] on a [Gateway] with a [Shard][com.gitlab.kordlib.common.entity.DiscordShard] that
+     * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
+     * can result in undefined behavior for the returned flow and inconsistencies in the cache.
+     *
+     * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
+     * If no nonce was provided one will be generated instead.
+     */
+    @PrivilegedIntent
+    fun requestMembers(request: RequestGuildMembers): Flow<MembersChunkEvent> {
+        val gateway = gateway ?: return emptyFlow()
+
+        val nonce = request.nonce.value ?: Random.nextInt(0, 100).toString()
+        val withNonce = request.copy(nonce = Optional.Value(nonce))
+
+        return kord.events
+                .onSubscription { gateway.send(withNonce) }
+                .filterIsInstance<MembersChunkEvent>()
+                .filter { it.nonce == nonce }
+                .transformWhile {
+                    emit(it)
+                    return@transformWhile (it.chunkIndex + 1) < it.chunkCount
+                }
+    }
 
     /**
      * Requests to get the this behavior as a [Guild].
@@ -467,7 +512,7 @@ suspend inline fun GuildBehavior.createEmoji(name: String, image: Image, builder
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val discordEmoji = kord.rest.emoji.createEmoji(guildId = id, name, image,  builder)
+    val discordEmoji = kord.rest.emoji.createEmoji(guildId = id, name, image, builder)
     return GuildEmoji(EmojiData.from(guildId = id, id = discordEmoji.id!!, discordEmoji), kord)
 }
 
@@ -737,3 +782,26 @@ suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.()
  */
 inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> =
         kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
+
+/**
+ * Executes a [RequestGuildMembers] command configured by the [builder] for guild
+ * on this gateway, returning a flow of [MembersChunkEvent] responses.
+ *
+ * If no [builder] is specified, the request will be configured to fetch all members.
+ *
+ * The returned flow is cold, and will execute the request only on subscription.
+ * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
+ * will result in an [IllegalStateException] being thrown.
+ *
+ * Executing the request on a [Gateway] with a [Shard][com.gitlab.kordlib.common.entity.DiscordShard] that
+ * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
+ * can result in undefined behavior for the returned flow and inconsistencies in the cache.
+ *
+ * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
+ * If no nonce was provided one will be generated instead.
+ */
+@PrivilegedIntent
+inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }): Flow<MembersChunkEvent> {
+    val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
+    return requestMembers(request)
+}
