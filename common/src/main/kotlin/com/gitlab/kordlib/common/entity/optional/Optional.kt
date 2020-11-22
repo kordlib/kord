@@ -196,6 +196,11 @@ fun <E> Optional<List<E>>.orEmpty(): List<E> = when (this) {
     is Value -> value
 }
 
+fun <E> Optional<Set<E>>.orEmpty(): Set<E> = when (this) {
+    is Missing, is Null<*> -> emptySet()
+    is Value -> value
+}
+
 @Suppress("UNCHECKED_CAST")
 inline fun <E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<List<T>> = when (this) {
     is Missing, is Null<*> -> this as Optional<List<T>>
