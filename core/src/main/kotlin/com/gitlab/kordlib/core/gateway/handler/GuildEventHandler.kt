@@ -203,16 +203,14 @@ internal class GuildEventHandler(
         val presences = presences.orEmpty().map { PresenceData.from(guildId, it) }
         cache.putAll(presences)
 
-        val members = members.asFlow().map { member ->
+        members.map { member ->
             val memberData = MemberData.from(member.user.value!!.id, guildId, member)
             cache.put(memberData)
             val userData = UserData.from(member.user.value!!)
             cache.put(userData)
+        }
 
-            Member(memberData, userData, kord)
-        }.toSet()
-
-        coreFlow.emit(MemberChunksEvent(guildId, members, kord, shard))
+        coreFlow.emit(MembersChunkEvent(MembersChunkData.from(this), kord, shard))
     }
 
     private suspend fun handle(event: PresenceUpdate, shard: Int) = with(event.presence) {

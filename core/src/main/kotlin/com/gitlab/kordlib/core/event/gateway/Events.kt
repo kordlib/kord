@@ -2,6 +2,7 @@ package com.gitlab.kordlib.core.event.gateway
 
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.behavior.GuildBehavior
 import com.gitlab.kordlib.core.entity.Guild
 import com.gitlab.kordlib.core.entity.Strategizable
 import com.gitlab.kordlib.core.entity.User
@@ -108,6 +109,8 @@ class ReadyEvent (
         override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : GatewayEvent(), Strategizable {
+
+    val guilds: Set<GuildBehavior> get() = guildIds.map { GuildBehavior(it, kord) }.toSet()
 
     suspend fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
 
