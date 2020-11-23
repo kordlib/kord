@@ -11,6 +11,10 @@
 
 * Fixed Color bug when converting from java.awt.Color with alpha. #114
 
+## Changes
+
+* Gateway reconnect retries reset on handshake. #68
+
 # 0.7.0-M1
 
 ## Changes

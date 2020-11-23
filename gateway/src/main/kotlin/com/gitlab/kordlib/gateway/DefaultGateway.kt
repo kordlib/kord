@@ -6,15 +6,12 @@ import com.gitlab.kordlib.common.ratelimit.RateLimiter
 import com.gitlab.kordlib.gateway.GatewayCloseCode.*
 import com.gitlab.kordlib.gateway.handler.*
 import com.gitlab.kordlib.gateway.retry.Retry
-import io.ktor.client.HttpClient
-import io.ktor.client.features.websocket.DefaultClientWebSocketSession
-import io.ktor.client.features.websocket.webSocketSession
-import io.ktor.client.request.url
-import io.ktor.http.URLBuilder
-import io.ktor.http.cio.websocket.CloseReason
-import io.ktor.http.cio.websocket.Frame
-import io.ktor.http.cio.websocket.close
-import io.ktor.util.error
+import io.ktor.client.*
+import io.ktor.client.features.websocket.*
+import io.ktor.client.request.*
+import io.ktor.http.*
+import io.ktor.http.cio.websocket.*
+import io.ktor.util.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
@@ -91,7 +88,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     init {
         val sequence = Sequence()
         SequenceHandler(events, sequence)
-        handshakeHandler = HandshakeHandler(events, ::trySend, sequence, data.identifyRateLimiter)
+        handshakeHandler = HandshakeHandler(events, ::trySend, sequence, data.identifyRateLimiter, data.reconnectRetry)
         HeartbeatHandler(events, ::trySend, { restart(Close.ZombieConnection) }, { _ping.value = it }, sequence)
         ReconnectHandler(events) { restart(Close.Reconnecting) }
         InvalidSessionHandler(events) { restart(it) }
@@ -122,7 +119,6 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
             try {
                 readSocket()
-                data.reconnectRetry.reset() //connected and read without problems, resetting retry counter
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
             }
@@ -277,8 +273,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 val copy = command.copy(token = "token")
                 "Gateway >>> ${Json.encodeToString(Command.Companion, copy)}"
             }
-        }
-        else defaultGatewayLogger.trace { "Gateway >>> $json" }
+        } else defaultGatewayLogger.trace { "Gateway >>> $json" }
         socket.send(Frame.Text(json))
     }
 
@@ -294,15 +289,16 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 }
 
-internal val GatewayConfiguration.identify get() = Identify(
-        token,
-        IdentifyProperties(os, name, name),
-        false.optional(),
-        50.optionalInt(),
-        shard.optional(),
-        presence,
-        intents
-)
+internal val GatewayConfiguration.identify
+    get() = Identify(
+            token,
+            IdentifyProperties(os, name, name),
+            false.optional(),
+            50.optionalInt(),
+            shard.optional(),
+            presence,
+            intents
+    )
 
 
 internal val os: String get() = System.getProperty("os.name")
