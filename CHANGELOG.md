@@ -40,6 +40,7 @@
 
 * `GuildBehavior#getVanityUrl` will now correctly return null when the guild does not have a vanity url.
 * Voice channels can now change their topic. 
+* Fixed `CacheEntitySupplier` not returning certain cached entities.
 
 ## Dependencies
 
