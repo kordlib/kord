@@ -3,6 +3,7 @@ package com.gitlab.kordlib.gateway.handler
 import com.gitlab.kordlib.common.ratelimit.RateLimiter
 import com.gitlab.kordlib.common.ratelimit.consume
 import com.gitlab.kordlib.gateway.*
+import com.gitlab.kordlib.gateway.retry.Retry
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
@@ -12,7 +13,8 @@ internal class HandshakeHandler(
         flow: Flow<Event>,
         private val send: suspend (Command) -> Unit,
         private val sequence: Sequence,
-        private val identifyRateLimiter: RateLimiter
+        private val identifyRateLimiter: RateLimiter,
+        private val reconnectRetry: Retry
 ) : Handler(flow, "HandshakeHandler") {
 
     lateinit var configuration: GatewayConfiguration
@@ -33,6 +35,7 @@ internal class HandshakeHandler(
         }
 
         on<Hello> {
+            reconnectRetry.reset() //connected and read without problems, resetting retry counter
             identifyRateLimiter.consume {
                 if (sessionStart) send(identify)
                 else send(resume)
