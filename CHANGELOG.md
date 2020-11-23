@@ -4,6 +4,12 @@
 
 * Re-added `values`  in `Intent` and `Intents`.
 * Added support for inline replies and `MessageBehavior#reply` to quickly create a reply to a message. #110
+* Added a shortcut to create channels from a `CategoryBehavior`, giving them a parentId by default. #109 
+* Added `Gateway#requestMembers` and `GuildBehavior#RequestMembers` as a shortcut for the `RequestGuildMembers` command.
+
+## Fixes
+
+* Fixed Color bug when converting from java.awt.Color with alpha. #114
 
 # 0.7.0-M1
 
