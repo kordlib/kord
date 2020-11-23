@@ -1,5 +1,6 @@
 package com.gitlab.kordlib.core.cache.data
 
+import com.gitlab.kordlib.common.entity.Overwrite
 import com.gitlab.kordlib.common.entity.*
 import kotlinx.serialization.Serializable
 

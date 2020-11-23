@@ -3,16 +3,15 @@ package com.gitlab.kordlib.rest.request
 import com.gitlab.kordlib.rest.json.optional
 import com.gitlab.kordlib.rest.json.response.DiscordErrorResponse
 import com.gitlab.kordlib.rest.ratelimit.*
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.defaultRequest
-import io.ktor.client.request.forms.MultiPartFormDataContent
-import io.ktor.client.request.header
-import io.ktor.client.request.request
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.features.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.content.TextContent
+import io.ktor.http.content.*
 import io.ktor.http.takeFrom
-import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import java.time.Clock
@@ -37,7 +36,7 @@ class KtorRequestHandler(
         private val client: HttpClient,
         private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
         private val clock: Clock = Clock.systemUTC(),
-        private val parser: Json = jsonDefault
+        private val parser: Json = jsonDefault,
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
 
@@ -51,12 +50,20 @@ class KtorRequestHandler(
             response
         }
 
+        val body = response.readText()
         return when {
-            response.isRateLimit -> handle(request)
-            response.isError -> {
-                throw KtorRequestException(response, parser.decodeFromString(DiscordErrorResponse.serializer().optional, String(response.readBytes())))
+            response.isRateLimit -> {
+                logger.debug { response.logString(body) }
+                handle(request)
             }
-            else -> parser.decodeFromString(request.route.strategy, response.readText())
+            response.isError -> {
+                logger.debug { response.logString(body) }
+                throw KtorRequestException(response, parser.decodeFromString(DiscordErrorResponse.serializer().optional, body))
+            }
+            else -> {
+                logger.debug { response.logString(body) }
+                parser.decodeFromString(request.route.strategy, body)
+            }
         }
     }
 
@@ -70,19 +77,24 @@ class KtorRequestHandler(
             parameters.appendAll(request.parameters)
         }
 
-        request.body?.let {
-            when (request) {
-                is MultipartRequest<*, *> -> {
-                    headers.append("payload_json", parser.encodeToString(it.strategy, it.body))
-                    this.body = MultiPartFormDataContent(request.data)
-                }
-
-                is JsonRequest<*, *> -> {
-                    val json = parser.encodeToString(it.strategy, it.body)
-                    this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
+        when (request) {
+            is JsonRequest -> run {
+                val requestBody = request.body ?: return@run
+                val json = parser.encodeToString(requestBody.strategy, requestBody.body)
+                logger.debug { request.logString(json) }
+                this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
+            }
+            is MultipartRequest -> {
+                val content = request.data
+                this.body = MultiPartFormDataContent(content)
+                logger.debug {
+                    val json = content.filterIsInstance<PartData.FormItem>()
+                            .firstOrNull { it.name == "payload_json" }?.value
+                    request.logString(json ?: "")
                 }
             }
         }
+
     }
 
     companion object {
@@ -91,7 +103,7 @@ class KtorRequestHandler(
                 token: String,
                 requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
                 clock: Clock = Clock.systemUTC(),
-                parser: Json = jsonDefault
+                parser: Json = jsonDefault,
         ): KtorRequestHandler {
             val client = HttpClient(CIO) {
                 expectSuccess = false

@@ -4,22 +4,40 @@ import com.gitlab.kordlib.gateway.*
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.map
-import kotlin.time.milliseconds
+import kotlin.time.Duration
+import kotlin.time.microseconds
 
 data class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
 
 class MasterGateway(
-        val gateways: Map<Int, Gateway>
+        val gateways: Map<Int, Gateway>,
 ) {
 
-    val averagePing get() = gateways.values.asSequence().map { it.ping.inMilliseconds }.average().milliseconds
+    /**
+     * Calculates the average [Gateway.ping] of all running [gateways].
+     *
+     * Gateways that return `null` are not counted into the average, if all [gateways]
+     * return `null` then this property will return `null` as well.
+     */
+    val averagePing
+        get(): Duration? {
+            val pings = gateways.values.mapNotNull { it.ping.value?.inMicroseconds }
+            if (pings.isEmpty()) return null
+
+            return pings.average().microseconds
+        }
+
 
     @OptIn(FlowPreview::class)
     val events: Flow<ShardEvent> = gateways.entries.asFlow()
-            .flatMapMerge(gateways.size) { (shard, gateway) -> gateway.events.map { event -> ShardEvent(event, gateway, shard) } }
+            .map { (shard, gateway) -> gateway.events.map { ShardEvent(it, gateway, shard) } }
+            .flattenMerge(gateways.size.coerceAtLeast(1))
 
+    /**
+     * Calls [Gateway.start] on each Gateway in [gateways], changing the [GatewayConfiguration.shard] for each Gateway.
+     */
     suspend fun start(configuration: GatewayConfiguration) = gateways.entries.forEach { (shard, gateway) ->
         val config = configuration.copy(shard = configuration.shard.copy(index = shard))
         gateway.start(config)

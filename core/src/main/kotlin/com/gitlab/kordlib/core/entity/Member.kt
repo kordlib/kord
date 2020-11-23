@@ -90,9 +90,7 @@ class Member(
     suspend fun getPermissions(): Permissions {
         val guild = getGuild()
         val owner = guild.ownerId == this.id
-        if (owner) return Permissions {
-            +Permission.All
-        }
+        if (owner) return Permissions(Permission.All)
 
         val everyone = guild.getEveryoneRole().permissions
         val roles = roles.map { it.permissions }.toList()

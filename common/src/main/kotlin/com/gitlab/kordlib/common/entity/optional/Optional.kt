@@ -214,6 +214,13 @@ inline fun <E, T> Optional<E>.mapNullable(mapper: (E) -> T): Optional<T?> = when
     is Value -> Optional(mapper(value))
 }
 
+@Suppress("UNCHECKED_CAST")
+inline fun <E: Any, T> Optional<E?>.mapNotNull(mapper: (E) -> T): Optional<T?> = when (this) {
+    is Missing -> this as Optional<T?>
+    is Null<*> -> this as Optional<T?>
+    is Value -> Optional(mapper(value!!))
+}
+
 inline fun <E : Any> Optional<E>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake = when (this) {
     is Missing, is Null<*> -> OptionalSnowflake.Missing
     is Value -> OptionalSnowflake.Value(mapper(value))

@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
+import kotlin.test.assertEquals
 
 fun imageBinary(path: String): Image {
     val loader = Unit::class.java.classLoader
@@ -160,10 +161,15 @@ class RestServiceTest {
 
         channel.deleteMessage(message.id)
 
-        repeat(2) {
-            channel.createMessage {
+        run {
+            val message = channel.createMessage {
                 content = "TEST"
             }
+            val reply = message.reply {
+                content = "TEST REPLY"
+            }
+
+            assert(reply.referencedMessage?.id == message.id)
         }
 
         val messages = channel.messages.toList()
@@ -378,6 +384,7 @@ class RestServiceTest {
     }
 
     @Test
+
     @Order(21)
     fun `category channel creation`(): Unit = runBlocking {
         val category = guild.createCategory("my category")
@@ -388,6 +395,44 @@ class RestServiceTest {
         val voiceChannel = category.createVoiceChannel("test child voice channel")
         assert(voiceChannel.category == category)
     }
+
+    @Test
+    @Order(22)
+    fun `message with file and content serializes correctly`(): Unit = runBlocking {
+        val message = channel.createMessage {
+            content = "TEST"
+
+            addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+        }
+
+        assertEquals("TEST", message.content)
+        assertEquals(1, message.attachments.size)
+        assertEquals("test.txt", message.attachments.first().filename)
+    }
+
+    @Test
+    @Order(23)
+    fun `message with only file correctly`(): Unit = runBlocking {
+        val message = channel.createMessage {
+            addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+        }
+
+        assertEquals(1, message.attachments.size)
+        assertEquals("test.txt", message.attachments.first().filename)
+    }
+
+    @Test
+    @Order(24)
+    fun `message with only content serializes correctly`(): Unit = runBlocking {
+        val message = channel.createMessage {
+            content = "TEST"
+
+            addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+        }
+
+        assertEquals("TEST", message.content)
+    }
+
 
     @Test
     @Order(Int.MAX_VALUE - 2)

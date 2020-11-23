@@ -29,7 +29,7 @@ import java.util.*
 class Message(
         val data: MessageData,
         override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+        override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : MessageBehavior {
 
     /**
@@ -95,6 +95,15 @@ class Message(
      * mentioned inside the same guild will not be present.
      */
     val mentionedChannelBehaviors: Set<ChannelBehavior> get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(it, kord) }.toSet()
+
+    /**
+     * The message being replied to.
+     *
+     * Absence of this field does **not** mean this message was not a reply. The referenced message
+     * may not be available (through deletion or other means).
+     * Compare [type] to [MessageType.Reply] for a consistent way of identifying replies.
+     */
+    val referencedMessage: Message? get() = data.referencedMessage.value?.let { Message(it, kord) }
 
     /**
      * The [Channels][Channel] specifically mentioned in this message.

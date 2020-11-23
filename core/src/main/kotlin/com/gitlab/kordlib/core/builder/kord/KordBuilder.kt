@@ -15,7 +15,6 @@ import com.gitlab.kordlib.core.exception.KordInitializationException
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 import com.gitlab.kordlib.gateway.DefaultGateway
-import com.gitlab.kordlib.gateway.DefaultGatewayData
 import com.gitlab.kordlib.gateway.Gateway
 import com.gitlab.kordlib.gateway.Intents
 import com.gitlab.kordlib.gateway.retry.LinearRetry
@@ -27,15 +26,13 @@ import com.gitlab.kordlib.rest.request.RequestHandler
 import com.gitlab.kordlib.rest.request.isError
 import com.gitlab.kordlib.rest.route.Route
 import com.gitlab.kordlib.rest.service.RestClient
-import io.ktor.client.HttpClient
-import io.ktor.client.request.get
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.readText
-import io.ktor.http.HttpStatusCode
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
@@ -45,8 +42,15 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.seconds
 
-operator fun DefaultGateway.Companion.invoke(resources: ClientResources, retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)) =
-        DefaultGateway(DefaultGatewayData("wss://gateway.discord.gg/", resources.httpClient, retry, BucketRateLimiter(120, 60.seconds), BucketRateLimiter(1, 5.seconds)))
+operator fun DefaultGateway.Companion.invoke(resources: ClientResources, retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)): DefaultGateway {
+    return DefaultGateway {
+        url = "wss://gateway.discord.gg/"
+        client = resources.httpClient
+        reconnectRetry = retry
+        sendRateLimiter = BucketRateLimiter(120, 60.seconds)
+        identifyRateLimiter = BucketRateLimiter(1, 5.seconds)
+    }
+}
 
 private val logger = KotlinLogging.logger { }
 
@@ -70,6 +74,16 @@ class KordBuilder(val token: String) {
      * Enable adding a [Runtime.addShutdownHook] to log out of the [Gateway] when the process is killed.
      */
     var enableShutdownHook: Boolean = true
+
+    /**
+     * The event flow used by [Kord.eventFlow] to publish [events][Kord.events].
+     * 
+     *
+     * By default a [MutableSharedFlow] with an `extraBufferCapacity` of `Int.MAX_VALUE`.
+     */
+    var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(
+            extraBufferCapacity = Int.MAX_VALUE
+    )
 
     /**
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
@@ -128,28 +142,7 @@ class KordBuilder(val token: String) {
         this.gatewayBuilder = gatewayBuilder
     }
 
-    /**
-     * Configures the enabled intents across all gateways.
-     *
-     * ```kotlin
-     * intents {
-     *     +Intent.DirectMessages
-     *
-     *     +Intents.nonPrivileged
-     *
-     *     enableEvent<MessageCreateEvent>()
-     *
-     *     enableEvents(TypingStartEvent::class, MessageDeleteEvent::class)
-     * }
-     * ```
-     */
-    @OptIn(ExperimentalContracts::class)
-    inline fun intents(builder: Intents.IntentsBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-        intents = Intents { builder() }
-    }
+
 
     /**
      * Configures the [RequestHandler] for the [RestClient].
@@ -244,8 +237,6 @@ class KordBuilder(val token: String) {
 
         val self = getBotIdFromToken(token)
 
-        val eventPublisher = BroadcastChannel<Event>(1)
-
         if (enableShutdownHook) {
             Runtime.getRuntime().addShutdownHook(thread(false) {
                 runBlocking {
@@ -260,7 +251,7 @@ class KordBuilder(val token: String) {
                 gateway,
                 rest,
                 self,
-                eventPublisher,
+                eventFlow,
                 defaultDispatcher
         )
     }

@@ -4,6 +4,7 @@ package com.gitlab.kordlib.core.entity
 
 import com.gitlab.kordlib.common.Color
 import com.gitlab.kordlib.common.entity.EmbedType
+import com.gitlab.kordlib.common.entity.optional.orEmpty
 import com.gitlab.kordlib.common.entity.optional.value
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.KordObject
@@ -88,7 +89,7 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
     /**
      * The embed fields.
      */
-    val fields: List<Field> = emptyList()
+    val fields: List<Field> get() = data.fields.orEmpty().map { Field(it, kord) }
 
     data class Footer(val data: EmbedFooterData, override val kord: Kord) : KordObject {
         val text: String get() = data.text

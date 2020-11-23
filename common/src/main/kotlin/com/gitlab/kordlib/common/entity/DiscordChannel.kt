@@ -105,7 +105,7 @@ sealed class ChannelType(val value: Int) {
             3 -> GroupDM
             4 -> GuildCategory
             5 -> GuildNews
-            96 -> GuildStore
+            6 -> GuildStore
             else -> Unknown(code)
         }
 

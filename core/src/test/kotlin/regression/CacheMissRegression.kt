@@ -27,10 +27,10 @@ import io.ktor.content.*
 import io.ktor.http.*
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.serialization.SerializationStrategy
@@ -38,6 +38,8 @@ import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.BeforeTest
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -54,12 +56,10 @@ object FakeGateway : Gateway {
 
     val deferred = CompletableDeferred<Unit>()
 
-    override val events: Flow<Event>
-        get() = emptyFlow()
+    override val events: SharedFlow<Event> = MutableSharedFlow<Event>()
 
     @ExperimentalTime
-    override val ping: Duration
-        get() = Duration.ZERO
+    override val ping: StateFlow<Duration?> = MutableStateFlow(null)
 
     override suspend fun detach() {}
 
@@ -71,6 +71,8 @@ object FakeGateway : Gateway {
     override suspend fun stop() {
         deferred.complete(Unit)
     }
+
+    override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
 }
 
 class CrashingHandler(val client: HttpClient) : RequestHandler {
@@ -125,7 +127,7 @@ class CacheMissingRegressions {
                 MasterGateway(mapOf(0 to FakeGateway)),
                 RestClient(CrashingHandler(resources.httpClient)),
                 getBotIdFromToken(token),
-                BroadcastChannel(1),
+                MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
                 Dispatchers.Default
         )
     }

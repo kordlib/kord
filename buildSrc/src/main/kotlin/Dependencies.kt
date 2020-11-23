@@ -2,7 +2,7 @@ object  Versions {
     const val kotlin = "1.4.10"
     const val kotlinxSerialization = "1.0.0"
     const val ktor = "1.4.1"
-    const val kotlinxCoroutines = "1.4.0-M1"
+    const val kotlinxCoroutines = "1.4.0"
     const val kotlinLogging = "2.0.3"
     const val atomicFu = "0.14.4"
     const val binaryCompatibilityValidator = "0.2.3"
@@ -16,7 +16,7 @@ object  Versions {
     const val junitJupiterEngine = junit5
     const val sl4j = "1.7.30"
     const val bintray = "1.8.5"
-    const val mockk = "1.10.0"
+    const val mockk = "1.10.2"
 }
 
 @Suppress("ObjectPropertyName")

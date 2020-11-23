@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.json.request
 
 import com.gitlab.kordlib.common.Color
+import com.gitlab.kordlib.common.entity.DiscordMessageReference
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.UserFlags
 import com.gitlab.kordlib.common.entity.optional.Optional
@@ -23,6 +24,8 @@ data class MessageCreateRequest(
         val embed: Optional<EmbedRequest> = Optional.Missing(),
         @SerialName("allowed_mentions")
         val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+        @SerialName("message_reference")
+        val messageReference: Optional<DiscordMessageReference> = Optional.Missing()
 )
 
 @Serializable
@@ -30,6 +33,8 @@ data class AllowedMentions(
         val parse: List<AllowedMentionType>,
         val users: List<String>,
         val roles: List<String>,
+        @SerialName("replied_user")
+        val repliedUser: OptionalBoolean = OptionalBoolean.Missing
 )
 
 @Serializable(with = AllowedMentionType.Serializer::class)

@@ -14,7 +14,7 @@ import com.gitlab.kordlib.core.event.channel.data.ChannelPinsUpdateEventData
 import com.gitlab.kordlib.core.event.channel.data.TypingStartEventData
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.gateway.*
-import kotlinx.coroutines.channels.SendChannel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import com.gitlab.kordlib.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
@@ -22,8 +22,8 @@ internal class ChannelEventHandler(
         kord: Kord,
         gateway: MasterGateway,
         cache: DataCache,
-        coreEventChannel: SendChannel<CoreEvent>,
-) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
+        coreFlow: MutableSharedFlow<CoreEvent>
+) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
         is ChannelCreate -> handle(event, shard)
@@ -48,7 +48,7 @@ internal class ChannelEventHandler(
             else -> error("unknown channel: $channel")
         }
 
-        coreEventChannel.send(coreEvent)
+        coreFlow.emit(coreEvent)
     }
 
     private suspend fun handle(event: ChannelUpdate, shard: Int) {
@@ -65,7 +65,7 @@ internal class ChannelEventHandler(
             else -> error("unknown channel: $channel")
         }
 
-        coreEventChannel.send(coreEvent)
+        coreFlow.emit(coreEvent)
     }
 
     private suspend fun handle(event: ChannelDelete, shard: Int) {
@@ -82,7 +82,7 @@ internal class ChannelEventHandler(
             else -> error("unknown channel: $channel")
         }
 
-        coreEventChannel.send(coreEvent)
+        coreFlow.emit(coreEvent)
     }
 
     private suspend fun handle(event: ChannelPinsUpdate, shard: Int) = with(event.pins) {
@@ -92,7 +92,7 @@ internal class ChannelEventHandler(
             it.copy(lastPinTimestamp = lastPinTimestamp)
         }
 
-        coreEventChannel.send(coreEvent)
+        coreFlow.emit(coreEvent)
     }
 
     private suspend fun handle(event: TypingStart, shard: Int) = with(event.data) {
@@ -106,7 +106,7 @@ internal class ChannelEventHandler(
                 shard
         )
 
-        coreEventChannel.send(coreEvent)
+        coreFlow.emit(coreEvent)
     }
 
 }

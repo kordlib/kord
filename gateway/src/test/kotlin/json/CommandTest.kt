@@ -149,7 +149,7 @@ class CommandTest {
                     add(JsonPrimitive(0))
                     add(JsonPrimitive(1))
                 })
-                put("intents", Intents.all.code)
+                put("intents", Intents.all.code.value)
             })
         })
 

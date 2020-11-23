@@ -1,11 +1,16 @@
 package com.gitlab.kordlib.gateway
 
 import com.gitlab.kordlib.gateway.builder.PresenceBuilder
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import io.ktor.util.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import mu.KotlinLogging
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration
 
 /**
@@ -15,19 +20,21 @@ import kotlin.time.Duration
  * through [events] and send [commands](https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-commands)
  * through [send].
  */
-interface Gateway {
+interface Gateway : CoroutineScope {
     /**
      * The incoming [events](https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events)
      * of the Gateway. Users should expect these [Flows](Flow) to be hot and remain open for the entire lifecycle of the
      * Gateway.
      */
-    val events: Flow<Event>
+    val events: SharedFlow<Event>
 
     /**
-     * The duration between the last [Heartbeat] and [HeartbeatACK]. If no [Heartbeat] has been received yet,
-     * [Duration.INFINITE] will be returned.
+     * The duration between the last [Heartbeat] and [HeartbeatACK].
+     *
+     * This flow will have a [value][StateFlow.value] of `null` if the gateway is not
+     * [active][Gateway.start], or no [HeartbeatACK] has been received yet.
      */
-    val ping: Duration
+    val ping: StateFlow<Duration?>
 
     /**
      * Starts a reconnection gateway connection with the given [configuration].
@@ -61,11 +68,13 @@ interface Gateway {
     companion object {
         private object None : Gateway {
 
-            override val events: Flow<Event>
-                get() = emptyFlow()
+            override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
 
-            override val ping: Duration
-                get() = Duration.ZERO
+            override val events: SharedFlow<Event>
+                get() = MutableSharedFlow()
+
+            override val ping: StateFlow<Duration?>
+                get() = MutableStateFlow(null)
 
             override suspend fun send(command: Command) {}
 
@@ -73,7 +82,9 @@ interface Gateway {
 
             override suspend fun stop() {}
 
-            override suspend fun detach() {}
+            override suspend fun detach() {
+                (this as CoroutineScope).cancel()
+            }
 
             override fun toString(): String {
                 return "Gateway.None"
@@ -83,7 +94,7 @@ interface Gateway {
         /**
          * Returns a [Gateway] with no-op behavior, an empty [Gateway.events] flow and a ping of [Duration.ZERO].
          */
-        fun none() : Gateway = None
+        fun none(): Gateway = None
 
     }
 }
@@ -127,6 +138,29 @@ suspend inline fun Gateway.start(token: String, config: GatewayConfigurationBuil
     val builder = GatewayConfigurationBuilder(token)
     builder.apply(config)
     start(builder.build())
+}
+
+/**
+ * Logger used to report throwables caught in [Gateway.on].
+ */
+@PublishedApi
+internal val gatewayOnLogger = KotlinLogging.logger("Gateway.on")
+
+/**
+ * Convenience method that will invoke the [consumer] on every event [T] created by [Gateway.events].
+ *
+ * The events are buffered in an [unlimited][Channel.UNLIMITED] [buffer][Flow.buffer] and
+ * [launched][CoroutineScope.launch] in the supplied [scope], which is [Gateway] by default.
+ * Each event will be [launched][CoroutineScope.launch] inside the [scope] separately and
+ * any thrown [Throwable] will be caught and logged.
+ *
+ * The returned [Job] is a reference to the created coroutine, call [Job.cancel] to cancel the processing of any further
+ * events for this [consumer].
+ */
+inline fun <reified T : Event> Gateway.on(scope: CoroutineScope = this, crossinline consumer: T.() -> Unit): Job {
+    return this.events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
+        launch { it.runCatching { it.consumer() }.onFailure(gatewayOnLogger::error) }
+    }.launchIn(scope)
 }
 
 /**

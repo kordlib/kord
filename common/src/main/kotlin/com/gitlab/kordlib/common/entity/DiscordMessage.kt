@@ -54,8 +54,9 @@ import kotlinx.serialization.encoding.Encoder
  * @param type Type of message.
  * @param activity Sent with Rich Presence-related chat embeds.
  * @param application Sent with Rich Presence-related chat embeds.
- * @param messageReference Reference data sent with crossposted messages.
+ * @param messageReference Reference data sent with crossposted messages and replies.
  * @param flags Message flags.
+ * @param referencedMessage the message associated with [messageReference].
  */
 @Serializable
 data class DiscordMessage(
@@ -91,6 +92,8 @@ data class DiscordMessage(
         @SerialName("message_reference")
         val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
         val flags: Optional<MessageFlags> = Optional.Missing(),
+        @SerialName("referenced_message")
+        val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
 )
 
 
@@ -135,8 +138,9 @@ data class DiscordMessage(
  * @param type Type of message.
  * @param activity Sent with Rich Presence-related chat embeds.
  * @param application Sent with Rich Presence-related chat embeds.
- * @param messageReference Reference data sent with crossposted messages.
+ * @param messageReference Reference data sent with crossposted messages and replies.
  * @param flags Message flags.
+ * @param referencedMessage the message associated with [messageReference].
  */
 @Serializable
 data class DiscordPartialMessage(
@@ -172,6 +176,8 @@ data class DiscordPartialMessage(
         @SerialName("message_reference")
         val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
         val flags: Optional<MessageFlags> = Optional.Missing(),
+        @SerialName("referenced_message")
+        val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
 )
 
 @Serializable
@@ -179,7 +185,7 @@ data class DiscordMessageReference(
         @SerialName("message_id")
         val id: OptionalSnowflake = OptionalSnowflake.Missing,
         @SerialName("channel_id")
-        val channelId: Snowflake,
+        val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
         @SerialName("guild_id")
         val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
 )
@@ -632,7 +638,8 @@ enum class MessageType(val code: Int) {
     ChannelFollowAdd(12),
     GuildDiscoveryDisqualified(14),
     @Suppress("SpellCheckingInspection")
-    GuildDiscoveryRequalified(15);
+    GuildDiscoveryRequalified(15),
+    Reply(19);
 
     companion object MessageTypeSerializer : KSerializer<MessageType> {
 

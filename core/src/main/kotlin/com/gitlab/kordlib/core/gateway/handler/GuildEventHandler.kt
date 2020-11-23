@@ -18,11 +18,7 @@ import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
 import com.gitlab.kordlib.core.event.user.PresenceUpdateEvent
 import com.gitlab.kordlib.core.gateway.MasterGateway
 import com.gitlab.kordlib.gateway.*
-import kotlinx.coroutines.channels.SendChannel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.singleOrNull
-import kotlinx.coroutines.flow.toSet
+import kotlinx.coroutines.flow.*
 import com.gitlab.kordlib.common.entity.DiscordGuild as GatewayGuild
 import com.gitlab.kordlib.core.event.Event as CoreEvent
 
@@ -31,8 +27,8 @@ internal class GuildEventHandler(
         kord: Kord,
         gateway: MasterGateway,
         cache: DataCache,
-        coreEventChannel: SendChannel<CoreEvent>,
-) : BaseGatewayEventHandler(kord, gateway, cache, coreEventChannel) {
+        coreFlow: MutableSharedFlow<CoreEvent>
+) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
         is GuildCreate -> handle(event, shard)
@@ -86,7 +82,7 @@ internal class GuildEventHandler(
         cache.put(data)
         event.guild.cache()
 
-        coreEventChannel.send(GuildCreateEvent(Guild(data, kord), shard))
+        coreFlow.emit(GuildCreateEvent(Guild(data, kord), shard))
     }
 
     private suspend fun handle(event: GuildUpdate, shard: Int) {
@@ -94,7 +90,7 @@ internal class GuildEventHandler(
         cache.put(data)
         event.guild.cache()
 
-        coreEventChannel.send(GuildCreateEvent(Guild(data, kord), shard))
+        coreFlow.emit(GuildCreateEvent(Guild(data, kord), shard))
     }
 
     private suspend fun handle(event: GuildDelete, shard: Int) = with(event.guild) {
@@ -103,7 +99,7 @@ internal class GuildEventHandler(
         val old = query.asFlow().map { Guild(it, kord) }.singleOrNull()
         query.remove()
 
-        coreEventChannel.send(GuildDeleteEvent(id, unavailable.orElse(false), old, kord, shard))
+        coreFlow.emit(GuildDeleteEvent(id, unavailable.orElse(false), old, kord, shard))
     }
 
     private suspend fun handle(event: GuildBanAdd, shard: Int) = with(event.ban) {
@@ -111,7 +107,7 @@ internal class GuildEventHandler(
         cache.put(user)
         val user = User(data, kord)
 
-        coreEventChannel.send(BanAddEvent(user, Snowflake(guildId), shard))
+        coreFlow.emit(BanAddEvent(user, Snowflake(guildId), shard))
     }
 
     private suspend fun handle(event: GuildBanRemove, shard: Int) = with(event.ban) {
@@ -119,7 +115,7 @@ internal class GuildEventHandler(
         cache.put(user)
         val user = User(data, kord)
 
-        coreEventChannel.send(BanRemoveEvent(user, Snowflake(guildId), shard))
+        coreFlow.emit(BanRemoveEvent(user, Snowflake(guildId), shard))
     }
 
     private suspend fun handle(event: GuildEmojisUpdate, shard: Int) = with(event.emoji) {
@@ -132,11 +128,12 @@ internal class GuildEventHandler(
             it.copy(emojis = emojis.map { emoji -> emoji.id })
         }
 
-        coreEventChannel.send(EmojisUpdateEvent(guildId, emojis.toSet(), kord, shard))
+        coreFlow.emit(EmojisUpdateEvent(guildId, emojis.toSet(), kord, shard))
     }
 
+
     private suspend fun handle(event: GuildIntegrationsUpdate, shard: Int) {
-        coreEventChannel.send(IntegrationsUpdateEvent(event.integrations.guildId, kord, shard))
+        coreFlow.emit(IntegrationsUpdateEvent(event.integrations.guildId, kord, shard))
     }
 
     private suspend fun handle(event: GuildMemberAdd, shard: Int) = with(event.member) {
@@ -148,7 +145,7 @@ internal class GuildEventHandler(
 
         val member = Member(memberData, userData, kord)
 
-        coreEventChannel.send(MemberJoinEvent(member, shard))
+        coreFlow.emit(MemberJoinEvent(member, shard))
     }
 
     private suspend fun handle(event: GuildMemberRemove, shard: Int) = with(event.member) {
@@ -156,7 +153,7 @@ internal class GuildEventHandler(
         cache.query<UserData> { UserData::id eq userData.id }.remove()
         val user = User(userData, kord)
 
-        coreEventChannel.send(MemberLeaveEvent(user, guildId, shard))
+        coreFlow.emit(MemberLeaveEvent(user, guildId, shard))
     }
 
     private suspend fun handle(event: GuildMemberUpdate, shard: Int) = with(event.member) {
@@ -172,21 +169,21 @@ internal class GuildEventHandler(
         val new = Member(MemberData.from(this), userData, kord)
         cache.put(new.memberData)
 
-        coreEventChannel.send(MemberUpdateEvent(new, old, kord, shard))
+        coreFlow.emit(MemberUpdateEvent(new, old, kord, shard))
     }
 
     private suspend fun handle(event: GuildRoleCreate, shard: Int) {
         val data = RoleData.from(event.role)
         cache.put(data)
 
-        coreEventChannel.send(RoleCreateEvent(Role(data, kord), shard))
+        coreFlow.emit(RoleCreateEvent(Role(data, kord), shard))
     }
 
     private suspend fun handle(event: GuildRoleUpdate, shard: Int) {
         val data = RoleData.from(event.role)
         cache.put(data)
 
-        coreEventChannel.send(RoleUpdateEvent(Role(data, kord), shard))
+        coreFlow.emit(RoleUpdateEvent(Role(data, kord), shard))
     }
 
     private suspend fun handle(event: GuildRoleDelete, shard: Int) = with(event.role) {
@@ -199,7 +196,7 @@ internal class GuildEventHandler(
 
         query.remove()
 
-        coreEventChannel.send(RoleDeleteEvent(guildId, id, old, kord, shard))
+        coreFlow.emit(RoleDeleteEvent(guildId, id, old, kord, shard))
     }
 
     private suspend fun handle(event: GuildMembersChunk, shard: Int) = with(event.data) {
@@ -215,7 +212,7 @@ internal class GuildEventHandler(
             Member(memberData, userData, kord)
         }.toSet()
 
-        coreEventChannel.send(MemberChunksEvent(guildId, members, kord, shard))
+        coreFlow.emit(MemberChunksEvent(guildId, members, kord, shard))
     }
 
     private suspend fun handle(event: PresenceUpdate, shard: Int) = with(event.presence) {
@@ -232,7 +229,7 @@ internal class GuildEventHandler(
                 .singleOrNull()
                 ?.let { User(it, kord) }
 
-        coreEventChannel.send(PresenceUpdateEvent(user, this.user, guildId.value!!, old, new, shard))
+        coreFlow.emit(PresenceUpdateEvent(user, this.user, guildId.value!!, old, new, shard))
     }
 
     private suspend fun handle(event: InviteCreate, shard: Int) = with(event) {
@@ -241,12 +238,12 @@ internal class GuildEventHandler(
         invite.inviter.value?.let { cache.put(UserData.from(it)) }
         invite.targetUser.value?.let { cache.put(UserData.from(it)) }
 
-        coreEventChannel.send(InviteCreateEvent(data, kord, shard))
+        coreFlow.emit(InviteCreateEvent(data, kord, shard))
     }
 
     private suspend fun handle(event: InviteDelete, shard: Int) = with(event) {
         val data = InviteDeleteData.from(invite)
-        coreEventChannel.send(InviteDeleteEvent(data, kord, shard))
+        coreFlow.emit(InviteDeleteEvent(data, kord, shard))
     }
 
 }
