@@ -6,6 +6,7 @@ import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.PresenceData
 import com.gitlab.kordlib.core.cache.data.VoiceStateData
+import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.exception.EntityNotFoundException
 import com.gitlab.kordlib.core.supplier.EntitySupplier
@@ -139,8 +140,8 @@ interface MemberBehavior : Entity, UserBehavior {
      */
     suspend fun getPresenceOrNull(): Presence? {
         val data = kord.cache.query<PresenceData> {
-            PresenceData::userId eq id.value
-            PresenceData::guildId eq guildId.value
+            idEq(PresenceData::userId, id)
+            idEq(PresenceData::guildId, guildId)
         }.singleOrNull() ?: return null
 
         return Presence(data, kord)
@@ -170,8 +171,8 @@ interface MemberBehavior : Entity, UserBehavior {
      */
     suspend fun getVoiceStateOrNull(): VoiceState? {
         val data = kord.cache.query<VoiceStateData> {
-            VoiceStateData::userId eq id.value
-            VoiceStateData::guildId eq guildId.value
+            idEq(VoiceStateData::userId, id)
+            idEq(VoiceStateData::guildId, guildId)
         }.singleOrNull() ?: return null
 
         return VoiceState(data, kord)

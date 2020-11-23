@@ -7,6 +7,7 @@ import com.gitlab.kordlib.common.entity.optional.Optional
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
+import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.catchDiscordError
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.*
@@ -100,7 +101,7 @@ interface GuildBehavior : Entity, Strategizable {
      * This property is not resolvable through REST and will always use [KordCache] instead.
      */
     val presences: Flow<Presence>
-        get() = kord.cache.query<PresenceData> { PresenceData::guildId eq id.value }
+        get() = kord.cache.query<PresenceData> { idEq(PresenceData::guildId, id) }
                 .asFlow()
                 .map { Presence(it, kord) }
 
@@ -149,7 +150,7 @@ interface GuildBehavior : Entity, Strategizable {
      */
     val voiceStates: Flow<VoiceState>
         get() = kord.cache
-                .query<VoiceStateData> { VoiceStateData::guildId eq id.value }
+                .query<VoiceStateData> { idEq( VoiceStateData::guildId, id) }
                 .asFlow()
                 .map { VoiceState(it, kord) }
 

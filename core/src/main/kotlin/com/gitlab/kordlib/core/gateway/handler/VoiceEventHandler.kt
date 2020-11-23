@@ -6,6 +6,7 @@ import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.optional.optional
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
+import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.entity.VoiceState
 import com.gitlab.kordlib.core.event.guild.VoiceServerUpdateEvent
 import com.gitlab.kordlib.core.event.user.VoiceStateUpdateEvent
@@ -35,7 +36,7 @@ internal class VoiceEventHandler(
     private suspend fun handle(event: VoiceStateUpdate, shard: Int) {
         val data = VoiceStateData.from(event.voiceState.guildId.value!!, event.voiceState)
 
-        val old = cache.query<VoiceStateData> { VoiceStateData::id eq data.id }
+        val old = cache.query<VoiceStateData> { idEq(VoiceStateData::id, data.id) }
                 .asFlow().map { VoiceState(it, kord) }.singleOrNull()
 
         cache.put(data)

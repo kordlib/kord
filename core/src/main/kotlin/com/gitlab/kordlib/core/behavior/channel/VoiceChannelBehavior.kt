@@ -7,6 +7,7 @@ import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.ChannelData
 import com.gitlab.kordlib.core.cache.data.VoiceStateData
+import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.entity.VoiceState
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.VoiceChannel
@@ -37,7 +38,7 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     val voiceStates: Flow<VoiceState>
-        get() = kord.cache.query<VoiceStateData> { VoiceStateData::channelId eq id.value }
+        get() = kord.cache.query<VoiceStateData> { idEq(VoiceStateData::channelId, id) }
                 .asFlow()
                 .map { VoiceState(it, kord) }
 

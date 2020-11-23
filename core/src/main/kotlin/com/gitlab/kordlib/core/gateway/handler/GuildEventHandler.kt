@@ -94,7 +94,7 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(event: GuildDelete, shard: Int) = with(event.guild) {
-        val query = cache.query<GuildData> { GuildData::id eq id }
+        val query = cache.query<GuildData> { idEq(GuildData::id, id) }
 
         val old = query.asFlow().map { Guild(it, kord) }.singleOrNull()
         query.remove()
@@ -124,7 +124,7 @@ internal class GuildEventHandler(
 
         val emojis = data.map { GuildEmoji(it, kord) }
 
-        cache.query<GuildData> { GuildData::id eq guildId.value }.update {
+        cache.query<GuildData> { idEq(GuildData::id, guildId) }.update {
             it.copy(emojis = emojis.map { emoji -> emoji.id })
         }
 
@@ -150,7 +150,7 @@ internal class GuildEventHandler(
 
     private suspend fun handle(event: GuildMemberRemove, shard: Int) = with(event.member) {
         val userData = UserData.from(user)
-        cache.query<UserData> { UserData::id eq userData.id }.remove()
+        cache.query<UserData> { idEq(UserData::id, userData.id) }.remove()
         val user = User(userData, kord)
 
         coreFlow.emit(MemberLeaveEvent(user, guildId, shard))
@@ -216,7 +216,7 @@ internal class GuildEventHandler(
     private suspend fun handle(event: PresenceUpdate, shard: Int) = with(event.presence) {
         val data = PresenceData.from(this.guildId.value!!, this)
 
-        val old = cache.query<PresenceData> { PresenceData::id eq data.id }
+        val old = cache.query<PresenceData> { idEq(PresenceData::id,  data.id) }
                 .asFlow().map { Presence(it, kord) }.singleOrNull()
 
         cache.put(data)

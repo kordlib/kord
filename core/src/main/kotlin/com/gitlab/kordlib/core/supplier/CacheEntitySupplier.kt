@@ -9,6 +9,7 @@ import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.any
 import com.gitlab.kordlib.core.cache.data.*
 import com.gitlab.kordlib.core.cache.idEq
+import com.gitlab.kordlib.core.cache.idGt
 import com.gitlab.kordlib.core.entity.*
 import com.gitlab.kordlib.core.entity.channel.Channel
 import com.gitlab.kordlib.core.entity.channel.GuildChannel
@@ -114,7 +115,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getChannelPins(channelId: Snowflake): Flow<Message> = cache.query<MessageData> {
         idEq(MessageData::channelId, channelId)
-        MessageData::pinned eq true
+        idEq(MessageData::pinned, true)
     }.asFlow().map { Message(it, kord) }
 
     override suspend fun getGuildOrNull(id: Snowflake): Guild? {
@@ -152,7 +153,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         require(limit > 0) { "At least 1 item should be requested, but got $limit." }
         return cache.query<MessageData> {
             idEq(MessageData::channelId, channelId)
-            MessageData::id lt messageId
+            idGt(MessageData::id, messageId)
         }.asFlow().map { Message(it, kord) }.take(limit)
     }
 

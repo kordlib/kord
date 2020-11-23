@@ -5,6 +5,7 @@ import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.UserData
+import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.entity.User
 import com.gitlab.kordlib.core.event.user.UserUpdateEvent
 import com.gitlab.kordlib.core.gateway.MasterGateway
@@ -31,7 +32,7 @@ internal class UserEventHandler(
     private suspend fun handle(event: UserUpdate, shard: Int) {
         val data = UserData.from(event.user)
 
-        val old = cache.query<UserData> { UserData::id eq data.id }
+        val old = cache.query<UserData> { idEq(UserData::id, data.id) }
                 .asFlow().map { User(it, kord) }.singleOrNull()
 
         cache.put(data)
