@@ -219,17 +219,12 @@ class RestServiceTest {
 //TODO Add Group Channel Tests
 
     @Test
-    @Disabled("Member is not added to guild yet due to Guild#addGuildMember")
     @Order(11)
     fun `member in guild`() = runBlocking {
         guild.members.toList()
         //TODO add member to guild
 
-        guild.getMember(userId).edit {
-            nickname = "my nickname"
-            muted = true
-            deafened = true
-        }
+        guild.getMember(userId)
 
         guild.editSelfNickname("Kord")
         //deleteGuildMember(guildId, user)

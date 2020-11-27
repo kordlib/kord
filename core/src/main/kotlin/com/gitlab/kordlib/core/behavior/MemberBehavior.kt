@@ -4,7 +4,9 @@ import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
+import com.gitlab.kordlib.core.cache.data.MemberData
 import com.gitlab.kordlib.core.cache.data.PresenceData
+import com.gitlab.kordlib.core.cache.data.UserData
 import com.gitlab.kordlib.core.cache.data.VoiceStateData
 import com.gitlab.kordlib.core.cache.idEq
 import com.gitlab.kordlib.core.entity.*
@@ -192,7 +194,7 @@ interface MemberBehavior : Entity, UserBehavior {
 
             override fun hashCode(): Int = Objects.hash(id, guildId)
 
-            override fun equals(other: Any?): Boolean = when(other) {
+            override fun equals(other: Any?): Boolean = when (other) {
                 is MemberBehavior -> other.id == id && other.guildId == guildId
                 is UserBehavior -> other.id == id
                 else -> false
@@ -225,9 +227,14 @@ suspend inline fun MemberBehavior.ban(builder: BanCreateBuilder.() -> Unit = {})
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun MemberBehavior.edit(builder: MemberModifyBuilder.() -> Unit) {
+suspend inline fun MemberBehavior.edit(builder: MemberModifyBuilder.() -> Unit): Member {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.guild.modifyGuildMember(guildId, id, builder)
+    val response = kord.rest.guild.modifyGuildMember(guildId, id, builder)
+    return Member(
+            MemberData.from(userId = response.user.value!!.id, guildId = guildId, response),
+            UserData.from(response.user.value!!),
+            kord
+    )
 }
