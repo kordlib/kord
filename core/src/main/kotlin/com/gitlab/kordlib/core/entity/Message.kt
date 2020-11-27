@@ -97,6 +97,11 @@ class Message(
     val mentionedChannelBehaviors: Set<ChannelBehavior> get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(it, kord) }.toSet()
 
     /**
+     * The stickers sent with this message.
+     */
+    val stickers: List<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }
+
+    /**
      * The message being replied to.
      *
      * Absence of this field does **not** mean this message was not a reply. The referenced message

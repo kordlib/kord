@@ -56,6 +56,7 @@ import kotlinx.serialization.encoding.Encoder
  * @param application Sent with Rich Presence-related chat embeds.
  * @param messageReference Reference data sent with crossposted messages and replies.
  * @param flags Message flags.
+ * @param stickers The stickers sent with the message (bots currently can only receive messages with stickers, not send).
  * @param referencedMessage the message associated with [messageReference].
  */
 @Serializable
@@ -92,9 +93,63 @@ data class DiscordMessage(
         @SerialName("message_reference")
         val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
         val flags: Optional<MessageFlags> = Optional.Missing(),
+        val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
         @SerialName("referenced_message")
         val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
 )
+
+/**
+ * @param id id of the sticker
+ * @param packId id of the pack the sticker is from
+ * @param name name of the sticker
+ * @param description description of the sticker
+ * @param tags a comma-separated list of tags for the sticker
+ * @param asset sticker asset hash
+ * @param previewAsset sticker preview asset hash
+ * @param formatType type of sticker format
+ */
+@Serializable
+data class DiscordMessageSticker(
+        val id: Snowflake,
+        @SerialName("pack_id")
+        val packId: Snowflake,
+        val name: String,
+        val description: String,
+        val tags: Optional<String> = Optional.Missing(),
+        val asset: String,
+        @SerialName("preview_asset")
+        val previewAsset: String?,
+        @SerialName("format_type")
+        val formatType: MessageStickerType,
+)
+
+@Serializable(with = MessageStickerType.Serializer::class)
+sealed class MessageStickerType(val value: Int) {
+    class Unknown(value: Int) : MessageStickerType(value)
+    object PNG : MessageStickerType(1)
+    object APNG : MessageStickerType(2)
+    object LOTTIE : MessageStickerType(3)
+
+    companion object {
+        val values: Set<MessageStickerType> = setOf(PNG, APNG, LOTTIE)
+    }
+
+    internal object Serializer : KSerializer<MessageStickerType> {
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("Kord.MessageStickerType", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): MessageStickerType = when (val value = decoder.decodeInt()) {
+            1 -> PNG
+            2 -> APNG
+            3 -> LOTTIE
+            else -> Unknown(value)
+        }
+
+        override fun serialize(encoder: Encoder, value: MessageStickerType) {
+            encoder.encodeInt(value.value)
+        }
+    }
+}
 
 
 /**
@@ -140,6 +195,7 @@ data class DiscordMessage(
  * @param application Sent with Rich Presence-related chat embeds.
  * @param messageReference Reference data sent with crossposted messages and replies.
  * @param flags Message flags.
+ * @param stickers The stickers sent with the message (bots currently can only receive messages with stickers, not send).
  * @param referencedMessage the message associated with [messageReference].
  */
 @Serializable
@@ -176,6 +232,7 @@ data class DiscordPartialMessage(
         @SerialName("message_reference")
         val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
         val flags: Optional<MessageFlags> = Optional.Missing(),
+        val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
         @SerialName("referenced_message")
         val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
 )
@@ -410,7 +467,7 @@ data class DiscordEmbed(
     data class Video(
             val url: Optional<String> = Optional.Missing(),
             val height: OptionalInt = OptionalInt.Missing,
-            val width: OptionalInt = OptionalInt.Missing
+            val width: OptionalInt = OptionalInt.Missing,
     )
 
     /**
@@ -422,7 +479,7 @@ data class DiscordEmbed(
     @Serializable
     data class Provider(
             val name: Optional<String> = Optional.Missing(),
-            val url: Optional<String> = Optional.Missing()
+            val url: Optional<String> = Optional.Missing(),
     )
 
     /**
@@ -454,7 +511,7 @@ data class DiscordEmbed(
     data class Field(
             val name: String,
             val value: String,
-            val inline: OptionalBoolean = OptionalBoolean.Missing
+            val inline: OptionalBoolean = OptionalBoolean.Missing,
     )
 }
 
@@ -493,11 +550,11 @@ sealed class EmbedType(val value: String) {
     /** Link embed. */
     object Link : EmbedType("link")
 
-    internal object Serializer: KSerializer<EmbedType> {
+    internal object Serializer : KSerializer<EmbedType> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("Kord.EmbedType", PrimitiveKind.STRING)
 
-        override fun deserialize(decoder: Decoder): EmbedType = when(val value = decoder.decodeString()) {
+        override fun deserialize(decoder: Decoder): EmbedType = when (val value = decoder.decodeString()) {
             "rich" -> Rich
             "image" -> Image
             "video" -> Video
@@ -525,22 +582,22 @@ data class Reaction(
 data class MessageActivity(
         val type: MessageActivityType,
         @SerialName("party_id")
-        val partyId: Optional<String> = Optional.Missing()
+        val partyId: Optional<String> = Optional.Missing(),
 )
 
 @Serializable(with = MessageActivityType.Serializer::class)
 sealed class MessageActivityType(val value: Int) {
-    class Unknown(value: Int): MessageActivityType(value)
+    class Unknown(value: Int) : MessageActivityType(value)
     object Join : MessageActivityType(1)
     object Spectate : MessageActivityType(2)
     object Listen : MessageActivityType(3)
     object JoinRequest : MessageActivityType(5)
 
-    internal object Serializer : KSerializer<MessageActivityType>{
+    internal object Serializer : KSerializer<MessageActivityType> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("Kord.MessageActivivtyType", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): MessageActivityType = when(val value = decoder.decodeInt()){
+        override fun deserialize(decoder: Decoder): MessageActivityType = when (val value = decoder.decodeInt()) {
             1 -> Join
             2 -> Spectate
             3 -> Listen
@@ -637,6 +694,7 @@ enum class MessageType(val code: Int) {
     UserPremiumGuildSubscriptionThree(11),
     ChannelFollowAdd(12),
     GuildDiscoveryDisqualified(14),
+
     @Suppress("SpellCheckingInspection")
     GuildDiscoveryRequalified(15),
     Reply(19);

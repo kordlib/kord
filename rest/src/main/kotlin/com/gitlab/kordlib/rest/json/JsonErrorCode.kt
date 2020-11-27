@@ -409,6 +409,21 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     InvalidAPIVersion(50041),
+
+    /**
+     * Cannot delete a channel required for Community guilds.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    CannotDeleteRequiredCommunityChannel(50074),
+
+    /**
+     * Invalid sticker sent.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    InvalidStickerSent(50081),
+
     /**
      * Reaction was blocked.
      *

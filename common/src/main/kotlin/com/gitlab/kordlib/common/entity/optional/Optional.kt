@@ -191,6 +191,11 @@ fun <T : Any> Optional<T>.switchOnMissing(value: T): Optional<T> = when (this) {
     is Null<*>, is Value -> this
 }
 
+fun <T : Any> Optional<T>.switchOnMissing(value: Optional<T>): Optional<T> = when (this) {
+    is Missing -> value
+    is Null<*>, is Value -> this
+}
+
 fun <E> Optional<List<E>>.orEmpty(): List<E> = when (this) {
     is Missing, is Null<*> -> emptyList()
     is Value -> value

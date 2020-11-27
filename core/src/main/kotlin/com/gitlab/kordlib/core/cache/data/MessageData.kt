@@ -32,7 +32,8 @@ data class MessageData(
         val application: Optional<MessageApplication> = Optional.Missing(),
         val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
         val flags: Optional<MessageFlags> = Optional.Missing(),
-        val referencedMessage: Optional<MessageData?> = Optional.Missing()
+        val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
+        val referencedMessage: Optional<MessageData?> = Optional.Missing(),
 ) {
 
     fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
@@ -63,8 +64,9 @@ data class MessageData(
         val mentions = partialMessage.mentions.mapList { it.id }.value ?: mentions
         val mentionEveryone = partialMessage.mentionEveryone.orElse(mentionEveryone)
         val embeds = partialMessage.embeds.mapList { EmbedData.from(it) }.switchOnMissing(embeds).orEmpty()
-        val mentionRoles = partialMessage.mentionRoles.mapList { it }.value ?:  mentionRoles
+        val mentionRoles = partialMessage.mentionRoles.mapList { it }.value ?: mentionRoles
         val mentionedChannels = partialMessage.mentionedChannels.mapList { it.id }.switchOnMissing(mentionedChannels.value.orEmpty()).coerceToMissing()
+        val stickers = partialMessage.stickers.mapList { MessageStickerData.from(it) }.switchOnMissing(this.stickers)
 
         return MessageData(
                 id,
@@ -89,7 +91,8 @@ data class MessageData(
                 activity,
                 application,
                 messageReference,
-                flags
+                flags,
+                stickers = stickers,
         )
     }
 
@@ -121,6 +124,7 @@ data class MessageData(
                     application,
                     messageReference,
                     flags,
+                    stickers.mapList { MessageStickerData.from(it) },
                     referencedMessage.mapNotNull { from(it) }
             )
         }
