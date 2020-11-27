@@ -3,8 +3,15 @@ package com.gitlab.kordlib.common.entity
 import com.gitlab.kordlib.common.entity.optional.Optional
 import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
 import com.gitlab.kordlib.common.entity.optional.OptionalInt
+import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class DiscordRole(
@@ -15,7 +22,17 @@ data class DiscordRole(
         val position: Int,
         val permissions: Permissions,
         val managed: Boolean,
-        val mentionable: Boolean
+        val mentionable: Boolean,
+        val tags: Optional<DiscordRoleTags> = Optional.Missing(),
+)
+
+@Serializable
+data class DiscordRoleTags(
+        val botId: OptionalSnowflake = OptionalSnowflake.Missing,
+        @SerialName("integration_id")
+        val integrationId: OptionalSnowflake = OptionalSnowflake.Missing,
+        @SerialName("premium_subscriber")
+        val premiumSubscriber: Optional<DiscordNull?> = Optional.Missing(),
 )
 
 @Serializable
@@ -27,9 +44,9 @@ data class DiscordPartialRole(
         val position: OptionalInt = OptionalInt.Missing,
         val permissions: Optional<Permissions> = Optional.Missing(),
         val managed: OptionalBoolean = OptionalBoolean.Missing,
-        val mentionable: OptionalBoolean = OptionalBoolean.Missing
+        val mentionable: OptionalBoolean = OptionalBoolean.Missing,
+        val tags: Optional<DiscordRoleTags> = Optional.Missing(),
 )
-
 
 @Serializable
 data class DiscordAuditLogRoleChange(
@@ -40,14 +57,14 @@ data class DiscordAuditLogRoleChange(
         val position: Int? = null,
         val permissions: Permissions? = null,
         val managed: Boolean? = null,
-        val mentionable: Boolean? = null
+        val mentionable: Boolean? = null,
 )
 
 @Serializable
 data class DiscordGuildRole(
         @SerialName("guild_id")
         val guildId: Snowflake,
-        val role: DiscordRole
+        val role: DiscordRole,
 )
 
 @Serializable
@@ -55,5 +72,5 @@ data class DiscordDeletedGuildRole(
         @SerialName("guild_id")
         val guildId: Snowflake,
         @SerialName("role_id")
-        val id: Snowflake
+        val id: Snowflake,
 )

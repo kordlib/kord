@@ -3,6 +3,7 @@ package com.gitlab.kordlib.core.entity
 import com.gitlab.kordlib.common.Color
 import com.gitlab.kordlib.common.entity.Permissions
 import com.gitlab.kordlib.common.entity.Snowflake
+import com.gitlab.kordlib.common.entity.optional.unwrap
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.behavior.RoleBehavior
 import com.gitlab.kordlib.core.cache.data.RoleData
@@ -35,6 +36,11 @@ data class Role(
     val permissions: Permissions get() = data.permissions
 
     val rawPosition: Int get() = data.position
+
+    /**
+     * The tags of this role, if present.
+     */
+    val tags: RoleTags? get() = data.tags.unwrap { RoleTags(it, guildId, kord) }
 
     override fun compareTo(other: Entity): Int = when (other) {
         is Role -> compareBy<Role> { it.rawPosition }.thenBy { it.guildId }.compare(this, other)

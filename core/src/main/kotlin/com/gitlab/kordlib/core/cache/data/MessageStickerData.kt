@@ -12,7 +12,7 @@ data class MessageStickerData(
         val packId: Snowflake,
         val name: String,
         val description: String,
-        val tags: Optional<String>,
+        val tags: Optional<String> = Optional.Missing(),
         val asset: String,
         val previewAsset: String?,
         val formatType: MessageStickerType,
