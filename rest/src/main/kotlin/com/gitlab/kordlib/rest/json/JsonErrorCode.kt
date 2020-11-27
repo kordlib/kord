@@ -425,6 +425,13 @@ enum class JsonErrorCode(val code: Int) {
     InvalidStickerSent(50081),
 
     /**
+     * 2 Factor Authentication is required.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    Require2FA(60003),
+
+    /**
      * Reaction was blocked.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
