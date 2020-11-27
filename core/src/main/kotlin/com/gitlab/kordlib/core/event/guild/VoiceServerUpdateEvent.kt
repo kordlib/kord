@@ -12,7 +12,7 @@ import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
 class VoiceServerUpdateEvent(
         val token: String,
         val guildId: Snowflake,
-        val endpoint: String,
+        val endpoint: String?,
         override val kord: Kord,
         override val shard: Int,
         override val supplier: EntitySupplier = kord.defaultSupplier
