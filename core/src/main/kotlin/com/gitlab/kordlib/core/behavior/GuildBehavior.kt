@@ -2,8 +2,11 @@ package com.gitlab.kordlib.core.behavior
 
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
+import com.gitlab.kordlib.common.annotation.KordExperimental
+import com.gitlab.kordlib.common.entity.DiscordUser
 import com.gitlab.kordlib.common.entity.Snowflake
 import com.gitlab.kordlib.common.entity.optional.Optional
+import com.gitlab.kordlib.common.entity.optional.unwrap
 import com.gitlab.kordlib.common.exception.RequestException
 import com.gitlab.kordlib.core.Kord
 import com.gitlab.kordlib.core.cache.data.*
@@ -150,7 +153,7 @@ interface GuildBehavior : Entity, Strategizable {
      */
     val voiceStates: Flow<VoiceState>
         get() = kord.cache
-                .query<VoiceStateData> { idEq( VoiceStateData::guildId, id) }
+                .query<VoiceStateData> { idEq(VoiceStateData::guildId, id) }
                 .asFlow()
                 .map { VoiceState(it, kord) }
 
@@ -248,6 +251,28 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [EntityNotFoundException] if the member wasn't present.
      */
     suspend fun getMember(userId: Snowflake): Member = supplier.getMember(id, userId)
+
+    /**
+     * Requests to get up to [limit] members whose [Member.username] or [Member.nickname] match the [query].
+     * The [limit] accepts a maximum value of `1000` and a minimum of `1`.
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     *
+     * This function is not part of the officially documented Discord API and may be removed/altered/stop working in the future.
+     */
+    @KordExperimental
+    suspend fun getMembers(query: String, limit: Int = 1000): Flow<Member> = flow {
+        kord.rest.guild.getGuildMembers(id, query, limit).forEach {
+            emit(Member(
+                    MemberData.from(userId = it.user.unwrap(DiscordUser::id)!!, guildId = id, it),
+                    UserData.from(it.user.value!!),
+                    kord
+            ))
+        }
+    }
 
     /**
      * Requests to get the [Member] represented by the [userId],

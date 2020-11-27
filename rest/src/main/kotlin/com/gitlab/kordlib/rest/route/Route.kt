@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.route
 
 import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
+import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.annotation.KordPreview
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.json.optional
@@ -182,6 +183,10 @@ sealed class Route<T>(
 
     object GuildMembersGet
         : Route<List<DiscordGuildMember>>(HttpMethod.Get, "/guilds/$GuildId/members", ListSerializer(DiscordGuildMember.serializer()))
+
+    @KordExperimental
+    object GuildMembersSearchGet //https://github.com/discord/discord-api-docs/pull/1577
+        : Route<List<DiscordGuildMember>>(HttpMethod.Get, "/guilds/$GuildId/members/search", ListSerializer(DiscordGuildMember.serializer()))
 
     object GuildMemberPut
         : Route<DiscordGuildMember?>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId", DiscordGuildMember.serializer().optional)

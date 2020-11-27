@@ -1,6 +1,7 @@
 package com.gitlab.kordlib.rest.service
 
 import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
+import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
 import com.gitlab.kordlib.rest.builder.channel.*
@@ -101,6 +102,18 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         if (position != null) {
             parameter(position.key, position.value)
         }
+        parameter("limit", "$limit")
+    }
+
+    /**
+     * Requests members with a username or nickname matching [query].
+     *
+     * @param limit limits the maximum amount of members returned. Max `1000`, defaults to `1`.
+     */
+    @KordExperimental
+    suspend fun getGuildMembers(guildId: Snowflake, query: String, limit: Int = 1) = call(Route.GuildMembersSearchGet) {
+        keys[Route.GuildId] = guildId
+        parameter("query", query)
         parameter("limit", "$limit")
     }
 
