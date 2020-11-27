@@ -201,7 +201,7 @@ interface GuildBehavior : Entity, Strategizable {
     fun requestMembers(request: RequestGuildMembers): Flow<MembersChunkEvent> {
         val gateway = gateway ?: return emptyFlow()
 
-        val nonce = request.nonce.value ?: Random.nextInt(0, 100).toString()
+        val nonce = (request.nonce.value ?: UUID.randomUUID().toString()).take(25)
         val withNonce = request.copy(nonce = Optional.Value(nonce))
 
         return kord.events

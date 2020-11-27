@@ -214,7 +214,7 @@ fun Gateway.requestGuildMembers(
  */
 @OptIn(PrivilegedIntent::class)
 fun Gateway.requestGuildMembers(request: RequestGuildMembers): Flow<GuildMembersChunk> {
-    val nonce = request.nonce.value ?: UUID.randomUUID().toString()
+    val nonce = (request.nonce.value ?: UUID.randomUUID().toString()).take(25)
     val withNonce = request.copy(nonce = Optional.Value(nonce))
 
     return events
