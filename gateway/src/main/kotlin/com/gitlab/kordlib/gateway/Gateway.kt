@@ -166,7 +166,7 @@ internal val gatewayOnLogger = KotlinLogging.logger("Gateway.on")
  * The returned [Job] is a reference to the created coroutine, call [Job.cancel] to cancel the processing of any further
  * events for this [consumer].
  */
-inline fun <reified T : Event> Gateway.on(scope: CoroutineScope = this, crossinline consumer: T.() -> Unit): Job {
+inline fun <reified T : Event> Gateway.on(scope: CoroutineScope = this, crossinline consumer: suspend T.() -> Unit): Job {
     return this.events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
         launch { it.runCatching { it.consumer() }.onFailure(gatewayOnLogger::error) }
     }.launchIn(scope)
