@@ -1,9 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-plugins {
-    id(Plugins.kapt)
-}
-
 dependencies {
     api(common)
     api(rest)
