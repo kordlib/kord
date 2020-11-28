@@ -4,6 +4,7 @@ import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.common.entity.optional.Optional
 import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
 import com.gitlab.kordlib.common.entity.optional.OptionalInt
+import kotlinx.atomicfu.atomic
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -167,7 +168,17 @@ data class RequestGuildMembers(
         @SerialName("user_ids")
         val userIds: Optional<Iterable<Snowflake>> = Optional.Missing(),
         val nonce: Optional<String> = Optional.Missing()
-) : Command()
+) : Command() {
+
+    object Nonce {
+        private val counter = atomic(0)
+
+        @OptIn(ExperimentalUnsignedTypes::class)
+        fun new() : String = counter.getAndIncrement().toUInt().toString()
+
+    }
+
+}
 
 @Serializable
 data class UpdateVoiceStatus(
