@@ -2,6 +2,7 @@ package com.gitlab.kordlib.rest.json.request
 
 import com.gitlab.kordlib.common.Color
 import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
+import com.gitlab.kordlib.common.annotation.KordExperimental
 import com.gitlab.kordlib.common.entity.*
 import com.gitlab.kordlib.common.entity.optional.Optional
 import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
@@ -52,29 +53,38 @@ data class GuildChannelCreateRequest(
         val id: OptionalSnowflake = OptionalSnowflake.Missing,
 )
 
-@Serializable(with = GuildChannelPositionModifyRequest.Serializer::class)
-data class GuildChannelPositionModifyRequest(val swaps: List<Pair<Snowflake, Int>>) {
+@Serializable
+data class ChannelPositionSwapRequest(
+        val id: Snowflake,
+        val position: Int?,
+        @KordExperimental
+        @SerialName("lock_permissions")
+        val lockPermissions: Boolean?,
+        @KordExperimental
+        @SerialName("parent_id")
+        val parentId: Snowflake?
+)
 
+@Serializable(with = GuildChannelPositionModifyRequest.Serializer::class)
+data class GuildChannelPositionModifyRequest(
+        val swaps: List<ChannelPositionSwapRequest>
+) {
     internal object Serializer : KSerializer<GuildChannelPositionModifyRequest> {
+        private val delegate = ListSerializer(ChannelPositionSwapRequest.serializer())
 
         @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
         override val descriptor: SerialDescriptor
-            get() = listSerialDescriptor(ChannelPosition.serializer().descriptor)
+            get() = listSerialDescriptor(ChannelPositionSwapRequest.serializer().descriptor)
 
         override fun serialize(encoder: Encoder, value: GuildChannelPositionModifyRequest) {
-            val positions = value.swaps.map { ChannelPosition(it.first, it.second) }
-            ListSerializer(ChannelPosition.serializer()).serialize(encoder, positions)
+            delegate.serialize(encoder, value.swaps)
         }
 
         override fun deserialize(decoder: Decoder): GuildChannelPositionModifyRequest {
-            val values = decoder.decodeSerializableValue(ListSerializer(ChannelPosition.serializer()))
-            return GuildChannelPositionModifyRequest(values.map { it.id to it.position })
+            return GuildChannelPositionModifyRequest(decoder.decodeSerializableValue(delegate))
         }
 
     }
-
-    @Serializable
-    private data class ChannelPosition(val id: Snowflake, val position: Int)
 }
 
 @Serializable

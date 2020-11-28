@@ -433,6 +433,20 @@ class RestServiceTest {
         assertEquals("TEST", message.content)
     }
 
+    @Test
+    @Order(25)
+    @OptIn(KordExperimental::class)
+    fun `channel moves in guild`(): Unit = runBlocking {
+        val category = guild.createCategory("move category")
+        val textChannel = guild.createTextChannel("move me to a category")
+
+        guild.swapChannelPositions {
+            move(textChannel.id){ parentId = category.id }
+        }
+
+        val currentTextChannel = guild.getChannelOf<TextChannel>(textChannel.id)
+        assertEquals(category.id,currentTextChannel.categoryId)
+    }
 
     @Test
     @Order(Int.MAX_VALUE - 2)
