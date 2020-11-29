@@ -124,12 +124,12 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyGuildMember(guildId: Snowflake, userId: Snowflake, builder: MemberModifyBuilder.() -> Unit) {
+    suspend inline fun modifyGuildMember(guildId: Snowflake, userId: Snowflake, builder: MemberModifyBuilder.() -> Unit): DiscordGuildMember {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        call(Route.GuildMemberPatch) {
+        return call(Route.GuildMemberPatch) {
             keys[Route.GuildId] = guildId
             keys[Route.UserId] = userId
             val modifyBuilder = MemberModifyBuilder().apply(builder)
