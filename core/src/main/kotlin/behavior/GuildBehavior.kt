@@ -338,7 +338,7 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun editSelfNickname(newNickname: String? = null): String {
-        return kord.rest.guild.modifyCurrentUserNickname(id, CurrentUserNicknameModifyRequest(Optional(newNickname)))
+        return kord.rest.guild.modifyCurrentUserNickname(id, CurrentUserNicknameModifyRequest(Optional(newNickname))).nick
     }
 
     /**
