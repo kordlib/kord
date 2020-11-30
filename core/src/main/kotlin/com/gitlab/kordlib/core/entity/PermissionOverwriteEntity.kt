@@ -1,19 +1,19 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
-import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
-import com.gitlab.kordlib.core.entity.channel.GuildChannel
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.core.supplier.getChannelOf
-import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
-import com.gitlab.kordlib.rest.request.RestRequestException
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.cache.data.PermissionOverwriteData
+import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.rest.request.RestRequestException
 
 class PermissionOverwriteEntity(
         val guildId: Snowflake,

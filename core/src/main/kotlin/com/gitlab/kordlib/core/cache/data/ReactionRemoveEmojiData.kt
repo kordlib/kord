@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.gateway.DiscordRemovedEmoji
-import com.gitlab.kordlib.gateway.DiscordRemovedReactionEmoji
+import dev.kord.common.entity.Snowflake
+import dev.kord.gateway.DiscordRemovedEmoji
+import dev.kord.gateway.DiscordRemovedReactionEmoji
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -1,10 +1,10 @@
-package com.gitlab.kordlib.core.live
+package dev.kord.core.live
 
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.User
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.user.UserUpdateEvent
+import dev.kord.common.annotation.KordPreview
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.User
+import dev.kord.core.event.Event
+import dev.kord.core.event.user.UserUpdateEvent
 
 
 @KordPreview

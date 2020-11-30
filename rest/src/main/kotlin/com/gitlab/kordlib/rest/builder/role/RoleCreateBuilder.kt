@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.rest.builder.role
+package dev.kord.rest.builder.role
 
-import com.gitlab.kordlib.common.Color
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.Permissions
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.rest.json.request.GuildRoleCreateRequest
+import dev.kord.common.Color
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.rest.json.request.GuildRoleCreateRequest
 
 @KordDsl
 class RoleCreateBuilder : AuditRequestBuilder<GuildRoleCreateRequest>{

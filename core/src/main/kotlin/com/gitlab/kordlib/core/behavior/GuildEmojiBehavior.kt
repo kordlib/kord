@@ -1,15 +1,15 @@
-package com.gitlab.kordlib.core.behavior
+package dev.kord.core.behavior
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.EmojiData
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.GuildEmoji
-import com.gitlab.kordlib.core.entity.Strategizable
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
-import com.gitlab.kordlib.rest.request.RestRequestException
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.EmojiData
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.GuildEmoji
+import dev.kord.core.entity.Strategizable
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.builder.guild.EmojiModifyBuilder
+import dev.kord.rest.request.RestRequestException
 import java.util.*
 
 /**

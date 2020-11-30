@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.core.entity.channel
+package dev.kord.core.entity.channel
 
-import com.gitlab.kordlib.common.entity.optional.getOrThrow
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.TextChannelBehavior
-import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.entity.optional.getOrThrow
+import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.TextChannelBehavior
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
 
 /**

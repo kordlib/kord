@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core
+package dev.kord.core
 
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.gateway.Intents
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.gateway.Intents
 import io.ktor.client.HttpClient
 
 class ClientResources(

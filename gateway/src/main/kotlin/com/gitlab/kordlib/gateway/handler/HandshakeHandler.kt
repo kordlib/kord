@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.gateway.handler
+package dev.kord.gateway.handler
 
-import com.gitlab.kordlib.common.ratelimit.RateLimiter
-import com.gitlab.kordlib.common.ratelimit.consume
-import com.gitlab.kordlib.gateway.*
-import com.gitlab.kordlib.gateway.retry.Retry
+import dev.kord.common.ratelimit.RateLimiter
+import dev.kord.common.ratelimit.consume
+import dev.kord.gateway.*
+import dev.kord.gateway.retry.Retry
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update

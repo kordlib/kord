@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.DiscordAttachment
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.OptionalInt
+import dev.kord.common.entity.DiscordAttachment
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.OptionalInt
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

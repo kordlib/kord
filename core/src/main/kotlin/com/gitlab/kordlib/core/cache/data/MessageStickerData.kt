@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.DiscordMessageSticker
-import com.gitlab.kordlib.common.entity.MessageStickerType
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
+import dev.kord.common.entity.DiscordMessageSticker
+import dev.kord.common.entity.MessageStickerType
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
 import kotlinx.serialization.Serializable
 
 @Serializable

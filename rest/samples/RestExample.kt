@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.rest
+package dev.kord.rest
 
-import com.gitlab.kordlib.rest.ratelimit.ExclusionRequestHandler
-import com.gitlab.kordlib.rest.service.RestClient
+import dev.kord.rest.ratelimit.ExclusionRequestHandler
+import dev.kord.rest.service.RestClient
 
 suspend fun main(args: Array<String>) {
     val token = args.firstOrNull() ?: error("token required")

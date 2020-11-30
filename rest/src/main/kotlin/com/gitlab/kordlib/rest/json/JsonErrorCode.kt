@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.rest.json
+package dev.kord.rest.json
 
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind

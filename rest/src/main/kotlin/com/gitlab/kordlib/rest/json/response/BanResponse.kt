@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.json.response
+package dev.kord.rest.json.response
 
-import com.gitlab.kordlib.common.entity.DiscordUser
+import dev.kord.common.entity.DiscordUser
 import kotlinx.serialization.Serializable
 
 @Serializable

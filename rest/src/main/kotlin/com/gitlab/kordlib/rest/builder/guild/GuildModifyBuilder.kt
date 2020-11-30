@@ -1,18 +1,18 @@
-package com.gitlab.kordlib.rest.builder.guild
+package dev.kord.rest.builder.guild
 
-import com.gitlab.kordlib.common.entity.DefaultMessageNotificationLevel
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.VerificationLevel
-import com.gitlab.kordlib.rest.Image
-import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.rest.json.request.GuildModifyRequest
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.ExplicitContentFilter
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalInt
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.common.entity.optional.map
+import dev.kord.common.entity.DefaultMessageNotificationLevel
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.VerificationLevel
+import dev.kord.rest.Image
+import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.rest.json.request.GuildModifyRequest
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.ExplicitContentFilter
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
 import java.util.*
 
 @KordDsl

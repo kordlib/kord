@@ -1,14 +1,14 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.behavior.UserBehavior
-import com.gitlab.kordlib.core.cache.data.BanData
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
+import dev.kord.core.behavior.UserBehavior
+import dev.kord.core.cache.data.BanData
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * An instance of a [Discord Ban](https://discord.com/developers/docs/resources/guild#ban-object).

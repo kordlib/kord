@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.cache.data.RemovedReactionData
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.cache.data.RemovedReactionData
 
 sealed class ReactionEmoji {
     /**

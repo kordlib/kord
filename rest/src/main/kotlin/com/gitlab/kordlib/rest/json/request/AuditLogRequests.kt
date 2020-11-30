@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.rest.json.request
+package dev.kord.rest.json.request
 
-import com.gitlab.kordlib.common.entity.AuditLogEvent
-import com.gitlab.kordlib.common.entity.Snowflake
+import dev.kord.common.entity.AuditLogEvent
+import dev.kord.common.entity.Snowflake
 
 data class AuditLogGetRequest(
         val userId: Snowflake? = null,

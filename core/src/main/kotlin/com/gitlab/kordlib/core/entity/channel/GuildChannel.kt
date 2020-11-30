@@ -1,17 +1,17 @@
-package com.gitlab.kordlib.core.entity.channel
+package dev.kord.core.entity.channel
 
-import com.gitlab.kordlib.common.entity.OverwriteType
-import com.gitlab.kordlib.common.entity.Permission
-import com.gitlab.kordlib.common.entity.Permissions
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.orEmpty
-import com.gitlab.kordlib.common.entity.optional.value
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
-import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
-import com.gitlab.kordlib.core.entity.PermissionOverwrite
-import com.gitlab.kordlib.core.entity.PermissionOverwriteEntity
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.entity.OverwriteType
+import dev.kord.common.entity.Permission
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.value
+import dev.kord.common.exception.RequestException
+import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.cache.data.PermissionOverwriteData
+import dev.kord.core.entity.PermissionOverwrite
+import dev.kord.core.entity.PermissionOverwriteEntity
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * An instance of a Discord channel associated to a [guild].

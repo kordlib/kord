@@ -1,14 +1,14 @@
-package com.gitlab.kordlib.rest.builder.webhook
+package dev.kord.rest.builder.webhook
 
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.rest.builder.RequestBuilder
-import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
-import com.gitlab.kordlib.rest.json.request.EmbedRequest
-import com.gitlab.kordlib.rest.json.request.MultiPartWebhookExecuteRequest
-import com.gitlab.kordlib.rest.json.request.WebhookExecuteRequest
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.message.EmbedBuilder
+import dev.kord.rest.json.request.EmbedRequest
+import dev.kord.rest.json.request.MultiPartWebhookExecuteRequest
+import dev.kord.rest.json.request.WebhookExecuteRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.nio.file.Files

@@ -1,12 +1,12 @@
-package com.gitlab.kordlib.rest.json.request
+package dev.kord.rest.json.request
 
-import com.gitlab.kordlib.common.Color
-import com.gitlab.kordlib.common.entity.DiscordMessageReference
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.UserFlags
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.OptionalInt
+import dev.kord.common.Color
+import dev.kord.common.entity.DiscordMessageReference
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.UserFlags
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalInt
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

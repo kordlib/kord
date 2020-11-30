@@ -1,10 +1,10 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.map
-import com.gitlab.kordlib.common.entity.optional.mapList
-import com.gitlab.kordlib.gateway.GuildMembersChunkData
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.mapList
+import dev.kord.gateway.GuildMembersChunkData
 import kotlinx.serialization.Serializable
 
 @Serializable

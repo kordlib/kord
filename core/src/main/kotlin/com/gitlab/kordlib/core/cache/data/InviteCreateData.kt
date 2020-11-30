@@ -1,12 +1,12 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.TargetUserType
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
-import com.gitlab.kordlib.common.entity.optional.mapSnowflake
-import com.gitlab.kordlib.gateway.DiscordCreatedInvite
-import com.gitlab.kordlib.gateway.DiscordInviteUser
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.TargetUserType
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.mapSnowflake
+import dev.kord.gateway.DiscordCreatedInvite
+import dev.kord.gateway.DiscordInviteUser
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

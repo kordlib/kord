@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.builder.guild
+package dev.kord.rest.builder.guild
 
-import com.gitlab.kordlib.common.entity.optional.Optional
+import dev.kord.common.entity.optional.Optional
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.util.*

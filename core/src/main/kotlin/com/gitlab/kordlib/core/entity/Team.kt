@@ -1,14 +1,14 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.TeamMembershipState
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.TeamData
-import com.gitlab.kordlib.core.cache.data.TeamMemberData
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.TeamMembershipState
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.TeamData
+import dev.kord.core.cache.data.TeamMemberData
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * A Discord [developer team](https://discord.com/developers/docs/topics/teams) which can own applications.

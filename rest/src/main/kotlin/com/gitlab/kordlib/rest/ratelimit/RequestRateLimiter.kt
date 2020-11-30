@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.ratelimit
+package dev.kord.rest.ratelimit
 
-import com.gitlab.kordlib.rest.request.Request
+import dev.kord.rest.request.Request
 import java.lang.Exception
 import java.time.Instant
 import kotlin.contracts.ExperimentalContracts

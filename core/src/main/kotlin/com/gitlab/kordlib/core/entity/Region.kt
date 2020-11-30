@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.cache.data.RegionData
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
+import dev.kord.core.cache.data.RegionData
 import java.util.*
 
 class Region(val data: RegionData, override val kord: Kord) : KordObject {

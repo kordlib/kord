@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.common.entity.optional.delegate
+package dev.kord.common.entity.optional.delegate
 
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.optional
-import com.gitlab.kordlib.common.entity.optional.value
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.optional
+import dev.kord.common.entity.optional.value
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty

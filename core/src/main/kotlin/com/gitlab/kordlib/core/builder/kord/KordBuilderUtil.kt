@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.core.builder.kord
+package dev.kord.core.builder.kord
 
-import com.gitlab.kordlib.common.entity.Snowflake
+import dev.kord.common.entity.Snowflake
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.cio.CIO

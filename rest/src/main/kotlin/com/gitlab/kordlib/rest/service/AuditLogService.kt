@@ -1,12 +1,12 @@
-package com.gitlab.kordlib.rest.service
+package dev.kord.rest.service
 
-import com.gitlab.kordlib.common.entity.AuditLogEvent
-import com.gitlab.kordlib.common.entity.DiscordAuditLog
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.rest.builder.auditlog.AuditLogGetRequestBuilder
-import com.gitlab.kordlib.rest.json.request.AuditLogGetRequest
-import com.gitlab.kordlib.rest.request.RequestHandler
-import com.gitlab.kordlib.rest.route.Route
+import dev.kord.common.entity.AuditLogEvent
+import dev.kord.common.entity.DiscordAuditLog
+import dev.kord.common.entity.Snowflake
+import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
+import dev.kord.rest.json.request.AuditLogGetRequest
+import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.route.Route
 
 class AuditLogService(requestHandler: RequestHandler) : RestService(requestHandler) {
 

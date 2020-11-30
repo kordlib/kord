@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.rest.builder.channel
+package dev.kord.rest.builder.channel
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.TargetUserType
-import com.gitlab.kordlib.common.entity.optional.*
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.rest.builder.RequestBuilder
-import com.gitlab.kordlib.rest.json.request.InviteCreateRequest
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.TargetUserType
+import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.InviteCreateRequest
 
 @KordDsl
 class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {

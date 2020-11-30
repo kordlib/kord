@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.core.cache
+package dev.kord.core.cache
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.DataEntryCache
@@ -8,8 +8,8 @@ import com.gitlab.kordlib.cache.api.delegate.EntrySupplier
 import com.gitlab.kordlib.cache.map.MapLikeCollection
 import com.gitlab.kordlib.cache.map.internal.MapEntryCache
 import com.gitlab.kordlib.cache.map.lruLinkedHashMap
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.cache.data.*
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.cache.data.*
 import java.util.concurrent.ConcurrentHashMap
 
 typealias Generator<I, T> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>

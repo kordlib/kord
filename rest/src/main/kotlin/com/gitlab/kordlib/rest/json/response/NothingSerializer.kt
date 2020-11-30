@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.rest.json.response
+package dev.kord.rest.json.response
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException

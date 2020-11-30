@@ -1,10 +1,10 @@
-package com.gitlab.kordlib.core.event.channel.data
+package dev.kord.core.event.channel.data
 
-import com.gitlab.kordlib.common.entity.DiscordPinsUpdateData
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
-import com.gitlab.kordlib.gateway.ChannelPinsUpdate
+import dev.kord.common.entity.DiscordPinsUpdateData
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.gateway.ChannelPinsUpdate
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -1,12 +1,12 @@
-package com.gitlab.kordlib.core.live
+package dev.kord.core.live
 
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Role
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
-import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
-import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
+import dev.kord.common.annotation.KordPreview
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.Role
+import dev.kord.core.event.Event
+import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.event.role.RoleDeleteEvent
+import dev.kord.core.event.role.RoleUpdateEvent
 
 @KordPreview
 fun Role.live() = LiveRole(this)

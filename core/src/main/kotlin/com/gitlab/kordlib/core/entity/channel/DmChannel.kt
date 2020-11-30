@@ -1,15 +1,15 @@
-package com.gitlab.kordlib.core.entity.channel
+package dev.kord.core.entity.channel
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.orEmpty
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.UserBehavior
-import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
-import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.entity.User
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.behavior.UserBehavior
+import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.User
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filterNotNull

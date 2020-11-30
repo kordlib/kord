@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.route
+package dev.kord.rest.route
 
-import com.gitlab.kordlib.common.entity.Snowflake
+import dev.kord.common.entity.Snowflake
 
 sealed class Position(val key: String, val value: Snowflake) {
     class Before(id: Snowflake) : Position("before", id)

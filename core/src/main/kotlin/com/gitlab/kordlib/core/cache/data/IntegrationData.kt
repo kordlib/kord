@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.Serializable
 
 @Serializable

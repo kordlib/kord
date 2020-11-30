@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.common.entity.optional
+package dev.kord.common.entity.optional
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException

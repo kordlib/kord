@@ -1,14 +1,14 @@
-package com.gitlab.kordlib.rest.service
+package dev.kord.rest.service
 
-import com.gitlab.kordlib.common.entity.DiscordEmoji
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.rest.Image
-import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
-import com.gitlab.kordlib.rest.builder.guild.EmojiModifyBuilder
-import com.gitlab.kordlib.rest.json.request.EmojiCreateRequest
-import com.gitlab.kordlib.rest.json.request.EmojiModifyRequest
-import com.gitlab.kordlib.rest.request.RequestHandler
-import com.gitlab.kordlib.rest.route.Route
+import dev.kord.common.entity.DiscordEmoji
+import dev.kord.common.entity.Snowflake
+import dev.kord.rest.Image
+import dev.kord.rest.builder.guild.EmojiCreateBuilder
+import dev.kord.rest.builder.guild.EmojiModifyBuilder
+import dev.kord.rest.json.request.EmojiCreateRequest
+import dev.kord.rest.json.request.EmojiModifyRequest
+import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.route.Route
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

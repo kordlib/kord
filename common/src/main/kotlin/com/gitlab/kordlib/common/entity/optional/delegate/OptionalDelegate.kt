@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.common.entity.optional.delegate
+package dev.kord.common.entity.optional.delegate
 
-import com.gitlab.kordlib.common.entity.optional.Optional
+import dev.kord.common.entity.optional.Optional
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty

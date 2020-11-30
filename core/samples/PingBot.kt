@@ -1,6 +1,6 @@
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.event.message.MessageCreateEvent
-import com.gitlab.kordlib.core.on
+import dev.kord.core.Kord
+import dev.kord.core.event.message.MessageCreateEvent
+import dev.kord.core.on
 
 suspend fun main(args: Array<String>) {
     val kord = Kord(args.firstOrNull() ?: error("token required"))

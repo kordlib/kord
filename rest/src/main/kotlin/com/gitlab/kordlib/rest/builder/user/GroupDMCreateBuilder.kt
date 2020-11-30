@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.rest.builder.user
+package dev.kord.rest.builder.user
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.rest.builder.RequestBuilder
-import com.gitlab.kordlib.rest.json.request.GroupDMCreateRequest
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.annotation.KordDsl
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.GroupDMCreateRequest
 
 @KordDsl
 class GroupDMCreateBuilder : RequestBuilder<GroupDMCreateRequest> {

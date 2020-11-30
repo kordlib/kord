@@ -1,16 +1,16 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.cache.data.VoiceStateData
-import com.gitlab.kordlib.core.entity.channel.VoiceChannel
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.core.supplier.getChannelOf
-import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
-import com.gitlab.kordlib.core.toSnowflakeOrNull
+import dev.kord.common.annotation.DeprecatedSinceKord
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
+import dev.kord.core.cache.data.VoiceStateData
+import dev.kord.core.entity.channel.VoiceChannel
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.core.toSnowflakeOrNull
 
 class VoiceState(
         val data: VoiceStateData,

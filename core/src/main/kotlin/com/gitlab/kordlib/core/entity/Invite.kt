@@ -1,21 +1,21 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.TargetUserType
-import com.gitlab.kordlib.common.entity.optional.value
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.behavior.UserBehavior
-import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
-import com.gitlab.kordlib.core.cache.data.InviteData
-import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.core.supplier.getChannelOf
-import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
-import com.gitlab.kordlib.core.toSnowflakeOrNull
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.TargetUserType
+import dev.kord.common.entity.optional.value
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
+import dev.kord.core.behavior.UserBehavior
+import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.cache.data.InviteData
+import dev.kord.core.entity.channel.Channel
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.core.toSnowflakeOrNull
 
 /**
  * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite).

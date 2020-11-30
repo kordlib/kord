@@ -1,23 +1,23 @@
-package com.gitlab.kordlib.core.gateway.handler
+package dev.kord.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
-import com.gitlab.kordlib.common.entity.optional.optional
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.*
-import com.gitlab.kordlib.core.cache.idEq
-import com.gitlab.kordlib.core.entity.VoiceState
-import com.gitlab.kordlib.core.event.guild.VoiceServerUpdateEvent
-import com.gitlab.kordlib.core.event.user.VoiceStateUpdateEvent
-import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.VoiceServerUpdate
-import com.gitlab.kordlib.gateway.VoiceStateUpdate
+import dev.kord.common.entity.optional.optional
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.*
+import dev.kord.core.cache.idEq
+import dev.kord.core.entity.VoiceState
+import dev.kord.core.event.guild.VoiceServerUpdateEvent
+import dev.kord.core.event.user.VoiceStateUpdateEvent
+import dev.kord.core.gateway.MasterGateway
+import dev.kord.gateway.Event
+import dev.kord.gateway.VoiceServerUpdate
+import dev.kord.gateway.VoiceStateUpdate
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
-import com.gitlab.kordlib.core.event.Event as CoreEvent
+import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class VoiceEventHandler(

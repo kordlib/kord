@@ -2,14 +2,14 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.DiscordShard
-import com.gitlab.kordlib.common.entity.PresenceStatus
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.OptionalInt
-import com.gitlab.kordlib.common.entity.optional.coerceToMissing
-import com.gitlab.kordlib.common.entity.optional.optional
-import com.gitlab.kordlib.common.entity.optional.optionalInt
-import com.gitlab.kordlib.gateway.*
+import dev.kord.common.entity.DiscordShard
+import dev.kord.common.entity.PresenceStatus
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.coerceToMissing
+import dev.kord.common.entity.optional.optional
+import dev.kord.common.entity.optional.optionalInt
+import dev.kord.gateway.*
 import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

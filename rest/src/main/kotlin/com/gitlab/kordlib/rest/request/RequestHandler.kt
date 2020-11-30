@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.rest.request
+package dev.kord.rest.request
 
 /**
  * Handles Discord API requests.

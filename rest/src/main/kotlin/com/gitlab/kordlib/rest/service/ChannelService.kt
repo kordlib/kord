@@ -1,15 +1,15 @@
-package com.gitlab.kordlib.rest.service
+package dev.kord.rest.service
 
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.rest.builder.channel.*
-import com.gitlab.kordlib.rest.builder.message.MessageCreateBuilder
-import com.gitlab.kordlib.rest.builder.message.MessageModifyBuilder
-import com.gitlab.kordlib.rest.json.request.*
-import com.gitlab.kordlib.rest.json.response.FollowedChannelResponse
-import com.gitlab.kordlib.rest.request.RequestHandler
-import com.gitlab.kordlib.rest.route.Position
-import com.gitlab.kordlib.rest.route.Route
+import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.*
+import dev.kord.rest.builder.channel.*
+import dev.kord.rest.builder.message.MessageCreateBuilder
+import dev.kord.rest.builder.message.MessageModifyBuilder
+import dev.kord.rest.json.request.*
+import dev.kord.rest.json.response.FollowedChannelResponse
+import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.route.Position
+import dev.kord.rest.route.Route
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

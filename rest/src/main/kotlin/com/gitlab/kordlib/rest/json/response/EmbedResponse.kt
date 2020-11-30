@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.json.response
+package dev.kord.rest.json.response
 
-import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
+import dev.kord.common.annotation.DeprecatedSinceKord
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
         "Guild embeds were renamed to widgets",
         ReplaceWith(
                 "DiscordGuildWidget(enabled, channelId)",
-                "com.gitlab.kordlib.common.entity.DiscordGuildWidget"
+                "dev.kord.common.entity.DiscordGuildWidget"
         ),
         DeprecationLevel.ERROR
 )

@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.json.response
+package dev.kord.rest.json.response
 
-import com.gitlab.kordlib.rest.json.JsonErrorCode
+import dev.kord.rest.json.JsonErrorCode
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

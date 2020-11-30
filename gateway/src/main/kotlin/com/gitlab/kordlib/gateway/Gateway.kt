@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.gateway
+package dev.kord.gateway
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.OptionalInt
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.gateway.builder.PresenceBuilder
-import com.gitlab.kordlib.gateway.builder.RequestGuildMembersBuilder
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.gateway.builder.PresenceBuilder
+import dev.kord.gateway.builder.RequestGuildMembersBuilder
 import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
@@ -182,7 +182,7 @@ inline fun <reified T : Event> Gateway.on(scope: CoroutineScope = this, crossinl
  * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
  * will result in an [IllegalStateException] being thrown.
  *
- * Executing the request on a [Gateway] with a [Shard][com.gitlab.kordlib.common.entity.DiscordShard] that
+ * Executing the request on a [Gateway] with a [Shard][dev.kord.common.entity.DiscordShard] that
  * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
  * can result in undefined behavior for the returned flow and inconsistencies in the cache.
  *
@@ -205,7 +205,7 @@ fun Gateway.requestGuildMembers(
  * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
  * will result in an [IllegalStateException] being thrown.
  *
- * Executing the [request] on a [Gateway] with a [Shard][com.gitlab.kordlib.common.entity.DiscordShard] that
+ * Executing the [request] on a [Gateway] with a [Shard][dev.kord.common.entity.DiscordShard] that
  * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
  * can result in undefined behavior for the returned flow and inconsistencies in the cache.
  *

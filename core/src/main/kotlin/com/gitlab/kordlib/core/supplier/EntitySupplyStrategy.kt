@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.core.supplier
+package dev.kord.core.supplier
 
-import com.gitlab.kordlib.core.Kord
+import dev.kord.core.Kord
 
 /**
  *  A supplier that accepts a [Kord] instance and returns an [EntitySupplier] of type [T].

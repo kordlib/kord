@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.rest
+package dev.kord.rest
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.request

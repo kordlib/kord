@@ -1,11 +1,11 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.DiscordPartialGuild
-import com.gitlab.kordlib.common.entity.GuildFeature
-import com.gitlab.kordlib.common.entity.Permissions
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.DiscordPartialGuild
+import dev.kord.common.entity.GuildFeature
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.Serializable
 
 @Serializable

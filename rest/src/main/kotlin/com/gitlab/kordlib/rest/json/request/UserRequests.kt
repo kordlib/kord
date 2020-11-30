@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.json.request
+package dev.kord.rest.json.request
 
-import com.gitlab.kordlib.common.entity.optional.Optional
+import dev.kord.common.entity.optional.Optional
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

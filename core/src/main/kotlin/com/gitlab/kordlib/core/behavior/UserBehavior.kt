@@ -1,20 +1,20 @@
-package com.gitlab.kordlib.core.behavior
+package dev.kord.core.behavior
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.DmChannel
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.rest.json.JsonErrorCode
-import com.gitlab.kordlib.rest.json.request.DMCreateRequest
-import com.gitlab.kordlib.rest.request.HttpStatus
-import com.gitlab.kordlib.rest.request.RestRequestException
-import com.gitlab.kordlib.rest.service.RestClient
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.*
+import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.DmChannel
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.json.JsonErrorCode
+import dev.kord.rest.json.request.DMCreateRequest
+import dev.kord.rest.request.HttpStatus
+import dev.kord.rest.request.RestRequestException
+import dev.kord.rest.service.RestClient
 import io.ktor.http.*
 import java.util.*
 

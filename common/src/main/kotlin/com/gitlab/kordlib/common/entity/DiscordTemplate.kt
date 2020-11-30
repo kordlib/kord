@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.common.entity
+package dev.kord.common.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

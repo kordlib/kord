@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.common.entity.optional.*
+import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
 
 internal val MessageData.authorId get() = author.id

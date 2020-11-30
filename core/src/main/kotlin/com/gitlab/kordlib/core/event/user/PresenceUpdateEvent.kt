@@ -1,16 +1,16 @@
-package com.gitlab.kordlib.core.event.user
+package dev.kord.core.event.user
 
-import com.gitlab.kordlib.common.entity.DiscordPresenceUser
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.behavior.MemberBehavior
-import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.entity.DiscordPresenceUser
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.MemberBehavior
+import dev.kord.core.entity.*
+import dev.kord.core.event.Event
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 class PresenceUpdateEvent(
         val oldUser: User?,

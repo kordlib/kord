@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.gateway.handler
+package dev.kord.gateway.handler
 
-import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.Reconnect
+import dev.kord.gateway.Event
+import dev.kord.gateway.Reconnect
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 

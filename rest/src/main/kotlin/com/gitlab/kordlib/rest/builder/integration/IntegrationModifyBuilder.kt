@@ -1,12 +1,12 @@
-package com.gitlab.kordlib.rest.builder.integration
+package dev.kord.rest.builder.integration
 
-import com.gitlab.kordlib.common.entity.IntegrationExpireBehavior
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.OptionalInt
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.rest.builder.RequestBuilder
-import com.gitlab.kordlib.rest.json.request.GuildIntegrationModifyRequest
+import dev.kord.common.entity.IntegrationExpireBehavior
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.GuildIntegrationModifyRequest
 
 /**
  * Builder for [modifying an integration](https://discord.com/developers/docs/resources/guild#modify-guild-integration).

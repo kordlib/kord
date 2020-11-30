@@ -2,8 +2,8 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.DiscordChannel
-import com.gitlab.kordlib.common.entity.optional.value
+import dev.kord.common.entity.DiscordChannel
+import dev.kord.common.entity.optional.value
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 

@@ -1,14 +1,14 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.Color
-import com.gitlab.kordlib.common.entity.Permissions
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.unwrap
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.RoleBehavior
-import com.gitlab.kordlib.core.cache.data.RoleData
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.Color
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.unwrap
+import dev.kord.core.Kord
+import dev.kord.core.behavior.RoleBehavior
+import dev.kord.core.cache.data.RoleData
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
 
 data class Role(

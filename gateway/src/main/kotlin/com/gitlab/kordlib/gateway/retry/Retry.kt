@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.gateway.retry
+package dev.kord.gateway.retry
 
 /**
  * A strategy for retrying after after a failed action.

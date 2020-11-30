@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.DiscordRoleTags
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.DiscordRoleTags
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.Serializable
 
 @Serializable

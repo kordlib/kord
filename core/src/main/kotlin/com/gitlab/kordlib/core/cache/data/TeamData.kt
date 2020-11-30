@@ -1,10 +1,10 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
 
-import com.gitlab.kordlib.common.entity.DiscordTeam
-import com.gitlab.kordlib.common.entity.DiscordTeamMember
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.TeamMembershipState
+import dev.kord.common.entity.DiscordTeam
+import dev.kord.common.entity.DiscordTeamMember
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.TeamMembershipState
 import kotlinx.serialization.Serializable
 
 /**

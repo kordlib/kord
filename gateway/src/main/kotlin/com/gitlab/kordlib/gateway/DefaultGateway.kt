@@ -1,11 +1,11 @@
-package com.gitlab.kordlib.gateway
+package dev.kord.gateway
 
-import com.gitlab.kordlib.common.entity.optional.optional
-import com.gitlab.kordlib.common.entity.optional.optionalInt
-import com.gitlab.kordlib.common.ratelimit.RateLimiter
-import com.gitlab.kordlib.gateway.GatewayCloseCode.*
-import com.gitlab.kordlib.gateway.handler.*
-import com.gitlab.kordlib.gateway.retry.Retry
+import dev.kord.common.entity.optional.optional
+import dev.kord.common.entity.optional.optionalInt
+import dev.kord.common.ratelimit.RateLimiter
+import dev.kord.gateway.GatewayCloseCode.*
+import dev.kord.gateway.handler.*
+import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
 import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*

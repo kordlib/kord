@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.core.cache
+package dev.kord.core.cache
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.find
 import com.gitlab.kordlib.cache.api.query
-import com.gitlab.kordlib.core.cache.data.*
+import dev.kord.core.cache.data.*
 
 /**
  * Registers all Kord data classes for this cache

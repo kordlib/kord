@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.core.behavior.channel
+package dev.kord.core.behavior.channel
 
 import equality.GuildChannelEqualityTest
 import mockKord

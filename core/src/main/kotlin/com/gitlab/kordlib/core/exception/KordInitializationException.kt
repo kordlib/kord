@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.core.exception
+package dev.kord.core.exception
 
 class KordInitializationException : Exception {
     constructor(message: String) : super(message)

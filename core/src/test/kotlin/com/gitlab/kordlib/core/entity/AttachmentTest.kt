@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.core.cache.data.AttachmentData
+import dev.kord.core.cache.data.AttachmentData
 import equality.EntityEqualityTest
 import io.mockk.every
 import io.mockk.mockk

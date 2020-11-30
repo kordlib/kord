@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.core.entity.channel
+package dev.kord.core.entity.channel
 
-import com.gitlab.kordlib.common.entity.ChannelType
-import com.gitlab.kordlib.common.entity.optional.optionalSnowflake
-import com.gitlab.kordlib.core.cache.data.ChannelData
+import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.optional.optionalSnowflake
+import dev.kord.core.cache.data.ChannelData
 import equality.GuildChannelEqualityTest
 import mockKord
 

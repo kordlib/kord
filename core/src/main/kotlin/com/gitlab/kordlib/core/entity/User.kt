@@ -1,16 +1,16 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.UserFlags
-import com.gitlab.kordlib.common.entity.UserPremium
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.behavior.UserBehavior
-import com.gitlab.kordlib.core.cache.data.UserData
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.rest.Image
+import dev.kord.common.annotation.DeprecatedSinceKord
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.UserFlags
+import dev.kord.common.entity.UserPremium
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
+import dev.kord.core.behavior.UserBehavior
+import dev.kord.core.cache.data.UserData
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.Image
 
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).

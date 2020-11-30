@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.core.event.user
+package dev.kord.core.event.user
 
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.entity.User
-import com.gitlab.kordlib.core.event.Event
+import dev.kord.core.Kord
+import dev.kord.core.entity.User
+import dev.kord.core.event.Event
 
 class UserUpdateEvent(
         val old: User?,

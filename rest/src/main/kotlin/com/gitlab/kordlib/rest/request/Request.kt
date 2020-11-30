@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.request
+package dev.kord.rest.request
 
-import com.gitlab.kordlib.rest.route.Route
+import dev.kord.rest.route.Route
 import io.ktor.client.request.forms.append
 import io.ktor.client.request.forms.formData
 import io.ktor.http.encodeURLQueryComponent

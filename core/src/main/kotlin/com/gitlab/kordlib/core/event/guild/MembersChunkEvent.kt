@@ -1,21 +1,21 @@
-package com.gitlab.kordlib.core.event.guild
+package dev.kord.core.event.guild
 
-import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.orEmpty
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.cache.data.MemberData
-import com.gitlab.kordlib.core.cache.data.MembersChunkData
-import com.gitlab.kordlib.core.cache.data.PresenceData
-import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.core.entity.Member
-import com.gitlab.kordlib.core.entity.Presence
-import com.gitlab.kordlib.core.entity.Strategizable
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.annotation.DeprecatedSinceKord
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.cache.data.MemberData
+import dev.kord.core.cache.data.MembersChunkData
+import dev.kord.core.cache.data.PresenceData
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Presence
+import dev.kord.core.entity.Strategizable
+import dev.kord.core.event.Event
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 
 

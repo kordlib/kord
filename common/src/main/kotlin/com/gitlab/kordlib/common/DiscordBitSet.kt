@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.common
+package dev.kord.common
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable

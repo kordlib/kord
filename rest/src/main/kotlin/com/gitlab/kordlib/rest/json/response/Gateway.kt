@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.rest.json.response
+package dev.kord.rest.json.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

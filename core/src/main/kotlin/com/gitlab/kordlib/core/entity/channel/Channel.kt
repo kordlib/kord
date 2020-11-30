@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.core.entity.channel
+package dev.kord.core.entity.channel
 
-import com.gitlab.kordlib.common.entity.ChannelType
-import com.gitlab.kordlib.common.entity.ChannelType.*
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
-import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.ChannelType.*
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * An instance of a [Discord Channel](https://discord.com/developers/docs/resources/channel)

@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.gateway.handler
+package dev.kord.gateway.handler
 
-import com.gitlab.kordlib.gateway.Close
-import com.gitlab.kordlib.gateway.DispatchEvent
-import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.Sequence
+import dev.kord.gateway.Close
+import dev.kord.gateway.DispatchEvent
+import dev.kord.gateway.Event
+import dev.kord.gateway.Sequence
 import kotlinx.coroutines.flow.Flow
 
 internal class SequenceHandler(

@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.common.entity.optional
+package dev.kord.common.entity.optional
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional.*
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable

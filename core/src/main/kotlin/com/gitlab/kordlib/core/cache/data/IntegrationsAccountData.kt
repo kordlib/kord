@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.DiscordIntegrationsAccount
+import dev.kord.common.entity.DiscordIntegrationsAccount
 import kotlinx.serialization.Serializable
 
 @Serializable

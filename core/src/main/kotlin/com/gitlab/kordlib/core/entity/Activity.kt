@@ -1,10 +1,10 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.common.entity.optional.value
-import com.gitlab.kordlib.core.cache.data.ActivityData
-import com.gitlab.kordlib.core.toInstant
+import dev.kord.common.annotation.DeprecatedSinceKord
+import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.value
+import dev.kord.core.cache.data.ActivityData
+import dev.kord.core.toInstant
 import java.time.Instant
 
 class Activity(val data: ActivityData) {

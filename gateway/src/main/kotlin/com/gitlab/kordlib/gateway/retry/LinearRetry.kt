@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.gateway.retry
+package dev.kord.gateway.retry
 
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update

@@ -1,5 +1,5 @@
-import com.gitlab.kordlib.common.Color
-import com.gitlab.kordlib.common.kColor
+import dev.kord.common.Color
+import dev.kord.common.kColor
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals

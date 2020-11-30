@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.gateway.handler
+package dev.kord.gateway.handler
 
-import com.gitlab.kordlib.gateway.Close
-import com.gitlab.kordlib.gateway.Event
+import dev.kord.gateway.Close
+import dev.kord.gateway.Event
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow

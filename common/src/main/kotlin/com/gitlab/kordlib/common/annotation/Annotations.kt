@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.common.annotation
+package dev.kord.common.annotation
 
 /**
  * Dsl marker for Kord dsls.

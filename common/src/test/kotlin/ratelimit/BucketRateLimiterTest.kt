@@ -1,6 +1,6 @@
 package ratelimit
 
-import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
+import dev.kord.common.ratelimit.BucketRateLimiter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import java.time.Clock

@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.core.behavior.WebhookBehavior
-import com.gitlab.kordlib.core.cache.data.WebhookData
+import dev.kord.core.behavior.WebhookBehavior
+import dev.kord.core.cache.data.WebhookData
 import equality.BehaviorEqualityTest
 import equality.EntityEqualityTest
 import io.mockk.every

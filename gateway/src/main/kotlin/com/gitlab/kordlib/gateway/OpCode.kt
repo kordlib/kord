@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.gateway
+package dev.kord.gateway
 
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind

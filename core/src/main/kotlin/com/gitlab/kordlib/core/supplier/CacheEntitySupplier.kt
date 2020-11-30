@@ -1,20 +1,20 @@
-package com.gitlab.kordlib.core.supplier
+package dev.kord.core.supplier
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.query
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.any
-import com.gitlab.kordlib.core.cache.data.*
-import com.gitlab.kordlib.core.cache.idEq
-import com.gitlab.kordlib.core.cache.idGt
-import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.GuildChannel
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.gateway.Gateway
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.any
+import dev.kord.core.cache.data.*
+import dev.kord.core.cache.idEq
+import dev.kord.core.cache.idGt
+import dev.kord.core.entity.*
+import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.gateway.Gateway
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 

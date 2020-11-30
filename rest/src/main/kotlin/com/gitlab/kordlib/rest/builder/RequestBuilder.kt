@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.builder
+package dev.kord.rest.builder
 
-import com.gitlab.kordlib.common.annotation.KordDsl
+import dev.kord.common.annotation.KordDsl
 
 @KordDsl
 interface RequestBuilder<T> {

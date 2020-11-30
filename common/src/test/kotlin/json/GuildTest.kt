@@ -2,7 +2,7 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.*
+import dev.kord.common.entity.*
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 

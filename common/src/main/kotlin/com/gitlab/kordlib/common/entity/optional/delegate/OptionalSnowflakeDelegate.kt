@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.common.entity.optional.delegate
+package dev.kord.common.entity.optional.delegate
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
-import com.gitlab.kordlib.common.entity.optional.optionalSnowflake
-import com.gitlab.kordlib.common.entity.optional.value
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.optionalSnowflake
+import dev.kord.common.entity.optional.value
 import kotlin.properties.Delegates
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0

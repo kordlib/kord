@@ -1,18 +1,18 @@
-package com.gitlab.kordlib.core.live
+package dev.kord.core.live
 
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.orEmpty
-import com.gitlab.kordlib.core.cache.data.ReactionData
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.core.entity.ReactionEmoji
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.channel.ChannelDeleteEvent
-import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
-import com.gitlab.kordlib.core.event.message.*
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.core.cache.data.ReactionData
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.Message
+import dev.kord.core.entity.ReactionEmoji
+import dev.kord.core.event.Event
+import dev.kord.core.event.channel.ChannelDeleteEvent
+import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.event.message.*
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 @KordPreview
 suspend fun Message.live() = LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id)

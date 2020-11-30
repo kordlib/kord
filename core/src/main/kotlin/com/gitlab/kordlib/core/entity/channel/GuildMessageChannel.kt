@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core.entity.channel
+package dev.kord.core.entity.channel
 
-import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * An instance of a Discord message channel associated to a [guild].

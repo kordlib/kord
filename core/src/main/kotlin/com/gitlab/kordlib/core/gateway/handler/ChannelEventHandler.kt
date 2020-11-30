@@ -1,21 +1,21 @@
-package com.gitlab.kordlib.core.gateway.handler
+package dev.kord.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
 import com.gitlab.kordlib.cache.api.remove
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.ChannelData
-import com.gitlab.kordlib.core.cache.data.MemberData
-import com.gitlab.kordlib.core.cache.idEq
-import com.gitlab.kordlib.core.entity.channel.*
-import com.gitlab.kordlib.core.event.channel.*
-import com.gitlab.kordlib.core.event.channel.data.ChannelPinsUpdateEventData
-import com.gitlab.kordlib.core.event.channel.data.TypingStartEventData
-import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.gateway.*
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.cache.data.MemberData
+import dev.kord.core.cache.idEq
+import dev.kord.core.entity.channel.*
+import dev.kord.core.event.channel.*
+import dev.kord.core.event.channel.data.ChannelPinsUpdateEventData
+import dev.kord.core.event.channel.data.TypingStartEventData
+import dev.kord.core.gateway.MasterGateway
+import dev.kord.gateway.*
 import kotlinx.coroutines.flow.MutableSharedFlow
-import com.gitlab.kordlib.core.event.Event as CoreEvent
+import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class ChannelEventHandler(

@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.DiscordClientStatus
-import com.gitlab.kordlib.common.entity.PresenceStatus
-import com.gitlab.kordlib.common.entity.optional.Optional
+import dev.kord.common.entity.DiscordClientStatus
+import dev.kord.common.entity.PresenceStatus
+import dev.kord.common.entity.optional.Optional
 import kotlinx.serialization.Serializable
 
 @Serializable

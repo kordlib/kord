@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.core.event.guild
+package dev.kord.core.event.guild
 
-import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.annotation.DeprecatedSinceKord
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.entity.*
+import dev.kord.core.event.Event
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 

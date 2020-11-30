@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.gateway
+package dev.kord.gateway
 
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic

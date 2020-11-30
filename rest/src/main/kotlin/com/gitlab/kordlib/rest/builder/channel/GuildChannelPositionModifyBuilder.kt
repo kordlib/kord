@@ -1,11 +1,11 @@
-package com.gitlab.kordlib.rest.builder.channel
+package dev.kord.rest.builder.channel
 
-import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.annotation.KordExperimental
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.rest.json.request.ChannelPositionSwapRequest
-import com.gitlab.kordlib.rest.json.request.GuildChannelPositionModifyRequest
+import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.entity.Snowflake
+import dev.kord.rest.json.request.ChannelPositionSwapRequest
+import dev.kord.rest.json.request.GuildChannelPositionModifyRequest
 
 @KordDsl
 class GuildChannelPositionModifyBuilder: AuditRequestBuilder<GuildChannelPositionModifyRequest>  {

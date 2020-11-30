@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.core.behavior.RoleBehavior
-import com.gitlab.kordlib.core.cache.data.RoleData
+import dev.kord.core.behavior.RoleBehavior
+import dev.kord.core.cache.data.RoleData
 import equality.BehaviorEqualityTest
 import equality.GuildEntityEqualityTest
 import io.mockk.every

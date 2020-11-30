@@ -1,10 +1,10 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.cache.data.ReactionData
-import com.gitlab.kordlib.core.toSnowflakeOrNull
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
+import dev.kord.core.cache.data.ReactionData
+import dev.kord.core.toSnowflakeOrNull
 
 /**
  * An instance of a [Discord Reaction](https://discord.com/developers/docs/resources/channel#reaction-object).

@@ -2,7 +2,7 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.DiscordVoiceState
+import dev.kord.common.entity.DiscordVoiceState
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import kotlin.test.Ignore

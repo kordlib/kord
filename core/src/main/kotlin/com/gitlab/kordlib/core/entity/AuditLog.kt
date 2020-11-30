@@ -1,12 +1,12 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.common.entity.optional.orEmpty
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.cache.data.IntegrationData
-import com.gitlab.kordlib.core.cache.data.UserData
-import com.gitlab.kordlib.core.cache.data.WebhookData
+import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
+import dev.kord.core.cache.data.IntegrationData
+import dev.kord.core.cache.data.UserData
+import dev.kord.core.cache.data.WebhookData
 
 class AuditLog(val data: DiscordAuditLog, val guildId: Snowflake, override val kord: Kord) : KordObject {
 

@@ -1,15 +1,15 @@
-package com.gitlab.kordlib.core.supplier
+package dev.kord.core.supplier
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.ClientResources
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.KordCacheBuilder
-import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.gateway.Gateway
-import com.gitlab.kordlib.gateway.Intents
-import com.gitlab.kordlib.gateway.PrivilegedIntent
-import com.gitlab.kordlib.rest.request.KtorRequestHandler
-import com.gitlab.kordlib.rest.service.RestClient
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.ClientResources
+import dev.kord.core.Kord
+import dev.kord.core.cache.KordCacheBuilder
+import dev.kord.core.gateway.MasterGateway
+import dev.kord.gateway.Gateway
+import dev.kord.gateway.Intents
+import dev.kord.gateway.PrivilegedIntent
+import dev.kord.rest.request.KtorRequestHandler
+import dev.kord.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BroadcastChannel

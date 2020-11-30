@@ -1,7 +1,7 @@
 package json
 
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.common.entity.optional.*
+import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.*
 import org.junit.jupiter.api.Assertions
 
 infix fun String?.shouldBe(value: String?){

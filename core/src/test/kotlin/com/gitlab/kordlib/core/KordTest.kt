@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.core
+package dev.kord.core
 
-import com.gitlab.kordlib.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordExperimental
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion

@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.core.live
+package dev.kord.core.live
 
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Member
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.guild.BanAddEvent
-import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
-import com.gitlab.kordlib.core.event.guild.MemberLeaveEvent
-import com.gitlab.kordlib.core.event.guild.MemberUpdateEvent
+import dev.kord.common.annotation.KordPreview
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.Member
+import dev.kord.core.event.Event
+import dev.kord.core.event.guild.BanAddEvent
+import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.event.guild.MemberLeaveEvent
+import dev.kord.core.event.guild.MemberUpdateEvent
 
 @KordPreview
 fun Member.live() = LiveMember(this)

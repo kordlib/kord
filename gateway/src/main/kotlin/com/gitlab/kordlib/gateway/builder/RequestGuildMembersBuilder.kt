@@ -1,14 +1,14 @@
-package com.gitlab.kordlib.gateway.builder
+package dev.kord.gateway.builder
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.OptionalInt
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.gateway.GuildMembersChunkData
-import com.gitlab.kordlib.gateway.Intent
-import com.gitlab.kordlib.gateway.PrivilegedIntent
-import com.gitlab.kordlib.gateway.RequestGuildMembers
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.gateway.GuildMembersChunkData
+import dev.kord.gateway.Intent
+import dev.kord.gateway.PrivilegedIntent
+import dev.kord.gateway.RequestGuildMembers
 
 /**
  * A builder for a [RequestGuildMembers] command.

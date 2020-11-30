@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.behavior.MemberBehavior
-import com.gitlab.kordlib.core.cache.data.MemberData
-import com.gitlab.kordlib.core.cache.data.UserData
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.behavior.MemberBehavior
+import dev.kord.core.cache.data.MemberData
+import dev.kord.core.cache.data.UserData
 import equality.BehaviorEqualityTest
 import equality.GuildEntityEqualityTest
 import io.mockk.every

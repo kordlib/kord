@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core.exception
+package dev.kord.core.exception
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.entity.channel.Channel
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.entity.channel.Channel
 
 class EntityNotFoundException : Exception {
 

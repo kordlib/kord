@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.core.behavior
+package dev.kord.core.behavior
 
-import com.gitlab.kordlib.common.entity.Snowflake
+import dev.kord.common.entity.Snowflake
 import equality.GuildEntityEqualityTest
 import io.mockk.mockk
 import mockKord

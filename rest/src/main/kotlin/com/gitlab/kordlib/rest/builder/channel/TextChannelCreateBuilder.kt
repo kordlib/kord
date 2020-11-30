@@ -1,16 +1,16 @@
-package com.gitlab.kordlib.rest.builder.channel
+package dev.kord.rest.builder.channel
 
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.ChannelType
-import com.gitlab.kordlib.common.entity.Overwrite
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.OptionalInt
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.rest.json.request.GuildChannelCreateRequest
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.Overwrite
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.rest.json.request.GuildChannelCreateRequest
 
 @KordDsl
 class TextChannelCreateBuilder(var name: String) : AuditRequestBuilder<GuildChannelCreateRequest> {

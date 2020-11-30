@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.rest.builder
+package dev.kord.rest.builder
 
-import com.gitlab.kordlib.common.entity.Overwrite
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.rest.builder.channel.CategoryModifyBuilder
+import dev.kord.common.entity.Overwrite
+import dev.kord.common.entity.optional.Optional
+import dev.kord.rest.builder.channel.CategoryModifyBuilder
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.rest.service
+package dev.kord.rest.service
 
-import com.gitlab.kordlib.rest.request.RequestHandler
-import com.gitlab.kordlib.rest.route.Route
+import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.route.Route
 
 class VoiceService(requestHandler: RequestHandler) : RestService(requestHandler) {
 

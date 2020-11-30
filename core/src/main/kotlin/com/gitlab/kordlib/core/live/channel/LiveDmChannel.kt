@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.core.live.channel
+package dev.kord.core.live.channel
 
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.channel.DmChannel
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.channel.DMChannelCreateEvent
-import com.gitlab.kordlib.core.event.channel.DMChannelDeleteEvent
-import com.gitlab.kordlib.core.event.channel.DMChannelUpdateEvent
-import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
+import dev.kord.common.annotation.KordPreview
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.channel.DmChannel
+import dev.kord.core.event.Event
+import dev.kord.core.event.channel.DMChannelCreateEvent
+import dev.kord.core.event.channel.DMChannelDeleteEvent
+import dev.kord.core.event.channel.DMChannelUpdateEvent
+import dev.kord.core.event.guild.GuildDeleteEvent
 
 @KordPreview
 fun DmChannel.live() = LiveDmChannel(this)

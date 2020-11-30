@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.rest.ratelimit
+package dev.kord.rest.ratelimit
 
-import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
-import com.gitlab.kordlib.rest.request.Request
-import com.gitlab.kordlib.rest.request.RequestIdentifier
-import com.gitlab.kordlib.rest.request.identifier
+import dev.kord.common.ratelimit.BucketRateLimiter
+import dev.kord.rest.request.Request
+import dev.kord.rest.request.RequestIdentifier
+import dev.kord.rest.request.identifier
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.CompletableDeferred

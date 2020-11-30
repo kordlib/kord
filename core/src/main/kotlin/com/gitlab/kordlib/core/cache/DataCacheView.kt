@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.core.cache
+package dev.kord.core.cache
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.DataEntryCache

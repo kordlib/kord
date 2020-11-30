@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.gateway
+package dev.kord.gateway
 
 import io.ktor.util.error
 import kotlinx.coroutines.*

@@ -1,8 +1,8 @@
 @file:Suppress("unused")
 
-package com.gitlab.kordlib.rest.request
+package dev.kord.rest.request
 
-import com.gitlab.kordlib.rest.ratelimit.BucketKey
+import dev.kord.rest.ratelimit.BucketKey
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readBytes
 import java.time.Clock

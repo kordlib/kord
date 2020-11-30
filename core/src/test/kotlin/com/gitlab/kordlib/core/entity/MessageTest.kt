@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.core.behavior.MessageBehavior
-import com.gitlab.kordlib.core.cache.data.MessageData
+import dev.kord.core.behavior.MessageBehavior
+import dev.kord.core.cache.data.MessageData
 import equality.BehaviorEqualityTest
 import equality.EntityEqualityTest
 import io.mockk.every

@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.core.event.channel
+package dev.kord.core.event.channel
 
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.entity.channel.*
-import com.gitlab.kordlib.core.event.Event
+import dev.kord.core.Kord
+import dev.kord.core.entity.channel.*
+import dev.kord.core.event.Event
 
 interface ChannelCreateEvent : Event {
     val channel: Channel

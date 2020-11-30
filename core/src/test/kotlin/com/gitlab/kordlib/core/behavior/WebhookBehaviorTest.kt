@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.core.behavior
+package dev.kord.core.behavior
 
 import equality.EntityEqualityTest
 import mockKord

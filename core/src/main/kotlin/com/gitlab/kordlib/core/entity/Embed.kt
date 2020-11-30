@@ -1,16 +1,16 @@
 @file:Suppress("DEPRECATION")
 
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.Color
-import com.gitlab.kordlib.common.entity.EmbedType
-import com.gitlab.kordlib.common.entity.optional.orEmpty
-import com.gitlab.kordlib.common.entity.optional.value
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.cache.data.*
-import com.gitlab.kordlib.core.toInstant
-import com.gitlab.kordlib.rest.builder.message.EmbedBuilder
+import dev.kord.common.Color
+import dev.kord.common.entity.EmbedType
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.value
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
+import dev.kord.core.cache.data.*
+import dev.kord.core.toInstant
+import dev.kord.rest.builder.message.EmbedBuilder
 import java.time.Instant
 
 internal const val embedDeprecationMessage = """

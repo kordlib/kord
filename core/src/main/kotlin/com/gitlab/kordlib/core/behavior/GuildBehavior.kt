@@ -1,45 +1,45 @@
-package com.gitlab.kordlib.core.behavior
+package dev.kord.core.behavior
 
 import com.gitlab.kordlib.cache.api.query
-import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
-import com.gitlab.kordlib.common.annotation.KordExperimental
-import com.gitlab.kordlib.common.entity.DiscordUser
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.unwrap
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.*
-import com.gitlab.kordlib.core.cache.idEq
-import com.gitlab.kordlib.core.catchDiscordError
-import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.core.entity.channel.*
-import com.gitlab.kordlib.core.event.guild.MembersChunkEvent
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.sorted
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy.Companion.rest
-import com.gitlab.kordlib.core.supplier.getChannelOf
-import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
-import com.gitlab.kordlib.gateway.Gateway
-import com.gitlab.kordlib.gateway.PrivilegedIntent
-import com.gitlab.kordlib.gateway.RequestGuildMembers
-import com.gitlab.kordlib.gateway.builder.RequestGuildMembersBuilder
-import com.gitlab.kordlib.gateway.start
-import com.gitlab.kordlib.rest.Image
-import com.gitlab.kordlib.rest.builder.auditlog.AuditLogGetRequestBuilder
-import com.gitlab.kordlib.rest.builder.ban.BanCreateBuilder
-import com.gitlab.kordlib.rest.builder.channel.*
-import com.gitlab.kordlib.rest.builder.guild.EmojiCreateBuilder
-import com.gitlab.kordlib.rest.builder.guild.GuildModifyBuilder
-import com.gitlab.kordlib.rest.builder.guild.GuildWidgetModifyBuilder
-import com.gitlab.kordlib.rest.builder.role.RoleCreateBuilder
-import com.gitlab.kordlib.rest.builder.role.RolePositionsModifyBuilder
-import com.gitlab.kordlib.rest.json.JsonErrorCode
-import com.gitlab.kordlib.rest.json.request.CurrentUserNicknameModifyRequest
-import com.gitlab.kordlib.rest.request.RestRequestException
-import com.gitlab.kordlib.rest.service.*
+import dev.kord.common.annotation.DeprecatedSinceKord
+import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.unwrap
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.*
+import dev.kord.core.cache.idEq
+import dev.kord.core.catchDiscordError
+import dev.kord.core.entity.*
+import dev.kord.core.entity.channel.*
+import dev.kord.core.event.guild.MembersChunkEvent
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.sorted
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.gateway.Gateway
+import dev.kord.gateway.PrivilegedIntent
+import dev.kord.gateway.RequestGuildMembers
+import dev.kord.gateway.builder.RequestGuildMembersBuilder
+import dev.kord.gateway.start
+import dev.kord.rest.Image
+import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
+import dev.kord.rest.builder.ban.BanCreateBuilder
+import dev.kord.rest.builder.channel.*
+import dev.kord.rest.builder.guild.EmojiCreateBuilder
+import dev.kord.rest.builder.guild.GuildModifyBuilder
+import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
+import dev.kord.rest.builder.role.RoleCreateBuilder
+import dev.kord.rest.builder.role.RolePositionsModifyBuilder
+import dev.kord.rest.json.JsonErrorCode
+import dev.kord.rest.json.request.CurrentUserNicknameModifyRequest
+import dev.kord.rest.request.RestRequestException
+import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
@@ -190,7 +190,7 @@ interface GuildBehavior : Entity, Strategizable {
      * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
      * will result in an [IllegalStateException] being thrown.
      *
-     * Executing the [request] on a [Gateway] with a [Shard][com.gitlab.kordlib.common.entity.DiscordShard] that
+     * Executing the [request] on a [Gateway] with a [Shard][dev.kord.common.entity.DiscordShard] that
      * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
      * can result in undefined behavior for the returned flow and inconsistencies in the cache.
      *
@@ -819,7 +819,7 @@ inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.(
  * Collection of this flow on a [Gateway] that is not [running][Gateway.start]
  * will result in an [IllegalStateException] being thrown.
  *
- * Executing the request on a [Gateway] with a [Shard][com.gitlab.kordlib.common.entity.DiscordShard] that
+ * Executing the request on a [Gateway] with a [Shard][dev.kord.common.entity.DiscordShard] that
  * [does not match the guild id](https://discord.com/developers/docs/topics/gateway#sharding)
  * can result in undefined behavior for the returned flow and inconsistencies in the cache.
  *

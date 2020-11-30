@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.core.live.channel
+package dev.kord.core.live.channel
 
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.channel.Category
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.channel.CategoryCreateEvent
-import com.gitlab.kordlib.core.event.channel.CategoryDeleteEvent
-import com.gitlab.kordlib.core.event.channel.CategoryUpdateEvent
-import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
+import dev.kord.common.annotation.KordPreview
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.channel.Category
+import dev.kord.core.event.Event
+import dev.kord.core.event.channel.CategoryCreateEvent
+import dev.kord.core.event.channel.CategoryDeleteEvent
+import dev.kord.core.event.channel.CategoryUpdateEvent
+import dev.kord.core.event.guild.GuildDeleteEvent
 
 @KordPreview
 fun Category.live() = LiveCategory(this)

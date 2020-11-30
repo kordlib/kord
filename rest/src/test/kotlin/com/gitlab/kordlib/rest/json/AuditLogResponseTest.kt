@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.json
+package dev.kord.rest.json
 
-import com.gitlab.kordlib.common.entity.DiscordAuditLog
+import dev.kord.common.entity.DiscordAuditLog
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 

@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.rest.json.response
+package dev.kord.rest.json.response
 
-import com.gitlab.kordlib.common.entity.ChannelType
+import dev.kord.common.entity.ChannelType
 import kotlinx.serialization.Serializable
 
 @Serializable

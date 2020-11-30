@@ -1,11 +1,11 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.Overwrite
-import com.gitlab.kordlib.common.entity.OverwriteType
-import com.gitlab.kordlib.common.entity.Permissions
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.cache.data.PermissionOverwriteData
-import com.gitlab.kordlib.rest.json.request.ChannelPermissionEditRequest
+import dev.kord.common.entity.Overwrite
+import dev.kord.common.entity.OverwriteType
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.cache.data.PermissionOverwriteData
+import dev.kord.rest.json.request.ChannelPermissionEditRequest
 
 open class PermissionOverwrite constructor(
         val data: PermissionOverwriteData,

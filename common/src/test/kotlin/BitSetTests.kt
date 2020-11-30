@@ -1,4 +1,4 @@
-import com.gitlab.kordlib.common.DiscordBitSet
+import dev.kord.common.DiscordBitSet
 import org.junit.jupiter.api.Test
 
 class BitSetTests {

@@ -1,17 +1,17 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.KordObject
-import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
-import com.gitlab.kordlib.core.cache.data.GuildWidgetData
-import com.gitlab.kordlib.core.entity.channel.Channel
-import com.gitlab.kordlib.core.entity.channel.GuildChannel
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
-import com.gitlab.kordlib.rest.builder.guild.GuildWidgetModifyBuilder
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.cache.data.GuildWidgetData
+import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
 
 class GuildWidget(
         val data: GuildWidgetData,

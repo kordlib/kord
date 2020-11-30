@@ -1,15 +1,15 @@
-package com.gitlab.kordlib.core.event.message
+package dev.kord.core.event.message
 
-import com.gitlab.kordlib.common.entity.DiscordPartialMessage
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.MessageBehavior
-import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
-import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.core.entity.Strategizable
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.entity.DiscordPartialMessage
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.behavior.MessageBehavior
+import dev.kord.core.behavior.channel.MessageChannelBehavior
+import dev.kord.core.entity.Message
+import dev.kord.core.entity.Strategizable
+import dev.kord.core.event.Event
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 class MessageUpdateEvent (
         val messageId: Snowflake,

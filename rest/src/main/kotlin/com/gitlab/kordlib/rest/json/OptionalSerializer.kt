@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.rest.json
+package dev.kord.rest.json
 
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -7,7 +7,7 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * This is a very stupid serializer and you should feel ashamed for calling this.
- * Essentially, there's a use case where a [com.gitlab.kordlib.rest.route.Route] may *sometimes* return
+ * Essentially, there's a use case where a [dev.kord.rest.route.Route] may *sometimes* return
  * a value, and sometimes nothing.
  *
  * `nullable` doesn't save you here since it'll expect at least something, and thus throws on an empty input.

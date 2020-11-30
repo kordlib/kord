@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.rest.json.response.BanResponse
+import dev.kord.common.entity.Snowflake
+import dev.kord.rest.json.response.BanResponse
 import kotlinx.serialization.Serializable
 
 @Serializable

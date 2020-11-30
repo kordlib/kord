@@ -1,19 +1,19 @@
-package com.gitlab.kordlib.core.gateway.handler
+package dev.kord.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.UserData
-import com.gitlab.kordlib.core.entity.User
-import com.gitlab.kordlib.core.event.gateway.ConnectEvent
-import com.gitlab.kordlib.core.event.gateway.DisconnectEvent
-import com.gitlab.kordlib.core.event.gateway.ReadyEvent
-import com.gitlab.kordlib.core.event.gateway.ResumedEvent
-import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.gateway.*
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.UserData
+import dev.kord.core.entity.User
+import dev.kord.core.event.gateway.ConnectEvent
+import dev.kord.core.event.gateway.DisconnectEvent
+import dev.kord.core.event.gateway.ReadyEvent
+import dev.kord.core.event.gateway.ResumedEvent
+import dev.kord.core.gateway.MasterGateway
+import dev.kord.gateway.*
 import kotlinx.coroutines.flow.MutableSharedFlow
-import com.gitlab.kordlib.core.event.Event as CoreEvent
+import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class LifeCycleEventHandler(

@@ -1,20 +1,20 @@
-package com.gitlab.kordlib.core.gateway.handler
+package dev.kord.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.UserData
-import com.gitlab.kordlib.core.cache.idEq
-import com.gitlab.kordlib.core.entity.User
-import com.gitlab.kordlib.core.event.user.UserUpdateEvent
-import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.UserUpdate
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.UserData
+import dev.kord.core.cache.idEq
+import dev.kord.core.entity.User
+import dev.kord.core.event.user.UserUpdateEvent
+import dev.kord.core.gateway.MasterGateway
+import dev.kord.gateway.Event
+import dev.kord.gateway.UserUpdate
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
-import com.gitlab.kordlib.core.event.Event as CoreEvent
+import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class UserEventHandler(

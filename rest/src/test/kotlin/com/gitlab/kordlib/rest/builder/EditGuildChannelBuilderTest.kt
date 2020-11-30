@@ -1,11 +1,11 @@
-package com.gitlab.kordlib.rest.builder
+package dev.kord.rest.builder
 
-import com.gitlab.kordlib.common.entity.Overwrite
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.rest.builder.channel.NewsChannelModifyBuilder
-import com.gitlab.kordlib.rest.builder.channel.StoreChannelModifyBuilder
-import com.gitlab.kordlib.rest.builder.channel.TextChannelModifyBuilder
-import com.gitlab.kordlib.rest.builder.channel.VoiceChannelModifyBuilder
+import dev.kord.common.entity.Overwrite
+import dev.kord.common.entity.optional.Optional
+import dev.kord.rest.builder.channel.NewsChannelModifyBuilder
+import dev.kord.rest.builder.channel.StoreChannelModifyBuilder
+import dev.kord.rest.builder.channel.TextChannelModifyBuilder
+import dev.kord.rest.builder.channel.VoiceChannelModifyBuilder
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

@@ -1,30 +1,30 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.common.entity.optional.orElse
-import com.gitlab.kordlib.common.entity.optional.orEmpty
-import com.gitlab.kordlib.common.entity.optional.value
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.behavior.MemberBehavior
-import com.gitlab.kordlib.core.behavior.RoleBehavior
-import com.gitlab.kordlib.core.behavior.channel.GuildChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.GuildMessageChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.TextChannelBehavior
-import com.gitlab.kordlib.core.behavior.channel.VoiceChannelBehavior
-import com.gitlab.kordlib.core.cache.data.GuildData
-import com.gitlab.kordlib.core.entity.channel.GuildChannel
-import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
-import com.gitlab.kordlib.core.entity.channel.TextChannel
-import com.gitlab.kordlib.core.entity.channel.VoiceChannel
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.core.supplier.getChannelOfOrNull
-import com.gitlab.kordlib.rest.Image
-import com.gitlab.kordlib.rest.service.RestClient
+import dev.kord.common.annotation.DeprecatedSinceKord
+import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.orElse
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.value
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.MemberBehavior
+import dev.kord.core.behavior.RoleBehavior
+import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.channel.TextChannelBehavior
+import dev.kord.core.behavior.channel.VoiceChannelBehavior
+import dev.kord.core.cache.data.GuildData
+import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.VoiceChannel
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.rest.Image
+import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.first
 import java.time.Instant
 import java.time.format.DateTimeFormatter
@@ -61,13 +61,13 @@ class Guild(
 
     /**
      * The approximate number of members in this guild. Present if this guild was requested through
-     * [rest][com.gitlab.kordlib.rest.service.RestClient] with the flag `with_counts`.
+     * [rest][dev.kord.rest.service.RestClient] with the flag `with_counts`.
      */
     val approximateMemberCount: Int? get() = data.approximateMemberCount.value
 
     /**
      * The approximate number of online members in this guild. Present if this guild was requested through
-     * [rest][com.gitlab.kordlib.rest.service.RestClient] with the flag `with_counts`.
+     * [rest][dev.kord.rest.service.RestClient] with the flag `with_counts`.
      */
     val approximatePresenceCount: Int? get() = data.approximatePresenceCount.value
 
@@ -195,7 +195,7 @@ class Guild(
     /**
      * True if the guild is considered large, if present.
      *
-     * This field is only present on Guilds created through [com.gitlab.kordlib.core.event.guild.GuildCreateEvent].
+     * This field is only present on Guilds created through [dev.kord.core.event.guild.GuildCreateEvent].
      */
     val isLarge: Boolean? get() = data.large.value
 

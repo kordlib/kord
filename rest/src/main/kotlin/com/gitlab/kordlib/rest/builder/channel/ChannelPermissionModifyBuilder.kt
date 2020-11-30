@@ -1,10 +1,10 @@
-package com.gitlab.kordlib.rest.builder.channel
+package dev.kord.rest.builder.channel
 
-import com.gitlab.kordlib.common.entity.Permissions
-import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.OverwriteType
-import com.gitlab.kordlib.rest.json.request.ChannelPermissionEditRequest
+import dev.kord.common.entity.Permissions
+import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.OverwriteType
+import dev.kord.rest.json.request.ChannelPermissionEditRequest
 
 @KordDsl
 class ChannelPermissionModifyBuilder(private var type: OverwriteType) : AuditRequestBuilder<ChannelPermissionEditRequest> {

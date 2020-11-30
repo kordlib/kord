@@ -1,12 +1,12 @@
 @file:Suppress("ArrayInDataClass")
 
-package com.gitlab.kordlib.rest.json.response
+package dev.kord.rest.json.response
 
-import com.gitlab.kordlib.common.entity.DiscordTeam
-import com.gitlab.kordlib.common.entity.DiscordUser
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.DiscordTeam
+import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

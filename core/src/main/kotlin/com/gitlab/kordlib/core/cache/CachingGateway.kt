@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.core.cache
+package dev.kord.core.cache
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.gateway.Close
-import com.gitlab.kordlib.gateway.Gateway
+import dev.kord.gateway.Close
+import dev.kord.gateway.Gateway
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn

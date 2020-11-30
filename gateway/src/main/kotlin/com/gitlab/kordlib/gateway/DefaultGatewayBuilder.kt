@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.gateway
+package dev.kord.gateway
 
-import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
-import com.gitlab.kordlib.common.ratelimit.RateLimiter
-import com.gitlab.kordlib.gateway.retry.LinearRetry
-import com.gitlab.kordlib.gateway.retry.Retry
+import dev.kord.common.ratelimit.BucketRateLimiter
+import dev.kord.common.ratelimit.RateLimiter
+import dev.kord.gateway.retry.LinearRetry
+import dev.kord.gateway.retry.Retry
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature

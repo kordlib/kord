@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.rest.ratelimit
+package dev.kord.rest.ratelimit
 
-import com.gitlab.kordlib.rest.request.Request
-import com.gitlab.kordlib.rest.request.RequestIdentifier
-import com.gitlab.kordlib.rest.request.identifier
+import dev.kord.rest.request.Request
+import dev.kord.rest.request.RequestIdentifier
+import dev.kord.rest.request.identifier
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import mu.KLogger

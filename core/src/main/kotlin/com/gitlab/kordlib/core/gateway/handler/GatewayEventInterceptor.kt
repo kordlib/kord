@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.core.gateway.handler
+package dev.kord.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.gateway.Event
+import dev.kord.core.Kord
+import dev.kord.core.gateway.MasterGateway
+import dev.kord.gateway.Event
 import io.ktor.util.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import mu.KotlinLogging
-import com.gitlab.kordlib.core.event.Event as CoreEvent
+import dev.kord.core.event.Event as CoreEvent
 
 private val logger = KotlinLogging.logger { }
 

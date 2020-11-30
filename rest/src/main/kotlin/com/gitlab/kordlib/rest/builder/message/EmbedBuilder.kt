@@ -1,14 +1,14 @@
-package com.gitlab.kordlib.rest.builder.message
+package dev.kord.rest.builder.message
 
-import com.gitlab.kordlib.common.Color
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.common.entity.optional.map
-import com.gitlab.kordlib.common.entity.optional.mapList
-import com.gitlab.kordlib.rest.builder.RequestBuilder
-import com.gitlab.kordlib.rest.json.request.*
+import dev.kord.common.Color
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.mapList
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.*
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 

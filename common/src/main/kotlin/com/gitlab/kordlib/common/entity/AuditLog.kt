@@ -1,20 +1,20 @@
-package com.gitlab.kordlib.common.entity
+package dev.kord.common.entity
 
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
-import com.gitlab.kordlib.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.orEmpty
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
-import com.gitlab.kordlib.common.Color as CommonColor
-import com.gitlab.kordlib.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
-import com.gitlab.kordlib.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
-import com.gitlab.kordlib.common.entity.MFALevel as CommonMFALevel
-import com.gitlab.kordlib.common.entity.Permissions as CommonPermissions
-import com.gitlab.kordlib.common.entity.VerificationLevel as CommonVerificationLevel
+import dev.kord.common.Color as CommonColor
+import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
+import dev.kord.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
+import dev.kord.common.entity.MFALevel as CommonMFALevel
+import dev.kord.common.entity.Permissions as CommonPermissions
+import dev.kord.common.entity.VerificationLevel as CommonVerificationLevel
 
 @Serializable
 data class DiscordAuditLog(

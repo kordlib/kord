@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.core.entity.channel
+package dev.kord.core.entity.channel
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.value
-import com.gitlab.kordlib.core.behavior.channel.CategoryBehavior
-import com.gitlab.kordlib.core.cache.data.InviteData
-import com.gitlab.kordlib.core.entity.Invite
-import com.gitlab.kordlib.core.toSnowflakeOrNull
-import com.gitlab.kordlib.rest.builder.channel.InviteCreateBuilder
-import com.gitlab.kordlib.rest.request.RestRequestException
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.value
+import dev.kord.core.behavior.channel.CategoryBehavior
+import dev.kord.core.cache.data.InviteData
+import dev.kord.core.entity.Invite
+import dev.kord.core.toSnowflakeOrNull
+import dev.kord.rest.builder.channel.InviteCreateBuilder
+import dev.kord.rest.request.RestRequestException
 
 /**
  * An instance of a Discord channel associated to a [category].

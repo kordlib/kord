@@ -1,16 +1,16 @@
-package com.gitlab.kordlib.core.performance
+package dev.kord.core.performance
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.core.ClientResources
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.event.guild.GuildCreateEvent
-import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.core.on
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.gateway.*
-import com.gitlab.kordlib.rest.request.KtorRequestHandler
-import com.gitlab.kordlib.rest.service.RestClient
+import dev.kord.common.entity.*
+import dev.kord.core.ClientResources
+import dev.kord.core.Kord
+import dev.kord.core.event.guild.GuildCreateEvent
+import dev.kord.core.gateway.MasterGateway
+import dev.kord.core.on
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.gateway.*
+import dev.kord.rest.request.KtorRequestHandler
+import dev.kord.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel

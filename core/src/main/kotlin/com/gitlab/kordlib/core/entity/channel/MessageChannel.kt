@@ -1,14 +1,14 @@
-package com.gitlab.kordlib.core.entity.channel
+package dev.kord.core.entity.channel
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.value
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.behavior.MessageBehavior
-import com.gitlab.kordlib.core.behavior.channel.MessageChannelBehavior
-import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.core.toInstant
-import com.gitlab.kordlib.core.toSnowflakeOrNull
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.value
+import dev.kord.common.exception.RequestException
+import dev.kord.core.behavior.MessageBehavior
+import dev.kord.core.behavior.channel.MessageChannelBehavior
+import dev.kord.core.entity.Message
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.toInstant
+import dev.kord.core.toSnowflakeOrNull
 import java.time.Instant
 
 /**

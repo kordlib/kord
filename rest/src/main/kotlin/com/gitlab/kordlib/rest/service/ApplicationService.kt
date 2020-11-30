@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.rest.service
+package dev.kord.rest.service
 
-import com.gitlab.kordlib.rest.json.response.ApplicationInfoResponse
-import com.gitlab.kordlib.rest.request.RequestHandler
-import com.gitlab.kordlib.rest.route.Route
+import dev.kord.rest.json.response.ApplicationInfoResponse
+import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.route.Route
 
 class ApplicationService(handler: RequestHandler) : RestService(handler) {
 

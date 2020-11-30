@@ -1,8 +1,8 @@
 package json
 
-import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.HeartbeatACK
-import com.gitlab.kordlib.gateway.Reconnect
+import dev.kord.gateway.Event
+import dev.kord.gateway.HeartbeatACK
+import dev.kord.gateway.Reconnect
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 

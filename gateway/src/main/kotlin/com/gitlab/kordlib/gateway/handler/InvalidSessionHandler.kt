@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.gateway.handler
+package dev.kord.gateway.handler
 
-import com.gitlab.kordlib.gateway.*
+import dev.kord.gateway.*
 import kotlinx.coroutines.flow.Flow
 
 internal class InvalidSessionHandler(

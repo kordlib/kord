@@ -1,26 +1,26 @@
-package com.gitlab.kordlib.core.gateway.handler
+package dev.kord.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.putAll
 import com.gitlab.kordlib.cache.api.query
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.optionalSnowflake
-import com.gitlab.kordlib.common.entity.optional.orEmpty
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.*
-import com.gitlab.kordlib.core.cache.idEq
-import com.gitlab.kordlib.core.entity.*
-import com.gitlab.kordlib.core.event.guild.*
-import com.gitlab.kordlib.core.event.role.RoleCreateEvent
-import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
-import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
-import com.gitlab.kordlib.core.event.user.PresenceUpdateEvent
-import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.gateway.*
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.optionalSnowflake
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.*
+import dev.kord.core.cache.idEq
+import dev.kord.core.entity.*
+import dev.kord.core.event.guild.*
+import dev.kord.core.event.role.RoleCreateEvent
+import dev.kord.core.event.role.RoleDeleteEvent
+import dev.kord.core.event.role.RoleUpdateEvent
+import dev.kord.core.event.user.PresenceUpdateEvent
+import dev.kord.core.gateway.MasterGateway
+import dev.kord.gateway.*
 import kotlinx.coroutines.flow.*
-import com.gitlab.kordlib.common.entity.DiscordGuild as GatewayGuild
-import com.gitlab.kordlib.core.event.Event as CoreEvent
+import dev.kord.common.entity.DiscordGuild as GatewayGuild
+import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class GuildEventHandler(

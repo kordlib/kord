@@ -1,8 +1,8 @@
-package com.gitlab.kordlib.rest.ratelimit
+package dev.kord.rest.ratelimit
 
-import com.gitlab.kordlib.common.entity.DiscordGuild
-import com.gitlab.kordlib.rest.request.JsonRequest
-import com.gitlab.kordlib.rest.route.Route
+import dev.kord.common.entity.DiscordGuild
+import dev.kord.rest.request.JsonRequest
+import dev.kord.rest.route.Route
 import io.ktor.util.StringValues
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

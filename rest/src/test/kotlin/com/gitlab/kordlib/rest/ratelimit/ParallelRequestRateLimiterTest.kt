@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.rest.ratelimit
+package dev.kord.rest.ratelimit
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.time.Clock

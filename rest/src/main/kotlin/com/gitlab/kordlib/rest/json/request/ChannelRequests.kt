@@ -1,12 +1,12 @@
-package com.gitlab.kordlib.rest.json.request
+package dev.kord.rest.json.request
 
-import com.gitlab.kordlib.common.entity.Overwrite
-import com.gitlab.kordlib.common.entity.OverwriteType
-import com.gitlab.kordlib.common.entity.Permissions
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.OptionalInt
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.Overwrite
+import dev.kord.common.entity.OverwriteType
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -1,11 +1,11 @@
-package com.gitlab.kordlib.rest.builder.ban
+package dev.kord.rest.builder.ban
 
-import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalInt
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.rest.json.request.GuildBanCreateRequest
+import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.rest.json.request.GuildBanCreateRequest
 
 @KordDsl
 class BanCreateBuilder : AuditRequestBuilder<GuildBanCreateRequest> {

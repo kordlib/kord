@@ -1,23 +1,23 @@
-package com.gitlab.kordlib.core.gateway.handler
+package dev.kord.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
 import com.gitlab.kordlib.cache.api.put
 import com.gitlab.kordlib.cache.api.query
-import com.gitlab.kordlib.common.entity.optional.*
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.*
-import com.gitlab.kordlib.core.cache.idEq
-import com.gitlab.kordlib.core.entity.Member
-import com.gitlab.kordlib.core.entity.Message
-import com.gitlab.kordlib.core.entity.ReactionEmoji
-import com.gitlab.kordlib.core.event.message.*
-import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.gateway.*
+import dev.kord.common.entity.optional.*
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.*
+import dev.kord.core.cache.idEq
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Message
+import dev.kord.core.entity.ReactionEmoji
+import dev.kord.core.event.message.*
+import dev.kord.core.gateway.MasterGateway
+import dev.kord.gateway.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
-import com.gitlab.kordlib.core.event.Event as CoreEvent
+import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class MessageEventHandler(

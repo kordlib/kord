@@ -1,20 +1,20 @@
-package com.gitlab.kordlib.core.live
+package dev.kord.core.live
 
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.common.entity.optional.*
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.core.event.*
-import com.gitlab.kordlib.core.event.channel.ChannelCreateEvent
-import com.gitlab.kordlib.core.event.channel.ChannelDeleteEvent
-import com.gitlab.kordlib.core.event.channel.ChannelUpdateEvent
-import com.gitlab.kordlib.core.event.guild.*
-import com.gitlab.kordlib.core.event.message.*
-import com.gitlab.kordlib.core.event.role.RoleCreateEvent
-import com.gitlab.kordlib.core.event.role.RoleDeleteEvent
-import com.gitlab.kordlib.core.event.role.RoleUpdateEvent
-import com.gitlab.kordlib.core.event.user.PresenceUpdateEvent
-import com.gitlab.kordlib.core.event.user.VoiceStateUpdateEvent
+import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.optional.*
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.Guild
+import dev.kord.core.event.*
+import dev.kord.core.event.channel.ChannelCreateEvent
+import dev.kord.core.event.channel.ChannelDeleteEvent
+import dev.kord.core.event.channel.ChannelUpdateEvent
+import dev.kord.core.event.guild.*
+import dev.kord.core.event.message.*
+import dev.kord.core.event.role.RoleCreateEvent
+import dev.kord.core.event.role.RoleDeleteEvent
+import dev.kord.core.event.role.RoleUpdateEvent
+import dev.kord.core.event.user.PresenceUpdateEvent
+import dev.kord.core.event.user.VoiceStateUpdateEvent
 
 @KordPreview
 fun Guild.live(): LiveGuild = LiveGuild(this)

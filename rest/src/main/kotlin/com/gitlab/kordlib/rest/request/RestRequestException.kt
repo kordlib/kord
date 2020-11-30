@@ -1,10 +1,10 @@
-package com.gitlab.kordlib.rest.request
+package dev.kord.rest.request
 
-import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.rest.json.JsonErrorCode
-import com.gitlab.kordlib.rest.json.response.DiscordErrorResponse
-import com.gitlab.kordlib.rest.service.RestService
+import dev.kord.common.annotation.DeprecatedSinceKord
+import dev.kord.common.exception.RequestException
+import dev.kord.rest.json.JsonErrorCode
+import dev.kord.rest.json.response.DiscordErrorResponse
+import dev.kord.rest.service.RestService
 import kotlinx.serialization.Serializable
 import io.ktor.client.statement.HttpResponse as KtorResponse
 

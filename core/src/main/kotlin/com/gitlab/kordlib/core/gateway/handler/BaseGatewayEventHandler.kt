@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.core.gateway.handler
+package dev.kord.core.gateway.handler
 
 import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.gateway.MasterGateway
-import com.gitlab.kordlib.gateway.Gateway
+import dev.kord.core.Kord
+import dev.kord.core.gateway.MasterGateway
+import dev.kord.gateway.Gateway
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import com.gitlab.kordlib.core.event.Event as CoreEvent
-import com.gitlab.kordlib.gateway.Event as GatewayEvent
+import dev.kord.core.event.Event as CoreEvent
+import dev.kord.gateway.Event as GatewayEvent
 
 abstract class BaseGatewayEventHandler(
         protected val kord: Kord,

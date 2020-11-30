@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.common.entity
+package dev.kord.common.entity
 
-import com.gitlab.kordlib.common.DiscordBitSet
+import dev.kord.common.DiscordBitSet
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind

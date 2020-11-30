@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
 import com.gitlab.kordlib.cache.api.data.description
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.optional
+import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.optional
 import kotlinx.serialization.Serializable
 
 private val MemberData.id get() = "$userId$guildId"

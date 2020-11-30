@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.MessageStickerType
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.MessageStickerData
+import dev.kord.common.entity.MessageStickerType
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.MessageStickerData
 
 /**
  * A sticker image that can be used in messages.

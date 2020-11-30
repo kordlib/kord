@@ -1,17 +1,17 @@
-package com.gitlab.kordlib.core.event.guild
+package dev.kord.core.event.guild
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.exception.RequestException
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.entity.Ban
-import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.core.entity.Strategizable
-import com.gitlab.kordlib.core.entity.User
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.exception.EntityNotFoundException
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.entity.Ban
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.User
+import dev.kord.core.event.Event
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 class BanAddEvent(
         val user: User,

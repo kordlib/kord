@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.GuildFeature
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.cache.data.GuildPreviewData
+import dev.kord.common.entity.GuildFeature
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.GuildPreviewData
 
 class GuildPreview(
         val data: GuildPreviewData,

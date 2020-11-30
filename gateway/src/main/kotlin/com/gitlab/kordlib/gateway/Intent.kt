@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.gateway
+package dev.kord.gateway
 
-import com.gitlab.kordlib.common.DiscordBitSet
-import com.gitlab.kordlib.common.EmptyBitSet
+import dev.kord.common.DiscordBitSet
+import dev.kord.common.EmptyBitSet
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind

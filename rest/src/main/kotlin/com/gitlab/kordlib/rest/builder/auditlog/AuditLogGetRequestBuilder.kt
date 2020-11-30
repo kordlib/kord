@@ -1,9 +1,9 @@
-package com.gitlab.kordlib.rest.builder.auditlog
+package dev.kord.rest.builder.auditlog
 
-import com.gitlab.kordlib.common.entity.AuditLogEvent
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.rest.builder.RequestBuilder
-import com.gitlab.kordlib.rest.json.request.AuditLogGetRequest
+import dev.kord.common.entity.AuditLogEvent
+import dev.kord.common.entity.Snowflake
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.AuditLogGetRequest
 
 class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
 

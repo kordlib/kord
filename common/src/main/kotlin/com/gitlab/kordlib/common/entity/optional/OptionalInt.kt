@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.common.entity.optional
+package dev.kord.common.entity.optional
 
-import com.gitlab.kordlib.common.entity.optional.OptionalInt.Missing
-import com.gitlab.kordlib.common.entity.optional.OptionalInt.Value
+import dev.kord.common.entity.optional.OptionalInt.Missing
+import dev.kord.common.entity.optional.OptionalInt.Value
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException

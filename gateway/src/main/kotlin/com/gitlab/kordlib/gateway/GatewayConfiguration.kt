@@ -1,10 +1,10 @@
-package com.gitlab.kordlib.gateway
+package dev.kord.gateway
 
-import com.gitlab.kordlib.common.entity.DiscordShard
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.coerceToMissing
-import com.gitlab.kordlib.common.entity.optional.optional
-import com.gitlab.kordlib.gateway.builder.PresenceBuilder
+import dev.kord.common.entity.DiscordShard
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.coerceToMissing
+import dev.kord.common.entity.optional.optional
+import dev.kord.gateway.builder.PresenceBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

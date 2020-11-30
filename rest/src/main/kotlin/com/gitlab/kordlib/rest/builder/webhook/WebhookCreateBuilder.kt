@@ -1,12 +1,12 @@
-package com.gitlab.kordlib.rest.builder.webhook
+package dev.kord.rest.builder.webhook
 
-import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.common.entity.optional.map
-import com.gitlab.kordlib.rest.json.request.WebhookCreateRequest
-import com.gitlab.kordlib.rest.Image
+import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
+import dev.kord.rest.json.request.WebhookCreateRequest
+import dev.kord.rest.Image
 
 @KordDsl
 class WebhookCreateBuilder(var name: String): AuditRequestBuilder<WebhookCreateRequest> {

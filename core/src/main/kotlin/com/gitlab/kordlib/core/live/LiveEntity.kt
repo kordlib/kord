@@ -1,12 +1,12 @@
-package com.gitlab.kordlib.core.live
+package dev.kord.core.live
 
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.message.MessageUpdateEvent
-import com.gitlab.kordlib.core.event.message.ReactionAddEvent
-import com.gitlab.kordlib.core.kordLogger
+import dev.kord.common.annotation.KordPreview
+import dev.kord.core.Kord
+import dev.kord.core.entity.Entity
+import dev.kord.core.event.Event
+import dev.kord.core.event.message.MessageUpdateEvent
+import dev.kord.core.event.message.ReactionAddEvent
+import dev.kord.core.kordLogger
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.CoroutineScope

@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core.event
+package dev.kord.core.event
 
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.gateway.Gateway
+import dev.kord.core.Kord
+import dev.kord.gateway.Gateway
 import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 

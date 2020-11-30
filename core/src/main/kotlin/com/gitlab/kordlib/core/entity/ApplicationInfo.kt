@@ -1,14 +1,14 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.behavior.UserBehavior
-import com.gitlab.kordlib.core.cache.data.ApplicationInfoData
-import com.gitlab.kordlib.core.cache.data.TeamData
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.rest.Image
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.UserBehavior
+import dev.kord.core.cache.data.ApplicationInfoData
+import dev.kord.core.cache.data.TeamData
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.Image
 import java.util.*
 
 /**

@@ -1,11 +1,11 @@
-package com.gitlab.kordlib.core.live.channel
+package dev.kord.core.live.channel
 
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.core.entity.Entity
-import com.gitlab.kordlib.core.entity.channel.GuildMessageChannel
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.event.channel.*
-import com.gitlab.kordlib.core.event.guild.GuildDeleteEvent
+import dev.kord.common.annotation.KordPreview
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.event.Event
+import dev.kord.core.event.channel.*
+import dev.kord.core.event.guild.GuildDeleteEvent
 
 @KordPreview
 fun GuildMessageChannel.live() = LiveGuildMessageChannel(this)

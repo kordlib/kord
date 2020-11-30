@@ -2,11 +2,11 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.Overwrite
-import com.gitlab.kordlib.common.entity.UserFlags
-import com.gitlab.kordlib.common.entity.UserPremium
-import com.gitlab.kordlib.common.entity.optional.value
-import com.gitlab.kordlib.gateway.*
+import dev.kord.common.entity.Overwrite
+import dev.kord.common.entity.UserFlags
+import dev.kord.common.entity.UserPremium
+import dev.kord.common.entity.optional.value
+import dev.kord.gateway.*
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 

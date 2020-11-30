@@ -1,13 +1,13 @@
-package com.gitlab.kordlib.rest.builder.user
+package dev.kord.rest.builder.user
 
-import com.gitlab.kordlib.rest.Image
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.common.entity.optional.map
-import com.gitlab.kordlib.common.entity.optional.mapNullable
-import com.gitlab.kordlib.rest.builder.RequestBuilder
-import com.gitlab.kordlib.rest.json.request.CurrentUserModifyRequest
+import dev.kord.rest.Image
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.mapNullable
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.CurrentUserModifyRequest
 
 @KordDsl
 class CurrentUserModifyBuilder : RequestBuilder<CurrentUserModifyRequest> {

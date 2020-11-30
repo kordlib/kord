@@ -1,11 +1,11 @@
-package com.gitlab.kordlib.rest.builder.template
+package dev.kord.rest.builder.template
 
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.common.entity.optional.map
-import com.gitlab.kordlib.rest.Image
-import com.gitlab.kordlib.rest.builder.RequestBuilder
-import com.gitlab.kordlib.rest.json.request.GuildTemplateCreateRequest
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
+import dev.kord.rest.Image
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.GuildTemplateCreateRequest
 
 class GuildFromTemplateCreateBuilder(var name: String) : RequestBuilder<GuildTemplateCreateRequest> {
 

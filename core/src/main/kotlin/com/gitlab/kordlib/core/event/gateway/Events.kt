@@ -1,18 +1,18 @@
-package com.gitlab.kordlib.core.event.gateway
+package dev.kord.core.event.gateway
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.behavior.GuildBehavior
-import com.gitlab.kordlib.core.entity.Guild
-import com.gitlab.kordlib.core.entity.Strategizable
-import com.gitlab.kordlib.core.entity.User
-import com.gitlab.kordlib.core.event.Event
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
-import com.gitlab.kordlib.gateway.Close
-import com.gitlab.kordlib.gateway.Command
-import com.gitlab.kordlib.gateway.Gateway
-import com.gitlab.kordlib.gateway.GatewayCloseCode
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.User
+import dev.kord.core.event.Event
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.gateway.Close
+import dev.kord.gateway.Command
+import dev.kord.gateway.Gateway
+import dev.kord.gateway.GatewayCloseCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 

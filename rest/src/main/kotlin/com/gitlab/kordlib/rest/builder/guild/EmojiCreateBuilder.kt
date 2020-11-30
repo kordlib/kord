@@ -1,11 +1,11 @@
-package com.gitlab.kordlib.rest.builder.guild
+package dev.kord.rest.builder.guild
 
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.rest.Image
-import com.gitlab.kordlib.rest.builder.AuditRequestBuilder
-import com.gitlab.kordlib.rest.json.request.EmojiCreateRequest
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.rest.Image
+import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.rest.json.request.EmojiCreateRequest
 
 @KordDsl
 class EmojiCreateBuilder(var name: String, var image: Image) : AuditRequestBuilder<EmojiCreateRequest> {

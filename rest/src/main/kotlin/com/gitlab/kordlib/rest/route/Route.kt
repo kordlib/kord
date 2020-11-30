@@ -1,11 +1,11 @@
-package com.gitlab.kordlib.rest.route
+package dev.kord.rest.route
 
-import com.gitlab.kordlib.common.annotation.DeprecatedSinceKord
-import com.gitlab.kordlib.common.annotation.KordExperimental
-import com.gitlab.kordlib.common.annotation.KordPreview
-import com.gitlab.kordlib.common.entity.*
-import com.gitlab.kordlib.rest.json.optional
-import com.gitlab.kordlib.rest.json.response.*
+import dev.kord.common.annotation.DeprecatedSinceKord
+import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.*
+import dev.kord.rest.json.optional
+import dev.kord.rest.json.response.*
 import io.ktor.http.HttpMethod
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
@@ -14,9 +14,9 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
-import com.gitlab.kordlib.common.entity.DiscordEmoji as EmojiEntity
+import dev.kord.common.entity.DiscordEmoji as EmojiEntity
 
-internal const val REST_VERSION_PROPERTY_NAME = "com.gitlab.kordlib.rest.version"
+internal const val REST_VERSION_PROPERTY_NAME = "dev.kord.rest.version"
 internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v8"
 
 sealed class Route<T>(

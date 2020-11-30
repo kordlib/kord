@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.rest.request
+package dev.kord.rest.request
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.rest.route.Route
+import dev.kord.common.entity.Snowflake
+import dev.kord.rest.route.Route
 import io.ktor.http.*
 import kotlinx.serialization.SerializationStrategy
 

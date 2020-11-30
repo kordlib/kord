@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.core
+package dev.kord.core
 
 /**
  * An instance than contains a reference to [Kord].

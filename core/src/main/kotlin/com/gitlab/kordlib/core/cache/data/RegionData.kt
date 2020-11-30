@@ -1,7 +1,7 @@
-package com.gitlab.kordlib.core.cache.data
+package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.common.entity.DiscordVoiceRegion
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.DiscordVoiceRegion
+import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.Serializable
 
 @Serializable

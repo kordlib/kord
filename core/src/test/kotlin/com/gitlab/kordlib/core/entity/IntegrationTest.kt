@@ -1,6 +1,6 @@
-package com.gitlab.kordlib.core.entity
+package dev.kord.core.entity
 
-import com.gitlab.kordlib.core.cache.data.IntegrationData
+import dev.kord.core.cache.data.IntegrationData
 import equality.GuildEntityEqualityTest
 import io.mockk.every
 import io.mockk.mockk

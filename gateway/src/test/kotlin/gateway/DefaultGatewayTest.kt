@@ -1,11 +1,11 @@
 package gateway
 
-import com.gitlab.kordlib.common.entity.ActivityType
-import com.gitlab.kordlib.common.entity.PresenceStatus
-import com.gitlab.kordlib.common.entity.DiscordBotActivity
-import com.gitlab.kordlib.common.ratelimit.BucketRateLimiter
-import com.gitlab.kordlib.gateway.*
-import com.gitlab.kordlib.gateway.retry.LinearRetry
+import dev.kord.common.entity.ActivityType
+import dev.kord.common.entity.PresenceStatus
+import dev.kord.common.entity.DiscordBotActivity
+import dev.kord.common.ratelimit.BucketRateLimiter
+import dev.kord.gateway.*
+import dev.kord.gateway.retry.LinearRetry
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.JsonFeature

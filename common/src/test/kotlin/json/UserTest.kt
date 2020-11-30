@@ -2,8 +2,8 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.DiscordUser
-import com.gitlab.kordlib.common.entity.UserFlags
+import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.UserFlags
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 

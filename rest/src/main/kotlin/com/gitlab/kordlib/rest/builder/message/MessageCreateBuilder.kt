@@ -1,18 +1,18 @@
-package com.gitlab.kordlib.rest.builder.message
+package dev.kord.rest.builder.message
 
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.DiscordMessageReference
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.common.entity.optional.OptionalBoolean
-import com.gitlab.kordlib.common.entity.optional.OptionalSnowflake
-import com.gitlab.kordlib.common.entity.optional.delegate.delegate
-import com.gitlab.kordlib.common.entity.optional.map
-import com.gitlab.kordlib.rest.builder.RequestBuilder
-import com.gitlab.kordlib.rest.json.request.AllowedMentions
-import com.gitlab.kordlib.rest.json.request.AllowedMentionType
-import com.gitlab.kordlib.rest.json.request.MessageCreateRequest
-import com.gitlab.kordlib.rest.json.request.MultipartMessageCreateRequest
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.DiscordMessageReference
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.AllowedMentions
+import dev.kord.rest.json.request.AllowedMentionType
+import dev.kord.rest.json.request.MessageCreateRequest
+import dev.kord.rest.json.request.MultipartMessageCreateRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
@@ -43,7 +43,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
 
     /**
      * The id of the message being replied to.
-     * Requires the [ReadMessageHistory][com.gitlab.kordlib.common.entity.Permission.ReadMessageHistory] permission.
+     * Requires the [ReadMessageHistory][dev.kord.common.entity.Permission.ReadMessageHistory] permission.
      *
      * Replying will not mention the author by default,
      * set [AllowedMentionsBuilder.repliedUser] to `true` via [allowedMentions]  to mention the author.

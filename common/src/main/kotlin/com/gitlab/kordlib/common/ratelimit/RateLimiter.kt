@@ -1,4 +1,4 @@
-package com.gitlab.kordlib.common.ratelimit
+package dev.kord.common.ratelimit
 
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

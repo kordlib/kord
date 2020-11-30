@@ -1,12 +1,12 @@
-package com.gitlab.kordlib.gateway.builder
+package dev.kord.gateway.builder
 
-import com.gitlab.kordlib.common.annotation.KordDsl
-import com.gitlab.kordlib.common.entity.ActivityType
-import com.gitlab.kordlib.common.entity.PresenceStatus
-import com.gitlab.kordlib.common.entity.DiscordBotActivity
-import com.gitlab.kordlib.common.entity.optional.Optional
-import com.gitlab.kordlib.gateway.DiscordPresence
-import com.gitlab.kordlib.gateway.UpdateStatus
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.ActivityType
+import dev.kord.common.entity.PresenceStatus
+import dev.kord.common.entity.DiscordBotActivity
+import dev.kord.common.entity.optional.Optional
+import dev.kord.gateway.DiscordPresence
+import dev.kord.gateway.UpdateStatus
 import java.time.Instant
 
 @KordDsl
