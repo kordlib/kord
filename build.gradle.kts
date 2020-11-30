@@ -140,9 +140,9 @@ subprojects {
             name = "Kord"
             userOrg = "kordlib"
             setLicenses("MIT")
-            vcsUrl = "https://gitlab.com/kordlib/kord.git"
-            websiteUrl = "https://gitlab.com/kordlib/kord.git"
-            issueTrackerUrl = "https://gitlab.com/kordlib/kord/issues"
+            vcsUrl = "https://github.com/kordlib/kord.git"
+            websiteUrl = "https://github.com/kordlib/kord.git"
+            issueTrackerUrl = "https://github.com/kordlib/kord/issues"
 
             version = VersionConfig().apply {
                 name = Library.version
