@@ -121,7 +121,7 @@ open class User(
             val hash = data.avatar ?: return defaultUrl
             if (!isAnimated && format == Image.Format.GIF) return null
 
-            return "https://cdn.discordapp.com/avatars/${data.id}/$hash.${format.extension}"
+            return "https://cdn.discordapp.com/avatars/${data.id.value}/$hash.${format.extension}"
         }
 
         /**
@@ -138,7 +138,7 @@ open class User(
             val hash = data.avatar ?: return defaultUrl
             if (!isAnimated && format == Image.Format.GIF) return null
 
-            return "https://cdn.discordapp.com/avatars/${data.id}/$hash.${format.extension}?size=${size.maxRes}"
+            return "https://cdn.discordapp.com/avatars/${data.id.value}/$hash.${format.extension}?size=${size.maxRes}"
         }
 
         /**
