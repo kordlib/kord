@@ -69,16 +69,6 @@ interface MemberBehavior : Entity, UserBehavior {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    @Deprecated("use the overload with reason instead", level = DeprecationLevel.HIDDEN)
-    suspend fun addRole(roleId: Snowflake) {//TODO remove in Kord 0.7.0
-        kord.rest.guild.addRoleToGuildMember(guildId = guildId, userId = id, roleId = roleId)
-    }
-
-    /**
-     * Requests to add the [Role] with the [roleId] to this member.
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     */
     suspend fun addRole(roleId: Snowflake, reason: String? = null) {
         kord.rest.guild.addRoleToGuildMember(guildId = guildId, userId = id, roleId = roleId, reason = reason)
     }
@@ -98,16 +88,6 @@ interface MemberBehavior : Entity, UserBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
-
-    /**
-     * Requests to remove the [Role] with the [roleId] from this member.
-     *
-     * @throws [RequestException] if something went wrong during the request.
-     */
-    @Deprecated("use the overload with reason instead", level = DeprecationLevel.HIDDEN)
-    suspend fun removeRole(roleId: Snowflake) {//TODO remove in Kord 0.7.0
-        kord.rest.guild.deleteRoleFromGuildMember(guildId = guildId, userId = id, roleId = roleId)
-    }
 
     /**
      * Requests to remove the [Role] with the [roleId] from this member.
