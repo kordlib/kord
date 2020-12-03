@@ -1,3 +1,31 @@
+# 0.7.0-RC
+
+## Additions
+
+* Added support for `MessageSticker`. #119
+* Added support for `RoleTags`. #119
+* Added `GuildBehavior#getMembers`. #119
+* Added the ability to move a channel under a category when moving channels. #119
+
+## Fixes
+
+* Fixed `MemberBehavior#edit`, now returning a member. #120 
+* `Gateway#on` now allows suspending consumers.
+* Fixed `GuildBehavior#editSelfNickname` incorrectly parsing the response json. #125
+* Fixed getting user's avatar url. #128
+
+## Changes
+
+* `VoiceServerUpdateEvent#endpoint` is now nullable. #119
+* **Moved com.gitlab.kord.common to dev.kord.common.** #122 
+* **Moved com.gitlab.kord.rest to dev.kord.rest.** #122
+* **Moved com.gitlab.kord.gateway to dev.kord.gateway.** #122
+* **Moved com.gitlab.kord.core to dev.kord.core.** #122
+
+## Removals
+
+* Removed deprecated API from 0.6.x.
+
 # 0.7.0-M2
 
 ## Additions
