@@ -195,7 +195,7 @@ sealed class Route<T>(
         : Route<DiscordGuildMember>(HttpMethod.Patch, "/guilds/$GuildId/members/$UserId", DiscordGuildMember.serializer())
 
     object GuildCurrentUserNickPatch
-        : Route<String>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", String.serializer())
+        : Route<CurrentUserNicknameModifyResponse>(HttpMethod.Patch, "/guilds/$GuildId/members/@me/nick", CurrentUserNicknameModifyResponse.serializer())
 
     object GuildMemberRolePut
         : Route<Unit>(HttpMethod.Put, "/guilds/$GuildId/members/$UserId/roles/$RoleId", NoStrategy)
