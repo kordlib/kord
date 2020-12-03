@@ -400,16 +400,6 @@ interface GuildBehavior : Entity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    @Deprecated("unBan is a typo", ReplaceWith("unban"))
-    suspend fun unBan(userId: Snowflake) {
-        kord.rest.guild.deleteGuildBan(guildId = id, userId = userId)
-    }
-
-    /**
-     * Requests to unban the given [userId].
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     */
     suspend fun unban(userId: Snowflake) {
         kord.rest.guild.deleteGuildBan(guildId = id, userId = userId)
     }
