@@ -81,6 +81,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private val jsonParser = Json {
         ignoreUnknownKeys = true
+        isLenient = true
     }
 
     private val stateMutex = Mutex()
