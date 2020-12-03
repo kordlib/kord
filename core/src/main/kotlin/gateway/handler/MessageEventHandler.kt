@@ -53,7 +53,7 @@ internal class MessageEventHandler(
         } else null
 
         //get the member and cache the member. We need the user, guild id and member to be present
-        val member = if (userData != null && guildId is OptionalSnowflake.Missing && member !is Optional.Value) {
+        val member = if (userData != null && guildId is OptionalSnowflake.Value && member !is Optional.Value) {
             val memberData = MemberData.from(author.id, guildId.value!!, member.value!!)
             cache.put(memberData)
             Member(memberData, userData, kord)
@@ -67,7 +67,7 @@ internal class MessageEventHandler(
             }
         }
 
-        coreFlow.emit(MessageCreateEvent(Message(data, kord), guildId.value!!, member, shard))
+        coreFlow.emit(MessageCreateEvent(Message(data, kord), guildId.value, member, shard))
     }
 
     private suspend fun handle(event: MessageUpdate, shard: Int) = with(event.message) {
