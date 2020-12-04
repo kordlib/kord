@@ -39,7 +39,7 @@ We're currently working on a testing library for easy bot testing against a semi
 
 ## Installation
 
-Replace `{version}` with the latest version number on bintray. 
+Replace `{version}` with the latest version number on bintray.
 
 [![Download](https://img.shields.io/bintray/v/kordlib/Kord/Kord?color=&style=for-the-badge) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion)
 
@@ -53,7 +53,7 @@ repositories {
 
 ```groovy
 dependencies {
-   implementation("com.gitlab.kordlib.kord:kord-core:{version}")
+    implementation("dev.kord.kord:kord-core:{version}")
 }
 ```
 
@@ -67,7 +67,7 @@ repositories {
 
 ```kotlin
 dependencies {
-   implementation("com.gitlab.kordlib.kord:kord-core:{version}")
+   implementation("dev.kord.kord:kord-core:{version}")
 }
 ```
 
@@ -82,7 +82,7 @@ dependencies {
 
 ```xml
 <dependency>
-    <groupId>com.gitlab.kordlib.kord</groupId>
+    <groupId>dev.kord.kord</groupId>
     <artifactId>kord-core</artifactId>
     <version>{version}</version>
 </dependency>
