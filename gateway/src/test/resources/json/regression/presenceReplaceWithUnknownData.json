@@ -1,0 +1,8 @@
+{
+  "t": "PRESENCES_REPLACE",
+  "s": 1337,
+  "op": 0,
+  "d": {
+    "some" : "key"
+  }
+}
