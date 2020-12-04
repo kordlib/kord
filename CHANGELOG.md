@@ -1,3 +1,133 @@
+# 0.7.0-RC
+
+## Additions
+
+* Added support for `MessageSticker`. #119
+* Added support for `RoleTags`. #119
+* Added `GuildBehavior#getMembers`. #119
+* Added the ability to move a channel under a category when moving channels. #119
+
+## Fixes
+
+* Fixed `MemberBehavior#edit`, now returning a member. #120 
+* `Gateway#on` now allows suspending consumers.
+* Fixed `GuildBehavior#editSelfNickname` incorrectly parsing the response json. #125
+* Fixed getting user's avatar url. #128
+
+## Changes
+
+* `VoiceServerUpdateEvent#endpoint` is now nullable. #119
+* **Moved com.gitlab.kord.common to dev.kord.common.** #122 
+* **Moved com.gitlab.kord.rest to dev.kord.rest.** #122
+* **Moved com.gitlab.kord.gateway to dev.kord.gateway.** #122
+* **Moved com.gitlab.kord.core to dev.kord.core.** #122
+
+## Removals
+
+* Removed deprecated API from 0.6.x.
+
+# 0.7.0-M2
+
+## Additions
+
+* Re-added `values`  in `Intent` and `Intents`.
+* Added support for inline replies and `MessageBehavior#reply` to quickly create a reply to a message. #110
+* Added a shortcut to create channels from a `CategoryBehavior`, giving them a parentId by default. #109 
+* Added `Gateway#requestMembers` and `GuildBehavior#RequestMembers` as a shortcut for the `RequestGuildMembers` command.
+
+## Fixes
+
+* Fixed Color bug when converting from java.awt.Color with alpha. #114
+
+## Changes
+
+* Gateway reconnect retries reset on handshake. #68
+
+# 0.7.0-M1
+
+## Changes
+
+* Updated API to Discord V8. #108
+* Introduced Optionals in lower level API and core xData classes. #108 #95
+* De-inlined Snowflake and implemented it into the lower level API. #108
+* Rewrote `AuditLog` and its child classes and introduced them to to `core`. #108
+* `Kord#events` is now a `SharedFlow` which can be configured via `KordBuilder#eventFlow`. #102 
+* `Image` now supports image sizes that are common for Discord image resources. #98
+* `java.awt.Color` has been replaced with `com.gitlab.kordlib.common.Color`. #5
+* `core` Entities should have a meaningful `toString` representation. #88
+* Request builders no longer have `lateinit` fields, these are now required arguments in the builder DSLs. #108
+* `Permissions` and `Intents` now have more and easier constructors. #103
+
+## Additions
+
+* `RestRequestException` now holds a reference to an (optional) `DiscordErrorResponse` with a more specific error message and code.
+* `PremiumTier` now has a `maxEmotes` field. #74
+* Added a `getDmChannelOrNull` to `UserBehavior` to safely try and open a DmChannel with a user. #111
+
+## Fixes
+
+* `GuildBehavior#getVanityUrl` will now correctly return null when the guild does not have a vanity url.
+* Voice channels can now change their topic. 
+* Fixed `CacheEntitySupplier` not returning certain cached entities.
+
+## Dependencies
+
+* Kotlin 1.4.0 -> 1.4.10
+* ktor 1.4.0 -> 1.4.1
+* kotlinx.serialization 1.0.0-RC -> 1.0.0
+* kotlinx.coroutines 1.3.9 -> 1.4.0
+* kotlinLogging 1.7.10 -> 2.0.3
+
+
+# 0.6.10
+
+## Fixes
+
+* Fixed `Guild#getVanityUrl` throwing an exception when a guild did not support vanity invites. #104
+* Fixed `Embed#fields` always returning empty. #105
+
+# 0.6.9
+
+## Fixes
+
+* Fixed `Rolebehavior#mention` for `everyone` roles. #96
+* Fixed NPE being thrown when trying to query data types that were not cached.
+* Fixed message content not being sent when uploading a file. #99
+
+# 0.6.8
+
+## Fixes
+
+* Fixed rest action reasons not encoding properly. #86
+
+# 0.6.7
+
+## Fixes
+
+* Fixed removed channels not being removed from cache. #84
+
+# 0.6.6
+
+## Fixes
+
+* Fixed an issue where `Members` would not consider `Users` with the same ID equal.
+* Removed a dependency on Java 10 introduced in 0.6.5. #78
+* Fixed the event flow dropping events under too much pressure. #81
+* Fixed the `KordCacheBuilder` ignoring configuration #82
+ 
+# 0.6.5
+
+## Fixes
+
+* Fixed an issue where `LiveMessage` would not filter its event flow. #70
+* Fixed an issue where emojis from events would be decoded incorrectly.
+
+# 0.6.4
+
+## Additions
+
+* Added a `MemberBehavior#addRole` and `MemberBehavior#removeRole` variant which accepts an audit log message.
+
 # 0.6.3
 
 ## Fixes

@@ -1,6 +1,6 @@
 import com.gitlab.kordlib.cache.api.put
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.core.Kord
+import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Disabled

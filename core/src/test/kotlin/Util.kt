@@ -1,6 +1,6 @@
-import com.gitlab.kordlib.core.Kord
-import com.gitlab.kordlib.core.supplier.EntitySupplier
-import com.gitlab.kordlib.core.supplier.EntitySupplyStrategy
+import dev.kord.core.Kord
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import io.mockk.every
 import io.mockk.mockk
 

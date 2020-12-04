@@ -2,7 +2,7 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.*
+import dev.kord.common.entity.*
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
@@ -19,27 +19,46 @@ class GuildTest {
         val guild = Json.decodeFromString(DiscordGuild.serializer(), file("guild"))
 
         with(guild) {
-            id shouldBe "41771983423143937"
-            applicationId shouldBe null
-            name shouldBe "Discord Developers"
-            icon shouldBe "86e39f7ae3307e811784e2ffd11a7310"
+            id shouldBe "197038439483310086"
+            name shouldBe "Discord Testers"
+            icon shouldBe "f64c482b807da4f539cff778d174971c"
+            description shouldBe "The official place to report Discord Bugs!"
             splash shouldBe null
-            ownerId shouldBe "80351110224678912"
-            region shouldBe "us-east"
-            afkChannelId shouldBe "42072017402331136"
-            afkTimeout shouldBe 300
-            embedEnabled shouldBe true
-            embedChannelId shouldBe "41771983444115456"
-            verificationLevel.code shouldBe 1
-            defaultMessageNotifications.code shouldBe 0
-            explicitContentFilter.code shouldBe 0
-            mfaLevel.code shouldBe 0
-            widgetEnabled shouldBe false
-            widgetChannelId shouldBe "41771983423143937"
-            roles shouldBe emptyList()
+            discoverySplash shouldBe null
+            features shouldBe listOf(
+                    GuildFeature.AnimatedIcon,
+                    GuildFeature.Verified,
+                    GuildFeature.News,
+                    GuildFeature.VanityUrl,
+                    GuildFeature.Discoverable,
+                    GuildFeature.InviteSplash,
+                    GuildFeature.Banner,
+                    GuildFeature.Community
+            )
             emojis shouldBe emptyList()
-            features shouldBe listOf(GuildFeature.InviteSplash)
-            unavailable shouldBe false
+            banner shouldBe "9b6439a7de04f1d26af92f84ac9e1e4a"
+            ownerId shouldBe "73193882359173120"
+            applicationId shouldBe null
+            region shouldBe "us-west"
+            afkChannelId shouldBe null
+            afkTimeout shouldBe 300
+            systemChannelId shouldBe null
+            widgetEnabled shouldBe true
+            widgetChannelId shouldBe null
+            verificationLevel shouldBe VerificationLevel.High
+            roles shouldBe emptyList()
+            defaultMessageNotifications shouldBe DefaultMessageNotificationLevel.OnlyMentions
+            mfaLevel shouldBe MFALevel.Elevated
+            explicitContentFilter shouldBe ExplicitContentFilter.AllMembers
+            maxPresences shouldBe 40000
+            maxMembers shouldBe 250000
+            vanityUrlCode shouldBe "discord-testers"
+            premiumTier shouldBe PremiumTier.Three
+            premiumSubscriptionCount shouldBe 33
+            systemChannelFlags shouldBe SystemChannelFlags(0)
+            preferredLocale shouldBe "en-US"
+            rulesChannelId shouldBe "441688182833020939"
+            publicUpdatesChannelId shouldBe "281283303326089216"
         }
 
     }
@@ -73,14 +92,14 @@ fun `GuildMember serialization`() {
 
 @Test
 fun `PartialGuild serialization`() {
-    val guild = Json.decodeFromString(DiscordPartialGuild.serializer(), file("partialguild"))
+    val guild = Json.decodeFromString(DiscordGuild.serializer(), file("partialguild"))
 
     with(guild) {
         id shouldBe "80351110224678912"
         name shouldBe "1337 Krew"
         icon shouldBe "8342729096ea3675442027381ff50dfe"
         owner shouldBe true
-        permissions!!.code shouldBe 36953089
+        permissions.value shouldBe 36953089
     }
 
 }

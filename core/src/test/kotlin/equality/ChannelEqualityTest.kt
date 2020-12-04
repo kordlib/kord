@@ -1,8 +1,8 @@
 package equality
 
-import com.gitlab.kordlib.common.entity.Snowflake
-import com.gitlab.kordlib.core.behavior.channel.ChannelBehavior
-import com.gitlab.kordlib.core.entity.Entity
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.entity.Entity
 import mockKord
 import kotlin.test.assertEquals
 

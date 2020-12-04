@@ -2,7 +2,7 @@
 
 package json
 
-import com.gitlab.kordlib.common.entity.DiscordEmoji
+import dev.kord.common.entity.DiscordEmoji
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
@@ -19,7 +19,7 @@ class EmojiTest {
         val emoji = Json.decodeFromString(DiscordEmoji.serializer(), file("customemoji"))
 
         with(emoji) {
-            id shouldBe "41771983429993937"
+            id!!.asString shouldBe "41771983429993937"
             name shouldBe "LUL"
         }
 
@@ -46,7 +46,7 @@ fun `Emoji serialization`() {
         id shouldBe "41771983429993937"
         name shouldBe "LUL"
         roles shouldBe listOf("41771983429993000", "41771983429993111")
-        with(user!!) {
+        with(user.value!!) {
             username shouldBe "Luigi"
             discriminator shouldBe "0002"
             id shouldBe "96008815106887111"

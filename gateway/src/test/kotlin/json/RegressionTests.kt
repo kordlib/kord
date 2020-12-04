@@ -1,10 +1,9 @@
 package json
 
-import com.gitlab.kordlib.gateway.Event
-import com.gitlab.kordlib.gateway.HeartbeatACK
-import com.gitlab.kordlib.gateway.Reconnect
+import dev.kord.gateway.Event
+import dev.kord.gateway.HeartbeatACK
+import dev.kord.gateway.Reconnect
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.parse
 import org.junit.jupiter.api.Test
 
 private fun file(name: String): String {
@@ -17,6 +16,21 @@ class RegressionTests {
     fun `Resume command serialization`() {
         val event = Json.decodeFromString(Event.Companion, file("eventWithDataThatShouldNotHaveData"))
         event shouldBe Reconnect
+    }
+
+    @Test
+    fun `Resumed with unknown data`(){
+        Json.decodeFromString(Event.Companion, file("resumeWithUnknownData"))
+    }
+
+    @Test
+    fun `PresenceReplace with unknown data`(){
+        Json.decodeFromString(Event.Companion, file("presenceReplaceWithUnknownData"))
+    }
+
+    @Test
+    fun `Unknown event with successfully parses`(){
+        Json.decodeFromString(Event.Companion, file("eventWithUnknownData")) //dispatch event with non-existent type
     }
 
 }

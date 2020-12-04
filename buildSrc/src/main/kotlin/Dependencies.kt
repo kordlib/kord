@@ -1,10 +1,11 @@
 object  Versions {
-    const val kotlin = "1.4.0"
-    const val kotlinxSerialization = "1.0.0-RC"
-    const val ktor = "1.4.0"
-    const val kotlinxCoroutines = "1.3.9"
-    const val kotlinLogging = "1.7.10"
+    const val kotlin = "1.4.10"
+    const val kotlinxSerialization = "1.0.0"
+    const val ktor = "1.4.1"
+    const val kotlinxCoroutines = "1.4.0"
+    const val kotlinLogging = "2.0.3"
     const val atomicFu = "0.14.4"
+    const val binaryCompatibilityValidator = "0.2.3"
 
     //test deps
     const val kotlinTest = kotlin
@@ -15,13 +16,14 @@ object  Versions {
     const val junitJupiterEngine = junit5
     const val sl4j = "1.7.30"
     const val bintray = "1.8.5"
-    const val mockk = "1.10.0"
+    const val mockk = "1.10.2"
 }
 
 @Suppress("ObjectPropertyName")
 object Dependencies {
     const val jdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     const val `kotlinx-serialization` = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}"
+    const val `kotlinx-serialization-json` = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxSerialization}"
     const val `kotlinx-coroutines` = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinxCoroutines}"
     const val `kotlinx-atomicfu` = ""
 
