@@ -143,16 +143,14 @@ A low level mapping of [Discord's Gateway](https://discordapp.com/developers/doc
 suspend fun main() {
     val gateway = DefaultGateway()
 
-    gateway.events.filterIsInstance<MessageCreate>()
-            .flowOn(Dispatchers.IO)
-            .onEach {
-                when (it.message.content) {
-                    "!close" -> gateway.stop()
-                    "!restart" -> gateway.restart()
-                    "!detach" -> gateway.detach()
-                }
-            }
-            .launchIn(GlobalScope)
+    gateway.on<MessageCreate> {
+        println("${message.author.username}: ${message.content}")
+        val words = message.content.split(' ')
+        when (words.firstOrNull()) {
+            "!close" -> gateway.stop()
+            "!detach" -> gateway.detach()
+        }
+    }.launchIn(gateway)
 
     gateway.start("your bot token")
 }
