@@ -18,4 +18,19 @@ class RegressionTests {
         event shouldBe Reconnect
     }
 
+    @Test
+    fun `Resumed with unknown data`(){
+        Json.decodeFromString(Event.Companion, file("resumeWithUnknownData"))
+    }
+
+    @Test
+    fun `PresenceReplace with unknown data`(){
+        Json.decodeFromString(Event.Companion, file("presenceReplaceWithUnknownData"))
+    }
+
+    @Test
+    fun `Unknown event with successfully parses`(){
+        Json.decodeFromString(Event.Companion, file("eventWithUnknownData")) //dispatch event with non-existent type
+    }
+
 }

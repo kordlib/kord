@@ -1,0 +1,10 @@
+{
+  "t": "RESUMED",
+  "s": 30,
+  "op": 0,
+  "d": {
+    "_trace": [
+      "[\"gateway-prd-main-dj3z\",{\"micros\":1542,\"calls\":[\"discord-sessions-prd-2-122\",{\"micros\":16}]}]"
+    ]
+  }
+}
