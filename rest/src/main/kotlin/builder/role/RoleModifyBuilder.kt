@@ -13,19 +13,19 @@ import dev.kord.rest.json.request.GuildRoleModifyRequest
 class RoleModifyBuilder : AuditRequestBuilder<GuildRoleModifyRequest> {
     override var reason: String? = null
 
-    private var _color: Optional<Color> = Optional.Missing()
+    private var _color: Optional<Color?> = Optional.Missing()
     var color: Color? by ::_color.delegate()
 
-    private var _hoist: OptionalBoolean = OptionalBoolean.Missing
+    private var _hoist: OptionalBoolean? = OptionalBoolean.Missing
     var hoist: Boolean? by ::_hoist.delegate()
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String?> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
-    private var _mentionable: OptionalBoolean = OptionalBoolean.Missing
+    private var _mentionable: OptionalBoolean? = OptionalBoolean.Missing
     var mentionable: Boolean? by ::_mentionable.delegate()
 
-    private var _permissions: Optional<Permissions> = Optional.Missing()
+    private var _permissions: Optional<Permissions?> = Optional.Missing()
     var permissions: Permissions? by ::_permissions.delegate()
 
     override fun toRequest(): GuildRoleModifyRequest = GuildRoleModifyRequest(

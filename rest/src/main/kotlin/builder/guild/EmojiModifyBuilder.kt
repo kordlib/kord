@@ -14,10 +14,11 @@ class EmojiModifyBuilder : AuditRequestBuilder<EmojiModifyRequest> {
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
-    var roles: MutableSet<Snowflake> = mutableSetOf()
+    private var _roles: Optional<MutableSet<Snowflake>?> = Optional.Missing()
+    var roles: MutableSet<Snowflake>? by ::_roles.delegate()
 
     override fun toRequest(): EmojiModifyRequest = EmojiModifyRequest(
             name = _name,
-            roles = Optional.missingOnEmpty(roles)
+            roles = _roles
     )
 }
