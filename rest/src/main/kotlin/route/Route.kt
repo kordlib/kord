@@ -6,10 +6,11 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.rest.json.optional
 import dev.kord.rest.json.response.*
-import io.ktor.http.HttpMethod
-import kotlinx.serialization.*
+import io.ktor.http.*
+import kotlinx.serialization.DeserializationStrategy
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
@@ -343,8 +344,23 @@ sealed class Route<T>(
     object TemplateGet
         : Route<DiscordTemplate>(HttpMethod.Get, "guilds/templates/${TemplateCode}", DiscordTemplate.serializer())
 
-    object TemplatePost
+    object GuildFromTemplatePost
         : Route<DiscordGuild>(HttpMethod.Post, "guilds/templates/${TemplateCode}", DiscordGuild.serializer())
+
+    object GuildTemplatesGet
+        : Route<List<DiscordTemplate>>(HttpMethod.Get, "/guilds/${GuildId}/templates", ListSerializer(DiscordTemplate.serializer()))
+
+    object GuildTemplatePost
+        : Route<DiscordTemplate>(HttpMethod.Post, "/guilds/${GuildId}/templates", DiscordTemplate.serializer())
+
+    object TemplateSyncPut
+        : Route<DiscordTemplate>(HttpMethod.Put, "/guilds/${GuildId}/templates/${TemplateCode}", DiscordTemplate.serializer())
+
+    object TemplatePatch
+        : Route<DiscordTemplate>(HttpMethod.Patch, "/guilds/${GuildId}/templates/${TemplateCode}", DiscordTemplate.serializer())
+
+    object TemplateDelete
+        : Route<DiscordTemplate>(HttpMethod.Delete, "/guilds/${GuildId}/templates/${TemplateCode}", DiscordTemplate.serializer())
 
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"
@@ -366,7 +382,7 @@ sealed class Route<T>(
     object IntegrationId : Key("{integration.id}")
     object WebhookId : Key("{webhook.id}", true)
     object WebhookToken : Key("{webhook.token}")
-    object TemplateCode: Key("{template.code}")
+    object TemplateCode : Key("{template.code}")
 
 }
 
