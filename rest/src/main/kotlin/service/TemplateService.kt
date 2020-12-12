@@ -29,24 +29,48 @@ class TemplateService(requestHandler: RequestHandler) : RestService(requestHandl
         body(GuildFromTemplateCreateRequest.serializer(), request)
     }
 
+    /**
+     * Creates a template given [guildId] configured by [request]
+     *
+     * Returns created [DiscordTemplate].
+     */
     suspend fun createGuildTemplate(guildId: Snowflake, request: GuildTemplateCreateRequest) = call(Route.GuildTemplatePost) {
         keys[Route.GuildId] = guildId
         body(GuildTemplateCreateRequest.serializer(), request)
     }
 
+    /**
+     * Returns a list of  [DiscordTemplate] given [guildId].
+     */
     suspend fun getGuildTemplates(guildId: Snowflake) = call(Route.GuildTemplatesGet) {
         keys[Route.GuildId] = guildId
     }
 
+    /**
+     * Synchronizes a template with [code] with the current state of the Guild with [guildId]
+     *
+     * Returns synchronized [DiscordTemplate].
+     */
     suspend fun syncGuildTemplate(guildId: Snowflake, code: String) = call(Route.TemplateSyncPut) {
         keys[Route.GuildId] = guildId
         keys[Route.TemplateCode] = code
     }
 
+    /**
+     * Deletes a template given [code] and [guildId].
+     *
+     * Returns deleted [DiscordTemplate]
+     */
     suspend fun deleteGuildTemplate(guildId: Snowflake, code: String) = call(Route.TemplateDelete) {
         keys[Route.GuildId] = guildId
         keys[Route.TemplateCode] = code
     }
+
+    /**
+     * Modifies existing guild template configured by [request] given [code] and [guildId].
+     *
+     * Returns the modified [DiscordTemplate].
+     */
 
     suspend fun modifyGuildTemplate(guildId: Snowflake, code: String, request: GuildTemplateModifyRequest) = call(Route.TemplatePatch) {
         keys[Route.GuildId] = guildId
@@ -63,11 +87,21 @@ class TemplateService(requestHandler: RequestHandler) : RestService(requestHandl
         return createGuildFromTemplate(code, request)
     }
 
+    /**
+     * Modifies existing guild template configured by [builder] given [code] and [guildId].
+     *
+     * Returns the modified [DiscordTemplate].
+     */
     suspend inline fun modifyGuildTemplate(guildId: Snowflake, code: String, builder: GuildTemplateModifyBuilder.() -> Unit): DiscordTemplate {
         val request = GuildTemplateModifyBuilder().apply(builder).toRequest()
         return modifyGuildTemplate(guildId, code, request)
     }
 
+    /**
+     * Creates a guild template with [name] inside the guild with [guildId] configured by [builder].
+     *
+     * Returns the new [DiscordTemplate].
+     */
     suspend inline fun createGuildTemplate(guildId: Snowflake, name: String, builder: GuildTemplateCreateBuilder.() -> Unit): DiscordTemplate {
         val request = GuildTemplateCreateBuilder(name).apply(builder).toRequest()
         return createGuildTemplate(guildId, request)
