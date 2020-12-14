@@ -20,7 +20,7 @@ data class DiscordTemplate(
         @SerialName("source_guild_id")
         val sourceGuildId: Snowflake,
         @SerialName("serialized_source_guild")
-        val serializedSourceGuild: DiscordGuild,
+        val serializedSourceGuild: DiscordPartialGuild,
         @SerialName("is_dirty")
         val isDirty: Boolean?
 )
