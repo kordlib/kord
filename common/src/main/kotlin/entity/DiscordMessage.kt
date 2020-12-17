@@ -714,4 +714,35 @@ enum class MessageType(val code: Int) {
         }
     }
 }
+@Serializable(with = AllowedMentionType.Serializer::class)
+sealed class AllowedMentionType(val value: String) {
+    class Unknown(value: String) : AllowedMentionType(value)
+    object RoleMentions : AllowedMentionType("roles")
+    object UserMentions : AllowedMentionType("users")
+    object EveryoneMentions : AllowedMentionType("everyone")
 
+    internal class Serializer : KSerializer<AllowedMentionType> {
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("Kord.DiscordAllowedMentionType", PrimitiveKind.STRING)
+
+        override fun deserialize(decoder: Decoder): AllowedMentionType = when(val value = decoder.decodeString()) {
+            "roles" -> RoleMentions
+            "users" -> UserMentions
+            "everyone" -> EveryoneMentions
+            else -> Unknown(value)
+        }
+
+        override fun serialize(encoder: Encoder, value: AllowedMentionType) {
+            encoder.encodeString(value.value)
+        }
+    }
+}
+
+@Serializable
+data class AllowedMentions(
+    val parse: List<AllowedMentionType>,
+    val users: List<String>,
+    val roles: List<String>,
+    @SerialName("replied_user")
+    val repliedUser: OptionalBoolean = OptionalBoolean.Missing
+)

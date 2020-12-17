@@ -1,5 +1,6 @@
 package dev.kord.rest.json.request
 
+import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake

@@ -1,9 +1,7 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.Color
-import dev.kord.common.entity.DiscordMessageReference
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.UserFlags
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -28,38 +26,7 @@ data class MessageCreateRequest(
         val messageReference: Optional<DiscordMessageReference> = Optional.Missing()
 )
 
-@Serializable
-data class AllowedMentions(
-        val parse: List<AllowedMentionType>,
-        val users: List<String>,
-        val roles: List<String>,
-        @SerialName("replied_user")
-        val repliedUser: OptionalBoolean = OptionalBoolean.Missing
-)
 
-@Serializable(with = AllowedMentionType.Serializer::class)
-sealed class AllowedMentionType(val value: String) {
-    class Unknown(value: String) : AllowedMentionType(value)
-    object RoleMentions : AllowedMentionType("roles")
-    object UserMentions : AllowedMentionType("users")
-    object EveryoneMentions : AllowedMentionType("everyone")
-
-    internal class Serializer : KSerializer<AllowedMentionType> {
-            override val descriptor: SerialDescriptor
-                    get() = PrimitiveSerialDescriptor("Kord.DiscordAllowedMentionType", PrimitiveKind.STRING)
-
-            override fun deserialize(decoder: Decoder): AllowedMentionType = when(val value = decoder.decodeString()) {
-                    "roles" -> RoleMentions
-                    "users" -> UserMentions
-                    "everyone" -> EveryoneMentions
-                    else -> Unknown(value)
-            }
-
-            override fun serialize(encoder: Encoder, value: AllowedMentionType) {
-                    encoder.encodeString(value.value)
-            }
-    }
-}
 
 data class MultipartMessageCreateRequest(
         val request: MessageCreateRequest,
