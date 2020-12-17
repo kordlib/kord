@@ -73,7 +73,7 @@ data class DiscordUnavailableGuild(
  * @param maxVideoChannelUsers The maximum amount of users in a video channel.
  * @param approximateMemberCount The approximate number of members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
  * @param approximatePresenceCount The approximate number of non-offline members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
- * @param welcomeScreen
+ * @param welcomeScreen The welcome screen of a Community guild, shown to new members.
  */
 @Serializable
 data class DiscordGuild(
