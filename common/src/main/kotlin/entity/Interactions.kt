@@ -117,7 +117,7 @@ sealed class InteractionType(val type: Int) {
         }
 
         override fun serialize(encoder: Encoder, value: InteractionType) {
-            TODO("Not yet implemented")
+            encoder.encodeInt(value.type)
         }
 
     }
