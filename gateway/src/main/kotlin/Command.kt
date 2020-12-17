@@ -185,7 +185,7 @@ data class UpdateVoiceStatus(
         @SerialName("guild_id")
         val guildId: Snowflake,
         @SerialName("channel_id")
-        val channelId: Snowflake,
+        val channelId: Snowflake?,
         @SerialName("self_mute")
         val selfMute: Boolean,
         @SerialName("self_deaf")
