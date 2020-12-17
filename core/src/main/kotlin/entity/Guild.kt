@@ -34,9 +34,9 @@ import java.util.*
  * An instance of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
  */
 class Guild(
-        val data: GuildData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
+    val data: GuildData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : GuildBehavior {
 
     override val id: Snowflake get() = data.id
@@ -70,6 +70,11 @@ class Guild(
      * [rest][dev.kord.rest.service.RestClient] with the flag `with_counts`.
      */
     val approximatePresenceCount: Int? get() = data.approximatePresenceCount.value
+
+    /**
+     * The welcome screen of a Community guild, shown to new members.
+     */
+    val welcomeScreen: WelcomeScreen? get() = data.welcomeScreen.value
 
     /**
      * The maximum number of presences for this guild. 25000 By default.
@@ -129,9 +134,9 @@ class Guild(
      */
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(
-            "Embed was renamed to widget.",
-            ReplaceWith("widgetChannelId"),
-            DeprecationLevel.ERROR
+        "Embed was renamed to widget.",
+        ReplaceWith("widgetChannelId"),
+        DeprecationLevel.ERROR
     )
     val embedChannelId: Snowflake? by ::widgetChannelId
 
@@ -145,9 +150,9 @@ class Guild(
      */
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(
-            "Embed was renamed to widget.",
-            ReplaceWith("widgetChannelId"),
-            DeprecationLevel.ERROR
+        "Embed was renamed to widget.",
+        ReplaceWith("widgetChannelId"),
+        DeprecationLevel.ERROR
     )
     val embedChannel: GuildChannelBehavior? by ::widgetChannel
 
@@ -180,7 +185,13 @@ class Guild(
     /**
      * The time at which this guild was joined, if present.
      */
-    val joinedTime: Instant? get() = data.joinedAt.value?.let { DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(it, Instant::from) }
+    val joinedTime: Instant?
+        get() = data.joinedAt.value?.let {
+            DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(
+                it,
+                Instant::from
+            )
+        }
 
     /**
      * The id of the owner.
@@ -242,7 +253,8 @@ class Guild(
      * The behaviors of all [channels][GuildChannel].
      */
     val channelBehaviors: Set<GuildChannelBehavior>
-        get() = data.channels.orEmpty().asSequence().map { GuildChannelBehavior(id = it, guildId = id, kord = kord) }.toSet()
+        get() = data.channels.orEmpty().asSequence().map { GuildChannelBehavior(id = it, guildId = id, kord = kord) }
+            .toSet()
 
     /**
      * The default message notification level.
@@ -305,7 +317,8 @@ class Guild(
     /**
      * The behaviors of the [roles][Role].
      */
-    val roleBehaviors: Set<RoleBehavior> get() = data.roles.asSequence().map { RoleBehavior(id = it, guildId = id, kord = kord) }.toSet()
+    val roleBehaviors: Set<RoleBehavior>
+        get() = data.roles.asSequence().map { RoleBehavior(id = it, guildId = id, kord = kord) }.toSet()
 
     /**
      * The vanity code of this server used in the [vanityUrl], if present.
@@ -335,7 +348,8 @@ class Guild(
     /**
      * Gets the banner url in the specified format.
      */
-    fun getBannerUrl(format: Image.Format): String? = data.banner?.let { "https://cdn.discordapp.com/banners/${id.asString}/$it.${format.extension}" }
+    fun getBannerUrl(format: Image.Format): String? =
+        data.banner?.let { "https://cdn.discordapp.com/banners/${id.asString}/$it.${format.extension}" }
 
     /**
      * Requests to get the banner image in the specified [format], if present.
@@ -361,7 +375,7 @@ class Guild(
      * @throws [EntityNotFoundException] if the [GuildEmoji] wasn't present.
      */
     suspend fun getEmoji(emojiId: Snowflake): GuildEmoji =
-            supplier.getEmoji(guildId = id, emojiId = emojiId)
+        supplier.getEmoji(guildId = id, emojiId = emojiId)
 
     /**
      * Requests to get the [GuildEmoji] represented by the [emojiId] in this guild,
@@ -370,7 +384,7 @@ class Guild(
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getEmojiOrNull(emojiId: Snowflake): GuildEmoji? =
-            supplier.getEmojiOrNull(guildId = id, emojiId = emojiId)
+        supplier.getEmojiOrNull(guildId = id, emojiId = emojiId)
 
 
     /**
@@ -393,7 +407,7 @@ class Guild(
      * Gets the discovery splash url in the specified [format], if present.
      */
     fun getDiscoverySplashUrl(format: Image.Format): String? =
-            data.splash.value?.let { "discovery-splashes/${id.asString}/${it}.${format.extension}" }
+        data.splash.value?.let { "discovery-splashes/${id.asString}/${it}.${format.extension}" }
 
     /**
      * Requests to get the splash image in the specified [format], if present.
@@ -409,7 +423,8 @@ class Guild(
     /**
      * Gets the icon url, if present.
      */
-    fun getIconUrl(format: Image.Format): String? = data.icon?.let { "https://cdn.discordapp.com/icons/${id.asString}/$it.${format.extension}" }
+    fun getIconUrl(format: Image.Format): String? =
+        data.icon?.let { "https://cdn.discordapp.com/icons/${id.asString}/$it.${format.extension}" }
 
     /**
      * Requests to get the icon image in the specified [format], if present.
@@ -462,7 +477,7 @@ class Guild(
      * Gets the splash url in the specified [format], if present.
      */
     fun getSplashUrl(format: Image.Format): String? =
-            data.splash.value?.let { "https://cdn.discordapp.com/splashes/${id.asString}/$it.${format.extension}" }
+        data.splash.value?.let { "https://cdn.discordapp.com/splashes/${id.asString}/$it.${format.extension}" }
 
     /**
      * Requests to get the splash image in the specified [format], if present.
@@ -480,7 +495,7 @@ class Guild(
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getSystemChannel(): TextChannel? =
-            systemChannelId?.let { supplier.getChannelOfOrNull(it) }
+        systemChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Requests to get the channel the widget will redirect users to,
@@ -489,7 +504,7 @@ class Guild(
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getWidgetChannel(): GuildMessageChannel? =
-            widgetChannelId?.let { supplier.getChannelOfOrNull(it) }
+        widgetChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Returns a new [Guild] with the given [strategy].

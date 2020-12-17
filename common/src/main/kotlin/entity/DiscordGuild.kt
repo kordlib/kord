@@ -73,6 +73,7 @@ data class DiscordUnavailableGuild(
  * @param maxVideoChannelUsers The maximum amount of users in a video channel.
  * @param approximateMemberCount The approximate number of members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
  * @param approximatePresenceCount The approximate number of non-offline members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
+ * @param welcomeScreen
  */
 @Serializable
 data class DiscordGuild(
@@ -149,6 +150,8 @@ data class DiscordGuild(
         val approximateMemberCount: OptionalInt = OptionalInt.Missing,
         @SerialName("approximate_presence_count")
         val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
+        @SerialName("welcome_screen")
+        val welcomeScreen: Optional<WelcomeScreen> = Optional.Missing()
 )
 
 /**
@@ -535,3 +538,20 @@ sealed class VerificationLevel(val value: Int) {
 
     }
 }
+
+@Serializable
+data class WelcomeScreenChannel(
+    @SerialName("channel_id")
+    val channelId: Snowflake,
+    val description: String,
+    @SerialName("emoji_id")
+    val emojiId: String?,
+    @SerialName("emoji_name")
+    val emojiName: String?
+)
+@Serializable
+data class WelcomeScreen(
+    val description: String?,
+    @SerialName("welcome_channels")
+    val welcomeChannels: List<WelcomeScreenChannel>
+)
