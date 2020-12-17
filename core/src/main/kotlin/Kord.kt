@@ -42,13 +42,13 @@ val kordLogger = KotlinLogging.logger { }
  * The central adapter between other Kord modules and source of core [events].
  */
 class Kord(
-        val resources: ClientResources,
-        val cache: DataCache,
-        val gateway: MasterGateway,
-        val rest: RestClient,
-        val selfId: Snowflake,
-        private val eventFlow: MutableSharedFlow<Event>,
-        dispatcher: CoroutineDispatcher,
+    val resources: ClientResources,
+    val cache: DataCache,
+    val gateway: MasterGateway,
+    val rest: RestClient,
+    val selfId: Snowflake,
+    private val eventFlow: MutableSharedFlow<Event>,
+    dispatcher: CoroutineDispatcher,
 ) : CoroutineScope {
     private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventFlow)
 
@@ -138,7 +138,11 @@ class Kord(
      * @return The newly created Guild.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("guild name is a mandatory field", ReplaceWith("createGuild(\"name\", builder)"), DeprecationLevel.WARNING)
+    @Deprecated(
+        "guild name is a mandatory field",
+        ReplaceWith("createGuild(\"name\", builder)"),
+        DeprecationLevel.WARNING
+    )
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
@@ -173,8 +177,8 @@ class Kord(
      * @throws [EntityNotFoundException] if the preview wasn't present.
      */
     suspend fun getGuildPreview(
-            guildId: Snowflake,
-            strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+        guildId: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
     ): GuildPreview = strategy.supply(this).getGuildPreview(guildId)
 
     /**
@@ -184,8 +188,8 @@ class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getGuildPreviewOrNull(
-            guildId: Snowflake,
-            strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+        guildId: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
     ): GuildPreview? = strategy.supply(this).getGuildPreviewOrNull(guildId)
 
 
@@ -196,8 +200,10 @@ class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
      */
-    suspend fun getChannel(id: Snowflake, strategy: EntitySupplyStrategy<*> =
-            resources.defaultStrategy): Channel? = strategy.supply(this).getChannelOrNull(id)
+    suspend fun getChannel(
+        id: Snowflake, strategy: EntitySupplyStrategy<*> =
+            resources.defaultStrategy
+    ): Channel? = strategy.supply(this).getChannelOrNull(id)
 
     /**
      * Requests to get the [Channel] as type [T] through the [strategy],
@@ -206,12 +212,14 @@ class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend inline fun <reified T : Channel> getChannelOf(
-            id: Snowflake,
-            strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): T? = strategy.supply(this).getChannelOfOrNull(id)
 
-    suspend fun getGuild(id: Snowflake, strategy: EntitySupplyStrategy<*> =
-            resources.defaultStrategy): Guild? = strategy.supply(this).getGuildOrNull(id)
+    suspend fun getGuild(
+        id: Snowflake, strategy: EntitySupplyStrategy<*> =
+            resources.defaultStrategy
+    ): Guild? = strategy.supply(this).getGuildOrNull(id)
 
     /**
      * Requests to get the [User] that represents this bot account through the [strategy],
@@ -220,10 +228,10 @@ class Kord(
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
     suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =
-            strategy.supply(this).getSelf()
+        strategy.supply(this).getSelf()
 
     suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User =
-            User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
+        User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
 
     /**
      * Requests to get the [User] that with the [id] through the [strategy],
@@ -232,7 +240,21 @@ class Kord(
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
     suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User? =
-            strategy.supply(this).getUserOrNull(id)
+        strategy.supply(this).getUserOrNull(id)
+
+    /**
+     * Requests to get the [Invite] with [code] through the [EntitySupplyStrategy.rest][REST].
+     * The returned [Invite], if found, uses the default strategy used by Kord.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     *
+     */
+    suspend fun getInvite(
+        code: String,
+        withCounts: Boolean,
+    ): Invite? =
+        EntitySupplyStrategy.rest.supply(this).getInviteOrNull(code, withCounts)
+
 
     /**
      * Requests to edit the presence of the bot user configured by the [builder].
@@ -268,7 +290,7 @@ class Kord(
          * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
          */
         suspend inline operator fun invoke(token: String, builder: KordBuilder.() -> Unit = {}): Kord =
-                KordBuilder(token).apply(builder).build()
+            KordBuilder(token).apply(builder).build()
 
         /**
          * Builds a [Kord] instance configured by the [builder].
@@ -303,8 +325,8 @@ class Kord(
  * events for this [consumer].
  */
 inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline consumer: suspend T.() -> Unit): Job =
-        events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
-                .onEach {
-                    scope.launch { runCatching { consumer(it) }.onFailure { kordLogger.catching(it) } }
-                }
-                .launchIn(scope)
+    events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
+        .onEach {
+            scope.launch { runCatching { consumer(it) }.onFailure { kordLogger.catching(it) } }
+        }
+        .launchIn(scope)
