@@ -13,7 +13,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
-data class ApplicationCommand(
+data class DiscordApplicationCommand(
     val id: Snowflake,
     @SerialName("application_id")
     val applicationId: Snowflake,
@@ -29,7 +29,7 @@ class ApplicationCommandOption(
     val description: String,
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
-    val choices: Optional<List<ApplicationCommandOptionChoice>> = Optional.Missing(),
+    val choices: Optional<List<DiscordApplicationCommandOptionChoice>> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
 )
 
@@ -77,13 +77,13 @@ sealed class ApplicationCommandOptionType(val type: Int) {
 }
 
 @Serializable
-data class ApplicationCommandOptionChoice(
+data class DiscordApplicationCommandOptionChoice(
     val name: String,
     val value: String // mixed type int or string
 )
 
 @Serializable
-data class Interaction(
+data class DiscordInteraction(
     val id: Snowflake,
     val type: InteractionType,
     val data: Optional<ApplicationCommandInteractionData> = Optional.Missing(),
