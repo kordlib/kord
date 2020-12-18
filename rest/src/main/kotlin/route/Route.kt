@@ -429,20 +429,20 @@ sealed class Route<T>(
         : Route<DiscordGuild>(HttpMethod.Post, "guilds/templates/${TemplateCode}", DiscordGuild.serializer())
 
     object GlobalApplicationCommandsGet
-        : Route<List<ApplicationCommand>>(
-        HttpMethod.Get, "/applications/${ApplicationId}/commands", ListSerializer(ApplicationCommand.serializer())
+        : Route<List<DiscordApplicationCommand>>(
+        HttpMethod.Get, "/applications/${ApplicationId}/commands", ListSerializer(DiscordApplicationCommand.serializer())
     )
 
-    object GlobalApplicationCommandCreate : Route<ApplicationCommand>(
+    object GlobalApplicationCommandCreate : Route<DiscordApplicationCommand>(
         HttpMethod.Post,
         "/applications/${ApplicationId}/commands",
-        ApplicationCommand.serializer()
+        DiscordApplicationCommand.serializer()
     )
 
-    object GlobalApplicationCommandModify : Route<ApplicationCommand>(
+    object GlobalApplicationCommandModify : Route<DiscordApplicationCommand>(
         HttpMethod.Patch,
         "/applications/${ApplicationId}/commands/${CommandId}",
-        ApplicationCommand.serializer()
+        DiscordApplicationCommand.serializer()
     )
 
     object GlobalApplicationCommandDelete
@@ -451,23 +451,23 @@ sealed class Route<T>(
     )
 
     object GuildApplicationCommandsGet
-        : Route<List<ApplicationCommand>>(
+        : Route<List<DiscordApplicationCommand>>(
         HttpMethod.Get,
         "/applications/${ApplicationId}/guilds/${GuildId}/commands",
-        ListSerializer(ApplicationCommand.serializer())
+        ListSerializer(DiscordApplicationCommand.serializer())
     )
 
-    object GuildApplicationCommandCreate : Route<ApplicationCommand>(
+    object GuildApplicationCommandCreate : Route<DiscordApplicationCommand>(
         HttpMethod.Post,
         "/applications/${ApplicationId}/guilds/${GuildId}/commands",
-        ApplicationCommand.serializer()
+        DiscordApplicationCommand.serializer()
     )
 
     object GuildApplicationCommandModify
-        : Route<ApplicationCommand>(
+        : Route<DiscordApplicationCommand>(
         HttpMethod.Patch,
         "/applications/${ApplicationId}/guilds/${GuildId}/commands/${CommandId}",
-        ApplicationCommand.serializer()
+        DiscordApplicationCommand.serializer()
     )
 
     object GuildApplicationCommandDelete

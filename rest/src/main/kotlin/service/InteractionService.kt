@@ -6,7 +6,7 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 
 class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
-    suspend fun getGlobalApplicationCommands(applicationId: Snowflake): List<ApplicationCommand> =
+    suspend fun getGlobalApplicationCommands(applicationId: Snowflake): List<DiscordApplicationCommand> =
         call(Route.GlobalApplicationCommandsGet) {
             keys[Route.ApplicationId] = applicationId
         }
@@ -14,7 +14,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend fun createGlobalApplicationCommand(
         applicationId: Snowflake,
         request: GlobalApplicationCommandCreateRequest
-    ): ApplicationCommand = call(Route.GlobalApplicationCommandCreate) {
+    ): DiscordApplicationCommand = call(Route.GlobalApplicationCommandCreate) {
         keys[Route.ApplicationId] = applicationId
         body(GlobalApplicationCommandCreateRequest.serializer(), request)
     }
