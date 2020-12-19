@@ -3,7 +3,7 @@ package dev.kord.core.behavior
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.RoleData
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Role
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.indexOfFirstOrNull
@@ -23,7 +23,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Role](https://discord.com/developers/docs/topics/permissions#role-object) associated to a [guild].
  */
-interface RoleBehavior : Entity, Strategizable {
+interface RoleBehavior : KordEntity, Strategizable {
     /**
      * The id of the guild this channel is associated to.
      */

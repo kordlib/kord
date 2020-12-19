@@ -56,7 +56,7 @@ class Kord(
      * The default supplier, obtained through Kord's [resources] and configured through [KordBuilder.defaultStrategy].
      * By default a strategy from [EntitySupplyStrategy.rest].
      *
-     * All [strategizable][Strategizable] [entities][Entity] created through this instance will use this supplier by default.
+     * All [strategizable][Strategizable] [entities][KordEntity] created through this instance will use this supplier by default.
      */
     val defaultSupplier: EntitySupplier = resources.defaultStrategy.supply(this)
 

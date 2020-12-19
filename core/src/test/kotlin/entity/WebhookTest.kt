@@ -14,5 +14,5 @@ internal class WebhookTest : EntityEqualityTest<Webhook> by EntityEqualityTest({
     every { data.id } returns it
     Webhook(data, kord)
 }), BehaviorEqualityTest<Webhook> {
-    override fun Webhook.behavior(): Entity = WebhookBehavior(id = id, kord = kord)
+    override fun Webhook.behavior(): KordEntity = WebhookBehavior(id = id, kord = kord)
 }

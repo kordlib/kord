@@ -11,7 +11,7 @@ import dev.kord.core.event.guild.GuildCreateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.guild.GuildUpdateEvent
 import dev.kord.core.event.message.*
-import dev.kord.core.live.AbstractLiveEntity
+import dev.kord.core.live.AbstractLiveKordEntity
 
 @KordPreview
 fun Channel.live() = when (this) {
@@ -24,7 +24,7 @@ fun Channel.live() = when (this) {
 }
 
 @KordPreview
-abstract class LiveChannel : AbstractLiveEntity() {
+abstract class LiveChannel : AbstractLiveKordEntity() {
 
     abstract val channel: Channel
 

@@ -3,7 +3,7 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.exception.EntityNotFoundException
@@ -15,7 +15,7 @@ import java.util.*
 /**
  * The behavior of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
  */
-interface ChannelBehavior : Entity, Strategizable {
+interface ChannelBehavior : KordEntity, Strategizable {
 
     /**
      * This channel [formatted as a mention](https://discord.com/developers/docs/reference#message-formatting)

@@ -41,7 +41,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
             keys[Route.GuildId] = guildId
         }
 
-    suspend fun createGuildApplicationCommands(
+    suspend fun createGuildApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         request: GuildApplicationCommandCreateRequest

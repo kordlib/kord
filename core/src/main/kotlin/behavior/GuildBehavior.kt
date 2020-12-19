@@ -45,12 +45,11 @@ import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.random.Random
 
 /**
  * The behavior of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
  */
-interface GuildBehavior : Entity, Strategizable {
+interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests to get all present bans for this guild.
      *

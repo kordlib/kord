@@ -1,7 +1,7 @@
 package dev.kord.core.live.channel
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.event.Event
@@ -14,7 +14,7 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 fun GuildChannel.live() = LiveGuildChannel(this)
 
 @KordPreview
-class LiveGuildChannel(channel: GuildChannel) : LiveChannel(), Entity by channel {
+class LiveGuildChannel(channel: GuildChannel) : LiveChannel(), KordEntity by channel {
 
     override var channel: GuildChannel = channel
         private set
