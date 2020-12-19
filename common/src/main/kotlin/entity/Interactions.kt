@@ -19,7 +19,7 @@ data class DiscordApplicationCommand(
     val applicationId: Snowflake,
     val name: String,
     val description: String,
-    val options: Optional<ApplicationCommandOption> = Optional.Missing()
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
 )
 
 @Serializable

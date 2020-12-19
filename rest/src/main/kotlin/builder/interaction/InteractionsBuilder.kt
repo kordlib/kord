@@ -135,8 +135,8 @@ class ApplicationCommandOptionBuilder(
 
     private var _choices: Optional<MutableList<DiscordApplicationCommandOptionChoice>> = Optional.Missing()
     private var choices: MutableList<DiscordApplicationCommandOptionChoice>? by ::_choices.delegate()
-
-    fun choice(name: String, value: () -> String) {
+        //TODO("Express types in a convenient way.")
+    fun  choice(name: String, value: () -> String) {
         if (choices == null) choices = mutableListOf()
         choices!!.add(DiscordApplicationCommandOptionChoice(name, value()))
     }
