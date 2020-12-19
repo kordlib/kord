@@ -107,7 +107,6 @@ class KordBuilder(val token: String) {
      */
     var intents: Intents = Intents.nonPrivileged
 
-    var applicationId: String? = null
 
     /**
      * Configures the shards this client will connect to, by default `0 until recommended`.
@@ -220,7 +219,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token, shards.count(), client, defaultStrategy, intents, applicationId)
+        val resources = ClientResources(token, shards.count(), client, defaultStrategy, intents)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
