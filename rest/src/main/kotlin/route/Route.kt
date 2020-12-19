@@ -5,6 +5,7 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.rest.json.optional
+import dev.kord.rest.json.request.DiscordInteractionResponse
 import dev.kord.rest.json.response.*
 import io.ktor.http.*
 import kotlinx.serialization.DeserializationStrategy
@@ -477,17 +478,17 @@ sealed class Route<T>(
         NoStrategy
     )
 
-    object InteractionResponseCreate : Route<InteractionResponse>(
+    object InteractionResponseCreate : Route<DiscordInteractionResponse>(
         HttpMethod.Post,
         "/interactions/${InteractionId}/${InteractionToken}/callback",
-        InteractionResponse.serializer()
+        DiscordInteractionResponse.serializer()
     )
 
     object OriginalInteractionResponseModify :
-        Route<InteractionResponse>(
+        Route<DiscordInteractionResponse>(
             HttpMethod.Patch,
             "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
-            InteractionResponse.serializer()
+            DiscordInteractionResponse.serializer()
         )
 
     object OriginalInteractionResponseDelete

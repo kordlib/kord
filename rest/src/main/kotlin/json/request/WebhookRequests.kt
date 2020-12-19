@@ -5,7 +5,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.SerialName
-import kotlinx. serialization.Serializable
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class WebhookCreateRequest(val name: String, val avatar: Optional<String> = Optional.Missing())

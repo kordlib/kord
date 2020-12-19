@@ -2,9 +2,9 @@ package dev.kord.rest.json.request
 
 import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.ApplicationCommandOption
-import dev.kord.common.entity.DiscordEmbed
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -38,8 +38,42 @@ data class GuildApplicationCommandModifyRequest(
 
 @Serializable
 data class OriginalInteractionResponseModifyRequest(
-    val content: String,
-    val embeds: List<DiscordEmbed>,
+    val content: Optional<String>,
+    val embeds: Optional<List<EmbedRequest>>,
     @SerialName("allowed_mentions")
-    val allowedMentions: AllowedMentions,
+    val allowedMentions: Optional<AllowedMentions>,
+)
+
+
+@Serializable
+data class DiscordInteractionResponse(
+    val type: InteractionResponseType,
+    val data: Optional<DiscordInteractionApplicationCommandCallbackData> = Optional.Missing()
+)
+
+@Serializable
+class DiscordInteractionApplicationCommandCallbackData(
+    val tts: OptionalBoolean = OptionalBoolean.Missing,
+    val content: String,
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
+
+)
+@Serializable
+class FollowupMessageCreateRequest(
+    val content: Optional<String> = Optional.Missing(),
+    val username: Optional<String> = Optional.Missing(),
+    @SerialName("avatar_url")
+    val avatar: Optional<String> = Optional.Missing(),
+    val tts: OptionalBoolean = OptionalBoolean.Missing,
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
+)
+
+@Serializable
+data class FollowupMessageModifyRequest(
+    val content: Optional<String>,
+    val embeds: Optional<List<EmbedRequest>>,
+    @SerialName("allowed_mentions")
+    val allowedMentions: Optional<AllowedMentions>,
 )

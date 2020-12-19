@@ -86,7 +86,7 @@ data class DiscordApplicationCommandOptionChoice(
 data class DiscordInteraction(
     val id: Snowflake,
     val type: InteractionType,
-    val data: Optional<ApplicationCommandInteractionData> = Optional.Missing(),
+    val data: Optional<DiscordApplicationCommandInteractionData> = Optional.Missing(),
     @SerialName("guild_id")
     val guildId: Snowflake,
     @SerialName("channel_id")
@@ -123,23 +123,23 @@ sealed class InteractionType(val type: Int) {
     }
 }
 @Serializable
-data class ApplicationCommandInteractionData(
+data class DiscordApplicationCommandInteractionData(
     val id: Snowflake,
     val name: String,
-    val options: Optional<List<ApplicationCommandInteractionDataOption>> = Optional.Missing()
+    val options: Optional<List<DiscordApplicationCommandInteractionDataOption>> = Optional.Missing()
 )
 
 @Serializable
-data class ApplicationCommandInteractionDataOption(
+data class DiscordApplicationCommandInteractionDataOption(
     val name: String,
-    val value: Optional<ApplicationCommandOptionType> = Optional.Missing(),
-    val options: Optional<List<ApplicationCommandInteractionDataOption>> = Optional.Missing()
+    val value: Optional<String> = Optional.Missing(),
+    val options: Optional<List<DiscordApplicationCommandInteractionDataOption>> = Optional.Missing()
 )
 
 @Serializable
-data class InteractionResponse(
+data class DiscordInteractionResponse(
     val type: InteractionResponseType,
-    val data: Optional<InteractionApplicationCommandCallbackData> = Optional.Missing()
+    val data: Optional<DiscordInteractionApplicationCommandCallbackData> = Optional.Missing()
 )
 
 @Serializable
@@ -177,7 +177,7 @@ sealed class InteractionResponseType(val type: Int) {
 }
 
 @Serializable
-class InteractionApplicationCommandCallbackData(
+class DiscordInteractionApplicationCommandCallbackData(
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     val content: String,
     val embeds: Optional<List<DiscordEmbed>> = Optional.Missing(),

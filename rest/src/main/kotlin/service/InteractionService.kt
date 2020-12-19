@@ -1,6 +1,7 @@
 package dev.kord.rest.service
 
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordApplicationCommand
+import dev.kord.common.entity.Snowflake
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
@@ -74,22 +75,22 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend fun createInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        request: InteractionResponse
+        request: DiscordInteractionResponse
     ) =
         call(Route.InteractionResponseCreate) {
             keys[Route.InteractionId] = interactionId
             keys[Route.InteractionToken] = interactionToken
-            body(InteractionResponse.serializer(), request)
+            body(DiscordInteractionResponse.serializer(), request)
         }
 
     suspend fun modifyInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        request: InteractionResponse
+        request: OriginalInteractionResponseModifyRequest
     ) = call(Route.OriginalInteractionResponseModify) {
         keys[Route.InteractionId] = interactionId
         keys[Route.InteractionToken] = interactionToken
-        body(InteractionResponse.serializer(), request)
+        body(OriginalInteractionResponseModifyRequest.serializer(), request)
 
     }
 
@@ -102,11 +103,13 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend fun createFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
-        request: MessageCreateRequest
+        request: FollowupMessageCreateRequest,
+        wait: Boolean = false
     ) = call(Route.FollowupMessageCreate) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.InteractionToken] = interactionToken
-        body(MessageCreateRequest.serializer(), request)
+        parameter("wait", "$wait")
+        body(FollowupMessageCreateRequest.serializer(), request)
     }
 
     suspend fun deleteFollowupMessage(applicationId: Snowflake, interactionToken: String, messageId: Snowflake) =
@@ -120,11 +123,11 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-        request: MessageEditPatchRequest
+        request: FollowupMessageModifyRequest
     ) = call(Route.EditMessagePatch) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.InteractionToken] = interactionToken
         keys[Route.MessageId] = messageId
-        body(MessageEditPatchRequest.serializer(), request)
+        body(FollowupMessageModifyRequest.serializer(), request)
     }
 }
