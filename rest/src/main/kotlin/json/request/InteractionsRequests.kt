@@ -17,8 +17,8 @@ data class GlobalApplicationCommandCreateRequest(
 
 @Serializable
 data class GlobalApplicationCommandModifyRequest(
-    val name: String,
-    val description: String,
+    val name: Optional<String>,
+    val description: Optional<String>,
     val options: Optional<List<ApplicationCommandOption>>
 )
 
@@ -31,8 +31,8 @@ data class GuildApplicationCommandCreateRequest(
 
 @Serializable
 data class GuildApplicationCommandModifyRequest(
-    val name: String,
-    val description: String,
+    val name: Optional<String>,
+    val description: Optional<String>,
     val options: Optional<List<ApplicationCommandOption>>
 )
 

@@ -42,10 +42,13 @@ class GlobalApplicationCommandCreateBuilder(
 }
 
 
-class GlobalApplicationCommandModifyBuilder(
-    val name: String,
-    val description: String
-) : RequestBuilder<GlobalApplicationCommandModifyRequest> {
+class GlobalApplicationCommandModifyBuilder : RequestBuilder<GlobalApplicationCommandModifyRequest> {
+    private var _name: Optional<String> = Optional.Missing()
+    var name: String? by ::_name.delegate()
+
+    private var _description: Optional<String> = Optional.Missing()
+    var description: String? by ::_name.delegate()
+
 
     private var _options: Optional<MutableList<ApplicationCommandOptionBuilder>> = Optional.Missing()
     private var options: MutableList<ApplicationCommandOptionBuilder>? by ::_options.delegate()
@@ -63,7 +66,7 @@ class GlobalApplicationCommandModifyBuilder(
     }
 
     override fun toRequest(): GlobalApplicationCommandModifyRequest {
-        return GlobalApplicationCommandModifyRequest(name, description, _options.mapList { it.toRequest() })
+        return GlobalApplicationCommandModifyRequest(_name, _description, _options.mapList { it.toRequest() })
 
     }
 
@@ -97,10 +100,14 @@ class GuildApplicationCommandCreateBuilder(
 }
 
 
-class GuildApplicationCommandModifyBuilder(
-    val name: String,
-    val description: String
-) : RequestBuilder<GuildApplicationCommandModifyRequest> {
+class GuildApplicationCommandModifyBuilder : RequestBuilder<GuildApplicationCommandModifyRequest> {
+
+    private var _name: Optional<String> = Optional.Missing()
+    var name: String? by ::_name.delegate()
+
+    private var _description: Optional<String> = Optional.Missing()
+    var description: String? by ::_name.delegate()
+
 
     private var _options: Optional<MutableList<ApplicationCommandOptionBuilder>> = Optional.Missing()
     private var options: MutableList<ApplicationCommandOptionBuilder>? by ::_options.delegate()
@@ -118,7 +125,7 @@ class GuildApplicationCommandModifyBuilder(
     }
 
     override fun toRequest(): GuildApplicationCommandModifyRequest {
-        return GuildApplicationCommandModifyRequest(name, description, _options.mapList { it.toRequest() })
+        return GuildApplicationCommandModifyRequest(_name, _description, _options.mapList { it.toRequest() })
 
     }
 
