@@ -3,6 +3,7 @@
 package dev.kord.core.builder.kord
 
 import com.gitlab.kordlib.cache.api.DataCache
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.ratelimit.BucketRateLimiter
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
@@ -106,6 +107,8 @@ class KordBuilder(val token: String) {
      * The enabled gateway intents, setting intents to null will disable the feature.
      */
     var intents: Intents = Intents.nonPrivileged
+
+    var applicationId: Snowflake? = null
 
 
     /**
@@ -219,7 +222,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token, shards.count(), client, defaultStrategy, intents)
+        val resources = ClientResources(token, shards.count(), client, defaultStrategy, intents, applicationId)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()

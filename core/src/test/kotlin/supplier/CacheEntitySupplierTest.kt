@@ -12,7 +12,6 @@ import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
@@ -24,7 +23,7 @@ internal class CacheEntitySupplierTest {
     @OptIn(PrivilegedIntent::class)
     fun `cache does not throw when accessing unregistered entities`(): Unit = runBlocking {
         val kord = Kord(
-                ClientResources("", 0, HttpClient(), EntitySupplyStrategy.cache, Intents.all),
+                ClientResources("", 0, HttpClient(), EntitySupplyStrategy.cache, Intents.all, null),
                 KordCacheBuilder().build(),
                 MasterGateway(mapOf(0 to Gateway.none())),
                 RestClient(KtorRequestHandler("")),

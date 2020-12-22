@@ -12,12 +12,8 @@ import dev.kord.rest.service.InteractionService
 interface GlobalApplicationCommandBehavior : Entity {
     val applicationId: Snowflake
     val service: InteractionService
-    suspend fun edit(
-        name: String,
-        description: String,
-        builder: GlobalApplicationCommandModifyBuilder.() -> Unit
-    ): GlobalApplicationCommand {
-        val request = GlobalApplicationCommandModifyBuilder(name, description).apply(builder).toRequest()
+    suspend fun edit(builder: GlobalApplicationCommandModifyBuilder.() -> Unit): GlobalApplicationCommand {
+        val request = GlobalApplicationCommandModifyBuilder().apply(builder).toRequest()
         val response = service.modifyGlobalApplicationCommand(applicationId, id, request)
         val data = ApplicationCommandData.from(response)
         return GlobalApplicationCommand(data, service)
@@ -33,12 +29,8 @@ interface GuildApplicationCommandBehavior : Entity {
     val applicationId: Snowflake
     val guildId: Snowflake
     val service: InteractionService
-    suspend fun edit(
-        name: String,
-        description: String,
-        builder: GuildApplicationCommandModifyBuilder.() -> Unit
-    ): GuildApplicationCommand {
-        val request = GuildApplicationCommandModifyBuilder(name, description).apply(builder).toRequest()
+    suspend fun edit(builder: GuildApplicationCommandModifyBuilder.() -> Unit): GuildApplicationCommand {
+        val request = GuildApplicationCommandModifyBuilder().apply(builder).toRequest()
         val response = service.modifyGuildApplicationCommand(applicationId, guildId, id, request)
         val data = ApplicationCommandData.from(response)
         return GuildApplicationCommand(data, guildId, service)
