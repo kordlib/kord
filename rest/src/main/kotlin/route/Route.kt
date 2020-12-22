@@ -5,7 +5,6 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.rest.json.optional
-import dev.kord.rest.json.request.DiscordInteractionResponse
 import dev.kord.rest.json.request.MessageEditPatchRequest
 import dev.kord.rest.json.response.*
 import io.ktor.http.*

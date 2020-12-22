@@ -7,6 +7,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.io.InputStream
 
 @Serializable
 data class GlobalApplicationCommandCreateRequest(
@@ -46,19 +47,24 @@ data class OriginalInteractionResponseModifyRequest(
 
 
 @Serializable
-data class DiscordInteractionResponse(
+data class InteractionResponseCreateRequest(
     val type: InteractionResponseType,
-    val data: Optional<DiscordInteractionApplicationCommandCallbackData> = Optional.Missing()
+    val data: Optional<InteractionApplicationCommandCallbackData> = Optional.Missing()
 )
 
 @Serializable
-class DiscordInteractionApplicationCommandCallbackData(
+class InteractionApplicationCommandCallbackData(
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     val content: String,
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
 
 )
+data class MultipartFollowupMessageCreateRequest(
+    val request: FollowupMessageCreateRequest,
+    val file: Pair<String, InputStream>?
+)
+
 @Serializable
 class FollowupMessageCreateRequest(
     val content: Optional<String> = Optional.Missing(),

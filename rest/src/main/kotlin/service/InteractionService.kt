@@ -75,20 +75,20 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend fun createInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        request: DiscordInteractionResponse
+        request: InteractionResponseCreateRequest
     ) =
         call(Route.InteractionResponseCreate) {
             keys[Route.InteractionId] = interactionId
             keys[Route.InteractionToken] = interactionToken
-            body(DiscordInteractionResponse.serializer(), request)
+            body(InteractionResponseCreateRequest.serializer(), request)
         }
 
     suspend fun modifyInteractionResponse(
-        interactionId: Snowflake,
+        applicationId: Snowflake,
         interactionToken: String,
         request: OriginalInteractionResponseModifyRequest
     ) = call(Route.OriginalInteractionResponseModify) {
-        keys[Route.InteractionId] = interactionId
+        keys[Route.ApplicationId] = applicationId
         keys[Route.InteractionToken] = interactionToken
         body(OriginalInteractionResponseModifyRequest.serializer(), request)
 
@@ -103,13 +103,15 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend fun createFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
-        request: FollowupMessageCreateRequest,
+        multipart: MultipartFollowupMessageCreateRequest,
         wait: Boolean = false
     ) = call(Route.FollowupMessageCreate) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.InteractionToken] = interactionToken
         parameter("wait", "$wait")
-        body(FollowupMessageCreateRequest.serializer(), request)
+        body(FollowupMessageCreateRequest.serializer(), multipart.request)
+        multipart.file?.let { file(it) }
+
     }
 
     suspend fun deleteFollowupMessage(applicationId: Snowflake, interactionToken: String, messageId: Snowflake) =

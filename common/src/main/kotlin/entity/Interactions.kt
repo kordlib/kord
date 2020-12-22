@@ -86,7 +86,7 @@ data class DiscordApplicationCommandOptionChoice(
 data class DiscordInteraction(
     val id: Snowflake,
     val type: InteractionType,
-    val data: Optional<DiscordApplicationCommandInteractionData> = Optional.Missing(),
+    val data: DiscordApplicationCommandInteractionData,
     @SerialName("guild_id")
     val guildId: Snowflake,
     @SerialName("channel_id")
@@ -142,7 +142,7 @@ data class DiscordInteractionResponse(
     val data: Optional<DiscordInteractionApplicationCommandCallbackData> = Optional.Missing()
 )
 
-@Serializable
+@Serializable(InteractionResponseType.Serializer::class)
 sealed class InteractionResponseType(val type: Int) {
     object Pong : InteractionResponseType(1)
     object Acknowledge : InteractionResponseType(2)
@@ -151,7 +151,7 @@ sealed class InteractionResponseType(val type: Int) {
     object ACKWithSource : InteractionResponseType(5)
     object Unknown : InteractionResponseType(Int.MAX_VALUE)
 
-    companion object
+    companion object;
 
     object Serializer : KSerializer<InteractionResponseType> {
 

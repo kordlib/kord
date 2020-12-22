@@ -13,6 +13,13 @@ import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 class GlobalApplicationCommandCreateBuilder(
     val name: String,
@@ -179,7 +186,7 @@ class OriginalInteractionResponseModifyBuilder() :
     }
 }
 
-class FollowupMessageModifyBuilder() :
+class FollowupMessageModifyBuilder :
     RequestBuilder<FollowupMessageModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
@@ -204,7 +211,7 @@ class FollowupMessageModifyBuilder() :
     }
 }
 
-class InteractionApplicationCommandCallbackDataBuilder(val content: String) {
+class InteractionApplicationCommandCallbackDataBuilder(var content: String) {
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
@@ -220,9 +227,9 @@ class InteractionApplicationCommandCallbackDataBuilder(val content: String) {
         embeds!! += EmbedBuilder().apply(builder)
     }
 
-    fun build(): DiscordInteractionApplicationCommandCallbackData {
+     fun build(): InteractionApplicationCommandCallbackData {
 
-        return DiscordInteractionApplicationCommandCallbackData(
+        return InteractionApplicationCommandCallbackData(
             _tts,
             content,
             _embeds.mapList { it.toRequest() },
@@ -231,17 +238,44 @@ class InteractionApplicationCommandCallbackDataBuilder(val content: String) {
     }
 }
 
-class InteractionResponseCreateBuilder(var type: InteractionResponseType) : RequestBuilder<DiscordInteractionResponse> {
-    private var _data: Optional<InteractionApplicationCommandCallbackDataBuilder> = Optional.Missing()
-    private var data: InteractionApplicationCommandCallbackDataBuilder? by ::_data.delegate()
 
-    fun data(content: String, builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit) {
-        val data = InteractionApplicationCommandCallbackDataBuilder(content).apply(builder)
+class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCreateRequest> {
+
+    private var _content: Optional<String> = Optional.Missing()
+    var content: String? by ::_content.delegate()
+
+    private var _username: Optional<String> = Optional.Missing()
+    var username: String? by ::_username.delegate()
+
+    private var _avatarUrl: Optional<String> = Optional.Missing()
+    var avatarUrl: String? by ::_avatarUrl.delegate()
+
+    private var _tts: OptionalBoolean = OptionalBoolean.Missing
+    var tts: Boolean? by ::_tts.delegate()
+
+    private var file: Pair<String, java.io.InputStream>? = null
+    var embeds: MutableList<EmbedRequest> = mutableListOf()
+
+    fun setFile(name: String, content: java.io.InputStream) {
+        file = name to content
     }
 
-    override fun toRequest(): DiscordInteractionResponse {
-        return DiscordInteractionResponse(type, _data.map { it.build() })
+    suspend fun setFile(path: Path) = withContext(Dispatchers.IO) {
+        setFile(path.fileName.toString(), Files.newInputStream(path))
     }
+
+    @OptIn(ExperimentalContracts::class)
+    inline fun embed(builder: EmbedBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        embeds.add(EmbedBuilder().apply(builder).toRequest())
+    }
+
+    override fun toRequest(): MultipartFollowupMessageCreateRequest = MultipartFollowupMessageCreateRequest(
+        FollowupMessageCreateRequest(_content, _username, _avatarUrl, _tts, Optional.missingOnEmpty(embeds)), file
+    )
+
 
 }
 
