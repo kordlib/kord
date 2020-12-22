@@ -23,10 +23,6 @@ interface InteractionBehavior : KordEntity {
         return InteractionResponseBehavior(applicationId, token,kord)
     }
 
-    suspend fun pong() {
-        val request = InteractionResponseCreateRequest(InteractionResponseType.Pong)
-        kord.rest.interaction.createInteractionResponse(id, token, request)
-    }
 
 
     suspend fun respond(
@@ -71,10 +67,6 @@ interface PartialInteractionBehavior : KordEntity {
         kord.rest.interaction.createInteractionResponse(id, token, request)
     }
 
-    suspend fun pong() {
-        val request = InteractionResponseCreateRequest(InteractionResponseType.Pong)
-        kord.rest.interaction.createInteractionResponse(id, token, request)
-    }
 
 
     suspend fun respond(
