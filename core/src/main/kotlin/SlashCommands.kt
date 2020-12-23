@@ -17,7 +17,7 @@ class SlashCommands(
     suspend fun createGlobalApplicationCommand(
         name: String,
         description: String,
-        builder: GlobalApplicationCommandCreateBuilder.() -> Unit
+        builder: GlobalApplicationCommandCreateBuilder.() -> Unit = {}
     ): GlobalApplicationCommand {
         val request = GlobalApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
         val response = service.createGlobalApplicationCommand(applicationId, request)
@@ -29,7 +29,7 @@ class SlashCommands(
         guildId: Snowflake,
         name: String,
         description: String,
-        builder: GuildApplicationCommandCreateBuilder.() -> Unit
+        builder: GuildApplicationCommandCreateBuilder.() -> Unit = {}
     ): GuildApplicationCommand {
         val request = GuildApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
         val response = service.createGuildApplicationCommand(applicationId, guildId, request)
@@ -45,7 +45,7 @@ class SlashCommands(
     }
 
 
-    suspend fun getGlobalApplicationCommands(guildId: Snowflake): Flow<GlobalApplicationCommand> = flow {
+    suspend fun getGlobalApplicationCommands(): Flow<GlobalApplicationCommand> = flow {
         for (command in service.getGlobalApplicationCommands(applicationId)) {
             val data = ApplicationCommandData.from(command)
             emit(GlobalApplicationCommand(data, service))

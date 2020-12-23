@@ -34,7 +34,7 @@ class GlobalApplicationCommandCreateBuilder(
         type: ApplicationCommandOptionType,
         name: String,
         description: String,
-        builder: ApplicationCommandOptionBuilder.() -> Unit
+        builder: ApplicationCommandOptionBuilder.() -> Unit = {}
     ) {
         if (options == null) options = mutableListOf()
         val option = ApplicationCommandOptionBuilder(type, name, description).apply(builder)
@@ -65,7 +65,7 @@ class GlobalApplicationCommandModifyBuilder : RequestBuilder<GlobalApplicationCo
         type: ApplicationCommandOptionType,
         name: String,
         description: String,
-        builder: ApplicationCommandOptionBuilder.() -> Unit
+        builder: ApplicationCommandOptionBuilder.() -> Unit = {}
     ) {
         if (options == null) options = mutableListOf()
         val option = ApplicationCommandOptionBuilder(type, name, description).apply(builder)
@@ -92,7 +92,7 @@ class GuildApplicationCommandCreateBuilder(
         type: ApplicationCommandOptionType,
         name: String,
         description: String,
-        builder: ApplicationCommandOptionBuilder.() -> Unit
+        builder: ApplicationCommandOptionBuilder.() -> Unit = {}
     ) {
         if (options == null) options = mutableListOf()
         val option = ApplicationCommandOptionBuilder(type, name, description).apply(builder)
@@ -124,7 +124,7 @@ class GuildApplicationCommandModifyBuilder : RequestBuilder<GuildApplicationComm
         type: ApplicationCommandOptionType,
         name: String,
         description: String,
-        builder: ApplicationCommandOptionBuilder.() -> Unit
+        builder: ApplicationCommandOptionBuilder.() -> Unit = {}
     ) {
         if (options == null) options = mutableListOf()
         val option = ApplicationCommandOptionBuilder(type, name, description).apply(builder)
