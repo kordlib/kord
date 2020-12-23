@@ -2,15 +2,17 @@ package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.InteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.PartialInteractionBehavior
+import dev.kord.core.cache.data.ApplicationCommandInteractionData
+import dev.kord.core.cache.data.ApplicationCommandInteractionDataOptionData
 import dev.kord.core.cache.data.InteractionData
-import dev.kord.core.entity.CommandOptions
-import dev.kord.core.entity.KordEntity
+import dev.kord.core.entity.Entity
 
- class PartialInteraction(val data: InteractionData, override val kord: Kord) : PartialInteractionBehavior {
+class PartialInteraction(val data: InteractionData, override val kord: Kord) : PartialInteractionBehavior {
 
     override val id: Snowflake get() = data.id
 
@@ -28,7 +30,8 @@ import dev.kord.core.entity.KordEntity
 
 }
 
-class Interaction(val data: InteractionData, override val applicationId: Snowflake, override val kord: Kord): InteractionBehavior {
+class Interaction(val data: InteractionData, override val applicationId: Snowflake, override val kord: Kord) :
+    InteractionBehavior {
 
     override val id: Snowflake get() = data.id
 
@@ -42,8 +45,28 @@ class Interaction(val data: InteractionData, override val applicationId: Snowfla
 
     val member: MemberBehavior get() = MemberBehavior(guildId, data.member.userId, kord)
 
-    val name: String = data.data.name
+    val command: Command
+        get() = Command(data.data)
 
     val version: Int get() = data.version
 
+}
+
+class Command(val data: ApplicationCommandInteractionData) : Entity {
+    override val id: Snowflake
+        get() = data.id
+
+    val name = data.name
+
+    val parameters = data.options.orEmpty().map { Parameter(it) }
+
+}
+
+class Parameter(val data: ApplicationCommandInteractionDataOptionData) {
+    val name: String
+        get() = data.name
+    val value: String?
+        get() = data.value.value
+
+    val parameters = data.options.value.orEmpty().map { Parameter(it) }
 }
