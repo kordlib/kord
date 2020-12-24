@@ -7,8 +7,10 @@ val DependencyHandlerScope.gateway get() = project(":gateway")
 val DependencyHandlerScope.core get() = project(":core")
 
 object Library {
+    private const val releaseVersion = "0.7.0"
+
     const val group = "dev.kord"
-    val version = System.getenv("RELEASE_TAG") ?: System.getenv("GITHUB_SHA") ?: "undefined"
+    val version = System.getenv("RELEASE_TAG") ?: releaseVersion
     const val description = "Idiomatic Kotlin Wrapper for The Discord API"
 
     /**
