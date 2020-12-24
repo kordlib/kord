@@ -365,6 +365,16 @@ sealed class Event {
                         DiscordInteraction.serializer()
                     ), sequence
                 )
+                "APPLICATION_COMMAND_CREATE" -> ApplicationCommandCreate(
+                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()), sequence)
+
+                "APPLICATION_COMMAND_UPDATE" -> ApplicationCommandUpdate(
+                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()), sequence)
+
+                "APPLICATION_COMMAND_DELETE" -> ApplicationCommandDelete(
+                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()), sequence)
+
+
                 else -> {
                     jsonLogger.warn { "unknown gateway event name $name" }
                     // consume json elements that are unknown to us
@@ -603,3 +613,6 @@ data class WebhooksUpdate(val webhooksUpdateData: DiscordWebhooksUpdateData, ove
     DispatchEvent()
 
 data class InteractionCreate(val interaction: DiscordInteraction, override val sequence: Int?) : DispatchEvent()
+data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) : DispatchEvent()
+data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) : DispatchEvent()
+data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) : DispatchEvent()

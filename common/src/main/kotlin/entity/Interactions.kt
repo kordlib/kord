@@ -2,6 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalSnowflake
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -19,6 +20,8 @@ data class DiscordApplicationCommand(
     val applicationId: Snowflake,
     val name: String,
     val description: String,
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
 )
 

@@ -3,6 +3,7 @@ package dev.kord.core.cache.data
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.mapList
 import kotlinx.serialization.Serializable
 
@@ -12,6 +13,7 @@ data class ApplicationCommandData(
     val applicationId: Snowflake,
     val name: String,
     val description: String,
+    val guildId: OptionalSnowflake,
     val options: Optional<List<ApplicationCommandOptionData>>
 ) {
     companion object {
@@ -22,6 +24,7 @@ data class ApplicationCommandData(
                     applicationId,
                     name,
                     description,
+                    guildId,
                     options.mapList { ApplicationCommandOptionData.from(it) })
             }
         }
