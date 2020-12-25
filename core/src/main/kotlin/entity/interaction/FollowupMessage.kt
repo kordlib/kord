@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
@@ -27,6 +28,7 @@ import java.util.*
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
  */
+@KordPreview
 class FollowupMessage(
     val data: MessageData,
     override val token: String,

@@ -1,11 +1,12 @@
 package dev.kord.rest.service
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordApplicationCommand
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
-
+@KordPreview
 class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
     suspend fun getGlobalApplicationCommands(applicationId: Snowflake): List<DiscordApplicationCommand> =
         call(Route.GlobalApplicationCommandsGet) {

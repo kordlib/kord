@@ -1,5 +1,6 @@
 package dev.kord.core.entity.interaction
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
@@ -11,7 +12,7 @@ import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.ApplicationCommandInteractionDataOptionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.Entity
-
+@KordPreview
 class PartialInteraction(val data: InteractionData, override val kord: Kord) : PartialInteractionBehavior {
 
     override val id: Snowflake get() = data.id
@@ -29,7 +30,7 @@ class PartialInteraction(val data: InteractionData, override val kord: Kord) : P
     val version: Int get() = data.version
 
 }
-
+@KordPreview
 class Interaction(val data: InteractionData, override val applicationId: Snowflake, override val kord: Kord) :
     InteractionBehavior {
 
@@ -55,7 +56,6 @@ class Interaction(val data: InteractionData, override val applicationId: Snowfla
 class Command(val data: ApplicationCommandInteractionData) : Entity {
     override val id: Snowflake
         get() = data.id
-
     val name = data.name
 
     val parameters = data.options.orEmpty().map { Parameter(it) }

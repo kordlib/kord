@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -8,6 +9,7 @@ import dev.kord.common.entity.optional.mapList
 import kotlinx.serialization.Serializable
 
 @Serializable
+@KordPreview
 data class ApplicationCommandData(
     val id: Snowflake,
     val applicationId: Snowflake,
@@ -32,6 +34,7 @@ data class ApplicationCommandData(
 }
 
 @Serializable
+@KordPreview
 data class ApplicationCommandOptionData(
     val type: ApplicationCommandOptionType,
     val name: String,
@@ -59,14 +62,15 @@ data class ApplicationCommandOptionData(
 }
 
 @Serializable
+@KordPreview
 data class ApplicationCommandOptionChoiceData(
     val name: String,
     val value: String
 ) {
     companion object {
-        fun from(choice: DiscordApplicationCommandOptionChoice): ApplicationCommandOptionChoiceData {
+        fun from(choice: Choice<*>): ApplicationCommandOptionChoiceData {
             return with(choice) {
-                ApplicationCommandOptionChoiceData(name, value)
+                ApplicationCommandOptionChoiceData(name, value.toString())
             }
         }
     }

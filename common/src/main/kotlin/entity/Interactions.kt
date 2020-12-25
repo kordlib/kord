@@ -3,15 +3,20 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.encoding.encodeStructure
+import kotlinx.serialization.json.JsonDecoder
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.int
+import kotlinx.serialization.json.jsonPrimitive
 
 @Serializable
 data class DiscordApplicationCommand(
@@ -32,9 +37,16 @@ class ApplicationCommandOption(
     val description: String,
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
-    val choices: Optional<List<DiscordApplicationCommandOptionChoice>> = Optional.Missing(),
+    val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
 )
+
+object NotSerializable : KSerializer<Any?> {
+    override fun deserialize(decoder: Decoder) = TODO("Not yet implemented")
+    override val descriptor: SerialDescriptor = String.serializer().descriptor
+    override fun serialize(encoder: Encoder, value: Any?) = TODO("Not yet implemented")
+}
+
 
 @Serializable(ApplicationCommandOptionType.Serializer::class)
 sealed class ApplicationCommandOptionType(val type: Int) {
@@ -79,11 +91,47 @@ sealed class ApplicationCommandOptionType(val type: Int) {
 
 }
 
-@Serializable
-data class DiscordApplicationCommandOptionChoice(
-    val name: String,
-    val value: String // mixed type int or string
-)
+@Serializable(Choice.ChoiceSerializer::class)
+sealed class Choice<out T> {
+    abstract val name: String
+    abstract val value: T
+
+    class IntChoice(override val name: String, override val value: Int) : Choice<Int>()
+    class StringChoice(override val name: String, override val value: String) : Choice<String>()
+    internal class ChoiceSerializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
+            element<String>("name")
+            element<String>("value")
+        }
+
+        override fun deserialize(decoder: Decoder): Choice<*> {
+            lateinit var name: String
+            lateinit var value: JsonPrimitive
+            val json = decoder as JsonDecoder
+            with(decoder.beginStructure(descriptor) as JsonDecoder) {
+                while (true) {
+                    when (val index = decodeElementIndex(descriptor)) {
+                        0 -> name = decodeStringElement(descriptor, index)
+                        1 -> value = decodeJsonElement().jsonPrimitive
+
+                        CompositeDecoder.DECODE_DONE -> break
+                        else -> throw SerializationException("unknown index: $index")
+                    }
+                }
+                endStructure(descriptor)
+            }
+            return if(value.isString) StringChoice(name, value.toString()) else IntChoice(name, value.int)
+        }
+
+        override fun serialize(encoder: Encoder, value: Choice<*>) {
+            encoder.encodeStructure(descriptor) {
+                encodeStringElement(descriptor, 0, value.name)
+                if (value is IntChoice) encodeIntElement(descriptor, 1, value.value)
+                else encodeStringElement(descriptor, 1, value.value.toString())
+            }
+        }
+    }
+}
 
 @Serializable
 data class DiscordInteraction(
@@ -98,6 +146,7 @@ data class DiscordInteraction(
     val token: String,
     val version: Int
 )
+
 @Serializable(InteractionType.Serializer::class)
 sealed class InteractionType(val type: Int) {
     object Ping : InteractionType(1)
@@ -125,6 +174,7 @@ sealed class InteractionType(val type: Int) {
 
     }
 }
+
 @Serializable
 data class DiscordApplicationCommandInteractionData(
     val id: Snowflake,

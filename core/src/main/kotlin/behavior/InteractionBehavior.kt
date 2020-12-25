@@ -1,5 +1,6 @@
 package dev.kord.core.behavior
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.optional
@@ -7,7 +8,7 @@ import dev.kord.core.Kord
 import dev.kord.core.entity.KordEntity
 import dev.kord.rest.builder.interaction.InteractionApplicationCommandCallbackDataBuilder
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
-
+@KordPreview
 interface InteractionBehavior : KordEntity {
 
     //TODO("return full response with full functionality")
@@ -28,7 +29,7 @@ interface InteractionBehavior : KordEntity {
     suspend fun respond(
         content: String,
         source: Boolean = false,
-        builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit
+        builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit = {}
     ): InteractionResponseBehavior {
         val type = if (source) InteractionResponseType.ChannelMessageWithSource
         else InteractionResponseType.ChannelMessage
@@ -56,7 +57,7 @@ interface InteractionBehavior : KordEntity {
                 get() = kord
         }
 }
-
+@KordPreview
 interface PartialInteractionBehavior : KordEntity {
     //TODO("return full response with data")
     val token: String
@@ -72,10 +73,9 @@ interface PartialInteractionBehavior : KordEntity {
     suspend fun respond(
         content: String,
         source: Boolean = false,
-        builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit
+        builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit = {}
     ) {
-        val type =
-            if (source) InteractionResponseType.ChannelMessageWithSource else InteractionResponseType.ChannelMessage
+        val type = if (source) InteractionResponseType.ChannelMessageWithSource else InteractionResponseType.ChannelMessage
         val data = InteractionApplicationCommandCallbackDataBuilder(content).apply(builder).build()
         val request = InteractionResponseCreateRequest(type, data.optional())
         kord.rest.interaction.createInteractionResponse(id, token, request)

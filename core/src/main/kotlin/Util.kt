@@ -1,6 +1,7 @@
 package dev.kord.core
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.core.entity.Entity
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.event.Event
 import dev.kord.core.event.user.PresenceUpdateEvent
@@ -72,7 +73,7 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
 
 
 
-fun <T : KordEntity> Flow<T>.sorted(): Flow<T> = flow {
+fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
     for (entity in toList().sorted()) {
         emit(entity)
     }

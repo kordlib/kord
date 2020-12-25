@@ -1,5 +1,6 @@
 package dev.kord.gateway
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -611,8 +612,11 @@ data class VoiceServerUpdate(val voiceServerUpdateData: DiscordVoiceServerUpdate
 
 data class WebhooksUpdate(val webhooksUpdateData: DiscordWebhooksUpdateData, override val sequence: Int?) :
     DispatchEvent()
-
+@KordPreview
 data class InteractionCreate(val interaction: DiscordInteraction, override val sequence: Int?) : DispatchEvent()
+@KordPreview
 data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) : DispatchEvent()
+@KordPreview
 data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) : DispatchEvent()
+@KordPreview
 data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) : DispatchEvent()

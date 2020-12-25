@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ApplicationCommandOptionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.mapList
@@ -9,7 +10,7 @@ import dev.kord.core.behavior.GuildApplicationCommandBehavior
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.ApplicationCommandOptionData
 import dev.kord.rest.service.InteractionService
-
+@KordPreview
 class GlobalApplicationCommand(val data: ApplicationCommandData, override val service: InteractionService) :
     GlobalApplicationCommandBehavior {
     override val id: Snowflake
@@ -26,7 +27,7 @@ class GlobalApplicationCommand(val data: ApplicationCommandData, override val se
 
 
 }
-
+@KordPreview
 class GuildApplicationCommand(
     val data: ApplicationCommandData,
     override val guildId: Snowflake,
@@ -46,7 +47,7 @@ class GuildApplicationCommand(
 
 
 }
-
+@KordPreview
 data class CommandOptions(val data: ApplicationCommandOptionData) {
     val type: ApplicationCommandOptionType get() = data.type
     val name: String get() = data.name

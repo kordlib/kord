@@ -1,9 +1,6 @@
 package dev.kord.rest.builder.interaction
 
-import dev.kord.common.entity.ApplicationCommandOption
-import dev.kord.common.entity.ApplicationCommandOptionType
-import dev.kord.common.entity.DiscordApplicationCommandOptionChoice
-import dev.kord.common.entity.InteractionResponseType
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
@@ -20,26 +17,14 @@ import java.nio.file.Path
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-
+@KordPreview
 class GlobalApplicationCommandCreateBuilder(
     val name: String,
     val description: String
-) : RequestBuilder<GlobalApplicationCommandCreateRequest> {
+) : RequestBuilder<GlobalApplicationCommandCreateRequest>, BaseApplicationBuilder() {
 
-    private var _options: Optional<MutableList<ApplicationCommandOptionBuilder>> = Optional.Missing()
-    private var options: MutableList<ApplicationCommandOptionBuilder>? by ::_options.delegate()
-
-    //TODO("check if desc can be empty")
-    fun option(
-        type: ApplicationCommandOptionType,
-        name: String,
-        description: String,
-        builder: ApplicationCommandOptionBuilder.() -> Unit = {}
-    ) {
-        if (options == null) options = mutableListOf()
-        val option = ApplicationCommandOptionBuilder(type, name, description).apply(builder)
-        options!!.add(option)
-    }
+    private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
+    override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
     override fun toRequest(): GlobalApplicationCommandCreateRequest {
         return GlobalApplicationCommandCreateRequest(name, description, _options.mapList { it.toRequest() })
@@ -48,56 +33,74 @@ class GlobalApplicationCommandCreateBuilder(
 
 }
 
-
-class GlobalApplicationCommandModifyBuilder : RequestBuilder<GlobalApplicationCommandModifyRequest> {
+@KordPreview
+class GlobalApplicationCommandModifyBuilder : RequestBuilder<GlobalApplicationCommandModifyRequest>,
+    BaseApplicationBuilder() {
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
     private var _description: Optional<String> = Optional.Missing()
     var description: String? by ::_name.delegate()
 
-
-    private var _options: Optional<MutableList<ApplicationCommandOptionBuilder>> = Optional.Missing()
-    private var options: MutableList<ApplicationCommandOptionBuilder>? by ::_options.delegate()
-
-    //TODO("check if desc can be empty")
-    fun option(
-        type: ApplicationCommandOptionType,
-        name: String,
-        description: String,
-        builder: ApplicationCommandOptionBuilder.() -> Unit = {}
-    ) {
-        if (options == null) options = mutableListOf()
-        val option = ApplicationCommandOptionBuilder(type, name, description).apply(builder)
-        options!!.add(option)
-    }
-
+    private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
+    override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
     override fun toRequest(): GlobalApplicationCommandModifyRequest {
         return GlobalApplicationCommandModifyRequest(_name, _description, _options.mapList { it.toRequest() })
-
     }
 
-}
 
+}
+@KordPreview
+sealed class BaseApplicationBuilder {
+    protected abstract var options: MutableList<OptionsBuilder>?
+
+    fun boolean(name: String, description: String) {
+        if (options == null) options = mutableListOf()
+        options!!.add(BooleanBuilder(name, description))
+    }
+
+    fun int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
+        if (options == null) options = mutableListOf()
+        options!!.add(IntChoiceBuilder(name, description).apply(builder))
+    }
+
+    fun string(name: String, description: String, builder: StringChoiceBuilder.() -> Unit = {}) {
+        if (options == null) options = mutableListOf()
+        options!!.add(StringChoiceBuilder(name, description).apply(builder))
+    }
+
+    fun group(name: String, description: String, builder: GroupCommandBuilder.() -> Unit) {
+        if (options == null) options = mutableListOf()
+        options!!.add(GroupCommandBuilder(name, description).apply(builder))
+    }
+
+    fun subCommand(name: String, description: String, builder: SubCommandBuilder.() -> Unit = {}) {
+        if (options == null) options = mutableListOf()
+        options!!.add(SubCommandBuilder(name, description).apply(builder))
+    }
+
+    fun role(name: String, description: String) {
+        if (options == null) options = mutableListOf()
+        options!!.add(RoleBuilder(name, description))
+    }
+
+    fun user(name: String, description: String) {
+        if (options == null) options = mutableListOf()
+        options!!.add(UserBuilder(name, description))
+    }
+
+    fun channel(name: String, description: String) {
+        if (options == null) options = mutableListOf()
+        options!!.add(ChannelBuilder(name, description))
+    }
+}
+@KordPreview
 class GuildApplicationCommandCreateBuilder(
     val name: String,
     val description: String
-) : RequestBuilder<GuildApplicationCommandCreateRequest> {
-
-    private var _options: Optional<MutableList<ApplicationCommandOptionBuilder>> = Optional.Missing()
-    private var options: MutableList<ApplicationCommandOptionBuilder>? by ::_options.delegate()
-
-    //TODO("check if desc can be empty")
-    fun option(
-        type: ApplicationCommandOptionType,
-        name: String,
-        description: String,
-        builder: ApplicationCommandOptionBuilder.() -> Unit = {}
-    ) {
-        if (options == null) options = mutableListOf()
-        val option = ApplicationCommandOptionBuilder(type, name, description).apply(builder)
-        options!!.add(option)
-    }
+) : RequestBuilder<GuildApplicationCommandCreateRequest>, BaseApplicationBuilder() {
+    private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
+    override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
     override fun toRequest(): GuildApplicationCommandCreateRequest {
         return GuildApplicationCommandCreateRequest(name, description, _options.mapList { it.toRequest() })
@@ -106,30 +109,21 @@ class GuildApplicationCommandCreateBuilder(
 
 }
 
-
-class GuildApplicationCommandModifyBuilder : RequestBuilder<GuildApplicationCommandModifyRequest> {
+@KordPreview
+class GuildApplicationCommandModifyBuilder : BaseApplicationBuilder(),
+    RequestBuilder<GuildApplicationCommandModifyRequest> {
 
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
+
 
     private var _description: Optional<String> = Optional.Missing()
     var description: String? by ::_name.delegate()
 
 
-    private var _options: Optional<MutableList<ApplicationCommandOptionBuilder>> = Optional.Missing()
-    private var options: MutableList<ApplicationCommandOptionBuilder>? by ::_options.delegate()
+    private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
+    override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
-    //TODO("check if desc can be empty")
-    fun option(
-        type: ApplicationCommandOptionType,
-        name: String,
-        description: String,
-        builder: ApplicationCommandOptionBuilder.() -> Unit = {}
-    ) {
-        if (options == null) options = mutableListOf()
-        val option = ApplicationCommandOptionBuilder(type, name, description).apply(builder)
-        options!!.add(option)
-    }
 
     override fun toRequest(): GuildApplicationCommandModifyRequest {
         return GuildApplicationCommandModifyRequest(_name, _description, _options.mapList { it.toRequest() })
@@ -138,30 +132,8 @@ class GuildApplicationCommandModifyBuilder : RequestBuilder<GuildApplicationComm
 
 }
 
-class ApplicationCommandOptionBuilder(
-    val type: ApplicationCommandOptionType,
-    val name: String,
-    val description: String
-) {
-    private var _required: OptionalBoolean = OptionalBoolean.Missing
-    var required: Boolean? by ::_required.delegate()
-
-    private var _default: OptionalBoolean = OptionalBoolean.Missing
-    var default: Boolean? by ::_default.delegate()
-
-    private var _choices: Optional<MutableList<DiscordApplicationCommandOptionChoice>> = Optional.Missing()
-    private var choices: MutableList<DiscordApplicationCommandOptionChoice>? by ::_choices.delegate()
-
-    //TODO("Express types in a convenient way.")
-    fun choice(name: String, value: () -> String) {
-        if (choices == null) choices = mutableListOf()
-        choices!!.add(DiscordApplicationCommandOptionChoice(name, value()))
-    }
-
-    fun toRequest() = ApplicationCommandOption(type, name, description, _default, _required, _choices)
-}
-
-class OriginalInteractionResponseModifyBuilder() :
+@KordPreview
+class OriginalInteractionResponseModifyBuilder :
     RequestBuilder<OriginalInteractionResponseModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
@@ -185,7 +157,7 @@ class OriginalInteractionResponseModifyBuilder() :
             _allowedMentions.map { it.build() })
     }
 }
-
+@KordPreview
 class FollowupMessageModifyBuilder :
     RequestBuilder<FollowupMessageModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
@@ -210,7 +182,7 @@ class FollowupMessageModifyBuilder :
             _allowedMentions.map { it.build() })
     }
 }
-
+@KordPreview
 class InteractionApplicationCommandCallbackDataBuilder(var content: String) {
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
@@ -227,7 +199,7 @@ class InteractionApplicationCommandCallbackDataBuilder(var content: String) {
         embeds!! += EmbedBuilder().apply(builder)
     }
 
-     fun build(): InteractionApplicationCommandCallbackData {
+    fun build(): InteractionApplicationCommandCallbackData {
 
         return InteractionApplicationCommandCallbackData(
             _tts,
@@ -238,7 +210,7 @@ class InteractionApplicationCommandCallbackDataBuilder(var content: String) {
     }
 }
 
-
+@KordPreview
 class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCreateRequest> {
 
     private var _content: Optional<String> = Optional.Missing()

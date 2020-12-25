@@ -1,5 +1,6 @@
 package dev.kord.core
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.entity.GlobalApplicationCommand
@@ -9,7 +10,7 @@ import dev.kord.rest.builder.interaction.GuildApplicationCommandCreateBuilder
 import dev.kord.rest.service.InteractionService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-
+@KordPreview
 class SlashCommands(
     private val applicationId: Snowflake,
     private val service: InteractionService

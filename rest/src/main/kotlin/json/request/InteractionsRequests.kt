@@ -1,5 +1,6 @@
 package dev.kord.rest.json.request
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.ApplicationCommandOption
 import dev.kord.common.entity.InteractionResponseType
@@ -10,6 +11,7 @@ import kotlinx.serialization.Serializable
 import java.io.InputStream
 
 @Serializable
+@KordPreview
 data class GlobalApplicationCommandCreateRequest(
     val name: String,
     val description: String,
@@ -17,13 +19,15 @@ data class GlobalApplicationCommandCreateRequest(
 )
 
 @Serializable
+@KordPreview
 data class GlobalApplicationCommandModifyRequest(
-    val name: Optional<String>,
-    val description: Optional<String>,
-    val options: Optional<List<ApplicationCommandOption>>
+    val name: Optional<String> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing(),
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
 )
 
 @Serializable
+@KordPreview
 data class GuildApplicationCommandCreateRequest(
     val name: String,
     val description: String,
@@ -31,28 +35,32 @@ data class GuildApplicationCommandCreateRequest(
 )
 
 @Serializable
+@KordPreview
 data class GuildApplicationCommandModifyRequest(
-    val name: Optional<String>,
-    val description: Optional<String>,
-    val options: Optional<List<ApplicationCommandOption>>
+    val name: Optional<String> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing(),
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
 )
 
 @Serializable
+@KordPreview
 data class OriginalInteractionResponseModifyRequest(
-    val content: Optional<String>,
-    val embeds: Optional<List<EmbedRequest>>,
+    val content: Optional<String> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing() ,
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions>,
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
 )
 
 
 @Serializable
+@KordPreview
 data class InteractionResponseCreateRequest(
     val type: InteractionResponseType,
     val data: Optional<InteractionApplicationCommandCallbackData> = Optional.Missing()
 )
 
 @Serializable
+@KordPreview
 class InteractionApplicationCommandCallbackData(
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     val content: String,
@@ -60,12 +68,14 @@ class InteractionApplicationCommandCallbackData(
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
 
 )
+@KordPreview
 data class MultipartFollowupMessageCreateRequest(
     val request: FollowupMessageCreateRequest,
     val file: Pair<String, InputStream>?
 )
 
 @Serializable
+@KordPreview
 class FollowupMessageCreateRequest(
     val content: Optional<String> = Optional.Missing(),
     val username: Optional<String> = Optional.Missing(),
@@ -77,6 +87,7 @@ class FollowupMessageCreateRequest(
 )
 
 @Serializable
+@KordPreview
 data class FollowupMessageModifyRequest(
     val content: Optional<String>,
     val embeds: Optional<List<EmbedRequest>>,
