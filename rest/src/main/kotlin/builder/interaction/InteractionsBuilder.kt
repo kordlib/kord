@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.interaction
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -18,6 +19,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 @KordPreview
+@KordDsl
 class GlobalApplicationCommandCreateBuilder(
     val name: String,
     val description: String
@@ -34,6 +36,7 @@ class GlobalApplicationCommandCreateBuilder(
 }
 
 @KordPreview
+@KordDsl
 class GlobalApplicationCommandModifyBuilder : RequestBuilder<GlobalApplicationCommandModifyRequest>,
     BaseApplicationBuilder() {
     private var _name: Optional<String> = Optional.Missing()
@@ -51,6 +54,7 @@ class GlobalApplicationCommandModifyBuilder : RequestBuilder<GlobalApplicationCo
 
 }
 @KordPreview
+@KordDsl
 sealed class BaseApplicationBuilder {
     protected abstract var options: MutableList<OptionsBuilder>?
 
@@ -95,6 +99,7 @@ sealed class BaseApplicationBuilder {
     }
 }
 @KordPreview
+@KordDsl
 class GuildApplicationCommandCreateBuilder(
     val name: String,
     val description: String
@@ -110,6 +115,7 @@ class GuildApplicationCommandCreateBuilder(
 }
 
 @KordPreview
+@KordDsl
 class GuildApplicationCommandModifyBuilder : BaseApplicationBuilder(),
     RequestBuilder<GuildApplicationCommandModifyRequest> {
 
@@ -133,6 +139,7 @@ class GuildApplicationCommandModifyBuilder : BaseApplicationBuilder(),
 }
 
 @KordPreview
+@KordDsl
 class OriginalInteractionResponseModifyBuilder :
     RequestBuilder<OriginalInteractionResponseModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
@@ -158,6 +165,7 @@ class OriginalInteractionResponseModifyBuilder :
     }
 }
 @KordPreview
+@KordDsl
 class FollowupMessageModifyBuilder :
     RequestBuilder<FollowupMessageModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
@@ -183,6 +191,7 @@ class FollowupMessageModifyBuilder :
     }
 }
 @KordPreview
+@KordDsl
 class InteractionApplicationCommandCallbackDataBuilder(var content: String) {
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
@@ -211,6 +220,7 @@ class InteractionApplicationCommandCallbackDataBuilder(var content: String) {
 }
 
 @KordPreview
+@KordDsl
 class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCreateRequest> {
 
     private var _content: Optional<String> = Optional.Missing()

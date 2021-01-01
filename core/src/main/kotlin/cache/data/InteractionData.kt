@@ -1,13 +1,15 @@
 package dev.kord.core.cache.data
 
-import dev.kord.common.entity.DiscordApplicationCommandInteractionData
-import dev.kord.common.entity.DiscordApplicationCommandInteractionDataOption
-import dev.kord.common.entity.InteractionType
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.mapList
 import dev.kord.gateway.InteractionCreate
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 data class InteractionData(
     val id: Snowflake,
@@ -41,7 +43,7 @@ data class InteractionData(
 data class ApplicationCommandInteractionData(
     val id: Snowflake,
     val name: String,
-    val options: Optional<List<ApplicationCommandInteractionDataOptionData>> = Optional.Missing()
+    val options: Optional<List<OptionData>> = Optional.Missing()
 ) {
     companion object {
         fun from(data: DiscordApplicationCommandInteractionData): ApplicationCommandInteractionData {
@@ -49,23 +51,31 @@ data class ApplicationCommandInteractionData(
                 ApplicationCommandInteractionData(
                     id,
                     name,
-                    options.mapList { ApplicationCommandInteractionDataOptionData.from(it) })
+                    options.mapList { OptionData.from(it) })
             }
         }
     }
 }
 
 @Serializable
-data class ApplicationCommandInteractionDataOptionData(
+data class OptionData(
     val name: String,
-    val value: Optional<String> = Optional.Missing(),
-    val options: Optional<List<ApplicationCommandInteractionDataOptionData>> = Optional.Missing()
+    val value: Optional<OptionValue<@Serializable(with = NotSerializable::class) Any?>> = Optional.Missing(),
+    val subCommand: Optional<List<SubCommand>> = Optional.Missing(),
+    val groups: Optional<List<CommandGroup>> = Optional.Missing()
 ) {
     companion object {
-        fun from(data: DiscordApplicationCommandInteractionDataOption): ApplicationCommandInteractionDataOptionData {
+        fun from(data: Option): OptionData {
             return with(data) {
-                ApplicationCommandInteractionDataOptionData(name, value, options.mapList { from(it) })
+                OptionData(name, value, subCommands, groups)
             }
         }
     }
+}
+
+
+internal object NotSerializable : KSerializer<Any?> {
+    override fun deserialize(decoder: Decoder) = TODO("Not yet implemented")
+    override val descriptor: SerialDescriptor = String.serializer().descriptor
+    override fun serialize(encoder: Encoder, value: Any?) = TODO("Not yet implemented")
 }

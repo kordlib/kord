@@ -1,4 +1,4 @@
-package dev.kord.core.entity
+package dev.kord.core.entity.interaction
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ApplicationCommandOptionType

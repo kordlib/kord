@@ -3,8 +3,8 @@ package dev.kord.core.behavior
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.entity.Entity
-import dev.kord.core.entity.GlobalApplicationCommand
-import dev.kord.core.entity.GuildApplicationCommand
+import dev.kord.core.entity.interaction.GlobalApplicationCommand
+import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.rest.builder.interaction.GlobalApplicationCommandModifyBuilder
 import dev.kord.rest.builder.interaction.GuildApplicationCommandModifyBuilder
 import dev.kord.rest.service.InteractionService

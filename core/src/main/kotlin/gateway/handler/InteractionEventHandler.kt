@@ -4,7 +4,7 @@ import com.gitlab.kordlib.cache.api.DataCache
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.InteractionData
-import dev.kord.core.entity.GuildApplicationCommand
+import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.entity.interaction.PartialInteraction
 import dev.kord.core.event.interaction.*
@@ -33,13 +33,16 @@ class InteractionEventHandler(
     private suspend fun handle(event: InteractionCreate, shard: Int) {
 
         val data = InteractionData.from(event)
-        val partial = PartialInteraction(data, kord)
-        coreFlow.emit(PartialInteractionCreateEvent(partial, kord, shard))
 
         if (kord.resources.applicationId != null) {
             val interaction = Interaction(data, kord.resources.applicationId, kord)
             coreFlow.emit(InteractionCreateEvent(interaction, kord, shard))
+            return
         }
+
+        val partial = PartialInteraction(data, kord)
+        coreFlow.emit(PartialInteractionCreateEvent(partial, kord, shard))
+
     }
 
     private suspend fun handle(event: ApplicationCommandCreate, shard: Int) {

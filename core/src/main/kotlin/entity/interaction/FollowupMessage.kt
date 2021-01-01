@@ -1,4 +1,4 @@
-package dev.kord.core.entity
+package dev.kord.core.entity.interaction
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.MessageType
@@ -11,6 +11,7 @@ import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.MessageData
+import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.GuildMessageChannel
