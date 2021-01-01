@@ -15,13 +15,23 @@ import kotlin.contracts.contract
 @Serializable(with = Permissions.Companion::class)
 class Permissions constructor(val code: DiscordBitSet) {
 
-    operator fun plus(permission: Permission): Permissions = Permissions(this.code + permission.code)
+    operator fun plus(permission: Permission): Permissions = Permissions(code + permission.code)
 
 
     operator fun minus(permission: Permission): Permissions = Permissions(code - permission.code)
 
 
     operator fun contains(permission: Permission): Boolean {
+        return permission.code in code
+    }
+
+    operator fun plus(permission: Permissions): Permissions = Permissions(code + permission.code)
+
+
+    operator fun minus(permission: Permissions): Permissions = Permissions(code - permission.code)
+
+
+    operator fun contains(permission: Permissions): Boolean {
         return permission.code in code
     }
 
