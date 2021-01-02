@@ -25,6 +25,16 @@ interface InteractionBehavior : KordEntity, Strategizable {
     val token: String
     val guildId: Snowflake
     val channelId: Snowflake
+
+
+    /**
+     * Acknowledges an interaction.
+     * An acknowledgement that have no message attached to it.
+     *
+     * [source] weather to show the source (author's name and provided arguments of the command).
+     *
+     * Returns an [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response
+     */
     suspend fun acknowledge(source: Boolean = false): InteractionResponseBehavior {
         val type = if (source) InteractionResponseType.ACKWithSource
         else InteractionResponseType.Acknowledge
@@ -85,6 +95,14 @@ interface InteractionBehavior : KordEntity, Strategizable {
     }
 }
 
+/**
+ * Acknowledges an interaction.
+ * An acknowledgement that have a message attached to it built using [builder] with an initial [content] value.
+ *
+ * [source] weather to show the source (author's name and provided arguments of the command).
+ *
+ * Returns an [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response
+ */
 @ExperimentalContracts
 suspend inline fun InteractionBehavior.respond(
     content: String,
@@ -104,12 +122,17 @@ suspend inline fun InteractionBehavior.respond(
 
 @KordPreview
 interface PartialInteractionBehavior : KordEntity, Strategizable {
-    //TODO("return full response with data")
 
     val guildId: Snowflake
     val channelId: Snowflake
     val token: String
 
+    /**
+     * Acknowledges an interaction.
+     * An acknowledgement that have no message attached to it.
+     *
+     * [source] weather to show the source (author's name and provided arguments of the command).
+     */
     suspend fun acknowledge(source: Boolean = false) {
         val type = if (source) InteractionResponseType.ACKWithSource else InteractionResponseType.Acknowledge
         val request = InteractionResponseCreateRequest(type)
@@ -167,7 +190,12 @@ interface PartialInteractionBehavior : KordEntity, Strategizable {
     }
 
 }
-
+/**
+ * Acknowledges an interaction.
+ * An acknowledgement that have no message attached to it.
+ *
+ * [source] weather to show the source (author's name and provided arguments of the command).
+ */
 @ExperimentalContracts
 suspend inline fun PartialInteractionBehavior.respond(
     content: String,

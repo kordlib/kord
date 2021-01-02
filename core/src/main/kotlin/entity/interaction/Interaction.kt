@@ -16,6 +16,9 @@ import dev.kord.core.cache.data.OptionData
 import dev.kord.core.entity.Entity
 import dev.kord.core.supplier.EntitySupplier
 
+/**
+ * Interaction that can respond to interactions but can't follow-up due to the absence of [application id][Kord.resources].
+ */
 @KordPreview
 class PartialInteraction(
     val data: InteractionData,
@@ -40,6 +43,9 @@ class PartialInteraction(
 
 }
 
+/**
+ * Interaction that can respond to interactions and follow them up.
+ */
 @KordPreview
 class Interaction(
     val data: InteractionData,
@@ -68,6 +74,9 @@ class Interaction(
 
 }
 
+/**
+ * The root command in the interaction.
+ */
 class Command(val data: ApplicationCommandInteractionData) : Entity {
     override val id: Snowflake
         get() = data.id
@@ -93,6 +102,10 @@ class Command(val data: ApplicationCommandInteractionData) : Entity {
 
 }
 
+/**
+ * The Group contains [SubCommand]s  related to [Command].
+ *
+ */
 class Group(val data: OptionData) {
     val name: String get() = data.name
 
@@ -102,6 +115,9 @@ class Group(val data: OptionData) {
 
 }
 
+/**
+ * A [SubCommand] that is either a part of [Command] or [Group].
+ */
 class SubCommand(val data: OptionData) {
     val name: String get() = data.name
     val options: Map<String, OptionValue<*>>

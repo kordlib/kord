@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
- * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
+ * A Message that's created to follow up an [Interaction Response][dev.kord.core.behavior.InteractionResponseBehavior]
  */
 @KordPreview
 class FollowupMessage(
