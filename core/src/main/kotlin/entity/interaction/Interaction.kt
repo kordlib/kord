@@ -4,16 +4,14 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Option
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.map
-import dev.kord.common.entity.optional.mapList
-import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.InteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.PartialInteractionBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.cache.data.OptionData
 import dev.kord.core.entity.Entity
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -74,13 +72,18 @@ class Command(val data: ApplicationCommandInteractionData) : Entity {
     override val id: Snowflake
         get() = data.id
 
-    val name = data.name
+    val name get() = data.name
 
-    val options = data.options.value?.filterNot { it.value is Optional.Missing  }?.associate { it.name to it.value.value }
+    //TODO: core Option
+    val options get(): Map<String, Option> = data.options.orEmpty().associate { it.name to TODO() }
 
-    val groups = data.options.value?.map { it.groups }?.filterNot { it is Optional.Missing  }
+    //TODO: core Groups
+    val groups get(): List<Any> = data.options.orEmpty()
+            .filter { it.subCommand.orEmpty().isNotEmpty() }
+            .map { TODO("make into group") }
 
-    val subCommands = data.options.value?.map { it.subCommand }?.filterNot { it is Optional.Missing  }
+    //TODO: core subcommands
+    val subCommands get() = data.options.value?.map { it.subCommand }?.filterNot { it is Optional.Missing  }
 
 
 }

@@ -1,6 +1,7 @@
 package dev.kord.core.cache.data
 
 import dev.kord.common.entity.*
+import dev.kord.common.entity.NotSerializable
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.mapList
 import dev.kord.gateway.InteractionCreate
@@ -59,15 +60,17 @@ data class ApplicationCommandInteractionData(
 
 @Serializable
 data class OptionData(
-    val name: String,
-    val value: Optional<OptionValue<@Serializable(with = NotSerializable::class) Any?>> = Optional.Missing(),
-    val subCommand: Optional<List<SubCommand>> = Optional.Missing(),
-    val groups: Optional<List<CommandGroup>> = Optional.Missing()
+        val name: String,
+        val value: Optional<OptionValue<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
+        val values: Optional<List<CommandArgument>> = Optional.Missing(),
+        val subCommand: Optional<List<SubCommand>> = Optional.Missing()
 ) {
     companion object {
-        fun from(data: Option): OptionData {
-            return with(data) {
-                OptionData(name, value, subCommands, groups)
+        fun from(data: Option): OptionData = with(data) {
+            when(data) {
+                is SubCommand -> OptionData(name, values = data.options)
+                is CommandArgument -> OptionData(name, value = Optional(data.value))
+                is CommandGroup -> OptionData(name, subCommand = data.options)
             }
         }
     }
