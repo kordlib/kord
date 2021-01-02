@@ -219,7 +219,7 @@ inline fun <E> Optional<List<E>>.filterList(mapper: (E) -> Boolean): Optional<Li
     is Value -> Value(value.filter(mapper))
 }
 @Suppress("UNCHECKED_CAST")
-inline fun <E, reified R> Optional<List<E>>.filterInstanceOfList(): Optional<List<R>> = when (this) {
+inline fun <reified R> Optional<List<*>>.filterInstanceOfList(): Optional<List<R>> = when (this) {
     is Missing, is Null<*> -> this as Optional<List<R>>
     is Value -> Value(value.filterIsInstance<R>())
 }
