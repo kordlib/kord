@@ -1,6 +1,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -15,6 +16,7 @@ import mu.KotlinLogging
 val kordLogger = KotlinLogging.logger { }
 
 @Serializable
+@KordPreview
 data class DiscordApplicationCommand(
         val id: Snowflake,
         @SerialName("application_id")
@@ -27,6 +29,7 @@ data class DiscordApplicationCommand(
 )
 
 @Serializable
+@KordPreview
 class ApplicationCommandOption(
         val type: ApplicationCommandOptionType,
         val name: String,
@@ -50,6 +53,7 @@ object NotSerializable : KSerializer<Any?> {
 
 
 @Serializable(ApplicationCommandOptionType.Serializer::class)
+@KordPreview
 sealed class ApplicationCommandOptionType(val type: Int) {
 
 
@@ -93,6 +97,7 @@ sealed class ApplicationCommandOptionType(val type: Int) {
 }
 
 @Serializable(Choice.ChoiceSerializer::class)
+@KordPreview
 sealed class Choice<out T> {
     abstract val name: String
     abstract val value: T
@@ -134,6 +139,7 @@ sealed class Choice<out T> {
 }
 
 @Serializable
+@KordPreview
 data class DiscordInteraction(
         val id: Snowflake,
         val type: InteractionType,
@@ -148,6 +154,7 @@ data class DiscordInteraction(
 )
 
 @Serializable(InteractionType.Serializer::class)
+@KordPreview
 sealed class InteractionType(val type: Int) {
     object Ping : InteractionType(1)
     object ApplicationCommand : InteractionType(2)
@@ -181,6 +188,7 @@ sealed class InteractionType(val type: Int) {
 }
 
 @Serializable
+@KordPreview
 data class DiscordApplicationCommandInteractionData(
             val id: Snowflake,
             val name: String,
@@ -188,6 +196,7 @@ data class DiscordApplicationCommandInteractionData(
 )
 
 @Serializable(with = Option.Serializer::class)
+@KordPreview
 sealed class Option {
     abstract val name: String
 
@@ -250,24 +259,28 @@ sealed class Option {
 }
 
 @Serializable
+@KordPreview
 data class SubCommand(
         override val name: String,
         val options: Optional<List<CommandArgument>> = Optional.Missing()
 ) : Option()
 
 @Serializable
+@KordPreview
 data class CommandArgument(
         override val name: String,
         val value: OptionValue<@Serializable(NotSerializable::class) Any?>,
 ) : Option()
 
 @Serializable
+@KordPreview
 data class CommandGroup(
-        override val name: String,
-        val options: Optional<List<SubCommand>> = Optional.Missing(),
+    override val name: String,
+    val options: Optional<List<SubCommand>> = Optional.Missing(),
 ) : Option()
 
 @Serializable(OptionValue.OptionValueSerializer::class)
+@KordPreview
 sealed class OptionValue<out T>(val value: T) {
     class IntValue(value: Int) : OptionValue<Int>(value)
     class StringValue(value: String) : OptionValue<String>(value)
@@ -310,13 +323,40 @@ sealed class OptionValue<out T>(val value: T) {
     }
 }
 
+fun OptionValue<*>.intOrNull(): Int? {
+    return value as? Int
+}
+
+fun OptionValue<*>.stringOrNull(): String? {
+    return value as? String
+}
+
+fun OptionValue<*>.booleanOrNull(): Boolean? {
+    return value as? Boolean
+}
+
+fun OptionValue<*>.int(): Int {
+    return intOrNull() ?: error("$value wasn't an Int.")
+}
+
+
+fun OptionValue<*>.string(): String {
+    return stringOrNull() ?: error("$value wasn't a String.")
+}
+
+fun OptionValue<*>.boolean(): Boolean {
+    return booleanOrNull() ?: error("$value wasn't a Boolean.")
+}
+
 @Serializable
+@KordPreview
 data class DiscordInteractionResponse(
         val type: InteractionResponseType,
         val data: Optional<DiscordInteractionApplicationCommandCallbackData> = Optional.Missing(),
 )
 
 @Serializable(InteractionResponseType.Serializer::class)
+@KordPreview
 sealed class InteractionResponseType(val type: Int) {
     object Pong : InteractionResponseType(1)
     object Acknowledge : InteractionResponseType(2)
@@ -352,6 +392,7 @@ sealed class InteractionResponseType(val type: Int) {
 
 
 @Serializable
+@KordPreview
 class DiscordInteractionApplicationCommandCallbackData(
         val tts: OptionalBoolean = OptionalBoolean.Missing,
         val content: String,
