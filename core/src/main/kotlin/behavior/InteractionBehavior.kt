@@ -29,11 +29,9 @@ interface InteractionBehavior : KordEntity, Strategizable {
 
     /**
      * Acknowledges an interaction.
-     * An acknowledgement that have no message attached to it.
      *
-     * [source] weather to show the source (author's name and provided arguments of the command).
-     *
-     * Returns an [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response
+     * @param source weather to show the author's name and provided arguments of the command.
+     * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
      */
     suspend fun acknowledge(source: Boolean = false): InteractionResponseBehavior {
         val type = if (source) InteractionResponseType.ACKWithSource
@@ -96,12 +94,12 @@ interface InteractionBehavior : KordEntity, Strategizable {
 }
 
 /**
- * Acknowledges an interaction.
- * An acknowledgement that have a message attached to it built using [builder] with an initial [content] value.
+ * Acknowledges an interaction and responds with [InteractionResponseBehavior] built using [builder].
  *
- * [source] weather to show the source (author's name and provided arguments of the command).
- *
- * Returns an [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response
+ * @param content initial content of the message.
+ * @param source weather to show the author's name and provided arguments of the command.
+ * @param builder [InteractionApplicationCommandCallbackDataBuilder] used to build a message.
+ * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
  */
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respond(
@@ -129,9 +127,9 @@ interface PartialInteractionBehavior : KordEntity, Strategizable {
 
     /**
      * Acknowledges an interaction.
-     * An acknowledgement that have no message attached to it.
      *
-     * [source] weather to show the source (author's name and provided arguments of the command).
+     * @param source weather to show the author's name and provided arguments of the command.
+     * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
      */
     suspend fun acknowledge(source: Boolean = false) {
         val type = if (source) InteractionResponseType.ACKWithSource else InteractionResponseType.Acknowledge
@@ -191,10 +189,10 @@ interface PartialInteractionBehavior : KordEntity, Strategizable {
 
 }
 /**
- * Acknowledges an interaction.
- * An acknowledgement that have no message attached to it.
- *
- * [source] weather to show the source (author's name and provided arguments of the command).
+ * Acknowledges an interaction and responds with [InteractionResponseBehavior] built using [builder].
+ * @param content initial content of the message.
+ * @param source weather to show the author's name and provided arguments of the command.
+ * @param builder [InteractionApplicationCommandCallbackDataBuilder] used to build a message.
  */
 @OptIn(ExperimentalContracts::class)
 suspend inline fun PartialInteractionBehavior.respond(
