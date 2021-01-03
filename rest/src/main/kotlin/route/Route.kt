@@ -530,10 +530,10 @@ sealed class Route<T>(
     object WebhookId : Key("{webhook.id}", true)
     object WebhookToken : Key("{webhook.token}")
     object TemplateCode : Key("{template.code}")
-    object ApplicationId : Key("{application.id}")
-    object CommandId : Key("{command.id}")
-    object InteractionId : Key("interaction.id")
-    object InteractionToken : Key("{interaction.token}")
+    object ApplicationId : Key("{application.id}", true)
+    object CommandId : Key("{command.id}", true)
+    object InteractionId : Key("interaction.id", true)
+    object InteractionToken : Key("{interaction.token}", true)
 
 }
 
