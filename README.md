@@ -53,7 +53,7 @@ repositories {
 
 ```groovy
 dependencies {
-    implementation("dev.kord.kord:kord-core:{version}")
+    implementation("dev.kord:kord-core:{version}")
 }
 ```
 
@@ -67,7 +67,7 @@ repositories {
 
 ```kotlin
 dependencies {
-   implementation("dev.kord.kord:kord-core:{version}")
+   implementation("dev.kord:kord-core:{version}")
 }
 ```
 
@@ -82,7 +82,7 @@ dependencies {
 
 ```xml
 <dependency>
-    <groupId>dev.kord.kord</groupId>
+    <groupId>dev.kord</groupId>
     <artifactId>kord-core</artifactId>
     <version>{version}</version>
 </dependency>
