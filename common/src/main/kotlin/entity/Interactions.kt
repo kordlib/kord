@@ -41,7 +41,7 @@ class ApplicationCommandOption(
 )
 
 /**
- * A serializer that's sole purpose is to provide a No-Op serializer for [Any].
+ * A serializer whose sole purpose is to provide a No-Op serializer for [Any].
  * The serializer is used when the generic type is neither known nor relevant to the serialization process
  *
  * e.g: `Choice<@Serializable(NotSerializable::class) Any?>`

@@ -79,11 +79,11 @@ data class OptionData(
 
 
 /**
- * A serializer that's sole purpose is to provide a No-Op serializer for [Any].
- * Since kotlinx.serialization doesn't allow using [Any] in a generic context.
+ * A serializer whose sole purpose is to provide a No-Op serializer for [Any].
+ * The serializer is used when the generic type is neither known nor relevant to the serialization process
  *
  * e.g: `Choice<@Serializable(NotSerializable::class) Any?>`
- * The serialization is handled by [Choice] serializer instead.
+ * The serialization is handled by [Choice] serializer instead where we don't care about the generic type.
  */
 @KordExperimental
 object NotSerializable : KSerializer<Any?> {
