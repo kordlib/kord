@@ -18,11 +18,12 @@ import java.nio.file.Path
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+
 @KordPreview
 @KordDsl
 class GlobalApplicationCommandCreateBuilder(
     val name: String,
-    val description: String
+    val description: String,
 ) : RequestBuilder<GlobalApplicationCommandCreateRequest>, BaseApplicationBuilder() {
 
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
@@ -53,56 +54,74 @@ class GlobalApplicationCommandModifyBuilder : RequestBuilder<GlobalApplicationCo
 
 
 }
+
 @KordPreview
 @KordDsl
 sealed class BaseApplicationBuilder {
     protected abstract var options: MutableList<OptionsBuilder>?
 
-    fun boolean(name: String, description: String) {
+    @ExperimentalContracts
+    fun boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
-        options!!.add(BooleanBuilder(name, description))
+        options!!.add(BooleanBuilder(name, description).apply(builder))
     }
 
+    @ExperimentalContracts
     fun int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(IntChoiceBuilder(name, description).apply(builder))
     }
 
+    @ExperimentalContracts
     fun string(name: String, description: String, builder: StringChoiceBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(StringChoiceBuilder(name, description).apply(builder))
     }
 
+    @ExperimentalContracts
     fun group(name: String, description: String, builder: GroupCommandBuilder.() -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(GroupCommandBuilder(name, description).apply(builder))
     }
 
+    @ExperimentalContracts
     fun subCommand(name: String, description: String, builder: SubCommandBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(SubCommandBuilder(name, description).apply(builder))
     }
 
-    fun role(name: String, description: String) {
+    @ExperimentalContracts
+    fun role(name: String, description: String, builder: RoleBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
-        options!!.add(RoleBuilder(name, description))
+        options!!.add(RoleBuilder(name, description).apply(builder))
     }
 
-    fun user(name: String, description: String) {
+    @ExperimentalContracts
+    fun user(name: String, description: String, builder: UserBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
-        options!!.add(UserBuilder(name, description))
+        options!!.add(UserBuilder(name, description).apply(builder))
     }
 
-    fun channel(name: String, description: String) {
+    @ExperimentalContracts
+    fun channel(name: String, description: String, builder: ChannelBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
-        options!!.add(ChannelBuilder(name, description))
+        options!!.add(ChannelBuilder(name, description).apply(builder))
     }
 }
+
 @KordPreview
 @KordDsl
 class GuildApplicationCommandCreateBuilder(
     val name: String,
-    val description: String
+    val description: String,
 ) : RequestBuilder<GuildApplicationCommandCreateRequest>, BaseApplicationBuilder() {
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
     override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
@@ -164,6 +183,7 @@ class OriginalInteractionResponseModifyBuilder :
             _allowedMentions.map { it.build() })
     }
 }
+
 @KordPreview
 @KordDsl
 class FollowupMessageModifyBuilder :
@@ -190,6 +210,7 @@ class FollowupMessageModifyBuilder :
             _allowedMentions.map { it.build() })
     }
 }
+
 @KordPreview
 @KordDsl
 class InteractionApplicationCommandCallbackDataBuilder(var content: String) {

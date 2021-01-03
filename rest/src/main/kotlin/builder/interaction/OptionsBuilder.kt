@@ -9,13 +9,17 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
 @KordPreview
 sealed class OptionsBuilder(val name: String, val description: String, val type: ApplicationCommandOptionType) :
     RequestBuilder<ApplicationCommandOption> {
-    private var _default: OptionalBoolean = OptionalBoolean.Missing
+    internal var _default: OptionalBoolean = OptionalBoolean.Missing
     var default: Boolean? by ::_default.delegate()
 
-    private var _required: OptionalBoolean = OptionalBoolean.Missing
+    internal var _required: OptionalBoolean = OptionalBoolean.Missing
     var required: Boolean? by ::_required.delegate()
 
     override fun toRequest(): ApplicationCommandOption {
@@ -32,10 +36,16 @@ sealed class BaseChoiceBuilder<T>(name: String, description: String, type: Appli
     abstract fun choice(name: String, value: () -> T)
 
     override fun toRequest(): ApplicationCommandOption {
-        return ApplicationCommandOption(type, name, description, choices = _choices)
+        return ApplicationCommandOption(type,
+            name,
+            description,
+            choices = _choices,
+            required = _required,
+            default = _default)
     }
 
 }
+
 @KordPreview
 class IntChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Int>(name, description, ApplicationCommandOptionType.Integer) {
@@ -55,20 +65,26 @@ class StringChoiceBuilder(name: String, description: String) :
         choices!!.add(Choice.StringChoice(name, value()))
     }
 }
+
 @KordPreview
 class BooleanBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Boolean)
+
 @KordPreview
 class UserBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.User)
+
 @KordPreview
 class RoleBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Role)
+
 @KordPreview
 class ChannelBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Channel)
+
 @KordPreview
-sealed class BaseCommandOptionBuilder(name: String, description: String, type: ApplicationCommandOptionType): OptionsBuilder(name, description,type) {
+sealed class BaseCommandOptionBuilder(name: String, description: String, type: ApplicationCommandOptionType) :
+    OptionsBuilder(name, description, type) {
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
     protected var options by ::_options.delegate()
 
@@ -76,42 +92,58 @@ sealed class BaseCommandOptionBuilder(name: String, description: String, type: A
         return ApplicationCommandOption(type, name, description, options = _options.mapList { it.toRequest() })
     }
 }
+
 @KordPreview
-class SubCommandBuilder(name: String, description: String): BaseCommandOptionBuilder(name,description, ApplicationCommandOptionType.SubCommand) {
-    fun boolean(name: String, description: String) {
+class SubCommandBuilder(name: String, description: String) :
+    BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommand) {
+    @ExperimentalContracts
+    fun boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
-        options!!.add(BooleanBuilder(name, description))
+        options!!.add(BooleanBuilder(name, description).apply(builder))
     }
 
+    @ExperimentalContracts
     fun int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(IntChoiceBuilder(name, description).apply(builder))
     }
 
+    @ExperimentalContracts
     fun string(name: String, description: String, builder: StringChoiceBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(StringChoiceBuilder(name, description).apply(builder))
     }
 
-    fun role(name: String, description: String) {
+    @ExperimentalContracts
+    fun role(name: String, description: String, builder: RoleBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
-        options!!.add(RoleBuilder(name, description))
+        options!!.add(RoleBuilder(name, description).apply(builder))
     }
 
-    fun user(name: String, description: String) {
+    @ExperimentalContracts
+    fun user(name: String, description: String, builder: UserBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
-        options!!.add(UserBuilder(name, description))
+        options!!.add(UserBuilder(name, description).apply(builder))
     }
 
-    fun channel(name: String, description: String) {
+    @ExperimentalContracts
+    fun channel(name: String, description: String, builder: ChannelBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
-        options!!.add(ChannelBuilder(name, description))
+        options!!.add(ChannelBuilder(name, description).apply(builder))
     }
 }
+
 @KordPreview
-class GroupCommandBuilder(name: String, description: String): BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommandGroup) {
+class GroupCommandBuilder(name: String, description: String) :
+    BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommandGroup) {
     fun subCommand(name: String, description: String, builder: SubCommandBuilder.() -> Unit) {
-        if(options == null) options = mutableListOf()
-        options!!.add(SubCommandBuilder(name,description).apply(builder))
+        if (options == null) options = mutableListOf()
+        options!!.add(SubCommandBuilder(name, description).apply(builder))
     }
 }

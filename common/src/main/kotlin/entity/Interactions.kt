@@ -338,6 +338,11 @@ fun OptionValue<*>.booleanOrNull(): Boolean? {
     return value as? Boolean
 }
 
+fun OptionValue<*>.snowflakeOrNull(): Snowflake? {
+    val id = stringOrNull() ?: return null
+    return Snowflake(id)
+}
+
 fun OptionValue<*>.int(): Int {
     return intOrNull() ?: error("$value wasn't an Int.")
 }
@@ -349,6 +354,10 @@ fun OptionValue<*>.string(): String {
 
 fun OptionValue<*>.boolean(): Boolean {
     return booleanOrNull() ?: error("$value wasn't a Boolean.")
+}
+
+fun OptionValue<*>.snowflake(): Snowflake {
+    return snowflakeOrNull() ?: error("$value wasn't a Snowflake.")
 }
 
 @Serializable
