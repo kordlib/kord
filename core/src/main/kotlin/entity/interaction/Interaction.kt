@@ -76,6 +76,11 @@ class Interaction(
 
 /**
  * The root command in the interaction.
+ *
+ * @property name name of the command.
+ * @property options  names of options in the command mapped to their values.
+ * @property groups  names of groups in the command mapped to the [Group] with matching name.
+ * @property subCommands  names of sub-commands in the command mapped to the [SubCommand] with matching name.
  */
 class Command(val data: ApplicationCommandInteractionData) : Entity {
     override val id: Snowflake
@@ -103,8 +108,9 @@ class Command(val data: ApplicationCommandInteractionData) : Entity {
 }
 
 /**
- * The Group contains [SubCommand]s  related to [Command].
+ * The Group containing [SubCommand]s  related to [Command].
  *
+ *@property subCommands  names of sub-commands in this [Group] of commands mapped to the [SubCommand] with matching name.
  */
 class Group(val data: OptionData) {
     val name: String get() = data.name
@@ -117,6 +123,9 @@ class Group(val data: OptionData) {
 
 /**
  * A [SubCommand] that is either a part of [Command] or [Group].
+ *
+ * @property name name of the subcommand.
+ * @property options  names of options in the command mapped to their values.
  */
 class SubCommand(val data: OptionData) {
     val name: String get() = data.name
