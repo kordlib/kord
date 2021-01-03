@@ -36,19 +36,22 @@ class ApplicationCommandOption(
         val description: String,
         val default: OptionalBoolean = OptionalBoolean.Missing,
         val required: OptionalBoolean = OptionalBoolean.Missing,
-        /*
-            We don't care about serializer type.
-            [Choice] has it's own [ChoiceSerializer]. [NotSerializable] is a no-op serializer that h
-         */
         val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
         val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
 )
 
+/**
+ * A serializer that's sole purpose is to provide a No-Op serializer for [Any].
+ * Since kotlinx.serialization doesn't allow using [Any] in a generic context.
+ *
+ * e.g: `Choice<@Serializable(NotSerializable::class) Any?>`
+ * The serialization is handled by [Choice] serializer instead.
+ */
 @KordExperimental
 object NotSerializable : KSerializer<Any?> {
-    override fun deserialize(decoder: Decoder) = TODO("Not yet implemented")
+    override fun deserialize(decoder: Decoder) = error("This operation is not supported.")
     override val descriptor: SerialDescriptor = String.serializer().descriptor
-    override fun serialize(encoder: Encoder, value: Any?) = TODO("Not yet implemented")
+    override fun serialize(encoder: Encoder, value: Any?) = error("This operation is not supported.")
 }
 
 
