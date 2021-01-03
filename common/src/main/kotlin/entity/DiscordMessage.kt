@@ -479,7 +479,7 @@ data class DiscordEmbed(
     @Serializable
     data class Provider(
             val name: Optional<String> = Optional.Missing(),
-            val url: Optional<String> = Optional.Missing(),
+            val url: Optional<String?> = Optional.Missing(),
     )
 
     /**
