@@ -34,14 +34,14 @@ interface InteractionResponseBehavior : KordObject {
     }
 }
 
-@ExperimentalContracts
+@OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionResponseBehavior.edit(builder: OriginalInteractionResponseModifyBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = OriginalInteractionResponseModifyBuilder().apply(builder).toRequest()
     kord.rest.interaction.modifyInteractionResponse(applicationId, token, request)
 }
 
-@ExperimentalContracts
+@OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): FollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = FollowupMessageCreateBuilder().apply(builder).toRequest()

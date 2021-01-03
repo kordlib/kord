@@ -96,42 +96,42 @@ sealed class BaseCommandOptionBuilder(name: String, description: String, type: A
 @KordPreview
 class SubCommandBuilder(name: String, description: String) :
     BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommand) {
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(BooleanBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(IntChoiceBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun string(name: String, description: String, builder: StringChoiceBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(StringChoiceBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun role(name: String, description: String, builder: RoleBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(RoleBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun user(name: String, description: String, builder: UserBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(UserBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun channel(name: String, description: String, builder: ChannelBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()

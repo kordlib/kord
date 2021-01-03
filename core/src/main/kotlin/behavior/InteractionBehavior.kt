@@ -103,7 +103,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
  *
  * Returns an [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response
  */
-@ExperimentalContracts
+@OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respond(
     content: String,
     source: Boolean = false,
@@ -196,7 +196,7 @@ interface PartialInteractionBehavior : KordEntity, Strategizable {
  *
  * [source] weather to show the source (author's name and provided arguments of the command).
  */
-@ExperimentalContracts
+@OptIn(ExperimentalContracts::class)
 suspend inline fun PartialInteractionBehavior.respond(
     content: String,
     source: Boolean = false,

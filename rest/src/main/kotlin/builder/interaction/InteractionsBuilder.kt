@@ -60,56 +60,56 @@ class GlobalApplicationCommandModifyBuilder : RequestBuilder<GlobalApplicationCo
 sealed class BaseApplicationBuilder {
     protected abstract var options: MutableList<OptionsBuilder>?
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(BooleanBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(IntChoiceBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun string(name: String, description: String, builder: StringChoiceBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(StringChoiceBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun group(name: String, description: String, builder: GroupCommandBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(GroupCommandBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun subCommand(name: String, description: String, builder: SubCommandBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(SubCommandBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun role(name: String, description: String, builder: RoleBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(RoleBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun user(name: String, description: String, builder: UserBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(UserBuilder(name, description).apply(builder))
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     fun channel(name: String, description: String, builder: ChannelBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()

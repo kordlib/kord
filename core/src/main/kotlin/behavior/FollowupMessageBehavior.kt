@@ -46,7 +46,7 @@ interface FollowupMessageBehavior : KordEntity {
     }
 }
 
-@ExperimentalContracts
+@OptIn(ExperimentalContracts::class)
 suspend inline fun FollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): FollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = FollowupMessageModifyBuilder().apply(builder).toRequest()

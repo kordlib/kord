@@ -23,7 +23,7 @@ class SlashCommands(
     val applicationId: Snowflake,
     val service: InteractionService
 ) {
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     suspend inline fun createGlobalApplicationCommand(
         name: String,
         description: String,
@@ -36,7 +36,7 @@ class SlashCommands(
         return GlobalApplicationCommand(data, service)
     }
 
-    @ExperimentalContracts
+    @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildApplicationCommand(
         guildId: Snowflake,
         name: String,
