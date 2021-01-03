@@ -10,28 +10,40 @@ import dev.kord.rest.builder.interaction.GuildApplicationCommandCreateBuilder
 import dev.kord.rest.service.InteractionService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
+/**
+ * Represents Slash Command's rest-only endpoints.
+ * This should be used only when registering new commands or modifying existing once.
+ */
 @KordPreview
 class SlashCommands(
-    private val applicationId: Snowflake,
-    private val service: InteractionService
+    val applicationId: Snowflake,
+    val service: InteractionService
 ) {
-    suspend fun createGlobalApplicationCommand(
+    @ExperimentalContracts
+    suspend inline fun createGlobalApplicationCommand(
         name: String,
         description: String,
         builder: GlobalApplicationCommandCreateBuilder.() -> Unit = {}
     ): GlobalApplicationCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = GlobalApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
         val response = service.createGlobalApplicationCommand(applicationId, request)
         val data = ApplicationCommandData.from(response)
         return GlobalApplicationCommand(data, service)
     }
 
-    suspend fun createGuildApplicationCommand(
+    @ExperimentalContracts
+    suspend inline fun createGuildApplicationCommand(
         guildId: Snowflake,
         name: String,
         description: String,
         builder: GuildApplicationCommandCreateBuilder.() -> Unit = {}
     ): GuildApplicationCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = GuildApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
         val response = service.createGuildApplicationCommand(applicationId, guildId, request)
         val data = ApplicationCommandData.from(response)
