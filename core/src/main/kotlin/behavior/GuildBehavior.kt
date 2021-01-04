@@ -450,11 +450,10 @@ interface GuildBehavior : Entity, Strategizable {
     }
 
     suspend fun getWelcomeScreenOrNull(): WelcomeScreen? =
-        withStrategy(rest).getWelcomeScreenOrNull()
+        rest.supply(kord).getGuildWelcomeScreenOrNull(id)
 
     suspend fun getWelcomeScreen(): WelcomeScreen =
-        withStrategy(rest).getWelcomeScreen()
-
+        rest.supply(kord).getGuildWelcomeScreen(id)
 
     suspend fun editWelcomeScreen(builder: WelcomeScreenModifyBuilder.() -> Unit): WelcomeScreen {
         val request = kord.rest.guild.modifyGuildWelcomeScreen(id, builder)
