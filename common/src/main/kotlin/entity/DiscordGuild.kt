@@ -151,7 +151,7 @@ data class DiscordGuild(
     @SerialName("approximate_presence_count")
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("welcome_screen")
-    val welcomeScreen: Optional<WelcomeScreen> = Optional.Missing()
+    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing()
 )
 
 /**
@@ -541,7 +541,7 @@ sealed class VerificationLevel(val value: Int) {
 }
 
 @Serializable
-data class WelcomeScreenChannel(
+data class DiscordWelcomeScreenChannel(
     @SerialName("channel_id")
     val channelId: Snowflake,
     val description: String,
@@ -552,8 +552,8 @@ data class WelcomeScreenChannel(
 )
 
 @Serializable
-data class WelcomeScreen(
+data class DiscordWelcomeScreen(
     val description: String?,
     @SerialName("welcome_channels")
-    val welcomeChannels: List<WelcomeScreenChannel>
+    val welcomeChannels: List<DiscordWelcomeScreenChannel>
 )
