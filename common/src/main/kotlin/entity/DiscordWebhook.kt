@@ -58,7 +58,7 @@ sealed class WebhookType(val value: Int) {
             get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): WebhookType = when(val value = decoder.decodeInt()) {
-            0 -> Incoming
+            1 -> Incoming
             2 -> ChannelFollower
             else -> Unknown(value)
         }
