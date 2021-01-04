@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.rest.builder.guild.WelcomeScreenChannelBuilder
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.descriptors.*
