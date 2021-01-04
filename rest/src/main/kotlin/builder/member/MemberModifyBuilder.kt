@@ -13,25 +13,26 @@ import dev.kord.rest.json.request.GuildMemberModifyRequest
 class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest> {
     override var reason: String? = null
 
-    private var _voiceChannelId: OptionalSnowflake = OptionalSnowflake.Missing
+    private var _voiceChannelId: OptionalSnowflake? = OptionalSnowflake.Missing
     var voiceChannelId: Snowflake? by ::_voiceChannelId.delegate()
 
-    private var _muted: OptionalBoolean = OptionalBoolean.Missing
+    private var _muted: OptionalBoolean? = OptionalBoolean.Missing
     var muted: Boolean? by ::_muted.delegate()
 
-    private var _deafened: OptionalBoolean = OptionalBoolean.Missing
+    private var _deafened: OptionalBoolean? = OptionalBoolean.Missing
     var deafened: Boolean? by ::_deafened.delegate()
 
-    private var _nickname: Optional<String> = Optional.Missing()
+    private var _nickname: Optional<String?> = Optional.Missing()
     var nickname: String? by ::_nickname.delegate()
 
-    var roles: MutableSet<Snowflake> = mutableSetOf()
+    private var _roles: Optional<MutableSet<Snowflake>?> = Optional.Missing()
+    var roles: MutableSet<Snowflake>? by ::_roles.delegate()
 
     override fun toRequest(): GuildMemberModifyRequest = GuildMemberModifyRequest(
             nick = _nickname,
             channelId = _voiceChannelId,
             mute = _muted,
             deaf = _deafened,
-            roles = Optional.missingOnEmpty(roles)
+            roles = _roles
     )
 }

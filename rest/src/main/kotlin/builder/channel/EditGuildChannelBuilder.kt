@@ -18,22 +18,23 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
-    private var _position: OptionalInt = OptionalInt.Missing
+    private var _position: OptionalInt? = OptionalInt.Missing
     var position: Int? by ::_position.delegate()
 
-    private var _topic: Optional<String> = Optional.Missing()
+    private var _topic: Optional<String?> = Optional.Missing()
     var topic: String? by ::_topic.delegate()
 
-    private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
+    private var _nsfw: OptionalBoolean? = OptionalBoolean.Missing
     var nsfw: Boolean? by ::_nsfw.delegate()
 
-    private var _parentId: OptionalSnowflake = OptionalSnowflake.Missing
+    private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     var parentId: Snowflake? by ::_parentId.delegate()
 
-    private var _rateLimitPerUser: OptionalInt = OptionalInt.Missing
+    private var _rateLimitPerUser: OptionalInt? = OptionalInt.Missing
     var rateLimitPerUser: Int? by ::_rateLimitPerUser.delegate()
 
-    var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = _name,
@@ -41,7 +42,7 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
             topic = _topic,
             nsfw = _nsfw,
             rateLimitPerUser = _rateLimitPerUser,
-            permissionOverwrites = Optional.missingOnEmpty(permissionOverwrites),
+            permissionOverwrites = _permissionOverwrites,
             parentId = _parentId
     )
 
@@ -54,21 +55,22 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
-    private var _position: OptionalInt = OptionalInt.Missing
+    private var _position: OptionalInt? = OptionalInt.Missing
     var position: Int? by ::_position.delegate()
 
-    private var _topic: Optional<String> = Optional.Missing()
+    private var _topic: Optional<String?> = Optional.Missing()
     var topic: String? by ::_topic.delegate()
 
-    private var _parentId: OptionalSnowflake = OptionalSnowflake.Missing
+    private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     var parentId: Snowflake? by ::_parentId.delegate()
 
-    var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
-    private var _bitrate: OptionalInt = OptionalInt.Missing
+    private var _bitrate: OptionalInt? = OptionalInt.Missing
     var bitrate: Int? by ::_bitrate.delegate()
 
-    private var _userLimit: OptionalInt = OptionalInt.Missing
+    private var _userLimit: OptionalInt? = OptionalInt.Missing
     var userLimit: Int? by ::_userLimit.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
@@ -78,7 +80,7 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
             bitrate = _bitrate,
             userLimit = _userLimit,
             topic = _topic,
-            permissionOverwrites = Optional.missingOnEmpty(permissionOverwrites)
+            permissionOverwrites = _permissionOverwrites
     )
 
 }
@@ -90,29 +92,30 @@ class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
-    private var _position: OptionalInt = OptionalInt.Missing
+    private var _position: OptionalInt? = OptionalInt.Missing
     var position: Int? by ::_position.delegate()
 
-    private var _topic: Optional<String> = Optional.Missing()
+    private var _topic: Optional<String?> = Optional.Missing()
     var topic: String? by ::_topic.delegate()
 
-    private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
+    private var _nsfw: OptionalBoolean? = OptionalBoolean.Missing
     var nsfw: Boolean? by ::_nsfw.delegate()
 
-    private var _parentId: OptionalSnowflake = OptionalSnowflake.Missing
+    private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     var parentId: Snowflake? by ::_parentId.delegate()
 
-    private var _rateLimitPerUser: OptionalInt = OptionalInt.Missing
+    private var _rateLimitPerUser: OptionalInt? = OptionalInt.Missing
     var rateLimitPerUser: Int? by ::_rateLimitPerUser.delegate()
 
-    var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = _name,
             position = _position,
             topic = _topic,
             nsfw = _nsfw,
-            permissionOverwrites = Optional.missingOnEmpty(permissionOverwrites),
+            permissionOverwrites = _permissionOverwrites,
             parentId = _parentId
     )
 }
@@ -124,15 +127,16 @@ class StoreChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
-    private var _position: OptionalInt = OptionalInt.Missing
+    private var _position: OptionalInt? = OptionalInt.Missing
     var position: Int? by ::_position.delegate()
 
-    var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = _name,
             position = _position,
-            permissionOverwrites = Optional.missingOnEmpty(permissionOverwrites)
+            permissionOverwrites = _permissionOverwrites
     )
 
 }

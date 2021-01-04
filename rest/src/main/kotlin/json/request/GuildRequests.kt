@@ -56,7 +56,7 @@ data class GuildChannelCreateRequest(
 @Serializable
 data class ChannelPositionSwapRequest(
         val id: Snowflake,
-        val position: Int?,
+        val position: OptionalInt? = OptionalInt.Missing,
         @KordExperimental
         @SerialName("lock_permissions")
         val lockPermissions: Boolean?,
@@ -156,7 +156,7 @@ data class GuildRolePositionModifyRequest(val swaps: List<Pair<Snowflake, Int>>)
 data class GuildRoleModifyRequest(
         val name: Optional<String?> = Optional.Missing(),
         val permissions: Optional<Permissions?> = Optional.Missing(),
-        val color: Optional<Color> = Optional.Missing(),
+        val color: Optional<Color?> = Optional.Missing(),
         @SerialName("hoist")
         val separate: OptionalBoolean? = OptionalBoolean.Missing,
         val mentionable: OptionalBoolean? = OptionalBoolean.Missing,
@@ -199,28 +199,28 @@ data class CurrentUserNicknameModifyRequest(
 @Serializable
 data class GuildModifyRequest(
         val name: Optional<String> = Optional.Missing(),
-        val region: Optional<String> = Optional.Missing(),
+        val region: Optional<String?> = Optional.Missing(),
         @SerialName("verification_level")
-        val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
+        val verificationLevel: Optional<VerificationLevel?> = Optional.Missing(),
         @SerialName("default_message_notifications")
-        val defaultMessageNotificationLevel: Optional<DefaultMessageNotificationLevel> = Optional.Missing(),
+        val defaultMessageNotificationLevel: Optional<DefaultMessageNotificationLevel?> = Optional.Missing(),
         @SerialName("explicit_content_filter")
-        val contentFilter: Optional<ExplicitContentFilter> = Optional.Missing(),
+        val contentFilter: Optional<ExplicitContentFilter?> = Optional.Missing(),
         @SerialName("afk_channel_id")
-        val afkChannelId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val afkChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
         @SerialName("afk_timeout")
         val afkTimeout: OptionalInt = OptionalInt.Missing,
-        val icon: Optional<String> = Optional.Missing(),
+        val icon: Optional<String?> = Optional.Missing(),
         @SerialName("owner_id")
         val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
-        val splash: Optional<String> = Optional.Missing(),
-        val banner: Optional<String> = Optional.Missing(),
+        val splash: Optional<String?> = Optional.Missing(),
+        val banner: Optional<String?> = Optional.Missing(),
         @SerialName("system_channel_id")
-        val systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val systemChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
         @SerialName("rules_channel_id")
-        val rulesChannelId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val rulesChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
         @SerialName("public_updates_channel_id")
-        val publicUpdatesChannelId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val publicUpdatesChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
         @SerialName("preferred_locale")
-        val preferredLocale: Optional<String> = Optional.Missing(),
+        val preferredLocale: Optional<String?> = Optional.Missing(),
 )
