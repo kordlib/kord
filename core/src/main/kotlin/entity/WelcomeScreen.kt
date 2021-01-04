@@ -15,7 +15,7 @@ class WelcomeScreen(val data: WelcomeScreenData, override val kord: Kord) : Kord
 
     val description: String? get() = data.description
 
-    val welcomeScreenChanenls: List<WelcomeScreenChannel>
+    val welcomeScreenChannels: List<WelcomeScreenChannel>
         get() = data.welcomeChannels.map { WelcomeScreenChannel(it, kord) }
 
 }
