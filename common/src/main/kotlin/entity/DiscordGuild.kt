@@ -546,7 +546,7 @@ data class WelcomeScreenChannel(
     val channelId: Snowflake,
     val description: String,
     @SerialName("emoji_id")
-    val emojiId: String?,
+    val emojiId: Snowflake?,
     @SerialName("emoji_name")
     val emojiName: String?
 )
