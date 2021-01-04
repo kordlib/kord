@@ -213,9 +213,16 @@ inline fun <E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<List<T>>
 }
 
 @Suppress("UNCHECKED_CAST")
-inline fun <E, T : Any> Optional<E>.map(mapper: (E) -> T): Optional<T> = when (this) {
+inline fun <E: Any, T : Any> Optional<E>.map(mapper: (E) -> T): Optional<T> = when (this) {
     is Missing, is Null<*> -> this as Optional<T>
     is Value -> Value(mapper(value))
+}
+
+@Suppress("UNCHECKED_CAST")
+@JvmName("mapNullableOptional")
+inline fun <E: Any, T : Any> Optional<E?>.map(mapper: (E) -> T): Optional<T?> = when (this) {
+    is Missing, is Null<*> -> this as Optional<T>
+    is Value -> Value(mapper(value!!))
 }
 
 @Suppress("UNCHECKED_CAST")
