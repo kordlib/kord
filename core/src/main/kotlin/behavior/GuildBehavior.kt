@@ -46,7 +46,6 @@ import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.random.Random
 
 /**
  * The behavior of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
@@ -106,8 +105,8 @@ interface GuildBehavior : Entity, Strategizable {
      */
     val presences: Flow<Presence>
         get() = kord.cache.query<PresenceData> { idEq(PresenceData::guildId, id) }
-                .asFlow()
-                .map { Presence(it, kord) }
+            .asFlow()
+            .map { Presence(it, kord) }
 
     /**
      * Requests to get all present members in this guild.
@@ -154,9 +153,9 @@ interface GuildBehavior : Entity, Strategizable {
      */
     val voiceStates: Flow<VoiceState>
         get() = kord.cache
-                .query<VoiceStateData> { idEq(VoiceStateData::guildId, id) }
-                .asFlow()
-                .map { VoiceState(it, kord) }
+            .query<VoiceStateData> { idEq(VoiceStateData::guildId, id) }
+            .asFlow()
+            .map { VoiceState(it, kord) }
 
     /**
      * Requests to get the present voice states of this guild.
@@ -206,13 +205,13 @@ interface GuildBehavior : Entity, Strategizable {
         val withNonce = request.copy(nonce = Optional.Value(nonce))
 
         return kord.events
-                .onSubscription { gateway.send(withNonce) }
-                .filterIsInstance<MembersChunkEvent>()
-                .filter { it.nonce == nonce }
-                .transformWhile {
-                    emit(it)
-                    return@transformWhile (it.chunkIndex + 1) < it.chunkCount
-                }
+            .onSubscription { gateway.send(withNonce) }
+            .filterIsInstance<MembersChunkEvent>()
+            .filter { it.nonce == nonce }
+            .transformWhile {
+                emit(it)
+                return@transformWhile (it.chunkIndex + 1) < it.chunkCount
+            }
     }
 
     /**
@@ -268,9 +267,9 @@ interface GuildBehavior : Entity, Strategizable {
     suspend fun getMembers(query: String, limit: Int = 1000): Flow<Member> = flow {
         kord.rest.guild.getGuildMembers(id, query, limit).forEach {
             emit(Member(
-                    MemberData.from(userId = it.user.unwrap(DiscordUser::id)!!, guildId = id, it),
-                    UserData.from(it.user.value!!),
-                    kord
+                MemberData.from(userId = it.user.unwrap(DiscordUser::id)!!, guildId = id, it),
+                UserData.from(it.user.value!!),
+                kord
             ))
         }
     }
@@ -310,7 +309,7 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [EntityNotFoundException] if the [Invite] wasn't present.
      */
     suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
-            kord.with(rest).getInvite(code, withCounts)
+        kord.with(rest).getInvite(code, withCounts)
 
     /**
      * Requests to get the [Invite] represented by the [code],
@@ -321,7 +320,7 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun getInviteOrNull(code: String, withCounts: Boolean = true): Invite? =
-            kord.with(rest).getInviteOrNull(code, withCounts)
+        kord.with(rest).getInviteOrNull(code, withCounts)
 
 
     /**
@@ -339,7 +338,8 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun editSelfNickname(newNickname: String? = null): String {
-        return kord.rest.guild.modifyCurrentUserNickname(id, CurrentUserNicknameModifyRequest(Optional(newNickname))).nick
+        return kord.rest.guild.modifyCurrentUserNickname(id,
+            CurrentUserNicknameModifyRequest(Optional(newNickname))).nick
     }
 
     /**
@@ -435,7 +435,7 @@ interface GuildBehavior : Entity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun getPruneCount(days: Int = 7): Int =
-            kord.rest.guild.getGuildPruneCount(id, days).pruned
+        kord.rest.guild.getGuildPruneCount(id, days).pruned
 
     /**
      * Requests to prune users in this guild.
@@ -449,14 +449,14 @@ interface GuildBehavior : Entity, Strategizable {
         return kord.rest.guild.beginGuildPrune(id, days, true).pruned!!
     }
 
-    suspend fun getWelcomeScreen(): WelcomeScreen {
-        val request = kord.rest.guild.getGuildWelcomeScreen(id)
-        val data = WelcomeScreenData.from(request)
-        return WelcomeScreen(data, kord)
-    }
+    suspend fun getWelcomeScreenOrNull(): WelcomeScreen? =
+        withStrategy(rest).getWelcomeScreenOrNull()
+
+    suspend fun getWelcomeScreen(): WelcomeScreen =
+        withStrategy(rest).getWelcomeScreen()
 
 
-    suspend fun editWelcomeScreen(builder:WelcomeScreenModifyBuilder.() -> Unit): WelcomeScreen {
+    suspend fun editWelcomeScreen(builder: WelcomeScreenModifyBuilder.() -> Unit): WelcomeScreen {
         val request = kord.rest.guild.modifyGuildWelcomeScreen(id, builder)
         val data = WelcomeScreenData.from(request)
         return WelcomeScreen(data, kord)
@@ -488,7 +488,11 @@ interface GuildBehavior : Entity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : GuildBehavior {
+        internal operator fun invoke(
+            id: Snowflake,
+            kord: Kord,
+            strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+        ) = object : GuildBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
             override val supplier: EntitySupplier = strategy.supply(kord)
@@ -527,7 +531,8 @@ suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): G
     return Guild(data, kord)
 }
 
-@Deprecated("emoji name and image are mandatory fields.", ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)"))
+@Deprecated("emoji name and image are mandatory fields.",
+    ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)"))
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
@@ -538,7 +543,11 @@ suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> U
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createEmoji(name: String, image: Image, builder: EmojiCreateBuilder.() -> Unit = {}): GuildEmoji {
+suspend inline fun GuildBehavior.createEmoji(
+    name: String,
+    image: Image,
+    builder: EmojiCreateBuilder.() -> Unit = {},
+): GuildEmoji {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -553,7 +562,9 @@ suspend inline fun GuildBehavior.createEmoji(name: String, image: Image, builder
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Deprecated("channel name is a mandatory field", ReplaceWith("createTextChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@Deprecated("channel name is a mandatory field",
+    ReplaceWith("createTextChannel(\"name\", builder)"),
+    DeprecationLevel.WARNING)
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
@@ -572,7 +583,10 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createTextChannel(name: String, builder: TextChannelCreateBuilder.() -> Unit = {}): TextChannel {
+suspend inline fun GuildBehavior.createTextChannel(
+    name: String,
+    builder: TextChannelCreateBuilder.() -> Unit = {},
+): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -589,7 +603,9 @@ suspend inline fun GuildBehavior.createTextChannel(name: String, builder: TextCh
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Deprecated("channel name is a mandatory field.", ReplaceWith("createVoiceChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@Deprecated("channel name is a mandatory field.",
+    ReplaceWith("createVoiceChannel(\"name\", builder)"),
+    DeprecationLevel.WARNING)
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
@@ -607,7 +623,10 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createVoiceChannel(name: String, builder: VoiceChannelCreateBuilder.() -> Unit = {}): VoiceChannel {
+suspend inline fun GuildBehavior.createVoiceChannel(
+    name: String,
+    builder: VoiceChannelCreateBuilder.() -> Unit = {},
+): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -624,7 +643,9 @@ suspend inline fun GuildBehavior.createVoiceChannel(name: String, builder: Voice
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Deprecated("channel name is a mandatory field.", ReplaceWith("createNewsChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@Deprecated("channel name is a mandatory field.",
+    ReplaceWith("createNewsChannel(\"name\", builder)"),
+    DeprecationLevel.WARNING)
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
@@ -642,7 +663,10 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createNewsChannel(name: String, builder: NewsChannelCreateBuilder.() -> Unit = {}): NewsChannel {
+suspend inline fun GuildBehavior.createNewsChannel(
+    name: String,
+    builder: NewsChannelCreateBuilder.() -> Unit = {},
+): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -660,7 +684,9 @@ suspend inline fun GuildBehavior.createNewsChannel(name: String, builder: NewsCh
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Deprecated("channel name is a mandatory field.", ReplaceWith("createCategoryChannel(\"name\", builder)"), DeprecationLevel.WARNING)
+@Deprecated("channel name is a mandatory field.",
+    ReplaceWith("createCategoryChannel(\"name\", builder)"),
+    DeprecationLevel.WARNING)
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
@@ -678,7 +704,10 @@ suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createCategory(name: String, builder: CategoryCreateBuilder.() -> Unit = {}): Category {
+suspend inline fun GuildBehavior.createCategory(
+    name: String,
+    builder: CategoryCreateBuilder.() -> Unit = {},
+): Category {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -811,7 +840,7 @@ suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.()
  *  ```
  */
 inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> =
-        kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
+    kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
 
 /**
  * Executes a [RequestGuildMembers] command configured by the [builder] for guild
