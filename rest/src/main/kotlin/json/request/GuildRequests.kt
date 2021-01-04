@@ -59,10 +59,10 @@ data class ChannelPositionSwapRequest(
         val position: OptionalInt? = OptionalInt.Missing,
         @KordExperimental
         @SerialName("lock_permissions")
-        val lockPermissions: Boolean? = null,
+        val lockPermissions: Boolean?,
         @KordExperimental
         @SerialName("parent_id")
-        val parentId: Snowflake? = null
+        val parentId: Snowflake?
 )
 
 @Serializable(with = GuildChannelPositionModifyRequest.Serializer::class)
