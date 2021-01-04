@@ -54,7 +54,6 @@ data class GuildData(
     val maxVideoChannelUsers: OptionalInt = OptionalInt.Missing,
     val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
-    val welcomeScreen: Optional<WelcomeScreenData>,
 ) {
     companion object {
 
@@ -114,7 +113,6 @@ data class GuildData(
                 maxVideoChannelUsers = maxVideoChannelUsers,
                 approximateMemberCount = approximateMemberCount,
                 approximatePresenceCount = approximatePresenceCount,
-                welcomeScreen = welcomeScreen.map { WelcomeScreenData.from(it) }
             )
         }
     }

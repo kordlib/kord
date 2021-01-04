@@ -280,6 +280,12 @@ sealed class Route<T>(
     object GuildVanityInviteGet
         : Route<DiscordPartialInvite>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", DiscordPartialInvite.serializer())
 
+    object GuildWelcomeScreenGet
+        : Route<DiscordWelcomeScreen>(HttpMethod.Get, "/guilds/${GuildId}/guild-object}/welcome-screen", DiscordWelcomeScreen.serializer())
+
+    object GuildWelcomeScreenPatch
+        : Route<DiscordWelcomeScreen>(HttpMethod.Patch, "/guilds/${GuildId}/guild-object}/welcome-screen", DiscordWelcomeScreen.serializer())
+
     @KordPreview
     object MessageCrosspost
         : Route<DiscordMessage>(HttpMethod.Post, "/channels/$ChannelId/messages/$MessageId/crosspost", DiscordMessage.serializer())
@@ -287,6 +293,7 @@ sealed class Route<T>(
     @KordPreview
     object NewsChannelFollow
         : Route<FollowedChannelResponse>(HttpMethod.Post, "/channels/$ChannelId/followers", FollowedChannelResponse.serializer())
+
 
     /**
      * Returns the guild preview object for the given id, even if the user is not in the guild.

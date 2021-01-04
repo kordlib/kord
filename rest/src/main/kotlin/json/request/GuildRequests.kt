@@ -224,3 +224,10 @@ data class GuildModifyRequest(
         @SerialName("preferred_locale")
         val preferredLocale: Optional<String> = Optional.Missing(),
 )
+
+@Serializable
+data class GuildWelcomeScreenModifyRequest(
+    val enabled: OptionalBoolean = OptionalBoolean.Missing,
+    val welcomeScreenChannels: Optional<List<DiscordWelcomeScreenChannel>> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing()
+)

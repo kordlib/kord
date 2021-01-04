@@ -150,8 +150,7 @@ data class DiscordGuild(
     val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_presence_count")
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
-    @SerialName("welcome_screen")
-    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing()
+
 )
 
 /**
@@ -170,7 +169,9 @@ class DiscordPartialGuild(
     val icon: String?,
     val owner: OptionalBoolean = OptionalBoolean.Missing,
     val permissions: Optional<Permissions> = Optional.Missing(),
-    val features: List<GuildFeature>
+    val features: List<GuildFeature>,
+    @SerialName("welcome_screen")
+    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing()
 )
 
 /**

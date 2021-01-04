@@ -73,11 +73,6 @@ class Guild(
     val approximatePresenceCount: Int? get() = data.approximatePresenceCount.value
 
     /**
-     * The welcome screen of a Community guild, shown to new members.
-     */
-    val welcomeScreen: WelcomeScreen? get() = data.welcomeScreen.unwrap { WelcomeScreen(it, kord) }
-
-    /**
      * The maximum number of presences for this guild. 25000 By default.
      */
     val maxPresences: Int get() = data.maxPresences.orElse(25_000)

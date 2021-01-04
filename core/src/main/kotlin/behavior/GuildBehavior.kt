@@ -34,6 +34,7 @@ import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.EmojiCreateBuilder
 import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
+import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
@@ -446,6 +447,19 @@ interface GuildBehavior : Entity, Strategizable {
      */
     suspend fun prune(days: Int = 7): Int {
         return kord.rest.guild.beginGuildPrune(id, days, true).pruned!!
+    }
+
+    suspend fun getWelcomeScreen(): WelcomeScreen {
+        val request = kord.rest.guild.getGuildWelcomeScreen(id)
+        val data = WelcomeScreenData.from(request)
+        return WelcomeScreen(data, kord)
+    }
+
+
+    suspend fun editWelcomeScreen(builder:WelcomeScreenModifyBuilder.() -> Unit): WelcomeScreen {
+        val request = kord.rest.guild.modifyGuildWelcomeScreen(id, builder)
+        val data = WelcomeScreenData.from(request)
+        return WelcomeScreen(data, kord)
     }
 
     /**
