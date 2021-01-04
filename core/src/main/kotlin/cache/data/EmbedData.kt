@@ -102,7 +102,7 @@ data class EmbedVideoData(
 @Serializable
 data class EmbedProviderData(
         val name: Optional<String> = Optional.Missing(),
-        val url: Optional<String?> = Optional.Missing(),
+        val url: Optional<String?> = Optional.Missing(), //see https://github.com/kordlib/kord/issues/149
 ) {
     companion object {
         fun from(entity: DiscordEmbed.Provider) = with(entity) {
