@@ -21,6 +21,7 @@ data class InteractionData(
     val channelId: Snowflake,
     val member: MemberData,
     val token: String,
+    val permissions: Permissions,
     val version: Int
 ) {
     companion object {
@@ -34,6 +35,7 @@ data class InteractionData(
                     channelId,
                     member.toData(member.user.value!!.id,guildId),
                     token,
+                    member.permissions,
                     version
                 )
             }

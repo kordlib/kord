@@ -151,7 +151,7 @@ data class DiscordInteraction(
         val guildId: Snowflake,
         @SerialName("channel_id")
         val channelId: Snowflake,
-        val member: DiscordGuildMember,
+        val member: DiscordInteractionGuildMember,
         val token: String,
         val version: Int,
 )
