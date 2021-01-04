@@ -61,7 +61,7 @@ class KordRestOnlyBuilder(val token: String) {
     fun build(): Kord {
         val client = httpClient.configure(token)
 
-        val resources = ClientResources(token, 0, client, EntitySupplyStrategy.rest, Intents.none, applicationId)
+        val resources = ClientResources(token, 0, client, EntitySupplyStrategy.rest, Intents.none)
         val rest = RestClient(handlerBuilder(resources))
         val selfId = getBotIdFromToken(token)
 

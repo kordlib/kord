@@ -7,6 +7,7 @@ import dev.kord.core.entity.interaction.GlobalApplicationCommand
 import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.rest.builder.interaction.GlobalApplicationCommandCreateBuilder
 import dev.kord.rest.builder.interaction.GuildApplicationCommandCreateBuilder
+import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.service.InteractionService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,13 +22,13 @@ import kotlin.contracts.contract
 @KordPreview
 class SlashCommands(
     val applicationId: Snowflake,
-    val service: InteractionService
+    val service: InteractionService,
 ) {
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGlobalApplicationCommand(
         name: String,
         description: String,
-        builder: GlobalApplicationCommandCreateBuilder.() -> Unit = {}
+        builder: GlobalApplicationCommandCreateBuilder.() -> Unit = {},
     ): GlobalApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = GlobalApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
@@ -41,7 +42,7 @@ class SlashCommands(
         guildId: Snowflake,
         name: String,
         description: String,
-        builder: GuildApplicationCommandCreateBuilder.() -> Unit = {}
+        builder: GuildApplicationCommandCreateBuilder.() -> Unit = {},
     ): GuildApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = GuildApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
@@ -50,7 +51,7 @@ class SlashCommands(
         return GuildApplicationCommand(data, guildId, service)
     }
 
-    suspend fun getGuildApplicationCommands(guildId: Snowflake): Flow<GuildApplicationCommand> = flow {
+    fun getGuildApplicationCommands(guildId: Snowflake): Flow<GuildApplicationCommand> = flow {
         for (command in service.getGuildApplicationCommands(applicationId, guildId)) {
             val data = ApplicationCommandData.from(command)
             emit(GuildApplicationCommand(data, guildId, service))
@@ -58,14 +59,16 @@ class SlashCommands(
     }
 
 
-    suspend fun getGlobalApplicationCommands(): Flow<GlobalApplicationCommand> = flow {
+    fun getGlobalApplicationCommands(): Flow<GlobalApplicationCommand> = flow {
         for (command in service.getGlobalApplicationCommands(applicationId)) {
             val data = ApplicationCommandData.from(command)
             emit(GlobalApplicationCommand(data, service))
         }
     }
-}
 
-fun Kord.toSlashCommands(applicationId: Snowflake): SlashCommands {
-    return SlashCommands(applicationId, rest.interaction)
+    companion object {
+        operator fun invoke(applicationId: Snowflake, requestHandler: RequestHandler) =
+            SlashCommands(applicationId, InteractionService(requestHandler))
+
+    }
 }

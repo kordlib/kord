@@ -10,12 +10,10 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.InteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
-import dev.kord.core.behavior.PartialInteractionBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.OptionData
 import dev.kord.core.entity.Entity
-import dev.kord.core.entity.Member
 import dev.kord.core.supplier.EntitySupplier
 
 /**
@@ -31,33 +29,6 @@ import dev.kord.core.supplier.EntitySupplier
  * @property command [Command] object that contains the data related to the interaction's command.
  * @property version read-only property, always 1
  */
-@KordPreview
-class PartialInteraction(
-    val data: InteractionData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
-) : PartialInteractionBehavior {
-
-    override val id: Snowflake get() = data.id
-
-    override val channelId: Snowflake get() = data.channelId
-
-    override val token: String get() = data.token
-
-    override val guildId: Snowflake get() = data.channelId
-
-    val type: InteractionType get() = data.type
-
-    val permissions: Permissions get() = data.permissions
-
-    val member: MemberBehavior get() = MemberBehavior(guildId, data.member.userId, kord)
-
-    val command: Command
-        get() = Command(data.data)
-
-    val version: Int get() = data.version
-
-}
 
 /**
  * Interaction that can respond to interactions and follow them up.
@@ -93,7 +64,7 @@ class Interaction(
 
     val permissions: Permissions get() = data.permissions
 
-    val member: MemberBehavior get() = MemberBehavior(data.guildId, data.member.userId!!, kord)
+    val member: MemberBehavior get() = MemberBehavior(data.guildId, data.member.userId, kord)
 
     val command: Command
         get() = Command(data.data)

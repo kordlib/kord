@@ -108,7 +108,6 @@ class KordBuilder(val token: String) {
      */
     var intents: Intents = Intents.nonPrivileged
 
-    var applicationId: Snowflake? = null
 
 
     /**
@@ -222,7 +221,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token, shards.count(), client, defaultStrategy, intents, applicationId)
+        val resources = ClientResources(token, shards.count(), client, defaultStrategy, intents)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()

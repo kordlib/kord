@@ -6,7 +6,6 @@ import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.core.entity.interaction.Interaction
-import dev.kord.core.entity.interaction.PartialInteraction
 import dev.kord.core.event.interaction.*
 import dev.kord.core.gateway.MasterGateway
 import dev.kord.gateway.*
@@ -17,10 +16,10 @@ class InteractionEventHandler(
     kord: Kord,
     gateway: MasterGateway,
     cache: DataCache,
-    coreFlow: MutableSharedFlow<CoreEvent>
+    coreFlow: MutableSharedFlow<CoreEvent>,
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
     override suspend fun handle(event: Event, shard: Int) {
-        when(event) {
+        when (event) {
             is InteractionCreate -> handle(event, shard)
             is ApplicationCommandCreate -> handle(event, shard)
             is ApplicationCommandUpdate -> handle(event, shard)
@@ -31,18 +30,9 @@ class InteractionEventHandler(
     }
 
     private suspend fun handle(event: InteractionCreate, shard: Int) {
-
         val data = InteractionData.from(event)
-
-        if (kord.resources.applicationId != null) {
-            val interaction = Interaction(data, kord.resources.applicationId, kord)
-            coreFlow.emit(InteractionCreateEvent(interaction, kord, shard))
-            return
-        }
-
-        val partial = PartialInteraction(data, kord)
-        coreFlow.emit(PartialInteractionCreateEvent(partial, kord, shard))
-
+        val interaction = Interaction(data, kord.selfId, kord)
+        coreFlow.emit(InteractionCreateEvent(interaction, kord, shard))
     }
 
     private suspend fun handle(event: ApplicationCommandCreate, shard: Int) {
