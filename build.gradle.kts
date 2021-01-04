@@ -14,7 +14,6 @@ buildscript {
 
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
-        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:${Versions.bintray}")
         classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:${Versions.atomicFu}")
         classpath("org.jetbrains.kotlinx:binary-compatibility-validator:${Versions.binaryCompatibilityValidator}")
     }
@@ -24,12 +23,16 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
     id("org.jetbrains.dokka") version "1.4.0"
     id("org.ajoberstar.git-publish") version "2.1.3"
+    id("com.jfrog.bintray") version "1.8.5"
+
+    signing
+    `maven-publish`
+    id("io.codearte.nexus-staging") version "0.22.0"
 }
 
 apply(plugin = "binary-compatibility-validator")
 
 repositories {
-    maven(url = "https://dl.bintray.com/kotlin/kotlin-dev/")
     mavenCentral()
     jcenter()
     mavenLocal()
@@ -50,6 +53,7 @@ subprojects {
     apply(plugin = "maven-publish")
     apply(plugin = "kotlinx-atomicfu")
     apply(plugin = "org.jetbrains.dokka")
+    apply(plugin = "signing")
 
     repositories {
         mavenCentral()
@@ -76,7 +80,7 @@ subprojects {
         testRuntimeOnly(Dependencies.sl4j)
     }
 
-    tasks.getByName("apiCheck").onlyIf { Library.stableApi }
+    tasks.getByName("apiCheck").onlyIf { Library.isStableApi }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target
@@ -114,25 +118,99 @@ subprojects {
         from(sourceSets.main.get().allSource)
     }
 
+    val dokkaJar by tasks.registering(Jar::class) {
+        group = JavaBasePlugin.DOCUMENTATION_GROUP
+        description = "Assembles Kotlin docs with Dokka"
+        archiveClassifier.set("javadoc")
+        from(tasks.dokkaHtml)
+        dependsOn(tasks.dokkaHtml)
+    }
+
     apply<BintrayPlugin>()
 
-    configure<PublishingExtension> {
+    publishing {
         publications {
-            register("kord", MavenPublication::class) {
+            create<MavenPublication>(Library.name) {
                 from(components["kotlin"])
                 groupId = Library.group
                 artifactId = "kord-${project.name}"
                 version = Library.version
 
                 artifact(sourcesJar.get())
+                artifact(dokkaJar.get())
+
+                pom {
+                    name.set(Library.name)
+                    description.set(Library.description)
+                    url.set(Library.description)
+
+                    organization {
+                        name.set("Kord")
+                        url.set("https://github.com/kordlib")
+                    }
+
+                    developers {
+                        developer {
+                            name.set("The Kord Team")
+                        }
+                    }
+
+                    issueManagement {
+                        system.set("GitHub")
+                        url.set("https://github.com/kordlib/kord/issues")
+                    }
+
+                    withXml {
+                        val repoNode = asNode().appendNode("repositories").appendNode("repository")
+
+                        with(repoNode) {
+                            appendNode("id", "jcenter")
+                            appendNode("name", "jcenter-bintray")
+                            appendNode("url", "https://jcenter.bintray.com")
+                        }
+                    }
+                    licenses {
+                        license {
+                            name.set("MIT")
+                            url.set("https://opensource.org/licenses/MIT")
+                        }
+                    }
+                    scm {
+                        connection.set("scm:git:ssh://github.com/kordlib/kord.git")
+                        developerConnection.set("scm:git:ssh://git@github.com:kordlib/kord.git")
+                        url.set(Library.projectUrl)
+                    }
+                }
+
+                if (!isJitPack) {
+                    repositories {
+                        maven {
+                            url = if (Library.isSnapshot) uri(Repo.snapshotsUrl)
+                            else uri(Repo.releasesUrl)
+
+                            credentials {
+                                username = System.getenv("NEXUS_USER")
+                                password = System.getenv("NEXUS_PASSWORD")
+                            }
+                        }
+                    }
+                }
+
             }
+        }
+
+    }
+
+    if (!isJitPack) {
+        signing {
+            sign(publishing.publications[Library.name])
         }
     }
 
     configure<BintrayExtension> {
         user = System.getenv("BINTRAY_USER")
         key = System.getenv("BINTRAY_KEY")
-        setPublications("kord")
+        setPublications(Library.name)
         publish = true
 
         pkg = PackageConfig().apply {
@@ -188,3 +266,5 @@ configure<GitPublishExtension> {
 
     commitMessage.set("Update Docs")
 }
+
+nexusStaging { }

@@ -6,19 +6,31 @@ val DependencyHandlerScope.rest get() = project(":rest")
 val DependencyHandlerScope.gateway get() = project(":gateway")
 val DependencyHandlerScope.core get() = project(":core")
 
-object Library {
-    private const val releaseVersion = "0.7.0"
 
+/**
+ * whether the process has been invoked by JitPack
+ */
+val isJitPack get() = "true" == System.getenv("JITPACK")
+
+object Library {
+    private const val releaseVersion = "0.7.0-SNAPSHOT"
+    val isSnapshot: Boolean get() = releaseVersion.endsWith("-SNAPSHOT")
+
+    const val name = "kord"
     const val group = "dev.kord"
-    val version = System.getenv("RELEASE_TAG") ?: releaseVersion
+    val version: String = if (isJitPack) System.getenv("RELEASE_TAG")
+    else releaseVersion
+
     const val description = "Idiomatic Kotlin Wrapper for The Discord API"
+    const val projectUrl = "https://github.com/kordlib/kord"
 
     /**
      * Whether the current API is considered stable, and should be compared to the 'golden' API dump.
-     *
-     * Settings this flag to `false` disables the `apiCheck` tasks that compares binary compatibility.
-     * Whenever a new development cycle starts, this flag should be set to `false`, and set to
-     * `true` together with a new API dump whenever that cycle ends.
      */
-    const val stableApi: Boolean = false
+    val isStableApi: Boolean get() = !isSnapshot
+}
+
+object Repo {
+    const val releasesUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+    const val snapshotsUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
 }
