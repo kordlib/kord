@@ -2,6 +2,7 @@ package dev.kord.core
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.event.Event
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
@@ -200,7 +201,7 @@ internal fun <C : Collection<T>, T> paginateForwards(start: Snowflake = Snowflak
 /**
  *  Selects the [Position.After] the youngest item in the batch.
  */
-internal fun <C : Collection<T>, T : Entity> paginateForwards(start: Snowflake = Snowflake("0"), batchSize: Int, request: suspend (position: Position) -> C): Flow<T> =
+internal fun <C : Collection<T>, T : KordEntity> paginateForwards(start: Snowflake = Snowflake("0"), batchSize: Int, request: suspend (position: Position) -> C): Flow<T> =
         paginate(start, batchSize, { it.id }, youngestItem { it.id }, Position::After, request)
 
 /**
@@ -212,7 +213,7 @@ internal fun <C : Collection<T>, T> paginateBackwards(start: Snowflake = Snowfla
 /**
  *  Selects the [Position.Before] the oldest item in the batch.
  */
-internal fun <C : Collection<T>, T : Entity> paginateBackwards(start: Snowflake = Snowflake(Long.MAX_VALUE), batchSize: Int, request: suspend (position: Position) -> C): Flow<T> =
+internal fun <C : Collection<T>, T : KordEntity> paginateBackwards(start: Snowflake = Snowflake(Long.MAX_VALUE), batchSize: Int, request: suspend (position: Position) -> C): Flow<T> =
         paginate(start, batchSize, { it.id }, oldestItem { it.id }, Position::Before, request)
 
 inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent() = enableEvent(T::class)

@@ -11,7 +11,7 @@ import java.util.*
  *
  * A file attached to a [Message].
  */
-data class Attachment(val data: AttachmentData, override val kord: Kord) : Entity {
+data class Attachment(val data: AttachmentData, override val kord: Kord) : KordEntity {
 
     override val id: Snowflake
         get() = data.id

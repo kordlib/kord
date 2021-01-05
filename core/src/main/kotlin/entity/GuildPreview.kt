@@ -8,7 +8,7 @@ import dev.kord.core.cache.data.GuildPreviewData
 class GuildPreview(
         val data: GuildPreviewData,
         override val kord: Kord
-) : Entity {
+) : KordEntity {
 
     override val id: Snowflake
         get() = data.id

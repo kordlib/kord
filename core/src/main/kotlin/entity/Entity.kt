@@ -3,10 +3,7 @@ package dev.kord.core.entity
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.KordObject
 
-/**
- * An object that is identified by its [id].
- */
-interface Entity : KordObject, Comparable<Entity> {
+interface Entity : Comparable<Entity> {
     /**
      * The unique identifier of this entity.
      */
@@ -21,3 +18,9 @@ interface Entity : KordObject, Comparable<Entity> {
         val comparator = compareBy<Entity> { it.id }
     }
 }
+
+/**
+ * An object that is identified by its [id].
+ * This object holds a [KordObject]
+ */
+interface KordEntity : KordObject, Entity

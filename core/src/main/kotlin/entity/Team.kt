@@ -17,7 +17,7 @@ class Team(
         val data: TeamData,
         override val kord: Kord,
         override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Entity, Strategizable {
+) : KordEntity, Strategizable {
     /**
      * The unique ID of this team.
      */

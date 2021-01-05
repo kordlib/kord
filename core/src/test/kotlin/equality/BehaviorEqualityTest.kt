@@ -1,13 +1,12 @@
 package equality
 
-import dev.kord.common.entity.Snowflake
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-interface BehaviorEqualityTest<T: Entity> : EntityEqualityTest<T> {
+interface BehaviorEqualityTest<T: KordEntity> : EntityEqualityTest<T> {
 
-    fun T.behavior() : Entity
+    fun T.behavior() : KordEntity
 
     @Test
     fun `Full entity equals its behavior`(){

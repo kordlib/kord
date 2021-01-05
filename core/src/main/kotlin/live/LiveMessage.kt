@@ -5,7 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.cache.data.ReactionData
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.Event
@@ -18,7 +18,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 suspend fun Message.live() = LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id)
 
 @KordPreview
-class LiveMessage(message: Message, val guildId: Snowflake?) : AbstractLiveEntity(), Entity by message {
+class LiveMessage(message: Message, val guildId: Snowflake?) : AbstractLiveKordEntity(), KordEntity by message {
 
     var message: Message = message
         private set

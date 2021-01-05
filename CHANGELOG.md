@@ -1,3 +1,13 @@
+# 0.7.x
+
+## Additions
+
+* Added core representation of templates #136
+
+## Fixes
+
+* Fix `GuildBehavior#getWidgetOrNull`
+
 # 0.7.0-RC
 
 ## Additions

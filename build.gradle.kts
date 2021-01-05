@@ -54,6 +54,7 @@ subprojects {
     apply(plugin = "maven-publish")
     apply(plugin = "kotlinx-atomicfu")
     apply(plugin = "org.jetbrains.dokka")
+  
     if(!isJitPack && Library.isRelease){
         apply(plugin = "signing")
     }

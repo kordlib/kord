@@ -28,7 +28,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Message](https://discord.com/developers/docs/resources/channel#message-object).
  */
-interface MessageBehavior : Entity, Strategizable {
+interface MessageBehavior : KordEntity, Strategizable {
     /**
      * The channel id this message belongs to.
      */

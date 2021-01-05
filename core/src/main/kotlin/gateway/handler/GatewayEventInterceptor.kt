@@ -30,7 +30,8 @@ class GatewayEventInterceptor(
             LifeCycleEventHandler(kord, gateway, cache, coreFlow),
             UserEventHandler(kord, gateway, cache, coreFlow),
             VoiceEventHandler(kord, gateway, cache, coreFlow),
-            WebhookEventHandler(kord, gateway, cache, coreFlow)
+            WebhookEventHandler(kord, gateway, cache, coreFlow),
+            InteractionEventHandler(kord,gateway, cache, coreFlow)
     )
 
     suspend fun start() = gateway.events

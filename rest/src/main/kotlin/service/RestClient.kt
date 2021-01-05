@@ -20,6 +20,8 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
     val voice: VoiceService = VoiceService(requestHandler)
     val webhook: WebhookService = WebhookService(requestHandler)
     val application: ApplicationService = ApplicationService(requestHandler)
+    val template: TemplateService = TemplateService(requestHandler)
+    val interaction: InteractionService = InteractionService(requestHandler)
 
     /**
      * Sends a request to the given [route]. This function exposes a direct call to the Discord api and allows

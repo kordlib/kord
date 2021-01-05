@@ -14,5 +14,5 @@ internal class UserTest : EntityEqualityTest<User> by EntityEqualityTest({
     every { data.id } returns it
     User(data, kord)
 }), BehaviorEqualityTest<User> {
-    override fun User.behavior(): Entity = UserBehavior(id = id, kord = kord)
+    override fun User.behavior(): KordEntity = UserBehavior(id = id, kord = kord)
 }

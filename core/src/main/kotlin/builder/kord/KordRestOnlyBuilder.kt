@@ -2,6 +2,7 @@ package dev.kord.core.builder.kord
 
 import com.gitlab.kordlib.cache.api.DataCache
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.event.Event
@@ -37,6 +38,8 @@ class KordRestOnlyBuilder(val token: String) {
      * will be used when not set.
      */
     var httpClient: HttpClient? = null
+
+    var applicationId: Snowflake? = null
 
     /**
      * Configures the [RequestHandler] for the [RestClient].

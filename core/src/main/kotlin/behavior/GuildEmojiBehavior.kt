@@ -3,7 +3,7 @@ package dev.kord.core.behavior
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.EmojiData
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.GuildEmoji
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.supplier.EntitySupplier
@@ -15,7 +15,7 @@ import java.util.*
 /**
  * The behavior of a [Discord Emoij](https://discord.com/developers/docs/resources/emoji).
  */
-interface GuildEmojiBehavior : Entity, Strategizable {
+interface GuildEmojiBehavior : KordEntity, Strategizable {
 
     /**
      * The id of the guild this emojis is part of.

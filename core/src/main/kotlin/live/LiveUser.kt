@@ -1,7 +1,7 @@
 package dev.kord.core.live
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.User
 import dev.kord.core.event.Event
 import dev.kord.core.event.user.UserUpdateEvent
@@ -11,7 +11,7 @@ import dev.kord.core.event.user.UserUpdateEvent
 fun User.live() = LiveUser(this)
 
 @KordPreview
-class LiveUser(user: User) : AbstractLiveEntity(), Entity by user {
+class LiveUser(user: User) : AbstractLiveKordEntity(), KordEntity by user {
 
     var user: User = user
         private set

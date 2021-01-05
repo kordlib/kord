@@ -4,7 +4,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.WebhookData
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.Webhook
@@ -21,7 +21,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Webhook](https://discord.com/developers/docs/resources/webhook).
  */
-interface WebhookBehavior : Entity, Strategizable {
+interface WebhookBehavior : KordEntity, Strategizable {
 
     /**
      * Requests to delete this webhook, this user must be the creator.

@@ -1,7 +1,7 @@
 package dev.kord.core.live
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Role
 import dev.kord.core.event.Event
 import dev.kord.core.event.guild.GuildDeleteEvent
@@ -12,7 +12,7 @@ import dev.kord.core.event.role.RoleUpdateEvent
 fun Role.live() = LiveRole(this)
 
 @KordPreview
-class LiveRole(role: Role) : AbstractLiveEntity(), Entity by role {
+class LiveRole(role: Role) : AbstractLiveKordEntity(), KordEntity by role {
     var role = role
         private set
 

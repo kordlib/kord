@@ -3,6 +3,7 @@ package dev.kord.core.cache.data
 import com.gitlab.kordlib.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.optional
 import kotlinx.serialization.Serializable
 
@@ -16,12 +17,18 @@ data class MemberData(
         val roles: List<Snowflake>,
         val joinedAt: String,
         val premiumSince: Optional<String?>,
+        val pending: OptionalBoolean = OptionalBoolean.Missing
 ) {
 
     companion object {
         val description = description(MemberData::id)
 
         fun from(userId: Snowflake, guildId: Snowflake, entity: DiscordGuildMember) = with(entity) {
+            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
+        }
+
+
+        fun from(userId: Snowflake, guildId: Snowflake, entity: DiscordInteractionGuildMember) = with(entity) {
             MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
         }
 
@@ -37,3 +44,4 @@ data class MemberData(
 }
 
 fun DiscordGuildMember.toData(userId: Snowflake, guildId: Snowflake) = MemberData.from(userId, guildId, this)
+fun DiscordInteractionGuildMember.toData(userId: Snowflake, guildId: Snowflake) = MemberData.from(userId, guildId, this)

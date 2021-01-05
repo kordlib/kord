@@ -8,7 +8,6 @@ import dev.kord.core.cache.data.ApplicationInfoData
 import dev.kord.core.cache.data.TeamData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.Image
 import java.util.*
 
 /**
@@ -18,7 +17,7 @@ class ApplicationInfo(
         val data: ApplicationInfoData,
         override val kord: Kord,
         override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Entity, Strategizable {
+) : KordEntity, Strategizable {
 
     override val id: Snowflake
         get() = data.id
