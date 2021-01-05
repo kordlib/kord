@@ -310,6 +310,15 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         builder: AuditLogGetRequestBuilder.() -> Unit
     ): Flow<DiscordAuditLogEntry> = getAuditLogEntries(guildId, AuditLogGetRequestBuilder().apply(builder).toRequest())
 
+    suspend fun getGuildWelcomeScreenOrNull(guildId: Snowflake): WelcomeScreen? = catchNotFound {
+        val response = guild.getGuildWelcomeScreen(guildId)
+        return WelcomeScreen(WelcomeScreenData.from(response), kord)
+    }
+
+    suspend fun getGuildWelcomeScreen(guildId: Snowflake): WelcomeScreen =
+        getGuildWelcomeScreenOrNull(guildId) ?: EntityNotFoundException.welcomeScreenNotFound(guildId)
+
+
     fun getAuditLogEntries(
         guildId: Snowflake,
         request: AuditLogGetRequest = AuditLogGetRequest()

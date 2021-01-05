@@ -2,6 +2,7 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -37,6 +38,14 @@ class PartialGuild(
      */
 
     val owner: Boolean? get() = data.owner.value
+
+
+    /**
+     * The welcome screen of a Community guild, shown to new members.
+     */
+
+    val welcomeScreen: WelcomeScreen? get() = data.welcomeScreen.unwrap { WelcomeScreen(it, kord) }
+
 
     /**
      * permissions that the invite creator has, if present.

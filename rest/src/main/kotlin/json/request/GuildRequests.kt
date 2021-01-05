@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.rest.builder.guild.WelcomeScreenChannelBuilder
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.descriptors.*
@@ -223,4 +224,11 @@ data class GuildModifyRequest(
         val publicUpdatesChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
         @SerialName("preferred_locale")
         val preferredLocale: Optional<String?> = Optional.Missing(),
+)
+
+@Serializable
+data class GuildWelcomeScreenModifyRequest(
+    val enabled: OptionalBoolean = OptionalBoolean.Missing,
+    val welcomeScreenChannels: Optional<List<DiscordWelcomeScreenChannel>> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing()
 )
