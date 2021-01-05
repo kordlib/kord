@@ -58,7 +58,7 @@ class GlobalApplicationCommandModifyBuilder : RequestBuilder<GlobalApplicationCo
 @KordPreview
 @KordDsl
 sealed class BaseApplicationBuilder {
-    protected abstract var options: MutableList<OptionsBuilder>?
+    abstract var options: MutableList<OptionsBuilder>?
 
     @OptIn(ExperimentalContracts::class)
     fun boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
