@@ -51,7 +51,7 @@ interface EntitySupplier {
     suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview?
 
     suspend fun getGuildPreview(guildId: Snowflake): GuildPreview =
-            getGuildPreviewOrNull(guildId) ?: EntityNotFoundException.entityNotFound("Guild Preview", guildId)
+        getGuildPreviewOrNull(guildId) ?: EntityNotFoundException.entityNotFound("Guild Preview", guildId)
 
     /**
      * Requests to get the widget of this guild through the [strategy],
@@ -69,7 +69,7 @@ interface EntitySupplier {
      * @throws [EntityNotFoundException] if the [GuildWidget] wasn't present.
      */
     suspend fun getGuildWidget(guildId: Snowflake): GuildWidget =
-            getGuildWidgetOrNull(guildId) ?: EntityNotFoundException.widgetNotFound(guildId)
+        getGuildWidgetOrNull(guildId) ?: EntityNotFoundException.widgetNotFound(guildId)
 
     /**
      * Requests the [Channel] with the given [id], returns `null` when the channel isn't present.
@@ -117,8 +117,8 @@ interface EntitySupplier {
      * @throws EntityNotFoundException if the member was null.
      */
     suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member =
-            getMemberOrNull(guildId, userId)
-                    ?: EntityNotFoundException.memberNotFound(guildId = guildId, userId = userId)
+        getMemberOrNull(guildId, userId)
+            ?: EntityNotFoundException.memberNotFound(guildId = guildId, userId = userId)
 
     /**
      * Requests the [Message] with the given [messageId] in the [MessageChannel] with the given [channelId],
@@ -135,7 +135,7 @@ interface EntitySupplier {
      * @throws EntityNotFoundException if the message is null.
      */
     suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): Message =
-            getMessageOrNull(channelId, messageId) ?: EntityNotFoundException.messageNotFound(channelId, messageId)
+        getMessageOrNull(channelId, messageId) ?: EntityNotFoundException.messageNotFound(channelId, messageId)
 
     /**
      * Requests a flow of messages created after the [Message] with the [messageId]
@@ -228,7 +228,7 @@ interface EntitySupplier {
      * @throws EntityNotFoundException if the role was null.
      */
     suspend fun getRole(guildId: Snowflake, roleId: Snowflake): Role =
-            getRoleOrNull(guildId, roleId) ?: EntityNotFoundException.roleNotFound(guildId, roleId)
+        getRoleOrNull(guildId, roleId) ?: EntityNotFoundException.roleNotFound(guildId, roleId)
 
     /**
      * Requests the [roles][Role] of the [Guild] with the given [guildId].
@@ -254,7 +254,7 @@ interface EntitySupplier {
      * @throws EntityNotFoundException if the ban was null.
      */
     suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): Ban = getGuildBanOrNull(guildId, userId)
-            ?: EntityNotFoundException.banNotFound(guildId, userId)
+        ?: EntityNotFoundException.banNotFound(guildId, userId)
 
     /**
      * Requests the [bans][Ban] of the [Guild] with the given [guildId].
@@ -295,7 +295,7 @@ interface EntitySupplier {
      * @throws EntityNotFoundException if the emoji was null.
      */
     suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): GuildEmoji =
-            getEmojiOrNull(guildId, emojiId) ?: EntityNotFoundException.emojiNotFound(guildId, emojiId)
+        getEmojiOrNull(guildId, emojiId) ?: EntityNotFoundException.emojiNotFound(guildId, emojiId)
 
     /**
      * Requests the [guild emojis][GuildEmoji] of the [Guild] with the given [guildId].
@@ -348,7 +348,7 @@ interface EntitySupplier {
      * @throws EntityNotFoundException if the webhook was null.
      */
     suspend fun getWebhook(id: Snowflake): Webhook =
-            getWebhookOrNull(id) ?: EntityNotFoundException.webhookNotFound(id)
+        getWebhookOrNull(id) ?: EntityNotFoundException.webhookNotFound(id)
 
     /**
      * Requests the [Webhook] with the given [id] using the [token] for authentication,
@@ -365,7 +365,29 @@ interface EntitySupplier {
      * @throws EntityNotFoundException if the webhook was null.
      */
     suspend fun getWebhookWithToken(id: Snowflake, token: String): Webhook =
-            getWebhookWithTokenOrNull(id, token) ?: EntityNotFoundException.webhookNotFound(id)
+        getWebhookWithTokenOrNull(id, token) ?: EntityNotFoundException.webhookNotFound(id)
+
+    /**
+     * Requests the [Template] with the given [code].
+     * returns null when the webhook isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the template.
+     */
+
+
+    suspend fun getTemplateOrNull(code: String): Template?
+
+    /**
+     * Requests the [Template] with the given [code].
+     * returns null when the webhook isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the template.
+     * @throws EntityNotFoundException if template was null.
+     */
+    suspend fun getTemplate(code: String): Template =
+        getTemplateOrNull(code) ?: EntityNotFoundException.templateNotFound(code)
+
+    fun getTemplates(guildId: Snowflake): Flow<Template>
 }
 
 
@@ -376,7 +398,7 @@ interface EntitySupplier {
  * @throws RequestException if something went wrong while retrieving the channel.
  */
 suspend inline fun <reified T : Channel> EntitySupplier.getChannelOfOrNull(id: Snowflake): T? =
-        getChannelOrNull(id) as? T
+    getChannelOrNull(id) as? T
 
 /**
  * Requests the [Channel] with the given [id] as type [T].
@@ -386,4 +408,4 @@ suspend inline fun <reified T : Channel> EntitySupplier.getChannelOfOrNull(id: S
  * @throws ClassCastException if the returned Channel is not of type [T].
  */
 suspend inline fun <reified T : Channel> EntitySupplier.getChannelOf(id: Snowflake): T =
-        (getChannelOrNull(id) ?: EntityNotFoundException.channelNotFound<T>(id)) as T
+    (getChannelOrNull(id) ?: EntityNotFoundException.channelNotFound<T>(id)) as T

@@ -76,6 +76,11 @@ class Member(
         else supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
     /**
+     * Whether the user has not yet passed the guild's Membership Screening requirements.
+     */
+    val isPending: Boolean get() = memberData.pending.discordBoolean
+    
+    /**
      * Whether this member's [id] equals the [Guild.ownerId].
      *
      * @throws [RequestException] if something went wrong during the request.

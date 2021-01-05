@@ -1,6 +1,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -18,7 +19,8 @@ data class DiscordGuildMember(
         @SerialName("premium_since")
         val premiumSince: Optional<String?> = Optional.Missing(),
         val deaf: Boolean,
-        val mute: Boolean
+        val mute: Boolean,
+        val pending: OptionalBoolean = OptionalBoolean.Missing
 )
 
 @Serializable
@@ -37,7 +39,8 @@ data class DiscordAddedGuildMember(
         val deaf: Boolean,
         val mute: Boolean,
         @SerialName("guild_id")
-        val guildId: Snowflake
+        val guildId: Snowflake,
+        val pending: OptionalBoolean = OptionalBoolean.Missing
 )
 
 @Serializable
@@ -58,4 +61,5 @@ data class DiscordUpdatedGuildMember(
         val joinedAt: String,
         @SerialName("premium_since")
         val premiumSince: Optional<String?> = Optional.Missing(),
+        val pending: OptionalBoolean = OptionalBoolean.Missing
 )

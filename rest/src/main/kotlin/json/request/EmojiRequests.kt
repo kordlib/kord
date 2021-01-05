@@ -8,11 +8,11 @@ import kotlinx.serialization.Serializable
 data class EmojiCreateRequest(
         val name: String,
         val image: String,
-        val roles: Set<Snowflake>
+        val roles: Iterable<Snowflake>
 )
 
 @Serializable
 data class EmojiModifyRequest(
         val name: Optional<String> = Optional.Missing(),
-        val roles: Optional<Set<Snowflake>> = Optional.Missing()
+        val roles: Optional<Iterable<Snowflake>?> = Optional.Missing()
 )

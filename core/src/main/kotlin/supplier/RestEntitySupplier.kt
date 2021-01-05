@@ -45,10 +45,13 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
     private val voice: VoiceService get() = kord.rest.voice
     private val webhook: WebhookService get() = kord.rest.webhook
     private val application: ApplicationService get() = kord.rest.application
+    private val template: TemplateService = kord.rest.template
 
     override val guilds: Flow<Guild>
-        get() = paginateForwards(idSelector = DiscordPartialGuild::id,
-            batchSize = 100) { position -> user.getCurrentUserGuilds(position, 100) }
+        get() = paginateForwards(
+            idSelector = DiscordPartialGuild::id,
+            batchSize = 100
+        ) { position -> user.getCurrentUserGuilds(position, 100) }
             .map {
                 val guild = guild.getGuild(it.id)
                 val data = GuildData.from(guild)
@@ -86,8 +89,8 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
      * @throws [RestRequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the preview was not found.
      */
-    override suspend fun getGuildPreview(guildId: Snowflake): GuildPreview = getGuildPreviewOrNull(guildId)
-        ?: EntityNotFoundException.entityNotFound("Guild preview", guildId)
+    override suspend fun getGuildPreview(guildId: Snowflake): GuildPreview =
+        getGuildPreviewOrNull(guildId) ?: EntityNotFoundException.entityNotFound("Guild preview", guildId)
 
     /**
      * Returns the preview of the guild matching the [guildId]. The bot does not need to present in this guild
@@ -289,9 +292,22 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         return GuildWidget(GuildWidgetData.from(response), guildId, kord)
     }
 
+    override suspend fun getTemplateOrNull(code: String): Template? = catchNotFound {
+        val response = template.getGuildTemplate(code)
+        return Template(response.toData(), kord)
+    }
+
+    override fun getTemplates(guildId: Snowflake): Flow<Template> = flow {
+        for (template in template.getGuildTemplates(guildId)) {
+            val data = template.toData()
+            emit(Template(data, kord))
+        }
+    }
+
+
     inline fun getAuditLogEntries(
         guildId: Snowflake,
-        builder: AuditLogGetRequestBuilder.() -> Unit,
+        builder: AuditLogGetRequestBuilder.() -> Unit
     ): Flow<DiscordAuditLogEntry> = getAuditLogEntries(guildId, AuditLogGetRequestBuilder().apply(builder).toRequest())
 
     suspend fun getGuildWelcomeScreenOrNull(guildId: Snowflake): WelcomeScreen? = catchNotFound {
@@ -305,7 +321,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
 
     fun getAuditLogEntries(
         guildId: Snowflake,
-        request: AuditLogGetRequest = AuditLogGetRequest(),
+        request: AuditLogGetRequest = AuditLogGetRequest()
     ): Flow<DiscordAuditLogEntry> = paginateBackwards(Snowflake.max, batchSize = 100, DiscordAuditLogEntry::id) {
         auditLog.getAuditLogs(guildId, request.copy(before = it.value)).auditLogEntries
     }

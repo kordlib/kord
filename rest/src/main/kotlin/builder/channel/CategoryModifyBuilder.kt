@@ -24,17 +24,19 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
      */
     var name: String? by ::_name.delegate()
 
-    private var _position: OptionalInt = OptionalInt.Missing
+    private var _position: OptionalInt? = OptionalInt.Missing
 
     /**
      * The position of this category in the guild's channel list.
      */
     var position: Int? by ::_position.delegate()
 
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+
     /**
      *  The permission overwrites for this category.
      */
-    var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
+    var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     /**
      * adds a [Overwrite] for the [memberId].
@@ -44,7 +46,9 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        permissionOverwrites.add(PermissionOverwriteBuilder(OverwriteType.Member, memberId).apply(builder).toOverwrite())
+        val overwrite = permissionOverwrites ?: mutableSetOf()
+        overwrite.add(PermissionOverwriteBuilder(OverwriteType.Member, memberId).apply(builder).toOverwrite())
+        permissionOverwrites = overwrite
     }
 
     /**
@@ -55,12 +59,14 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        permissionOverwrites.add(PermissionOverwriteBuilder(OverwriteType.Role, roleId).apply(builder).toOverwrite())
+        val overwrite = permissionOverwrites ?: mutableSetOf()
+        overwrite.add(PermissionOverwriteBuilder(OverwriteType.Role, roleId).apply(builder).toOverwrite())
+        permissionOverwrites = overwrite
     }
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
             name = _name,
             position = _position,
-            permissionOverwrites = Optional.missingOnEmpty(permissionOverwrites)
+            permissionOverwrites = _permissionOverwrites
     )
 }
