@@ -20,6 +20,7 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
     val voice: VoiceService = VoiceService(requestHandler)
     val webhook: WebhookService = WebhookService(requestHandler)
     val application: ApplicationService = ApplicationService(requestHandler)
+    val template: TemplateService = TemplateService(requestHandler)
     val interaction: InteractionService = InteractionService(requestHandler)
 
     /**

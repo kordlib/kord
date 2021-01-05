@@ -338,6 +338,12 @@ sealed class Route<T>(
     object GuildVanityInviteGet
         : Route<DiscordPartialInvite>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", DiscordPartialInvite.serializer())
 
+    object GuildWelcomeScreenGet
+        : Route<DiscordWelcomeScreen>(HttpMethod.Get, "/guilds/${GuildId}/guild-object}/welcome-screen", DiscordWelcomeScreen.serializer())
+
+    object GuildWelcomeScreenPatch
+        : Route<DiscordWelcomeScreen>(HttpMethod.Patch, "/guilds/${GuildId}/guild-object}/welcome-screen", DiscordWelcomeScreen.serializer())
+
     @KordPreview
     object MessageCrosspost
         : Route<DiscordMessage>(
@@ -353,6 +359,7 @@ sealed class Route<T>(
         "/channels/$ChannelId/followers",
         FollowedChannelResponse.serializer()
     )
+
 
     /**
      * Returns the guild preview object for the given id, even if the user is not in the guild.
@@ -426,8 +433,23 @@ sealed class Route<T>(
     object TemplateGet
         : Route<DiscordTemplate>(HttpMethod.Get, "guilds/templates/${TemplateCode}", DiscordTemplate.serializer())
 
-    object TemplatePost
+    object GuildFromTemplatePost
         : Route<DiscordGuild>(HttpMethod.Post, "guilds/templates/${TemplateCode}", DiscordGuild.serializer())
+
+    object GuildTemplatesGet
+        : Route<List<DiscordTemplate>>(HttpMethod.Get, "/guilds/${GuildId}/templates", ListSerializer(DiscordTemplate.serializer()))
+
+    object GuildTemplatePost
+        : Route<DiscordTemplate>(HttpMethod.Post, "/guilds/${GuildId}/templates", DiscordTemplate.serializer())
+
+    object TemplateSyncPut
+        : Route<DiscordTemplate>(HttpMethod.Put, "/guilds/${GuildId}/templates/${TemplateCode}", DiscordTemplate.serializer())
+
+    object TemplatePatch
+        : Route<DiscordTemplate>(HttpMethod.Patch, "/guilds/${GuildId}/templates/${TemplateCode}", DiscordTemplate.serializer())
+
+    object TemplateDelete
+        : Route<DiscordTemplate>(HttpMethod.Delete, "/guilds/${GuildId}/templates/${TemplateCode}", DiscordTemplate.serializer())
 
     object GlobalApplicationCommandsGet
         : Route<List<DiscordApplicationCommand>>(

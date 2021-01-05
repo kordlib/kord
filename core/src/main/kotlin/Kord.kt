@@ -216,7 +216,6 @@ class Kord(
         strategy: EntitySupplyStrategy<*> =
             resources.defaultStrategy,
     ): Channel? = strategy.supply(this).getChannelOrNull(id)
-
     /**
      * Requests to get the [Channel] as type [T] through the [strategy],
      * returns null if the [Channel] isn't present or is not of type [T].
@@ -254,6 +253,20 @@ class Kord(
      */
     suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User? =
         strategy.supply(this).getUserOrNull(id)
+
+    /**
+     * Requests to get the [Invite] with [code] through the [EntitySupplyStrategy.rest][REST].
+     * The returned [Invite], if found, uses the default strategy used by Kord.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     *
+     */
+    suspend fun getInvite(
+        code: String,
+        withCounts: Boolean,
+    ): Invite? =
+        EntitySupplyStrategy.rest.supply(this).getInviteOrNull(code, withCounts)
+
 
     /**
      * Requests to edit the presence of the bot user configured by the [builder].

@@ -3,6 +3,7 @@ package dev.kord.core.cache.data
 import com.gitlab.kordlib.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.optional
 import kotlinx.serialization.Serializable
 
@@ -16,6 +17,7 @@ data class MemberData(
         val roles: List<Snowflake>,
         val joinedAt: String,
         val premiumSince: Optional<String?>,
+        val pending: OptionalBoolean = OptionalBoolean.Missing
 ) {
 
     companion object {

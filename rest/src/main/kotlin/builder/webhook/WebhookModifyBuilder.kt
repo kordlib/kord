@@ -17,7 +17,7 @@ class WebhookModifyBuilder: AuditRequestBuilder<WebhookModifyRequest> {
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
-    private var _avatar: Optional<Image> = Optional.Missing()
+    private var _avatar: Optional<Image?> = Optional.Missing()
     var avatar: Image? by ::_avatar.delegate()
 
     private var _channelId: OptionalSnowflake = OptionalSnowflake.Missing

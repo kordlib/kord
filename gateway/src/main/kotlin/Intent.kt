@@ -194,6 +194,20 @@ data class Intents internal constructor(val code: DiscordBitSet) {
      */
     operator fun minus(intent: Intent): Intents = Intents(code - intent.code)
 
+
+    operator fun contains(intent: Intents) = intent.code in code
+
+    /**
+     * Returns an [Intents] that added the [intent] to this [code].
+     */
+    operator fun plus(intent: Intents): Intents = Intents(code + intent.code)
+
+    /**
+     * Returns an [Intents] that removed the [intent] from this [code].
+     */
+    operator fun minus(intent: Intents): Intents = Intents(code - intent.code)
+
+
     /**
      * copy this [Intents] and apply the [block] to it.
      */

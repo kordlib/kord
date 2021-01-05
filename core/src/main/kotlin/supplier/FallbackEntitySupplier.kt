@@ -104,6 +104,14 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? =
             first.getGuildWidgetOrNull(guildId) ?: second.getGuildWidgetOrNull(guildId)
 
+    override suspend fun getTemplateOrNull(code: String): Template? =
+        first.getTemplateOrNull(code) ?: second.getTemplateOrNull(code)
+
+
+    override fun getTemplates(guildId: Snowflake): Flow<Template> =
+        first.getTemplates(guildId).switchIfEmpty(second.getTemplates(guildId))
+
+
     override fun toString(): String {
         return "FallbackEntitySupplier(first=$first, second=$second)"
     }

@@ -35,6 +35,7 @@ import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.EmojiCreateBuilder
 import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
+import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
 import dev.kord.rest.builder.interaction.GuildApplicationCommandCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
@@ -173,6 +174,9 @@ interface GuildBehavior : KordEntity, Strategizable {
             }
         }
 
+    val templates: Flow<Template>
+        get() = supplier.getTemplates(id)
+
     /**
      * Application commands for this guild only.
      */
@@ -273,11 +277,13 @@ interface GuildBehavior : KordEntity, Strategizable {
     @KordExperimental
     suspend fun getMembers(query: String, limit: Int = 1000): Flow<Member> = flow {
         kord.rest.guild.getGuildMembers(id, query, limit).forEach {
-            emit(Member(
-                MemberData.from(userId = it.user.unwrap(DiscordUser::id)!!, guildId = id, it),
-                UserData.from(it.user.value!!),
-                kord
-            ))
+            emit(
+                Member(
+                    MemberData.from(userId = it.user.unwrap(DiscordUser::id)!!, guildId = id, it),
+                    UserData.from(it.user.value!!),
+                    kord
+                )
+            )
         }
     }
 
@@ -345,8 +351,10 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun editSelfNickname(newNickname: String? = null): String {
-        return kord.rest.guild.modifyCurrentUserNickname(id,
-            CurrentUserNicknameModifyRequest(Optional(newNickname))).nick
+        return kord.rest.guild.modifyCurrentUserNickname(
+            id,
+            CurrentUserNicknameModifyRequest(Optional(newNickname))
+        ).nick
     }
 
     /**
@@ -456,6 +464,18 @@ interface GuildBehavior : KordEntity, Strategizable {
         return kord.rest.guild.beginGuildPrune(id, days, true).pruned!!
     }
 
+    suspend fun getWelcomeScreenOrNull(): WelcomeScreen? =
+        rest.supply(kord).getGuildWelcomeScreenOrNull(id)
+
+    suspend fun getWelcomeScreen(): WelcomeScreen =
+        rest.supply(kord).getGuildWelcomeScreen(id)
+
+    suspend fun editWelcomeScreen(builder: WelcomeScreenModifyBuilder.() -> Unit): WelcomeScreen {
+        val request = kord.rest.guild.modifyGuildWelcomeScreen(id, builder)
+        val data = WelcomeScreenData.from(request)
+        return WelcomeScreen(data, kord)
+    }
+
     /**
      * Requests to get the vanity url of this guild, if present.
      *
@@ -474,12 +494,17 @@ interface GuildBehavior : KordEntity, Strategizable {
 
     suspend fun getWidget(): GuildWidget = supplier.getGuildWidget(id)
 
-    suspend fun getWidgetOrNull(): GuildWidget? = supplier.getGuildWidget(id)
+    suspend fun getWidgetOrNull(): GuildWidget? = supplier.getGuildWidgetOrNull(id)
 
-    /**
-     * Returns a new [GuildBehavior] with the given [strategy].
-     */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
+    suspend fun getTemplate(code: String) = supplier.getTemplate(code)
+
+    suspend fun getTemplateOrNull(code: String) = supplier.getTemplateOrNull(code)
+
+
+/**
+ * Returns a new [GuildBehavior] with the given [strategy].
+ */
+override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 
     companion object {
         internal operator fun invoke(
@@ -491,19 +516,19 @@ interface GuildBehavior : KordEntity, Strategizable {
             override val kord: Kord = kord
             override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun hashCode(): Int = Objects.hash(id)
+        override fun hashCode(): Int = Objects.hash(id)
 
-            override fun equals(other: Any?): Boolean = when (other) {
-                is GuildBehavior -> other.id == id
-                is PartialGuild -> other.id == id
-                else -> false
-            }
+        override fun equals(other: Any?): Boolean = when (other) {
+            is GuildBehavior -> other.id == id
+            is PartialGuild -> other.id == id
+            else -> false
+        }
 
-            override fun toString(): String {
-                return "GuildBehavior(id=$id, kord=$kord, supplier$supplier)"
-            }
+        override fun toString(): String {
+            return "GuildBehavior(id=$id, kord=$kord, supplier$supplier)"
         }
     }
+}
 
 }
 
@@ -531,8 +556,10 @@ suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): G
     return Guild(data, kord)
 }
 
-@Deprecated("emoji name and image are mandatory fields.",
-    ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)"))
+@Deprecated(
+    "emoji name and image are mandatory fields.",
+    ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)")
+)
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
@@ -546,7 +573,7 @@ suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> U
 suspend inline fun GuildBehavior.createEmoji(
     name: String,
     image: Image,
-    builder: EmojiCreateBuilder.() -> Unit = {},
+    builder: EmojiCreateBuilder.() -> Unit = {}
 ): GuildEmoji {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -562,9 +589,11 @@ suspend inline fun GuildBehavior.createEmoji(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Deprecated("channel name is a mandatory field",
+@Deprecated(
+    "channel name is a mandatory field",
     ReplaceWith("createTextChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING)
+    DeprecationLevel.WARNING
+)
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
@@ -585,7 +614,7 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createTextChannel(
     name: String,
-    builder: TextChannelCreateBuilder.() -> Unit = {},
+    builder: TextChannelCreateBuilder.() -> Unit = {}
 ): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -603,9 +632,11 @@ suspend inline fun GuildBehavior.createTextChannel(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Deprecated("channel name is a mandatory field.",
+@Deprecated(
+    "channel name is a mandatory field.",
     ReplaceWith("createVoiceChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING)
+    DeprecationLevel.WARNING
+)
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
@@ -625,7 +656,7 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createVoiceChannel(
     name: String,
-    builder: VoiceChannelCreateBuilder.() -> Unit = {},
+    builder: VoiceChannelCreateBuilder.() -> Unit = {}
 ): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -643,9 +674,11 @@ suspend inline fun GuildBehavior.createVoiceChannel(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Deprecated("channel name is a mandatory field.",
+@Deprecated(
+    "channel name is a mandatory field.",
     ReplaceWith("createNewsChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING)
+    DeprecationLevel.WARNING
+)
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
@@ -665,7 +698,7 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createNewsChannel(
     name: String,
-    builder: NewsChannelCreateBuilder.() -> Unit = {},
+    builder: NewsChannelCreateBuilder.() -> Unit = {}
 ): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -684,9 +717,11 @@ suspend inline fun GuildBehavior.createNewsChannel(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@Deprecated("channel name is a mandatory field.",
+@Deprecated(
+    "channel name is a mandatory field.",
     ReplaceWith("createCategoryChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING)
+    DeprecationLevel.WARNING
+)
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
@@ -706,7 +741,7 @@ suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.(
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createCategory(
     name: String,
-    builder: CategoryCreateBuilder.() -> Unit = {},
+    builder: CategoryCreateBuilder.() -> Unit = {}
 ): Category {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
