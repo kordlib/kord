@@ -57,6 +57,8 @@ jobs:
       BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
       NEXUS_USER: ${{ secrets.NEXUS_USER }}
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      ORG_GRADLE_PROJECT_signingKey: ${{ secrets.signingKey }}
+      ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signingPassword }}
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:

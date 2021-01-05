@@ -2,6 +2,7 @@ import com.jfrog.bintray.gradle.BintrayExtension
 import com.jfrog.bintray.gradle.BintrayPlugin
 import org.ajoberstar.gradle.git.publish.GitPublishExtension
 import org.ajoberstar.gradle.git.publish.tasks.GitPublishReset
+import org.apache.commons.codec.binary.Base64
 
 buildscript {
     repositories {
@@ -53,7 +54,9 @@ subprojects {
     apply(plugin = "maven-publish")
     apply(plugin = "kotlinx-atomicfu")
     apply(plugin = "org.jetbrains.dokka")
-    apply(plugin = "signing")
+    if(!isJitPack && Library.isRelease){
+        apply(plugin = "signing")
+    }
 
     repositories {
         mavenCentral()
@@ -201,8 +204,13 @@ subprojects {
 
     }
 
-    if (!isJitPack) {
+    if (!isJitPack && Library.isRelease) {
         signing {
+            val signingKey = findProperty("signingKey")?.toString()
+            val signingPassword = findProperty("signingPassword")?.toString()
+            if (signingKey != null && signingPassword != null) {
+                useInMemoryPgpKeys(String(Base64().decode(signingKey.toByteArray())), signingPassword)
+            }
             sign(publishing.publications[Library.name])
         }
     }
