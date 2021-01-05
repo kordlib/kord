@@ -10,8 +10,8 @@ on:
       - '**/src/**'
     branches:
       - 'master'
-      - '0.7.X'
-      - '0.8.X'
+      - '0.7.x'
+      - '0.8.x'
     tags-ignore:
       - '*.*'
     pull_request:
