@@ -12,7 +12,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.json.request.DMCreateRequest
-import dev.kord.rest.request.HttpStatus
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import io.ktor.http.*
@@ -21,7 +20,7 @@ import java.util.*
 /**
  * The behavior of a [Discord User](https://discord.com/developers/docs/resources/user)
  */
-interface UserBehavior : Entity, Strategizable {
+interface UserBehavior : KordEntity, Strategizable {
 
     val mention: String get() = "<@${id.asString}>"
 

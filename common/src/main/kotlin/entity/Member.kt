@@ -23,6 +23,26 @@ data class DiscordGuildMember(
         val pending: OptionalBoolean = OptionalBoolean.Missing
 )
 
+
+@Serializable
+data class DiscordInteractionGuildMember(
+        val user: Optional<DiscordUser> = Optional.Missing(),
+        /*
+        Don't trust the docs:
+        2020-11-05 nick is only documented as nullable but can be missing through Gateway
+        */
+        val nick: Optional<String?> = Optional.Missing(),
+        val roles: List<Snowflake>,
+        @SerialName("joined_at")
+        val joinedAt: String,
+        @SerialName("premium_since")
+        val premiumSince: Optional<String?> = Optional.Missing(),
+        val deaf: Boolean,
+        val mute: Boolean,
+        val permissions: Permissions,
+)
+
+
 @Serializable
 data class DiscordAddedGuildMember(
         val user: Optional<DiscordUser> = Optional.Missing(),

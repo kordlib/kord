@@ -1,6 +1,8 @@
 package dev.kord.rest.builder.message
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.AllowedMentionType
+import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.DiscordMessageReference
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
@@ -9,8 +11,6 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.json.request.AllowedMentions
-import dev.kord.rest.json.request.AllowedMentionType
 import dev.kord.rest.json.request.MessageCreateRequest
 import dev.kord.rest.json.request.MultipartMessageCreateRequest
 import kotlinx.coroutines.Dispatchers

@@ -23,7 +23,7 @@ internal class MemberTest : GuildEntityEqualityTest<Member> by GuildEntityEquali
 
     Member(memberData, userData, kord)
 }), BehaviorEqualityTest<Member> {
-    override fun Member.behavior(): Entity = MemberBehavior(guildId = guildId, id = id, kord = kord)
+    override fun Member.behavior(): KordEntity = MemberBehavior(guildId = guildId, id = id, kord = kord)
 
     @Test
     fun `members equal users with the same ID`() {

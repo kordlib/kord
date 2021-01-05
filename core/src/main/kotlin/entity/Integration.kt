@@ -29,7 +29,7 @@ class Integration(
         val data: IntegrationData,
         override val kord: Kord,
         override val supplier: EntitySupplier = kord.defaultSupplier
-) : Entity, Strategizable {
+) : KordEntity, Strategizable {
 
     override val id: Snowflake
         get() = data.id

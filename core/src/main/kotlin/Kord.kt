@@ -14,6 +14,7 @@ import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.interaction.GlobalApplicationCommand
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
@@ -25,6 +26,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
+import dev.kord.rest.builder.interaction.GlobalApplicationCommandCreateBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.*
@@ -53,10 +55,21 @@ class Kord(
     private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventFlow)
 
     /**
+     * A [SlashCommands] object to deal with Application Commands interactions.
+     */
+    val slashCommands: SlashCommands = SlashCommands(selfId, rest.interaction)
+
+    /**
+     * Global commands made by the bot under this Kord instance.
+     */
+    val globalCommands: Flow<GlobalApplicationCommand>
+        get() = slashCommands.getGlobalApplicationCommands()
+
+    /**
      * The default supplier, obtained through Kord's [resources] and configured through [KordBuilder.defaultStrategy].
      * By default a strategy from [EntitySupplyStrategy.rest].
      *
-     * All [strategizable][Strategizable] [entities][Entity] created through this instance will use this supplier by default.
+     * All [strategizable][Strategizable] [entities][KordEntity] created through this instance will use this supplier by default.
      */
     val defaultSupplier: EntitySupplier = resources.defaultStrategy.supply(this)
 
@@ -138,11 +151,9 @@ class Kord(
      * @return The newly created Guild.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated(
-        "guild name is a mandatory field",
+    @Deprecated("guild name is a mandatory field",
         ReplaceWith("createGuild(\"name\", builder)"),
-        DeprecationLevel.WARNING
-    )
+        DeprecationLevel.WARNING)
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
@@ -178,7 +189,7 @@ class Kord(
      */
     suspend fun getGuildPreview(
         guildId: Snowflake,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): GuildPreview = strategy.supply(this).getGuildPreview(guildId)
 
     /**
@@ -189,7 +200,7 @@ class Kord(
      */
     suspend fun getGuildPreviewOrNull(
         guildId: Snowflake,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): GuildPreview? = strategy.supply(this).getGuildPreviewOrNull(guildId)
 
 
@@ -201,10 +212,10 @@ class Kord(
      * @throws [EntityNotFoundException] if the channel wasn't present.
      */
     suspend fun getChannel(
-        id: Snowflake, strategy: EntitySupplyStrategy<*> =
-            resources.defaultStrategy
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> =
+            resources.defaultStrategy,
     ): Channel? = strategy.supply(this).getChannelOrNull(id)
-
     /**
      * Requests to get the [Channel] as type [T] through the [strategy],
      * returns null if the [Channel] isn't present or is not of type [T].
@@ -217,8 +228,9 @@ class Kord(
     ): T? = strategy.supply(this).getChannelOfOrNull(id)
 
     suspend fun getGuild(
-        id: Snowflake, strategy: EntitySupplyStrategy<*> =
-            resources.defaultStrategy
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> =
+            resources.defaultStrategy,
     ): Guild? = strategy.supply(this).getGuildOrNull(id)
 
     /**
@@ -311,6 +323,11 @@ class Kord(
         }
     }
 
+    suspend inline fun createGlobalApplicationCommand(
+        name: String,
+        description: String,
+        builder: GlobalApplicationCommandCreateBuilder.() -> Unit = {},
+    ) = slashCommands.createGlobalApplicationCommand(name, description, builder)
 }
 
 /**

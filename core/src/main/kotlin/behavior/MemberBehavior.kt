@@ -24,7 +24,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
  */
-interface MemberBehavior : Entity, UserBehavior {
+interface MemberBehavior : KordEntity, UserBehavior {
 
     /**
      * The id of the guild this channel is associated to.

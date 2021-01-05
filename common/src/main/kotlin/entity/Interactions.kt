@@ -1,0 +1,413 @@
+package dev.kord.common.entity
+
+import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.optional.*
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.encoding.*
+import kotlinx.serialization.json.*
+import mu.KotlinLogging
+
+val kordLogger = KotlinLogging.logger { }
+
+@Serializable
+@KordPreview
+data class DiscordApplicationCommand(
+        val id: Snowflake,
+        @SerialName("application_id")
+        val applicationId: Snowflake,
+        val name: String,
+        val description: String,
+        @SerialName("guild_id")
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+)
+
+@Serializable
+@KordPreview
+class ApplicationCommandOption(
+        val type: ApplicationCommandOptionType,
+        val name: String,
+        val description: String,
+        val default: OptionalBoolean = OptionalBoolean.Missing,
+        val required: OptionalBoolean = OptionalBoolean.Missing,
+        val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
+        val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+)
+
+/**
+ * A serializer whose sole purpose is to provide a No-Op serializer for [Any].
+ * The serializer is used when the generic type is neither known nor relevant to the serialization process
+ *
+ * e.g: `Choice<@Serializable(NotSerializable::class) Any?>`
+ * The serialization is handled by [Choice] serializer instead where we don't care about the generic type.
+ */
+@KordExperimental
+object NotSerializable : KSerializer<Any?> {
+    override fun deserialize(decoder: Decoder) = error("This operation is not supported.")
+    override val descriptor: SerialDescriptor = String.serializer().descriptor
+    override fun serialize(encoder: Encoder, value: Any?) = error("This operation is not supported.")
+}
+
+
+@Serializable(ApplicationCommandOptionType.Serializer::class)
+@KordPreview
+sealed class ApplicationCommandOptionType(val type: Int) {
+
+
+    object SubCommand : ApplicationCommandOptionType(1)
+    object SubCommandGroup : ApplicationCommandOptionType(2)
+    object String : ApplicationCommandOptionType(3)
+    object Integer : ApplicationCommandOptionType(4)
+    object Boolean : ApplicationCommandOptionType(5)
+    object User : ApplicationCommandOptionType(6)
+    object Channel : ApplicationCommandOptionType(7)
+    object Role : ApplicationCommandOptionType(8)
+    class Unknown(type: Int) : ApplicationCommandOptionType(type)
+
+    companion object;
+
+    internal object Serializer : KSerializer<ApplicationCommandOptionType> {
+
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("ApplicationCommandOptionType", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): ApplicationCommandOptionType {
+            return when (val type = decoder.decodeInt()) {
+                1 -> SubCommand
+                2 -> SubCommandGroup
+                3 -> String
+                4 -> Integer
+                5 -> Boolean
+                6 -> User
+                7 -> Channel
+                8 -> Role
+                else -> Unknown(type)
+            }
+        }
+
+        override fun serialize(encoder: Encoder, value: ApplicationCommandOptionType) {
+            encoder.encodeInt(value.type)
+        }
+    }
+
+
+}
+
+@Serializable(Choice.ChoiceSerializer::class)
+@KordPreview
+sealed class Choice<out T> {
+    abstract val name: String
+    abstract val value: T
+
+    class IntChoice(override val name: String, override val value: Int) : Choice<Int>()
+    class StringChoice(override val name: String, override val value: String) : Choice<String>()
+    internal class ChoiceSerializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
+            element<String>("name")
+            element<String>("value")
+        }
+
+        override fun deserialize(decoder: Decoder): Choice<*> {
+            lateinit var name: String
+            lateinit var value: JsonPrimitive
+            with(decoder.beginStructure(descriptor) as JsonDecoder) {
+                while (true) {
+                    when (val index = decodeElementIndex(descriptor)) {
+                        0 -> name = decodeStringElement(descriptor, index)
+                        1 -> value = decodeJsonElement().jsonPrimitive
+
+                        CompositeDecoder.DECODE_DONE -> break
+                        else -> throw SerializationException("unknown index: $index")
+                    }
+                }
+                endStructure(descriptor)
+            }
+            return if (value.isString) StringChoice(name, value.toString()) else IntChoice(name, value.int)
+        }
+
+        override fun serialize(encoder: Encoder, value: Choice<*>) {
+            encoder.encodeStructure(descriptor) {
+                encodeStringElement(descriptor, 0, value.name)
+                if (value is IntChoice) encodeIntElement(descriptor, 1, value.value)
+                else encodeStringElement(descriptor, 1, value.value.toString())
+            }
+        }
+    }
+}
+
+@Serializable
+@KordPreview
+data class DiscordInteraction(
+        val id: Snowflake,
+        val type: InteractionType,
+        val data: DiscordApplicationCommandInteractionData,
+        @SerialName("guild_id")
+        val guildId: Snowflake,
+        @SerialName("channel_id")
+        val channelId: Snowflake,
+        val member: DiscordInteractionGuildMember,
+        val token: String,
+        val version: Int,
+)
+
+@Serializable(InteractionType.Serializer::class)
+@KordPreview
+sealed class InteractionType(val type: Int) {
+    object Ping : InteractionType(1)
+    object ApplicationCommand : InteractionType(2)
+    class Unknown(type: Int) : InteractionType(type)
+
+    override fun toString(): String = when(this){
+        Ping -> "InteractionType.Ping($type)"
+        ApplicationCommand -> "InteractionType.ApplicationCommand($type)"
+        is Unknown -> "InteractionType.Unknown($type)"
+    }
+
+    companion object;
+    internal object Serializer : KSerializer<InteractionType> {
+
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("InteractionType", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): InteractionType {
+            return when (val type = decoder.decodeInt()) {
+                1 -> Ping
+                2 -> ApplicationCommand
+                else -> Unknown(type)
+            }
+        }
+
+        override fun serialize(encoder: Encoder, value: InteractionType) {
+            encoder.encodeInt(value.type)
+        }
+
+    }
+}
+
+@Serializable
+@KordPreview
+data class DiscordApplicationCommandInteractionData(
+            val id: Snowflake,
+            val name: String,
+            val options: Optional<List<Option>> = Optional.Missing()
+)
+
+@Serializable(with = Option.Serializer::class)
+@KordPreview
+sealed class Option {
+    abstract val name: String
+
+    internal object Serializer : KSerializer<Option> {
+
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Kord.Option") {
+            element("name", String.serializer().descriptor, isOptional = false)
+            element("value", JsonElement.serializer().descriptor, isOptional = true)
+            element("options", JsonArray.serializer().descriptor, isOptional = true)
+        }
+
+        override fun deserialize(decoder: Decoder): Option {
+            decoder as? JsonDecoder ?: error("Option can only be deserialize with a JsonDecoder")
+            val json = decoder.json
+
+            var name = ""
+            var jsonValue: JsonPrimitive? = null
+            var jsonOptions: JsonArray? = null
+            decoder.decodeStructure(descriptor) {
+                while (true) {
+                    when (val index = decodeElementIndex(descriptor)) {
+                        0 -> name = decodeStringElement(descriptor, index)
+                        1 -> jsonValue = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
+                        2 -> jsonOptions = decodeSerializableElement(descriptor, index, JsonArray.serializer())
+
+                        CompositeDecoder.DECODE_DONE -> return@decodeStructure
+                        else -> throw SerializationException("unknown index: $index")
+                    }
+                }
+            }
+
+            jsonValue?.let { value -> // name + value == command option, i.e. an argument
+                return CommandArgument(name, OptionValue(value))
+            }
+
+            if (jsonOptions == null) { // name -value -options == can only be sub command
+                return SubCommand(name, Optional.Missing())
+            }
+
+            //options are present, either a subcommand or a group, we'll have to look at its children
+            val nestedOptions = jsonOptions?.map { json.decodeFromJsonElement(serializer(), it) } ?: emptyList()
+
+            if (nestedOptions.isEmpty()) { //only subcommands can have no children
+                return SubCommand(name, Optional(emptyList()))
+            }
+
+            val onlyArguments = nestedOptions.all { it is CommandArgument } //only subcommand can have options at this point
+            if (onlyArguments) return SubCommand(name, Optional(nestedOptions.filterIsInstance<CommandArgument>()))
+
+            val onlySubCommands = nestedOptions.all { it is SubCommand } //only groups can have options at this point
+            if (onlySubCommands) return CommandGroup(name, Optional(nestedOptions.filterIsInstance<SubCommand>()))
+
+            error("option mixed option arguments and option subcommands: $jsonOptions")
+        }
+
+        override fun serialize(encoder: Encoder, value: Option) {
+            TODO("Not yet implemented")
+        }
+    }
+}
+
+@Serializable
+@KordPreview
+data class SubCommand(
+        override val name: String,
+        val options: Optional<List<CommandArgument>> = Optional.Missing()
+) : Option()
+
+@Serializable
+@KordPreview
+data class CommandArgument(
+        override val name: String,
+        val value: OptionValue<@Serializable(NotSerializable::class) Any?>,
+) : Option()
+
+@Serializable
+@KordPreview
+data class CommandGroup(
+    override val name: String,
+    val options: Optional<List<SubCommand>> = Optional.Missing(),
+) : Option()
+
+@Serializable(OptionValue.OptionValueSerializer::class)
+@KordPreview
+sealed class OptionValue<out T>(val value: T) {
+    class IntValue(value: Int) : OptionValue<Int>(value)
+    class StringValue(value: String) : OptionValue<String>(value)
+    class BooleanValue(value: Boolean) : OptionValue<Boolean>(value)
+
+    override fun toString(): String = when(this){
+        is IntValue -> "OptionValue.IntValue($value)"
+        is StringValue -> "OptionValue.StringValue($value)"
+        is BooleanValue -> "OptionValue.BooleanValue($value)"
+    }
+
+    companion object {
+        operator fun invoke(value: JsonPrimitive): OptionValue<Any> = when {
+            value.isString -> StringValue(value.content)
+            value.booleanOrNull != null -> BooleanValue(value.boolean)
+            value.intOrNull != null -> IntValue(value.int)
+            else -> throw SerializationException("unknown value type for option")
+        }
+    }
+
+    internal class OptionValueSerializer<T>(serializer: KSerializer<T>) : KSerializer<OptionValue<*>> {
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("OptionValue", PrimitiveKind.STRING)
+
+        override fun deserialize(decoder: Decoder): OptionValue<*> {
+            val value = (decoder as JsonDecoder).decodeJsonElement().jsonPrimitive
+            return when {
+                value.isString -> StringValue(value.toString())
+                value.booleanOrNull != null -> BooleanValue(value.boolean)
+                else -> IntValue(value.int)
+            }
+        }
+
+        override fun serialize(encoder: Encoder, value: OptionValue<*>) {
+            when (value) {
+                is IntValue -> encoder.encodeInt(value.value)
+                is StringValue -> encoder.encodeString(value.value)
+                is BooleanValue -> encoder.encodeBoolean(value.value)
+            }
+        }
+    }
+}
+
+fun OptionValue<*>.intOrNull(): Int? {
+    return value as? Int
+}
+
+fun OptionValue<*>.stringOrNull(): String? {
+    return value as? String
+}
+
+fun OptionValue<*>.booleanOrNull(): Boolean? {
+    return value as? Boolean
+}
+
+fun OptionValue<*>.snowflakeOrNull(): Snowflake? {
+    val id = stringOrNull() ?: return null
+    return Snowflake(id)
+}
+
+fun OptionValue<*>.int(): Int {
+    return intOrNull() ?: error("$value wasn't an Int.")
+}
+
+
+fun OptionValue<*>.string(): String {
+    return stringOrNull() ?: error("$value wasn't a String.")
+}
+
+fun OptionValue<*>.boolean(): Boolean {
+    return booleanOrNull() ?: error("$value wasn't a Boolean.")
+}
+
+fun OptionValue<*>.snowflake(): Snowflake {
+    return snowflakeOrNull() ?: error("$value wasn't a Snowflake.")
+}
+
+@Serializable
+@KordPreview
+data class DiscordInteractionResponse(
+        val type: InteractionResponseType,
+        val data: Optional<DiscordInteractionApplicationCommandCallbackData> = Optional.Missing(),
+)
+
+@Serializable(InteractionResponseType.Serializer::class)
+@KordPreview
+sealed class InteractionResponseType(val type: Int) {
+    object Pong : InteractionResponseType(1)
+    object Acknowledge : InteractionResponseType(2)
+    object ChannelMessage : InteractionResponseType(3)
+    object ChannelMessageWithSource : InteractionResponseType(4)
+    object ACKWithSource : InteractionResponseType(5)
+    class Unknown(type: Int) : InteractionResponseType(type)
+
+    companion object;
+
+    internal object Serializer : KSerializer<InteractionResponseType> {
+
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("InteractionResponseType", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): InteractionResponseType {
+            return when (val type = decoder.decodeInt()) {
+                1 -> Pong
+                2 -> Acknowledge
+                3 -> ChannelMessage
+                4 -> ChannelMessageWithSource
+                5 -> ACKWithSource
+                else -> Unknown(type)
+            }
+        }
+
+        override fun serialize(encoder: Encoder, value: InteractionResponseType) {
+            encoder.encodeInt(value.type)
+        }
+
+    }
+}
+
+
+@Serializable
+@KordPreview
+class DiscordInteractionApplicationCommandCallbackData(
+        val tts: OptionalBoolean = OptionalBoolean.Missing,
+        val content: String,
+        val embeds: Optional<List<DiscordEmbed>> = Optional.Missing(),
+        val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+)

@@ -14,6 +14,7 @@ import dev.kord.core.cache.idEq
 import dev.kord.core.catchDiscordError
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.*
+import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.sorted
@@ -35,6 +36,7 @@ import dev.kord.rest.builder.guild.EmojiCreateBuilder
 import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
 import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
+import dev.kord.rest.builder.interaction.GuildApplicationCommandCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
@@ -50,7 +52,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
  */
-interface GuildBehavior : Entity, Strategizable {
+interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests to get all present bans for this guild.
      *
@@ -174,6 +176,12 @@ interface GuildBehavior : Entity, Strategizable {
 
     val templates: Flow<Template>
         get() = supplier.getTemplates(id)
+
+    /**
+     * Application commands for this guild only.
+     */
+    val commands: Flow<GuildApplicationCommand>
+        get() = kord.slashCommands.getGuildApplicationCommands(id)
 
     /**
      * Returns the gateway this guild is part of as per the
@@ -499,7 +507,11 @@ interface GuildBehavior : Entity, Strategizable {
 override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 
     companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : GuildBehavior {
+        internal operator fun invoke(
+            id: Snowflake,
+            kord: Kord,
+            strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+        ) = object : GuildBehavior {
             override val id: Snowflake = id
             override val kord: Kord = kord
             override val supplier: EntitySupplier = strategy.supply(kord)
@@ -519,6 +531,12 @@ override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = Gu
 }
 
 }
+
+suspend inline fun GuildBehavior.createApplicationCommand(
+    name: String,
+    description: String,
+    builder: GuildApplicationCommandCreateBuilder.() -> Unit = {},
+) = kord.slashCommands.createGuildApplicationCommand(id, name, description, builder)
 
 /**
  * Requests to edit this guild.

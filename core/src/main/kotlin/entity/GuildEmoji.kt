@@ -10,7 +10,6 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.EmojiData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.toSnowflakeOrNull
 import dev.kord.rest.builder.guild.EmojiModifyBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -27,7 +26,7 @@ class GuildEmoji(
         val data: EmojiData,
         override val kord: Kord,
         override val supplier: EntitySupplier = kord.defaultSupplier
-) : Entity, Strategizable {
+) : KordEntity, Strategizable {
 
     override val id: Snowflake
         get() = data.id

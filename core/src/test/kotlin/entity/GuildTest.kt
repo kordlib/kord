@@ -14,5 +14,5 @@ internal class GuildTest: EntityEqualityTest<Guild> by EntityEqualityTest({
     every { data.id } returns it
     Guild(data, kord)
 }), BehaviorEqualityTest<Guild> {
-    override fun Guild.behavior(): Entity = GuildBehavior(id, kord)
+    override fun Guild.behavior(): KordEntity = GuildBehavior(id, kord)
 }

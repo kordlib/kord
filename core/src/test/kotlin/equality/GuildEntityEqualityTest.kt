@@ -1,11 +1,11 @@
 package equality
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import kotlin.test.Test
 import kotlin.test.assertNotEquals
 
-interface GuildEntityEqualityTest<T: Entity> : EntityEqualityTest<T> {
+interface GuildEntityEqualityTest<T: KordEntity> : EntityEqualityTest<T> {
 
     fun newEntity(id: Snowflake, guildId: Snowflake): T
 
@@ -30,7 +30,7 @@ interface GuildEntityEqualityTest<T: Entity> : EntityEqualityTest<T> {
     }
 
     companion object {
-        operator fun<T: Entity> invoke(supplier: (id: Snowflake, guildId: Snowflake) -> T) = object: GuildEntityEqualityTest<T> {
+        operator fun<T: KordEntity> invoke(supplier: (id: Snowflake, guildId: Snowflake) -> T) = object: GuildEntityEqualityTest<T> {
             override fun newEntity(id: Snowflake, guildId: Snowflake): T = supplier(id, guildId)
         }
     }

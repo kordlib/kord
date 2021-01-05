@@ -2,7 +2,7 @@ package dev.kord.core.live
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.*
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Guild
 import dev.kord.core.event.*
 import dev.kord.core.event.channel.ChannelCreateEvent
@@ -20,7 +20,7 @@ import dev.kord.core.event.user.VoiceStateUpdateEvent
 fun Guild.live(): LiveGuild = LiveGuild(this)
 
 @KordPreview
-class LiveGuild(guild: Guild) : AbstractLiveEntity(), Entity by guild {
+class LiveGuild(guild: Guild) : AbstractLiveKordEntity(), KordEntity by guild {
 
     var guild: Guild = guild
         private set

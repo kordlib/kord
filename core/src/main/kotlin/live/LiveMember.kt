@@ -1,7 +1,7 @@
 package dev.kord.core.live
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Member
 import dev.kord.core.event.Event
 import dev.kord.core.event.guild.BanAddEvent
@@ -13,7 +13,7 @@ import dev.kord.core.event.guild.MemberUpdateEvent
 fun Member.live() = LiveMember(this)
 
 @KordPreview
-class LiveMember(member: Member) : AbstractLiveEntity(), Entity by member {
+class LiveMember(member: Member) : AbstractLiveKordEntity(), KordEntity by member {
     var member = member
         private set
 

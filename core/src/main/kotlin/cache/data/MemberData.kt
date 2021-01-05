@@ -24,18 +24,24 @@ data class MemberData(
         val description = description(MemberData::id)
 
         fun from(userId: Snowflake, guildId: Snowflake, entity: DiscordGuildMember) = with(entity) {
-            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince, pending)
+            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
+        }
+
+
+        fun from(userId: Snowflake, guildId: Snowflake, entity: DiscordInteractionGuildMember) = with(entity) {
+            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
         }
 
         fun from(userId: Snowflake, entity: DiscordAddedGuildMember) = with(entity) {
-            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince, pending)
+            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
         }
 
         fun from(entity: DiscordUpdatedGuildMember) = with(entity){
-            MemberData(userId = user.id, guildId = guildId, nick, roles, joinedAt, premiumSince, pending)
+            MemberData(userId = user.id, guildId = guildId, nick, roles, joinedAt, premiumSince)
         }
 
     }
 }
 
 fun DiscordGuildMember.toData(userId: Snowflake, guildId: Snowflake) = MemberData.from(userId, guildId, this)
+fun DiscordInteractionGuildMember.toData(userId: Snowflake, guildId: Snowflake) = MemberData.from(userId, guildId, this)

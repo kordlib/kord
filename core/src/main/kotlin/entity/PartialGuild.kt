@@ -18,7 +18,7 @@ class PartialGuild(
         val data: PartialGuildData,
         override val kord: Kord,
         override val supplier: EntitySupplier = kord.defaultSupplier
-) : Entity, Strategizable {
+) : KordEntity, Strategizable {
 
     /**
      * The name of this guild.
