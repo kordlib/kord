@@ -86,7 +86,7 @@ class ChannelBuilder(name: String, description: String) :
 sealed class BaseCommandOptionBuilder(name: String, description: String, type: ApplicationCommandOptionType) :
     OptionsBuilder(name, description, type) {
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
-    protected var options by ::_options.delegate()
+     var options by ::_options.delegate()
 
     override fun toRequest(): ApplicationCommandOption {
         return ApplicationCommandOption(type, name, description, options = _options.mapList { it.toRequest() })

@@ -15,7 +15,7 @@ import java.io.InputStream
 data class GlobalApplicationCommandCreateRequest(
     val name: String,
     val description: String,
-    val options: Optional<List<ApplicationCommandOption>>
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
 )
 
 @Serializable
@@ -31,7 +31,7 @@ data class GlobalApplicationCommandModifyRequest(
 data class GuildApplicationCommandCreateRequest(
     val name: String,
     val description: String,
-    val options: Optional<List<ApplicationCommandOption>>
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
 )
 
 @Serializable
@@ -89,8 +89,8 @@ class FollowupMessageCreateRequest(
 @Serializable
 @KordPreview
 data class FollowupMessageModifyRequest(
-    val content: Optional<String>,
-    val embeds: Optional<List<EmbedRequest>>,
+    val content: Optional<String> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions>,
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
 )
