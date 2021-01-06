@@ -1,12 +1,23 @@
 # 0.7.x
 
+
+
 ## Additions
 
+* Added slash commands support. #145
 * Added core representation of templates #136
+* Added overloaded operations for Intents and Permissions. #152
+* Added welcome screens. #141
+* Added `Kord#getInvite`. #143
+* Added pending property to member. #153
 
 ## Fixes
 
-* Fix `GuildBehavior#getWidgetOrNull`
+* Fix `GuildBehavior#getWidgetOrNull` #138
+* Fix nullity in builders. #135
+* Fix channelId nullity in UpdateVoiceState. #144
+* Fix provider nullity in embeds. #151
+* Fix WebhookType.Incoming incorrect value. #156
 
 # 0.7.0-RC
 
