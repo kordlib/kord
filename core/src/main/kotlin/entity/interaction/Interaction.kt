@@ -58,7 +58,7 @@ class Interaction(
 
     override val token: String get() = data.token
 
-    override val guildId: Snowflake get() = data.channelId
+    override val guildId: Snowflake get() = data.guildId
 
     val type: InteractionType get() = data.type
 
