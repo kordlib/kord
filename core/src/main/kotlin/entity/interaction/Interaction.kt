@@ -8,8 +8,10 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.InteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
+import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.OptionData
@@ -63,6 +65,10 @@ class Interaction(
     val type: InteractionType get() = data.type
 
     val permissions: Permissions get() = data.permissions
+
+    val channel = ChannelBehavior(channelId, kord)
+
+    val guild = GuildBehavior(guildId, kord)
 
     val member: MemberBehavior get() = MemberBehavior(data.guildId, data.member.userId, kord)
 
