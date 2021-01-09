@@ -4,6 +4,8 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.MessageData
+import dev.kord.core.cache.data.toData
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.FollowupMessage
 import dev.kord.rest.builder.interaction.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.interaction.OriginalInteractionResponseModifyBuilder
@@ -55,10 +57,11 @@ interface InteractionAcknowledgementBehavior : BaseInteractionResponseBehavior {
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionResponseBehavior.edit(builder: OriginalInteractionResponseModifyBuilder.() -> Unit) {
+suspend inline fun InteractionResponseBehavior.edit(builder: OriginalInteractionResponseModifyBuilder.() -> Unit): Message {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = OriginalInteractionResponseModifyBuilder().apply(builder).toRequest()
-    kord.rest.interaction.modifyInteractionResponse(applicationId, token, request)
+    val response = kord.rest.interaction.modifyInteractionResponse(applicationId, token, request)
+    return Message(response.toData(), kord)
 }
 
 @OptIn(ExperimentalContracts::class)
