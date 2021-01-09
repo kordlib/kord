@@ -49,8 +49,7 @@ class Interaction(
     override val applicationId: Snowflake,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) :
-    InteractionBehavior {
+) : InteractionBehavior {
 
     override val id: Snowflake get() = data.id
 

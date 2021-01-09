@@ -11,10 +11,12 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface InteractionResponseBehavior : KordObject {
+interface BaseInteractionResponseBehavior: KordObject {
     val applicationId: Snowflake
     val token: String
 
+}
+interface InteractionResponseBehavior : BaseInteractionResponseBehavior {
     suspend fun delete() {
         kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
     }
@@ -34,6 +36,24 @@ interface InteractionResponseBehavior : KordObject {
     }
 }
 
+interface InteractionAcknowledgementBehavior : BaseInteractionResponseBehavior {
+
+    companion object {
+        operator fun invoke(applicationId: Snowflake, token: String, kord: Kord) =
+            object : InteractionAcknowledgementBehavior {
+                override val applicationId: Snowflake
+                    get() = applicationId
+
+                override val token: String
+                    get() = token
+
+                override val kord: Kord
+                    get() = kord
+            }
+    }
+
+}
+
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionResponseBehavior.edit(builder: OriginalInteractionResponseModifyBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -42,7 +62,7 @@ suspend inline fun InteractionResponseBehavior.edit(builder: OriginalInteraction
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): FollowupMessage {
+suspend inline fun BaseInteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): FollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = FollowupMessageCreateBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.createFollowupMessage(applicationId, token, request)
