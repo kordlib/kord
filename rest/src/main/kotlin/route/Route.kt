@@ -507,10 +507,10 @@ sealed class Route<T>(
     )
 
     object OriginalInteractionResponseModify :
-        Route<Unit>(
+        Route<DiscordMessage>(
             HttpMethod.Patch,
             "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
-            NoStrategy
+            DiscordMessage.serializer()
         )
 
     object OriginalInteractionResponseDelete
