@@ -33,12 +33,12 @@ interface InteractionBehavior : KordEntity, Strategizable {
      * @param source weather to show the author's name and provided arguments of the command.
      * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
      */
-    suspend fun acknowledge(source: Boolean = false): InteractionAcknowledgementBehavior {
+    suspend fun acknowledge(source: Boolean = false): InteractionResponseBehavior {
         val type = if (source) InteractionResponseType.ACKWithSource
         else InteractionResponseType.Acknowledge
         val request = InteractionResponseCreateRequest(type)
         kord.rest.interaction.createInteractionResponse(id, token, request)
-        return InteractionAcknowledgementBehavior(applicationId, token, kord)
+        return InteractionResponseBehavior(applicationId, token, kord)
     }
 
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
