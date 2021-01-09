@@ -13,15 +13,10 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface BaseInteractionResponseBehavior: KordObject {
+interface InteractionResponseBehavior : KordObject {
     val applicationId: Snowflake
     val token: String
 
-}
-interface InteractionResponseBehavior : BaseInteractionResponseBehavior {
-    suspend fun delete() {
-        kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
-    }
 
     companion object {
         operator fun invoke(applicationId: Snowflake, token: String, kord: Kord) =
@@ -38,11 +33,15 @@ interface InteractionResponseBehavior : BaseInteractionResponseBehavior {
     }
 }
 
-interface InteractionAcknowledgementBehavior : BaseInteractionResponseBehavior {
+interface EditableInteractionResponseBehavior : InteractionResponseBehavior {
+
+    suspend fun delete() {
+        kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
+    }
 
     companion object {
         operator fun invoke(applicationId: Snowflake, token: String, kord: Kord) =
-            object : InteractionAcknowledgementBehavior {
+            object : EditableInteractionResponseBehavior {
                 override val applicationId: Snowflake
                     get() = applicationId
 
@@ -57,7 +56,7 @@ interface InteractionAcknowledgementBehavior : BaseInteractionResponseBehavior {
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionResponseBehavior.edit(builder: OriginalInteractionResponseModifyBuilder.() -> Unit): Message {
+suspend inline fun EditableInteractionResponseBehavior.edit(builder: OriginalInteractionResponseModifyBuilder.() -> Unit): Message {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = OriginalInteractionResponseModifyBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.modifyInteractionResponse(applicationId, token, request)
@@ -65,7 +64,7 @@ suspend inline fun InteractionResponseBehavior.edit(builder: OriginalInteraction
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun BaseInteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): FollowupMessage {
+suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): FollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = FollowupMessageCreateBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.createFollowupMessage(applicationId, token, request)
