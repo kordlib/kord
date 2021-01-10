@@ -11,7 +11,7 @@ suspend fun main() {
     val kord = Kord(token)
 
     // Flow style
-    kord.events.buffer(CoroutineChannel.UNLIMITED)
+    kord.events
             .filterIsInstance<MessageCreateEvent>()
             .filter { it.message.author?.isBot == false }
             .filter { it.message.content == "!ping" }
