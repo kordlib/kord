@@ -1,4 +1,4 @@
-# 0.7.x
+# 0.7.0
 
 
 
@@ -18,6 +18,7 @@
 * Fix channelId nullity in UpdateVoiceState. #144
 * Fix provider nullity in embeds. #151
 * Fix WebhookType.Incoming incorrect value. #156
+* Fix `DiscordErrorResponse` inability to consume full input #162
 
 # 0.7.0-RC
 
