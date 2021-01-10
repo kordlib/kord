@@ -193,6 +193,10 @@ suspend fun main() {
 We will, there's an [issue](https://github.com/kordlib/kord/issues/69) open to track the features we want/need to make a
 transition to MPP smooth.
 
+## Will you support voice
+
+Yes, please check #101
+
 ## When will you document your code
 
 Yes.
