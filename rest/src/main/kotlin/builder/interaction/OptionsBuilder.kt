@@ -33,7 +33,7 @@ sealed class BaseChoiceBuilder<T>(name: String, description: String, type: Appli
     private var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
     var choices: MutableList<Choice<*>>? by ::_choices.delegate()
 
-    abstract fun choice(name: String, value: () -> T)
+    abstract fun choice(name: String, value: T)
 
     override fun toRequest(): ApplicationCommandOption {
         return ApplicationCommandOption(type,
@@ -50,9 +50,9 @@ sealed class BaseChoiceBuilder<T>(name: String, description: String, type: Appli
 class IntChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Int>(name, description, ApplicationCommandOptionType.Integer) {
 
-    override fun choice(name: String, value: () -> Int) {
+    override fun choice(name: String, value: Int) {
         if (choices == null) choices = mutableListOf()
-        choices!!.add(Choice.IntChoice(name, value()))
+        choices!!.add(Choice.IntChoice(name, value))
     }
 }
 
@@ -60,9 +60,9 @@ class IntChoiceBuilder(name: String, description: String) :
 class StringChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
 
-    override fun choice(name: String, value: () -> String) {
+    override fun choice(name: String, value: String) {
         if (choices == null) choices = mutableListOf()
-        choices!!.add(Choice.StringChoice(name, value()))
+        choices!!.add(Choice.StringChoice(name, value))
     }
 }
 
