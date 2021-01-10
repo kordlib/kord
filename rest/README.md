@@ -14,24 +14,30 @@ suspend fun main(args: Array<String>) {
     println("using $username's token")
 }
 ``` 
-
 ## Installation
 
-Replace `{version}` with the latest version number on bintray [ ![Download](https://api.bintray.com/packages/kordlib/Kord/Kord/images/download.svg) ](https://bintray.com/kordlib/Kord/Kord/_latestVersion).
+Replace `{version}` with the latest version number on maven central.
+
+For Snapshots replace `{version}` with `{branch}-SNAPSHOT`
+
+e.g: `0.7.x-SNAPSHOT`
+
+[![Download](https://img.shields.io/nexus/r/dev.kord/kord-rest?color=fb5502&label=Kord&logoColor=05c1fd&server=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2F&style=for-the-badge) ](https://search.maven.org/search?q=g:dev.kord)
 
 ### Gradle (groovy)
 
 ```groovy
 repositories {
-    maven {
-        url = "https://dl.bintray.com/kordlib/Kord"
-    }
+    mavenCentral()
+    // Kord Snapshots Repository (Optional):
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+
 }
 ```
 
 ```groovy
 dependencies {
-   implementation("com.gitlab.kordlib.kord:kord-rest:{version}")
+    implementation("dev.kord:kord-rest:{version}")
 }
 ```
 
@@ -39,29 +45,46 @@ dependencies {
 
 ```kotlin
 repositories {
-   maven(url = "https://dl.bintray.com/kordlib/Kord")
+    mavenCentral()
+    // Kord Snapshots Repository (Optional):
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+
 }
 ```
 
+---
+
 ```kotlin
 dependencies {
-   implementation("com.gitlab.kordlib.kord:kord:rest:{version}")
+    implementation("dev.kord:kord-rest:{version}")
 }
 ```
 
 ### Maven
 
+##### Kord Snapshots Repository (Optional):
+
 ```xml
+
 <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
+    <id>snapshots-repo</id>
+    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    <releases>
+        <enabled>false</enabled>
+    </releases>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
 </repository>
 ```
 
+---
+
 ```xml
+
 <dependency>
-    <groupId>com.gitlab.kordlib.kord</groupId>
-    <artifactId>rest</artifactId>
+    <groupId>dev.kord</groupId>
+    <artifactId>kord-rest</artifactId>
     <version>{version}</version>
 </dependency>
 ```
