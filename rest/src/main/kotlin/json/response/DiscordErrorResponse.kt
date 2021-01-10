@@ -1,5 +1,7 @@
 package dev.kord.rest.json.response
 
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.optional
 import dev.kord.rest.json.JsonErrorCode
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -32,7 +34,7 @@ class DiscordErrorResponse(
 class DiscordFieldError(
     @SerialName("_errors")
     val errors: List<DiscordErrorDetail> = emptyList(),
-    val optionErrors: List<Map<String, DiscordFieldError>> = emptyList()
+    val nestedErrors: Optional<JsonObject> = Optional.Missing()
 ) {
     internal object Serializer : KSerializer<DiscordFieldError> {
 
@@ -49,11 +51,8 @@ class DiscordFieldError(
                     Json.decodeFromJsonElement(ListSerializer(DiscordErrorDetail.serializer()), json["_errors"]!!)
                 )
 
-            // Options exist
-            val details = Json.decodeFromJsonElement(JsonObject.serializer(), json).values.map {
-                Json.decodeFromJsonElement(MapSerializer(String.serializer(), serializer()), it)
-            }
-            return DiscordFieldError(optionErrors = details)
+            // Nested fields have no definite structure.
+            return DiscordFieldError(nestedErrors = json.optional())
         }
 
         override fun serialize(encoder: Encoder, value: DiscordFieldError) {
