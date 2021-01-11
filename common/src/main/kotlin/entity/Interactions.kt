@@ -326,17 +326,9 @@ sealed class OptionValue<out T>(val value: T) {
     }
 }
 
-fun OptionValue<*>.intOrNull(): Int? {
-    return value as? Int
-}
-
-
-fun OptionValue<*>.booleanOrNull(): Boolean? {
-    return value as? Boolean
-}
 
 fun OptionValue<*>.int(): Int {
-    return intOrNull() ?: error("$value wasn't an Int.")
+    return value as? Int ?: error("$value wasn't an Int.")
 }
 
 
@@ -345,11 +337,12 @@ fun OptionValue<*>.string(): String {
 }
 
 fun OptionValue<*>.boolean(): Boolean {
-    return booleanOrNull() ?: error("$value wasn't a Boolean.")
+    return value as? Boolean ?: error("$value wasn't a Boolean.")
 }
 
 fun OptionValue<*>.snowflake(): Snowflake {
-    return Snowflake(string())
+    val id = string().toLongOrNull() ?: error("$value wasn't a Snowflake")
+    return Snowflake(id)
 }
 
 @Serializable
