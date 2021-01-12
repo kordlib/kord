@@ -103,7 +103,6 @@ interface InteractionBehavior : KordEntity, Strategizable {
  */
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respond(
-    content: String,
     source: Boolean = false,
     builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit = {}
 ): InteractionResponseBehavior {
@@ -111,7 +110,7 @@ suspend inline fun InteractionBehavior.respond(
     val type = if (source) InteractionResponseType.ChannelMessageWithSource
     else InteractionResponseType.ChannelMessage
 
-    val data = InteractionApplicationCommandCallbackDataBuilder(content).apply(builder).build()
+    val data = InteractionApplicationCommandCallbackDataBuilder().apply(builder).build()
     val request = InteractionResponseCreateRequest(type, data.optional())
     kord.rest.interaction.createInteractionResponse(id, token, request)
     return InteractionResponseBehavior(applicationId, token, kord)

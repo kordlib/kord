@@ -213,7 +213,11 @@ class FollowupMessageModifyBuilder :
 
 @KordPreview
 @KordDsl
-class InteractionApplicationCommandCallbackDataBuilder(var content: String) {
+class InteractionApplicationCommandCallbackDataBuilder {
+
+    private var _content: Optional<String> = Optional.Missing()
+    var content: String? by ::_content.delegate()
+
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
@@ -233,7 +237,7 @@ class InteractionApplicationCommandCallbackDataBuilder(var content: String) {
 
         return InteractionApplicationCommandCallbackData(
             _tts,
-            content,
+            _content,
             _embeds.mapList { it.toRequest() },
             _allowedMentions.map { it.build() })
 
