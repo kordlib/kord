@@ -63,7 +63,7 @@ data class InteractionResponseCreateRequest(
 @KordPreview
 class InteractionApplicationCommandCallbackData(
     val tts: OptionalBoolean = OptionalBoolean.Missing,
-    val content: String,
+    val content: Optional<String> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
 
