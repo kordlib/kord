@@ -166,7 +166,7 @@ data class RequestGuildMembers(
         val limit: OptionalInt = OptionalInt.Missing,
         val presences: OptionalBoolean = OptionalBoolean.Missing,
         @SerialName("user_ids")
-        val userIds: Optional<Iterable<Snowflake>> = Optional.Missing(),
+        val userIds: Optional<Set<Snowflake>> = Optional.Missing(),
         val nonce: Optional<String> = Optional.Missing()
 ) : Command() {
 
