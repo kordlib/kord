@@ -93,7 +93,7 @@ data class GuildMemberAddRequest(
         @SerialName("access_token")
         val token: String,
         val nick: Optional<String> = Optional.Missing(),
-        val roles: Optional<Iterable<Snowflake>> = Optional.Missing(),
+        val roles: Optional<Set<Snowflake>> = Optional.Missing(),
         val mute: OptionalBoolean = OptionalBoolean.Missing,
         val deaf: OptionalBoolean = OptionalBoolean.Missing,
 )
@@ -101,7 +101,7 @@ data class GuildMemberAddRequest(
 @Serializable
 data class GuildMemberModifyRequest(
         val nick: Optional<String?> = Optional.Missing(),
-        val roles: Optional<Iterable<Snowflake>?> = Optional.Missing(),
+        val roles: Optional<Set<Snowflake>?> = Optional.Missing(),
         val mute: OptionalBoolean? = OptionalBoolean.Missing,
         val deaf: OptionalBoolean? = OptionalBoolean.Missing,
         @SerialName("channel_id")

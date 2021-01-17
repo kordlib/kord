@@ -7,10 +7,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.listSerialDescriptor
+import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
@@ -86,27 +83,27 @@ data class DiscordActivityEmoji(
 @Serializable
 data class DiscordActivityParty(
         val id: Optional<String> = Optional.Missing(),
-        val size: Optional<DiscordActivityPartSize> = Optional.Missing()
+        val size: Optional<DiscordActivityPartySize> = Optional.Missing()
 )
 
-@Serializable
-data class DiscordActivityPartSize(
+@Serializable(DiscordActivityPartySize.Serializer::class)
+data class DiscordActivityPartySize(
         val current: Int,
         val maximum: Int
 ) {
-    internal object Serializer: KSerializer<DiscordActivityPartSize> {
+    internal object Serializer: KSerializer<DiscordActivityPartySize> {
         @OptIn(ExperimentalSerializationApi::class)
         override val descriptor: SerialDescriptor
             get() = listSerialDescriptor(Int.serializer().descriptor)
 
         private val delegate = ListSerializer(Int.serializer())
 
-        override fun deserialize(decoder: Decoder): DiscordActivityPartSize {
+        override fun deserialize(decoder: Decoder): DiscordActivityPartySize {
             val (current, maximum) = delegate.deserialize(decoder)
-            return DiscordActivityPartSize(current, maximum)
+            return DiscordActivityPartySize(current, maximum)
         }
 
-        override fun serialize(encoder: Encoder, value: DiscordActivityPartSize) {
+        override fun serialize(encoder: Encoder, value: DiscordActivityPartySize) {
             delegate.serialize(encoder, listOf(value.current, value.maximum))
         }
     }
