@@ -45,8 +45,8 @@ object Dependencies {
     const val `ktor-client-mock` = "io.ktor:ktor-client-mock:${Versions.ktor}"
     const val `ktor-client-mock-jvm`= "io.ktor:ktor-client-mock-jvm:${Versions.ktor}"
 
-    const val `cache-api` = "com.gitlab.kordlib.cache:api"
-    const val `cache-map` = "com.gitlab.kordlib.cache:map"
+    const val `cache-api` = "dev.kord.cache:cache-api"
+    const val `cache-map` = "dev.kord.cache:cache-map"
 
     const val mockk = "io.mockk:mockk:${Versions.mockk}"
 }

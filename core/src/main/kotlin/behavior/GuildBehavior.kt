@@ -1,6 +1,6 @@
 package dev.kord.core.behavior
 
-import com.gitlab.kordlib.cache.api.query
+import dev.kord.cache.api.query
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.DiscordUser

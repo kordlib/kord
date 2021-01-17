@@ -1,7 +1,7 @@
 package dev.kord.core.supplier
 
-import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.query
+import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.query
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException

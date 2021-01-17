@@ -1,6 +1,6 @@
 package dev.kord.core.performance
 
-import com.gitlab.kordlib.cache.api.DataCache
+import dev.kord.cache.api.DataCache
 import dev.kord.common.entity.*
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord

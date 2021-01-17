@@ -1,13 +1,13 @@
 package dev.kord.core.cache
 
-import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.DataEntryCache
-import com.gitlab.kordlib.cache.api.data.DataDescription
-import com.gitlab.kordlib.cache.api.delegate.DelegatingDataCache
-import com.gitlab.kordlib.cache.api.delegate.EntrySupplier
-import com.gitlab.kordlib.cache.map.MapLikeCollection
-import com.gitlab.kordlib.cache.map.internal.MapEntryCache
-import com.gitlab.kordlib.cache.map.lruLinkedHashMap
+import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.DataEntryCache
+import dev.kord.cache.api.data.DataDescription
+import dev.kord.cache.api.delegate.DelegatingDataCache
+import dev.kord.cache.api.delegate.EntrySupplier
+import dev.kord.cache.map.MapLikeCollection
+import dev.kord.cache.map.internal.MapEntryCache
+import dev.kord.cache.map.lruLinkedHashMap
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.*
 import java.util.concurrent.ConcurrentHashMap

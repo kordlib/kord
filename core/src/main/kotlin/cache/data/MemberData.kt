@@ -1,6 +1,6 @@
 package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.cache.api.data.description
+import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean

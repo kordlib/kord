@@ -1,6 +1,6 @@
 package dev.kord.core.cache
 
-import com.gitlab.kordlib.cache.api.DataCache
+import dev.kord.cache.api.DataCache
 import dev.kord.gateway.Close
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.*

@@ -20,13 +20,13 @@ dependencies {
 
     api(Dependencies.`cache-api`) {
         version {
-            strictly("0.1.4")
+            strictly("0.3.0-SNAPSHOT")
         }
     }
 
     api(Dependencies.`cache-map`) {
         version {
-            strictly("0.1.4")
+            strictly("0.3.0-SNAPSHOT")
         }
     }
 

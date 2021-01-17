@@ -1,8 +1,8 @@
 package dev.kord.core.cache
 
-import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.find
-import com.gitlab.kordlib.cache.api.query
+import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.find
+import dev.kord.cache.api.query
 import dev.kord.core.cache.data.*
 
 /**

@@ -1,6 +1,6 @@
 package dev.kord.core.gateway.handler
 
-import com.gitlab.kordlib.cache.api.DataCache
+import dev.kord.cache.api.DataCache
 import dev.kord.core.Kord
 import dev.kord.core.event.guild.WebhookUpdateEvent
 import dev.kord.core.gateway.MasterGateway

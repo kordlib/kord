@@ -1,6 +1,6 @@
 package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.cache.api.data.description
+import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordGuildMember
 import dev.kord.common.entity.DiscordVoiceState
 import dev.kord.common.entity.Snowflake

@@ -1,6 +1,6 @@
 package dev.kord.core.cache
 
-import com.gitlab.kordlib.cache.api.QueryBuilder
+import dev.kord.cache.api.QueryBuilder
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake

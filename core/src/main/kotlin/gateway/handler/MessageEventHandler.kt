@@ -1,8 +1,8 @@
 package dev.kord.core.gateway.handler
 
-import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.put
-import com.gitlab.kordlib.cache.api.query
+import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.put
+import dev.kord.cache.api.query
 import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.*

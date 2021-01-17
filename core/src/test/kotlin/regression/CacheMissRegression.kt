@@ -1,7 +1,7 @@
 package regression
 
-import com.gitlab.kordlib.cache.api.put
-import com.gitlab.kordlib.cache.map.MapDataCache
+import dev.kord.cache.api.put
+import dev.kord.cache.map.MapDataCache
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
