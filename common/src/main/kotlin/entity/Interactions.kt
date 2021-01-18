@@ -345,12 +345,6 @@ fun OptionValue<*>.snowflake(): Snowflake {
     return Snowflake(id)
 }
 
-@Serializable
-@KordPreview
-data class DiscordInteractionResponse(
-        val type: InteractionResponseType,
-        val data: Optional<DiscordInteractionApplicationCommandCallbackData> = Optional.Missing(),
-)
 
 @Serializable(InteractionResponseType.Serializer::class)
 @KordPreview
@@ -386,13 +380,3 @@ sealed class InteractionResponseType(val type: Int) {
 
     }
 }
-
-
-@Serializable
-@KordPreview
-class DiscordInteractionApplicationCommandCallbackData(
-        val tts: OptionalBoolean = OptionalBoolean.Missing,
-        val content: String,
-        val embeds: Optional<List<DiscordEmbed>> = Optional.Missing(),
-        val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-)
