@@ -53,9 +53,9 @@ class Interaction(
 
     val permissions: Permissions get() = data.permissions
 
-    val channel: TextChannelBehavior = TextChannelBehavior(id = channelId, guildId = guildid, kord)
+    val channel: TextChannelBehavior get() = TextChannelBehavior(id = channelId, guildId = guildId, kord = kord)
 
-    val guild = GuildBehavior(guildId, kord)
+    val guild get() = GuildBehavior(guildId, kord)
 
     val member: MemberBehavior get() = MemberBehavior(data.guildId, data.member.userId, kord)
 
