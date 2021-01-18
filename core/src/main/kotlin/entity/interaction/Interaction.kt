@@ -19,20 +19,6 @@ import dev.kord.core.entity.Entity
 import dev.kord.core.supplier.EntitySupplier
 
 /**
- * Interaction that can respond to interactions but can't follow-up due to the absence of [application id][Kord.resources].
- *
- * @property id interaction's id.
- * @property channelId the channel id where the interaction took place.
- * @property token a continuation token for responding to the interaction
- * @property guildId the id of the guild where the interaction took place.
- * @property permissions the permissions of the member with the overwrites.
- * @property type the type of the interaction.
- * @property member the invoker of the command as [MemberBehavior].
- * @property command [Command] object that contains the data related to the interaction's command.
- * @property version read-only property, always 1
- */
-
-/**
  * Interaction that can respond to interactions and follow them up.
  *
  * @property id interaction's id.
