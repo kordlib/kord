@@ -2,6 +2,7 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
@@ -228,6 +229,9 @@ class InteractionApplicationCommandCallbackDataBuilder {
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
+    private var _flags: Optional<MessageFlags> = Optional.Missing()
+    var flags: MessageFlags? by ::_flags.delegate()
+
     fun embed(builder: EmbedBuilder.() -> Unit) {
         if (embeds == null) embeds = mutableListOf()
         embeds!! += EmbedBuilder().apply(builder)
@@ -240,6 +244,7 @@ class InteractionApplicationCommandCallbackDataBuilder {
             _content,
             _embeds.mapList { it.toRequest() },
             _allowedMentions.map { it.build() })
+            _flags
 
     }
 }

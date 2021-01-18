@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.ApplicationCommandOption
 import dev.kord.common.entity.InteractionResponseType
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.SerialName
@@ -65,7 +66,9 @@ class InteractionApplicationCommandCallbackData(
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     val content: Optional<String> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
-    val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
+    @SerialName("allowed_mentions")
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing()
 
 )
 @KordPreview
