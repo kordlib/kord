@@ -3,6 +3,7 @@ package dev.kord.core
 import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
 import dev.kord.common.entity.PresenceStatus
@@ -57,11 +58,13 @@ class Kord(
     /**
      * A [SlashCommands] object to deal with Application Commands interactions.
      */
+    @KordPreview
     val slashCommands: SlashCommands = SlashCommands(selfId, rest.interaction)
 
     /**
      * Global commands made by the bot under this Kord instance.
      */
+    @KordPreview
     val globalCommands: Flow<GlobalApplicationCommand>
         get() = slashCommands.getGlobalApplicationCommands()
 
@@ -255,7 +258,7 @@ class Kord(
         strategy.supply(this).getUserOrNull(id)
 
     /**
-     * Requests to get the [Invite] with [code] through the [EntitySupplyStrategy.rest][REST].
+     * Requests to get the [Invite] with [code] through the [EntitySupplyStrategy.rest][rest].
      * The returned [Invite], if found, uses the default strategy used by Kord.
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -323,6 +326,7 @@ class Kord(
         }
     }
 
+    @KordPreview
     suspend inline fun createGlobalApplicationCommand(
         name: String,
         description: String,

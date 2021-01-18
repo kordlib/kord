@@ -1,6 +1,7 @@
 package dev.kord.core.gateway.handler
 
 import dev.kord.cache.api.DataCache
+import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.InteractionData
@@ -12,6 +13,7 @@ import dev.kord.gateway.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import dev.kord.core.event.Event as CoreEvent
 
+@KordPreview
 class InteractionEventHandler(
     kord: Kord,
     gateway: MasterGateway,

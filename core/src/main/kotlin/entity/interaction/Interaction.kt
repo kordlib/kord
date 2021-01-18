@@ -74,6 +74,7 @@ class Interaction(
  * @property groups  names of groups in the command mapped to the [Group] with matching name.
  * @property subCommands  names of sub-commands in the command mapped to the [SubCommand] with matching name.
  */
+@KordPreview
 class Command(val data: ApplicationCommandInteractionData) : Entity {
     override val id: Snowflake
         get() = data.id
@@ -104,6 +105,7 @@ class Command(val data: ApplicationCommandInteractionData) : Entity {
  *
  *@property subCommands  names of sub-commands in this [Group] of commands mapped to the [SubCommand] with matching name.
  */
+@KordPreview
 class Group(val data: OptionData) {
     val name: String get() = data.name
 
@@ -119,8 +121,10 @@ class Group(val data: OptionData) {
  * @property name name of the subcommand.
  * @property options  names of options in the command mapped to their values.
  */
+@KordPreview
 class SubCommand(val data: OptionData) {
     val name: String get() = data.name
+
     val options: Map<String, OptionValue<*>>
         get() = data.values.orEmpty()
             .associate { it.name to it.value }

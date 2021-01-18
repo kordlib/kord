@@ -1,6 +1,7 @@
 package dev.kord.core.cache.data
 
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.NotSerializable
 import dev.kord.common.entity.optional.Optional
@@ -13,6 +14,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+@KordPreview
 data class InteractionData(
     val id: Snowflake,
     val type: InteractionType,
@@ -43,6 +45,7 @@ data class InteractionData(
     }
 }
 
+@KordPreview
 @Serializable
 data class ApplicationCommandInteractionData(
     val id: Snowflake,
@@ -61,9 +64,11 @@ data class ApplicationCommandInteractionData(
     }
 }
 
+@KordPreview
 @Serializable
 data class OptionData(
         val name: String,
+        @OptIn(KordExperimental::class)
         val value: Optional<OptionValue<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
         val values: Optional<List<CommandArgument>> = Optional.Missing(),
         val subCommand: Optional<List<SubCommand>> = Optional.Missing()

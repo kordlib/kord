@@ -1,5 +1,6 @@
 package dev.kord.core.behavior
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageData
@@ -10,6 +11,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+@KordPreview
 interface FollowupMessageBehavior : KordEntity {
     val applicationId: Snowflake
     val token: String
@@ -46,6 +48,7 @@ interface FollowupMessageBehavior : KordEntity {
     }
 }
 
+@KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun FollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): FollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }

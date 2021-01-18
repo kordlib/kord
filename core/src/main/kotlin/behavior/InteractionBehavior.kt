@@ -20,12 +20,10 @@ import kotlin.contracts.contract
 @KordPreview
 interface InteractionBehavior : KordEntity, Strategizable {
 
-
     val applicationId: Snowflake
     val token: String
     val guildId: Snowflake
     val channelId: Snowflake
-
 
     /**
      * Acknowledges an interaction.
@@ -96,11 +94,11 @@ interface InteractionBehavior : KordEntity, Strategizable {
 /**
  * Acknowledges an interaction and responds with [InteractionResponseBehavior] built using [builder].
  *
- * @param content initial content of the message.
  * @param source weather to show the author's name and provided arguments of the command.
  * @param builder [InteractionApplicationCommandCallbackDataBuilder] used to build a message.
  * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
  */
+@KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respond(
     source: Boolean = false,
