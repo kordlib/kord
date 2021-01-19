@@ -12,6 +12,7 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.InteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.OptionData
@@ -65,7 +66,7 @@ class Interaction(
 
     val permissions: Permissions get() = data.permissions
 
-    val channel = ChannelBehavior(channelId, kord)
+    val channel = MessageChannelBehavior(channelId, kord)
 
     val guild = GuildBehavior(guildId, kord)
 
