@@ -148,6 +148,8 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
 
     override fun toString(): String = "AuditLogChangeKey(name=$name)"
 
+    class Unknown(name: String): AuditLogChangeKey<JsonElement>(name, JsonElement.serializer())
+
     @SerialName("name")
     object Name : AuditLogChangeKey<String>("name", serializer())
 
@@ -349,7 +351,7 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
                 "enable_emoticons" -> EnableEmoticons
                 "expire_behavior" -> ExpireBehavior
                 "expire_grace_period" -> ExpireGracePeriod
-                else -> throw SerializationException("Unknown audit log name: $name")
+                else -> Unknown(name)
             } as AuditLogChangeKey<T>
         }
     }
