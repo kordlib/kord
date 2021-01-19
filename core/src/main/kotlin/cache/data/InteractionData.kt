@@ -71,14 +71,14 @@ data class OptionData(
         @OptIn(KordExperimental::class)
         val value: Optional<OptionValue<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
         val values: Optional<List<CommandArgument>> = Optional.Missing(),
-        val subCommand: Optional<List<SubCommand>> = Optional.Missing()
+        val subCommands: Optional<List<SubCommand>> = Optional.Missing()
 ) {
     companion object {
         fun from(data: Option): OptionData = with(data) {
             when(data) {
                 is SubCommand -> OptionData(name, values = data.options)
                 is CommandArgument -> OptionData(name, value = Optional(data.value))
-                is CommandGroup -> OptionData(name, subCommand = data.options)
+                is CommandGroup -> OptionData(name, subCommands = data.options)
             }
         }
     }

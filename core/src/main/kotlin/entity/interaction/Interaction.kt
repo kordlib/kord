@@ -11,8 +11,6 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.InteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
-import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
@@ -88,7 +86,7 @@ class Command(val data: ApplicationCommandInteractionData) : Entity {
 
     val groups: Map<String, Group>
         get() = data.options.orEmpty()
-            .filter { it.subCommand.orEmpty().isNotEmpty() }
+            .filter { it.subCommands.orEmpty().isNotEmpty() }
             .associate { it.name to Group(it) }
 
 
@@ -110,7 +108,7 @@ class Group(val data: OptionData) {
     val name: String get() = data.name
 
     val subCommands: Map<String, SubCommand>
-        get() = data.subCommand.orEmpty()
+        get() = data.subCommands.orEmpty()
             .associate { it.name to SubCommand(OptionData(it.name, values = it.options)) }
 
 }

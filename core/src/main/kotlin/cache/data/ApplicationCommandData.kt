@@ -2,10 +2,7 @@ package dev.kord.core.cache.data
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.entity.optional.mapList
+import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -59,6 +56,67 @@ data class ApplicationCommandOptionData(
             }
         }
     }
+}
+
+
+@KordPreview
+@Serializable
+class ApplicationCommandGroupData(
+    val name: String,
+    val description: String,
+    val subCommands: List<ApplicationCommandSubcommandData>
+)
+
+@KordPreview
+@Suppress("FunctionName")
+fun ApplicationCommandGroupData(data: ApplicationCommandOptionData): ApplicationCommandGroupData {
+    return ApplicationCommandGroupData(
+        data.name,
+        data.description,
+        data.options.orEmpty().map { ApplicationCommandSubCommandData(it) }
+    )
+}
+
+
+@KordPreview
+@Serializable
+data class ApplicationCommandSubcommandData(
+    val name: String,
+    val description: String,
+    val isDefault: OptionalBoolean,
+    val parameters: Optional<List<ApplicationCommandParameterData>>
+)
+
+@KordPreview
+@Suppress("FunctionName")
+fun ApplicationCommandSubCommandData(data: ApplicationCommandOptionData): ApplicationCommandSubcommandData {
+    return ApplicationCommandSubcommandData(
+        data.name,
+        data.description,
+        data.default,
+        data.options.mapList { ApplicationCommandParameterData(it) }
+    )
+}
+
+
+@KordPreview
+@Serializable
+data class ApplicationCommandParameterData(
+    val name: String,
+    val description: String,
+    val required: OptionalBoolean,
+    val choices: Optional<List<ApplicationCommandOptionChoiceData>>
+)
+
+@KordPreview
+@Suppress("FunctionName")
+fun ApplicationCommandParameterData(data: ApplicationCommandOptionData): ApplicationCommandParameterData {
+    return ApplicationCommandParameterData(
+        data.name,
+        data.description,
+        data.required,
+        data.choices
+    )
 }
 
 @Serializable

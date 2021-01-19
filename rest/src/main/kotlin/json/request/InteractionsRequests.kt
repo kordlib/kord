@@ -12,7 +12,7 @@ import java.io.InputStream
 
 @Serializable
 @KordPreview
-data class GlobalApplicationCommandCreateRequest(
+data class ApplicationCommandCreateRequest(
     val name: String,
     val description: String,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
@@ -20,7 +20,7 @@ data class GlobalApplicationCommandCreateRequest(
 
 @Serializable
 @KordPreview
-data class GlobalApplicationCommandModifyRequest(
+data class ApplicationCommandModifyRequest(
     val name: Optional<String> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
@@ -28,23 +28,7 @@ data class GlobalApplicationCommandModifyRequest(
 
 @Serializable
 @KordPreview
-data class GuildApplicationCommandCreateRequest(
-    val name: String,
-    val description: String,
-    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
-)
-
-@Serializable
-@KordPreview
-data class GuildApplicationCommandModifyRequest(
-    val name: Optional<String> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing(),
-    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
-)
-
-@Serializable
-@KordPreview
-data class OriginalInteractionResponseModifyRequest(
+data class InteractionResponseModifyRequest(
     val content: Optional<String> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing() ,
     @SerialName("allowed_mentions")

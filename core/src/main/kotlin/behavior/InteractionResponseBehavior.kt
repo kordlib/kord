@@ -9,7 +9,7 @@ import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.FollowupMessage
 import dev.kord.rest.builder.interaction.FollowupMessageCreateBuilder
-import dev.kord.rest.builder.interaction.OriginalInteractionResponseModifyBuilder
+import dev.kord.rest.builder.interaction.InteractionResponseModifyBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -60,9 +60,9 @@ interface EditableInteractionResponseBehavior : InteractionResponseBehavior {
 
 @KordPreview
 @OptIn(ExperimentalContracts::class)
-suspend inline fun EditableInteractionResponseBehavior.edit(builder: OriginalInteractionResponseModifyBuilder.() -> Unit): Message {
+suspend inline fun EditableInteractionResponseBehavior.edit(builder: InteractionResponseModifyBuilder.() -> Unit): Message {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val request = OriginalInteractionResponseModifyBuilder().apply(builder).toRequest()
+    val request = InteractionResponseModifyBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.modifyInteractionResponse(applicationId, token, request)
     return Message(response.toData(), kord)
 }

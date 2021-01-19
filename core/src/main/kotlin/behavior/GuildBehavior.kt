@@ -37,7 +37,7 @@ import dev.kord.rest.builder.guild.EmojiCreateBuilder
 import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
 import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
-import dev.kord.rest.builder.interaction.GuildApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
@@ -537,7 +537,7 @@ interface GuildBehavior : KordEntity, Strategizable {
 suspend inline fun GuildBehavior.createApplicationCommand(
     name: String,
     description: String,
-    builder: GuildApplicationCommandCreateBuilder.() -> Unit = {},
+    builder: ApplicationCommandCreateBuilder.() -> Unit = {},
 ) = kord.slashCommands.createGuildApplicationCommand(id, name, description, builder)
 
 /**

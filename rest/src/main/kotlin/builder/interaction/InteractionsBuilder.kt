@@ -21,37 +21,18 @@ import kotlin.contracts.contract
 
 @KordPreview
 @KordDsl
-class GlobalApplicationCommandCreateBuilder(
+class ApplicationCommandCreateBuilder(
     val name: String,
     val description: String,
-) : RequestBuilder<GlobalApplicationCommandCreateRequest>, BaseApplicationBuilder() {
+) : RequestBuilder<ApplicationCommandCreateRequest>, BaseApplicationBuilder() {
 
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
     override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
-    override fun toRequest(): GlobalApplicationCommandCreateRequest {
-        return GlobalApplicationCommandCreateRequest(name, description, _options.mapList { it.toRequest() })
+    override fun toRequest(): ApplicationCommandCreateRequest {
+        return ApplicationCommandCreateRequest(name, description, _options.mapList { it.toRequest() })
 
     }
-
-}
-
-@KordPreview
-@KordDsl
-class GlobalApplicationCommandModifyBuilder : RequestBuilder<GlobalApplicationCommandModifyRequest>,
-    BaseApplicationBuilder() {
-    private var _name: Optional<String> = Optional.Missing()
-    var name: String? by ::_name.delegate()
-
-    private var _description: Optional<String> = Optional.Missing()
-    var description: String? by ::_name.delegate()
-
-    private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
-    override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
-    override fun toRequest(): GlobalApplicationCommandModifyRequest {
-        return GlobalApplicationCommandModifyRequest(_name, _description, _options.mapList { it.toRequest() })
-    }
-
 
 }
 
@@ -119,39 +100,20 @@ sealed class BaseApplicationBuilder {
 
 @KordPreview
 @KordDsl
-class GuildApplicationCommandCreateBuilder(
-    val name: String,
-    val description: String,
-) : RequestBuilder<GuildApplicationCommandCreateRequest>, BaseApplicationBuilder() {
-    private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
-    override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
-
-    override fun toRequest(): GuildApplicationCommandCreateRequest {
-        return GuildApplicationCommandCreateRequest(name, description, _options.mapList { it.toRequest() })
-
-    }
-
-}
-
-@KordPreview
-@KordDsl
-class GuildApplicationCommandModifyBuilder : BaseApplicationBuilder(),
-    RequestBuilder<GuildApplicationCommandModifyRequest> {
+class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
+    RequestBuilder<ApplicationCommandModifyRequest> {
 
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
-
     private var _description: Optional<String> = Optional.Missing()
     var description: String? by ::_name.delegate()
-
 
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
     override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
-
-    override fun toRequest(): GuildApplicationCommandModifyRequest {
-        return GuildApplicationCommandModifyRequest(_name, _description, _options.mapList { it.toRequest() })
+    override fun toRequest(): ApplicationCommandModifyRequest {
+        return ApplicationCommandModifyRequest(_name, _description, _options.mapList { it.toRequest() })
 
     }
 
@@ -159,8 +121,8 @@ class GuildApplicationCommandModifyBuilder : BaseApplicationBuilder(),
 
 @KordPreview
 @KordDsl
-class OriginalInteractionResponseModifyBuilder :
-    RequestBuilder<OriginalInteractionResponseModifyRequest> {
+class InteractionResponseModifyBuilder :
+    RequestBuilder<InteractionResponseModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
@@ -176,8 +138,8 @@ class OriginalInteractionResponseModifyBuilder :
     }
 
 
-    override fun toRequest(): OriginalInteractionResponseModifyRequest {
-        return OriginalInteractionResponseModifyRequest(
+    override fun toRequest(): InteractionResponseModifyRequest {
+        return InteractionResponseModifyRequest(
             _content,
             _embeds.mapList { it.toRequest() },
             _allowedMentions.map { it.build() })
@@ -283,6 +245,4 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
         FollowupMessageCreateRequest(_content, _username, _avatarUrl, _tts, Optional.missingOnEmpty(embeds)), file
     )
 
-
 }
-

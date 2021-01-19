@@ -5,8 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.entity.interaction.GlobalApplicationCommand
 import dev.kord.core.entity.interaction.GuildApplicationCommand
-import dev.kord.rest.builder.interaction.GlobalApplicationCommandCreateBuilder
-import dev.kord.rest.builder.interaction.GuildApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.service.InteractionService
 import kotlinx.coroutines.flow.Flow
@@ -28,10 +27,10 @@ class SlashCommands(
     suspend inline fun createGlobalApplicationCommand(
         name: String,
         description: String,
-        builder: GlobalApplicationCommandCreateBuilder.() -> Unit = {},
+        builder: ApplicationCommandCreateBuilder.() -> Unit = {},
     ): GlobalApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = GlobalApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
+        val request = ApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
         val response = service.createGlobalApplicationCommand(applicationId, request)
         val data = ApplicationCommandData.from(response)
         return GlobalApplicationCommand(data, service)
@@ -42,19 +41,19 @@ class SlashCommands(
         guildId: Snowflake,
         name: String,
         description: String,
-        builder: GuildApplicationCommandCreateBuilder.() -> Unit = {},
+        builder: ApplicationCommandCreateBuilder.() -> Unit = {},
     ): GuildApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = GuildApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
+        val request = ApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
         val response = service.createGuildApplicationCommand(applicationId, guildId, request)
         val data = ApplicationCommandData.from(response)
-        return GuildApplicationCommand(data, guildId, service)
+        return GuildApplicationCommand(data, service, guildId)
     }
 
     fun getGuildApplicationCommands(guildId: Snowflake): Flow<GuildApplicationCommand> = flow {
         for (command in service.getGuildApplicationCommands(applicationId, guildId)) {
             val data = ApplicationCommandData.from(command)
-            emit(GuildApplicationCommand(data, guildId, service))
+            emit(GuildApplicationCommand(data, service, guildId))
         }
     }
 

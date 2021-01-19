@@ -39,20 +39,20 @@ class InteractionEventHandler(
 
     private suspend fun handle(event: ApplicationCommandCreate, shard: Int) {
         val data = ApplicationCommandData.from(event.application)
-        val application = GuildApplicationCommand(data, data.guildId.value!!, kord.rest.interaction)
+        val application = GuildApplicationCommand(data, kord.rest.interaction, data.guildId.value!!)
         coreFlow.emit(ApplicationCommandCreateEvent(application, kord, shard))
     }
 
 
     private suspend fun handle(event: ApplicationCommandUpdate, shard: Int) {
         val data = ApplicationCommandData.from(event.application)
-        val application = GuildApplicationCommand(data, data.guildId.value!!, kord.rest.interaction)
+        val application = GuildApplicationCommand(data, kord.rest.interaction, data.guildId.value!!)
         coreFlow.emit(ApplicationCommandUpdateEvent(application, kord, shard))
     }
 
     private suspend fun handle(event: ApplicationCommandDelete, shard: Int) {
         val data = ApplicationCommandData.from(event.application)
-        val application = GuildApplicationCommand(data, data.guildId.value!!, kord.rest.interaction)
+        val application = GuildApplicationCommand(data, kord.rest.interaction, data.guildId.value!!)
         coreFlow.emit(ApplicationCommandDeleteEvent(application, kord, shard))
     }
 }

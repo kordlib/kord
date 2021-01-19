@@ -27,7 +27,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
-import dev.kord.rest.builder.interaction.GlobalApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.*
@@ -330,7 +330,7 @@ class Kord(
     suspend inline fun createGlobalApplicationCommand(
         name: String,
         description: String,
-        builder: GlobalApplicationCommandCreateBuilder.() -> Unit = {},
+        builder: ApplicationCommandCreateBuilder.() -> Unit = {},
     ) = slashCommands.createGlobalApplicationCommand(name, description, builder)
 }
 
