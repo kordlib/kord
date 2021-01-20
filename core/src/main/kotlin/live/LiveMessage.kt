@@ -31,6 +31,7 @@ class LiveMessage(message: Message, val guildId: Snowflake?) : AbstractLiveKordE
         is MessageCreateEvent -> event.message.id == message.id
         is MessageUpdateEvent -> event.messageId == message.id
         is MessageDeleteEvent -> event.messageId == message.id
+        is MessageBulkDeleteEvent -> event.messageIds.contains(message.id)
 
         is ChannelDeleteEvent -> event.channel.id == message.channelId
 
@@ -45,6 +46,7 @@ class LiveMessage(message: Message, val guildId: Snowflake?) : AbstractLiveKordE
 
         is MessageUpdateEvent -> message = Message(message.data + event.new, kord)
         is MessageDeleteEvent -> shutDown()
+        is MessageBulkDeleteEvent -> shutDown()
 
         is ChannelDeleteEvent -> shutDown()
 
