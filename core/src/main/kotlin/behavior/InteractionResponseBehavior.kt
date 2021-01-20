@@ -1,5 +1,6 @@
 package dev.kord.core.behavior
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
@@ -8,11 +9,12 @@ import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.FollowupMessage
 import dev.kord.rest.builder.interaction.FollowupMessageCreateBuilder
-import dev.kord.rest.builder.interaction.OriginalInteractionResponseModifyBuilder
+import dev.kord.rest.builder.interaction.InteractionResponseModifyBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+@KordPreview
 interface InteractionResponseBehavior : KordObject {
     val applicationId: Snowflake
     val token: String
@@ -33,6 +35,7 @@ interface InteractionResponseBehavior : KordObject {
     }
 }
 
+@KordPreview
 interface EditableInteractionResponseBehavior : InteractionResponseBehavior {
 
     suspend fun delete() {
@@ -55,14 +58,16 @@ interface EditableInteractionResponseBehavior : InteractionResponseBehavior {
 
 }
 
+@KordPreview
 @OptIn(ExperimentalContracts::class)
-suspend inline fun EditableInteractionResponseBehavior.edit(builder: OriginalInteractionResponseModifyBuilder.() -> Unit): Message {
+suspend inline fun EditableInteractionResponseBehavior.edit(builder: InteractionResponseModifyBuilder.() -> Unit): Message {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val request = OriginalInteractionResponseModifyBuilder().apply(builder).toRequest()
+    val request = InteractionResponseModifyBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.modifyInteractionResponse(applicationId, token, request)
     return Message(response.toData(), kord)
 }
 
+@KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): FollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }

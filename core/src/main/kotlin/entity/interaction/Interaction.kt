@@ -11,26 +11,12 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.InteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
-import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.OptionData
 import dev.kord.core.entity.Entity
 import dev.kord.core.supplier.EntitySupplier
-
-/**
- * Interaction that can respond to interactions but can't follow-up due to the absence of [application id][Kord.resources].
- *
- * @property id interaction's id.
- * @property channelId the channel id where the interaction took place.
- * @property token a continuation token for responding to the interaction
- * @property guildId the id of the guild where the interaction took place.
- * @property permissions the permissions of the member with the overwrites.
- * @property type the type of the interaction.
- * @property member the invoker of the command as [MemberBehavior].
- * @property command [Command] object that contains the data related to the interaction's command.
- * @property version read-only property, always 1
- */
 
 /**
  * Interaction that can respond to interactions and follow them up.
@@ -65,9 +51,9 @@ class Interaction(
 
     val permissions: Permissions get() = data.permissions
 
-    val channel = ChannelBehavior(channelId, kord)
+    val channel: TextChannelBehavior get() = TextChannelBehavior(id = channelId, guildId = guildId, kord = kord)
 
-    val guild = GuildBehavior(guildId, kord)
+    val guild get() = GuildBehavior(guildId, kord)
 
     val member: MemberBehavior get() = MemberBehavior(data.guildId, data.member.userId, kord)
 
@@ -86,6 +72,7 @@ class Interaction(
  * @property groups  names of groups in the command mapped to the [Group] with matching name.
  * @property subCommands  names of sub-commands in the command mapped to the [SubCommand] with matching name.
  */
+@KordPreview
 class Command(val data: ApplicationCommandInteractionData) : Entity {
     override val id: Snowflake
         get() = data.id
@@ -99,7 +86,7 @@ class Command(val data: ApplicationCommandInteractionData) : Entity {
 
     val groups: Map<String, Group>
         get() = data.options.orEmpty()
-            .filter { it.subCommand.orEmpty().isNotEmpty() }
+            .filter { it.subCommands.orEmpty().isNotEmpty() }
             .associate { it.name to Group(it) }
 
 
@@ -116,11 +103,12 @@ class Command(val data: ApplicationCommandInteractionData) : Entity {
  *
  *@property subCommands  names of sub-commands in this [Group] of commands mapped to the [SubCommand] with matching name.
  */
+@KordPreview
 class Group(val data: OptionData) {
     val name: String get() = data.name
 
     val subCommands: Map<String, SubCommand>
-        get() = data.subCommand.orEmpty()
+        get() = data.subCommands.orEmpty()
             .associate { it.name to SubCommand(OptionData(it.name, values = it.options)) }
 
 }
@@ -131,8 +119,10 @@ class Group(val data: OptionData) {
  * @property name name of the subcommand.
  * @property options  names of options in the command mapped to their values.
  */
+@KordPreview
 class SubCommand(val data: OptionData) {
     val name: String get() = data.name
+
     val options: Map<String, OptionValue<*>>
         get() = data.values.orEmpty()
             .associate { it.name to it.value }

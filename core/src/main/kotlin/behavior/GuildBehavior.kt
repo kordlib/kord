@@ -3,6 +3,7 @@ package dev.kord.core.behavior
 import dev.kord.cache.api.query
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
@@ -36,7 +37,7 @@ import dev.kord.rest.builder.guild.EmojiCreateBuilder
 import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
 import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
-import dev.kord.rest.builder.interaction.GuildApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
@@ -103,7 +104,7 @@ interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests to get all present presences of this guild.
      *
-     * This property is not resolvable through REST and will always use [KordCache] instead.
+     * This property is not resolvable through REST and will always use [Kord.cache] instead.
      */
     val presences: Flow<Presence>
         get() = kord.cache.query<PresenceData> { idEq(PresenceData::guildId, id) }
@@ -148,7 +149,7 @@ interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests to get the present voice states of this guild.
      *
-     * This property is not resolvable through REST and will always use [KordCache] instead.
+     * This property is not resolvable through REST and will always use [Kord.cache] instead.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
@@ -180,6 +181,7 @@ interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Application commands for this guild only.
      */
+    @KordPreview
     val commands: Flow<GuildApplicationCommand>
         get() = kord.slashCommands.getGuildApplicationCommands(id)
 
@@ -393,7 +395,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      */
     suspend fun getChannel(channelId: Snowflake): GuildChannel {
         val channel = supplier.getChannelOf<GuildChannel>(channelId)
-        require(channel.guildId == this.id) { "channel ${channelId} is not in guild ${this.id}" }
+        require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id}" }
         return channel
     }
 
@@ -407,7 +409,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      */
     suspend fun getChannelOrNull(channelId: Snowflake): GuildChannel? {
         val channel = supplier.getChannelOfOrNull<GuildChannel>(channelId) ?: return null
-        require(channel.guildId == this.id) { "channel ${channelId} is not in guild ${this.id}" }
+        require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id}" }
         return channel
     }
 
@@ -500,11 +502,10 @@ interface GuildBehavior : KordEntity, Strategizable {
 
     suspend fun getTemplateOrNull(code: String) = supplier.getTemplateOrNull(code)
 
-
-/**
- * Returns a new [GuildBehavior] with the given [strategy].
- */
-override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
+    /**
+     * Returns a new [GuildBehavior] with the given [strategy].
+     */
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 
     companion object {
         internal operator fun invoke(
@@ -516,26 +517,27 @@ override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = Gu
             override val kord: Kord = kord
             override val supplier: EntitySupplier = strategy.supply(kord)
 
-        override fun hashCode(): Int = Objects.hash(id)
+            override fun hashCode(): Int = Objects.hash(id)
 
-        override fun equals(other: Any?): Boolean = when (other) {
-            is GuildBehavior -> other.id == id
-            is PartialGuild -> other.id == id
-            else -> false
-        }
+            override fun equals(other: Any?): Boolean = when (other) {
+                is GuildBehavior -> other.id == id
+                is PartialGuild -> other.id == id
+                else -> false
+            }
 
-        override fun toString(): String {
-            return "GuildBehavior(id=$id, kord=$kord, supplier$supplier)"
+            override fun toString(): String {
+                return "GuildBehavior(id=$id, kord=$kord, supplier$supplier)"
+            }
         }
     }
-}
 
 }
 
+@KordPreview
 suspend inline fun GuildBehavior.createApplicationCommand(
     name: String,
     description: String,
-    builder: GuildApplicationCommandCreateBuilder.() -> Unit = {},
+    builder: ApplicationCommandCreateBuilder.() -> Unit = {},
 ) = kord.slashCommands.createGuildApplicationCommand(id, name, description, builder)
 
 /**
@@ -837,7 +839,7 @@ suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilde
  */
 suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOf(channelId: Snowflake): T {
     val channel = supplier.getChannelOf<T>(channelId)
-    require(channel.guildId == this.id) { "channel ${channelId} is not in guild ${this.id}" }
+    require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id}" }
     return channel
 }
 
@@ -851,7 +853,7 @@ suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOf(channel
  */
 suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfOrNull(channelId: Snowflake): T? {
     val channel = supplier.getChannelOfOrNull<T>(channelId) ?: return null
-    require(channel.guildId == this.id) { "channel ${channelId} is not in guild ${this.id}" }
+    require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id}" }
     return channel
 }
 

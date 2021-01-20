@@ -1,6 +1,7 @@
 package dev.kord.core.gateway.handler
 
 import dev.kord.cache.api.DataCache
+import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.InteractionData
@@ -12,6 +13,7 @@ import dev.kord.gateway.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import dev.kord.core.event.Event as CoreEvent
 
+@KordPreview
 class InteractionEventHandler(
     kord: Kord,
     gateway: MasterGateway,
@@ -37,20 +39,20 @@ class InteractionEventHandler(
 
     private suspend fun handle(event: ApplicationCommandCreate, shard: Int) {
         val data = ApplicationCommandData.from(event.application)
-        val application = GuildApplicationCommand(data, data.guildId.value!!, kord.rest.interaction)
+        val application = GuildApplicationCommand(data, kord.rest.interaction, data.guildId.value!!)
         coreFlow.emit(ApplicationCommandCreateEvent(application, kord, shard))
     }
 
 
     private suspend fun handle(event: ApplicationCommandUpdate, shard: Int) {
         val data = ApplicationCommandData.from(event.application)
-        val application = GuildApplicationCommand(data, data.guildId.value!!, kord.rest.interaction)
+        val application = GuildApplicationCommand(data, kord.rest.interaction, data.guildId.value!!)
         coreFlow.emit(ApplicationCommandUpdateEvent(application, kord, shard))
     }
 
     private suspend fun handle(event: ApplicationCommandDelete, shard: Int) {
         val data = ApplicationCommandData.from(event.application)
-        val application = GuildApplicationCommand(data, data.guildId.value!!, kord.rest.interaction)
+        val application = GuildApplicationCommand(data, kord.rest.interaction, data.guildId.value!!)
         coreFlow.emit(ApplicationCommandDeleteEvent(application, kord, shard))
     }
 }

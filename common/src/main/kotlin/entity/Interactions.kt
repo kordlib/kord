@@ -36,6 +36,7 @@ class ApplicationCommandOption(
         val description: String,
         val default: OptionalBoolean = OptionalBoolean.Missing,
         val required: OptionalBoolean = OptionalBoolean.Missing,
+        @OptIn(KordExperimental::class)
         val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
         val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
 )
@@ -272,6 +273,7 @@ data class SubCommand(
 @KordPreview
 data class CommandArgument(
         override val name: String,
+        @OptIn(KordExperimental::class)
         val value: OptionValue<@Serializable(NotSerializable::class) Any?>,
 ) : Option()
 
@@ -327,19 +329,23 @@ sealed class OptionValue<out T>(val value: T) {
 }
 
 
+@KordPreview
 fun OptionValue<*>.int(): Int {
     return value as? Int ?: error("$value wasn't an Int.")
 }
 
 
+@KordPreview
 fun OptionValue<*>.string(): String {
     return value.toString()
 }
 
+@KordPreview
 fun OptionValue<*>.boolean(): Boolean {
     return value as? Boolean ?: error("$value wasn't a Boolean.")
 }
 
+@KordPreview
 fun OptionValue<*>.snowflake(): Snowflake {
     val id = string().toLongOrNull() ?: error("$value wasn't a Snowflake")
     return Snowflake(id)

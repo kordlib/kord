@@ -2,6 +2,7 @@ package dev.kord.core.rest
 
 import dev.kord.common.Color
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.*
@@ -441,6 +442,45 @@ class RestServiceTest {
 
         val currentTextChannel = guild.getChannelOf<TextChannel>(textChannel.id)
         assertEquals(category.id,currentTextChannel.categoryId)
+    }
+
+    @OptIn(KordPreview::class)
+    fun `guild application commands`(): Unit = runBlocking {
+        val command = guild.createApplicationCommand("test", "automated test"){
+            group("test-group", "automated test") {
+                subCommand("test-sub-command", "automated test") {
+                    int("integer", "test choice") {
+                        choice("one", 1)
+                        choice("two", 2)
+                    }
+                }
+            }
+
+            subCommand("test-sub-command", "automated test") {
+                int("integer", "test choice")
+            }
+        }
+
+        assertEquals("test-group", command.name)
+        assertEquals("automated test", command.description)
+        assertEquals(1, command.subCommands.size)
+        assertEquals(1, command.groups.size)
+
+        assertEquals(1, command.subCommands.values.first().parameters.size)
+        val parameter = command.subCommands.values.first().parameters.values.first()
+        assertEquals(1, parameter.choices.size)
+        assertEquals("1", parameter.choices.values.first())
+
+        assertEquals("test-group", command.groups.values.first().name)
+        assertEquals("test-sub-command", command.subCommands.values.first().name)
+
+        val updated = command.edit {
+            description = "other description"
+        }
+
+        assertEquals("other description", updated.description)
+
+        updated.delete()
     }
 
     @Test
