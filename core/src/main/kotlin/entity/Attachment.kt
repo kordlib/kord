@@ -54,7 +54,7 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : KordE
     /**
      * If this file is an image. Denoted by the presence of a [width] and [height].
      */
-    val isImage: Boolean get() = height == width && height == null
+    val isImage: Boolean get() = height != null && width != null
 
     override fun hashCode(): Int = Objects.hash(id)
 
