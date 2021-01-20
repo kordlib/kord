@@ -20,7 +20,7 @@ data class ApplicationInfoResponse(
         val icon: String?,
         val description: String,
         @SerialName("rpc_origins")
-        val rpcOrigins: List<String>?,
+        val rpcOrigins: Optional<List<String>> = Optional.Missing(),
         @SerialName("bot_public")
         val botPublic: Boolean,
         @SerialName("bot_require_code_grant")
