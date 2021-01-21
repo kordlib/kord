@@ -1,6 +1,8 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.coerceToMissing
+import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
@@ -24,7 +26,7 @@ class ApplicationInfo(
 
     val name: String get() = data.name
 
-    val description: String? get() = data.description
+    val description: String get() = data.description
 
     val isPublic: Boolean get() = data.botPublic
 
@@ -33,7 +35,7 @@ class ApplicationInfo(
     /**
      * The rpc origins of this application, empty if disabled.
      */
-    val rpcOrigins: List<String> get() = data.rpcOrigins.orEmpty()
+    val rpcOrigins: List<String> get() = data.rpcOrigins.coerceToMissing().orEmpty()
 
     val ownerId: Snowflake get() = data.ownerId
 

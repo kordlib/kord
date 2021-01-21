@@ -11,7 +11,7 @@ data class ApplicationInfoData(
         val name: String,
         val icon: String? = null,
         val description: String,
-        val rpcOrigins: List<String>? = null,
+        val rpcOrigins: Optional<List<String>?> = Optional.Missing(),
         val botPublic: Boolean,
         val botRequireCodeGrant: Boolean,
         val ownerId: Snowflake,
