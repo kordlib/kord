@@ -5,14 +5,14 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.entity.KordEntity
-import dev.kord.core.entity.interaction.FollowupMessage
+import dev.kord.core.entity.interaction.InteractionFollowup
 import dev.kord.rest.builder.interaction.FollowupMessageModifyBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordPreview
-interface FollowupMessageBehavior : KordEntity {
+interface InteractionFollowupBehavior : KordEntity {
     val applicationId: Snowflake
     val token: String
     val channelId: Snowflake
@@ -28,7 +28,7 @@ interface FollowupMessageBehavior : KordEntity {
             channelId: Snowflake,
             token: String,
             kord: Kord
-        ) = object : FollowupMessageBehavior {
+        ) = object : InteractionFollowupBehavior {
             override val id: Snowflake
                 get() = id
 
@@ -50,10 +50,10 @@ interface FollowupMessageBehavior : KordEntity {
 
 @KordPreview
 @OptIn(ExperimentalContracts::class)
-suspend inline fun FollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): FollowupMessage {
+suspend inline fun InteractionFollowupBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): InteractionFollowup {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = FollowupMessageModifyBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, request)
     val data = MessageData.from(response)
-    return FollowupMessage(data, token, applicationId, kord)
+    return InteractionFollowup(data, token, applicationId, kord)
 }
