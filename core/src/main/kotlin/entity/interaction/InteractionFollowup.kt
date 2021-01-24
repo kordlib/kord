@@ -18,7 +18,6 @@ import dev.kord.core.entity.channel.MessageChannel
  * @param applicationId the application id of bot invoking the follow-up
  * @param kord The kord instance responsible for the follow-up
  */
-
 @KordPreview
 class InteractionFollowup(
      val message: Message,
