@@ -30,11 +30,11 @@ class InteractionFollowup(
     /**
      * The id of the follow-up message.
      */
-    override val id: Snowflake = message.id
+    override val id: Snowflake get() = message.id
 
     /**
      * The id of the [MessageChannel] the follow-up message was send in.
      */
-    override val channelId: Snowflake = message.channelId
+    override val channelId: Snowflake get() = message.channelId
 
 }
