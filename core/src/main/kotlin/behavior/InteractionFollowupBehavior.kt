@@ -5,6 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.entity.KordEntity
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.InteractionFollowup
 import dev.kord.rest.builder.interaction.FollowupMessageModifyBuilder
 import kotlin.contracts.ExperimentalContracts
@@ -55,5 +56,5 @@ suspend inline fun InteractionFollowupBehavior.edit(builder: FollowupMessageModi
     val request = FollowupMessageModifyBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, request)
     val data = MessageData.from(response)
-    return InteractionFollowup(data, token, applicationId, kord)
+    return InteractionFollowup(Message(data,kord), token, applicationId, kord)
 }

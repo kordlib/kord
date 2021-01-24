@@ -74,5 +74,5 @@ suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessage
     val request = FollowupMessageCreateBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.createFollowupMessage(applicationId, token, request)
     val data = MessageData.from(response)
-    return InteractionFollowup(data, token, applicationId, kord)
+    return InteractionFollowup(Message(data, kord), token, applicationId, kord)
 }

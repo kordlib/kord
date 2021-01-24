@@ -11,10 +11,17 @@ import dev.kord.core.entity.channel.MessageChannel
 /**
  * Holds the follow-up [Message] resulting from an interaction follow-up
  * and behaves on it through [InteractionFollowupBehavior]
+ *
+ * @param message The message created by this follow-up.
+ * To use the message behavior your application must be authorized as a bot.
+ * @param token The unique token used to follow-up the Interaction Response.
+ * @param applicationId the application id of bot invoking the follow-up
+ * @param kord The kord instance responsible for the follow-up
  */
+
 @KordPreview
 class InteractionFollowup(
-    val data: MessageData,
+     val message: Message,
     override val token: String,
     override val applicationId: Snowflake,
     override val kord: Kord,
@@ -23,20 +30,11 @@ class InteractionFollowup(
     /**
      * The id of the follow-up message.
      */
-    override val id: Snowflake
-        get() = data.id
+    override val id: Snowflake = message.id
 
     /**
      * The id of the [MessageChannel] the follow-up message was send in.
      */
-    override val channelId: Snowflake
-        get() = data.channelId
-
-    /**
-     * The message created by this follow-up.
-     *
-     * To use the message behavior your application must be authorized as a bot.
-     */
-    val message: Message = Message(data, kord)
+    override val channelId: Snowflake = message.channelId
 
 }
