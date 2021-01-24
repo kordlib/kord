@@ -9,7 +9,8 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.MessageChannel
 
 /**
- * A Message that's created to follow up an [Interaction Response][dev.kord.core.behavior.InteractionResponseBehavior]
+ * Holds the follow-up [Message] resulting from an interaction follow-up
+ * and behaves on it through [InteractionFollowupBehavior]
  */
 @KordPreview
 class InteractionFollowup(
@@ -36,7 +37,6 @@ class InteractionFollowup(
      *
      * To use the message behavior your application must be authorized as a bot.
      */
-    val message: Message
-        get() = Message(data, kord)
+    val message: Message = Message(data, kord)
 
 }
