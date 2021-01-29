@@ -7,14 +7,11 @@ import dev.kord.core.event.Event
 import dev.kord.core.event.channel.ChannelCreateEvent
 import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.channel.ChannelUpdateEvent
-import dev.kord.core.event.channel.DMChannelUpdateEvent
 import dev.kord.core.event.guild.GuildCreateEvent
 import dev.kord.core.event.guild.GuildUpdateEvent
 import dev.kord.core.event.message.*
 import dev.kord.core.event.user.VoiceStateUpdateEvent
-import dev.kord.core.live.LiveGuild
 import dev.kord.core.live.channel.LiveChannel
-import dev.kord.core.live.channel.LiveDmChannel
 import dev.kord.core.live.channel.live
 import dev.kord.core.live.on
 
@@ -23,7 +20,6 @@ inline fun Channel.live(block: LiveChannel.() -> Unit) = this.live().apply(block
 
 @KordPreview
 fun LiveChannel.voiceStateUpdate(block: suspend (VoiceStateUpdateEvent) -> Unit) = on(consumer = block)
-
 
 @KordPreview
 inline fun LiveChannel.reaction(

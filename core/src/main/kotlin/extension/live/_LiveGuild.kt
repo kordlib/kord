@@ -15,7 +15,6 @@ import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.LiveGuild
-import dev.kord.core.live.LiveMessage
 import dev.kord.core.live.live
 import dev.kord.core.live.on
 
