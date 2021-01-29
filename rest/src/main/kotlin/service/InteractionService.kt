@@ -127,7 +127,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         interactionToken: String,
         messageId: Snowflake,
         request: FollowupMessageModifyRequest
-    ) = call(Route.EditMessagePatch) {
+    ) = call(Route.FollowupMessageModify) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.InteractionToken] = interactionToken
         keys[Route.MessageId] = messageId
