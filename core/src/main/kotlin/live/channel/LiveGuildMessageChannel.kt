@@ -4,7 +4,9 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.event.Event
-import dev.kord.core.event.channel.*
+import dev.kord.core.event.channel.ChannelCreateEvent
+import dev.kord.core.event.channel.ChannelDeleteEvent
+import dev.kord.core.event.channel.ChannelUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.on
 
