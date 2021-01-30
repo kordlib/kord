@@ -218,7 +218,7 @@ class Message(
      */
     suspend fun getAuthorAsMember(): Member? {
         val author = author ?: return null
-        val guildId = getGuild().id
+        val guildId = getGuildOrNull()?.id ?: return null
         return author.asMember(guildId)
     }
 
