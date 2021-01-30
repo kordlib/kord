@@ -60,7 +60,7 @@ repositories {
     mavenCentral()
     // Kord Snapshots Repository (Optional):
     maven {
-        url = "https://oss.sonatype.org/content/repositories/snapshots"
+        url "https://oss.sonatype.org/content/repositories/snapshots"
     }
 
 }
