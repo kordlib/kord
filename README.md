@@ -59,7 +59,9 @@ e.g: `0.7.x-SNAPSHOT`
 repositories {
     mavenCentral()
     // Kord Snapshots Repository (Optional):
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
 
 }
 ```
