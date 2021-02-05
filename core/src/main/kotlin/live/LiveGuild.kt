@@ -119,9 +119,6 @@ fun LiveGuild.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(cons
 fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-fun LiveGuild.onShutDown(block: suspend (GuildDeleteEvent) -> Unit) = onGuildDelete(block)
-
-@KordPreview
 class LiveGuild(guild: Guild) : AbstractLiveKordEntity(), KordEntity by guild {
 
     var guild: Guild = guild
