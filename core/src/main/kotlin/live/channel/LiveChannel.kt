@@ -32,23 +32,6 @@ inline fun Channel.live(block: LiveChannel.() -> Unit) = this.live().apply(block
 fun LiveChannel.onVoiceStateUpdate(block: suspend (VoiceStateUpdateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-inline fun LiveChannel.onReaction(crossinline block: suspend (Event) -> Unit) = on<Event> {
-    if (it is ReactionAddEvent || it is ReactionRemoveEvent) {
-        block(it)
-    }
-}
-
-@KordPreview
-inline fun LiveChannel.onReaction(
-    emoji: ReactionEmoji,
-    crossinline block: suspend (Event) -> Unit
-) = on<Event> {
-    if (it is ReactionAddEvent && (emoji == it.emoji) || it is ReactionRemoveEvent && (emoji == it.emoji)) {
-        block(it)
-    }
-}
-
-@KordPreview
 fun LiveChannel.onReactionAdd(block: suspend (ReactionAddEvent) -> Unit) = on(consumer = block)
 
 @KordPreview

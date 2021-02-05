@@ -22,23 +22,6 @@ suspend fun Message.live() =
 suspend fun Message.live(block: LiveMessage.() -> Unit) = this.live().apply(block)
 
 @KordPreview
-inline fun LiveMessage.onReaction(crossinline block: suspend (Event) -> Unit) = on<Event> {
-    if (it is ReactionAddEvent || it is ReactionRemoveEvent) {
-        block(it)
-    }
-}
-
-@KordPreview
-inline fun LiveMessage.onReaction(
-    emoji: ReactionEmoji,
-    crossinline block: suspend (Event) -> Unit
-) = on<Event> {
-    if (it is ReactionAddEvent && (emoji == it.emoji) || it is ReactionRemoveEvent && (emoji == it.emoji)) {
-        block(it)
-    }
-}
-
-@KordPreview
 fun LiveMessage.onReactionAdd(block: suspend (ReactionAddEvent) -> Unit) = on(consumer = block)
 
 @KordPreview

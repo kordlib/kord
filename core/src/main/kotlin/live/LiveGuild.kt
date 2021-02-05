@@ -63,23 +63,6 @@ fun LiveGuild.onMemberUpdate(block: suspend (MemberUpdateEvent) -> Unit) = on(co
 fun LiveGuild.onMemberLeave(block: suspend (MemberLeaveEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-inline fun LiveGuild.onReaction(crossinline block: suspend (Event) -> Unit) = on<Event> {
-    if (it is ReactionAddEvent || it is ReactionRemoveEvent) {
-        block(it)
-    }
-}
-
-@KordPreview
-inline fun LiveGuild.onReaction(
-    emoji: ReactionEmoji,
-    crossinline block: suspend (Event) -> Unit
-) = on<Event> {
-    if (it is ReactionAddEvent && (emoji == it.emoji) || it is ReactionRemoveEvent && (emoji == it.emoji)) {
-        block(it)
-    }
-}
-
-@KordPreview
 fun LiveGuild.onReactionAdd(block: suspend (ReactionAddEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
