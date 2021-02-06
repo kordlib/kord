@@ -206,7 +206,11 @@ class InteractionApplicationCommandCallbackDataBuilder {
     private var _flags: Optional<MessageFlags> = Optional.Missing()
     var flags: MessageFlags? by ::_flags.delegate()
 
+    @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
         if (embeds == null) embeds = mutableListOf()
         embeds!! += EmbedBuilder().apply(builder)
     }
