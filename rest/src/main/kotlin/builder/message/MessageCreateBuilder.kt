@@ -18,6 +18,9 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 @KordDsl
 class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
@@ -50,7 +53,9 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
      */
     var messageReference: Snowflake? by ::_messageReference.delegate()
 
+    @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
+        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
         embed = (embed ?: EmbedBuilder()).apply(block)
     }
 
@@ -72,15 +77,15 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     }
 
     override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
-            MessageCreateRequest(
-                    _content,
-                    _nonce,
-                    _tts,
-                    _embed.map { it.toRequest() },
-                    _allowedMentions.map { it.build() },
-                    _messageReference.map { DiscordMessageReference(id = OptionalSnowflake.Value(it)) }
-            ),
-            files
+        MessageCreateRequest(
+            _content,
+            _nonce,
+            _tts,
+            _embed.map { it.toRequest() },
+            _allowedMentions.map { it.build() },
+            _messageReference.map { DiscordMessageReference(id = OptionalSnowflake.Value(it)) }
+        ),
+        files
     )
 
 }
@@ -132,10 +137,10 @@ class AllowedMentionsBuilder {
     }
 
     fun build(): AllowedMentions = AllowedMentions(
-            parse = types.toList(),
-            users = users.map { it.asString },
-            roles = roles.map { it.asString },
-            repliedUser = _repliedUser
+        parse = types.toList(),
+        users = users.map { it.asString },
+        roles = roles.map { it.asString },
+        repliedUser = _repliedUser
     )
 
 }
