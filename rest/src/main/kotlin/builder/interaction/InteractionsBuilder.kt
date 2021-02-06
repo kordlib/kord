@@ -221,7 +221,9 @@ class InteractionApplicationCommandCallbackDataBuilder {
             _tts,
             _content,
             _embeds.mapList { it.toRequest() },
-            _allowedMentions.map { it.build() })
+            _allowedMentions.map { it.build() },
+            _flags
+        )
 
     }
 }
