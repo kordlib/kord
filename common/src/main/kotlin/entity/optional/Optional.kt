@@ -251,6 +251,16 @@ inline fun <E: Any, T> Optional<E?>.mapNotNull(mapper: (E) -> T): Optional<T?> =
     is Value -> Optional(mapper(value!!))
 }
 
+inline fun <E> Optional<List<E>>.firstOrNull(mapper: (E) -> Boolean) : E? = when(this){
+    is Missing, is Null<*> -> null
+    is Value -> value.firstOrNull(mapper)
+}
+
+
+inline fun <E> Optional<List<E>>.first(mapper: (E) -> Boolean = {true}) : E = firstOrNull(mapper)!!
+
+
+
 inline fun <E : Any> Optional<E>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake = when (this) {
     is Missing, is Null<*> -> OptionalSnowflake.Missing
     is Value -> OptionalSnowflake.Value(mapper(value))

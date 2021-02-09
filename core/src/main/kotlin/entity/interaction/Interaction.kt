@@ -5,8 +5,7 @@ import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.OptionValue
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.InteractionBehavior
@@ -84,16 +83,16 @@ class Command(val data: ApplicationCommandInteractionData) : Entity {
             .filter { it.value !is Optional.Missing<*> }
             .associate { it.name to it.value.value!! }
 
-    val groups: Map<String, Group>
-        get() = data.options.orEmpty()
-            .filter { it.subCommands.orEmpty().isNotEmpty() }
-            .associate { it.name to Group(it) }
+    val group: Group?
+        get() = data.options
+            .firstOrNull { it.subCommands.orEmpty().isNotEmpty() }
+            ?.let { Group(it) }
 
 
-    val subCommands: Map<String, SubCommand>
-        get() = data.options.orEmpty()
-            .filter { it.values.orEmpty().isNotEmpty() }
-            .associate { it.name to SubCommand(it) }
+    val subCommand: SubCommand?
+        get() = data.options
+            .firstOrNull { it.values.orEmpty().isNotEmpty() }
+            ?.let { SubCommand(it) }
 
 
 }
@@ -107,9 +106,11 @@ class Command(val data: ApplicationCommandInteractionData) : Entity {
 class Group(val data: OptionData) {
     val name: String get() = data.name
 
-    val subCommands: Map<String, SubCommand>
-        get() = data.subCommands.orEmpty()
-            .associate { it.name to SubCommand(OptionData(it.name, values = it.options)) }
+    val subCommand: SubCommand
+        get() = data.subCommands.unwrap {
+            val command = it.first()
+            SubCommand(OptionData(command.name, values = command.options))
+        }!!
 
 }
 
