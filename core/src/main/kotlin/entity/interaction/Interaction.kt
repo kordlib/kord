@@ -68,8 +68,8 @@ class Interaction(
  *
  * @property name name of the command.
  * @property options  names of options in the command mapped to their values.
- * @property groups  names of groups in the command mapped to the [Group] with matching name.
- * @property subCommands  names of sub-commands in the command mapped to the [SubCommand] with matching name.
+ * @property group  The group containing an invoked [SubCommand], if present.
+ * @property subCommand The [SubCommand] invoked under this Command's name, if present.
  */
 @KordPreview
 class Command(val data: ApplicationCommandInteractionData) : Entity {
@@ -98,9 +98,9 @@ class Command(val data: ApplicationCommandInteractionData) : Entity {
 }
 
 /**
- * The Group containing [SubCommand]s  related to [Command].
+ * The Group containing [SubCommand] invoked from this Group.
  *
- *@property subCommands  names of sub-commands in this [Group] of commands mapped to the [SubCommand] with matching name.
+ *@property subCommand the [SubCommand] invoked from this Group.
  */
 @KordPreview
 class Group(val data: OptionData) {

@@ -257,7 +257,7 @@ inline fun <E> Optional<List<E>>.firstOrNull(mapper: (E) -> Boolean) : E? = when
 }
 
 
-inline fun <E> Optional<List<E>>.first(mapper: (E) -> Boolean = {true}) : E = firstOrNull(mapper)!!
+inline fun <E> Optional<List<E>>.first(mapper: (E) -> Boolean) : E = firstOrNull(mapper)!!
 
 
 
