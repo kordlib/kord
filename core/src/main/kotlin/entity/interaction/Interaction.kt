@@ -67,7 +67,7 @@ class Interaction(
 sealed class Command {
 
     abstract val rootId: Snowflake
-    abstract val name: String
+    abstract val rootName: String
     abstract val options: Map<String, OptionValue<*>>
 
     companion object {
@@ -93,7 +93,7 @@ class RootCommand(val data: ApplicationCommandInteractionData) : Command() {
      override val rootId: Snowflake
         get() = data.id
 
-    override val name get() = data.name
+    override val rootName get() = data.name
 
     override val options: Map<String, OptionValue<*>>
         get() = data.options.orEmpty()
@@ -106,12 +106,12 @@ class SubCommand(val data: ApplicationCommandInteractionData) : Command() {
 
     private val subCommandData = data.options.orEmpty().first()
 
-    val rootName get() = data.name
+    override val rootName get() = data.name
 
     override val rootId: Snowflake
         get() = data.id
 
-    override val name get() = subCommandData.name
+     val name get() = subCommandData.name
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.values.orEmpty()
@@ -128,11 +128,11 @@ class GroupCommand(val data: ApplicationCommandInteractionData) : Command() {
     override val rootId: Snowflake
         get() = data.id
 
-    val rootName get() = data.name
+    override val rootName get() = data.name
 
     val groupName get() = groupData.name
 
-    override val name get() = subCommandData.name
+    val name get() = subCommandData.name
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.options.orEmpty()
