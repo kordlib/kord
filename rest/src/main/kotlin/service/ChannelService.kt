@@ -16,17 +16,20 @@ import kotlin.contracts.contract
 
 class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun createMessage(channelId: Snowflake, builder: MessageCreateBuilder.() -> Unit): DiscordMessage {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
+    suspend fun createMessage(channelId: Snowflake, multipartRequest: MultipartMessageCreateRequest): DiscordMessage {
+
         return call(Route.MessagePost) {
             keys[Route.ChannelId] = channelId
-            val multipartRequest = MessageCreateBuilder().apply(builder).toRequest()
             body(MessageCreateRequest.serializer(), multipartRequest.request)
             multipartRequest.files.forEach { file(it) }
         }
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createMessage(channelId: Snowflake, builder: MessageCreateBuilder.() -> Unit): DiscordMessage {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val multipartRequest = MessageCreateBuilder().apply(builder).toRequest()
+        return createMessage(channelId, multipartRequest)
     }
 
     suspend fun getMessages(channelId: Snowflake, position: Position? = null, limit: Int = 50) = call(Route.MessagesGet) {
