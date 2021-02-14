@@ -132,7 +132,7 @@ class GroupCommand(val data: ApplicationCommandInteractionData) : Command() {
 
     val groupName get() = groupData.name
 
-    override val name get() = groupData.name
+    override val name get() = subCommandData.name
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.options.orEmpty()
