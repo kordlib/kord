@@ -80,11 +80,28 @@ class Interaction(
     val version: Int get() = data.version
 }
 
+/**
+ * The base command of all commands that can be executed under an interaction event.
+ */
 @KordPreview
 sealed class InteractionCommand {
-
+    /**
+     * The id of the root command.
+     */
     abstract val rootId: Snowflake
+
+    /**
+     * The root command name
+     */
     abstract val rootName: String
+
+    /**
+     * Options passed to the command.
+     * Type-check your command to against the sub-types of this class for the right context of the execution
+     * * [RootCommand] - Context of main command execution.
+     * * [GroupCommand] - Context of a subcommand executed in a group.
+     * * [SubCommand] - Context of a subcommand executed under the root command.
+     */
     abstract val options: Map<String, OptionValue<*>>
 
     companion object {
@@ -104,6 +121,11 @@ sealed class InteractionCommand {
     }
 }
 
+/**
+ * Represents an invocation of a root command.
+ *
+ * The root command is the first command defined in in a slash-command structure.
+ */
 @KordPreview
 class RootCommand(val data: ApplicationCommandInteractionData) : InteractionCommand() {
 
@@ -118,6 +140,9 @@ class RootCommand(val data: ApplicationCommandInteractionData) : InteractionComm
 
 }
 
+/**
+ * Represents an invocation of a sub-command under the [RootCommand]
+ */
 @KordPreview
 class SubCommand(val data: ApplicationCommandInteractionData) : InteractionCommand() {
 
@@ -128,6 +153,9 @@ class SubCommand(val data: ApplicationCommandInteractionData) : InteractionComma
     override val rootId: Snowflake
         get() = data.id
 
+    /**
+     * Name of the subcommand executed.
+     */
     val name get() = subCommandData.name
 
     override val options: Map<String, OptionValue<*>>
@@ -136,6 +164,9 @@ class SubCommand(val data: ApplicationCommandInteractionData) : InteractionComma
 
 }
 
+/**
+ * Represents an invocation of a sub-command under a group.
+ */
 @KordPreview
 class GroupCommand(val data: ApplicationCommandInteractionData) : InteractionCommand() {
 
@@ -147,8 +178,14 @@ class GroupCommand(val data: ApplicationCommandInteractionData) : InteractionCom
 
     override val rootName get() = data.name
 
+    /**
+     * Name of the group of this sub-command.
+     */
     val groupName get() = groupData.name
 
+    /**
+     * Name of this sub-command
+     */
     val name get() = subCommandData.name
 
     override val options: Map<String, OptionValue<*>>
