@@ -7,6 +7,7 @@ import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
+import dev.kord.core.KordObject
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.InteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
@@ -60,72 +61,81 @@ class Interaction(
         get() = Command(data.data)
 
     val version: Int get() = data.version
-
 }
 
-/**
- * The root command in the interaction.
- *
- * @property name name of the command.
- * @property options  names of options in the command mapped to their values.
- * @property group  The group containing an invoked [SubCommand], if present.
- * @property subCommand The [SubCommand] invoked under this Command's name, if present.
- */
 @KordPreview
-class Command(val data: ApplicationCommandInteractionData) : Entity {
-    override val id: Snowflake
+sealed class Command {
+
+    abstract val rootId: Snowflake
+    abstract val name: String
+    abstract val options: Map<String, OptionValue<*>>
+
+    companion object {
+        operator fun invoke(data: ApplicationCommandInteractionData): Command {
+            val firstLevelOptions = data.options.orEmpty()
+            val rootPredicate = firstLevelOptions.isEmpty() || firstLevelOptions.any { it.value.value != null }
+            val groupPredicate = firstLevelOptions.any { it.subCommands.orEmpty().isNotEmpty() }
+            val subCommandPredicate = firstLevelOptions.any { it.values.orEmpty().isNotEmpty() }
+
+            return when {
+                rootPredicate -> RootCommand(data)
+                groupPredicate -> GroupCommand(data)
+                subCommandPredicate -> SubCommand(data)
+                else -> error("Undefined data structure")
+            }
+        }
+    }
+}
+
+@KordPreview
+class RootCommand(val data: ApplicationCommandInteractionData) : Command() {
+
+     override val rootId: Snowflake
         get() = data.id
 
-    val name get() = data.name
+    override val name get() = data.name
 
-    val options
-        get(): Map<String, OptionValue<*>> = data.options.orEmpty()
-            .filter { it.value !is Optional.Missing<*> }
+    override val options: Map<String, OptionValue<*>>
+        get() = data.options.orEmpty()
             .associate { it.name to it.value.value!! }
 
-    val group: Group?
-        get() = data.options
-            .firstOrNull { it.subCommands.orEmpty().isNotEmpty() }
-            ?.let { Group(it) }
+}
 
+@KordPreview
+class SubCommand(val data: ApplicationCommandInteractionData) : Command() {
 
-    val subCommand: SubCommand?
-        get() = data.options
-            .firstOrNull { it.values.orEmpty().isNotEmpty() }
-            ?.let { SubCommand(it) }
+    private val subCommandData = data.options.orEmpty().first()
 
+    val rootName get() = data.name
+
+    override val rootId: Snowflake
+        get() = data.id
+
+    override val name get() = subCommandData.name
+
+    override val options: Map<String, OptionValue<*>>
+        get() = subCommandData.values.orEmpty()
+            .associate { it.name to it.value }
 
 }
 
-/**
- * The Group containing [SubCommand] invoked from this Group.
- *
- *@property subCommand the [SubCommand] invoked from this Group.
- */
 @KordPreview
-class Group(val data: OptionData) {
-    val name: String get() = data.name
+class GroupCommand(val data: ApplicationCommandInteractionData) : Command() {
 
-    val subCommand: SubCommand
-        get() = data.subCommands.unwrap {
-            val command = it.first()
-            SubCommand(OptionData(command.name, values = command.options))
-        }!!
+    private val groupData get() = data.options.orEmpty().first()
+    private val subCommandData get() = groupData.subCommands.orEmpty().first()
 
-}
+    override val rootId: Snowflake
+        get() = data.id
 
-/**
- * A [SubCommand] that is either a part of [Command] or [Group].
- *
- * @property name name of the subcommand.
- * @property options  names of options in the command mapped to their values.
- */
-@KordPreview
-class SubCommand(val data: OptionData) {
-    val name: String get() = data.name
+    val rootName get() = data.name
 
-    val options: Map<String, OptionValue<*>>
-        get() = data.values.orEmpty()
+    val groupName get() = groupData.name
+
+    override val name get() = groupData.name
+
+    override val options: Map<String, OptionValue<*>>
+        get() = subCommandData.options.orEmpty()
             .associate { it.name to it.value }
 }
 
