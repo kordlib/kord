@@ -109,13 +109,11 @@ sealed class InteractionCommand {
             val firstLevelOptions = data.options.orEmpty()
             val rootPredicate = firstLevelOptions.isEmpty() || firstLevelOptions.any { it.value.value != null }
             val groupPredicate = firstLevelOptions.any { it.subCommands.orEmpty().isNotEmpty() }
-            val subCommandPredicate = firstLevelOptions.any { it.values.orEmpty().isNotEmpty() }
 
             return when {
                 rootPredicate -> RootCommand(data)
                 groupPredicate -> GroupCommand(data)
-                subCommandPredicate -> SubCommand(data)
-                else -> error("Undefined data structure")
+                else -> SubCommand(data) // if not root, or group, it's a sub-command
             }
         }
     }
