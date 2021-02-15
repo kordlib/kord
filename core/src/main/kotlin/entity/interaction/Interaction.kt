@@ -99,8 +99,8 @@ sealed class InteractionCommand {
      * Options passed to the command.
      * Type-check your command to against the sub-types of this class for the right context of the execution
      * * [RootCommand] - Context of main command execution.
-     * * [GroupCommand] - Context of a subcommand executed in a group.
-     * * [SubCommand] - Context of a subcommand executed under the root command.
+     * * [GroupCommand] - Context of a sub-command executed in a group.
+     * * [SubCommand] - Context of a sub-command executed under the root command.
      */
     abstract val options: Map<String, OptionValue<*>>
 
@@ -154,7 +154,7 @@ class SubCommand(val data: ApplicationCommandInteractionData) : InteractionComma
         get() = data.id
 
     /**
-     * Name of the subcommand executed.
+     * Name of the sub-command executed.
      */
     val name get() = subCommandData.name
 
