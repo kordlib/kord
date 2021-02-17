@@ -7,7 +7,6 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.WebhookBehavior
-import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.WebhookData
 import dev.kord.core.entity.channel.GuildMessageChannel
@@ -86,7 +85,7 @@ data class Webhook(
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is WebhookBehavior -> other.id == id
         else -> false
     }

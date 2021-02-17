@@ -3,7 +3,6 @@ package dev.kord.core.gateway.handler
 import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.query
-import dev.kord.common.entity.optional.optional
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.*
 import dev.kord.core.cache.idEq
@@ -42,7 +41,7 @@ internal class VoiceEventHandler(
         cache.put(data)
         val new = VoiceState(data, kord)
 
-        coreFlow.emit( VoiceStateUpdateEvent(old, new, shard))
+        coreFlow.emit(VoiceStateUpdateEvent(old, new, shard))
     }
 
     private suspend fun handle(event: VoiceServerUpdate, shard: Int) = with(event.voiceServerUpdateData) {

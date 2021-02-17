@@ -31,13 +31,13 @@ class GatewayEventInterceptor(
             UserEventHandler(kord, gateway, cache, coreFlow),
             VoiceEventHandler(kord, gateway, cache, coreFlow),
             WebhookEventHandler(kord, gateway, cache, coreFlow),
-            InteractionEventHandler(kord,gateway, cache, coreFlow)
+            InteractionEventHandler(kord, gateway, cache, coreFlow)
     )
 
     suspend fun start() = gateway.events
-                .buffer(Channel.UNLIMITED)
-                .onEach { (event, _, shard) -> dispatch(event, shard) }
-                .launchIn(kord)
+            .buffer(Channel.UNLIMITED)
+            .onEach { (event, _, shard) -> dispatch(event, shard) }
+            .launchIn(kord)
 
     private suspend fun dispatch(event: Event, shard: Int) {
         runCatching {

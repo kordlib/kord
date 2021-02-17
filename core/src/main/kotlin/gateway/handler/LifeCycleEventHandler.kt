@@ -2,7 +2,6 @@ package dev.kord.core.gateway.handler
 
 import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
-import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.User

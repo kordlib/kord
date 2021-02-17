@@ -1,14 +1,14 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.cache.data.IntegrationData
 import dev.kord.core.cache.data.RoleTagsData
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.common.exception.RequestException
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 class RoleTags(

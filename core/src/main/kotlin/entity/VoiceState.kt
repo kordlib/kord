@@ -8,9 +8,7 @@ import dev.kord.core.cache.data.VoiceStateData
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.toSnowflakeOrNull
 
 class VoiceState(
         val data: VoiceStateData,

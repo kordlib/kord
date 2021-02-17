@@ -20,6 +20,6 @@ interface Strategizable {
     /**
      * Returns a copy of this class with a new [supplier] provided by the [strategy].
      */
-    fun withStrategy(strategy: EntitySupplyStrategy<*>) : Strategizable
+    fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable
 
 }

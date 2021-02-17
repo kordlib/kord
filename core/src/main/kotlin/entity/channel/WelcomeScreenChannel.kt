@@ -1,4 +1,5 @@
 package dev.kord.core.entity.channel
+
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
@@ -14,9 +15,9 @@ import dev.kord.core.supplier.EntitySupplier
  * @property emojiName the emoji name if custom, the unicode character if standard, or `null` if no emoji is set.
  */
 class WelcomeScreenChannel(
-    val data: WelcomeScreenChannelData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
+        val data: WelcomeScreenChannelData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : ChannelBehavior {
 
     override val id: Snowflake

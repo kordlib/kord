@@ -1,10 +1,8 @@
 package dev.kord.core.behavior.channel
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.*
 import dev.kord.core.exception.EntityNotFoundException

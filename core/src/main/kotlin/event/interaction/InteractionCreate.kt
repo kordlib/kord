@@ -7,7 +7,7 @@ import dev.kord.core.event.Event
 
 @KordPreview
 class InteractionCreateEvent(
-    val interaction: Interaction,
-    override val kord: Kord,
-    override val shard: Int
+        val interaction: Interaction,
+        override val kord: Kord,
+        override val shard: Int
 ) : Event

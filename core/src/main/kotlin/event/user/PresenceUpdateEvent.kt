@@ -61,7 +61,7 @@ class PresenceUpdateEvent(
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getMemberOrNull(): Member? = supplier.getMemberOrNull(guildId = guildId, userId =user.id)
+    suspend fun getMemberOrNull(): Member? = supplier.getMemberOrNull(guildId = guildId, userId = user.id)
 
     /**
      * Requests to get the guild in which the presence was updated.

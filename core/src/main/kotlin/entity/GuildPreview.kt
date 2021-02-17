@@ -46,7 +46,7 @@ class GuildPreview(
     /**
      * Approximate number of members in this guild.
      */
-    val approximateMemberCount: Int get() =  data.approximateMemberCount
+    val approximateMemberCount: Int get() = data.approximateMemberCount
 
     /**
      * Approximate number of online members in this guild.

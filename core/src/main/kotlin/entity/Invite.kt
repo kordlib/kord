@@ -15,7 +15,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.toSnowflakeOrNull
 
 /**
  * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite).

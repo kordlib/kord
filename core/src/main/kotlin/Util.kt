@@ -4,15 +4,14 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.event.Event
-import dev.kord.core.event.user.PresenceUpdateEvent
-import dev.kord.core.event.user.VoiceStateUpdateEvent
-import dev.kord.core.event.guild.WebhookUpdateEvent
 import dev.kord.core.event.channel.*
 import dev.kord.core.event.guild.*
 import dev.kord.core.event.message.*
 import dev.kord.core.event.role.RoleCreateEvent
 import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
+import dev.kord.core.event.user.PresenceUpdateEvent
+import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intents
 import dev.kord.gateway.MessageDelete
@@ -43,7 +42,7 @@ internal fun Int.toInstant() = Instant.ofEpochMilli(toLong())
 internal fun Long.toInstant() = Instant.ofEpochMilli(this)
 
 @OptIn(ExperimentalContracts::class)
-internal inline fun <T> catchNotFound(block: () -> T): T?  {
+internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
     }
@@ -56,7 +55,7 @@ internal inline fun <T> catchNotFound(block: () -> T): T?  {
 }
 
 @OptIn(ExperimentalContracts::class)
-internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: () -> T): T?  {
+internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: () -> T): T? {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
     }
@@ -70,7 +69,6 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
         }
     }
 }
-
 
 
 fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {

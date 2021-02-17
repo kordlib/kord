@@ -87,7 +87,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     val members: Flow<Member>
         get() = cache.query<MemberData>().asFlow().mapNotNull {
             val userData =
-                cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull() ?: return@mapNotNull null
+                    cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull() ?: return@mapNotNull null
             Member(it, userData, kord)
         }
 
@@ -137,7 +137,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
         val data = cache.query<MessageData> { idEq(MessageData::id, messageId) }.singleOrNull()
-            ?: return null
+                ?: return null
 
         return Message(data, kord)
     }
@@ -198,7 +198,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         require(limit > 0) { "At least 1 item should be requested, but got $limit." }
         return cache.query<MemberData> { idEq(MemberData::guildId, guildId) }.asFlow().mapNotNull {
             val userData =
-                cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull() ?: return@mapNotNull null
+                    cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull() ?: return@mapNotNull null
             Member(it, userData, kord)
         }
     }
@@ -266,7 +266,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Template(data, kord)
     }
 
-    override  fun getTemplates(guildId: Snowflake): Flow<Template> {
+    override fun getTemplates(guildId: Snowflake): Flow<Template> {
         return cache.query<TemplateData>() {
             idEq(TemplateData::sourceGuildId, guildId)
         }.asFlow().map { Template(it, kord) }

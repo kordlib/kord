@@ -10,7 +10,7 @@ data class GuildWidgetData(
         val channelId: Snowflake?
 ) {
     companion object {
-        fun from(entity: DiscordGuildWidget) : GuildWidgetData = with(entity){
+        fun from(entity: DiscordGuildWidget): GuildWidgetData = with(entity) {
             GuildWidgetData(enabled, channelId)
         }
     }

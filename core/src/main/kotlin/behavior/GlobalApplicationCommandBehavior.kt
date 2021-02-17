@@ -10,9 +10,6 @@ import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.rest.builder.interaction.ApplicationCommandModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.InteractionService
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-import kotlin.jvm.Throws
 
 @KordPreview
 interface ApplicationCommandBehavior : Entity {
@@ -26,8 +23,8 @@ interface ApplicationCommandBehavior : Entity {
      * @throws [RestRequestException] when something goes wrong during the request.
      */
     suspend fun edit(
-        builder: suspend /*suspend since not inline*/ ApplicationCommandModifyBuilder.() -> Unit)
-    : ApplicationCommand
+            builder: suspend /*suspend since not inline*/ ApplicationCommandModifyBuilder.() -> Unit)
+            : ApplicationCommand
 
     /**
      * Requests to delete this command.

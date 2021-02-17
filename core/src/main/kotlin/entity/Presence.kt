@@ -26,17 +26,20 @@ class Presence(
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Game field is no longer present.", ReplaceWith("activities.firstOrNull()"), DeprecationLevel.ERROR)
-    val game: Activity? get() = activities.firstOrNull()
+    val game: Activity?
+        get() = activities.firstOrNull()
 
     val guildId: Snowflake? get() = data.guildId
 
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("role ids are no longer present.",  ReplaceWith("emptySet()") , DeprecationLevel.ERROR)
-    val roleIds: Set<Snowflake>? get() = emptySet()
+    @Deprecated("role ids are no longer present.", ReplaceWith("emptySet()"), DeprecationLevel.ERROR)
+    val roleIds: Set<Snowflake>?
+        get() = emptySet()
 
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("role ids are no longer present.",  ReplaceWith("emptyFlow()") , DeprecationLevel.ERROR)
-    val roles: Flow<Role> get() = emptyFlow()
+    @Deprecated("role ids are no longer present.", ReplaceWith("emptyFlow()"), DeprecationLevel.ERROR)
+    val roles: Flow<Role>
+        get() = emptyFlow()
 
     val status: PresenceStatus get() = data.status
 

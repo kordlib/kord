@@ -8,7 +8,6 @@ import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.Message
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.toInstant
-import dev.kord.core.toSnowflakeOrNull
 import java.time.Instant
 
 /**

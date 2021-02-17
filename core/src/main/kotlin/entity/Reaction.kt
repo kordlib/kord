@@ -4,7 +4,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.ReactionData
-import dev.kord.core.toSnowflakeOrNull
 
 /**
  * An instance of a [Discord Reaction](https://discord.com/developers/docs/resources/channel#reaction-object).

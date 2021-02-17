@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WelcomeScreenData(
-    val description: String?,
-    val welcomeChannels: List<WelcomeScreenChannelData>,
+        val description: String?,
+        val welcomeChannels: List<WelcomeScreenChannelData>,
 ) {
     companion object {
         fun from(data: DiscordWelcomeScreen): WelcomeScreenData {
@@ -21,10 +21,10 @@ data class WelcomeScreenData(
 
 @Serializable
 data class WelcomeScreenChannelData(
-    val channelId: Snowflake,
-    val description: String,
-    val emojiId: Snowflake?,
-    val emojiName: String?,
+        val channelId: Snowflake,
+        val description: String,
+        val emojiId: Snowflake?,
+        val emojiName: String?,
 ) {
     companion object {
         fun from(data: DiscordWelcomeScreenChannel): WelcomeScreenChannelData {

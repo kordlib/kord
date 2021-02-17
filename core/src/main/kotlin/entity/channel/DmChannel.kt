@@ -58,7 +58,7 @@ data class DmChannel(
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is ChannelBehavior -> other.id == id
         else -> false
     }

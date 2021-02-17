@@ -4,8 +4,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.InteractionFollowupBehavior
-import dev.kord.core.cache.data.MessageData
-import dev.kord.core.entity.*
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.MessageChannel
 
 /**
@@ -20,10 +19,10 @@ import dev.kord.core.entity.channel.MessageChannel
  */
 @KordPreview
 class InteractionFollowup(
-     val message: Message,
-    override val token: String,
-    override val applicationId: Snowflake,
-    override val kord: Kord,
+        val message: Message,
+        override val token: String,
+        override val applicationId: Snowflake,
+        override val kord: Kord,
 ) : InteractionFollowupBehavior {
 
     /**

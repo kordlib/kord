@@ -34,7 +34,8 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
      */
     @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
     @Deprecated(embedDeprecationMessage)
-    val type: EmbedType? get() = data.type.value
+    val type: EmbedType?
+        get() = data.type.value
 
     /**
      * The description, if present.

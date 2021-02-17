@@ -19,7 +19,7 @@ data class MessageStickerData(
 ) {
 
     companion object {
-        fun from(entity: DiscordMessageSticker): MessageStickerData = with(entity){
+        fun from(entity: DiscordMessageSticker): MessageStickerData = with(entity) {
             MessageStickerData(id, packId, name, description, tags, asset, previewAsset, formatType)
         }
     }

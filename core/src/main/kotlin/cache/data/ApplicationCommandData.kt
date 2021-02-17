@@ -8,23 +8,23 @@ import kotlinx.serialization.Serializable
 @Serializable
 @KordPreview
 data class ApplicationCommandData(
-    val id: Snowflake,
-    val applicationId: Snowflake,
-    val name: String,
-    val description: String,
-    val guildId: OptionalSnowflake,
-    val options: Optional<List<ApplicationCommandOptionData>>
+        val id: Snowflake,
+        val applicationId: Snowflake,
+        val name: String,
+        val description: String,
+        val guildId: OptionalSnowflake,
+        val options: Optional<List<ApplicationCommandOptionData>>
 ) {
     companion object {
         fun from(command: DiscordApplicationCommand): ApplicationCommandData {
             return with(command) {
                 ApplicationCommandData(
-                    id,
-                    applicationId,
-                    name,
-                    description,
-                    guildId,
-                    options.mapList { ApplicationCommandOptionData.from(it) })
+                        id,
+                        applicationId,
+                        name,
+                        description,
+                        guildId,
+                        options.mapList { ApplicationCommandOptionData.from(it) })
             }
         }
     }
@@ -33,25 +33,25 @@ data class ApplicationCommandData(
 @Serializable
 @KordPreview
 data class ApplicationCommandOptionData(
-    val type: ApplicationCommandOptionType,
-    val name: String,
-    val description: String,
-    val default: OptionalBoolean = OptionalBoolean.Missing,
-    val required: OptionalBoolean = OptionalBoolean.Missing,
-    val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing(),
-    val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing()
+        val type: ApplicationCommandOptionType,
+        val name: String,
+        val description: String,
+        val default: OptionalBoolean = OptionalBoolean.Missing,
+        val required: OptionalBoolean = OptionalBoolean.Missing,
+        val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing(),
+        val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing()
 ) {
     companion object {
         fun from(data: ApplicationCommandOption): ApplicationCommandOptionData {
             return with(data) {
                 ApplicationCommandOptionData(
-                    type,
-                    name,
-                    description,
-                    default,
-                    required,
-                    choices.mapList { ApplicationCommandOptionChoiceData.from(it) },
-                    options.mapList { inner -> from(inner) }
+                        type,
+                        name,
+                        description,
+                        default,
+                        required,
+                        choices.mapList { ApplicationCommandOptionChoiceData.from(it) },
+                        options.mapList { inner -> from(inner) }
                 )
             }
         }
@@ -62,18 +62,18 @@ data class ApplicationCommandOptionData(
 @KordPreview
 @Serializable
 class ApplicationCommandGroupData(
-    val name: String,
-    val description: String,
-    val subCommands: List<ApplicationCommandSubcommandData>
+        val name: String,
+        val description: String,
+        val subCommands: List<ApplicationCommandSubcommandData>
 )
 
 @KordPreview
 @Suppress("FunctionName")
 fun ApplicationCommandGroupData(data: ApplicationCommandOptionData): ApplicationCommandGroupData {
     return ApplicationCommandGroupData(
-        data.name,
-        data.description,
-        data.options.orEmpty().map { ApplicationCommandSubCommandData(it) }
+            data.name,
+            data.description,
+            data.options.orEmpty().map { ApplicationCommandSubCommandData(it) }
     )
 }
 
@@ -81,20 +81,20 @@ fun ApplicationCommandGroupData(data: ApplicationCommandOptionData): Application
 @KordPreview
 @Serializable
 data class ApplicationCommandSubcommandData(
-    val name: String,
-    val description: String,
-    val isDefault: OptionalBoolean,
-    val parameters: Optional<List<ApplicationCommandParameterData>>
+        val name: String,
+        val description: String,
+        val isDefault: OptionalBoolean,
+        val parameters: Optional<List<ApplicationCommandParameterData>>
 )
 
 @KordPreview
 @Suppress("FunctionName")
 fun ApplicationCommandSubCommandData(data: ApplicationCommandOptionData): ApplicationCommandSubcommandData {
     return ApplicationCommandSubcommandData(
-        data.name,
-        data.description,
-        data.default,
-        data.options.mapList { ApplicationCommandParameterData(it) }
+            data.name,
+            data.description,
+            data.default,
+            data.options.mapList { ApplicationCommandParameterData(it) }
     )
 }
 
@@ -102,28 +102,28 @@ fun ApplicationCommandSubCommandData(data: ApplicationCommandOptionData): Applic
 @KordPreview
 @Serializable
 data class ApplicationCommandParameterData(
-    val name: String,
-    val description: String,
-    val required: OptionalBoolean,
-    val choices: Optional<List<ApplicationCommandOptionChoiceData>>
+        val name: String,
+        val description: String,
+        val required: OptionalBoolean,
+        val choices: Optional<List<ApplicationCommandOptionChoiceData>>
 )
 
 @KordPreview
 @Suppress("FunctionName")
 fun ApplicationCommandParameterData(data: ApplicationCommandOptionData): ApplicationCommandParameterData {
     return ApplicationCommandParameterData(
-        data.name,
-        data.description,
-        data.required,
-        data.choices
+            data.name,
+            data.description,
+            data.required,
+            data.choices
     )
 }
 
 @Serializable
 @KordPreview
 data class ApplicationCommandOptionChoiceData(
-    val name: String,
-    val value: String
+        val name: String,
+        val value: String
 ) {
     companion object {
         fun from(choice: Choice<*>): ApplicationCommandOptionChoiceData {

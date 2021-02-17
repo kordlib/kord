@@ -11,7 +11,7 @@ import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
-class MessageUpdateEvent (
+class MessageUpdateEvent(
         val messageId: Snowflake,
         val channelId: Snowflake,
         val new: DiscordPartialMessage,

@@ -7,7 +7,10 @@ import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.core.entity.interaction.Interaction
-import dev.kord.core.event.interaction.*
+import dev.kord.core.event.interaction.ApplicationCommandCreateEvent
+import dev.kord.core.event.interaction.ApplicationCommandDeleteEvent
+import dev.kord.core.event.interaction.ApplicationCommandUpdateEvent
+import dev.kord.core.event.interaction.InteractionCreateEvent
 import dev.kord.core.gateway.MasterGateway
 import dev.kord.gateway.*
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,10 +18,10 @@ import dev.kord.core.event.Event as CoreEvent
 
 @KordPreview
 class InteractionEventHandler(
-    kord: Kord,
-    gateway: MasterGateway,
-    cache: DataCache,
-    coreFlow: MutableSharedFlow<CoreEvent>,
+        kord: Kord,
+        gateway: MasterGateway,
+        cache: DataCache,
+        coreFlow: MutableSharedFlow<CoreEvent>,
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
     override suspend fun handle(event: Event, shard: Int) {
         when (event) {

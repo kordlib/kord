@@ -7,8 +7,8 @@ import dev.kord.core.event.Event
 
 @KordPreview
 class ApplicationCommandUpdateEvent(
-    val command: GuildApplicationCommand,
-    override val kord: Kord,
-    override val shard: Int
+        val command: GuildApplicationCommand,
+        override val kord: Kord,
+        override val shard: Int
 ) : Event
 

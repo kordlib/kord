@@ -216,7 +216,7 @@ internal class GuildEventHandler(
     private suspend fun handle(event: PresenceUpdate, shard: Int) = with(event.presence) {
         val data = PresenceData.from(this.guildId.value!!, this)
 
-        val old = cache.query<PresenceData> { idEq(PresenceData::id,  data.id) }
+        val old = cache.query<PresenceData> { idEq(PresenceData::id, data.id) }
                 .asFlow().map { Presence(it, kord) }.singleOrNull()
 
         cache.put(data)

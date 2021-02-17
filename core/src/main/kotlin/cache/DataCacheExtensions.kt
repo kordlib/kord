@@ -1,7 +1,6 @@
 package dev.kord.core.cache
 
 import dev.kord.cache.api.DataCache
-import dev.kord.cache.api.find
 import dev.kord.cache.api.query
 import dev.kord.core.cache.data.*
 

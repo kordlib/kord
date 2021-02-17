@@ -6,8 +6,6 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.mapSnowflake
 import dev.kord.gateway.DiscordCreatedInvite
-import dev.kord.gateway.DiscordInviteUser
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable

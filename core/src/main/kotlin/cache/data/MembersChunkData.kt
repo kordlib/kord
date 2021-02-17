@@ -2,7 +2,6 @@ package dev.kord.core.cache.data
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.gateway.GuildMembersChunkData
 import kotlinx.serialization.Serializable

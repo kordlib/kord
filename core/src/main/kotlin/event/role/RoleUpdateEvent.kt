@@ -24,7 +24,7 @@ class RoleUpdateEvent(
 
     suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull():Guild? = supplier.getGuildOrNull(guildId)
+    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleUpdateEvent =
             RoleUpdateEvent(role, shard, strategy.supply(kord))

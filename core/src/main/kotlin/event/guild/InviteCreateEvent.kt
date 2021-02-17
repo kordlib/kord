@@ -8,7 +8,6 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.cache.data.InviteCreateData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Member

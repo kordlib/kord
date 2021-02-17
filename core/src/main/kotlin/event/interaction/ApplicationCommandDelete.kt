@@ -7,7 +7,7 @@ import dev.kord.core.event.Event
 
 @KordPreview
 class ApplicationCommandDeleteEvent(
-    val command: GuildApplicationCommand,
-    override val kord: Kord,
-    override val shard: Int
+        val command: GuildApplicationCommand,
+        override val kord: Kord,
+        override val shard: Int
 ) : Event

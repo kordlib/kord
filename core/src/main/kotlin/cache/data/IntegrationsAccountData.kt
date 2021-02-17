@@ -9,7 +9,7 @@ data class IntegrationsAccountData(
         val name: String,
 ) {
     companion object {
-        fun from(entity: DiscordIntegrationsAccount) : IntegrationsAccountData = with(entity) {
+        fun from(entity: DiscordIntegrationsAccount): IntegrationsAccountData = with(entity) {
             IntegrationsAccountData(id, name)
         }
     }

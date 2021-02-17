@@ -7,7 +7,6 @@ import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Entity
-import dev.kord.core.entity.KordEntity
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*

@@ -54,7 +54,7 @@ class Ban(
     /**
      * Returns a new [Ban] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>) : Ban = Ban(data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Ban = Ban(data, kord, strategy.supply(kord))
 
     override fun toString(): String {
         return "Ban(data=$data, kord=$kord, supplier=$supplier)"

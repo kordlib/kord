@@ -25,7 +25,7 @@ data class InviteData(
                     code,
                     guild = guild.map { PartialGuildData.from(it) },
                     channelId = channel.id,
-                    inviterId =  inviter.mapSnowflake { it.id },
+                    inviterId = inviter.mapSnowflake { it.id },
                     targetUserId = targetUser.mapSnowflake { it.id },
                     targetUserType,
                     approximatePresenceCount,

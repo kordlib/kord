@@ -22,7 +22,7 @@ class VoiceServerUpdateEvent(
 
     suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull():Guild? = supplier.getGuildOrNull(guildId)
+    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceServerUpdateEvent =
             VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, strategy.supply(kord))

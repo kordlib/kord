@@ -1,7 +1,10 @@
 package dev.kord.core.entity
 
 import dev.kord.common.annotation.DeprecatedSinceKord
-import dev.kord.common.entity.*
+import dev.kord.common.entity.ActivityFlags
+import dev.kord.common.entity.ActivityType
+import dev.kord.common.entity.DiscordActivityEmoji
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ActivityData
 import dev.kord.core.toInstant
@@ -30,12 +33,13 @@ class Activity(val data: ActivityData) {
 
     val party: Party? get() = data.party.value?.let { Party(it.id.value, it.size.value?.current, it.size.value?.maximum) }
 
-    val assets: Assets? get() = Assets(
-            data.assets.value?.largeImage?.value,
-            data.assets.value?.largeText?.value,
-            data.assets.value?.smallImage?.value,
-            data.assets.value?.smallText?.value
-    )
+    val assets: Assets?
+        get() = Assets(
+                data.assets.value?.largeImage?.value,
+                data.assets.value?.largeText?.value,
+                data.assets.value?.smallImage?.value,
+                data.assets.value?.smallText?.value
+        )
 
     val secrets: Secrets? get() = Secrets(data.secrets.value?.join?.value, data.secrets.value?.join?.value, data.secrets.value?.join?.value)
 

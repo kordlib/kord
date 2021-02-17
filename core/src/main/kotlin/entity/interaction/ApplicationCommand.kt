@@ -14,8 +14,8 @@ import dev.kord.rest.service.InteractionService
 
 @KordPreview
 abstract class ApplicationCommand(
-    val data: ApplicationCommandData,
-    override val service: InteractionService
+        val data: ApplicationCommandData,
+        override val service: InteractionService
 ) : ApplicationCommandBehavior {
     override val id: Snowflake
         get() = data.id
@@ -36,13 +36,13 @@ abstract class ApplicationCommand(
      */
     @DeprecatedSinceKord("0.7.0-SNAPSHOT")
     @Deprecated(
-        "For the next iteration of slash commands, moving subcommands and groups into an autocomplete type will not be supported",
-        level = DeprecationLevel.ERROR,
-        replaceWith = ReplaceWith("true")
+            "For the next iteration of slash commands, moving subcommands and groups into an autocomplete type will not be supported",
+            level = DeprecationLevel.ERROR,
+            replaceWith = ReplaceWith("true")
     )
     val isDefault: Boolean
         get() = groups.values.flatMap { it.subcommands.values }
-            .any { it.data.isDefault.discordBoolean }
+                .any { it.data.isDefault.discordBoolean }
                 || subCommands.values.any { it.data.isDefault.discordBoolean }
 
     /**
@@ -50,32 +50,32 @@ abstract class ApplicationCommand(
      */
     val groups: Map<String, ApplicationCommandGroup>
         get() = data.options.filterList { it.type == ApplicationCommandOptionType.SubCommandGroup }
-            .orEmpty().associate { it.name to ApplicationCommandGroup(ApplicationCommandGroupData(it)) }
+                .orEmpty().associate { it.name to ApplicationCommandGroup(ApplicationCommandGroupData(it)) }
 
     /**
      * The directly nested sub commands of this command.
      */
     val subCommands: Map<String, ApplicationCommandSubCommand>
         get() = data.options.filterList { it.type == ApplicationCommandOptionType.SubCommand }
-            .orEmpty().associate { it.name to ApplicationCommandSubCommand(ApplicationCommandSubCommandData(it)) }
+                .orEmpty().associate { it.name to ApplicationCommandSubCommand(ApplicationCommandSubCommandData(it)) }
 }
 
 @KordPreview
 class GlobalApplicationCommand(
-    data: ApplicationCommandData,
-    service: InteractionService,
+        data: ApplicationCommandData,
+        service: InteractionService,
 ) : ApplicationCommand(data, service), GlobalApplicationCommandBehavior
 
 @KordPreview
 class GuildApplicationCommand(
-    data: ApplicationCommandData,
-    service: InteractionService,
-    override val guildId: Snowflake,
+        data: ApplicationCommandData,
+        service: InteractionService,
+        override val guildId: Snowflake,
 ) : ApplicationCommand(data, service), GuildApplicationCommandBehavior
 
 @KordPreview
 class ApplicationCommandGroup(
-    val data: ApplicationCommandGroupData
+        val data: ApplicationCommandGroupData
 ) {
     /**
      * The name of the group.
@@ -97,7 +97,7 @@ class ApplicationCommandGroup(
 
 @KordPreview
 class ApplicationCommandSubCommand(
-    val data: ApplicationCommandSubcommandData
+        val data: ApplicationCommandSubcommandData
 ) {
 
     /**
@@ -117,9 +117,9 @@ class ApplicationCommandSubCommand(
      */
     @DeprecatedSinceKord("0.7.0-SNAPSHOT")
     @Deprecated(
-        "For the next iteration of slash commands, moving subcommands and groups into an autocomplete type will not be supported",
-        level = DeprecationLevel.ERROR,
-        replaceWith = ReplaceWith("false")
+            "For the next iteration of slash commands, moving subcommands and groups into an autocomplete type will not be supported",
+            level = DeprecationLevel.ERROR,
+            replaceWith = ReplaceWith("false")
     )
     val isDefault: Boolean
         get() = data.isDefault.discordBoolean
@@ -134,7 +134,7 @@ class ApplicationCommandSubCommand(
 
 @KordPreview
 class ApplicationCommandParameter(
-    val data: ApplicationCommandParameterData
+        val data: ApplicationCommandParameterData
 ) {
 
     /**

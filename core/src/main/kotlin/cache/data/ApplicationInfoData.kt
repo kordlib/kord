@@ -17,7 +17,7 @@ data class ApplicationInfoData(
         val ownerId: Snowflake,
         val summary: String,
         val verifyKey: String,
-        val team: DiscordTeam?= null,
+        val team: DiscordTeam? = null,
         val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
         val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
         val slug: Optional<String> = Optional.Missing(),
