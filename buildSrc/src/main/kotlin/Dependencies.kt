@@ -51,7 +51,6 @@ object Dependencies {
     const val `ktor-client-serialization-jvm` =
         "io.ktor:ktor-client-serialization-jvm:${Versions.ktor}"
     const val `ktor-client-cio` = "io.ktor:ktor-client-cio:${Versions.ktor}"
-    const val `ktor-client-okhttp` = "io.ktor:ktor-client-okhttp:${Versions.ktor}"
     const val `ktor-client-websocket` = "io.ktor:ktor-client-websockets:${Versions.ktor}"
     const val `ktor-client-mock` = "io.ktor:ktor-client-mock:${Versions.ktor}"
     const val `ktor-client-mock-jvm` = "io.ktor:ktor-client-mock-jvm:${Versions.ktor}"
