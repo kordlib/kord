@@ -210,7 +210,7 @@ class KordBuilder(val token: String) {
     suspend fun build(): Kord {
         val client = httpClient.configure(token)
 
-        val recommendedShards = 1 //client.getGatewayInfo().shards
+        val recommendedShards = client.getGatewayInfo().shards
         val shards = shardRange(recommendedShards).toList()
 
         if (client.engine.config.threadsCount < shards.size + 1) {
