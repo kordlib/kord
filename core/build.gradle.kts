@@ -1,5 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+plugins {
+    kotlin("jvm")
+}
+
 sourceSets {
     val samples by creating {
         compileClasspath += sourceSets["main"].output
@@ -17,6 +21,7 @@ dependencies {
     api(common)
     api(rest)
     api(gateway)
+    implementation(Dependencies.sl4j)
 
     api(Dependencies.`cache-api`) {
         version {

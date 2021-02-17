@@ -42,7 +42,7 @@ import kotlin.time.seconds
 
 operator fun DefaultGateway.Companion.invoke(
     resources: ClientResources,
-    retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)
+    retry: Retry = LinearRetry(2.seconds, 60.seconds, 10),
 ): DefaultGateway {
     return DefaultGateway {
         url = "wss://gateway.discord.gg/"
@@ -107,7 +107,6 @@ class KordBuilder(val token: String) {
      * The enabled gateway intents, setting intents to null will disable the feature.
      */
     var intents: Intents = Intents.nonPrivileged
-
 
 
     /**
@@ -201,7 +200,8 @@ class KordBuilder(val token: String) {
             throw KordInitializationException(message)
         }
 
-        return Json { ignoreUnknownKeys = true }.decodeFromString(BotGatewayResponse.serializer(), responseBody)
+        return Json { ignoreUnknownKeys = true }.decodeFromString(BotGatewayResponse.serializer(),
+            responseBody)
     }
 
     /**
@@ -210,7 +210,7 @@ class KordBuilder(val token: String) {
     suspend fun build(): Kord {
         val client = httpClient.configure(token)
 
-        val recommendedShards = client.getGatewayInfo().shards
+        val recommendedShards = 1 //client.getGatewayInfo().shards
         val shards = shardRange(recommendedShards).toList()
 
         if (client.engine.config.threadsCount < shards.size + 1) {

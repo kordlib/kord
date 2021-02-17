@@ -1,30 +1,13 @@
-import com.jfrog.bintray.gradle.BintrayExtension
-import com.jfrog.bintray.gradle.BintrayPlugin
 import org.ajoberstar.gradle.git.publish.GitPublishExtension
-import org.ajoberstar.gradle.git.publish.tasks.GitPublishReset
 import org.apache.commons.codec.binary.Base64
 
-buildscript {
-    repositories {
-        jcenter()
-        maven(url = "https://plugins.gradle.org/m2/")
-    }
-    dependencies {
-        //https://github.com/melix/japicmp-gradle-plugin/issues/36
-        classpath("com.google.guava:guava:28.2-jre")
-
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}")
-        classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
-        classpath("org.jetbrains.kotlinx:atomicfu-gradle-plugin:${Versions.atomicFu}")
-        classpath("org.jetbrains.kotlinx:binary-compatibility-validator:${Versions.binaryCompatibilityValidator}")
-    }
-}
-
 plugins {
-    id("org.jetbrains.kotlin.jvm") version Versions.kotlin
-    id("org.jetbrains.dokka") version "1.4.0"
+    kotlin("jvm") version Versions.kotlin
+    kotlin("plugin.serialization") version Versions.kotlin apply false
+    `kotlinx-atomicfu` apply false
+    `kotlinx-binary-compatibility-validator` apply false
+    id("org.jetbrains.dokka") version "1.4.20"
     id("org.ajoberstar.git-publish") version "2.1.3"
-    id("com.jfrog.bintray") version "1.8.5"
 
     signing
     `maven-publish`
@@ -33,46 +16,43 @@ plugins {
 
 apply(plugin = "binary-compatibility-validator")
 
-repositories {
-    mavenCentral()
-    jcenter()
-    mavenLocal()
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
 }
 
-dependencies {
-    api(Dependencies.jdk8)
+repositories {
+    mavenLocal()
 }
 
 group = Library.group
 version = Library.version
 
 subprojects {
-    apply(plugin = "java")
-    apply(plugin = "kotlin")
-    apply(plugin = "kotlinx-serialization")
-    apply(plugin = "com.jfrog.bintray")
-    apply(plugin = "maven-publish")
-    apply(plugin = "kotlinx-atomicfu")
-    apply(plugin = "org.jetbrains.dokka")
-  
-    if(!isJitPack && Library.isRelease){
-        apply(plugin = "signing")
-    }
-
     repositories {
-        mavenCentral()
-        jcenter()
         maven(url = "https://kotlin.bintray.com/kotlinx")
-        maven(url ="https://oss.sonatype.org/content/repositories/snapshots")
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
         maven(url = "https://dl.bintray.com/kotlin/kotlin-dev/")
     }
 
+    apply(plugin = "java")
+    apply(plugin = "kotlin")
+    apply(plugin = "kotlinx-serialization")
+    apply(plugin = "maven-publish")
+    apply(plugin = "kotlinx-atomicfu")
+    apply(plugin = "org.jetbrains.dokka")
+
+    if (!isJitPack && Library.isRelease) {
+        apply(plugin = "signing")
+    }
+
     dependencies {
-        api(Dependencies.jdk8)
         api(Dependencies.`kotlinx-serialization`)
         implementation(Dependencies.`kotlinx-serialization-json`)
         api(Dependencies.`kotlinx-coroutines`)
-        implementation("org.jetbrains.kotlinx:atomicfu-jvm:${Versions.atomicFu}")
+        implementation(Dependencies.`kotlinx-atomicfu`)
         implementation(Dependencies.`kotlin-logging`)
 
         testImplementation(Dependencies.`kotlin-test`)
@@ -129,8 +109,6 @@ subprojects {
         from(tasks.dokkaHtml)
         dependsOn(tasks.dokkaHtml)
     }
-
-    apply<BintrayPlugin>()
 
     publishing {
         publications {
@@ -210,32 +188,10 @@ subprojects {
             val signingKey = findProperty("signingKey")?.toString()
             val signingPassword = findProperty("signingPassword")?.toString()
             if (signingKey != null && signingPassword != null) {
-                useInMemoryPgpKeys(String(Base64().decode(signingKey.toByteArray())), signingPassword)
+                useInMemoryPgpKeys(String(Base64().decode(signingKey.toByteArray())),
+                    signingPassword)
             }
             sign(publishing.publications[Library.name])
-        }
-    }
-
-    configure<BintrayExtension> {
-        user = System.getenv("BINTRAY_USER")
-        key = System.getenv("BINTRAY_KEY")
-        setPublications(Library.name)
-        publish = true
-
-        pkg = PackageConfig().apply {
-            repo = "Kord"
-            name = "Kord"
-            userOrg = "kordlib"
-            setLicenses("MIT")
-            vcsUrl = "https://github.com/kordlib/kord.git"
-            websiteUrl = "https://github.com/kordlib/kord.git"
-            issueTrackerUrl = "https://github.com/kordlib/kord/issues"
-
-            version = VersionConfig().apply {
-                name = Library.version
-                desc = Library.description
-                vcsTag = Library.version
-            }
         }
     }
 }
@@ -248,21 +204,25 @@ tasks {
         delete(dokkaOutputDir)
     }
 
-    dokkaHtmlMultiModule.configure {
+    dokkaHtmlMultiModule {
         dependsOn(clean)
         outputDirectory.set(file(dokkaOutputDir))
-        documentationFileName.set("DokkaDescription.md")
+//        documentationFileName.set("DokkaDescription.md")
     }
 
+    val fixIndex by register<Copy>("fixIndex") {
+        dependsOn(dokkaHtmlMultiModule)
+        val outputDirectory = dokkaHtmlMultiModule.get().outputDirectory.get()
+        from(outputDirectory)
+        include("-modules.html")
+        into(outputDirectory)
 
-    val fixIndex by register<DocsTask>("fixIndex") {
-        dependsOn(dokkaHtmlMultimodule)
+        rename("-modules.html", "index.html")
     }
 
-    val gitPublishReset by getting(GitPublishReset::class) {
+    gitPublishReset {
         dependsOn(fixIndex)
     }
-
 }
 
 configure<GitPublishExtension> {
@@ -275,5 +235,3 @@ configure<GitPublishExtension> {
 
     commitMessage.set("Update Docs")
 }
-
-nexusStaging { }

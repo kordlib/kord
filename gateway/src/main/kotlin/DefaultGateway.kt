@@ -7,13 +7,16 @@ import dev.kord.gateway.GatewayCloseCode.*
 import dev.kord.gateway.handler.*
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.cio.websocket.*
 import io.ktor.util.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
+import kotlinx.atomicfu.getAndUpdate
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
@@ -27,6 +30,7 @@ import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
 import kotlin.coroutines.CoroutineContext
+import kotlin.reflect.KClass
 import kotlin.time.Duration
 
 private val defaultGatewayLogger = KotlinLogging.logger { }
@@ -46,13 +50,13 @@ private sealed class State(val retry: Boolean) {
  * @param identifyRateLimiter: A rate limiter that follows the Discord API specifications for identifying.
  */
 data class DefaultGatewayData(
-        val url: String,
-        val client: HttpClient,
-        val reconnectRetry: Retry,
-        val sendRateLimiter: RateLimiter,
-        val identifyRateLimiter: RateLimiter,
-        val dispatcher: CoroutineDispatcher,
-        val eventFlow: MutableSharedFlow<Event>
+    val url: String,
+    val client: HttpClient,
+    val reconnectRetry: Retry,
+    val sendRateLimiter: RateLimiter,
+    val identifyRateLimiter: RateLimiter,
+    val dispatcher: CoroutineDispatcher,
+    val eventFlow: MutableSharedFlow<Event>,
 )
 
 /**
@@ -63,7 +67,8 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override val coroutineContext: CoroutineContext = data.dispatcher + SupervisorJob()
 
-    private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
+    private val compression: Boolean =
+        URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
 
     private val _ping = MutableStateFlow<Duration?>(null)
     override val ping: StateFlow<Duration?> get() = _ping
@@ -89,60 +94,69 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     init {
         val sequence = Sequence()
         SequenceHandler(events, sequence)
-        handshakeHandler = HandshakeHandler(events, ::trySend, sequence, data.identifyRateLimiter, data.reconnectRetry)
-        HeartbeatHandler(events, ::trySend, { restart(Close.ZombieConnection) }, { _ping.value = it }, sequence)
+        handshakeHandler = HandshakeHandler(events,
+            ::trySend,
+            sequence,
+            data.identifyRateLimiter,
+            data.reconnectRetry)
+        HeartbeatHandler(events,
+            ::trySend,
+            { restart(Close.ZombieConnection) },
+            { _ping.value = it },
+            sequence)
         ReconnectHandler(events) { restart(Close.Reconnecting) }
         InvalidSessionHandler(events) { restart(it) }
     }
 
     //running on default dispatchers because ktor does *not* like running on an EmptyCoroutineContext from main
-    override suspend fun start(configuration: GatewayConfiguration): Unit = withContext(Dispatchers.Default) {
-        resetState(configuration)
+    override suspend fun start(configuration: GatewayConfiguration): Unit =
+        withContext(Dispatchers.Default) {
+            resetState(configuration)
 
-        while (data.reconnectRetry.hasNext && state.value is State.Running) {
-            try {
-                socket = webSocket(data.url)
-                /**
-                 * https://discord.com/developers/docs/topics/gateway#transport-compression
-                 *
-                 * > Every connection to the gateway should use its own unique zlib context.
-                 */
-                inflater = Inflater()
-            } catch (exception: Exception) {
-                defaultGatewayLogger.error(exception)
-                if (exception is java.nio.channels.UnresolvedAddressException) {
-                    data.eventFlow.emit(Close.Timeout)
+            while (data.reconnectRetry.hasNext && state.value is State.Running) {
+                try {
+                    socket = webSocket(data.url)
+                    /**
+                     * https://discord.com/developers/docs/topics/gateway#transport-compression
+                     *
+                     * > Every connection to the gateway should use its own unique zlib context.
+                     */
+                    inflater = Inflater()
+                } catch (exception: Exception) {
+                    defaultGatewayLogger.error(exception)
+                    if (exception is java.nio.channels.UnresolvedAddressException) {
+                        data.eventFlow.emit(Close.Timeout)
+                    }
+
+                    data.reconnectRetry.retry()
+                    continue //can't handle a close code if you've got no socket
                 }
 
-                data.reconnectRetry.retry()
-                continue //can't handle a close code if you've got no socket
+                try {
+                    readSocket()
+                } catch (exception: Exception) {
+                    defaultGatewayLogger.error(exception)
+                }
+
+                defaultGatewayLogger.trace { "gateway connection closing" }
+
+                try {
+                    handleClose()
+                } catch (exception: Exception) {
+                    defaultGatewayLogger.error(exception)
+                }
+
+                defaultGatewayLogger.trace { "handled gateway connection closed" }
+
+                if (state.value.retry) data.reconnectRetry.retry()
+                else data.eventFlow.emit(Close.RetryLimitReached)
             }
 
-            try {
-                readSocket()
-            } catch (exception: Exception) {
-                defaultGatewayLogger.error(exception)
+            _ping.value = null
+            if (!data.reconnectRetry.hasNext) {
+                defaultGatewayLogger.warn { "retry limit exceeded, gateway closing" }
             }
-
-            defaultGatewayLogger.trace { "gateway connection closing" }
-
-            try {
-                handleClose()
-            } catch (exception: Exception) {
-                defaultGatewayLogger.error(exception)
-            }
-
-            defaultGatewayLogger.trace { "handled gateway connection closed" }
-
-            if (state.value.retry) data.reconnectRetry.retry()
-            else data.eventFlow.emit(Close.RetryLimitReached)
         }
-
-        _ping.value = null
-        if (!data.reconnectRetry.hasNext) {
-            defaultGatewayLogger.warn { "retry limit exceeded, gateway closing" }
-        }
-    }
 
     private suspend fun resetState(configuration: GatewayConfiguration) = stateMutex.withLock {
         @Suppress("UNUSED_VARIABLE")
@@ -212,7 +226,9 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 throw  IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
             }
             discordReason.resetSession -> {
-                state.update { State.Running(true) }
+                // Ik getAndUpdate makes no sense but
+                // using update makes the compiler angry
+                state.getAndUpdate { State.Running(true) }
             }
         }
     }
@@ -225,7 +241,10 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
     }
 
-    private suspend fun webSocket(url: String) = data.client.webSocketSession { url(url) }
+    private suspend fun webSocket(url: String) = data.client.webSocketSession {
+        url(url)
+        header("Sec-WebSocket-Extensions", "permessage-deflate; client_max_window_bits")
+    }
 
     override suspend fun stop() {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
@@ -283,22 +302,23 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     companion object {
 
         inline operator fun invoke(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway =
-                DefaultGatewayBuilder().apply(builder).build()
+            DefaultGatewayBuilder().apply(builder).build()
 
         private const val gatewayRunningError = "The Gateway is already running, call stop() first."
-        private const val gatewayDetachedError = "The Gateway has been detached and can no longer be used, create a new instance instead."
+        private const val gatewayDetachedError =
+            "The Gateway has been detached and can no longer be used, create a new instance instead."
     }
 }
 
 internal val GatewayConfiguration.identify
     get() = Identify(
-            token,
-            IdentifyProperties(os, name, name),
-            false.optional(),
-            50.optionalInt(),
-            shard.optional(),
-            presence,
-            intents
+        token,
+        IdentifyProperties(os, name, name),
+        false.optional(),
+        50.optionalInt(),
+        shard.optional(),
+        presence,
+        intents
     )
 
 
@@ -339,3 +359,17 @@ internal val GatewayCloseCode.resetSession
         InvalidIntents -> false
         DisallowedIntents -> false
     }
+
+
+@Suppress("KDocMissingDocumentation")
+class NoTransformationFoundException(
+    response: HttpResponse,
+    from: KClass<*>, to: KClass<*>,
+) : UnsupportedOperationException() {
+    override val message: String = """No transformation found: $from -> $to
+        |with response from ${response.request.url}:
+        |status: ${response.status}
+        |response headers: 
+        |${response.headers.flattenEntries().joinToString { (key, value) -> "$key: $value\n" }}
+    """.trimMargin()
+}

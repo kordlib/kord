@@ -8,7 +8,7 @@ import io.ktor.client.features.defaultRequest
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.websocket.WebSockets
-import io.ktor.client.request.header
+import io.ktor.client.request.*
 import io.ktor.util.*
 import kotlinx.serialization.json.Json
 import java.util.*
