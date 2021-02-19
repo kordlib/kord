@@ -1,5 +1,6 @@
 package interaction
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordApplicationCommandInteractionData
 import dev.kord.common.entity.int
 import dev.kord.common.entity.optional.optional
@@ -12,7 +13,7 @@ import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Test
 import kotlin.reflect.typeOf
 import kotlin.test.assertEquals
-
+@KordPreview
 class CommandsTypeTests {
     val arg = buildJsonObject {
         put("name", "argument")
