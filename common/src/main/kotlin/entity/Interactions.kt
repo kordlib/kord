@@ -141,7 +141,14 @@ sealed class Choice<out T> {
         }
     }
 }
-
+@Serializable
+@KordPreview
+data class ResolvedObjects(
+    val members: Map<Snowflake, DiscordGuildMember>,
+    val users: Map<Snowflake, DiscordUser>,
+    val roles: Map<Snowflake, DiscordGuildRole>,
+    val channels: Map<Snowflake, DiscordChannel>
+)
 @Serializable
 @KordPreview
 data class DiscordInteraction(
@@ -153,6 +160,7 @@ data class DiscordInteraction(
         @SerialName("channel_id")
         val channelId: Snowflake,
         val member: DiscordInteractionGuildMember,
+        val resolved: ResolvedObjects,
         val token: String,
         val version: Int,
 )

@@ -23,6 +23,7 @@ data class InteractionData(
     val channelId: Snowflake,
     val member: MemberData,
     val token: String,
+    val resolved: ResolvedObjectsData,
     val permissions: Permissions,
     val version: Int
 ) {
@@ -37,6 +38,12 @@ data class InteractionData(
                     channelId,
                     member.toData(member.user.value!!.id,guildId),
                     token,
+                    ResolvedObjectsData(
+                        members = resolved.members.mapValues { MemberData.from(it.key, guildId, it.value) },
+                        channels = resolved.channels.mapValues { ChannelData.from(it.value) },
+                        roles = resolved.roles.mapValues { RoleData.from(it.value) },
+                        users = resolved.users.mapValues { it.value.toData() }
+                    ),
                     member.permissions,
                     version
                 )
@@ -44,6 +51,15 @@ data class InteractionData(
         }
     }
 }
+
+@KordPreview
+@Serializable
+data class ResolvedObjectsData(
+    val members: Map<Snowflake, MemberData>,
+    val users: Map<Snowflake, UserData>,
+    val roles: Map<Snowflake, RoleData>,
+    val channels: Map<Snowflake, ChannelData>
+)
 
 @KordPreview
 @Serializable

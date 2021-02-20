@@ -1,10 +1,7 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.InteractionType
-import dev.kord.common.entity.OptionValue
-import dev.kord.common.entity.Permissions
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
@@ -13,7 +10,14 @@ import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.cache.data.ResolvedObjectsData
+import dev.kord.core.cache.data.UserData
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Role
+import dev.kord.core.entity.User
+import dev.kord.core.entity.channel.Channel
 import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * Interaction that can respond to interactions and follow them up.
@@ -78,6 +82,8 @@ class Interaction(
      * read-only property, always 1
      */
     val version: Int get() = data.version
+
+    val resolved: ResolvedObjects get() = ResolvedObjects(data.resolved, kord)
 }
 
 /**
@@ -191,5 +197,11 @@ class GroupCommand(val data: ApplicationCommandInteractionData) : InteractionCom
             .associate { it.name to it.value }
 }
 
+class ResolvedObjects(val data: ResolvedObjectsData, val kord: Kord, val strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) {
+    val channels: Map<Snowflake, Channel> get() = data.channels.mapValues { Channel.from(it.value, kord, strategy) }
+    val roles: Map<Snowflake, Role> get() = data.roles.mapValues { Role(it.value, kord) }
+    val users: Map<Snowflake, User> get() = data.users.mapValues { User(it.value, kord) }
+    val members: Map<Snowflake, Member> get() = data.members.mapValues { Member(it.value) }
+}
 
 
