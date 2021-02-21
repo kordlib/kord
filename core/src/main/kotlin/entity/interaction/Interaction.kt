@@ -1,12 +1,10 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.InteractionType
-import dev.kord.common.entity.OptionValue
-import dev.kord.common.entity.Permissions
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
+import dev.kord.core.KordObject
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.InteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
@@ -16,11 +14,13 @@ import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Role
+import dev.kord.core.entity.User
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import dev.kord.core.entity.channel.Channel
+import java.lang.IllegalStateException
 
 /**
  * Interaction that can respond to interactions and follow them up.
@@ -79,21 +79,20 @@ class Interaction(
      * [InteractionCommand] object that contains the data related to the interaction's command.
      */
     val command: InteractionCommand
-        get() = InteractionCommand(data.data)
+        get() = InteractionCommand(data.data, data.resolved, kord)
 
     /**
      * read-only property, always 1
      */
     val version: Int get() = data.version
 
-    val resolved: ResolvedObjects get() = ResolvedObjects(data.resolved, kord)
 }
 
 /**
  * The base command of all commands that can be executed under an interaction event.
  */
 @KordPreview
-sealed class InteractionCommand {
+sealed class InteractionCommand : KordObject {
     /**
      * The id of the root command.
      */
@@ -113,16 +112,22 @@ sealed class InteractionCommand {
      */
     abstract val options: Map<String, OptionValue<*>>
 
+    abstract val resolved: ResolvedObjects
+
     companion object {
-        operator fun invoke(data: ApplicationCommandInteractionData): InteractionCommand {
+        operator fun invoke(
+            data: ApplicationCommandInteractionData,
+            resolvedObjectsData: ResolvedObjectsData,
+            kord: Kord
+        ): InteractionCommand {
             val firstLevelOptions = data.options.orEmpty()
             val rootPredicate = firstLevelOptions.isEmpty() || firstLevelOptions.any { it.value.value != null }
             val groupPredicate = firstLevelOptions.any { it.subCommands.orEmpty().isNotEmpty() }
 
             return when {
-                rootPredicate -> RootCommand(data)
-                groupPredicate -> GroupCommand(data)
-                else -> SubCommand(data) // if not root, or group, it's a sub-command
+                rootPredicate -> RootCommand(data, resolvedObjectsData, kord)
+                groupPredicate -> GroupCommand(data, resolvedObjectsData, kord)
+                else -> SubCommand(data, resolvedObjectsData, kord) // if not root, or group, it's a sub-command
             }
         }
     }
@@ -134,7 +139,10 @@ sealed class InteractionCommand {
  * The root command is the first command defined in in a slash-command structure.
  */
 @KordPreview
-class RootCommand(val data: ApplicationCommandInteractionData) : InteractionCommand() {
+class RootCommand(
+    val data: ApplicationCommandInteractionData, val resolvedObjectsData: ResolvedObjectsData,
+    override val kord: Kord
+) : InteractionCommand() {
 
     override val rootId: Snowflake
         get() = data.id
@@ -145,13 +153,20 @@ class RootCommand(val data: ApplicationCommandInteractionData) : InteractionComm
         get() = data.options.orEmpty()
             .associate { it.name to it.value.value!! }
 
+    override val resolved: ResolvedObjects
+        get() = ResolvedObjects(resolvedObjectsData, kord)
+
 }
 
 /**
  * Represents an invocation of a sub-command under the [RootCommand]
  */
 @KordPreview
-class SubCommand(val data: ApplicationCommandInteractionData) : InteractionCommand() {
+class SubCommand(
+    val data: ApplicationCommandInteractionData,
+    val resolvedObjectsData: ResolvedObjectsData,
+    override val kord: Kord
+) : InteractionCommand() {
 
     private val subCommandData = data.options.orEmpty().first()
 
@@ -169,13 +184,22 @@ class SubCommand(val data: ApplicationCommandInteractionData) : InteractionComma
         get() = subCommandData.values.orEmpty()
             .associate { it.name to it.value }
 
+
+    override val resolved: ResolvedObjects
+        get() = ResolvedObjects(resolvedObjectsData, kord)
+
+
 }
 
 /**
  * Represents an invocation of a sub-command under a group.
  */
 @KordPreview
-class GroupCommand(val data: ApplicationCommandInteractionData) : InteractionCommand() {
+class GroupCommand(
+    val data: ApplicationCommandInteractionData,
+    val resolvedObjectsData: ResolvedObjectsData,
+    override val kord: Kord
+) : InteractionCommand() {
 
     private val groupData get() = data.options.orEmpty().first()
     private val subCommandData get() = groupData.subCommands.orEmpty().first()
@@ -198,6 +222,11 @@ class GroupCommand(val data: ApplicationCommandInteractionData) : InteractionCom
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.options.orEmpty()
             .associate { it.name to it.value }
+
+
+    override val resolved: ResolvedObjects
+        get() = ResolvedObjects(resolvedObjectsData, kord)
+
 }
 
 class ResolvedObjects(
@@ -205,27 +234,43 @@ class ResolvedObjects(
     val kord: Kord,
     val strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ) {
-    val roles: Flow<Role>
-        get() = flow {
-            for (roleData in data.roles.values) {
-                emit(Role(roleData, kord))
-            }
-        }
+    val channels: Map<Snowflake, Channel> get() = data.channels.mapValues { Channel.from(it.value, kord, strategy) }
+    val roles: Map<Snowflake, Role> get() = data.roles.mapValues { Role(it.value, kord) }
+    val users: Map<Snowflake, User> get() = data.users.mapValues { User(it.value, kord) }
+    val members: Map<Snowflake, Member> get() = data.members.mapValues { Member(it.value, data.users[it.key]!!, kord) }
+}
 
-    val users: Flow<Member>
-        get() = flow {
-            for (memberData in data.members.values) {
-                // should be included in users resolved fields(?)
-                val user = data.users[memberData.userId]!!
-                emit(Member(memberData, user, kord))
-            }
-        }
-    val channels: Flow<Channel>
-        get() = flow {
-            for (channelData in data.channels.values) {
-                emit(Channel.from(channelData, kord))
-            }
-        }
+
+fun InteractionCommand.resolveMember(snowflake: Snowflake): Member? {
+    return resolved.members[snowflake]
+}
+
+fun InteractionCommand.resolveMember(argument: String): Member? {
+    val snowflake = options[argument]?.snowflake() ?: return null
+    return resolveMember(snowflake)
+}
+
+
+fun InteractionCommand.resolveChannel(snowflake: Snowflake): Channel? {
+    return resolved.channels[snowflake]
+}
+
+fun InteractionCommand.resolveUser(snowflake: Snowflake): User? {
+    return resolved.users[snowflake]
+}
+
+fun InteractionCommand.resolveUser(argument: String): User? {
+    val snowflake = options[argument]?.snowflake() ?: return null
+    return resolveUser(snowflake)
+}
+
+fun InteractionCommand.resolveRole(snowflake: Snowflake): Role? {
+    return resolved.roles[snowflake]
+}
+
+fun InteractionCommand.resolveRole(argument: String): Role? {
+    val snowflake = options[argument]?.snowflake() ?: return null
+    return resolveRole(snowflake)
 }
 
 
