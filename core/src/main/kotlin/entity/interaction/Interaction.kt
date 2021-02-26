@@ -241,12 +241,12 @@ class ResolvedObjects(
 sealed class OptionValue<T>(val value: T) {
 
     class RoleOptionValue(value: Role) : OptionValue<Role>(value)
-    class MemberOptionValue(value: Member) : OptionValue<Member>(value)
+    open class UserOptionValue(value: User) : OptionValue<User>(value)
+    class MemberOptionValue(value: Member) : UserOptionValue(value)
     class ChannelOptionValue(value: Channel) : OptionValue<Channel>(value)
     class IntOptionValue(value: Int) : OptionValue<Int>(value)
     class StringOptionValue(value: String) : OptionValue<String>(value)
     class BooleanOptionValue(value: Boolean) : OptionValue<Boolean>(value)
-    class UserOptionValue(value: User) : OptionValue<User>(value)
 
     companion object {
         operator fun invoke(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
