@@ -6,6 +6,8 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.NotSerializable
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.mapList
+import dev.kord.common.entity.optional.optional
+import dev.kord.core.entity.interaction.OptionValue
 import dev.kord.gateway.InteractionCreate
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -23,27 +25,26 @@ data class InteractionData(
     val channelId: Snowflake,
     val member: MemberData,
     val token: String,
-    val resolved: ResolvedObjectsData,
     val permissions: Permissions,
     val version: Int
 ) {
     companion object {
         fun from(event: InteractionCreate): InteractionData {
             return with(event.interaction) {
+                val resolvables = ResolvedObjectsData(
+                    members = resolved.members.mapValues { MemberData.from(it.key, guildId, it.value) },
+                    channels = resolved.channels.mapValues { ChannelData.from(it.value) },
+                    roles = resolved.roles.mapValues { RoleData.from(it.value) },
+                    users = resolved.users.mapValues { it.value.toData() }
+                ).optional()
                 InteractionData(
                     id,
                     type,
-                    ApplicationCommandInteractionData.from(data),
+                    ApplicationCommandInteractionData.from(data, resolvables),
                     guildId,
                     channelId,
-                    member.toData(member.user.value!!.id,guildId),
+                    member.toData(member.user.value!!.id, guildId),
                     token,
-                    ResolvedObjectsData(
-                        members = resolved.members.mapValues { MemberData.from(it.key, guildId, it.value) },
-                        channels = resolved.channels.mapValues { ChannelData.from(it.value) },
-                        roles = resolved.roles.mapValues { RoleData.from(it.value) },
-                        users = resolved.users.mapValues { it.value.toData() }
-                    ),
                     member.permissions,
                     version
                 )
@@ -66,15 +67,22 @@ data class ResolvedObjectsData(
 data class ApplicationCommandInteractionData(
     val id: Snowflake,
     val name: String,
-    val options: Optional<List<OptionData>> = Optional.Missing()
+    val options: Optional<List<OptionData>> = Optional.Missing(),
+    val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing()
 ) {
     companion object {
-        fun from(data: DiscordApplicationCommandInteractionData): ApplicationCommandInteractionData {
+        fun from(
+            data: DiscordApplicationCommandInteractionData,
+            resolvables: Optional<ResolvedObjectsData> = Optional.Missing()
+        ): ApplicationCommandInteractionData {
             return with(data) {
                 ApplicationCommandInteractionData(
                     id,
                     name,
-                    options.mapList { OptionData.from(it) })
+                    options.mapList { OptionData.from(it) },
+                    resolvables
+                )
+
             }
         }
     }
@@ -85,7 +93,7 @@ data class ApplicationCommandInteractionData(
 data class OptionData(
         val name: String,
         @OptIn(KordExperimental::class)
-        val value: Optional<OptionValue<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
+        val value: Optional<DiscordOptionValue<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
         val values: Optional<List<CommandArgument>> = Optional.Missing(),
         val subCommands: Optional<List<SubCommand>> = Optional.Missing()
 ) {
