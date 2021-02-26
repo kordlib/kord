@@ -32,7 +32,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
      * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
      */
     suspend fun acknowledge(): InteractionResponseBehavior {
-        val request = InteractionResponseCreateRequest(InteractionResponseType.ChannelMessageWithSource)
+        val request = InteractionResponseCreateRequest(InteractionResponseType.DeferredChannelMessageWithSource)
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return InteractionResponseBehavior(applicationId, token, kord)
     }
