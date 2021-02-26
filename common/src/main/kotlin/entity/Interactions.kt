@@ -241,7 +241,7 @@ sealed class Option {
             }
 
             jsonValue?.let { value -> // name + value == command option, i.e. an argument
-                return CommandArgument(name, OptionValue(value))
+                return CommandArgument(name, DiscordOptionValue(value))
             }
 
             if (jsonOptions == null) { // name -value -options == can only be sub command
@@ -280,9 +280,9 @@ data class SubCommand(
 @Serializable
 @KordPreview
 data class CommandArgument(
-        override val name: String,
-        @OptIn(KordExperimental::class)
-        val value: OptionValue<@Serializable(NotSerializable::class) Any?>,
+    override val name: String,
+    @OptIn(KordExperimental::class)
+        val value: DiscordOptionValue<@Serializable(NotSerializable::class) Any?>,
 ) : Option()
 
 @Serializable
@@ -292,12 +292,12 @@ data class CommandGroup(
     val options: Optional<List<SubCommand>> = Optional.Missing(),
 ) : Option()
 
-@Serializable(OptionValue.OptionValueSerializer::class)
+@Serializable(DiscordOptionValue.OptionValueSerializer::class)
 @KordPreview
-sealed class OptionValue<out T>(val value: T) {
-    class IntValue(value: Int) : OptionValue<Int>(value)
-    class StringValue(value: String) : OptionValue<String>(value)
-    class BooleanValue(value: Boolean) : OptionValue<Boolean>(value)
+sealed class DiscordOptionValue<out T>(val value: T) {
+    class IntValue(value: Int) : DiscordOptionValue<Int>(value)
+    class StringValue(value: String) : DiscordOptionValue<String>(value)
+    class BooleanValue(value: Boolean) : DiscordOptionValue<Boolean>(value)
 
     override fun toString(): String = when(this){
         is IntValue -> "OptionValue.IntValue($value)"
@@ -306,7 +306,7 @@ sealed class OptionValue<out T>(val value: T) {
     }
 
     companion object {
-        operator fun invoke(value: JsonPrimitive): OptionValue<Any> = when {
+        operator fun invoke(value: JsonPrimitive): DiscordOptionValue<Any> = when {
             value.isString -> StringValue(value.content)
             value.booleanOrNull != null -> BooleanValue(value.boolean)
             value.intOrNull != null -> IntValue(value.int)
@@ -314,10 +314,10 @@ sealed class OptionValue<out T>(val value: T) {
         }
     }
 
-    internal class OptionValueSerializer<T>(serializer: KSerializer<T>) : KSerializer<OptionValue<*>> {
+    internal class OptionValueSerializer<T>(serializer: KSerializer<T>) : KSerializer<DiscordOptionValue<*>> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("OptionValue", PrimitiveKind.STRING)
 
-        override fun deserialize(decoder: Decoder): OptionValue<*> {
+        override fun deserialize(decoder: Decoder): DiscordOptionValue<*> {
             val value = (decoder as JsonDecoder).decodeJsonElement().jsonPrimitive
             return when {
                 value.isString -> StringValue(value.toString())
@@ -326,7 +326,7 @@ sealed class OptionValue<out T>(val value: T) {
             }
         }
 
-        override fun serialize(encoder: Encoder, value: OptionValue<*>) {
+        override fun serialize(encoder: Encoder, value: DiscordOptionValue<*>) {
             when (value) {
                 is IntValue -> encoder.encodeInt(value.value)
                 is StringValue -> encoder.encodeString(value.value)
@@ -338,23 +338,23 @@ sealed class OptionValue<out T>(val value: T) {
 
 
 @KordPreview
-fun OptionValue<*>.int(): Int {
+fun DiscordOptionValue<*>.int(): Int {
     return value as? Int ?: error("$value wasn't an Int.")
 }
 
 
 @KordPreview
-fun OptionValue<*>.string(): String {
+fun DiscordOptionValue<*>.string(): String {
     return value.toString()
 }
 
 @KordPreview
-fun OptionValue<*>.boolean(): Boolean {
+fun DiscordOptionValue<*>.boolean(): Boolean {
     return value as? Boolean ?: error("$value wasn't a Boolean.")
 }
 
 @KordPreview
-fun OptionValue<*>.snowflake(): Snowflake {
+fun DiscordOptionValue<*>.snowflake(): Snowflake {
     val id = string().toLongOrNull() ?: error("$value wasn't a Snowflake")
     return Snowflake(id)
 }
