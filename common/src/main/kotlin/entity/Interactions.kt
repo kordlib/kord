@@ -149,12 +149,24 @@ data class DiscordInteraction(
         val type: InteractionType,
         val data: DiscordApplicationCommandInteractionData,
         @SerialName("guild_id")
-        val guildId: Snowflake,
+        val guildId: Snowflake? = null,
         @SerialName("channel_id")
-        val channelId: Snowflake,
-        val member: DiscordInteractionGuildMember,
+        val channelId: Snowflake? = null,
+        val member: DiscordInteractionGuildMember? = null,
+        val user: DiscordInteractionUser? = null,
         val token: String,
         val version: Int,
+)
+
+@Serializable
+@KordPreview
+data class DiscordInteractionUser(
+    val avatar: String,
+    val discriminator: String,
+    val id: Snowflake,
+    @SerialName("public_flags")
+    val publicFlags: Optional<UserFlags>,
+    val username: String
 )
 
 @Serializable(InteractionType.Serializer::class)

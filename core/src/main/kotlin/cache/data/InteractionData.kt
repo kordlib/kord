@@ -19,11 +19,12 @@ data class InteractionData(
     val id: Snowflake,
     val type: InteractionType,
     val data: ApplicationCommandInteractionData,
-    val guildId: Snowflake,
-    val channelId: Snowflake,
-    val member: MemberData,
+    val guildId: Snowflake?,
+    val channelId: Snowflake?,
+    val member: MemberData?,
+    val user: UserData?,
     val token: String,
-    val permissions: Permissions,
+    val permissions: Permissions?,
     val version: Int
 ) {
     companion object {
@@ -35,9 +36,10 @@ data class InteractionData(
                     ApplicationCommandInteractionData.from(data),
                     guildId,
                     channelId,
-                    member.toData(member.user.value!!.id,guildId),
+                    member?.let { it.toData(it.user.value!!.id, guildId!!) },
+                    user?.toData(),
                     token,
-                    member.permissions,
+                    member?.permissions,
                     version
                 )
             }
@@ -67,15 +69,15 @@ data class ApplicationCommandInteractionData(
 @KordPreview
 @Serializable
 data class OptionData(
-        val name: String,
-        @OptIn(KordExperimental::class)
-        val value: Optional<OptionValue<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
-        val values: Optional<List<CommandArgument>> = Optional.Missing(),
-        val subCommands: Optional<List<SubCommand>> = Optional.Missing()
+    val name: String,
+    @OptIn(KordExperimental::class)
+    val value: Optional<OptionValue<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
+    val values: Optional<List<CommandArgument>> = Optional.Missing(),
+    val subCommands: Optional<List<SubCommand>> = Optional.Missing()
 ) {
     companion object {
         fun from(data: Option): OptionData = with(data) {
-            when(data) {
+            when (data) {
                 is SubCommand -> OptionData(name, values = data.options)
                 is CommandArgument -> OptionData(name, value = Optional(data.value))
                 is CommandGroup -> OptionData(name, subCommands = data.options)

@@ -27,7 +27,6 @@ data class MemberData(
             MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
         }
 
-
         fun from(userId: Snowflake, guildId: Snowflake, entity: DiscordInteractionGuildMember) = with(entity) {
             MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
         }
@@ -45,3 +44,4 @@ data class MemberData(
 
 fun DiscordGuildMember.toData(userId: Snowflake, guildId: Snowflake) = MemberData.from(userId, guildId, this)
 fun DiscordInteractionGuildMember.toData(userId: Snowflake, guildId: Snowflake) = MemberData.from(userId, guildId, this)
+fun DiscordInteractionUser.toData() = UserData.from(this)

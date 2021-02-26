@@ -41,21 +41,28 @@ class Interaction(
 
     override val id: Snowflake get() = data.id
 
-    override val channelId: Snowflake get() = data.channelId
+    override val channelId: Snowflake? get() = data.channelId
 
     override val token: String get() = data.token
 
-    override val guildId: Snowflake get() = data.guildId
+    override val guildId: Snowflake? get() = data.guildId
 
     val type: InteractionType get() = data.type
 
-    val permissions: Permissions get() = data.permissions
+    val permissions: Permissions? get() = data.permissions
 
-    val channel: TextChannelBehavior get() = TextChannelBehavior(id = channelId, guildId = guildId, kord = kord)
+    val channel: TextChannelBehavior?
+        get() = channelId?.let {
+            TextChannelBehavior(
+                id = it,
+                guildId = guildId!!,
+                kord = kord
+            )
+        }
 
-    val guild get() = GuildBehavior(guildId, kord)
+    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
-    val member: MemberBehavior get() = MemberBehavior(data.guildId, data.member.userId, kord)
+    val member: MemberBehavior? get() = guildId?.let {MemberBehavior(it, data.member!!.userId, kord)}
 
     val command: Command
         get() = Command(data.data)

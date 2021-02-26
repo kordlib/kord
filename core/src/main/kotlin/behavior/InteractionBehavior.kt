@@ -22,8 +22,8 @@ interface InteractionBehavior : KordEntity, Strategizable {
 
     val applicationId: Snowflake
     val token: String
-    val guildId: Snowflake
-    val channelId: Snowflake
+    val guildId: Snowflake?
+    val channelId: Snowflake?
 
     /**
      * Acknowledges an interaction.
@@ -39,17 +39,18 @@ interface InteractionBehavior : KordEntity, Strategizable {
         return InteractionResponseBehavior(applicationId, token, kord)
     }
 
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
 
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    suspend fun getGuild(): Guild =
+        guildId?.let { supplier.getGuild(it) } ?: error("getGuild() is not available in DMs")
 
 
-    suspend fun getChannelOrNull(): Channel? = supplier.getChannelOrNull(channelId)
+    suspend fun getChannelOrNull(): Channel? = channelId?.let { supplier.getChannelOrNull(it) }
 
 
-    suspend fun getChannel(): Channel = supplier.getChannel(channelId)
-
+    suspend fun getChannel(): Channel = channelId?.let { supplier.getChannel(it) }
+        ?: error("getChannel() is not available in DMs")
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior =
         InteractionBehavior(id, guildId, channelId, token, applicationId, kord, strategy)
@@ -58,8 +59,8 @@ interface InteractionBehavior : KordEntity, Strategizable {
 
         operator fun invoke(
             id: Snowflake,
-            guildId: Snowflake,
-            channelId: Snowflake,
+            guildId: Snowflake?,
+            channelId: Snowflake?,
             token: String,
             applicationId: Snowflake,
             kord: Kord,
@@ -78,10 +79,10 @@ interface InteractionBehavior : KordEntity, Strategizable {
                 override val kord: Kord
                     get() = kord
 
-                override val channelId: Snowflake
+                override val channelId: Snowflake?
                     get() = channelId
 
-                override val guildId: Snowflake
+                override val guildId: Snowflake?
                     get() = guildId
 
                 override val supplier: EntitySupplier
