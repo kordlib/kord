@@ -3,6 +3,7 @@ package dev.kord.core.entity.interaction
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.GuildBehavior
@@ -12,15 +13,10 @@ import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Role
-import dev.kord.core.entity.User
+import dev.kord.core.entity.*
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import dev.kord.core.entity.channel.Channel
-import java.lang.IllegalStateException
 
 /**
  * Interaction that can respond to interactions and follow them up.
@@ -79,7 +75,7 @@ class Interaction(
      * [InteractionCommand] object that contains the data related to the interaction's command.
      */
     val command: InteractionCommand
-        get() = InteractionCommand(data.data, data.resolved, kord)
+        get() = InteractionCommand(data.data, kord)
 
     /**
      * read-only property, always 1
@@ -112,12 +108,10 @@ sealed class InteractionCommand : KordObject {
      */
     abstract val options: Map<String, OptionValue<*>>
 
-    abstract val resolved: ResolvedObjects
 
     companion object {
         operator fun invoke(
             data: ApplicationCommandInteractionData,
-            resolvedObjectsData: ResolvedObjectsData,
             kord: Kord
         ): InteractionCommand {
             val firstLevelOptions = data.options.orEmpty()
@@ -125,12 +119,14 @@ sealed class InteractionCommand : KordObject {
             val groupPredicate = firstLevelOptions.any { it.subCommands.orEmpty().isNotEmpty() }
 
             return when {
-                rootPredicate -> RootCommand(data, resolvedObjectsData, kord)
-                groupPredicate -> GroupCommand(data, resolvedObjectsData, kord)
-                else -> SubCommand(data, resolvedObjectsData, kord) // if not root, or group, it's a sub-command
+                rootPredicate -> RootCommand(data, kord)
+                groupPredicate -> GroupCommand(data, kord)
+                else -> SubCommand(data, kord) // if not root, or group, it's a sub-command
             }
         }
     }
+
+    abstract val resolved: ResolvedObjects?
 }
 
 /**
@@ -140,7 +136,7 @@ sealed class InteractionCommand : KordObject {
  */
 @KordPreview
 class RootCommand(
-    val data: ApplicationCommandInteractionData, val resolvedObjectsData: ResolvedObjectsData,
+    val data: ApplicationCommandInteractionData,
     override val kord: Kord
 ) : InteractionCommand() {
 
@@ -151,10 +147,10 @@ class RootCommand(
 
     override val options: Map<String, OptionValue<*>>
         get() = data.options.orEmpty()
-            .associate { it.name to it.value.value!! }
+            .associate { it.name to OptionValue(it.value.value  !!, resolved) }
 
-    override val resolved: ResolvedObjects
-        get() = ResolvedObjects(resolvedObjectsData, kord)
+    override val resolved: ResolvedObjects?
+        get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
 
 }
 
@@ -164,7 +160,6 @@ class RootCommand(
 @KordPreview
 class SubCommand(
     val data: ApplicationCommandInteractionData,
-    val resolvedObjectsData: ResolvedObjectsData,
     override val kord: Kord
 ) : InteractionCommand() {
 
@@ -182,11 +177,11 @@ class SubCommand(
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.values.orEmpty()
-            .associate { it.name to it.value }
+            .associate { it.name to OptionValue(it.value, resolved) }
 
 
-    override val resolved: ResolvedObjects
-        get() = ResolvedObjects(resolvedObjectsData, kord)
+    override val resolved: ResolvedObjects?
+        get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
 
 
 }
@@ -197,7 +192,6 @@ class SubCommand(
 @KordPreview
 class GroupCommand(
     val data: ApplicationCommandInteractionData,
-    val resolvedObjectsData: ResolvedObjectsData,
     override val kord: Kord
 ) : InteractionCommand() {
 
@@ -221,14 +215,14 @@ class GroupCommand(
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.options.orEmpty()
-            .associate { it.name to it.value }
+            .associate { it.name to OptionValue(it.value, resolved) }
 
 
-    override val resolved: ResolvedObjects
-        get() = ResolvedObjects(resolvedObjectsData, kord)
+    override val resolved: ResolvedObjects?
+        get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
 
 }
-
+@KordPreview
 class ResolvedObjects(
     val data: ResolvedObjectsData,
     val kord: Kord,
@@ -238,39 +232,61 @@ class ResolvedObjects(
     val roles: Map<Snowflake, Role> get() = data.roles.mapValues { Role(it.value, kord) }
     val users: Map<Snowflake, User> get() = data.users.mapValues { User(it.value, kord) }
     val members: Map<Snowflake, Member> get() = data.members.mapValues { Member(it.value, data.users[it.key]!!, kord) }
+
+    operator fun get(snowflake: Snowflake): KordEntity? {
+        return channels[snowflake] ?: roles[snowflake] ?: users[snowflake] ?: members[snowflake]
+    }
 }
+@KordPreview
+sealed class OptionValue<T>(val value: T) {
 
+    class RoleOptionValue(value: Role) : OptionValue<Role>(value)
+    class MemberOptionValue(value: Member) : OptionValue<Member>(value)
+    class ChannelOptionValue(value: Channel) : OptionValue<Channel>(value)
+    class IntOptionValue(value: Int) : OptionValue<Int>(value)
+    class StringOptionValue(value: String) : OptionValue<String>(value)
+    class BooleanOptionValue(value: Boolean) : OptionValue<Boolean>(value)
+    class UserOptionValue(value: User) : OptionValue<User>(value)
 
-fun InteractionCommand.resolveMember(snowflake: Snowflake): Member? {
-    return resolved.members[snowflake]
+    companion object {
+        operator fun invoke(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
+            return when (value) {
+                is DiscordOptionValue.BooleanValue -> BooleanOptionValue(value.value)
+                is DiscordOptionValue.IntValue -> IntOptionValue(value.value)
+                is DiscordOptionValue.StringValue -> {
+                    if(resolvedObjects == null) return StringOptionValue(value.value)
+
+                    val snowflake = value.snowflake()
+
+                    when {
+                        resolvedObjects.members[snowflake] != null -> MemberOptionValue(resolvedObjects.members[snowflake]!!)
+                        resolvedObjects.users[snowflake] != null -> UserOptionValue(resolvedObjects.users[snowflake]!!)
+                        resolvedObjects.channels[snowflake] != null -> ChannelOptionValue(resolvedObjects.channels[snowflake]!!)
+                        resolvedObjects.roles[snowflake] != null -> RoleOptionValue(resolvedObjects.roles[snowflake]!!)
+                        else -> StringOptionValue(value.value)
+                    }
+                }
+            }
+        }
+    }
 }
+@KordPreview
+fun OptionValue<*>.user(): User = value as User
 
-fun InteractionCommand.resolveMember(argument: String): Member? {
-    val snowflake = options[argument]?.snowflake() ?: return null
-    return resolveMember(snowflake)
-}
+@KordPreview
+fun OptionValue<*>.channel(): Channel = value as Channel
 
+@KordPreview
+fun OptionValue<*>.role(): Role = value as Role
 
-fun InteractionCommand.resolveChannel(snowflake: Snowflake): Channel? {
-    return resolved.channels[snowflake]
-}
+@KordPreview
+fun OptionValue<*>.member(): Member = value as Member
 
-fun InteractionCommand.resolveUser(snowflake: Snowflake): User? {
-    return resolved.users[snowflake]
-}
+@KordPreview
+fun OptionValue<*>.string() = value.toString()
 
-fun InteractionCommand.resolveUser(argument: String): User? {
-    val snowflake = options[argument]?.snowflake() ?: return null
-    return resolveUser(snowflake)
-}
+@KordPreview
+fun OptionValue<*>.boolean() = value as Boolean
 
-fun InteractionCommand.resolveRole(snowflake: Snowflake): Role? {
-    return resolved.roles[snowflake]
-}
-
-fun InteractionCommand.resolveRole(argument: String): Role? {
-    val snowflake = options[argument]?.snowflake() ?: return null
-    return resolveRole(snowflake)
-}
-
-
+@KordPreview
+fun OptionValue<*>.int() = value as Int
