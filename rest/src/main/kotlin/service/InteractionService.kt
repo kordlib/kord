@@ -69,7 +69,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         guildId: Snowflake,
         request: List<ApplicationCommandCreateRequest>
     ) =
-        call(Route.GuildApplicationCommandCreate) {
+        call(Route.GuildApplicationCommandPut) {
             keys[Route.ApplicationId] = applicationId
             keys[Route.GuildId] = guildId
             body(ListSerializer(ApplicationCommandCreateRequest.serializer()), request)
