@@ -278,7 +278,9 @@ enum class MessageFlag(val code: Long) {
     SourceMessageDeleted(8),
 
     /* This message came from the urgent message system. */
-    Urgent(16);
+    Urgent(16),
+
+    Ephemeral(0x80000000);
 }
 
 @Serializable(with = MessageFlags.Serializer::class)
