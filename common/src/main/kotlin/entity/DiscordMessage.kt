@@ -264,7 +264,7 @@ data class DiscordMentionedChannel(
         val name: String,
 )
 
-enum class MessageFlag(val code: Long) {
+enum class MessageFlag(val code: Int) {
     /** This message has been published to subscribed channels (via Channel Following) */
     CrossPosted(1),
 
@@ -284,9 +284,9 @@ enum class MessageFlag(val code: Long) {
 }
 
 @Serializable(with = MessageFlags.Serializer::class)
-data class MessageFlags internal constructor(val code: Long) {
+data class MessageFlags internal constructor(val code: Int) {
 
-    val flags = MessageFlag.values().filter { code and it.code != 0L }
+    val flags = MessageFlag.values().filter { code and it.code != 0 }
 
     operator fun contains(flag: MessageFlag) = flag in flags
 
@@ -317,16 +317,16 @@ data class MessageFlags internal constructor(val code: Long) {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("flags", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): MessageFlags {
-            val flags = decoder.decodeLong()
+            val flags = decoder.decodeInt()
             return MessageFlags(flags)
         }
 
         override fun serialize(encoder: Encoder, value: MessageFlags) {
-            encoder.encodeLong(value.code)
+            encoder.encodeInt(value.code)
         }
     }
 
-    class Builder(internal var code: Long = 0) {
+    class Builder(internal var code: Int = 0) {
         operator fun MessageFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or code
         }
