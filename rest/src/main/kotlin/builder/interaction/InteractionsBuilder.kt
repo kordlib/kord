@@ -2,6 +2,7 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -262,6 +263,9 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
 
+    private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
+    var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
+
     private var file: Pair<String, java.io.InputStream>? = null
     var embeds: MutableList<EmbedRequest> = mutableListOf()
 
@@ -283,13 +287,14 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
 
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(
-            FollowupMessageCreateRequest(
-                _content,
+            FollowupMessageCreateRequest(_content,
                 _username,
                 _avatarUrl,
                 _tts,
-                Optional.missingOnEmpty(embeds)
-            ), file
+                Optional.missingOnEmpty(embeds),
+                _allowedMentions
+            ),
+            file,
         )
 
 }
