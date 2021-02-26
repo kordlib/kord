@@ -364,10 +364,8 @@ fun DiscordOptionValue<*>.snowflake(): Snowflake {
 @KordPreview
 sealed class InteractionResponseType(val type: Int) {
     object Pong : InteractionResponseType(1)
-    object Acknowledge : InteractionResponseType(2)
-    object ChannelMessage : InteractionResponseType(3)
     object ChannelMessageWithSource : InteractionResponseType(4)
-    object ACKWithSource : InteractionResponseType(5)
+    object DeferredChannelMessageWithSource : InteractionResponseType(5)
     class Unknown(type: Int) : InteractionResponseType(type)
 
     companion object;
@@ -380,10 +378,8 @@ sealed class InteractionResponseType(val type: Int) {
         override fun deserialize(decoder: Decoder): InteractionResponseType {
             return when (val type = decoder.decodeInt()) {
                 1 -> Pong
-                2 -> Acknowledge
-                3 -> ChannelMessage
                 4 -> ChannelMessageWithSource
-                5 -> ACKWithSource
+                5 -> DeferredChannelMessageWithSource
                 else -> Unknown(type)
             }
         }

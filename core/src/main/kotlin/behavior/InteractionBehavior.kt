@@ -31,10 +31,8 @@ interface InteractionBehavior : KordEntity, Strategizable {
      * @param source weather to show the author's name and provided arguments of the command.
      * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
      */
-    suspend fun acknowledge(source: Boolean = false): InteractionResponseBehavior {
-        val type = if (source) InteractionResponseType.ACKWithSource
-        else InteractionResponseType.Acknowledge
-        val request = InteractionResponseCreateRequest(type)
+    suspend fun acknowledge(): InteractionResponseBehavior {
+        val request = InteractionResponseCreateRequest(InteractionResponseType.ChannelMessageWithSource)
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return InteractionResponseBehavior(applicationId, token, kord)
     }
@@ -105,11 +103,9 @@ suspend inline fun InteractionBehavior.respond(
     builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit = {}
 ): InteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val type = if (source) InteractionResponseType.ChannelMessageWithSource
-    else InteractionResponseType.ChannelMessage
 
     val data = InteractionApplicationCommandCallbackDataBuilder().apply(builder).build()
-    val request = InteractionResponseCreateRequest(type, data.optional())
+    val request = InteractionResponseCreateRequest(InteractionResponseType.ChannelMessageWithSource, data.optional())
     kord.rest.interaction.createInteractionResponse(id, token, request)
     return InteractionResponseBehavior(applicationId, token, kord)
 
