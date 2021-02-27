@@ -6,6 +6,7 @@ import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.entity.interaction.GlobalApplicationCommand
 import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.service.InteractionService
 import kotlinx.coroutines.flow.Flow
@@ -36,6 +37,22 @@ class SlashCommands(
         return GlobalApplicationCommand(data, service)
     }
 
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createGlobalApplicationCommands(
+        name: String,
+        description: String,
+        builder: ApplicationCommandsCreateBuilder.() -> Unit = {},
+    ): List<GlobalApplicationCommand> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = ApplicationCommandsCreateBuilder(name, description).apply(builder).toRequest()
+        return service.createGlobalApplicationCommands(applicationId, request).map {
+            val data = ApplicationCommandData.from(it)
+            GlobalApplicationCommand(data, service)
+        }
+
+    }
+
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildApplicationCommand(
         guildId: Snowflake,
@@ -48,6 +65,22 @@ class SlashCommands(
         val response = service.createGuildApplicationCommand(applicationId, guildId, request)
         val data = ApplicationCommandData.from(response)
         return GuildApplicationCommand(data, service, guildId)
+    }
+
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createGuildApplicationCommands(
+        guildId: Snowflake,
+        name: String,
+        description: String,
+        builder: ApplicationCommandsCreateBuilder.() -> Unit = {},
+    ): List<GuildApplicationCommand> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = ApplicationCommandsCreateBuilder(name, description).apply(builder).toRequest()
+        return service.createGlobalApplicationCommands(applicationId, request).map {
+            val data = ApplicationCommandData.from(it)
+            GuildApplicationCommand(data, service, guildId)
+        }
     }
 
     fun getGuildApplicationCommands(guildId: Snowflake): Flow<GuildApplicationCommand> = flow {
