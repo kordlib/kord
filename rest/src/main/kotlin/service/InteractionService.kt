@@ -6,6 +6,8 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
+import kotlinx.serialization.builtins.ListSerializer
+
 @KordPreview
 class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
     suspend fun getGlobalApplicationCommands(applicationId: Snowflake): List<DiscordApplicationCommand> =
@@ -59,7 +61,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         guildId: Snowflake,
         commandId: Snowflake,
         request: ApplicationCommandModifyRequest
-    ) = call(Route.GuildApplicationCommandModify) {
+    ) = call(Route.GlobalApplicationCommandCreate) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.GuildId] = guildId
         keys[Route.CommandId] = commandId

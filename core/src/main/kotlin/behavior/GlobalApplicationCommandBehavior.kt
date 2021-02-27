@@ -58,7 +58,7 @@ interface GuildApplicationCommandBehavior : ApplicationCommandBehavior {
 
     override suspend fun edit(builder: suspend ApplicationCommandModifyBuilder.() -> Unit): GuildApplicationCommand {
         val request = ApplicationCommandModifyBuilder().apply { builder() }.toRequest()
-        val response = service.modifyGlobalApplicationCommand(applicationId, id, request)
+        val response = service.modifyGuildApplicationCommand(applicationId, guildId, id, request)
         val data = ApplicationCommandData.from(response)
         return GuildApplicationCommand(data, service, guildId)
     }
