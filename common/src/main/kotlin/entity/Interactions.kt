@@ -145,17 +145,17 @@ sealed class Choice<out T> {
 @Serializable
 @KordPreview
 data class DiscordInteraction(
-        val id: Snowflake,
-        val type: InteractionType,
-        val data: DiscordApplicationCommandInteractionData,
-        @SerialName("guild_id")
+    val id: Snowflake,
+    val type: InteractionType,
+    val data: DiscordApplicationCommandInteractionData,
+    @SerialName("guild_id")
         val guildId: Snowflake? = null,
-        @SerialName("channel_id")
-        val channelId: Snowflake? = null,
-        val member: DiscordInteractionGuildMember? = null,
-        val user: DiscordInteractionUser? = null,
-        val token: String,
-        val version: Int,
+    @SerialName("channel_id")
+        val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
+    val user: Optional<DiscordInteractionUser> = Optional.Missing(),
+    val token: String,
+    val version: Int,
 )
 
 @Serializable
