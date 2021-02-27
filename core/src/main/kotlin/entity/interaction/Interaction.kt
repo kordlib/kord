@@ -8,15 +8,15 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
-import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.behavior.InteractionBehavior
-import dev.kord.core.behavior.MemberBehavior
+import dev.kord.core.behavior.*
 import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.OptionData
 import dev.kord.core.entity.Entity
+import dev.kord.core.entity.Strategizable
 import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * Interaction that can respond to interactions and follow them up.
@@ -32,7 +32,7 @@ import dev.kord.core.supplier.EntitySupplier
  * @property version read-only property, always 1
  */
 @KordPreview
-class Interaction(
+sealed class Interaction(
     val data: InteractionData,
     override val applicationId: Snowflake,
     override val kord: Kord,
@@ -41,34 +41,75 @@ class Interaction(
 
     override val id: Snowflake get() = data.id
 
-    override val channelId: Snowflake? get() = data.channelId
-
     override val token: String get() = data.token
-
-    override val guildId: Snowflake? get() = data.guildId
 
     val type: InteractionType get() = data.type
 
     val permissions: Permissions? get() = data.permissions
-
-    val channel: TextChannelBehavior?
-        get() = channelId?.let {
-            TextChannelBehavior(
-                id = it,
-                guildId = guildId!!,
-                kord = kord
-            )
-        }
-
-    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
-
-    val member: MemberBehavior? get() = guildId?.let {MemberBehavior(it, data.member!!.userId, kord)}
 
     val command: Command
         get() = Command(data.data)
 
     val version: Int get() = data.version
 
+    companion object {
+        operator fun invoke(data: InteractionData, applicationId: Snowflake, kord: Kord): Interaction {
+            return when {
+                data.user != null -> DMInteraction(data, applicationId, kord)
+                data.channelId != null && data.guildId != null && data.member != null ->
+                    GuildInteraction(
+                        data,
+                        applicationId,
+                        kord
+                    )
+                else -> error("Received unexpected interaction: $data")
+            }
+        }
+    }
+}
+
+@KordPreview
+class DMInteraction(
+    data: InteractionData,
+    applicationId: Snowflake,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+) : Interaction(data, applicationId, kord, supplier), DMInteractionBehavior {
+    override val userId
+        get() = data.user!!.id
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
+        return DMInteraction(data, applicationId, kord, strategy.supply(kord))
+    }
+}
+
+@KordPreview
+class GuildInteraction(
+    data: InteractionData,
+    applicationId: Snowflake,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+) : Interaction(data, applicationId, kord, supplier), GuildInteractionBehavior {
+    override val guildId: Snowflake
+        get() = data.guildId!! // This can't be null because Interaction.invoke() only calls this if it isn't
+    override val channelId: Snowflake
+        get() = data.channelId!! // This can't be null because Interaction.invoke() only calls this if it isn't
+
+    val channel: TextChannelBehavior
+        get() =
+            TextChannelBehavior(
+                id = channelId,
+                guildId = guildId,
+                kord = kord
+            )
+
+    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+
+    val member: MemberBehavior get() = MemberBehavior(channelId, data.member!!.userId, kord)
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
+        return GuildInteraction(data, applicationId, kord, strategy.supply(kord))
+    }
 }
 
 /**

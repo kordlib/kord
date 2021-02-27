@@ -8,6 +8,7 @@ import dev.kord.core.Kord
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -22,8 +23,12 @@ interface InteractionBehavior : KordEntity, Strategizable {
 
     val applicationId: Snowflake
     val token: String
-    val guildId: Snowflake?
-    val channelId: Snowflake?
+
+    fun asGuildInteractionBehavior(): GuildInteractionBehavior =
+        this as? GuildInteractionBehavior ?: error("This is not a GuildInteractionBehavior")
+
+    fun asDMInteractionBehavior(): DMInteractionBehavior =
+        this as? DMInteractionBehavior ?: error("This is not a DMInteractionBehavior")
 
     /**
      * Acknowledges an interaction.
@@ -38,40 +43,80 @@ interface InteractionBehavior : KordEntity, Strategizable {
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return InteractionResponseBehavior(applicationId, token, kord)
     }
+}
 
-    suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+@KordPreview
+interface DMInteractionBehavior : InteractionBehavior {
+    val userId: Snowflake
 
+    suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
 
-    suspend fun getGuild(): Guild =
-        guildId?.let { supplier.getGuild(it) } ?: error("getGuild() is not available in DMs")
-
-
-    suspend fun getChannelOrNull(): Channel? = channelId?.let { supplier.getChannelOrNull(it) }
-
-
-    suspend fun getChannel(): Channel = channelId?.let { supplier.getChannel(it) }
-        ?: error("getChannel() is not available in DMs")
-
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior =
-        InteractionBehavior(id, guildId, channelId, token, applicationId, kord, strategy)
+    suspend fun getUser(): User? = supplier.getUser(userId)
 
     companion object {
-
         operator fun invoke(
             id: Snowflake,
-            guildId: Snowflake?,
-            channelId: Snowflake?,
+            userId: Snowflake,
             token: String,
             applicationId: Snowflake,
             kord: Kord,
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-        ) =
-            object : InteractionBehavior {
+        ): DMInteractionBehavior = object : DMInteractionBehavior {
+            override val userId: Snowflake
+                get() = userId
+            override val applicationId: Snowflake
+                get() = applicationId
+            override val token: String
+                get() = token
+            override val kord: Kord
+                get() = kord
+            override val id: Snowflake
+                get() = id
+            override val supplier: EntitySupplier
+                get() = strategy.supply(kord)
+
+            override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
+                return DMInteractionBehavior(id, userId, token, applicationId, kord, strategy)
+            }
+
+        }
+    }
+}
+
+@KordPreview
+interface GuildInteractionBehavior : InteractionBehavior {
+    val guildId: Snowflake
+    val channelId: Snowflake
+
+    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+
+    suspend fun getGuild(): Guild =
+        supplier.getGuild(guildId)
+
+    suspend fun getChannelOrNull(): Channel? = supplier.getChannelOrNull(channelId)
+
+    suspend fun getChannel(): Channel = supplier.getChannel(channelId)
+
+    companion object {
+        operator fun invoke(
+            id: Snowflake,
+            guildId: Snowflake,
+            channelId: Snowflake,
+            token: String,
+            applicationId: Snowflake,
+            kord: Kord,
+            strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+        ): GuildInteractionBehavior =
+            object : GuildInteractionBehavior {
                 override val id: Snowflake
                     get() = id
 
                 override val token: String
                     get() = token
+                override val guildId: Snowflake
+                    get() = guildId
+                override val channelId: Snowflake
+                    get() = channelId
 
                 override val applicationId: Snowflake
                     get() = applicationId
@@ -79,15 +124,12 @@ interface InteractionBehavior : KordEntity, Strategizable {
                 override val kord: Kord
                     get() = kord
 
-                override val channelId: Snowflake?
-                    get() = channelId
-
-                override val guildId: Snowflake?
-                    get() = guildId
-
                 override val supplier: EntitySupplier
                     get() = strategy.supply(kord)
 
+                override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
+                    return GuildInteractionBehavior(id, guildId, channelId, token, applicationId, kord, strategy)
+                }
             }
     }
 }

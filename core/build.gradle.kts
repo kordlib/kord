@@ -7,10 +7,8 @@ sourceSets {
     }
 }
 
-configurations {
-    val samplesImplementation by getting {
-        extendsFrom(configurations["implementation"])
-    }
+val samplesImplementation by configurations.getting {
+    extendsFrom(configurations["implementation"])
 }
 
 dependencies {
@@ -31,17 +29,18 @@ dependencies {
     }
 
     testImplementation(Dependencies.mockk)
+    samplesImplementation(Dependencies.sl4j)
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = Jvm.target
         freeCompilerArgs = listOf(
-                CompilerArguments.inlineClasses,
-                CompilerArguments.coroutines,
-                CompilerArguments.time,
-                CompilerArguments.stdLib,
-                CompilerArguments.optIn
+            CompilerArguments.inlineClasses,
+            CompilerArguments.coroutines,
+            CompilerArguments.time,
+            CompilerArguments.stdLib,
+            CompilerArguments.optIn
         )
     }
 }

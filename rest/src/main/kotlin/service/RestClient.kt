@@ -1,6 +1,7 @@
 package dev.kord.rest.service
 
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.request.RequestHandler
@@ -45,7 +46,7 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
     }
 
     companion object {
-        operator fun invoke(token: String) : RestClient {
+        operator fun invoke(token: String): RestClient {
             val requestHandler = KtorRequestHandler(token)
             return RestClient(requestHandler)
         }
