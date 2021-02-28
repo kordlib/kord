@@ -23,6 +23,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
 
     val applicationId: Snowflake
     val token: String
+    val channelId: Snowflake?
 
     fun asGuildInteractionBehavior(): GuildInteractionBehavior =
         this as? GuildInteractionBehavior ?: error("This is not a GuildInteractionBehavior")
@@ -45,8 +46,16 @@ interface InteractionBehavior : KordEntity, Strategizable {
     }
 }
 
+interface InteractionBehaviorWithChannel : InteractionBehavior {
+    override val channelId: Snowflake
+
+    suspend fun getChannelOrNull(): Channel? = supplier.getChannelOrNull(channelId)
+
+    suspend fun getChannel(): Channel = supplier.getChannel(channelId)
+}
+
 @KordPreview
-interface DMInteractionBehavior : InteractionBehavior {
+interface DMInteractionBehavior : InteractionBehaviorWithChannel {
     val userId: Snowflake
 
     suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
@@ -59,6 +68,7 @@ interface DMInteractionBehavior : InteractionBehavior {
             userId: Snowflake,
             token: String,
             applicationId: Snowflake,
+            channelId: Snowflake,
             kord: Kord,
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): DMInteractionBehavior = object : DMInteractionBehavior {
@@ -74,9 +84,11 @@ interface DMInteractionBehavior : InteractionBehavior {
                 get() = id
             override val supplier: EntitySupplier
                 get() = strategy.supply(kord)
+            override val channelId: Snowflake
+                get() = channelId
 
             override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
-                return DMInteractionBehavior(id, userId, token, applicationId, kord, strategy)
+                return DMInteractionBehavior(id, userId, token, applicationId, channelId, kord, strategy)
             }
 
         }
@@ -86,16 +98,12 @@ interface DMInteractionBehavior : InteractionBehavior {
 @KordPreview
 interface GuildInteractionBehavior : InteractionBehavior {
     val guildId: Snowflake
-    val channelId: Snowflake
+    override val channelId: Snowflake
 
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     suspend fun getGuild(): Guild =
         supplier.getGuild(guildId)
-
-    suspend fun getChannelOrNull(): Channel? = supplier.getChannelOrNull(channelId)
-
-    suspend fun getChannel(): Channel = supplier.getChannel(channelId)
 
     companion object {
         operator fun invoke(

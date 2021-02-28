@@ -77,6 +77,8 @@ class DMInteraction(
 ) : Interaction(data, applicationId, kord, supplier), DMInteractionBehavior {
     override val userId
         get() = data.user!!.id
+    override val channelId: Snowflake
+        get() = data.channelId!!
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
         return DMInteraction(data, applicationId, kord, strategy.supply(kord))
