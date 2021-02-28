@@ -5,6 +5,8 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.NotSerializable
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.gateway.InteractionCreate
 import kotlinx.serialization.KSerializer
@@ -19,12 +21,12 @@ data class InteractionData(
     val id: Snowflake,
     val type: InteractionType,
     val data: ApplicationCommandInteractionData,
-    val guildId: Snowflake?,
-    val channelId: Snowflake?,
-    val member: MemberData?,
-    val user: UserData?,
+    val guildId: OptionalSnowflake,
+    val channelId: OptionalSnowflake,
+    val member: Optional<MemberData>,
+    val user: Optional<UserData>,
     val token: String,
-    val permissions: Permissions?,
+    val permissions: Optional<Permissions>,
     val version: Int
 ) {
     companion object {
@@ -36,10 +38,10 @@ data class InteractionData(
                     ApplicationCommandInteractionData.from(data),
                     guildId,
                     channelId,
-                    member?.let { it.toData(it.user.value!!.id, guildId!!) },
-                    user?.toData(),
+                    member.map { it.toData(it.user.value!!.id, guildId.value!!) },
+                    user.map(DiscordInteractionUser::toData),
                     token,
-                    member?.permissions,
+                    member.map(DiscordInteractionGuildMember::permissions),
                     version
                 )
             }

@@ -6,6 +6,7 @@ import dev.kord.common.entity.OptionValue
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.*
@@ -45,7 +46,7 @@ sealed class Interaction(
 
     val type: InteractionType get() = data.type
 
-    val permissions: Permissions? get() = data.permissions
+    val permissions: Optional<Permissions> get() = data.permissions
 
     val command: Command
         get() = Command(data.data)
@@ -55,8 +56,9 @@ sealed class Interaction(
     companion object {
         operator fun invoke(data: InteractionData, applicationId: Snowflake, kord: Kord): Interaction {
             return when {
-                data.user != null -> DMInteraction(data, applicationId, kord)
-                data.channelId != null && data.guildId != null && data.member != null ->
+                data.channelId is OptionalSnowflake.Missing -> error("Received unexpected interaction: $data")
+                data.user !is Optional.Missing -> DMInteraction(data, applicationId, kord)
+                data.guildId !is OptionalSnowflake.Missing && data.member !is Optional.Missing ->
                     GuildInteraction(
                         data,
                         applicationId,
@@ -76,9 +78,10 @@ class DMInteraction(
     supplier: EntitySupplier = kord.defaultSupplier
 ) : Interaction(data, applicationId, kord, supplier), DMInteractionBehavior {
     override val userId
-        get() = data.user!!.id
+        get() = data.user.value!!.id
+
     override val channelId: Snowflake
-        get() = data.channelId!!
+        get() = data.channelId.value!!
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
         return DMInteraction(data, applicationId, kord, strategy.supply(kord))
@@ -93,9 +96,9 @@ class GuildInteraction(
     supplier: EntitySupplier = kord.defaultSupplier
 ) : Interaction(data, applicationId, kord, supplier), GuildInteractionBehavior {
     override val guildId: Snowflake
-        get() = data.guildId!! // This can't be null because Interaction.invoke() only calls this if it isn't
+        get() = data.guildId.value!! // This can't be null because Interaction.invoke() only calls this if it isn't
     override val channelId: Snowflake
-        get() = data.channelId!! // This can't be null because Interaction.invoke() only calls this if it isn't
+        get() = data.channelId.value!! // This can't be null because Interaction.invoke() only calls this if it isn't
 
     val channel: TextChannelBehavior
         get() =
@@ -107,7 +110,7 @@ class GuildInteraction(
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    val member: MemberBehavior get() = MemberBehavior(channelId, data.member!!.userId, kord)
+    val member: MemberBehavior get() = MemberBehavior(channelId, data.member.value!!.userId, kord)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
         return GuildInteraction(data, applicationId, kord, strategy.supply(kord))
