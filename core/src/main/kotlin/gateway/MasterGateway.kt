@@ -57,7 +57,7 @@ class MasterGateway(
 
     suspend fun sendAll(command: Command) = gateways.values.forEach { it.send(command) }
 
-    suspend fun detachAll() = coroutineScope { gateways.values.forEach { launch { it.detach() } } }
+    suspend fun detachAll() = gateways.values.forEach { it.detach() }
 
     suspend fun stopAll() = coroutineScope {
         gateways.values.forEach { launch { it.stop() } }
