@@ -6,6 +6,7 @@ import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
+import dev.kord.core.builder.kord.Shards
 import dev.kord.core.builder.kord.configure
 import dev.kord.core.builder.kord.getBotIdFromToken
 import dev.kord.core.cache.data.ChannelData
@@ -120,7 +121,7 @@ class CacheMissingRegressions {
     @BeforeTest
     fun setup() = runBlockingTest { //TODO, move this over to entity supplier tests instead, eventually.
         val token = System.getenv("KORD_TEST_TOKEN")
-        val resources = ClientResources(token, 1, null.configure(token), EntitySupplyStrategy.cacheWithRestFallback, Intents.nonPrivileged)
+        val resources = ClientResources(token, Shards(1), null.configure(token), EntitySupplyStrategy.cacheWithRestFallback, Intents.nonPrivileged)
         kord = Kord(
                 resources,
                 MapDataCache().also { it.registerKordData() },
