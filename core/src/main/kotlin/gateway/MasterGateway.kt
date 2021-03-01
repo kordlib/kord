@@ -59,9 +59,7 @@ class MasterGateway(
 
     suspend fun detachAll() = gateways.values.forEach { it.detach() }
 
-    suspend fun stopAll() = coroutineScope {
-        gateways.values.forEach { launch { it.stop() } }
-    }
+    suspend fun stopAll() = gateways.values.forEach { it.stop() }
 
     override fun toString(): String {
         return "MasterGateway(gateways=$gateways)"
