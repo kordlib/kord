@@ -54,7 +54,7 @@ operator fun DefaultGateway.Companion.invoke(
 
 private val logger = KotlinLogging.logger { }
 
-data class Shards(val totalShards: Int, val shards: Iterable<Int> = 0 until totalShards)
+data class Shards(val totalShards: Int, val indices: Iterable<Int> = 0 until totalShards)
 
 class KordBuilder(val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
@@ -213,7 +213,7 @@ class KordBuilder(val token: String) {
 
         val recommendedShards = client.getGatewayInfo().shards
         val shardsInfo = shardsBuilder(recommendedShards)
-        val shards = shardsInfo.shards.toList()
+        val shards = shardsInfo.indices.toList()
 
         if (client.engine.config.threadsCount < shards.size + 1) {
             logger.warn {
@@ -223,7 +223,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token, shards.count(), client, defaultStrategy, intents,shardsInfo.totalShards)
+        val resources = ClientResources(token, shardsInfo, client, defaultStrategy, intents)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
