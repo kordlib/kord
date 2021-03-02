@@ -1,3 +1,6 @@
+import org.gradle.plugin.use.PluginDependenciesSpec
+import org.gradle.plugin.use.PluginDependencySpec
+
 object  Versions {
     const val kotlin = "1.4.10"
     const val kotlinxSerialization = "1.0.0"
@@ -25,7 +28,7 @@ object Dependencies {
     const val `kotlinx-serialization` = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.kotlinxSerialization}"
     const val `kotlinx-serialization-json` = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxSerialization}"
     const val `kotlinx-coroutines` = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinxCoroutines}"
-    const val `kotlinx-atomicfu` = ""
+    const val `kotlinx-atomicfu` = "org.jetbrains.kotlinx:atomicfu-jvm:${Versions.atomicFu}"
 
     const val `kotlin-logging` = "io.github.microutils:kotlin-logging:${Versions.kotlinLogging}"
 
@@ -52,5 +55,13 @@ object Dependencies {
 }
 
 object Plugins {
-    const val kapt = "org.jetbrains.kotlin.kapt"
+    const val `kotlinx-atomicfu` = "org.jetbrains.kotlinx.atomicfu-gradle-plugin"
+    const val `kotlinx-binary-compatibility-validator` =
+        "org.jetbrains.kotlinx.binary-compatibility-validator"
 }
+
+inline val PluginDependenciesSpec.`kotlinx-atomicfu`: PluginDependencySpec
+    get() = id(Plugins.`kotlinx-atomicfu`).version(Versions.atomicFu)
+
+inline val PluginDependenciesSpec.`kotlinx-binary-compatibility-validator`: PluginDependencySpec
+    get() = id(Plugins.`kotlinx-binary-compatibility-validator`).version(Versions.binaryCompatibilityValidator)

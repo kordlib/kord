@@ -1,3 +1,6 @@
+plugins {
+    kotlin("jvm")
+}
 
 sourceSets {
     val samples by creating {
