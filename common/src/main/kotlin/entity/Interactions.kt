@@ -18,27 +18,27 @@ val kordLogger = KotlinLogging.logger { }
 @Serializable
 @KordPreview
 data class DiscordApplicationCommand(
-        val id: Snowflake,
-        @SerialName("application_id")
-        val applicationId: Snowflake,
-        val name: String,
-        val description: String,
-        @SerialName("guild_id")
-        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-        val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    val id: Snowflake,
+    @SerialName("application_id")
+    val applicationId: Snowflake,
+    val name: String,
+    val description: String,
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
 )
 
 @Serializable
 @KordPreview
 class ApplicationCommandOption(
-        val type: ApplicationCommandOptionType,
-        val name: String,
-        val description: String,
-        val default: OptionalBoolean = OptionalBoolean.Missing,
-        val required: OptionalBoolean = OptionalBoolean.Missing,
-        @OptIn(KordExperimental::class)
-        val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
-        val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    val type: ApplicationCommandOptionType,
+    val name: String,
+    val description: String,
+    val default: OptionalBoolean = OptionalBoolean.Missing,
+    val required: OptionalBoolean = OptionalBoolean.Missing,
+    @OptIn(KordExperimental::class)
+    val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
 )
 
 /**
@@ -141,28 +141,31 @@ sealed class Choice<out T> {
         }
     }
 }
+
 @Serializable
 @KordPreview
 data class ResolvedObjects(
-    val members: Map<Snowflake, DiscordGuildMember>,
-    val users: Map<Snowflake, DiscordUser>,
-    val roles: Map<Snowflake, DiscordGuildRole>,
-    val channels: Map<Snowflake, DiscordChannel>
+    val members: Optional<Map<Snowflake, DiscordGuildMember>> = Optional.Missing(),
+    val users: Optional<Map<Snowflake, DiscordUser>> = Optional.Missing(),
+    val roles: Optional<Map<Snowflake, DiscordGuildRole>> = Optional.Missing(),
+    val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing()
 )
+
 @Serializable
 @KordPreview
 data class DiscordInteraction(
-        val id: Snowflake,
-        val type: InteractionType,
-        val data: DiscordApplicationCommandInteractionData,
-        @SerialName("guild_id")
-        val guildId: Snowflake,
-        @SerialName("channel_id")
-        val channelId: Snowflake,
-        val member: DiscordInteractionGuildMember,
-        val resolved: ResolvedObjects,
-        val token: String,
-        val version: Int,
+    val id: Snowflake,
+    val type: InteractionType,
+    val data: DiscordApplicationCommandInteractionData,
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("channel_id")
+    val channelId: Snowflake,
+    val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
+    val user: Optional<DiscordUser> = Optional.Missing(),
+    val resolved: Optional<ResolvedObjects> = Optional.Missing(),
+    val token: String,
+    val version: Int,
 )
 
 @Serializable(InteractionType.Serializer::class)
@@ -172,7 +175,7 @@ sealed class InteractionType(val type: Int) {
     object ApplicationCommand : InteractionType(2)
     class Unknown(type: Int) : InteractionType(type)
 
-    override fun toString(): String = when(this){
+    override fun toString(): String = when (this) {
         Ping -> "InteractionType.Ping($type)"
         ApplicationCommand -> "InteractionType.ApplicationCommand($type)"
         is Unknown -> "InteractionType.Unknown($type)"
@@ -202,9 +205,9 @@ sealed class InteractionType(val type: Int) {
 @Serializable
 @KordPreview
 data class DiscordApplicationCommandInteractionData(
-            val id: Snowflake,
-            val name: String,
-            val options: Optional<List<Option>> = Optional.Missing()
+    val id: Snowflake,
+    val name: String,
+    val options: Optional<List<Option>> = Optional.Missing()
 )
 
 @Serializable(with = Option.Serializer::class)
@@ -255,7 +258,8 @@ sealed class Option {
                 return SubCommand(name, Optional(emptyList()))
             }
 
-            val onlyArguments = nestedOptions.all { it is CommandArgument } //only subcommand can have options at this point
+            val onlyArguments =
+                nestedOptions.all { it is CommandArgument } //only subcommand can have options at this point
             if (onlyArguments) return SubCommand(name, Optional(nestedOptions.filterIsInstance<CommandArgument>()))
 
             val onlySubCommands = nestedOptions.all { it is SubCommand } //only groups can have options at this point
@@ -273,8 +277,8 @@ sealed class Option {
 @Serializable
 @KordPreview
 data class SubCommand(
-        override val name: String,
-        val options: Optional<List<CommandArgument>> = Optional.Missing()
+    override val name: String,
+    val options: Optional<List<CommandArgument>> = Optional.Missing()
 ) : Option()
 
 @Serializable
@@ -282,7 +286,7 @@ data class SubCommand(
 data class CommandArgument(
     override val name: String,
     @OptIn(KordExperimental::class)
-        val value: DiscordOptionValue<@Serializable(NotSerializable::class) Any?>,
+    val value: DiscordOptionValue<@Serializable(NotSerializable::class) Any?>,
 ) : Option()
 
 @Serializable
@@ -299,7 +303,7 @@ sealed class DiscordOptionValue<out T>(val value: T) {
     class StringValue(value: String) : DiscordOptionValue<String>(value)
     class BooleanValue(value: Boolean) : DiscordOptionValue<Boolean>(value)
 
-    override fun toString(): String = when(this){
+    override fun toString(): String = when (this) {
         is IntValue -> "OptionValue.IntValue($value)"
         is StringValue -> "OptionValue.StringValue($value)"
         is BooleanValue -> "OptionValue.BooleanValue($value)"
