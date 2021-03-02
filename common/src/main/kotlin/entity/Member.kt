@@ -40,6 +40,7 @@ data class DiscordInteractionGuildMember(
         val deaf: Boolean,
         val mute: Boolean,
         val permissions: Permissions,
+        val pending: OptionalBoolean = OptionalBoolean.Missing
 )
 
 

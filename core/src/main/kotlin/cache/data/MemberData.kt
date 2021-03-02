@@ -29,7 +29,7 @@ data class MemberData(
 
 
         fun from(userId: Snowflake, guildId: Snowflake, entity: DiscordInteractionGuildMember) = with(entity) {
-            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
+            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince, pending)
         }
 
         fun from(userId: Snowflake, entity: DiscordAddedGuildMember) = with(entity) {
