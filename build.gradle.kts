@@ -72,7 +72,7 @@ subprojects {
         api(Dependencies.`kotlinx-serialization`)
         implementation(Dependencies.`kotlinx-serialization-json`)
         api(Dependencies.`kotlinx-coroutines`)
-        implementation("org.jetbrains.kotlinx:atomicfu-jvm:${Versions.atomicFu}")
+        implementation(Dependencies.`kotlinx-atomicfu`)
         implementation(Dependencies.`kotlin-logging`)
 
         testImplementation(Dependencies.`kotlin-test`)
