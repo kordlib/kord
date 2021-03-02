@@ -214,6 +214,13 @@ inline fun <E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<List<T>>
 
 
 @Suppress("UNCHECKED_CAST")
+inline fun <K, V, R> Optional<Map<K, V>>.mapValues(mapper: (Map.Entry<K, V>) -> R): Optional<Map<K, R>> = when (this) {
+    is Missing, is Null<*> -> this as Optional<Map<K, R>>
+    is Value -> Value(value.mapValues(mapper))
+}
+
+
+@Suppress("UNCHECKED_CAST")
 inline fun <E> Optional<List<E>>.filterList(mapper: (E) -> Boolean): Optional<List<E>> = when (this) {
     is Missing, is Null<*> -> this
     is Value -> Value(value.filter(mapper))
