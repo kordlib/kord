@@ -30,18 +30,10 @@ data class InteractionData(
     companion object {
         fun from(event: InteractionCreate): InteractionData {
             return with(event.interaction) {
-                val resolvables = resolved.map { mappedResolvables ->
-                    ResolvedObjectsData(
-                        members = mappedResolvables.members.mapValues { MemberData.from(it.key, guildId.value!!, it.value) },
-                        channels = mappedResolvables.channels.mapValues { ChannelData.from(it.value) },
-                        roles = mappedResolvables.roles.mapValues { RoleData.from(it.value) },
-                        users = mappedResolvables.users.mapValues { it.value.toData() }
-                    )
-                }
                 InteractionData(
                     id,
                     type,
-                    ApplicationCommandInteractionData.from(data, resolvables),
+                    ApplicationCommandInteractionData.from(data, guildId.value),
                     guildId,
                     channelId,
                     member.map { it.toData(it.user.value!!.id, guildId.value!!) },
@@ -62,7 +54,19 @@ data class ResolvedObjectsData(
     val users: Optional<Map<Snowflake, UserData>> = Optional.Missing(),
     val roles: Optional<Map<Snowflake, RoleData>> = Optional.Missing(),
     val channels: Optional<Map<Snowflake, ChannelData>> = Optional.Missing()
-)
+) {
+    companion object {
+        fun from(data: ResolvedObjects, guildId: Snowflake?): ResolvedObjectsData {
+            return ResolvedObjectsData(
+                members = data.members.mapValues { MemberData.from(it.key, guildId!!, it.value) },
+                channels = data.channels.mapValues { ChannelData.from(it.value) },
+                roles = data.roles.mapValues { RoleData.from(it.value) },
+                users = data.users.mapValues { it.value.toData() }
+            )
+        }
+    }
+}
+
 
 @KordPreview
 @Serializable
@@ -75,14 +79,14 @@ data class ApplicationCommandInteractionData(
     companion object {
         fun from(
             data: DiscordApplicationCommandInteractionData,
-            resolvables: Optional<ResolvedObjectsData> = Optional.Missing()
+            guildId: Snowflake?
         ): ApplicationCommandInteractionData {
             return with(data) {
                 ApplicationCommandInteractionData(
                     id,
                     name,
                     options.mapList { OptionData.from(it) },
-                    resolvables
+                    data.resolved.map { ResolvedObjectsData.from(it, guildId) }
                 )
 
             }

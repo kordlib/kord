@@ -163,7 +163,6 @@ data class DiscordInteraction(
     val channelId: Snowflake,
     val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
     val user: Optional<DiscordUser> = Optional.Missing(),
-    val resolved: Optional<ResolvedObjects> = Optional.Missing(),
     val token: String,
     val version: Int,
 )
@@ -207,6 +206,7 @@ sealed class InteractionType(val type: Int) {
 data class DiscordApplicationCommandInteractionData(
     val id: Snowflake,
     val name: String,
+    val resolved: Optional<ResolvedObjects> = Optional.Missing(),
     val options: Optional<List<Option>> = Optional.Missing()
 )
 
