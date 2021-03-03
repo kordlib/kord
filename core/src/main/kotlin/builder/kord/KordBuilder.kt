@@ -3,7 +3,6 @@
 package dev.kord.core.builder.kord
 
 import dev.kord.cache.api.DataCache
-import dev.kord.common.entity.Snowflake
 import dev.kord.common.ratelimit.BucketRateLimiter
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
@@ -55,8 +54,10 @@ operator fun DefaultGateway.Companion.invoke(
 
 private val logger = KotlinLogging.logger { }
 
+data class Shards(val totalShards: Int, val indices: Iterable<Int> = 0 until totalShards)
+
 class KordBuilder(val token: String) {
-    private var shardRange: (recommended: Int) -> Iterable<Int> = { 0 until it }
+    private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
         { resources, shards ->
             val rateLimiter = BucketRateLimiter(1, 5.seconds)
@@ -127,8 +128,8 @@ class KordBuilder(val token: String) {
      *}
      * ```
      */
-    fun sharding(shardRange: (recommended: Int) -> Iterable<Int>) {
-        this.shardRange = shardRange
+    fun sharding(shards: (recommended: Int) -> Shards) {
+        this.shardsBuilder = shards
     }
 
     /**
@@ -211,7 +212,8 @@ class KordBuilder(val token: String) {
         val client = httpClient.configure(token)
 
         val recommendedShards = client.getGatewayInfo().shards
-        val shards = shardRange(recommendedShards).toList()
+        val shardsInfo = shardsBuilder(recommendedShards)
+        val shards = shardsInfo.indices.toList()
 
         if (client.engine.config.threadsCount < shards.size + 1) {
             logger.warn {
@@ -221,7 +223,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token, shards.count(), client, defaultStrategy, intents)
+        val resources = ClientResources(token, shardsInfo, client, defaultStrategy, intents)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()

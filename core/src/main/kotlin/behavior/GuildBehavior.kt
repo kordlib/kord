@@ -192,7 +192,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      */
     val gateway: Gateway?
         get() {
-            val shard = id.value.shr(22) % kord.resources.shardCount.coerceAtLeast(1)
+            val shard = id.value.shr(22) % kord.resources.shards.totalShards.coerceAtLeast(1)
             return kord.gateway.gateways[shard.toInt()]
         }
 
