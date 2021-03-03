@@ -13,6 +13,6 @@ class ClientResources(
     val intents: Intents,
 ) {
     override fun toString(): String {
-        return "ClientResources(shardCount=$shards, httpClient=$httpClient, defaultStrategy=$defaultStrategy, intents=$intents)"
+        return "ClientResources(shards=$shards, httpClient=$httpClient, defaultStrategy=$defaultStrategy, intents=$intents)"
     }
 }
