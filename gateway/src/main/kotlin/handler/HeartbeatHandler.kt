@@ -55,12 +55,13 @@ internal class HeartbeatHandler(
         }
     }
 
-    // These two methods avoid a bug with the kotlinx.atomicfu compiler plugin
 
+    // https://github.com/Kotlin/kotlinx.atomicfu/issues/180
     private fun setNoZombie() {
         possibleZombie.update { false }
     }
 
+    // https://github.com/Kotlin/kotlinx.atomicfu/issues/180
     private fun setPossibleZombie() {
         possibleZombie.update { true }
     }

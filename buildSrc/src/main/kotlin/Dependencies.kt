@@ -9,7 +9,7 @@ object Versions {
 
     //test deps
     const val kotlinTest = kotlin
-    const val junit5 = "57.1"
+    const val junit5 = "5.7.1"
     const val kotlinxCoroutinesTest = kotlinxCoroutines
     const val kotlinReflect = kotlin
     const val junitJupiterApi = junit5
