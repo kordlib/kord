@@ -2,17 +2,19 @@ package dev.kord.core.gateway
 
 import dev.kord.gateway.*
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlin.time.Duration
 import kotlin.time.microseconds
 
 data class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
 
 class MasterGateway(
-        val gateways: Map<Int, Gateway>,
+    val gateways: Map<Int, Gateway>,
 ) {
 
     /**
@@ -32,15 +34,19 @@ class MasterGateway(
 
     @OptIn(FlowPreview::class)
     val events: Flow<ShardEvent> = gateways.entries.asFlow()
-            .map { (shard, gateway) -> gateway.events.map { ShardEvent(it, gateway, shard) } }
-            .flattenMerge(gateways.size.coerceAtLeast(1))
+        .map { (shard, gateway) -> gateway.events.map { ShardEvent(it, gateway, shard) } }
+        .flattenMerge(gateways.size.coerceAtLeast(1))
 
     /**
      * Calls [Gateway.start] on each Gateway in [gateways], changing the [GatewayConfiguration.shard] for each Gateway.
      */
-    suspend fun start(configuration: GatewayConfiguration) = gateways.entries.forEach { (shard, gateway) ->
-        val config = configuration.copy(shard = configuration.shard.copy(index = shard))
-        gateway.start(config)
+    suspend fun start(configuration: GatewayConfiguration): Unit = coroutineScope {
+        gateways.entries.forEach { (shard, gateway) ->
+            val config = configuration.copy(shard = configuration.shard.copy(index = shard))
+            launch {
+                gateway.start(config)
+            }
+        }
     }
 
     suspend inline fun start(token: String, config: GatewayConfigurationBuilder.() -> Unit = {}) {
