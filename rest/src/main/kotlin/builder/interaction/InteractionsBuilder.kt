@@ -41,10 +41,7 @@ class ApplicationCommandCreateBuilder(
 
 @KordPreview
 @KordDsl
-class ApplicationCommandsCreateBuilder(
-    val name: String,
-    val description: String,
-) : RequestBuilder<List<ApplicationCommandCreateRequest>> {
+class ApplicationCommandsCreateBuilder : RequestBuilder<List<ApplicationCommandCreateRequest>> {
     val commands: MutableList<ApplicationCommandCreateBuilder> = mutableListOf()
     fun command(
         name: String,

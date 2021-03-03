@@ -90,7 +90,6 @@ interface InteractionBehavior : KordEntity, Strategizable {
 @KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respond(
-    source: Boolean = false,
     builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit = {}
 ): InteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
