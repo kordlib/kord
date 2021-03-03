@@ -40,12 +40,10 @@ class SlashCommands(
 
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGlobalApplicationCommands(
-        name: String,
-        description: String,
-        builder: ApplicationCommandsCreateBuilder.() -> Unit = {},
+        builder: ApplicationCommandsCreateBuilder.() -> Unit,
     ): List<GlobalApplicationCommand> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = ApplicationCommandsCreateBuilder(name, description).apply(builder).toRequest()
+        val request = ApplicationCommandsCreateBuilder().apply(builder).toRequest()
         return service.createGlobalApplicationCommands(applicationId, request).map {
             val data = ApplicationCommandData.from(it)
             GlobalApplicationCommand(data, service)
@@ -71,12 +69,10 @@ class SlashCommands(
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,
-        name: String,
-        description: String,
-        builder: ApplicationCommandsCreateBuilder.() -> Unit = {},
+        builder: ApplicationCommandsCreateBuilder.() -> Unit,
     ): List<GuildApplicationCommand> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = ApplicationCommandsCreateBuilder(name, description).apply(builder).toRequest()
+        val request = ApplicationCommandsCreateBuilder().apply(builder).toRequest()
         return service.createGlobalApplicationCommands(applicationId, request).map {
             val data = ApplicationCommandData.from(it)
             GuildApplicationCommand(data, service, guildId)

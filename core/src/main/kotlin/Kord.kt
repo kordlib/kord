@@ -28,6 +28,7 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.*
@@ -332,6 +333,13 @@ class Kord(
         description: String,
         builder: ApplicationCommandCreateBuilder.() -> Unit = {},
     ) = slashCommands.createGlobalApplicationCommand(name, description, builder)
+
+    @KordPreview
+    suspend inline fun createGlobalApplicationCommands(
+        builder: ApplicationCommandsCreateBuilder.() -> Unit,
+    ) = slashCommands.createGlobalApplicationCommands(builder)
+
+
 }
 
 /**

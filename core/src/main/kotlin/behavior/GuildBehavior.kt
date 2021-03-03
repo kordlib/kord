@@ -38,6 +38,7 @@ import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
 import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
@@ -539,6 +540,12 @@ suspend inline fun GuildBehavior.createApplicationCommand(
     description: String,
     builder: ApplicationCommandCreateBuilder.() -> Unit = {},
 ) = kord.slashCommands.createGuildApplicationCommand(id, name, description, builder)
+
+
+@KordPreview
+suspend inline fun GuildBehavior.createApplicationCommands(
+    builder: ApplicationCommandsCreateBuilder.() -> Unit
+) = kord.slashCommands.createGuildApplicationCommands(id, builder)
 
 /**
  * Requests to edit this guild.
