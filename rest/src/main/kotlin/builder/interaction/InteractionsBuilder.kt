@@ -287,12 +287,13 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
 
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(
-            FollowupMessageCreateRequest(_content,
-                _username,
-                _avatarUrl,
-                _tts,
-                Optional.missingOnEmpty(embeds),
-                _allowedMentions
+            FollowupMessageCreateRequest(
+                content = _content,
+                username = _username,
+                avatar = _avatarUrl,
+                tts = _tts,
+                embeds = Optional.missingOnEmpty(embeds),
+                allowedMentions = _allowedMentions
             ),
             file,
         )

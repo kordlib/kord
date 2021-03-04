@@ -258,13 +258,13 @@ inline fun <E: Any, T> Optional<E?>.mapNotNull(mapper: (E) -> T): Optional<T?> =
     is Value -> Optional(mapper(value!!))
 }
 
-inline fun <E> Optional<List<E>>.firstOrNull(mapper: (E) -> Boolean) : E? = when(this){
+inline fun <E> Optional<List<E>>.firstOrNull(predicate: (E) -> Boolean) : E? = when(this){
     is Missing, is Null<*> -> null
-    is Value -> value.firstOrNull(mapper)
+    is Value -> value.firstOrNull(predicate)
 }
 
 
-inline fun <E> Optional<List<E>>.first(mapper: (E) -> Boolean) : E = firstOrNull(mapper)!!
+inline fun <E> Optional<List<E>>.first(predicate: (E) -> Boolean) : E = firstOrNull(predicate)!!
 
 
 
