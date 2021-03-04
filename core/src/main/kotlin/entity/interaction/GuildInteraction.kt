@@ -1,14 +1,15 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.core.entity.Guild
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.GuildInteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
+import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.entity.Guild
 import dev.kord.core.supplier.EntitySupplier
 
 /**
@@ -39,6 +40,9 @@ class GuildInteraction(
      * The invoker of the command as [MemberBehavior].
      */
     val member: MemberBehavior get() = MemberBehavior(guildId, data.member.value!!.userId, kord)
+
+    override val channel: GuildMessageChannelBehavior
+        get() = GuildMessageChannelBehavior(guildId, channelId, kord)
 
 
 }

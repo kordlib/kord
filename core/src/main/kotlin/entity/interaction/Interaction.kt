@@ -106,7 +106,7 @@ sealed class InteractionCommand : KordObject {
             val rootPredicate = firstLevelOptions.isEmpty() || firstLevelOptions.any { it.value.value != null }
             val groupPredicate = firstLevelOptions.any { it.subCommands.orEmpty().isNotEmpty() }
             val subCommandPredicate =
-                firstLevelOptions.all { it.subCommands !is Optional.Missing && it.values !is Optional.Missing }
+                firstLevelOptions.all { it.value is Optional.Missing && it.subCommands is Optional.Missing }
 
             return when {
                 rootPredicate -> RootCommand(data, kord)
@@ -263,26 +263,14 @@ sealed class OptionValue<T>(val value: T) {
                     val snowflake = value.snowflake()
 
                     when {
-                        resolvedObjects.members?.get(snowflake) != null -> MemberOptionValue(
-                            resolvedObjects.members?.get(
-                                snowflake
-                            )!!
-                        )
-                        resolvedObjects.users?.get(snowflake) != null -> UserOptionValue(
-                            resolvedObjects.users?.get(
-                                snowflake
-                            )!!
-                        )
-                        resolvedObjects.channels?.get(snowflake) != null -> ChannelOptionValue(
-                            resolvedObjects.channels?.get(
-                                snowflake
-                            )!!
-                        )
-                        resolvedObjects.roles?.get(snowflake) != null -> RoleOptionValue(
-                            resolvedObjects.roles?.get(
-                                snowflake
-                            )!!
-                        )
+                        resolvedObjects.members?.get(snowflake) != null ->
+                            MemberOptionValue(resolvedObjects.members?.get(snowflake)!!)
+                        resolvedObjects.users?.get(snowflake) != null ->
+                            UserOptionValue(resolvedObjects.users?.get(snowflake)!!)
+                        resolvedObjects.channels?.get(snowflake) != null ->
+                            ChannelOptionValue(resolvedObjects.channels?.get(snowflake)!!)
+                        resolvedObjects.roles?.get(snowflake) != null ->
+                            RoleOptionValue(resolvedObjects.roles?.get(snowflake)!!)
                         else -> StringOptionValue(value.value)
                     }
                 }
