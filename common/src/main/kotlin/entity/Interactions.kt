@@ -147,7 +147,7 @@ sealed class Choice<out T> {
 data class ResolvedObjects(
     val members: Optional<Map<Snowflake, DiscordGuildMember>> = Optional.Missing(),
     val users: Optional<Map<Snowflake, DiscordUser>> = Optional.Missing(),
-    val roles: Optional<Map<Snowflake, DiscordGuildRole>> = Optional.Missing(),
+    val roles: Optional<Map<Snowflake, DiscordRole>> = Optional.Missing(),
     val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing()
 )
 

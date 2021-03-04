@@ -5,7 +5,6 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.NotSerializable
 import dev.kord.common.entity.optional.*
-import dev.kord.core.entity.interaction.OptionValue
 import dev.kord.gateway.InteractionCreate
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -60,7 +59,7 @@ data class ResolvedObjectsData(
             return ResolvedObjectsData(
                 members = data.members.mapValues { MemberData.from(it.key, guildId!!, it.value) },
                 channels = data.channels.mapValues { ChannelData.from(it.value) },
-                roles = data.roles.mapValues { RoleData.from(it.value) },
+                roles = data.roles.mapValues { RoleData.from(guildId!!, it.value) },
                 users = data.users.mapValues { it.value.toData() }
             )
         }
