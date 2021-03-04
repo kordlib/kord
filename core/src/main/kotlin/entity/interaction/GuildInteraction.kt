@@ -1,5 +1,7 @@
 package dev.kord.core.entity.interaction
 
+import dev.kord.common.annotation.KordPreview
+import dev.kord.core.entity.Guild
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
@@ -9,6 +11,10 @@ import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.supplier.EntitySupplier
 
+/**
+ * An [Interaction] that took place in a [Guild].
+ */
+@KordPreview
 class GuildInteraction(
     override val data: InteractionData,
     override val applicationId: Snowflake,
@@ -19,6 +25,9 @@ class GuildInteraction(
     override val guildId: Snowflake
         get() = data.guildId.value!!
 
+    /**
+     * Overridden permissions of the interaction invoker in the channel.
+     */
     val permissions: Permissions get() = data.permissions.value!!
 
     /**

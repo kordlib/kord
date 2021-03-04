@@ -9,8 +9,7 @@ import dev.kord.common.entity.snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.InteractionBehavior
-import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.channel.TextChannelBehavior
+import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
@@ -21,7 +20,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * Interaction that can respond to interactions and follow them up.
+ * An instance of [Interaction] (https://discord.com/developers/docs/interactions/slash-commands#interaction)
  */
 @KordPreview
 interface Interaction : InteractionBehavior {
@@ -46,9 +45,9 @@ interface Interaction : InteractionBehavior {
     val type: InteractionType get() = data.type
 
     /**
-     * The [TextChannelBehavior] of the channel the command was executed in.
+     * The [MessageChannelBehavior] of the channel the command was executed in.
      */
-    val channel: ChannelBehavior get() = ChannelBehavior(data.channelId, kord)
+    val channel: MessageChannelBehavior get() = MessageChannelBehavior(data.channelId, kord)
 
 
     /**
@@ -93,11 +92,7 @@ sealed class InteractionCommand : KordObject {
     abstract val rootName: String
 
     /**
-     * Options passed to the command.
-     * Type-check your command to against the sub-types of this class for the right context of the execution
-     * * [RootCommand] - Context of main command execution.
-     * * [GroupCommand] - Context of a sub-command executed in a group.
-     * * [SubCommand] - Context of a sub-command executed under the root command.
+     * the values passed to the command.
      */
     abstract val options: Map<String, OptionValue<*>>
 
