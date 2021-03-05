@@ -6,9 +6,14 @@ import dev.kord.core.entity.User
 import dev.kord.core.event.Event
 import dev.kord.core.event.user.UserUpdateEvent
 
-
 @KordPreview
 fun User.live() = LiveUser(this)
+
+@KordPreview
+inline fun User.live(block: LiveUser.() -> Unit) = this.live().apply(block)
+
+@KordPreview
+fun LiveUser.onUpdate(block: suspend (UserUpdateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
 class LiveUser(user: User) : AbstractLiveKordEntity(), KordEntity by user {

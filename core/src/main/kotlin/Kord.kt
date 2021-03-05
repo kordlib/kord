@@ -121,7 +121,7 @@ class Kord(
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
         gateway.start(resources.token) {
-            shard = DiscordShard(0, resources.shardCount)
+            shard = DiscordShard(0, resources.shards.totalShards)
             presence(builder)
             intents = resources.intents
             name = "kord"
