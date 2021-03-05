@@ -1,132 +1,301 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.DiscordOptionValue
 import dev.kord.common.entity.InteractionType
-import dev.kord.common.entity.OptionValue
-import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.KordObject
 import dev.kord.core.behavior.InteractionBehavior
-import dev.kord.core.behavior.MemberBehavior
-import dev.kord.core.behavior.channel.TextChannelBehavior
+import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
-import dev.kord.core.cache.data.OptionData
-import dev.kord.core.entity.Entity
-import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.cache.data.ResolvedObjectsData
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Role
+import dev.kord.core.entity.User
+import dev.kord.core.entity.channel.Channel
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * Interaction that can respond to interactions and follow them up.
- *
- * @property id interaction's id.
- * @property channelId the channel id where the interaction took place.
- * @property token a continuation token for responding to the interaction
- * @property guildId the id of the guild where the interaction took place.
- * @property permissions the permissions of the member with the overwrites.
- * @property type the type of the interaction.
- * @property member the invoker of the command as [MemberBehavior].
- * @property command [Command] object that contains the data related to the interaction's command.
- * @property version read-only property, always 1
+ * An instance of [Interaction] (https://discord.com/developers/docs/interactions/slash-commands#interaction)
  */
 @KordPreview
-class Interaction(
-    val data: InteractionData,
-    override val applicationId: Snowflake,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
-) : InteractionBehavior {
+interface Interaction : InteractionBehavior {
+
+    val data: InteractionData
 
     override val id: Snowflake get() = data.id
 
+    /**
+     * The channel id where the interaction took place.
+     */
     override val channelId: Snowflake get() = data.channelId
 
+    /**
+     * a continuation token for responding to the interaction
+     */
     override val token: String get() = data.token
 
-    override val guildId: Snowflake get() = data.guildId
-
+    /**
+     * The type of the interaction.
+     */
     val type: InteractionType get() = data.type
 
-    val permissions: Permissions get() = data.permissions
+    /**
+     * The [MessageChannelBehavior] of the channel the command was executed in.
+     */
+    val channel: MessageChannelBehavior get() = MessageChannelBehavior(data.channelId, kord)
 
-    val channel: TextChannelBehavior get() = TextChannelBehavior(id = channelId, guildId = guildId, kord = kord)
 
-    val guild get() = GuildBehavior(guildId, kord)
+    /**
+     * [InteractionCommand] object that contains the data related to the interaction's command.
+     */
+    val command: InteractionCommand
+        get() = InteractionCommand(data.data, kord)
 
-    val member: MemberBehavior get() = MemberBehavior(data.guildId, data.member.userId, kord)
-
-    val command: Command
-        get() = Command(data.data)
-
+    /**
+     * read-only property, always 1
+     */
     val version: Int get() = data.version
 
+    companion object {
+        fun from(
+            data: InteractionData,
+            kord: Kord,
+            strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+        ): Interaction {
+            return if (data.guildId !is OptionalSnowflake.Missing)
+                GuildInteraction(data, kord.slashCommands.applicationId, kord, strategy.supply(kord))
+            else
+                DmInteraction(data, kord.slashCommands.applicationId, kord, strategy.supply(kord))
+        }
+    }
+
 }
 
 /**
- * The root command in the interaction.
- *
- * @property name name of the command.
- * @property options  names of options in the command mapped to their values.
- * @property groups  names of groups in the command mapped to the [Group] with matching name.
- * @property subCommands  names of sub-commands in the command mapped to the [SubCommand] with matching name.
+ * The base command of all commands that can be executed under an interaction event.
  */
 @KordPreview
-class Command(val data: ApplicationCommandInteractionData) : Entity {
-    override val id: Snowflake
+sealed class InteractionCommand : KordObject {
+    /**
+     * The id of the root command.
+     */
+    abstract val rootId: Snowflake
+
+    /**
+     * The root command name
+     */
+    abstract val rootName: String
+
+    /**
+     * the values passed to the command.
+     */
+    abstract val options: Map<String, OptionValue<*>>
+
+
+    companion object {
+        operator fun invoke(
+            data: ApplicationCommandInteractionData,
+            kord: Kord
+        ): InteractionCommand {
+            val firstLevelOptions = data.options.orEmpty()
+            val rootPredicate = firstLevelOptions.isEmpty() || firstLevelOptions.any { it.value.value != null }
+            val groupPredicate = firstLevelOptions.any { it.subCommands.orEmpty().isNotEmpty() }
+            val subCommandPredicate =
+                firstLevelOptions.all { it.value is Optional.Missing && it.subCommands is Optional.Missing }
+
+            return when {
+                rootPredicate -> RootCommand(data, kord)
+                groupPredicate -> GroupCommand(data, kord)
+                subCommandPredicate -> SubCommand(data, kord)
+                else -> error("The interaction data provided is not an application command")
+            }
+        }
+    }
+
+    abstract val resolved: ResolvedObjects?
+}
+
+/**
+ * Represents an invocation of a root command.
+ *
+ * The root command is the first command defined in in a slash-command structure.
+ */
+@KordPreview
+class RootCommand(
+    val data: ApplicationCommandInteractionData,
+    override val kord: Kord
+) : InteractionCommand() {
+
+    override val rootId: Snowflake
         get() = data.id
 
-    val name get() = data.name
+    override val rootName get() = data.name
 
-    val options
-        get(): Map<String, OptionValue<*>> = data.options.orEmpty()
-            .filter { it.value !is Optional.Missing<*> }
-            .associate { it.name to it.value.value!! }
-
-    val groups: Map<String, Group>
+    override val options: Map<String, OptionValue<*>>
         get() = data.options.orEmpty()
-            .filter { it.subCommands.orEmpty().isNotEmpty() }
-            .associate { it.name to Group(it) }
+            .associate { it.name to OptionValue(it.value.value!!, resolved) }
+
+    override val resolved: ResolvedObjects?
+        get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
+
+}
+
+/**
+ * Represents an invocation of a sub-command under the [RootCommand]
+ */
+@KordPreview
+class SubCommand(
+    val data: ApplicationCommandInteractionData,
+    override val kord: Kord
+) : InteractionCommand() {
+
+    private val subCommandData = data.options.orEmpty().first()
+
+    override val rootName get() = data.name
+
+    override val rootId: Snowflake
+        get() = data.id
+
+    /**
+     * Name of the sub-command executed.
+     */
+    val name get() = subCommandData.name
+
+    override val options: Map<String, OptionValue<*>>
+        get() = subCommandData.values.orEmpty()
+            .associate { it.name to OptionValue(it.value, resolved) }
 
 
-    val subCommands: Map<String, SubCommand>
-        get() = data.options.orEmpty()
-            .filter { it.values.orEmpty().isNotEmpty() }
-            .associate { it.name to SubCommand(it) }
+    override val resolved: ResolvedObjects?
+        get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
 
 
 }
 
 /**
- * The Group containing [SubCommand]s  related to [Command].
- *
- *@property subCommands  names of sub-commands in this [Group] of commands mapped to the [SubCommand] with matching name.
+ * Represents an invocation of a sub-command under a group.
  */
 @KordPreview
-class Group(val data: OptionData) {
-    val name: String get() = data.name
+class GroupCommand(
+    val data: ApplicationCommandInteractionData,
+    override val kord: Kord
+) : InteractionCommand() {
 
-    val subCommands: Map<String, SubCommand>
-        get() = data.subCommands.orEmpty()
-            .associate { it.name to SubCommand(OptionData(it.name, values = it.options)) }
+    private val groupData get() = data.options.orEmpty().first()
+    private val subCommandData get() = groupData.subCommands.orEmpty().first()
+
+    override val rootId: Snowflake
+        get() = data.id
+
+    override val rootName get() = data.name
+
+    /**
+     * Name of the group of this sub-command.
+     */
+    val groupName get() = groupData.name
+
+    /**
+     * Name of this sub-command
+     */
+    val name get() = subCommandData.name
+
+    override val options: Map<String, OptionValue<*>>
+        get() = subCommandData.options.orEmpty()
+            .associate { it.name to OptionValue(it.value, resolved) }
+
+
+    override val resolved: ResolvedObjects?
+        get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
 
 }
 
-/**
- * A [SubCommand] that is either a part of [Command] or [Group].
- *
- * @property name name of the subcommand.
- * @property options  names of options in the command mapped to their values.
- */
 @KordPreview
-class SubCommand(val data: OptionData) {
-    val name: String get() = data.name
+class ResolvedObjects(
+    val data: ResolvedObjectsData,
+    val kord: Kord,
+    val strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+) {
+    val channels: Map<Snowflake, Channel>?
+        get() = data.channels.mapValues {
+            Channel.from(
+                it.value,
+                kord,
+                strategy
+            )
+        }.value
+    val roles: Map<Snowflake, Role>? get() = data.roles.mapValues { Role(it.value, kord) }.value
+    val users: Map<Snowflake, User>? get() = data.users.mapValues { User(it.value, kord) }.value
+    val members: Map<Snowflake, Member>?
+        get() = data.members.mapValues {
+            Member(
+                it.value,
+                users!!.get(it.key)!!.data,
+                kord
+            )
+        }.value
 
-    val options: Map<String, OptionValue<*>>
-        get() = data.values.orEmpty()
-            .associate { it.name to it.value }
 }
 
+@KordPreview
+sealed class OptionValue<T>(val value: T) {
 
+    class RoleOptionValue(value: Role) : OptionValue<Role>(value)
+    open class UserOptionValue(value: User) : OptionValue<User>(value)
+    class MemberOptionValue(value: Member) : UserOptionValue(value)
+    class ChannelOptionValue(value: Channel) : OptionValue<Channel>(value)
+    class IntOptionValue(value: Int) : OptionValue<Int>(value)
+    class StringOptionValue(value: String) : OptionValue<String>(value)
+    class BooleanOptionValue(value: Boolean) : OptionValue<Boolean>(value)
 
+    companion object {
+        operator fun invoke(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
+            return when (value) {
+                is DiscordOptionValue.BooleanValue -> BooleanOptionValue(value.value)
+                is DiscordOptionValue.IntValue -> IntOptionValue(value.value)
+                is DiscordOptionValue.StringValue -> {
+                    if (resolvedObjects == null) return StringOptionValue(value.value)
+
+                    val snowflake = value.snowflake()
+
+                    when {
+                        resolvedObjects.members?.get(snowflake) != null ->
+                            MemberOptionValue(resolvedObjects.members?.get(snowflake)!!)
+                        resolvedObjects.users?.get(snowflake) != null ->
+                            UserOptionValue(resolvedObjects.users?.get(snowflake)!!)
+                        resolvedObjects.channels?.get(snowflake) != null ->
+                            ChannelOptionValue(resolvedObjects.channels?.get(snowflake)!!)
+                        resolvedObjects.roles?.get(snowflake) != null ->
+                            RoleOptionValue(resolvedObjects.roles?.get(snowflake)!!)
+                        else -> StringOptionValue(value.value)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@KordPreview
+fun OptionValue<*>.user(): User = value as User
+
+@KordPreview
+fun OptionValue<*>.channel(): Channel = value as Channel
+
+@KordPreview
+fun OptionValue<*>.role(): Role = value as Role
+
+@KordPreview
+fun OptionValue<*>.member(): Member = value as Member
+
+@KordPreview
+fun OptionValue<*>.string() = value.toString()
+
+@KordPreview
+fun OptionValue<*>.boolean() = value as Boolean
+
+@KordPreview
+fun OptionValue<*>.int() = value as Int

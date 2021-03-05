@@ -18,8 +18,8 @@ data class DiscordGuildMember(
         val joinedAt: String,
         @SerialName("premium_since")
         val premiumSince: Optional<String?> = Optional.Missing(),
-        val deaf: Boolean,
-        val mute: Boolean,
+        val deaf: OptionalBoolean = OptionalBoolean.Missing,
+        val mute: OptionalBoolean = OptionalBoolean.Missing,
         val pending: OptionalBoolean = OptionalBoolean.Missing
 )
 
@@ -37,8 +37,6 @@ data class DiscordInteractionGuildMember(
         val joinedAt: String,
         @SerialName("premium_since")
         val premiumSince: Optional<String?> = Optional.Missing(),
-        val deaf: Boolean,
-        val mute: Boolean,
         val permissions: Permissions,
 )
 

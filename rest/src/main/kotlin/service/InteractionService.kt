@@ -6,6 +6,8 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
+import kotlinx.serialization.builtins.ListSerializer
+
 @KordPreview
 class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
     suspend fun getGlobalApplicationCommands(applicationId: Snowflake): List<DiscordApplicationCommand> =
@@ -19,6 +21,15 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     ): DiscordApplicationCommand = call(Route.GlobalApplicationCommandCreate) {
         keys[Route.ApplicationId] = applicationId
         body(ApplicationCommandCreateRequest.serializer(), request)
+    }
+
+
+    suspend fun createGlobalApplicationCommands(
+        applicationId: Snowflake,
+        request: List<ApplicationCommandCreateRequest>
+    ): List<DiscordApplicationCommand> = call(Route.GlobalApplicationCommandsCreate) {
+        keys[Route.ApplicationId] = applicationId
+        body(ListSerializer(ApplicationCommandCreateRequest.serializer()), request)
     }
 
     suspend fun modifyGlobalApplicationCommand(
@@ -47,12 +58,22 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         applicationId: Snowflake,
         guildId: Snowflake,
         request: ApplicationCommandCreateRequest
-    ) =
-        call(Route.GuildApplicationCommandCreate) {
+    ) = call(Route.GuildApplicationCommandCreate) {
             keys[Route.ApplicationId] = applicationId
             keys[Route.GuildId] = guildId
             body(ApplicationCommandCreateRequest.serializer(), request)
         }
+
+    suspend fun createGuildApplicationCommands(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        request: List<ApplicationCommandCreateRequest>
+    ) = call(Route.GuildApplicationCommandsCreate) {
+            keys[Route.ApplicationId] = applicationId
+            keys[Route.GuildId] = guildId
+            body(ListSerializer(ApplicationCommandCreateRequest.serializer()), request)
+        }
+
 
     suspend fun modifyGuildApplicationCommand(
         applicationId: Snowflake,

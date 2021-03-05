@@ -5,6 +5,7 @@ import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.optional
 import dev.kord.core.Kord
+import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
@@ -22,7 +23,6 @@ interface InteractionBehavior : KordEntity, Strategizable {
 
     val applicationId: Snowflake
     val token: String
-    val guildId: Snowflake
     val channelId: Snowflake
 
     /**
@@ -31,19 +31,11 @@ interface InteractionBehavior : KordEntity, Strategizable {
      * @param source weather to show the author's name and provided arguments of the command.
      * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
      */
-    suspend fun acknowledge(source: Boolean = false): InteractionResponseBehavior {
-        val type = if (source) InteractionResponseType.ACKWithSource
-        else InteractionResponseType.Acknowledge
-        val request = InteractionResponseCreateRequest(type)
+    suspend fun acknowledge(): InteractionResponseBehavior {
+        val request = InteractionResponseCreateRequest(InteractionResponseType.DeferredChannelMessageWithSource)
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return InteractionResponseBehavior(applicationId, token, kord)
     }
-
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
-
-
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
-
 
     suspend fun getChannelOrNull(): Channel? = supplier.getChannelOrNull(channelId)
 
@@ -52,13 +44,12 @@ interface InteractionBehavior : KordEntity, Strategizable {
 
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior =
-        InteractionBehavior(id, guildId, channelId, token, applicationId, kord, strategy)
+        InteractionBehavior(id, channelId, token, applicationId, kord, strategy)
 
     companion object {
 
         operator fun invoke(
             id: Snowflake,
-            guildId: Snowflake,
             channelId: Snowflake,
             token: String,
             applicationId: Snowflake,
@@ -81,8 +72,6 @@ interface InteractionBehavior : KordEntity, Strategizable {
                 override val channelId: Snowflake
                     get() = channelId
 
-                override val guildId: Snowflake
-                    get() = guildId
 
                 override val supplier: EntitySupplier
                     get() = strategy.supply(kord)
@@ -101,15 +90,12 @@ interface InteractionBehavior : KordEntity, Strategizable {
 @KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respond(
-    source: Boolean = false,
     builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit = {}
 ): InteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val type = if (source) InteractionResponseType.ChannelMessageWithSource
-    else InteractionResponseType.ChannelMessage
 
     val data = InteractionApplicationCommandCallbackDataBuilder().apply(builder).build()
-    val request = InteractionResponseCreateRequest(type, data.optional())
+    val request = InteractionResponseCreateRequest(InteractionResponseType.ChannelMessageWithSource, data.optional())
     kord.rest.interaction.createInteractionResponse(id, token, request)
     return InteractionResponseBehavior(applicationId, token, kord)
 

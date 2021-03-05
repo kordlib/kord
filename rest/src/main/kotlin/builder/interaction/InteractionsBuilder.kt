@@ -42,6 +42,24 @@ class ApplicationCommandCreateBuilder(
 
 @KordPreview
 @KordDsl
+class ApplicationCommandsCreateBuilder : RequestBuilder<List<ApplicationCommandCreateRequest>> {
+    val commands: MutableList<ApplicationCommandCreateBuilder> = mutableListOf()
+    fun command(
+        name: String,
+        description: String,
+        builder: ApplicationCommandCreateBuilder.() -> Unit
+    ) {
+        commands += ApplicationCommandCreateBuilder(name, description).apply(builder)
+    }
+
+    override fun toRequest(): List<ApplicationCommandCreateRequest> {
+        return commands.map { it.toRequest() }
+    }
+
+}
+
+@KordPreview
+@KordDsl
 sealed class BaseApplicationBuilder {
     abstract var options: MutableList<OptionsBuilder>?
 
@@ -270,12 +288,12 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(
             FollowupMessageCreateRequest(
-                _content,
-                _username,
-                _avatarUrl,
-                _tts,
-                Optional.missingOnEmpty(embeds),
-                _allowedMentions
+                content = _content,
+                username = _username,
+                avatar = _avatarUrl,
+                tts = _tts,
+                embeds = Optional.missingOnEmpty(embeds),
+                allowedMentions = _allowedMentions
             ),
             file,
         )

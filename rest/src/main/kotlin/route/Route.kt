@@ -462,6 +462,13 @@ sealed class Route<T>(
         DiscordApplicationCommand.serializer()
     )
 
+
+    object GlobalApplicationCommandsCreate : Route<List<DiscordApplicationCommand>>(
+        HttpMethod.Put,
+        "/applications/${ApplicationId}/commands",
+        ListSerializer(DiscordApplicationCommand.serializer())
+    )
+
     object GlobalApplicationCommandModify : Route<DiscordApplicationCommand>(
         HttpMethod.Patch,
         "/applications/${ApplicationId}/commands/${CommandId}",
@@ -484,6 +491,13 @@ sealed class Route<T>(
         HttpMethod.Post,
         "/applications/${ApplicationId}/guilds/${GuildId}/commands",
         DiscordApplicationCommand.serializer()
+    )
+
+
+    object GuildApplicationCommandsCreate : Route<List<DiscordApplicationCommand>>(
+        HttpMethod.Put,
+        "/applications/${ApplicationId}/guilds/${GuildId}/commands",
+        ListSerializer(DiscordApplicationCommand.serializer())
     )
 
     object GuildApplicationCommandModify

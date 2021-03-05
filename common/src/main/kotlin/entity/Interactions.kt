@@ -18,27 +18,27 @@ val kordLogger = KotlinLogging.logger { }
 @Serializable
 @KordPreview
 data class DiscordApplicationCommand(
-        val id: Snowflake,
-        @SerialName("application_id")
-        val applicationId: Snowflake,
-        val name: String,
-        val description: String,
-        @SerialName("guild_id")
-        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-        val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    val id: Snowflake,
+    @SerialName("application_id")
+    val applicationId: Snowflake,
+    val name: String,
+    val description: String,
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
 )
 
 @Serializable
 @KordPreview
 class ApplicationCommandOption(
-        val type: ApplicationCommandOptionType,
-        val name: String,
-        val description: String,
-        val default: OptionalBoolean = OptionalBoolean.Missing,
-        val required: OptionalBoolean = OptionalBoolean.Missing,
-        @OptIn(KordExperimental::class)
-        val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
-        val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    val type: ApplicationCommandOptionType,
+    val name: String,
+    val description: String,
+    val default: OptionalBoolean = OptionalBoolean.Missing,
+    val required: OptionalBoolean = OptionalBoolean.Missing,
+    @OptIn(KordExperimental::class)
+    val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
 )
 
 /**
@@ -144,17 +144,27 @@ sealed class Choice<out T> {
 
 @Serializable
 @KordPreview
+data class ResolvedObjects(
+    val members: Optional<Map<Snowflake, DiscordGuildMember>> = Optional.Missing(),
+    val users: Optional<Map<Snowflake, DiscordUser>> = Optional.Missing(),
+    val roles: Optional<Map<Snowflake, DiscordRole>> = Optional.Missing(),
+    val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing()
+)
+
+@Serializable
+@KordPreview
 data class DiscordInteraction(
-        val id: Snowflake,
-        val type: InteractionType,
-        val data: DiscordApplicationCommandInteractionData,
-        @SerialName("guild_id")
-        val guildId: Snowflake,
-        @SerialName("channel_id")
-        val channelId: Snowflake,
-        val member: DiscordInteractionGuildMember,
-        val token: String,
-        val version: Int,
+    val id: Snowflake,
+    val type: InteractionType,
+    val data: DiscordApplicationCommandInteractionData,
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("channel_id")
+    val channelId: Snowflake,
+    val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
+    val user: Optional<DiscordUser> = Optional.Missing(),
+    val token: String,
+    val version: Int,
 )
 
 @Serializable(InteractionType.Serializer::class)
@@ -164,7 +174,7 @@ sealed class InteractionType(val type: Int) {
     object ApplicationCommand : InteractionType(2)
     class Unknown(type: Int) : InteractionType(type)
 
-    override fun toString(): String = when(this){
+    override fun toString(): String = when (this) {
         Ping -> "InteractionType.Ping($type)"
         ApplicationCommand -> "InteractionType.ApplicationCommand($type)"
         is Unknown -> "InteractionType.Unknown($type)"
@@ -194,9 +204,10 @@ sealed class InteractionType(val type: Int) {
 @Serializable
 @KordPreview
 data class DiscordApplicationCommandInteractionData(
-            val id: Snowflake,
-            val name: String,
-            val options: Optional<List<Option>> = Optional.Missing()
+    val id: Snowflake,
+    val name: String,
+    val resolved: Optional<ResolvedObjects> = Optional.Missing(),
+    val options: Optional<List<Option>> = Optional.Missing()
 )
 
 @Serializable(with = Option.Serializer::class)
@@ -233,7 +244,7 @@ sealed class Option {
             }
 
             jsonValue?.let { value -> // name + value == command option, i.e. an argument
-                return CommandArgument(name, OptionValue(value))
+                return CommandArgument(name, DiscordOptionValue(value))
             }
 
             if (jsonOptions == null) { // name -value -options == can only be sub command
@@ -247,7 +258,8 @@ sealed class Option {
                 return SubCommand(name, Optional(emptyList()))
             }
 
-            val onlyArguments = nestedOptions.all { it is CommandArgument } //only subcommand can have options at this point
+            val onlyArguments =
+                nestedOptions.all { it is CommandArgument } //only subcommand can have options at this point
             if (onlyArguments) return SubCommand(name, Optional(nestedOptions.filterIsInstance<CommandArgument>()))
 
             val onlySubCommands = nestedOptions.all { it is SubCommand } //only groups can have options at this point
@@ -265,16 +277,16 @@ sealed class Option {
 @Serializable
 @KordPreview
 data class SubCommand(
-        override val name: String,
-        val options: Optional<List<CommandArgument>> = Optional.Missing()
+    override val name: String,
+    val options: Optional<List<CommandArgument>> = Optional.Missing()
 ) : Option()
 
 @Serializable
 @KordPreview
 data class CommandArgument(
-        override val name: String,
-        @OptIn(KordExperimental::class)
-        val value: OptionValue<@Serializable(NotSerializable::class) Any?>,
+    override val name: String,
+    @OptIn(KordExperimental::class)
+    val value: DiscordOptionValue<@Serializable(NotSerializable::class) Any?>,
 ) : Option()
 
 @Serializable
@@ -284,21 +296,21 @@ data class CommandGroup(
     val options: Optional<List<SubCommand>> = Optional.Missing(),
 ) : Option()
 
-@Serializable(OptionValue.OptionValueSerializer::class)
+@Serializable(DiscordOptionValue.OptionValueSerializer::class)
 @KordPreview
-sealed class OptionValue<out T>(val value: T) {
-    class IntValue(value: Int) : OptionValue<Int>(value)
-    class StringValue(value: String) : OptionValue<String>(value)
-    class BooleanValue(value: Boolean) : OptionValue<Boolean>(value)
+sealed class DiscordOptionValue<out T>(val value: T) {
+    class IntValue(value: Int) : DiscordOptionValue<Int>(value)
+    class StringValue(value: String) : DiscordOptionValue<String>(value)
+    class BooleanValue(value: Boolean) : DiscordOptionValue<Boolean>(value)
 
-    override fun toString(): String = when(this){
+    override fun toString(): String = when (this) {
         is IntValue -> "OptionValue.IntValue($value)"
         is StringValue -> "OptionValue.StringValue($value)"
         is BooleanValue -> "OptionValue.BooleanValue($value)"
     }
 
     companion object {
-        operator fun invoke(value: JsonPrimitive): OptionValue<Any> = when {
+        operator fun invoke(value: JsonPrimitive): DiscordOptionValue<Any> = when {
             value.isString -> StringValue(value.content)
             value.booleanOrNull != null -> BooleanValue(value.boolean)
             value.intOrNull != null -> IntValue(value.int)
@@ -306,10 +318,10 @@ sealed class OptionValue<out T>(val value: T) {
         }
     }
 
-    internal class OptionValueSerializer<T>(serializer: KSerializer<T>) : KSerializer<OptionValue<*>> {
+    internal class OptionValueSerializer<T>(serializer: KSerializer<T>) : KSerializer<DiscordOptionValue<*>> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("OptionValue", PrimitiveKind.STRING)
 
-        override fun deserialize(decoder: Decoder): OptionValue<*> {
+        override fun deserialize(decoder: Decoder): DiscordOptionValue<*> {
             val value = (decoder as JsonDecoder).decodeJsonElement().jsonPrimitive
             return when {
                 value.isString -> StringValue(value.toString())
@@ -318,7 +330,7 @@ sealed class OptionValue<out T>(val value: T) {
             }
         }
 
-        override fun serialize(encoder: Encoder, value: OptionValue<*>) {
+        override fun serialize(encoder: Encoder, value: DiscordOptionValue<*>) {
             when (value) {
                 is IntValue -> encoder.encodeInt(value.value)
                 is StringValue -> encoder.encodeString(value.value)
@@ -330,23 +342,23 @@ sealed class OptionValue<out T>(val value: T) {
 
 
 @KordPreview
-fun OptionValue<*>.int(): Int {
+fun DiscordOptionValue<*>.int(): Int {
     return value as? Int ?: error("$value wasn't an Int.")
 }
 
 
 @KordPreview
-fun OptionValue<*>.string(): String {
+fun DiscordOptionValue<*>.string(): String {
     return value.toString()
 }
 
 @KordPreview
-fun OptionValue<*>.boolean(): Boolean {
+fun DiscordOptionValue<*>.boolean(): Boolean {
     return value as? Boolean ?: error("$value wasn't a Boolean.")
 }
 
 @KordPreview
-fun OptionValue<*>.snowflake(): Snowflake {
+fun DiscordOptionValue<*>.snowflake(): Snowflake {
     val id = string().toLongOrNull() ?: error("$value wasn't a Snowflake")
     return Snowflake(id)
 }
@@ -356,10 +368,8 @@ fun OptionValue<*>.snowflake(): Snowflake {
 @KordPreview
 sealed class InteractionResponseType(val type: Int) {
     object Pong : InteractionResponseType(1)
-    object Acknowledge : InteractionResponseType(2)
-    object ChannelMessage : InteractionResponseType(3)
     object ChannelMessageWithSource : InteractionResponseType(4)
-    object ACKWithSource : InteractionResponseType(5)
+    object DeferredChannelMessageWithSource : InteractionResponseType(5)
     class Unknown(type: Int) : InteractionResponseType(type)
 
     companion object;
@@ -372,10 +382,8 @@ sealed class InteractionResponseType(val type: Int) {
         override fun deserialize(decoder: Decoder): InteractionResponseType {
             return when (val type = decoder.decodeInt()) {
                 1 -> Pong
-                2 -> Acknowledge
-                3 -> ChannelMessage
                 4 -> ChannelMessageWithSource
-                5 -> ACKWithSource
+                5 -> DeferredChannelMessageWithSource
                 else -> Unknown(type)
             }
         }
