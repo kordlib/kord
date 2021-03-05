@@ -288,17 +288,18 @@ data class MessageFlags internal constructor(val code: Int) {
 
     val flags = MessageFlag.values().filter { code and it.code != 0 }
 
-    operator fun contains(flag: MessageFlag) = flag in flags
+    operator fun contains(flag: MessageFlag) = flag.code and this.code == flag.code
 
-    operator fun plus(flags: MessageFlags): MessageFlags = when {
-        code and flags.code == flags.code -> this
-        else -> MessageFlags(this.code or flags.code)
-    }
+    operator fun contains(flags: MessageFlags) = flags.code and this.code == flags.code
 
-    operator fun minus(flag: MessageFlag): MessageFlags = when {
-        code and flag.code == flag.code -> MessageFlags(code xor flag.code)
-        else -> this
-    }
+    operator fun plus(flags: MessageFlags): MessageFlags = MessageFlags(this.code or flags.code)
+
+    operator fun plus(flags: MessageFlag): MessageFlags = MessageFlags(this.code or flags.code)
+
+    operator fun minus(flags: MessageFlags): MessageFlags = MessageFlags(this.code xor flags.code)
+
+    operator fun minus(flags: MessageFlag): MessageFlags = MessageFlags(this.code xor flags.code)
+
 
     inline fun copy(block: Builder.() -> Unit): MessageFlags {
         val builder = Builder(code)
@@ -310,6 +311,28 @@ data class MessageFlags internal constructor(val code: Int) {
         inline operator fun invoke(builder: Builder.() -> Unit): MessageFlags {
             return Builder().apply(builder).flags()
         }
+
+        operator fun invoke(value: Int) = MessageFlags(value)
+
+        operator fun invoke(vararg flags: MessageFlag) = MessageFlags {
+            flags.forEach { +it }
+        }
+
+        operator fun invoke(vararg flags: MessageFlags) = MessageFlags {
+            flags.forEach { +it }
+        }
+
+        operator fun invoke(flags: Iterable<MessageFlag>) = MessageFlags {
+            flags.forEach { +it }
+        }
+
+
+        @JvmName("invokeWithFlags")
+        operator fun invoke(flags: Iterable<MessageFlags>) = MessageFlags {
+            flags.forEach { +it }
+        }
+
+
     }
 
     internal object Serializer : KSerializer<MessageFlags> {
@@ -332,6 +355,16 @@ data class MessageFlags internal constructor(val code: Int) {
         }
 
         operator fun MessageFlag.unaryMinus() {
+            if (this@Builder.code and code == code) {
+                this@Builder.code = this@Builder.code xor code
+            }
+        }
+
+        operator fun MessageFlags.unaryPlus() {
+            this@Builder.code = this@Builder.code or code
+        }
+
+        operator fun MessageFlags.unaryMinus() {
             if (this@Builder.code and code == code) {
                 this@Builder.code = this@Builder.code xor code
             }
