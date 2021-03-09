@@ -284,7 +284,7 @@ enum class MessageFlag(val code: Int) {
 }
 
 @Serializable(with = MessageFlags.Serializer::class)
-data class MessageFlags internal constructor(val code: Int) {
+class MessageFlags internal constructor(val code: Int) {
 
     val flags = MessageFlag.values().filter { code and it.code != 0 }
 
@@ -306,6 +306,8 @@ data class MessageFlags internal constructor(val code: Int) {
         builder.apply(block)
         return builder.flags()
     }
+
+    override fun toString(): String = flags.toString()
 
     companion object {
         inline operator fun invoke(builder: Builder.() -> Unit): MessageFlags {
