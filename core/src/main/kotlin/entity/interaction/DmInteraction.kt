@@ -21,5 +21,5 @@ class DmInteraction(
     /**
      * The user who invoked the interaction.
      */
-    val user get() =  User(data.user.value!!, kord)
+    override val user get() =  User(data.user.value!!, kord)
 }

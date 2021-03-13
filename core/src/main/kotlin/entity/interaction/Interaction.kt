@@ -49,7 +49,7 @@ interface Interaction : InteractionBehavior {
      */
     val channel: MessageChannelBehavior get() = MessageChannelBehavior(data.channelId, kord)
 
-
+    abstract val user: UserBehavior
     /**
      * [InteractionCommand] object that contains the data related to the interaction's command.
      */
