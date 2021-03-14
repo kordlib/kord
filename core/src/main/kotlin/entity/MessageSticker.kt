@@ -50,7 +50,7 @@ class MessageSticker(val data: MessageStickerData, override val kord: Kord) : Ko
      * The sticker preview image has asset (currently private).
      */
     val previewAsset: String?
-        get() = data.previewAsset
+        get() = data.previewAsset.value
 
     /**
      * The type of sticker image.
