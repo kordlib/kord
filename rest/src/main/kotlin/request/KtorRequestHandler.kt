@@ -10,8 +10,8 @@ import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.content.TextContent
+import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.http.takeFrom
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import java.time.Clock
@@ -58,7 +58,9 @@ class KtorRequestHandler(
             }
             response.isError -> {
                 logger.debug { response.logString(body) }
-                throw KtorRequestException(response, parser.decodeFromString(DiscordErrorResponse.serializer().optional, body))
+                if(response.contentType() == ContentType.Application.Json)
+                    throw KtorRequestException(response, parser.decodeFromString(DiscordErrorResponse.serializer().optional, body))
+                else throw KtorRequestException(response, null)
             }
             else -> {
                 logger.debug { response.logString(body) }
