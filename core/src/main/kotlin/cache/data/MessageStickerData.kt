@@ -14,7 +14,7 @@ data class MessageStickerData(
         val description: String,
         val tags: Optional<String> = Optional.Missing(),
         val asset: String,
-        val previewAsset: String?,
+        val previewAsset: Optional<String?> = Optional.Missing(),
         val formatType: MessageStickerType,
 ) {
 
