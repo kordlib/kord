@@ -118,6 +118,7 @@ data class DiscordMessageSticker(
         val tags: Optional<String> = Optional.Missing(),
         val asset: String,
         @SerialName("preview_asset")
+        // https://github.com/kordlib/kord/issues/207
         val previewAsset: Optional<String?> = Optional.Missing(),
         @SerialName("format_type")
         val formatType: MessageStickerType,
