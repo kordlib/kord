@@ -147,5 +147,6 @@ sealed class Permission(val code: DiscordBitSet) {
     object ManageRoles : Permission(0x10000000)
     object ManageWebhooks : Permission(0x20000000)
     object ManageEmojis : Permission(0x40000000)
+    object UseSlashCommands : Permission(0x80000000)
     object All : Permission(0x7FFFFDFF)
 }
