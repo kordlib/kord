@@ -23,7 +23,7 @@ internal class HeartbeatHandler(
 
     override fun start() {
         on<Event> {
-            possibleZombie.update { false }
+            setNoZombie()
         }
 
         on<Hello> { hello ->
@@ -31,7 +31,7 @@ internal class HeartbeatHandler(
                 if (possibleZombie.value) {
                     restart()
                 } else {
-                    possibleZombie.update { true }
+                    setPossibleZombie()
                     timestamp = timeSource.markNow()
                     send(Command.Heartbeat(sequence.value))
                 }
@@ -53,5 +53,16 @@ internal class HeartbeatHandler(
         on<Close> {
             ticker.stop()
         }
+    }
+
+
+    // https://github.com/Kotlin/kotlinx.atomicfu/issues/180
+    private fun setNoZombie() {
+        possibleZombie.update { false }
+    }
+
+    // https://github.com/Kotlin/kotlinx.atomicfu/issues/180
+    private fun setPossibleZombie() {
+        possibleZombie.update { true }
     }
 }

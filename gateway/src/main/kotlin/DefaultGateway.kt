@@ -12,9 +12,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.cio.websocket.*
 import io.ktor.util.*
-import kotlinx.atomicfu.AtomicRef
-import kotlinx.atomicfu.atomic
-import kotlinx.atomicfu.update
+import kotlinx.atomicfu.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -212,9 +210,14 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 throw  IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
             }
             discordReason.resetSession -> {
-                state.update { State.Running(true) }
+                setStopped()
             }
         }
+    }
+
+    // This avoids a bug with the atomicfu compiler plugin
+    private fun setStopped() {
+        state.update { State.Running(true) }
     }
 
     private fun <T> ReceiveChannel<T>.asFlow() = flow {
