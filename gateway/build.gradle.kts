@@ -1,5 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+plugins {
+    kotlin("jvm")
+}
+
 sourceSets {
     val samples by creating {
         compileClasspath += sourceSets["main"].output
