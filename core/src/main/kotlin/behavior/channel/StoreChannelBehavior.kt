@@ -41,29 +41,33 @@ interface StoreChannelBehavior : GuildChannelBehavior {
      *
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): StoreChannelBehavior = StoreChannelBehavior(guildId, id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): StoreChannelBehavior =
+        StoreChannelBehavior(guildId, id, kord, strategy)
 
-    companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): StoreChannelBehavior = object : StoreChannelBehavior {
-            override val guildId: Snowflake = guildId
-            override val id: Snowflake = id
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
+}
 
-            override fun hashCode(): Int = Objects.hash(id, guildId)
+internal fun StoreChannelBehavior(
+    guildId: Snowflake,
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+): StoreChannelBehavior = object : StoreChannelBehavior {
+    override val guildId: Snowflake = guildId
+    override val id: Snowflake = id
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun equals(other: Any?): Boolean = when(other) {
-                is GuildChannelBehavior -> other.id == id && other.guildId == guildId
-                is ChannelBehavior -> other.id == id
-                else -> false
-            }
+    override fun hashCode(): Int = Objects.hash(id, guildId)
 
-            override fun toString(): String {
-                return "StoreChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
-            }
-        }
+    override fun equals(other: Any?): Boolean = when (other) {
+        is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+        is ChannelBehavior -> other.id == id
+        else -> false
     }
 
+    override fun toString(): String {
+        return "StoreChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
+    }
 }
 
 /**

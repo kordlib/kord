@@ -43,11 +43,9 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
             block()
         }
     }
+}
 
-    companion object {
-        operator fun invoke(token: String) : RestClient {
-            val requestHandler = KtorRequestHandler(token)
-            return RestClient(requestHandler)
-        }
-    }
+fun RestClient(token: String) : RestClient {
+    val requestHandler = KtorRequestHandler(token)
+    return RestClient(requestHandler)
 }

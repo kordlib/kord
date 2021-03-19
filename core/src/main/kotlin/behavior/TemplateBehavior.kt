@@ -38,22 +38,21 @@ interface TemplateBehavior : KordObject {
         return Guild(data, kord)
     }
 
-    companion object {
-        operator fun invoke(guildId: Snowflake, code: String, kord: Kord): TemplateBehavior =
-            object : TemplateBehavior {
-                override val code: String = code
-                override val guildId: Snowflake = guildId
-                override val kord: Kord = kord
-
-                override fun hashCode(): Int = Objects.hash(code)
-
-                override fun equals(other: Any?): Boolean =
-                    other is TemplateBehavior && other.code == code
-
-
-                override fun toString(): String {
-                    return "TemplateBehavior(code=$code, guildId=$guildId)"
-                }
-            }
-    }
 }
+
+ fun TemplateBehavior(guildId: Snowflake, code: String, kord: Kord): TemplateBehavior =
+    object : TemplateBehavior {
+        override val code: String = code
+        override val guildId: Snowflake = guildId
+        override val kord: Kord = kord
+
+        override fun hashCode(): Int = Objects.hash(code)
+
+        override fun equals(other: Any?): Boolean =
+            other is TemplateBehavior && other.code == code
+
+
+        override fun toString(): String {
+            return "TemplateBehavior(code=$code, guildId=$guildId)"
+        }
+    }

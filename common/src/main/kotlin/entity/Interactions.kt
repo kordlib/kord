@@ -309,15 +309,6 @@ sealed class DiscordOptionValue<out T>(val value: T) {
         is BooleanValue -> "OptionValue.BooleanValue($value)"
     }
 
-    companion object {
-        operator fun invoke(value: JsonPrimitive): DiscordOptionValue<Any> = when {
-            value.isString -> StringValue(value.content)
-            value.booleanOrNull != null -> BooleanValue(value.boolean)
-            value.intOrNull != null -> IntValue(value.int)
-            else -> throw SerializationException("unknown value type for option")
-        }
-    }
-
     internal class OptionValueSerializer<T>(serializer: KSerializer<T>) : KSerializer<DiscordOptionValue<*>> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("OptionValue", PrimitiveKind.STRING)
 
@@ -338,6 +329,13 @@ sealed class DiscordOptionValue<out T>(val value: T) {
             }
         }
     }
+}
+@KordPreview
+fun DiscordOptionValue(value: JsonPrimitive): DiscordOptionValue<Any> = when {
+    value.isString -> DiscordOptionValue.StringValue(value.content)
+    value.booleanOrNull != null -> DiscordOptionValue.BooleanValue(value.boolean)
+    value.intOrNull != null -> DiscordOptionValue.IntValue(value.int)
+    else -> throw SerializationException("unknown value type for option")
 }
 
 

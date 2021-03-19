@@ -303,14 +303,6 @@ class Kord(
         /**
          * Builds a [Kord] instance configured by the [builder].
          *
-         * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
-         */
-        suspend inline operator fun invoke(token: String, builder: KordBuilder.() -> Unit = {}): Kord =
-            KordBuilder(token).apply(builder).build()
-
-        /**
-         * Builds a [Kord] instance configured by the [builder].
-         *
          * The instance only allows for configuration of REST related APIs,
          * interacting with the [gateway][Kord.gateway] or its [events][Kord.events] will result in no-ops.
          *
@@ -326,6 +318,16 @@ class Kord(
             return KordRestOnlyBuilder(token).apply(builder).build()
         }
     }
+
+
+    /**
+     * Builds a [Kord] instance configured by the [builder].
+     *
+     * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
+     */
+    suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Kord =
+        KordBuilder(token).apply(builder).build()
+
 
     @KordPreview
     suspend inline fun createGlobalApplicationCommand(

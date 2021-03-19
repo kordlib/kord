@@ -78,28 +78,33 @@ interface RoleBehavior : KordEntity, Strategizable {
     /**
      * Returns a new [RoleBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleBehavior = RoleBehavior(guildId, id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleBehavior =
+        RoleBehavior(guildId, id, kord, strategy)
 
-    companion object {
-        internal operator fun invoke(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): RoleBehavior = object : RoleBehavior {
-            override val guildId: Snowflake = guildId
-            override val id: Snowflake = id
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
+}
 
-            override fun hashCode(): Int = Objects.hash(id, guildId)
+internal fun RoleBehavior(
+    guildId: Snowflake,
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+): RoleBehavior = object : RoleBehavior {
+    override val guildId: Snowflake = guildId
+    override val id: Snowflake = id
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun equals(other: Any?): Boolean = when(other) {
-                is RoleBehavior -> other.id == id && other.guildId == guildId
-                else -> false
-            }
+    override fun hashCode(): Int = Objects.hash(id, guildId)
 
-            override fun toString(): String {
-                return "RoleBehavior(id=$id, guildId=$guildId, kord=$kord, "
-            }
-
-        }
+    override fun equals(other: Any?): Boolean = when (other) {
+        is RoleBehavior -> other.id == id && other.guildId == guildId
+        else -> false
     }
+
+    override fun toString(): String {
+        return "RoleBehavior(id=$id, guildId=$guildId, kord=$kord, "
+    }
+
 }
 
 /**

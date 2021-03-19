@@ -20,11 +20,13 @@ import kotlin.contracts.contract
  * See [the official documentation](https://discord.com/developers/docs/topics/gateway#privileged-intents) for more info on
  * how to enable these.
  */
-@RequiresOptIn("""
+@RequiresOptIn(
+    """
     Some intents are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without enabling them.
     
     See https://discord.com/developers/docs/topics/gateway#privileged-intents for more info on how to enable these.
-""", Level.ERROR)
+""", Level.ERROR
+)
 annotation class PrivilegedIntent
 
 /**
@@ -152,25 +154,47 @@ sealed class Intent(val code: DiscordBitSet) {
     companion object {
         @OptIn(PrivilegedIntent::class)
         val values = setOf(
-                DirectMessageTyping,
-                GuildIntegrations,
-                GuildEmojis,
-                DirectMessageTyping,
-                DirectMessages,
-                DirectMessagesReactions,
-                GuildBans,
-                Guilds,
-                GuildVoiceStates,
-                GuildMessages,
-                GuildMessageReactions,
-                GuildWebhooks,
-                GuildInvites,
-                GuildPresences,
-                GuildMembers
+            DirectMessageTyping,
+            GuildIntegrations,
+            GuildEmojis,
+            DirectMessageTyping,
+            DirectMessages,
+            DirectMessagesReactions,
+            GuildBans,
+            Guilds,
+            GuildVoiceStates,
+            GuildMessages,
+            GuildMessageReactions,
+            GuildWebhooks,
+            GuildInvites,
+            GuildPresences,
+            GuildMembers
         )
     }
 }
 
+inline fun Intents(builder: Intents.IntentsBuilder.() -> Unit = {}): Intents {
+    return Intents.IntentsBuilder().apply(builder).flags()
+}
+
+fun Intents(vararg intents: Intents) = Intents {
+    intents.forEach { +it }
+}
+
+fun Intents(vararg intents: Intent) = Intents {
+    intents.forEach { +it }
+}
+
+fun Intents(intents: Iterable<Intents>) = Intents {
+    intents.forEach { +it }
+}
+
+fun Intents(value: String) = Intents(DiscordBitSet(value))
+
+@JvmName("IntentsWithIterable")
+fun Intents(intents: Iterable<Intent>) = Intents {
+    intents.forEach { +it }
+}
 /**
  * A set of [intents][Intent] to be used while [identifying][Identify] a [Gateway] connection to communicate the events the client wishes to receive.
  */
@@ -229,36 +253,17 @@ data class Intents internal constructor(val code: DiscordBitSet) {
 
         @OptIn(PrivilegedIntent::class)
         val nonPrivileged: Intents
-            get() = invoke {
+            get() = Intents {
                 +all
                 -Intent.GuildPresences
                 -Intent.GuildMembers
             }
 
-        val none: Intents = invoke()
+        val none: Intents = Intents()
 
-        inline operator fun invoke(builder: IntentsBuilder.() -> Unit = {}): Intents {
-            return IntentsBuilder().apply(builder).flags()
-        }
-
-        operator fun invoke(vararg intents: Intents) = invoke {
-            intents.forEach { +it }
-        }
-
-        operator fun invoke(vararg intents: Intent) = invoke {
-            intents.forEach { +it }
-        }
-
-        @JvmName("invokeWithIntents")
-        operator fun invoke(intents: Iterable<Intents>) = invoke {
-            intents.forEach { +it }
-        }
-
-        operator fun invoke(value: String) = Intents(DiscordBitSet(value))
-        operator fun invoke(intents: Iterable<Intent>) = invoke {
-            intents.forEach { +it }
-        }
     }
+
+
 
     class IntentsBuilder(internal var code: DiscordBitSet = EmptyBitSet()) {
         operator fun Intents.unaryPlus() {

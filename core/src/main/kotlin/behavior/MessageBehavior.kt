@@ -181,32 +181,29 @@ interface MessageBehavior : KordEntity, Strategizable {
             strategy: EntitySupplyStrategy<*>,
     ): MessageBehavior = MessageBehavior(channelId, id, kord, strategy)
 
-    companion object {
-        internal operator fun invoke(
-                channelId: Snowflake,
-                messageId: Snowflake,
-                kord: Kord,
-                strategy:
-                EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
-        ) = object : MessageBehavior {
-            override val channelId: Snowflake = channelId
-            override val id: Snowflake = messageId
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
+}
 
-            override fun hashCode(): Int = Objects.hash(id)
+ fun MessageBehavior(
+    channelId: Snowflake,
+    messageId: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+) = object : MessageBehavior {
+    override val channelId: Snowflake = channelId
+    override val id: Snowflake = messageId
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun equals(other: Any?): Boolean = when (other) {
-                is MessageBehavior -> other.id == id && other.channelId == channelId
-                else -> false
-            }
+    override fun hashCode(): Int = Objects.hash(id)
 
-            override fun toString(): String {
-                return "MessageBehavior(id=$id, channelId=$channelId, kord=$kord, supplier=$supplier)"
-            }
-        }
+    override fun equals(other: Any?): Boolean = when (other) {
+        is MessageBehavior -> other.id == id && other.channelId == channelId
+        else -> false
     }
 
+    override fun toString(): String {
+        return "MessageBehavior(id=$id, channelId=$channelId, kord=$kord, supplier=$supplier)"
+    }
 }
 
 /**

@@ -507,32 +507,30 @@ interface GuildBehavior : KordEntity, Strategizable {
      * Returns a new [GuildBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
+}
 
-    companion object {
-        internal operator fun invoke(
-            id: Snowflake,
-            kord: Kord,
-            strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
-        ) = object : GuildBehavior {
-            override val id: Snowflake = id
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
+internal fun GuildBehavior(
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+) = object : GuildBehavior {
+    override val id: Snowflake = id
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = Objects.hash(id)
 
-            override fun equals(other: Any?): Boolean = when (other) {
-                is GuildBehavior -> other.id == id
-                is PartialGuild -> other.id == id
-                else -> false
-            }
-
-            override fun toString(): String {
-                return "GuildBehavior(id=$id, kord=$kord, supplier$supplier)"
-            }
-        }
+    override fun equals(other: Any?): Boolean = when (other) {
+        is GuildBehavior -> other.id == id
+        is PartialGuild -> other.id == id
+        else -> false
     }
 
+    override fun toString(): String {
+        return "GuildBehavior(id=$id, kord=$kord, supplier$supplier)"
+    }
 }
+
 
 @KordPreview
 suspend inline fun GuildBehavior.createApplicationCommand(

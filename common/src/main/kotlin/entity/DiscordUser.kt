@@ -138,10 +138,6 @@ data class UserFlags constructor(val code: Int) {
 
     companion object UserFlagsSerializer : KSerializer<UserFlags> {
 
-        inline operator fun invoke(builder: UserFlagsBuilder.() -> Unit): UserFlags {
-            return UserFlagsBuilder().apply(builder).flags()
-        }
-
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("userFlag", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): UserFlags {
@@ -169,6 +165,11 @@ data class UserFlags constructor(val code: Int) {
         fun flags() = UserFlags(code)
     }
 
+}
+
+
+inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags {
+    return UserFlags.UserFlagsBuilder().apply(builder).flags()
 }
 
 /**

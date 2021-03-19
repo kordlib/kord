@@ -46,39 +46,37 @@ interface InteractionBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior =
         InteractionBehavior(id, channelId, token, applicationId, kord, strategy)
 
-    companion object {
-
-        operator fun invoke(
-            id: Snowflake,
-            channelId: Snowflake,
-            token: String,
-            applicationId: Snowflake,
-            kord: Kord,
-            strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-        ) =
-            object : InteractionBehavior {
-                override val id: Snowflake
-                    get() = id
-
-                override val token: String
-                    get() = token
-
-                override val applicationId: Snowflake
-                    get() = applicationId
-
-                override val kord: Kord
-                    get() = kord
-
-                override val channelId: Snowflake
-                    get() = channelId
-
-
-                override val supplier: EntitySupplier
-                    get() = strategy.supply(kord)
-
-            }
-    }
 }
+
+@KordPreview
+ fun InteractionBehavior(
+    id: Snowflake,
+    channelId: Snowflake,
+    token: String,
+    applicationId: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+) = object : InteractionBehavior {
+        override val id: Snowflake
+            get() = id
+
+        override val token: String
+            get() = token
+
+        override val applicationId: Snowflake
+            get() = applicationId
+
+        override val kord: Kord
+            get() = kord
+
+        override val channelId: Snowflake
+            get() = channelId
+
+
+        override val supplier: EntitySupplier
+            get() = strategy.supply(kord)
+
+    }
 
 /**
  * Acknowledges an interaction and responds with [InteractionResponseBehavior] built using [builder].
