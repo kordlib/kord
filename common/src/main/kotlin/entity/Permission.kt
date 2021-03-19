@@ -32,7 +32,7 @@ fun Permissions(vararg permissions: Permissions) = Permissions {
 }
 
 
-@JvmName("permissionWithIterable")
+@JvmName("PermissionWithIterable")
  fun Permissions(permissions: Iterable<Permissions>) = Permissions {
     permissions.forEach { +it }
 }
