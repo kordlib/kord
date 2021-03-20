@@ -46,7 +46,7 @@ interface StoreChannelBehavior : GuildChannelBehavior {
 
 }
 
-internal fun StoreChannelBehavior(
+fun StoreChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,

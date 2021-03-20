@@ -41,7 +41,7 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
 
 }
 
-internal fun TextChannelBehavior(
+fun TextChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,

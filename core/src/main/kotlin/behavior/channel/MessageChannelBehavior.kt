@@ -223,7 +223,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
         MessageChannelBehavior(id, kord, strategy)
 }
 
-internal fun MessageChannelBehavior(
+fun MessageChannelBehavior(
     id: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy

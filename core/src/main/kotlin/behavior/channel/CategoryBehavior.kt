@@ -75,7 +75,7 @@ interface CategoryBehavior : GuildChannelBehavior {
 }
 
 
-internal fun CategoryBehavior(
+ fun CategoryBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,

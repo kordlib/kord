@@ -127,7 +127,7 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
 
 }
 
-internal fun GuildChannelBehavior(
+ fun GuildChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,

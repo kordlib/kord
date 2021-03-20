@@ -62,7 +62,7 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
 
 }
 
-internal fun NewsChannelBehavior(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): NewsChannelBehavior = object : NewsChannelBehavior {
+fun NewsChannelBehavior(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): NewsChannelBehavior = object : NewsChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id
     override val kord: Kord = kord

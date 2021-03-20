@@ -83,7 +83,7 @@ interface RoleBehavior : KordEntity, Strategizable {
 
 }
 
-internal fun RoleBehavior(
+fun RoleBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,

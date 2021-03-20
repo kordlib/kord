@@ -66,7 +66,7 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
         VoiceChannelBehavior(guildId, id, kord, strategy)
 }
 
-internal fun VoiceChannelBehavior(
+fun VoiceChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
