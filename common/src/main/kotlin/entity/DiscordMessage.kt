@@ -310,34 +310,6 @@ class MessageFlags internal constructor(val code: Int) {
 
     override fun toString(): String = "MessageFlags(flags=${flags.toString()})"
 
-    companion object {
-        inline operator fun invoke(builder: Builder.() -> Unit): MessageFlags {
-            return Builder().apply(builder).flags()
-        }
-
-        operator fun invoke(value: Int) = MessageFlags(value)
-
-        operator fun invoke(vararg flags: MessageFlag) = MessageFlags {
-            flags.forEach { +it }
-        }
-
-        operator fun invoke(vararg flags: MessageFlags) = MessageFlags {
-            flags.forEach { +it }
-        }
-
-        operator fun invoke(flags: Iterable<MessageFlag>) = MessageFlags {
-            flags.forEach { +it }
-        }
-
-
-        @JvmName("invokeWithFlags")
-        operator fun invoke(flags: Iterable<MessageFlags>) = MessageFlags {
-            flags.forEach { +it }
-        }
-
-
-    }
-
     internal object Serializer : KSerializer<MessageFlags> {
 
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("flags", PrimitiveKind.INT)
@@ -377,6 +349,29 @@ class MessageFlags internal constructor(val code: Int) {
     }
 
 }
+
+inline  fun MessageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
+    return MessageFlags.Builder().apply(builder).flags()
+}
+
+ fun MessageFlags(vararg flags: MessageFlag) = MessageFlags {
+    flags.forEach { +it }
+}
+
+ fun MessageFlags(vararg flags: MessageFlags) = MessageFlags {
+    flags.forEach { +it }
+}
+
+ fun MessageFlags(flags: Iterable<MessageFlag>) = MessageFlags {
+    flags.forEach { +it }
+}
+
+
+@JvmName("MessageFlagsWithIterable")
+ fun MessageFlags(flags: Iterable<MessageFlags>) = MessageFlags {
+    flags.forEach { +it }
+}
+
 
 /**
  * A representation of a [Discord Attachment structure](https://discord.com/developers/docs/resources/channel#attachment-object).

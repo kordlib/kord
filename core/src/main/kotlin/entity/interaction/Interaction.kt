@@ -50,6 +50,7 @@ sealed class Interaction : InteractionBehavior {
     open val channel: MessageChannelBehavior get() = MessageChannelBehavior(data.channelId, kord)
 
     abstract val user: UserBehavior
+
     /**
      * [InteractionCommand] object that contains the data related to the interaction's command.
      */
@@ -96,28 +97,25 @@ sealed class InteractionCommand : KordObject {
      */
     abstract val options: Map<String, OptionValue<*>>
 
-
-    companion object {
-        operator fun invoke(
-            data: ApplicationCommandInteractionData,
-            kord: Kord
-        ): InteractionCommand {
-            val firstLevelOptions = data.options.orEmpty()
-            val rootPredicate = firstLevelOptions.isEmpty() || firstLevelOptions.any { it.value.value != null }
-            val groupPredicate = firstLevelOptions.any { it.subCommands.orEmpty().isNotEmpty() }
-            val subCommandPredicate =
-                firstLevelOptions.all { it.value is Optional.Missing && it.subCommands is Optional.Missing }
-
-            return when {
-                rootPredicate -> RootCommand(data, kord)
-                groupPredicate -> GroupCommand(data, kord)
-                subCommandPredicate -> SubCommand(data, kord)
-                else -> error("The interaction data provided is not an application command")
-            }
-        }
-    }
-
     abstract val resolved: ResolvedObjects?
+}
+
+fun InteractionCommand(
+    data: ApplicationCommandInteractionData,
+    kord: Kord
+): InteractionCommand {
+    val firstLevelOptions = data.options.orEmpty()
+    val rootPredicate = firstLevelOptions.isEmpty() || firstLevelOptions.any { it.value.value != null }
+    val groupPredicate = firstLevelOptions.any { it.subCommands.orEmpty().isNotEmpty() }
+    val subCommandPredicate =
+        firstLevelOptions.all { it.value is Optional.Missing && it.subCommands is Optional.Missing }
+
+    return when {
+        rootPredicate -> RootCommand(data, kord)
+        groupPredicate -> GroupCommand(data, kord)
+        subCommandPredicate -> SubCommand(data, kord)
+        else -> error("The interaction data provided is not an application command")
+    }
 }
 
 /**
@@ -251,29 +249,28 @@ sealed class OptionValue<T>(val value: T) {
     class IntOptionValue(value: Int) : OptionValue<Int>(value)
     class StringOptionValue(value: String) : OptionValue<String>(value)
     class BooleanOptionValue(value: Boolean) : OptionValue<Boolean>(value)
+}
 
-    companion object {
-        operator fun invoke(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
-            return when (value) {
-                is DiscordOptionValue.BooleanValue -> BooleanOptionValue(value.value)
-                is DiscordOptionValue.IntValue -> IntOptionValue(value.value)
-                is DiscordOptionValue.StringValue -> {
-                    if (resolvedObjects == null) return StringOptionValue(value.value)
+@KordPreview
+fun OptionValue(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
+    return when (value) {
+        is DiscordOptionValue.BooleanValue -> OptionValue.BooleanOptionValue(value.value)
+        is DiscordOptionValue.IntValue -> OptionValue.IntOptionValue(value.value)
+        is DiscordOptionValue.StringValue -> {
+            if (resolvedObjects == null) return OptionValue.StringOptionValue(value.value)
 
-                    val snowflake = value.snowflake()
+            val snowflake = value.snowflake()
 
-                    when {
-                        resolvedObjects.members?.get(snowflake) != null ->
-                            MemberOptionValue(resolvedObjects.members?.get(snowflake)!!)
-                        resolvedObjects.users?.get(snowflake) != null ->
-                            UserOptionValue(resolvedObjects.users?.get(snowflake)!!)
-                        resolvedObjects.channels?.get(snowflake) != null ->
-                            ChannelOptionValue(resolvedObjects.channels?.get(snowflake)!!)
-                        resolvedObjects.roles?.get(snowflake) != null ->
-                            RoleOptionValue(resolvedObjects.roles?.get(snowflake)!!)
-                        else -> StringOptionValue(value.value)
-                    }
-                }
+            when {
+                resolvedObjects.members?.get(snowflake) != null ->
+                    OptionValue.MemberOptionValue(resolvedObjects.members?.get(snowflake)!!)
+                resolvedObjects.users?.get(snowflake) != null ->
+                    OptionValue.UserOptionValue(resolvedObjects.users?.get(snowflake)!!)
+                resolvedObjects.channels?.get(snowflake) != null ->
+                    OptionValue.ChannelOptionValue(resolvedObjects.channels?.get(snowflake)!!)
+                resolvedObjects.roles?.get(snowflake) != null ->
+                    OptionValue.RoleOptionValue(resolvedObjects.roles?.get(snowflake)!!)
+                else -> OptionValue.StringOptionValue(value.value)
             }
         }
     }
@@ -293,7 +290,7 @@ class DmInteraction(
     /**
      * The user who invoked the interaction.
      */
-    override val user get() =  User(data.user.value!!, kord)
+    override val user get() = User(data.user.value!!, kord)
 }
 
 @KordPreview

@@ -12,6 +12,8 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+
+
 @Serializable(with = Permissions.Companion::class)
 class Permissions constructor(val code: DiscordBitSet) {
 
@@ -51,32 +53,6 @@ class Permissions constructor(val code: DiscordBitSet) {
 
     companion object : KSerializer<Permissions> {
 
-        operator fun invoke(value: String) = Permissions(DiscordBitSet(value))
-        inline operator fun invoke(block: PermissionsBuilder.() -> Unit = {}): Permissions {
-            val builder = PermissionsBuilder(DiscordBitSet(0))
-            builder.apply(block)
-            return builder.permissions()
-        }
-
-        operator fun invoke(vararg permissions: Permission) = Permissions {
-            permissions.forEach { +it }
-        }
-
-        operator fun invoke(vararg permissions: Permissions) = Permissions {
-            permissions.forEach { +it }
-        }
-
-        operator fun invoke(permissions: Iterable<Permission>) = Permissions {
-            permissions.forEach { +it }
-        }
-
-
-        @JvmName("invokeWithPermissions")
-        operator fun invoke(permissions: Iterable<Permissions>) = Permissions {
-            permissions.forEach { +it }
-        }
-
-
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("permission", PrimitiveKind.STRING)
 
@@ -112,6 +88,33 @@ class Permissions constructor(val code: DiscordBitSet) {
         fun permissions() = Permissions(code)
     }
 }
+
+fun Permissions(value: String) = Permissions(DiscordBitSet(value))
+
+inline  fun Permissions(block: Permissions.PermissionsBuilder.() -> Unit = {}): Permissions {
+    val builder = Permissions.PermissionsBuilder(DiscordBitSet(0))
+    builder.apply(block)
+    return builder.permissions()
+}
+
+fun Permissions(vararg permissions: Permission) = Permissions {
+    permissions.forEach { +it }
+}
+
+fun Permissions(vararg permissions: Permissions) = Permissions {
+    permissions.forEach { +it }
+}
+
+fun Permissions(permissions: Iterable<Permission>) = Permissions {
+    permissions.forEach { +it }
+}
+
+
+@JvmName("PermissionWithIterable")
+fun Permissions(permissions: Iterable<Permissions>) = Permissions {
+    permissions.forEach { +it }
+}
+
 
 
 sealed class Permission(val code: DiscordBitSet) {

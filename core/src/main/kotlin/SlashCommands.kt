@@ -93,10 +93,8 @@ class SlashCommands(
             emit(GlobalApplicationCommand(data, service))
         }
     }
-
-    companion object {
-        operator fun invoke(applicationId: Snowflake, requestHandler: RequestHandler) =
-            SlashCommands(applicationId, InteractionService(requestHandler))
-
-    }
 }
+
+@KordPreview
+fun SlashCommands(applicationId: Snowflake, requestHandler: RequestHandler) =
+    SlashCommands(applicationId, InteractionService(requestHandler))

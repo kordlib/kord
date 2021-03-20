@@ -54,7 +54,7 @@ class DiscordBitSet(internal var data: LongArray) {
     }
 
     operator fun contains(other: DiscordBitSet): Boolean {
-        if(other.size > size) return false
+        if (other.size > size) return false
         for (i in other.data.indices) {
             if (data[i] and other.data[i] != other.data[i]) return false
         }
@@ -109,34 +109,34 @@ class DiscordBitSet(internal var data: LongArray) {
         return "DiscordBitSet($binary)"
     }
 
-    companion object {
-        operator fun invoke(vararg widths: Long): DiscordBitSet {
-            return DiscordBitSet(widths)
-        }
+}
 
-        operator fun invoke(value: String): DiscordBitSet {
-            if (value.length <= SAFE_LENGTH) {// fast path
-                return DiscordBitSet(longArrayOf(value.toULong().toLong()))
-            }
+fun DiscordBitSet(vararg widths: Long): DiscordBitSet {
+    return DiscordBitSet(widths)
+}
 
-            val bytes = BigInteger(value).toByteArray()
-
-            val longSize = (bytes.size / Long.SIZE_BYTES) + 1
-            val destination = LongArray(longSize)
-
-            var longIndex = -1
-            bytes.reversed().forEachIndexed { index, byte ->
-                val offset = index % Long.SIZE_BYTES
-                if (offset == 0) {
-                    longIndex += 1
-                }
-
-                destination[longIndex] = (destination[longIndex].toULong() or (byte.toUByte().toULong() shl offset * Byte.SIZE_BITS)).toLong()
-            }
-
-            return DiscordBitSet(destination)
-        }
+fun DiscordBitSet(value: String): DiscordBitSet {
+    if (value.length <= SAFE_LENGTH) {// fast path
+        return DiscordBitSet(longArrayOf(value.toULong().toLong()))
     }
+
+    val bytes = BigInteger(value).toByteArray()
+
+    val longSize = (bytes.size / Long.SIZE_BYTES) + 1
+    val destination = LongArray(longSize)
+
+    var longIndex = -1
+    bytes.reversed().forEachIndexed { index, byte ->
+        val offset = index % Long.SIZE_BYTES
+        if (offset == 0) {
+            longIndex += 1
+        }
+
+        destination[longIndex] =
+            (destination[longIndex].toULong() or (byte.toUByte().toULong() shl offset * Byte.SIZE_BITS)).toLong()
+    }
+
+    return DiscordBitSet(destination)
 }
 
 

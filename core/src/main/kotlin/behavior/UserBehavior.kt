@@ -101,24 +101,21 @@ interface UserBehavior : KordEntity, Strategizable {
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): UserBehavior = UserBehavior(id, kord, strategy)
+}
 
-    companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): UserBehavior = object : UserBehavior {
-            override val id: Snowflake = id
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
+fun UserBehavior(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): UserBehavior = object : UserBehavior {
+    override val id: Snowflake = id
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = Objects.hash(id)
 
-            override fun equals(other: Any?): Boolean = when(other) {
-                is UserBehavior -> other.id == id
-                else -> false
-            }
-
-            override fun toString(): String {
-                return "UserBehavior(id=$id, kord=kord, supplier=$supplier)"
-            }
-        }
+    override fun equals(other: Any?): Boolean = when(other) {
+        is UserBehavior -> other.id == id
+        else -> false
     }
 
+    override fun toString(): String {
+        return "UserBehavior(id=$id, kord=kord, supplier=$supplier)"
+    }
 }

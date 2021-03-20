@@ -42,6 +42,7 @@ import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
 val kordLogger = KotlinLogging.logger { }
 
+
 /**
  * The central adapter between other Kord modules and source of core [events].
  */
@@ -303,14 +304,6 @@ class Kord(
         /**
          * Builds a [Kord] instance configured by the [builder].
          *
-         * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
-         */
-        suspend inline operator fun invoke(token: String, builder: KordBuilder.() -> Unit = {}): Kord =
-            KordBuilder(token).apply(builder).build()
-
-        /**
-         * Builds a [Kord] instance configured by the [builder].
-         *
          * The instance only allows for configuration of REST related APIs,
          * interacting with the [gateway][Kord.gateway] or its [events][Kord.events] will result in no-ops.
          *
@@ -327,6 +320,8 @@ class Kord(
         }
     }
 
+
+
     @KordPreview
     suspend inline fun createGlobalApplicationCommand(
         name: String,
@@ -341,6 +336,15 @@ class Kord(
 
 
 }
+
+/**
+ * Builds a [Kord] instance configured by the [builder].
+ *
+ * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
+ */
+suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Kord =
+    KordBuilder(token).apply(builder).build()
+
 
 /**
  * Convenience method that will invoke the [consumer] on every event [T] created by [Kord.events].

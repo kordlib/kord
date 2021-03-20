@@ -98,23 +98,20 @@ class KtorRequestHandler(
         }
 
     }
+}
 
-    companion object {
 
-        operator fun invoke(
-                token: String,
-                requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
-                clock: Clock = Clock.systemUTC(),
-                parser: Json = jsonDefault,
-        ): KtorRequestHandler {
-            val client = HttpClient(CIO) {
-                expectSuccess = false
-                defaultRequest { header("Authorization", "Bot $token") }
-            }
-            return KtorRequestHandler(client, requestRateLimiter, clock, parser)
-        }
+fun KtorRequestHandler(
+    token: String,
+    requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
+    clock: Clock = Clock.systemUTC(),
+    parser: Json = jsonDefault,
+): KtorRequestHandler {
+    val client = HttpClient(CIO) {
+        expectSuccess = false
+        defaultRequest { header("Authorization", "Bot $token") }
     }
-
+    return KtorRequestHandler(client, requestRateLimiter, clock, parser)
 }
 
 fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): RequestResponse {

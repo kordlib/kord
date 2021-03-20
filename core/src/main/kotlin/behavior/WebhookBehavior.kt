@@ -47,30 +47,29 @@ interface WebhookBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): WebhookBehavior =
             WebhookBehavior(id, kord, strategy)
 
-    companion object {
-        internal operator fun invoke(
-                id: Snowflake,
-                kord: Kord,
-                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
-        ): WebhookBehavior = object : WebhookBehavior {
-            override val id: Snowflake = id
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
+}
 
-            override fun hashCode(): Int = Objects.hash(id)
+internal  fun WebhookBehavior(
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+): WebhookBehavior = object : WebhookBehavior {
+    override val id: Snowflake = id
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun equals(other: Any?): Boolean = when (other) {
-                is WebhookBehavior -> other.id == id
-                else -> false
-            }
+    override fun hashCode(): Int = Objects.hash(id)
 
-            override fun toString(): String {
-                return "WebhookBehavior(id=$id, kord=$kord, supplier=$supplier)"
-            }
-        }
+    override fun equals(other: Any?): Boolean = when (other) {
+        is WebhookBehavior -> other.id == id
+        else -> false
+    }
 
+    override fun toString(): String {
+        return "WebhookBehavior(id=$id, kord=$kord, supplier=$supplier)"
     }
 }
+
 
 /**
  * Requests to edit the webhook, this user must be the creator.

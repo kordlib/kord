@@ -60,7 +60,7 @@ data class Invite(
     /**
      * The user behavior of the user who created this invite, if present.
      */
-    val inviter: UserBehavior? get() = inviterId?.let { UserBehavior.invoke(it, kord) }
+    val inviter: UserBehavior? get() = inviterId?.let { UserBehavior(it, kord) }
 
     /**
      * The user behavior of the target user this invite is associated to, if present.
