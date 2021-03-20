@@ -12,30 +12,6 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
- fun Permissions(value: String) = Permissions(DiscordBitSet(value))
-inline  fun Permissions(block: Permissions.PermissionsBuilder.() -> Unit = {}): Permissions {
-    val builder = Permissions.PermissionsBuilder(DiscordBitSet(0))
-    builder.apply(block)
-    return builder.permissions()
-}
-
-fun Permissions(vararg permissions: Permission) = Permissions {
-    permissions.forEach { +it }
-}
-
-fun Permissions(vararg permissions: Permissions) = Permissions {
-    permissions.forEach { +it }
-}
-
- fun Permissions(permissions: Iterable<Permission>) = Permissions {
-    permissions.forEach { +it }
-}
-
-
-@JvmName("PermissionWithIterable")
- fun Permissions(permissions: Iterable<Permissions>) = Permissions {
-    permissions.forEach { +it }
-}
 
 
 @Serializable(with = Permissions.Companion::class)
@@ -112,6 +88,33 @@ class Permissions constructor(val code: DiscordBitSet) {
         fun permissions() = Permissions(code)
     }
 }
+
+fun Permissions(value: String) = Permissions(DiscordBitSet(value))
+
+inline  fun Permissions(block: Permissions.PermissionsBuilder.() -> Unit = {}): Permissions {
+    val builder = Permissions.PermissionsBuilder(DiscordBitSet(0))
+    builder.apply(block)
+    return builder.permissions()
+}
+
+fun Permissions(vararg permissions: Permission) = Permissions {
+    permissions.forEach { +it }
+}
+
+fun Permissions(vararg permissions: Permissions) = Permissions {
+    permissions.forEach { +it }
+}
+
+fun Permissions(permissions: Iterable<Permission>) = Permissions {
+    permissions.forEach { +it }
+}
+
+
+@JvmName("PermissionWithIterable")
+fun Permissions(permissions: Iterable<Permissions>) = Permissions {
+    permissions.forEach { +it }
+}
+
 
 
 sealed class Permission(val code: DiscordBitSet) {
