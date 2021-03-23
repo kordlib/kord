@@ -37,7 +37,7 @@ data class MemberData(
         }
 
         fun from(entity: DiscordUpdatedGuildMember) = with(entity){
-            MemberData(userId = user.id, guildId = guildId, nick, roles, joinedAt, premiumSince)
+            MemberData(userId = user.id, guildId = guildId, nick, roles, joinedAt, premiumSince, pending)
         }
 
     }
