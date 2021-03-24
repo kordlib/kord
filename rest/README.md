@@ -1,4 +1,4 @@
-# Kord gateway
+# Kord REST Client
 
 A low-level implementation of discord's rest api.
 
