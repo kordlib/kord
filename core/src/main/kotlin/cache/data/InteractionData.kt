@@ -27,8 +27,8 @@ data class InteractionData(
     val version: Int
 ) {
     companion object {
-        fun from(event: InteractionCreate): InteractionData {
-            return with(event.interaction) {
+        fun from(interaction: DiscordInteraction): InteractionData {
+            return with(interaction) {
                 InteractionData(
                     id,
                     type,

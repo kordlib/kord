@@ -32,7 +32,7 @@ class InteractionEventHandler(
     }
 
     private suspend fun handle(event: InteractionCreate, shard: Int) {
-        val data = InteractionData.from(event)
+        val data = InteractionData.from(event.interaction)
         val interaction = Interaction.from(data, kord)
         coreFlow.emit(InteractionCreateEvent(interaction, kord, shard))
     }
