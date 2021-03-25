@@ -223,6 +223,12 @@ sealed class GuildFeature(val value: String) {
     /** Guild has enabled the welcome screen */
     object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
 
+    /** Guild has enabled membership screening */
+    object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED")
+
+    /** Guild can be previewed before joining via Membership Screening or the directory */
+    object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
+
     internal object Serializer : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
@@ -241,6 +247,8 @@ sealed class GuildFeature(val value: String) {
             "ANIMATED_ICON" -> AnimatedIcon
             "BANNER" -> Banner
             "WELCOME_SCREEN_ENABLED" -> WelcomeScreenEnabled
+            "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
+            "PREVIEW_ENABLED" -> PreviewEnabled
             else -> Unknown(value)
         }
 
