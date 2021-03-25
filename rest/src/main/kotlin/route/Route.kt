@@ -339,10 +339,10 @@ sealed class Route<T>(
         : Route<DiscordPartialInvite>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", DiscordPartialInvite.serializer())
 
     object GuildWelcomeScreenGet
-        : Route<DiscordWelcomeScreen>(HttpMethod.Get, "/guilds/${GuildId}/guild-object}/welcome-screen", DiscordWelcomeScreen.serializer())
+        : Route<DiscordWelcomeScreen>(HttpMethod.Get, "/guilds/${GuildId}/welcome-screen", DiscordWelcomeScreen.serializer())
 
     object GuildWelcomeScreenPatch
-        : Route<DiscordWelcomeScreen>(HttpMethod.Patch, "/guilds/${GuildId}/guild-object}/welcome-screen", DiscordWelcomeScreen.serializer())
+        : Route<DiscordWelcomeScreen>(HttpMethod.Patch, "/guilds/${GuildId}/welcome-screen", DiscordWelcomeScreen.serializer())
 
     @KordPreview
     object MessageCrosspost
