@@ -151,7 +151,7 @@ data class DiscordGuild(
     @SerialName("approximate_presence_count")
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
 
-)
+    )
 
 /**
  * A partial representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object
@@ -223,26 +223,39 @@ sealed class GuildFeature(val value: String) {
     /** Guild has enabled the welcome screen */
     object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
 
+    /**
+     * Guild has enabled [Membership Screening](#DOCS_RESOURCES_GUILD/membership-screening-object)
+     */
+    object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED ")
+
+    /**
+     * Guild can be previewed before joining via Membership Screening or the directory
+     */
+    object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
+
     internal object Serializer : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
 
-        override fun deserialize(decoder: Decoder): GuildFeature = when (val value = decoder.decodeString()) {
-            "INVITE_SPLASH" -> InviteSplash
-            "VIP_REGIONS" -> VIPRegions
-            "VANITY_URL" -> VanityUrl
-            "VERIFIED" -> Verified
-            "PARTNERED" -> Partnered
-            "COMMUNITY" -> Community
-            "COMMERCE" -> Commerce
-            "NEWS" -> News
-            "DISCOVERABLE" -> Discoverable
-            "FEATURABLE" -> Featurable
-            "ANIMATED_ICON" -> AnimatedIcon
-            "BANNER" -> Banner
-            "WELCOME_SCREEN_ENABLED" -> WelcomeScreenEnabled
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): GuildFeature =
+            when (val value = decoder.decodeString()) {
+                "INVITE_SPLASH" -> InviteSplash
+                "VIP_REGIONS" -> VIPRegions
+                "VANITY_URL" -> VanityUrl
+                "VERIFIED" -> Verified
+                "PARTNERED" -> Partnered
+                "COMMUNITY" -> Community
+                "COMMERCE" -> Commerce
+                "NEWS" -> News
+                "DISCOVERABLE" -> Discoverable
+                "FEATURABLE" -> Featurable
+                "ANIMATED_ICON" -> AnimatedIcon
+                "BANNER" -> Banner
+                "WELCOME_SCREEN_ENABLED" -> WelcomeScreenEnabled
+                "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
+                "PREVIEW_ENABLED" -> PreviewEnabled
+                else -> Unknown(value)
+            }
 
         override fun serialize(encoder: Encoder, value: GuildFeature) {
             encoder.encodeString(value.value)
@@ -409,13 +422,14 @@ sealed class PremiumTier(val value: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("Kord.PremiumTier", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): PremiumTier = when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> One
-            2 -> Two
-            3 -> Three
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): PremiumTier =
+            when (val value = decoder.decodeInt()) {
+                0 -> None
+                1 -> One
+                2 -> Two
+                3 -> Three
+                else -> Unknown(value)
+            }
 
         override fun serialize(encoder: Encoder, value: PremiumTier) {
             encoder.encodeInt(value.value)
@@ -460,12 +474,13 @@ sealed class ExplicitContentFilter(val value: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("explicit_content_filter", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): ExplicitContentFilter = when (val value = decoder.decodeInt()) {
-            0 -> Disabled
-            1 -> MembersWithoutRoles
-            2 -> AllMembers
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): ExplicitContentFilter =
+            when (val value = decoder.decodeInt()) {
+                0 -> Disabled
+                1 -> MembersWithoutRoles
+                2 -> AllMembers
+                else -> Unknown(value)
+            }
 
         override fun serialize(encoder: Encoder, value: ExplicitContentFilter) {
             encoder.encodeInt(value.value)
@@ -485,11 +500,12 @@ sealed class MFALevel(val value: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("Kord.MFALevel", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): MFALevel = when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> Elevated
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): MFALevel =
+            when (val value = decoder.decodeInt()) {
+                0 -> None
+                1 -> Elevated
+                else -> Unknown(value)
+            }
 
         override fun serialize(encoder: Encoder, value: MFALevel) {
             encoder.encodeInt(value.value)
@@ -525,14 +541,15 @@ sealed class VerificationLevel(val value: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("Kord.VerificationLevel", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): VerificationLevel = when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> Low
-            2 -> Medium
-            3 -> High
-            4 -> VeryHigh
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): VerificationLevel =
+            when (val value = decoder.decodeInt()) {
+                0 -> None
+                1 -> Low
+                2 -> Medium
+                3 -> High
+                4 -> VeryHigh
+                else -> Unknown(value)
+            }
 
         override fun serialize(encoder: Encoder, value: VerificationLevel) {
             encoder.encodeInt(value.value)
@@ -558,3 +575,27 @@ data class DiscordWelcomeScreen(
     @SerialName("welcome_channels")
     val welcomeChannels: List<DiscordWelcomeScreenChannel>
 )
+
+@Serializable
+data class DiscordMembershipScreening(
+    val version: String,
+    @SerialName("form_fields")
+    val formFields: List<FormField>,
+    val description: Optional<String> = Optional.Missing()
+) {
+
+    @Serializable
+    data class FormField(
+        @SerialName("field_type")
+        val type: Type,
+        val label: String,
+        val values: Optional<List<String>> = Optional.Missing(),
+        val required: Boolean
+    ) {
+        @Serializable
+        enum class Type {
+            @SerialName("TERMS")
+            Terms
+        }
+    }
+}
