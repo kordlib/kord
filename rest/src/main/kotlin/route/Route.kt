@@ -379,7 +379,7 @@ sealed class Route<T>(
     object GuildWebhooksGet
         : Route<List<DiscordWebhook>>(
         HttpMethod.Get,
-        "/guild/$GuildId/webhooks",
+        "/guilds/$GuildId/webhooks",
         ListSerializer(DiscordWebhook.serializer())
     )
 
