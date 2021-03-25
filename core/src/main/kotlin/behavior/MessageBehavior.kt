@@ -17,6 +17,7 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.message.MessageCreateBuilder
 import dev.kord.rest.builder.message.MessageModifyBuilder
+import dev.kord.rest.builder.webhook.EditWebhookMessageBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
@@ -39,6 +40,8 @@ interface MessageBehavior : KordEntity, Strategizable {
      */
     val channel get() = MessageChannelBehavior(channelId, kord)
 
+    val webhookId: Snowflake?
+
     /**
      * Requests to get the channel this message was send in.
      */
@@ -60,7 +63,8 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = id)
+    suspend fun asMessageOrNull(): Message? =
+        supplier.getMessageOrNull(channelId = channelId, messageId = id)
 
 
     /**
@@ -82,7 +86,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      */
 
     fun getReactors(emoji: ReactionEmoji): Flow<User> =
-            kord.with(EntitySupplyStrategy.rest).getReactors(channelId, id, emoji)
+        kord.with(EntitySupplyStrategy.rest).getReactors(channelId, id, emoji)
 
     /**
      * Requests to add an [emoji] to this message.
@@ -90,7 +94,11 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun addReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.createReaction(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
+        kord.rest.channel.createReaction(
+            channelId = channelId,
+            messageId = id,
+            emoji = emoji.urlFormat
+        )
     }
 
     /**
@@ -126,7 +134,12 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteReaction(userId: Snowflake, emoji: ReactionEmoji) {
-        kord.rest.channel.deleteReaction(channelId = channelId, messageId = id, userId = userId, emoji = emoji.urlFormat)
+        kord.rest.channel.deleteReaction(
+            channelId = channelId,
+            messageId = id,
+            userId = userId,
+            emoji = emoji.urlFormat
+        )
     }
 
     /**
@@ -135,7 +148,11 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteOwnReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.deleteOwnReaction(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
+        kord.rest.channel.deleteOwnReaction(
+            channelId = channelId,
+            messageId = id,
+            emoji = emoji.urlFormat
+        )
     }
 
     /**
@@ -153,7 +170,11 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.deleteAllReactionsForEmoji(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
+        kord.rest.channel.deleteAllReactionsForEmoji(
+            channelId = channelId,
+            messageId = id,
+            emoji = emoji.urlFormat
+        )
     }
 
     /**
@@ -178,20 +199,22 @@ interface MessageBehavior : KordEntity, Strategizable {
      * Returns a new [MessageBehavior] with the given [strategy].
      */
     override fun withStrategy(
-            strategy: EntitySupplyStrategy<*>,
-    ): MessageBehavior = MessageBehavior(channelId, id, kord, strategy)
+        strategy: EntitySupplyStrategy<*>,
+    ): MessageBehavior = MessageBehavior(channelId, id, kord, webhookId, strategy)
 
 }
 
- fun MessageBehavior(
+fun MessageBehavior(
     channelId: Snowflake,
     messageId: Snowflake,
     kord: Kord,
+    webhookId: Snowflake? = null,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
 ) = object : MessageBehavior {
     override val channelId: Snowflake = channelId
     override val id: Snowflake = messageId
     override val kord: Kord = kord
+    override val webhookId: Snowflake? = webhookId
     override val supplier: EntitySupplier = strategy.supply(kord)
 
     override fun hashCode(): Int = Objects.hash(id)
@@ -212,13 +235,51 @@ interface MessageBehavior : KordEntity, Strategizable {
  * @return The edited [Message].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ * @throws [IllegalStateException] if this message is a webhook message (See [editWebhookMessage]).
+ * @see editWebhookMessage
  */
 @OptIn(ExperimentalContracts::class)
 suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.channel.editMessage(channelId = channelId, messageId = id, builder = builder)
+
+    require(webhookId == null) { "Cannot perform edits on webhook messages use editWebhook() instead" }
+
+    val response =
+        kord.rest.channel.editMessage(channelId = channelId, messageId = id, builder = builder)
+    val data = MessageData.from(response)
+
+    return Message(data, kord)
+}
+
+/**
+ * Requests to edit this message.
+ *
+ * @return The edited [Message].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ * @throws [IllegalStateException] if this message is a normal message (see [edit]).
+ * @see edit
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun MessageBehavior.editWebhookMessage(
+    token: String,
+    builder: EditWebhookMessageBuilder.() -> Unit
+): Message {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    require(webhookId != null) { "Cannot perform edits on  non webhook messages use edit() instead" }
+
+    val response =
+        kord.rest.webhook.editWebhookMessage(
+            webhookId = webhookId!!,
+            messageId = id,
+            token = token,
+            builder = builder
+        )
     val data = MessageData.from(response)
 
     return Message(data, kord)

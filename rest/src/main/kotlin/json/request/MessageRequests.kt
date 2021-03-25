@@ -81,7 +81,7 @@ data class EmbedFieldRequest(
 data class MessageEditPatchRequest(
         val content: Optional<String?> = Optional.Missing(),
         val embed: Optional<EmbedRequest?> = Optional.Missing(),
-        val flags: Optional<UserFlags?> = Optional.Missing(),
+        val flags: Optional<MessageFlags?> = Optional.Missing(),
         @SerialName("allowed_mentions")
         val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
 )
