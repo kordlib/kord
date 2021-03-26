@@ -30,12 +30,12 @@ import kotlin.reflect.KClass
 
 internal fun String?.toSnowflakeOrNull(): Snowflake? = when {
     this == null -> null
-    else -> runCatching { Snowflake(this) }.getOrNull()
+    else -> Snowflake(this)
 }
 
 internal fun Long?.toSnowflakeOrNull(): Snowflake? = when {
     this == null -> null
-    else -> runCatching { Snowflake(this) }.getOrNull()
+    else -> Snowflake(this)
 }
 
 internal fun String.toInstant() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(this, Instant::from)

@@ -261,7 +261,7 @@ fun OptionValue(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?)
             if (resolvedObjects == null) return OptionValue.StringOptionValue(value.value)
 
             val string = value.value
-            val snowflake = string.toSnowflakeOrNull() ?: return OptionValue.StringOptionValue(string)
+            val snowflake = string.toLongOrNull().toSnowflakeOrNull() ?: return OptionValue.StringOptionValue(string)
 
             when {
                 resolvedObjects.members?.get(snowflake) != null ->
