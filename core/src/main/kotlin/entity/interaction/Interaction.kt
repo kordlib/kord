@@ -18,6 +18,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.DmChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.toSnowflakeOrNull
 
 /**
  * An instance of [Interaction] (https://discord.com/developers/docs/interactions/slash-commands#interaction)
@@ -259,7 +260,8 @@ fun OptionValue(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?)
         is DiscordOptionValue.StringValue -> {
             if (resolvedObjects == null) return OptionValue.StringOptionValue(value.value)
 
-            val snowflake = value.snowflake()
+            val string = value.string()
+            val snowflake = string.toSnowflakeOrNull() ?: return OptionValue.StringOptionValue(string)
 
             when {
                 resolvedObjects.members?.get(snowflake) != null ->
@@ -270,7 +272,7 @@ fun OptionValue(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?)
                     OptionValue.ChannelOptionValue(resolvedObjects.channels?.get(snowflake)!!)
                 resolvedObjects.roles?.get(snowflake) != null ->
                     OptionValue.RoleOptionValue(resolvedObjects.roles?.get(snowflake)!!)
-                else -> OptionValue.StringOptionValue(value.value)
+                else -> OptionValue.StringOptionValue(string)
             }
         }
     }
