@@ -260,7 +260,7 @@ fun OptionValue(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?)
         is DiscordOptionValue.StringValue -> {
             if (resolvedObjects == null) return OptionValue.StringOptionValue(value.value)
 
-            val string = value.string()
+            val string = value.value
             val snowflake = string.toSnowflakeOrNull() ?: return OptionValue.StringOptionValue(string)
 
             when {
