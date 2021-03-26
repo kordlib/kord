@@ -16,7 +16,7 @@ class EditWebhookMessageBuilder : RequestBuilder<WebhookEditMessageRequest> {
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
-    var embeds: MutableList<EmbedRequest> = mutableListOf()
+    var embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
     var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
@@ -26,10 +26,10 @@ class EditWebhookMessageBuilder : RequestBuilder<WebhookEditMessageRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        embeds.add(EmbedBuilder().apply(builder).toRequest())
+        embeds.add(EmbedBuilder().apply(builder))
     }
 
     override fun toRequest(): WebhookEditMessageRequest = WebhookEditMessageRequest(
-        _content, Optional.missingOnEmpty(embeds), _allowedMentions
+        _content, Optional.missingOnEmpty(embeds.map(EmbedBuilder::toRequest)), _allowedMentions
     )
 }
