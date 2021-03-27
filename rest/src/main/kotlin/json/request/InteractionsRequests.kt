@@ -1,10 +1,7 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.AllowedMentions
-import dev.kord.common.entity.ApplicationCommandOption
-import dev.kord.common.entity.InteractionResponseType
-import dev.kord.common.entity.MessageFlags
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.SerialName
@@ -16,7 +13,9 @@ import java.io.InputStream
 data class ApplicationCommandCreateRequest(
     val name: String,
     val description: String,
-    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_permission")
+    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 )
 
 @Serializable
@@ -24,14 +23,16 @@ data class ApplicationCommandCreateRequest(
 data class ApplicationCommandModifyRequest(
     val name: Optional<String> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
-    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing()
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_permission")
+    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 )
 
 @Serializable
 @KordPreview
 data class InteractionResponseModifyRequest(
     val content: Optional<String> = Optional.Missing(),
-    val embeds: Optional<List<EmbedRequest>> = Optional.Missing() ,
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
 )
@@ -60,6 +61,7 @@ class InteractionApplicationCommandCallbackData(
     val flags: Optional<MessageFlags> = Optional.Missing()
 
 )
+
 @KordPreview
 data class MultipartFollowupMessageCreateRequest(
     val request: FollowupMessageCreateRequest,
@@ -85,4 +87,10 @@ data class FollowupMessageModifyRequest(
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+)
+
+@Serializable
+@KordPreview
+data class ApplicationCommandPermissionsEditRequest(
+    val permissions: List<DiscordApplicationCommandPermission>
 )

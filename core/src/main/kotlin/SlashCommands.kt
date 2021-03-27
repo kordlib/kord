@@ -1,11 +1,13 @@
 package dev.kord.core
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.DiscordApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.entity.interaction.GlobalApplicationCommand
 import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.service.InteractionService
@@ -99,6 +101,31 @@ class SlashCommands(
             val data = ApplicationCommandData.from(command)
             emit(GlobalApplicationCommand(data, service))
         }
+    }
+
+
+    suspend fun getGuildApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake
+    ): DiscordApplicationCommandPermissions =
+        service.getGuildApplicationCommandPermissions(applicationId, guildId)
+
+    suspend fun getApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): DiscordApplicationCommandPermissions =
+        service.getApplicationCommandPermissions(applicationId, guildId, commandId)
+
+    suspend fun editApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake,
+        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
+    ) {
+        val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
+
+        service.editApplicationCommandPermissions(applicationId, guildId, commandId, request)
     }
 }
 

@@ -26,6 +26,8 @@ data class DiscordApplicationCommand(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_permission")
+    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 )
 
 @Serializable
@@ -52,7 +54,8 @@ class ApplicationCommandOption(
 object NotSerializable : KSerializer<Any?> {
     override fun deserialize(decoder: Decoder) = error("This operation is not supported.")
     override val descriptor: SerialDescriptor = String.serializer().descriptor
-    override fun serialize(encoder: Encoder, value: Any?) = error("This operation is not supported.")
+    override fun serialize(encoder: Encoder, value: Any?) =
+        error("This operation is not supported.")
 }
 
 
@@ -129,7 +132,10 @@ sealed class Choice<out T> {
                 }
                 endStructure(descriptor)
             }
-            return if (value.isString) StringChoice(name, value.toString()) else IntChoice(name, value.int)
+            return if (value.isString) StringChoice(name, value.toString()) else IntChoice(
+                name,
+                value.int
+            )
         }
 
         override fun serialize(encoder: Encoder, value: Choice<*>) {
@@ -236,8 +242,10 @@ sealed class Option {
                 while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
                         0 -> name = decodeStringElement(descriptor, index)
-                        1 -> jsonValue = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
-                        2 -> jsonOptions = decodeSerializableElement(descriptor, index, JsonArray.serializer())
+                        1 -> jsonValue =
+                            decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
+                        2 -> jsonOptions =
+                            decodeSerializableElement(descriptor, index, JsonArray.serializer())
 
                         CompositeDecoder.DECODE_DONE -> return@decodeStructure
                         else -> throw SerializationException("unknown index: $index")
@@ -254,7 +262,8 @@ sealed class Option {
             }
 
             //options are present, either a subcommand or a group, we'll have to look at its children
-            val nestedOptions = jsonOptions?.map { json.decodeFromJsonElement(serializer(), it) } ?: emptyList()
+            val nestedOptions =
+                jsonOptions?.map { json.decodeFromJsonElement(serializer(), it) } ?: emptyList()
 
             if (nestedOptions.isEmpty()) { //only subcommands can have no children
                 return SubCommand(name, Optional(emptyList()))
@@ -262,10 +271,17 @@ sealed class Option {
 
             val onlyArguments =
                 nestedOptions.all { it is CommandArgument } //only subcommand can have options at this point
-            if (onlyArguments) return SubCommand(name, Optional(nestedOptions.filterIsInstance<CommandArgument>()))
+            if (onlyArguments) return SubCommand(
+                name,
+                Optional(nestedOptions.filterIsInstance<CommandArgument>())
+            )
 
-            val onlySubCommands = nestedOptions.all { it is SubCommand } //only groups can have options at this point
-            if (onlySubCommands) return CommandGroup(name, Optional(nestedOptions.filterIsInstance<SubCommand>()))
+            val onlySubCommands =
+                nestedOptions.all { it is SubCommand } //only groups can have options at this point
+            if (onlySubCommands) return CommandGroup(
+                name,
+                Optional(nestedOptions.filterIsInstance<SubCommand>())
+            )
 
             error("option mixed option arguments and option subcommands: $jsonOptions")
         }
@@ -311,8 +327,10 @@ sealed class DiscordOptionValue<out T>(val value: T) {
         is BooleanValue -> "OptionValue.BooleanValue($value)"
     }
 
-    internal class OptionValueSerializer<T>(serializer: KSerializer<T>) : KSerializer<DiscordOptionValue<*>> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("OptionValue", PrimitiveKind.STRING)
+    internal class OptionValueSerializer<T>(serializer: KSerializer<T>) :
+        KSerializer<DiscordOptionValue<*>> {
+        override val descriptor: SerialDescriptor =
+            PrimitiveSerialDescriptor("OptionValue", PrimitiveKind.STRING)
 
         override fun deserialize(decoder: Decoder): DiscordOptionValue<*> {
             val value = (decoder as JsonDecoder).decodeJsonElement().jsonPrimitive
@@ -332,6 +350,7 @@ sealed class DiscordOptionValue<out T>(val value: T) {
         }
     }
 }
+
 @KordPreview
 fun DiscordOptionValue(value: JsonPrimitive): DiscordOptionValue<Any> = when {
     value.isString -> DiscordOptionValue.StringValue(value.content)
@@ -391,6 +410,44 @@ sealed class InteractionResponseType(val type: Int) {
         override fun serialize(encoder: Encoder, value: InteractionResponseType) {
             encoder.encodeInt(value.type)
         }
+    }
+}
 
+@KordPreview
+@Serializable
+data class DiscordApplicationCommandPermissions(
+    val id: String,
+    @SerialName("application_id")
+    val applicationId: String,
+    @SerialName("guild_id")
+    val guildId: String,
+    val permissions: List<DiscordApplicationCommandPermission>
+)
+
+@KordPreview
+@Serializable
+data class DiscordApplicationCommandPermission(
+    val id: Snowflake,
+    val type: Type,
+    val permission: Boolean
+) {
+    @Serializable(with = Type.Serializer::class)
+    enum class Type(val value: Int) {
+        ROLE(1),
+        USER(2);
+
+        object Serializer : KSerializer<Type> {
+            override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
+
+            override fun deserialize(decoder: Decoder): Type =
+                when (val value = decoder.decodeInt()) {
+                    1 -> ROLE
+                    2 -> USER
+                    else -> error("Unknown permission type: $value")
+                }
+
+            override fun serialize(encoder: Encoder, value: Type) = encoder.encodeInt(value.value)
+        }
     }
 }

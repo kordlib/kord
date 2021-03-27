@@ -3,7 +3,9 @@ package dev.kord.rest.builder.interaction
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.AllowedMentions
+import dev.kord.common.entity.DiscordApplicationCommandPermission
 import dev.kord.common.entity.MessageFlags
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
@@ -32,11 +34,14 @@ class ApplicationCommandCreateBuilder(
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
     override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
+    private var _defaultPermission: OptionalBoolean = OptionalBoolean.Missing
+    var defaultPermission: Boolean? by ::_defaultPermission.delegate()
+
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(name,
             description,
-            _options.mapList { it.toRequest() })
-
+            _options.mapList { it.toRequest() }, _defaultPermission
+        )
     }
 
 }
@@ -142,13 +147,17 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
     private var _description: Optional<String> = Optional.Missing()
     var description: String? by ::_name.delegate()
 
+    private var _defaultPermission: OptionalBoolean = OptionalBoolean.Missing
+    private var defaultPermission: Boolean? by ::_defaultPermission.delegate()
+
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
     override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(_name,
             _description,
-            _options.mapList { it.toRequest() })
+            _options.mapList { it.toRequest() }, _defaultPermission
+        )
 
     }
 
@@ -317,5 +326,35 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
             ),
             files,
         )
+}
+
+@KordPreview
+class ApplicationCommandPermissionsModifyBuilder :
+    RequestBuilder<ApplicationCommandPermissionsEditRequest> {
+
+    var permissions = mutableListOf<DiscordApplicationCommandPermission>()
+
+    fun role(id: Snowflake, allow: Boolean = true) {
+        permissions.add(
+            DiscordApplicationCommandPermission(
+                id,
+                DiscordApplicationCommandPermission.Type.ROLE,
+                allow
+            )
+        )
+    }
+
+    fun user(id: Snowflake, allow: Boolean = true) {
+        permissions.add(
+            DiscordApplicationCommandPermission(
+                id,
+                DiscordApplicationCommandPermission.Type.USER,
+                allow
+            )
+        )
+    }
+
+    override fun toRequest(): ApplicationCommandPermissionsEditRequest =
+        ApplicationCommandPermissionsEditRequest(permissions)
 
 }
