@@ -328,11 +328,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/members/$UserId", NoStrategy)
 
     object GuildBansGet
-        : Route<List<BanResponse>>(
-        HttpMethod.Get,
-        "/guilds/$GuildId/bans",
-        ListSerializer(BanResponse.serializer())
-    )
+        : Route<List<BanResponse>>(HttpMethod.Get, "/guilds/$GuildId/bans", ListSerializer(BanResponse.serializer()))
 
     object GuildBanGet
         : Route<BanResponse>(
