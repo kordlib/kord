@@ -42,15 +42,15 @@ interface StoreChannelBehavior : GuildChannelBehavior {
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StoreChannelBehavior =
-        StoreChannelBehavior(guildId, id, kord, strategy)
+            StoreChannelBehavior(guildId, id, kord, strategy)
 
 }
 
 fun StoreChannelBehavior(
-    guildId: Snowflake,
-    id: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+        guildId: Snowflake,
+        id: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ): StoreChannelBehavior = object : StoreChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id

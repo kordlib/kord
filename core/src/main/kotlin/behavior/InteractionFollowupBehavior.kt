@@ -25,11 +25,11 @@ interface InteractionFollowupBehavior : KordEntity {
 
 @KordPreview
 fun InteractionFollowupBehavior(
-    id: Snowflake,
-    applicationId: Snowflake,
-    channelId: Snowflake,
-    token: String,
-    kord: Kord
+        id: Snowflake,
+        applicationId: Snowflake,
+        channelId: Snowflake,
+        token: String,
+        kord: Kord
 ) = object : InteractionFollowupBehavior {
     override val id: Snowflake
         get() = id
@@ -55,5 +55,5 @@ suspend inline fun InteractionFollowupBehavior.edit(builder: FollowupMessageModi
     val request = FollowupMessageModifyBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, request)
     val data = MessageData.from(response)
-    return InteractionFollowup(Message(data,kord), token, applicationId, kord)
+    return InteractionFollowup(Message(data, kord), token, applicationId, kord)
 }

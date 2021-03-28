@@ -34,6 +34,7 @@ suspend fun main(args: Array<String>) {
     gateway.start(token)
 }
 ```
+
 ## Installation
 
 Replace `{version}` with the latest version number on maven central.

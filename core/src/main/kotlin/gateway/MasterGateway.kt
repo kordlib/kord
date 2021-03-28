@@ -14,7 +14,7 @@ import kotlin.time.microseconds
 data class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
 
 class MasterGateway(
-    val gateways: Map<Int, Gateway>,
+        val gateways: Map<Int, Gateway>,
 ) {
 
     /**
@@ -34,8 +34,8 @@ class MasterGateway(
 
     @OptIn(FlowPreview::class)
     val events: Flow<ShardEvent> = gateways.entries.asFlow()
-        .map { (shard, gateway) -> gateway.events.map { ShardEvent(it, gateway, shard) } }
-        .flattenMerge(gateways.size.coerceAtLeast(1))
+            .map { (shard, gateway) -> gateway.events.map { ShardEvent(it, gateway, shard) } }
+            .flattenMerge(gateways.size.coerceAtLeast(1))
 
     /**
      * Calls [Gateway.start] on each Gateway in [gateways], changing the [GatewayConfiguration.shard] for each Gateway.

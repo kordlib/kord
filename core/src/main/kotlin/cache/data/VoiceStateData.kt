@@ -12,22 +12,22 @@ val VoiceStateData.id get() = "$userId$guildId"
 
 @Serializable
 data class VoiceStateData(
-    /*
-     We assume we're only getting voice state updates from guilds.
-     If Discord allows people to voice chat with bots we're in trouble.
-     (And not just because this code would break).
-     */
-    val guildId: Snowflake,
-    val channelId: Snowflake? = null,
-    val userId: Snowflake,
-    val memberId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val sessionId: String,
-    val deaf: Boolean,
-    val mute: Boolean,
-    val selfDeaf: Boolean,
-    val selfMute: Boolean,
-    val selfStream: OptionalBoolean = OptionalBoolean.Missing,
-    val suppress: Boolean,
+        /*
+         We assume we're only getting voice state updates from guilds.
+         If Discord allows people to voice chat with bots we're in trouble.
+         (And not just because this code would break).
+         */
+        val guildId: Snowflake,
+        val channelId: Snowflake? = null,
+        val userId: Snowflake,
+        val memberId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val sessionId: String,
+        val deaf: Boolean,
+        val mute: Boolean,
+        val selfDeaf: Boolean,
+        val selfMute: Boolean,
+        val selfStream: OptionalBoolean = OptionalBoolean.Missing,
+        val suppress: Boolean,
 ) {
 
     companion object {
@@ -35,17 +35,17 @@ data class VoiceStateData(
 
         fun from(guildId: Snowflake, entity: DiscordVoiceState) = with(entity) {
             VoiceStateData(
-                guildId = guildId,
-                channelId = channelId,
-                userId = userId,
-                memberId = member.mapSnowflake { it.user.value!!.id },
-                sessionId = sessionId,
-                deaf = deaf,
-                mute = mute,
-                selfDeaf = selfDeaf,
-                selfMute = selfMute,
-                selfStream = selfStream,
-                suppress = suppress
+                    guildId = guildId,
+                    channelId = channelId,
+                    userId = userId,
+                    memberId = member.mapSnowflake { it.user.value!!.id },
+                    sessionId = sessionId,
+                    deaf = deaf,
+                    mute = mute,
+                    selfDeaf = selfDeaf,
+                    selfMute = selfMute,
+                    selfStream = selfStream,
+                    suppress = suppress
             )
         }
     }

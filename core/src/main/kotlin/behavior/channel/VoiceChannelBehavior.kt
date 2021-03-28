@@ -39,8 +39,8 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
      */
     val voiceStates: Flow<VoiceState>
         get() = kord.cache.query<VoiceStateData> { idEq(VoiceStateData::channelId, id) }
-            .asFlow()
-            .map { VoiceState(it, kord) }
+                .asFlow()
+                .map { VoiceState(it, kord) }
 
     /**
      * Requests to get the this behavior as a [VoiceChannel].
@@ -63,14 +63,14 @@ interface VoiceChannelBehavior : GuildChannelBehavior {
      * Returns a new [VoiceChannelBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceChannelBehavior =
-        VoiceChannelBehavior(guildId, id, kord, strategy)
+            VoiceChannelBehavior(guildId, id, kord, strategy)
 }
 
 fun VoiceChannelBehavior(
-    guildId: Snowflake,
-    id: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+        guildId: Snowflake,
+        id: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ) = object : VoiceChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id

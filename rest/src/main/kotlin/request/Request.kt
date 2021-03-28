@@ -1,11 +1,10 @@
 package dev.kord.rest.request
 
 import dev.kord.rest.route.Route
-import io.ktor.client.request.forms.append
-import io.ktor.client.request.forms.formData
-import io.ktor.http.encodeURLQueryComponent
-import io.ktor.util.StringValues
-import io.ktor.utils.io.streams.outputStream
+import io.ktor.client.request.forms.*
+import io.ktor.http.*
+import io.ktor.util.*
+import io.ktor.utils.io.streams.*
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 
@@ -25,12 +24,13 @@ sealed class Request<B : Any, R> {
         }
 }
 
-val Request<*, *>.identifier get() = when { //The major identifier is always the 'biggest' entity.
-    Route.GuildId in routeParams -> RequestIdentifier.MajorParamIdentifier(route, routeParams.getValue(Route.GuildId))
-    Route.ChannelId in routeParams -> RequestIdentifier.MajorParamIdentifier(route, routeParams.getValue(Route.ChannelId))
-    Route.WebhookId in routeParams -> RequestIdentifier.MajorParamIdentifier(route, routeParams.getValue(Route.WebhookId))
-    else -> RequestIdentifier.RouteIdentifier(route)
-}
+val Request<*, *>.identifier
+    get() = when { //The major identifier is always the 'biggest' entity.
+        Route.GuildId in routeParams -> RequestIdentifier.MajorParamIdentifier(route, routeParams.getValue(Route.GuildId))
+        Route.ChannelId in routeParams -> RequestIdentifier.MajorParamIdentifier(route, routeParams.getValue(Route.ChannelId))
+        Route.WebhookId in routeParams -> RequestIdentifier.MajorParamIdentifier(route, routeParams.getValue(Route.WebhookId))
+        else -> RequestIdentifier.RouteIdentifier(route)
+    }
 
 /**
  * A ['per-route'](https://discord.com/developers/docs/topics/rate-limits) identifier for rate limiting purposes.

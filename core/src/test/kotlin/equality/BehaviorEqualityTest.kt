@@ -4,12 +4,12 @@ import dev.kord.core.entity.KordEntity
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-interface BehaviorEqualityTest<T: KordEntity> : EntityEqualityTest<T> {
+interface BehaviorEqualityTest<T : KordEntity> : EntityEqualityTest<T> {
 
-    fun T.behavior() : KordEntity
+    fun T.behavior(): KordEntity
 
     @Test
-    fun `Full entity equals its behavior`(){
+    fun `Full entity equals its behavior`() {
         val entity = newEntity(randomId())
         val behavior = entity.behavior()
 
@@ -17,7 +17,7 @@ interface BehaviorEqualityTest<T: KordEntity> : EntityEqualityTest<T> {
     }
 
     @Test
-    fun `Behavior equals its full entity`(){
+    fun `Behavior equals its full entity`() {
         val entity = newEntity(randomId())
         val behavior = entity.behavior()
 

@@ -6,7 +6,7 @@ import dev.kord.core.entity.KordEntity
 import mockKord
 import kotlin.test.assertEquals
 
-interface ChannelEqualityTest<T: KordEntity> : EntityEqualityTest<T> {
+interface ChannelEqualityTest<T : KordEntity> : EntityEqualityTest<T> {
 
     @kotlin.test.Test
     fun `Channel is equal to Channel with the same id`() {
@@ -19,7 +19,7 @@ interface ChannelEqualityTest<T: KordEntity> : EntityEqualityTest<T> {
     }
 
     companion object {
-        operator fun<T: KordEntity> invoke(supplier: (Snowflake) -> T) = object: ChannelEqualityTest<T> {
+        operator fun <T : KordEntity> invoke(supplier: (Snowflake) -> T) = object : ChannelEqualityTest<T> {
             override fun newEntity(id: Snowflake): T = supplier(id)
         }
     }

@@ -148,7 +148,7 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
 
     override fun toString(): String = "AuditLogChangeKey(name=$name)"
 
-    class Unknown(name: String): AuditLogChangeKey<JsonElement>(name, JsonElement.serializer())
+    class Unknown(name: String) : AuditLogChangeKey<JsonElement>(name, JsonElement.serializer())
 
     @SerialName("name")
     object Name : AuditLogChangeKey<String>("name", serializer())

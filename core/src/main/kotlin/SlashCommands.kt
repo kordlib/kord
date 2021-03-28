@@ -21,14 +21,14 @@ import kotlin.contracts.contract
  */
 @KordPreview
 class SlashCommands(
-    val applicationId: Snowflake,
-    val service: InteractionService,
+        val applicationId: Snowflake,
+        val service: InteractionService,
 ) {
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGlobalApplicationCommand(
-        name: String,
-        description: String,
-        builder: ApplicationCommandCreateBuilder.() -> Unit = {},
+            name: String,
+            description: String,
+            builder: ApplicationCommandCreateBuilder.() -> Unit = {},
     ): GlobalApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = ApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
@@ -40,7 +40,7 @@ class SlashCommands(
 
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGlobalApplicationCommands(
-        builder: ApplicationCommandsCreateBuilder.() -> Unit,
+            builder: ApplicationCommandsCreateBuilder.() -> Unit,
     ): List<GlobalApplicationCommand> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = ApplicationCommandsCreateBuilder().apply(builder).toRequest()
@@ -53,10 +53,10 @@ class SlashCommands(
 
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildApplicationCommand(
-        guildId: Snowflake,
-        name: String,
-        description: String,
-        builder: ApplicationCommandCreateBuilder.() -> Unit = {},
+            guildId: Snowflake,
+            name: String,
+            description: String,
+            builder: ApplicationCommandCreateBuilder.() -> Unit = {},
     ): GuildApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = ApplicationCommandCreateBuilder(name, description).apply(builder).toRequest()
@@ -68,8 +68,8 @@ class SlashCommands(
 
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildApplicationCommands(
-        guildId: Snowflake,
-        builder: ApplicationCommandsCreateBuilder.() -> Unit,
+            guildId: Snowflake,
+            builder: ApplicationCommandsCreateBuilder.() -> Unit,
     ): List<GuildApplicationCommand> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = ApplicationCommandsCreateBuilder().apply(builder).toRequest()
@@ -97,4 +97,4 @@ class SlashCommands(
 
 @KordPreview
 fun SlashCommands(applicationId: Snowflake, requestHandler: RequestHandler) =
-    SlashCommands(applicationId, InteractionService(requestHandler))
+        SlashCommands(applicationId, InteractionService(requestHandler))

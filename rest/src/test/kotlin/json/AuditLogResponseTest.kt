@@ -10,6 +10,7 @@ object AuditLogResponseTest {
     fun `AuditLogResponseSerialization serialization`() {
 
         val json = file("auditlog")
+
         @Suppress("UNUSED_VARIABLE")
         val log = Json.decodeFromString(DiscordAuditLog.serializer(), json)
 

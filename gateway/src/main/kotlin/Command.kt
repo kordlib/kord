@@ -174,7 +174,7 @@ data class RequestGuildMembers(
         private val counter = atomic(0)
 
         @OptIn(ExperimentalUnsignedTypes::class)
-        fun new() : String = counter.getAndIncrement().toUInt().toString()
+        fun new(): String = counter.getAndIncrement().toUInt().toString()
 
     }
 

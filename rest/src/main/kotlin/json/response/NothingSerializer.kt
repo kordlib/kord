@@ -6,7 +6,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-internal object NothingSerializer :  KSerializer<Nothing> {
+internal object NothingSerializer : KSerializer<Nothing> {
     override val descriptor: SerialDescriptor
         get() = throw SerializationException("This type can no longer be serialized.")
 

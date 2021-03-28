@@ -1,14 +1,14 @@
 package dev.kord.rest.builder.channel
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Overwrite
-import dev.kord.rest.builder.AuditRequestBuilder
-import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 
 @KordDsl

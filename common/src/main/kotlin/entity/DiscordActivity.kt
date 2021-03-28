@@ -4,10 +4,16 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalLong
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
@@ -52,7 +58,7 @@ class ActivityFlags(val value: Int) {
 
     val flags: Set<ActivityFlag> get() = ActivityFlag.values().filter { (it.value and value) == it.value }.toSet()
 
-    operator fun contains(flag: ActivityFlag) : Boolean = (flag.value and value) == flag.value
+    operator fun contains(flag: ActivityFlag): Boolean = (flag.value and value) == flag.value
 
     internal object Serializer : KSerializer<ActivityFlags> {
         override val descriptor: SerialDescriptor
@@ -91,7 +97,7 @@ data class DiscordActivityPartySize(
         val current: Int,
         val maximum: Int
 ) {
-    internal object Serializer: KSerializer<DiscordActivityPartySize> {
+    internal object Serializer : KSerializer<DiscordActivityPartySize> {
         @OptIn(ExperimentalSerializationApi::class)
         override val descriptor: SerialDescriptor
             get() = listSerialDescriptor(Int.serializer().descriptor)

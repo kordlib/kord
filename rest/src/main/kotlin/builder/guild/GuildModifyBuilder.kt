@@ -1,18 +1,18 @@
 package dev.kord.rest.builder.guild
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DefaultMessageNotificationLevel
+import dev.kord.common.entity.ExplicitContentFilter
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.VerificationLevel
-import dev.kord.rest.Image
-import dev.kord.rest.builder.AuditRequestBuilder
-import dev.kord.rest.json.request.GuildModifyRequest
-import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ExplicitContentFilter
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
+import dev.kord.rest.Image
+import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.rest.json.request.GuildModifyRequest
 import java.util.*
 
 @KordDsl
@@ -56,6 +56,7 @@ class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
     var systemChannelId: Snowflake? by ::_systemChannelId.delegate()
 
     private var _rulesChannelId: OptionalSnowflake? = OptionalSnowflake.Missing
+
     /**
      * The id of the channel where "PUBLIC" guilds display rules and/or guidelines.
      */
@@ -63,12 +64,14 @@ class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
 
 
     private var _publicUpdatesChannelId: OptionalSnowflake? = OptionalSnowflake.Missing
+
     /**
      * The id of the channel where admins and moderators of "PUBLIC" guilds receive notices from Discord.
      */
     var publicUpdatesChannelId: Snowflake? by ::_publicUpdatesChannelId.delegate()
 
     private var _preferredLocale: Optional<Locale?> = Optional.Missing()
+
     /**
      * The preferred locale of a "PUBLIC" guild used in server discovery and notices from Discord; defaults to "en-US".
      */

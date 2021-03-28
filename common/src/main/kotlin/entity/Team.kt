@@ -46,7 +46,7 @@ sealed class TeamMembershipState(val value: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("membership_state", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): TeamMembershipState = when(val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): TeamMembershipState = when (val value = decoder.decodeInt()) {
             1 -> Invited
             2 -> Accepted
             else -> Unknown(value)

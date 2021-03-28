@@ -16,7 +16,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 
 @KordPreview
 suspend fun Message.live() =
-    LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id)
+        LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id)
 
 @KordPreview
 suspend fun Message.live(block: LiveMessage.() -> Unit) = this.live().apply(block)
@@ -26,8 +26,8 @@ fun LiveMessage.onReactionAdd(block: suspend (ReactionAddEvent) -> Unit) = on(co
 
 @KordPreview
 inline fun LiveMessage.onReactionAdd(
-    reaction: ReactionEmoji,
-    crossinline block: suspend (ReactionAddEvent) -> Unit
+        reaction: ReactionEmoji,
+        crossinline block: suspend (ReactionAddEvent) -> Unit
 ) = on<ReactionAddEvent> {
     if (it.emoji == reaction) {
         block(it)
@@ -39,8 +39,8 @@ fun LiveMessage.onReactionRemove(block: suspend (ReactionRemoveEvent) -> Unit) =
 
 @KordPreview
 inline fun LiveMessage.onReactionRemove(
-    reaction: ReactionEmoji,
-    crossinline block: suspend (ReactionRemoveEvent) -> Unit
+        reaction: ReactionEmoji,
+        crossinline block: suspend (ReactionRemoveEvent) -> Unit
 ) = on<ReactionRemoveEvent> {
     if (it.emoji == reaction) {
         block(it)
@@ -59,7 +59,7 @@ fun LiveMessage.onUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consu
 @KordPreview
 inline fun LiveMessage.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is MessageDeleteEvent || it is MessageBulkDeleteEvent
-        || it is ChannelDeleteEvent || it is GuildDeleteEvent
+            || it is ChannelDeleteEvent || it is GuildDeleteEvent
     ) {
         block(it)
     }
@@ -118,7 +118,7 @@ class LiveMessage(message: Message, val guildId: Snowflake?) : AbstractLiveKordE
         val animated = this is ReactionEmoji.Custom && isAnimated
 
         val present = message.data.reactions.orEmpty()
-            .firstOrNull { it.emojiName == name && it.emojiId == id }
+                .firstOrNull { it.emojiName == name && it.emojiId == id }
 
         val reactions = when (present) {
             null -> message.data.reactions.orEmpty() + ReactionData(1, event.userId == kord.selfId, id, name, animated)
@@ -133,7 +133,7 @@ class LiveMessage(message: Message, val guildId: Snowflake?) : AbstractLiveKordE
 
     private fun process(event: ReactionRemoveEvent) = with(event.emoji) {
         val present = message.data.reactions.orEmpty()
-            .firstOrNull { it.emojiName == name && it.emojiId == id }
+                .firstOrNull { it.emojiName == name && it.emojiId == id }
 
         val reactions = when (present) {
             null -> message.data.reactions.orEmpty()

@@ -18,7 +18,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
+class ExecuteWebhookBuilder : RequestBuilder<MultiPartWebhookExecuteRequest> {
 
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
@@ -51,8 +51,8 @@ class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
         embeds.add(EmbedBuilder().apply(builder).toRequest())
     }
 
-    override fun toRequest() : MultiPartWebhookExecuteRequest = MultiPartWebhookExecuteRequest(
-        WebhookExecuteRequest(_content, _username, _avatarUrl, _tts, Optional.missingOnEmpty(embeds)), file
+    override fun toRequest(): MultiPartWebhookExecuteRequest = MultiPartWebhookExecuteRequest(
+            WebhookExecuteRequest(_content, _username, _avatarUrl, _tts, Optional.missingOnEmpty(embeds)), file
     )
 
 }

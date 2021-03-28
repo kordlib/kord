@@ -52,7 +52,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
      * @throws [ClassCastException] if the channel isn't a guild message channel.
      */
     override suspend fun asChannel(): GuildMessageChannel =
-        super<GuildChannelBehavior>.asChannel() as GuildMessageChannel
+            super<GuildChannelBehavior>.asChannel() as GuildMessageChannel
 
     /**
      * Requests to get this behavior as a [GuildMessageChannel],
@@ -61,7 +61,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
      * @throws [RequestException] if something went wrong during the request.
      */
     override suspend fun asChannelOrNull(): GuildMessageChannel? =
-        super<GuildChannelBehavior>.asChannelOrNull() as? GuildMessageChannel
+            super<GuildChannelBehavior>.asChannelOrNull() as? GuildMessageChannel
 
     /**
      * Requests to bulk delete the [messages].
@@ -88,14 +88,14 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
      * Returns a new [GuildMessageChannelBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildMessageChannelBehavior =
-        GuildMessageChannelBehavior(guildId, id, kord, strategy)
+            GuildMessageChannelBehavior(guildId, id, kord, strategy)
 }
 
-internal  fun GuildMessageChannelBehavior(
-    guildId: Snowflake,
-    id: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+internal fun GuildMessageChannelBehavior(
+        guildId: Snowflake,
+        id: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ) = object : GuildMessageChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id
@@ -123,9 +123,9 @@ internal  fun GuildMessageChannelBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @Deprecated(
-    "channel name is a mandatory field.",
-    ReplaceWith("createWebhook(\"name\", builder)"),
-    DeprecationLevel.WARNING
+        "channel name is a mandatory field.",
+        ReplaceWith("createWebhook(\"name\", builder)"),
+        DeprecationLevel.WARNING
 )
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
@@ -145,8 +145,8 @@ suspend inline fun GuildMessageChannelBehavior.createWebhook(builder: WebhookCre
  */
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildMessageChannelBehavior.createWebhook(
-    name: String,
-    builder: WebhookCreateBuilder.() -> Unit = {}
+        name: String,
+        builder: WebhookCreateBuilder.() -> Unit = {}
 ): Webhook {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 internal class OptionalSnowflakeTest {
 
     @Test
-    fun `deserializing nothing in optional assigns Missing`(){
+    fun `deserializing nothing in optional assigns Missing`() {
         @Language("json")
         val json = """{}"""
 
@@ -25,7 +25,7 @@ internal class OptionalSnowflakeTest {
     }
 
     @Test
-    fun `deserializing null in optional throws SerializationException`(){
+    fun `deserializing null in optional throws SerializationException`() {
         @Language("json")
         val json = """{ "value":null }"""
 
@@ -38,7 +38,7 @@ internal class OptionalSnowflakeTest {
     }
 
     @Test
-    fun `deserializing value in optional assigns Value`(){
+    fun `deserializing value in optional assigns Value`() {
         @Language("json")
         val json = """{ "value":5 }"""
 

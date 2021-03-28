@@ -106,10 +106,11 @@ sealed class OptionalInt {
 /**
  * returns `null` if this is `null` or [OptionalInt.Missing], calls [OptionalInt.Value.value] otherwise.
  */
-val OptionalInt?.value: Int? get() = when(this){
-    is Value -> value
-    Missing, null -> null
-}
+val OptionalInt?.value: Int?
+    get() = when (this) {
+        is Value -> value
+        Missing, null -> null
+    }
 
 /**
  * returns `null` if this is `null`, calls [OptionalInt.asNullable] otherwise.
@@ -119,12 +120,12 @@ val OptionalInt?.asNullable: Int? get() = this?.asNullable
 /**
  * returns [default] if this is `null`, calls [OptionalInt.asNullable] otherwise.
  */
-fun OptionalInt?.orElse(default: Int): Int  = this?.orElse(default) ?: default
+fun OptionalInt?.orElse(default: Int): Int = this?.orElse(default) ?: default
 
 /**
  * returns the value of the optional or throws a [IllegalStateException] if the optional doesn't contain a value or is `null`.
  */
-fun OptionalInt?.getOrThrow(): Int = when(this){
+fun OptionalInt?.getOrThrow(): Int = when (this) {
     Missing, null -> throw IllegalStateException("Optional did not contain a value")
     is Value -> value
 }
@@ -133,7 +134,7 @@ fun OptionalInt?.getOrThrow(): Int = when(this){
 @Suppress("RemoveRedundantQualifierName")
 fun Int.optionalInt(): OptionalInt.Value = OptionalInt.Value(this)
 
-inline fun OptionalInt.map(mapper: (Int) -> Int): OptionalInt = when(this){
+inline fun OptionalInt.map(mapper: (Int) -> Int): OptionalInt = when (this) {
     Missing -> Missing
     is Value -> Value(mapper(value))
 }

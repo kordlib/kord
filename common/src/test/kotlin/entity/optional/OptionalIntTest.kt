@@ -5,13 +5,13 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.intellij.lang.annotations.Language
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal class OptionalIntTest {
 
     @Test
-    fun `deserializing nothing in optional assigns Missing`(){
+    fun `deserializing nothing in optional assigns Missing`() {
         @Language("json")
         val json = """{}"""
 
@@ -24,7 +24,7 @@ internal class OptionalIntTest {
     }
 
     @Test
-    fun `deserializing null in optional throws SerializationException`(){
+    fun `deserializing null in optional throws SerializationException`() {
         @Language("json")
         val json = """{ "value":null }"""
 
@@ -37,7 +37,7 @@ internal class OptionalIntTest {
     }
 
     @Test
-    fun `deserializing value in optional assigns Value`(){
+    fun `deserializing value in optional assigns Value`() {
         @Language("json")
         val json = """{ "value":5 }"""
 

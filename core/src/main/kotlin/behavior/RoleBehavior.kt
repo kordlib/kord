@@ -79,15 +79,15 @@ interface RoleBehavior : KordEntity, Strategizable {
      * Returns a new [RoleBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleBehavior =
-        RoleBehavior(guildId, id, kord, strategy)
+            RoleBehavior(guildId, id, kord, strategy)
 
 }
 
 fun RoleBehavior(
-    guildId: Snowflake,
-    id: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+        guildId: Snowflake,
+        id: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ): RoleBehavior = object : RoleBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id

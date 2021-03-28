@@ -46,7 +46,7 @@ development.
 
 Replace `{version}` with the latest version number on maven central.
 
-For Snapshots replace `{version}` with `{branch}-SNAPSHOT` 
+For Snapshots replace `{version}` with `{branch}-SNAPSHOT`
 
 e.g: `0.7.x-SNAPSHOT`
 

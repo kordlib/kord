@@ -1,9 +1,9 @@
 package dev.kord.rest.builder.channel
 
-import dev.kord.common.entity.Permissions
-import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.OverwriteType
+import dev.kord.common.entity.Permissions
+import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelPermissionEditRequest
 
 @KordDsl

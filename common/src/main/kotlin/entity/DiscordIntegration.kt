@@ -41,7 +41,7 @@ data class DiscordPartialIntegration(
         val name: String,
         val type: String,
         val account: DiscordIntegrationsAccount,
-    )
+)
 
 @Serializable
 data class IntegrationApplication(
@@ -63,7 +63,7 @@ sealed class IntegrationExpireBehavior(val value: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("expire_behavior", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): IntegrationExpireBehavior = when(val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): IntegrationExpireBehavior = when (val value = decoder.decodeInt()) {
             0 -> RemoveRole
             1 -> Kick
             else -> Unknown(value)

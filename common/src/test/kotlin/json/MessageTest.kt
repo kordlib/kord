@@ -2,7 +2,9 @@
 
 package json
 
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordMessage
+import dev.kord.common.entity.MessageFlag
+import dev.kord.common.entity.MessageFlags
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 

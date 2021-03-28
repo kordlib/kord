@@ -67,8 +67,8 @@ fun LiveGuild.onReactionAdd(block: suspend (ReactionAddEvent) -> Unit) = on(cons
 
 @KordPreview
 inline fun LiveGuild.onReactionAdd(
-    reaction: ReactionEmoji,
-    crossinline block: suspend (ReactionAddEvent) -> Unit
+        reaction: ReactionEmoji,
+        crossinline block: suspend (ReactionAddEvent) -> Unit
 ) = on<ReactionAddEvent> {
     if (it.emoji == reaction) {
         block(it)
@@ -80,8 +80,8 @@ fun LiveGuild.onReactionRemove(block: suspend (ReactionRemoveEvent) -> Unit) = o
 
 @KordPreview
 inline fun LiveGuild.onReactionRemove(
-    reaction: ReactionEmoji,
-    crossinline block: suspend (ReactionRemoveEvent) -> Unit
+        reaction: ReactionEmoji,
+        crossinline block: suspend (ReactionRemoveEvent) -> Unit
 ) = on<ReactionRemoveEvent> {
     if (it.emoji == reaction) {
         block(it)
@@ -169,33 +169,33 @@ class LiveGuild(guild: Guild) : AbstractLiveKordEntity(), KordEntity by guild {
         is EmojisUpdateEvent -> guild = Guild(guild.data.copy(emojis = event.emojis.map { it.id }), kord)
 
         is RoleCreateEvent -> guild = Guild(
-            guild.data.copy(
-                roles = guild.data.roles + event.guildId
-            ), kord
+                guild.data.copy(
+                        roles = guild.data.roles + event.guildId
+                ), kord
         )
 
         is RoleDeleteEvent -> guild = Guild(
-            guild.data.copy(
-                roles = guild.data.roles - event.guildId
-            ), kord
+                guild.data.copy(
+                        roles = guild.data.roles - event.guildId
+                ), kord
         )
 
         is MemberJoinEvent -> guild = Guild(
-            guild.data.copy(
-                memberCount = guild.data.memberCount.map { it + 1 },
-            ), kord
+                guild.data.copy(
+                        memberCount = guild.data.memberCount.map { it + 1 },
+                ), kord
         )
 
         is MemberLeaveEvent -> guild = Guild(guild.data.copy(
-            memberCount = guild.data.memberCount.map { it - 1 }
+                memberCount = guild.data.memberCount.map { it - 1 }
         ), kord)
 
         is ChannelCreateEvent -> guild = Guild(guild.data.copy(
-            channels = guild.data.channels.map { it + event.channel.id }
+                channels = guild.data.channels.map { it + event.channel.id }
         ), kord)
 
         is ChannelDeleteEvent -> guild = Guild(guild.data.copy(
-            channels = guild.data.channels.map { it - event.channel.id }
+                channels = guild.data.channels.map { it - event.channel.id }
         ), kord)
 
         is GuildUpdateEvent -> guild = event.guild

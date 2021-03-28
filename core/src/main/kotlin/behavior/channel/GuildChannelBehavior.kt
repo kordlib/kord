@@ -127,11 +127,11 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
 
 }
 
- fun GuildChannelBehavior(
-    guildId: Snowflake,
-    id: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+fun GuildChannelBehavior(
+        guildId: Snowflake,
+        id: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ): GuildChannelBehavior = object : GuildChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id
@@ -140,7 +140,7 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false

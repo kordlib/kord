@@ -2,15 +2,15 @@ package dev.kord.gateway.builder
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ActivityType
-import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.entity.DiscordBotActivity
+import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.entity.optional.Optional
 import dev.kord.gateway.DiscordPresence
 import dev.kord.gateway.UpdateStatus
 import java.time.Instant
 
 @KordDsl
-class PresenceBuilder  {
+class PresenceBuilder {
     private var game: DiscordBotActivity? = null
     var status: PresenceStatus = PresenceStatus.Online
     var afk: Boolean = false

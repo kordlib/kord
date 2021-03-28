@@ -15,11 +15,11 @@ import kotlin.contracts.contract
 
 @KordPreview
 sealed class OptionsBuilder(
-    val name: String,
-    val description: String,
-    val type: ApplicationCommandOptionType,
+        val name: String,
+        val description: String,
+        val type: ApplicationCommandOptionType,
 ) :
-    RequestBuilder<ApplicationCommandOption> {
+        RequestBuilder<ApplicationCommandOption> {
     internal var _default: OptionalBoolean = OptionalBoolean.Missing
     var default: Boolean? by ::_default.delegate()
 
@@ -33,11 +33,11 @@ sealed class OptionsBuilder(
 
 @KordPreview
 sealed class BaseChoiceBuilder<T>(
-    name: String,
-    description: String,
-    type: ApplicationCommandOptionType,
+        name: String,
+        description: String,
+        type: ApplicationCommandOptionType,
 ) :
-    OptionsBuilder(name, description, type) {
+        OptionsBuilder(name, description, type) {
     private var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
     var choices: MutableList<Choice<*>>? by ::_choices.delegate()
 
@@ -45,18 +45,18 @@ sealed class BaseChoiceBuilder<T>(
 
     override fun toRequest(): ApplicationCommandOption {
         return ApplicationCommandOption(type,
-            name,
-            description,
-            choices = _choices,
-            required = _required,
-            default = _default)
+                name,
+                description,
+                choices = _choices,
+                required = _required,
+                default = _default)
     }
 
 }
 
 @KordPreview
 class IntChoiceBuilder(name: String, description: String) :
-    BaseChoiceBuilder<Int>(name, description, ApplicationCommandOptionType.Integer) {
+        BaseChoiceBuilder<Int>(name, description, ApplicationCommandOptionType.Integer) {
 
     override fun choice(name: String, value: Int) {
         if (choices == null) choices = mutableListOf()
@@ -66,7 +66,7 @@ class IntChoiceBuilder(name: String, description: String) :
 
 @KordPreview
 class StringChoiceBuilder(name: String, description: String) :
-    BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
+        BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
 
     override fun choice(name: String, value: String) {
         if (choices == null) choices = mutableListOf()
@@ -76,41 +76,41 @@ class StringChoiceBuilder(name: String, description: String) :
 
 @KordPreview
 class BooleanBuilder(name: String, description: String) :
-    OptionsBuilder(name, description, ApplicationCommandOptionType.Boolean)
+        OptionsBuilder(name, description, ApplicationCommandOptionType.Boolean)
 
 @KordPreview
 class UserBuilder(name: String, description: String) :
-    OptionsBuilder(name, description, ApplicationCommandOptionType.User)
+        OptionsBuilder(name, description, ApplicationCommandOptionType.User)
 
 @KordPreview
 class RoleBuilder(name: String, description: String) :
-    OptionsBuilder(name, description, ApplicationCommandOptionType.Role)
+        OptionsBuilder(name, description, ApplicationCommandOptionType.Role)
 
 @KordPreview
 class ChannelBuilder(name: String, description: String) :
-    OptionsBuilder(name, description, ApplicationCommandOptionType.Channel)
+        OptionsBuilder(name, description, ApplicationCommandOptionType.Channel)
 
 @KordPreview
 sealed class BaseCommandOptionBuilder(
-    name: String,
-    description: String,
-    type: ApplicationCommandOptionType,
+        name: String,
+        description: String,
+        type: ApplicationCommandOptionType,
 ) :
-    OptionsBuilder(name, description, type) {
+        OptionsBuilder(name, description, type) {
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
     var options by ::_options.delegate()
 
     override fun toRequest(): ApplicationCommandOption {
         return ApplicationCommandOption(type,
-            name,
-            description,
-            options = _options.mapList { it.toRequest() })
+                name,
+                description,
+                options = _options.mapList { it.toRequest() })
     }
 }
 
 @KordPreview
 class SubCommandBuilder(name: String, description: String) :
-    BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommand) {
+        BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommand) {
     @OptIn(ExperimentalContracts::class)
     inline fun boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -127,9 +127,9 @@ class SubCommandBuilder(name: String, description: String) :
 
     @OptIn(ExperimentalContracts::class)
     inline fun string(
-        name: String,
-        description: String,
-        builder: StringChoiceBuilder.() -> Unit = {},
+            name: String,
+            description: String,
+            builder: StringChoiceBuilder.() -> Unit = {},
     ) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
@@ -160,11 +160,11 @@ class SubCommandBuilder(name: String, description: String) :
 
 @KordPreview
 class GroupCommandBuilder(name: String, description: String) :
-    BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommandGroup) {
+        BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommandGroup) {
     inline fun subCommand(
-        name: String,
-        description: String,
-        builder: SubCommandBuilder.() -> Unit,
+            name: String,
+            description: String,
+            builder: SubCommandBuilder.() -> Unit,
     ) {
         if (options == null) options = mutableListOf()
         options!!.add(SubCommandBuilder(name, description).apply(builder))

@@ -25,11 +25,11 @@ class CommandsTypeTests {
         putJsonArray("options") { add(arg) }
     }
     val subCommand =
-        buildJsonObject {
-            putJsonArray("options") { add(partialSubCommand) }
-            put("name", "root")
-            put("id", "792107855418490901")
-        }
+            buildJsonObject {
+                putJsonArray("options") { add(partialSubCommand) }
+                put("name", "root")
+                put("id", "792107855418490901")
+            }
 
     val group = buildJsonObject {
         putJsonArray("options") {

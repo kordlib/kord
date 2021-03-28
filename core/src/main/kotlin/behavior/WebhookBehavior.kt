@@ -49,10 +49,10 @@ interface WebhookBehavior : KordEntity, Strategizable {
 
 }
 
-internal  fun WebhookBehavior(
-    id: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+internal fun WebhookBehavior(
+        id: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
 ): WebhookBehavior = object : WebhookBehavior {
     override val id: Snowflake = id
     override val kord: Kord = kord

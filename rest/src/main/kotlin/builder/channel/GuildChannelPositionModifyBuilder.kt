@@ -1,16 +1,16 @@
 package dev.kord.rest.builder.channel
 
-import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelPositionSwapRequest
 import dev.kord.rest.json.request.GuildChannelPositionModifyRequest
 
 @KordDsl
-class GuildChannelPositionModifyBuilder: AuditRequestBuilder<GuildChannelPositionModifyRequest>  {
+class GuildChannelPositionModifyBuilder : AuditRequestBuilder<GuildChannelPositionModifyRequest> {
     override var reason: String? = null
     var swaps: MutableList<GuildChannelSwapBuilder> = mutableListOf()
 
@@ -22,7 +22,7 @@ class GuildChannelPositionModifyBuilder: AuditRequestBuilder<GuildChannelPositio
         pairs.forEach { move(it) }
     }
 
-    inline fun move(channel: Snowflake, builder: GuildChannelSwapBuilder.() -> Unit){
+    inline fun move(channel: Snowflake, builder: GuildChannelSwapBuilder.() -> Unit) {
         swaps.firstOrNull { it.channelId == channel }?.builder() ?: run {
             swaps.add(GuildChannelSwapBuilder(channel).also(builder))
         }
@@ -37,6 +37,7 @@ class GuildChannelSwapBuilder(var channelId: Snowflake) {
 
 
     private var _position: OptionalInt? = OptionalInt.Missing
+
     /**
      * The new position of this channel
      */

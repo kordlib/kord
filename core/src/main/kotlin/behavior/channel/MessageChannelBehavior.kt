@@ -120,7 +120,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
     fun getMessagesBefore(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
-        supplier.getMessagesBefore(channelId = id, messageId = messageId, limit = limit)
+            supplier.getMessagesBefore(channelId = id, messageId = messageId, limit = limit)
 
     /**
      * Requests to get all messages in this channel that were created **after** [messageId].
@@ -143,7 +143,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
     fun getMessagesAfter(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
-        supplier.getMessagesAfter(channelId = id, messageId = messageId, limit = limit)
+            supplier.getMessagesAfter(channelId = id, messageId = messageId, limit = limit)
 
     /**
      * Requests to get messages around (both older and newer) the [messageId].
@@ -162,7 +162,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws IllegalArgumentException if the [limit] is outside the range of 1..100.
      */
     fun getMessagesAround(messageId: Snowflake, limit: Int = 100): Flow<Message> =
-        supplier.getMessagesAround(channelId = id, messageId = messageId, limit = 100)
+            supplier.getMessagesAround(channelId = id, messageId = messageId, limit = 100)
 
     /**
      * Requests to get a message with the given [messageId].
@@ -220,13 +220,13 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * Returns a new [MessageChannelBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageChannelBehavior =
-        MessageChannelBehavior(id, kord, strategy)
+            MessageChannelBehavior(id, kord, strategy)
 }
 
 fun MessageChannelBehavior(
-    id: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+        id: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ) = object : MessageChannelBehavior {
     override val id: Snowflake = id
     override val kord: Kord = kord

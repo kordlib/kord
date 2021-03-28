@@ -60,7 +60,7 @@ class RequestGuildMembersBuilder(var guildId: Snowflake) {
      */
     fun requestAllMembers() {
         limit = 0
-        query= ""
+        query = ""
         userIds.clear()
     }
 

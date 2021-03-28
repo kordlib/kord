@@ -6,7 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import mockKord
 
-internal class IntegrationTest : GuildEntityEqualityTest<Integration> by GuildEntityEqualityTest ({ id, guildId ->
+internal class IntegrationTest : GuildEntityEqualityTest<Integration> by GuildEntityEqualityTest({ id, guildId ->
     val kord = mockKord()
     val data = mockk<IntegrationData>()
     every { data.id } returns id

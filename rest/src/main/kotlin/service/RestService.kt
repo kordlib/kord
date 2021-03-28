@@ -1,7 +1,7 @@
 package dev.kord.rest.service
 
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.RequestBuilder
+import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

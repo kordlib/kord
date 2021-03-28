@@ -3,8 +3,8 @@ package dev.kord.core.behavior
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.EmojiData
-import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.GuildEmoji
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -43,11 +43,11 @@ interface GuildEmojiBehavior : KordEntity, Strategizable {
             GuildEmojiBehavior(guildId = guildId, id = id, kord = kord, strategy = strategy)
 }
 
-internal  fun GuildEmojiBehavior(
-    guildId: Snowflake,
-    id: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+internal fun GuildEmojiBehavior(
+        guildId: Snowflake,
+        id: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ): GuildEmojiBehavior = object : GuildEmojiBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id
@@ -56,7 +56,7 @@ internal  fun GuildEmojiBehavior(
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildEmojiBehavior -> other.id == id
         else -> false
     }
@@ -65,6 +65,7 @@ internal  fun GuildEmojiBehavior(
         return "GuildEmoijBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
     }
 }
+
 /**
  * Requests to edit this emoji.
  *

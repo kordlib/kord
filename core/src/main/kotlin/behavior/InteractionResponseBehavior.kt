@@ -23,16 +23,16 @@ interface InteractionResponseBehavior : KordObject {
 
 @KordPreview
 fun InteractionResponseBehavior(applicationId: Snowflake, token: String, kord: Kord) =
-    object : InteractionResponseBehavior {
-        override val applicationId: Snowflake
-            get() = applicationId
+        object : InteractionResponseBehavior {
+            override val applicationId: Snowflake
+                get() = applicationId
 
-        override val token: String
-            get() = token
+            override val token: String
+                get() = token
 
-        override val kord: Kord
-            get() = kord
-    }
+            override val kord: Kord
+                get() = kord
+        }
 
 @KordPreview
 interface EditableInteractionResponseBehavior : InteractionResponseBehavior {
@@ -41,18 +41,19 @@ interface EditableInteractionResponseBehavior : InteractionResponseBehavior {
         kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
     }
 }
+
 @KordPreview
 fun EditableInteractionResponseBehavior(applicationId: Snowflake, token: String, kord: Kord) =
-    object : EditableInteractionResponseBehavior {
-        override val applicationId: Snowflake
-            get() = applicationId
+        object : EditableInteractionResponseBehavior {
+            override val applicationId: Snowflake
+                get() = applicationId
 
-        override val token: String
-            get() = token
+            override val token: String
+                get() = token
 
-        override val kord: Kord
-            get() = kord
-    }
+            override val kord: Kord
+                get() = kord
+        }
 
 @KordPreview
 @OptIn(ExperimentalContracts::class)

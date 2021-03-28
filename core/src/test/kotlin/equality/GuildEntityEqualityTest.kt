@@ -5,7 +5,7 @@ import dev.kord.core.entity.KordEntity
 import kotlin.test.Test
 import kotlin.test.assertNotEquals
 
-interface GuildEntityEqualityTest<T: KordEntity> : EntityEqualityTest<T> {
+interface GuildEntityEqualityTest<T : KordEntity> : EntityEqualityTest<T> {
 
     fun newEntity(id: Snowflake, guildId: Snowflake): T
 
@@ -30,7 +30,7 @@ interface GuildEntityEqualityTest<T: KordEntity> : EntityEqualityTest<T> {
     }
 
     companion object {
-        operator fun<T: KordEntity> invoke(supplier: (id: Snowflake, guildId: Snowflake) -> T) = object: GuildEntityEqualityTest<T> {
+        operator fun <T : KordEntity> invoke(supplier: (id: Snowflake, guildId: Snowflake) -> T) = object : GuildEntityEqualityTest<T> {
             override fun newEntity(id: Snowflake, guildId: Snowflake): T = supplier(id, guildId)
         }
     }

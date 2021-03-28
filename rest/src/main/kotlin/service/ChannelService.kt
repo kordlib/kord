@@ -192,7 +192,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     @KordPreview
-    suspend fun crossPost(channelId: Snowflake, messageId: Snowflake) : DiscordMessage = call(Route.MessageCrosspost) {
+    suspend fun crossPost(channelId: Snowflake, messageId: Snowflake): DiscordMessage = call(Route.MessageCrosspost) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
     }
@@ -214,7 +214,7 @@ suspend inline fun ChannelService.patchTextChannel(channelId: Snowflake, builder
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun ChannelService.patchVoiceChannel(channelId: Snowflake, builder: VoiceChannelModifyBuilder.() -> Unit) : DiscordChannel {
+suspend inline fun ChannelService.patchVoiceChannel(channelId: Snowflake, builder: VoiceChannelModifyBuilder.() -> Unit): DiscordChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -238,7 +238,7 @@ suspend inline fun ChannelService.patchNewsChannel(channelId: Snowflake, builder
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun ChannelService.patchCategory(channelId: Snowflake, builder: CategoryModifyBuilder.() -> Unit) : DiscordChannel {
+suspend inline fun ChannelService.patchCategory(channelId: Snowflake, builder: CategoryModifyBuilder.() -> Unit): DiscordChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

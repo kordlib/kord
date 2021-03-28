@@ -1,7 +1,7 @@
 package dev.kord.rest.builder.guild
 
 import dev.kord.common.entity.optional.Optional
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.util.*
 

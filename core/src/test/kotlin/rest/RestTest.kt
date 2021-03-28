@@ -437,16 +437,16 @@ class RestServiceTest {
         val textChannel = guild.createTextChannel("move me to a category")
 
         guild.swapChannelPositions {
-            move(textChannel.id){ parentId = category.id }
+            move(textChannel.id) { parentId = category.id }
         }
 
         val currentTextChannel = guild.getChannelOf<TextChannel>(textChannel.id)
-        assertEquals(category.id,currentTextChannel.categoryId)
+        assertEquals(category.id, currentTextChannel.categoryId)
     }
 
     @OptIn(KordPreview::class)
     fun `guild application commands`(): Unit = runBlocking {
-        val command = guild.createApplicationCommand("test", "automated test"){
+        val command = guild.createApplicationCommand("test", "automated test") {
             group("test-group", "automated test") {
                 subCommand("test-sub-command", "automated test") {
                     int("integer", "test choice") {

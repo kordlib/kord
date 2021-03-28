@@ -29,10 +29,10 @@
       {
         "options": [
           {
-                "value": 1,
-                "name": "testint"
-              }
-            ],
+            "value": 1,
+            "name": "testint"
+          }
+        ],
         "name": "subcommand"
       }
     ],

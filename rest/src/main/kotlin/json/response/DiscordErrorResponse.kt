@@ -7,8 +7,6 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.builtins.MapSerializer
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -22,9 +20,9 @@ import kotlinx.serialization.json.jsonObject
  */
 @Serializable
 class DiscordErrorResponse(
-    val code: JsonErrorCode = JsonErrorCode.Unknown,
-    val errors: Map<String, DiscordFieldError> = emptyMap(),
-    val message: String = "",
+        val code: JsonErrorCode = JsonErrorCode.Unknown,
+        val errors: Map<String, DiscordFieldError> = emptyMap(),
+        val message: String = "",
 )
 
 /**
@@ -32,9 +30,9 @@ class DiscordErrorResponse(
  */
 @Serializable(DiscordFieldError.Serializer::class)
 class DiscordFieldError(
-    @SerialName("_errors")
-    val errors: List<DiscordErrorDetail> = emptyList(),
-    val nestedErrors: Optional<JsonObject> = Optional.Missing()
+        @SerialName("_errors")
+        val errors: List<DiscordErrorDetail> = emptyList(),
+        val nestedErrors: Optional<JsonObject> = Optional.Missing()
 ) {
     internal object Serializer : KSerializer<DiscordFieldError> {
 
@@ -48,7 +46,7 @@ class DiscordFieldError(
             // Direct Error message
             if (json.containsKey("_errors"))
                 return DiscordFieldError(
-                    Json.decodeFromJsonElement(ListSerializer(DiscordErrorDetail.serializer()), json["_errors"]!!)
+                        Json.decodeFromJsonElement(ListSerializer(DiscordErrorDetail.serializer()), json["_errors"]!!)
                 )
 
             // Nested fields have no definite structure.
@@ -67,6 +65,6 @@ class DiscordFieldError(
  */
 @Serializable
 class DiscordErrorDetail(
-    val code: String,
-    val message: String,
+        val code: String,
+        val message: String,
 )

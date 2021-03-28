@@ -3,8 +3,7 @@
 package dev.kord.rest.request
 
 import dev.kord.rest.ratelimit.BucketKey
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.readBytes
+import io.ktor.client.statement.*
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
@@ -23,7 +22,7 @@ val HttpResponse.channelResetPoint: Instant
         return Instant.ofEpochMilli(unixSeconds.times(1000).toLong())
     }
 
-fun HttpResponse.channelResetPoint(clock: Clock) : Instant {
+fun HttpResponse.channelResetPoint(clock: Clock): Instant {
     val seconds = headers[rateLimitResetAfter]?.toDouble() ?: return clock.instant()
     return clock.instant().plus(Duration.ofMillis(seconds.times(1000).toLong()))
 }
@@ -52,7 +51,7 @@ suspend fun HttpResponse.errorString(): String {
     return logString(message)
 }
 
-fun Request<*,*>.logString(body: String): String {
+fun Request<*, *>.logString(body: String): String {
     val method = route.method.value
     val path = route.path
     val params = routeParams.entries

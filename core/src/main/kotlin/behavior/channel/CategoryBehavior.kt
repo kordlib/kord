@@ -73,11 +73,11 @@ interface CategoryBehavior : GuildChannelBehavior {
 }
 
 
- fun CategoryBehavior(
-    guildId: Snowflake,
-    id: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+fun CategoryBehavior(
+        guildId: Snowflake,
+        id: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
 ): CategoryBehavior = object : CategoryBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id

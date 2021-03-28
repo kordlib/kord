@@ -1,8 +1,6 @@
 package json
 
-import dev.kord.common.DiscordBitSet
 import dev.kord.common.entity.DiscordRole
-import dev.kord.common.entity.Permissions
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put

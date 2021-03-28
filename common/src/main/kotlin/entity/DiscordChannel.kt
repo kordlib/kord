@@ -80,6 +80,7 @@ sealed class ChannelType(val value: Int) {
 
     /** A voice channel within a server. */
     object GuildVoice : ChannelType(2)
+
     /** A direct message between multiple users. */
     object GroupDM : ChannelType(3)
 

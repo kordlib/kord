@@ -133,7 +133,7 @@ fun DiscordBitSet(value: String): DiscordBitSet {
         }
 
         destination[longIndex] =
-            (destination[longIndex].toULong() or (byte.toUByte().toULong() shl offset * Byte.SIZE_BITS)).toLong()
+                (destination[longIndex].toULong() or (byte.toUByte().toULong() shl offset * Byte.SIZE_BITS)).toLong()
     }
 
     return DiscordBitSet(destination)

@@ -50,13 +50,13 @@ class DefaultGatewayBuilder {
         }
 
         val data = DefaultGatewayData(
-            url,
-            client,
-            retry,
-            sendRateLimiter,
-            identifyRateLimiter,
-            dispatcher,
-            eventFlow
+                url,
+                client,
+                retry,
+                sendRateLimiter,
+                identifyRateLimiter,
+                dispatcher,
+                eventFlow
         )
 
         return DefaultGateway(data)

@@ -24,8 +24,8 @@ import kotlin.contracts.contract
 @KordPreview
 @KordDsl
 class ApplicationCommandCreateBuilder(
-    val name: String,
-    val description: String,
+        val name: String,
+        val description: String,
 ) : RequestBuilder<ApplicationCommandCreateRequest>, BaseApplicationBuilder() {
 
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
@@ -33,8 +33,8 @@ class ApplicationCommandCreateBuilder(
 
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(name,
-            description,
-            _options.mapList { it.toRequest() })
+                description,
+                _options.mapList { it.toRequest() })
 
     }
 
@@ -45,9 +45,9 @@ class ApplicationCommandCreateBuilder(
 class ApplicationCommandsCreateBuilder : RequestBuilder<List<ApplicationCommandCreateRequest>> {
     val commands: MutableList<ApplicationCommandCreateBuilder> = mutableListOf()
     fun command(
-        name: String,
-        description: String,
-        builder: ApplicationCommandCreateBuilder.() -> Unit
+            name: String,
+            description: String,
+            builder: ApplicationCommandCreateBuilder.() -> Unit
     ) {
         commands += ApplicationCommandCreateBuilder(name, description).apply(builder)
     }
@@ -79,9 +79,9 @@ sealed class BaseApplicationBuilder {
 
     @OptIn(ExperimentalContracts::class)
     inline fun string(
-        name: String,
-        description: String,
-        builder: StringChoiceBuilder.() -> Unit = {},
+            name: String,
+            description: String,
+            builder: StringChoiceBuilder.() -> Unit = {},
     ) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
@@ -97,9 +97,9 @@ sealed class BaseApplicationBuilder {
 
     @OptIn(ExperimentalContracts::class)
     inline fun subCommand(
-        name: String,
-        description: String,
-        builder: SubCommandBuilder.() -> Unit = {},
+            name: String,
+            description: String,
+            builder: SubCommandBuilder.() -> Unit = {},
     ) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
@@ -131,7 +131,7 @@ sealed class BaseApplicationBuilder {
 @KordPreview
 @KordDsl
 class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
-    RequestBuilder<ApplicationCommandModifyRequest> {
+        RequestBuilder<ApplicationCommandModifyRequest> {
 
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
@@ -144,8 +144,8 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
 
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(_name,
-            _description,
-            _options.mapList { it.toRequest() })
+                _description,
+                _options.mapList { it.toRequest() })
 
     }
 
@@ -154,7 +154,7 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
 @KordPreview
 @KordDsl
 class InteractionResponseModifyBuilder :
-    RequestBuilder<InteractionResponseModifyRequest> {
+        RequestBuilder<InteractionResponseModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
@@ -172,16 +172,16 @@ class InteractionResponseModifyBuilder :
 
     override fun toRequest(): InteractionResponseModifyRequest {
         return InteractionResponseModifyRequest(
-            _content,
-            _embeds.mapList { it.toRequest() },
-            _allowedMentions.map { it.build() })
+                _content,
+                _embeds.mapList { it.toRequest() },
+                _allowedMentions.map { it.build() })
     }
 }
 
 @KordPreview
 @KordDsl
 class FollowupMessageModifyBuilder :
-    RequestBuilder<FollowupMessageModifyRequest> {
+        RequestBuilder<FollowupMessageModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
@@ -199,9 +199,9 @@ class FollowupMessageModifyBuilder :
 
     override fun toRequest(): FollowupMessageModifyRequest {
         return FollowupMessageModifyRequest(
-            _content,
-            _embeds.mapList { it.toRequest() },
-            _allowedMentions.map { it.build() })
+                _content,
+                _embeds.mapList { it.toRequest() },
+                _allowedMentions.map { it.build() })
     }
 }
 
@@ -237,11 +237,11 @@ class InteractionApplicationCommandCallbackDataBuilder {
     fun build(): InteractionApplicationCommandCallbackData {
 
         return InteractionApplicationCommandCallbackData(
-            _tts,
-            _content,
-            _embeds.mapList { it.toRequest() },
-            _allowedMentions.map { it.build() },
-            _flags
+                _tts,
+                _content,
+                _embeds.mapList { it.toRequest() },
+                _allowedMentions.map { it.build() },
+                _flags
         )
 
     }
@@ -286,16 +286,16 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
     }
 
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
-        MultipartFollowupMessageCreateRequest(
-            FollowupMessageCreateRequest(
-                content = _content,
-                username = _username,
-                avatar = _avatarUrl,
-                tts = _tts,
-                embeds = Optional.missingOnEmpty(embeds),
-                allowedMentions = _allowedMentions
-            ),
-            file,
-        )
+            MultipartFollowupMessageCreateRequest(
+                    FollowupMessageCreateRequest(
+                            content = _content,
+                            username = _username,
+                            avatar = _avatarUrl,
+                            tts = _tts,
+                            embeds = Optional.missingOnEmpty(embeds),
+                            allowedMentions = _allowedMentions
+                    ),
+                    file,
+            )
 
 }

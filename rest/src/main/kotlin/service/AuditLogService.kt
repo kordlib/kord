@@ -1,6 +1,5 @@
 package dev.kord.rest.service
 
-import dev.kord.common.entity.AuditLogEvent
 import dev.kord.common.entity.DiscordAuditLog
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder

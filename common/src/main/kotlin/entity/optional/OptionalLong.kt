@@ -1,5 +1,7 @@
 package dev.kord.common.entity.optional
 
+import dev.kord.common.entity.optional.OptionalLong.Missing
+import dev.kord.common.entity.optional.OptionalLong.Value
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -115,5 +117,5 @@ val OptionalLong?.value: Long? get() = this?.asNullable
  */
 fun OptionalLong?.orElse(default: Long) = this?.orElse(default) ?: default
 
-fun Long?.optional(): OptionalLong = if(this == null) OptionalLong.Missing
+fun Long?.optional(): OptionalLong = if (this == null) OptionalLong.Missing
 else OptionalLong.Value(this)

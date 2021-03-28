@@ -57,10 +57,10 @@ class EntityNotFoundException : Exception {
                 throw EntityNotFoundException("Widget for guild ${id.value} was not found.")
 
         fun templateNotFound(code: String): Nothing =
-            throw EntityNotFoundException("Template $code was not found.")
+                throw EntityNotFoundException("Template $code was not found.")
 
         fun welcomeScreenNotFound(guildId: Snowflake): Nothing =
-            throw EntityNotFoundException("Welcome screen for guild $guildId was not found.")
+                throw EntityNotFoundException("Welcome screen for guild $guildId was not found.")
 
     }
 

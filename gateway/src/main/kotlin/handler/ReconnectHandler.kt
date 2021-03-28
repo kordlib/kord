@@ -2,7 +2,6 @@ package dev.kord.gateway.handler
 
 import dev.kord.gateway.Event
 import dev.kord.gateway.Reconnect
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
 internal class ReconnectHandler(

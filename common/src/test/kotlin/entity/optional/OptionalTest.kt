@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 internal class OptionalTest {
 
     @Test
-    fun `creating optional from nullable value returns Value on non-null value`(){
+    fun `creating optional from nullable value returns Value on non-null value`() {
         val value: Int? = 5
         val optional = Optional(value)
 
@@ -19,7 +19,7 @@ internal class OptionalTest {
     }
 
     @Test
-    fun `creating optional from nullable value returns Null on null value`(){
+    fun `creating optional from nullable value returns Null on null value`() {
         val value: Int? = null
         val optional = Optional(value)
 
@@ -27,7 +27,7 @@ internal class OptionalTest {
     }
 
     @Test
-    fun `deserializing null in nullable optional assigns Null`(){
+    fun `deserializing null in nullable optional assigns Null`() {
         @Language("json")
         val json = """{ "value":null }"""
 
@@ -40,7 +40,7 @@ internal class OptionalTest {
     }
 
     @Test
-    fun `deserializing nothing in nullable optional assigns Missing`(){
+    fun `deserializing nothing in nullable optional assigns Missing`() {
         @Language("json")
         val json = """{}"""
 
@@ -53,7 +53,7 @@ internal class OptionalTest {
     }
 
     @Test
-    fun `deserializing nothing in non-nullable optional assigns Missing`(){
+    fun `deserializing nothing in non-nullable optional assigns Missing`() {
         @Language("json")
         val json = """{}"""
 
@@ -66,7 +66,7 @@ internal class OptionalTest {
     }
 
     @Test
-    fun `deserializing null in non-nullable optional throws SerializationException`(){
+    fun `deserializing null in non-nullable optional throws SerializationException`() {
         @Language("json")
         val json = """{ "value":null }"""
 

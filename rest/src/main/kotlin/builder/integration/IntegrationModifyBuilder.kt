@@ -14,18 +14,21 @@ import dev.kord.rest.json.request.GuildIntegrationModifyRequest
 class IntegrationModifyBuilder : RequestBuilder<GuildIntegrationModifyRequest> {
 
     private var _expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing()
+
     /**
      * the behavior when an integration subscription lapses.
      */
     var expireBehavior: IntegrationExpireBehavior? by ::_expireBehavior.delegate()
 
     private var _expirePeriodInDays: OptionalInt = OptionalInt.Missing
+
     /**
      * 	Period in days where the integration will ignore lapsed subscriptions
      */
     var expirePeriodInDays: Int? by ::_expirePeriodInDays.delegate()
 
     private var _enableEmoticons: OptionalBoolean = OptionalBoolean.Missing
+
     /**
      * whether emoticons should be synced for this integration (twitch only currently).
      */

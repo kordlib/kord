@@ -5,7 +5,6 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.NotSerializable
 import dev.kord.common.entity.optional.*
-import dev.kord.gateway.InteractionCreate
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -15,31 +14,31 @@ import kotlinx.serialization.encoding.Encoder
 
 @KordPreview
 data class InteractionData(
-    val id: Snowflake,
-    val type: InteractionType,
-    val data: ApplicationCommandInteractionData,
-    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val channelId: Snowflake,
-    val member: Optional<MemberData> = Optional.Missing(),
-    val user: Optional<UserData> = Optional.Missing(),
-    val token: String,
-    val permissions: Optional<Permissions>,
-    val version: Int
+        val id: Snowflake,
+        val type: InteractionType,
+        val data: ApplicationCommandInteractionData,
+        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+        val channelId: Snowflake,
+        val member: Optional<MemberData> = Optional.Missing(),
+        val user: Optional<UserData> = Optional.Missing(),
+        val token: String,
+        val permissions: Optional<Permissions>,
+        val version: Int
 ) {
     companion object {
         fun from(interaction: DiscordInteraction): InteractionData {
             return with(interaction) {
                 InteractionData(
-                    id,
-                    type,
-                    ApplicationCommandInteractionData.from(data, guildId.value),
-                    guildId,
-                    channelId,
-                    member.map { it.toData(it.user.value!!.id, guildId.value!!) },
-                    user.map { it.toData() },
-                    token,
-                    member.map { it.permissions },
-                    version
+                        id,
+                        type,
+                        ApplicationCommandInteractionData.from(data, guildId.value),
+                        guildId,
+                        channelId,
+                        member.map { it.toData(it.user.value!!.id, guildId.value!!) },
+                        user.map { it.toData() },
+                        token,
+                        member.map { it.permissions },
+                        version
                 )
             }
         }
@@ -49,18 +48,18 @@ data class InteractionData(
 @KordPreview
 @Serializable
 data class ResolvedObjectsData(
-    val members: Optional<Map<Snowflake, MemberData>> = Optional.Missing(),
-    val users: Optional<Map<Snowflake, UserData>> = Optional.Missing(),
-    val roles: Optional<Map<Snowflake, RoleData>> = Optional.Missing(),
-    val channels: Optional<Map<Snowflake, ChannelData>> = Optional.Missing()
+        val members: Optional<Map<Snowflake, MemberData>> = Optional.Missing(),
+        val users: Optional<Map<Snowflake, UserData>> = Optional.Missing(),
+        val roles: Optional<Map<Snowflake, RoleData>> = Optional.Missing(),
+        val channels: Optional<Map<Snowflake, ChannelData>> = Optional.Missing()
 ) {
     companion object {
         fun from(data: ResolvedObjects, guildId: Snowflake?): ResolvedObjectsData {
             return ResolvedObjectsData(
-                members = data.members.mapValues { MemberData.from(it.key, guildId!!, it.value) },
-                channels = data.channels.mapValues { ChannelData.from(it.value) },
-                roles = data.roles.mapValues { RoleData.from(guildId!!, it.value) },
-                users = data.users.mapValues { it.value.toData() }
+                    members = data.members.mapValues { MemberData.from(it.key, guildId!!, it.value) },
+                    channels = data.channels.mapValues { ChannelData.from(it.value) },
+                    roles = data.roles.mapValues { RoleData.from(guildId!!, it.value) },
+                    users = data.users.mapValues { it.value.toData() }
             )
         }
     }
@@ -70,22 +69,22 @@ data class ResolvedObjectsData(
 @KordPreview
 @Serializable
 data class ApplicationCommandInteractionData(
-    val id: Snowflake,
-    val name: String,
-    val options: Optional<List<OptionData>> = Optional.Missing(),
-    val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing()
+        val id: Snowflake,
+        val name: String,
+        val options: Optional<List<OptionData>> = Optional.Missing(),
+        val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing()
 ) {
     companion object {
         fun from(
-            data: DiscordApplicationCommandInteractionData,
-            guildId: Snowflake?
+                data: DiscordApplicationCommandInteractionData,
+                guildId: Snowflake?
         ): ApplicationCommandInteractionData {
             return with(data) {
                 ApplicationCommandInteractionData(
-                    id,
-                    name,
-                    options.mapList { OptionData.from(it) },
-                    data.resolved.map { ResolvedObjectsData.from(it, guildId) }
+                        id,
+                        name,
+                        options.mapList { OptionData.from(it) },
+                        data.resolved.map { ResolvedObjectsData.from(it, guildId) }
                 )
 
             }
@@ -96,11 +95,11 @@ data class ApplicationCommandInteractionData(
 @KordPreview
 @Serializable
 data class OptionData(
-    val name: String,
-    @OptIn(KordExperimental::class)
-    val value: Optional<DiscordOptionValue<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
-    val values: Optional<List<CommandArgument>> = Optional.Missing(),
-    val subCommands: Optional<List<SubCommand>> = Optional.Missing()
+        val name: String,
+        @OptIn(KordExperimental::class)
+        val value: Optional<DiscordOptionValue<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
+        val values: Optional<List<CommandArgument>> = Optional.Missing(),
+        val subCommands: Optional<List<SubCommand>> = Optional.Missing()
 ) {
     companion object {
         fun from(data: Option): OptionData = with(data) {

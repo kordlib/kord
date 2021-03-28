@@ -58,7 +58,7 @@ class KtorRequestHandler(
             }
             response.isError -> {
                 logger.debug { response.logString(body) }
-                if(response.contentType() == ContentType.Application.Json)
+                if (response.contentType() == ContentType.Application.Json)
                     throw KtorRequestException(response, parser.decodeFromString(DiscordErrorResponse.serializer().optional, body))
                 else throw KtorRequestException(response, null)
             }
@@ -102,10 +102,10 @@ class KtorRequestHandler(
 
 
 fun KtorRequestHandler(
-    token: String,
-    requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
-    clock: Clock = Clock.systemUTC(),
-    parser: Json = jsonDefault,
+        token: String,
+        requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
+        clock: Clock = Clock.systemUTC(),
+        parser: Json = jsonDefault,
 ): KtorRequestHandler {
     val client = HttpClient(CIO) {
         expectSuccess = false

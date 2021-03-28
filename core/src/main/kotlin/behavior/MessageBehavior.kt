@@ -183,11 +183,11 @@ interface MessageBehavior : KordEntity, Strategizable {
 
 }
 
- fun MessageBehavior(
-    channelId: Snowflake,
-    messageId: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+fun MessageBehavior(
+        channelId: Snowflake,
+        messageId: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
 ) = object : MessageBehavior {
     override val channelId: Snowflake = channelId
     override val id: Snowflake = messageId

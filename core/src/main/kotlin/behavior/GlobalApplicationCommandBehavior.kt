@@ -23,7 +23,8 @@ interface ApplicationCommandBehavior : Entity {
      * @throws [RestRequestException] when something goes wrong during the request.
      */
     suspend fun edit(
-            builder: suspend /*suspend since not inline*/ ApplicationCommandModifyBuilder.() -> Unit)
+        builder: suspend /*suspend since not inline*/ ApplicationCommandModifyBuilder.() -> Unit
+    )
             : ApplicationCommand
 
     /**

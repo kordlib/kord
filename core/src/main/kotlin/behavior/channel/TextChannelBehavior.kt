@@ -42,10 +42,10 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
 }
 
 fun TextChannelBehavior(
-    guildId: Snowflake,
-    id: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+        guildId: Snowflake,
+        id: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ): TextChannelBehavior = object : TextChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id
@@ -54,7 +54,7 @@ fun TextChannelBehavior(
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false

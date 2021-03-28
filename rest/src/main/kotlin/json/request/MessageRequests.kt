@@ -1,18 +1,14 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.Color
-import dev.kord.common.entity.*
+import dev.kord.common.entity.AllowedMentions
+import dev.kord.common.entity.DiscordMessageReference
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class MessageCreateRequest(
@@ -25,7 +21,6 @@ data class MessageCreateRequest(
         @SerialName("message_reference")
         val messageReference: Optional<DiscordMessageReference> = Optional.Missing()
 )
-
 
 
 data class MultipartMessageCreateRequest(

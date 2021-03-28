@@ -3,8 +3,8 @@ package dev.kord.rest.service
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.rest.request.KtorRequestHandler
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.RequestBuilder
+import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -45,7 +45,7 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
     }
 }
 
-fun RestClient(token: String) : RestClient {
+fun RestClient(token: String): RestClient {
     val requestHandler = KtorRequestHandler(token)
     return RestClient(requestHandler)
 }

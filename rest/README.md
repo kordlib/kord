@@ -14,6 +14,7 @@ suspend fun main(args: Array<String>) {
     println("using $username's token")
 }
 ``` 
+
 ## Installation
 
 Replace `{version}` with the latest version number on maven central.
@@ -24,7 +25,6 @@ e.g: `0.7.x-SNAPSHOT`
 
 [![Download](https://img.shields.io/nexus/r/dev.kord/kord-rest?color=fb5502&label=Kord&logoColor=05c1fd&server=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2F&style=for-the-badge) ](https://search.maven.org/search?q=g:dev.kord)
 [![Snapshot](https://img.shields.io/nexus/s/dev.kord/kord-rest?label=SNAPSHOT&server=https%3A%2F%2Foss.sonatype.org%2F&style=for-the-badge)](https://oss.sonatype.org/#nexus-search;quick~dev.kord)
-
 
 ### Gradle (groovy)
 

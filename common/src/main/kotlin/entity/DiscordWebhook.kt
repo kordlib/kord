@@ -2,7 +2,9 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.*
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -40,24 +42,24 @@ data class DiscordWebhook(
 
 @Serializable(with = WebhookType.Serializer::class)
 sealed class WebhookType(val value: Int) {
-    class Unknown(value: Int): WebhookType(value)
+    class Unknown(value: Int) : WebhookType(value)
 
     /**
      * Incoming Webhooks can post messages to channels with a generated token.
      */
-    object Incoming: WebhookType(1)
+    object Incoming : WebhookType(1)
 
     /**
      * 	Channel Follower Webhooks are internal webhooks used with Channel Following to post new messages into channels.
      */
-    object ChannelFollower: WebhookType(2)
+    object ChannelFollower : WebhookType(2)
 
     internal object Serializer : KSerializer<WebhookType> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): WebhookType = when(val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): WebhookType = when (val value = decoder.decodeInt()) {
             1 -> Incoming
             2 -> ChannelFollower
             else -> Unknown(value)

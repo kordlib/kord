@@ -27,7 +27,7 @@ ij_css_hex_color_upper_case = false
 ij_css_keep_blank_lines_in_code = 2
 ij_css_keep_indents_on_empty_lines = false
 ij_css_keep_single_line_blocks = false
-ij_css_properties_order = font,font-family,font-size,font-weight,font-style,font-variant,font-size-adjust,font-stretch,line-height,position,z-index,top,right,bottom,left,display,visibility,float,clear,overflow,overflow-x,overflow-y,clip,zoom,align-content,align-items,align-self,flex,flex-flow,flex-basis,flex-direction,flex-grow,flex-shrink,flex-wrap,justify-content,order,box-sizing,width,min-width,max-width,height,min-height,max-height,margin,margin-top,margin-right,margin-bottom,margin-left,padding,padding-top,padding-right,padding-bottom,padding-left,table-layout,empty-cells,caption-side,border-spacing,border-collapse,list-style,list-style-position,list-style-type,list-style-image,content,quotes,counter-reset,counter-increment,resize,cursor,user-select,nav-index,nav-up,nav-right,nav-down,nav-left,transition,transition-delay,transition-timing-function,transition-duration,transition-property,transform,transform-origin,animation,animation-name,animation-duration,animation-play-state,animation-timing-function,animation-delay,animation-iteration-count,animation-direction,text-align,text-align-last,vertical-align,white-space,text-decoration,text-emphasis,text-emphasis-color,text-emphasis-style,text-emphasis-position,text-indent,text-justify,letter-spacing,word-spacing,text-outline,text-transform,text-wrap,text-overflow,text-overflow-ellipsis,text-overflow-mode,word-wrap,word-break,tab-size,hyphens,pointer-events,opacity,color,border,border-width,border-style,border-color,border-top,border-top-width,border-top-style,border-top-color,border-right,border-right-width,border-right-style,border-right-color,border-bottom,border-bottom-width,border-bottom-style,border-bottom-color,border-left,border-left-width,border-left-style,border-left-color,border-radius,border-top-left-radius,border-top-right-radius,border-bottom-right-radius,border-bottom-left-radius,border-image,border-image-source,border-image-slice,border-image-width,border-image-outset,border-image-repeat,outline,outline-width,outline-style,outline-color,outline-offset,background,background-color,background-image,background-repeat,background-attachment,background-position,background-position-x,background-position-y,background-clip,background-origin,background-size,box-decoration-break,box-shadow,text-shadow
+ij_css_properties_order = font, font-family, font-size, font-weight, font-style, font-variant, font-size-adjust, font-stretch, line-height, position, z-index, top, right, bottom, left, display, visibility, float, clear, overflow, overflow-x, overflow-y, clip, zoom, align-content, align-items, align-self, flex, flex-flow, flex-basis, flex-direction, flex-grow, flex-shrink, flex-wrap, justify-content, order, box-sizing, width, min-width, max-width, height, min-height, max-height, margin, margin-top, margin-right, margin-bottom, margin-left, padding, padding-top, padding-right, padding-bottom, padding-left, table-layout, empty-cells, caption-side, border-spacing, border-collapse, list-style, list-style-position, list-style-type, list-style-image, content, quotes, counter-reset, counter-increment, resize, cursor, user-select, nav-index, nav-up, nav-right, nav-down, nav-left, transition, transition-delay, transition-timing-function, transition-duration, transition-property, transform, transform-origin, animation, animation-name, animation-duration, animation-play-state, animation-timing-function, animation-delay, animation-iteration-count, animation-direction, text-align, text-align-last, vertical-align, white-space, text-decoration, text-emphasis, text-emphasis-color, text-emphasis-style, text-emphasis-position, text-indent, text-justify, letter-spacing, word-spacing, text-outline, text-transform, text-wrap, text-overflow, text-overflow-ellipsis, text-overflow-mode, word-wrap, word-break, tab-size, hyphens, pointer-events, opacity, color, border, border-width, border-style, border-color, border-top, border-top-width, border-top-style, border-top-color, border-right, border-right-width, border-right-style, border-right-color, border-bottom, border-bottom-width, border-bottom-style, border-bottom-color, border-left, border-left-width, border-left-style, border-left-color, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-right-radius, border-bottom-left-radius, border-image, border-image-source, border-image-slice, border-image-width, border-image-outset, border-image-repeat, outline, outline-width, outline-style, outline-color, outline-offset, background, background-color, background-image, background-repeat, background-attachment, background-position, background-position-x, background-position-y, background-clip, background-origin, background-size, box-decoration-break, box-shadow, text-shadow
 ij_css_space_after_colon = true
 ij_css_space_before_opening_brace = true
 ij_css_use_double_quotes = true
@@ -142,7 +142,7 @@ ij_java_for_statement_wrap = off
 ij_java_generate_final_locals = false
 ij_java_generate_final_parameters = false
 ij_java_if_brace_force = never
-ij_java_imports_layout = *,|,javax.**,java.**,|,$*
+ij_java_imports_layout = *, |, javax.**, java.**, |, $*
 ij_java_indent_case_from_switch = true
 ij_java_insert_inner_class_imports = false
 ij_java_insert_override_annotation = true
@@ -176,7 +176,7 @@ ij_java_method_parameters_wrap = off
 ij_java_modifier_list_wrap = false
 ij_java_names_count_to_use_import_on_demand = 3
 ij_java_new_line_after_lparen_in_record_header = false
-ij_java_packages_to_use_import_on_demand = java.awt.*,javax.swing.*
+ij_java_packages_to_use_import_on_demand = java.awt.*, javax.swing.*
 ij_java_parameter_annotation_wrap = off
 ij_java_parentheses_expression_new_line_after_left_paren = false
 ij_java_parentheses_expression_right_paren_on_new_line = false
@@ -307,7 +307,7 @@ ij_less_hex_color_upper_case = false
 ij_less_keep_blank_lines_in_code = 2
 ij_less_keep_indents_on_empty_lines = false
 ij_less_keep_single_line_blocks = false
-ij_less_properties_order = font,font-family,font-size,font-weight,font-style,font-variant,font-size-adjust,font-stretch,line-height,position,z-index,top,right,bottom,left,display,visibility,float,clear,overflow,overflow-x,overflow-y,clip,zoom,align-content,align-items,align-self,flex,flex-flow,flex-basis,flex-direction,flex-grow,flex-shrink,flex-wrap,justify-content,order,box-sizing,width,min-width,max-width,height,min-height,max-height,margin,margin-top,margin-right,margin-bottom,margin-left,padding,padding-top,padding-right,padding-bottom,padding-left,table-layout,empty-cells,caption-side,border-spacing,border-collapse,list-style,list-style-position,list-style-type,list-style-image,content,quotes,counter-reset,counter-increment,resize,cursor,user-select,nav-index,nav-up,nav-right,nav-down,nav-left,transition,transition-delay,transition-timing-function,transition-duration,transition-property,transform,transform-origin,animation,animation-name,animation-duration,animation-play-state,animation-timing-function,animation-delay,animation-iteration-count,animation-direction,text-align,text-align-last,vertical-align,white-space,text-decoration,text-emphasis,text-emphasis-color,text-emphasis-style,text-emphasis-position,text-indent,text-justify,letter-spacing,word-spacing,text-outline,text-transform,text-wrap,text-overflow,text-overflow-ellipsis,text-overflow-mode,word-wrap,word-break,tab-size,hyphens,pointer-events,opacity,color,border,border-width,border-style,border-color,border-top,border-top-width,border-top-style,border-top-color,border-right,border-right-width,border-right-style,border-right-color,border-bottom,border-bottom-width,border-bottom-style,border-bottom-color,border-left,border-left-width,border-left-style,border-left-color,border-radius,border-top-left-radius,border-top-right-radius,border-bottom-right-radius,border-bottom-left-radius,border-image,border-image-source,border-image-slice,border-image-width,border-image-outset,border-image-repeat,outline,outline-width,outline-style,outline-color,outline-offset,background,background-color,background-image,background-repeat,background-attachment,background-position,background-position-x,background-position-y,background-clip,background-origin,background-size,box-decoration-break,box-shadow,text-shadow
+ij_less_properties_order = font, font-family, font-size, font-weight, font-style, font-variant, font-size-adjust, font-stretch, line-height, position, z-index, top, right, bottom, left, display, visibility, float, clear, overflow, overflow-x, overflow-y, clip, zoom, align-content, align-items, align-self, flex, flex-flow, flex-basis, flex-direction, flex-grow, flex-shrink, flex-wrap, justify-content, order, box-sizing, width, min-width, max-width, height, min-height, max-height, margin, margin-top, margin-right, margin-bottom, margin-left, padding, padding-top, padding-right, padding-bottom, padding-left, table-layout, empty-cells, caption-side, border-spacing, border-collapse, list-style, list-style-position, list-style-type, list-style-image, content, quotes, counter-reset, counter-increment, resize, cursor, user-select, nav-index, nav-up, nav-right, nav-down, nav-left, transition, transition-delay, transition-timing-function, transition-duration, transition-property, transform, transform-origin, animation, animation-name, animation-duration, animation-play-state, animation-timing-function, animation-delay, animation-iteration-count, animation-direction, text-align, text-align-last, vertical-align, white-space, text-decoration, text-emphasis, text-emphasis-color, text-emphasis-style, text-emphasis-position, text-indent, text-justify, letter-spacing, word-spacing, text-outline, text-transform, text-wrap, text-overflow, text-overflow-ellipsis, text-overflow-mode, word-wrap, word-break, tab-size, hyphens, pointer-events, opacity, color, border, border-width, border-style, border-color, border-top, border-top-width, border-top-style, border-top-color, border-right, border-right-width, border-right-style, border-right-color, border-bottom, border-bottom-width, border-bottom-style, border-bottom-color, border-left, border-left-width, border-left-style, border-left-color, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-right-radius, border-bottom-left-radius, border-image, border-image-source, border-image-slice, border-image-width, border-image-outset, border-image-repeat, outline, outline-width, outline-style, outline-color, outline-offset, background, background-color, background-image, background-repeat, background-attachment, background-position, background-position-x, background-position-y, background-clip, background-origin, background-size, box-decoration-break, box-shadow, text-shadow
 ij_less_space_after_colon = true
 ij_less_space_before_opening_brace = true
 ij_less_use_double_quotes = true
@@ -327,7 +327,7 @@ ij_sass_hex_color_upper_case = false
 ij_sass_keep_blank_lines_in_code = 2
 ij_sass_keep_indents_on_empty_lines = false
 ij_sass_keep_single_line_blocks = false
-ij_sass_properties_order = font,font-family,font-size,font-weight,font-style,font-variant,font-size-adjust,font-stretch,line-height,position,z-index,top,right,bottom,left,display,visibility,float,clear,overflow,overflow-x,overflow-y,clip,zoom,align-content,align-items,align-self,flex,flex-flow,flex-basis,flex-direction,flex-grow,flex-shrink,flex-wrap,justify-content,order,box-sizing,width,min-width,max-width,height,min-height,max-height,margin,margin-top,margin-right,margin-bottom,margin-left,padding,padding-top,padding-right,padding-bottom,padding-left,table-layout,empty-cells,caption-side,border-spacing,border-collapse,list-style,list-style-position,list-style-type,list-style-image,content,quotes,counter-reset,counter-increment,resize,cursor,user-select,nav-index,nav-up,nav-right,nav-down,nav-left,transition,transition-delay,transition-timing-function,transition-duration,transition-property,transform,transform-origin,animation,animation-name,animation-duration,animation-play-state,animation-timing-function,animation-delay,animation-iteration-count,animation-direction,text-align,text-align-last,vertical-align,white-space,text-decoration,text-emphasis,text-emphasis-color,text-emphasis-style,text-emphasis-position,text-indent,text-justify,letter-spacing,word-spacing,text-outline,text-transform,text-wrap,text-overflow,text-overflow-ellipsis,text-overflow-mode,word-wrap,word-break,tab-size,hyphens,pointer-events,opacity,color,border,border-width,border-style,border-color,border-top,border-top-width,border-top-style,border-top-color,border-right,border-right-width,border-right-style,border-right-color,border-bottom,border-bottom-width,border-bottom-style,border-bottom-color,border-left,border-left-width,border-left-style,border-left-color,border-radius,border-top-left-radius,border-top-right-radius,border-bottom-right-radius,border-bottom-left-radius,border-image,border-image-source,border-image-slice,border-image-width,border-image-outset,border-image-repeat,outline,outline-width,outline-style,outline-color,outline-offset,background,background-color,background-image,background-repeat,background-attachment,background-position,background-position-x,background-position-y,background-clip,background-origin,background-size,box-decoration-break,box-shadow,text-shadow
+ij_sass_properties_order = font, font-family, font-size, font-weight, font-style, font-variant, font-size-adjust, font-stretch, line-height, position, z-index, top, right, bottom, left, display, visibility, float, clear, overflow, overflow-x, overflow-y, clip, zoom, align-content, align-items, align-self, flex, flex-flow, flex-basis, flex-direction, flex-grow, flex-shrink, flex-wrap, justify-content, order, box-sizing, width, min-width, max-width, height, min-height, max-height, margin, margin-top, margin-right, margin-bottom, margin-left, padding, padding-top, padding-right, padding-bottom, padding-left, table-layout, empty-cells, caption-side, border-spacing, border-collapse, list-style, list-style-position, list-style-type, list-style-image, content, quotes, counter-reset, counter-increment, resize, cursor, user-select, nav-index, nav-up, nav-right, nav-down, nav-left, transition, transition-delay, transition-timing-function, transition-duration, transition-property, transform, transform-origin, animation, animation-name, animation-duration, animation-play-state, animation-timing-function, animation-delay, animation-iteration-count, animation-direction, text-align, text-align-last, vertical-align, white-space, text-decoration, text-emphasis, text-emphasis-color, text-emphasis-style, text-emphasis-position, text-indent, text-justify, letter-spacing, word-spacing, text-outline, text-transform, text-wrap, text-overflow, text-overflow-ellipsis, text-overflow-mode, word-wrap, word-break, tab-size, hyphens, pointer-events, opacity, color, border, border-width, border-style, border-color, border-top, border-top-width, border-top-style, border-top-color, border-right, border-right-width, border-right-style, border-right-color, border-bottom, border-bottom-width, border-bottom-style, border-bottom-color, border-left, border-left-width, border-left-style, border-left-color, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-right-radius, border-bottom-left-radius, border-image, border-image-source, border-image-slice, border-image-width, border-image-outset, border-image-repeat, outline, outline-width, outline-style, outline-color, outline-offset, background, background-color, background-image, background-repeat, background-attachment, background-position, background-position-x, background-position-y, background-clip, background-origin, background-size, box-decoration-break, box-shadow, text-shadow
 ij_sass_space_after_colon = true
 ij_sass_space_before_opening_brace = true
 ij_sass_use_double_quotes = true
@@ -347,7 +347,7 @@ ij_scss_hex_color_upper_case = false
 ij_scss_keep_blank_lines_in_code = 2
 ij_scss_keep_indents_on_empty_lines = false
 ij_scss_keep_single_line_blocks = false
-ij_scss_properties_order = font,font-family,font-size,font-weight,font-style,font-variant,font-size-adjust,font-stretch,line-height,position,z-index,top,right,bottom,left,display,visibility,float,clear,overflow,overflow-x,overflow-y,clip,zoom,align-content,align-items,align-self,flex,flex-flow,flex-basis,flex-direction,flex-grow,flex-shrink,flex-wrap,justify-content,order,box-sizing,width,min-width,max-width,height,min-height,max-height,margin,margin-top,margin-right,margin-bottom,margin-left,padding,padding-top,padding-right,padding-bottom,padding-left,table-layout,empty-cells,caption-side,border-spacing,border-collapse,list-style,list-style-position,list-style-type,list-style-image,content,quotes,counter-reset,counter-increment,resize,cursor,user-select,nav-index,nav-up,nav-right,nav-down,nav-left,transition,transition-delay,transition-timing-function,transition-duration,transition-property,transform,transform-origin,animation,animation-name,animation-duration,animation-play-state,animation-timing-function,animation-delay,animation-iteration-count,animation-direction,text-align,text-align-last,vertical-align,white-space,text-decoration,text-emphasis,text-emphasis-color,text-emphasis-style,text-emphasis-position,text-indent,text-justify,letter-spacing,word-spacing,text-outline,text-transform,text-wrap,text-overflow,text-overflow-ellipsis,text-overflow-mode,word-wrap,word-break,tab-size,hyphens,pointer-events,opacity,color,border,border-width,border-style,border-color,border-top,border-top-width,border-top-style,border-top-color,border-right,border-right-width,border-right-style,border-right-color,border-bottom,border-bottom-width,border-bottom-style,border-bottom-color,border-left,border-left-width,border-left-style,border-left-color,border-radius,border-top-left-radius,border-top-right-radius,border-bottom-right-radius,border-bottom-left-radius,border-image,border-image-source,border-image-slice,border-image-width,border-image-outset,border-image-repeat,outline,outline-width,outline-style,outline-color,outline-offset,background,background-color,background-image,background-repeat,background-attachment,background-position,background-position-x,background-position-y,background-clip,background-origin,background-size,box-decoration-break,box-shadow,text-shadow
+ij_scss_properties_order = font, font-family, font-size, font-weight, font-style, font-variant, font-size-adjust, font-stretch, line-height, position, z-index, top, right, bottom, left, display, visibility, float, clear, overflow, overflow-x, overflow-y, clip, zoom, align-content, align-items, align-self, flex, flex-flow, flex-basis, flex-direction, flex-grow, flex-shrink, flex-wrap, justify-content, order, box-sizing, width, min-width, max-width, height, min-height, max-height, margin, margin-top, margin-right, margin-bottom, margin-left, padding, padding-top, padding-right, padding-bottom, padding-left, table-layout, empty-cells, caption-side, border-spacing, border-collapse, list-style, list-style-position, list-style-type, list-style-image, content, quotes, counter-reset, counter-increment, resize, cursor, user-select, nav-index, nav-up, nav-right, nav-down, nav-left, transition, transition-delay, transition-timing-function, transition-duration, transition-property, transform, transform-origin, animation, animation-name, animation-duration, animation-play-state, animation-timing-function, animation-delay, animation-iteration-count, animation-direction, text-align, text-align-last, vertical-align, white-space, text-decoration, text-emphasis, text-emphasis-color, text-emphasis-style, text-emphasis-position, text-indent, text-justify, letter-spacing, word-spacing, text-outline, text-transform, text-wrap, text-overflow, text-overflow-ellipsis, text-overflow-mode, word-wrap, word-break, tab-size, hyphens, pointer-events, opacity, color, border, border-width, border-style, border-color, border-top, border-top-width, border-top-style, border-top-color, border-right, border-right-width, border-right-style, border-right-color, border-bottom, border-bottom-width, border-bottom-style, border-bottom-color, border-left, border-left-width, border-left-style, border-left-color, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-right-radius, border-bottom-left-radius, border-image, border-image-source, border-image-slice, border-image-width, border-image-outset, border-image-repeat, outline, outline-width, outline-style, outline-color, outline-offset, background, background-color, background-image, background-repeat, background-attachment, background-position, background-position-x, background-position-y, background-clip, background-origin, background-size, box-decoration-break, box-shadow, text-shadow
 ij_scss_space_after_colon = true
 ij_scss_space_before_opening_brace = true
 ij_scss_use_double_quotes = true
@@ -367,7 +367,7 @@ ij_stylus_hex_color_upper_case = false
 ij_stylus_keep_blank_lines_in_code = 2
 ij_stylus_keep_indents_on_empty_lines = false
 ij_stylus_keep_single_line_blocks = false
-ij_stylus_properties_order = font,font-family,font-size,font-weight,font-style,font-variant,font-size-adjust,font-stretch,line-height,position,z-index,top,right,bottom,left,display,visibility,float,clear,overflow,overflow-x,overflow-y,clip,zoom,align-content,align-items,align-self,flex,flex-flow,flex-basis,flex-direction,flex-grow,flex-shrink,flex-wrap,justify-content,order,box-sizing,width,min-width,max-width,height,min-height,max-height,margin,margin-top,margin-right,margin-bottom,margin-left,padding,padding-top,padding-right,padding-bottom,padding-left,table-layout,empty-cells,caption-side,border-spacing,border-collapse,list-style,list-style-position,list-style-type,list-style-image,content,quotes,counter-reset,counter-increment,resize,cursor,user-select,nav-index,nav-up,nav-right,nav-down,nav-left,transition,transition-delay,transition-timing-function,transition-duration,transition-property,transform,transform-origin,animation,animation-name,animation-duration,animation-play-state,animation-timing-function,animation-delay,animation-iteration-count,animation-direction,text-align,text-align-last,vertical-align,white-space,text-decoration,text-emphasis,text-emphasis-color,text-emphasis-style,text-emphasis-position,text-indent,text-justify,letter-spacing,word-spacing,text-outline,text-transform,text-wrap,text-overflow,text-overflow-ellipsis,text-overflow-mode,word-wrap,word-break,tab-size,hyphens,pointer-events,opacity,color,border,border-width,border-style,border-color,border-top,border-top-width,border-top-style,border-top-color,border-right,border-right-width,border-right-style,border-right-color,border-bottom,border-bottom-width,border-bottom-style,border-bottom-color,border-left,border-left-width,border-left-style,border-left-color,border-radius,border-top-left-radius,border-top-right-radius,border-bottom-right-radius,border-bottom-left-radius,border-image,border-image-source,border-image-slice,border-image-width,border-image-outset,border-image-repeat,outline,outline-width,outline-style,outline-color,outline-offset,background,background-color,background-image,background-repeat,background-attachment,background-position,background-position-x,background-position-y,background-clip,background-origin,background-size,box-decoration-break,box-shadow,text-shadow
+ij_stylus_properties_order = font, font-family, font-size, font-weight, font-style, font-variant, font-size-adjust, font-stretch, line-height, position, z-index, top, right, bottom, left, display, visibility, float, clear, overflow, overflow-x, overflow-y, clip, zoom, align-content, align-items, align-self, flex, flex-flow, flex-basis, flex-direction, flex-grow, flex-shrink, flex-wrap, justify-content, order, box-sizing, width, min-width, max-width, height, min-height, max-height, margin, margin-top, margin-right, margin-bottom, margin-left, padding, padding-top, padding-right, padding-bottom, padding-left, table-layout, empty-cells, caption-side, border-spacing, border-collapse, list-style, list-style-position, list-style-type, list-style-image, content, quotes, counter-reset, counter-increment, resize, cursor, user-select, nav-index, nav-up, nav-right, nav-down, nav-left, transition, transition-delay, transition-timing-function, transition-duration, transition-property, transform, transform-origin, animation, animation-name, animation-duration, animation-play-state, animation-timing-function, animation-delay, animation-iteration-count, animation-direction, text-align, text-align-last, vertical-align, white-space, text-decoration, text-emphasis, text-emphasis-color, text-emphasis-style, text-emphasis-position, text-indent, text-justify, letter-spacing, word-spacing, text-outline, text-transform, text-wrap, text-overflow, text-overflow-ellipsis, text-overflow-mode, word-wrap, word-break, tab-size, hyphens, pointer-events, opacity, color, border, border-width, border-style, border-color, border-top, border-top-width, border-top-style, border-top-color, border-right, border-right-width, border-right-style, border-right-color, border-bottom, border-bottom-width, border-bottom-style, border-bottom-color, border-left, border-left-width, border-left-style, border-left-color, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-right-radius, border-bottom-left-radius, border-image, border-image-source, border-image-slice, border-image-width, border-image-outset, border-image-repeat, outline, outline-width, outline-style, outline-color, outline-offset, background, background-color, background-image, background-repeat, background-attachment, background-position, background-position-x, background-position-y, background-clip, background-origin, background-size, box-decoration-break, box-shadow, text-shadow
 ij_stylus_space_after_colon = true
 ij_stylus_space_before_opening_brace = true
 ij_stylus_use_double_quotes = true
@@ -381,7 +381,7 @@ ij_editorconfig_space_before_colon = false
 ij_editorconfig_space_before_comma = false
 ij_editorconfig_spaces_around_assignment_operators = true
 
-[{*.ant,*.fxml,*.jhm,*.jnlp,*.jrxml,*.pom,*.rng,*.tld,*.wadl,*.wsdd,*.wsdl,*.xjb,*.xml,*.xsd,*.xsl,*.xslt,*.xul}]
+[{*.ant, *.fxml, *.jhm, *.jnlp, *.jrxml, *.pom, *.rng, *.tld, *.wadl, *.wsdd, *.wsdl, *.xjb, *.xml, *.xsd, *.xsl, *.xslt, *.xul}]
 ij_xml_align_attributes = true
 ij_xml_align_text = false
 ij_xml_attribute_wrap = normal
@@ -400,7 +400,7 @@ ij_xml_space_inside_empty_tag = false
 ij_xml_text_wrap = normal
 ij_xml_use_custom_settings = false
 
-[{*.ats,*.ts}]
+[{*.ats, *.ts}]
 ij_continuation_indent_size = 4
 ij_typescript_align_imports = false
 ij_typescript_align_multiline_array_initializer_expression = false
@@ -420,7 +420,7 @@ ij_typescript_array_initializer_wrap = off
 ij_typescript_assignment_wrap = off
 ij_typescript_binary_operation_sign_on_next_line = false
 ij_typescript_binary_operation_wrap = off
-ij_typescript_blacklist_imports = rxjs/Rx,node_modules/**,**/node_modules/**,@angular/material,@angular/material/typings/**
+ij_typescript_blacklist_imports = rxjs/Rx, node_modules/**, **/node_modules/**, @angular/material, @angular/material/typings/**
 ij_typescript_blank_lines_after_imports = 1
 ij_typescript_blank_lines_around_class = 1
 ij_typescript_blank_lines_around_field = 0
@@ -568,7 +568,7 @@ ij_typescript_while_brace_force = never
 ij_typescript_while_on_new_line = false
 ij_typescript_wrap_comments = false
 
-[{*.bash,*.sh,*.zsh}]
+[{*.bash, *.sh, *.zsh}]
 indent_size = 2
 tab_width = 2
 ij_shell_binary_ops_start_line = false
@@ -577,7 +577,7 @@ ij_shell_minify_program = false
 ij_shell_redirect_followed_by_space = false
 ij_shell_switch_cases_indented = false
 
-[{*.cjs,*.js}]
+[{*.cjs, *.js}]
 ij_continuation_indent_size = 4
 ij_javascript_align_imports = false
 ij_javascript_align_multiline_array_initializer_expression = false
@@ -597,7 +597,7 @@ ij_javascript_array_initializer_wrap = off
 ij_javascript_assignment_wrap = off
 ij_javascript_binary_operation_sign_on_next_line = false
 ij_javascript_binary_operation_wrap = off
-ij_javascript_blacklist_imports = rxjs/Rx,node_modules/**,**/node_modules/**,@angular/material,@angular/material/typings/**
+ij_javascript_blacklist_imports = rxjs/Rx, node_modules/**, **/node_modules/**, @angular/material, @angular/material/typings/**
 ij_javascript_blank_lines_after_imports = 1
 ij_javascript_blank_lines_around_class = 1
 ij_javascript_blank_lines_around_field = 0
@@ -742,7 +742,7 @@ ij_javascript_while_brace_force = never
 ij_javascript_while_on_new_line = false
 ij_javascript_wrap_comments = false
 
-[{*.cjsx,*.coffee}]
+[{*.cjsx, *.coffee}]
 indent_size = 2
 tab_width = 2
 ij_continuation_indent_size = 2
@@ -757,7 +757,7 @@ ij_coffeescript_align_var_statements = 0
 ij_coffeescript_array_initializer_new_line_after_left_brace = false
 ij_coffeescript_array_initializer_right_brace_on_new_line = false
 ij_coffeescript_array_initializer_wrap = normal
-ij_coffeescript_blacklist_imports = rxjs/Rx,node_modules/**,**/node_modules/**,@angular/material,@angular/material/typings/**
+ij_coffeescript_blacklist_imports = rxjs/Rx, node_modules/**, **/node_modules/**, @angular/material, @angular/material/typings/**
 ij_coffeescript_blank_lines_around_function = 1
 ij_coffeescript_call_parameters_new_line_after_left_paren = false
 ij_coffeescript_call_parameters_right_paren_on_new_line = false
@@ -839,10 +839,10 @@ ij_coffeescript_use_public_modifier = false
 ij_coffeescript_use_semicolon_after_statement = false
 ij_coffeescript_var_declaration_wrap = normal
 
-[{*.ft,*.vm,*.vsl}]
+[{*.ft, *.vm, *.vsl}]
 ij_vtl_keep_indents_on_empty_lines = false
 
-[{*.gant,*.gradle,*.groovy,*.gson,*.gy}]
+[{*.gant, *.gradle, *.groovy, *.gson, *.gy}]
 ij_groovy_align_group_field_declarations = false
 ij_groovy_align_multiline_array_initializer_expression = false
 ij_groovy_align_multiline_assignment = false
@@ -898,7 +898,7 @@ ij_groovy_for_statement_right_paren_on_new_line = false
 ij_groovy_for_statement_wrap = off
 ij_groovy_if_brace_force = never
 ij_groovy_import_annotation_wrap = 2
-ij_groovy_imports_layout = *,|,javax.**,java.**,|,$*
+ij_groovy_imports_layout = *, |, javax.**, java.**, |, $*
 ij_groovy_indent_case_from_switch = true
 ij_groovy_indent_label_blocks = true
 ij_groovy_insert_inner_class_imports = false
@@ -1021,7 +1021,7 @@ ij_groovy_while_brace_force = never
 ij_groovy_while_on_new_line = false
 ij_groovy_wrap_long_lines = false
 
-[{*.gradle.kts,*.kt,*.kts,*.main.kts}]
+[{*.gradle.kts, *.kt, *.kts, *.main.kts}]
 ij_kotlin_align_in_columns_case_branch = false
 ij_kotlin_align_multiline_binary_operation = false
 ij_kotlin_align_multiline_extends_list = false
@@ -1054,7 +1054,7 @@ ij_kotlin_field_annotation_wrap = split_into_lines
 ij_kotlin_finally_on_new_line = false
 ij_kotlin_if_rparen_on_new_line = false
 ij_kotlin_import_nested_classes = false
-ij_kotlin_imports_layout = *,java.**,javax.**,kotlin.**,^
+ij_kotlin_imports_layout = *, java.**, javax.**, kotlin.**, ^
 ij_kotlin_insert_whitespaces_in_simple_one_line_method = true
 ij_kotlin_keep_blank_lines_before_right_brace = 2
 ij_kotlin_keep_blank_lines_in_code = 2
@@ -1072,7 +1072,7 @@ ij_kotlin_method_parameters_right_paren_on_new_line = false
 ij_kotlin_method_parameters_wrap = off
 ij_kotlin_name_count_to_use_star_import = 5
 ij_kotlin_name_count_to_use_star_import_for_members = 3
-ij_kotlin_packages_to_use_import_on_demand = java.util.*,kotlinx.android.synthetic.**,io.ktor.**
+ij_kotlin_packages_to_use_import_on_demand = java.util.*, kotlinx.android.synthetic.**, io.ktor.**
 ij_kotlin_parameter_annotation_wrap = off
 ij_kotlin_space_after_comma = true
 ij_kotlin_space_after_extend_colon = true
@@ -1102,7 +1102,7 @@ ij_kotlin_wrap_elvis_expressions = 1
 ij_kotlin_wrap_expression_body_functions = 0
 ij_kotlin_wrap_first_method_in_call_chain = false
 
-[{*.har,*.jsb2,*.jsb3,*.json,.babelrc,.eslintrc,.stylelintrc,bowerrc,jest.config}]
+[{*.har, *.jsb2, *.jsb3, *.json, .babelrc, .eslintrc, .stylelintrc, bowerrc, jest.config}]
 indent_size = 2
 ij_json_keep_blank_lines_in_code = 0
 ij_json_keep_indents_on_empty_lines = false
@@ -1115,23 +1115,23 @@ ij_json_spaces_within_braces = false
 ij_json_spaces_within_brackets = false
 ij_json_wrap_long_lines = false
 
-[{*.htm,*.html,*.ng,*.sht,*.shtm,*.shtml}]
-ij_html_add_new_line_before_tags = body,div,p,form,h1,h2,h3
+[{*.htm, *.html, *.ng, *.sht, *.shtm, *.shtml}]
+ij_html_add_new_line_before_tags = body, div, p, form, h1, h2, h3
 ij_html_align_attributes = true
 ij_html_align_text = false
 ij_html_attribute_wrap = normal
 ij_html_block_comment_at_first_column = true
 ij_html_do_not_align_children_of_min_lines = 0
-ij_html_do_not_break_if_inline_tags = title,h1,h2,h3,h4,h5,h6,p
-ij_html_do_not_indent_children_of_tags = html,body,thead,tbody,tfoot
+ij_html_do_not_break_if_inline_tags = title, h1, h2, h3, h4, h5, h6, p
+ij_html_do_not_indent_children_of_tags = html, body, thead, tbody, tfoot
 ij_html_enforce_quotes = false
-ij_html_inline_tags = a,abbr,acronym,b,basefont,bdo,big,br,cite,cite,code,dfn,em,font,i,img,input,kbd,label,q,s,samp,select,small,span,strike,strong,sub,sup,textarea,tt,u,var
+ij_html_inline_tags = a, abbr, acronym, b, basefont, bdo, big, br, cite, cite, code, dfn, em, font, i, img, input, kbd, label, q, s, samp, select, small, span, strike, strong, sub, sup, textarea, tt, u, var
 ij_html_keep_blank_lines = 2
 ij_html_keep_indents_on_empty_lines = false
 ij_html_keep_line_breaks = true
 ij_html_keep_line_breaks_in_text = true
 ij_html_keep_whitespaces = false
-ij_html_keep_whitespaces_inside = span,pre,textarea
+ij_html_keep_whitespaces_inside = span, pre, textarea
 ij_html_line_comment_at_first_column = true
 ij_html_new_line_after_last_attribute = never
 ij_html_new_line_before_first_attribute = never
@@ -1143,14 +1143,14 @@ ij_html_space_inside_empty_tag = false
 ij_html_text_wrap = normal
 ij_html_uniform_ident = false
 
-[{*.jsf,*.jsp,*.jspf,*.tag,*.tagf,*.xjsp}]
+[{*.jsf, *.jsp, *.jspf, *.tag, *.tagf, *.xjsp}]
 ij_jsp_jsp_prefer_comma_separated_import_list = false
 ij_jsp_keep_indents_on_empty_lines = false
 
-[{*.jspx,*.tagx}]
+[{*.jspx, *.tagx}]
 ij_jspx_keep_indents_on_empty_lines = false
 
-[{*.markdown,*.md}]
+[{*.markdown, *.md}]
 ij_markdown_force_one_space_after_blockquote_symbol = true
 ij_markdown_force_one_space_after_header_symbol = true
 ij_markdown_force_one_space_after_list_bullet = true
@@ -1163,13 +1163,13 @@ ij_markdown_min_lines_around_block_elements = 1
 ij_markdown_min_lines_around_header = 1
 ij_markdown_min_lines_between_paragraphs = 1
 
-[{*.properties,spring.handlers,spring.schemas}]
+[{*.properties, spring.handlers, spring.schemas}]
 ij_properties_align_group_field_declarations = false
 ij_properties_keep_blank_lines = false
 ij_properties_key_value_delimiter = equals
 ij_properties_spaces_around_key_value_delimiter = false
 
-[{*.yaml,*.yml}]
+[{*.yaml, *.yml}]
 indent_size = 2
 ij_yaml_align_values_properties = do_not_align
 ij_yaml_autoinsert_sequence_marker = true

@@ -36,8 +36,8 @@ fun LiveChannel.onReactionAdd(block: suspend (ReactionAddEvent) -> Unit) = on(co
 
 @KordPreview
 inline fun LiveChannel.onReactionAdd(
-    reaction: ReactionEmoji,
-    crossinline block: suspend (ReactionAddEvent) -> Unit
+        reaction: ReactionEmoji,
+        crossinline block: suspend (ReactionAddEvent) -> Unit
 ) = on<ReactionAddEvent> {
     if (it.emoji == reaction) {
         block(it)
@@ -49,8 +49,8 @@ fun LiveChannel.onReactionRemove(block: suspend (ReactionRemoveEvent) -> Unit) =
 
 @KordPreview
 inline fun LiveChannel.onReactionRemove(
-    reaction: ReactionEmoji,
-    crossinline block: suspend (ReactionRemoveEvent) -> Unit
+        reaction: ReactionEmoji,
+        crossinline block: suspend (ReactionRemoveEvent) -> Unit
 ) = on<ReactionRemoveEvent> {
     if (it.emoji == reaction) {
         block(it)

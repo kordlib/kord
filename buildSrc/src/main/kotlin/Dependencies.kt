@@ -37,13 +37,13 @@ object Dependencies {
     const val `junit-jupiter-engine` = "org.junit.jupiter:junit-jupiter-engine:${Versions.junitJupiterEngine}"
     const val sl4j = "org.slf4j:slf4j-simple:${Versions.sl4j}"
 
-    const val `ktor-client-json` =  "io.ktor:ktor-client-json:${Versions.ktor}"
+    const val `ktor-client-json` = "io.ktor:ktor-client-json:${Versions.ktor}"
     const val `ktor-client-json-jvm` = "io.ktor:ktor-client-json-jvm:${Versions.ktor}"
     const val `ktor-client-serialization-jvm` = "io.ktor:ktor-client-serialization-jvm:${Versions.ktor}"
     const val `ktor-client-cio` = "io.ktor:ktor-client-cio:${Versions.ktor}"
     const val `ktor-client-websocket` = "io.ktor:ktor-client-websockets:${Versions.ktor}"
     const val `ktor-client-mock` = "io.ktor:ktor-client-mock:${Versions.ktor}"
-    const val `ktor-client-mock-jvm`= "io.ktor:ktor-client-mock-jvm:${Versions.ktor}"
+    const val `ktor-client-mock-jvm` = "io.ktor:ktor-client-mock-jvm:${Versions.ktor}"
 
     const val `cache-api` = "dev.kord.cache:cache-api"
     const val `cache-map` = "dev.kord.cache:cache-map"

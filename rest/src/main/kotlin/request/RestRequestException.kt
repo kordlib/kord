@@ -2,10 +2,8 @@ package dev.kord.rest.request
 
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.exception.RequestException
-import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.json.response.DiscordErrorResponse
 import dev.kord.rest.service.RestService
-import kotlinx.serialization.Serializable
 import io.ktor.client.statement.HttpResponse as KtorResponse
 
 /**

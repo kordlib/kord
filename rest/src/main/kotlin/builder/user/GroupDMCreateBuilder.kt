@@ -1,7 +1,7 @@
 package dev.kord.rest.builder.user
 
-import dev.kord.common.entity.Snowflake
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.GroupDMCreateRequest
 

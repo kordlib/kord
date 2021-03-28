@@ -287,7 +287,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyGuildWidget(guildId: Snowflake, widget: GuildWidgetModifyRequest): DiscordGuildWidget = call(Route.GuildWidgetPatch){
+    suspend fun modifyGuildWidget(guildId: Snowflake, widget: GuildWidgetModifyRequest): DiscordGuildWidget = call(Route.GuildWidgetPatch) {
         keys[Route.GuildId] = guildId
         body(GuildWidgetModifyRequest.serializer(), widget)
     }
@@ -304,23 +304,25 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         body(CurrentUserNicknameModifyRequest.serializer(), nick)
     }
 
-    suspend fun getGuildWelcomeScreen(guildId: Snowflake) = call(Route.GuildWelcomeScreenGet){
+    suspend fun getGuildWelcomeScreen(guildId: Snowflake) = call(Route.GuildWelcomeScreenGet) {
         keys[Route.GuildId] = guildId
     }
 
 
-    suspend fun modifyGuildWelcomeScreen(guildId: Snowflake, request: GuildWelcomeScreenModifyRequest) = call(Route.GuildWelcomeScreenPatch){
+    suspend fun modifyGuildWelcomeScreen(guildId: Snowflake, request: GuildWelcomeScreenModifyRequest) = call(Route.GuildWelcomeScreenPatch) {
         keys[Route.GuildId] = guildId
         body(GuildWelcomeScreenModifyRequest.serializer(), request)
     }
 
 }
+
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.modifyGuildWelcomeScreen(guildId: Snowflake, builder: WelcomeScreenModifyBuilder.() -> Unit): DiscordWelcomeScreen {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = WelcomeScreenModifyBuilder().apply(builder)
     return modifyGuildWelcomeScreen(guildId, builder.toRequest())
 }
+
 suspend inline fun GuildService.createTextChannel(guildId: Snowflake, name: String, builder: TextChannelCreateBuilder.() -> Unit): DiscordChannel {
     val createBuilder = TextChannelCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)

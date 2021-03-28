@@ -3,13 +3,10 @@ package dev.kord.rest.ratelimit
 import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import mu.KLogger
 import mu.KotlinLogging
 import java.time.Clock
-import java.time.Duration
-import java.time.Instant
 
 private val requestLogger = KotlinLogging.logger {}
 

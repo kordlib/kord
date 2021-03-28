@@ -1,11 +1,10 @@
 package dev.kord.rest.builder.user
 
-import dev.kord.rest.Image
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
-import dev.kord.common.entity.optional.mapNullable
+import dev.kord.rest.Image
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.CurrentUserModifyRequest
 

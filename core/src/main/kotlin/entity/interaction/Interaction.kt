@@ -1,7 +1,10 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordOptionValue
+import dev.kord.common.entity.InteractionType
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
@@ -65,9 +68,9 @@ sealed class Interaction : InteractionBehavior {
 
     companion object {
         fun from(
-            data: InteractionData,
-            kord: Kord,
-            strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+                data: InteractionData,
+                kord: Kord,
+                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): Interaction {
             return if (data.guildId !is OptionalSnowflake.Missing)
                 GuildInteraction(data, kord.slashCommands.applicationId, kord, strategy.supply(kord))
@@ -102,14 +105,14 @@ sealed class InteractionCommand : KordObject {
 }
 
 fun InteractionCommand(
-    data: ApplicationCommandInteractionData,
-    kord: Kord
+        data: ApplicationCommandInteractionData,
+        kord: Kord
 ): InteractionCommand {
     val firstLevelOptions = data.options.orEmpty()
     val rootPredicate = firstLevelOptions.isEmpty() || firstLevelOptions.any { it.value.value != null }
     val groupPredicate = firstLevelOptions.any { it.subCommands.orEmpty().isNotEmpty() }
     val subCommandPredicate =
-        firstLevelOptions.all { it.value is Optional.Missing && it.subCommands is Optional.Missing }
+            firstLevelOptions.all { it.value is Optional.Missing && it.subCommands is Optional.Missing }
 
     return when {
         rootPredicate -> RootCommand(data, kord)
@@ -126,8 +129,8 @@ fun InteractionCommand(
  */
 @KordPreview
 class RootCommand(
-    val data: ApplicationCommandInteractionData,
-    override val kord: Kord
+        val data: ApplicationCommandInteractionData,
+        override val kord: Kord
 ) : InteractionCommand() {
 
     override val rootId: Snowflake
@@ -137,7 +140,7 @@ class RootCommand(
 
     override val options: Map<String, OptionValue<*>>
         get() = data.options.orEmpty()
-            .associate { it.name to OptionValue(it.value.value!!, resolved) }
+                .associate { it.name to OptionValue(it.value.value!!, resolved) }
 
     override val resolved: ResolvedObjects?
         get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
@@ -149,8 +152,8 @@ class RootCommand(
  */
 @KordPreview
 class SubCommand(
-    val data: ApplicationCommandInteractionData,
-    override val kord: Kord
+        val data: ApplicationCommandInteractionData,
+        override val kord: Kord
 ) : InteractionCommand() {
 
     private val subCommandData = data.options.orEmpty().first()
@@ -167,7 +170,7 @@ class SubCommand(
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.values.orEmpty()
-            .associate { it.name to OptionValue(it.value, resolved) }
+                .associate { it.name to OptionValue(it.value, resolved) }
 
 
     override val resolved: ResolvedObjects?
@@ -181,8 +184,8 @@ class SubCommand(
  */
 @KordPreview
 class GroupCommand(
-    val data: ApplicationCommandInteractionData,
-    override val kord: Kord
+        val data: ApplicationCommandInteractionData,
+        override val kord: Kord
 ) : InteractionCommand() {
 
     private val groupData get() = data.options.orEmpty().first()
@@ -205,7 +208,7 @@ class GroupCommand(
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.options.orEmpty()
-            .associate { it.name to OptionValue(it.value, resolved) }
+                .associate { it.name to OptionValue(it.value, resolved) }
 
 
     override val resolved: ResolvedObjects?
@@ -215,16 +218,16 @@ class GroupCommand(
 
 @KordPreview
 class ResolvedObjects(
-    val data: ResolvedObjectsData,
-    val kord: Kord,
-    val strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+        val data: ResolvedObjectsData,
+        val kord: Kord,
+        val strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ) {
     val channels: Map<Snowflake, Channel>?
         get() = data.channels.mapValues {
             Channel.from(
-                it.value,
-                kord,
-                strategy
+                    it.value,
+                    kord,
+                    strategy
             )
         }.value
     val roles: Map<Snowflake, Role>? get() = data.roles.mapValues { Role(it.value, kord) }.value
@@ -232,9 +235,9 @@ class ResolvedObjects(
     val members: Map<Snowflake, Member>?
         get() = data.members.mapValues {
             Member(
-                it.value,
-                users!!.get(it.key)!!.data,
-                kord
+                    it.value,
+                    users!!.get(it.key)!!.data,
+                    kord
             )
         }.value
 
@@ -284,10 +287,10 @@ fun OptionValue(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?)
  */
 @KordPreview
 class DmInteraction(
-    override val data: InteractionData,
-    override val applicationId: Snowflake,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
+        override val data: InteractionData,
+        override val applicationId: Snowflake,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Interaction() {
     /**
      * The user who invoked the interaction.
@@ -297,10 +300,10 @@ class DmInteraction(
 
 @KordPreview
 class GuildInteraction(
-    override val data: InteractionData,
-    override val applicationId: Snowflake,
-    override val kord: Kord,
-    override val supplier: EntitySupplier
+        override val data: InteractionData,
+        override val applicationId: Snowflake,
+        override val kord: Kord,
+        override val supplier: EntitySupplier
 ) : Interaction(), GuildInteractionBehavior {
 
     override val guildId: Snowflake

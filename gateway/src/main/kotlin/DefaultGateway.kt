@@ -291,7 +291,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
 
 inline fun DefaultGateway(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway =
-    DefaultGatewayBuilder().apply(builder).build()
+        DefaultGatewayBuilder().apply(builder).build()
 
 
 internal val GatewayConfiguration.identify

@@ -58,7 +58,7 @@ sealed class DiscordConnectionVisibility(val value: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("Kord.DiscordConnectionVisibility", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): DiscordConnectionVisibility = when(val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): DiscordConnectionVisibility = when (val value = decoder.decodeInt()) {
             0 -> None
             1 -> Everyone
             else -> Unknown(value)

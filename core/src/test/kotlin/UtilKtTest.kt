@@ -2,7 +2,6 @@ package dev.kord.core
 
 import dev.kord.common.entity.Snowflake
 import kotlinx.coroutines.flow.count
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

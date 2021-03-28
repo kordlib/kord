@@ -55,7 +55,7 @@ interface ChannelBehavior : KordEntity, Strategizable {
 
 }
 
- fun ChannelBehavior(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : ChannelBehavior {
+fun ChannelBehavior(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : ChannelBehavior {
     override val id: Snowflake = id
     override val kord: Kord = kord
     override val supplier: EntitySupplier = strategy.supply(kord)

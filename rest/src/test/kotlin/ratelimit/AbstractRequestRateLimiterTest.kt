@@ -3,7 +3,7 @@ package dev.kord.rest.ratelimit
 import dev.kord.common.entity.DiscordGuild
 import dev.kord.rest.request.JsonRequest
 import dev.kord.rest.route.Route
-import io.ktor.util.StringValues
+import io.ktor.util.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.withTimeout
@@ -11,7 +11,6 @@ import kotlinx.coroutines.withTimeoutOrNull
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
-import kotlin.IllegalStateException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.ExperimentalTime
@@ -22,7 +21,7 @@ import kotlin.time.toJavaDuration
 @ExperimentalCoroutinesApi
 abstract class AbstractRequestRateLimiterTest {
 
-    abstract fun newRequestRateLimiter(clock: Clock) : RequestRateLimiter
+    abstract fun newRequestRateLimiter(clock: Clock): RequestRateLimiter
 
     private val timeout = 1000.seconds
     private val instant = Instant.EPOCH
@@ -37,7 +36,7 @@ abstract class AbstractRequestRateLimiterTest {
         }
     }
 
-    private suspend fun RequestRateLimiter.sendRequest(guildId: Long) : RequestToken {
+    private suspend fun RequestRateLimiter.sendRequest(guildId: Long): RequestToken {
         val request = JsonRequest<Unit, DiscordGuild>(Route.GuildGet, mapOf(Route.GuildId to guildId.toString()), StringValues.Empty, StringValues.Empty, null)
         return await(request)
     }
@@ -83,7 +82,7 @@ abstract class AbstractRequestRateLimiterTest {
         val rateLimiter = newRequestRateLimiter(clock)
 
         rateLimiter.sendRequest(clock, 1, 1, rateLimit = RateLimit.exhausted)
-        rateLimiter.sendRequest(clock, 2, 1 , rateLimit = RateLimit(Total(5), Remaining(5))) //discovery
+        rateLimiter.sendRequest(clock, 2, 1, rateLimit = RateLimit(Total(5), Remaining(5))) //discovery
         rateLimiter.sendRequest(clock, 2, 1, rateLimit = RateLimit(Total(5), Remaining(5)))
 
         assertEquals(timeout.inMilliseconds.toLong(), currentTime)
@@ -113,7 +112,8 @@ abstract class AbstractRequestRateLimiterTest {
             rateLimiter.consume(request) {
                 throw IllegalStateException("something went wrong")
             }
-        } catch (_: IllegalStateException) {}
+        } catch (_: IllegalStateException) {
+        }
 
         withTimeout(1_000_000) {
             rateLimiter.sendRequest(clock, 1, rateLimit = RateLimit.exhausted)

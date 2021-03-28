@@ -54,8 +54,8 @@ subprojects {
     apply(plugin = "maven-publish")
     apply(plugin = "kotlinx-atomicfu")
     apply(plugin = "org.jetbrains.dokka")
-  
-    if(!isJitPack && Library.isRelease){
+
+    if (!isJitPack && Library.isRelease) {
         apply(plugin = "signing")
     }
 
@@ -63,7 +63,7 @@ subprojects {
         mavenCentral()
         jcenter()
         maven(url = "https://kotlin.bintray.com/kotlinx")
-        maven(url ="https://oss.sonatype.org/content/repositories/snapshots")
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
         maven(url = "https://dl.bintray.com/kotlin/kotlin-dev/")
     }
 

@@ -5,8 +5,6 @@ import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.optional
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.InteractionData
-import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
@@ -44,39 +42,39 @@ interface InteractionBehavior : KordEntity, Strategizable {
 
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior =
-        InteractionBehavior(id, channelId, token, applicationId, kord, strategy)
+            InteractionBehavior(id, channelId, token, applicationId, kord, strategy)
 
 }
 
 @KordPreview
- fun InteractionBehavior(
-    id: Snowflake,
-    channelId: Snowflake,
-    token: String,
-    applicationId: Snowflake,
-    kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+fun InteractionBehavior(
+        id: Snowflake,
+        channelId: Snowflake,
+        token: String,
+        applicationId: Snowflake,
+        kord: Kord,
+        strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ) = object : InteractionBehavior {
-        override val id: Snowflake
-            get() = id
+    override val id: Snowflake
+        get() = id
 
-        override val token: String
-            get() = token
+    override val token: String
+        get() = token
 
-        override val applicationId: Snowflake
-            get() = applicationId
+    override val applicationId: Snowflake
+        get() = applicationId
 
-        override val kord: Kord
-            get() = kord
+    override val kord: Kord
+        get() = kord
 
-        override val channelId: Snowflake
-            get() = channelId
+    override val channelId: Snowflake
+        get() = channelId
 
 
-        override val supplier: EntitySupplier
-            get() = strategy.supply(kord)
+    override val supplier: EntitySupplier
+        get() = strategy.supply(kord)
 
-    }
+}
 
 /**
  * Acknowledges an interaction and responds with [InteractionResponseBehavior] built using [builder].
@@ -88,7 +86,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
 @KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respond(
-    builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit = {}
+        builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit = {}
 ): InteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 

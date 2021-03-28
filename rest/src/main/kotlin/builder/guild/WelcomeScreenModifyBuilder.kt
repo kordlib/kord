@@ -5,12 +5,9 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
 class WelcomeScreenModifyBuilder : RequestBuilder<GuildWelcomeScreenModifyRequest> {
 
@@ -21,7 +18,7 @@ class WelcomeScreenModifyBuilder : RequestBuilder<GuildWelcomeScreenModifyReques
     var description: String? by ::_description.delegate()
 
     private var _welcomeScreenChannels: Optional<MutableList<WelcomeScreenChannelBuilder>> = Optional.Missing()
-     var welcomeScreenChannels: MutableList<WelcomeScreenChannelBuilder>? by ::_welcomeScreenChannels.delegate()
+    var welcomeScreenChannels: MutableList<WelcomeScreenChannelBuilder>? by ::_welcomeScreenChannels.delegate()
 
     fun welcomeChannel(id: Snowflake, description: String, builder: WelcomeScreenChannelBuilder.() -> Unit) {
 
@@ -36,13 +33,12 @@ class WelcomeScreenModifyBuilder : RequestBuilder<GuildWelcomeScreenModifyReques
 }
 
 
-
 class WelcomeScreenChannelBuilder(
-    var channelId: Snowflake,
-    var description: String,
-    var emojiId: Snowflake?,
-    var emojiName: String?
-): RequestBuilder<DiscordWelcomeScreenChannel> {
+        var channelId: Snowflake,
+        var description: String,
+        var emojiId: Snowflake?,
+        var emojiName: String?
+) : RequestBuilder<DiscordWelcomeScreenChannel> {
     override fun toRequest(): DiscordWelcomeScreenChannel {
         return DiscordWelcomeScreenChannel(channelId, description, emojiId, emojiName)
     }

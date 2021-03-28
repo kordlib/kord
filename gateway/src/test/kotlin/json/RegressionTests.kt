@@ -1,7 +1,6 @@
 package json
 
 import dev.kord.gateway.Event
-import dev.kord.gateway.HeartbeatACK
 import dev.kord.gateway.Reconnect
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
@@ -19,17 +18,17 @@ class RegressionTests {
     }
 
     @Test
-    fun `Resumed with unknown data`(){
+    fun `Resumed with unknown data`() {
         Json.decodeFromString(Event.Companion, file("resumeWithUnknownData"))
     }
 
     @Test
-    fun `PresenceReplace with unknown data`(){
+    fun `PresenceReplace with unknown data`() {
         Json.decodeFromString(Event.Companion, file("presenceReplaceWithUnknownData"))
     }
 
     @Test
-    fun `Unknown event with successfully parses`(){
+    fun `Unknown event with successfully parses`() {
         Json.decodeFromString(Event.Companion, file("eventWithUnknownData")) //dispatch event with non-existent type
     }
 

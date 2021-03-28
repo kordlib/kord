@@ -1,8 +1,6 @@
 package dev.kord.gateway.handler
 
-import dev.kord.gateway.Close
 import dev.kord.gateway.Event
-import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance

@@ -1,6 +1,6 @@
 package dev.kord.gateway
 
-import io.ktor.util.error
+import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
@@ -10,7 +10,7 @@ import kotlinx.coroutines.sync.withLock
 import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
 
-private val logger = KotlinLogging.logger {  }
+private val logger = KotlinLogging.logger { }
 
 /**
  * A reusable fixed rate ticker.

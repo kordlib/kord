@@ -6,8 +6,10 @@ import dev.kord.common.entity.ExplicitContentFilter
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.VerificationLevel
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
 import dev.kord.rest.Image
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.channel.CategoryCreateBuilder
@@ -43,7 +45,7 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
     fun newUniqueSnowflake() = Snowflake(snowflakeGenerator.next())
 
     private var _region: Optional<String> = Optional.Missing()
-    var region: String?  by ::_region.delegate()
+    var region: String? by ::_region.delegate()
 
     private var _icon: Optional<Image> = Optional.Missing()
     var icon: Image? by ::_icon.delegate()
@@ -64,18 +66,21 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
     val channels: MutableList<GuildChannelCreateRequest> = mutableListOf()
 
     private var _afkChannelId: OptionalSnowflake = OptionalSnowflake.Missing
+
     /**
      * The id of the afk channel, this channel can be configured by supplying a channel with the same id.
      */
     var afkChannelId: Snowflake? by ::_afkChannelId.delegate()
 
     private var _afkTimeout: OptionalInt = OptionalInt.Missing
+
     /**
      * The afk timeout in seconds.
      */
     var afkTimeout: Int? by ::_afkTimeout.delegate()
 
     private var _systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing
+
     /**
      * The id of the channel to which system messages are sent, this channel can be configured by supplying a channel with the same id.
      */
@@ -133,7 +138,7 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
             _defaultMessageNotificationLevel,
             _explicitContentFilter,
             Optional.missingOnEmpty(roles).map { roles ->
-                when(val everyone = everyoneRole?.toRequest()) {
+                when (val everyone = everyoneRole?.toRequest()) {
                     null -> roles
                     else -> mutableListOf(everyone).also { it.addAll(roles) }
                 }
@@ -143,5 +148,5 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
             _afkTimeout,
             _systemChannelId,
 
-    )
+            )
 }

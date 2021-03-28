@@ -350,25 +350,25 @@ class MessageFlags internal constructor(val code: Int) {
 
 }
 
-inline  fun MessageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
+inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
     return MessageFlags.Builder().apply(builder).flags()
 }
 
- fun MessageFlags(vararg flags: MessageFlag) = MessageFlags {
+fun MessageFlags(vararg flags: MessageFlag) = MessageFlags {
     flags.forEach { +it }
 }
 
- fun MessageFlags(vararg flags: MessageFlags) = MessageFlags {
+fun MessageFlags(vararg flags: MessageFlags) = MessageFlags {
     flags.forEach { +it }
 }
 
- fun MessageFlags(flags: Iterable<MessageFlag>) = MessageFlags {
+fun MessageFlags(flags: Iterable<MessageFlag>) = MessageFlags {
     flags.forEach { +it }
 }
 
 
 @JvmName("MessageFlagsWithIterable")
- fun MessageFlags(flags: Iterable<MessageFlags>) = MessageFlags {
+fun MessageFlags(flags: Iterable<MessageFlags>) = MessageFlags {
     flags.forEach { +it }
 }
 
@@ -747,6 +747,7 @@ enum class MessageType(val code: Int) {
         }
     }
 }
+
 @Serializable(with = AllowedMentionType.Serializer::class)
 sealed class AllowedMentionType(val value: String) {
     class Unknown(value: String) : AllowedMentionType(value)
@@ -758,7 +759,7 @@ sealed class AllowedMentionType(val value: String) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("Kord.DiscordAllowedMentionType", PrimitiveKind.STRING)
 
-        override fun deserialize(decoder: Decoder): AllowedMentionType = when(val value = decoder.decodeString()) {
+        override fun deserialize(decoder: Decoder): AllowedMentionType = when (val value = decoder.decodeString()) {
             "roles" -> RoleMentions
             "users" -> UserMentions
             "everyone" -> EveryoneMentions
@@ -773,9 +774,9 @@ sealed class AllowedMentionType(val value: String) {
 
 @Serializable
 data class AllowedMentions(
-    val parse: List<AllowedMentionType>,
-    val users: List<String>,
-    val roles: List<String>,
-    @SerialName("replied_user")
-    val repliedUser: OptionalBoolean = OptionalBoolean.Missing
+        val parse: List<AllowedMentionType>,
+        val users: List<String>,
+        val roles: List<String>,
+        @SerialName("replied_user")
+        val repliedUser: OptionalBoolean = OptionalBoolean.Missing
 )

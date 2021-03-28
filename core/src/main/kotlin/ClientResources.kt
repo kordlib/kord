@@ -6,11 +6,11 @@ import dev.kord.gateway.Intents
 import io.ktor.client.*
 
 class ClientResources(
-    val token: String,
-    val shards: Shards,
-    val httpClient: HttpClient,
-    val defaultStrategy: EntitySupplyStrategy<*>,
-    val intents: Intents,
+        val token: String,
+        val shards: Shards,
+        val httpClient: HttpClient,
+        val defaultStrategy: EntitySupplyStrategy<*>,
+        val intents: Intents,
 ) {
     override fun toString(): String {
         return "ClientResources(shards=$shards, httpClient=$httpClient, defaultStrategy=$defaultStrategy, intents=$intents)"
