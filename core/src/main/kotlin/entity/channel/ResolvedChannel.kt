@@ -23,7 +23,7 @@ class ResolvedChannel(
         get() = strategy.supply(kord)
 
     override fun toString(): String {
-        return "ResolvedChannel(id=$id,type=$type, name=$name, permissions=$permissions)"
+        return "ResolvedChannel(id=$id, type=$type, name=$name, permissions=$permissions)"
     }
 
 }
