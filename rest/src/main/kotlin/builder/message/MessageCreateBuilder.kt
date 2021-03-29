@@ -10,6 +10,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
+import dev.kord.rest.builder.MultipleAttachmentsRequest
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.MessageCreateRequest
 import dev.kord.rest.json.request.MultipartMessageCreateRequest
@@ -23,7 +24,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
+class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest>, MultipleAttachmentsRequest {
 
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
@@ -40,7 +41,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+    override val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
     private var _messageReference: OptionalSnowflake = OptionalSnowflake.Missing
 
@@ -57,14 +58,6 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     inline fun embed(block: EmbedBuilder.() -> Unit) {
         contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
         embed = (embed ?: EmbedBuilder()).apply(block)
-    }
-
-    fun addFile(name: String, content: InputStream) {
-        files += name to content
-    }
-
-    suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
-        addFile(path.fileName.toString(), Files.newInputStream(path))
     }
 
     /**

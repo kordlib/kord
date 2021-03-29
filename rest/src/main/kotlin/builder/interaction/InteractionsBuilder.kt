@@ -9,6 +9,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
+import dev.kord.rest.builder.MultipleAttachmentsRequest
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
@@ -155,7 +156,7 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
 @KordPreview
 @KordDsl
 class InteractionResponseModifyBuilder :
-    RequestBuilder<MultipartInteractionResponseModifyRequest> {
+    RequestBuilder<MultipartInteractionResponseModifyRequest>, MultipleAttachmentsRequest {
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
@@ -165,19 +166,11 @@ class InteractionResponseModifyBuilder :
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+    override val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
         if (embeds == null) embeds = mutableListOf()
         embeds!! += EmbedBuilder().apply(builder)
-    }
-
-    fun addFile(name: String, content: InputStream) {
-        files += name to content
-    }
-
-    suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
-        addFile(path.fileName.toString(), Files.newInputStream(path))
     }
 
     override fun toRequest(): MultipartInteractionResponseModifyRequest {
@@ -263,7 +256,7 @@ class InteractionApplicationCommandCallbackDataBuilder {
 
 @KordPreview
 @KordDsl
-class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCreateRequest> {
+class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCreateRequest>, MultipleAttachmentsRequest {
 
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
@@ -280,16 +273,9 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
     private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
     var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
 
-    val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+    override val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+
     var embeds: MutableList<EmbedRequest> = mutableListOf()
-
-    fun addFile(name: String, content: InputStream) {
-        files += name to content
-    }
-
-    suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
-        addFile(path.fileName.toString(), Files.newInputStream(path))
-    }
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
