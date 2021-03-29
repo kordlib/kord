@@ -8,7 +8,11 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 @KordPreview
-class ResolvedChannel(override val data: ChannelData, override val kord: Kord, val strategy: EntitySupplyStrategy<*>): Channel {
+class ResolvedChannel(
+    override val data: ChannelData,
+    override val kord: Kord,
+    val strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+) : Channel {
 
 
     val name: String get() = data.name.value!!
