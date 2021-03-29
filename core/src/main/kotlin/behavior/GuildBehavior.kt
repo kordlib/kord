@@ -503,6 +503,14 @@ interface GuildBehavior : KordEntity, Strategizable {
 
     suspend fun getTemplateOrNull(code: String) = supplier.getTemplateOrNull(code)
 
+    suspend fun getWebhook(id: Snowflake) = rest.supply(kord).getWebhook(id)
+
+    suspend fun getWebhookOrNull(id: Snowflake) = rest.supply(kord).getWebhookOrNull(id)
+
+    suspend fun getWebhookWithToken(id: Snowflake, token: String) = rest.supply(kord).getWebhookWithToken(id, token)
+
+    suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String) = rest.supply(kord).getWebhookWithTokenOrNull(id, token)
+
     /**
      * Returns a new [GuildBehavior] with the given [strategy].
      */
