@@ -25,6 +25,7 @@ data class ChannelData(
         val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
         val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
         val lastPinTimestamp: Optional<String?> = Optional.Missing(),
+        val permissions: Optional<Permissions> = Optional.Missing()
 ) {
 
 
@@ -50,7 +51,8 @@ data class ChannelData(
                     ownerId,
                     applicationId,
                     parentId,
-                    lastPinTimestamp
+                    lastPinTimestamp,
+                    permissions
             )
         }
     }

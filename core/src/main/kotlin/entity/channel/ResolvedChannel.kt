@@ -1,0 +1,21 @@
+package dev.kord.core.entity.channel
+
+import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.Permissions
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+
+@KordPreview
+class ResolvedChannel(override val data: ChannelData, override val kord: Kord, val strategy: EntitySupplyStrategy<*>): Channel {
+
+
+    val name: String get() = data.name.value!!
+
+    val permissions: Permissions get() = data.permissions.value!!
+
+    override val supplier: EntitySupplier
+        get() = strategy.supply(kord)
+
+}

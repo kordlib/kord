@@ -1,7 +1,10 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordOptionValue
+import dev.kord.common.entity.InteractionType
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
@@ -16,6 +19,7 @@ import dev.kord.core.entity.Role
 import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.DmChannel
+import dev.kord.core.entity.channel.ResolvedChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.toSnowflakeOrNull
@@ -219,14 +223,9 @@ class ResolvedObjects(
     val kord: Kord,
     val strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ) {
-    val channels: Map<Snowflake, Channel>?
-        get() = data.channels.mapValues {
-            Channel.from(
-                it.value,
-                kord,
-                strategy
-            )
-        }.value
+    val channels: Map<Snowflake, ResolvedChannel>?
+    get() = data.channels.mapValues { ResolvedChannel(it.value, kord, strategy) }.value
+
     val roles: Map<Snowflake, Role>? get() = data.roles.mapValues { Role(it.value, kord) }.value
     val users: Map<Snowflake, User>? get() = data.users.mapValues { User(it.value, kord) }.value
     val members: Map<Snowflake, Member>?
@@ -246,7 +245,7 @@ sealed class OptionValue<T>(val value: T) {
     class RoleOptionValue(value: Role) : OptionValue<Role>(value)
     open class UserOptionValue(value: User) : OptionValue<User>(value)
     class MemberOptionValue(value: Member) : UserOptionValue(value)
-    class ChannelOptionValue(value: Channel) : OptionValue<Channel>(value)
+    class ChannelOptionValue(value: ResolvedChannel) : OptionValue<ResolvedChannel>(value)
     class IntOptionValue(value: Int) : OptionValue<Int>(value)
     class StringOptionValue(value: String) : OptionValue<String>(value)
     class BooleanOptionValue(value: Boolean) : OptionValue<Boolean>(value)
@@ -334,7 +333,7 @@ class GuildInteraction(
 fun OptionValue<*>.user(): User = value as User
 
 @KordPreview
-fun OptionValue<*>.channel(): Channel = value as Channel
+fun OptionValue<*>.channel(): ResolvedChannel = value as ResolvedChannel
 
 @KordPreview
 fun OptionValue<*>.role(): Role = value as Role
