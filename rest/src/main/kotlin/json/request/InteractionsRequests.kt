@@ -63,7 +63,7 @@ class InteractionApplicationCommandCallbackData(
 @KordPreview
 data class MultipartFollowupMessageCreateRequest(
     val request: FollowupMessageCreateRequest,
-    val file: Pair<String, InputStream>?
+    val files: List<Pair<String, java.io.InputStream>> = emptyList(),
 )
 
 @Serializable
