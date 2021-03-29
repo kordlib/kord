@@ -74,9 +74,9 @@ sealed class Interaction : InteractionBehavior {
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): Interaction {
             return if (data.guildId !is OptionalSnowflake.Missing)
-                GuildInteraction(data, kord.slashCommands.applicationId, kord, strategy.supply(kord))
+                GuildInteraction(data, data.applicationId, kord, strategy.supply(kord))
             else
-                DmInteraction(data, kord.slashCommands.applicationId, kord, strategy.supply(kord))
+                DmInteraction(data, data.applicationId, kord, strategy.supply(kord))
         }
     }
 
