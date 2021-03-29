@@ -65,6 +65,7 @@ data class DiscordChannel(
         val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
         @SerialName("last_pin_timestamp")
         val lastPinTimestamp: Optional<String?> = Optional.Missing(),
+        val permissions: Optional<Permissions> = Optional.Missing()
 )
 
 @Serializable(with = ChannelType.Serializer::class)
