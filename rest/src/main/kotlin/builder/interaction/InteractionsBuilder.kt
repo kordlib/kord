@@ -15,6 +15,7 @@ import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.contracts.ExperimentalContracts
@@ -154,7 +155,7 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
 @KordPreview
 @KordDsl
 class InteractionResponseModifyBuilder :
-    RequestBuilder<InteractionResponseModifyRequest> {
+    RequestBuilder<MultipartInteractionResponseModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
@@ -164,17 +165,30 @@ class InteractionResponseModifyBuilder :
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
+    val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
         if (embeds == null) embeds = mutableListOf()
         embeds!! += EmbedBuilder().apply(builder)
     }
 
+    fun addFile(name: String, content: InputStream) {
+        files += name to content
+    }
 
-    override fun toRequest(): InteractionResponseModifyRequest {
-        return InteractionResponseModifyRequest(
-            _content,
-            _embeds.mapList { it.toRequest() },
-            _allowedMentions.map { it.build() })
+    suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
+        addFile(path.fileName.toString(), Files.newInputStream(path))
+    }
+
+    override fun toRequest(): MultipartInteractionResponseModifyRequest {
+        return MultipartInteractionResponseModifyRequest(
+            InteractionResponseModifyRequest(
+                _content,
+                _embeds.mapList { it.toRequest() },
+                _allowedMentions.map { it.build() }
+            ),
+            files
+        )
     }
 }
 
