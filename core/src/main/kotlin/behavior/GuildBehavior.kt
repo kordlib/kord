@@ -504,46 +504,6 @@ interface GuildBehavior : KordEntity, Strategizable {
     suspend fun getTemplateOrNull(code: String) = supplier.getTemplateOrNull(code)
 
     /**
-     * Requests to get the [Webhook] in this guild.
-     *
-     * Webhooks are not resolvable through cache and will always use the [RestClient] instead.
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     * @throws [EntityNotFoundException] if the webhook was not found.
-     */
-    suspend fun getWebhook(id: Snowflake) = rest.supply(kord).getWebhook(id)
-    /**
-     * Requests to get the [Webhook] in this guild with an authentication token,
-     * returns null if the webhook wasn't present.
-     *
-     * Webhooks are not resolvable through cache and will always use the [RestClient] instead.
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     */
-
-    suspend fun getWebhookOrNull(id: Snowflake) = rest.supply(kord).getWebhookOrNull(id)
-
-    /**
-     * Requests to get the [Webhook] in this guild with an authentication token.
-     *
-     * Webhooks are not resolvable through cache and will always use the [RestClient] instead.
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     * @throws [EntityNotFoundException] if the webhook was not found.
-     */
-    suspend fun getWebhookWithToken(id: Snowflake, token: String) = rest.supply(kord).getWebhookWithToken(id, token)
-    /**
-     * Requests to get the [Webhook] in this guild with an authentication token,
-     * returns null if the webhook wasn't present.
-     *
-     * Webhooks are not resolvable through cache and will always use the [RestClient] instead.
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     */
-
-    suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String) = rest.supply(kord).getWebhookWithTokenOrNull(id, token)
-
-    /**
      * Returns a new [GuildBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
