@@ -30,6 +30,7 @@ class InteractionTest {
         val interaction = json.decodeFromString(DiscordInteraction.serializer(), text)
         with(interaction) {
             channelId shouldBe "587324906702766226"
+            applicationId shouldBe "297153970613387264"
             id shouldBe "793442788670832640"
             version shouldBe 1
             type.type shouldBe 2
@@ -56,6 +57,7 @@ class InteractionTest {
         val interaction = json.decodeFromString(DiscordInteraction.serializer(), text)
         with(interaction) {
             channelId shouldBe "587324906702766226"
+            applicationId shouldBe "297153970613387264"
             id shouldBe "793442788670832640"
             version shouldBe 1
             type.type shouldBe 2
@@ -81,6 +83,7 @@ class InteractionTest {
         val interaction = json.decodeFromString(DiscordInteraction.serializer(), text)
         with(interaction) {
             channelId shouldBe "587324906702766226"
+            applicationId shouldBe "297153970613387264"
             id shouldBe "793442788670832640"
             version shouldBe 1
             type.type shouldBe 2
