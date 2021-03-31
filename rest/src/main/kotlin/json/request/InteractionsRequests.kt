@@ -36,6 +36,11 @@ data class InteractionResponseModifyRequest(
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
 )
 
+@KordPreview
+data class MultipartInteractionResponseModifyRequest(
+    val request: InteractionResponseModifyRequest,
+    val files: List<Pair<String, java.io.InputStream>> = emptyList(),
+)
 
 @Serializable
 @KordPreview
