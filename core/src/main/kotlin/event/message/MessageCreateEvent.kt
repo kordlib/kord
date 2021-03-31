@@ -29,7 +29,7 @@ class MessageCreateEvent(
      */
     suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageCreateEvent =
             MessageCreateEvent(message, guildId, member, shard, strategy.supply(message.kord))
 
     override fun toString(): String {

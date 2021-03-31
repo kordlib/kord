@@ -155,6 +155,8 @@ data class ResolvedObjects(
 @KordPreview
 data class DiscordInteraction(
     val id: Snowflake,
+    @SerialName("application_id")
+    val applicationId: Snowflake,
     val type: InteractionType,
     val data: DiscordApplicationCommandInteractionData,
     @SerialName("guild_id")

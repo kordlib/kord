@@ -16,6 +16,7 @@ import kotlinx.serialization.encoding.Encoder
 @KordPreview
 data class InteractionData(
     val id: Snowflake,
+    val applicationId: Snowflake,
     val type: InteractionType,
     val data: ApplicationCommandInteractionData,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -31,6 +32,7 @@ data class InteractionData(
             return with(interaction) {
                 InteractionData(
                     id,
+                    applicationId,
                     type,
                     ApplicationCommandInteractionData.from(data, guildId.value),
                     guildId,

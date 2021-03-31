@@ -30,6 +30,7 @@ import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
+import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -156,9 +157,11 @@ class Kord(
      * @return The newly created Guild.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("guild name is a mandatory field",
+    @Deprecated(
+        "guild name is a mandatory field",
         ReplaceWith("createGuild(\"name\", builder)"),
-        DeprecationLevel.WARNING)
+        DeprecationLevel.WARNING
+    )
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
@@ -221,6 +224,7 @@ class Kord(
         strategy: EntitySupplyStrategy<*> =
             resources.defaultStrategy,
     ): Channel? = strategy.supply(this).getChannelOrNull(id)
+
     /**
      * Requests to get the [Channel] as type [T] through the [strategy],
      * returns null if the [Channel] isn't present or is not of type [T].
@@ -237,6 +241,52 @@ class Kord(
         strategy: EntitySupplyStrategy<*> =
             resources.defaultStrategy,
     ): Guild? = strategy.supply(this).getGuildOrNull(id)
+
+    /**
+     * Requests to get the [Webhook] in this guild.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the webhook was not present.
+     */
+    suspend fun getWebhook(
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+    ): Webhook = strategy.supply(this).getWebhook(id)
+
+    /**
+     * Requests to get the [Webhook] in this guild with an authentication token,
+     * returns null if the webhook was not present.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+
+    suspend fun getWebhookOrNull(
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+    ): Webhook? = strategy.supply(this).getWebhookOrNull(id)
+
+    /**
+     * Requests to get the [Webhook] in this guild with an authentication token.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the webhook was not present.
+     */
+    suspend fun getWebhookWithToken(
+        id: Snowflake,
+        token: String,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+    ): Webhook = strategy.supply(this).getWebhookWithToken(id, token)
+
+    /**
+     * Requests to get the [Webhook] in this guild with an authentication token,
+     * returns null if the webhook was not present.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+
+    suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String, strategy: EntitySupplyStrategy<*>): Webhook? =
+        strategy.supply(this).getWebhookWithTokenOrNull(id, token)
+
 
     /**
      * Requests to get the [User] that represents this bot account through the [strategy],
@@ -319,7 +369,6 @@ class Kord(
             return KordRestOnlyBuilder(token).apply(builder).build()
         }
     }
-
 
 
     @KordPreview
