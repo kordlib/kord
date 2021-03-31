@@ -280,15 +280,15 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
     private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
     var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
 
-    private var file: Pair<String, java.io.InputStream>? = null
+    val files: MutableList<Pair<String, InputStream>> = mutableListOf()
     var embeds: MutableList<EmbedRequest> = mutableListOf()
 
-    fun setFile(name: String, content: java.io.InputStream) {
-        file = name to content
+    fun addFile(name: String, content: InputStream) {
+        files += name to content
     }
 
-    suspend fun setFile(path: Path) = withContext(Dispatchers.IO) {
-        setFile(path.fileName.toString(), Files.newInputStream(path))
+    suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
+        addFile(path.fileName.toString(), Files.newInputStream(path))
     }
 
     @OptIn(ExperimentalContracts::class)
@@ -309,7 +309,7 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
                 embeds = Optional.missingOnEmpty(embeds),
                 allowedMentions = _allowedMentions
             ),
-            file,
+            files,
         )
 
 }

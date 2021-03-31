@@ -145,7 +145,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.InteractionToken] = interactionToken
         parameter("wait", "$wait")
         body(FollowupMessageCreateRequest.serializer(), multipart.request)
-        multipart.file?.let { file(it) }
+        multipart.files.forEach { file(it) }
 
     }
 
