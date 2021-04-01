@@ -13,7 +13,7 @@ val DependencyHandlerScope.core get() = project(":core")
 val isJitPack get() = "true" == System.getenv("JITPACK")
 
 object Library {
-    private const val releaseVersion = "0.7.0-SNAPSHOT"
+    private const val releaseVersion = "0.7.0-RC2"
     val isSnapshot: Boolean get() = releaseVersion.endsWith("-SNAPSHOT")
     val isRelease: Boolean get() = !isSnapshot
     const val name = "kord"
