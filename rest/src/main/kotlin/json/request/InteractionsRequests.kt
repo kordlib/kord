@@ -1,15 +1,17 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.AllowedMentions
-import dev.kord.common.entity.ApplicationCommandOption
-import dev.kord.common.entity.InteractionResponseType
-import dev.kord.common.entity.MessageFlags
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.io.InputStream
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 @KordPreview
@@ -31,7 +33,7 @@ data class ApplicationCommandModifyRequest(
 @KordPreview
 data class InteractionResponseModifyRequest(
     val content: Optional<String> = Optional.Missing(),
-    val embeds: Optional<List<EmbedRequest>> = Optional.Missing() ,
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
 )
@@ -60,6 +62,7 @@ class InteractionApplicationCommandCallbackData(
     val flags: Optional<MessageFlags> = Optional.Missing()
 
 )
+
 @KordPreview
 data class MultipartFollowupMessageCreateRequest(
     val request: FollowupMessageCreateRequest,
@@ -85,4 +88,17 @@ data class FollowupMessageModifyRequest(
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+)
+
+
+@Serializable
+@KordPreview
+data class PingInteractionRequest(
+    val id: Snowflake,
+    @SerialName("application_id")
+    val applicationId: Snowflake,
+    val type: InteractionType,
+    val token: String,
+    val user: DiscordUser,
+    val version: Int
 )
