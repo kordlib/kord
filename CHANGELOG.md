@@ -21,7 +21,7 @@
 * Fix provider nullity in embeds. #151
 * Fix WebhookType.Incoming incorrect value. #156
 * Fix `DiscordErrorResponse` inability to consume full input #162
-* `MessageCreateEvent#withStrategy` returning `Strategizable` #233
+* Fix `MessageCreateEvent#withStrategy` returning `Strategizable`. #233
 * Fix serialization issues for `DiscordActivityPartySize`. #168
 * Fix `Attachment#isImage` check. #172
 * Fix`rpc_origins` being nullable instead of optional. #173
@@ -36,7 +36,6 @@
 
 ## Changes
 
-* Allow multiple file upload. #229 #228
 * Allow controlling the number of total shards #196
 * Replaced invoke functions with top-level factory functions. #210
 
