@@ -102,27 +102,3 @@ data class PingInteractionRequest(
     val user: DiscordUser,
     val version: Int
 )
-
-@Serializable
-@KordPreview
-object PingInteractionResponse {
-    val serializer = object : KSerializer<PingInteractionResponse> {
-
-        override val descriptor: SerialDescriptor
-            get() = buildClassSerialDescriptor("PingInteractionResponse") {
-                element("type", Int.serializer().descriptor)
-            }
-
-        override fun deserialize(decoder: Decoder): PingInteractionResponse {
-            throw UnsupportedOperationException()
-        }
-
-
-        override fun serialize(encoder: Encoder, value: PingInteractionResponse) {
-            val composite = encoder.beginStructure(descriptor)
-            composite.encodeIntElement(descriptor, 0, InteractionResponseType.Pong.type)
-            composite.endStructure(descriptor)
-        }
-
-    }
-}
