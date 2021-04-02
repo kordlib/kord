@@ -48,7 +48,7 @@ jobs:
       GITHUB_EVENT_NAME: ${{ github.event_name }}
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
       GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }} # Source branch name, currently unused.      
-      GITHUB_BRANCH_NAME: ${{ github.ref }}
+      GITHUB_BRANCH_NAME: ${{ github.ref##*/ }}
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
