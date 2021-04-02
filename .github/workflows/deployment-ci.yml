@@ -33,11 +33,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew --stacktrace --info build
 
-  release:
-    name: Inject slug/short variables
-    
+  release:    
     name: Publish artifacts
-    uses: rlespinasse/github-slug-action@3.5.1
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     needs: build
