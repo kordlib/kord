@@ -48,7 +48,6 @@ jobs:
       GITHUB_EVENT_NAME: ${{ github.event_name }}
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
       GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }} # Source branch name, currently unused.
-      GITHUB_BRANCH_NAME: ${{ steps.extract_branch.outputs.branch }}
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
@@ -57,9 +56,9 @@ jobs:
           fetch-depth: 0
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        run: echo "##[set-output name=branch;]${GITHUB_REF#refs/heads/}"
         id: extract_branch
-
+      - run: echo "name=GITHUB_BRANCH_NAME::${ steps.extract_branch.outputs.branch }" >> $GITHUB_ENV
       - run: echo "::group::Publishing info"
       - run: echo "event name = $GITHUB_EVENT_NAME"
       - run: echo "tag name = $GITHUB_TAG_NAME"
