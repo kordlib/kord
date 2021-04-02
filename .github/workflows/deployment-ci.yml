@@ -4,6 +4,8 @@ name: Kotlin CI
 
 on:
   push:
+    branches-ignore:
+      - master
   pull_request:
   release:
     types: [published]
@@ -17,6 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - run: echo "name=GITHUB_BRANCH_NAME::${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - uses: actions/cache@v1
         with:
           path: ~/.gradle/caches
