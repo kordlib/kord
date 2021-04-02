@@ -20,6 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v1
+      - uses: nelonoel/branch-name@v1
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
@@ -48,7 +49,7 @@ jobs:
       GITHUB_EVENT_NAME: ${{ github.event_name }}
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
       GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }} # Source branch name, currently unused.      
-      GITHUB_BRANCH_NAME: ${{ GITHUB_REF#refs/heads/ }}
+      GITHUB_BRANCH_NAME: ${{ $BRANCH_NAME }}
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
