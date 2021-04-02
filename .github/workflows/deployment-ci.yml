@@ -55,7 +55,6 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Extract branch name
       - run: echo "name=GITHUB_BRANCH_NAME::${GITHUB_REF##*/}" >> $GITHUB_ENV
       - run: echo "event name = $GITHUB_EVENT_NAME"
       - run: echo "tag name = $GITHUB_TAG_NAME"
