@@ -55,6 +55,10 @@ jobs:
         with:
           fetch-depth: 0
       - run: echo "name=GITHUB_BRANCH_NAME::${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - run: echo "event name = $GITHUB_EVENT_NAME"
+      - run: echo "tag name = $GITHUB_TAG_NAME"
+      - run: echo "tag target = $GITHUB_TARGET_COMMITISH"
+      - run: echo "branch name = $GITHUB_BRANCH_NAME"
       - uses: actions/cache@v1
         with:
           path: ~/.gradle/caches
