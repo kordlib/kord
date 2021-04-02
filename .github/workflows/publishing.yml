@@ -1,6 +1,6 @@
 # This workflow will build a package using Gradle and then publish it to maven
 
-name: Kotlin CI
+name: Publishing
 
 on:
   release:
