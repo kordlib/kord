@@ -13,13 +13,13 @@ val DependencyHandlerScope.core get() = project(":core")
 val isJitPack get() = "true" == System.getenv("JITPACK")
 
 object Library {
-    private const val releaseVersion = "0.7.0-SNAPSHOT"
-    val isSnapshot: Boolean get() = releaseVersion.endsWith("-SNAPSHOT")
-    val isRelease: Boolean get() = !isSnapshot
     const val name = "kord"
     const val group = "dev.kord"
     val version: String = if (isJitPack) System.getenv("RELEASE_TAG")
-    else releaseVersion
+    else System.getenv("GITHUB_TAG_NAME") ?: System.getenv("GITHUB_HEAD_REF") + "-SNAPSHOT"
+
+    val isSnapshot: Boolean get() = version.endsWith("-SNAPSHOT")
+    val isRelease: Boolean get() = !isSnapshot
 
     const val description = "Idiomatic Kotlin Wrapper for The Discord API"
     const val projectUrl = "https://github.com/kordlib/kord"
