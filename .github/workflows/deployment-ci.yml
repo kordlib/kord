@@ -19,7 +19,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: rlespinasse/github-slug-action@v3.5.1
       - uses: actions/cache@v1
         with:
           path: ~/.gradle/caches
