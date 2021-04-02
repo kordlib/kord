@@ -16,7 +16,7 @@ object Library {
     const val name = "kord"
     const val group = "dev.kord"
     val version: String = if (isJitPack) System.getenv("RELEASE_TAG")
-    else System.getenv("GITHUB_TAG_NAME") ?: System.getenv("GITHUB_HEAD_REF") + "-SNAPSHOT"
+    else System.getenv("GITHUB_TAG_NAME") ?: System.getenv("GITHUB_BRANCH_NAME") + "-SNAPSHOT"
 
     val isSnapshot: Boolean get() = version.endsWith("-SNAPSHOT")
     val isRelease: Boolean get() = !isSnapshot
