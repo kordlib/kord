@@ -3,6 +3,8 @@
 name: Publishing
 
 on:
+  push:
+  pull_request:
   release:
     types: [published]
 jobs:
@@ -41,7 +43,8 @@ jobs:
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       ORG_GRADLE_PROJECT_signingKey: ${{ secrets.signingKey }}
       ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signingPassword }}
-      GITHUB_TAG: ${{ github.event.release.tag_name }}
+      GITHUB_EVENT_NAME: ${{ github.event_name }}
+      GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
       GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }} # Source branch name, currently unused.
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
