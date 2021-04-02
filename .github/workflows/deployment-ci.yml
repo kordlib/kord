@@ -47,9 +47,7 @@ jobs:
       ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signingPassword }}
       GITHUB_EVENT_NAME: ${{ github.event_name }}
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
-      GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }} # Source branch name, currently unused.
-      GITHUB_BRANCH_NAME: ${{ env.GITHUB_HEAD_REF_SLUG }}
-      
+      GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }} # Source branch name, currently unused.      
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
