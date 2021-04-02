@@ -20,6 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v1
+      - uses: rlespinasse/github-slug-action@v3.5.1
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
@@ -33,7 +34,10 @@ jobs:
         run: ./gradlew --stacktrace --info build
 
   release:
+    name: Inject slug/short variables
+    
     name: Publish artifacts
+    uses: rlespinasse/github-slug-action@3.5.1
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     needs: build
@@ -48,6 +52,8 @@ jobs:
       GITHUB_EVENT_NAME: ${{ github.event_name }}
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
       GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }} # Source branch name, currently unused.
+      GITHUB_BRANCH_NAME: ${{ env.GITHUB_HEAD_REF_SLUG }}
+      
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
@@ -55,7 +61,6 @@ jobs:
         with:
           fetch-depth: 0
       
-      - run: echo "name=GITHUB_BRANCH_NAME::${GITHUB_REF##*/}" >> $GITHUB_ENV
       - run: echo "event name = $GITHUB_EVENT_NAME"
       - run: echo "tag name = $GITHUB_TAG_NAME"
       - run: echo "tag target = $GITHUB_TARGET_COMMITISH"
