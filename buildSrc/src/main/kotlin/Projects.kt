@@ -40,7 +40,7 @@ object Library {
      */
     val isStableApi: Boolean get() = !isSnapshot
 
-    val isUndefinedVersion = version == "undefined"
+    val isUndefinedVersion get() = version == "undefined"
 }
 
 object Repo {
