@@ -47,7 +47,7 @@ jobs:
       ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signingPassword }}
       GITHUB_EVENT_NAME: ${{ github.event_name }}
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
-      GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }} # Source branch name, currently unused.
+      GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }}
       GITHUB_BRANCH_NAME: ${{ github.ref }}
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
@@ -56,11 +56,11 @@ jobs:
         with:
           fetch-depth: 0
       - run: echo "::group::Publishing Info"
-      - run: echo "event name = $GITHUB_EVENT_NAME"
-      - run: echo "branch name = $GITHUB_BRANCH_NAME"
-      - run: echo "tag name = $GITHUB_TAG_NAME"
-      - run: echo "tag target = $GITHUB_TARGET_COMMITISH"
-      - run: echo "::endgroup::"
+          echo "event name = $GITHUB_EVENT_NAME"
+          echo "branch name = $GITHUB_BRANCH_NAME"
+          echo "tag name = $GITHUB_TAG_NAME"
+          echo "tag target = $GITHUB_TARGET_COMMITISH"
+          echo "::endgroup::"
       - uses: actions/cache@v1
         with:
           path: ~/.gradle/caches
