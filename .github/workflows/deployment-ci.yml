@@ -53,12 +53,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - run: echo "::group::Publishing Info"
-            "event name = $GITHUB_EVENT_NAME"
-            "branch name = $GITHUB_BRANCH_NAME"
-            "tag name = $GITHUB_TAG_NAME"
-            "tag target = $GITHUB_TARGET_COMMITISH"
-            "::endgroup::"
       - uses: actions/cache@v1
         with:
           path: ~/.gradle/caches
