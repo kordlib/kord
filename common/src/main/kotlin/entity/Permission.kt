@@ -13,7 +13,6 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 
-
 @Serializable(with = Permissions.Companion::class)
 class Permissions constructor(val code: DiscordBitSet) {
 
@@ -91,7 +90,7 @@ class Permissions constructor(val code: DiscordBitSet) {
 
 fun Permissions(value: String) = Permissions(DiscordBitSet(value))
 
-inline  fun Permissions(block: Permissions.PermissionsBuilder.() -> Unit = {}): Permissions {
+inline fun Permissions(block: Permissions.PermissionsBuilder.() -> Unit = {}): Permissions {
     val builder = Permissions.PermissionsBuilder(DiscordBitSet(0))
     builder.apply(block)
     return builder.permissions()
@@ -116,9 +115,8 @@ fun Permissions(permissions: Iterable<Permissions>) = Permissions {
 }
 
 
-
 sealed class Permission(val code: DiscordBitSet) {
-    constructor(vararg values: Long) : this(DiscordBitSet(values))
+    constructor(values: Long) : this(DiscordBitSet(values))
 
     object CreateInstantInvite : Permission(0x00000001)
     object KickMembers : Permission(0x00000002)
@@ -151,5 +149,6 @@ sealed class Permission(val code: DiscordBitSet) {
     object ManageWebhooks : Permission(0x20000000)
     object ManageEmojis : Permission(0x40000000)
     object UseSlashCommands : Permission(0x80000000)
+    object RequestToSpeak : Permission(0x100000000)
     object All : Permission(0x7FFFFDFF)
 }

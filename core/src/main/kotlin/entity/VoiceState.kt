@@ -2,20 +2,21 @@ package dev.kord.core.entity
 
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.map
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.VoiceStateData
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.toSnowflakeOrNull
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 
 class VoiceState(
-        val data: VoiceStateData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: VoiceStateData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordObject, Strategizable {
 
     val guildId: Snowflake get() = data.guildId
@@ -36,6 +37,11 @@ class VoiceState(
 
     val isSuppressed: Boolean get() = data.suppress
 
+    val requestToSpeakTimestamp: Instant?
+        get() = data.requestToSpeakTimestamp.map {
+            DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(it, Instant::from)
+        }.value
+
     /**
      * Whether this user is streaming using "Go Live".
      */
@@ -48,7 +54,9 @@ class VoiceState(
      * @throws [RequestException] if anything went wrong during the request.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("User getChannelOrNull instead.", ReplaceWith("getChannelOrNull"), DeprecationLevel.ERROR)
+    @Deprecated("User getChannelOrNull instead.",
+        ReplaceWith("getChannelOrNull"),
+        DeprecationLevel.ERROR)
     suspend fun getChannel(): VoiceChannel? = channelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
@@ -57,7 +65,8 @@ class VoiceState(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getChannelOrNull(): VoiceChannel? = channelId?.let { supplier.getChannelOfOrNull(it) }
+    suspend fun getChannelOrNull(): VoiceChannel? =
+        channelId?.let { supplier.getChannelOfOrNull(it) }
 
 
     /**
@@ -95,7 +104,8 @@ class VoiceState(
     /**
      * Returns a new [VoiceState] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceState = VoiceState(data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceState =
+        VoiceState(data, kord, strategy.supply(kord))
 
     override fun toString(): String {
         return "VoiceState(data=$data, kord=$kord, supplier=$supplier)"
