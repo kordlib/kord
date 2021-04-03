@@ -15,10 +15,10 @@ val isJitPack get() = "true" == System.getenv("JITPACK")
 object Library {
     const val name = "kord"
     const val group = "dev.kord"
-    val branchRef = System.getenv("GITHUB_BRANCH_NAME") ?: "undefined"
-    val branchNameSlug = branchRef.substringAfter("refs/heads/")
     val version: String = if (isJitPack) System.getenv("RELEASE_TAG")
-    else System.getenv("GITHUB_TAG_NAME") ?:  "$branchNameSlug-SNAPSHOT"
+    else System.getenv("GITHUB_TAG_NAME")
+        ?: System.getenv("GITHUB_BRANCH_NAME")?.plus("-SNAPSHOT")?.substringAfter("refs/heads/")
+        ?: error("No tag or branch name found.")
 
     val isSnapshot: Boolean get() = version.endsWith("-SNAPSHOT")
     val isRelease: Boolean get() = !isSnapshot
