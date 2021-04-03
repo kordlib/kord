@@ -116,7 +116,7 @@ fun Permissions(permissions: Iterable<Permissions>) = Permissions {
 
 
 sealed class Permission(val code: DiscordBitSet) {
-    constructor(values: Long) : this(DiscordBitSet(values))
+    constructor(vararg values: Long) : this(DiscordBitSet(values))
 
     object CreateInstantInvite : Permission(0x00000001)
     object KickMembers : Permission(0x00000002)
