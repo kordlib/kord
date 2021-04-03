@@ -96,11 +96,6 @@ subprojects {
         }
     }
 
-    tasks.withType<PublishToMavenRepository>().configureEach {
-        onlyIf {
-            Library.branchNameSlug != "master"
-        }
-    }
 
     tasks.dokkaHtml.configure {
         this.outputDirectory.set(file("${project.projectDir}/dokka/kord/"))
