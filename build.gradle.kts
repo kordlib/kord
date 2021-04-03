@@ -132,6 +132,11 @@ subprojects {
 
     apply<BintrayPlugin>()
 
+    tasks.withType<PublishToMavenRepository> {
+        doFirst {
+            require(!Library.isUndefinedVersion) { "No release/snapshot version found." }
+        }
+    }
     publishing {
         publications {
             create<MavenPublication>(Library.name) {
