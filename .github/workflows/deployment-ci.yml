@@ -28,7 +28,7 @@ jobs:
         with:
           java-version: 8
       - name: Build with Gradle
-        run: ./gradlew --stacktrace --info build
+        run: ./gradlew --stacktrace --info  -x publish build
 
   release:
     name: Publish artifacts
