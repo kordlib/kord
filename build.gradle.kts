@@ -24,8 +24,6 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
     id("org.jetbrains.dokka") version "1.4.0"
     id("org.ajoberstar.git-publish") version "2.1.3"
-    id("com.jfrog.bintray") version "1.8.5"
-
     signing
     `maven-publish`
     id("io.codearte.nexus-staging") version "0.22.0"
@@ -50,7 +48,6 @@ subprojects {
     apply(plugin = "java")
     apply(plugin = "kotlin")
     apply(plugin = "kotlinx-serialization")
-    apply(plugin = "com.jfrog.bintray")
     apply(plugin = "maven-publish")
     apply(plugin = "kotlinx-atomicfu")
     apply(plugin = "org.jetbrains.dokka")
@@ -130,8 +127,11 @@ subprojects {
         dependsOn(tasks.dokkaHtml)
     }
 
-    apply<BintrayPlugin>()
-
+    tasks.withType<PublishToMavenRepository>().configureEach {
+        onlyIf {
+            Library.branchNameSlug != "master"
+        }
+    }
     publishing {
         publications {
             create<MavenPublication>(Library.name) {
@@ -213,29 +213,6 @@ subprojects {
                 useInMemoryPgpKeys(String(Base64().decode(signingKey.toByteArray())), signingPassword)
             }
             sign(publishing.publications[Library.name])
-        }
-    }
-
-    configure<BintrayExtension> {
-        user = System.getenv("BINTRAY_USER")
-        key = System.getenv("BINTRAY_KEY")
-        setPublications(Library.name)
-        publish = true
-
-        pkg = PackageConfig().apply {
-            repo = "Kord"
-            name = "Kord"
-            userOrg = "kordlib"
-            setLicenses("MIT")
-            vcsUrl = "https://github.com/kordlib/kord.git"
-            websiteUrl = "https://github.com/kordlib/kord.git"
-            issueTrackerUrl = "https://github.com/kordlib/kord/issues"
-
-            version = VersionConfig().apply {
-                name = Library.version
-                desc = Library.description
-                vcsTag = Library.version
-            }
         }
     }
 }
