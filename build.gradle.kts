@@ -84,7 +84,7 @@ subprojects {
         testRuntimeOnly(Dependencies.sl4j)
     }
 
-    tasks.getByName("apiCheck").onlyIf { Library.isStableApi }
+    tasks.getByName("apiCheck").onlyIf { Library.isStableApi && !Library.isUndefinedVersion }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target
