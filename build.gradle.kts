@@ -135,7 +135,7 @@ subprojects {
     publishing {
         publications {
             create<MavenPublication>(Library.name) {
-                assert(Library.version != "undefined") { "No release/snapshot version found." }
+                require(!Library.isUndefinedVersion) { "No release/snapshot version found." }
                 from(components["kotlin"])
                 groupId = Library.group
                 artifactId = "kord-${project.name}"
