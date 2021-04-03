@@ -134,6 +134,7 @@ subprojects {
 
     publishing {
         publications {
+            assert(Library.version != "undefined") { "No release/snapshot version found. "}
             create<MavenPublication>(Library.name) {
                 from(components["kotlin"])
                 groupId = Library.group
