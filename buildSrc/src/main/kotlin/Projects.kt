@@ -16,7 +16,7 @@ object Library {
     const val name = "kord"
     const val group = "dev.kord"
     val branchRef = System.getenv("GITHUB_BRANCH_NAME") ?: "undefined"
-    val branchNameSlug = branchRef.substringAfter("GITHUB_BRANCH_NAME")
+    val branchNameSlug = branchRef.substringAfter("refs/heads/")
     val version: String = if (isJitPack) System.getenv("RELEASE_TAG")
     else System.getenv("GITHUB_TAG_NAME") ?:  "$branchNameSlug-SNAPSHOT"
 
