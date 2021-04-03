@@ -55,7 +55,7 @@ subprojects {
     apply(plugin = "kotlinx-atomicfu")
     apply(plugin = "org.jetbrains.dokka")
   
-    if(!isJitPack && Library.isRelease){
+    if(!isJitPack && Library.isRelease && !Library.isUndefinedVersion){
         apply(plugin = "signing")
     }
 
