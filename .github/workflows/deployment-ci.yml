@@ -33,7 +33,7 @@ jobs:
   release:
     name: Publish artifacts
     runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'pull_request' ||  github.ref != 'refs/heads/master' }}
+    if: ${{ github.event_name != 'pull_request' &&  github.ref != 'refs/heads/master' }}
     needs: build
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
