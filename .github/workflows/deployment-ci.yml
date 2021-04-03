@@ -54,11 +54,11 @@ jobs:
         with:
           fetch-depth: 0
       - run: echo "::group::Publishing Info"
-          echo "event name = $GITHUB_EVENT_NAME"
-          echo "branch name = $GITHUB_BRANCH_NAME"
-          echo "tag name = $GITHUB_TAG_NAME"
-          echo "tag target = $GITHUB_TARGET_COMMITISH"
-          echo "::endgroup::"
+            "event name = $GITHUB_EVENT_NAME"
+            "branch name = $GITHUB_BRANCH_NAME"
+            "tag name = $GITHUB_TAG_NAME"
+            "tag target = $GITHUB_TARGET_COMMITISH"
+            "::endgroup::"
       - uses: actions/cache@v1
         with:
           path: ~/.gradle/caches
