@@ -15,7 +15,8 @@ val isJitPack get() = "true" == System.getenv("JITPACK")
 object Library {
     const val name = "kord"
     const val group = "dev.kord"
-    val branchNameSlug = System.getenv("GITHUB_BRANCH_NAME").substringAfter("refs/heads/", "undefined")
+    val branchRef = System.getenv("GITHUB_BRANCH_NAME") ?: "undefined"
+    val branchNameSlug = branchRef.substringAfter("GITHUB_BRANCH_NAME")
     val version: String = if (isJitPack) System.getenv("RELEASE_TAG")
     else System.getenv("GITHUB_TAG_NAME") ?:  "$branchNameSlug-SNAPSHOT"
 
