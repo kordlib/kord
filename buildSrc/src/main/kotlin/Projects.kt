@@ -39,6 +39,8 @@ object Library {
      * Whether the current API is considered stable, and should be compared to the 'golden' API dump.
      */
     val isStableApi: Boolean get() = !isSnapshot
+
+    val isUndefinedVersion = version == "undefined"
 }
 
 object Repo {
