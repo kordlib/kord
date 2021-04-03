@@ -15,7 +15,7 @@ val isJitPack get() = "true" == System.getenv("JITPACK")
 object Library {
     const val name = "kord"
     const val group = "dev.kord"
-    val version: String = if (isJitPack) System.getenv("RELEASE_TAG")
+    val version: String get() = if (isJitPack) System.getenv("RELEASE_TAG")
     else {
         val tag = System.getenv("GITHUB_TAG_NAME")
         val branch = System.getenv("GITHUB_BRANCH_NAME")
