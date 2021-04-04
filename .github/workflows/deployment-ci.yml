@@ -28,7 +28,7 @@ jobs:
         with:
           java-version: 8
       - name: Build with Gradle
-        run: ./gradlew --stacktrace --info build
+        run: ./gradlew --stacktrace --info build -x apiCheck
 
   release:
     name: Publish artifacts
@@ -63,6 +63,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 8
+
+      - name: API Checking with Gradle
+        run: ./gradlew apiCheck
+
       - name: Publish with Gradle
         run: ./gradlew -x test publish
 # Disabled for now
