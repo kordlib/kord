@@ -78,131 +78,132 @@ subprojects {
         testRuntimeOnly(Dependencies.sl4j)
     }
 
-    tasks.getByName("apiCheck").onlyIf { Library.isRelease }
+    tasks.getByName("apiCheck").mustRunBefore(tasks.withType<PublishToMavenRepository>())
+        .onlyIf { Library.isRelease }
 
-    val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
-    compileKotlin.kotlinOptions.jvmTarget = Jvm.target
-
-
-    tasks.withType<Test> {
-        useJUnitPlatform {
-            includeEngines.plusAssign("junit-jupiter")
-        }
-    }
+        val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
+        compileKotlin.kotlinOptions.jvmTarget = Jvm.target
 
 
-    tasks.dokkaHtml.configure {
-        onlyIf { Library.isRelease }
-        this.outputDirectory.set(file("${project.projectDir}/dokka/kord/"))
-
-        dokkaSourceSets {
-            configureEach {
-                platform.set(org.jetbrains.dokka.Platform.jvm)
-
-                sourceLink {
-                    localDirectory.set(file("src/main/kotlin"))
-                    remoteUrl.set(uri("https://github.com/kordlib/kord/tree/master/${project.name}/src/main/kotlin/").toURL())
-
-                    remoteLineSuffix.set("#L")
-                }
-
-                jdkVersion.set(8)
+        tasks.withType<Test> {
+            useJUnitPlatform {
+                includeEngines.plusAssign("junit-jupiter")
             }
         }
-    }
 
 
-    val sourcesJar by tasks.registering(Jar::class) {
-        archiveClassifier.set("sources")
-        from(sourceSets.main.get().allSource)
-    }
+        tasks.dokkaHtml.configure {
+            this.outputDirectory.set(file("${project.projectDir}/dokka/kord/"))
 
-    val dokkaJar by tasks.registering(Jar::class) {
-        group = JavaBasePlugin.DOCUMENTATION_GROUP
-        description = "Assembles Kotlin docs with Dokka"
-        archiveClassifier.set("javadoc")
-        from(tasks.dokkaHtml)
-        dependsOn(tasks.dokkaHtml)
-    }
+            dokkaSourceSets {
+                configureEach {
+                    platform.set(org.jetbrains.dokka.Platform.jvm)
 
+                    sourceLink {
+                        localDirectory.set(file("src/main/kotlin"))
+                        remoteUrl.set(uri("https://github.com/kordlib/kord/tree/master/${project.name}/src/main/kotlin/").toURL())
 
-    tasks.withType<PublishToMavenRepository> {
-        doFirst {
-            require(!Library.isUndefined) { "No release/snapshot version found." }
-        }
-    }
-    publishing {
-        publications {
-            create<MavenPublication>(Library.name) {
-                from(components["kotlin"])
-                groupId = Library.group
-                artifactId = "kord-${project.name}"
-                version = Library.version
-
-                artifact(sourcesJar.get())
-                artifact(dokkaJar.get())
-
-                pom {
-                    name.set(Library.name)
-                    description.set(Library.description)
-                    url.set(Library.description)
-
-                    organization {
-                        name.set("Kord")
-                        url.set("https://github.com/kordlib")
+                        remoteLineSuffix.set("#L")
                     }
 
-                    developers {
-                        developer {
-                            name.set("The Kord Team")
-                        }
-                    }
-
-                    issueManagement {
-                        system.set("GitHub")
-                        url.set("https://github.com/kordlib/kord/issues")
-                    }
-
-                    licenses {
-                        license {
-                            name.set("MIT")
-                            url.set("https://opensource.org/licenses/MIT")
-                        }
-                    }
-                    scm {
-                        connection.set("scm:git:ssh://github.com/kordlib/kord.git")
-                        developerConnection.set("scm:git:ssh://git@github.com:kordlib/kord.git")
-                        url.set(Library.projectUrl)
-                    }
+                    jdkVersion.set(8)
                 }
+            }
+        }
 
-                if (!isJitPack) {
-                    repositories {
-                        maven {
-                            url = if (Library.isSnapshot) uri(Repo.snapshotsUrl)
-                            else uri(Repo.releasesUrl)
 
-                            credentials {
-                                username = System.getenv("NEXUS_USER")
-                                password = System.getenv("NEXUS_PASSWORD")
+        val sourcesJar by tasks.registering(Jar::class) {
+            archiveClassifier.set("sources")
+            from(sourceSets.main.get().allSource)
+        }
+
+        val dokkaJar by tasks.registering(Jar::class) {
+            group = JavaBasePlugin.DOCUMENTATION_GROUP
+            description = "Assembles Kotlin docs with Dokka"
+            archiveClassifier.set("javadoc")
+            from(tasks.dokkaHtml)
+            dependsOn(tasks.dokkaHtml)
+        }
+
+
+        tasks.withType<PublishToMavenRepository> {
+            doFirst {
+                require(!Library.isUndefined) { "No release/snapshot version found." }
+            }
+        }
+        publishing {
+            publications {
+                create<MavenPublication>(Library.name) {
+                    from(components["kotlin"])
+                    groupId = Library.group
+                    artifactId = "kord-${project.name}"
+                    version = Library.version
+
+                    artifact(sourcesJar.get())
+                    artifact(dokkaJar.get())
+
+                    pom {
+                        name.set(Library.name)
+                        description.set(Library.description)
+                        url.set(Library.description)
+
+                        organization {
+                            name.set("Kord")
+                            url.set("https://github.com/kordlib")
+                        }
+
+                        developers {
+                            developer {
+                                name.set("The Kord Team")
+                            }
+                        }
+
+                        issueManagement {
+                            system.set("GitHub")
+                            url.set("https://github.com/kordlib/kord/issues")
+                        }
+
+                        licenses {
+                            license {
+                                name.set("MIT")
+                                url.set("https://opensource.org/licenses/MIT")
+                            }
+                        }
+                        scm {
+                            connection.set("scm:git:ssh://github.com/kordlib/kord.git")
+                            developerConnection.set("scm:git:ssh://git@github.com:kordlib/kord.git")
+                            url.set(Library.projectUrl)
+                        }
+                    }
+
+                    if (!isJitPack) {
+                        repositories {
+                            maven {
+                                url = if (Library.isSnapshot) uri(Repo.snapshotsUrl)
+                                else uri(Repo.releasesUrl)
+
+                                credentials {
+                                    username = System.getenv("NEXUS_USER")
+                                    password = System.getenv("NEXUS_PASSWORD")
+                                }
                             }
                         }
                     }
-                }
 
+                }
             }
+
         }
 
-    }
-
-    if (!isJitPack && Library.isRelease) {
-        signing {
-            val signingKey = findProperty("signingKey")?.toString()
-            val signingPassword = findProperty("signingPassword")?.toString()
-            if (signingKey != null && signingPassword != null) {
-                useInMemoryPgpKeys(String(Base64().decode(signingKey.toByteArray())), signingPassword)
+        if (!isJitPack && Library.isRelease) {
+            signing {
+                val signingKey = findProperty("signingKey")?.toString()
+                val signingPassword = findProperty("signingPassword")?.toString()
+                if (signingKey != null && signingPassword != null) {
+                    useInMemoryPgpKeys(String(Base64().decode(signingKey.toByteArray())), signingPassword)
+                }
+                sign(publishing.publications[Library.name])
             }
-            sign(publishing.publications[Library.name])
         }
     }
 
