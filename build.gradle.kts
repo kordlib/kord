@@ -79,12 +79,7 @@ subprojects {
     }
 
     val apiCheck = tasks.getByName("apiCheck")
-    apiCheck.doFirst {
-        println(" version: ${Library.version}")
-        println("Checking if it is a release")
-        println(Library.isRelease)
-        if(!Library.isRelease) throw StopExecutionException()
-    }
+    apiCheck.onlyIf { Library.isRelease }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target
@@ -132,10 +127,7 @@ subprojects {
 
 
     tasks.withType<PublishToMavenRepository>().configureEach {
-        dependsOn(apiCheck)
-        doFirst {
-            require(!Library.isUndefined) { "No release/snapshot version found." }
-        }
+        doFirst { require(!Library.isUndefined) { "No release/snapshot version found." } }
     }
     publishing {
         publications {
