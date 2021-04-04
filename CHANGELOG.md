@@ -20,6 +20,7 @@
 * Fix WebhookType.Incoming incorrect value. #156
 * Fix `DiscordErrorResponse` inability to consume full input #162
 * Fix unhandled events for unknown channel types. #240
+
 # 0.7.0-RC
 
 ## Additions
