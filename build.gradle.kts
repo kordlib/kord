@@ -78,7 +78,9 @@ subprojects {
         testRuntimeOnly(Dependencies.sl4j)
     }
 
-    tasks.getByName("apiCheck").onlyIf { !Library.isRelease }
+    val apiCheck = tasks.getByName("apiCheck")
+    apiCheck.doFirst { println("Checking if it is a release") }
+    apiCheck.onlyIf { Library.isRelease }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target
@@ -126,6 +128,7 @@ subprojects {
 
 
     tasks.withType<PublishToMavenRepository> {
+        dependsOn(apiCheck)
         doFirst {
             require(!Library.isUndefined) { "No release/snapshot version found." }
         }
