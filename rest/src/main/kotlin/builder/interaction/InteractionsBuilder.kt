@@ -45,7 +45,7 @@ class ApplicationCommandCreateBuilder(
 @KordDsl
 class ApplicationCommandsCreateBuilder : RequestBuilder<List<ApplicationCommandCreateRequest>> {
     val commands: MutableList<ApplicationCommandCreateBuilder> = mutableListOf()
-    fun command(
+    inline fun command(
         name: String,
         description: String,
         builder: ApplicationCommandCreateBuilder.() -> Unit
