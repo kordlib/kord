@@ -45,11 +45,13 @@ class ApplicationCommandCreateBuilder(
 @KordDsl
 class ApplicationCommandsCreateBuilder : RequestBuilder<List<ApplicationCommandCreateRequest>> {
     val commands: MutableList<ApplicationCommandCreateBuilder> = mutableListOf()
-    fun command(
+    @OptIn(ExperimentalContracts::class)
+    inline fun command(
         name: String,
         description: String,
         builder: ApplicationCommandCreateBuilder.() -> Unit
     ) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += ApplicationCommandCreateBuilder(name, description).apply(builder)
     }
 

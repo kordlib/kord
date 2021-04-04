@@ -371,17 +371,25 @@ class Kord(
     }
 
 
+    @OptIn(ExperimentalContracts::class)
     @KordPreview
     suspend inline fun createGlobalApplicationCommand(
         name: String,
         description: String,
         builder: ApplicationCommandCreateBuilder.() -> Unit = {},
-    ) = slashCommands.createGlobalApplicationCommand(name, description, builder)
+    ): GlobalApplicationCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return slashCommands.createGlobalApplicationCommand(name, description, builder)
+    }
 
+    @OptIn(ExperimentalContracts::class)
     @KordPreview
     suspend inline fun createGlobalApplicationCommands(
         builder: ApplicationCommandsCreateBuilder.() -> Unit,
-    ) = slashCommands.createGlobalApplicationCommands(builder)
+    ): List<GlobalApplicationCommand> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return slashCommands.createGlobalApplicationCommands(builder)
+    }
 
 
 }

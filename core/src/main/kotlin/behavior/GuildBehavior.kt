@@ -532,18 +532,26 @@ interface GuildBehavior : KordEntity, Strategizable {
 }
 
 
+@OptIn(ExperimentalContracts::class)
 @KordPreview
 suspend inline fun GuildBehavior.createApplicationCommand(
     name: String,
     description: String,
     builder: ApplicationCommandCreateBuilder.() -> Unit = {},
-) = kord.slashCommands.createGuildApplicationCommand(id, name, description, builder)
+): GuildApplicationCommand {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return kord.slashCommands.createGuildApplicationCommand(id, name, description, builder)
+}
 
 
+@OptIn(ExperimentalContracts::class)
 @KordPreview
 suspend inline fun GuildBehavior.createApplicationCommands(
     builder: ApplicationCommandsCreateBuilder.() -> Unit
-) = kord.slashCommands.createGuildApplicationCommands(id, builder)
+): List<GuildApplicationCommand> {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return kord.slashCommands.createGuildApplicationCommands(id, builder)
+}
 
 /**
  * Requests to edit this guild.
