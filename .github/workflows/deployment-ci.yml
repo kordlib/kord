@@ -9,6 +9,9 @@ on:
     types: [published]
 jobs:
   build:
+    if: |
+      !contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.pull_request.title, '[ci skip]')
+
     name: Build Kord
     runs-on: ubuntu-latest
     env:
@@ -33,7 +36,9 @@ jobs:
   release:
     name: Publish artifacts
     runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'pull_request' &&  github.ref != 'refs/heads/master' }}
+    if: |
+      !contains(github.event.head_commit.message, '[publish skip]') && !contains(github.event.pull_request.title, '[publish skip]')
+      && github.event_name != 'pull_request' &&  github.ref != 'refs/heads/master'
     needs: build
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
@@ -67,8 +72,10 @@ jobs:
       - name: API Checking with Gradle
         run: ./gradlew apiCheck
 
+
       - name: Publish with Gradle
         run: ./gradlew -x test publish
+
 # Disabled for now
 #
 #      - name: Close and Release Repository
