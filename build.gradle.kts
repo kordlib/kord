@@ -80,7 +80,7 @@ subprojects {
 
     val apiCheck = tasks.getByName("apiCheck")
     apiCheck.doFirst {
-        println(Library.version)
+        println(" version: ${Library.version}")
         println("Checking if it is a release")
         println(Library.isRelease)
         if(!Library.isRelease) throw StopExecutionException()
