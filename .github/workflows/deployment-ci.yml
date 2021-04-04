@@ -63,7 +63,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 8
-          
+
+      - name: API Checking with Gradle
+        run: ./gradlew apiCheck
+
       - name: Publish with Gradle
         run: ./gradlew -x test publish
 # Disabled for now
