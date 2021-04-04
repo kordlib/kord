@@ -1,5 +1,3 @@
-import com.jfrog.bintray.gradle.BintrayExtension
-import com.jfrog.bintray.gradle.BintrayPlugin
 import org.ajoberstar.gradle.git.publish.GitPublishExtension
 import org.ajoberstar.gradle.git.publish.tasks.GitPublishReset
 import org.apache.commons.codec.binary.Base64
@@ -24,7 +22,6 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
     id("org.jetbrains.dokka") version "1.4.0"
     id("org.ajoberstar.git-publish") version "2.1.3"
-    id("com.jfrog.bintray") version "1.8.5"
 
     signing
     `maven-publish`
@@ -50,21 +47,18 @@ subprojects {
     apply(plugin = "java")
     apply(plugin = "kotlin")
     apply(plugin = "kotlinx-serialization")
-    apply(plugin = "com.jfrog.bintray")
     apply(plugin = "maven-publish")
     apply(plugin = "kotlinx-atomicfu")
     apply(plugin = "org.jetbrains.dokka")
-  
-    if(!isJitPack && Library.isRelease){
+
+    if (!isJitPack && Library.isRelease) {
         apply(plugin = "signing")
     }
 
     repositories {
         mavenCentral()
         jcenter()
-        maven(url = "https://kotlin.bintray.com/kotlinx")
-        maven(url ="https://oss.sonatype.org/content/repositories/snapshots")
-        maven(url = "https://dl.bintray.com/kotlin/kotlin-dev/")
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
     }
 
     dependencies {
@@ -84,7 +78,8 @@ subprojects {
         testRuntimeOnly(Dependencies.sl4j)
     }
 
-    tasks.getByName("apiCheck").onlyIf { Library.isStableApi }
+    val apiCheck = tasks.getByName("apiCheck")
+    apiCheck.onlyIf { Library.isRelease }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target
@@ -130,8 +125,10 @@ subprojects {
         dependsOn(tasks.dokkaHtml)
     }
 
-    apply<BintrayPlugin>()
 
+    tasks.withType<PublishToMavenRepository>().configureEach {
+        doFirst { require(!Library.isUndefined) { "No release/snapshot version found." } }
+    }
     publishing {
         publications {
             create<MavenPublication>(Library.name) {
@@ -164,15 +161,6 @@ subprojects {
                         url.set("https://github.com/kordlib/kord/issues")
                     }
 
-                    withXml {
-                        val repoNode = asNode().appendNode("repositories").appendNode("repository")
-
-                        with(repoNode) {
-                            appendNode("id", "jcenter")
-                            appendNode("name", "jcenter-bintray")
-                            appendNode("url", "https://jcenter.bintray.com")
-                        }
-                    }
                     licenses {
                         license {
                             name.set("MIT")
@@ -215,30 +203,9 @@ subprojects {
             sign(publishing.publications[Library.name])
         }
     }
-
-    configure<BintrayExtension> {
-        user = System.getenv("BINTRAY_USER")
-        key = System.getenv("BINTRAY_KEY")
-        setPublications(Library.name)
-        publish = true
-
-        pkg = PackageConfig().apply {
-            repo = "Kord"
-            name = "Kord"
-            userOrg = "kordlib"
-            setLicenses("MIT")
-            vcsUrl = "https://github.com/kordlib/kord.git"
-            websiteUrl = "https://github.com/kordlib/kord.git"
-            issueTrackerUrl = "https://github.com/kordlib/kord/issues"
-
-            version = VersionConfig().apply {
-                name = Library.version
-                desc = Library.description
-                vcsTag = Library.version
-            }
-        }
-    }
 }
+
+
 
 tasks {
     val dokkaOutputDir = "${rootProject.projectDir}/dokka"
