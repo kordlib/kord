@@ -23,7 +23,7 @@ object Library {
              when {
                 !tag.isNullOrBlank() -> tag
                 !tag.isNullOrBlank() && branch.startsWith("refs/heads/") ->
-                    branch.substringAfter("refs/heads/") + "-SNAPSHOT"
+                    branch.substringAfter("refs/heads/").replace("/", "-") + "-SNAPSHOT"
                 else -> "undefined"
             }
 
