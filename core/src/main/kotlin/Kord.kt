@@ -386,9 +386,11 @@ class Kord(
     @KordPreview
     suspend inline fun createGlobalApplicationCommands(
         builder: ApplicationCommandsCreateBuilder.() -> Unit,
-    ): List<GlobalApplicationCommand> {
+    ): Flow<GlobalApplicationCommand> {
+
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return slashCommands.createGlobalApplicationCommands(builder)
+
     }
 
 

@@ -548,7 +548,7 @@ suspend inline fun GuildBehavior.createApplicationCommand(
 @KordPreview
 suspend inline fun GuildBehavior.createApplicationCommands(
     builder: ApplicationCommandsCreateBuilder.() -> Unit
-): List<GuildApplicationCommand> {
+): Flow<GuildApplicationCommand> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.slashCommands.createGuildApplicationCommands(id, builder)
 }
