@@ -78,7 +78,7 @@ subprojects {
         testRuntimeOnly(Dependencies.sl4j)
     }
 
-    tasks.getByName("apiCheck").onlyIf { Library.isRelease }
+    tasks.getByName("apiCheck").setOnlyIf { Library.isRelease }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target
