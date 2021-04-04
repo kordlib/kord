@@ -22,7 +22,7 @@ object Library {
             val branch = System.getenv("GITHUB_BRANCH_NAME")
              when {
                 !tag.isNullOrBlank() -> tag
-                !tag.isNullOrBlank() && branch.startsWith("refs/heads/") ->
+                !branch.isNullOrBlank() && branch.startsWith("refs/heads/") ->
                     branch.substringAfter("refs/heads/").replace("/", "-") + "-SNAPSHOT"
                 else -> "undefined"
             }
