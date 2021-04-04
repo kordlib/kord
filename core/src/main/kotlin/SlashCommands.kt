@@ -41,15 +41,19 @@ class SlashCommands(
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGlobalApplicationCommands(
         builder: ApplicationCommandsCreateBuilder.() -> Unit,
-    ): List<GlobalApplicationCommand> {
+    ): Flow<GlobalApplicationCommand> {
+
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = ApplicationCommandsCreateBuilder().apply(builder).toRequest()
-        return service.createGlobalApplicationCommands(applicationId, request).map {
-            val data = ApplicationCommandData.from(it)
-            GlobalApplicationCommand(data, service)
-        }
 
+        return flow {
+            for (command in service.createGlobalApplicationCommands(applicationId, request)) {
+                val data = ApplicationCommandData.from(command)
+                emit(GlobalApplicationCommand(data, service))
+            }
+        }
     }
+
 
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildApplicationCommand(
@@ -70,12 +74,15 @@ class SlashCommands(
     suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,
         builder: ApplicationCommandsCreateBuilder.() -> Unit,
-    ): List<GuildApplicationCommand> {
+    ): Flow<GuildApplicationCommand> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = ApplicationCommandsCreateBuilder().apply(builder).toRequest()
-        return service.createGlobalApplicationCommands(applicationId, request).map {
-            val data = ApplicationCommandData.from(it)
-            GuildApplicationCommand(data, service, guildId)
+
+        return flow {
+            for (command in service.createGuildApplicationCommands(applicationId, guildId, request)) {
+                val data = ApplicationCommandData.from(command)
+                emit(GuildApplicationCommand(data, service, guildId))
+            }
         }
     }
 
