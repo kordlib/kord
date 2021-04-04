@@ -79,10 +79,11 @@ subprojects {
     }
 
     val apiCheck = tasks.getByName("apiCheck")
-    apiCheck.doFirst { 
-        println("Checking if it is a release") 
+    apiCheck.doFirst {
+        println(version)
+        println("Checking if it is a release")
         println(Library.isRelease)
-        if(!Library.isRelease) throw StopExecutionException() 
+        if(!Library.isRelease) throw StopExecutionException()
     }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
