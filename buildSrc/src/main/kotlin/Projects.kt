@@ -33,14 +33,12 @@ object Library {
 
     val isSnapshot: Boolean get() = version.endsWith("-SNAPSHOT")
 
-    val isRelease: Boolean get() = !isSnapshot
-
     /**
      * Whether the current API is considered stable, and should be compared to the 'golden' API dump.
      */
-    val isStableApi: Boolean get() = !isSnapshot
+    val isRelease: Boolean get() = !isSnapshot && !isUndefined
 
-    val isUndefinedVersion get() = version == "undefined"
+    val isUndefined get() = version == "undefined"
 }
 
 object Repo {
