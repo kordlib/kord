@@ -78,7 +78,9 @@ subprojects {
         testRuntimeOnly(Dependencies.sl4j)
     }
 
-    tasks.getByName("apiCheck").onlyIf { Library.isRelease }
+    tasks.getByName("apiCheck").doFirst {
+        if(!Library.isRelease) throw StopExecutionException("This is not a release, Skipping...")
+    }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target
