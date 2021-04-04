@@ -127,7 +127,7 @@ subprojects {
     }
 
 
-    tasks.withType<PublishToMavenRepository> {
+    tasks.withType<PublishToMavenRepository>().configureEach {
         dependsOn(apiCheck)
         doFirst {
             require(!Library.isUndefined) { "No release/snapshot version found." }
