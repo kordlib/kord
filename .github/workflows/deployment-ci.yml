@@ -4,25 +4,14 @@ name: Kotlin CI
 
 on:
   push:
-    paths:
-      - '**.gradle'
-      - '**.properties'
-      - '**/src/**'
-    branches:
-      - 'master'
-      - '0.7.x'
-      - '0.8.x'
-    tags-ignore:
-      - '*.*'
-    pull_request:
-      paths:
-        - '**.gradle'
-        - '**.properties'
-        - '**/src/**'
-      types: [ opened, synchronize, reopened ]
-
+  pull_request:
+  release:
+    types: [published]
 jobs:
   build:
+    if: |
+      !contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.pull_request.title, '[ci skip]')
+
     name: Build Kord
     runs-on: ubuntu-latest
     env:
@@ -42,14 +31,14 @@ jobs:
         with:
           java-version: 8
       - name: Build with Gradle
-        run: ./gradlew --stacktrace --info build
-        if: |
-          !contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.pull_request.title, '[ci skip]')
+        run: ./gradlew --stacktrace --info build -x apiCheck
 
   release:
     name: Publish artifacts
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
+    if: |
+      !contains(github.event.head_commit.message, '[publish skip]') && !contains(github.event.pull_request.title, '[publish skip]')
+      && github.event_name != 'pull_request' &&  github.ref != 'refs/heads/master'
     needs: build
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
@@ -59,6 +48,10 @@ jobs:
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       ORG_GRADLE_PROJECT_signingKey: ${{ secrets.signingKey }}
       ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signingPassword }}
+      GITHUB_EVENT_NAME: ${{ github.event_name }}
+      GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
+      GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }}
+      GITHUB_BRANCH_NAME: ${{ github.ref }}
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
@@ -75,8 +68,14 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 8
+
+      - name: API Checking with Gradle
+        run: ./gradlew apiCheck
+
+
       - name: Publish with Gradle
         run: ./gradlew -x test publish
+
 # Disabled for now
 #
 #      - name: Close and Release Repository
