@@ -219,6 +219,7 @@ tasks {
         dependsOn(clean)
         outputDirectory.set(file(dokkaOutputDir))
         documentationFileName.set("DokkaDescription.md")
+        onlyIf { Library.isRelease }
     }
 
 
