@@ -78,7 +78,9 @@ subprojects {
         testRuntimeOnly(Dependencies.sl4j)
     }
 
-    tasks.getByName("apiCheck").setOnlyIf { Library.isRelease }
+    tasks.withType<kotlinx.validation.ApiCompareCompareTask>().configureEach {
+        onlyIf { Library.isRelease }
+    }
 
     val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
     compileKotlin.kotlinOptions.jvmTarget = Jvm.target
