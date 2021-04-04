@@ -45,3 +45,10 @@ class VoiceChannelUpdateEvent(override val channel: VoiceChannel, override val s
         return "VoiceChannelUpdateEvent(channel=$channel, shard=$shard)"
     }
 }
+
+
+class UnknownChannelUpdateEvent(override val channel: Channel, override val shard: Int) : ChannelCreateEvent {
+    override fun toString(): String {
+        return "UnknownChannelUpdateEvent(channel=$channel, shard=$shard)"
+    }
+}

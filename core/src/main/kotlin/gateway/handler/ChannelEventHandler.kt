@@ -45,7 +45,7 @@ internal class ChannelEventHandler(
             is TextChannel -> TextChannelCreateEvent(channel, shard)
             is VoiceChannel -> VoiceChannelCreateEvent(channel, shard)
             is Category -> CategoryCreateEvent(channel, shard)
-            else -> error("unknown channel: $channel")
+            else -> UnknownChannelCreateEvent(channel, shard)
         }
 
         coreFlow.emit(coreEvent)
@@ -62,7 +62,7 @@ internal class ChannelEventHandler(
             is TextChannel -> TextChannelUpdateEvent(channel, shard)
             is VoiceChannel -> VoiceChannelUpdateEvent(channel, shard)
             is Category -> CategoryUpdateEvent(channel, shard)
-            else -> error("unknown channel: $channel")
+            else -> UnknownChannelUpdateEvent(channel, shard)
         }
 
         coreFlow.emit(coreEvent)
@@ -79,7 +79,7 @@ internal class ChannelEventHandler(
             is TextChannel -> TextChannelDeleteEvent(channel, shard)
             is VoiceChannel -> VoiceChannelDeleteEvent(channel, shard)
             is Category -> CategoryDeleteEvent(channel, shard)
-            else -> error("unknown channel: $channel")
+            else -> UnknownChannelDeleteEvent(channel, shard)
         }
 
         coreFlow.emit(coreEvent)
