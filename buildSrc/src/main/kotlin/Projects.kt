@@ -16,16 +16,17 @@ object Library {
     const val name = "kord"
     const val group = "dev.kord"
     val version: String
-        get() = if (isJitPack) System.getenv("RELEASE_TAG")
+        get() =  if (isJitPack) System.getenv("RELEASE_TAG")
         else {
             val tag = System.getenv("GITHUB_TAG_NAME")
             val branch = System.getenv("GITHUB_BRANCH_NAME")
-            when {
-                tag != null -> tag
-                branch != null && branch.startsWith("refs/heads/") ->
+             when {
+                !tag.isNullOrBlank() -> tag
+                !tag.isNullOrBlank() && branch.startsWith("refs/heads/") ->
                     branch.substringAfter("refs/heads/") + "-SNAPSHOT"
                 else -> "undefined"
             }
+
         }
 
     const val description = "Idiomatic Kotlin Wrapper for The Discord API"
