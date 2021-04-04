@@ -92,6 +92,7 @@ subprojects {
 
 
     tasks.dokkaHtml.configure {
+        onlyIf { Library.isRelease }
         this.outputDirectory.set(file("${project.projectDir}/dokka/kord/"))
 
         dokkaSourceSets {
@@ -219,7 +220,6 @@ tasks {
         dependsOn(clean)
         outputDirectory.set(file(dokkaOutputDir))
         documentationFileName.set("DokkaDescription.md")
-        onlyIf { Library.isRelease }
     }
 
 
