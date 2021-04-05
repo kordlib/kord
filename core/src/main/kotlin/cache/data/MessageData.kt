@@ -30,7 +30,7 @@ data class MessageData(
         val type: MessageType,
         val activity: Optional<MessageActivity> = Optional.Missing(),
         val application: Optional<MessageApplication> = Optional.Missing(),
-        val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
+        val messageReference: Optional<MessageReferenceData> = Optional.Missing(),
         val flags: Optional<MessageFlags> = Optional.Missing(),
         val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
         val referencedMessage: Optional<MessageData?> = Optional.Missing(),
@@ -122,7 +122,7 @@ data class MessageData(
                     type,
                     activity,
                     application,
-                    messageReference,
+                    messageReference.map { MessageReferenceData.from(it) },
                     flags,
                     stickers.mapList { MessageStickerData.from(it) },
                     referencedMessage.mapNotNull { from(it) }
