@@ -18,13 +18,14 @@ dependencies {
 
     api(Dependencies.`cache-api`) {
         version {
-            strictly("0.3.0-SNAPSHOT")
-        }
+            strictly("[0.3.0, 0.4.0[")
+            prefer("latest.release")        }
     }
 
     api(Dependencies.`cache-map`) {
         version {
-            strictly("0.3.0-SNAPSHOT")
+            strictly("[0.3.0, 0.4.0[")
+            prefer("latest.release")
         }
     }
 
