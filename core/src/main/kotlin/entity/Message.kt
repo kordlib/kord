@@ -219,7 +219,7 @@ class Message(
      *
      * Returns null if this message was not send using a webhook.
      */
-    override val webhookId: Snowflake? get() = data.webhookId.value
+    val webhookId: Snowflake? get() = data.webhookId.value
 
     /**
      * Returns itself.

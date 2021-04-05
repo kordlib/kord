@@ -40,8 +40,6 @@ interface MessageBehavior : KordEntity, Strategizable {
      */
     val channel get() = MessageChannelBehavior(channelId, kord)
 
-    val webhookId: Snowflake?
-
     /**
      * Requests to get the channel this message was send in.
      */
@@ -200,7 +198,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      */
     override fun withStrategy(
         strategy: EntitySupplyStrategy<*>,
-    ): MessageBehavior = MessageBehavior(channelId, id, kord, webhookId, strategy)
+    ): MessageBehavior = MessageBehavior(channelId, id, kord)
 
 }
 
@@ -208,13 +206,11 @@ fun MessageBehavior(
     channelId: Snowflake,
     messageId: Snowflake,
     kord: Kord,
-    webhookId: Snowflake? = null,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
 ) = object : MessageBehavior {
     override val channelId: Snowflake = channelId
     override val id: Snowflake = messageId
     override val kord: Kord = kord
-    override val webhookId: Snowflake? = webhookId
     override val supplier: EntitySupplier = strategy.supply(kord)
 
     override fun hashCode(): Int = Objects.hash(id)
@@ -244,8 +240,6 @@ suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
 
-    require(webhookId == null) { "Cannot perform edits on webhook messages use editWebhook() instead" }
-
     val response =
         kord.rest.channel.editMessage(channelId = channelId, messageId = id, builder = builder)
     val data = MessageData.from(response)
@@ -264,6 +258,7 @@ suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit
  */
 @OptIn(ExperimentalContracts::class)
 suspend inline fun MessageBehavior.editWebhookMessage(
+    webhookId: Snowflake,
     token: String,
     builder: EditWebhookMessageBuilder.() -> Unit
 ): Message {
@@ -271,11 +266,9 @@ suspend inline fun MessageBehavior.editWebhookMessage(
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
 
-    require(webhookId != null) { "Cannot perform edits on  non webhook messages use edit() instead" }
-
     val response =
         kord.rest.webhook.editWebhookMessage(
-            webhookId = webhookId!!,
+            webhookId = webhookId,
             messageId = id,
             token = token,
             builder = builder
