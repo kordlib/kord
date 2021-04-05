@@ -11,4 +11,6 @@ interface GuildInteractionBehavior : InteractionBehavior {
 
     suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
+    companion object;
+
 }
