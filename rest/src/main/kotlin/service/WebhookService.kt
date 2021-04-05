@@ -118,7 +118,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             parameter("wait", "$wait")
             val request = ExecuteWebhookBuilder().apply(builder).toRequest()
             body(WebhookExecuteRequest.serializer(), request.request)
-            request.file?.let { file(it) }
+            request.files.forEach { file(it) }
         }
     }
 
