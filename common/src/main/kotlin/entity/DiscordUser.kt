@@ -168,7 +168,9 @@ data class UserFlags constructor(val code: Int) {
 }
 
 
+@OptIn(ExperimentalContracts::class)
 inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return UserFlags.UserFlagsBuilder().apply(builder).flags()
 }
 

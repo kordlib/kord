@@ -118,10 +118,14 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         parameter("limit", "$limit")
     }
 
-    suspend fun addGuildMember(guildId: Snowflake, userId: Snowflake, token: String, builder: MemberAddBuilder.() -> Unit) = call(Route.GuildMemberPut) {
+    @OptIn(ExperimentalContracts::class)
+    suspend fun addGuildMember(guildId: Snowflake, userId: Snowflake, token: String, builder: MemberAddBuilder.() -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        call(Route.GuildMemberPut) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
         body(GuildMemberAddRequest.serializer(), MemberAddBuilder(token).also(builder).toRequest())
+        }
     }
 
     @OptIn(ExperimentalContracts::class)
@@ -207,19 +211,28 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend inline fun modifyGuildRolePosition(guildId: Snowflake, builder: RolePositionsModifyBuilder.() -> Unit) = call(Route.GuildRolesPatch) {
-        keys[Route.GuildId] = guildId
-        val modifyBuilder = RolePositionsModifyBuilder().apply(builder)
-        body(GuildRolePositionModifyRequest.serializer(), modifyBuilder.toRequest())
-        modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun modifyGuildRolePosition(guildId: Snowflake, builder: RolePositionsModifyBuilder.() -> Unit): List<DiscordRole> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+        return call(Route.GuildRolesPatch) {
+            keys[Route.GuildId] = guildId
+            val modifyBuilder = RolePositionsModifyBuilder().apply(builder)
+            body(GuildRolePositionModifyRequest.serializer(), modifyBuilder.toRequest())
+            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
-    suspend inline fun modifyGuildRole(guildId: Snowflake, roleId: Snowflake, builder: RoleModifyBuilder.() -> Unit) = call(Route.GuildRolePatch) {
-        keys[Route.GuildId] = guildId
-        keys[Route.RoleId] = roleId
-        val modifyBuilder = RoleModifyBuilder().apply(builder)
-        body(GuildRoleModifyRequest.serializer(), modifyBuilder.toRequest())
-        modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun modifyGuildRole(guildId: Snowflake, roleId: Snowflake, builder: RoleModifyBuilder.() -> Unit): DiscordRole {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return call(Route.GuildRolePatch) {
+            keys[Route.GuildId] = guildId
+            keys[Route.RoleId] = roleId
+            val modifyBuilder = RoleModifyBuilder().apply(builder)
+            body(GuildRoleModifyRequest.serializer(), modifyBuilder.toRequest())
+            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+        }
     }
 
     suspend fun deleteGuildRole(guildId: Snowflake, roleId: Snowflake, reason: String? = null) = call(Route.GuildRoleDelete) {
@@ -257,10 +270,14 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         body(GuildIntegrationCreateRequest.serializer(), integration)
     }
 
-    suspend inline fun modifyGuildIntegration(guildId: Snowflake, integrationId: Snowflake, builder: IntegrationModifyBuilder.() -> Unit) = call(Route.GuildIntegrationPatch) {
-        keys[Route.GuildId] = guildId
-        keys[Route.IntegrationId] = integrationId
-        body(GuildIntegrationModifyRequest.serializer(), IntegrationModifyBuilder().apply(builder).toRequest())
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun modifyGuildIntegration(guildId: Snowflake, integrationId: Snowflake, builder: IntegrationModifyBuilder.() -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+            call(Route.GuildIntegrationPatch) {
+            keys[Route.GuildId] = guildId
+            keys[Route.IntegrationId] = integrationId
+            body(GuildIntegrationModifyRequest.serializer(), IntegrationModifyBuilder().apply(builder).toRequest())
+        }
     }
 
     suspend fun deleteGuildIntegration(guildId: Snowflake, integrationId: Snowflake) = call(Route.GuildIntegrationDelete) {
@@ -292,8 +309,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         body(GuildWidgetModifyRequest.serializer(), widget)
     }
 
-    suspend inline fun modifyGuildWidget(guildId: Snowflake, builder: GuildWidgetModifyBuilder.() -> Unit): DiscordGuildWidget =
-            modifyGuildWidget(guildId, GuildWidgetModifyBuilder().apply(builder).toRequest())
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun modifyGuildWidget(guildId: Snowflake, builder: GuildWidgetModifyBuilder.() -> Unit): DiscordGuildWidget {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return modifyGuildWidget(guildId, GuildWidgetModifyBuilder().apply(builder).toRequest())
+    }
 
     suspend fun getVanityInvite(guildId: Snowflake) = call(Route.GuildVanityInviteGet) {
         keys[Route.GuildId] = guildId
@@ -321,22 +341,30 @@ suspend inline fun GuildService.modifyGuildWelcomeScreen(guildId: Snowflake, bui
     val builder = WelcomeScreenModifyBuilder().apply(builder)
     return modifyGuildWelcomeScreen(guildId, builder.toRequest())
 }
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.createTextChannel(guildId: Snowflake, name: String, builder: TextChannelCreateBuilder.() -> Unit): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val createBuilder = TextChannelCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.createNewsChannel(guildId: Snowflake, name: String, builder: NewsChannelCreateBuilder.() -> Unit): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val createBuilder = NewsChannelCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.createVoiceChannel(guildId: Snowflake, name: String, builder: VoiceChannelCreateBuilder.() -> Unit): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val createBuilder = VoiceChannelCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.createCategory(guildId: Snowflake, name: String, builder: CategoryCreateBuilder.() -> Unit): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val createBuilder = CategoryCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }

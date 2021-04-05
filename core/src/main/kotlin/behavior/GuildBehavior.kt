@@ -870,7 +870,9 @@ suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfOrNull(c
     return channel
 }
 
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)
 }
 
