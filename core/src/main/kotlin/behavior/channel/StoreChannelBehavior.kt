@@ -13,6 +13,9 @@ import dev.kord.rest.builder.channel.StoreChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchStoreChannel
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a Discord Store Channel associated to a guild.
@@ -77,7 +80,9 @@ fun StoreChannelBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun StoreChannelBehavior.edit(builder: StoreChannelModifyBuilder.() -> Unit): StoreChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchStoreChannel(id, builder)
     val data = ChannelData.from(response)
 

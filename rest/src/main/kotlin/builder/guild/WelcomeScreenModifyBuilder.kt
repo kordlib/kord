@@ -11,6 +11,9 @@ import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 class WelcomeScreenModifyBuilder : RequestBuilder<GuildWelcomeScreenModifyRequest> {
 
@@ -23,8 +26,9 @@ class WelcomeScreenModifyBuilder : RequestBuilder<GuildWelcomeScreenModifyReques
     private var _welcomeScreenChannels: Optional<MutableList<WelcomeScreenChannelBuilder>> = Optional.Missing()
      var welcomeScreenChannels: MutableList<WelcomeScreenChannelBuilder>? by ::_welcomeScreenChannels.delegate()
 
-    fun welcomeChannel(id: Snowflake, description: String, builder: WelcomeScreenChannelBuilder.() -> Unit) {
-
+    @OptIn(ExperimentalContracts::class)
+    inline fun welcomeChannel(id: Snowflake, description: String, builder: WelcomeScreenChannelBuilder.() -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (welcomeScreenChannels == null) welcomeScreenChannels = mutableListOf()
         welcomeScreenChannels!!.add(WelcomeScreenChannelBuilder(id, description, null, null).apply(builder))
     }

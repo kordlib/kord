@@ -23,6 +23,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.take
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.math.min
 
 /**
@@ -305,10 +308,14 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
     }
 
 
+    @OptIn(ExperimentalContracts::class)
     inline fun getAuditLogEntries(
         guildId: Snowflake,
         builder: AuditLogGetRequestBuilder.() -> Unit
-    ): Flow<DiscordAuditLogEntry> = getAuditLogEntries(guildId, AuditLogGetRequestBuilder().apply(builder).toRequest())
+    ): Flow<DiscordAuditLogEntry> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return getAuditLogEntries(guildId, AuditLogGetRequestBuilder().apply(builder).toRequest())
+    }
 
     suspend fun getGuildWelcomeScreenOrNull(guildId: Snowflake): WelcomeScreen? = catchNotFound {
         val response = guild.getGuildWelcomeScreen(guildId)
