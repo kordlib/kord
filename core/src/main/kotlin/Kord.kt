@@ -297,8 +297,11 @@ class Kord(
     suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =
         strategy.supply(this).getSelf()
 
-    suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User =
-        User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
+    @OptIn(ExperimentalContracts::class)
+    suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
+    }
 
     /**
      * Requests to get the [User] that with the [id] through the [strategy],
