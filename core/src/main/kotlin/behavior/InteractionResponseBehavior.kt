@@ -19,6 +19,9 @@ interface InteractionResponseBehavior : KordObject {
     val applicationId: Snowflake
     val token: String
 
+    suspend fun delete() {
+        kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
+    }
 }
 
 @KordPreview
@@ -35,28 +38,8 @@ fun InteractionResponseBehavior(applicationId: Snowflake, token: String, kord: K
     }
 
 @KordPreview
-interface EditableInteractionResponseBehavior : InteractionResponseBehavior {
-
-    suspend fun delete() {
-        kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
-    }
-}
-@KordPreview
-fun EditableInteractionResponseBehavior(applicationId: Snowflake, token: String, kord: Kord) =
-    object : EditableInteractionResponseBehavior {
-        override val applicationId: Snowflake
-            get() = applicationId
-
-        override val token: String
-            get() = token
-
-        override val kord: Kord
-            get() = kord
-    }
-
-@KordPreview
 @OptIn(ExperimentalContracts::class)
-suspend inline fun EditableInteractionResponseBehavior.edit(builder: InteractionResponseModifyBuilder.() -> Unit): Message {
+suspend inline fun InteractionResponseBehavior.edit(builder: InteractionResponseModifyBuilder.() -> Unit): Message {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = InteractionResponseModifyBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.modifyInteractionResponse(applicationId, token, request)
