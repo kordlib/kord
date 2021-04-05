@@ -297,8 +297,11 @@ class Kord(
     suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =
         strategy.supply(this).getSelf()
 
-    suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User =
-        User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
+    @OptIn(ExperimentalContracts::class)
+    suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
+    }
 
     /**
      * Requests to get the [User] that with the [id] through the [strategy],
@@ -401,8 +404,11 @@ class Kord(
  *
  * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
  */
-suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Kord =
-    KordBuilder(token).apply(builder).build()
+@OptIn(ExperimentalContracts::class)
+suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Kord {
+contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return KordBuilder(token).apply(builder).build()
+}
 
 
 /**

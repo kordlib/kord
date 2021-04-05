@@ -12,6 +12,9 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * Represents [a message sent in a channel within Discord](https://discord.com/developers/docs/resources/channel#message-object).
@@ -350,7 +353,9 @@ class MessageFlags internal constructor(val code: Int) {
 
 }
 
+@OptIn(ExperimentalContracts::class)
 inline  fun MessageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return MessageFlags.Builder().apply(builder).flags()
 }
 

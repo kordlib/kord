@@ -870,7 +870,9 @@ suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfOrNull(c
     return channel
 }
 
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)
 }
 
@@ -889,9 +891,11 @@ suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.()
  *  println("user changed nickname from $old to $new")
  *  ```
  */
-inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> =
-    kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
-
+@OptIn(ExperimentalContracts::class)
+inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
+}
 /**
  * Executes a [RequestGuildMembers] command configured by the [builder] for guild
  * on this gateway, returning a flow of [MembersChunkEvent] responses.
@@ -909,8 +913,10 @@ inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.(
  * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
  * If no nonce was provided one will be generated instead.
  */
+@OptIn(ExperimentalContracts::class)
 @PrivilegedIntent
 inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }): Flow<MembersChunkEvent> {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
     return requestMembers(request)
 }

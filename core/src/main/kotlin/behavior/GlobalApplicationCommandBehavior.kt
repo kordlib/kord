@@ -10,6 +10,7 @@ import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.rest.builder.interaction.ApplicationCommandModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.InteractionService
+import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.jvm.Throws

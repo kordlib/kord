@@ -106,7 +106,9 @@ interface CategoryBehavior : GuildChannelBehavior {
  * @return The edited [Category].
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Category {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchCategory(id, builder)
     val data = ChannelData.from(response)
 

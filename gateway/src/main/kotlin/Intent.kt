@@ -173,7 +173,9 @@ sealed class Intent(val code: DiscordBitSet) {
     }
 }
 
+@OptIn(ExperimentalContracts::class)
 inline fun Intents(builder: Intents.IntentsBuilder.() -> Unit = {}): Intents {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return Intents.IntentsBuilder().apply(builder).flags()
 }
 

@@ -24,6 +24,9 @@ import mu.KotlinLogging
 import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 
@@ -289,10 +292,11 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 }
 
-
-inline fun DefaultGateway(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway =
-    DefaultGatewayBuilder().apply(builder).build()
-
+@OptIn(ExperimentalContracts::class)
+inline fun DefaultGateway(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return DefaultGatewayBuilder().apply(builder).build()
+}
 
 internal val GatewayConfiguration.identify
     get() = Identify(

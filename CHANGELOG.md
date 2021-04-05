@@ -10,6 +10,7 @@
 * Added welcome screens. #141
 * Added `Kord#getInvite`. #143
 * Added pending property to member. #153
+* Added missing contracts to various builders. #243
 
 ## Fixes
 

@@ -189,11 +189,12 @@ inline fun <reified T : Event> Gateway.on(scope: CoroutineScope = this, crossinl
  * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
  * If no nonce was provided one will be generated instead.
  */
-@OptIn(PrivilegedIntent::class)
+@OptIn(PrivilegedIntent::class, ExperimentalContracts::class)
 fun Gateway.requestGuildMembers(
         guildId: Snowflake,
         builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }
 ): Flow<GuildMembersChunk> {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(guildId).apply(builder).toRequest()
     return requestGuildMembers(request)
 }
