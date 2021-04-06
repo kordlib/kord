@@ -107,8 +107,8 @@ suspend inline fun InteractionBehavior.respond(
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionBehavior.acknowledge(builder: MessageFlags.Builder.() -> Unit = {}) {
+suspend inline fun InteractionBehavior.acknowledge(builder: MessageFlags.Builder.() -> Unit = {}): InteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val flags = MessageFlags.Builder().apply(builder).flags()
-    acknowledge(flags)
+    return acknowledge(flags)
 }
