@@ -44,6 +44,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
 
     private var _messageReference: OptionalSnowflake = OptionalSnowflake.Missing
 
+    private var _failIfNotExists: OptionalBoolean = OptionalBoolean.Missing
     /**
      * The id of the message being replied to.
      * Requires the [ReadMessageHistory][dev.kord.common.entity.Permission.ReadMessageHistory] permission.
@@ -52,6 +53,8 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
      * set [AllowedMentionsBuilder.repliedUser] to `true` via [allowedMentions]  to mention the author.
      */
     var messageReference: Snowflake? by ::_messageReference.delegate()
+
+    var failIfNotExists: Boolean? by ::_failIfNotExists.delegate()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
@@ -83,7 +86,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
             _tts,
             _embed.map { it.toRequest() },
             _allowedMentions.map { it.build() },
-            _messageReference.map { DiscordMessageReference(id = OptionalSnowflake.Value(it)) }
+            _messageReference.map { DiscordMessageReference(id = OptionalSnowflake.Value(it), failIfNotExists = _failIfNotExists) }
         ),
         files
     )

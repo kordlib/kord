@@ -111,6 +111,17 @@ class Message(
     val referencedMessage: Message? get() = data.referencedMessage.value?.let { Message(it, kord) }
 
     /**
+     * reference data sent with crossposted messages and replies.
+     *
+     * This field is only returned for messages with [MessageType.Reply].
+     * If the message is a reply but the [referencedMessage] field is not present,
+     * the backend did not attempt to fetch the [Message] that was being replied to,
+     * so its state is unknown.
+     * If the field exists but is null, the referenced message was deleted.
+     */
+    val messageReference: MessageReference? get() = data.messageReference.value?.let { MessageReference(it, kord) }
+
+    /**
      * The [Channels][Channel] specifically mentioned in this message.
      *
      * This property will only emit values on crossposted messages, channels

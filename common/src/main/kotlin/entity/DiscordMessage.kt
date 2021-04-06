@@ -249,6 +249,8 @@ data class DiscordMessageReference(
         val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
         @SerialName("guild_id")
         val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+        @SerialName("fail_if_not_exists")
+        val failIfNotExists: OptionalBoolean = OptionalBoolean.Missing
 )
 
 /**
