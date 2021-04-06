@@ -31,6 +31,21 @@ interface InteractionBehavior : KordEntity, Strategizable {
      * @param source weather to show the author's name and provided arguments of the command.
      * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
      */
+    suspend fun acknowledge(): InteractionResponseBehavior {
+
+        val request = InteractionResponseCreateRequest(
+            InteractionResponseType.DeferredChannelMessageWithSource,
+        )
+        kord.rest.interaction.createInteractionResponse(id, token, request)
+        return InteractionResponseBehavior(applicationId, token, kord)
+    }
+
+    /**
+     * Acknowledges an interaction.
+     *
+     * @param source weather to show the author's name and provided arguments of the command.
+     * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
+     */
     suspend fun acknowledge(flags: MessageFlags): InteractionResponseBehavior {
 
         val builder = InteractionApplicationCommandCallbackDataBuilder()
@@ -107,7 +122,7 @@ suspend inline fun InteractionBehavior.respond(
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionBehavior.acknowledge(builder: MessageFlags.Builder.() -> Unit = {}): InteractionResponseBehavior {
+suspend inline fun InteractionBehavior.acknowledge(builder: MessageFlags.Builder.() -> Unit): InteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val flags = MessageFlags.Builder().apply(builder).flags()
     return acknowledge(flags)
