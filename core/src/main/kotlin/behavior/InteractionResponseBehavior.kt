@@ -6,6 +6,7 @@ import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.toData
+import dev.kord.core.catchNotFound
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.InteractionFollowup
 import dev.kord.rest.builder.interaction.FollowupMessageCreateBuilder
@@ -19,8 +20,14 @@ interface InteractionResponseBehavior : KordObject {
     val applicationId: Snowflake
     val token: String
 
+    /**
+     * Deletes a interaction response. For an ephemeral message, the endpoint returns 404.
+     *  404 is considered a success for this method.
+     */
     suspend fun delete() {
-        kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
+        catchNotFound {
+            kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
+        }
     }
 }
 
