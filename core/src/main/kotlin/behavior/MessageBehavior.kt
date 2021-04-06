@@ -231,7 +231,6 @@ fun MessageBehavior(
  * @return The edited [Message].
  *
  * @throws [RestRequestException] if something went wrong during the request.
- * @throws [IllegalStateException] if this message is a webhook message (See [editWebhookMessage]).
  * @see editWebhookMessage
  */
 @OptIn(ExperimentalContracts::class)
@@ -253,7 +252,6 @@ suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit
  * @return The edited [Message].
  *
  * @throws [RestRequestException] if something went wrong during the request.
- * @throws [IllegalStateException] if this message is a normal message (see [edit]).
  * @see edit
  */
 @OptIn(ExperimentalContracts::class)
