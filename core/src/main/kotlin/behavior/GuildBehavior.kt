@@ -228,6 +228,10 @@ interface GuildBehavior : KordEntity, Strategizable {
             }
     }
 
+    @KordPreview
+    suspend fun getApplicationCommand(commandId: Snowflake) =
+        kord.slashCommands.getGuildApplicationCommand(id, commandId)
+
     /**
      * Requests to get the this behavior as a [Guild].
      *

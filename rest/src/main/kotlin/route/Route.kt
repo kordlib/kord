@@ -475,6 +475,15 @@ sealed class Route<T>(
         DiscordApplicationCommand.serializer()
     )
 
+
+    @KordPreview
+    object GlobalApplicationCommandGet
+        : Route<DiscordApplicationCommand>(
+        HttpMethod.Get,
+        "/applications/${ApplicationId}/commands/${CommandId}",
+        DiscordApplicationCommand.serializer()
+    )
+
     object GlobalApplicationCommandDelete
         : Route<Unit>(
         HttpMethod.Delete, "/applications/${ApplicationId}/commands/${CommandId}", NoStrategy
@@ -503,6 +512,14 @@ sealed class Route<T>(
     object GuildApplicationCommandModify
         : Route<DiscordApplicationCommand>(
         HttpMethod.Patch,
+        "/applications/${ApplicationId}/guilds/${GuildId}/commands/${CommandId}",
+        DiscordApplicationCommand.serializer()
+    )
+
+    @KordPreview
+    object GuildApplicationCommandGet
+        : Route<DiscordApplicationCommand>(
+        HttpMethod.Get,
         "/applications/${ApplicationId}/guilds/${GuildId}/commands/${CommandId}",
         DiscordApplicationCommand.serializer()
     )

@@ -71,6 +71,12 @@ class Kord(
     val globalCommands: Flow<GlobalApplicationCommand>
         get() = slashCommands.getGlobalApplicationCommands()
 
+
+    @KordPreview
+    suspend fun getApplicationCommand(commandId: Snowflake) =
+        slashCommands.getGlobalApplicationCommand(commandId)
+
+
     /**
      * The default supplier, obtained through Kord's [resources] and configured through [KordBuilder.defaultStrategy].
      * By default a strategy from [EntitySupplyStrategy.rest].

@@ -167,4 +167,16 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.MessageId] = messageId
         body(FollowupMessageModifyRequest.serializer(), request)
     }
+
+    suspend fun getGlobalCommand(applicationId: Snowflake, commandId: Snowflake) = call(Route.GlobalApplicationCommandGet){
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.CommandId] = commandId
+    }
+
+
+    suspend fun getGuildCommand(applicationId: Snowflake, guildId: Snowflake, commandId: Snowflake) = call(Route.GuildApplicationCommandGet){
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.GuildId] = guildId
+        keys[Route.CommandId] = commandId
+    }
 }
