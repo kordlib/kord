@@ -110,14 +110,13 @@ fun InteractionBehavior(
 /**
  * Acknowledges an interaction and responds with [InteractionResponseBehavior] built using [builder].
  *
- * @param source weather to show the author's name and provided arguments of the command.
  * @param builder [InteractionApplicationCommandCallbackDataBuilder] used to build a message.
  * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
  */
 @KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respond(
-    builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit = {}
+    builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit
 ): InteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
