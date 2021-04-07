@@ -2,6 +2,7 @@ package dev.kord.core.behavior
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionResponseType
+import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.optional
@@ -56,6 +57,13 @@ interface InteractionBehavior : KordEntity, Strategizable {
         )
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return InteractionResponseBehavior(applicationId, token, kord)
+    }
+
+    suspend fun acknowledge(vararg flags: MessageFlag): InteractionResponseBehavior {
+        val messageFlags = MessageFlags {
+            flags.forEach { +it }
+        }
+        return acknowledge(messageFlags)
     }
 
     suspend fun getChannelOrNull(): Channel? = supplier.getChannelOrNull(channelId)
