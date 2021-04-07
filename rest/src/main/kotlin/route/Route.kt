@@ -451,11 +451,13 @@ sealed class Route<T>(
     object TemplateDelete
         : Route<DiscordTemplate>(HttpMethod.Delete, "/guilds/${GuildId}/templates/${TemplateCode}", DiscordTemplate.serializer())
 
+    @KordPreview
     object GlobalApplicationCommandsGet
         : Route<List<DiscordApplicationCommand>>(
         HttpMethod.Get, "/applications/${ApplicationId}/commands", ListSerializer(DiscordApplicationCommand.serializer())
     )
 
+    @KordPreview
     object GlobalApplicationCommandCreate : Route<DiscordApplicationCommand>(
         HttpMethod.Post,
         "/applications/${ApplicationId}/commands",
@@ -463,12 +465,14 @@ sealed class Route<T>(
     )
 
 
+    @KordPreview
     object GlobalApplicationCommandsCreate : Route<List<DiscordApplicationCommand>>(
         HttpMethod.Put,
         "/applications/${ApplicationId}/commands",
         ListSerializer(DiscordApplicationCommand.serializer())
     )
 
+    @KordPreview
     object GlobalApplicationCommandModify : Route<DiscordApplicationCommand>(
         HttpMethod.Patch,
         "/applications/${ApplicationId}/commands/${CommandId}",
@@ -489,6 +493,7 @@ sealed class Route<T>(
         HttpMethod.Delete, "/applications/${ApplicationId}/commands/${CommandId}", NoStrategy
     )
 
+    @KordPreview
     object GuildApplicationCommandsGet
         : Route<List<DiscordApplicationCommand>>(
         HttpMethod.Get,
@@ -496,6 +501,7 @@ sealed class Route<T>(
         ListSerializer(DiscordApplicationCommand.serializer())
     )
 
+    @KordPreview
     object GuildApplicationCommandCreate : Route<DiscordApplicationCommand>(
         HttpMethod.Post,
         "/applications/${ApplicationId}/guilds/${GuildId}/commands",
@@ -503,12 +509,14 @@ sealed class Route<T>(
     )
 
 
+    @KordPreview
     object GuildApplicationCommandsCreate : Route<List<DiscordApplicationCommand>>(
         HttpMethod.Put,
         "/applications/${ApplicationId}/guilds/${GuildId}/commands",
         ListSerializer(DiscordApplicationCommand.serializer())
     )
 
+    @KordPreview
     object GuildApplicationCommandModify
         : Route<DiscordApplicationCommand>(
         HttpMethod.Patch,
