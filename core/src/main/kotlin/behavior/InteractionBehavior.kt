@@ -28,7 +28,6 @@ interface InteractionBehavior : KordEntity, Strategizable {
     /**
      * Acknowledges an interaction.
      *
-     * @param source weather to show the author's name and provided arguments of the command.
      * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
      */
     suspend fun acknowledge(): InteractionResponseBehavior {
@@ -43,7 +42,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
     /**
      * Acknowledges an interaction.
      *
-     * @param source weather to show the author's name and provided arguments of the command.
+     * @param flags [MessageFlags] for the interaction response.
      * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
      */
     suspend fun acknowledge(flags: MessageFlags): InteractionResponseBehavior {
@@ -121,6 +120,7 @@ suspend inline fun InteractionBehavior.respond(
 
 }
 
+@KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.acknowledge(builder: MessageFlags.Builder.() -> Unit): InteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
