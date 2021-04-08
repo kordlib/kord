@@ -2,17 +2,11 @@ package dev.kord.rest.service
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordApplicationCommand
-import dev.kord.common.entity.DiscordMessage
 import dev.kord.common.entity.Snowflake
-import dev.kord.rest.builder.interaction.InteractionResponseModifyBuilder
-import dev.kord.rest.builder.message.MessageCreateBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlinx.serialization.builtins.ListSerializer
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 @KordPreview
 class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
@@ -111,12 +105,6 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
             body(InteractionResponseCreateRequest.serializer(), request)
         }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyInteractionResponse(applicationId: Snowflake, interactionToken: String, builder: InteractionResponseModifyBuilder.() -> Unit): DiscordMessage {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val multipartRequest = InteractionResponseModifyBuilder().apply(builder).toRequest()
-        return modifyInteractionResponse(applicationId, interactionToken, multipartRequest)
-    }
 
     suspend fun modifyInteractionResponse(
         applicationId: Snowflake,
