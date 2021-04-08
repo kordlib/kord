@@ -3,8 +3,9 @@ package dev.kord.core.entity.interaction
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.InteractionFollowupBehavior
-import dev.kord.core.cache.data.MessageData
+import dev.kord.core.behavior.interaction.EphemeralFollowupMessageBehavior
+import dev.kord.core.behavior.interaction.FollowupMessageBehavior
+import dev.kord.core.behavior.interaction.PublicFollowupMessageBehavior
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.MessageChannel
 
@@ -19,12 +20,7 @@ import dev.kord.core.entity.channel.MessageChannel
  * @param kord The kord instance responsible for the follow-up
  */
 @KordPreview
-class InteractionFollowup(
-     val message: Message,
-    override val token: String,
-    override val applicationId: Snowflake,
-    override val kord: Kord,
-) : InteractionFollowupBehavior {
+sealed class InteractionFollowup(val message: Message) : FollowupMessageBehavior {
 
     /**
      * The id of the follow-up message.
@@ -36,4 +32,20 @@ class InteractionFollowup(
      */
     override val channelId: Snowflake get() = message.channelId
 
+
 }
+
+class PublicFollowupMessage(
+    message: Message,
+    override val applicationId: Snowflake,
+    override val token: String,
+    override val kord: Kord
+) : InteractionFollowup(message), PublicFollowupMessageBehavior
+
+
+class EphemeralFollowupMessage(
+    message: Message,
+    override val applicationId: Snowflake,
+    override val token: String,
+    override val kord: Kord
+) : InteractionFollowup(message), EphemeralFollowupMessageBehavior

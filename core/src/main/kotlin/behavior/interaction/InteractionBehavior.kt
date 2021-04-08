@@ -1,10 +1,9 @@
-package dev.kord.core.behavior
+package behavior.interaction
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.channel.PublicInteractionResponseBehavior
+import dev.kord.core.behavior.interaction.InteractionResponseBehavior
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
@@ -12,7 +11,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.interaction.AcknowledgementResponseBuilder
 import dev.kord.rest.builder.interaction.EphemeralInteractionResponseCreateBuilder
-import dev.kord.rest.builder.interaction.InteractionApplicationCommandCallbackDataBuilder
 import dev.kord.rest.builder.interaction.PublicInteractionResponseCreateBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
