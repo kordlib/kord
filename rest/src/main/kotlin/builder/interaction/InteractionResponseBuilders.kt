@@ -61,7 +61,7 @@ class PublicInteractionResponseCreateBuilder :
 
 
     @OptIn(ExperimentalContracts::class)
-    fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
+    inline fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         allowedMentions = AllowedMentionsBuilder().apply(builder).build()
     }
@@ -116,7 +116,7 @@ class PublicInteractionResponseModifyBuilder :
 
 
     @OptIn(ExperimentalContracts::class)
-    fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
+    inline fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         allowedMentions = AllowedMentionsBuilder().apply(builder).build()
     }
@@ -160,7 +160,7 @@ class EphemeralInteractionResponseModifyBuilder() :
     var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
 
     @OptIn(ExperimentalContracts::class)
-    fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
+    inline fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         allowedMentions = AllowedMentionsBuilder().apply(builder).build()
     }

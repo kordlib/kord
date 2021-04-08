@@ -34,8 +34,8 @@ class PublicFollowupMessageModifyBuilder :
     private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
     var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
-    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+    private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
+    var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
@@ -44,12 +44,20 @@ class PublicFollowupMessageModifyBuilder :
         embeds!! += EmbedBuilder().apply(builder)
     }
 
+    @OptIn(ExperimentalContracts::class)
+    inline fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        allowedMentions = AllowedMentionsBuilder().apply(builder).build()
+    }
+
+
 
     override fun toRequest(): FollowupMessageModifyRequest {
         return FollowupMessageModifyRequest(
             _content,
             _embeds.mapList { it.toRequest() },
-            _allowedMentions.map { it.build() })
+            _allowedMentions
+        )
     }
 }
 
@@ -69,7 +77,7 @@ class EphemeralFollowupMessageModifyBuilder :
 
 
     @OptIn(ExperimentalContracts::class)
-    fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
+    inline fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         allowedMentions = AllowedMentionsBuilder().apply(builder).build()
     }
@@ -133,11 +141,7 @@ class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessa
 
 @KordPreview
 @KordDsl
-class EphemeralFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCreateRequest> {
-
-    private var _content: Optional<String> = Optional.Missing()
-    var content: String? by ::_content.delegate()
-
+class EphemeralFollowupMessageCreateBuilder(var content: String) : RequestBuilder<MultipartFollowupMessageCreateRequest> {
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
@@ -148,7 +152,7 @@ class EphemeralFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMe
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(
             FollowupMessageCreateRequest(
-                content = _content,
+                content = Optional.Value(content),
                 tts = _tts,
                 allowedMentions = _allowedMentions
             ),

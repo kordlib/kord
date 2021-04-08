@@ -44,9 +44,9 @@ suspend inline fun EphemeralInteractionResponseBehavior.edit(builder: EphemeralI
 
 @KordPreview
 @OptIn(ExperimentalContracts::class)
-suspend inline fun EphemeralInteractionResponseBehavior.followUp(builder: EphemeralFollowupMessageCreateBuilder.() -> Unit): InteractionFollowup {
+suspend inline fun EphemeralInteractionResponseBehavior.followUp(content: String, builder: EphemeralFollowupMessageCreateBuilder.() -> Unit): InteractionFollowup {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val request = EphemeralFollowupMessageCreateBuilder().apply(builder).toRequest()
+    val request = EphemeralFollowupMessageCreateBuilder(content).apply(builder).toRequest()
     val response = kord.rest.interaction.createFollowupMessage(applicationId, token, request)
     val data = MessageData.from(response)
     return EphemeralFollowupMessage(Message(data, kord), applicationId, token, kord)
