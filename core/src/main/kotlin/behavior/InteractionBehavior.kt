@@ -1,20 +1,19 @@
 package dev.kord.core.behavior
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.InteractionResponseType
-import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.optional
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.PublicInteractionResponseBehavior
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.builder.interaction.AcknowledgementResponseBuilder
+import dev.kord.rest.builder.interaction.EphemeralInteractionResponseCreateBuilder
 import dev.kord.rest.builder.interaction.InteractionApplicationCommandCallbackDataBuilder
-import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
-import dev.kord.rest.json.request.InteractionResponseCreateRequest
+import dev.kord.rest.builder.interaction.PublicInteractionResponseCreateBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -27,44 +26,27 @@ interface InteractionBehavior : KordEntity, Strategizable {
     val channelId: Snowflake
 
     /**
-     * Acknowledges an interaction.
+     * Acknowledges an interaction ephemerally.
      *
-     * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
+     * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
      */
-    suspend fun acknowledge(): InteractionResponseBehavior {
-
-        val request = InteractionResponseCreateRequest(
-            InteractionResponseType.DeferredChannelMessageWithSource,
-        )
+    suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
+        val request = AcknowledgementResponseBuilder(true).toRequest()
         kord.rest.interaction.createInteractionResponse(id, token, request)
-        return InteractionResponseBehavior(applicationId, token, kord)
+        return EphemeralInteractionResponseBehavior(applicationId, token, kord)
     }
 
     /**
      * Acknowledges an interaction.
      *
-     * @param flags [MessageFlags] for the interaction response.
-     * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
+     * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
      */
-    suspend fun acknowledge(flags: MessageFlags): InteractionResponseBehavior {
-
-        val builder = InteractionApplicationCommandCallbackDataBuilder()
-        builder.flags = flags
-
-        val request = InteractionResponseCreateRequest(
-            InteractionResponseType.DeferredChannelMessageWithSource,
-            builder.build().optional()
-        )
+    suspend fun ackowledgePublic(): PublicInteractionResponseBehavior {
+        val request = AcknowledgementResponseBuilder().toRequest()
         kord.rest.interaction.createInteractionResponse(id, token, request)
-        return InteractionResponseBehavior(applicationId, token, kord)
+        return PublicInteractionResponseBehavior(applicationId, token, kord)
     }
 
-    suspend fun acknowledge(vararg flags: MessageFlag): InteractionResponseBehavior {
-        val messageFlags = MessageFlags {
-            flags.forEach { +it }
-        }
-        return acknowledge(messageFlags)
-    }
 
     suspend fun getChannelOrNull(): Channel? = supplier.getChannelOrNull(channelId)
 
@@ -108,29 +90,43 @@ fun InteractionBehavior(
 }
 
 /**
- * Acknowledges an interaction and responds with [InteractionResponseBehavior] built using [builder].
+ * Acknowledges an interaction and responds with [PublicInteractionResponseBehavior].
  *
- * @param builder [InteractionApplicationCommandCallbackDataBuilder] used to build a message.
- * @return [InteractionResponseBehavior] which can be used to create follow-up message or edit the original response.
+ * @param builder [PublicInteractionResponseCreateBuilder] used to a create an public response.
+ * @return [PublicInteractionResponseBehavior] public response to the interaction.
  */
 @KordPreview
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionBehavior.respond(
-    builder: InteractionApplicationCommandCallbackDataBuilder.() -> Unit
+suspend inline fun InteractionBehavior.respondPublic(
+    builder: PublicInteractionResponseCreateBuilder.() -> Unit
 ): InteractionResponseBehavior {
+
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
-    val data = InteractionApplicationCommandCallbackDataBuilder().apply(builder).build()
-    val request = InteractionResponseCreateRequest(InteractionResponseType.ChannelMessageWithSource, data.optional())
+    val request = PublicInteractionResponseCreateBuilder().apply(builder).toRequest()
     kord.rest.interaction.createInteractionResponse(id, token, request)
-    return InteractionResponseBehavior(applicationId, token, kord)
+    return PublicInteractionResponseBehavior(applicationId, token, kord)
 
 }
 
+
+/**
+ * Acknowledges an interaction and responds with [EphemeralInteractionResponseBehavior] with ephemeral flag.
+ *
+ * @param builder [EphemeralInteractionResponseCreateBuilder] used to a create an ephemeral response.
+ * @return [EphemeralInteractionResponseBehavior] ephemeral response to the interaction.
+ */
 @KordPreview
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionBehavior.acknowledge(builder: MessageFlags.Builder.() -> Unit): InteractionResponseBehavior {
+suspend inline fun InteractionBehavior.respondEphemeral(
+    content: String,
+    builder: EphemeralInteractionResponseCreateBuilder.() -> Unit
+): InteractionResponseBehavior {
+
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val flags = MessageFlags.Builder().apply(builder).flags()
-    return acknowledge(flags)
+
+    val request = EphemeralInteractionResponseCreateBuilder(content).apply(builder).toRequest()
+    kord.rest.interaction.createInteractionResponse(id, token, request)
+    return EphemeralInteractionResponseBehavior(applicationId, token, kord)
+
 }
