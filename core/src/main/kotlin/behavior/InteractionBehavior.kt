@@ -120,7 +120,7 @@ suspend inline fun InteractionBehavior.respondPublic(
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respondEphemeral(
     content: String,
-    builder: EphemeralInteractionResponseCreateBuilder.() -> Unit
+    builder: EphemeralInteractionResponseCreateBuilder.() -> Unit = {}
 ): InteractionResponseBehavior {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
