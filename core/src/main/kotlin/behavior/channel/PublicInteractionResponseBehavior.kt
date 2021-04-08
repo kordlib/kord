@@ -36,7 +36,7 @@ fun PublicInteractionResponseBehavior(applicationId: Snowflake, token: String, k
 
 @KordPreview
 @OptIn(ExperimentalContracts::class)
-suspend fun PublicInteractionResponseBehavior.edit(builder: PublicInteractionResponseModifyBuilder.() -> Unit): Message {
+suspend inline fun PublicInteractionResponseBehavior.edit(builder: PublicInteractionResponseModifyBuilder.() -> Unit): Message {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE)  }
     val request = PublicInteractionResponseModifyBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.modifyInteractionResponse(applicationId, token, request)

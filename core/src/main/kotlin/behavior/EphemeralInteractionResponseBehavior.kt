@@ -29,7 +29,7 @@ fun EphemeralInteractionResponseBehavior(applicationId: Snowflake, token: String
 
 @KordPreview
 @OptIn(ExperimentalContracts::class)
-suspend fun EphemeralInteractionResponseBehavior.edit(builder: EphemeralInteractionResponseModifyBuilder.() -> Unit): Message {
+suspend inline fun EphemeralInteractionResponseBehavior.edit(builder: EphemeralInteractionResponseModifyBuilder.() -> Unit): Message {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = EphemeralInteractionResponseModifyBuilder().apply(builder).toRequest()
     val response = kord.rest.interaction.modifyInteractionResponse(applicationId, token, request)
