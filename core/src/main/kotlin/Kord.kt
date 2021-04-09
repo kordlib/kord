@@ -73,7 +73,7 @@ class Kord(
 
 
     @KordPreview
-    suspend fun getApplicationCommand(commandId: Snowflake) =
+    suspend fun getGlobalApplicationCommand(commandId: Snowflake) =
         slashCommands.getGlobalApplicationCommand(commandId)
 
 
