@@ -30,7 +30,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
      *
      * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
      */
-    suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
+    suspend fun acknowledgeEphemeral(): EphemeralInteractionAcknowledgementBehavior {
         val request = AcknowledgementResponseBuilder(true).toRequest()
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return EphemeralInteractionAcknowledgementBehavior(applicationId, token, kord)
@@ -121,7 +121,7 @@ suspend inline fun InteractionBehavior.respondPublic(
 suspend inline fun InteractionBehavior.respondEphemeral(
     content: String,
     builder: EphemeralInteractionResponseCreateBuilder.() -> Unit = {}
-): InteractionResponseBehavior {
+): EphemeralInteractionRespondBehavior {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 

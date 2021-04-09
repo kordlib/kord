@@ -97,13 +97,24 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend fun createInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        request: InteractionResponseCreateRequest
-    ) =
-        call(Route.InteractionResponseCreate) {
+        request: MultipartInteractionResponseCreateRequest
+    ) = call(Route.InteractionResponseCreate) {
             keys[Route.InteractionId] = interactionId
             keys[Route.InteractionToken] = interactionToken
-            body(InteractionResponseCreateRequest.serializer(), request)
+            body(InteractionResponseCreateRequest.serializer(), request.request)
+            request.files.onEach { file(it) }
         }
+
+
+    suspend fun createInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        request: InteractionResponseCreateRequest
+    ) = call(Route.InteractionResponseCreate) {
+        keys[Route.InteractionId] = interactionId
+        keys[Route.InteractionToken] = interactionToken
+        body(InteractionResponseCreateRequest.serializer(), request)
+    }
 
 
     suspend fun modifyInteractionResponse(

@@ -2,9 +2,15 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.AllowedMentions
+import dev.kord.common.entity.InteractionResponseType
+import dev.kord.common.entity.MessageFlag
+import dev.kord.common.entity.MessageFlags
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.mapList
+import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
@@ -17,7 +23,6 @@ import java.nio.file.Path
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-
 
 
 @KordPreview
@@ -40,7 +45,7 @@ class AcknowledgementResponseBuilder(val ephemeral: Boolean = false) :
 @KordPreview
 @KordDsl
 class PublicInteractionResponseCreateBuilder :
-    RequestBuilder<InteractionResponseCreateRequest> {
+    RequestBuilder<MultipartInteractionResponseCreateRequest> {
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
@@ -53,9 +58,6 @@ class PublicInteractionResponseCreateBuilder :
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
-
-    private var _flags: Optional<MessageFlags> = Optional.Missing()
-    var flags: MessageFlags? by ::_flags.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
@@ -82,19 +84,23 @@ class PublicInteractionResponseCreateBuilder :
         addFile(path.fileName.toString(), Files.newInputStream(path))
     }
 
-    override fun toRequest(): InteractionResponseCreateRequest {
-        return InteractionResponseCreateRequest(
+    override fun toRequest(): MultipartInteractionResponseCreateRequest {
+        return MultipartInteractionResponseCreateRequest(
+            InteractionResponseCreateRequest(
                 InteractionResponseType.ChannelMessageWithSource,
                 InteractionApplicationCommandCallbackData(
-                content = _content,
-                embeds = _embeds.mapList { it.toRequest() },
-                allowedMentions = _allowedMentions,
-                tts = _tts
-            ).optional()
-            )
+                    content = _content,
+                    embeds = _embeds.mapList { it.toRequest() },
+                    allowedMentions = _allowedMentions,
+                    tts = _tts
+                ).optional()
+            ),
+            files
+        )
 
     }
 }
+
 @KordPreview
 @KordDsl
 class PublicInteractionResponseModifyBuilder :
@@ -108,9 +114,6 @@ class PublicInteractionResponseModifyBuilder :
     private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
     var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
 
-
-    private var _flags: Optional<MessageFlags> = Optional.Missing()
-    var flags: MessageFlags? by ::_flags.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
@@ -196,7 +199,7 @@ class EphemeralInteractionResponseCreateBuilder(val content: String) :
 
     override fun toRequest(): InteractionResponseCreateRequest {
         return InteractionResponseCreateRequest(
-            type =  InteractionResponseType.ChannelMessageWithSource,
+            type = InteractionResponseType.ChannelMessageWithSource,
             InteractionApplicationCommandCallbackData(
                 content = Optional.Value(content),
                 allowedMentions = _allowedMentions,
