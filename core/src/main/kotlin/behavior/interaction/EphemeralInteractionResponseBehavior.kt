@@ -15,22 +15,8 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface EphemeralInteractionResponseBehavior : InteractionResponseBehavior
-
-
 @KordPreview
-fun EphemeralInteractionResponseBehavior(applicationId: Snowflake, token: String, kord: Kord) =
-    object : EphemeralInteractionResponseBehavior {
-        override val applicationId: Snowflake
-            get() = applicationId
-
-        override val token: String
-            get() = token
-
-        override val kord: Kord
-            get() = kord
-    }
-
+interface EphemeralInteractionResponseBehavior : InteractionResponseBehavior
 
 @KordPreview
 @OptIn(ExperimentalContracts::class)
@@ -42,12 +28,3 @@ suspend inline fun EphemeralInteractionResponseBehavior.edit(builder: EphemeralI
 }
 
 
-@KordPreview
-@OptIn(ExperimentalContracts::class)
-suspend inline fun EphemeralInteractionResponseBehavior.followUp(content: String, builder: EphemeralFollowupMessageCreateBuilder.() -> Unit): InteractionFollowup {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val request = EphemeralFollowupMessageCreateBuilder(content).apply(builder).toRequest()
-    val response = kord.rest.interaction.createFollowupMessage(applicationId, token, request)
-    val data = MessageData.from(response)
-    return EphemeralFollowupMessage(Message(data, kord), applicationId, token, kord)
-}

@@ -200,7 +200,9 @@ class EphemeralInteractionResponseCreateBuilder(val content: String) :
             InteractionApplicationCommandCallbackData(
                 content = Optional.Value(content),
                 allowedMentions = _allowedMentions,
-                tts = _tts
+                tts = _tts,
+                flags = Optional.Value(MessageFlags(MessageFlag.Ephemeral))
+
             ).optional()
         )
     }

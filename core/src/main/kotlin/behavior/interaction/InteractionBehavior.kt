@@ -3,6 +3,8 @@ package behavior.interaction
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.behavior.interaction.EphemeralInteractionAcknowledgementBehavior
+import dev.kord.core.behavior.interaction.EphemeralInteractionRespondBehavior
 import dev.kord.core.behavior.interaction.InteractionResponseBehavior
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
@@ -31,7 +33,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
     suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
         val request = AcknowledgementResponseBuilder(true).toRequest()
         kord.rest.interaction.createInteractionResponse(id, token, request)
-        return EphemeralInteractionResponseBehavior(applicationId, token, kord)
+        return EphemeralInteractionAcknowledgementBehavior(applicationId, token, kord)
     }
 
     /**
@@ -125,6 +127,6 @@ suspend inline fun InteractionBehavior.respondEphemeral(
 
     val request = EphemeralInteractionResponseCreateBuilder(content).apply(builder).toRequest()
     kord.rest.interaction.createInteractionResponse(id, token, request)
-    return EphemeralInteractionResponseBehavior(applicationId, token, kord)
+    return EphemeralInteractionRespondBehavior(applicationId, token, kord)
 
 }
