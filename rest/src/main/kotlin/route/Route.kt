@@ -15,6 +15,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.serializer
 import dev.kord.common.entity.DiscordEmoji as EmojiEntity
 
 internal const val REST_VERSION_PROPERTY_NAME = "dev.kord.rest.version"
@@ -23,7 +24,7 @@ internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v
 sealed class Route<T>(
     val method: HttpMethod,
     val path: String,
-    val strategy: DeserializationStrategy<T>
+    val strategy: DeserializationStrategy<T>,
 ) {
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -459,10 +460,14 @@ sealed class Route<T>(
     )
 
     object GuildWelcomeScreenGet
-        : Route<DiscordWelcomeScreen>(HttpMethod.Get, "/guilds/${GuildId}/welcome-screen", DiscordWelcomeScreen.serializer())
+        : Route<DiscordWelcomeScreen>(HttpMethod.Get,
+        "/guilds/${GuildId}/welcome-screen",
+        DiscordWelcomeScreen.serializer())
 
     object GuildWelcomeScreenPatch
-        : Route<DiscordWelcomeScreen>(HttpMethod.Patch, "/guilds/${GuildId}/welcome-screen", DiscordWelcomeScreen.serializer())
+        : Route<DiscordWelcomeScreen>(HttpMethod.Patch,
+        "/guilds/${GuildId}/welcome-screen",
+        DiscordWelcomeScreen.serializer())
 
     @KordPreview
     object MessageCrosspost
@@ -731,10 +736,10 @@ sealed class Route<T>(
 
     @KordPreview
     object ApplicationCommandPermissionsBatchPut
-        : Route<DiscordApplicationCommandPermissions>(
+        : Route<List<DiscordApplicationCommandPermissions>>(
         HttpMethod.Put,
         "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
-        DiscordApplicationCommandPermissions.serializer()
+        serializer()
     )
 
     object FollowupMessageCreate : Route<DiscordMessage>(

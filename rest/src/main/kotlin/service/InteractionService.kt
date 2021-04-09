@@ -217,7 +217,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         applicationId: Snowflake,
         guildId: Snowflake,
         request: List<PartialDiscordApplicationCommandPermissions>,
-    ) = call(Route.ApplicationCommandPermissionsPut) {
+    ) = call(Route.ApplicationCommandPermissionsBatchPut) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.GuildId] = guildId
 
