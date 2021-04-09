@@ -24,7 +24,9 @@ class MessageUpdateEvent (
     /**
      * The behavior of the message that was updated.
      */
-    val message: MessageBehavior get() = MessageBehavior(messageId = messageId, channelId = channelId, kord = kord)
+    val message: MessageBehavior get() = MessageBehavior(channelId = channelId,
+        messageId = messageId,
+        kord = kord)
 
     /**
      * The behavior of the channel in which the message was updated.

@@ -7,6 +7,7 @@ import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.entity.interaction.GlobalApplicationCommand
 import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
 import dev.kord.rest.request.RequestHandler
@@ -106,14 +107,14 @@ class SlashCommands(
 
     suspend fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
-        guildId: Snowflake
+        guildId: Snowflake,
     ): DiscordApplicationCommandPermissions =
         service.getGuildApplicationCommandPermissions(applicationId, guildId)
 
     suspend fun getApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
-        commandId: Snowflake
+        commandId: Snowflake,
     ): DiscordApplicationCommandPermissions =
         service.getApplicationCommandPermissions(applicationId, guildId, commandId)
 
@@ -121,11 +122,21 @@ class SlashCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
-        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
+        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
     ) {
         val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
 
         service.editApplicationCommandPermissions(applicationId, guildId, commandId, request)
+    }
+
+    suspend fun bulkEditApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
+    ) {
+        val request = ApplicationCommandPermissionsBulkModifyBuilder().apply(builder).toRequest()
+
+        service.bulkEditApplicationCommandPermissions(applicationId, guildId, request)
     }
 }
 

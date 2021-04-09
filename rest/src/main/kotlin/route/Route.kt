@@ -503,7 +503,7 @@ sealed class Route<T>(
     object GuildWebhooksGet
         : Route<List<DiscordWebhook>>(
         HttpMethod.Get,
-        "/guilds/$GuildId/webhooks",
+        "/guildyeah but when s/$GuildId/webhooks",
         ListSerializer(DiscordWebhook.serializer())
     )
 
@@ -726,6 +726,14 @@ sealed class Route<T>(
         : Route<DiscordApplicationCommandPermissions>(
         HttpMethod.Put,
         "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
+        DiscordApplicationCommandPermissions.serializer()
+    )
+
+    @KordPreview
+    object ApplicationCommandPermissionsBatchPut
+        : Route<DiscordApplicationCommandPermissions>(
+        HttpMethod.Put,
+        "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
         DiscordApplicationCommandPermissions.serializer()
     )
 

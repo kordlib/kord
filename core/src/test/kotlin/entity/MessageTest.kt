@@ -15,5 +15,7 @@ internal class MessageTest : EntityEqualityTest<Message> by EntityEqualityTest({
     every { data.channelId } returns it
     Message(data, kord)
 }), BehaviorEqualityTest<Message> {
-    override fun Message.behavior(): KordEntity = MessageBehavior(messageId = id, channelId = id, kord = kord)
+    override fun Message.behavior(): KordEntity = MessageBehavior(channelId = id,
+        messageId = id,
+        kord = kord)
 }

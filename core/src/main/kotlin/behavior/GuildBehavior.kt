@@ -38,6 +38,7 @@ import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
 import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
@@ -313,7 +314,8 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getRoleOrNull(roleId: Snowflake): Role? = supplier.getRoleOrNull(guildId = id, roleId = roleId)
+    suspend fun getRoleOrNull(roleId: Snowflake): Role? =
+        supplier.getRoleOrNull(guildId = id, roleId = roleId)
 
     /**
      * Requests to get the [Invite] represented by the [code].
@@ -345,8 +347,11 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use editSelfNickname.", ReplaceWith("editSelfNickname(newNickname)"), DeprecationLevel.ERROR)
-    suspend fun modifySelfNickname(newNickname: String? = null): String = editSelfNickname(newNickname)
+    @Deprecated("Use editSelfNickname.",
+        ReplaceWith("editSelfNickname(newNickname)"),
+        DeprecationLevel.ERROR)
+    suspend fun modifySelfNickname(newNickname: String? = null): String =
+        editSelfNickname(newNickname)
 
     /**
      *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
@@ -506,10 +511,11 @@ interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Returns a new [GuildBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior =
+        GuildBehavior(id, kord, strategy)
 }
 
- fun GuildBehavior(
+fun GuildBehavior(
     id: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
@@ -547,6 +553,8 @@ suspend inline fun GuildBehavior.createApplicationCommand(
 @OptIn(ExperimentalContracts::class)
 @KordPreview
 suspend inline fun GuildBehavior.createApplicationCommands(
+    builder: ApplicationCommandsCreateBuilder.() -> Unit,
+) = kord.slashCommands.createGuildApplicationCommands(id, builder)
     builder: ApplicationCommandsCreateBuilder.() -> Unit
 ): Flow<GuildApplicationCommand> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -588,7 +596,7 @@ suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> U
 suspend inline fun GuildBehavior.createEmoji(
     name: String,
     image: Image,
-    builder: EmojiCreateBuilder.() -> Unit = {}
+    builder: EmojiCreateBuilder.() -> Unit = {},
 ): GuildEmoji {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -629,7 +637,7 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createTextChannel(
     name: String,
-    builder: TextChannelCreateBuilder.() -> Unit = {}
+    builder: TextChannelCreateBuilder.() -> Unit = {},
 ): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -671,7 +679,7 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createVoiceChannel(
     name: String,
-    builder: VoiceChannelCreateBuilder.() -> Unit = {}
+    builder: VoiceChannelCreateBuilder.() -> Unit = {},
 ): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -713,7 +721,7 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createNewsChannel(
     name: String,
-    builder: NewsChannelCreateBuilder.() -> Unit = {}
+    builder: NewsChannelCreateBuilder.() -> Unit = {},
 ): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -756,7 +764,7 @@ suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.(
 @OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.createCategory(
     name: String,
-    builder: CategoryCreateBuilder.() -> Unit = {}
+    builder: CategoryCreateBuilder.() -> Unit = {},
 ): Category {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -809,7 +817,8 @@ suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyB
 @OptIn(ExperimentalContracts::class)
 @DeprecatedSinceKord("0.7.0")
 @Deprecated("Use createRole instead.", ReplaceWith("createRole(builder)"), DeprecationLevel.ERROR)
-suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit = {}): Role = createRole(builder)
+suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit = {}): Role =
+    createRole(builder)
 
 /**
  * Requests to add a new role to this guild.
@@ -919,4 +928,18 @@ inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
     return requestMembers(request)
+}
+
+@OptIn(ExperimentalContracts::class)
+@KordPreview
+suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    kord.slashCommands.bulkEditApplicationCommandPermissions(
+        kord.selfId,
+        id,
+        builder
+    )
 }

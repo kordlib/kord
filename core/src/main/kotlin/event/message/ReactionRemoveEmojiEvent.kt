@@ -43,7 +43,9 @@ class ReactionRemoveEmojiEvent(
      */
     val messageId: Snowflake get() = data.messageId
 
-    val message: MessageBehavior get() = MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
+    val message: MessageBehavior get() = MessageBehavior(channelId = channelId,
+        messageId = messageId,
+        kord = kord)
 
     /**
      * The emoji that was removed.

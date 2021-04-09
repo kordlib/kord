@@ -2,10 +2,7 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.AllowedMentions
-import dev.kord.common.entity.DiscordApplicationCommandPermission
-import dev.kord.common.entity.MessageFlags
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
@@ -54,7 +51,7 @@ class ApplicationCommandsCreateBuilder : RequestBuilder<List<ApplicationCommandC
     inline fun command(
         name: String,
         description: String,
-        builder: ApplicationCommandCreateBuilder.() -> Unit
+        builder: ApplicationCommandCreateBuilder.() -> Unit,
     ) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += ApplicationCommandCreateBuilder(name, description).apply(builder)
@@ -326,6 +323,34 @@ class FollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCrea
             ),
             files,
         )
+}
+
+@KordPreview
+class ApplicationCommandPermissionsBulkModifyBuilder :
+    RequestBuilder<List<PartialDiscordApplicationCommandPermissions>> {
+
+    @PublishedApi
+    internal val permissions = mutableMapOf<Snowflake, ApplicationCommandPermissionsModifyBuilder>()
+
+    @OptIn(ExperimentalContracts::class)
+    inline fun command(
+        commandId: Snowflake,
+        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
+    ) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        permissions[commandId] = ApplicationCommandPermissionsModifyBuilder().apply(builder)
+    }
+
+    override fun toRequest(): List<PartialDiscordApplicationCommandPermissions> {
+        return permissions.map { (id, builder) ->
+            PartialDiscordApplicationCommandPermissions(
+                id.asString, builder.permissions.toList()
+            )
+        }
+    }
 }
 
 @KordPreview

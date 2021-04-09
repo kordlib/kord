@@ -426,6 +426,13 @@ data class DiscordApplicationCommandPermissions(
 
 @KordPreview
 @Serializable
+data class PartialDiscordApplicationCommandPermissions(
+    val id: String,
+    val permissions: List<DiscordApplicationCommandPermission>
+)
+
+@KordPreview
+@Serializable
 data class DiscordApplicationCommandPermission(
     val id: Snowflake,
     val type: Type,
