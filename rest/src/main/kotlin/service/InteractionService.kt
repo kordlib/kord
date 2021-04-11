@@ -149,11 +149,9 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         applicationId: Snowflake,
         interactionToken: String,
         multipart: MultipartFollowupMessageCreateRequest,
-        wait: Boolean = false
     ) = call(Route.FollowupMessageCreate) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.InteractionToken] = interactionToken
-        parameter("wait", "$wait")
         body(FollowupMessageCreateRequest.serializer(), multipart.request)
         multipart.files.forEach { file(it) }
 

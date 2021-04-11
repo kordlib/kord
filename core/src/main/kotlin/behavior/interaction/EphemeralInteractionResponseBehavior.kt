@@ -30,12 +30,11 @@ suspend inline fun EphemeralInteractionResponseBehavior.edit(builder: EphemeralI
 @KordPreview
 suspend inline fun EphemeralInteractionResponseBehavior.followup(
     content: String,
-    wait: Boolean = false,
     builder: EphemeralFollowupMessageCreateBuilder.() -> Unit = {}
 ): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = EphemeralFollowupMessageCreateBuilder(content).apply(builder)
-    val response = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest(), wait)
+    val response = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest())
     val message = Message(response.toData(), kord)
     return EphemeralFollowupMessage(message, applicationId, token, kord)
 }
@@ -45,12 +44,11 @@ suspend inline fun EphemeralInteractionResponseBehavior.followup(
 @KordPreview
 @KordUnsafe
 suspend inline fun EphemeralInteractionResponseBehavior.followup(
-    wait: Boolean = false,
     builder: PublicFollowupMessageCreateBuilder.() -> Unit
 ): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = PublicFollowupMessageCreateBuilder().apply(builder)
-    val response = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest(), wait)
+    val response = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest())
     val message = Message(response.toData(), kord)
     return PublicFollowupMessage(message, applicationId, token, kord)
 }
