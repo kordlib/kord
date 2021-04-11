@@ -128,6 +128,17 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         multipartRequest.files.forEach { file(it) }
     }
 
+    suspend fun modifyInteractionResponse(
+        applicationId: Snowflake,
+        interactionToken: String,
+        request: InteractionResponseModifyRequest
+    ) = call(Route.OriginalInteractionResponseModify) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.InteractionToken] = interactionToken
+        body(InteractionResponseModifyRequest.serializer(), request)
+    }
+
+
     suspend fun deleteOriginalInteractionResponse(applicationId: Snowflake, interactionToken: String) =
         call(Route.OriginalInteractionResponseDelete) {
             keys[Route.ApplicationId] = applicationId
