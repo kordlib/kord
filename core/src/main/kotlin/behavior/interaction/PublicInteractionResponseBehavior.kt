@@ -1,10 +1,8 @@
-package behavior.interaction
+package dev.kord.core.behavior.interaction
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.InteractionResponseBehavior
-import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.PublicFollowupMessage
@@ -20,8 +18,27 @@ interface PublicInteractionResponseBehavior : InteractionResponseBehavior {
     suspend fun delete() {
         kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
     }
+
 }
 
+
+@KordPreview
+@OptIn(ExperimentalContracts::class)
+suspend inline fun PublicInteractionResponseBehavior.edit(builder: PublicInteractionResponseModifyBuilder.() -> Unit): Message {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val builder = PublicInteractionResponseModifyBuilder().apply(builder)
+    val message = kord.rest.interaction.modifyInteractionResponse(applicationId, token, builder.toRequest())
+    return Message(message.toData(), kord)
+}
+
+@KordPreview
+@OptIn(ExperimentalContracts::class)
+suspend inline fun PublicInteractionResponseBehavior.followup(wait: Boolean = false, builder: PublicFollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val builder = PublicFollowupMessageCreateBuilder().apply(builder)
+    val message = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest(), wait)
+    return PublicFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
+}
 
 @KordPreview
 fun PublicInteractionResponseBehavior(applicationId: Snowflake, token: String, kord: Kord) =
@@ -35,24 +52,3 @@ fun PublicInteractionResponseBehavior(applicationId: Snowflake, token: String, k
         override val kord: Kord
             get() = kord
     }
-
-
-@KordPreview
-@OptIn(ExperimentalContracts::class)
-suspend inline fun PublicInteractionResponseBehavior.edit(builder: PublicInteractionResponseModifyBuilder.() -> Unit): Message {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val request = PublicInteractionResponseModifyBuilder().apply(builder).toRequest()
-    val response = kord.rest.interaction.modifyInteractionResponse(applicationId, token, request)
-    return Message(response.toData(), kord)
-}
-
-
-@KordPreview
-@OptIn(ExperimentalContracts::class)
-suspend inline fun PublicInteractionResponseBehavior.followUp(builder: PublicFollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val request = PublicFollowupMessageCreateBuilder().apply(builder).toRequest()
-    val response = kord.rest.interaction.createFollowupMessage(applicationId, token, request)
-    val data = MessageData.from(response)
-    return PublicFollowupMessage(Message(data, kord), applicationId, token, kord)
-}

@@ -3,15 +3,14 @@ package behavior.interaction
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.EphemeralInteractionAcknowledgementBehavior
-import dev.kord.core.behavior.interaction.EphemeralInteractionRespondBehavior
+import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.InteractionResponseBehavior
+import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.interaction.AcknowledgementResponseBuilder
 import dev.kord.rest.builder.interaction.EphemeralInteractionResponseCreateBuilder
 import dev.kord.rest.builder.interaction.PublicInteractionResponseCreateBuilder
 import kotlin.contracts.ExperimentalContracts
@@ -30,10 +29,10 @@ interface InteractionBehavior : KordEntity, Strategizable {
      *
      * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
      */
-    suspend fun acknowledgeEphemeral(): EphemeralInteractionAcknowledgementBehavior {
-        val request = AcknowledgementResponseBuilder(true).toRequest()
+    suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
+        val request = EphemeralInteractionResponseCreateBuilder().toRequest()
         kord.rest.interaction.createInteractionResponse(id, token, request)
-        return EphemeralInteractionAcknowledgementBehavior(applicationId, token, kord)
+        return EphemeralInteractionResponseBehavior(applicationId, token, kord)
     }
 
     /**
@@ -42,7 +41,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
      * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
      */
     suspend fun ackowledgePublic(): PublicInteractionResponseBehavior {
-        val request = AcknowledgementResponseBuilder().toRequest()
+        val request = PublicInteractionResponseCreateBuilder().toRequest()
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return PublicInteractionResponseBehavior(applicationId, token, kord)
     }
@@ -121,12 +120,15 @@ suspend inline fun InteractionBehavior.respondPublic(
 suspend inline fun InteractionBehavior.respondEphemeral(
     content: String,
     builder: EphemeralInteractionResponseCreateBuilder.() -> Unit = {}
-): EphemeralInteractionRespondBehavior {
+): EphemeralInteractionResponseBehavior {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-    val request = EphemeralInteractionResponseCreateBuilder(content).apply(builder).toRequest()
+    val builder = EphemeralInteractionResponseCreateBuilder().apply {
+        this.content = content
+        builder()
+    }
+    val request = builder.toRequest()
     kord.rest.interaction.createInteractionResponse(id, token, request)
-    return EphemeralInteractionRespondBehavior(applicationId, token, kord)
+    return EphemeralInteractionResponseBehavior(applicationId, token, kord)
 
 }
