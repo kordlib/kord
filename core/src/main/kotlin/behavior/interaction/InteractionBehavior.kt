@@ -3,6 +3,7 @@ package behavior.interaction
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.InteractionResponseBehavior
 import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
@@ -23,6 +24,8 @@ interface InteractionBehavior : KordEntity, Strategizable {
     val applicationId: Snowflake
     val token: String
     val channelId: Snowflake
+
+    val channel: ChannelBehavior get() = ChannelBehavior(channelId, kord)
 
     /**
      * Acknowledges an interaction ephemerally.
