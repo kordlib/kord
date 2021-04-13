@@ -8,6 +8,7 @@ import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.exception.EntityNotFoundException
 import kotlinx.coroutines.flow.Flow
+import dev.kord.common.entity.ChannelType.Unknown
 
 /**
  * An abstraction that allows for requesting Discord entities.
@@ -87,7 +88,7 @@ interface EntitySupplier {
     suspend fun getChannel(id: Snowflake): Channel = getChannelOrNull(id)!!
 
     /**
-     * Requests the [channels][GuildChannel] of the [Guild] with the given [guildId].
+     * Requests the [channels][GuildChannel] of the [Guild] with the given [guildId], channels with an [Unknown] type will be filtered out of the list.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.

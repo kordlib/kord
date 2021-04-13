@@ -112,7 +112,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = cache.query<ChannelData> {
         idEq(ChannelData::guildId, guildId)
-    }.asFlow().map { Channel.from(it, kord) as GuildChannel }
+    }.asFlow().map { Channel.from(it, kord) }.filterIsInstance()
 
     override fun getChannelPins(channelId: Snowflake): Flow<Message> = cache.query<MessageData> {
         idEq(MessageData::channelId, channelId)
