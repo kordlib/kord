@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.InteractionResponseBehavior
 import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
@@ -18,6 +19,9 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+/**
+ * The behavior of a [Discord Interaction](https://discord.com/developers/docs/interactions/slash-commands#interaction)
+ */
 @KordPreview
 interface InteractionBehavior : KordEntity, Strategizable {
 
@@ -25,7 +29,10 @@ interface InteractionBehavior : KordEntity, Strategizable {
     val token: String
     val channelId: Snowflake
 
-    val channel: ChannelBehavior get() = ChannelBehavior(channelId, kord)
+    /**
+     * The [MessageChannelBehavior] of the channel the command was executed in.
+     */
+    val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
     /**
      * Acknowledges an interaction ephemerally.

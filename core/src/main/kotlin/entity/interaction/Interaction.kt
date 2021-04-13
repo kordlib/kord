@@ -52,10 +52,6 @@ sealed class Interaction : InteractionBehavior {
      */
     val type: InteractionType get() = data.type
 
-    /**
-     * The [MessageChannelBehavior] of the channel the command was executed in.
-     */
-    open val channel: MessageChannelBehavior get() = MessageChannelBehavior(data.channelId, kord)
 
     abstract val user: UserBehavior
 

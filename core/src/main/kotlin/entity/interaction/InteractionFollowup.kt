@@ -11,13 +11,10 @@ import dev.kord.core.entity.channel.MessageChannel
 
 /**
  * Holds the follow-up [Message] resulting from an interaction follow-up
- * and behaves on it through [InteractionFollowupBehavior]
+ * and behaves on it through [FollowupMessageBehavior]
  *
  * @param message The message created by this follow-up.
  * To use the message behavior your application must be authorized as a bot.
- * @param token The unique token used to follow-up the Interaction Response.
- * @param applicationId the application id of bot invoking the follow-up
- * @param kord The kord instance responsible for the follow-up
  */
 @KordPreview
 sealed class InteractionFollowup(val message: Message) : FollowupMessageBehavior {
@@ -35,6 +32,14 @@ sealed class InteractionFollowup(val message: Message) : FollowupMessageBehavior
 
 }
 
+
+/**
+ * Holds the follow-up [Message] resulting from an public followup message
+ * and behaves on it through [PublicFollowupMessageBehavior]
+ *
+ * @param message The message created by this follow-up.
+ * To use the message behavior your application must be authorized as a bot.
+ */
 class PublicFollowupMessage(
     message: Message,
     override val applicationId: Snowflake,
@@ -43,6 +48,13 @@ class PublicFollowupMessage(
 ) : InteractionFollowup(message), PublicFollowupMessageBehavior
 
 
+/**
+ * Holds the follow-up [Message] resulting from an ephemeral followup message
+ * and behaves on it through [EphemeralFollowupMessageBehavior]
+ *
+ * @param message The message created by this follow-up.
+ * To use the message behavior your application must be authorized as a bot.
+ */
 class EphemeralFollowupMessage(
     message: Message,
     override val applicationId: Snowflake,
