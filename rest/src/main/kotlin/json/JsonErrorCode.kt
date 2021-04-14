@@ -164,6 +164,24 @@ enum class JsonErrorCode(val code: Int) {
      */
     UnknownRedistributable(10036),
     /**
+     * Unknown guild template.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownGuildTemplate(10057),
+    /**
+     * Unknown interaction.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownInteraction(10062),
+    /**
+     * Unknown application command.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownApplicationCommand(10063),
+    /**
      * Bots cannot use this endpoint.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
