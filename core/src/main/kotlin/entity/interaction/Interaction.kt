@@ -1,6 +1,6 @@
 package dev.kord.core.entity.interaction
 
-import behavior.interaction.InteractionBehavior
+import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordOptionValue
 import dev.kord.common.entity.InteractionType

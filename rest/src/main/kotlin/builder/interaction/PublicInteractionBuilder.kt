@@ -124,9 +124,6 @@ class PublicInteractionResponseModifyBuilder :
     }
 
     override fun toRequest(): MultipartInteractionResponseModifyRequest {
-        if (files.isEmpty() && content == null && embeds == null) InteractionResponseType.DeferredChannelMessageWithSource
-        else InteractionResponseType.ChannelMessageWithSource
-
         return MultipartInteractionResponseModifyRequest(
             InteractionResponseModifyRequest(
                     content = _content,
