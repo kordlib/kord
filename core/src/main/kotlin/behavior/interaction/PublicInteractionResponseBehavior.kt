@@ -57,7 +57,7 @@ suspend inline fun PublicInteractionResponseBehavior.edit(builder: PublicInterac
  */
 @KordPreview
 @OptIn(ExperimentalContracts::class)
-suspend inline fun PublicInteractionResponseBehavior.followup(builder: PublicFollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
+suspend inline fun PublicInteractionResponseBehavior.followUp(builder: PublicFollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = PublicFollowupMessageCreateBuilder().apply(builder)
     val message = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest())

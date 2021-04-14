@@ -86,8 +86,8 @@ sealed class BaseApplicationBuilder {
 @KordPreview
 @KordDsl
 class ApplicationCommandCreateBuilder(
-    val name: String,
-    val description: String,
+    var name: String,
+    var description: String,
 ) : RequestBuilder<ApplicationCommandCreateRequest>, BaseApplicationBuilder() {
 
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()

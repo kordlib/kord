@@ -124,9 +124,8 @@ class PublicInteractionResponseModifyBuilder :
     }
 
     override fun toRequest(): MultipartInteractionResponseModifyRequest {
-        val type =
-            if (files.isEmpty() && content == null && embeds == null) InteractionResponseType.DeferredChannelMessageWithSource
-            else InteractionResponseType.ChannelMessageWithSource
+        if (files.isEmpty() && content == null && embeds == null) InteractionResponseType.DeferredChannelMessageWithSource
+        else InteractionResponseType.ChannelMessageWithSource
 
         return MultipartInteractionResponseModifyRequest(
             InteractionResponseModifyRequest(

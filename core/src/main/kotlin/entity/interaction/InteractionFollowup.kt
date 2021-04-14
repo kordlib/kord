@@ -50,10 +50,12 @@ class PublicFollowupMessage(
 
 /**
  * Holds the follow-up [Message] resulting from an ephemeral followup message
- * and behaves on it through [EphemeralFollowupMessageBehavior]
+ * and behaves on it through [EphemeralFollowupMessageBehavior].
  *
  * @param message The message created by this follow-up.
  * To use the message behavior your application must be authorized as a bot.
+ * Note: Any rest calls made through the [message] object e.g: `message.delete()` will throw since the message
+ * is deleted once the client receives it.
  */
 class EphemeralFollowupMessage(
     message: Message,

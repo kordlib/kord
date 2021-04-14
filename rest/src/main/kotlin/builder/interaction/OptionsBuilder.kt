@@ -15,9 +15,9 @@ import kotlin.contracts.contract
 
 @KordPreview
 sealed class OptionsBuilder(
-    val name: String,
-    val description: String,
-    val type: ApplicationCommandOptionType,
+    var name: String,
+    var description: String,
+    var type: ApplicationCommandOptionType,
 ) :
     RequestBuilder<ApplicationCommandOption> {
     internal var _default: OptionalBoolean = OptionalBoolean.Missing

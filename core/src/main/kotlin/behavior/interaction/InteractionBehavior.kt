@@ -1,18 +1,18 @@
-package behavior.interaction
+package dev.kord.core.behavior.interaction
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.MessageChannelBehavior
-import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.InteractionResponseBehavior
-import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.interaction.EphemeralInteractionResponseCreateBuilder
 import dev.kord.rest.builder.interaction.PublicInteractionResponseCreateBuilder
 import kotlin.contracts.ExperimentalContracts
@@ -57,10 +57,10 @@ interface InteractionBehavior : KordEntity, Strategizable {
     }
 
 
-    suspend fun getChannelOrNull(): Channel? = supplier.getChannelOrNull(channelId)
+    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
 
-    suspend fun getChannel(): Channel = supplier.getChannel(channelId)
+    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior =
