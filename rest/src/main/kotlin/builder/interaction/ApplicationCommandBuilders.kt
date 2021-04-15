@@ -2,12 +2,17 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.DiscordApplicationCommandPermission
+import dev.kord.common.entity.PartialDiscordApplicationCommandPermissions
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import dev.kord.rest.json.request.ApplicationCommandModifyRequest
+import dev.kord.rest.json.request.ApplicationCommandPermissionsEditRequest
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -93,10 +98,13 @@ class ApplicationCommandCreateBuilder(
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
     override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
+    private var _defaultPermission: OptionalBoolean = OptionalBoolean.Missing
+    var defaultPermission: Boolean? by ::_defaultPermission.delegate()
+
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(name,
             description,
-            _options.mapList { it.toRequest() })
+            _options.mapList { it.toRequest() }, _defaultPermission)
 
     }
 
@@ -138,11 +146,74 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
     override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
+    private var _defaultPermission: OptionalBoolean = OptionalBoolean.Missing
+    private var defaultPermission: Boolean? by ::_defaultPermission.delegate()
+
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(_name,
             _description,
-            _options.mapList { it.toRequest() })
+            _options.mapList { it.toRequest() }, _defaultPermission)
 
     }
+
+}
+
+
+@KordPreview
+class ApplicationCommandPermissionsBulkModifyBuilder :
+        RequestBuilder<List<PartialDiscordApplicationCommandPermissions>> {
+
+    @PublishedApi
+    internal val permissions = mutableMapOf<Snowflake, ApplicationCommandPermissionsModifyBuilder>()
+
+    @OptIn(ExperimentalContracts::class)
+    inline fun command(
+            commandId: Snowflake,
+            builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
+    ) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        permissions[commandId] = ApplicationCommandPermissionsModifyBuilder().apply(builder)
+    }
+
+    override fun toRequest(): List<PartialDiscordApplicationCommandPermissions> {
+        return permissions.map { (id, builder) ->
+            PartialDiscordApplicationCommandPermissions(
+                    id.asString, builder.permissions.toList()
+            )
+        }
+    }
+}
+
+@KordPreview
+class ApplicationCommandPermissionsModifyBuilder :
+        RequestBuilder<ApplicationCommandPermissionsEditRequest> {
+
+    var permissions = mutableListOf<DiscordApplicationCommandPermission>()
+
+    fun role(id: Snowflake, allow: Boolean = true) {
+        permissions.add(
+                DiscordApplicationCommandPermission(
+                        id,
+                        DiscordApplicationCommandPermission.Type.Role,
+                        allow
+                )
+        )
+    }
+
+    fun user(id: Snowflake, allow: Boolean = true) {
+        permissions.add(
+                DiscordApplicationCommandPermission(
+                        id,
+                        DiscordApplicationCommandPermission.Type.User,
+                        allow
+                )
+        )
+    }
+
+    override fun toRequest(): ApplicationCommandPermissionsEditRequest =
+            ApplicationCommandPermissionsEditRequest(permissions)
 
 }

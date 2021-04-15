@@ -8,6 +8,7 @@ import dev.kord.core.entity.interaction.ApplicationCommand
 import dev.kord.core.entity.interaction.GlobalApplicationCommand
 import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.rest.builder.interaction.ApplicationCommandModifyBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.InteractionService
 import kotlin.contracts.ExperimentalContracts
@@ -37,6 +38,19 @@ interface ApplicationCommandBehavior : Entity {
      * @throws [RestRequestException] when something goes wrong during the request.
      */
     suspend fun delete()
+
+    /**
+     * Updates the permissions for this command on the guild corresponding to [guildId].
+     *
+     * @throws [RestRequestException] when something goes wrong during the request.
+     */
+    suspend fun editPermissions(
+            guildId: Snowflake,
+            builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
+    ) {
+        val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
+        service.editApplicationCommandPermissions(applicationId, guildId, id, request)
+    }
 }
 
 @KordPreview

@@ -2,11 +2,14 @@ package dev.kord.rest.service
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordApplicationCommand
+import dev.kord.common.entity.DiscordApplicationCommandPermissions
+import dev.kord.common.entity.PartialDiscordApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.serializer
 
 @KordPreview
 class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
@@ -203,4 +206,51 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
             keys[Route.GuildId] = guildId
             keys[Route.CommandId] = commandId
         }
+    suspend fun getGuildCommand(applicationId: Snowflake, guildId: Snowflake, commandId: Snowflake) = call(Route.GuildApplicationCommandGet){
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.GuildId] = guildId
+        keys[Route.CommandId] = commandId
+    }
+
+    suspend fun getGuildApplicationCommandPermissions(
+            applicationId: Snowflake,
+            guildId: Snowflake,
+    ): DiscordApplicationCommandPermissions = call(Route.GuildApplicationCommandPermissionsGet) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.GuildId] = guildId
+    }
+
+    suspend fun getApplicationCommandPermissions(
+            applicationId: Snowflake,
+            guildId: Snowflake,
+            commandId: Snowflake,
+    ): DiscordApplicationCommandPermissions = call(Route.ApplicationCommandPermissionsGet) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.GuildId] = guildId
+        keys[Route.CommandId] = commandId
+    }
+
+    suspend fun editApplicationCommandPermissions(
+            applicationId: Snowflake,
+            guildId: Snowflake,
+            commandId: Snowflake,
+            request: ApplicationCommandPermissionsEditRequest,
+    ) = call(Route.ApplicationCommandPermissionsPut) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.GuildId] = guildId
+        keys[Route.CommandId] = commandId
+
+        body(ApplicationCommandPermissionsEditRequest.serializer(), request)
+    }
+
+    suspend fun bulkEditApplicationCommandPermissions(
+            applicationId: Snowflake,
+            guildId: Snowflake,
+            request: List<PartialDiscordApplicationCommandPermissions>,
+    ) = call(Route.ApplicationCommandPermissionsBatchPut) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.GuildId] = guildId
+
+        body(serializer(), request)
+    }
 }
