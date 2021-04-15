@@ -56,6 +56,7 @@ class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
     var systemChannelId: Snowflake? by ::_systemChannelId.delegate()
 
     private var _rulesChannelId: OptionalSnowflake? = OptionalSnowflake.Missing
+
     /**
      * The id of the channel where "PUBLIC" guilds display rules and/or guidelines.
      */
@@ -63,32 +64,34 @@ class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
 
 
     private var _publicUpdatesChannelId: OptionalSnowflake? = OptionalSnowflake.Missing
+
     /**
      * The id of the channel where admins and moderators of "PUBLIC" guilds receive notices from Discord.
      */
     var publicUpdatesChannelId: Snowflake? by ::_publicUpdatesChannelId.delegate()
 
     private var _preferredLocale: Optional<Locale?> = Optional.Missing()
+
     /**
      * The preferred locale of a "PUBLIC" guild used in server discovery and notices from Discord; defaults to "en-US".
      */
     var preferredLocale: Locale? by ::_preferredLocale.delegate()
 
     override fun toRequest(): GuildModifyRequest = GuildModifyRequest(
-            _name,
-            _region,
-            _verificationLevel,
-            _notificationLevel,
-            _explicitContentFilter,
-            _afkChannelId,
-            _afkTimeout,
-            _icon.map { it.dataUri },
-            _ownerId,
-            _splash.map { it.dataUri },
-            _banner.map { it.dataUri },
-            _systemChannelId,
-            _rulesChannelId,
-            _publicUpdatesChannelId,
-            _preferredLocale.map { "${it.language}-${it.country}" }
+        _name,
+        _region,
+        _verificationLevel,
+        _notificationLevel,
+        _explicitContentFilter,
+        _afkChannelId,
+        _afkTimeout,
+        _icon.map { it.dataUri },
+        _ownerId,
+        _splash.map { it.dataUri },
+        _banner.map { it.dataUri },
+        _systemChannelId,
+        _rulesChannelId,
+        _publicUpdatesChannelId,
+        _preferredLocale.map { "${it.language}-${it.country}" }
     )
 }

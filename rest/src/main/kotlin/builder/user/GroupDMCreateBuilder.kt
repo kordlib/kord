@@ -12,8 +12,8 @@ class GroupDMCreateBuilder : RequestBuilder<GroupDMCreateRequest> {
     val nicknames: MutableMap<Snowflake, String> = mutableMapOf()
 
     override fun toRequest(): GroupDMCreateRequest = GroupDMCreateRequest(
-            tokens.toList(),
-            nicknames.mapKeys { it.value }
+        tokens.toList(),
+        nicknames.mapKeys { it.value }
     )
 
 }

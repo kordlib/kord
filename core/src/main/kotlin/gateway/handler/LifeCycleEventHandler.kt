@@ -17,10 +17,10 @@ import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class LifeCycleEventHandler(
-        kord: Kord,
-        gateway: MasterGateway,
-        cache: DataCache,
-        coreFlow: MutableSharedFlow<CoreEvent>
+    kord: Kord,
+    gateway: MasterGateway,
+    cache: DataCache,
+    coreFlow: MutableSharedFlow<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
@@ -31,7 +31,14 @@ internal class LifeCycleEventHandler(
             Close.Detach -> coreFlow.emit(DisconnectEvent.DetachEvent(kord, shard))
             Close.UserClose -> coreFlow.emit(DisconnectEvent.UserCloseEvent(kord, shard))
             Close.Timeout -> coreFlow.emit(DisconnectEvent.TimeoutEvent(kord, shard))
-            is Close.DiscordClose -> coreFlow.emit(DisconnectEvent.DiscordCloseEvent(kord, shard, event.closeCode, event.recoverable))
+            is Close.DiscordClose -> coreFlow.emit(
+                DisconnectEvent.DiscordCloseEvent(
+                    kord,
+                    shard,
+                    event.closeCode,
+                    event.recoverable
+                )
+            )
             Close.Reconnecting -> coreFlow.emit(DisconnectEvent.ReconnectingEvent(kord, shard))
             Close.ZombieConnection -> coreFlow.emit(DisconnectEvent.ZombieConnectionEvent(kord, shard))
             Close.RetryLimitReached -> coreFlow.emit(DisconnectEvent.RetryLimitReachedEvent(kord, shard))

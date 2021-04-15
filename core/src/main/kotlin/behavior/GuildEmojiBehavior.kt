@@ -43,10 +43,10 @@ interface GuildEmojiBehavior : KordEntity, Strategizable {
      * Returns a new [GuildEmojiBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildEmojiBehavior =
-            GuildEmojiBehavior(guildId = guildId, id = id, kord = kord, strategy = strategy)
+        GuildEmojiBehavior(guildId = guildId, id = id, kord = kord, strategy = strategy)
 }
 
-internal  fun GuildEmojiBehavior(
+internal fun GuildEmojiBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
@@ -59,7 +59,7 @@ internal  fun GuildEmojiBehavior(
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildEmojiBehavior -> other.id == id
         else -> false
     }
@@ -68,6 +68,7 @@ internal  fun GuildEmojiBehavior(
         return "GuildEmoijBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
     }
 }
+
 /**
  * Requests to edit this emoji.
  *

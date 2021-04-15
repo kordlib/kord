@@ -91,7 +91,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
         GuildMessageChannelBehavior(guildId, id, kord, strategy)
 }
 
-internal  fun GuildMessageChannelBehavior(
+internal fun GuildMessageChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,

@@ -37,13 +37,13 @@ class TextChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
     var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
-            name = _name,
-            position = _position,
-            topic = _topic,
-            nsfw = _nsfw,
-            rateLimitPerUser = _rateLimitPerUser,
-            permissionOverwrites = _permissionOverwrites,
-            parentId = _parentId
+        name = _name,
+        position = _position,
+        topic = _topic,
+        nsfw = _nsfw,
+        rateLimitPerUser = _rateLimitPerUser,
+        permissionOverwrites = _permissionOverwrites,
+        parentId = _parentId
     )
 
 }
@@ -74,13 +74,13 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     var userLimit: Int? by ::_userLimit.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
-            name = _name,
-            position = _position,
-            parentId = _parentId,
-            bitrate = _bitrate,
-            userLimit = _userLimit,
-            topic = _topic,
-            permissionOverwrites = _permissionOverwrites
+        name = _name,
+        position = _position,
+        parentId = _parentId,
+        bitrate = _bitrate,
+        userLimit = _userLimit,
+        topic = _topic,
+        permissionOverwrites = _permissionOverwrites
     )
 
 }
@@ -111,12 +111,12 @@ class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> 
     var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
-            name = _name,
-            position = _position,
-            topic = _topic,
-            nsfw = _nsfw,
-            permissionOverwrites = _permissionOverwrites,
-            parentId = _parentId
+        name = _name,
+        position = _position,
+        topic = _topic,
+        nsfw = _nsfw,
+        permissionOverwrites = _permissionOverwrites,
+        parentId = _parentId
     )
 }
 
@@ -134,9 +134,9 @@ class StoreChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
-            name = _name,
-            position = _position,
-            permissionOverwrites = _permissionOverwrites
+        name = _name,
+        position = _position,
+        permissionOverwrites = _permissionOverwrites
     )
 
 }

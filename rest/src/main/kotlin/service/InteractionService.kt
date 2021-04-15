@@ -59,20 +59,20 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         guildId: Snowflake,
         request: ApplicationCommandCreateRequest
     ) = call(Route.GuildApplicationCommandCreate) {
-            keys[Route.ApplicationId] = applicationId
-            keys[Route.GuildId] = guildId
-            body(ApplicationCommandCreateRequest.serializer(), request)
-        }
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.GuildId] = guildId
+        body(ApplicationCommandCreateRequest.serializer(), request)
+    }
 
     suspend fun createGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
         request: List<ApplicationCommandCreateRequest>
     ) = call(Route.GuildApplicationCommandsCreate) {
-            keys[Route.ApplicationId] = applicationId
-            keys[Route.GuildId] = guildId
-            body(ListSerializer(ApplicationCommandCreateRequest.serializer()), request)
-        }
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.GuildId] = guildId
+        body(ListSerializer(ApplicationCommandCreateRequest.serializer()), request)
+    }
 
 
     suspend fun modifyGuildApplicationCommand(
@@ -99,11 +99,11 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         interactionToken: String,
         request: MultipartInteractionResponseCreateRequest
     ) = call(Route.InteractionResponseCreate) {
-            keys[Route.InteractionId] = interactionId
-            keys[Route.InteractionToken] = interactionToken
-            body(InteractionResponseCreateRequest.serializer(), request.request)
-            request.files.onEach { file(it) }
-        }
+        keys[Route.InteractionId] = interactionId
+        keys[Route.InteractionToken] = interactionToken
+        body(InteractionResponseCreateRequest.serializer(), request.request)
+        request.files.onEach { file(it) }
+    }
 
 
     suspend fun createInteractionResponse(
@@ -176,15 +176,17 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         body(FollowupMessageModifyRequest.serializer(), request)
     }
 
-    suspend fun getGlobalCommand(applicationId: Snowflake, commandId: Snowflake) = call(Route.GlobalApplicationCommandGet){
-        keys[Route.ApplicationId] = applicationId
-        keys[Route.CommandId] = commandId
-    }
+    suspend fun getGlobalCommand(applicationId: Snowflake, commandId: Snowflake) =
+        call(Route.GlobalApplicationCommandGet) {
+            keys[Route.ApplicationId] = applicationId
+            keys[Route.CommandId] = commandId
+        }
 
 
-    suspend fun getGuildCommand(applicationId: Snowflake, guildId: Snowflake, commandId: Snowflake) = call(Route.GuildApplicationCommandGet){
-        keys[Route.ApplicationId] = applicationId
-        keys[Route.GuildId] = guildId
-        keys[Route.CommandId] = commandId
-    }
+    suspend fun getGuildCommand(applicationId: Snowflake, guildId: Snowflake, commandId: Snowflake) =
+        call(Route.GuildApplicationCommandGet) {
+            keys[Route.ApplicationId] = applicationId
+            keys[Route.GuildId] = guildId
+            keys[Route.CommandId] = commandId
+        }
 }

@@ -126,9 +126,9 @@ class PublicInteractionResponseModifyBuilder :
     override fun toRequest(): MultipartInteractionResponseModifyRequest {
         return MultipartInteractionResponseModifyRequest(
             InteractionResponseModifyRequest(
-                    content = _content,
-                    embeds = _embeds.mapList { it.toRequest() },
-                    allowedMentions = _allowedMentions,
+                content = _content,
+                embeds = _embeds.mapList { it.toRequest() },
+                allowedMentions = _allowedMentions,
             ),
             files
         )

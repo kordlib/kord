@@ -11,13 +11,13 @@ private val MemberData.id get() = "$userId$guildId"
 
 @Serializable
 data class MemberData(
-        val userId: Snowflake,
-        val guildId: Snowflake,
-        val nick: Optional<String?> = Optional.Missing(),
-        val roles: List<Snowflake>,
-        val joinedAt: String,
-        val premiumSince: Optional<String?>,
-        val pending: OptionalBoolean = OptionalBoolean.Missing
+    val userId: Snowflake,
+    val guildId: Snowflake,
+    val nick: Optional<String?> = Optional.Missing(),
+    val roles: List<Snowflake>,
+    val joinedAt: String,
+    val premiumSince: Optional<String?>,
+    val pending: OptionalBoolean = OptionalBoolean.Missing
 ) {
 
     companion object {
@@ -36,7 +36,7 @@ data class MemberData(
             MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
         }
 
-        fun from(entity: DiscordUpdatedGuildMember) = with(entity){
+        fun from(entity: DiscordUpdatedGuildMember) = with(entity) {
             MemberData(userId = user.id, guildId = guildId, nick, roles, joinedAt, premiumSince, pending)
         }
 

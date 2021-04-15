@@ -16,9 +16,9 @@ import java.util.*
  * An instance of a Discord category associated to a [guild].
  */
 class Category(
-        override val data: ChannelData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val data: ChannelData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : GuildChannel, CategoryBehavior {
 
     override val guildId: Snowflake
@@ -37,7 +37,7 @@ class Category(
      * Returns a new [Category] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Category =
-            Category(data, kord, strategy.supply(kord))
+        Category(data, kord, strategy.supply(kord))
 
 
     override fun hashCode(): Int = Objects.hash(id, guildId)

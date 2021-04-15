@@ -49,7 +49,7 @@ suspend fun TemplateBehavior.createGuild(name: String, builder: GuildFromTemplat
 }
 
 
- fun TemplateBehavior(guildId: Snowflake, code: String, kord: Kord): TemplateBehavior =
+fun TemplateBehavior(guildId: Snowflake, code: String, kord: Kord): TemplateBehavior =
     object : TemplateBehavior {
         override val code: String = code
         override val guildId: Snowflake = guildId

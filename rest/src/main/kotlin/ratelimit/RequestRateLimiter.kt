@@ -27,8 +27,8 @@ interface RequestRateLimiter {
  */
 @OptIn(ExperimentalContracts::class)
 suspend inline fun <T> RequestRateLimiter.consume(
-        request: Request<*, *>,
-        consumer: (token: RequestToken) -> T
+    request: Request<*, *>,
+    consumer: (token: RequestToken) -> T
 ): T {
     contract {
         callsInPlace(consumer, InvocationKind.EXACTLY_ONCE)
@@ -94,17 +94,29 @@ sealed class RequestResponse {
     /**
      * The request returned a response without errors.
      */
-    data class Accepted(override val bucketKey: BucketKey?, override val rateLimit: RateLimit?, override val reset: Reset) : RequestResponse()
+    data class Accepted(
+        override val bucketKey: BucketKey?,
+        override val rateLimit: RateLimit?,
+        override val reset: Reset
+    ) : RequestResponse()
 
     /**
      * The request returned a global rate limit error.
      */
-    data class GlobalRateLimit(override val bucketKey: BucketKey?, override val rateLimit: RateLimit?, override val reset: Reset) : RequestResponse()
+    data class GlobalRateLimit(
+        override val bucketKey: BucketKey?,
+        override val rateLimit: RateLimit?,
+        override val reset: Reset
+    ) : RequestResponse()
 
     /**
      * The request returned a bucket rate limit error.
      */
-    data class BucketRateLimit(override val bucketKey: BucketKey, override val rateLimit: RateLimit?, override val reset: Reset) : RequestResponse()
+    data class BucketRateLimit(
+        override val bucketKey: BucketKey,
+        override val rateLimit: RateLimit?,
+        override val reset: Reset
+    ) : RequestResponse()
 
     companion object
 

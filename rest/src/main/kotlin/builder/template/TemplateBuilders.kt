@@ -16,7 +16,7 @@ class GuildFromTemplateCreateBuilder(var name: String) : RequestBuilder<GuildFro
 
 
     override fun toRequest(): GuildFromTemplateCreateRequest = GuildFromTemplateCreateRequest(
-            name, _image.map { it.dataUri }
+        name, _image.map { it.dataUri }
     )
 }
 

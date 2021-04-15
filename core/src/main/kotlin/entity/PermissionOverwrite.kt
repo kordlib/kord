@@ -8,7 +8,7 @@ import dev.kord.core.cache.data.PermissionOverwriteData
 import dev.kord.rest.json.request.ChannelPermissionEditRequest
 
 open class PermissionOverwrite constructor(
-        val data: PermissionOverwriteData,
+    val data: PermissionOverwriteData,
 ) {
     val allowed: Permissions get() = data.allowed
     val denied: Permissions get() = data.denied
@@ -28,13 +28,13 @@ open class PermissionOverwrite constructor(
 
     companion object {
         fun forEveryone(guildId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
-                PermissionOverwrite(PermissionOverwriteData(guildId, OverwriteType.Role, allowed, denied))
+            PermissionOverwrite(PermissionOverwriteData(guildId, OverwriteType.Role, allowed, denied))
 
         fun forMember(memberId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
-                PermissionOverwrite(PermissionOverwriteData(memberId, OverwriteType.Member, allowed, denied))
+            PermissionOverwrite(PermissionOverwriteData(memberId, OverwriteType.Member, allowed, denied))
 
         fun forRole(roleId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
-                PermissionOverwrite(PermissionOverwriteData(roleId, OverwriteType.Role, allowed, denied))
+            PermissionOverwrite(PermissionOverwriteData(roleId, OverwriteType.Role, allowed, denied))
     }
 
     override fun toString(): String {

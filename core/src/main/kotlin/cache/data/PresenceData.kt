@@ -8,11 +8,11 @@ val PresenceData.id get() = "$userId$guildId"
 
 @Serializable
 data class PresenceData(
-        val userId: Snowflake,
-        val guildId: Snowflake,
-        val status: PresenceStatus,
-        val activities: List<ActivityData>,
-        val clientStatus: ClientStatusData,
+    val userId: Snowflake,
+    val guildId: Snowflake,
+    val status: PresenceStatus,
+    val activities: List<ActivityData>,
+    val clientStatus: ClientStatusData,
 ) {
 
     companion object {
@@ -20,11 +20,11 @@ data class PresenceData(
 
         fun from(guildId: Snowflake, entity: DiscordPresenceUpdate) = with(entity) {
             PresenceData(
-                    user.id,
-                    guildId,
-                    status,
-                    activities.map { ActivityData.from(it) },
-                    ClientStatusData.from(clientStatus),
+                user.id,
+                guildId,
+                status,
+                activities.map { ActivityData.from(it) },
+                ClientStatusData.from(clientStatus),
             )
         }
     }

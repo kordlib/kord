@@ -38,34 +38,34 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable
 data class DiscordChannel(
-        val id: Snowflake,
-        val type: ChannelType,
-        @SerialName("guild_id")
-        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-        val position: OptionalInt = OptionalInt.Missing,
-        @SerialName("permission_overwrites")
-        val permissionOverwrites: Optional<List<Overwrite>> = Optional.Missing(),
-        val name: Optional<String> = Optional.Missing(),
-        val topic: Optional<String?> = Optional.Missing(),
-        val nsfw: OptionalBoolean = OptionalBoolean.Missing,
-        @SerialName("last_message_id")
-        val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
-        val bitrate: OptionalInt = OptionalInt.Missing,
-        @SerialName("user_limit")
-        val userLimit: OptionalInt = OptionalInt.Missing,
-        @SerialName("rate_limit_per_user")
-        val rateLimitPerUser: OptionalInt = OptionalInt.Missing,
-        val recipients: Optional<List<DiscordUser>> = Optional.Missing(),
-        val icon: Optional<String?> = Optional.Missing(),
-        @SerialName("owner_id")
-        val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
-        @SerialName("application_id")
-        val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
-        @SerialName("parent_id")
-        val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
-        @SerialName("last_pin_timestamp")
-        val lastPinTimestamp: Optional<String?> = Optional.Missing(),
-        val permissions: Optional<Permissions> = Optional.Missing()
+    val id: Snowflake,
+    val type: ChannelType,
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val position: OptionalInt = OptionalInt.Missing,
+    @SerialName("permission_overwrites")
+    val permissionOverwrites: Optional<List<Overwrite>> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing(),
+    val topic: Optional<String?> = Optional.Missing(),
+    val nsfw: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("last_message_id")
+    val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
+    val bitrate: OptionalInt = OptionalInt.Missing,
+    @SerialName("user_limit")
+    val userLimit: OptionalInt = OptionalInt.Missing,
+    @SerialName("rate_limit_per_user")
+    val rateLimitPerUser: OptionalInt = OptionalInt.Missing,
+    val recipients: Optional<List<DiscordUser>> = Optional.Missing(),
+    val icon: Optional<String?> = Optional.Missing(),
+    @SerialName("owner_id")
+    val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("application_id")
+    val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("parent_id")
+    val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
+    @SerialName("last_pin_timestamp")
+    val lastPinTimestamp: Optional<String?> = Optional.Missing(),
+    val permissions: Optional<Permissions> = Optional.Missing()
 )
 
 @Serializable(with = ChannelType.Serializer::class)
@@ -81,6 +81,7 @@ sealed class ChannelType(val value: Int) {
 
     /** A voice channel within a server. */
     object GuildVoice : ChannelType(2)
+
     /** A direct message between multiple users. */
     object GroupDM : ChannelType(3)
 
@@ -117,10 +118,10 @@ sealed class ChannelType(val value: Int) {
 
 @Serializable
 data class Overwrite(
-        val id: Snowflake,
-        val type: OverwriteType,
-        val allow: Permissions,
-        val deny: Permissions,
+    val id: Snowflake,
+    val type: OverwriteType,
+    val allow: Permissions,
+    val deny: Permissions,
 ) {
     companion object;
 

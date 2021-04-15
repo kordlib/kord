@@ -61,21 +61,21 @@ interface CategoryBehavior : GuildChannelBehavior {
      */
     val channels: Flow<CategorizableChannel>
         get() = supplier.getGuildChannels(guildId)
-                .filterIsInstance<CategorizableChannel>()
-                .filter { it.categoryId == id }
+            .filterIsInstance<CategorizableChannel>()
+            .filter { it.categoryId == id }
 
 
     /**
      * Returns a new [CategoryBehavior] with the given [strategy].
      */
     override fun withStrategy(
-            strategy: EntitySupplyStrategy<*>,
+        strategy: EntitySupplyStrategy<*>,
     ): CategoryBehavior = CategoryBehavior(guildId, id, kord, strategy)
 
 }
 
 
- fun CategoryBehavior(
+fun CategoryBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
@@ -124,7 +124,10 @@ suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Ca
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun CategoryBehavior.createTextChannel(name: String, builder: TextChannelCreateBuilder.() -> Unit = {}): TextChannel {
+suspend inline fun CategoryBehavior.createTextChannel(
+    name: String,
+    builder: TextChannelCreateBuilder.() -> Unit = {}
+): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -146,7 +149,10 @@ suspend inline fun CategoryBehavior.createTextChannel(name: String, builder: Tex
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun CategoryBehavior.createVoiceChannel(name: String, builder: VoiceChannelCreateBuilder.() -> Unit = {}): VoiceChannel {
+suspend inline fun CategoryBehavior.createVoiceChannel(
+    name: String,
+    builder: VoiceChannelCreateBuilder.() -> Unit = {}
+): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -167,7 +173,10 @@ suspend inline fun CategoryBehavior.createVoiceChannel(name: String, builder: Vo
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun CategoryBehavior.createNewsChannel(name: String, builder: NewsChannelCreateBuilder.() -> Unit = {}): NewsChannel {
+suspend inline fun CategoryBehavior.createNewsChannel(
+    name: String,
+    builder: NewsChannelCreateBuilder.() -> Unit = {}
+): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

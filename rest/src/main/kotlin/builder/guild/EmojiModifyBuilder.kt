@@ -18,7 +18,7 @@ class EmojiModifyBuilder : AuditRequestBuilder<EmojiModifyRequest> {
     var roles: MutableSet<Snowflake>? by ::_roles.delegate()
 
     override fun toRequest(): EmojiModifyRequest = EmojiModifyRequest(
-            name = _name,
-            roles = _roles
+        name = _name,
+        roles = _roles
     )
 }

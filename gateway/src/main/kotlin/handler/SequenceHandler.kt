@@ -7,8 +7,8 @@ import dev.kord.gateway.Sequence
 import kotlinx.coroutines.flow.Flow
 
 internal class SequenceHandler(
-        flow: Flow<Event>,
-        private val sequence: Sequence
+    flow: Flow<Event>,
+    private val sequence: Sequence
 ) : Handler(flow, "SequenceHandler") {
 
     init {

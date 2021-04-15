@@ -14,47 +14,48 @@ class EntityNotFoundException : Exception {
 
         @PublishedApi
         internal inline fun entityNotFound(entityType: String, id: Snowflake): Nothing =
-                throw EntityNotFoundException("$entityType with id ${id.asString} was not found.")
+            throw EntityNotFoundException("$entityType with id ${id.asString} was not found.")
 
         @PublishedApi
         internal inline fun guildEntityNotFound(entityType: String, guildId: Snowflake, id: Snowflake): Nothing =
-                throw EntityNotFoundException("$entityType with id ${id.asString} in guild ${guildId.asString} was not found.")
+            throw EntityNotFoundException("$entityType with id ${id.asString} in guild ${guildId.asString} was not found.")
 
 
         inline fun guildNotFound(guildId: Snowflake): Nothing =
-                entityNotFound("Guild", guildId)
+            entityNotFound("Guild", guildId)
 
         inline fun <reified T : Channel> channelNotFound(channelId: Snowflake): Nothing =
-                entityNotFound(T::class.simpleName!!, channelId)
+            entityNotFound(T::class.simpleName!!, channelId)
 
         inline fun memberNotFound(guildId: Snowflake, userId: Snowflake): Nothing =
-                guildEntityNotFound("Member", guildId = guildId, id = userId)
+            guildEntityNotFound("Member", guildId = guildId, id = userId)
 
-        inline fun messageNotFound(channelId: Snowflake, messageId: Snowflake): Nothing = throw EntityNotFoundException("Message with id ${messageId.asString} in channel ${channelId.asString} was not found")
+        inline fun messageNotFound(channelId: Snowflake, messageId: Snowflake): Nothing =
+            throw EntityNotFoundException("Message with id ${messageId.asString} in channel ${channelId.asString} was not found")
 
         inline fun userNotFound(userId: Snowflake): Nothing =
-                entityNotFound("User", userId)
+            entityNotFound("User", userId)
 
         inline fun selfNotFound(): Nothing =
-                throw EntityNotFoundException("Self user not found")
+            throw EntityNotFoundException("Self user not found")
 
         fun roleNotFound(guildId: Snowflake, roleId: Snowflake): Nothing =
-                guildEntityNotFound("Role", guildId = guildId, id = roleId)
+            guildEntityNotFound("Role", guildId = guildId, id = roleId)
 
         fun banNotFound(guildId: Snowflake, userId: Snowflake): Nothing =
-                guildEntityNotFound("Ban", guildId = guildId, id = userId)
+            guildEntityNotFound("Ban", guildId = guildId, id = userId)
 
         fun emojiNotFound(guildId: Snowflake, emojiId: Snowflake): Nothing =
-                guildEntityNotFound("GuildEmoji", guildId = guildId, id = emojiId)
+            guildEntityNotFound("GuildEmoji", guildId = guildId, id = emojiId)
 
         fun webhookNotFound(webhookId: Snowflake): Nothing =
-                entityNotFound("Webhook", webhookId)
+            entityNotFound("Webhook", webhookId)
 
         fun inviteNotFound(code: String): Nothing =
-                throw EntityNotFoundException("Invite with code $code was not found.")
+            throw EntityNotFoundException("Invite with code $code was not found.")
 
         fun widgetNotFound(id: Snowflake): Nothing =
-                throw EntityNotFoundException("Widget for guild ${id.value} was not found.")
+            throw EntityNotFoundException("Widget for guild ${id.value} was not found.")
 
         fun templateNotFound(code: String): Nothing =
             throw EntityNotFoundException("Template $code was not found.")

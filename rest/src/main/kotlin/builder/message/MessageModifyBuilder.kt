@@ -50,6 +50,6 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
 
 
     override fun toRequest(): MessageEditPatchRequest = MessageEditPatchRequest(
-            _content, _embed.mapNullable { it?.toRequest() }, _flags, _allowedMentions.mapNullable { it?.build() }
+        _content, _embed.mapNullable { it?.toRequest() }, _flags, _allowedMentions.mapNullable { it?.build() }
     )
 }

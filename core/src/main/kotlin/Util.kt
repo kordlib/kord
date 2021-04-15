@@ -43,7 +43,7 @@ internal fun Int.toInstant() = Instant.ofEpochMilli(toLong())
 internal fun Long.toInstant() = Instant.ofEpochMilli(this)
 
 @OptIn(ExperimentalContracts::class)
-internal inline fun <T> catchNotFound(block: () -> T): T?  {
+internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
     }
@@ -56,7 +56,7 @@ internal inline fun <T> catchNotFound(block: () -> T): T?  {
 }
 
 @OptIn(ExperimentalContracts::class)
-internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: () -> T): T?  {
+internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: () -> T): T? {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
     }
@@ -72,7 +72,6 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
 }
 
 
-
 fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
     for (entity in toList().sorted()) {
         emit(entity)
@@ -85,14 +84,14 @@ fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
  * Returns `null` if the flow was empty.
  */
 suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: suspend (T) -> Boolean): T? =
-        filter { predicate(it) }.firstOrNull()
+    filter { predicate(it) }.firstOrNull()
 
 /**
  * The terminal operator that returns `true` if any of the elements match [predicate].
  * The flow's collection is cancelled when a match is found.
  */
 suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
-        firstOrNull(predicate) != null
+    firstOrNull(predicate) != null
 
 /**
  * The non-terminal operator that returns a new flow that will emit values of the second [flow] only after the first
@@ -130,18 +129,18 @@ internal suspend fun <T> Flow<T>.indexOfFirstOrNull(predicate: suspend (T) -> Bo
         counter += 1
         pair
     }
-            .filter { predicate(it.second) }
-            .take(1)
-            .singleOrNull()?.first
+        .filter { predicate(it.second) }
+        .take(1)
+        .singleOrNull()?.first
 }
 
 internal fun <C : Collection<T>, T> paginate(
-        start: Snowflake,
-        batchSize: Int,
-        idSelector: (T) -> Snowflake,
-        itemSelector: (Collection<T>) -> T?,
-        directionSelector: (Snowflake) -> Position,
-        request: suspend (position: Position) -> C,
+    start: Snowflake,
+    batchSize: Int,
+    idSelector: (T) -> Snowflake,
+    itemSelector: (Collection<T>) -> T?,
+    directionSelector: (Snowflake) -> Position,
+    request: suspend (position: Position) -> C,
 ): Flow<T> = flow {
     var position = directionSelector(start)
     var size = batchSize
@@ -195,26 +194,44 @@ internal fun <T> oldestItem(idSelector: (T) -> Snowflake): (Collection<T>) -> T?
 /**
  *  Selects the [Position.After] the youngest item in the batch.
  */
-internal fun <C : Collection<T>, T> paginateForwards(start: Snowflake = Snowflake("0"), batchSize: Int, idSelector: (T) -> Snowflake, request: suspend (position: Position) -> C): Flow<T> =
-        paginate(start, batchSize, idSelector, youngestItem(idSelector), Position::After, request)
+internal fun <C : Collection<T>, T> paginateForwards(
+    start: Snowflake = Snowflake("0"),
+    batchSize: Int,
+    idSelector: (T) -> Snowflake,
+    request: suspend (position: Position) -> C
+): Flow<T> =
+    paginate(start, batchSize, idSelector, youngestItem(idSelector), Position::After, request)
 
 /**
  *  Selects the [Position.After] the youngest item in the batch.
  */
-internal fun <C : Collection<T>, T : KordEntity> paginateForwards(start: Snowflake = Snowflake("0"), batchSize: Int, request: suspend (position: Position) -> C): Flow<T> =
-        paginate(start, batchSize, { it.id }, youngestItem { it.id }, Position::After, request)
+internal fun <C : Collection<T>, T : KordEntity> paginateForwards(
+    start: Snowflake = Snowflake("0"),
+    batchSize: Int,
+    request: suspend (position: Position) -> C
+): Flow<T> =
+    paginate(start, batchSize, { it.id }, youngestItem { it.id }, Position::After, request)
 
 /**
  *  Selects the [Position.Before] the oldest item in the batch.
  */
-internal fun <C : Collection<T>, T> paginateBackwards(start: Snowflake = Snowflake(Long.MAX_VALUE), batchSize: Int, idSelector: (T) -> Snowflake, request: suspend (position: Position) -> C): Flow<T> =
-        paginate(start, batchSize, idSelector, oldestItem(idSelector), Position::Before, request)
+internal fun <C : Collection<T>, T> paginateBackwards(
+    start: Snowflake = Snowflake(Long.MAX_VALUE),
+    batchSize: Int,
+    idSelector: (T) -> Snowflake,
+    request: suspend (position: Position) -> C
+): Flow<T> =
+    paginate(start, batchSize, idSelector, oldestItem(idSelector), Position::Before, request)
 
 /**
  *  Selects the [Position.Before] the oldest item in the batch.
  */
-internal fun <C : Collection<T>, T : KordEntity> paginateBackwards(start: Snowflake = Snowflake(Long.MAX_VALUE), batchSize: Int, request: suspend (position: Position) -> C): Flow<T> =
-        paginate(start, batchSize, { it.id }, oldestItem { it.id }, Position::Before, request)
+internal fun <C : Collection<T>, T : KordEntity> paginateBackwards(
+    start: Snowflake = Snowflake(Long.MAX_VALUE),
+    batchSize: Int,
+    request: suspend (position: Position) -> C
+): Flow<T> =
+    paginate(start, batchSize, { it.id }, oldestItem { it.id }, Position::Before, request)
 
 inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent() = enableEvent(T::class)
 

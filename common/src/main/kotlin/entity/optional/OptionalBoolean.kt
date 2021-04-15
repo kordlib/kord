@@ -36,7 +36,7 @@ sealed class OptionalBoolean {
 
     val discordBoolean get() = orElse(false)
 
-    operator fun not(): OptionalBoolean = when(this){
+    operator fun not(): OptionalBoolean = when (this) {
         Missing -> this
         is Value -> Value(!value)
     }
@@ -110,10 +110,11 @@ sealed class OptionalBoolean {
 /**
  * returns `null` if this is `null` or [OptionalBoolean.Missing], calls [OptionalBoolean.Value.value] otherwise.
  */
-val OptionalBoolean?.value: Boolean? get() = when(this){
-    is OptionalBoolean.Value -> value
-    OptionalBoolean.Missing, null -> null
-}
+val OptionalBoolean?.value: Boolean?
+    get() = when (this) {
+        is OptionalBoolean.Value -> value
+        OptionalBoolean.Missing, null -> null
+    }
 
 /**
  * returns `null` if this is `null`, calls [OptionalBoolean.asNullable] otherwise.
@@ -125,4 +126,4 @@ val OptionalBoolean?.asNullable: Boolean? get() = this?.asNullable
  */
 fun OptionalBoolean?.orElse(default: Boolean) = this?.orElse(default) ?: default
 
-fun Boolean.optional() : OptionalBoolean.Value = OptionalBoolean.Value(this)
+fun Boolean.optional(): OptionalBoolean.Value = OptionalBoolean.Value(this)

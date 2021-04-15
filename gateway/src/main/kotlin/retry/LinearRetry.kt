@@ -17,9 +17,9 @@ private val linearRetryLogger = KotlinLogging.logger { }
  * @param maxTries the maximum amount of consecutive retries before [hasNext] returns false.
  */
 class LinearRetry constructor(
-        private val firstBackoff: Duration,
-        private val maxBackoff: Duration,
-        private val maxTries: Int
+    private val firstBackoff: Duration,
+    private val maxBackoff: Duration,
+    private val maxTries: Int
 ) : Retry {
 
     constructor(firstBackoffMillis: Long, maxBackoffMillis: Long, maxTries: Int) :
@@ -28,7 +28,9 @@ class LinearRetry constructor(
     init {
         require(firstBackoff.isPositive()) { "firstBackoff needs to be positive but was ${firstBackoff.toLongMilliseconds()} ms" }
         require(maxBackoff.isPositive()) { "maxBackoff needs to be positive but was ${maxBackoff.toLongMilliseconds()} ms" }
-        require(maxBackoff.minus(firstBackoff).isPositive()) { "maxBackoff ${maxBackoff.toLongMilliseconds()} ms needs to be bigger than firstBackoff ${firstBackoff.toLongMilliseconds()} ms" }
+        require(
+            maxBackoff.minus(firstBackoff).isPositive()
+        ) { "maxBackoff ${maxBackoff.toLongMilliseconds()} ms needs to be bigger than firstBackoff ${firstBackoff.toLongMilliseconds()} ms" }
         require(maxTries > 0) { "maxTries needs to be positive but was $maxTries" }
     }
 

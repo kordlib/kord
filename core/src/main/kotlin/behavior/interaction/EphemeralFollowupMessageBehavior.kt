@@ -23,7 +23,7 @@ import kotlin.contracts.contract
 interface EphemeralFollowupMessageBehavior : FollowupMessageBehavior {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): EphemeralFollowupMessageBehavior {
-        return EphemeralFollowupMessageBehavior(id, applicationId, token ,channelId, kord, strategy.supply(kord))
+        return EphemeralFollowupMessageBehavior(id, applicationId, token, channelId, kord, strategy.supply(kord))
     }
 }
 
@@ -51,7 +51,7 @@ fun EphemeralFollowupMessageBehavior(
     channelId: Snowflake,
     kord: Kord,
     supplier: EntitySupplier
-): EphemeralFollowupMessageBehavior = object :  EphemeralFollowupMessageBehavior {
+): EphemeralFollowupMessageBehavior = object : EphemeralFollowupMessageBehavior {
     override val applicationId: Snowflake
         get() = applicationId
     override val token: String

@@ -11,9 +11,9 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 class RoleUpdateEvent(
-        val role: Role,
-        override val shard: Int,
-        override val supplier: EntitySupplier = role.kord.defaultSupplier
+    val role: Role,
+    override val shard: Int,
+    override val supplier: EntitySupplier = role.kord.defaultSupplier
 ) : Event, Strategizable {
 
     override val kord: Kord get() = role.kord
@@ -24,10 +24,10 @@ class RoleUpdateEvent(
 
     suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull():Guild? = supplier.getGuildOrNull(guildId)
+    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleUpdateEvent =
-            RoleUpdateEvent(role, shard, strategy.supply(kord))
+        RoleUpdateEvent(role, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "RoleUpdateEvent(role=$role, shard=$shard, supplier=$supplier)"

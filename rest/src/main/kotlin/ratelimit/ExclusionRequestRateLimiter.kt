@@ -34,7 +34,8 @@ class ExclusionRequestRateLimiter(clock: Clock = Clock.systemUTC()) : AbstractRa
         return ExclusionRequestToken(request.identifier, buckets)
     }
 
-    private inner class ExclusionRequestToken(identity: RequestIdentifier, requestBuckets: List<Bucket>) : AbstractRequestToken(identity, requestBuckets) {
+    private inner class ExclusionRequestToken(identity: RequestIdentifier, requestBuckets: List<Bucket>) :
+        AbstractRequestToken(identity, requestBuckets) {
 
         override suspend fun complete(response: RequestResponse) {
             super.complete(response)

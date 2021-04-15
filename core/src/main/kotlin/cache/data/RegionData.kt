@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RegionData(
-        val id: String,
-        val guildId: OptionalSnowflake,
-        val name: String,
-        val vip: Boolean,
-        val optimal: Boolean,
-        val deprecated: Boolean,
-        val custom: Boolean,
+    val id: String,
+    val guildId: OptionalSnowflake,
+    val name: String,
+    val vip: Boolean,
+    val optimal: Boolean,
+    val deprecated: Boolean,
+    val custom: Boolean,
 ) {
     companion object {
         fun from(guildId: OptionalSnowflake, region: DiscordVoiceRegion) = with(region) {

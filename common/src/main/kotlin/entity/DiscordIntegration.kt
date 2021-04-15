@@ -13,44 +13,44 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class DiscordIntegration(
-        val id: Snowflake,
-        val name: String,
-        val type: String,
-        val enabled: Boolean,
-        val syncing: Boolean,
-        @SerialName("role_id")
-        val roleId: Snowflake,
-        @SerialName("enable_emoticons")
-        val enableEmoticons: OptionalBoolean = OptionalBoolean.Missing,
-        @SerialName("expire_behavior")
-        val expireBehavior: IntegrationExpireBehavior,
-        @SerialName("expire_grace_period")
-        val expireGracePeriod: Int,
-        val user: DiscordUser,
-        val account: DiscordIntegrationsAccount,
-        @SerialName("synced_at")
-        val syncedAt: String,
-        val subscriberCount: Int,
-        val revoked: Boolean,
-        val application: IntegrationApplication
+    val id: Snowflake,
+    val name: String,
+    val type: String,
+    val enabled: Boolean,
+    val syncing: Boolean,
+    @SerialName("role_id")
+    val roleId: Snowflake,
+    @SerialName("enable_emoticons")
+    val enableEmoticons: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("expire_behavior")
+    val expireBehavior: IntegrationExpireBehavior,
+    @SerialName("expire_grace_period")
+    val expireGracePeriod: Int,
+    val user: DiscordUser,
+    val account: DiscordIntegrationsAccount,
+    @SerialName("synced_at")
+    val syncedAt: String,
+    val subscriberCount: Int,
+    val revoked: Boolean,
+    val application: IntegrationApplication
 )
 
 @Serializable
 data class DiscordPartialIntegration(
-        val id: Snowflake,
-        val name: String,
-        val type: String,
-        val account: DiscordIntegrationsAccount,
-    )
+    val id: Snowflake,
+    val name: String,
+    val type: String,
+    val account: DiscordIntegrationsAccount,
+)
 
 @Serializable
 data class IntegrationApplication(
-        val id: Snowflake,
-        val name: String,
-        val icon: String?,
-        val description: String,
-        val summary: String,
-        val bot: Optional<DiscordUser>
+    val id: Snowflake,
+    val name: String,
+    val icon: String?,
+    val description: String,
+    val summary: String,
+    val bot: Optional<DiscordUser>
 )
 
 @Serializable(with = IntegrationExpireBehavior.Serializer::class)
@@ -63,7 +63,7 @@ sealed class IntegrationExpireBehavior(val value: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("expire_behavior", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): IntegrationExpireBehavior = when(val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): IntegrationExpireBehavior = when (val value = decoder.decodeInt()) {
             0 -> RemoveRole
             1 -> Kick
             else -> Unknown(value)
@@ -78,6 +78,6 @@ sealed class IntegrationExpireBehavior(val value: Int) {
 
 @Serializable
 data class DiscordIntegrationsAccount(
-        val id: String,
-        val name: String
+    val id: String,
+    val name: String
 )

@@ -23,49 +23,49 @@ import dev.kord.core.behavior.channel.*
 class Unsafe(private val kord: Kord) {
 
     fun message(channelId: Snowflake, messageId: Snowflake): MessageBehavior =
-            MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
+        MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
 
     fun channel(id: Snowflake): ChannelBehavior =
-            ChannelBehavior(id, kord)
+        ChannelBehavior(id, kord)
 
     fun messageChannel(id: Snowflake): MessageChannelBehavior =
-            MessageChannelBehavior(id, kord)
+        MessageChannelBehavior(id, kord)
 
     fun guildChannel(guildId: Snowflake, id: Snowflake): GuildChannelBehavior =
-            GuildChannelBehavior(guildId = guildId, id = id, kord = kord)
+        GuildChannelBehavior(guildId = guildId, id = id, kord = kord)
 
     fun guildMessageChannel(guildId: Snowflake, id: Snowflake): GuildMessageChannelBehavior =
-            GuildMessageChannelBehavior(guildId = guildId, id = id, kord = kord)
+        GuildMessageChannelBehavior(guildId = guildId, id = id, kord = kord)
 
     fun newsChannel(guildId: Snowflake, id: Snowflake): NewsChannelBehavior =
-            NewsChannelBehavior(guildId = guildId, id = id, kord = kord)
+        NewsChannelBehavior(guildId = guildId, id = id, kord = kord)
 
     fun textChannel(guildId: Snowflake, id: Snowflake): TextChannelBehavior =
-            TextChannelBehavior(guildId = guildId, id = id, kord = kord)
+        TextChannelBehavior(guildId = guildId, id = id, kord = kord)
 
     fun voiceChannel(guildId: Snowflake, id: Snowflake): VoiceChannelBehavior =
-            VoiceChannelBehavior(guildId = guildId, id = id, kord = kord)
+        VoiceChannelBehavior(guildId = guildId, id = id, kord = kord)
 
     fun storeChannel(guildId: Snowflake, id: Snowflake): StoreChannelBehavior =
-            StoreChannelBehavior(guildId = guildId, id = id, kord = kord)
+        StoreChannelBehavior(guildId = guildId, id = id, kord = kord)
 
     fun guild(id: Snowflake): GuildBehavior =
-            GuildBehavior(id, kord)
+        GuildBehavior(id, kord)
 
     fun guildEmoji(guildId: Snowflake, id: Snowflake, kord: Kord): GuildEmojiBehavior =
-            GuildEmojiBehavior(guildId = guildId, id = id, kord = kord)
+        GuildEmojiBehavior(guildId = guildId, id = id, kord = kord)
 
     fun role(guildId: Snowflake, id: Snowflake): RoleBehavior =
-            RoleBehavior(guildId = guildId, id = id, kord = kord)
+        RoleBehavior(guildId = guildId, id = id, kord = kord)
 
     fun user(id: Snowflake): UserBehavior =
-            UserBehavior(id, kord)
+        UserBehavior(id, kord)
 
     fun member(guildId: Snowflake, id: Snowflake): MemberBehavior =
-            MemberBehavior(guildId = guildId, id = id, kord = kord)
+        MemberBehavior(guildId = guildId, id = id, kord = kord)
 
     fun webhook(id: Snowflake): WebhookBehavior =
-            WebhookBehavior(id, kord)
+        WebhookBehavior(id, kord)
 
     override fun toString(): String {
         return "Unsafe"

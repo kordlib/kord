@@ -13,29 +13,29 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class DiscordBotActivity(
-        val name: String,
-        val type: ActivityType,
-        val url: Optional<String?> = Optional.Missing()
+    val name: String,
+    val type: ActivityType,
+    val url: Optional<String?> = Optional.Missing()
 )
 
 @Serializable
 data class DiscordActivity(
-        val name: String,
-        val type: ActivityType,
-        val url: Optional<String?> = Optional.Missing(),
-        @SerialName("created_at")
-        val createdAt: Long,
-        val timestamps: Optional<DiscordActivityTimeStamps> = Optional.Missing(),
-        @SerialName("application_id")
-        val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
-        val details: Optional<String?> = Optional.Missing(),
-        val state: Optional<String?> = Optional.Missing(),
-        val emoji: Optional<DiscordActivityEmoji?> = Optional.Missing(),
-        val party: Optional<DiscordActivityParty> = Optional.Missing(),
-        val assets: Optional<DiscordActivityAssets> = Optional.Missing(),
-        val secrets: Optional<DiscordActivitySecrets> = Optional.Missing(),
-        val instance: OptionalBoolean = OptionalBoolean.Missing,
-        val flags: Optional<ActivityFlags> = Optional.Missing()
+    val name: String,
+    val type: ActivityType,
+    val url: Optional<String?> = Optional.Missing(),
+    @SerialName("created_at")
+    val createdAt: Long,
+    val timestamps: Optional<DiscordActivityTimeStamps> = Optional.Missing(),
+    @SerialName("application_id")
+    val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val details: Optional<String?> = Optional.Missing(),
+    val state: Optional<String?> = Optional.Missing(),
+    val emoji: Optional<DiscordActivityEmoji?> = Optional.Missing(),
+    val party: Optional<DiscordActivityParty> = Optional.Missing(),
+    val assets: Optional<DiscordActivityAssets> = Optional.Missing(),
+    val secrets: Optional<DiscordActivitySecrets> = Optional.Missing(),
+    val instance: OptionalBoolean = OptionalBoolean.Missing,
+    val flags: Optional<ActivityFlags> = Optional.Missing()
 )
 
 enum class ActivityFlag(val value: Int) {
@@ -52,7 +52,7 @@ class ActivityFlags(val value: Int) {
 
     val flags: Set<ActivityFlag> get() = ActivityFlag.values().filter { (it.value and value) == it.value }.toSet()
 
-    operator fun contains(flag: ActivityFlag) : Boolean = (flag.value and value) == flag.value
+    operator fun contains(flag: ActivityFlag): Boolean = (flag.value and value) == flag.value
 
     internal object Serializer : KSerializer<ActivityFlags> {
         override val descriptor: SerialDescriptor
@@ -69,29 +69,29 @@ class ActivityFlags(val value: Int) {
 
 @Serializable
 data class DiscordActivityTimeStamps(
-        val start: OptionalLong = OptionalLong.Missing,
-        val end: OptionalLong = OptionalLong.Missing
+    val start: OptionalLong = OptionalLong.Missing,
+    val end: OptionalLong = OptionalLong.Missing
 )
 
 @Serializable
 data class DiscordActivityEmoji(
-        val name: String,
-        val id: OptionalSnowflake = OptionalSnowflake.Missing,
-        val animated: OptionalBoolean = OptionalBoolean.Missing
+    val name: String,
+    val id: OptionalSnowflake = OptionalSnowflake.Missing,
+    val animated: OptionalBoolean = OptionalBoolean.Missing
 )
 
 @Serializable
 data class DiscordActivityParty(
-        val id: Optional<String> = Optional.Missing(),
-        val size: Optional<DiscordActivityPartySize> = Optional.Missing()
+    val id: Optional<String> = Optional.Missing(),
+    val size: Optional<DiscordActivityPartySize> = Optional.Missing()
 )
 
 @Serializable(DiscordActivityPartySize.Serializer::class)
 data class DiscordActivityPartySize(
-        val current: Int,
-        val maximum: Int
+    val current: Int,
+    val maximum: Int
 ) {
-    internal object Serializer: KSerializer<DiscordActivityPartySize> {
+    internal object Serializer : KSerializer<DiscordActivityPartySize> {
         @OptIn(ExperimentalSerializationApi::class)
         override val descriptor: SerialDescriptor
             get() = listSerialDescriptor(Int.serializer().descriptor)
@@ -111,21 +111,21 @@ data class DiscordActivityPartySize(
 
 @Serializable
 data class DiscordActivityAssets(
-        @SerialName("large_image")
-        val largeImage: Optional<String> = Optional.Missing(),
-        @SerialName("large_text")
-        val largeText: Optional<String> = Optional.Missing(),
-        @SerialName("small_image")
-        val smallImage: Optional<String> = Optional.Missing(),
-        @SerialName("small_text")
-        val smallText: Optional<String> = Optional.Missing()
+    @SerialName("large_image")
+    val largeImage: Optional<String> = Optional.Missing(),
+    @SerialName("large_text")
+    val largeText: Optional<String> = Optional.Missing(),
+    @SerialName("small_image")
+    val smallImage: Optional<String> = Optional.Missing(),
+    @SerialName("small_text")
+    val smallText: Optional<String> = Optional.Missing()
 )
 
 @Serializable
 data class DiscordActivitySecrets(
-        val join: Optional<String> = Optional.Missing(),
-        val spectate: Optional<String> = Optional.Missing(),
-        val match: Optional<String> = Optional.Missing()
+    val join: Optional<String> = Optional.Missing(),
+    val spectate: Optional<String> = Optional.Missing(),
+    val match: Optional<String> = Optional.Missing()
 )
 
 @Serializable(with = ActivityType.ActivityTypeSerializer::class)

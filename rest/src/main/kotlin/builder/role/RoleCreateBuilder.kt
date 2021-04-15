@@ -10,7 +10,7 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildRoleCreateRequest
 
 @KordDsl
-class RoleCreateBuilder : AuditRequestBuilder<GuildRoleCreateRequest>{
+class RoleCreateBuilder : AuditRequestBuilder<GuildRoleCreateRequest> {
     override var reason: String? = null
 
     private var _color: Optional<Color> = Optional.Missing()
@@ -29,10 +29,10 @@ class RoleCreateBuilder : AuditRequestBuilder<GuildRoleCreateRequest>{
     var permissions: Permissions? by ::_permissions.delegate()
 
     override fun toRequest(): GuildRoleCreateRequest = GuildRoleCreateRequest(
-            color = _color,
-            separate = _hoist,
-            name = _name,
-            mentionable = _mentionable,
-            permissions = _permissions
+        color = _color,
+        separate = _hoist,
+        name = _name,
+        mentionable = _mentionable,
+        permissions = _permissions
     )
 }

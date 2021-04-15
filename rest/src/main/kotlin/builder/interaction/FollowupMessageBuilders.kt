@@ -51,7 +51,6 @@ class PublicFollowupMessageModifyBuilder :
     }
 
 
-
     override fun toRequest(): FollowupMessageModifyRequest {
         return FollowupMessageModifyRequest(
             _content,
@@ -141,7 +140,8 @@ class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessa
 
 @KordPreview
 @KordDsl
-class EphemeralFollowupMessageCreateBuilder(var content: String) : RequestBuilder<MultipartFollowupMessageCreateRequest> {
+class EphemeralFollowupMessageCreateBuilder(var content: String) :
+    RequestBuilder<MultipartFollowupMessageCreateRequest> {
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()

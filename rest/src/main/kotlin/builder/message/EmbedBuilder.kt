@@ -148,17 +148,17 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
     }
 
     override fun toRequest(): EmbedRequest = EmbedRequest(
-            _title,
-            Optional.Value("embed"),
-            _description,
-            _url,
-            _timestamp.map { DateTimeFormatter.ISO_INSTANT.format(it) },
-            _color,
-            _footer.map { it.toRequest() },
-            _image.map { EmbedImageRequest(it) },
-            _thumbnail.map { it.toRequest() },
-            _author.map { it.toRequest() },
-            Optional.missingOnEmpty(fields).mapList { it.toRequest() }
+        _title,
+        Optional.Value("embed"),
+        _description,
+        _url,
+        _timestamp.map { DateTimeFormatter.ISO_INSTANT.format(it) },
+        _color,
+        _footer.map { it.toRequest() },
+        _image.map { EmbedImageRequest(it) },
+        _thumbnail.map { it.toRequest() },
+        _author.map { it.toRequest() },
+        Optional.missingOnEmpty(fields).mapList { it.toRequest() }
     )
 
     @KordDsl
@@ -196,12 +196,14 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
     class Author : RequestBuilder<EmbedAuthorRequest> {
 
         private var _name: Optional<String> = Optional.Missing()
+
         /**
          * The name of the author. This field is required if [url] is not null.
          */
         var name: String? by ::_name.delegate()
 
         private var _url: Optional<String> = Optional.Missing()
+
         /**
          * The link that will be applied to the author's [name]. [name] is a mandatory field if [url] is not null.
          */
@@ -209,6 +211,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
 
 
         private var _icon: Optional<String> = Optional.Missing()
+
         /**
          * The image url that will be displayed next to the author's name.
          */
@@ -247,6 +250,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
 
 
         private var _inline: OptionalBoolean = OptionalBoolean.Missing
+
         /**
          * Whether the field should be rendered inline, `false` by default.
          */

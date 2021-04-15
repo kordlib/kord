@@ -35,8 +35,10 @@ sealed class ReactionEmoji {
     }
 
     companion object {
-        fun from(guildEmoji: GuildEmoji) = Custom(guildEmoji.id, guildEmoji.name
-                ?: error("emojis without name cannot be used to react"), guildEmoji.isAnimated)
+        fun from(guildEmoji: GuildEmoji) = Custom(
+            guildEmoji.id, guildEmoji.name
+                ?: error("emojis without name cannot be used to react"), guildEmoji.isAnimated
+        )
 
         fun from(guildEmoji: RemovedReactionData) = when (guildEmoji.id) {
             null -> Unicode(guildEmoji.name!!)

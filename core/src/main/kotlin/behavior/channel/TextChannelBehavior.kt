@@ -40,7 +40,8 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
     /**
      * Returns a new [TextChannelBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannelBehavior = TextChannelBehavior(guildId, id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannelBehavior =
+        TextChannelBehavior(guildId, id, kord, strategy)
 
 }
 
@@ -57,7 +58,7 @@ fun TextChannelBehavior(
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false

@@ -16,7 +16,11 @@ import java.time.Duration as JavaDuration
  * @param capacity The maximum amount of permits that are given for each permit.
  * @param refillInterval The duration between permit refills.
  */
-class BucketRateLimiter(private val capacity: Int, private val refillInterval: Duration, private val clock: Clock = Clock.systemUTC()) : RateLimiter {
+class BucketRateLimiter(
+    private val capacity: Int,
+    private val refillInterval: Duration,
+    private val clock: Clock = Clock.systemUTC()
+) : RateLimiter {
 
     private val mutex = Mutex()
 

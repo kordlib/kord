@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RoleTagsData(
-        val botId: OptionalSnowflake,
-        val integrationId: OptionalSnowflake,
-        val premiumSubscriber: Boolean,
+    val botId: OptionalSnowflake,
+    val integrationId: OptionalSnowflake,
+    val premiumSubscriber: Boolean,
 ) {
 
     companion object {

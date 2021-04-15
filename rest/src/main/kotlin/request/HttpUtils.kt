@@ -23,7 +23,7 @@ val HttpResponse.channelResetPoint: Instant
         return Instant.ofEpochMilli(unixSeconds.times(1000).toLong())
     }
 
-fun HttpResponse.channelResetPoint(clock: Clock) : Instant {
+fun HttpResponse.channelResetPoint(clock: Clock): Instant {
     val seconds = headers[rateLimitResetAfter]?.toDouble() ?: return clock.instant()
     return clock.instant().plus(Duration.ofMillis(seconds.times(1000).toLong()))
 }
@@ -45,18 +45,19 @@ fun HttpResponse.globalSuspensionPoint(clock: Clock): Long {
     return (secondsWait * 1000) + clock.millis()
 }
 
-fun HttpResponse.logString(body: String) = "[RESPONSE]:${status.value}:${call.request.method.value}:${call.request.url} body:$body"
+fun HttpResponse.logString(body: String) =
+    "[RESPONSE]:${status.value}:${call.request.method.value}:${call.request.url} body:$body"
 
 suspend fun HttpResponse.errorString(): String {
     val message = String(this.readBytes())
     return logString(message)
 }
 
-fun Request<*,*>.logString(body: String): String {
+fun Request<*, *>.logString(body: String): String {
     val method = route.method.value
     val path = route.path
     val params = routeParams.entries
-            .joinToString(",", "[", "]") { (key, value) -> "$key=$value" }
+        .joinToString(",", "[", "]") { (key, value) -> "$key=$value" }
 
     return "[REQUEST]:$method:$path params:$params body:$body"
 }

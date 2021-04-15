@@ -16,7 +16,12 @@ import kotlin.contracts.contract
 class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createEmoji(guildId: Snowflake, name: String, image: Image, builder: EmojiCreateBuilder.() -> Unit = {}): DiscordEmoji {
+    suspend inline fun createEmoji(
+        guildId: Snowflake,
+        name: String,
+        image: Image,
+        builder: EmojiCreateBuilder.() -> Unit = {}
+    ): DiscordEmoji {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -29,20 +34,26 @@ class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend fun createEmoji(guildId: Snowflake, emoji: EmojiCreateRequest, reason: String? = null) = call(Route.GuildEmojiPost) {
-        keys[Route.GuildId] = guildId
-        body(EmojiCreateRequest.serializer(), emoji)
-        reason?.let { header("X-Audit-Log-Reason", reason) }
-    }
+    suspend fun createEmoji(guildId: Snowflake, emoji: EmojiCreateRequest, reason: String? = null) =
+        call(Route.GuildEmojiPost) {
+            keys[Route.GuildId] = guildId
+            body(EmojiCreateRequest.serializer(), emoji)
+            reason?.let { header("X-Audit-Log-Reason", reason) }
+        }
 
-    suspend fun deleteEmoji(guildId: Snowflake, emojiId: Snowflake, reason: String? = null) = call(Route.GuildEmojiDelete) {
-        keys[Route.GuildId] = guildId
-        keys[Route.EmojiId] = emojiId
-        reason?.let { header("X-Audit-Log-Reason", reason) }
-    }
+    suspend fun deleteEmoji(guildId: Snowflake, emojiId: Snowflake, reason: String? = null) =
+        call(Route.GuildEmojiDelete) {
+            keys[Route.GuildId] = guildId
+            keys[Route.EmojiId] = emojiId
+            reason?.let { header("X-Audit-Log-Reason", reason) }
+        }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyEmoji(guildId: Snowflake, emojiId: Snowflake, builder: EmojiModifyBuilder.() -> Unit): DiscordEmoji {
+    suspend inline fun modifyEmoji(
+        guildId: Snowflake,
+        emojiId: Snowflake,
+        builder: EmojiModifyBuilder.() -> Unit
+    ): DiscordEmoji {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }

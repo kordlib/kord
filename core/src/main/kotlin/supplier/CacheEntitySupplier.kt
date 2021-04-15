@@ -266,7 +266,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Template(data, kord)
     }
 
-    override  fun getTemplates(guildId: Snowflake): Flow<Template> {
+    override fun getTemplates(guildId: Snowflake): Flow<Template> {
         return cache.query<TemplateData>() {
             idEq(TemplateData::sourceGuildId, guildId)
         }.asFlow().map { Template(it, kord) }

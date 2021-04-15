@@ -11,10 +11,10 @@ import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class WebhookEventHandler(
-        kord: Kord,
-        gateway: MasterGateway,
-        cache: DataCache,
-        coreFlow: MutableSharedFlow<CoreEvent>
+    kord: Kord,
+    gateway: MasterGateway,
+    cache: DataCache,
+    coreFlow: MutableSharedFlow<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {

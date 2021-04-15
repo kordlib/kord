@@ -107,9 +107,9 @@ interface MemberBehavior : KordEntity, UserBehavior {
      * @throws [EntityNotFoundException] if the [Presence] wasn't present.
      */
     suspend fun getPresence(): Presence = getPresenceOrNull() ?: EntityNotFoundException.guildEntityNotFound(
-            "Presence for Member",
-            guildId = guildId,
-            id = id
+        "Presence for Member",
+        guildId = guildId,
+        id = id
     )
 
     /**
@@ -138,9 +138,9 @@ interface MemberBehavior : KordEntity, UserBehavior {
      * @throws [EntityNotFoundException] if the [VoiceState] wasn't present.
      */
     suspend fun getVoiceState(): VoiceState = getVoiceStateOrNull() ?: EntityNotFoundException.guildEntityNotFound(
-            "VoiceState for Member",
-            guildId = guildId,
-            id = id
+        "VoiceState for Member",
+        guildId = guildId,
+        id = id
     )
 
     /**
@@ -163,10 +163,17 @@ interface MemberBehavior : KordEntity, UserBehavior {
     /**
      * Returns a new [MemberBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberBehavior = MemberBehavior(guildId = guildId, id = id, kord = kord, strategy = strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberBehavior =
+        MemberBehavior(guildId = guildId, id = id, kord = kord, strategy = strategy)
 
 }
- fun MemberBehavior(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): MemberBehavior = object : MemberBehavior {
+
+fun MemberBehavior(
+    guildId: Snowflake,
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+): MemberBehavior = object : MemberBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id
     override val kord: Kord = kord
@@ -184,6 +191,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
         return "MemberBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
     }
 }
+
 /**
  * Requests to ban this member.
  *
@@ -209,8 +217,8 @@ suspend inline fun MemberBehavior.edit(builder: MemberModifyBuilder.() -> Unit):
     }
     val response = kord.rest.guild.modifyGuildMember(guildId, id, builder)
     return Member(
-            MemberData.from(userId = response.user.value!!.id, guildId = guildId, response),
-            UserData.from(response.user.value!!),
-            kord
+        MemberData.from(userId = response.user.value!!.id, guildId = guildId, response),
+        UserData.from(response.user.value!!),
+        kord
     )
 }

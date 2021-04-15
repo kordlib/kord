@@ -58,11 +58,17 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
     /**
      * Returns a new [NewsChannelBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): NewsChannelBehavior = NewsChannelBehavior(guildId, id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): NewsChannelBehavior =
+        NewsChannelBehavior(guildId, id, kord, strategy)
 
 }
 
-fun NewsChannelBehavior(guildId: Snowflake, id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): NewsChannelBehavior = object : NewsChannelBehavior {
+fun NewsChannelBehavior(
+    guildId: Snowflake,
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+): NewsChannelBehavior = object : NewsChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id
     override val kord: Kord = kord
@@ -70,7 +76,7 @@ fun NewsChannelBehavior(guildId: Snowflake, id: Snowflake, kord: Kord, strategy:
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false

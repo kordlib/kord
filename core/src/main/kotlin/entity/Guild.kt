@@ -183,8 +183,10 @@ class Guild(
      */
     val joinedTime: Instant?
         get() = data.joinedAt.value?.let {
-            DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(it,
-                Instant::from)
+            DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(
+                it,
+                Instant::from
+            )
         }
 
     /**

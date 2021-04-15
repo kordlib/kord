@@ -6,8 +6,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
 internal class ReconnectHandler(
-        flow: Flow<Event>,
-        private val reconnect: suspend () -> Unit
+    flow: Flow<Event>,
+    private val reconnect: suspend () -> Unit
 ) : Handler(flow, "ReconnectHandler") {
 
     override fun start() {

@@ -151,7 +151,7 @@ data class DiscordGuild(
     @SerialName("approximate_presence_count")
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
 
-)
+    )
 
 /**
  * A partial representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object

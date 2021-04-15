@@ -20,7 +20,7 @@ class AuditLog(val data: DiscordAuditLog, val guildId: Snowflake, override val k
 
 }
 
-class AuditLogEntry(val data: DiscordAuditLogEntry, override val kord:Kord): KordObject {
+class AuditLogEntry(val data: DiscordAuditLogEntry, override val kord: Kord) : KordObject {
     val targetId: Snowflake? get() = data.targetId
 
     val changes: List<AuditLogChange<*>> get() = data.changes.orEmpty()
@@ -33,10 +33,10 @@ class AuditLogEntry(val data: DiscordAuditLogEntry, override val kord:Kord): Kor
 
     val options: AuditLogEntryOptionalInfo? get() = data.options.value
 
-    val reason:  String? get() = data.reason.value
+    val reason: String? get() = data.reason.value
 
     @Suppress("UNCHECKED_CAST")
     operator fun <T> get(value: AuditLogChangeKey<T>): AuditLogChange<T>? =
-            changes.firstOrNull { it.key == value } as? AuditLogChange<T>
+        changes.firstOrNull { it.key == value } as? AuditLogChange<T>
 
 }

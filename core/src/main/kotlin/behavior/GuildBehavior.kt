@@ -513,7 +513,7 @@ interface GuildBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 }
 
- fun GuildBehavior(
+fun GuildBehavior(
     id: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
@@ -900,6 +900,7 @@ inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.(
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
 }
+
 /**
  * Executes a [RequestGuildMembers] command configured by the [builder] for guild
  * on this gateway, returning a flow of [MembersChunkEvent] responses.

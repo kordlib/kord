@@ -6,8 +6,8 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.data.GuildPreviewData
 
 class GuildPreview(
-        val data: GuildPreviewData,
-        override val kord: Kord
+    val data: GuildPreviewData,
+    override val kord: Kord
 ) : KordEntity {
 
     override val id: Snowflake
@@ -46,7 +46,7 @@ class GuildPreview(
     /**
      * Approximate number of members in this guild.
      */
-    val approximateMemberCount: Int get() =  data.approximateMemberCount
+    val approximateMemberCount: Int get() = data.approximateMemberCount
 
     /**
      * Approximate number of online members in this guild.

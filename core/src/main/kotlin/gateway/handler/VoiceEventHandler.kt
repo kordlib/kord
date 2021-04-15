@@ -21,10 +21,10 @@ import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class VoiceEventHandler(
-        kord: Kord,
-        gateway: MasterGateway,
-        cache: DataCache,
-        coreFlow: MutableSharedFlow<CoreEvent>
+    kord: Kord,
+    gateway: MasterGateway,
+    cache: DataCache,
+    coreFlow: MutableSharedFlow<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
@@ -37,12 +37,12 @@ internal class VoiceEventHandler(
         val data = VoiceStateData.from(event.voiceState.guildId.value!!, event.voiceState)
 
         val old = cache.query<VoiceStateData> { idEq(VoiceStateData::id, data.id) }
-                .asFlow().map { VoiceState(it, kord) }.singleOrNull()
+            .asFlow().map { VoiceState(it, kord) }.singleOrNull()
 
         cache.put(data)
         val new = VoiceState(data, kord)
 
-        coreFlow.emit( VoiceStateUpdateEvent(old, new, shard))
+        coreFlow.emit(VoiceStateUpdateEvent(old, new, shard))
     }
 
     private suspend fun handle(event: VoiceServerUpdate, shard: Int) = with(event.voiceServerUpdateData) {

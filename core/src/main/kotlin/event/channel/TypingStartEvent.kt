@@ -21,10 +21,10 @@ import dev.kord.core.toInstant
 import java.time.Instant
 
 class TypingStartEvent(
-        val data: TypingStartEventData,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
+    val data: TypingStartEventData,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
     val channelId: Snowflake get() = data.channelId
@@ -82,12 +82,12 @@ class TypingStartEvent(
     suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
-            TypingStartEvent(
-                    data,
-                    kord,
-                    shard,
-                    supplier
-            )
+        TypingStartEvent(
+            data,
+            kord,
+            shard,
+            supplier
+        )
 
     override fun toString(): String {
         return "TypingStartEvent(channelId=$channelId, userId=$userId, guildId=$guildId, started=$started, kord=$kord, shard=$shard, supplier=$supplier)"

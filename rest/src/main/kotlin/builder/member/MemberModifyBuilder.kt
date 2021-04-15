@@ -29,10 +29,10 @@ class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest> {
     var roles: MutableSet<Snowflake>? by ::_roles.delegate()
 
     override fun toRequest(): GuildMemberModifyRequest = GuildMemberModifyRequest(
-            nick = _nickname,
-            channelId = _voiceChannelId,
-            mute = _muted,
-            deaf = _deafened,
-            roles = _roles
+        nick = _nickname,
+        channelId = _voiceChannelId,
+        mute = _muted,
+        deaf = _deafened,
+        roles = _roles
     )
 }
