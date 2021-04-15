@@ -30,6 +30,7 @@ import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
+import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -69,6 +70,12 @@ class Kord(
     @KordPreview
     val globalCommands: Flow<GlobalApplicationCommand>
         get() = slashCommands.getGlobalApplicationCommands()
+
+
+    @KordPreview
+    suspend fun getGlobalApplicationCommand(commandId: Snowflake) =
+        slashCommands.getGlobalApplicationCommand(commandId)
+
 
     /**
      * The default supplier, obtained through Kord's [resources] and configured through [KordBuilder.defaultStrategy].
@@ -156,9 +163,11 @@ class Kord(
      * @return The newly created Guild.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("guild name is a mandatory field",
+    @Deprecated(
+        "guild name is a mandatory field",
         ReplaceWith("createGuild(\"name\", builder)"),
-        DeprecationLevel.WARNING)
+        DeprecationLevel.WARNING
+    )
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
@@ -221,6 +230,7 @@ class Kord(
         strategy: EntitySupplyStrategy<*> =
             resources.defaultStrategy,
     ): Channel? = strategy.supply(this).getChannelOrNull(id)
+
     /**
      * Requests to get the [Channel] as type [T] through the [strategy],
      * returns null if the [Channel] isn't present or is not of type [T].
@@ -239,6 +249,52 @@ class Kord(
     ): Guild? = strategy.supply(this).getGuildOrNull(id)
 
     /**
+     * Requests to get the [Webhook] in this guild.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the webhook was not present.
+     */
+    suspend fun getWebhook(
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+    ): Webhook = strategy.supply(this).getWebhook(id)
+
+    /**
+     * Requests to get the [Webhook] in this guild with an authentication token,
+     * returns null if the webhook was not present.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+
+    suspend fun getWebhookOrNull(
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+    ): Webhook? = strategy.supply(this).getWebhookOrNull(id)
+
+    /**
+     * Requests to get the [Webhook] in this guild with an authentication token.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the webhook was not present.
+     */
+    suspend fun getWebhookWithToken(
+        id: Snowflake,
+        token: String,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+    ): Webhook = strategy.supply(this).getWebhookWithToken(id, token)
+
+    /**
+     * Requests to get the [Webhook] in this guild with an authentication token,
+     * returns null if the webhook was not present.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+
+    suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String, strategy: EntitySupplyStrategy<*>): Webhook? =
+        strategy.supply(this).getWebhookWithTokenOrNull(id, token)
+
+
+    /**
      * Requests to get the [User] that represents this bot account through the [strategy],
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -247,8 +303,11 @@ class Kord(
     suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =
         strategy.supply(this).getSelf()
 
-    suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User =
-        User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
+    @OptIn(ExperimentalContracts::class)
+    suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
+    }
 
     /**
      * Requests to get the [User] that with the [id] through the [strategy],
@@ -321,18 +380,27 @@ class Kord(
     }
 
 
-
+    @OptIn(ExperimentalContracts::class)
     @KordPreview
     suspend inline fun createGlobalApplicationCommand(
         name: String,
         description: String,
         builder: ApplicationCommandCreateBuilder.() -> Unit = {},
-    ) = slashCommands.createGlobalApplicationCommand(name, description, builder)
+    ): GlobalApplicationCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return slashCommands.createGlobalApplicationCommand(name, description, builder)
+    }
 
+    @OptIn(ExperimentalContracts::class)
     @KordPreview
     suspend inline fun createGlobalApplicationCommands(
         builder: ApplicationCommandsCreateBuilder.() -> Unit,
-    ) = slashCommands.createGlobalApplicationCommands(builder)
+    ): Flow<GlobalApplicationCommand> {
+
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return slashCommands.createGlobalApplicationCommands(builder)
+
+    }
 
 
 }
@@ -342,8 +410,11 @@ class Kord(
  *
  * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
  */
-suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Kord =
-    KordBuilder(token).apply(builder).build()
+@OptIn(ExperimentalContracts::class)
+suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Kord {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return KordBuilder(token).apply(builder).build()
+}
 
 
 /**

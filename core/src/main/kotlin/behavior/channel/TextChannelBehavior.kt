@@ -13,6 +13,9 @@ import dev.kord.rest.builder.channel.TextChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchTextChannel
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 interface TextChannelBehavior : GuildMessageChannelBehavior {
 
@@ -37,7 +40,8 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
     /**
      * Returns a new [TextChannelBehavior] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannelBehavior = TextChannelBehavior(guildId, id, kord, strategy)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannelBehavior =
+        TextChannelBehavior(guildId, id, kord, strategy)
 
 }
 
@@ -54,7 +58,7 @@ fun TextChannelBehavior(
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false
@@ -73,9 +77,10 @@ fun TextChannelBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun TextChannelBehavior.edit(builder: TextChannelModifyBuilder.() -> Unit): TextChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchTextChannel(id, builder)
-
     val data = ChannelData.from(response)
     return Channel.from(data, kord) as TextChannel
 }

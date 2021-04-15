@@ -11,6 +11,7 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.createInvite
 import dev.kord.rest.Image
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.RestRequestException

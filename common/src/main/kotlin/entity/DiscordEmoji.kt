@@ -19,22 +19,22 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class DiscordEmoji(
-        val id: Snowflake?,
-        val name: String?,
-        val roles: Optional<List<Snowflake>> = Optional.Missing(),
-        val user: Optional<DiscordUser> = Optional.Missing(),
-        @SerialName("require_colons")
-        val requireColons: OptionalBoolean = OptionalBoolean.Missing,
-        val managed: OptionalBoolean = OptionalBoolean.Missing,
-        val animated: OptionalBoolean = OptionalBoolean.Missing,
-        val available: OptionalBoolean = OptionalBoolean.Missing,
+    val id: Snowflake?,
+    val name: String?,
+    val roles: Optional<List<Snowflake>> = Optional.Missing(),
+    val user: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("require_colons")
+    val requireColons: OptionalBoolean = OptionalBoolean.Missing,
+    val managed: OptionalBoolean = OptionalBoolean.Missing,
+    val animated: OptionalBoolean = OptionalBoolean.Missing,
+    val available: OptionalBoolean = OptionalBoolean.Missing,
 )
 
 @Serializable
 data class DiscordUpdatedEmojis(
-        @SerialName("guild_id")
-        val guildId: Snowflake,
-        val emojis: List<DiscordEmoji>,
+    @SerialName("guild_id")
+    val guildId: Snowflake,
+    val emojis: List<DiscordEmoji>,
 )
 
 
@@ -47,7 +47,7 @@ data class DiscordUpdatedEmojis(
  */
 @Serializable
 data class DiscordPartialEmoji(
-        val id: Snowflake?,
-        val name: String?,
-        val animated: OptionalBoolean = OptionalBoolean.Missing,
+    val id: Snowflake?,
+    val name: String?,
+    val animated: OptionalBoolean = OptionalBoolean.Missing,
 )

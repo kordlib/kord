@@ -45,11 +45,11 @@ interface WebhookBehavior : KordEntity, Strategizable {
      * Returns a new [WebhookBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): WebhookBehavior =
-            WebhookBehavior(id, kord, strategy)
+        WebhookBehavior(id, kord, strategy)
 
 }
 
-internal  fun WebhookBehavior(
+internal fun WebhookBehavior(
     id: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
@@ -118,10 +118,10 @@ suspend inline fun WebhookBehavior.execute(token: String, builder: ExecuteWebhoo
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
     val response = kord.rest.webhook.executeWebhook(
-            token = token,
-            webhookId = id,
-            wait = true,
-            builder = builder
+        token = token,
+        webhookId = id,
+        wait = true,
+        builder = builder
     )!!
 
     val data = MessageData.from(response)

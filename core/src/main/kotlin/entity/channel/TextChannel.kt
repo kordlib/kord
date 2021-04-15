@@ -14,9 +14,9 @@ import java.util.*
  * An instance of a Discord Text Channel associated to a guild.
  */
 class TextChannel(
-        override val data: ChannelData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    override val data: ChannelData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : GuildMessageChannel, TextChannelBehavior {
 
     /**
@@ -35,11 +35,11 @@ class TextChannel(
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.cacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannel =
-            TextChannel(data, kord, strategy.supply(kord))
+        TextChannel(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false

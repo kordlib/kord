@@ -16,14 +16,14 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 
 class ReactionAddEvent(
-        val userId: Snowflake,
-        val channelId: Snowflake,
-        val messageId: Snowflake,
-        val guildId: Snowflake?,
-        val emoji: ReactionEmoji,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val userId: Snowflake,
+    val channelId: Snowflake,
+    val messageId: Snowflake,
+    val guildId: Snowflake?,
+    val emoji: ReactionEmoji,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
     val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
@@ -51,7 +51,7 @@ class ReactionAddEvent(
     suspend fun getUserAsMember(): Member? = guildId?.let { supplier.getMemberOrNull(it, userId) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionAddEvent =
-            ReactionAddEvent(userId, channelId, messageId, guildId, emoji, kord, shard, strategy.supply(kord))
+        ReactionAddEvent(userId, channelId, messageId, guildId, emoji, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "ReactionAddEvent(userId=$userId, channelId=$channelId, messageId=$messageId, guildId=$guildId, emoji=$emoji, kord=$kord, shard=$shard, supplier=$supplier)"

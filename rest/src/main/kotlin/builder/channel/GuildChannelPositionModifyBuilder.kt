@@ -8,9 +8,12 @@ import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.json.request.ChannelPositionSwapRequest
 import dev.kord.rest.json.request.GuildChannelPositionModifyRequest
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 @KordDsl
-class GuildChannelPositionModifyBuilder: AuditRequestBuilder<GuildChannelPositionModifyRequest>  {
+class GuildChannelPositionModifyBuilder : AuditRequestBuilder<GuildChannelPositionModifyRequest> {
     override var reason: String? = null
     var swaps: MutableList<GuildChannelSwapBuilder> = mutableListOf()
 
@@ -22,14 +25,16 @@ class GuildChannelPositionModifyBuilder: AuditRequestBuilder<GuildChannelPositio
         pairs.forEach { move(it) }
     }
 
-    inline fun move(channel: Snowflake, builder: GuildChannelSwapBuilder.() -> Unit){
+    @OptIn(ExperimentalContracts::class)
+    inline fun move(channel: Snowflake, builder: GuildChannelSwapBuilder.() -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         swaps.firstOrNull { it.channelId == channel }?.builder() ?: run {
             swaps.add(GuildChannelSwapBuilder(channel).also(builder))
         }
     }
 
     override fun toRequest(): GuildChannelPositionModifyRequest =
-            GuildChannelPositionModifyRequest(swaps.map { it.toRequest() })
+        GuildChannelPositionModifyRequest(swaps.map { it.toRequest() })
 }
 
 
@@ -37,6 +42,7 @@ class GuildChannelSwapBuilder(var channelId: Snowflake) {
 
 
     private var _position: OptionalInt? = OptionalInt.Missing
+
     /**
      * The new position of this channel
      */
@@ -63,7 +69,7 @@ class GuildChannelSwapBuilder(var channelId: Snowflake) {
 
     @OptIn(KordExperimental::class)
     fun toRequest(): ChannelPositionSwapRequest = ChannelPositionSwapRequest(
-            channelId, _position, lockPermissionsToParent, parentId
+        channelId, _position, lockPermissionsToParent, parentId
     )
 
 }

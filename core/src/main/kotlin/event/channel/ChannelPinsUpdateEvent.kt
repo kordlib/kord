@@ -16,10 +16,10 @@ import dev.kord.core.toInstant
 import java.time.Instant
 
 class ChannelPinsUpdateEvent(
-        val data: ChannelPinsUpdateEventData,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: ChannelPinsUpdateEventData,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
     val channelId: Snowflake get() = data.channelId
@@ -37,7 +37,7 @@ class ChannelPinsUpdateEvent(
     suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ChannelPinsUpdateEvent =
-            ChannelPinsUpdateEvent(data, kord, shard, strategy.supply(kord))
+        ChannelPinsUpdateEvent(data, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "ChannelPinsUpdateEvent(channelId=$channelId, lastPinTimestamp=$lastPinTimestamp, kord=$kord, shard=$shard, supplier=$supplier)"

@@ -15,9 +15,9 @@ import dev.kord.rest.Image
 import java.util.*
 
 class PartialGuild(
-        val data: PartialGuildData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: PartialGuildData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordEntity, Strategizable {
 
     /**
@@ -56,7 +56,8 @@ class PartialGuild(
     /**
      * Gets the icon url, if present.
      */
-    fun getIconUrl(format: Image.Format): String? = data.icon?.let { "https://cdn.discordapp.com/icons/${id.asString}/$it.${format.extension}" }
+    fun getIconUrl(format: Image.Format): String? =
+        data.icon?.let { "https://cdn.discordapp.com/icons/${id.asString}/$it.${format.extension}" }
 
     /**
      * Requests to get the icon image in the specified [format], if present.
@@ -94,7 +95,7 @@ class PartialGuild(
 
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PartialGuild =
-            PartialGuild(data, kord, strategy.supply(kord))
+        PartialGuild(data, kord, strategy.supply(kord))
 
     override fun toString(): String {
         return "PartialGuild(data=$data, kord=$kord, supplier=$supplier)"

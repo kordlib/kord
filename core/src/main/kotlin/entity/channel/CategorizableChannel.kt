@@ -8,6 +8,9 @@ import dev.kord.core.entity.Invite
 import dev.kord.core.toSnowflakeOrNull
 import dev.kord.rest.builder.channel.InviteCreateBuilder
 import dev.kord.rest.request.RestRequestException
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * An instance of a Discord channel associated to a [category].
@@ -30,17 +33,19 @@ interface CategorizableChannel : GuildChannel {
         }
 
 
-    /**
-     * Request to create an invite for this channel.
-     *
-     * @return the created [Invite].
-     * @throws RestRequestException if something went wrong during the request.
-     */
-    suspend fun createInvite(builder: InviteCreateBuilder.() -> Unit = {}): Invite {
-        val response = kord.rest.channel.createInvite(id, builder)
-        val data = InviteData.from(response)
+}
 
-        return Invite(data, kord)
-    }
+/**
+ * Request to create an invite for this channel.
+ *
+ * @return the created [Invite].
+ * @throws RestRequestException if something went wrong during the request.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun CategorizableChannel.createInvite(builder: InviteCreateBuilder.() -> Unit = {}): Invite {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val response = kord.rest.channel.createInvite(id, builder)
+    val data = InviteData.from(response)
 
+    return Invite(data, kord)
 }

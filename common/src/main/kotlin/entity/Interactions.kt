@@ -155,6 +155,8 @@ data class ResolvedObjects(
 @KordPreview
 data class DiscordInteraction(
     val id: Snowflake,
+    @SerialName("application_id")
+    val applicationId: Snowflake,
     val type: InteractionType,
     val data: DiscordApplicationCommandInteractionData,
     @SerialName("guild_id")
@@ -330,6 +332,7 @@ sealed class DiscordOptionValue<out T>(val value: T) {
         }
     }
 }
+
 @KordPreview
 fun DiscordOptionValue(value: JsonPrimitive): DiscordOptionValue<Any> = when {
     value.isString -> DiscordOptionValue.StringValue(value.content)

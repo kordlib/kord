@@ -17,14 +17,14 @@ import kotlinx.serialization.encoding.Encoder
  */
 @OptIn(ExperimentalSerializationApi::class)
 internal val <T> KSerializer<T>.optional: KSerializer<T?>
-    get() = object: KSerializer<T?> {
+    get() = object : KSerializer<T?> {
 
         override val descriptor: SerialDescriptor
             get() = this@optional.descriptor
 
         override fun deserialize(decoder: Decoder): T? = try {
             decoder.decodeSerializableValue(this@optional)
-        } catch (e :Exception) {
+        } catch (e: Exception) {
             null
         }
 

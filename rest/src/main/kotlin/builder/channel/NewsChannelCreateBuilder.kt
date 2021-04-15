@@ -13,15 +13,15 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 
 @KordDsl
-class NewsChannelCreateBuilder(var name: String): AuditRequestBuilder<GuildChannelCreateRequest> {
+class NewsChannelCreateBuilder(var name: String) : AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
 
     private var _topic: Optional<String> = Optional.Missing()
     var topic: String? by ::_topic.delegate()
-    
+
     private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
     var nsfw: Boolean? by ::_nsfw.delegate()
-    
+
     private var _parentId: OptionalSnowflake = OptionalSnowflake.Missing
     var parentId: Snowflake? by ::_parentId.delegate()
 
@@ -31,12 +31,12 @@ class NewsChannelCreateBuilder(var name: String): AuditRequestBuilder<GuildChann
     val permissionOverwrites: MutableList<Overwrite> = mutableListOf()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
-            name = name,
-            topic = _topic,
-            nsfw = _nsfw,
-            parentId = _parentId,
-            position = _position,
-            permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
-            type = ChannelType.GuildNews
+        name = name,
+        topic = _topic,
+        nsfw = _nsfw,
+        parentId = _parentId,
+        position = _position,
+        permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
+        type = ChannelType.GuildNews
     )
 }

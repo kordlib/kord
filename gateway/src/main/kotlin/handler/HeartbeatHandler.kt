@@ -9,13 +9,13 @@ import kotlin.time.*
 
 @ObsoleteCoroutinesApi
 internal class HeartbeatHandler(
-        flow: Flow<Event>,
-        private val send: suspend (Command) -> Unit,
-        private val restart: suspend () -> Unit,
-        private val ping: (Duration) -> Unit,
-        private val sequence: Sequence,
-        private val ticker: Ticker = Ticker(),
-        private val timeSource: TimeSource = TimeSource.Monotonic
+    flow: Flow<Event>,
+    private val send: suspend (Command) -> Unit,
+    private val restart: suspend () -> Unit,
+    private val ping: (Duration) -> Unit,
+    private val sequence: Sequence,
+    private val ticker: Ticker = Ticker(),
+    private val timeSource: TimeSource = TimeSource.Monotonic
 ) : Handler(flow, "HeartbeatHandler") {
 
     private val possibleZombie = atomic(false)

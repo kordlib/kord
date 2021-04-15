@@ -228,6 +228,10 @@ interface GuildBehavior : KordEntity, Strategizable {
             }
     }
 
+    @KordPreview
+    suspend fun getApplicationCommand(commandId: Snowflake) =
+        kord.slashCommands.getGuildApplicationCommand(id, commandId)
+
     /**
      * Requests to get the this behavior as a [Guild].
      *
@@ -509,7 +513,7 @@ interface GuildBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 }
 
- fun GuildBehavior(
+fun GuildBehavior(
     id: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
@@ -532,18 +536,26 @@ interface GuildBehavior : KordEntity, Strategizable {
 }
 
 
+@OptIn(ExperimentalContracts::class)
 @KordPreview
 suspend inline fun GuildBehavior.createApplicationCommand(
     name: String,
     description: String,
     builder: ApplicationCommandCreateBuilder.() -> Unit = {},
-) = kord.slashCommands.createGuildApplicationCommand(id, name, description, builder)
+): GuildApplicationCommand {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return kord.slashCommands.createGuildApplicationCommand(id, name, description, builder)
+}
 
 
+@OptIn(ExperimentalContracts::class)
 @KordPreview
 suspend inline fun GuildBehavior.createApplicationCommands(
     builder: ApplicationCommandsCreateBuilder.() -> Unit
-) = kord.slashCommands.createGuildApplicationCommands(id, builder)
+): Flow<GuildApplicationCommand> {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return kord.slashCommands.createGuildApplicationCommands(id, builder)
+}
 
 /**
  * Requests to edit this guild.
@@ -862,7 +874,9 @@ suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfOrNull(c
     return channel
 }
 
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)
 }
 
@@ -881,8 +895,11 @@ suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.()
  *  println("user changed nickname from $old to $new")
  *  ```
  */
-inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> =
-    kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
+@OptIn(ExperimentalContracts::class)
+inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
+}
 
 /**
  * Executes a [RequestGuildMembers] command configured by the [builder] for guild
@@ -901,8 +918,10 @@ inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.(
  * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
  * If no nonce was provided one will be generated instead.
  */
+@OptIn(ExperimentalContracts::class)
 @PrivilegedIntent
 inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }): Flow<MembersChunkEvent> {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
     return requestMembers(request)
 }

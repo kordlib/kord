@@ -61,8 +61,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asMessageOrNull(): Message? =
-        supplier.getMessageOrNull(channelId = channelId, messageId = id)
+    suspend fun asMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = id)
 
 
     /**
@@ -84,7 +83,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      */
 
     fun getReactors(emoji: ReactionEmoji): Flow<User> =
-        kord.with(EntitySupplyStrategy.rest).getReactors(channelId, id, emoji)
+            kord.with(EntitySupplyStrategy.rest).getReactors(channelId, id, emoji)
 
     /**
      * Requests to add an [emoji] to this message.
@@ -92,11 +91,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun addReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.createReaction(
-            channelId = channelId,
-            messageId = id,
-            emoji = emoji.urlFormat
-        )
+        kord.rest.channel.createReaction(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
     }
 
     /**
@@ -132,12 +127,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteReaction(userId: Snowflake, emoji: ReactionEmoji) {
-        kord.rest.channel.deleteReaction(
-            channelId = channelId,
-            messageId = id,
-            userId = userId,
-            emoji = emoji.urlFormat
-        )
+        kord.rest.channel.deleteReaction(channelId = channelId, messageId = id, userId = userId, emoji = emoji.urlFormat)
     }
 
     /**
@@ -146,11 +136,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteOwnReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.deleteOwnReaction(
-            channelId = channelId,
-            messageId = id,
-            emoji = emoji.urlFormat
-        )
+        kord.rest.channel.deleteOwnReaction(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
     }
 
     /**
@@ -168,11 +154,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteReaction(emoji: ReactionEmoji) {
-        kord.rest.channel.deleteAllReactionsForEmoji(
-            channelId = channelId,
-            messageId = id,
-            emoji = emoji.urlFormat
-        )
+        kord.rest.channel.deleteAllReactionsForEmoji(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
     }
 
     /**
@@ -198,11 +180,11 @@ interface MessageBehavior : KordEntity, Strategizable {
      */
     override fun withStrategy(
         strategy: EntitySupplyStrategy<*>,
-    ): MessageBehavior = MessageBehavior(channelId, id, kord)
+    ): MessageBehavior = MessageBehavior(channelId, id, kord, strategy)
 
 }
 
-fun MessageBehavior(
+ fun MessageBehavior(
     channelId: Snowflake,
     messageId: Snowflake,
     kord: Kord,

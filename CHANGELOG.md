@@ -10,6 +10,8 @@
 * Added welcome screens. #141
 * Added `Kord#getInvite`. #143
 * Added pending property to member. #153
+* Added missing contracts to various builders. #243
+* Added message reference core entity. #245
 
 ## Fixes
 
@@ -19,6 +21,7 @@
 * Fix provider nullity in embeds. #151
 * Fix WebhookType.Incoming incorrect value. #156
 * Fix `DiscordErrorResponse` inability to consume full input #162
+* Fix unhandled events for unknown channel types. #240
 
 # 0.7.0-RC
 

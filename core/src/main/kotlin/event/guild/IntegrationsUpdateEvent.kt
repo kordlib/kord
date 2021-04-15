@@ -10,10 +10,10 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 class IntegrationsUpdateEvent(
-        val guildId: Snowflake,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val guildId: Snowflake,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
@@ -23,7 +23,7 @@ class IntegrationsUpdateEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): IntegrationsUpdateEvent =
-            IntegrationsUpdateEvent(guildId, kord, shard, strategy.supply(kord))
+        IntegrationsUpdateEvent(guildId, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "IntegrationsUpdateEvent(guildId=$guildId, kord=$kord, shard=$shard, supplier=$supplier)"

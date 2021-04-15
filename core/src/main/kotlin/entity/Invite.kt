@@ -21,9 +21,9 @@ import dev.kord.core.toSnowflakeOrNull
  * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite).
  */
 data class Invite(
-        val data: InviteData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: InviteData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordObject, Strategizable {
 
     /**
@@ -125,7 +125,7 @@ data class Invite(
      * Returns a new [Invite] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Invite =
-            Invite(data, kord, strategy.supply(kord))
+        Invite(data, kord, strategy.supply(kord))
 
     override fun toString(): String {
         return "Invite(data=$data, kord=$kord, supplier=$supplier)"

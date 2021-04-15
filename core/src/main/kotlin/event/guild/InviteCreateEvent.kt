@@ -30,10 +30,10 @@ import kotlin.time.seconds
  * Sent when a new invite to a channel is created.
  */
 class InviteCreateEvent(
-        val data: InviteCreateData,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
+    val data: InviteCreateData,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
     /**
@@ -163,7 +163,11 @@ class InviteCreateEvent(
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use getInviterAsMemberOrNull instead.", ReplaceWith("getInviterAsMemberOrNull()"), level = DeprecationLevel.ERROR)
+    @Deprecated(
+        "Use getInviterAsMemberOrNull instead.",
+        ReplaceWith("getInviterAsMemberOrNull()"),
+        level = DeprecationLevel.ERROR
+    )
     suspend fun getInviterAsMember(): Member? {
         return supplier.getMember(guildId = guildId ?: return null, userId = inviterId ?: return null)
     }
@@ -179,7 +183,7 @@ class InviteCreateEvent(
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteCreateEvent =
-            InviteCreateEvent(data, kord, shard, supplier)
+        InviteCreateEvent(data, kord, shard, supplier)
 
     override fun toString(): String {
         return "InviteCreateEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"

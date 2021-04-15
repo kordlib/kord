@@ -27,17 +27,17 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable
 data class DiscordConnection(
-        val id: String,
-        val name: String,
-        val type: String,
-        val revoked: OptionalBoolean = OptionalBoolean.Missing,
-        val integrations: Optional<List<DiscordIntegration>> = Optional.Missing(),
-        val verified: Boolean,
-        @SerialName("friend_sync")
-        val friendSync: Boolean,
-        @SerialName("show_activity")
-        val showActivity: Boolean,
-        val visibility: DiscordConnectionVisibility,
+    val id: String,
+    val name: String,
+    val type: String,
+    val revoked: OptionalBoolean = OptionalBoolean.Missing,
+    val integrations: Optional<List<DiscordIntegration>> = Optional.Missing(),
+    val verified: Boolean,
+    @SerialName("friend_sync")
+    val friendSync: Boolean,
+    @SerialName("show_activity")
+    val showActivity: Boolean,
+    val visibility: DiscordConnectionVisibility,
 )
 
 @Serializable(with = DiscordConnectionVisibility.Serializer::class)
@@ -58,11 +58,12 @@ sealed class DiscordConnectionVisibility(val value: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("Kord.DiscordConnectionVisibility", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): DiscordConnectionVisibility = when(val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> Everyone
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): DiscordConnectionVisibility =
+            when (val value = decoder.decodeInt()) {
+                0 -> None
+                1 -> Everyone
+                else -> Unknown(value)
+            }
 
         override fun serialize(encoder: Encoder, value: DiscordConnectionVisibility) {
             encoder.encodeInt(value.value)

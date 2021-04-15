@@ -44,9 +44,28 @@ suspend fun main(args: Array<String>) {
             "!close" -> gateway.stop()
             "!detach" -> gateway.detach()
             "!status" -> when (words.getOrNull(1)) {
-                "playing" -> gateway.send(UpdateStatus(status = PresenceStatus.Online, afk = false, activities = listOf(DiscordBotActivity("Kord", ActivityType.Game)), since = null))
+                "playing" -> gateway.send(
+                    UpdateStatus(
+                        status = PresenceStatus.Online,
+                        afk = false,
+                        activities = listOf(DiscordBotActivity("Kord", ActivityType.Game)),
+                        since = null
+                    )
+                )
             }
-            "!ping" -> gateway.send(UpdateStatus(status = PresenceStatus.Online, afk = false, activities = listOf(DiscordBotActivity("Ping is ${gateway.ping.value?.toLongMilliseconds()}", ActivityType.Game)), since = null))
+            "!ping" -> gateway.send(
+                UpdateStatus(
+                    status = PresenceStatus.Online,
+                    afk = false,
+                    activities = listOf(
+                        DiscordBotActivity(
+                            "Ping is ${gateway.ping.value?.toLongMilliseconds()}",
+                            ActivityType.Game
+                        )
+                    ),
+                    since = null
+                )
+            )
         }
     }.launchIn(GlobalScope)
 

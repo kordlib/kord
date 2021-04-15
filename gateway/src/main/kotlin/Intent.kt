@@ -173,7 +173,9 @@ sealed class Intent(val code: DiscordBitSet) {
     }
 }
 
+@OptIn(ExperimentalContracts::class)
 inline fun Intents(builder: Intents.IntentsBuilder.() -> Unit = {}): Intents {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return Intents.IntentsBuilder().apply(builder).flags()
 }
 
@@ -195,6 +197,7 @@ fun Intents(value: String) = Intents(DiscordBitSet(value))
 fun Intents(intents: Iterable<Intent>) = Intents {
     intents.forEach { +it }
 }
+
 /**
  * A set of [intents][Intent] to be used while [identifying][Identify] a [Gateway] connection to communicate the events the client wishes to receive.
  */
@@ -262,7 +265,6 @@ data class Intents internal constructor(val code: DiscordBitSet) {
         val none: Intents = Intents()
 
     }
-
 
 
     class IntentsBuilder(internal var code: DiscordBitSet = EmptyBitSet()) {

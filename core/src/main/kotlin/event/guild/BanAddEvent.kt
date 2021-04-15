@@ -14,10 +14,10 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 class BanAddEvent(
-        val user: User,
-        val guildId: Snowflake,
-        override val shard: Int,
-        override val supplier: EntitySupplier = user.kord.defaultSupplier
+    val user: User,
+    val guildId: Snowflake,
+    override val shard: Int,
+    override val supplier: EntitySupplier = user.kord.defaultSupplier
 ) : Event, Strategizable {
 
     override val kord: Kord get() = user.kord
@@ -57,7 +57,7 @@ class BanAddEvent(
     suspend fun getBanOrNull(): Ban? = supplier.getGuildBanOrNull(guildId, user.id)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): BanAddEvent =
-            BanAddEvent(user, guildId, shard, strategy.supply(kord))
+        BanAddEvent(user, guildId, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "BanAddEvent(user=$user, guildId=$guildId, shard=$shard, supplier=$supplier)"

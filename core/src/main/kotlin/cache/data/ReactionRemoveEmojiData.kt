@@ -16,10 +16,10 @@ data class RemovedReactionData(val id: Snowflake? = null, val name: String?) {
 
 @Serializable
 data class ReactionRemoveEmojiData(
-        val channelId: Snowflake,
-        val guildId: Snowflake,
-        val messageId: Snowflake,
-        val emoji: RemovedReactionData
+    val channelId: Snowflake,
+    val guildId: Snowflake,
+    val messageId: Snowflake,
+    val emoji: RemovedReactionData
 ) {
 
     companion object {

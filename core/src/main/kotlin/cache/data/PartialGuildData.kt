@@ -23,14 +23,15 @@ class PartialGuildData(
     companion object {
 
         fun from(partialGuild: DiscordPartialGuild) = with(partialGuild) {
-            PartialGuildData(id,
+            PartialGuildData(
+                id,
                 name,
                 icon,
                 owner,
                 permissions,
                 features,
                 welcomeScreen = welcomeScreen.map { WelcomeScreenData.from(it) },
-                )
+            )
         }
     }
 

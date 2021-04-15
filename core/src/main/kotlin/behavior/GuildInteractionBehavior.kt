@@ -1,5 +1,6 @@
 package dev.kord.core.behavior
 
+import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Guild
 
@@ -11,8 +12,6 @@ interface GuildInteractionBehavior : InteractionBehavior {
 
     suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    companion object {
-
-    }
+    companion object;
 
 }

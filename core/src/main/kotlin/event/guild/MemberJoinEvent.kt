@@ -11,9 +11,9 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 class MemberJoinEvent(
-        val member: Member,
-        override val shard: Int,
-        override val supplier: EntitySupplier = member.kord.defaultSupplier
+    val member: Member,
+    override val shard: Int,
+    override val supplier: EntitySupplier = member.kord.defaultSupplier
 ) : Event, Strategizable {
 
     override val kord: Kord get() = member.kord
@@ -27,7 +27,7 @@ class MemberJoinEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberJoinEvent =
-            MemberJoinEvent(member, shard, strategy.supply(kord))
+        MemberJoinEvent(member, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "MemberJoinEvent(member=$member, shard=$shard, supplier=$supplier)"

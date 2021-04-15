@@ -45,7 +45,10 @@ abstract class AbstractRateLimiter internal constructor(val clock: Clock) : Requ
 
     internal abstract fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken
 
-    internal abstract inner class AbstractRequestToken(val identity: RequestIdentifier, val requestBuckets: List<Bucket>) : RequestToken {
+    internal abstract inner class AbstractRequestToken(
+        val identity: RequestIdentifier,
+        val requestBuckets: List<Bucket>
+    ) : RequestToken {
         private val completableDeferred = CompletableDeferred<Unit>()
 
         override val completed: Boolean

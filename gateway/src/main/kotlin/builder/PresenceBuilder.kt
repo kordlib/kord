@@ -10,7 +10,7 @@ import dev.kord.gateway.UpdateStatus
 import java.time.Instant
 
 @KordDsl
-class PresenceBuilder  {
+class PresenceBuilder {
     private var game: DiscordBotActivity? = null
     var status: PresenceStatus = PresenceStatus.Online
     var afk: Boolean = false

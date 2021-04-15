@@ -37,6 +37,9 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import kotlin.concurrent.thread
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.seconds
 
 operator fun DefaultGateway.Companion.invoke(
@@ -110,7 +113,6 @@ class KordBuilder(val token: String) {
     var intents: Intents = Intents.nonPrivileged
 
 
-
     /**
      * Configures the shards this client will connect to, by default `0 until recommended`.
      * This can be used to break up to client into multiple processes.
@@ -174,7 +176,9 @@ class KordBuilder(val token: String) {
      * }
      * ```
      */
+    @OptIn(ExperimentalContracts::class)
     fun cache(builder: KordCacheBuilder.(resources: ClientResources) -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val old = cacheBuilder
         cacheBuilder = { resources: ClientResources ->
             old(resources)

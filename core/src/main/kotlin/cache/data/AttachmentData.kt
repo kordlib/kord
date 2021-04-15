@@ -8,13 +8,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AttachmentData(
-        val id: Snowflake,
-        val filename: String,
-        val size: Int,
-        val url: String,
-        val proxyUrl: String,
-        val height: OptionalInt? = OptionalInt.Missing,
-        val width: OptionalInt? = OptionalInt.Missing,
+    val id: Snowflake,
+    val filename: String,
+    val size: Int,
+    val url: String,
+    val proxyUrl: String,
+    val height: OptionalInt? = OptionalInt.Missing,
+    val width: OptionalInt? = OptionalInt.Missing,
 ) {
     companion object {
         fun from(entity: DiscordAttachment) = with(entity) {

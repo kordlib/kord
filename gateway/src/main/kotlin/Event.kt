@@ -367,13 +367,19 @@ sealed class Event {
                     ), sequence
                 )
                 "APPLICATION_COMMAND_CREATE" -> ApplicationCommandCreate(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()), sequence)
+                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
+                    sequence
+                )
 
                 "APPLICATION_COMMAND_UPDATE" -> ApplicationCommandUpdate(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()), sequence)
+                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
+                    sequence
+                )
 
                 "APPLICATION_COMMAND_DELETE" -> ApplicationCommandDelete(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()), sequence)
+                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
+                    sequence
+                )
 
 
                 else -> {
@@ -612,11 +618,18 @@ data class VoiceServerUpdate(val voiceServerUpdateData: DiscordVoiceServerUpdate
 
 data class WebhooksUpdate(val webhooksUpdateData: DiscordWebhooksUpdateData, override val sequence: Int?) :
     DispatchEvent()
+
 @KordPreview
 data class InteractionCreate(val interaction: DiscordInteraction, override val sequence: Int?) : DispatchEvent()
+
 @KordPreview
-data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) : DispatchEvent()
+data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
+    DispatchEvent()
+
 @KordPreview
-data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) : DispatchEvent()
+data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
+    DispatchEvent()
+
 @KordPreview
-data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) : DispatchEvent()
+data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :
+    DispatchEvent()

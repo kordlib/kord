@@ -13,9 +13,9 @@ import java.util.*
  * An instance of a Discord Store Channel associated to a guild.
  */
 data class StoreChannel(
-        override val data: ChannelData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    override val data: ChannelData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : CategorizableChannel, GuildChannel, StoreChannelBehavior {
 
 
@@ -25,11 +25,11 @@ data class StoreChannel(
      * Returns a new [StoreChannel] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StoreChannel =
-            StoreChannel(data, kord, strategy.supply(kord))
+        StoreChannel(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false

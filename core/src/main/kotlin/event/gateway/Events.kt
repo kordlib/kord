@@ -18,14 +18,14 @@ import kotlinx.coroutines.flow.filter
 
 sealed class GatewayEvent : Event
 
-class ConnectEvent (override val kord: Kord, override val shard: Int) : GatewayEvent()
+class ConnectEvent(override val kord: Kord, override val shard: Int) : GatewayEvent()
 
 sealed class DisconnectEvent : GatewayEvent() {
 
     /**
      * A Gateway was detached, all resources tied to that gateway should be freed.
      */
-    class DetachEvent(override val kord: Kord, override val shard: Int): DisconnectEvent() {
+    class DetachEvent(override val kord: Kord, override val shard: Int) : DisconnectEvent() {
         override fun toString(): String {
             return "DetachEvent(kord=$kord, shard=$shard)"
         }
@@ -34,7 +34,7 @@ sealed class DisconnectEvent : GatewayEvent() {
     /**
      * The user closed the Gateway connection.
      */
-    class UserCloseEvent(override val kord: Kord, override val shard: Int): DisconnectEvent() {
+    class UserCloseEvent(override val kord: Kord, override val shard: Int) : DisconnectEvent() {
         override fun toString(): String {
             return "UserCloseEvent(kord=$kord, shard=$shard)"
         }
@@ -43,7 +43,7 @@ sealed class DisconnectEvent : GatewayEvent() {
     /**
      * The connection was closed because of a timeout, probably due to a loss of internet connection.
      */
-    class TimeoutEvent(override val kord: Kord, override val shard: Int): DisconnectEvent() {
+    class TimeoutEvent(override val kord: Kord, override val shard: Int) : DisconnectEvent() {
         override fun toString(): String {
             return "TimeoutEvent(kord=$kord, shard=$shard)"
         }
@@ -54,7 +54,12 @@ sealed class DisconnectEvent : GatewayEvent() {
      *
      * @param recoverable true if the gateway will automatically try to reconnect.
      */
-    class DiscordCloseEvent(override val kord: Kord, override val shard: Int, val closeCode: GatewayCloseCode, val recoverable: Boolean): DisconnectEvent() {
+    class DiscordCloseEvent(
+        override val kord: Kord,
+        override val shard: Int,
+        val closeCode: GatewayCloseCode,
+        val recoverable: Boolean
+    ) : DisconnectEvent() {
         override fun toString(): String {
             return "DiscordCloseEvent(kord=$kord, shard=$shard, closeCode=$closeCode, recoverable=$recoverable)"
         }
@@ -64,7 +69,7 @@ sealed class DisconnectEvent : GatewayEvent() {
      *  The Gateway has failed to establish a connection too many times and will not try to reconnect anymore.
      *  The user is free to manually connect again using [Gateway.start], otherwise all resources linked to the Gateway should free and the Gateway [detached][Gateway.detach].
      */
-    class RetryLimitReachedEvent(override val kord: Kord, override val shard: Int): DisconnectEvent() {
+    class RetryLimitReachedEvent(override val kord: Kord, override val shard: Int) : DisconnectEvent() {
         override fun toString(): String {
             return "RetryLimitReachedEvent(kord=$kord, shard=$shard)"
         }
@@ -100,14 +105,14 @@ sealed class DisconnectEvent : GatewayEvent() {
 
 }
 
-class ReadyEvent (
-        val gatewayVersion: Int,
-        val guildIds: Set<Snowflake>,
-        val self: User,
-        val sessionId: String,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+class ReadyEvent(
+    val gatewayVersion: Int,
+    val guildIds: Set<Snowflake>,
+    val self: User,
+    val sessionId: String,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : GatewayEvent(), Strategizable {
 
     val guilds: Set<GuildBehavior> get() = guildIds.map { GuildBehavior(it, kord) }.toSet()
@@ -115,7 +120,7 @@ class ReadyEvent (
     suspend fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReadyEvent =
-            ReadyEvent(gatewayVersion, guildIds, self, sessionId, kord, shard, strategy.supply(kord))
+        ReadyEvent(gatewayVersion, guildIds, self, sessionId, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "ReadyEvent(gatewayVersion=$gatewayVersion, guildIds=$guildIds, self=$self, sessionId='$sessionId', kord=$kord, shard=$shard, supplier=$supplier)"

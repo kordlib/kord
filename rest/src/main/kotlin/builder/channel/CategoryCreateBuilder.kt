@@ -31,7 +31,7 @@ class CategoryCreateBuilder(var name: String) : AuditRequestBuilder<GuildChannel
      * adds a [Overwrite] for the [memberId].
      */
     @OptIn(ExperimentalContracts::class)
-    inline fun addMemberOverwrite(memberId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit){
+    inline fun addMemberOverwrite(memberId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -42,7 +42,7 @@ class CategoryCreateBuilder(var name: String) : AuditRequestBuilder<GuildChannel
      * adds a [Overwrite] for the [roleId].
      */
     @OptIn(ExperimentalContracts::class)
-    inline fun addRoleOverwrite(roleId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit){
+    inline fun addRoleOverwrite(roleId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -50,10 +50,10 @@ class CategoryCreateBuilder(var name: String) : AuditRequestBuilder<GuildChannel
     }
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
-            name = name,
-            position = _position,
-            nsfw = _nsfw,
-            permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
-            type = ChannelType.GuildCategory
+        name = name,
+        position = _position,
+        nsfw = _nsfw,
+        permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
+        type = ChannelType.GuildCategory
     )
 }

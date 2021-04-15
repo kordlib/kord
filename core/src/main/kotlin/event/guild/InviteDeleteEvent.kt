@@ -18,10 +18,10 @@ import dev.kord.core.supplier.getChannelOfOrNull
  * Sent when an invite is deleted.
  */
 class InviteDeleteEvent(
-        val data: InviteDeleteData,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: InviteDeleteData,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
     /**
@@ -64,7 +64,7 @@ class InviteDeleteEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteDeleteEvent =
-            InviteDeleteEvent(data, kord, shard, strategy.supply(kord))
+        InviteDeleteEvent(data, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "InviteDeleteEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"

@@ -12,12 +12,15 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 class GuildWidget(
-        val data: GuildWidgetData,
-        val guildId: Snowflake,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
+    val data: GuildWidgetData,
+    val guildId: Snowflake,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordObject, Strategizable {
 
     val isEnabled: Boolean get() = data.enabled
@@ -34,13 +37,16 @@ class GuildWidget(
 
     suspend fun getChannelOrNull(): GuildChannel? = data.channelId?.let { supplier.getChannelOfOrNull(it) }
 
-    suspend inline fun <reified T : Channel> getChannelOfOrNull(): T? = data.channelId?.let { supplier.getChannelOfOrNull(it) }
+    suspend inline fun <reified T : Channel> getChannelOfOrNull(): T? =
+        data.channelId?.let { supplier.getChannelOfOrNull(it) }
 
+    @OptIn(ExperimentalContracts::class)
     suspend inline fun edit(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(guildId, builder)), guildId, kord)
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildWidget =
-            GuildWidget(data, guildId, kord, strategy.supply(kord))
+        GuildWidget(data, guildId, kord, strategy.supply(kord))
 
 }

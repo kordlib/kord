@@ -9,12 +9,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ChannelPinsUpdateEventData(
-        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-        val channelId: Snowflake,
-        val lastPinTimestamp: Optional<String?> = Optional.Missing()
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val channelId: Snowflake,
+    val lastPinTimestamp: Optional<String?> = Optional.Missing()
 ) {
     companion object {
-        fun from(entity: DiscordPinsUpdateData): ChannelPinsUpdateEventData = with(entity){
+        fun from(entity: DiscordPinsUpdateData): ChannelPinsUpdateEventData = with(entity) {
             ChannelPinsUpdateEventData(guildId, channelId, lastPinTimestamp)
         }
     }

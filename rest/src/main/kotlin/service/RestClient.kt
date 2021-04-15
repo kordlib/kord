@@ -45,7 +45,7 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
     }
 }
 
-fun RestClient(token: String) : RestClient {
+fun RestClient(token: String): RestClient {
     val requestHandler = KtorRequestHandler(token)
     return RestClient(requestHandler)
 }

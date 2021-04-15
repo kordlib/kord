@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 class KordRestOnlyBuilder(val token: String) {
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
-            { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter()) }
+        { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter()) }
 
     /**
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
@@ -66,13 +66,13 @@ class KordRestOnlyBuilder(val token: String) {
         val selfId = getBotIdFromToken(token)
 
         return Kord(
-                resources,
-                DataCache.none(),
-                MasterGateway(mapOf(0 to Gateway.none())),
-                rest,
-                selfId,
-                MutableSharedFlow(),
-                defaultDispatcher
+            resources,
+            DataCache.none(),
+            MasterGateway(mapOf(0 to Gateway.none())),
+            rest,
+            selfId,
+            MutableSharedFlow(),
+            defaultDispatcher
         )
     }
 }

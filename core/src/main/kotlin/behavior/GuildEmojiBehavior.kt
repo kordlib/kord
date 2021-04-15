@@ -11,6 +11,9 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.guild.EmojiModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a [Discord Emoij](https://discord.com/developers/docs/resources/emoji).
@@ -40,10 +43,10 @@ interface GuildEmojiBehavior : KordEntity, Strategizable {
      * Returns a new [GuildEmojiBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildEmojiBehavior =
-            GuildEmojiBehavior(guildId = guildId, id = id, kord = kord, strategy = strategy)
+        GuildEmojiBehavior(guildId = guildId, id = id, kord = kord, strategy = strategy)
 }
 
-internal  fun GuildEmojiBehavior(
+internal fun GuildEmojiBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
@@ -56,7 +59,7 @@ internal  fun GuildEmojiBehavior(
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is GuildEmojiBehavior -> other.id == id
         else -> false
     }
@@ -65,6 +68,7 @@ internal  fun GuildEmojiBehavior(
         return "GuildEmoijBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
     }
 }
+
 /**
  * Requests to edit this emoji.
  *
@@ -72,7 +76,9 @@ internal  fun GuildEmojiBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildEmojiBehavior.edit(builder: EmojiModifyBuilder.() -> Unit): GuildEmoji {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.emoji.modifyEmoji(guildId, id, builder)
     val data = EmojiData.from(guildId = guildId, id = id, entity = response)
 

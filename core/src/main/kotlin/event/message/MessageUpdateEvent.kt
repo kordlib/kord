@@ -11,14 +11,14 @@ import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
-class MessageUpdateEvent (
-        val messageId: Snowflake,
-        val channelId: Snowflake,
-        val new: DiscordPartialMessage,
-        val old: Message?,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+class MessageUpdateEvent(
+    val messageId: Snowflake,
+    val channelId: Snowflake,
+    val new: DiscordPartialMessage,
+    val old: Message?,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
     /**
@@ -37,7 +37,7 @@ class MessageUpdateEvent (
     suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageUpdateEvent =
-            MessageUpdateEvent(messageId, channelId, new, old, kord, shard, strategy.supply(kord))
+        MessageUpdateEvent(messageId, channelId, new, old, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "MessageUpdateEvent(messageId=$messageId, channelId=$channelId, new=$new, old=$old, kord=$kord, shard=$shard, supplier=$supplier)"
