@@ -298,8 +298,8 @@ data class CommandArgument(
 @Serializable
 @KordPreview
 data class CommandGroup(
-        override val name: String,
-        val options: Optional<List<SubCommand>> = Optional.Missing(),
+    override val name: String,
+    val options: Optional<List<SubCommand>> = Optional.Missing(),
 ) : Option()
 
 @Serializable(DiscordOptionValue.OptionValueSerializer::class)
