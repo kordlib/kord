@@ -6,8 +6,10 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.EphemeralFollowupMessageBehavior
 import dev.kord.core.behavior.interaction.FollowupMessageBehavior
 import dev.kord.core.behavior.interaction.PublicFollowupMessageBehavior
-import dev.kord.core.entity.*
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * Holds the follow-up [Message] resulting from an interaction follow-up
@@ -44,8 +46,14 @@ class PublicFollowupMessage(
     message: Message,
     override val applicationId: Snowflake,
     override val token: String,
-    override val kord: Kord
-) : InteractionFollowup(message), PublicFollowupMessageBehavior
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : InteractionFollowup(message), PublicFollowupMessageBehavior {
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicFollowupMessage {
+        return PublicFollowupMessage(message, applicationId, token, kord, strategy.supply(kord))
+    }
+}
 
 
 /**
@@ -61,5 +69,11 @@ class EphemeralFollowupMessage(
     message: Message,
     override val applicationId: Snowflake,
     override val token: String,
-    override val kord: Kord
-) : InteractionFollowup(message), EphemeralFollowupMessageBehavior
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : InteractionFollowup(message), EphemeralFollowupMessageBehavior {
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): EphemeralFollowupMessage {
+        return EphemeralFollowupMessage(message, applicationId, token, kord, strategy.supply(kord))
+    }
+}
