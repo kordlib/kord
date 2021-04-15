@@ -1,7 +1,7 @@
 package dev.kord.core
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.DiscordApplicationCommandPermissions
+import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.entity.interaction.GlobalApplicationCommand
@@ -119,14 +119,14 @@ class SlashCommands(
     suspend fun getGuildApplicationCommandPermissions(
             applicationId: Snowflake,
             guildId: Snowflake,
-    ): DiscordApplicationCommandPermissions =
+    ): DiscordGuildApplicationCommandPermissions =
             service.getGuildApplicationCommandPermissions(applicationId, guildId)
 
     suspend fun getApplicationCommandPermissions(
             applicationId: Snowflake,
             guildId: Snowflake,
             commandId: Snowflake,
-    ): DiscordApplicationCommandPermissions =
+    ): DiscordGuildApplicationCommandPermissions =
             service.getApplicationCommandPermissions(applicationId, guildId, commandId)
 
     suspend fun editApplicationCommandPermissions(

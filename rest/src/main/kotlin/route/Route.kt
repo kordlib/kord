@@ -590,31 +590,31 @@ sealed class Route<T>(
 
     @KordPreview
     object GuildApplicationCommandPermissionsGet
-        : Route<DiscordApplicationCommandPermissions>(
+        : Route<DiscordGuildApplicationCommandPermissions>(
             HttpMethod.Get,
             "/applications/${ApplicationId}/guilds/$GuildId/commands/permissions",
-            DiscordApplicationCommandPermissions.serializer()
+            DiscordGuildApplicationCommandPermissions.serializer()
     )
 
     @KordPreview
     object ApplicationCommandPermissionsGet
-        : Route<DiscordApplicationCommandPermissions>(
+        : Route<DiscordGuildApplicationCommandPermissions>(
             HttpMethod.Get,
             "/applications/${ApplicationId}/guilds/$GuildId/commands/$CommandId/permissions",
-            DiscordApplicationCommandPermissions.serializer()
+            DiscordGuildApplicationCommandPermissions.serializer()
     )
 
     @KordPreview
     object ApplicationCommandPermissionsPut
-        : Route<DiscordApplicationCommandPermissions>(
+        : Route<DiscordGuildApplicationCommandPermissions>(
             HttpMethod.Put,
             "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
-            DiscordApplicationCommandPermissions.serializer()
+            DiscordGuildApplicationCommandPermissions.serializer()
     )
 
     @KordPreview
     object ApplicationCommandPermissionsBatchPut
-        : Route<List<DiscordApplicationCommandPermissions>>(
+        : Route<List<DiscordGuildApplicationCommandPermissions>>(
             HttpMethod.Put,
             "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
             serializer()

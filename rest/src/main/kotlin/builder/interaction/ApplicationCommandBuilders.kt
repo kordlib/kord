@@ -2,8 +2,8 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.DiscordApplicationCommandPermission
-import dev.kord.common.entity.PartialDiscordApplicationCommandPermissions
+import dev.kord.common.entity.DiscordGuildApplicationCommandPermission
+import dev.kord.common.entity.PartialDiscordGuildApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -161,7 +161,7 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
 
 @KordPreview
 class ApplicationCommandPermissionsBulkModifyBuilder :
-        RequestBuilder<List<PartialDiscordApplicationCommandPermissions>> {
+        RequestBuilder<List<PartialDiscordGuildApplicationCommandPermissions>> {
 
     @PublishedApi
     internal val permissions = mutableMapOf<Snowflake, ApplicationCommandPermissionsModifyBuilder>()
@@ -178,9 +178,9 @@ class ApplicationCommandPermissionsBulkModifyBuilder :
         permissions[commandId] = ApplicationCommandPermissionsModifyBuilder().apply(builder)
     }
 
-    override fun toRequest(): List<PartialDiscordApplicationCommandPermissions> {
+    override fun toRequest(): List<PartialDiscordGuildApplicationCommandPermissions> {
         return permissions.map { (id, builder) ->
-            PartialDiscordApplicationCommandPermissions(
+            PartialDiscordGuildApplicationCommandPermissions(
                     id.asString, builder.permissions.toList()
             )
         }
@@ -191,13 +191,13 @@ class ApplicationCommandPermissionsBulkModifyBuilder :
 class ApplicationCommandPermissionsModifyBuilder :
         RequestBuilder<ApplicationCommandPermissionsEditRequest> {
 
-    var permissions = mutableListOf<DiscordApplicationCommandPermission>()
+    var permissions = mutableListOf<DiscordGuildApplicationCommandPermission>()
 
     fun role(id: Snowflake, allow: Boolean = true) {
         permissions.add(
-                DiscordApplicationCommandPermission(
+                DiscordGuildApplicationCommandPermission(
                         id,
-                        DiscordApplicationCommandPermission.Type.Role,
+                        DiscordGuildApplicationCommandPermission.Type.Role,
                         allow
                 )
         )
@@ -205,9 +205,9 @@ class ApplicationCommandPermissionsModifyBuilder :
 
     fun user(id: Snowflake, allow: Boolean = true) {
         permissions.add(
-                DiscordApplicationCommandPermission(
+                DiscordGuildApplicationCommandPermission(
                         id,
-                        DiscordApplicationCommandPermission.Type.User,
+                        DiscordGuildApplicationCommandPermission.Type.User,
                         allow
                 )
         )

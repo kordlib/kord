@@ -403,44 +403,45 @@ sealed class InteractionResponseType(val type: Int) {
 
 @KordPreview
 @Serializable
-data class DiscordApplicationCommandPermissions(
-        val id: String,
-        @SerialName("application_id")
-        val applicationId: String,
-        @SerialName("guild_id")
-        val guildId: String,
-        val permissions: List<DiscordApplicationCommandPermission>
+data class DiscordGuildApplicationCommandPermissions(
+    val id: Snowflake,
+    @SerialName("application_id")
+    val applicationId: Snowflake,
+    @SerialName("guild_id")
+    val guildId: String,
+    val permissions: List<DiscordGuildApplicationCommandPermission>
 )
 
 @KordPreview
 @Serializable
-data class PartialDiscordApplicationCommandPermissions(
-        val id: String,
-        val permissions: List<DiscordApplicationCommandPermission>
+data class PartialDiscordGuildApplicationCommandPermissions(
+    val id: Snowflake,
+    val permissions: List<DiscordGuildApplicationCommandPermission>
 )
 
 @KordPreview
 @Serializable
-data class DiscordApplicationCommandPermission(
-        val id: Snowflake,
-        val type: Type,
-        val permission: Boolean
+data class DiscordGuildApplicationCommandPermission(
+    val id: Snowflake,
+    val type: Type,
+    val permission: Boolean
 ) {
     @Serializable(with = Type.Serializer::class)
     sealed class Type(val value: Int) {
         object Role : Type(1)
         object User : Type(2)
+        object Unknown : Type(-1)
 
         object Serializer : KSerializer<Type> {
             override val descriptor: SerialDescriptor =
-                    PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
             override fun deserialize(decoder: Decoder): Type =
-                    when (val value = decoder.decodeInt()) {
-                        1 -> Role
-                        2 -> User
-                        else -> error("Unknown permission type: $value")
-                    }
+                when (decoder.decodeInt()) {
+                    1 -> Role
+                    2 -> User
+                    else -> Unknown
+                }
 
             override fun serialize(encoder: Encoder, value: Type) = encoder.encodeInt(value.value)
         }

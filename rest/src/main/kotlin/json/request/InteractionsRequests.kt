@@ -105,5 +105,5 @@ data class MultipartFollowupMessageModifyRequest(
 @Serializable
 @KordPreview
 data class ApplicationCommandPermissionsEditRequest(
-        val permissions: List<DiscordApplicationCommandPermission>
+        val permissions: List<DiscordGuildApplicationCommandPermission>
 )

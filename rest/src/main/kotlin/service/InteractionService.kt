@@ -2,8 +2,8 @@ package dev.kord.rest.service
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordApplicationCommand
-import dev.kord.common.entity.DiscordApplicationCommandPermissions
-import dev.kord.common.entity.PartialDiscordApplicationCommandPermissions
+import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
+import dev.kord.common.entity.PartialDiscordGuildApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
@@ -215,7 +215,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend fun getGuildApplicationCommandPermissions(
             applicationId: Snowflake,
             guildId: Snowflake,
-    ): DiscordApplicationCommandPermissions = call(Route.GuildApplicationCommandPermissionsGet) {
+    ): DiscordGuildApplicationCommandPermissions = call(Route.GuildApplicationCommandPermissionsGet) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.GuildId] = guildId
     }
@@ -224,7 +224,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
             applicationId: Snowflake,
             guildId: Snowflake,
             commandId: Snowflake,
-    ): DiscordApplicationCommandPermissions = call(Route.ApplicationCommandPermissionsGet) {
+    ): DiscordGuildApplicationCommandPermissions = call(Route.ApplicationCommandPermissionsGet) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.GuildId] = guildId
         keys[Route.CommandId] = commandId
@@ -244,9 +244,9 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     suspend fun bulkEditApplicationCommandPermissions(
-            applicationId: Snowflake,
-            guildId: Snowflake,
-            request: List<PartialDiscordApplicationCommandPermissions>,
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        request: List<PartialDiscordGuildApplicationCommandPermissions>,
     ) = call(Route.ApplicationCommandPermissionsBatchPut) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.GuildId] = guildId
