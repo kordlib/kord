@@ -32,7 +32,7 @@ interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
 
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicFollowupMessageBehavior {
-        return PublicFollowupMessageBehavior(id, applicationId, token ,channelId, kord, strategy.supply(kord))
+        return PublicFollowupMessageBehavior(id, applicationId, token, channelId, kord, strategy.supply(kord))
     }
 }
 
@@ -60,7 +60,7 @@ fun PublicFollowupMessageBehavior(
     channelId: Snowflake,
     kord: Kord,
     supplier: EntitySupplier
-): PublicFollowupMessageBehavior  = object :  PublicFollowupMessageBehavior {
+): PublicFollowupMessageBehavior = object : PublicFollowupMessageBehavior {
     override val applicationId: Snowflake
         get() = applicationId
     override val token: String

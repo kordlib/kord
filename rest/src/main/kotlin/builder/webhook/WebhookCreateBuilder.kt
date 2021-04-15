@@ -9,11 +9,11 @@ import dev.kord.rest.json.request.WebhookCreateRequest
 import dev.kord.rest.Image
 
 @KordDsl
-class WebhookCreateBuilder(var name: String): AuditRequestBuilder<WebhookCreateRequest> {
+class WebhookCreateBuilder(var name: String) : AuditRequestBuilder<WebhookCreateRequest> {
     override var reason: String? = null
 
     private var _avatar: Optional<Image> = Optional.Missing()
-    var avatar: Image? by ::_avatar.delegate() 
+    var avatar: Image? by ::_avatar.delegate()
 
     override fun toRequest() = WebhookCreateRequest(name, _avatar.map { it.dataUri })
 }

@@ -34,13 +34,13 @@ class TextChannelCreateBuilder(var name: String) : AuditRequestBuilder<GuildChan
     val permissionOverwrites: MutableList<Overwrite> = mutableListOf()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
-            name,
-            ChannelType.GuildText,
-            _topic,
-            _rateLimitPerUser,
-            _position,
-            parentId = _parentId,
-            nsfw = _nsfw,
-            permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
+        name,
+        ChannelType.GuildText,
+        _topic,
+        _rateLimitPerUser,
+        _position,
+        parentId = _parentId,
+        nsfw = _nsfw,
+        permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
     )
 }

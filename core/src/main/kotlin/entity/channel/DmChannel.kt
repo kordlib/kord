@@ -20,9 +20,9 @@ import java.util.*
  * An instance of a Discord DM channel.
  */
 data class DmChannel(
-        override val data: ChannelData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    override val data: ChannelData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : MessageChannel {
     /**
      * The ids of the recipients of the channel.
@@ -46,19 +46,19 @@ data class DmChannel(
      */
     val recipients: Flow<User>
         get() = data.recipients.orEmpty().asFlow()
-                .map { supplier.getUserOrNull(it) }
-                .filterNotNull()
+            .map { supplier.getUserOrNull(it) }
+            .filterNotNull()
 
     /**
      * returns a new [DmChannel] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): DmChannel =
-            DmChannel(data, kord, strategy.supply(kord))
+        DmChannel(data, kord, strategy.supply(kord))
 
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is ChannelBehavior -> other.id == id
         else -> false
     }

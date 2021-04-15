@@ -14,11 +14,11 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 
 class WebhookUpdateEvent(
-        val guildId: Snowflake,
-        val channelId: Snowflake,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val guildId: Snowflake,
+    val channelId: Snowflake,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
     val channel: GuildMessageChannelBehavior get() = GuildMessageChannelBehavior(guildId, channelId, kord)
@@ -34,7 +34,7 @@ class WebhookUpdateEvent(
     suspend fun getGuildOrNull(): Guild? = guild.asGuildOrNull()
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): WebhookUpdateEvent =
-            WebhookUpdateEvent(guildId, channelId, kord, shard, strategy.supply(kord))
+        WebhookUpdateEvent(guildId, channelId, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "WebhookUpdateEvent(guildId=$guildId, channelId=$channelId, kord=$kord, shard=$shard, supplier=$supplier)"

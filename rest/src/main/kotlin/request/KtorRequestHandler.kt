@@ -33,10 +33,10 @@ internal val jsonDefault = Json {
  */
 @Suppress("EXPERIMENTAL_API_USAGE")
 class KtorRequestHandler(
-        private val client: HttpClient,
-        private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
-        private val clock: Clock = Clock.systemUTC(),
-        private val parser: Json = jsonDefault,
+    private val client: HttpClient,
+    private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
+    private val clock: Clock = Clock.systemUTC(),
+    private val parser: Json = jsonDefault,
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
 
@@ -58,8 +58,11 @@ class KtorRequestHandler(
             }
             response.isError -> {
                 logger.debug { response.logString(body) }
-                if(response.contentType() == ContentType.Application.Json)
-                    throw KtorRequestException(response, parser.decodeFromString(DiscordErrorResponse.serializer().optional, body))
+                if (response.contentType() == ContentType.Application.Json)
+                    throw KtorRequestException(
+                        response,
+                        parser.decodeFromString(DiscordErrorResponse.serializer().optional, body)
+                    )
                 else throw KtorRequestException(response, null)
             }
             else -> {
@@ -91,7 +94,7 @@ class KtorRequestHandler(
                 this.body = MultiPartFormDataContent(content)
                 logger.debug {
                     val json = content.filterIsInstance<PartData.FormItem>()
-                            .firstOrNull { it.name == "payload_json" }?.value
+                        .firstOrNull { it.name == "payload_json" }?.value
                     request.logString(json ?: "")
                 }
             }
@@ -126,8 +129,10 @@ fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): Reques
 
     return when {
         response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
-        response.isRateLimit -> RequestResponse.BucketRateLimit(bucket
-                ?: BucketKey("missing"), rateLimit, reset)
+        response.isRateLimit -> RequestResponse.BucketRateLimit(
+            bucket
+                ?: BucketKey("missing"), rateLimit, reset
+        )
         response.isError -> RequestResponse.Error
         else -> RequestResponse.Accepted(bucket, rateLimit, reset)
     }

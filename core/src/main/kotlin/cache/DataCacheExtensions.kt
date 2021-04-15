@@ -9,16 +9,16 @@ import dev.kord.core.cache.data.*
  * Registers all Kord data classes for this cache
  */
 internal suspend fun DataCache.registerKordData() = register(
-        RoleData.description,
-        ChannelData.description,
-        GuildData.description,
-        MemberData.description,
-        UserData.description,
-        MessageData.description,
-        EmojiData.description,
-        WebhookData.description,
-        PresenceData.description,
-        VoiceStateData.description
+    RoleData.description,
+    ChannelData.description,
+    GuildData.description,
+    MemberData.description,
+    UserData.description,
+    MessageData.description,
+    EmojiData.description,
+    WebhookData.description,
+    PresenceData.description,
+    VoiceStateData.description
 )
 
 /**

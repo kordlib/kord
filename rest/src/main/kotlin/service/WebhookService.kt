@@ -20,7 +20,11 @@ import kotlin.contracts.contract
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createWebhook(channelId: Snowflake, name: String, builder: WebhookCreateBuilder.() -> Unit): DiscordWebhook {
+    suspend inline fun createWebhook(
+        channelId: Snowflake,
+        name: String,
+        builder: WebhookCreateBuilder.() -> Unit
+    ): DiscordWebhook {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -65,7 +69,11 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyWebhookWithToken(webhookId: Snowflake, token: String, builder: WebhookModifyBuilder.() -> Unit): DiscordWebhook {
+    suspend inline fun modifyWebhookWithToken(
+        webhookId: Snowflake,
+        token: String,
+        builder: WebhookModifyBuilder.() -> Unit
+    ): DiscordWebhook {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -84,14 +92,20 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         reason?.let { header("X-Audit-Log-Reason", reason) }
     }
 
-    suspend fun deleteWebhookWithToken(webhookId: Snowflake, token: String, reason: String? = null) = call(Route.WebhookByTokenDelete) {
-        keys[Route.WebhookId] = webhookId
-        keys[Route.WebhookToken] = token
-        reason?.let { header("X-Audit-Log-Reason", reason) }
-    }
+    suspend fun deleteWebhookWithToken(webhookId: Snowflake, token: String, reason: String? = null) =
+        call(Route.WebhookByTokenDelete) {
+            keys[Route.WebhookId] = webhookId
+            keys[Route.WebhookToken] = token
+            reason?.let { header("X-Audit-Log-Reason", reason) }
+        }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun executeWebhook(webhookId: Snowflake, token: String, wait: Boolean, builder: ExecuteWebhookBuilder.() -> Unit): DiscordMessage? {
+    suspend inline fun executeWebhook(
+        webhookId: Snowflake,
+        token: String,
+        wait: Boolean,
+        builder: ExecuteWebhookBuilder.() -> Unit
+    ): DiscordMessage? {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -108,19 +122,19 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
 
     @KordExperimental
     suspend fun executeSlackWebhook(webhookId: Snowflake, token: String, body: JsonObject, wait: Boolean = false) =
-            call(Route.ExecuteSlackWebhookPost) {
-                keys[Route.WebhookId] = webhookId
-                keys[Route.WebhookToken] = token
-                parameter("wait", "$wait")
-                body(JsonObject.serializer(), body)
-            }
+        call(Route.ExecuteSlackWebhookPost) {
+            keys[Route.WebhookId] = webhookId
+            keys[Route.WebhookToken] = token
+            parameter("wait", "$wait")
+            body(JsonObject.serializer(), body)
+        }
 
     @KordExperimental
     suspend fun executeGithubWebhook(webhookId: Snowflake, token: String, body: JsonObject, wait: Boolean = false) =
-            call(Route.ExecuteGithubWebhookPost) {
-                keys[Route.WebhookId] = webhookId
-                keys[Route.WebhookToken] = token
-                parameter("wait", "$wait")
-                body(JsonObject.serializer(), body)
-            }
+        call(Route.ExecuteGithubWebhookPost) {
+            keys[Route.WebhookId] = webhookId
+            keys[Route.WebhookToken] = token
+            parameter("wait", "$wait")
+            body(JsonObject.serializer(), body)
+        }
 }

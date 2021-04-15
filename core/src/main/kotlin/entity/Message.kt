@@ -27,9 +27,9 @@ import java.util.*
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
  */
 class Message(
-        val data: MessageData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
+    val data: MessageData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : MessageBehavior {
 
     /**
@@ -94,7 +94,8 @@ class Message(
      * This collection can only contain values on crossposted messages, channels
      * mentioned inside the same guild will not be present.
      */
-    val mentionedChannelBehaviors: Set<ChannelBehavior> get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(it, kord) }.toSet()
+    val mentionedChannelBehaviors: Set<ChannelBehavior>
+        get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(it, kord) }.toSet()
 
     /**
      * The stickers sent with this message.

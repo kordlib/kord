@@ -16,9 +16,9 @@ import java.util.*
  * The details of a [Discord OAuth2](https://discord.com/developers/docs/topics/oauth2) application.
  */
 class ApplicationInfo(
-        val data: ApplicationInfoData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
+    val data: ApplicationInfoData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordEntity, Strategizable {
 
     override val id: Snowflake
@@ -71,7 +71,7 @@ class ApplicationInfo(
      * Returns a new [ApplicationInfo] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ApplicationInfo =
-            ApplicationInfo(data, kord, strategy.supply(kord))
+        ApplicationInfo(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id)
 

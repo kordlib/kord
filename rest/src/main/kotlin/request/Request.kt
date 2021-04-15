@@ -25,12 +25,22 @@ sealed class Request<B : Any, R> {
         }
 }
 
-val Request<*, *>.identifier get() = when { //The major identifier is always the 'biggest' entity.
-    Route.GuildId in routeParams -> RequestIdentifier.MajorParamIdentifier(route, routeParams.getValue(Route.GuildId))
-    Route.ChannelId in routeParams -> RequestIdentifier.MajorParamIdentifier(route, routeParams.getValue(Route.ChannelId))
-    Route.WebhookId in routeParams -> RequestIdentifier.MajorParamIdentifier(route, routeParams.getValue(Route.WebhookId))
-    else -> RequestIdentifier.RouteIdentifier(route)
-}
+val Request<*, *>.identifier
+    get() = when { //The major identifier is always the 'biggest' entity.
+        Route.GuildId in routeParams -> RequestIdentifier.MajorParamIdentifier(
+            route,
+            routeParams.getValue(Route.GuildId)
+        )
+        Route.ChannelId in routeParams -> RequestIdentifier.MajorParamIdentifier(
+            route,
+            routeParams.getValue(Route.ChannelId)
+        )
+        Route.WebhookId in routeParams -> RequestIdentifier.MajorParamIdentifier(
+            route,
+            routeParams.getValue(Route.WebhookId)
+        )
+        else -> RequestIdentifier.RouteIdentifier(route)
+    }
 
 /**
  * A ['per-route'](https://discord.com/developers/docs/topics/rate-limits) identifier for rate limiting purposes.
@@ -50,22 +60,22 @@ sealed class RequestIdentifier {
 data class RequestBody<T>(val strategy: SerializationStrategy<T>, val body: T) where T : Any
 
 class JsonRequest<B : Any, R>(
-        override val route: Route<R>,
-        override val routeParams: Map<Route.Key, String>,
-        override val parameters: StringValues,
-        override val headers: StringValues,
-        override val body: RequestBody<B>?
+    override val route: Route<R>,
+    override val routeParams: Map<Route.Key, String>,
+    override val parameters: StringValues,
+    override val headers: StringValues,
+    override val body: RequestBody<B>?
 ) : Request<B, R>() {
     override val files: List<Pair<String, java.io.InputStream>>? = null
 }
 
 class MultipartRequest<B : Any, R>(
-        override val route: Route<R>,
-        override val routeParams: Map<Route.Key, String>,
-        override val parameters: StringValues,
-        override val headers: StringValues,
-        override val body: RequestBody<B>?,
-        override val files: List<Pair<String, java.io.InputStream>> = emptyList()
+    override val route: Route<R>,
+    override val routeParams: Map<Route.Key, String>,
+    override val parameters: StringValues,
+    override val headers: StringValues,
+    override val body: RequestBody<B>?,
+    override val files: List<Pair<String, java.io.InputStream>> = emptyList()
 ) : Request<B, R>() {
 
     val data = formData {

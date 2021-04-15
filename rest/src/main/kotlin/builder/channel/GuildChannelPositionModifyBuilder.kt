@@ -13,7 +13,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-class GuildChannelPositionModifyBuilder: AuditRequestBuilder<GuildChannelPositionModifyRequest>  {
+class GuildChannelPositionModifyBuilder : AuditRequestBuilder<GuildChannelPositionModifyRequest> {
     override var reason: String? = null
     var swaps: MutableList<GuildChannelSwapBuilder> = mutableListOf()
 
@@ -26,7 +26,7 @@ class GuildChannelPositionModifyBuilder: AuditRequestBuilder<GuildChannelPositio
     }
 
     @OptIn(ExperimentalContracts::class)
-    inline fun move(channel: Snowflake, builder: GuildChannelSwapBuilder.() -> Unit){
+    inline fun move(channel: Snowflake, builder: GuildChannelSwapBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         swaps.firstOrNull { it.channelId == channel }?.builder() ?: run {
             swaps.add(GuildChannelSwapBuilder(channel).also(builder))
@@ -34,7 +34,7 @@ class GuildChannelPositionModifyBuilder: AuditRequestBuilder<GuildChannelPositio
     }
 
     override fun toRequest(): GuildChannelPositionModifyRequest =
-            GuildChannelPositionModifyRequest(swaps.map { it.toRequest() })
+        GuildChannelPositionModifyRequest(swaps.map { it.toRequest() })
 }
 
 
@@ -42,6 +42,7 @@ class GuildChannelSwapBuilder(var channelId: Snowflake) {
 
 
     private var _position: OptionalInt? = OptionalInt.Missing
+
     /**
      * The new position of this channel
      */
@@ -68,7 +69,7 @@ class GuildChannelSwapBuilder(var channelId: Snowflake) {
 
     @OptIn(KordExperimental::class)
     fun toRequest(): ChannelPositionSwapRequest = ChannelPositionSwapRequest(
-            channelId, _position, lockPermissionsToParent, parentId
+        channelId, _position, lockPermissionsToParent, parentId
     )
 
 }

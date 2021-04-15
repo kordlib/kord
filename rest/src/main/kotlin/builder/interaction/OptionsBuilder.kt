@@ -44,12 +44,14 @@ sealed class BaseChoiceBuilder<T>(
     abstract fun choice(name: String, value: T)
 
     override fun toRequest(): ApplicationCommandOption {
-        return ApplicationCommandOption(type,
+        return ApplicationCommandOption(
+            type,
             name,
             description,
             choices = _choices,
             required = _required,
-            default = _default)
+            default = _default
+        )
     }
 
 }

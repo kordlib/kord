@@ -412,7 +412,7 @@ class Kord(
  */
 @OptIn(ExperimentalContracts::class)
 suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Kord {
-contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return KordBuilder(token).apply(builder).build()
 }
 

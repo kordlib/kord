@@ -6,11 +6,11 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.event.Event
 
 class GuildDeleteEvent(
-        val guildId: Snowflake,
-        val unavailable: Boolean,
-        val guild: Guild?,
-        override val kord: Kord,
-        override val shard: Int
+    val guildId: Snowflake,
+    val unavailable: Boolean,
+    val guild: Guild?,
+    override val kord: Kord,
+    override val shard: Int
 ) : Event {
 
     override fun toString(): String {

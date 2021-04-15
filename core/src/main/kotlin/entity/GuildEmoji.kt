@@ -23,9 +23,9 @@ import kotlin.contracts.contract
  * An instance of a [Discord emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
  */
 class GuildEmoji(
-        val data: EmojiData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: EmojiData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordEntity, Strategizable {
 
     override val id: Snowflake
@@ -72,7 +72,8 @@ class GuildEmoji(
     /**
      * The behaviors of the [roles][Role] for which this emoji was whitelisted.
      */
-    val roleBehaviors: Set<RoleBehavior> get() = data.roles.orEmpty().map { RoleBehavior(guildId = guildId, id = id, kord = kord) }.toSet()
+    val roleBehaviors: Set<RoleBehavior>
+        get() = data.roles.orEmpty().map { RoleBehavior(guildId = guildId, id = id, kord = kord) }.toSet()
 
     /**
      * The [roles][Role] for which this emoji was whitelisted.

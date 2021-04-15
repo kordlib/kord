@@ -10,6 +10,6 @@ interface RequestHandler {
      * Throws an [RestRequestException] when a non-rate limit error response is returned.
      */
     @Throws(RestRequestException::class)
-    suspend fun <B : Any,R>  handle(request: Request<B,R>): R
+    suspend fun <B : Any, R> handle(request: Request<B, R>): R
 
 }

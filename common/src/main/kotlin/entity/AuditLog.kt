@@ -18,87 +18,87 @@ import dev.kord.common.entity.VerificationLevel as CommonVerificationLevel
 
 @Serializable
 data class DiscordAuditLog(
-        val webhooks: List<DiscordWebhook>,
-        val users: List<DiscordUser>,
-        @SerialName("audit_log_entries")
-        val auditLogEntries: List<DiscordAuditLogEntry>,
-        val integrations: List<DiscordPartialIntegration>,
+    val webhooks: List<DiscordWebhook>,
+    val users: List<DiscordUser>,
+    @SerialName("audit_log_entries")
+    val auditLogEntries: List<DiscordAuditLogEntry>,
+    val integrations: List<DiscordPartialIntegration>,
 )
 
 @Serializable
 data class DiscordAuditLogEntry(
-        @SerialName("target_id")
-        val targetId: Snowflake?,
-        val changes: Optional<List<AuditLogChange<in @Contextual Any?>>> = Optional.Missing(),
-        @SerialName("user_id")
-        val userId: Snowflake,
-        val id: Snowflake,
-        @SerialName("action_type")
-        val actionType: AuditLogEvent,
-        val options: Optional<AuditLogEntryOptionalInfo> = Optional.Missing(),
-        val reason: Optional<String> = Optional.Missing(),
+    @SerialName("target_id")
+    val targetId: Snowflake?,
+    val changes: Optional<List<AuditLogChange<in @Contextual Any?>>> = Optional.Missing(),
+    @SerialName("user_id")
+    val userId: Snowflake,
+    val id: Snowflake,
+    @SerialName("action_type")
+    val actionType: AuditLogEvent,
+    val options: Optional<AuditLogEntryOptionalInfo> = Optional.Missing(),
+    val reason: Optional<String> = Optional.Missing(),
 ) {
 
     @Suppress("UNCHECKED_CAST")
     operator fun <T> get(value: AuditLogChangeKey<T>): AuditLogChange<T>? =
-            changes.orEmpty().firstOrNull { it.key == value } as? AuditLogChange<T>
+        changes.orEmpty().firstOrNull { it.key == value } as? AuditLogChange<T>
 
 }
 
 @Serializable
 data class AuditLogEntryOptionalInfo(
-        /*
-        Do not trust the docs:
-        2020-11-12 field is described as present but is in fact optional
-         */
-        @SerialName("delete_member_days")
-        val deleteMemberDays: Optional<String> = Optional.Missing(),
-        /*
-        Do not trust the docs:
-        2020-11-12 field is described as present but is in fact optional
-         */
-        @SerialName("members_removed")
-        val membersRemoved: Optional<String> = Optional.Missing(),
-        /*
-        Do not trust the docs:
-        2020-11-12 field is described as present but is in fact optional
-         */
-        @SerialName("channel_id")
-        val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
-        /*
-        Do not trust the docs:
-        2020-11-12 field is described as present but is in fact optional
-         */
-        @SerialName("message_id")
-        val messageId: OptionalSnowflake = OptionalSnowflake.Missing,
-        /*
-        Do not trust the docs:
-        2020-11-12 field is described as present but is in fact optional
-         */
-        val count: Optional<String> = Optional.Missing(),
-        /*
-        Do not trust the docs:
-        2020-11-12 field is described as present but is in fact optional
-         */
-        val id: OptionalSnowflake = OptionalSnowflake.Missing,
-        /*
-        Do not trust the docs:
-        2020-11-12 field is described as present but is in fact optional
-         */
-        val type: Optional<OverwriteType> = Optional.Missing(),
-        /*
-        Do not trust the docs:
-        2020-11-12 field is described as present but is in fact optional
-         */
-        @SerialName("role_name")
-        val roleName: Optional<String> = Optional.Missing(),
+    /*
+    Do not trust the docs:
+    2020-11-12 field is described as present but is in fact optional
+     */
+    @SerialName("delete_member_days")
+    val deleteMemberDays: Optional<String> = Optional.Missing(),
+    /*
+    Do not trust the docs:
+    2020-11-12 field is described as present but is in fact optional
+     */
+    @SerialName("members_removed")
+    val membersRemoved: Optional<String> = Optional.Missing(),
+    /*
+    Do not trust the docs:
+    2020-11-12 field is described as present but is in fact optional
+     */
+    @SerialName("channel_id")
+    val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
+    /*
+    Do not trust the docs:
+    2020-11-12 field is described as present but is in fact optional
+     */
+    @SerialName("message_id")
+    val messageId: OptionalSnowflake = OptionalSnowflake.Missing,
+    /*
+    Do not trust the docs:
+    2020-11-12 field is described as present but is in fact optional
+     */
+    val count: Optional<String> = Optional.Missing(),
+    /*
+    Do not trust the docs:
+    2020-11-12 field is described as present but is in fact optional
+     */
+    val id: OptionalSnowflake = OptionalSnowflake.Missing,
+    /*
+    Do not trust the docs:
+    2020-11-12 field is described as present but is in fact optional
+     */
+    val type: Optional<OverwriteType> = Optional.Missing(),
+    /*
+    Do not trust the docs:
+    2020-11-12 field is described as present but is in fact optional
+     */
+    @SerialName("role_name")
+    val roleName: Optional<String> = Optional.Missing(),
 )
 
 @Serializable(with = AuditLogChange.Serializer::class)
 data class AuditLogChange<T>(
-        val new: T?,
-        val old: T?,
-        val key: AuditLogChangeKey<T>,
+    val new: T?,
+    val old: T?,
+    val key: AuditLogChangeKey<T>,
 ) {
 
     internal class Serializer<T>(val ser: KSerializer<T>) : KSerializer<AuditLogChange<T>> {
@@ -117,7 +117,11 @@ data class AuditLogChange<T>(
                     when (val index = decodeElementIndex(descriptor)) {
                         0 -> new = decodeSerializableElement(descriptor, index, JsonElement.serializer())
                         1 -> old = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        2 -> key = decodeSerializableElement(descriptor, index, AuditLogChangeKey.Serializer(Unit.serializer()))
+                        2 -> key = decodeSerializableElement(
+                            descriptor,
+                            index,
+                            AuditLogChangeKey.Serializer(Unit.serializer())
+                        )
                         CompositeDecoder.DECODE_DONE -> break
                         else -> throw SerializationException("unknown index: $index")
                     }
@@ -127,7 +131,11 @@ data class AuditLogChange<T>(
                 val oldVal = old?.let { Json.decodeFromJsonElement(key.serializer, old) }
 
                 @Suppress("UNCHECKED_CAST")
-                return AuditLogChange(new = newVal, old = oldVal, key = key as AuditLogChangeKey<Any?>) as AuditLogChange<T>
+                return AuditLogChange(
+                    new = newVal,
+                    old = oldVal,
+                    key = key as AuditLogChangeKey<Any?>
+                ) as AuditLogChange<T>
             }
         }
 
@@ -148,7 +156,7 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
 
     override fun toString(): String = "AuditLogChangeKey(name=$name)"
 
-    class Unknown(name: String): AuditLogChangeKey<JsonElement>(name, JsonElement.serializer())
+    class Unknown(name: String) : AuditLogChangeKey<JsonElement>(name, JsonElement.serializer())
 
     @SerialName("name")
     object Name : AuditLogChangeKey<String>("name", serializer())
@@ -178,10 +186,12 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
     object VerificationLevel : AuditLogChangeKey<CommonVerificationLevel>("verification_level", serializer())
 
     @SerialName("explicit_content_filter")
-    object ExplicitContentFilter : AuditLogChangeKey<CommonExplicitContentFilter>("explicit_content_filter", serializer())
+    object ExplicitContentFilter :
+        AuditLogChangeKey<CommonExplicitContentFilter>("explicit_content_filter", serializer())
 
     @SerialName("default_message_notifications")
-    object DefaultMessageNotificationLevel : AuditLogChangeKey<CommonDefaultMessageNotificationLevel>("default_message_notifications", serializer())
+    object DefaultMessageNotificationLevel :
+        AuditLogChangeKey<CommonDefaultMessageNotificationLevel>("default_message_notifications", serializer())
 
     @SerialName("vanity_url_code")
     object VanityUrlCode : AuditLogChangeKey<String>("vanity_url_code", serializer())

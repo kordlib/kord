@@ -4,8 +4,8 @@ import dev.kord.gateway.*
 import kotlinx.coroutines.flow.Flow
 
 internal class InvalidSessionHandler(
-        flow: Flow<Event>,
-        private val restart: suspend (event: Close) -> Unit
+    flow: Flow<Event>,
+    private val restart: suspend (event: Close) -> Unit
 ) : Handler(flow, "InvalidSessionHandler") {
 
     override fun start() {

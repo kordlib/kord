@@ -16,8 +16,8 @@ import dev.kord.rest.Image
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
  */
 open class User(
-        val data: UserData,
-        override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier,
+    val data: UserData,
+    override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : UserBehavior {
 
     override val id: Snowflake

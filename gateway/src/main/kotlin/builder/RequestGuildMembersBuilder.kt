@@ -60,12 +60,12 @@ class RequestGuildMembersBuilder(var guildId: Snowflake) {
      */
     fun requestAllMembers() {
         limit = 0
-        query= ""
+        query = ""
         userIds.clear()
     }
 
     fun toRequest(): RequestGuildMembers = RequestGuildMembers(
-            guildId, _query, _limit, _presences, Optional.missingOnEmpty(userIds), _nonce
+        guildId, _query, _limit, _presences, Optional.missingOnEmpty(userIds), _nonce
     )
 
 }

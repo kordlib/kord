@@ -16,14 +16,14 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 
 class ReactionRemoveEvent(
-        val userId: Snowflake,
-        val channelId: Snowflake,
-        val messageId: Snowflake,
-        val guildId: Snowflake?,
-        val emoji: ReactionEmoji,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val userId: Snowflake,
+    val channelId: Snowflake,
+    val messageId: Snowflake,
+    val guildId: Snowflake?,
+    val emoji: ReactionEmoji,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
     val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
@@ -51,10 +51,10 @@ class ReactionRemoveEvent(
     suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
 
     suspend fun getUserAsMember(): Member? =
-            guildId?.let { supplier.getMemberOrNull(guildId = guildId, userId = userId) }
+        guildId?.let { supplier.getMemberOrNull(guildId = guildId, userId = userId) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveEvent =
-            ReactionRemoveEvent(userId, channelId, messageId, guildId, emoji, kord, shard, strategy.supply(kord))
+        ReactionRemoveEvent(userId, channelId, messageId, guildId, emoji, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "ReactionRemoveEvent(userId=$userId, channelId=$channelId, messageId=$messageId, guildId=$guildId, emoji=$emoji, kord=$kord, shard=$shard, supplier=$supplier)"

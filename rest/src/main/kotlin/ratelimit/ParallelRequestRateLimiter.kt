@@ -29,8 +29,10 @@ class ParallelRequestRateLimiter(clock: Clock = Clock.systemUTC()) : AbstractRat
     override val logger: KLogger
         get() = parallelLogger
 
-    override fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken = ParallelRequestToken(request.identifier, buckets)
+    override fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken =
+        ParallelRequestToken(request.identifier, buckets)
 
-    private inner class ParallelRequestToken(identity: RequestIdentifier, requestBuckets: List<Bucket>) : AbstractRequestToken(identity, requestBuckets)
+    private inner class ParallelRequestToken(identity: RequestIdentifier, requestBuckets: List<Bucket>) :
+        AbstractRequestToken(identity, requestBuckets)
 
 }

@@ -79,7 +79,11 @@ suspend inline fun EphemeralInteractionResponseBehavior.followUp(
 }
 
 @KordPreview
-fun EphemeralInteractionResponseBehavior(applicationId: Snowflake, token: String, kord: Kord): EphemeralInteractionResponseBehavior =
+fun EphemeralInteractionResponseBehavior(
+    applicationId: Snowflake,
+    token: String,
+    kord: Kord
+): EphemeralInteractionResponseBehavior =
     object : EphemeralInteractionResponseBehavior {
         override val applicationId: Snowflake
             get() = applicationId

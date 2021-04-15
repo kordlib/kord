@@ -29,10 +29,10 @@ class RoleModifyBuilder : AuditRequestBuilder<GuildRoleModifyRequest> {
     var permissions: Permissions? by ::_permissions.delegate()
 
     override fun toRequest(): GuildRoleModifyRequest = GuildRoleModifyRequest(
-            name = _name,
-            color = _color,
-            separate = _hoist,
-            mentionable = _mentionable,
-            permissions = _permissions
+        name = _name,
+        color = _color,
+        separate = _hoist,
+        mentionable = _mentionable,
+        permissions = _permissions
     )
 }

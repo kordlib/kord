@@ -58,7 +58,7 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : KordE
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is Attachment -> other.id == id
         else -> false
     }

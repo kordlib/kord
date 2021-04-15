@@ -115,5 +115,5 @@ val OptionalLong?.value: Long? get() = this?.asNullable
  */
 fun OptionalLong?.orElse(default: Long) = this?.orElse(default) ?: default
 
-fun Long?.optional(): OptionalLong = if(this == null) OptionalLong.Missing
+fun Long?.optional(): OptionalLong = if (this == null) OptionalLong.Missing
 else OptionalLong.Value(this)

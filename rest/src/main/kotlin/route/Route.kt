@@ -339,10 +339,18 @@ sealed class Route<T>(
         : Route<DiscordPartialInvite>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", DiscordPartialInvite.serializer())
 
     object GuildWelcomeScreenGet
-        : Route<DiscordWelcomeScreen>(HttpMethod.Get, "/guilds/${GuildId}/welcome-screen", DiscordWelcomeScreen.serializer())
+        : Route<DiscordWelcomeScreen>(
+        HttpMethod.Get,
+        "/guilds/${GuildId}/welcome-screen",
+        DiscordWelcomeScreen.serializer()
+    )
 
     object GuildWelcomeScreenPatch
-        : Route<DiscordWelcomeScreen>(HttpMethod.Patch, "/guilds/${GuildId}/welcome-screen", DiscordWelcomeScreen.serializer())
+        : Route<DiscordWelcomeScreen>(
+        HttpMethod.Patch,
+        "/guilds/${GuildId}/welcome-screen",
+        DiscordWelcomeScreen.serializer()
+    )
 
     @KordPreview
     object MessageCrosspost
@@ -437,24 +445,42 @@ sealed class Route<T>(
         : Route<DiscordGuild>(HttpMethod.Post, "guilds/templates/${TemplateCode}", DiscordGuild.serializer())
 
     object GuildTemplatesGet
-        : Route<List<DiscordTemplate>>(HttpMethod.Get, "/guilds/${GuildId}/templates", ListSerializer(DiscordTemplate.serializer()))
+        : Route<List<DiscordTemplate>>(
+        HttpMethod.Get,
+        "/guilds/${GuildId}/templates",
+        ListSerializer(DiscordTemplate.serializer())
+    )
 
     object GuildTemplatePost
         : Route<DiscordTemplate>(HttpMethod.Post, "/guilds/${GuildId}/templates", DiscordTemplate.serializer())
 
     object TemplateSyncPut
-        : Route<DiscordTemplate>(HttpMethod.Put, "/guilds/${GuildId}/templates/${TemplateCode}", DiscordTemplate.serializer())
+        : Route<DiscordTemplate>(
+        HttpMethod.Put,
+        "/guilds/${GuildId}/templates/${TemplateCode}",
+        DiscordTemplate.serializer()
+    )
 
     object TemplatePatch
-        : Route<DiscordTemplate>(HttpMethod.Patch, "/guilds/${GuildId}/templates/${TemplateCode}", DiscordTemplate.serializer())
+        : Route<DiscordTemplate>(
+        HttpMethod.Patch,
+        "/guilds/${GuildId}/templates/${TemplateCode}",
+        DiscordTemplate.serializer()
+    )
 
     object TemplateDelete
-        : Route<DiscordTemplate>(HttpMethod.Delete, "/guilds/${GuildId}/templates/${TemplateCode}", DiscordTemplate.serializer())
+        : Route<DiscordTemplate>(
+        HttpMethod.Delete,
+        "/guilds/${GuildId}/templates/${TemplateCode}",
+        DiscordTemplate.serializer()
+    )
 
     @KordPreview
     object GlobalApplicationCommandsGet
         : Route<List<DiscordApplicationCommand>>(
-        HttpMethod.Get, "/applications/${ApplicationId}/commands", ListSerializer(DiscordApplicationCommand.serializer())
+        HttpMethod.Get,
+        "/applications/${ApplicationId}/commands",
+        ListSerializer(DiscordApplicationCommand.serializer())
     )
 
     @KordPreview
@@ -553,7 +579,8 @@ sealed class Route<T>(
         )
 
     object OriginalInteractionResponseDelete
-        : Route<Unit>(HttpMethod.Delete, "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original", NoStrategy)
+        :
+        Route<Unit>(HttpMethod.Delete, "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original", NoStrategy)
 
     object FollowupMessageCreate : Route<DiscordMessage>(
         HttpMethod.Post,
@@ -568,7 +595,11 @@ sealed class Route<T>(
     )
 
     object FollowupMessageDelete :
-        Route<Unit>(HttpMethod.Delete, "/webhooks/${ApplicationId}/${InteractionToken}/messages/${MessageId}", NoStrategy)
+        Route<Unit>(
+            HttpMethod.Delete,
+            "/webhooks/${ApplicationId}/${InteractionToken}/messages/${MessageId}",
+            NoStrategy
+        )
 
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"

@@ -13,9 +13,9 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.toSnowflakeOrNull
 
 class VoiceState(
-        val data: VoiceStateData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: VoiceStateData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordObject, Strategizable {
 
     val guildId: Snowflake get() = data.guildId
@@ -95,7 +95,8 @@ class VoiceState(
     /**
      * Returns a new [VoiceState] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceState = VoiceState(data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceState =
+        VoiceState(data, kord, strategy.supply(kord))
 
     override fun toString(): String {
         return "VoiceState(data=$data, kord=$kord, supplier=$supplier)"

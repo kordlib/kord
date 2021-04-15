@@ -31,7 +31,7 @@ data class ApplicationCommandModifyRequest(
 @KordPreview
 data class InteractionResponseModifyRequest(
     val content: Optional<String> = Optional.Missing(),
-    val embeds: Optional<List<EmbedRequest>> = Optional.Missing() ,
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing()
@@ -67,6 +67,7 @@ class InteractionApplicationCommandCallbackData(
     val flags: Optional<MessageFlags> = Optional.Missing()
 
 )
+
 @KordPreview
 data class MultipartFollowupMessageCreateRequest(
     val request: FollowupMessageCreateRequest,

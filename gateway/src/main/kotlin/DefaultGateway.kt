@@ -47,13 +47,13 @@ private sealed class State(val retry: Boolean) {
  * @param identifyRateLimiter: A rate limiter that follows the Discord API specifications for identifying.
  */
 data class DefaultGatewayData(
-        val url: String,
-        val client: HttpClient,
-        val reconnectRetry: Retry,
-        val sendRateLimiter: RateLimiter,
-        val identifyRateLimiter: RateLimiter,
-        val dispatcher: CoroutineDispatcher,
-        val eventFlow: MutableSharedFlow<Event>
+    val url: String,
+    val client: HttpClient,
+    val reconnectRetry: Retry,
+    val sendRateLimiter: RateLimiter,
+    val identifyRateLimiter: RateLimiter,
+    val dispatcher: CoroutineDispatcher,
+    val eventFlow: MutableSharedFlow<Event>
 )
 
 /**
@@ -288,7 +288,8 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     companion object {
         private const val gatewayRunningError = "The Gateway is already running, call stop() first."
-        private const val gatewayDetachedError = "The Gateway has been detached and can no longer be used, create a new instance instead."
+        private const val gatewayDetachedError =
+            "The Gateway has been detached and can no longer be used, create a new instance instead."
     }
 }
 
@@ -300,13 +301,13 @@ inline fun DefaultGateway(builder: DefaultGatewayBuilder.() -> Unit = {}): Defau
 
 internal val GatewayConfiguration.identify
     get() = Identify(
-            token,
-            IdentifyProperties(os, name, name),
-            false.optional(),
-            50.optionalInt(),
-            shard.optional(),
-            presence,
-            intents
+        token,
+        IdentifyProperties(os, name, name),
+        false.optional(),
+        50.optionalInt(),
+        shard.optional(),
+        presence,
+        intents
     )
 
 

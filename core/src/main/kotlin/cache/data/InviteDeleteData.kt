@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class InviteDeleteData(
-        val channelId: Snowflake,
-        val guildId: Snowflake,
-        val code: String
+    val channelId: Snowflake,
+    val guildId: Snowflake,
+    val code: String
 ) {
 
     companion object {

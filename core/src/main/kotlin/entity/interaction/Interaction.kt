@@ -223,7 +223,7 @@ class ResolvedObjects(
     val strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ) {
     val channels: Map<Snowflake, ResolvedChannel>?
-    get() = data.channels.mapValues { ResolvedChannel(it.value, kord, strategy) }.value
+        get() = data.channels.mapValues { ResolvedChannel(it.value, kord, strategy) }.value
 
     val roles: Map<Snowflake, Role>? get() = data.roles.mapValues { Role(it.value, kord) }.value
     val users: Map<Snowflake, User>? get() = data.users.mapValues { User(it.value, kord) }.value

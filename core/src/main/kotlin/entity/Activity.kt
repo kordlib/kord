@@ -28,16 +28,29 @@ class Activity(val data: ActivityData) {
 
     val state: String? get() = data.state.value
 
-    val party: Party? get() = data.party.value?.let { Party(it.id.value, it.size.value?.current, it.size.value?.maximum) }
+    val party: Party?
+        get() = data.party.value?.let {
+            Party(
+                it.id.value,
+                it.size.value?.current,
+                it.size.value?.maximum
+            )
+        }
 
-    val assets: Assets? get() = Assets(
+    val assets: Assets?
+        get() = Assets(
             data.assets.value?.largeImage?.value,
             data.assets.value?.largeText?.value,
             data.assets.value?.smallImage?.value,
             data.assets.value?.smallText?.value
-    )
+        )
 
-    val secrets: Secrets? get() = Secrets(data.secrets.value?.join?.value, data.secrets.value?.join?.value, data.secrets.value?.join?.value)
+    val secrets: Secrets?
+        get() = Secrets(
+            data.secrets.value?.join?.value,
+            data.secrets.value?.join?.value,
+            data.secrets.value?.join?.value
+        )
 
     val isInstance: Boolean? get() = data.instance.value
 

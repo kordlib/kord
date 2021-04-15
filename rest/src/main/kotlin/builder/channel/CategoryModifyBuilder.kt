@@ -14,11 +14,12 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
+class CategoryModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
 
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
+
     /**
      * The name of the category.
      */
@@ -42,7 +43,7 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
      * adds a [Overwrite] for the [memberId].
      */
     @OptIn(ExperimentalContracts::class)
-    inline fun addMemberOverwrite(memberId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit){
+    inline fun addMemberOverwrite(memberId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -55,7 +56,7 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
      * adds a [Overwrite] for the [roleId].
      */
     @OptIn(ExperimentalContracts::class)
-    inline fun addRoleOverwrite(roleId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit){
+    inline fun addRoleOverwrite(roleId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -65,8 +66,8 @@ class CategoryModifyBuilder: AuditRequestBuilder<ChannelModifyPatchRequest> {
     }
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
-            name = _name,
-            position = _position,
-            permissionOverwrites = _permissionOverwrites
+        name = _name,
+        position = _position,
+        permissionOverwrites = _permissionOverwrites
     )
 }

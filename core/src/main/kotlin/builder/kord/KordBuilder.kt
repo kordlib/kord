@@ -113,7 +113,6 @@ class KordBuilder(val token: String) {
     var intents: Intents = Intents.nonPrivileged
 
 
-
     /**
      * Configures the shards this client will connect to, by default `0 until recommended`.
      * This can be used to break up to client into multiple processes.

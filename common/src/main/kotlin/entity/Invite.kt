@@ -15,7 +15,7 @@ sealed class TargetUserType(val value: Int) {
     internal object Serializer : KSerializer<TargetUserType> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Kord.TargetUserType", PrimitiveKind.INT)
 
-        override fun deserialize(decoder: Decoder): TargetUserType = when(val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): TargetUserType = when (val value = decoder.decodeInt()) {
             1 -> Stream
             else -> Unknown(value)
         }

@@ -75,60 +75,61 @@ sealed class Command {
 
 @Serializable
 internal data class Identify(
-        internal val token: String,
-        val properties: IdentifyProperties,
-        val compress: OptionalBoolean = OptionalBoolean.Missing,
-        @SerialName("large_threshold")
-        val largeThreshold: OptionalInt = OptionalInt.Missing,
-        val shard: Optional<DiscordShard> = Optional.Missing(),
-        val presence: Optional<DiscordPresence> = Optional.Missing(),
-        val intents: Intents,
+    internal val token: String,
+    val properties: IdentifyProperties,
+    val compress: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("large_threshold")
+    val largeThreshold: OptionalInt = OptionalInt.Missing,
+    val shard: Optional<DiscordShard> = Optional.Missing(),
+    val presence: Optional<DiscordPresence> = Optional.Missing(),
+    val intents: Intents,
 ) : Command() {
-    override fun toString(): String = "Identify(token=hunter2,properties=$properties,compress=$compress,largeThreshold=$largeThreshold," +
-            "shard=$shard,presence=$presence"
+    override fun toString(): String =
+        "Identify(token=hunter2,properties=$properties,compress=$compress,largeThreshold=$largeThreshold," +
+                "shard=$shard,presence=$presence"
 }
 
 @Serializable
 data class IdentifyProperties(
-        @Required
-        @SerialName("\$os")
-        val os: String,
-        @SerialName("\$browser")
-        val browser: String,
-        @SerialName("\$device")
-        val device: String,
+    @Required
+    @SerialName("\$os")
+    val os: String,
+    @SerialName("\$browser")
+    val browser: String,
+    @SerialName("\$device")
+    val device: String,
 )
 
 @Serializable
 data class GuildMembersChunkData(
-        @SerialName("guild_id")
-        val guildId: Snowflake,
-        val members: List<DiscordGuildMember>,
-        @SerialName("chunk_index")
-        val chunkIndex: Int,
-        @SerialName("chunk_count")
-        val chunkCount: Int,
-        @SerialName("not_found")
-        val notFound: Optional<Set<Snowflake>> = Optional.Missing(),
-        val presences: Optional<List<DiscordPresenceUpdate>> = Optional.Missing(),
-        val nonce: Optional<String> = Optional.Missing()
+    @SerialName("guild_id")
+    val guildId: Snowflake,
+    val members: List<DiscordGuildMember>,
+    @SerialName("chunk_index")
+    val chunkIndex: Int,
+    @SerialName("chunk_count")
+    val chunkCount: Int,
+    @SerialName("not_found")
+    val notFound: Optional<Set<Snowflake>> = Optional.Missing(),
+    val presences: Optional<List<DiscordPresenceUpdate>> = Optional.Missing(),
+    val nonce: Optional<String> = Optional.Missing()
 )
 
 @Serializable
 data class DiscordPresence(
-        val status: PresenceStatus,
-        val afk: Boolean,
-        val since: Long? = null,
-        val game: DiscordBotActivity? = null,
+    val status: PresenceStatus,
+    val afk: Boolean,
+    val since: Long? = null,
+    val game: DiscordBotActivity? = null,
 )
 
 @Serializable
 internal data class Resume(
-        val token: String,
-        @SerialName("session_id")
-        val sessionId: String,
-        @SerialName("seq")
-        val sequenceNumber: Int,
+    val token: String,
+    @SerialName("session_id")
+    val sessionId: String,
+    @SerialName("seq")
+    val sequenceNumber: Int,
 ) : Command() {
     override fun toString(): String = "Resume(token=hunter2,sessionId=$sessionId,sequenceNumber:$sequenceNumber)"
 }
@@ -160,21 +161,21 @@ internal data class Resume(
 @PrivilegedIntent
 @Serializable
 data class RequestGuildMembers(
-        @SerialName("guild_id")
-        val guildId: Snowflake,
-        val query: Optional<String> = Optional.Missing(),
-        val limit: OptionalInt = OptionalInt.Missing,
-        val presences: OptionalBoolean = OptionalBoolean.Missing,
-        @SerialName("user_ids")
-        val userIds: Optional<Set<Snowflake>> = Optional.Missing(),
-        val nonce: Optional<String> = Optional.Missing()
+    @SerialName("guild_id")
+    val guildId: Snowflake,
+    val query: Optional<String> = Optional.Missing(),
+    val limit: OptionalInt = OptionalInt.Missing,
+    val presences: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("user_ids")
+    val userIds: Optional<Set<Snowflake>> = Optional.Missing(),
+    val nonce: Optional<String> = Optional.Missing()
 ) : Command() {
 
     object Nonce {
         private val counter = atomic(0)
 
         @OptIn(ExperimentalUnsignedTypes::class)
-        fun new() : String = counter.getAndIncrement().toUInt().toString()
+        fun new(): String = counter.getAndIncrement().toUInt().toString()
 
     }
 
@@ -182,20 +183,20 @@ data class RequestGuildMembers(
 
 @Serializable
 data class UpdateVoiceStatus(
-        @SerialName("guild_id")
-        val guildId: Snowflake,
-        @SerialName("channel_id")
-        val channelId: Snowflake?,
-        @SerialName("self_mute")
-        val selfMute: Boolean,
-        @SerialName("self_deaf")
-        val selfDeaf: Boolean,
+    @SerialName("guild_id")
+    val guildId: Snowflake,
+    @SerialName("channel_id")
+    val channelId: Snowflake?,
+    @SerialName("self_mute")
+    val selfMute: Boolean,
+    @SerialName("self_deaf")
+    val selfDeaf: Boolean,
 ) : Command()
 
 @Serializable
 data class UpdateStatus(
-        val since: Long?,
-        val activities: List<DiscordBotActivity>?,
-        val status: PresenceStatus,
-        val afk: Boolean,
+    val since: Long?,
+    val activities: List<DiscordBotActivity>?,
+    val status: PresenceStatus,
+    val afk: Boolean,
 ) : Command()

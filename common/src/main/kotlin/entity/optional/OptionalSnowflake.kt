@@ -108,17 +108,18 @@ sealed class OptionalSnowflake {
 /**
  * returns `null` if this is `null` or [OptionalSnowflake.Missing], calls [OptionalSnowflake.Value.value] otherwise.
  */
-val OptionalSnowflake?.value: Snowflake? get() = when(this){
-    is OptionalSnowflake.Value -> value
-    OptionalSnowflake.Missing, null -> null
-}
+val OptionalSnowflake?.value: Snowflake?
+    get() = when (this) {
+        is OptionalSnowflake.Value -> value
+        OptionalSnowflake.Missing, null -> null
+    }
 
-fun Snowflake.optionalSnowflake() : OptionalSnowflake.Value = OptionalSnowflake.Value(this.value)
+fun Snowflake.optionalSnowflake(): OptionalSnowflake.Value = OptionalSnowflake.Value(this.value)
 
 @JvmName("optionalNullable")
-fun Snowflake?.optionalSnowflake() : OptionalSnowflake.Value? = this?.optionalSnowflake()
+fun Snowflake?.optionalSnowflake(): OptionalSnowflake.Value? = this?.optionalSnowflake()
 
-inline fun<T: Any> OptionalSnowflake.map(mapper: (Snowflake) -> T): Optional<T> = when(this){
+inline fun <T : Any> OptionalSnowflake.map(mapper: (Snowflake) -> T): Optional<T> = when (this) {
     OptionalSnowflake.Missing -> Optional.Missing()
     is OptionalSnowflake.Value -> Optional.Value(mapper(value))
 }

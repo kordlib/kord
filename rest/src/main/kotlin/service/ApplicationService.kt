@@ -6,6 +6,6 @@ import dev.kord.rest.route.Route
 
 class ApplicationService(handler: RequestHandler) : RestService(handler) {
 
-    suspend fun getCurrentApplicationInfo() : ApplicationInfoResponse = call(Route.CurrentApplicationInfo)
+    suspend fun getCurrentApplicationInfo(): ApplicationInfoResponse = call(Route.CurrentApplicationInfo)
 
 }

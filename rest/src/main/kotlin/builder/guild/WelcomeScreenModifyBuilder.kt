@@ -24,7 +24,7 @@ class WelcomeScreenModifyBuilder : RequestBuilder<GuildWelcomeScreenModifyReques
     var description: String? by ::_description.delegate()
 
     private var _welcomeScreenChannels: Optional<MutableList<WelcomeScreenChannelBuilder>> = Optional.Missing()
-     var welcomeScreenChannels: MutableList<WelcomeScreenChannelBuilder>? by ::_welcomeScreenChannels.delegate()
+    var welcomeScreenChannels: MutableList<WelcomeScreenChannelBuilder>? by ::_welcomeScreenChannels.delegate()
 
     @OptIn(ExperimentalContracts::class)
     inline fun welcomeChannel(id: Snowflake, description: String, builder: WelcomeScreenChannelBuilder.() -> Unit) {
@@ -34,11 +34,14 @@ class WelcomeScreenModifyBuilder : RequestBuilder<GuildWelcomeScreenModifyReques
     }
 
     override fun toRequest(): GuildWelcomeScreenModifyRequest {
-        return GuildWelcomeScreenModifyRequest(_enabled, _welcomeScreenChannels.mapList { it.toRequest() }, _description)
+        return GuildWelcomeScreenModifyRequest(
+            _enabled,
+            _welcomeScreenChannels.mapList { it.toRequest() },
+            _description
+        )
     }
 
 }
-
 
 
 class WelcomeScreenChannelBuilder(
@@ -46,7 +49,7 @@ class WelcomeScreenChannelBuilder(
     var description: String,
     var emojiId: Snowflake?,
     var emojiName: String?
-): RequestBuilder<DiscordWelcomeScreenChannel> {
+) : RequestBuilder<DiscordWelcomeScreenChannel> {
     override fun toRequest(): DiscordWelcomeScreenChannel {
         return DiscordWelcomeScreenChannel(channelId, description, emojiId, emojiName)
     }

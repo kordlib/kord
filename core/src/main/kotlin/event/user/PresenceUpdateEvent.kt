@@ -13,13 +13,13 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 class PresenceUpdateEvent(
-        val oldUser: User?,
-        val user: DiscordPresenceUser,
-        val guildId: Snowflake,
-        val old: Presence?,
-        val presence: Presence,
-        override val shard: Int,
-        override val supplier: EntitySupplier = presence.kord.defaultSupplier
+    val oldUser: User?,
+    val user: DiscordPresenceUser,
+    val guildId: Snowflake,
+    val old: Presence?,
+    val presence: Presence,
+    override val shard: Int,
+    override val supplier: EntitySupplier = presence.kord.defaultSupplier
 ) : Event, Strategizable {
     override val kord: Kord get() = presence.kord
 
@@ -61,7 +61,7 @@ class PresenceUpdateEvent(
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getMemberOrNull(): Member? = supplier.getMemberOrNull(guildId = guildId, userId =user.id)
+    suspend fun getMemberOrNull(): Member? = supplier.getMemberOrNull(guildId = guildId, userId = user.id)
 
     /**
      * Requests to get the guild in which the presence was updated.
@@ -79,7 +79,7 @@ class PresenceUpdateEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PresenceUpdateEvent =
-            PresenceUpdateEvent(oldUser, user, guildId, old, presence, shard, strategy.supply(kord))
+        PresenceUpdateEvent(oldUser, user, guildId, old, presence, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "PresenceUpdateEvent(oldUser=$oldUser, user=$user, guildId=$guildId, old=$old, presence=$presence, shard=$shard, supplier=$supplier)"

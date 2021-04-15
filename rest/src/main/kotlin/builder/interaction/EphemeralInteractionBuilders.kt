@@ -18,7 +18,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordPreview
-class EphemeralInteractionResponseModifyBuilder: RequestBuilder<InteractionResponseModifyRequest> {
+class EphemeralInteractionResponseModifyBuilder : RequestBuilder<InteractionResponseModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
@@ -35,7 +35,7 @@ class EphemeralInteractionResponseModifyBuilder: RequestBuilder<InteractionRespo
 
 
     override fun toRequest(): InteractionResponseModifyRequest {
-        return InteractionResponseModifyRequest(content = _content, allowedMentions =  _allowedMentions)
+        return InteractionResponseModifyRequest(content = _content, allowedMentions = _allowedMentions)
 
     }
 }
@@ -61,7 +61,7 @@ class EphemeralInteractionResponseCreateBuilder : RequestBuilder<InteractionResp
     override fun toRequest(): InteractionResponseCreateRequest {
         val flags = Optional.Value(MessageFlags(MessageFlag.Ephemeral))
 
-        val type = if(content == null) InteractionResponseType.DeferredChannelMessageWithSource
+        val type = if (content == null) InteractionResponseType.DeferredChannelMessageWithSource
         else InteractionResponseType.ChannelMessageWithSource
         val data = InteractionApplicationCommandCallbackData(content = _content, flags = flags)
         return InteractionResponseCreateRequest(type, data.optional())

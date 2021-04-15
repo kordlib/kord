@@ -17,10 +17,10 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class GuildWidget(
-        val data: GuildWidgetData,
-        val guildId: Snowflake,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
+    val data: GuildWidgetData,
+    val guildId: Snowflake,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordObject, Strategizable {
 
     val isEnabled: Boolean get() = data.enabled
@@ -37,7 +37,8 @@ class GuildWidget(
 
     suspend fun getChannelOrNull(): GuildChannel? = data.channelId?.let { supplier.getChannelOfOrNull(it) }
 
-    suspend inline fun <reified T : Channel> getChannelOfOrNull(): T? = data.channelId?.let { supplier.getChannelOfOrNull(it) }
+    suspend inline fun <reified T : Channel> getChannelOfOrNull(): T? =
+        data.channelId?.let { supplier.getChannelOfOrNull(it) }
 
     @OptIn(ExperimentalContracts::class)
     suspend inline fun edit(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
@@ -46,6 +47,6 @@ class GuildWidget(
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildWidget =
-            GuildWidget(data, guildId, kord, strategy.supply(kord))
+        GuildWidget(data, guildId, kord, strategy.supply(kord))
 
 }

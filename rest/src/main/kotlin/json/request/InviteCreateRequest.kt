@@ -9,14 +9,14 @@ import kotlinx.serialization.*
 
 @Serializable
 data class InviteCreateRequest(
-        @SerialName("max_age")
-        val age: OptionalInt = OptionalInt.Missing,
-        @SerialName("max_uses")
-        val uses: OptionalInt = OptionalInt.Missing,
-        val temporary: OptionalBoolean = OptionalBoolean.Missing,
-        val unique: OptionalBoolean = OptionalBoolean.Missing,
-        @SerialName("target_user")
-        val targetUser: OptionalSnowflake = OptionalSnowflake.Missing,
-        @SerialName("target_user_type")
-        val targetUserType: Optional<TargetUserType> = Optional.Missing()
+    @SerialName("max_age")
+    val age: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_uses")
+    val uses: OptionalInt = OptionalInt.Missing,
+    val temporary: OptionalBoolean = OptionalBoolean.Missing,
+    val unique: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("target_user")
+    val targetUser: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("target_user_type")
+    val targetUserType: Optional<TargetUserType> = Optional.Missing()
 )

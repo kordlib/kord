@@ -33,22 +33,22 @@ import kotlin.contracts.contract
  */
 @Serializable
 data class DiscordUser(
-        val id: Snowflake,
-        val username: String,
-        val discriminator: String,
-        val avatar: String?,
-        val bot: OptionalBoolean = OptionalBoolean.Missing,
-        val system: OptionalBoolean = OptionalBoolean.Missing,
-        @SerialName("mfa_enabled")
-        val mfaEnabled: OptionalBoolean = OptionalBoolean.Missing,
-        val locale: Optional<String> = Optional.Missing(),
-        val verified: OptionalBoolean = OptionalBoolean.Missing,
-        val email: Optional<String?> = Optional.Missing(),
-        val flags: Optional<UserFlags> = Optional.Missing(),
-        @SerialName("premium_type")
-        val premiumType: Optional<UserPremium> = Optional.Missing(),
-        @SerialName("public_flags")
-        val publicFlags: Optional<UserFlags> = Optional.Missing(),
+    val id: Snowflake,
+    val username: String,
+    val discriminator: String,
+    val avatar: String?,
+    val bot: OptionalBoolean = OptionalBoolean.Missing,
+    val system: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("mfa_enabled")
+    val mfaEnabled: OptionalBoolean = OptionalBoolean.Missing,
+    val locale: Optional<String> = Optional.Missing(),
+    val verified: OptionalBoolean = OptionalBoolean.Missing,
+    val email: Optional<String?> = Optional.Missing(),
+    val flags: Optional<UserFlags> = Optional.Missing(),
+    @SerialName("premium_type")
+    val premiumType: Optional<UserPremium> = Optional.Missing(),
+    @SerialName("public_flags")
+    val publicFlags: Optional<UserFlags> = Optional.Missing(),
 )
 
 /**
@@ -71,23 +71,23 @@ data class DiscordUser(
  */
 @Serializable
 data class DiscordOptionallyMemberUser(
-        val id: Snowflake,
-        val username: String,
-        val discriminator: String,
-        val avatar: String?,
-        val bot: OptionalBoolean = OptionalBoolean.Missing,
-        val system: OptionalBoolean = OptionalBoolean.Missing,
-        @SerialName("mfa_enabled")
-        val mfaEnabled: OptionalBoolean = OptionalBoolean.Missing,
-        val locale: Optional<String> = Optional.Missing(),
-        val verified: OptionalBoolean = OptionalBoolean.Missing,
-        val email: Optional<String?> = Optional.Missing(),
-        val flags: Optional<UserFlags> = Optional.Missing(),
-        @SerialName("premium_type")
-        val premiumType: Optional<UserPremium> = Optional.Missing(),
-        @SerialName("public_flags")
-        val publicFlags: Optional<UserFlags> = Optional.Missing(),
-        val member: Optional<DiscordGuildMember> = Optional.Missing(),
+    val id: Snowflake,
+    val username: String,
+    val discriminator: String,
+    val avatar: String?,
+    val bot: OptionalBoolean = OptionalBoolean.Missing,
+    val system: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("mfa_enabled")
+    val mfaEnabled: OptionalBoolean = OptionalBoolean.Missing,
+    val locale: Optional<String> = Optional.Missing(),
+    val verified: OptionalBoolean = OptionalBoolean.Missing,
+    val email: Optional<String?> = Optional.Missing(),
+    val flags: Optional<UserFlags> = Optional.Missing(),
+    @SerialName("premium_type")
+    val premiumType: Optional<UserPremium> = Optional.Missing(),
+    @SerialName("public_flags")
+    val publicFlags: Optional<UserFlags> = Optional.Missing(),
+    val member: Optional<DiscordGuildMember> = Optional.Missing(),
 )
 
 

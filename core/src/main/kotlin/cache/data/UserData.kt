@@ -14,12 +14,12 @@ private val WebhookData.nullableUserId get() = userId.value
 
 @Serializable
 data class UserData(
-        val id: Snowflake,
-        val username: String,
-        val discriminator: String,
-        val avatar: String? = null,
-        val bot: OptionalBoolean = OptionalBoolean.Missing,
-        val publicFlags: Optional<UserFlags> = Optional.Missing(),
+    val id: Snowflake,
+    val username: String,
+    val discriminator: String,
+    val avatar: String? = null,
+    val bot: OptionalBoolean = OptionalBoolean.Missing,
+    val publicFlags: Optional<UserFlags> = Optional.Missing(),
 ) {
     companion object {
 

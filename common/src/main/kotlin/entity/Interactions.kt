@@ -332,6 +332,7 @@ sealed class DiscordOptionValue<out T>(val value: T) {
         }
     }
 }
+
 @KordPreview
 fun DiscordOptionValue(value: JsonPrimitive): DiscordOptionValue<Any> = when {
     value.isString -> DiscordOptionValue.StringValue(value.content)

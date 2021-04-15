@@ -7,7 +7,8 @@ import dev.kord.common.entity.OverwriteType
 import dev.kord.rest.json.request.ChannelPermissionEditRequest
 
 @KordDsl
-class ChannelPermissionModifyBuilder(private var type: OverwriteType) : AuditRequestBuilder<ChannelPermissionEditRequest> {
+class ChannelPermissionModifyBuilder(private var type: OverwriteType) :
+    AuditRequestBuilder<ChannelPermissionEditRequest> {
 
     override var reason: String? = null
 

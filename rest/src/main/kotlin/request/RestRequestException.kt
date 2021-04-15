@@ -15,14 +15,18 @@ import io.ktor.client.statement.HttpResponse as KtorResponse
  * * [error] &mdash; The JSON error body of the failed request, this is optionally present.
  */
 abstract class RestRequestException(
-        val status: HttpStatus,
-        val error: DiscordErrorResponse? = null,
+    val status: HttpStatus,
+    val error: DiscordErrorResponse? = null,
 ) : RequestException("REST request returned with HTTP ${status.code} ${status.message}.${
     error?.let { " ${error.code}: ${error.message}" } ?: ""
 }") {
 
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated(level = DeprecationLevel.WARNING, message = "Use status.code instead", replaceWith = ReplaceWith("status.code"))
+    @Deprecated(
+        level = DeprecationLevel.WARNING,
+        message = "Use status.code instead",
+        replaceWith = ReplaceWith("status.code")
+    )
     val code: Int by this.status::code
 
 }
@@ -36,6 +40,6 @@ data class HttpStatus(val code: Int, val message: String)
  * Implementation of the [RestRequestException] for [RestServices][RestService] using Ktor.
  */
 class KtorRequestException(
-        val httpResponse: KtorResponse,
-        discordError: DiscordErrorResponse?,
+    val httpResponse: KtorResponse,
+    discordError: DiscordErrorResponse?,
 ) : RestRequestException(HttpStatus(httpResponse.status.value, httpResponse.status.description), discordError)

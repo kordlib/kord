@@ -43,7 +43,7 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
     fun newUniqueSnowflake() = Snowflake(snowflakeGenerator.next())
 
     private var _region: Optional<String> = Optional.Missing()
-    var region: String?  by ::_region.delegate()
+    var region: String? by ::_region.delegate()
 
     private var _icon: Optional<Image> = Optional.Missing()
     var icon: Image? by ::_icon.delegate()
@@ -64,25 +64,32 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
     val channels: MutableList<GuildChannelCreateRequest> = mutableListOf()
 
     private var _afkChannelId: OptionalSnowflake = OptionalSnowflake.Missing
+
     /**
      * The id of the afk channel, this channel can be configured by supplying a channel with the same id.
      */
     var afkChannelId: Snowflake? by ::_afkChannelId.delegate()
 
     private var _afkTimeout: OptionalInt = OptionalInt.Missing
+
     /**
      * The afk timeout in seconds.
      */
     var afkTimeout: Int? by ::_afkTimeout.delegate()
 
     private var _systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing
+
     /**
      * The id of the channel to which system messages are sent, this channel can be configured by supplying a channel with the same id.
      */
     var systemChannelId: Snowflake? by ::_systemChannelId.delegate()
 
     @OptIn(ExperimentalContracts::class)
-    inline fun textChannel(name: String, id: Snowflake = newUniqueSnowflake(), builder: TextChannelCreateBuilder.() -> Unit): Snowflake {
+    inline fun textChannel(
+        name: String,
+        id: Snowflake = newUniqueSnowflake(),
+        builder: TextChannelCreateBuilder.() -> Unit
+    ): Snowflake {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -91,7 +98,11 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
     }
 
     @OptIn(ExperimentalContracts::class)
-    inline fun newsChannel(name: String, id: Snowflake = newUniqueSnowflake(), builder: NewsChannelCreateBuilder.() -> Unit): Snowflake {
+    inline fun newsChannel(
+        name: String,
+        id: Snowflake = newUniqueSnowflake(),
+        builder: NewsChannelCreateBuilder.() -> Unit
+    ): Snowflake {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -100,7 +111,11 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
     }
 
     @OptIn(ExperimentalContracts::class)
-    inline fun category(name: String, id: Snowflake = newUniqueSnowflake(), builder: CategoryCreateBuilder.() -> Unit): Snowflake {
+    inline fun category(
+        name: String,
+        id: Snowflake = newUniqueSnowflake(),
+        builder: CategoryCreateBuilder.() -> Unit
+    ): Snowflake {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -126,22 +141,22 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
     }
 
     override fun toRequest(): GuildCreateRequest = GuildCreateRequest(
-            name,
-            _region,
-            _icon.map { it.dataUri },
-            _verificationLevel,
-            _defaultMessageNotificationLevel,
-            _explicitContentFilter,
-            Optional.missingOnEmpty(roles).map { roles ->
-                when(val everyone = everyoneRole?.toRequest()) {
-                    null -> roles
-                    else -> mutableListOf(everyone).also { it.addAll(roles) }
-                }
-            },
-            Optional.missingOnEmpty(channels),
-            _afkChannelId,
-            _afkTimeout,
-            _systemChannelId,
+        name,
+        _region,
+        _icon.map { it.dataUri },
+        _verificationLevel,
+        _defaultMessageNotificationLevel,
+        _explicitContentFilter,
+        Optional.missingOnEmpty(roles).map { roles ->
+            when (val everyone = everyoneRole?.toRequest()) {
+                null -> roles
+                else -> mutableListOf(everyone).also { it.addAll(roles) }
+            }
+        },
+        Optional.missingOnEmpty(channels),
+        _afkChannelId,
+        _afkTimeout,
+        _systemChannelId,
 
-    )
+        )
 }
