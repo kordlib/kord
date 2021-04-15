@@ -47,8 +47,7 @@ class Message(
     /**
      * The files attached to this message.
      */
-    val attachments: Set<Attachment>
-        get() = data.attachments.asSequence().map { Attachment(it, kord) }.toSet()
+    val attachments: Set<Attachment> get() = data.attachments.asSequence().map { Attachment(it, kord) }.toSet()
 
     /**
      * The author of this message, if it was created by a [User].
@@ -87,8 +86,7 @@ class Message(
      * This collection can only contain values on crossposted messages, channels
      * mentioned inside the same guild will not be present.
      */
-    val mentionedChannelIds: Set<Snowflake>
-        get() = data.mentionedChannels.orEmpty().map { it }.toSet()
+    val mentionedChannelIds: Set<Snowflake> get() = data.mentionedChannels.orEmpty().map { it }.toSet()
 
     /**
      * The [Channels][ChannelBehavior] specifically mentioned in this message.
@@ -102,8 +100,7 @@ class Message(
     /**
      * The stickers sent with this message.
      */
-    val stickers: List<MessageSticker>
-        get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }
+    val stickers: List<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }
 
     /**
      * The message being replied to.
@@ -175,13 +172,7 @@ class Message(
     /**
      * The [Behaviors][UserBehavior] of users mentioned in this message.
      */
-    val mentionedUserBehaviors: Set<UserBehavior>
-        get() = data.mentions.map {
-            UserBehavior(
-                it,
-                kord
-            )
-        }.toSet()
+    val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(it, kord) }.toSet()
 
     /**
      * The [users][User] mentioned in this message.
@@ -203,17 +194,12 @@ class Message(
     /**
      * The reactions to this message.
      */
-    val reactions: Set<Reaction>
-        get() = data.reactions.orEmpty().asSequence().map { Reaction(it, kord) }.toSet()
+    val reactions: Set<Reaction> get() = data.reactions.orEmpty().asSequence().map { Reaction(it, kord) }.toSet()
 
     /**
      * The instant when this message was created.
      */
-    val timestamp: Instant
-        get() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(
-            data.timestamp,
-            Instant::from
-        )
+    val timestamp: Instant get() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(data.timestamp, Instant::from)
 
     /**
      * Whether this message was send using `\tts`.
@@ -263,14 +249,12 @@ class Message(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? =
-        supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
+    suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
 
     /**
      * Returns a new [Message] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Message =
-        Message(data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Message = Message(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id)
 

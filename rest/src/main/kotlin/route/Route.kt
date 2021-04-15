@@ -400,15 +400,10 @@ sealed class Route<T>(
         : Route<DiscordWebhook>(HttpMethod.Get, "/webhooks/$WebhookId/$WebhookToken", DiscordWebhook.serializer())
 
     object WebhookPatch
-        :
-        Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId", DiscordWebhook.serializer())
+        : Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId", DiscordWebhook.serializer())
 
-    object WebhookByTokenPatch
-        : Route<DiscordWebhook>(
-        HttpMethod.Patch,
-        "/webhooks/$WebhookId/$WebhookToken",
-        DiscordWebhook.serializer()
-    )
+    object WebhookByTokenPatch :
+        Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId/$WebhookToken", DiscordWebhook.serializer())
 
     object WebhookDelete
         : Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId", NoStrategy)
