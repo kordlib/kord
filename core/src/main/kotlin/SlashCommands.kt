@@ -70,6 +70,12 @@ class SlashCommands(
     }
 
 
+    suspend fun getGuildApplicationCommand(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand {
+        val response = service.getGuildCommand(applicationId, guildId, commandId)
+        val data = ApplicationCommandData.from(response)
+        return GuildApplicationCommand(data, service, guildId)
+    }
+
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,
@@ -93,6 +99,12 @@ class SlashCommands(
         }
     }
 
+
+    suspend fun getGlobalApplicationCommand(commandId: Snowflake): GlobalApplicationCommand {
+        val response = service.getGlobalCommand(applicationId, commandId)
+        val data = ApplicationCommandData.from(response)
+        return GlobalApplicationCommand(data, service)
+    }
 
     fun getGlobalApplicationCommands(): Flow<GlobalApplicationCommand> = flow {
         for (command in service.getGlobalApplicationCommands(applicationId)) {
