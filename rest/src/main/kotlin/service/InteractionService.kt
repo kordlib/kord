@@ -200,12 +200,6 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         }
 
 
-    suspend fun getGuildCommand(applicationId: Snowflake, guildId: Snowflake, commandId: Snowflake) =
-        call(Route.GuildApplicationCommandGet) {
-            keys[Route.ApplicationId] = applicationId
-            keys[Route.GuildId] = guildId
-            keys[Route.CommandId] = commandId
-        }
     suspend fun getGuildCommand(applicationId: Snowflake, guildId: Snowflake, commandId: Snowflake) = call(Route.GuildApplicationCommandGet){
         keys[Route.ApplicationId] = applicationId
         keys[Route.GuildId] = guildId
