@@ -1,11 +1,12 @@
 package dev.kord.core
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
 import dev.kord.core.entity.interaction.GlobalApplicationCommand
 import dev.kord.core.entity.interaction.GuildApplicationCommand
+import dev.kord.core.entity.interaction.GuildApplicationCommandPermissions
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
@@ -117,23 +118,31 @@ class SlashCommands(
     }
 
     suspend fun getGuildApplicationCommandPermissions(
-            applicationId: Snowflake,
-            guildId: Snowflake,
-    ): DiscordGuildApplicationCommandPermissions =
-            service.getGuildApplicationCommandPermissions(applicationId, guildId)
+        applicationId: Snowflake,
+        guildId: Snowflake,
+    ): GuildApplicationCommandPermissions {
+        val permissions = service.getGuildApplicationCommandPermissions(applicationId, guildId)
+        val data = GuildApplicationCommandPermissionsData.from(permissions)
+
+        return GuildApplicationCommandPermissions(data)
+    }
 
     suspend fun getApplicationCommandPermissions(
-            applicationId: Snowflake,
-            guildId: Snowflake,
-            commandId: Snowflake,
-    ): DiscordGuildApplicationCommandPermissions =
-            service.getApplicationCommandPermissions(applicationId, guildId, commandId)
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake,
+    ): GuildApplicationCommandPermissions {
+        val permissions = service.getApplicationCommandPermissions(applicationId, guildId, commandId)
+        val data = GuildApplicationCommandPermissionsData.from(permissions)
+
+        return GuildApplicationCommandPermissions(data)
+    }
 
     suspend fun editApplicationCommandPermissions(
-            applicationId: Snowflake,
-            guildId: Snowflake,
-            commandId: Snowflake,
-            builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake,
+        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
     ) {
         val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
 
@@ -141,9 +150,9 @@ class SlashCommands(
     }
 
     suspend fun bulkEditApplicationCommandPermissions(
-            applicationId: Snowflake,
-            guildId: Snowflake,
-            builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
     ) {
         val request = ApplicationCommandPermissionsBulkModifyBuilder().apply(builder).toRequest()
 

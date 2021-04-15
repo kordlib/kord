@@ -408,7 +408,7 @@ data class DiscordGuildApplicationCommandPermissions(
     @SerialName("application_id")
     val applicationId: Snowflake,
     @SerialName("guild_id")
-    val guildId: String,
+    val guildId: Snowflake,
     val permissions: List<DiscordGuildApplicationCommandPermission>
 )
 
