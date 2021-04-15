@@ -17,7 +17,7 @@ class GuildApplicationCommandPermission(val data: GuildApplicationCommandPermiss
 }
 
 @KordPreview
-class GuildApplicationCommandPermissions(val data: GuildApplicationCommandPermissionsData) {
+class ApplicationCommandPermissions(val data: GuildApplicationCommandPermissionsData) {
     val id: Snowflake get() = data.id
 
     val applicationId: Snowflake get() = data.applicationId

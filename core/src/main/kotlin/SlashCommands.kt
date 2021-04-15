@@ -6,7 +6,7 @@ import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
 import dev.kord.core.entity.interaction.GlobalApplicationCommand
 import dev.kord.core.entity.interaction.GuildApplicationCommand
-import dev.kord.core.entity.interaction.GuildApplicationCommandPermissions
+import dev.kord.core.entity.interaction.ApplicationCommandPermissions
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
@@ -120,22 +120,22 @@ class SlashCommands(
     suspend fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
-    ): GuildApplicationCommandPermissions {
+    ): ApplicationCommandPermissions {
         val permissions = service.getGuildApplicationCommandPermissions(applicationId, guildId)
         val data = GuildApplicationCommandPermissionsData.from(permissions)
 
-        return GuildApplicationCommandPermissions(data)
+        return ApplicationCommandPermissions(data)
     }
 
     suspend fun getApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
-    ): GuildApplicationCommandPermissions {
+    ): ApplicationCommandPermissions {
         val permissions = service.getApplicationCommandPermissions(applicationId, guildId, commandId)
         val data = GuildApplicationCommandPermissionsData.from(permissions)
 
-        return GuildApplicationCommandPermissions(data)
+        return ApplicationCommandPermissions(data)
     }
 
     suspend fun editApplicationCommandPermissions(
