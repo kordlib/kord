@@ -83,7 +83,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      */
 
     fun getReactors(emoji: ReactionEmoji): Flow<User> =
-            kord.with(EntitySupplyStrategy.rest).getReactors(channelId, id, emoji)
+        kord.with(EntitySupplyStrategy.rest).getReactors(channelId, id, emoji)
 
     /**
      * Requests to add an [emoji] to this message.
@@ -127,7 +127,12 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteReaction(userId: Snowflake, emoji: ReactionEmoji) {
-        kord.rest.channel.deleteReaction(channelId = channelId, messageId = id, userId = userId, emoji = emoji.urlFormat)
+        kord.rest.channel.deleteReaction(
+            channelId = channelId,
+            messageId = id,
+            userId = userId,
+            emoji = emoji.urlFormat
+        )
     }
 
     /**
@@ -184,7 +189,7 @@ interface MessageBehavior : KordEntity, Strategizable {
 
 }
 
- fun MessageBehavior(
+fun MessageBehavior(
     channelId: Snowflake,
     messageId: Snowflake,
     kord: Kord,

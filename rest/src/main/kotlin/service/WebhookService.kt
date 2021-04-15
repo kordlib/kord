@@ -71,7 +71,11 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyWebhookWithToken(webhookId: Snowflake, token: String, builder: WebhookModifyBuilder.() -> Unit): DiscordWebhook {
+    suspend inline fun modifyWebhookWithToken(
+        webhookId: Snowflake,
+        token: String,
+        builder: WebhookModifyBuilder.() -> Unit
+    ): DiscordWebhook {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -135,4 +139,25 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             parameter("wait", "$wait")
             body(JsonObject.serializer(), body)
         }
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun editWebhookMessage(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        builder: EditWebhookMessageBuilder.() -> Unit
+    ): DiscordMessage {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return call(Route.EditWebhookMessage) {
+
+            keys[Route.WebhookId] = webhookId
+            keys[Route.WebhookToken] = token
+            keys[Route.MessageId] = messageId
+            val body = EditWebhookMessageBuilder().apply(builder).toRequest()
+            body(WebhookEditMessageRequest.serializer(), body)
+        }
+    }
 }
