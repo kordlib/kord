@@ -5,7 +5,6 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.json.request.EmbedRequest
 import dev.kord.rest.json.request.WebhookEditMessageRequest
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
