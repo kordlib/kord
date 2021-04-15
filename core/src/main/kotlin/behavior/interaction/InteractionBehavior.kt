@@ -108,7 +108,7 @@ fun InteractionBehavior(
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respondPublic(
     builder: PublicInteractionResponseCreateBuilder.() -> Unit
-): InteractionResponseBehavior {
+): PublicInteractionResponseBehavior {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 

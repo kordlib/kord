@@ -61,7 +61,7 @@ suspend inline fun EphemeralInteractionResponseBehavior.followUp(
  * Follows-up this interaction response with a [PublicFollowupMessage]
  *
  * This function assumes that this interaction response has content in it.
- * Use [the safe method overload][EphemeralInteractionResponseBehavior.followup] if you are unsure
+ * Use [the safe method overload][EphemeralInteractionResponseBehavior.followUp] if you are unsure
  *
  * @return created [PublicFollowupMessage]
  */
@@ -79,7 +79,7 @@ suspend inline fun EphemeralInteractionResponseBehavior.followUp(
 }
 
 @KordPreview
-fun EphemeralInteractionResponseBehavior(applicationId: Snowflake, token: String, kord: Kord) =
+fun EphemeralInteractionResponseBehavior(applicationId: Snowflake, token: String, kord: Kord): EphemeralInteractionResponseBehavior =
     object : EphemeralInteractionResponseBehavior {
         override val applicationId: Snowflake
             get() = applicationId
