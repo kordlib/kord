@@ -34,12 +34,13 @@ data class InteractionResponseModifyRequest(
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing() ,
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing()
 )
 
 @KordPreview
 data class MultipartInteractionResponseModifyRequest(
     val request: InteractionResponseModifyRequest,
-    val files: List<Pair<String, java.io.InputStream>> = emptyList(),
+    val files: List<Pair<String, InputStream>> = emptyList(),
 )
 
 @Serializable
@@ -47,6 +48,12 @@ data class MultipartInteractionResponseModifyRequest(
 data class InteractionResponseCreateRequest(
     val type: InteractionResponseType,
     val data: Optional<InteractionApplicationCommandCallbackData> = Optional.Missing()
+)
+
+@KordPreview
+data class MultipartInteractionResponseCreateRequest(
+    val request: InteractionResponseCreateRequest,
+    val files: List<Pair<String, InputStream>> = emptyList()
 )
 
 @Serializable
@@ -63,7 +70,7 @@ class InteractionApplicationCommandCallbackData(
 @KordPreview
 data class MultipartFollowupMessageCreateRequest(
     val request: FollowupMessageCreateRequest,
-    val files: List<Pair<String, java.io.InputStream>> = emptyList(),
+    val files: List<Pair<String, InputStream>> = emptyList(),
 )
 
 @Serializable

@@ -1,5 +1,6 @@
 package dev.kord.core.entity.interaction
 
+import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordOptionValue
 import dev.kord.common.entity.InteractionType
@@ -8,7 +9,10 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
-import dev.kord.core.behavior.*
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.GuildInteractionBehavior
+import dev.kord.core.behavior.MemberBehavior
+import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
@@ -17,7 +21,6 @@ import dev.kord.core.cache.data.ResolvedObjectsData
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Role
 import dev.kord.core.entity.User
-import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.DmChannel
 import dev.kord.core.entity.channel.ResolvedChannel
 import dev.kord.core.supplier.EntitySupplier
@@ -49,10 +52,6 @@ sealed class Interaction : InteractionBehavior {
      */
     val type: InteractionType get() = data.type
 
-    /**
-     * The [MessageChannelBehavior] of the channel the command was executed in.
-     */
-    open val channel: MessageChannelBehavior get() = MessageChannelBehavior(data.channelId, kord)
 
     abstract val user: UserBehavior
 

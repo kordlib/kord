@@ -2,17 +2,11 @@ package dev.kord.rest.service
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordApplicationCommand
-import dev.kord.common.entity.DiscordMessage
 import dev.kord.common.entity.Snowflake
-import dev.kord.rest.builder.interaction.InteractionResponseModifyBuilder
-import dev.kord.rest.builder.message.MessageCreateBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlinx.serialization.builtins.ListSerializer
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 @KordPreview
 class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
@@ -103,20 +97,25 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend fun createInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        request: InteractionResponseCreateRequest
-    ) =
-        call(Route.InteractionResponseCreate) {
+        request: MultipartInteractionResponseCreateRequest
+    ) = call(Route.InteractionResponseCreate) {
             keys[Route.InteractionId] = interactionId
             keys[Route.InteractionToken] = interactionToken
-            body(InteractionResponseCreateRequest.serializer(), request)
+            body(InteractionResponseCreateRequest.serializer(), request.request)
+            request.files.onEach { file(it) }
         }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyInteractionResponse(applicationId: Snowflake, interactionToken: String, builder: InteractionResponseModifyBuilder.() -> Unit): DiscordMessage {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val multipartRequest = InteractionResponseModifyBuilder().apply(builder).toRequest()
-        return modifyInteractionResponse(applicationId, interactionToken, multipartRequest)
+
+    suspend fun createInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        request: InteractionResponseCreateRequest
+    ) = call(Route.InteractionResponseCreate) {
+        keys[Route.InteractionId] = interactionId
+        keys[Route.InteractionToken] = interactionToken
+        body(InteractionResponseCreateRequest.serializer(), request)
     }
+
 
     suspend fun modifyInteractionResponse(
         applicationId: Snowflake,
@@ -129,6 +128,17 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         multipartRequest.files.forEach { file(it) }
     }
 
+    suspend fun modifyInteractionResponse(
+        applicationId: Snowflake,
+        interactionToken: String,
+        request: InteractionResponseModifyRequest
+    ) = call(Route.OriginalInteractionResponseModify) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.InteractionToken] = interactionToken
+        body(InteractionResponseModifyRequest.serializer(), request)
+    }
+
+
     suspend fun deleteOriginalInteractionResponse(applicationId: Snowflake, interactionToken: String) =
         call(Route.OriginalInteractionResponseDelete) {
             keys[Route.ApplicationId] = applicationId
@@ -139,11 +149,9 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         applicationId: Snowflake,
         interactionToken: String,
         multipart: MultipartFollowupMessageCreateRequest,
-        wait: Boolean = false
     ) = call(Route.FollowupMessageCreate) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.InteractionToken] = interactionToken
-        parameter("wait", "$wait")
         body(FollowupMessageCreateRequest.serializer(), multipart.request)
         multipart.files.forEach { file(it) }
 
