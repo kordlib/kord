@@ -2,6 +2,7 @@ package dev.kord.rest.builder.message
 
 import dev.kord.common.entity.UserFlags
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
@@ -21,8 +22,8 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     private var _embed: Optional<EmbedBuilder?> = Optional.Missing()
     var embed: EmbedBuilder? by ::_embed.delegate()
 
-    private var _flags: Optional<UserFlags?> = Optional.Missing()
-    var flags: UserFlags? by ::_flags.delegate()
+    private var _flags: Optional<MessageFlags?> = Optional.Missing()
+    var flags: MessageFlags? by ::_flags.delegate()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder?> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
