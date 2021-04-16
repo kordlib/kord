@@ -4,10 +4,12 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.DiscordMessage
 import dev.kord.common.entity.DiscordWebhook
 import dev.kord.common.entity.Snowflake
+import dev.kord.rest.builder.webhook.EditWebhookMessageBuilder
 import dev.kord.rest.builder.webhook.ExecuteWebhookBuilder
 import dev.kord.rest.builder.webhook.WebhookCreateBuilder
 import dev.kord.rest.builder.webhook.WebhookModifyBuilder
 import dev.kord.rest.json.request.WebhookCreateRequest
+import dev.kord.rest.json.request.WebhookEditMessageRequest
 import dev.kord.rest.json.request.WebhookExecuteRequest
 import dev.kord.rest.json.request.WebhookModifyRequest
 import dev.kord.rest.request.RequestHandler
@@ -137,4 +139,25 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             parameter("wait", "$wait")
             body(JsonObject.serializer(), body)
         }
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun editWebhookMessage(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        builder: EditWebhookMessageBuilder.() -> Unit
+    ): DiscordMessage {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return call(Route.EditWebhookMessage) {
+
+            keys[Route.WebhookId] = webhookId
+            keys[Route.WebhookToken] = token
+            keys[Route.MessageId] = messageId
+            val body = EditWebhookMessageBuilder().apply(builder).toRequest()
+            body(WebhookEditMessageRequest.serializer(), body)
+        }
+    }
 }

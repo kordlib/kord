@@ -5,7 +5,6 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.rest.json.optional
-import dev.kord.rest.json.request.MessageEditPatchRequest
 import dev.kord.rest.json.response.*
 import io.ktor.http.*
 import kotlinx.serialization.DeserializationStrategy
@@ -426,6 +425,12 @@ sealed class Route<T>(
 
     object ExecuteGithubWebhookPost
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
+
+    object EditWebhookMessage : Route<DiscordMessage>(
+        HttpMethod.Patch,
+        "/webhooks/$WebhookId/$WebhookToken/messages/$MessageId",
+        DiscordMessage.serializer()
+    )
 
     object VoiceRegionsGet
         : Route<List<DiscordVoiceRegion>>(

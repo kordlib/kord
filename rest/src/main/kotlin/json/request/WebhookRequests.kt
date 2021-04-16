@@ -33,3 +33,10 @@ data class MultiPartWebhookExecuteRequest(
     val request: WebhookExecuteRequest,
     val file: Pair<String, java.io.InputStream>?
 )
+
+@Serializable
+data class WebhookEditMessageRequest(
+    val content: Optional<String> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
+)

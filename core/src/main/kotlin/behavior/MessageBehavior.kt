@@ -17,6 +17,7 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.message.MessageCreateBuilder
 import dev.kord.rest.builder.message.MessageModifyBuilder
+import dev.kord.rest.builder.webhook.EditWebhookMessageBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
@@ -217,13 +218,46 @@ fun MessageBehavior(
  * @return The edited [Message].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ * @see editWebhookMessage
  */
 @OptIn(ExperimentalContracts::class)
 suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.channel.editMessage(channelId = channelId, messageId = id, builder = builder)
+
+    val response =
+        kord.rest.channel.editMessage(channelId = channelId, messageId = id, builder = builder)
+    val data = MessageData.from(response)
+
+    return Message(data, kord)
+}
+
+/**
+ * Requests to edit this message.
+ *
+ * @return The edited [Message].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ * @see edit
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun MessageBehavior.editWebhookMessage(
+    webhookId: Snowflake,
+    token: String,
+    builder: EditWebhookMessageBuilder.() -> Unit
+): Message {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    val response =
+        kord.rest.webhook.editWebhookMessage(
+            webhookId = webhookId,
+            messageId = id,
+            token = token,
+            builder = builder
+        )
     val data = MessageData.from(response)
 
     return Message(data, kord)
