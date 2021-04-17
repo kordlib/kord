@@ -211,6 +211,11 @@ sealed class GuildFeature(val value: String) {
     /** Guild is lurkable and able to be discovered directly */
     object Discoverable : GuildFeature("DISCOVERABLE")
 
+    /**
+     * guild cannot be discoverable
+     */
+    object DiscoverableDisabled : GuildFeature("DISCOVERABLE_DISABLED")
+
     /** Guild is able to be featured in the directory */
     object Featurable : GuildFeature("FEATURABLE")
 
@@ -222,6 +227,7 @@ sealed class GuildFeature(val value: String) {
 
     /** Guild has enabled the welcome screen */
     object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
+
 
     internal object Serializer : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor

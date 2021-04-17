@@ -194,6 +194,13 @@ enum class JsonErrorCode(val code: Int) {
     UnknownGuildTemplate(10057),
 
     /**
+     * Unknown discovery category.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownDiscoveryCategory(10059),
+
+    /**
      * Unknown interaction.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
@@ -283,6 +290,13 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     MaxInvites(30016),
+
+    /**
+     * Maximum number of guild discovery subcategories has been reached (5).
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxGuildDiscoverySubCategories(30030),
 
     /**
      * Unauthorized. Provide a valid token and try again.
