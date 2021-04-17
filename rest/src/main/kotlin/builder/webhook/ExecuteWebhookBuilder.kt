@@ -44,6 +44,7 @@ class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
     suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
         addFile(path.fileName.toString(), Files.newInputStream(path))
     }
+
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
         contract {
