@@ -40,3 +40,8 @@ data class WebhookEditMessageRequest(
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
 )
+
+data class MultipartWebhookEditMessageRequest(
+    val request: WebhookEditMessageRequest,
+    val files: List<Pair<String, java.io.InputStream>> = emptyList()
+)

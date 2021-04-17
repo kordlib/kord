@@ -157,7 +157,8 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.WebhookToken] = token
             keys[Route.MessageId] = messageId
             val body = EditWebhookMessageBuilder().apply(builder).toRequest()
-            body(WebhookEditMessageRequest.serializer(), body)
+            body(WebhookEditMessageRequest.serializer(), body.request)
+            body.files.onEach { file(it) }
         }
     }
 }
