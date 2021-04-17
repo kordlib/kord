@@ -24,5 +24,10 @@ class ApplicationCommandPermissions(val data: GuildApplicationCommandPermissions
 
     val guildId: Snowflake get() = data.guildId
 
-    val permissions: List<GuildApplicationCommandPermissionData> get() = data.permissions
+    val permissions: List<GuildApplicationCommandPermission>
+        get() = data.permissions.map {
+            GuildApplicationCommandPermission(
+                it
+            )
+        }
 }

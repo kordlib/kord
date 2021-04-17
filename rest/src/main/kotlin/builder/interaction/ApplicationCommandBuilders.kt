@@ -181,7 +181,7 @@ class ApplicationCommandPermissionsBulkModifyBuilder :
     override fun toRequest(): List<PartialDiscordGuildApplicationCommandPermissions> {
         return permissions.map { (id, builder) ->
             PartialDiscordGuildApplicationCommandPermissions(
-                    id.asString, builder.permissions.toList()
+                    id, builder.permissions.toList()
             )
         }
     }

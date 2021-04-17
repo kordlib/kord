@@ -430,17 +430,17 @@ data class DiscordGuildApplicationCommandPermission(
     sealed class Type(val value: Int) {
         object Role : Type(1)
         object User : Type(2)
-        object Unknown : Type(-1)
+        class Unknown(value: Int) : Type(value)
 
         object Serializer : KSerializer<Type> {
             override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
             override fun deserialize(decoder: Decoder): Type =
-                when (decoder.decodeInt()) {
+                when (val value = decoder.decodeInt()) {
                     1 -> Role
                     2 -> User
-                    else -> Unknown
+                    else -> Unknown(value)
                 }
 
             override fun serialize(encoder: Encoder, value: Type) = encoder.encodeInt(value.value)
