@@ -9,6 +9,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.io.InputStream
 
 @Serializable
 @KordPreview

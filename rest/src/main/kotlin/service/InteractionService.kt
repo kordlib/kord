@@ -177,6 +177,19 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         request.files.forEach { file(it) }
     }
 
+
+    suspend fun modifyFollowupMessage(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+        request: FollowupMessageModifyRequest
+    ) = call(Route.FollowupMessageModify) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.InteractionToken] = interactionToken
+        keys[Route.MessageId] = messageId
+        body(FollowupMessageModifyRequest.serializer(), request)
+    }
+
     suspend fun getGlobalCommand(applicationId: Snowflake, commandId: Snowflake) =
         call(Route.GlobalApplicationCommandGet) {
             keys[Route.ApplicationId] = applicationId
