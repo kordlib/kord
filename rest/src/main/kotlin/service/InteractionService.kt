@@ -245,6 +245,6 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.ApplicationId] = applicationId
         keys[Route.GuildId] = guildId
 
-        body(serializer(), request)
+        body(ListSerializer(PartialDiscordGuildApplicationCommandPermissions.serializer()), request)
     }
 }

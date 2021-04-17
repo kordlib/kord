@@ -5,6 +5,8 @@ import dev.kord.common.entity.DiscordGuildApplicationCommandPermission
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.GuildApplicationCommandPermissionData
 import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 @KordPreview
 class GuildApplicationCommandPermission(val data: GuildApplicationCommandPermissionData) {
@@ -24,10 +26,8 @@ class ApplicationCommandPermissions(val data: GuildApplicationCommandPermissions
 
     val guildId: Snowflake get() = data.guildId
 
-    val permissions: List<GuildApplicationCommandPermission>
-        get() = data.permissions.map {
-            GuildApplicationCommandPermission(
-                it
-            )
+    val permissions: Flow<GuildApplicationCommandPermission>
+        get() = flow {
+            data.permissions.forEach { emit(GuildApplicationCommandPermission(it)) }
         }
 }
