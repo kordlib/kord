@@ -207,7 +207,7 @@ data class Intents internal constructor(val code: DiscordBitSet) {
      *  Returns this [Intents] as a [Set] of [Intent]
      */
     @OptIn(PrivilegedIntent::class)
-    val values = Intent.values.filter { it.code in code }
+    val values = Intent.values.filter { it.code in code }.toSet()
 
     operator fun contains(intent: Intent) = intent.code in code
 
