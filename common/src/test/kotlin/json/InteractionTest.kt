@@ -98,4 +98,23 @@ class InteractionTest {
             arg.value.string() shouldBe "1"
         }
     }
+
+    @Test
+    fun `slash command permissions can be serialized`() {
+        val text = file("slash_command_permissions_update")
+
+        val interaction = json.decodeFromString(DiscordGuildApplicationCommandPermissions.serializer(), text)
+
+        with(interaction) {
+            id shouldBe "833008574669651989"
+            applicationId shouldBe "535129406650318860"
+            guildId shouldBe "809471441719787602"
+
+            with(permissions.first()) {
+                id shouldBe "827126703301066792"
+                type shouldBe DiscordGuildApplicationCommandPermission.Type.Role
+                permission shouldBe true
+            }
+        }
+    }
 }
