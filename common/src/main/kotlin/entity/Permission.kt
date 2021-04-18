@@ -189,7 +189,6 @@ sealed class Permission(val code: DiscordBitSet) {
                 ManageWebhooks,
                 ManageEmojis,
                 UseSlashCommands,
-                All,
             )
     }
 }
