@@ -30,8 +30,8 @@ data class WebhookExecuteRequest(
 )
 
 data class MultiPartWebhookExecuteRequest(
-    val request: WebhookExecuteRequest,
-    val file: Pair<String, java.io.InputStream>?
+        val request: WebhookExecuteRequest,
+        val files: List<Pair<String, java.io.InputStream>> = emptyList()
 )
 
 @Serializable
@@ -39,4 +39,9 @@ data class WebhookEditMessageRequest(
     val content: Optional<String> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
+)
+
+data class MultipartWebhookEditMessageRequest(
+    val request: WebhookEditMessageRequest,
+    val files: List<Pair<String, java.io.InputStream>> = emptyList()
 )

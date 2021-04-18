@@ -168,6 +168,20 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
+        request: MultipartFollowupMessageModifyRequest
+    ) = call(Route.FollowupMessageModify) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.InteractionToken] = interactionToken
+        keys[Route.MessageId] = messageId
+        body(FollowupMessageModifyRequest.serializer(), request.request)
+        request.files.forEach { file(it) }
+    }
+
+
+    suspend fun modifyFollowupMessage(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
         request: FollowupMessageModifyRequest
     ) = call(Route.FollowupMessageModify) {
         keys[Route.ApplicationId] = applicationId

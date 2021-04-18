@@ -118,7 +118,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             parameter("wait", "$wait")
             val request = ExecuteWebhookBuilder().apply(builder).toRequest()
             body(WebhookExecuteRequest.serializer(), request.request)
-            request.file?.let { file(it) }
+            request.files.forEach { file(it) }
         }
     }
 
@@ -157,7 +157,8 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.WebhookToken] = token
             keys[Route.MessageId] = messageId
             val body = EditWebhookMessageBuilder().apply(builder).toRequest()
-            body(WebhookEditMessageRequest.serializer(), body)
+            body(WebhookEditMessageRequest.serializer(), body.request)
+            body.files.onEach { file(it) }
         }
     }
 }

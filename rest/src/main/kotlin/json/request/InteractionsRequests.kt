@@ -94,3 +94,9 @@ data class FollowupMessageModifyRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
 )
+
+@KordPreview
+data class MultipartFollowupMessageModifyRequest(
+    val request: FollowupMessageModifyRequest,
+    val files: List<Pair<String, java.io.InputStream>> = emptyList(),
+)
