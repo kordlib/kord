@@ -15,6 +15,10 @@ import kotlin.contracts.contract
 
 @Serializable(with = Permissions.Companion::class)
 class Permissions constructor(val code: DiscordBitSet) {
+    /**
+     *  Returns this [Permissions] as a [Set] of [Permission]
+     */
+    val values =  Permission.values.filter { it.code in code }.toSet()
 
     operator fun plus(permission: Permission): Permissions = Permissions(code + permission.code)
 
@@ -150,4 +154,42 @@ sealed class Permission(val code: DiscordBitSet) {
     object ManageEmojis : Permission(0x40000000)
     object UseSlashCommands : Permission(0x80000000)
     object All : Permission(0xFFFFFDFF)
+
+    companion object {
+        val values: Set<Permission>
+            get() = setOf(
+                CreateInstantInvite,
+                KickMembers,
+                BanMembers,
+                Administrator,
+                ManageChannels,
+                ManageGuild,
+                AddReactions,
+                ViewAuditLog,
+                ViewChannel,
+                SendMessages,
+                SendTTSMessages,
+                ManageMessages,
+                EmbedLinks,
+                AttachFiles,
+                ReadMessageHistory,
+                MentionEveryone,
+                UseExternalEmojis,
+                ViewGuildInsights,
+                Connect,
+                Speak,
+                MuteMembers,
+                DeafenMembers,
+                MoveMembers,
+                UseVAD,
+                PrioritySpeaker,
+                ChangeNickname,
+                ManageNicknames,
+                ManageRoles,
+                ManageWebhooks,
+                ManageEmojis,
+                UseSlashCommands,
+                All,
+            )
+    }
 }
