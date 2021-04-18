@@ -345,6 +345,30 @@ sealed class Route<T>(
         DiscordWelcomeScreen.serializer()
     )
 
+    object GuildDiscoveryMetadataGet : Route<DiscordDiscoveryMetadata>(
+        HttpMethod.Get,
+        "/guilds/$GuildId/discovery-metadata",
+        DiscordDiscoveryMetadata.serializer()
+    )
+
+    object GuildDiscoveryMetadataPatch : Route<DiscordDiscoveryMetadata>(
+        HttpMethod.Patch,
+        "/guilds/$GuildId/discovery-metadata",
+        DiscordDiscoveryMetadata.serializer()
+    )
+
+    object GuildDiscoverySubCategoryPost : Route<AddGuildDiscoverySubCategoryResponse>(
+        HttpMethod.Post,
+        "/guilds/$GuildId/discovery-categories/$DiscoveryCategoryId",
+        AddGuildDiscoverySubCategoryResponse.serializer()
+    )
+
+    object GuildDiscoverySubCategoryDelete : Route<Unit>(
+        HttpMethod.Post,
+        "/guilds/$GuildId/discovery-categories/$DiscoveryCategoryId",
+        NoStrategy
+    )
+
     object GuildWelcomeScreenPatch
         : Route<DiscordWelcomeScreen>(
         HttpMethod.Patch,
@@ -639,6 +663,19 @@ sealed class Route<T>(
             NoStrategy
         )
 
+    object ListDiscoveryCategories :
+        Route<List<DiscordDiscoveryCategory>>(
+            HttpMethod.Get,
+            "/discovery/categories",
+            ListSerializer(DiscordDiscoveryCategory.serializer())
+        )
+
+    object ValidateDiscoverySearchTerm : Route<DiscoveryTermValidationResponse>(
+        HttpMethod.Get,
+        "/discovery/valid-term",
+        DiscoveryTermValidationResponse.serializer()
+    )
+
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"
     }
@@ -664,6 +701,7 @@ sealed class Route<T>(
     object CommandId : Key("{command.id}", true)
     object InteractionId : Key("interaction.id", true)
     object InteractionToken : Key("{interaction.token}", true)
+    object DiscoveryCategoryId : Key("{category.id}", false)
 
 }
 

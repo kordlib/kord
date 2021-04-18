@@ -5,6 +5,7 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
+import dev.kord.rest.builder.discovery.ModifyDiscoveryMetadataBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
@@ -441,4 +442,40 @@ suspend inline fun GuildService.createCategory(
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val createBuilder = CategoryCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
+}
+
+suspend fun GuildService.getDiscoveryMetadata(
+    guildId: Snowflake,
+): DiscordDiscoveryMetadata = call(Route.GuildDiscoveryMetadataGet) {
+    keys[Route.GuildId] = guildId
+}
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildService.getDiscoveryMetadata(
+    guildId: Snowflake,
+    builder: ModifyDiscoveryMetadataBuilder.() -> Unit
+): DiscordDiscoveryMetadata {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    return call(Route.GuildDiscoveryMetadataGet) {
+        keys[Route.GuildId] = guildId
+    }
+}
+
+suspend fun GuildService.addDiscoverySubCategory(
+    guildId: Snowflake,
+    categoryId: Snowflake
+): AddGuildDiscoverySubCategoryResponse = call(Route.GuildDiscoverySubCategoryPost) {
+    keys[Route.GuildId] = guildId
+    keys[Route.DiscoveryCategoryId] = categoryId
+}
+
+suspend fun GuildService.removeDiscoverySubCategory(
+    guildId: Snowflake,
+    categoryId: Snowflake
+): Unit = call(Route.GuildDiscoverySubCategoryDelete) {
+    keys[Route.GuildId] = guildId
+    keys[Route.DiscoveryCategoryId] = categoryId
 }
