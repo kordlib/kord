@@ -4,14 +4,21 @@
 
 ## Additions
 
-* Added slash commands support. #145
+* Added slash commands support. #145 #201 #253 #249
 * Added core representation of templates #136
-* Added overloaded operations for Intents and Permissions. #152
+* Added overloaded operations for Intents and Permissions. #152 #203
 * Added welcome screens. #141
 * Added `Kord#getInvite`. #143
 * Added pending property to member. #153
-* Added missing contracts to various builders. #243
-* Added message reference core entity. #245
+* Added `Kord` functions to get webhooks. #232
+* Added ability to send a message through request. #184
+* Added extension methods for `LiveEntity`. #177
+* Added `USE_SLASH_COMMANDS` permission. #208
+* Added `Permission#values` and `Permissions#values`. #255
+* Added allowed mentions. #256
+* Added new webhook endpoints. #217
+* Added missing error codes. #250
+* Added `Message#messageReference`. #245
 
 ## Fixes
 
@@ -21,7 +28,35 @@
 * Fix provider nullity in embeds. #151
 * Fix WebhookType.Incoming incorrect value. #156
 * Fix `DiscordErrorResponse` inability to consume full input #162
-* Fix unhandled events for unknown channel types. #240
+* Fix `MessageCreateEvent#withStrategy` returning `Strategizable`. #233
+* Fix serialization issues for `DiscordActivityPartySize`. #168
+* Fix `Attachment#isImage` check. #172
+* Fix`rpc_origins` being nullable instead of optional. #173
+* Fix `LiveMessage` not being shut down on bulk delete. #174
+* Fix `Message#authorAsMember` throwing if guild was not found. #178
+* Fix swapped `mute` and `deaf` in `VoiceStateData`. #188
+* Fix `preview_asset` not being optional. #206.
+* Fix parsing raw responses into Json. #205
+* Fix typos in webhook and welcome screen routes. #219 #220
+* Fix gateway 0 blocking other shard gateways from running. #194
+* Fix unhandled unknown channel types. #251
+
+
+## Changes
+
+* Allow controlling the number of total shards #196
+* Replaced invoke functions with top-level factory functions. #210
+* Allow multiple file upload. #247 #228 #229
+
+## Dependencies
+
+* kotlin 1.4.10 -> 1.4.32 #198
+* kotlinx.serialization 1.0.0 -> 1.1.0 #198
+* kotlinx.coroutines 1.4.0 -> 1.4.2 #198
+* kotlinx.atomicfu 0.14.4 -> 0.15.1 #198
+* kotlinx.binary-compatibility-validator 0.2.3 -> 0.4.0 #198
+* ktor 1.4.1 -> 1.5.2 #198
+* kotlin-logging 2.0.3 -> 2.0.4 #198
 
 # 0.7.0-RC
 
