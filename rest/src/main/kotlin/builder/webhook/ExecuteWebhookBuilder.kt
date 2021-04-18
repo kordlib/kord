@@ -4,7 +4,9 @@ import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.EmbedRequest
 import dev.kord.rest.json.request.MultiPartWebhookExecuteRequest
@@ -19,7 +21,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
+class ExecuteWebhookBuilder : RequestBuilder<MultiPartWebhookExecuteRequest> {
 
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
@@ -37,6 +39,10 @@ class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
 
     var embeds: MutableList<EmbedRequest> = mutableListOf()
 
+
+    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+
     fun addFile(name: String, content: InputStream) {
         files += name to content
     }
@@ -53,8 +59,24 @@ class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
         embeds.add(EmbedBuilder().apply(builder).toRequest())
     }
 
-    override fun toRequest() : MultiPartWebhookExecuteRequest = MultiPartWebhookExecuteRequest(
-        WebhookExecuteRequest(_content, _username, _avatarUrl, _tts, Optional.missingOnEmpty(embeds)), files
+    /**
+     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
+     * (ping everything), calling this function but not configuring it before the request is build will result in all
+     * pings being ignored.
+     */
+    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
+    }
+
+    override fun toRequest(): MultiPartWebhookExecuteRequest = MultiPartWebhookExecuteRequest(
+        WebhookExecuteRequest(
+            _content,
+            _username,
+            _avatarUrl,
+            _tts,
+            Optional.missingOnEmpty(embeds),
+            _allowedMentions.map { it.build() }),
+        files
     )
 
 }
