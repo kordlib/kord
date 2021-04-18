@@ -76,7 +76,9 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
      * (ping everything), calling this function but not configuring it before the request is build will result in all
      * pings being ignored.
      */
+    @OptIn(ExperimentalContracts::class)
     inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
         allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 

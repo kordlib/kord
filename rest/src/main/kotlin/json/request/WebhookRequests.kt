@@ -26,7 +26,7 @@ data class WebhookExecuteRequest(
     val avatar: Optional<String> = Optional.Missing(),
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
-    val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
+    val allowedMentions: Optional<AllowedMentions?> = Optional.Missing()
 )
 
 data class MultiPartWebhookExecuteRequest(

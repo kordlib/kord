@@ -6,6 +6,7 @@ import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
@@ -33,8 +34,8 @@ class PublicFollowupMessageModifyBuilder :
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
 
-    private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
-    var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
+    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
@@ -52,10 +53,15 @@ class PublicFollowupMessageModifyBuilder :
         addFile(path.fileName.toString(), Files.newInputStream(path))
     }
 
+    /**
+     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
+     * (ping everything), calling this function but not configuring it before the request is build will result in all
+     * pings being ignored.
+     */
     @OptIn(ExperimentalContracts::class)
-    inline fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        allowedMentions = AllowedMentionsBuilder().apply(builder).build()
+    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
 
@@ -64,7 +70,7 @@ class PublicFollowupMessageModifyBuilder :
             FollowupMessageModifyRequest(
                 _content,
                 _embeds.mapList { it.toRequest() },
-                _allowedMentions
+                _allowedMentions.map { it.build() }
             ),
             files
         )
@@ -82,21 +88,25 @@ class EphemeralFollowupMessageModifyBuilder :
     private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
     var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
-    private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
-    var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
+    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
 
+    /**
+     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
+     * (ping everything), calling this function but not configuring it before the request is build will result in all
+     * pings being ignored.
+     */
     @OptIn(ExperimentalContracts::class)
-    inline fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        allowedMentions = AllowedMentionsBuilder().apply(builder).build()
+    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
-
 
     override fun toRequest(): FollowupMessageModifyRequest {
         return FollowupMessageModifyRequest(
             content = _content,
-            allowedMentions = _allowedMentions
+            allowedMentions = _allowedMentions.map { it.build() }
         )
     }
 }

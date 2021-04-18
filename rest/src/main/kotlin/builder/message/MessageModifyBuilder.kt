@@ -43,9 +43,7 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
      */
     @OptIn(ExperimentalContracts::class)
     inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
-        contract {
-            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-        }
+        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
         allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
