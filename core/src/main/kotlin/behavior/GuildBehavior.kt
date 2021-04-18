@@ -38,6 +38,7 @@ import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
 import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
@@ -924,4 +925,18 @@ inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
     return requestMembers(request)
+}
+
+@OptIn(ExperimentalContracts::class)
+@KordPreview
+suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    kord.slashCommands.bulkEditApplicationCommandPermissions(
+            kord.selfId,
+            id,
+            builder
+    )
 }

@@ -15,6 +15,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.serializer
 import dev.kord.common.entity.DiscordEmoji as EmojiEntity
 
 internal const val REST_VERSION_PROPERTY_NAME = "dev.kord.rest.version"
@@ -586,6 +587,38 @@ sealed class Route<T>(
     object OriginalInteractionResponseDelete
         :
         Route<Unit>(HttpMethod.Delete, "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original", NoStrategy)
+
+    @KordPreview
+    object GuildApplicationCommandPermissionsGet
+        : Route<DiscordGuildApplicationCommandPermissions>(
+            HttpMethod.Get,
+            "/applications/${ApplicationId}/guilds/$GuildId/commands/permissions",
+            DiscordGuildApplicationCommandPermissions.serializer()
+    )
+
+    @KordPreview
+    object ApplicationCommandPermissionsGet
+        : Route<DiscordGuildApplicationCommandPermissions>(
+            HttpMethod.Get,
+            "/applications/${ApplicationId}/guilds/$GuildId/commands/$CommandId/permissions",
+            DiscordGuildApplicationCommandPermissions.serializer()
+    )
+
+    @KordPreview
+    object ApplicationCommandPermissionsPut
+        : Route<DiscordGuildApplicationCommandPermissions>(
+            HttpMethod.Put,
+            "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
+            DiscordGuildApplicationCommandPermissions.serializer()
+    )
+
+    @KordPreview
+    object ApplicationCommandPermissionsBatchPut
+        : Route<List<DiscordGuildApplicationCommandPermissions>>(
+            HttpMethod.Put,
+            "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
+            serializer()
+    )
 
     object FollowupMessageCreate : Route<DiscordMessage>(
         HttpMethod.Post,
