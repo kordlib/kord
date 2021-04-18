@@ -45,6 +45,7 @@
 * Allow controlling the number of total shards #196
 * Replaced invoke functions with top-level factory functions. #210
 * Allow multiple file upload. #247 #228 #229
+* Added missing contracts #243
 
 ## Dependencies
 
