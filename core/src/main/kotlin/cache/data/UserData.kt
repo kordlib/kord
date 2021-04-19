@@ -1,6 +1,6 @@
 package dev.kord.core.cache.data
 
-import com.gitlab.kordlib.cache.api.data.description
+import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordOptionallyMemberUser
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
@@ -14,12 +14,12 @@ private val WebhookData.nullableUserId get() = userId.value
 
 @Serializable
 data class UserData(
-        val id: Snowflake,
-        val username: String,
-        val discriminator: String,
-        val avatar: String? = null,
-        val bot: OptionalBoolean = OptionalBoolean.Missing,
-        val publicFlags: Optional<UserFlags> = Optional.Missing(),
+    val id: Snowflake,
+    val username: String,
+    val discriminator: String,
+    val avatar: String? = null,
+    val bot: OptionalBoolean = OptionalBoolean.Missing,
+    val publicFlags: Optional<UserFlags> = Optional.Missing(),
 ) {
     companion object {
 

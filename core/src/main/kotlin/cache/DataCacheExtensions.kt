@@ -1,24 +1,24 @@
 package dev.kord.core.cache
 
-import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.find
-import com.gitlab.kordlib.cache.api.query
+import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.find
+import dev.kord.cache.api.query
 import dev.kord.core.cache.data.*
 
 /**
  * Registers all Kord data classes for this cache
  */
 internal suspend fun DataCache.registerKordData() = register(
-        RoleData.description,
-        ChannelData.description,
-        GuildData.description,
-        MemberData.description,
-        UserData.description,
-        MessageData.description,
-        EmojiData.description,
-        WebhookData.description,
-        PresenceData.description,
-        VoiceStateData.description
+    RoleData.description,
+    ChannelData.description,
+    GuildData.description,
+    MemberData.description,
+    UserData.description,
+    MessageData.description,
+    EmojiData.description,
+    WebhookData.description,
+    PresenceData.description,
+    VoiceStateData.description
 )
 
 /**

@@ -27,9 +27,9 @@ import java.util.*
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
  */
 class Message(
-        val data: MessageData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
+    val data: MessageData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : MessageBehavior {
 
     /**
@@ -94,7 +94,8 @@ class Message(
      * This collection can only contain values on crossposted messages, channels
      * mentioned inside the same guild will not be present.
      */
-    val mentionedChannelBehaviors: Set<ChannelBehavior> get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(it, kord) }.toSet()
+    val mentionedChannelBehaviors: Set<ChannelBehavior>
+        get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(it, kord) }.toSet()
 
     /**
      * The stickers sent with this message.
@@ -109,6 +110,17 @@ class Message(
      * Compare [type] to [MessageType.Reply] for a consistent way of identifying replies.
      */
     val referencedMessage: Message? get() = data.referencedMessage.value?.let { Message(it, kord) }
+
+    /**
+     * reference data sent with crossposted messages and replies.
+     *
+     * This field is only returned for messages with [MessageType.Reply].
+     * If the message is a reply but the [referencedMessage] field is not present,
+     * the backend did not attempt to fetch the [Message] that was being replied to,
+     * so its state is unknown.
+     * If the field exists but is null, the referenced message was deleted.
+     */
+    val messageReference: MessageReference? get() = data.messageReference.value?.let { MessageReference(it, kord) }
 
     /**
      * The [Channels][Channel] specifically mentioned in this message.
@@ -218,7 +230,7 @@ class Message(
      */
     suspend fun getAuthorAsMember(): Member? {
         val author = author ?: return null
-        val guildId = getGuild().id
+        val guildId = getGuildOrNull()?.id ?: return null
         return author.asMember(guildId)
     }
 

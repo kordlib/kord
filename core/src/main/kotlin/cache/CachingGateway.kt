@@ -1,6 +1,6 @@
 package dev.kord.core.cache
 
-import com.gitlab.kordlib.cache.api.DataCache
+import dev.kord.cache.api.DataCache
 import dev.kord.gateway.Close
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.*
@@ -14,9 +14,9 @@ import kotlin.coroutines.CoroutineContext
  */
 @FlowPreview
 class CachingGateway(
-        private val cache: DataCache,
-        private val gateway: Gateway,
-        private val dispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val cache: DataCache,
+    private val gateway: Gateway,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : DataCache by cache, Gateway by gateway, CoroutineScope {
 
     override val coroutineContext: CoroutineContext

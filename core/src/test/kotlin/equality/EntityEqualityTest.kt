@@ -1,7 +1,7 @@
 package equality
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -10,7 +10,7 @@ import kotlin.test.assertNotEquals
 val ids = generateSequence { Random.nextLong() }.distinct().iterator()
 fun randomId() = Snowflake(ids.next())
 
-interface EntityEqualityTest<T : Entity> {
+interface EntityEqualityTest<T : KordEntity> {
 
     fun newEntity(id: Snowflake): T
 
@@ -32,7 +32,7 @@ interface EntityEqualityTest<T : Entity> {
     }
 
     companion object {
-        operator fun <T : Entity> invoke(supplier: (Snowflake) -> T) = object : EntityEqualityTest<T> {
+        operator fun <T : KordEntity> invoke(supplier: (Snowflake) -> T) = object : EntityEqualityTest<T> {
             override fun newEntity(id: Snowflake): T = supplier(id)
         }
     }

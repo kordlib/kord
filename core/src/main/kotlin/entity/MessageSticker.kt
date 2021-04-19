@@ -8,7 +8,7 @@ import dev.kord.core.cache.data.MessageStickerData
 /**
  * A sticker image that can be used in messages.
  */
-class MessageSticker(val data: MessageStickerData, override val kord: Kord) : Entity {
+class MessageSticker(val data: MessageStickerData, override val kord: Kord) : KordEntity {
 
     /**
      * The id of the sticker.
@@ -50,7 +50,7 @@ class MessageSticker(val data: MessageStickerData, override val kord: Kord) : En
      * The sticker preview image has asset (currently private).
      */
     val previewAsset: String?
-        get() = data.previewAsset
+        get() = data.previewAsset.value
 
     /**
      * The type of sticker image.

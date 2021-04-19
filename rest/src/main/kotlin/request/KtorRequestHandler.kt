@@ -10,8 +10,8 @@ import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.content.TextContent
+import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.http.takeFrom
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import java.time.Clock
@@ -33,10 +33,10 @@ internal val jsonDefault = Json {
  */
 @Suppress("EXPERIMENTAL_API_USAGE")
 class KtorRequestHandler(
-        private val client: HttpClient,
-        private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
-        private val clock: Clock = Clock.systemUTC(),
-        private val parser: Json = jsonDefault,
+    private val client: HttpClient,
+    private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
+    private val clock: Clock = Clock.systemUTC(),
+    private val parser: Json = jsonDefault,
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
 
@@ -58,7 +58,12 @@ class KtorRequestHandler(
             }
             response.isError -> {
                 logger.debug { response.logString(body) }
-                throw KtorRequestException(response, parser.decodeFromString(DiscordErrorResponse.serializer().optional, body))
+                if (response.contentType() == ContentType.Application.Json)
+                    throw KtorRequestException(
+                        response,
+                        parser.decodeFromString(DiscordErrorResponse.serializer().optional, body)
+                    )
+                else throw KtorRequestException(response, null)
             }
             else -> {
                 logger.debug { response.logString(body) }
@@ -89,30 +94,27 @@ class KtorRequestHandler(
                 this.body = MultiPartFormDataContent(content)
                 logger.debug {
                     val json = content.filterIsInstance<PartData.FormItem>()
-                            .firstOrNull { it.name == "payload_json" }?.value
+                        .firstOrNull { it.name == "payload_json" }?.value
                     request.logString(json ?: "")
                 }
             }
         }
 
     }
+}
 
-    companion object {
 
-        operator fun invoke(
-                token: String,
-                requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
-                clock: Clock = Clock.systemUTC(),
-                parser: Json = jsonDefault,
-        ): KtorRequestHandler {
-            val client = HttpClient(CIO) {
-                expectSuccess = false
-                defaultRequest { header("Authorization", "Bot $token") }
-            }
-            return KtorRequestHandler(client, requestRateLimiter, clock, parser)
-        }
+fun KtorRequestHandler(
+    token: String,
+    requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
+    clock: Clock = Clock.systemUTC(),
+    parser: Json = jsonDefault,
+): KtorRequestHandler {
+    val client = HttpClient(CIO) {
+        expectSuccess = false
+        defaultRequest { header("Authorization", "Bot $token") }
     }
-
+    return KtorRequestHandler(client, requestRateLimiter, clock, parser)
 }
 
 fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): RequestResponse {
@@ -127,8 +129,10 @@ fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): Reques
 
     return when {
         response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
-        response.isRateLimit -> RequestResponse.BucketRateLimit(bucket
-                ?: BucketKey("missing"), rateLimit, reset)
+        response.isRateLimit -> RequestResponse.BucketRateLimit(
+            bucket
+                ?: BucketKey("missing"), rateLimit, reset
+        )
         response.isError -> RequestResponse.Error
         else -> RequestResponse.Accepted(bucket, rateLimit, reset)
     }

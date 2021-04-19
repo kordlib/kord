@@ -15,5 +15,5 @@ internal class RoleTest : GuildEntityEqualityTest<Role> by GuildEntityEqualityTe
     every { data.guildId } returns guildId
     Role(data, kord)
 }), BehaviorEqualityTest<Role> {
-    override fun Role.behavior(): Entity = RoleBehavior(guildId = guildId, id = id, kord = kord)
+    override fun Role.behavior(): KordEntity = RoleBehavior(guildId = guildId, id = id, kord = kord)
 }

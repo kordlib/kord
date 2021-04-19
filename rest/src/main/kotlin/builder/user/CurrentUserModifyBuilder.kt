@@ -19,7 +19,7 @@ class CurrentUserModifyBuilder : RequestBuilder<CurrentUserModifyRequest> {
     var avatar: Image? by ::_avatar.delegate()
 
     override fun toRequest(): CurrentUserModifyRequest = CurrentUserModifyRequest(
-            _username, _avatar.mapNullable { it?.dataUri }
+        _username, _avatar.map { it.dataUri }
     )
 
 }

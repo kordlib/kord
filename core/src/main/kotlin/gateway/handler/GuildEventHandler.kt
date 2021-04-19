@@ -1,9 +1,9 @@
 package dev.kord.core.gateway.handler
 
-import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.put
-import com.gitlab.kordlib.cache.api.putAll
-import com.gitlab.kordlib.cache.api.query
+import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.put
+import dev.kord.cache.api.putAll
+import dev.kord.cache.api.query
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
@@ -24,10 +24,10 @@ import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class GuildEventHandler(
-        kord: Kord,
-        gateway: MasterGateway,
-        cache: DataCache,
-        coreFlow: MutableSharedFlow<CoreEvent>
+    kord: Kord,
+    gateway: MasterGateway,
+    cache: DataCache,
+    coreFlow: MutableSharedFlow<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
@@ -216,16 +216,16 @@ internal class GuildEventHandler(
     private suspend fun handle(event: PresenceUpdate, shard: Int) = with(event.presence) {
         val data = PresenceData.from(this.guildId.value!!, this)
 
-        val old = cache.query<PresenceData> { idEq(PresenceData::id,  data.id) }
-                .asFlow().map { Presence(it, kord) }.singleOrNull()
+        val old = cache.query<PresenceData> { idEq(PresenceData::id, data.id) }
+            .asFlow().map { Presence(it, kord) }.singleOrNull()
 
         cache.put(data)
         val new = Presence(data, kord)
 
         val user = cache
-                .query<UserData> { idEq(UserData::id, event.presence.user.id) }
-                .singleOrNull()
-                ?.let { User(it, kord) }
+            .query<UserData> { idEq(UserData::id, event.presence.user.id) }
+            .singleOrNull()
+            ?.let { User(it, kord) }
 
         coreFlow.emit(PresenceUpdateEvent(user, this.user, guildId.value!!, old, new, shard))
     }

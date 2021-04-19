@@ -1,7 +1,7 @@
 package dev.kord.core.live
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Role
 import dev.kord.core.event.Event
 import dev.kord.core.event.guild.GuildDeleteEvent
@@ -12,7 +12,26 @@ import dev.kord.core.event.role.RoleUpdateEvent
 fun Role.live() = LiveRole(this)
 
 @KordPreview
-class LiveRole(role: Role) : AbstractLiveEntity(), Entity by role {
+inline fun Role.live(block: LiveRole.() -> Unit) = this.live().apply(block)
+
+@KordPreview
+fun LiveRole.onDelete(block: suspend (RoleDeleteEvent) -> Unit) = on(consumer = block)
+
+@KordPreview
+fun LiveRole.onUpdate(block: suspend (RoleUpdateEvent) -> Unit) = on(consumer = block)
+
+@KordPreview
+inline fun LiveRole.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
+    if (it is RoleDeleteEvent || it is GuildDeleteEvent) {
+        block(it)
+    }
+}
+
+@KordPreview
+fun LiveRole.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
+
+@KordPreview
+class LiveRole(role: Role) : AbstractLiveKordEntity(), KordEntity by role {
     var role = role
         private set
 

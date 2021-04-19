@@ -18,10 +18,10 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 
 class ReactionRemoveEmojiEvent(
-        val data: ReactionRemoveEmojiData,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: ReactionRemoveEmojiData,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
     /**
@@ -29,7 +29,12 @@ class ReactionRemoveEmojiEvent(
      */
     val channelId: Snowflake get() = data.channelId
 
-    val channel: GuildMessageChannelBehavior get() = GuildMessageChannelBehavior(guildId = guildId, id = channelId, kord = kord)
+    val channel: GuildMessageChannelBehavior
+        get() = GuildMessageChannelBehavior(
+            guildId = guildId,
+            id = channelId,
+            kord = kord
+        )
 
     /**
      * The id of the [Guild].
@@ -63,7 +68,7 @@ class ReactionRemoveEmojiEvent(
     suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveAllEvent =
-            ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, strategy.supply(kord))
+        ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "ReactionRemoveEmojiEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"

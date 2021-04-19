@@ -4,7 +4,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.WebhookData
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.Webhook
@@ -21,7 +21,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Webhook](https://discord.com/developers/docs/resources/webhook).
  */
-interface WebhookBehavior : Entity, Strategizable {
+interface WebhookBehavior : KordEntity, Strategizable {
 
     /**
      * Requests to delete this webhook, this user must be the creator.
@@ -45,32 +45,31 @@ interface WebhookBehavior : Entity, Strategizable {
      * Returns a new [WebhookBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): WebhookBehavior =
-            WebhookBehavior(id, kord, strategy)
+        WebhookBehavior(id, kord, strategy)
 
-    companion object {
-        internal operator fun invoke(
-                id: Snowflake,
-                kord: Kord,
-                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
-        ): WebhookBehavior = object : WebhookBehavior {
-            override val id: Snowflake = id
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
+}
 
-            override fun hashCode(): Int = Objects.hash(id)
+internal fun WebhookBehavior(
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+): WebhookBehavior = object : WebhookBehavior {
+    override val id: Snowflake = id
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun equals(other: Any?): Boolean = when (other) {
-                is WebhookBehavior -> other.id == id
-                else -> false
-            }
+    override fun hashCode(): Int = Objects.hash(id)
 
-            override fun toString(): String {
-                return "WebhookBehavior(id=$id, kord=$kord, supplier=$supplier)"
-            }
-        }
+    override fun equals(other: Any?): Boolean = when (other) {
+        is WebhookBehavior -> other.id == id
+        else -> false
+    }
 
+    override fun toString(): String {
+        return "WebhookBehavior(id=$id, kord=$kord, supplier=$supplier)"
     }
 }
+
 
 /**
  * Requests to edit the webhook, this user must be the creator.
@@ -119,10 +118,10 @@ suspend inline fun WebhookBehavior.execute(token: String, builder: ExecuteWebhoo
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
     val response = kord.rest.webhook.executeWebhook(
-            token = token,
-            webhookId = id,
-            wait = true,
-            builder = builder
+        token = token,
+        webhookId = id,
+        wait = true,
+        builder = builder
     )!!
 
     val data = MessageData.from(response)

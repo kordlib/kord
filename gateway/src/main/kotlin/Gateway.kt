@@ -166,7 +166,10 @@ internal val gatewayOnLogger = KotlinLogging.logger("Gateway.on")
  * The returned [Job] is a reference to the created coroutine, call [Job.cancel] to cancel the processing of any further
  * events for this [consumer].
  */
-inline fun <reified T : Event> Gateway.on(scope: CoroutineScope = this, crossinline consumer: suspend T.() -> Unit): Job {
+inline fun <reified T : Event> Gateway.on(
+    scope: CoroutineScope = this,
+    crossinline consumer: suspend T.() -> Unit
+): Job {
     return this.events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
         launch { it.runCatching { it.consumer() }.onFailure(gatewayOnLogger::error) }
     }.launchIn(scope)
@@ -189,11 +192,12 @@ inline fun <reified T : Event> Gateway.on(scope: CoroutineScope = this, crossinl
  * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
  * If no nonce was provided one will be generated instead.
  */
-@OptIn(PrivilegedIntent::class)
+@OptIn(PrivilegedIntent::class, ExperimentalContracts::class)
 fun Gateway.requestGuildMembers(
-        guildId: Snowflake,
-        builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }
+    guildId: Snowflake,
+    builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }
 ): Flow<GuildMembersChunk> {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(guildId).apply(builder).toRequest()
     return requestGuildMembers(request)
 }
@@ -218,13 +222,13 @@ fun Gateway.requestGuildMembers(request: RequestGuildMembers): Flow<GuildMembers
     val withNonce = request.copy(nonce = Optional.Value(nonce))
 
     return events
-            .onSubscription { send(withNonce) } //send request on subscription
-            .filterIsInstance<GuildMembersChunk>()
-            .filter { it.data.nonce.value == nonce }
-            .transformWhile {
-                emit(it)
-                return@transformWhile (it.data.chunkIndex + 1) < it.data.chunkCount
-            }// 0 <= chunk_index < chunk_count
+        .onSubscription { send(withNonce) } //send request on subscription
+        .filterIsInstance<GuildMembersChunk>()
+        .filter { it.data.nonce.value == nonce }
+        .transformWhile {
+            emit(it)
+            return@transformWhile (it.data.chunkIndex + 1) < it.data.chunkCount
+        }// 0 <= chunk_index < chunk_count
 }
 
 /**

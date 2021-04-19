@@ -16,11 +16,11 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.request.RestRequestException
 
 class PermissionOverwriteEntity(
-        val guildId: Snowflake,
-        val channelId: Snowflake,
-        data: PermissionOverwriteData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val guildId: Snowflake,
+    val channelId: Snowflake,
+    data: PermissionOverwriteData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : PermissionOverwrite(data), KordObject, Strategizable {
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
@@ -74,7 +74,7 @@ class PermissionOverwriteEntity(
      * Returns a new [PermissionOverwriteEntity] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PermissionOverwriteEntity =
-            PermissionOverwriteEntity(guildId, channelId, data, kord, strategy.supply(kord))
+        PermissionOverwriteEntity(guildId, channelId, data, kord, strategy.supply(kord))
 
     override fun toString(): String {
         return "PermissionOverwriteEntity(target=$target, type=$type, allowed=$allowed, denied=$denied, kord=$kord, supplier=$supplier)"

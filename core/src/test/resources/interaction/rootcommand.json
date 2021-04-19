@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "type": 2,
+  "token": "hunter2",
+  "member": {
+    "user": {
+      "username": "Hope",
+      "public_flags": 64,
+      "id": "695549908383432716",
+      "discriminator": "9000",
+      "avatar": "68922a048551bb4b0dda88b65e85d8f1"
+    },
+    "roles": [
+      "556525712308305940"
+    ],
+    "premium_since": null,
+    "permissions": "2147483647",
+    "pending": false,
+    "nick": null,
+    "mute": false,
+    "joined_at": "2020-04-03T09:35:54.879000+00:00",
+    "is_pending": false,
+    "deaf": false
+  },
+  "id": "793442788670832640",
+  "guild_id": "556525343595298817",
+  "data": {
+    "options": [
+      {
+        "value": 1,
+        "name": "testint"
+      }
+    ],
+    "name": "testsubcommands",
+    "id": "792107855418490901"
+  },
+  "channel_id": "587324906702766226"
+}

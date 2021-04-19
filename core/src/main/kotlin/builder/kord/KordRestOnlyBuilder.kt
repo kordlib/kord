@@ -1,7 +1,8 @@
 package dev.kord.core.builder.kord
 
-import com.gitlab.kordlib.cache.api.DataCache
+import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.event.Event
@@ -25,7 +26,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 class KordRestOnlyBuilder(val token: String) {
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
-            { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter()) }
+        { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter()) }
 
     /**
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
@@ -37,6 +38,8 @@ class KordRestOnlyBuilder(val token: String) {
      * will be used when not set.
      */
     var httpClient: HttpClient? = null
+
+    var applicationId: Snowflake? = null
 
     /**
      * Configures the [RequestHandler] for the [RestClient].
@@ -58,18 +61,18 @@ class KordRestOnlyBuilder(val token: String) {
     fun build(): Kord {
         val client = httpClient.configure(token)
 
-        val resources = ClientResources(token, 0, client, EntitySupplyStrategy.rest, Intents.none)
+        val resources = ClientResources(token, Shards(0), client, EntitySupplyStrategy.rest, Intents.none)
         val rest = RestClient(handlerBuilder(resources))
         val selfId = getBotIdFromToken(token)
 
         return Kord(
-                resources,
-                DataCache.none(),
-                MasterGateway(mapOf(0 to Gateway.none())),
-                rest,
-                selfId,
-                MutableSharedFlow(),
-                defaultDispatcher
+            resources,
+            DataCache.none(),
+            MasterGateway(mapOf(0 to Gateway.none())),
+            rest,
+            selfId,
+            MutableSharedFlow(),
+            defaultDispatcher
         )
     }
 }

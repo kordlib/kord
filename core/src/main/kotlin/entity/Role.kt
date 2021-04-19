@@ -12,9 +12,9 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
 
 data class Role(
-        val data: RoleData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: RoleData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : RoleBehavior {
 
     override val id: Snowflake
@@ -54,7 +54,7 @@ data class Role(
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is RoleBehavior -> other.id == id && other.guildId == guildId
         else -> false
     }

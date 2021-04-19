@@ -14,10 +14,10 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  * A Discord [developer team](https://discord.com/developers/docs/topics/teams) which can own applications.
  */
 class Team(
-        val data: TeamData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Entity, Strategizable {
+    val data: TeamData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : KordEntity, Strategizable {
     /**
      * The unique ID of this team.
      */

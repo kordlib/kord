@@ -14,9 +14,9 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  * An instance of a [Discord Ban](https://discord.com/developers/docs/resources/guild#ban-object).
  */
 class Ban(
-        val data: BanData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: BanData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordObject, Strategizable {
 
     /**
@@ -54,7 +54,7 @@ class Ban(
     /**
      * Returns a new [Ban] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>) : Ban = Ban(data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Ban = Ban(data, kord, strategy.supply(kord))
 
     override fun toString(): String {
         return "Ban(data=$data, kord=$kord, supplier=$supplier)"

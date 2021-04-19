@@ -12,10 +12,10 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class TeamData(
-        val id: Snowflake,
-        val icon: String? = null,
-        val members: List<TeamMemberData>,
-        val ownerUserId: Snowflake,
+    val id: Snowflake,
+    val icon: String? = null,
+    val members: List<TeamMemberData>,
+    val ownerUserId: Snowflake,
 ) {
     companion object {
         fun from(entity: DiscordTeam): TeamData = with(entity) {
@@ -29,10 +29,10 @@ data class TeamData(
  */
 @Serializable
 class TeamMemberData(
-        val membershipState: TeamMembershipState,
-        val permissions: List<String>,
-        val teamId: Snowflake,
-        val userId: Snowflake,
+    val membershipState: TeamMembershipState,
+    val permissions: List<String>,
+    val teamId: Snowflake,
+    val userId: Snowflake,
 ) {
     companion object {
         fun from(entity: DiscordTeamMember): TeamMemberData = with(entity) {

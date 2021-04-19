@@ -12,10 +12,10 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 class RoleTags(
-        val data: RoleTagsData,
-        val guildId: Snowflake,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
+    val data: RoleTagsData,
+    val guildId: Snowflake,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordObject, Strategizable {
 
     /**
@@ -58,7 +58,7 @@ class RoleTags(
     suspend fun getIntegration(): Integration? {
         val id = integrationId ?: return null
         val response = kord.rest.guild.getGuildIntegrations(guildId)
-                .firstOrNull { it.id == id } ?: return null
+            .firstOrNull { it.id == id } ?: return null
 
         return Integration(IntegrationData.from(guildId, response), kord)
     }
@@ -80,6 +80,6 @@ class RoleTags(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
-            RoleTags(data, guildId, kord, strategy.supply(kord))
+        RoleTags(data, guildId, kord, strategy.supply(kord))
 
 }

@@ -1,6 +1,8 @@
 package dev.kord.rest.builder.message
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.AllowedMentionType
+import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.DiscordMessageReference
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
@@ -9,8 +11,6 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.json.request.AllowedMentions
-import dev.kord.rest.json.request.AllowedMentionType
 import dev.kord.rest.json.request.MessageCreateRequest
 import dev.kord.rest.json.request.MultipartMessageCreateRequest
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +18,9 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 @KordDsl
 class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
@@ -41,6 +44,8 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
 
     private var _messageReference: OptionalSnowflake = OptionalSnowflake.Missing
 
+    private var _failIfNotExists: OptionalBoolean = OptionalBoolean.Missing
+
     /**
      * The id of the message being replied to.
      * Requires the [ReadMessageHistory][dev.kord.common.entity.Permission.ReadMessageHistory] permission.
@@ -50,7 +55,11 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
      */
     var messageReference: Snowflake? by ::_messageReference.delegate()
 
+    var failIfNotExists: Boolean? by ::_failIfNotExists.delegate()
+
+    @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
+        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
         embed = (embed ?: EmbedBuilder()).apply(block)
     }
 
@@ -67,20 +76,27 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
      * (ping everything), calling this function but not configuring it before the request is build will result in all
      * pings being ignored.
      */
+    @OptIn(ExperimentalContracts::class)
     inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
         allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
     override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
-            MessageCreateRequest(
-                    _content,
-                    _nonce,
-                    _tts,
-                    _embed.map { it.toRequest() },
-                    _allowedMentions.map { it.build() },
-                    _messageReference.map { DiscordMessageReference(id = OptionalSnowflake.Value(it)) }
-            ),
-            files
+        MessageCreateRequest(
+            _content,
+            _nonce,
+            _tts,
+            _embed.map { it.toRequest() },
+            _allowedMentions.map { it.build() },
+            _messageReference.map {
+                DiscordMessageReference(
+                    id = OptionalSnowflake.Value(it),
+                    failIfNotExists = _failIfNotExists
+                )
+            }
+        ),
+        files
     )
 
 }
@@ -132,10 +148,10 @@ class AllowedMentionsBuilder {
     }
 
     fun build(): AllowedMentions = AllowedMentions(
-            parse = types.toList(),
-            users = users.map { it.asString },
-            roles = roles.map { it.asString },
-            repliedUser = _repliedUser
+        parse = types.toList(),
+        users = users.map { it.asString },
+        roles = roles.map { it.asString },
+        repliedUser = _repliedUser
     )
 
 }

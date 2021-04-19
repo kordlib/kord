@@ -11,7 +11,7 @@ import java.util.*
  *
  * A file attached to a [Message].
  */
-data class Attachment(val data: AttachmentData, override val kord: Kord) : Entity {
+data class Attachment(val data: AttachmentData, override val kord: Kord) : KordEntity {
 
     override val id: Snowflake
         get() = data.id
@@ -54,11 +54,11 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : Entit
     /**
      * If this file is an image. Denoted by the presence of a [width] and [height].
      */
-    val isImage: Boolean get() = height == width && height == null
+    val isImage: Boolean get() = height != null && width != null
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is Attachment -> other.id == id
         else -> false
     }

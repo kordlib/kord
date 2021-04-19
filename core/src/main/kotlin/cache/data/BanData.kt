@@ -6,9 +6,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BanData(
-        val reason: String? = null,
-        val userId: Snowflake,
-        val guildId: Snowflake,
+    val reason: String? = null,
+    val userId: Snowflake,
+    val guildId: Snowflake,
 ) {
     companion object {
         fun from(guildId: Snowflake, entity: BanResponse) = with(entity) {

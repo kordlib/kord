@@ -28,7 +28,7 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
     /**
      * Creates a Snowflake from a given [instant].
      */
-    constructor(instant: Instant): this((instant.toEpochMilli() shl 22) - discordEpochLong)
+    constructor(instant: Instant) : this((instant.toEpochMilli() shl 22) - discordEpochLong)
 
     val asString get() = value.toString()
 
@@ -79,6 +79,6 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
 private class SnowflakeMark(val epochMilliseconds: Long) : TimeMark() {
 
     override fun elapsedNow(): Duration =
-            java.time.Duration.between(Instant.ofEpochMilli(epochMilliseconds), Instant.now()).toKotlinDuration()
+        java.time.Duration.between(Instant.ofEpochMilli(epochMilliseconds), Instant.now()).toKotlinDuration()
 
 }

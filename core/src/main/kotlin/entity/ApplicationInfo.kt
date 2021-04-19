@@ -1,6 +1,8 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.coerceToMissing
+import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
@@ -8,24 +10,23 @@ import dev.kord.core.cache.data.ApplicationInfoData
 import dev.kord.core.cache.data.TeamData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.Image
 import java.util.*
 
 /**
  * The details of a [Discord OAuth2](https://discord.com/developers/docs/topics/oauth2) application.
  */
 class ApplicationInfo(
-        val data: ApplicationInfoData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Entity, Strategizable {
+    val data: ApplicationInfoData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : KordEntity, Strategizable {
 
     override val id: Snowflake
         get() = data.id
 
     val name: String get() = data.name
 
-    val description: String? get() = data.description
+    val description: String get() = data.description
 
     val isPublic: Boolean get() = data.botPublic
 
@@ -34,7 +35,7 @@ class ApplicationInfo(
     /**
      * The rpc origins of this application, empty if disabled.
      */
-    val rpcOrigins: List<String> get() = data.rpcOrigins.orEmpty()
+    val rpcOrigins: List<String> get() = data.rpcOrigins.coerceToMissing().orEmpty()
 
     val ownerId: Snowflake get() = data.ownerId
 
@@ -70,7 +71,7 @@ class ApplicationInfo(
      * Returns a new [ApplicationInfo] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ApplicationInfo =
-            ApplicationInfo(data, kord, strategy.supply(kord))
+        ApplicationInfo(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id)
 

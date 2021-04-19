@@ -22,10 +22,10 @@ import java.util.*
  * An instance of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
  */
 class Member(
-        val memberData: MemberData,
-        userData: UserData,
-        kord: Kord,
-        supplier: EntitySupplier = kord.defaultSupplier
+    val memberData: MemberData,
+    userData: UserData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
 ) : User(userData, kord, supplier), MemberBehavior {
 
     override val guildId: Snowflake
@@ -76,6 +76,11 @@ class Member(
         else supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
     /**
+     * Whether the user has not yet passed the guild's Membership Screening requirements.
+     */
+    val isPending: Boolean get() = memberData.pending.discordBoolean
+
+    /**
      * Whether this member's [id] equals the [Guild.ownerId].
      *
      * @throws [RequestException] if something went wrong during the request.
@@ -104,12 +109,13 @@ class Member(
     /**
      * Returns a new [Member] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Member = Member(memberData, data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Member =
+        Member(memberData, data, kord, strategy.supply(kord))
 
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is MemberBehavior -> other.id == id && other.guildId == guildId
         is UserBehavior -> other.id == id
         else -> false

@@ -20,9 +20,9 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import java.util.*
 
 data class Webhook(
-        val data: WebhookData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: WebhookData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : WebhookBehavior, Strategizable {
 
     override val id: Snowflake get() = data.id
@@ -82,11 +82,11 @@ data class Webhook(
      * Returns a new [Webhook] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Webhook =
-            Webhook(data, kord, strategy.supply(kord))
+        Webhook(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id)
 
-    override fun equals(other: Any?): Boolean = when(other) {
+    override fun equals(other: Any?): Boolean = when (other) {
         is WebhookBehavior -> other.id == id
         else -> false
     }

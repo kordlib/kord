@@ -10,7 +10,7 @@ import kotlinx.coroutines.sync.withLock
 import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
 
-private val logger = KotlinLogging.logger {  }
+private val logger = KotlinLogging.logger { }
 
 /**
  * A reusable fixed rate ticker.

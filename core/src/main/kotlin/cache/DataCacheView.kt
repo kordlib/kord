@@ -1,10 +1,10 @@
 package dev.kord.core.cache
 
-import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.DataEntryCache
-import com.gitlab.kordlib.cache.api.Query
-import com.gitlab.kordlib.cache.api.QueryBuilder
-import com.gitlab.kordlib.cache.api.data.DataDescription
+import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.DataEntryCache
+import dev.kord.cache.api.Query
+import dev.kord.cache.api.QueryBuilder
+import dev.kord.cache.api.data.DataDescription
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KType
 
@@ -50,9 +50,9 @@ class DataCacheView(private val cache: DataCache) : DataCache by cache {
 }
 
 private class DataEntryCacheView<T : Any>(
-        private val entryCache: DataEntryCache<T>,
-        private val description: DataDescription<T, out Any>,
-        private val viewKeys: ViewKeys
+    private val entryCache: DataEntryCache<T>,
+    private val description: DataDescription<T, out Any>,
+    private val viewKeys: ViewKeys
 ) : DataEntryCache<T> by entryCache {
 
     override suspend fun put(item: T) {
@@ -67,17 +67,17 @@ private class DataEntryCacheView<T : Any>(
 }
 
 private class QueryBuilderView<T : Any>(
-        private val builder: QueryBuilder<T>,
-        private val property: KProperty1<T, Any>,
-        private val keys: Set<Any>
+    private val builder: QueryBuilder<T>,
+    private val property: KProperty1<T, Any>,
+    private val keys: Set<Any>
 ) : QueryBuilder<T> by builder {
     override fun build(): Query<T> = QueryView(builder, property, keys)
 }
 
 private class QueryView<T : Any>(
-        private val builder: QueryBuilder<T>,
-        private val property: KProperty1<T, Any>,
-        private val keys: Set<Any>
+    private val builder: QueryBuilder<T>,
+    private val property: KProperty1<T, Any>,
+    private val keys: Set<Any>
 ) : Query<T> by builder.build() {
     override suspend fun remove() = builder.apply { property `in` keys }.build().remove()
 }

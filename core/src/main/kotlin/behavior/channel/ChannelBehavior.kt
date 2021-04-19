@@ -3,7 +3,7 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.exception.EntityNotFoundException
@@ -15,7 +15,7 @@ import java.util.*
 /**
  * The behavior of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
  */
-interface ChannelBehavior : Entity, Strategizable {
+interface ChannelBehavior : KordEntity, Strategizable {
 
     /**
      * This channel [formatted as a mention](https://discord.com/developers/docs/reference#message-formatting)
@@ -53,23 +53,23 @@ interface ChannelBehavior : Entity, Strategizable {
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ChannelBehavior = ChannelBehavior(id, kord, strategy)
 
-    companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) = object : ChannelBehavior {
-            override val id: Snowflake = id
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
+}
+
+fun ChannelBehavior(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) =
+    object : ChannelBehavior {
+        override val id: Snowflake = id
+        override val kord: Kord = kord
+        override val supplier: EntitySupplier = strategy.supply(kord)
 
 
-            override fun hashCode(): Int = Objects.hash(id)
+        override fun hashCode(): Int = Objects.hash(id)
 
-            override fun equals(other: Any?): Boolean = when (other) {
-                is ChannelBehavior -> other.id == id
-                else -> false
-            }
+        override fun equals(other: Any?): Boolean = when (other) {
+            is ChannelBehavior -> other.id == id
+            else -> false
+        }
 
-            override fun toString(): String {
-                return "ChannelBehavior(id=$id, kord=$kord, supplier=$supplier)"
-            }
+        override fun toString(): String {
+            return "ChannelBehavior(id=$id, kord=$kord, supplier=$supplier)"
         }
     }
-}

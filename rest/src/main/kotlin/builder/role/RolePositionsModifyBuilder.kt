@@ -19,5 +19,5 @@ class RolePositionsModifyBuilder : AuditRequestBuilder<GuildRolePositionModifyRe
     }
 
     override fun toRequest(): GuildRolePositionModifyRequest =
-            GuildRolePositionModifyRequest(swaps)
+        GuildRolePositionModifyRequest(swaps)
 }

@@ -97,7 +97,11 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun addOverwrite(overwrite: PermissionOverwrite) {
-        kord.rest.channel.editChannelPermissions(channelId = id, overwriteId = overwrite.target, permissions = overwrite.asRequest())
+        kord.rest.channel.editChannelPermissions(
+            channelId = id,
+            overwriteId = overwrite.target,
+            permissions = overwrite.asRequest()
+        )
     }
 
     /**
@@ -111,8 +115,8 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
     override fun compareTo(other: Entity): Int {
         if (other !is GuildChannelBehavior) return super.compareTo(other)
         val discordOrder = compareBy<GuildChannelBehavior> { it.guildId }
-                .thenBy { (it as? GuildChannel)?.guildId }
-                .thenBy { it.id }
+            .thenBy { (it as? GuildChannel)?.guildId }
+            .thenBy { it.id }
 
         return discordOrder.compare(this, other)
     }
@@ -121,35 +125,34 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
      * Returns a new [GuildChannelBehavior] with the given [strategy].
      */
     override fun withStrategy(
-            strategy: EntitySupplyStrategy<*>
+        strategy: EntitySupplyStrategy<*>
     ): GuildChannelBehavior = GuildChannelBehavior(guildId, id, kord, strategy)
 
-    companion object {
-        internal operator fun invoke(
-                guildId: Snowflake,
-                id: Snowflake,
-                kord: Kord,
-                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-        ): GuildChannelBehavior = object : GuildChannelBehavior {
-            override val guildId: Snowflake = guildId
-            override val id: Snowflake = id
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun hashCode(): Int = Objects.hash(id, guildId)
+}
 
-            override fun equals(other: Any?): Boolean = when(other) {
-                is GuildChannelBehavior -> other.id == id && other.guildId == guildId
-                is ChannelBehavior -> other.id == id
-                else -> false
-            }
+fun GuildChannelBehavior(
+    guildId: Snowflake,
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+): GuildChannelBehavior = object : GuildChannelBehavior {
+    override val guildId: Snowflake = guildId
+    override val id: Snowflake = id
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun toString(): String {
-                return "GuildChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
-            }
-        }
+    override fun hashCode(): Int = Objects.hash(id, guildId)
+
+    override fun equals(other: Any?): Boolean = when (other) {
+        is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+        is ChannelBehavior -> other.id == id
+        else -> false
     }
 
+    override fun toString(): String {
+        return "GuildChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
+    }
 }
 
 /**
@@ -158,7 +161,10 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
  *  @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildChannelBehavior.editRolePermission(roleId: Snowflake, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+suspend inline fun GuildChannelBehavior.editRolePermission(
+    roleId: Snowflake,
+    builder: ChannelPermissionModifyBuilder.() -> Unit
+) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -171,7 +177,10 @@ suspend inline fun GuildChannelBehavior.editRolePermission(roleId: Snowflake, bu
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildChannelBehavior.editMemberPermission(memberId: Snowflake, builder: ChannelPermissionModifyBuilder.() -> Unit) {
+suspend inline fun GuildChannelBehavior.editMemberPermission(
+    memberId: Snowflake,
+    builder: ChannelPermissionModifyBuilder.() -> Unit
+) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

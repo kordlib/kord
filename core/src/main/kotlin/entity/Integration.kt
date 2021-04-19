@@ -26,10 +26,10 @@ import kotlin.contracts.contract
  * A [Discord integration](https://discord.com/developers/docs/resources/guild#get-guild-integrations).
  */
 class Integration(
-        val data: IntegrationData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
-) : Entity, Strategizable {
+    val data: IntegrationData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : KordEntity, Strategizable {
 
     override val id: Snowflake
         get() = data.id
@@ -163,7 +163,7 @@ class Integration(
     suspend fun sync() = kord.rest.guild.syncGuildIntegration(guildId = guildId, integrationId = id)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Integration =
-            Integration(data, kord, strategy.supply(kord))
+        Integration(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id)
 

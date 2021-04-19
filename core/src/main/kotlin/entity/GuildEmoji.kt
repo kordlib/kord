@@ -10,7 +10,6 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.EmojiData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.toSnowflakeOrNull
 import dev.kord.rest.builder.guild.EmojiModifyBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -24,10 +23,10 @@ import kotlin.contracts.contract
  * An instance of a [Discord emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
  */
 class GuildEmoji(
-        val data: EmojiData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
-) : Entity, Strategizable {
+    val data: EmojiData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : KordEntity, Strategizable {
 
     override val id: Snowflake
         get() = data.id
@@ -73,7 +72,8 @@ class GuildEmoji(
     /**
      * The behaviors of the [roles][Role] for which this emoji was whitelisted.
      */
-    val roleBehaviors: Set<RoleBehavior> get() = data.roles.orEmpty().map { RoleBehavior(guildId = guildId, id = id, kord = kord) }.toSet()
+    val roleBehaviors: Set<RoleBehavior>
+        get() = data.roles.orEmpty().map { RoleBehavior(guildId = guildId, id = id, kord = kord) }.toSet()
 
     /**
      * The [roles][Role] for which this emoji was whitelisted.

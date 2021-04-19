@@ -4,13 +4,16 @@ import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.EmbedRequest
 import dev.kord.rest.json.request.MultiPartWebhookExecuteRequest
 import dev.kord.rest.json.request.WebhookExecuteRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.contracts.ExperimentalContracts
@@ -18,7 +21,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
+class ExecuteWebhookBuilder : RequestBuilder<MultiPartWebhookExecuteRequest> {
 
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
@@ -32,15 +35,20 @@ class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
 
-    private var file: Pair<String, java.io.InputStream>? = null
+    val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+
     var embeds: MutableList<EmbedRequest> = mutableListOf()
 
-    fun setFile(name: String, content: java.io.InputStream) {
-        file = name to content
+
+    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+
+    fun addFile(name: String, content: InputStream) {
+        files += name to content
     }
 
-    suspend fun setFile(path: Path) = withContext(Dispatchers.IO) {
-        setFile(path.fileName.toString(), Files.newInputStream(path))
+    suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
+        addFile(path.fileName.toString(), Files.newInputStream(path))
     }
 
     @OptIn(ExperimentalContracts::class)
@@ -51,8 +59,24 @@ class ExecuteWebhookBuilder: RequestBuilder<MultiPartWebhookExecuteRequest> {
         embeds.add(EmbedBuilder().apply(builder).toRequest())
     }
 
-    override fun toRequest() : MultiPartWebhookExecuteRequest = MultiPartWebhookExecuteRequest(
-        WebhookExecuteRequest(_content, _username, _avatarUrl, _tts, Optional.missingOnEmpty(embeds)), file
+    /**
+     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
+     * (ping everything), calling this function but not configuring it before the request is build will result in all
+     * pings being ignored.
+     */
+    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
+    }
+
+    override fun toRequest(): MultiPartWebhookExecuteRequest = MultiPartWebhookExecuteRequest(
+        WebhookExecuteRequest(
+            _content,
+            _username,
+            _avatarUrl,
+            _tts,
+            Optional.missingOnEmpty(embeds),
+            _allowedMentions.map { it.build() }),
+        files
     )
 
 }

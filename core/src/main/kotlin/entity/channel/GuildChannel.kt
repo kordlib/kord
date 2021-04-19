@@ -36,9 +36,9 @@ interface GuildChannel : Channel, GuildChannelBehavior {
      */
     val permissionOverwrites: Set<PermissionOverwriteEntity>
         get() = data.permissionOverwrites.orEmpty().asSequence()
-                .map { PermissionOverwriteData(it.id, it.type, it.allow, it.deny) }
-                .map { PermissionOverwriteEntity(guildId, id, it, kord) }
-                .toSet()
+            .map { PermissionOverwriteData(it.id, it.type, it.allow, it.deny) }
+            .map { PermissionOverwriteEntity(guildId, id, it, kord) }
+            .toSet()
 
     /**
      * Calculates the effective permissions of the [memberId] in this channel, applying the overwrite for the member
@@ -83,16 +83,16 @@ interface GuildChannel : Channel, GuildChannelBehavior {
      * Gets the permission overwrite for the [memberId] in this channel, if present.
      */
     fun getPermissionOverwritesForMember(memberId: Snowflake): PermissionOverwriteEntity? =
-            getPermissionOverwritesForType(memberId, OverwriteType.Member)
+        getPermissionOverwritesForType(memberId, OverwriteType.Member)
 
     /**
      * Gets the permission overwrite for the [roleId] in this channel, if present.
      */
     fun getPermissionOverwritesForRole(roleId: Snowflake): PermissionOverwriteEntity? =
-            getPermissionOverwritesForType(roleId, OverwriteType.Role)
+        getPermissionOverwritesForType(roleId, OverwriteType.Role)
 
     private fun getPermissionOverwritesForType(id: Snowflake, type: OverwriteType): PermissionOverwriteEntity? =
-            permissionOverwrites.firstOrNull { it.target == id && it.type == type }
+        permissionOverwrites.firstOrNull { it.target == id && it.type == type }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildChannel
 

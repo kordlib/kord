@@ -2,6 +2,7 @@ package dev.kord.core.rest
 
 import dev.kord.common.Color
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.*
@@ -10,6 +11,7 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.createInvite
 import dev.kord.rest.Image
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.RestRequestException
@@ -364,6 +366,14 @@ class RestServiceTest {
             content = "hello world!"
         }
 
+        val message = webhook.execute(webhook.token!!) {
+            content = "a"
+        }
+
+        message.editWebhookMessage(webhook.id, webhook.token!!) {
+            content = "b"
+        }
+
         webhook.delete(reason = "test")
         Unit
     }
@@ -436,11 +446,50 @@ class RestServiceTest {
         val textChannel = guild.createTextChannel("move me to a category")
 
         guild.swapChannelPositions {
-            move(textChannel.id){ parentId = category.id }
+            move(textChannel.id) { parentId = category.id }
         }
 
         val currentTextChannel = guild.getChannelOf<TextChannel>(textChannel.id)
-        assertEquals(category.id,currentTextChannel.categoryId)
+        assertEquals(category.id, currentTextChannel.categoryId)
+    }
+
+    @OptIn(KordPreview::class)
+    fun `guild application commands`(): Unit = runBlocking {
+        val command = guild.createApplicationCommand("test", "automated test") {
+            group("test-group", "automated test") {
+                subCommand("test-sub-command", "automated test") {
+                    int("integer", "test choice") {
+                        choice("one", 1)
+                        choice("two", 2)
+                    }
+                }
+            }
+
+            subCommand("test-sub-command", "automated test") {
+                int("integer", "test choice")
+            }
+        }
+
+        assertEquals("test-group", command.name)
+        assertEquals("automated test", command.description)
+        assertEquals(1, command.subCommands.size)
+        assertEquals(1, command.groups.size)
+
+        assertEquals(1, command.subCommands.values.first().parameters.size)
+        val parameter = command.subCommands.values.first().parameters.values.first()
+        assertEquals(1, parameter.choices.size)
+        assertEquals("1", parameter.choices.values.first())
+
+        assertEquals("test-group", command.groups.values.first().name)
+        assertEquals("test-sub-command", command.subCommands.values.first().name)
+
+        val updated = command.edit {
+            description = "other description"
+        }
+
+        assertEquals("other description", updated.description)
+
+        updated.delete()
     }
 
     @Test

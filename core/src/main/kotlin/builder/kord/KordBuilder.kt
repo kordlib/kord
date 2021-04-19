@@ -2,7 +2,7 @@
 
 package dev.kord.core.builder.kord
 
-import com.gitlab.kordlib.cache.api.DataCache
+import dev.kord.cache.api.DataCache
 import dev.kord.common.ratelimit.BucketRateLimiter
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
@@ -42,7 +42,10 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.seconds
 
-operator fun DefaultGateway.Companion.invoke(resources: ClientResources, retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)): DefaultGateway {
+operator fun DefaultGateway.Companion.invoke(
+    resources: ClientResources,
+    retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)
+): DefaultGateway {
     return DefaultGateway {
         url = "wss://gateway.discord.gg/"
         client = resources.httpClient
@@ -54,20 +57,23 @@ operator fun DefaultGateway.Companion.invoke(resources: ClientResources, retry: 
 
 private val logger = KotlinLogging.logger { }
 
+data class Shards(val totalShards: Int, val indices: Iterable<Int> = 0 until totalShards)
+
 class KordBuilder(val token: String) {
-    private var shardRange: (recommended: Int) -> Iterable<Int> = { 0 until it }
-    private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> = { resources, shards ->
-        val rateLimiter = BucketRateLimiter(1, 5.seconds)
-        shards.map {
-            DefaultGateway {
-                client = resources.httpClient
-                identifyRateLimiter = rateLimiter
+    private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
+    private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
+        { resources, shards ->
+            val rateLimiter = BucketRateLimiter(1, 5.seconds)
+            shards.map {
+                DefaultGateway {
+                    client = resources.httpClient
+                    identifyRateLimiter = rateLimiter
+                }
             }
         }
-    }
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
-            { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter()) }
+        { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter()) }
     private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
 
     /**
@@ -77,12 +83,12 @@ class KordBuilder(val token: String) {
 
     /**
      * The event flow used by [Kord.eventFlow] to publish [events][Kord.events].
-     * 
+     *
      *
      * By default a [MutableSharedFlow] with an `extraBufferCapacity` of `Int.MAX_VALUE`.
      */
     var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(
-            extraBufferCapacity = Int.MAX_VALUE
+        extraBufferCapacity = Int.MAX_VALUE
     )
 
     /**
@@ -106,6 +112,7 @@ class KordBuilder(val token: String) {
      */
     var intents: Intents = Intents.nonPrivileged
 
+
     /**
      * Configures the shards this client will connect to, by default `0 until recommended`.
      * This can be used to break up to client into multiple processes.
@@ -123,8 +130,8 @@ class KordBuilder(val token: String) {
      *}
      * ```
      */
-    fun sharding(shardRange: (recommended: Int) -> Iterable<Int>) {
-        this.shardRange = shardRange
+    fun sharding(shards: (recommended: Int) -> Shards) {
+        this.shardsBuilder = shards
     }
 
     /**
@@ -141,7 +148,6 @@ class KordBuilder(val token: String) {
     fun gateways(gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway>) {
         this.gatewayBuilder = gatewayBuilder
     }
-
 
 
     /**
@@ -170,7 +176,9 @@ class KordBuilder(val token: String) {
      * }
      * ```
      */
+    @OptIn(ExperimentalContracts::class)
     fun cache(builder: KordCacheBuilder.(resources: ClientResources) -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val old = cacheBuilder
         cacheBuilder = { resources: ClientResources ->
             old(resources)
@@ -208,7 +216,8 @@ class KordBuilder(val token: String) {
         val client = httpClient.configure(token)
 
         val recommendedShards = client.getGatewayInfo().shards
-        val shards = shardRange(recommendedShards).toList()
+        val shardsInfo = shardsBuilder(recommendedShards)
+        val shards = shardsInfo.indices.toList()
 
         if (client.engine.config.threadsCount < shards.size + 1) {
             logger.warn {
@@ -218,15 +227,15 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token, shards.count(), client, defaultStrategy, intents)
+        val resources = ClientResources(token, shardsInfo, client, defaultStrategy, intents)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
         val gateway = run {
             val gateways = buildMap<Int, Gateway> {
                 val gateways = gatewayBuilder(resources, shards)
-                        .map { CachingGateway(cache.createView(), it) }
-                        .onEach { it.registerKordData() }
+                    .map { CachingGateway(cache.createView(), it) }
+                    .onEach { it.registerKordData() }
 
                 shards.forEachIndexed { index, shard ->
                     put(shard, gateways[index])
@@ -246,13 +255,13 @@ class KordBuilder(val token: String) {
         }
 
         return Kord(
-                resources,
-                cache,
-                gateway,
-                rest,
-                self,
-                eventFlow,
-                defaultDispatcher
+            resources,
+            cache,
+            gateway,
+            rest,
+            self,
+            eventFlow,
+            defaultDispatcher
         )
     }
 

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DiscordGuildWidget(
-        val enabled: Boolean,
-        @SerialName("channel_id")
-        val channelId: Snowflake?
+    val enabled: Boolean,
+    @SerialName("channel_id")
+    val channelId: Snowflake?
 )

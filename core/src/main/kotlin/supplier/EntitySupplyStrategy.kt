@@ -52,7 +52,7 @@ interface EntitySupplyStrategy<T : EntitySupplier> {
          * Create an [EntitySupplyStrategy] from the given [supplier].
          */
         operator fun <T : EntitySupplier> invoke(
-                supplier: (Kord) -> T
+            supplier: (Kord) -> T
         ): EntitySupplyStrategy<T> = object : EntitySupplyStrategy<T> {
             override fun supply(kord: Kord): T = supplier(kord)
         }

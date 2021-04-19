@@ -14,9 +14,9 @@ class EmojiCreateBuilder(var name: String, var image: Image) : AuditRequestBuild
     var roles: MutableSet<Snowflake> = mutableSetOf()
 
     override fun toRequest(): EmojiCreateRequest = EmojiCreateRequest(
-            name = name,
-            image = image.dataUri,
-            roles = roles
+        name = name,
+        image = image.dataUri,
+        roles = roles
     )
 
 }

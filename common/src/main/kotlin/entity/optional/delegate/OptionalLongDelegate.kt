@@ -7,29 +7,31 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 
-fun KMutableProperty0<OptionalLong>.delegate(): ReadWriteProperty<Any?, Long?> = object : ReadWriteProperty<Any?, Long?> {
+fun KMutableProperty0<OptionalLong>.delegate(): ReadWriteProperty<Any?, Long?> =
+    object : ReadWriteProperty<Any?, Long?> {
 
-    override fun getValue(thisRef: Any?, property: KProperty<*>): Long? {
-        return this@delegate.get().value
+        override fun getValue(thisRef: Any?, property: KProperty<*>): Long? {
+            return this@delegate.get().value
+        }
+
+        override fun setValue(thisRef: Any?, property: KProperty<*>, value: Long?) {
+            val optional = if (value == null) OptionalLong.Missing
+            else OptionalLong.Value(value)
+            this@delegate.set(optional)
+        }
+
     }
-
-    override fun setValue(thisRef: Any?, property: KProperty<*>, value: Long?) {
-        val optional = if (value == null) OptionalLong.Missing
-        else OptionalLong.Value(value)
-        this@delegate.set(optional)
-    }
-
-}
 
 @JvmName("provideNullableDelegate")
-fun KMutableProperty0<OptionalLong?>.delegate(): ReadWriteProperty<Any?, Long?> = object : ReadWriteProperty<Any?, Long?> {
+fun KMutableProperty0<OptionalLong?>.delegate(): ReadWriteProperty<Any?, Long?> =
+    object : ReadWriteProperty<Any?, Long?> {
 
-    override fun getValue(thisRef: Any?, property: KProperty<*>): Long? {
-        return this@delegate.get().value
+        override fun getValue(thisRef: Any?, property: KProperty<*>): Long? {
+            return this@delegate.get().value
+        }
+
+        override fun setValue(thisRef: Any?, property: KProperty<*>, value: Long?) {
+            this@delegate.set(value?.optional())
+        }
+
     }
-
-    override fun setValue(thisRef: Any?, property: KProperty<*>, value: Long?) {
-        this@delegate.set(value?.optional())
-    }
-
-}

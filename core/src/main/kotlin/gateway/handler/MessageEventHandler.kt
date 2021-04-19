@@ -1,8 +1,8 @@
 package dev.kord.core.gateway.handler
 
-import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.put
-import com.gitlab.kordlib.cache.api.query
+import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.put
+import dev.kord.cache.api.query
 import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.*
@@ -21,10 +21,10 @@ import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class MessageEventHandler(
-        kord: Kord,
-        gateway: MasterGateway,
-        cache: DataCache,
-        coreFlow: MutableSharedFlow<CoreEvent>
+    kord: Kord,
+    gateway: MasterGateway,
+    cache: DataCache,
+    coreFlow: MutableSharedFlow<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
@@ -94,7 +94,7 @@ internal class MessageEventHandler(
         query.remove()
 
         coreFlow.emit(
-                MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard)
+            MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard)
         )
     }
 
@@ -107,7 +107,7 @@ internal class MessageEventHandler(
         val ids = ids.asSequence().map { it }.toSet()
 
         coreFlow.emit(
-                MessageBulkDeleteEvent(ids, removed, channelId, guildId.value, kord, shard)
+            MessageBulkDeleteEvent(ids, removed, channelId, guildId.value, kord, shard)
         )
     }
 
@@ -143,15 +143,15 @@ internal class MessageEventHandler(
         }
 
         coreFlow.emit(
-                ReactionAddEvent(
-                        userId,
-                        channelId,
-                        messageId,
-                        guildId.value,
-                        reaction,
-                        kord,
-                        shard
-                )
+            ReactionAddEvent(
+                userId,
+                channelId,
+                messageId,
+                guildId.value,
+                reaction,
+                kord,
+                shard
+            )
         )
     }
 
@@ -185,15 +185,15 @@ internal class MessageEventHandler(
         }
 
         coreFlow.emit(
-                ReactionRemoveEvent(
-                        userId,
-                        channelId,
-                        messageId,
-                        guildId.value,
-                        reaction,
-                        kord,
-                        shard
-                )
+            ReactionRemoveEvent(
+                userId,
+                channelId,
+                messageId,
+                guildId.value,
+                reaction,
+                kord,
+                shard
+            )
         )
     }
 
@@ -201,19 +201,19 @@ internal class MessageEventHandler(
         cache.query<MessageData> { idEq(MessageData::id, messageId) }.update { it.copy(reactions = Optional.Missing()) }
 
         coreFlow.emit(
-                ReactionRemoveAllEvent(
-                        channelId,
-                        messageId,
-                        guildId.value,
-                        kord,
-                        shard
-                )
+            ReactionRemoveAllEvent(
+                channelId,
+                messageId,
+                guildId.value,
+                kord,
+                shard
+            )
         )
     }
 
     private suspend fun handle(event: MessageReactionRemoveEmoji, shard: Int) = with(event.reaction) {
         cache.query<MessageData> { idEq(MessageData::id, messageId) }
-                .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
+            .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
 
         val data = ReactionRemoveEmojiData.from(this)
         coreFlow.emit(ReactionRemoveEmojiEvent(data, kord, shard))

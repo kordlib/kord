@@ -23,7 +23,7 @@ class MemberAddBuilder(var token: String) : RequestBuilder<GuildMemberAddRequest
     var deafened: Boolean? by ::_deafened.delegate()
 
     override fun toRequest(): GuildMemberAddRequest = GuildMemberAddRequest(
-            token, _nickname, Optional.missingOnEmpty(roles), mute = _muted, deaf = _deafened
+        token, _nickname, Optional.missingOnEmpty(roles), mute = _muted, deaf = _deafened
     )
 
 }

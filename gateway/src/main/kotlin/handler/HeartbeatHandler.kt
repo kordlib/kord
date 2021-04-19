@@ -9,13 +9,13 @@ import kotlin.time.*
 
 @ObsoleteCoroutinesApi
 internal class HeartbeatHandler(
-        flow: Flow<Event>,
-        private val send: suspend (Command) -> Unit,
-        private val restart: suspend () -> Unit,
-        private val ping: (Duration) -> Unit,
-        private val sequence: Sequence,
-        private val ticker: Ticker = Ticker(),
-        private val timeSource: TimeSource = TimeSource.Monotonic
+    flow: Flow<Event>,
+    private val send: suspend (Command) -> Unit,
+    private val restart: suspend () -> Unit,
+    private val ping: (Duration) -> Unit,
+    private val sequence: Sequence,
+    private val ticker: Ticker = Ticker(),
+    private val timeSource: TimeSource = TimeSource.Monotonic
 ) : Handler(flow, "HeartbeatHandler") {
 
     private val possibleZombie = atomic(false)
@@ -23,7 +23,7 @@ internal class HeartbeatHandler(
 
     override fun start() {
         on<Event> {
-            possibleZombie.update { false }
+            setNoZombie()
         }
 
         on<Hello> { hello ->
@@ -31,7 +31,7 @@ internal class HeartbeatHandler(
                 if (possibleZombie.value) {
                     restart()
                 } else {
-                    possibleZombie.update { true }
+                    setPossibleZombie()
                     timestamp = timeSource.markNow()
                     send(Command.Heartbeat(sequence.value))
                 }
@@ -53,5 +53,16 @@ internal class HeartbeatHandler(
         on<Close> {
             ticker.stop()
         }
+    }
+
+
+    // https://github.com/Kotlin/kotlinx.atomicfu/issues/180
+    private fun setNoZombie() {
+        possibleZombie.update { false }
+    }
+
+    // https://github.com/Kotlin/kotlinx.atomicfu/issues/180
+    private fun setPossibleZombie() {
+        possibleZombie.update { true }
     }
 }

@@ -1,8 +1,8 @@
 package dev.kord.core.gateway.handler
 
-import com.gitlab.kordlib.cache.api.DataCache
-import com.gitlab.kordlib.cache.api.put
-import com.gitlab.kordlib.cache.api.query
+import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.put
+import dev.kord.cache.api.query
 import dev.kord.common.entity.optional.optional
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.*
@@ -21,10 +21,10 @@ import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class VoiceEventHandler(
-        kord: Kord,
-        gateway: MasterGateway,
-        cache: DataCache,
-        coreFlow: MutableSharedFlow<CoreEvent>
+    kord: Kord,
+    gateway: MasterGateway,
+    cache: DataCache,
+    coreFlow: MutableSharedFlow<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {
@@ -37,12 +37,12 @@ internal class VoiceEventHandler(
         val data = VoiceStateData.from(event.voiceState.guildId.value!!, event.voiceState)
 
         val old = cache.query<VoiceStateData> { idEq(VoiceStateData::id, data.id) }
-                .asFlow().map { VoiceState(it, kord) }.singleOrNull()
+            .asFlow().map { VoiceState(it, kord) }.singleOrNull()
 
         cache.put(data)
         val new = VoiceState(data, kord)
 
-        coreFlow.emit( VoiceStateUpdateEvent(old, new, shard))
+        coreFlow.emit(VoiceStateUpdateEvent(old, new, shard))
     }
 
     private suspend fun handle(event: VoiceServerUpdate, shard: Int) = with(event.voiceServerUpdateData) {

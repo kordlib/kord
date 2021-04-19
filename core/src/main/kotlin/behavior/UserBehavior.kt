@@ -12,7 +12,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.json.request.DMCreateRequest
-import dev.kord.rest.request.HttpStatus
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import io.ktor.http.*
@@ -21,7 +20,7 @@ import java.util.*
 /**
  * The behavior of a [Discord User](https://discord.com/developers/docs/resources/user)
  */
-interface UserBehavior : Entity, Strategizable {
+interface UserBehavior : KordEntity, Strategizable {
 
     val mention: String get() = "<@${id.asString}>"
 
@@ -86,7 +85,7 @@ interface UserBehavior : Entity, Strategizable {
     suspend fun getDmChannelOrNull(): DmChannel? {
         return try {
             getDmChannel()
-        }catch (exception: RestRequestException){
+        } catch (exception: RestRequestException) {
             val code = exception.error?.code
             when {
                 code == JsonErrorCode.CannotSendMessagesToUser -> null
@@ -102,24 +101,25 @@ interface UserBehavior : Entity, Strategizable {
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): UserBehavior = UserBehavior(id, kord, strategy)
+}
 
-    companion object {
-        internal operator fun invoke(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): UserBehavior = object : UserBehavior {
-            override val id: Snowflake = id
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
+fun UserBehavior(
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+): UserBehavior = object : UserBehavior {
+    override val id: Snowflake = id
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = Objects.hash(id)
 
-            override fun equals(other: Any?): Boolean = when(other) {
-                is UserBehavior -> other.id == id
-                else -> false
-            }
-
-            override fun toString(): String {
-                return "UserBehavior(id=$id, kord=kord, supplier=$supplier)"
-            }
-        }
+    override fun equals(other: Any?): Boolean = when (other) {
+        is UserBehavior -> other.id == id
+        else -> false
     }
 
+    override fun toString(): String {
+        return "UserBehavior(id=$id, kord=kord, supplier=$supplier)"
+    }
 }

@@ -30,12 +30,12 @@ class VoiceChannelCreateBuilder(var name: String) : AuditRequestBuilder<GuildCha
     val permissionOverwrites: MutableList<Overwrite> = mutableListOf()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
-            name = name,
-            bitrate = _bitrate,
-            userLimit = _userLimit,
-            parentId = _parentId,
-            position = _position,
-            permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
-            type = ChannelType.GuildVoice
+        name = name,
+        bitrate = _bitrate,
+        userLimit = _userLimit,
+        parentId = _parentId,
+        position = _position,
+        permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
+        type = ChannelType.GuildVoice
     )
 }

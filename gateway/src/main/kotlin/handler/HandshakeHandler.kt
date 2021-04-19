@@ -10,11 +10,11 @@ import kotlinx.atomicfu.update
 import kotlinx.coroutines.flow.Flow
 
 internal class HandshakeHandler(
-        flow: Flow<Event>,
-        private val send: suspend (Command) -> Unit,
-        private val sequence: Sequence,
-        private val identifyRateLimiter: RateLimiter,
-        private val reconnectRetry: Retry
+    flow: Flow<Event>,
+    private val send: suspend (Command) -> Unit,
+    private val sequence: Sequence,
+    private val identifyRateLimiter: RateLimiter,
+    private val reconnectRetry: Retry
 ) : Handler(flow, "HandshakeHandler") {
 
     lateinit var configuration: GatewayConfiguration

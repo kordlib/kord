@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FollowedChannelResponse(
-        @SerialName("channel_id")
-        val channelId: Snowflake,
-        @SerialName("webhook_id")
-        val webhookId: Snowflake
+    @SerialName("channel_id")
+    val channelId: Snowflake,
+    @SerialName("webhook_id")
+    val webhookId: Snowflake
 )

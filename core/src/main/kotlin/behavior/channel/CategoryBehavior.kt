@@ -61,43 +61,43 @@ interface CategoryBehavior : GuildChannelBehavior {
      */
     val channels: Flow<CategorizableChannel>
         get() = supplier.getGuildChannels(guildId)
-                .filterIsInstance<CategorizableChannel>()
-                .filter { it.categoryId == id }
+            .filterIsInstance<CategorizableChannel>()
+            .filter { it.categoryId == id }
 
 
     /**
      * Returns a new [CategoryBehavior] with the given [strategy].
      */
     override fun withStrategy(
-            strategy: EntitySupplyStrategy<*>,
+        strategy: EntitySupplyStrategy<*>,
     ): CategoryBehavior = CategoryBehavior(guildId, id, kord, strategy)
 
-    companion object {
-        internal operator fun invoke(
-                guildId: Snowflake,
-                id: Snowflake,
-                kord: Kord,
-                strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
-        ): CategoryBehavior = object : CategoryBehavior {
-            override val guildId: Snowflake = guildId
-            override val id: Snowflake = id
-            override val kord: Kord = kord
-            override val supplier: EntitySupplier = strategy.supply(kord)
+}
 
-            override fun hashCode(): Int = Objects.hash(id, guildId)
 
-            override fun equals(other: Any?): Boolean = when (other) {
-                is GuildChannelBehavior -> other.id == id && other.guildId == guildId
-                is ChannelBehavior -> other.id == id
-                else -> false
-            }
+fun CategoryBehavior(
+    guildId: Snowflake,
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+): CategoryBehavior = object : CategoryBehavior {
+    override val guildId: Snowflake = guildId
+    override val id: Snowflake = id
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
-            override fun toString(): String {
-                return "CategoryBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
-            }
+    override fun hashCode(): Int = Objects.hash(id, guildId)
 
-        }
+    override fun equals(other: Any?): Boolean = when (other) {
+        is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+        is ChannelBehavior -> other.id == id
+        else -> false
     }
+
+    override fun toString(): String {
+        return "CategoryBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
+    }
+
 }
 
 /**
@@ -106,7 +106,9 @@ interface CategoryBehavior : GuildChannelBehavior {
  * @return The edited [Category].
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@OptIn(ExperimentalContracts::class)
 suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Category {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchCategory(id, builder)
     val data = ChannelData.from(response)
 
@@ -122,7 +124,10 @@ suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Ca
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun CategoryBehavior.createTextChannel(name: String, builder: TextChannelCreateBuilder.() -> Unit = {}): TextChannel {
+suspend inline fun CategoryBehavior.createTextChannel(
+    name: String,
+    builder: TextChannelCreateBuilder.() -> Unit = {}
+): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -144,7 +149,10 @@ suspend inline fun CategoryBehavior.createTextChannel(name: String, builder: Tex
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun CategoryBehavior.createVoiceChannel(name: String, builder: VoiceChannelCreateBuilder.() -> Unit = {}): VoiceChannel {
+suspend inline fun CategoryBehavior.createVoiceChannel(
+    name: String,
+    builder: VoiceChannelCreateBuilder.() -> Unit = {}
+): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -165,7 +173,10 @@ suspend inline fun CategoryBehavior.createVoiceChannel(name: String, builder: Vo
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun CategoryBehavior.createNewsChannel(name: String, builder: NewsChannelCreateBuilder.() -> Unit = {}): NewsChannel {
+suspend inline fun CategoryBehavior.createNewsChannel(
+    name: String,
+    builder: NewsChannelCreateBuilder.() -> Unit = {}
+): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

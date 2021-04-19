@@ -13,11 +13,11 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.entity.channel.DmChannel
 
 class MessageCreateEvent(
-        val message: Message,
-        val guildId: Snowflake?,
-        val member: Member?,
-        override val shard: Int,
-        override val supplier: EntitySupplier = message.kord.defaultSupplier
+    val message: Message,
+    val guildId: Snowflake?,
+    val member: Member?,
+    override val shard: Int,
+    override val supplier: EntitySupplier = message.kord.defaultSupplier
 ) : Event, Strategizable {
     override val kord: Kord get() = message.kord
 
@@ -29,8 +29,8 @@ class MessageCreateEvent(
      */
     suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
-            MessageCreateEvent(message, guildId, member, shard, strategy.supply(message.kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageCreateEvent =
+        MessageCreateEvent(message, guildId, member, shard, strategy.supply(message.kord))
 
     override fun toString(): String {
         return "MessageCreateEvent(message=$message, guildId=$guildId, member=$member, shard=$shard, supplier=$supplier)"

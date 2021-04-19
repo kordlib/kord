@@ -45,3 +45,9 @@ class VoiceChannelCreateEvent(override val channel: VoiceChannel, override val s
         return "VoiceChannelCreateEvent(channel=$channel, shard=$shard)"
     }
 }
+
+class UnknownChannelCreateEvent(override val channel: Channel, override val shard: Int) : ChannelCreateEvent {
+    override fun toString(): String {
+        return "UnknownChannelCreateEvent(channel=$channel, shard=$shard)"
+    }
+}

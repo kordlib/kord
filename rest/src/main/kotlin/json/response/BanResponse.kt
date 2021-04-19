@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BanResponse(
-        val reason: String?,
-        val user: DiscordUser
+    val reason: String?,
+    val user: DiscordUser
 )

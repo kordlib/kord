@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class ChannelFollowRequest(
-        @SerialName("webhook_channel_id")
-        val webhookChannelId: String
+    @SerialName("webhook_channel_id")
+    val webhookChannelId: String
 )

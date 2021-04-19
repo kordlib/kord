@@ -18,23 +18,23 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 
-
 @DeprecatedSinceKord("0.7.0")
 @Deprecated("Renamed to MembersChunkEvent", ReplaceWith("MembersChunkEvent"), DeprecationLevel.ERROR)
 typealias MemberChunksEvent = MembersChunkEvent
 
 class MembersChunkEvent(
-        val data: MembersChunkData,
-        override val kord: Kord,
-        override val shard: Int,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    val data: MembersChunkData,
+    override val kord: Kord,
+    override val shard: Int,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
     val guildId: Snowflake get() = data.guildId
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    val members: Set<Member> get() = data.members.zip(data.users)
+    val members: Set<Member>
+        get() = data.members.zip(data.users)
             .map { (member, user) -> Member(member, user, kord) }
             .toSet()
 
@@ -53,7 +53,7 @@ class MembersChunkEvent(
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MembersChunkEvent =
-            MembersChunkEvent(data, kord, shard, strategy.supply(kord))
+        MembersChunkEvent(data, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "MemberChunksEvent(guildId=$guildId, members=$members, kord=$kord, shard=$shard, supplier=$supplier)"

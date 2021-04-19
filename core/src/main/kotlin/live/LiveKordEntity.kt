@@ -2,7 +2,7 @@ package dev.kord.core.live
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
-import dev.kord.core.entity.Entity
+import dev.kord.core.entity.KordEntity
 import dev.kord.core.event.Event
 import dev.kord.core.event.message.MessageUpdateEvent
 import dev.kord.core.event.message.ReactionAddEvent
@@ -22,23 +22,23 @@ import kotlinx.coroutines.sync.withLock
  * [reactions][ReactionAddEvent] to that message.
  */
 @KordPreview
-interface LiveEntity : Entity {
+interface LiveKordEntity : KordEntity {
     val events: Flow<Event>
 
     fun shutDown()
 }
 
 @KordPreview
-abstract class AbstractLiveEntity : LiveEntity {
+abstract class AbstractLiveKordEntity : LiveKordEntity {
     private val mutex = Mutex()
     private val running = atomic(true)
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     override val events: Flow<Event>
         get() = kord.events
-                .takeWhile { running.value }
-                .filter { filter(it) }
-                .onEach { mutex.withLock { update(it) } }
+            .takeWhile { running.value }
+            .filter { filter(it) }
+            .onEach { mutex.withLock { update(it) } }
 
     protected abstract fun filter(event: Event): Boolean
     protected abstract fun update(event: Event)
@@ -51,9 +51,9 @@ abstract class AbstractLiveEntity : LiveEntity {
  * or [Kord] by default and will not propagate any exceptions.
  */
 @KordPreview
-inline fun <reified T : Event> LiveEntity.on(scope: CoroutineScope = kord, noinline consumer: suspend (T) -> Unit) =
-        events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
-            runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
-        }.catch { kordLogger.catching(it) }.launchIn(scope)
+inline fun <reified T : Event> LiveKordEntity.on(scope: CoroutineScope = kord, noinline consumer: suspend (T) -> Unit) =
+    events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
+        runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
+    }.catch { kordLogger.catching(it) }.launchIn(scope)
 
 

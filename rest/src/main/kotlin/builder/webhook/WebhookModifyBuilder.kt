@@ -11,21 +11,21 @@ import dev.kord.rest.Image
 import dev.kord.rest.json.request.WebhookModifyRequest
 
 @KordDsl
-class WebhookModifyBuilder: AuditRequestBuilder<WebhookModifyRequest> {
+class WebhookModifyBuilder : AuditRequestBuilder<WebhookModifyRequest> {
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
-    private var _avatar: Optional<Image> = Optional.Missing()
+    private var _avatar: Optional<Image?> = Optional.Missing()
     var avatar: Image? by ::_avatar.delegate()
 
     private var _channelId: OptionalSnowflake = OptionalSnowflake.Missing
     var channelId: Snowflake? by ::_channelId.delegate()
 
     override fun toRequest(): WebhookModifyRequest = WebhookModifyRequest(
-            name = _name,
-            avatar = _avatar.map { it.dataUri },
-            channelId = _channelId
+        name = _name,
+        avatar = _avatar.map { it.dataUri },
+        channelId = _channelId
     )
 }

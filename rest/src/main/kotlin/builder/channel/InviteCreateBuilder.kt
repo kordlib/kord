@@ -20,24 +20,28 @@ class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
     var age: Int? by ::_age.delegate()
 
     private var _uses: OptionalInt = OptionalInt.Missing
+
     /**
      * The maximum number of uses, or 0 for unlimited. 0 by default.
      */
     var uses: Int? by ::_uses.delegate()
 
     private var _temporary: OptionalBoolean = OptionalBoolean.Missing
+
     /**
      * 	Whether this invite only grants temporary membership. False by default.
      */
     var temporary: Boolean? by ::_temporary.delegate()
 
     private var _unique: OptionalBoolean = OptionalBoolean.Missing
+
     /**
      * Whether to reuse a similar invite (useful for creating many unique one time use invites). False by default.
      */
     var unique: Boolean? by ::_unique.delegate()
 
     private var _targetUser: OptionalSnowflake = OptionalSnowflake.Missing
+
     /**
      * The target user id for this invite.
      */
@@ -47,12 +51,12 @@ class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
     override var reason: String? by ::_reason.delegate()
 
     override fun toRequest(): InviteCreateRequest = InviteCreateRequest(
-            temporary = _temporary,
-            age = _age,
-            unique = _unique,
-            uses = _uses,
-            targetUser = _targetUser,
-            targetUserType = _targetUser.map { TargetUserType.Stream }
+        temporary = _temporary,
+        age = _age,
+        unique = _unique,
+        uses = _uses,
+        targetUser = _targetUser,
+        targetUserType = _targetUser.map { TargetUserType.Stream }
     )
 }
 

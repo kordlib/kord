@@ -12,24 +12,24 @@ import kotlinx.serialization.json.*
 
 @Serializable
 data class DiscordPresenceUpdate(
-        val user: DiscordPresenceUser,
-        /*
-        Don't trust the docs:
-        2020-11-05: Discord documentation incorrectly claims this field is non-optional,
-        yet it is not present during the READY event.
-        */
-        @SerialName("guild_id")
-        val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-        val status: PresenceStatus,
-        val activities: List<DiscordActivity>,
-        @SerialName("client_status")
-        val clientStatus: DiscordClientStatus,
+    val user: DiscordPresenceUser,
+    /*
+    Don't trust the docs:
+    2020-11-05: Discord documentation incorrectly claims this field is non-optional,
+    yet it is not present during the READY event.
+    */
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val status: PresenceStatus,
+    val activities: List<DiscordActivity>,
+    @SerialName("client_status")
+    val clientStatus: DiscordClientStatus,
 )
 
 @Serializable(with = DiscordPresenceUser.Serializer::class)
 data class DiscordPresenceUser(
-        val id: Snowflake,
-        val details: JsonObject,
+    val id: Snowflake,
+    val details: JsonObject,
 ) {
 
     internal object Serializer : KSerializer<DiscordPresenceUser> {
@@ -62,9 +62,9 @@ data class DiscordPresenceUser(
 
 @Serializable
 data class DiscordClientStatus(
-        val desktop: Optional<PresenceStatus> = Optional.Missing(),
-        val mobile: Optional<PresenceStatus> = Optional.Missing(),
-        val web: Optional<PresenceStatus> = Optional.Missing(),
+    val desktop: Optional<PresenceStatus> = Optional.Missing(),
+    val mobile: Optional<PresenceStatus> = Optional.Missing(),
+    val web: Optional<PresenceStatus> = Optional.Missing(),
 )
 
 @Serializable(with = PresenceStatus.StatusSerializer::class)
@@ -75,7 +75,7 @@ sealed class PresenceStatus(val value: String) {
     object Idle : PresenceStatus("idle")
     object DoNotDisturb : PresenceStatus("dnd")
     object Offline : PresenceStatus("offline")
-    object Invisible: PresenceStatus("invisible")
+    object Invisible : PresenceStatus("invisible")
 
     companion object StatusSerializer : KSerializer<PresenceStatus> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Kord.ClientStatus", PrimitiveKind.STRING)

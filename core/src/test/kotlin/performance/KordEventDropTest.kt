@@ -1,9 +1,10 @@
 package dev.kord.core.performance
 
-import com.gitlab.kordlib.cache.api.DataCache
+import dev.kord.cache.api.DataCache
 import dev.kord.common.entity.*
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
+import dev.kord.core.builder.kord.Shards
 import dev.kord.core.event.guild.GuildCreateEvent
 import dev.kord.core.gateway.MasterGateway
 import dev.kord.core.on
@@ -46,7 +47,7 @@ class KordEventDropTest {
     }
 
     val kord = Kord(
-            resources = ClientResources("token", 1, HttpClient(), EntitySupplyStrategy.cache, Intents.none),
+            resources = ClientResources("token", Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
             cache = DataCache.none(),
             MasterGateway(mapOf(0 to SpammyGateway)),
             RestClient(KtorRequestHandler("token", clock = Clock.systemUTC())),

@@ -1,4 +1,4 @@
-import com.gitlab.kordlib.cache.api.put
+import dev.kord.cache.api.put
 import dev.kord.core.Kord
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.runBlocking
