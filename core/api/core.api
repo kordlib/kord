@@ -1,54 +1,3 @@
-public abstract interface class behavior/interaction/EphemeralInteractionResponseBehavior : dev/kord/core/behavior/interaction/InteractionResponseBehavior {
-}
-
-public final class behavior/interaction/EphemeralInteractionResponseBehaviorKt {
-	public static final fun edit (Lbehavior/interaction/EphemeralInteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public abstract interface class behavior/interaction/InteractionBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
-	public abstract fun acknowledgeEphemeral (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun ackowledgePublic (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
-	public abstract fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
-	public abstract fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getChannelId ()Ldev/kord/common/entity/Snowflake;
-	public abstract fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getToken ()Ljava/lang/String;
-	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Lbehavior/interaction/InteractionBehavior;
-}
-
-public final class behavior/interaction/InteractionBehavior$DefaultImpls {
-	public static fun acknowledgeEphemeral (Lbehavior/interaction/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun ackowledgePublic (Lbehavior/interaction/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun compareTo (Lbehavior/interaction/InteractionBehavior;Ldev/kord/core/entity/Entity;)I
-	public static fun getChannel (Lbehavior/interaction/InteractionBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
-	public static fun getChannel (Lbehavior/interaction/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getChannelOrNull (Lbehavior/interaction/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun withStrategy (Lbehavior/interaction/InteractionBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Lbehavior/interaction/InteractionBehavior;
-}
-
-public final class behavior/interaction/InteractionBehaviorKt {
-	public static final fun InteractionBehavior (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;)Lbehavior/interaction/InteractionBehavior;
-	public static synthetic fun InteractionBehavior$default (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;ILjava/lang/Object;)Lbehavior/interaction/InteractionBehavior;
-	public static final fun respondEphemeral (Lbehavior/interaction/InteractionBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun respondEphemeral$default (Lbehavior/interaction/InteractionBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static final fun respondPublic (Lbehavior/interaction/InteractionBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public abstract interface class behavior/interaction/PublicInteractionResponseBehavior : dev/kord/core/behavior/interaction/InteractionResponseBehavior {
-	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class behavior/interaction/PublicInteractionResponseBehavior$DefaultImpls {
-	public static fun delete (Lbehavior/interaction/PublicInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class behavior/interaction/PublicInteractionResponseBehaviorKt {
-	public static final fun PublicInteractionResponseBehavior (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Lbehavior/interaction/PublicInteractionResponseBehavior;
-	public static final fun edit (Lbehavior/interaction/PublicInteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun followUp (Lbehavior/interaction/PublicInteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public final class dev/kord/core/ClientResources {
 	public fun <init> (Ljava/lang/String;Ldev/kord/core/builder/kord/Shards;Lio/ktor/client/HttpClient;Ldev/kord/core/supplier/EntitySupplyStrategy;Ldev/kord/gateway/Intents;)V
 	public final fun getDefaultStrategy ()Ldev/kord/core/supplier/EntitySupplyStrategy;
@@ -190,14 +139,6 @@ public abstract interface class dev/kord/core/behavior/ApplicationCommandBehavio
 
 public final class dev/kord/core/behavior/ApplicationCommandBehavior$DefaultImpls {
 	public static fun compareTo (Ldev/kord/core/behavior/ApplicationCommandBehavior;Ldev/kord/core/entity/Entity;)I
-}
-
-public abstract interface class dev/kord/core/behavior/EphemeralInteractionResponseBehavior : dev/kord/core/behavior/InteractionResponseBehavior {
-}
-
-public final class dev/kord/core/behavior/EphemeralInteractionResponseBehaviorKt {
-	public static final fun EphemeralInteractionResponseBehavior (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/behavior/EphemeralInteractionResponseBehavior;
-	public static final fun edit (Ldev/kord/core/behavior/EphemeralInteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/GlobalApplicationCommandBehavior : dev/kord/core/behavior/ApplicationCommandBehavior {
@@ -411,64 +352,6 @@ public final class dev/kord/core/behavior/GuildInteractionBehavior$DefaultImpls 
 	public static fun getGuild (Ldev/kord/core/behavior/GuildInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getGuildOrNull (Ldev/kord/core/behavior/GuildInteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/GuildInteractionBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
-}
-
-public abstract interface class dev/kord/core/behavior/InteractionBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
-	public abstract fun acknowledgeEphemeral (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun ackowledgePublic (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
-	public abstract fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getChannelId ()Ldev/kord/common/entity/Snowflake;
-	public abstract fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getToken ()Ljava/lang/String;
-	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/InteractionBehavior;
-}
-
-public final class dev/kord/core/behavior/InteractionBehavior$DefaultImpls {
-	public static fun acknowledgeEphemeral (Ldev/kord/core/behavior/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun ackowledgePublic (Ldev/kord/core/behavior/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun compareTo (Ldev/kord/core/behavior/InteractionBehavior;Ldev/kord/core/entity/Entity;)I
-	public static fun getChannel (Ldev/kord/core/behavior/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getChannelOrNull (Ldev/kord/core/behavior/InteractionBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun withStrategy (Ldev/kord/core/behavior/InteractionBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/InteractionBehavior;
-}
-
-public final class dev/kord/core/behavior/InteractionBehaviorKt {
-	public static final fun InteractionBehavior (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/InteractionBehavior;
-	public static synthetic fun InteractionBehavior$default (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;ILjava/lang/Object;)Ldev/kord/core/behavior/InteractionBehavior;
-	public static final fun respondEphemeral (Ldev/kord/core/behavior/InteractionBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun respondEphemeral$default (Ldev/kord/core/behavior/InteractionBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static final fun respondPublic (Ldev/kord/core/behavior/InteractionBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public abstract interface class dev/kord/core/behavior/InteractionFollowupBehavior : dev/kord/core/entity/KordEntity {
-	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
-	public abstract fun getChannelId ()Ldev/kord/common/entity/Snowflake;
-	public abstract fun getToken ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/behavior/InteractionFollowupBehavior$DefaultImpls {
-	public static fun compareTo (Ldev/kord/core/behavior/InteractionFollowupBehavior;Ldev/kord/core/entity/Entity;)I
-	public static fun delete (Ldev/kord/core/behavior/InteractionFollowupBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class dev/kord/core/behavior/InteractionFollowupBehaviorKt {
-	public static final fun InteractionFollowupBehavior (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/behavior/InteractionFollowupBehavior;
-	public static final fun edit (Ldev/kord/core/behavior/InteractionFollowupBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public abstract interface class dev/kord/core/behavior/InteractionResponseBehavior : dev/kord/core/KordObject {
-	public abstract fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
-	public abstract fun getToken ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/behavior/InteractionResponseBehavior$DefaultImpls {
-	public static fun delete (Ldev/kord/core/behavior/InteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class dev/kord/core/behavior/InteractionResponseBehaviorKt {
-	public static final fun followUp (Ldev/kord/core/behavior/InteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/MemberBehavior : dev/kord/core/behavior/UserBehavior, dev/kord/core/entity/KordEntity {
@@ -898,19 +781,6 @@ public final class dev/kord/core/behavior/channel/NewsChannelBehaviorKt {
 	public static final fun edit (Ldev/kord/core/behavior/channel/NewsChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface class dev/kord/core/behavior/channel/PublicInteractionResponseBehavior : dev/kord/core/behavior/InteractionResponseBehavior {
-	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class dev/kord/core/behavior/channel/PublicInteractionResponseBehavior$DefaultImpls {
-	public static fun delete (Ldev/kord/core/behavior/channel/PublicInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class dev/kord/core/behavior/channel/PublicInteractionResponseBehaviorKt {
-	public static final fun PublicInteractionResponseBehavior (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/behavior/channel/PublicInteractionResponseBehavior;
-	public static final fun edit (Ldev/kord/core/behavior/channel/PublicInteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public abstract interface class dev/kord/core/behavior/channel/StoreChannelBehavior : dev/kord/core/behavior/channel/GuildChannelBehavior {
 	public abstract fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1023,23 +893,6 @@ public final class dev/kord/core/behavior/interaction/EphemeralFollowupMessageBe
 public final class dev/kord/core/behavior/interaction/EphemeralFollowupMessageBehaviorKt {
 	public static final fun EphemeralFollowupMessageBehavior (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)Ldev/kord/core/behavior/interaction/EphemeralFollowupMessageBehavior;
 	public static final fun edit (Ldev/kord/core/behavior/interaction/EphemeralFollowupMessageBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public abstract interface class dev/kord/core/behavior/interaction/EphemeralInteractionAcknowledgementBehavior : behavior/interaction/EphemeralInteractionResponseBehavior {
-}
-
-public final class dev/kord/core/behavior/interaction/EphemeralInteractionAcknowledgementBehaviorKt {
-	public static final fun EphemeralInteractionAcknowledgementBehavior (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/behavior/interaction/EphemeralInteractionAcknowledgementBehavior;
-	public static final fun followUp (Ldev/kord/core/behavior/interaction/EphemeralInteractionAcknowledgementBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun followUp$default (Ldev/kord/core/behavior/interaction/EphemeralInteractionAcknowledgementBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-}
-
-public abstract interface class dev/kord/core/behavior/interaction/EphemeralInteractionRespondBehavior : behavior/interaction/EphemeralInteractionResponseBehavior {
-}
-
-public final class dev/kord/core/behavior/interaction/EphemeralInteractionRespondBehaviorKt {
-	public static final fun EphemeralInteractionRespondBehavior (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/behavior/interaction/EphemeralInteractionRespondBehavior;
-	public static final fun followUp (Ldev/kord/core/behavior/interaction/EphemeralInteractionRespondBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/EphemeralInteractionResponseBehavior : dev/kord/core/behavior/interaction/InteractionResponseBehavior {
