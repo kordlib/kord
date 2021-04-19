@@ -773,10 +773,6 @@ public final class dev/kord/common/entity/ChannelType$GuildNews : dev/kord/commo
 	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildNews;
 }
 
-public final class dev/kord/common/entity/ChannelType$GuildStageVoice : dev/kord/common/entity/ChannelType {
-	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildStageVoice;
-}
-
 public final class dev/kord/common/entity/ChannelType$GuildStore : dev/kord/common/entity/ChannelType {
 	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildStore;
 }
@@ -4882,10 +4878,6 @@ public final class dev/kord/common/entity/Permission$PrioritySpeaker : dev/kord/
 
 public final class dev/kord/common/entity/Permission$ReadMessageHistory : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$ReadMessageHistory;
-}
-
-public final class dev/kord/common/entity/Permission$RequestToSpeak : dev/kord/common/entity/Permission {
-	public static final field INSTANCE Ldev/kord/common/entity/Permission$RequestToSpeak;
 }
 
 public final class dev/kord/common/entity/Permission$SendMessages : dev/kord/common/entity/Permission {
