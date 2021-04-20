@@ -4,6 +4,8 @@ name: Kotlin CI
 
 on:
   push:
+    tags-ignore:
+      - '**' # We don't want this to run on tags pushes
   pull_request:
   release:
     types: [published]
@@ -39,7 +41,7 @@ jobs:
     if: |
       !contains(github.event.head_commit.message, '[publish skip]') && !contains(github.event.pull_request.title, '[publish skip]')
       && github.event_name != 'pull_request' &&  github.ref != 'refs/heads/master'
-      && !contains(github.ref, 'refs/tags/')
+
     needs: build
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
