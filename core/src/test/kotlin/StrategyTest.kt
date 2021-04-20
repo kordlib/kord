@@ -2,10 +2,7 @@ import dev.kord.cache.api.put
 import dev.kord.core.Kord
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Disabled
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -23,26 +20,27 @@ class StrategyTest {
     }
 
     @Test
+    @Order(1)
     fun `rest only`() = runBlocking {
-        kord.with(EntitySupplyStrategy.rest).getSelf()
+        val fromRest = kord.with(EntitySupplyStrategy.rest).getSelfOrNull()
         val inCache = kord.with(EntitySupplyStrategy.cache).getSelfOrNull()
         assertNull(inCache)
+        assertNotNull(fromRest)
     }
 
     @Test
-    @Disabled
+    @Order(3)
     fun `cache only`() = runBlocking {
-        val self = kord.with(EntitySupplyStrategy.rest).getSelf()
-        kord.cache.put(self.data)
 
-        val inCache = kord.with(EntitySupplyStrategy.cache).getSelf()
-        assertEquals(self, inCache)
+        val inCache = kord.with(EntitySupplyStrategy.cache).getSelfOrNull()
+        assertNotNull(inCache)
     }
 
     @Test
+    @Order(2)
     fun `cache falls back to rest`() = runBlocking {
         val cache = kord.with(EntitySupplyStrategy.cache)
-        val inCache = cache.getSelf()
+        val inCache = cache.getSelfOrNull()
 
         assertNull(inCache)
 
