@@ -33,7 +33,7 @@ fun imageBinary(path: String): Image {
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
+@EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
 class RestServiceTest {
 
     private val publicGuildId = Snowflake(322850917248663552)

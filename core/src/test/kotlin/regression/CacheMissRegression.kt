@@ -114,7 +114,7 @@ class CrashingHandler(val client: HttpClient) : RequestHandler {
     }
 }
 
-@EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
+@EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
 class CacheMissingRegressions {
     lateinit var kord: Kord
 

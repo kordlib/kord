@@ -12,7 +12,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Disabled
+@EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
 class StrategyTest {
 
     lateinit var kord: Kord
@@ -23,7 +23,6 @@ class StrategyTest {
     }
 
     @Test
-    @EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
     fun `rest only`() = runBlocking {
         kord.with(EntitySupplyStrategy.rest).getSelf()
         val inCache = kord.with(EntitySupplyStrategy.cache).getSelfOrNull()
@@ -41,7 +40,6 @@ class StrategyTest {
     }
 
     @Test
-    @EnabledIfEnvironmentVariable(named = "TARGET_BRANCH", matches = "master")
     fun `cache falls back to rest`() = runBlocking {
         val cache = kord.with(EntitySupplyStrategy.cache)
         val inCache = cache.getSelf()
