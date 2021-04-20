@@ -494,7 +494,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun getVanityUrl(): String? {
-        val identifier = catchDiscordError(JsonErrorCode.InviteCodeInvalidOrTaken) {
+        val identifier = catchDiscordError(JsonErrorCode.InviteCodeInvalidOrTaken, JsonErrorCode.MissingAccess) {
             kord.rest.guild.getVanityInvite(id).code
         } ?: return null
         return "https://discord.gg/$identifier"
@@ -935,8 +935,8 @@ suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builde
     }
 
     kord.slashCommands.bulkEditApplicationCommandPermissions(
-            kord.selfId,
-            id,
-            builder
+        kord.selfId,
+        id,
+        builder
     )
 }

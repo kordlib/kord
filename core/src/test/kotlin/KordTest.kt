@@ -5,8 +5,10 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import java.util.concurrent.CountDownLatch
 
+@EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
 internal class KordTest {
 
     @Test

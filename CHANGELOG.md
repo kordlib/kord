@@ -1,3 +1,9 @@
+# 0.7.0-RC3
+
+## Fixes
+
+* Unhandled missing access when trying to get vanity url with the feature disabled. #264
+
 # 0.7.0-RC2
 
 ## Additions
