@@ -1,3 +1,9 @@
+# 0.7.0-RC3
+
+## Fixes
+
+* Unhandled missing access in case of a disabled invite feature. #264
+
 # 0.7.0-RC2
 
 ## Additions
