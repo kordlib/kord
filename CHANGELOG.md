@@ -2,7 +2,7 @@
 
 ## Fixes
 
-* Unhandled missing access in case of a disabled invite feature. #264
+* Unhandled missing access when trying to get vanity url with the feature disabled. #264
 
 # 0.7.0-RC2
 
