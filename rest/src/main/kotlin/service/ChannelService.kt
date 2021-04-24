@@ -252,6 +252,18 @@ suspend inline fun ChannelService.patchVoiceChannel(
     return patchChannel(channelId, VoiceChannelModifyBuilder().apply(builder).toRequest())
 }
 
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun ChannelService.patchStageVoiceChannel(
+    channelId: Snowflake,
+    builder: StageVoiceChannelModifyBuilder.() -> Unit
+): DiscordChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    return patchChannel(channelId, StageVoiceChannelModifyBuilder().apply(builder).toRequest())
+}
+
 @OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.patchStoreChannel(
     channelId: Snowflake,
