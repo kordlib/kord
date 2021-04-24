@@ -16,8 +16,14 @@ class CurrentVoiceStateModifyBuilder(val channelId: Snowflake) : RequestBuilder<
 
     private var _suppress: OptionalBoolean = OptionalBoolean.Missing
 
+    /**
+     * sets the user's request to speak.
+     */
     var requestToSpeakTimestamp: LocalDateTime? by ::_requestToSpeakTimestamp.delegate()
 
+    /**
+     *  whether this user is muted by the current user.
+     */
     var suppress: Boolean? by ::_suppress.delegate()
 
 
@@ -31,6 +37,9 @@ class VoiceStateModifyBuilder(val channelId: Snowflake) : RequestBuilder<VoiceSt
 
     private var _suppress: OptionalBoolean = OptionalBoolean.Missing
 
+    /**
+     *  whether this user is muted by the current user.
+     */
     var suppress: Boolean? by ::_suppress.delegate()
 
     override fun toRequest(): VoiceStateModifyRequest {

@@ -10,6 +10,10 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
 
+/**
+ * An instance of a [Discord Stage Channel](https://support.discord.com/hc/en-us/articles/1500005513722)
+ * associated to a community guild.
+ */
 class StageChannel(
     override val data: ChannelData,
     override val kord: Kord,
