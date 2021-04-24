@@ -1,6 +1,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.DiscordBitSet
+import dev.kord.common.EmptyBitSet
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -18,7 +19,7 @@ class Permissions constructor(val code: DiscordBitSet) {
     /**
      *  Returns this [Permissions] as a [Set] of [Permission]
      */
-    val values =  Permission.values.filter { it.code in code }.toSet()
+    val values = Permission.values.filter { it.code in code }.toSet()
 
     operator fun plus(permission: Permission): Permissions = Permissions(code + permission.code)
 
@@ -153,7 +154,8 @@ sealed class Permission(val code: DiscordBitSet) {
     object ManageWebhooks : Permission(0x20000000)
     object ManageEmojis : Permission(0x40000000)
     object UseSlashCommands : Permission(0x80000000)
-    object All : Permission(0xFFFFFDFF)
+    object RequestToSpeak : Permission(0x100000000)
+    object All : Permission(Permission.values.fold(EmptyBitSet()) { acc, value -> acc + value.code })
 
     companion object {
         val values: Set<Permission>
@@ -189,6 +191,7 @@ sealed class Permission(val code: DiscordBitSet) {
                 ManageWebhooks,
                 ManageEmojis,
                 UseSlashCommands,
+                RequestToSpeak
             )
     }
 }
