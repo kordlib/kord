@@ -25,17 +25,6 @@ interface StageChannelBehavior : BaseVoiceChannelBehavior {
         return StageChannelBehavior(id, guildId, kord, strategy.supply(kord))
     }
 
-    fun StageChannelBehavior(
-        id: Snowflake,
-        guildId: Snowflake,
-        kord: Kord,
-        supplier: EntitySupplier = kord.defaultSupplier
-    ): StageChannelBehavior = object : StageChannelBehavior {
-        override val guildId: Snowflake get() = guildId
-        override val id: Snowflake get() = id
-        override val kord get() = kord
-        override val supplier get() = supplier
-    }
 }
 
 @OptIn(ExperimentalContracts::class)
