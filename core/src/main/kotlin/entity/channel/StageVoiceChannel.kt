@@ -45,6 +45,6 @@ class StageChannel(
     }
 
     override fun toString(): String {
-        return "VoiceChannel(data=$data, kord=$kord, supplier=$supplier)"
+        return "StageChannel(data=$data, kord=$kord, supplier=$supplier)"
     }
 }
