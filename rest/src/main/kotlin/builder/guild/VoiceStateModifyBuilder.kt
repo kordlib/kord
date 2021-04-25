@@ -8,18 +8,18 @@ import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.CurrentVoiceStateModifyRequest
 import dev.kord.rest.json.request.VoiceStateModifyRequest
-import java.time.LocalDateTime
+import java.time.OffsetDateTime
 
 class CurrentVoiceStateModifyBuilder(val channelId: Snowflake) : RequestBuilder<CurrentVoiceStateModifyRequest> {
 
-    private var _requestToSpeakTimestamp: Optional<LocalDateTime> = Optional.Missing()
+    private var _requestToSpeakTimestamp: Optional<OffsetDateTime> = Optional.Missing()
 
     private var _suppress: OptionalBoolean = OptionalBoolean.Missing
 
     /**
      * sets the user's request to speak.
      */
-    var requestToSpeakTimestamp: LocalDateTime? by ::_requestToSpeakTimestamp.delegate()
+    var requestToSpeakTimestamp: OffsetDateTime? by ::_requestToSpeakTimestamp.delegate()
 
     /**
      *  whether this user is muted by the current user.
