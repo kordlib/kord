@@ -54,26 +54,30 @@ data class RateLimit(val total: Total, val remaining: Remaining) {
     companion object
 }
 
-inline class Total(val value: Long) {
+@JvmInline
+value class Total(val value: Long) {
     companion object
 }
 
 
-inline class Remaining(val value: Long) {
+@JvmInline
+value class Remaining(val value: Long) {
     companion object
 }
 
 /**
  * The unique identifier of this bucket.
  */
-inline class BucketKey(val value: String) {
+@JvmInline
+value class BucketKey(val value: String) {
     companion object
 }
 
 /**
  * The [instant][value] when the current bucket gets reset.
  */
-inline class Reset(val value: Instant) {
+@JvmInline
+value class Reset(val value: Instant) {
     companion object
 }
 

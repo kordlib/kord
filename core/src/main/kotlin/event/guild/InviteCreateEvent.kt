@@ -87,7 +87,7 @@ class InviteCreateEvent(
     /**
      * How long the invite is valid for (in seconds).
      */
-    val maxAge: Duration get() = data.maxAge.seconds
+    val maxAge: Duration get() = Duration.seconds(data.maxAge)
 
     /**
      * The maximum number of times the invite can be used.

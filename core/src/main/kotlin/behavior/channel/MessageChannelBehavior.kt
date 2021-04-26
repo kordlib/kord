@@ -26,7 +26,6 @@ import kotlin.contracts.contract
 import kotlin.coroutines.coroutineContext
 import kotlin.time.Duration
 import kotlin.time.TimeMark
-import kotlin.time.seconds
 
 /**
  * The behavior of a Discord channel that can use messages.
