@@ -4,6 +4,8 @@ name: Kotlin CI
 
 on:
   push:
+    branches:
+      - '**' # We want to run this on all branch pushes
     tags-ignore:
       - '**' # We don't want this to run on tags pushes
   pull_request:
