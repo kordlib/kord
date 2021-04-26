@@ -11,15 +11,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import mu.KLogger
 import java.time.Clock
+import kotlin.time.Duration as KDuration
 import java.time.Duration
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.time.minutes
 
 
 abstract class AbstractRateLimiter internal constructor(val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
 
-    internal val autoBanRateLimiter = BucketRateLimiter(25000, 10.minutes)
+    internal val autoBanRateLimiter = BucketRateLimiter(25000, KDuration.minutes(10))
     internal val globalSuspensionPoint = atomic(Reset(clock.instant()))
     internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
     internal val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()

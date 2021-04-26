@@ -38,7 +38,7 @@ repositories {
 }
 
 dependencies {
-    api(Dependencies.jdk8)
+//    api(Dependencies.jdk8)
 }
 
 group = Library.group
