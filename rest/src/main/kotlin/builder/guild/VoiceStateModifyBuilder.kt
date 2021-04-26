@@ -23,8 +23,8 @@ class CurrentVoiceStateModifyBuilder(val channelId: Snowflake) : RequestBuilder<
      * e.g: A client who requested to speak at 18:00,
      * will appear above a client who requested to speak at 20:00 in the same timezone.
      *
-     * A date in the past is treated as "now" by Discord.
-     * A null value removes the request to speak.
+     * * A date in the past is treated as "now" by Discord.
+     * * A null value removes the request to speak.
      */
     var requestToSpeakTimestamp: OffsetDateTime? by ::_requestToSpeakTimestamp.delegate()
 
