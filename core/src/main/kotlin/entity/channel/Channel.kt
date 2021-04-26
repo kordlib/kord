@@ -42,6 +42,7 @@ interface Channel : ChannelBehavior {
         ): Channel = when (data.type) {
             GuildText -> TextChannel(data, kord)
             DM, GroupDM -> DmChannel(data, kord)
+            GuildStageVoice -> StageChannel(data, kord)
             GuildVoice -> VoiceChannel(data, kord)
             GuildCategory -> Category(data, kord)
             GuildNews -> NewsChannel(data, kord)

@@ -36,6 +36,8 @@ class VoiceState(
 
     val isSuppressed: Boolean get() = data.suppress
 
+    val requestToSpeakTimestamp: String? get() = data.requestToSpeakTimestamp
+
     /**
      * Whether this user is streaming using "Go Live".
      */

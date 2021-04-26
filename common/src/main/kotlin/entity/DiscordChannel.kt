@@ -94,6 +94,8 @@ sealed class ChannelType(val value: Int) {
     /** A channel in which game developers can sell their game on Discord. */
     object GuildStore : ChannelType(6)
 
+    object GuildStageVoice : ChannelType(13)
+
     companion object;
 
     internal object Serializer : KSerializer<ChannelType> {
@@ -108,6 +110,7 @@ sealed class ChannelType(val value: Int) {
             4 -> GuildCategory
             5 -> GuildNews
             6 -> GuildStore
+            13 -> GuildStageVoice
             else -> Unknown(code)
         }
 

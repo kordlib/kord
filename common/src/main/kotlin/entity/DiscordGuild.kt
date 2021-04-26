@@ -372,6 +372,8 @@ data class DiscordVoiceState(
     @SerialName("self_stream")
     val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val suppress: Boolean,
+    @SerialName("request_to_speak_timestamp")
+    val requestToSpeakTimestamp: String?
 )
 
 /**
