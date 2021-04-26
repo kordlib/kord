@@ -5,6 +5,7 @@ import org.apache.commons.codec.binary.Base64
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
         maven(url = "https://plugins.gradle.org/m2/")
     }
     dependencies {

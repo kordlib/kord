@@ -22,9 +22,6 @@ class LinearRetry constructor(
     private val maxTries: Int
 ) : Retry {
 
-    constructor(firstBackoffMillis: Long, maxBackoffMillis: Long, maxTries: Int) :
-            this(firstBackoffMillis.milliseconds, maxBackoffMillis.milliseconds, maxTries)
-
     init {
         require(firstBackoff.isPositive()) { "firstBackoff needs to be positive but was ${firstBackoff.toLongMilliseconds()} ms" }
         require(maxBackoff.isPositive()) { "maxBackoff needs to be positive but was ${maxBackoff.toLongMilliseconds()} ms" }
