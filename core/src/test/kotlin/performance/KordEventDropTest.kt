@@ -99,7 +99,7 @@ class KordEventDropTest {
             SpammyGateway.events.emit(event)
         }
 
-        withTimeout(Duration.minutes(1)) {
+        withTimeout(Duration.minutes(1).inWholeMilliseconds) {
             countdown.await()
         }
         assertEquals(amount, counter.get())
