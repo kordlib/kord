@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.seconds
+import kotlin.time.Duration as KDuration
 import kotlin.time.toKotlinDuration
 
 @FlowPreview
@@ -44,7 +44,7 @@ class DefaultGatewayTest {
                 }
             }
 
-            reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
+            reconnectRetry = LinearRetry(KDuration.seconds(2), KDuration.seconds(20), 10)
             sendRateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
         }
 

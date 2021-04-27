@@ -38,7 +38,7 @@ class BucketRateLimiter(
 
     private fun resetState() {
         count = 0
-        nextInterval = clock.millis() + refillInterval.inMilliseconds.toLong()
+        nextInterval = clock.millis() + refillInterval.inWholeMilliseconds
     }
 
     private suspend fun delayUntilNextInterval() {

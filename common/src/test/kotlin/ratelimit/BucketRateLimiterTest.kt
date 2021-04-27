@@ -9,6 +9,7 @@ import java.time.ZoneOffset
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.asserter
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 
@@ -16,7 +17,7 @@ import kotlin.time.milliseconds
 @ExperimentalCoroutinesApi
 class BucketRateLimiterTest {
 
-    val interval = 1_000_000.milliseconds
+    val interval = Duration.milliseconds(1_000_000)
     val instant = Instant.now()
     val clock = Clock.fixed(instant, ZoneOffset.UTC)
     lateinit var rateLimiter: BucketRateLimiter
@@ -38,7 +39,7 @@ class BucketRateLimiterTest {
         rateLimiter.consume()
         rateLimiter.consume()
 
-        asserter.assertTrue("expected timeout of ${interval.inMilliseconds.toLong()} ms but was $currentTime ms", interval.toLongMilliseconds() == currentTime)
+        asserter.assertTrue("expected timeout of ${interval.inWholeMilliseconds} ms but was $currentTime ms", interval.inWholeMilliseconds == currentTime)
     }
 
 }

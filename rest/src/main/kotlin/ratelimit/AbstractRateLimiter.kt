@@ -11,15 +11,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import mu.KLogger
 import java.time.Clock
+import kotlin.time.Duration as KDuration
 import java.time.Duration
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.time.minutes
 
 
 abstract class AbstractRateLimiter internal constructor(val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
 
-    internal val autoBanRateLimiter = BucketRateLimiter(25000, 10.minutes)
+    internal val autoBanRateLimiter = BucketRateLimiter(25000, KDuration.minutes(10))
     internal val globalSuspensionPoint = atomic(Reset(clock.instant()))
     internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
     internal val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
@@ -45,7 +45,8 @@ abstract class AbstractRateLimiter internal constructor(val clock: Clock) : Requ
 
     internal abstract fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken
 
-    internal abstract inner class AbstractRequestToken(
+    internal abstract class AbstractRequestToken(
+        val rateLimiter: AbstractRateLimiter,
         val identity: RequestIdentifier,
         val requestBuckets: List<Bucket>
     ) : RequestToken {
@@ -54,29 +55,32 @@ abstract class AbstractRateLimiter internal constructor(val clock: Clock) : Requ
         override val completed: Boolean
             get() = completableDeferred.isCompleted
 
-        open override suspend fun complete(response: RequestResponse) {
-            response.bucketKey?.let { key ->
-                if (identity.addBucket(key)) {
-                    logger.trace { "[DISCOVERED]:[BUCKET]:Bucket ${response.bucketKey?.value} discovered for $identity" }
-                    buckets[key] = key.bucket
-                }
-            }
+        override suspend fun complete(response: RequestResponse) {
+            with(rateLimiter) {
+                val key = response.bucketKey
+                if (key != null) {
+                    if (identity.addBucket(key)) {
 
-            when (response) {
-                is RequestResponse.GlobalRateLimit -> {
-                    logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
-                    globalSuspensionPoint.update { response.reset }
+                        logger.trace { "[DISCOVERED]:[BUCKET]:Bucket discovered for" }
+                        buckets[key] = key.bucket
+                    }
                 }
-                is RequestResponse.BucketRateLimit -> {
-                    logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
-                    response.bucketKey.bucket.updateReset(response.reset)
-                }
-            }
 
-            completableDeferred.complete(Unit)
-            requestBuckets.forEach { it.unlock() }
+                when (response) {
+                    is RequestResponse.GlobalRateLimit -> {
+                        logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
+                        globalSuspensionPoint.update { response.reset }
+                    }
+                    is RequestResponse.BucketRateLimit -> {
+                        logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
+                        response.bucketKey.bucket.updateReset(response.reset)
+                    }
+                }
+
+                completableDeferred.complete(Unit)
+                requestBuckets.forEach { it.unlock() }
+            }
         }
-
     }
 
     internal inner class Bucket(val id: BucketKey) {

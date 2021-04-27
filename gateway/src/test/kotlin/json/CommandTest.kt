@@ -13,6 +13,7 @@ import dev.kord.gateway.*
 import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.util.*
 
 private val json = Json { encodeDefaults = false }
 
@@ -112,7 +113,7 @@ class CommandTest {
             put("d", buildJsonObject {
                 put("since", since)
                 put("activities", null as String?)
-                put("status", status.value.toLowerCase())
+                put("status", status.value.lowercase(Locale.getDefault()))
                 put("afk", afk)
             })
         })
