@@ -136,7 +136,8 @@ enum class ActivityType(val code: Int) {
     Streaming(1),
     Listening(2),
     Watching(3),
-    Custom(4);
+    Custom(4),
+    Competing(5);
 
     companion object ActivityTypeSerializer : KSerializer<ActivityType> {
         override val descriptor: SerialDescriptor
