@@ -25,6 +25,10 @@ fun LiveMember.onUpdate(block: suspend (MemberUpdateEvent) -> Unit) = on(consume
 @KordPreview
 fun LiveMember.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "This method cannot intercept a manual shutdown",
+    replaceWith = ReplaceWith("AbstractLiveKordEntity.onShutDown(() -> Unit)")
+)
 @KordPreview
 inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is MemberLeaveEvent || it is BanAddEvent || it is GuildDeleteEvent) {

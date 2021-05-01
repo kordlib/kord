@@ -22,6 +22,10 @@ fun LiveCategory.onCreate(block: suspend (CategoryCreateEvent) -> Unit) = on(con
 @KordPreview
 fun LiveCategory.onUpdate(block: suspend (CategoryUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "This method cannot intercept a manual shutdown",
+    replaceWith = ReplaceWith("AbstractLiveKordEntity.onShutDown(() -> Unit)")
+)
 @KordPreview
 inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is CategoryDeleteEvent || it is GuildDeleteEvent) {

@@ -56,6 +56,10 @@ fun LiveMessage.onCreate(block: suspend (MessageCreateEvent) -> Unit) = on(consu
 @KordPreview
 fun LiveMessage.onUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "This method cannot intercept a manual shutdown",
+    replaceWith = ReplaceWith("AbstractLiveKordEntity.onShutDown(() -> Unit)")
+)
 @KordPreview
 inline fun LiveMessage.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is MessageDeleteEvent || it is MessageBulkDeleteEvent

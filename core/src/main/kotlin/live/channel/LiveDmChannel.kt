@@ -22,6 +22,10 @@ fun LiveDmChannel.onCreate(block: suspend (DMChannelCreateEvent) -> Unit) = on(c
 @KordPreview
 fun LiveDmChannel.onUpdate(block: suspend (DMChannelUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "This method cannot intercept a manual shutdown",
+    replaceWith = ReplaceWith("AbstractLiveKordEntity.onShutDown(() -> Unit)")
+)
 @KordPreview
 inline fun LiveDmChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is DMChannelDeleteEvent || it is GuildDeleteEvent) {

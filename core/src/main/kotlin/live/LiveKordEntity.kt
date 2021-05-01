@@ -33,6 +33,8 @@ abstract class AbstractLiveKordEntity : LiveKordEntity {
     private val mutex = Mutex()
     private val running = atomic(true)
 
+    private var onShutDown: (() -> Unit)? = null
+
     @Suppress("EXPERIMENTAL_API_USAGE")
     override val events: Flow<Event>
         get() = kord.events
@@ -42,7 +44,15 @@ abstract class AbstractLiveKordEntity : LiveKordEntity {
 
     protected abstract fun filter(event: Event): Boolean
     protected abstract fun update(event: Event)
-    override fun shutDown() = running.update { false }
+
+    override fun shutDown() {
+        running.update { false }
+        onShutDown?.invoke()
+    }
+
+    fun onShutDown(action: (() -> Unit)?){
+        onShutDown = action
+    }
 
 }
 
