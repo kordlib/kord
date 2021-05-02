@@ -30,7 +30,9 @@ interface LiveKordEntity : KordEntity, CoroutineScope {
 @KordPreview
 abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher) : LiveKordEntity {
 
-    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob()
+    protected val job = SupervisorJob()
+
+    override val coroutineContext: CoroutineContext = job + dispatcher
 
     private val mutex = Mutex()
 
@@ -46,6 +48,10 @@ abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher) : LiveKor
 
     override fun shutDown() {
         cancel("Shutdown executed")
+    }
+
+    fun onComplete(block: CompletionHandler) {
+        job.invokeOnCompletion(block)
     }
 }
 
