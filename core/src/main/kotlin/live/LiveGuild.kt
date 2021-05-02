@@ -16,12 +16,16 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
-fun Guild.live(): LiveGuild = LiveGuild(this)
+fun Guild.live(dispatcher: CoroutineDispatcher = Dispatchers.Default): LiveGuild =
+    LiveGuild(this, dispatcher)
 
 @KordPreview
-inline fun Guild.live(block: LiveGuild.() -> Unit) = this.live().apply(block)
+inline fun Guild.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveGuild.() -> Unit) =
+    this.live(dispatcher).apply(block)
 
 @KordPreview
 fun LiveGuild.onEmojisUpdate(block: suspend (EmojisUpdateEvent) -> Unit) = on(consumer = block)
@@ -119,7 +123,10 @@ fun LiveGuild.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(cons
 fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-class LiveGuild(guild: Guild) : AbstractLiveKordEntity(), KordEntity by guild {
+class LiveGuild(
+    guild: Guild,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
+) : AbstractLiveKordEntity(dispatcher), KordEntity by guild {
 
     var guild: Guild = guild
         private set

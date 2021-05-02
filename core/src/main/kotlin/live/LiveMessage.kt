@@ -13,13 +13,16 @@ import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.message.*
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
-suspend fun Message.live() =
-    LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id)
+suspend fun Message.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
+    LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id, dispatcher)
 
 @KordPreview
-suspend fun Message.live(block: LiveMessage.() -> Unit) = this.live().apply(block)
+suspend fun Message.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveMessage.() -> Unit) =
+    this.live(dispatcher).apply(block)
 
 @KordPreview
 fun LiveMessage.onReactionAdd(block: suspend (ReactionAddEvent) -> Unit) = on(consumer = block)
@@ -78,7 +81,11 @@ fun LiveMessage.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = o
 fun LiveMessage.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-class LiveMessage(message: Message, val guildId: Snowflake?) : AbstractLiveKordEntity(), KordEntity by message {
+class LiveMessage(
+    message: Message,
+    val guildId: Snowflake?,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
+) : AbstractLiveKordEntity(dispatcher), KordEntity by message {
 
     var message: Message = message
         private set

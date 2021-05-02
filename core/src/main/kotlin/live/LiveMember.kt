@@ -9,12 +9,15 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.guild.MemberLeaveEvent
 import dev.kord.core.event.guild.MemberUpdateEvent
 import dev.kord.core.live.channel.LiveGuildChannel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
-fun Member.live() = LiveMember(this)
+fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveMember(this, dispatcher)
 
 @KordPreview
-inline fun Member.live(block: LiveMember.() -> Unit) = this.live().apply(block)
+inline fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveMember.() -> Unit) =
+    this.live(dispatcher).apply(block)
 
 @KordPreview
 fun LiveMember.onLeave(block: suspend (MemberLeaveEvent) -> Unit) = on(consumer = block)
@@ -36,7 +39,10 @@ inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Uni
 fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-class LiveMember(member: Member) : AbstractLiveKordEntity(), KordEntity by member {
+class LiveMember(
+    member: Member,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
+) : AbstractLiveKordEntity(dispatcher), KordEntity by member {
     var member = member
         private set
 

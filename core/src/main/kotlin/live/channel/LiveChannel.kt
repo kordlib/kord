@@ -14,19 +14,22 @@ import dev.kord.core.event.message.*
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
-fun Channel.live() = when (this) {
-    is DmChannel -> this.live()
-    is NewsChannel -> this.live()
-    is StoreChannel -> this.live()
-    is TextChannel -> this.live()
-    is VoiceChannel -> this.live()
+fun Channel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = when (this) {
+    is DmChannel -> this.live(dispatcher)
+    is NewsChannel -> this.live(dispatcher)
+    is StoreChannel -> this.live(dispatcher)
+    is TextChannel -> this.live(dispatcher)
+    is VoiceChannel -> this.live(dispatcher)
     else -> error("unsupported channel type")
 }
 
 @KordPreview
-inline fun Channel.live(block: LiveChannel.() -> Unit) = this.live().apply(block)
+inline fun Channel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveChannel.() -> Unit) =
+    this.live(dispatcher).apply(block)
 
 @KordPreview
 fun LiveChannel.onVoiceStateUpdate(block: suspend (VoiceStateUpdateEvent) -> Unit) = on(consumer = block)
@@ -85,7 +88,7 @@ fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(co
 fun LiveChannel.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-abstract class LiveChannel : AbstractLiveKordEntity() {
+abstract class LiveChannel(dispatcher: CoroutineDispatcher = Dispatchers.Default) : AbstractLiveKordEntity(dispatcher) {
 
     abstract val channel: Channel
 
