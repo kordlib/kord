@@ -32,6 +32,10 @@ class PresenceBuilder {
         game = DiscordBotActivity(name, ActivityType.Watching)
     }
 
+    fun competing(name: String) {
+        game = DiscordBotActivity(name, ActivityType.Competing)
+    }
+
     fun toUpdateStatus(): UpdateStatus = UpdateStatus(since?.toEpochMilli(), game?.let(::listOf), status, afk)
 
     fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since?.toEpochMilli(), game)
