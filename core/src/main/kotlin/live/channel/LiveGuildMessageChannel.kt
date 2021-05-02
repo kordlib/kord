@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 
 @KordPreview
 fun GuildMessageChannel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
-    LiveGuildMessageChannel(dispatcher, this)
+    LiveGuildMessageChannel(this, dispatcher)
 
 @KordPreview
 inline fun GuildMessageChannel.live(
@@ -47,8 +47,8 @@ fun LiveGuildMessageChannel.onDelete(block: suspend (GuildDeleteEvent) -> Unit) 
 
 @KordPreview
 class LiveGuildMessageChannel(
-    dispatcher: CoroutineDispatcher,
-    channel: GuildMessageChannel
+    channel: GuildMessageChannel,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : LiveChannel(dispatcher), KordEntity by channel {
 
     override var channel: GuildMessageChannel = channel

@@ -18,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 
 @KordPreview
 suspend fun Message.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
-    LiveMessage(dispatcher, this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id)
+    LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id, dispatcher)
 
 @KordPreview
 suspend fun Message.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveMessage.() -> Unit) =
@@ -86,9 +86,9 @@ fun LiveMessage.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(co
 
 @KordPreview
 class LiveMessage(
-    dispatcher: CoroutineDispatcher,
     message: Message,
-    val guildId: Snowflake?
+    val guildId: Snowflake?,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : AbstractLiveKordEntity(dispatcher), KordEntity by message {
 
     var message: Message = message

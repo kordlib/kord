@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 
 @KordPreview
 fun VoiceChannel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
-    LiveVoiceChannel(dispatcher, this)
+    LiveVoiceChannel(this, dispatcher)
 
 @KordPreview
 inline fun VoiceChannel.live(
@@ -47,8 +47,8 @@ fun LiveVoiceChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = 
 
 @KordPreview
 class LiveVoiceChannel(
-    dispatcher: CoroutineDispatcher,
-    channel: VoiceChannel
+    channel: VoiceChannel,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : LiveChannel(dispatcher), KordEntity by channel {
 
     override var channel: VoiceChannel = channel

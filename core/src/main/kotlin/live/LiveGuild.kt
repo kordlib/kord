@@ -21,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 
 @KordPreview
 fun Guild.live(dispatcher: CoroutineDispatcher = Dispatchers.Default): LiveGuild =
-    LiveGuild(dispatcher, this)
+    LiveGuild(this, dispatcher)
 
 @KordPreview
 inline fun Guild.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveGuild.() -> Unit) =
@@ -124,8 +124,8 @@ fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(cons
 
 @KordPreview
 class LiveGuild(
-    dispatcher: CoroutineDispatcher,
-    guild: Guild
+    guild: Guild,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : AbstractLiveKordEntity(dispatcher), KordEntity by guild {
 
     var guild: Guild = guild

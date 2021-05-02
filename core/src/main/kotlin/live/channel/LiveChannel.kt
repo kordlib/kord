@@ -88,7 +88,7 @@ fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(co
 fun LiveChannel.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-abstract class LiveChannel(dispatcher: CoroutineDispatcher) : AbstractLiveKordEntity(dispatcher) {
+abstract class LiveChannel(dispatcher: CoroutineDispatcher = Dispatchers.Default) : AbstractLiveKordEntity(dispatcher) {
 
     abstract val channel: Channel
 

@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 
 @KordPreview
 fun Category.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
-    LiveCategory(dispatcher, this)
+    LiveCategory(this, dispatcher)
 
 @KordPreview
 inline fun Category.live(
@@ -47,8 +47,8 @@ fun LiveCategory.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(c
 
 @KordPreview
 class LiveCategory(
-    dispatcher: CoroutineDispatcher,
-    channel: Category
+    channel: Category,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : LiveChannel(dispatcher), KordEntity by channel {
 
     override var channel: Category = channel

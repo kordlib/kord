@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 @KordPreview
-fun User.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveUser(dispatcher, this)
+fun User.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveUser(this, dispatcher)
 
 @KordPreview
 inline fun User.live(
@@ -22,8 +22,8 @@ fun LiveUser.onUpdate(block: suspend (UserUpdateEvent) -> Unit) = on(consumer = 
 
 @KordPreview
 class LiveUser(
-    dispatcher: CoroutineDispatcher,
-    user: User
+    user: User,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : AbstractLiveKordEntity(dispatcher), KordEntity by user {
 
     var user: User = user

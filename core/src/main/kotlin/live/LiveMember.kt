@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 @KordPreview
-fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveMember(dispatcher, this)
+fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveMember(this, dispatcher)
 
 @KordPreview
 inline fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveMember.() -> Unit) =
@@ -44,8 +44,8 @@ fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = 
 
 @KordPreview
 class LiveMember(
-    dispatcher: CoroutineDispatcher,
-    member: Member
+    member: Member,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : AbstractLiveKordEntity(dispatcher), KordEntity by member {
     var member = member
         private set

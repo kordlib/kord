@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 @KordPreview
-fun Role.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveRole(dispatcher, this)
+fun Role.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveRole(this, dispatcher)
 
 @KordPreview
 inline fun Role.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveRole.() -> Unit) =
@@ -39,8 +39,8 @@ fun LiveRole.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consu
 
 @KordPreview
 class LiveRole(
-    dispatcher: CoroutineDispatcher,
-    role: Role
+    role: Role,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : AbstractLiveKordEntity(dispatcher), KordEntity by role {
     var role = role
         private set
