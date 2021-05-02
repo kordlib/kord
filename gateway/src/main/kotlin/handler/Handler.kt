@@ -1,8 +1,6 @@
 package dev.kord.gateway.handler
 
-import dev.kord.gateway.Close
 import dev.kord.gateway.Event
-import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
@@ -18,9 +16,8 @@ internal abstract class Handler(
     val name: String,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : CoroutineScope {
-
-    override val coroutineContext: CoroutineContext
-        get() = Job() + dispatcher
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext = job + dispatcher
 
     init {
         launch {

@@ -72,8 +72,8 @@ object FakeGateway : Gateway {
     override suspend fun stop() {
         deferred.complete(Unit)
     }
-
-    override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext = job + EmptyCoroutineContext
 }
 
 class CrashingHandler(val client: HttpClient) : RequestHandler {

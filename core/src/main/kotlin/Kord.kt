@@ -108,7 +108,9 @@ class Kord(
     val events: SharedFlow<Event>
         get() = eventFlow
 
-    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob()
+    private val job = SupervisorJob()
+
+    override val coroutineContext: CoroutineContext = job + dispatcher
 
     val regions: Flow<Region>
         get() = defaultSupplier.regions
