@@ -10,12 +10,18 @@ import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.channel.ChannelUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.on
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
-fun GuildChannel.live() = LiveGuildChannel(this)
+fun GuildChannel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
+    LiveGuildChannel(dispatcher, this)
 
 @KordPreview
-inline fun GuildChannel.live(block: LiveGuildChannel.() -> Unit) = this.live().apply(block)
+inline fun GuildChannel.live(
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    block: LiveGuildChannel.() -> Unit
+) = this.live(dispatcher).apply(block)
 
 @KordPreview
 fun LiveGuildChannel.onCreate(block: suspend (ChannelCreateEvent) -> Unit) = on(consumer = block)
@@ -41,7 +47,10 @@ fun LiveGuildChannel.onDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(
 fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-class LiveGuildChannel(channel: GuildChannel) : LiveChannel(), KordEntity by channel {
+class LiveGuildChannel(
+    dispatcher: CoroutineDispatcher,
+    channel: GuildChannel
+) : LiveChannel(dispatcher), KordEntity by channel {
 
     override var channel: GuildChannel = channel
         private set

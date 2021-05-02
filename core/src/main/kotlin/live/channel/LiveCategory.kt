@@ -9,12 +9,18 @@ import dev.kord.core.event.channel.CategoryDeleteEvent
 import dev.kord.core.event.channel.CategoryUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.on
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
-fun Category.live() = LiveCategory(this)
+fun Category.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
+    LiveCategory(dispatcher, this)
 
 @KordPreview
-inline fun Category.live(block: LiveCategory.() -> Unit) = this.live().apply(block)
+inline fun Category.live(
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    block: LiveCategory.() -> Unit
+) = this.live(dispatcher).apply(block)
 
 @KordPreview
 fun LiveCategory.onCreate(block: suspend (CategoryCreateEvent) -> Unit) = on(consumer = block)
@@ -40,7 +46,10 @@ fun LiveCategory.onDelete(block: suspend (CategoryDeleteEvent) -> Unit) = on(con
 fun LiveCategory.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-class LiveCategory(channel: Category) : LiveChannel(), KordEntity by channel {
+class LiveCategory(
+    dispatcher: CoroutineDispatcher,
+    channel: Category
+) : LiveChannel(dispatcher), KordEntity by channel {
 
     override var channel: Category = channel
         private set

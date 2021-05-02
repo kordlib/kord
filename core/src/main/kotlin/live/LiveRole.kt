@@ -7,12 +7,15 @@ import dev.kord.core.event.Event
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
-fun Role.live() = LiveRole(this)
+fun Role.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveRole(dispatcher, this)
 
 @KordPreview
-inline fun Role.live(block: LiveRole.() -> Unit) = this.live().apply(block)
+inline fun Role.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveRole.() -> Unit) =
+    this.live(dispatcher).apply(block)
 
 @KordPreview
 fun LiveRole.onDelete(block: suspend (RoleDeleteEvent) -> Unit) = on(consumer = block)
@@ -35,7 +38,10 @@ inline fun LiveRole.onShutDown(crossinline block: suspend (Event) -> Unit) = on<
 fun LiveRole.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-class LiveRole(role: Role) : AbstractLiveKordEntity(), KordEntity by role {
+class LiveRole(
+    dispatcher: CoroutineDispatcher,
+    role: Role
+) : AbstractLiveKordEntity(dispatcher), KordEntity by role {
     var role = role
         private set
 

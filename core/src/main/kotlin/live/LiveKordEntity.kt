@@ -7,13 +7,12 @@ import dev.kord.core.event.Event
 import dev.kord.core.event.message.MessageUpdateEvent
 import dev.kord.core.event.message.ReactionAddEvent
 import dev.kord.core.kordLogger
-import kotlinx.atomicfu.atomic
-import kotlinx.atomicfu.update
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlin.coroutines.CoroutineContext
 
 /**
  * A Discord entity that only emits events *related* to this entity.
@@ -22,23 +21,23 @@ import kotlinx.coroutines.sync.withLock
  * [reactions][ReactionAddEvent] to that message.
  */
 @KordPreview
-interface LiveKordEntity : KordEntity {
+interface LiveKordEntity : KordEntity, CoroutineScope {
     val events: Flow<Event>
 
     fun shutDown()
 }
 
 @KordPreview
-abstract class AbstractLiveKordEntity : LiveKordEntity {
-    private val mutex = Mutex()
-    private val running = atomic(true)
+abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher) : LiveKordEntity {
 
-    private var onShutDown: (() -> Unit)? = null
+    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob()
+
+    private val mutex = Mutex()
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     override val events: Flow<Event>
         get() = kord.events
-            .takeWhile { running.value }
+            .takeWhile { isActive }
             .filter { filter(it) }
             .onEach { mutex.withLock { update(it) } }
 
@@ -46,14 +45,8 @@ abstract class AbstractLiveKordEntity : LiveKordEntity {
     protected abstract fun update(event: Event)
 
     override fun shutDown() {
-        running.update { false }
-        onShutDown?.invoke()
+        cancel("Shutdown executed")
     }
-
-    fun onShutDown(action: (() -> Unit)?){
-        onShutDown = action
-    }
-
 }
 
 /**
@@ -61,9 +54,9 @@ abstract class AbstractLiveKordEntity : LiveKordEntity {
  * or [Kord] by default and will not propagate any exceptions.
  */
 @KordPreview
-inline fun <reified T : Event> LiveKordEntity.on(scope: CoroutineScope = kord, noinline consumer: suspend (T) -> Unit) =
+inline fun <reified T : Event> LiveKordEntity.on(noinline consumer: suspend (T) -> Unit) =
     events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
         runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
-    }.catch { kordLogger.catching(it) }.launchIn(scope)
+    }.catch { kordLogger.catching(it) }.launchIn(this)
 
 
