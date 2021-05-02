@@ -23,10 +23,6 @@ fun LiveRole.onDelete(block: suspend (RoleDeleteEvent) -> Unit) = on(consumer = 
 @KordPreview
 fun LiveRole.onUpdate(block: suspend (RoleUpdateEvent) -> Unit) = on(consumer = block)
 
-@Deprecated(
-    "This method cannot intercept a manual shutdown",
-    replaceWith = ReplaceWith("AbstractLiveKordEntity.onShutDown(() -> Unit)")
-)
 @KordPreview
 inline fun LiveRole.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is RoleDeleteEvent || it is GuildDeleteEvent) {

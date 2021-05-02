@@ -28,10 +28,6 @@ fun LiveVoiceChannel.onCreate(block: suspend (VoiceChannelCreateEvent) -> Unit) 
 @KordPreview
 fun LiveVoiceChannel.onUpdate(block: suspend (VoiceChannelUpdateEvent) -> Unit) = on(consumer = block)
 
-@Deprecated(
-    "This method cannot intercept a manual shutdown",
-    replaceWith = ReplaceWith("AbstractLiveKordEntity.onShutDown(() -> Unit)")
-)
 @KordPreview
 inline fun LiveVoiceChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is VoiceChannelDeleteEvent || it is GuildDeleteEvent) {

@@ -28,10 +28,6 @@ fun LiveGuildMessageChannel.onCreate(block: suspend (ChannelCreateEvent) -> Unit
 @KordPreview
 fun LiveGuildMessageChannel.onUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(consumer = block)
 
-@Deprecated(
-    "This method cannot intercept a manual shutdown",
-    replaceWith = ReplaceWith("AbstractLiveKordEntity.onShutDown(() -> Unit)")
-)
 @KordPreview
 inline fun LiveGuildMessageChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is ChannelDeleteEvent || it is GuildDeleteEvent) {
