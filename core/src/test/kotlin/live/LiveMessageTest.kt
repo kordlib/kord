@@ -3,7 +3,6 @@ package live
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
-import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.behavior.channel.createTextChannel
 import dev.kord.core.behavior.createCategory
 import dev.kord.core.behavior.edit
@@ -17,7 +16,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import java.util.concurrent.CountDownLatch
