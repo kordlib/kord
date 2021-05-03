@@ -3,29 +3,26 @@ package live
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.behavior.channel.createTextChannel
 import dev.kord.core.behavior.createCategory
+import dev.kord.core.behavior.edit
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.channel.Category
 import dev.kord.core.entity.channel.TextChannel
-import dev.kord.core.event.Event
-import dev.kord.core.live.LiveMessage
-import dev.kord.core.live.live
-import dev.kord.core.live.on
-import dev.kord.core.live.onReactionAdd
+import dev.kord.core.live.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicInteger
 import kotlin.test.*
-import kotlin.test.Test
-import kotlin.time.seconds
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordExperimental::class, KordPreview::class)
@@ -47,8 +44,12 @@ class LiveMessageTest {
     private lateinit var live: LiveMessage
 
     @BeforeAll
-    fun setup() = runBlocking {
+    fun onBeforeAll() = runBlocking {
         kord = Kord(token)
+        GlobalScope.launch(kord.coroutineContext) {
+            kord.login()
+        }
+
         guild = createGuild()
         category = createCategory()
         channel = createChannel()
@@ -56,7 +57,12 @@ class LiveMessageTest {
 
     @AfterAll
     fun onAfterAll() = runBlocking {
-        guild.delete()
+        try {
+            guild.delete()
+        } finally {
+            kord.logout()
+            kord.shutdown()
+        }
     }
 
     @BeforeTest
@@ -67,30 +73,16 @@ class LiveMessageTest {
 
     @AfterTest
     fun onAfter() {
-        if(live.isActive){
-            live.shutDown()
-        }
+        live.shutDown()
     }
 
-    private suspend fun createGuild(): Guild {
-        val region = kord.regions.first()
+    private suspend fun createGuild(): Guild = kord.createGuild("LIVE_MESSAGE_TEST_GUILD") {}
 
-        return kord.createGuild("LIVE_MESSAGE_TEST_GUILD") {
-            this.region = region.id
-        }
-    }
+    private suspend fun createCategory(): Category = guild.createCategory("LIVE_MESSAGE_TEST_CATEGORY")
 
-    private suspend fun createCategory(): Category {
-        return guild.createCategory("LIVE_MESSAGE_TEST_CATEGORY")
-    }
+    private suspend fun createChannel(): TextChannel = category.createTextChannel("LIVE_MESSAGE_TEST_CHANNEL")
 
-    private suspend fun createChannel(): TextChannel {
-        return category.createTextChannel("LIVE_MESSAGE_TEST_CHANNEL")
-    }
-
-    private suspend fun createMessage(): Message {
-        return channel.createMessage("test")
-    }
+    private suspend fun createMessage(): Message = channel.createMessage("LIVE_MESSAGE_TEST_MESSAGE")
 
     @Test
     fun `Shutdown method cancel the lifecycle`() = runBlockingTest {
@@ -100,36 +92,197 @@ class LiveMessageTest {
     }
 
     @Test
-    fun `Children job are cancel when the live entity is shutdown`() = runBlockingTest {
+    fun `Children job are cancel when the live entity is shutdown`() = runBlocking {
         val job = live.onReactionAdd { }
         assertTrue(job.isActive)
 
+        message.addReaction(ReactionEmoji.Unicode("\uD83D\uDC28"))
+
         live.shutDown()
         assertTrue(job.isCancelled)
+        assertFalse(live.isActive)
     }
 
     @Test
-    fun `Check onReactionAdd is called when ReactionAddEvent is received`() = runBlocking {
-        val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
+    fun `Check onReactionAdd is called when event is received`() {
+        countdownContext(1) {
+            val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
 
-        val counter = AtomicInteger(0)
-        val countdown = CountDownLatch(1)
+            live.onReactionAdd {
+                assertEquals(emojiExpected, it.emoji)
+                countDown()
+            }
 
-        live.onReactionAdd {
-            println(it)
-            assertEquals(emojiExpected, it.emoji)
-            counter.incrementAndGet()
-            countdown.countDown()
+            message.addReaction(emojiExpected)
         }
+    }
 
-        message.addReaction(emojiExpected)
+    @Test
+    fun `Check onReactionAdd with specific reaction is called when event is received`() {
+        countdownContext(1) {
+            val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
+            val emojiOther = ReactionEmoji.Unicode("\uD83D\uDC3B")
 
+            live.onReactionAdd(emojiExpected) {
+                assertEquals(emojiExpected, it.emoji)
+                countDown()
+            }
 
-        while(countdown.count != 0L && counter.get() == 0){
-            delay(1000)
-            countdown.countDown()
+            message.addReaction(emojiOther)
+            message.addReaction(emojiExpected)
         }
+    }
 
-        assertEquals(1, counter.get())
+    @Test
+    fun `Check onReactionRemove is called when event is received`() {
+        countdownContext(1) {
+            val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
+
+            live.onReactionRemove {
+                assertEquals(emojiExpected, it.emoji)
+                countDown()
+            }
+
+            message.addReaction(emojiExpected)
+            message.deleteOwnReaction(emojiExpected)
+        }
+    }
+
+    @Test
+    fun `Check onReactionRemove with specific reaction is called when event is received`() {
+        countdownContext(1) {
+            val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
+            val emojiOther = ReactionEmoji.Unicode("\uD83D\uDC3B")
+
+            live.onReactionRemove(emojiExpected) {
+                assertEquals(emojiExpected, it.emoji)
+                countDown()
+            }
+
+            message.addReaction(emojiExpected)
+            message.addReaction(emojiOther)
+            message.deleteOwnReaction(emojiOther)
+            message.deleteOwnReaction(emojiExpected)
+        }
+    }
+
+    @Test
+    fun `Check onReactionRemoveAll is called when event is received`() {
+        countdownContext(1) {
+            val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
+
+            live.onReactionRemoveAll {
+                countDown()
+            }
+
+            message.addReaction(emojiExpected)
+            message.deleteAllReactions()
+        }
+    }
+
+    @Ignore
+    @Test
+    fun `Check onCreate is called when event is received`() {
+        countdownContext(1) {
+            live.onCreate {
+                countDown()
+            }
+
+            // Create message already created ?
+        }
+    }
+
+    @Test
+    fun `Check onUpdate is called when event is received`() {
+        countdownContext(1) {
+
+            live.onUpdate {
+                countDown()
+            }
+
+            message.edit {
+                content = message.content
+            }
+        }
+    }
+
+    @Ignore
+    @Test
+    fun `Check onOnlyDelete is called when event is received`() {
+        countdownContext(1) {
+
+            live.onOnlyDelete {
+                countDown()
+            }
+
+            message.delete()
+            delay(500)
+            assertFalse(live.isActive)
+        }
+    }
+
+    @Ignore
+    @Test
+    fun `Check onBulkDelete is called when event is received`() {
+        countdownContext(1) {
+
+            live.onBulkDelete {
+                countDown()
+            }
+
+            channel.bulkDelete(listOf(message.id))
+            delay(500)
+            assertFalse(live.isActive)
+        }
+    }
+
+    @Ignore
+    @Test
+    fun `Check onChannelDelete is not called because the liveEntity is shutdown`() {
+        countdownContext(1) {
+
+            live.onChannelDelete {
+                countDown()
+            }
+
+            channel.delete()
+            delay(500)
+            assertFalse(live.isActive)
+
+            channel = createChannel()
+        }
+    }
+
+    @Ignore
+    @Test
+    fun `Check onGuildDelete is not called because the liveEntity is shutdown`() {
+        countdownContext(1) {
+
+            live.onGuildDelete {
+                countDown()
+            }
+
+            guild.delete()
+            delay(500)
+            assertFalse(live.isActive)
+
+            guild = createGuild()
+            category = createCategory()
+            channel = createChannel()
+        }
+    }
+
+    private inline fun countdownContext(
+        count: Int,
+        expectedCount: Long = 0,
+        waitMs: Long = 5000,
+        crossinline action: suspend CountDownLatch.() -> Unit
+    ) = runBlocking {
+        val countdown = CountDownLatch(count)
+
+        action(countdown)
+
+        countdown.await(waitMs, TimeUnit.MILLISECONDS)
+        assertEquals(expectedCount, countdown.count)
     }
 }
