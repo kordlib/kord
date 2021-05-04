@@ -9,6 +9,7 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 fun Role.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveRole(this, dispatcher)
@@ -37,7 +38,7 @@ fun LiveRole.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consu
 class LiveRole(
     role: Role,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher), KordEntity by role {
+) : AbstractLiveKordEntity(dispatcher, role.kord.coroutineContext.job), KordEntity by role {
     var role = role
         private set
 

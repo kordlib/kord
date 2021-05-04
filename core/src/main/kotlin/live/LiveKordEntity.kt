@@ -28,9 +28,9 @@ interface LiveKordEntity : KordEntity, CoroutineScope {
 }
 
 @KordPreview
-abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher) : LiveKordEntity {
+abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher, parent: Job) : LiveKordEntity {
 
-    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob()
+    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(parent)
 
     private val mutex = Mutex()
 

@@ -15,6 +15,7 @@ import dev.kord.core.event.message.*
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 suspend fun Message.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
@@ -85,7 +86,7 @@ class LiveMessage(
     message: Message,
     val guildId: Snowflake?,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher), KordEntity by message {
+) : AbstractLiveKordEntity(dispatcher, message.kord.coroutineContext.job), KordEntity by message {
 
     var message: Message = message
         private set

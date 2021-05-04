@@ -11,6 +11,7 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 fun DmChannel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveDmChannel(this, dispatcher)
@@ -44,7 +45,7 @@ fun LiveDmChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(
 class LiveDmChannel(
     channel: DmChannel,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : LiveChannel(dispatcher), KordEntity by channel {
+) : LiveChannel(dispatcher, channel.kord.coroutineContext.job), KordEntity by channel {
 
     override var channel: DmChannel = channel
         private set
