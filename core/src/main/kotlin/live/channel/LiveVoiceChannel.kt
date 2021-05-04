@@ -28,6 +28,10 @@ fun LiveVoiceChannel.onCreate(block: suspend (VoiceChannelCreateEvent) -> Unit) 
 @KordPreview
 fun LiveVoiceChannel.onUpdate(block: suspend (VoiceChannelUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the live entity is shutdown",
+    ReplaceWith("LiveVoiceChannel.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 inline fun LiveVoiceChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is VoiceChannelDeleteEvent || it is GuildDeleteEvent) {
@@ -35,9 +39,17 @@ inline fun LiveVoiceChannel.onShutDown(crossinline block: suspend (Event) -> Uni
     }
 }
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveVoiceChannel.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveVoiceChannel.onDelete(block: suspend (VoiceChannelDeleteEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveVoiceChannel.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveVoiceChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
