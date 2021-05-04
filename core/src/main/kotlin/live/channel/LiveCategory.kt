@@ -66,9 +66,9 @@ class LiveCategory(
     override fun update(event: Event) = when (event) {
         is CategoryCreateEvent -> channel = event.channel
         is CategoryUpdateEvent -> channel = event.channel
-        is CategoryDeleteEvent -> shutDown()
+        is CategoryDeleteEvent -> shutdown()
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutdown()
 
         else -> Unit
     }

@@ -38,7 +38,7 @@ fun LiveMember.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = bl
     ReplaceWith("LiveMember.onShutDown((() -> Unit)?)")
 )
 @KordPreview
-inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
+inline fun LiveGuildChannel.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is MemberLeaveEvent || it is BanAddEvent || it is GuildDeleteEvent) {
         block(it)
     }
@@ -69,9 +69,9 @@ class LiveMember(
     }
 
     override fun update(event: Event) = when (event) {
-        is MemberLeaveEvent -> shutDown()
-        is BanAddEvent -> shutDown()
-        is GuildDeleteEvent -> shutDown()
+        is MemberLeaveEvent -> shutdown()
+        is BanAddEvent -> shutdown()
+        is GuildDeleteEvent -> shutdown()
         is MemberUpdateEvent -> member = event.member
 
         else -> Unit

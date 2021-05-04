@@ -211,7 +211,7 @@ class LiveGuild(
         ), kord)
 
         is GuildUpdateEvent -> guild = event.guild
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutdown()
         else -> Unit
     }
 

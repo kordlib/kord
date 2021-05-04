@@ -65,7 +65,7 @@ fun LiveMessage.onUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consu
     ReplaceWith("LiveMessage.onShutDown((() -> Unit)?)")
 )
 @KordPreview
-inline fun LiveMessage.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
+inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is MessageDeleteEvent || it is MessageBulkDeleteEvent
         || it is ChannelDeleteEvent || it is GuildDeleteEvent
     ) {
@@ -133,12 +133,12 @@ class LiveMessage(
         is ReactionRemoveAllEvent -> message = Message(message.data.copy(reactions = Optional.Missing()), kord)
 
         is MessageUpdateEvent -> message = Message(message.data + event.new, kord)
-        is MessageDeleteEvent -> shutDown()
-        is MessageBulkDeleteEvent -> shutDown()
+        is MessageDeleteEvent -> shutdown()
+        is MessageBulkDeleteEvent -> shutdown()
 
-        is ChannelDeleteEvent -> shutDown()
+        is ChannelDeleteEvent -> shutdown()
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutdown()
         else -> Unit
     }
 

@@ -2,36 +2,26 @@ package live
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
-import dev.kord.core.Kord
-import dev.kord.core.behavior.channel.createTextChannel
-import dev.kord.core.behavior.createCategory
 import dev.kord.core.behavior.edit
-import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.channel.Category
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.live.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.AfterAll
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
+import java.util.*
 import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordExperimental::class, KordPreview::class)
 @EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
-class LiveMessageTest {
+class LiveMessageTest : AbstractLiveEntityTest() {
 
-    private val token = System.getenv("KORD_TEST_TOKEN")
-
-    private lateinit var kord: Kord
-
-    private lateinit var guild: Guild
+    override val token = System.getenv("KORD_TEST_TOKEN")
 
     private lateinit var category: Category
 
@@ -42,25 +32,12 @@ class LiveMessageTest {
     private lateinit var live: LiveMessage
 
     @BeforeAll
-    fun onBeforeAll() = runBlocking {
-        kord = Kord(token)
-        GlobalScope.launch(kord.coroutineContext) {
-            kord.login()
-        }
-
+    override fun onBeforeAll() = runBlocking {
+        super.onBeforeAll()
+        kordLoginAsync()
         guild = createGuild()
-        category = createCategory()
-        channel = createChannel()
-    }
-
-    @AfterAll
-    fun onAfterAll() = runBlocking {
-        try {
-            guild.delete()
-        } finally {
-            kord.logout()
-            kord.shutdown()
-        }
+        category = createCategory(guild!!)
+        channel = createTextChannel(category)
     }
 
     @BeforeTest
@@ -71,35 +48,12 @@ class LiveMessageTest {
 
     @AfterTest
     fun onAfter() {
-        live.shutDown()
+        if (live.isActive) {
+            live.shutdown()
+        }
     }
 
-    private suspend fun createGuild(): Guild = kord.createGuild("LIVE_MESSAGE_TEST_GUILD") {}
-
-    private suspend fun createCategory(): Category = guild.createCategory("LIVE_MESSAGE_TEST_CATEGORY")
-
-    private suspend fun createChannel(): TextChannel = category.createTextChannel("LIVE_MESSAGE_TEST_CHANNEL")
-
-    private suspend fun createMessage(): Message = channel.createMessage("LIVE_MESSAGE_TEST_MESSAGE")
-
-    @Test
-    fun `Shutdown method cancel the lifecycle`() = runBlockingTest {
-        assertTrue(live.isActive)
-        live.shutDown()
-        assertFalse(live.isActive)
-    }
-
-    @Test
-    fun `Children job are cancel when the live entity is shutdown`() = runBlocking {
-        val job = live.onReactionAdd { }
-        assertTrue(job.isActive)
-
-        message.addReaction(ReactionEmoji.Unicode("\uD83D\uDC28"))
-
-        live.shutDown()
-        assertTrue(job.isCancelled)
-        assertFalse(live.isActive)
-    }
+    private suspend fun createMessage(): Message = channel.createMessage(UUID.randomUUID().toString())
 
     @Test
     fun `Check onReactionAdd is called when event is received`() {
@@ -193,94 +147,59 @@ class LiveMessageTest {
     @Test
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
-
             live.onUpdate {
                 countDown()
             }
-
             message.edit {
                 content = message.content
             }
         }
     }
 
-    @Ignore
     @Test
-    fun `Check onOnlyDelete is called when event is received`() {
+    fun `Check onShutdown is called when event the message delete event is received`() {
         countdownContext(1) {
-
-            live.onOnlyDelete {
+            live.onShutdown {
                 countDown()
             }
-
             message.delete()
-            delay(500)
-            assertFalse(live.isActive)
         }
     }
 
-    @Ignore
     @Test
-    fun `Check onBulkDelete is called when event is received`() {
+    fun `Check onShutdown is called when event the bulk delete event is received`() {
         countdownContext(1) {
-
-            live.onBulkDelete {
+            live.onShutdown {
                 countDown()
             }
-
             channel.bulkDelete(listOf(message.id))
-            delay(500)
-            assertFalse(live.isActive)
         }
     }
 
-    @Ignore
     @Test
-    fun `Check onChannelDelete is not called because the liveEntity is shutdown`() {
+    fun `Check onShutdown is called when event the channel delete event is received`() = runBlocking {
         countdownContext(1) {
-
-            live.onChannelDelete {
+            live.onShutdown {
                 countDown()
             }
-
             channel.delete()
-            delay(500)
-            assertFalse(live.isActive)
-
-            channel = createChannel()
         }
+        channel = createTextChannel(category)
     }
 
-    @Ignore
     @Test
-    fun `Check onGuildDelete is not called because the liveEntity is shutdown`() {
+    fun `Check onShutdown is called when event the guild delete event is received`() = runBlocking {
+        val oldGuild = requireGuild()
         countdownContext(1) {
-
-            live.onGuildDelete {
+            live.onShutdown {
                 countDown()
             }
-
-            guild.delete()
-            delay(500)
-            assertFalse(live.isActive)
-
-            guild = createGuild()
-            category = createCategory()
-            channel = createChannel()
+            oldGuild.delete()
         }
-    }
 
-    private inline fun countdownContext(
-        count: Int,
-        expectedCount: Long = 0,
-        waitMs: Long = 5000,
-        crossinline action: suspend CountDownLatch.() -> Unit
-    ) = runBlocking {
-        val countdown = CountDownLatch(count)
-
-        action(countdown)
-
-        countdown.await(waitMs, TimeUnit.MILLISECONDS)
-        assertEquals(expectedCount, countdown.count)
+        assertFalse(live.isActive)
+        guild = createGuild()
+        category = createCategory(guild!!)
+        channel = createTextChannel(category)
     }
 }

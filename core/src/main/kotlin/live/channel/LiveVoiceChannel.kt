@@ -66,9 +66,9 @@ class LiveVoiceChannel(
     override fun update(event: Event) = when (event) {
         is VoiceChannelCreateEvent -> channel = event.channel
         is VoiceChannelUpdateEvent -> channel = event.channel
-        is VoiceChannelDeleteEvent -> shutDown()
+        is VoiceChannelDeleteEvent -> shutdown()
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutdown()
 
         else -> Unit
     }

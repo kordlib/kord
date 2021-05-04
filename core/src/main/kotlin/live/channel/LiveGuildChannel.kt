@@ -67,9 +67,9 @@ class LiveGuildChannel(
     override fun update(event: Event) = when (event) {
         is ChannelCreateEvent -> channel = event.channel as GuildMessageChannel
         is ChannelUpdateEvent -> channel = event.channel as GuildMessageChannel
-        is ChannelDeleteEvent -> shutDown()
+        is ChannelDeleteEvent -> shutdown()
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutdown()
 
         else -> Unit
     }

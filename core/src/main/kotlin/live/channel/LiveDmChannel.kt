@@ -65,9 +65,9 @@ class LiveDmChannel(
     override fun update(event: Event) = when (event) {
         is DMChannelCreateEvent -> channel = event.channel
         is DMChannelUpdateEvent -> channel = event.channel
-        is DMChannelDeleteEvent -> shutDown()
+        is DMChannelDeleteEvent -> shutdown()
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutdown()
 
         else -> Unit
     }

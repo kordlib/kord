@@ -33,7 +33,7 @@ fun LiveRole.onUpdate(block: suspend (RoleUpdateEvent) -> Unit) = on(consumer = 
     ReplaceWith("LiveRole.onShutDown((() -> Unit)?)")
 )
 @KordPreview
-inline fun LiveRole.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
+inline fun LiveRole.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is RoleDeleteEvent || it is GuildDeleteEvent) {
         block(it)
     }
@@ -62,8 +62,8 @@ class LiveRole(
     }
 
     override fun update(event: Event) = when (event) {
-        is RoleDeleteEvent -> shutDown()
-        is GuildDeleteEvent -> shutDown()
+        is RoleDeleteEvent -> shutdown()
+        is GuildDeleteEvent -> shutdown()
         is RoleUpdateEvent -> role = event.role
         else -> Unit
     }
