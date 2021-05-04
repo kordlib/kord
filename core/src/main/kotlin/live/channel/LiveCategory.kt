@@ -29,6 +29,10 @@ fun LiveCategory.onCreate(block: suspend (CategoryCreateEvent) -> Unit) = on(con
 @KordPreview
 fun LiveCategory.onUpdate(block: suspend (CategoryUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the live entity is shutdown",
+    ReplaceWith("LiveCategory.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is CategoryDeleteEvent || it is GuildDeleteEvent) {
@@ -36,9 +40,17 @@ inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) =
     }
 }
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveCategory.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveCategory.onDelete(block: suspend (CategoryDeleteEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveCategory.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveCategory.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 

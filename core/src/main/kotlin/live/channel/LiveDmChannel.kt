@@ -28,6 +28,10 @@ fun LiveDmChannel.onCreate(block: suspend (DMChannelCreateEvent) -> Unit) = on(c
 @KordPreview
 fun LiveDmChannel.onUpdate(block: suspend (DMChannelUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the live entity is shutdown",
+    ReplaceWith("LiveDmChannel.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 inline fun LiveDmChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is DMChannelDeleteEvent || it is GuildDeleteEvent) {
@@ -35,9 +39,17 @@ inline fun LiveDmChannel.onShutDown(crossinline block: suspend (Event) -> Unit) 
     }
 }
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveDmChannel.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveDmChannel.onDelete(block: suspend (DMChannelDeleteEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveDmChannel.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveDmChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 

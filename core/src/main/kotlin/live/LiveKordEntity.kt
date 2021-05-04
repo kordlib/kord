@@ -32,6 +32,9 @@ abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher, parent: J
 
     override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(parent)
 
+    var shutdownAction: (() -> Unit)? = null
+    private set
+
     private val mutex = Mutex()
 
     @Suppress("EXPERIMENTAL_API_USAGE")
@@ -44,8 +47,13 @@ abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher, parent: J
     protected abstract fun filter(event: Event): Boolean
     protected abstract fun update(event: Event)
 
+    fun onShutDown(action: (() -> Unit)?){
+        shutdownAction = action
+    }
+
     override fun shutDown() {
-        cancel("Shutdown executed")
+        shutdownAction?.invoke()
+        cancel()
     }
 }
 
