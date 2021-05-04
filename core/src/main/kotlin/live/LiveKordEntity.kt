@@ -28,9 +28,12 @@ interface LiveKordEntity : KordEntity, CoroutineScope {
 }
 
 @KordPreview
-abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher) : LiveKordEntity {
+abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher, parent: Job) : LiveKordEntity {
 
-    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob()
+    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(parent)
+
+    var shutdownAction: (() -> Unit)? = null
+    private set
 
     private val mutex = Mutex()
 
@@ -44,8 +47,13 @@ abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher) : LiveKor
     protected abstract fun filter(event: Event): Boolean
     protected abstract fun update(event: Event)
 
+    fun onShutDown(action: (() -> Unit)?){
+        shutdownAction = action
+    }
+
     override fun shutDown() {
-        cancel("Shutdown executed")
+        shutdownAction?.invoke()
+        cancel()
     }
 }
 

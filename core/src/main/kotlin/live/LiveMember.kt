@@ -11,6 +11,7 @@ import dev.kord.core.event.guild.MemberUpdateEvent
 import dev.kord.core.live.channel.LiveGuildChannel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveMember(this, dispatcher)
@@ -25,9 +26,17 @@ fun LiveMember.onLeave(block: suspend (MemberLeaveEvent) -> Unit) = on(consumer 
 @KordPreview
 fun LiveMember.onUpdate(block: suspend (MemberUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveMember.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveMember.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the live entity is shutdown",
+    ReplaceWith("LiveMember.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is MemberLeaveEvent || it is BanAddEvent || it is GuildDeleteEvent) {
@@ -35,6 +44,10 @@ inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Uni
     }
 }
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveMember.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
@@ -42,7 +55,7 @@ fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = 
 class LiveMember(
     member: Member,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher), KordEntity by member {
+) : AbstractLiveKordEntity(dispatcher, member.kord.coroutineContext.job), KordEntity by member {
     var member = member
         private set
 

@@ -18,6 +18,7 @@ import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 fun Guild.live(dispatcher: CoroutineDispatcher = Dispatchers.Default): LiveGuild =
@@ -119,6 +120,10 @@ fun LiveGuild.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(cons
 @KordPreview
 fun LiveGuild.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveGuild.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
@@ -126,7 +131,7 @@ fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(cons
 class LiveGuild(
     guild: Guild,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher), KordEntity by guild {
+) : AbstractLiveKordEntity(dispatcher, guild.kord.coroutineContext.job), KordEntity by guild {
 
     var guild: Guild = guild
         private set
