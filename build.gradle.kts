@@ -177,8 +177,8 @@ subprojects {
                 if (!isJitPack) {
                     repositories {
                         maven {
-//                            url = if (Library.isSnapshot) uri(Repo.snapshotsUrl)
-//                            else uri(Repo.releasesUrl)
+                            url = if (Library.isSnapshot) uri(Repo.snapshotsUrl)
+                            else uri(Repo.releasesUrl)
 
                             credentials {
                                 username = System.getenv("NEXUS_USER")
@@ -218,6 +218,7 @@ tasks {
     dokkaHtmlMultiModule.configure {
         dependsOn(clean)
         outputDirectory.set(file(dokkaOutputDir))
+        fileLayout.set(org.jetbrains.dokka.gradle.DokkaMultiModuleFileLayout.)
 //        documentationFileName.set("DokkaDescription.md")
     }
 
