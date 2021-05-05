@@ -20,7 +20,6 @@ import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordExperimental::class, KordPreview::class)
-@EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
 class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
 
     @BeforeTest

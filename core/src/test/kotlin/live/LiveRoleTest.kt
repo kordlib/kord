@@ -18,7 +18,6 @@ import kotlin.test.Test
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordExperimental::class, KordPreview::class)
-@EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
 class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
 
     lateinit var role: Role
