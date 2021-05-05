@@ -35,6 +35,9 @@ fun LiveGuild.onEmojisUpdate(block: suspend (EmojisUpdateEvent) -> Unit) = on(co
 fun LiveGuild.onIntegrationsUpdate(block: suspend (IntegrationsUpdateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
+fun LiveGuild.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = block)
+
+@KordPreview
 fun LiveGuild.onBanRemove(block: suspend (BanRemoveEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
@@ -141,6 +144,7 @@ class LiveGuild(
 
         is IntegrationsUpdateEvent -> event.guildId == guild.id
 
+        is BanAddEvent -> event.guildId == guild.id
         is BanRemoveEvent -> event.guildId == guild.id
 
         is PresenceUpdateEvent -> event.guildId == guild.id
