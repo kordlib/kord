@@ -13,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.test.*
@@ -21,7 +20,7 @@ import kotlin.test.*
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordExperimental::class, KordPreview::class)
 @EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
-class LiveKordEntityTest : AbstractLiveEntityTest() {
+class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityMock>() {
 
     @OptIn(KordPreview::class)
     inner class LiveEntityMock(override val kord: Kord) :
@@ -40,26 +39,9 @@ class LiveKordEntityTest : AbstractLiveEntityTest() {
         }
     }
 
-    override val token = System.getenv("KORD_TEST_TOKEN")
-
-    private lateinit var live: LiveEntityMock
-
-    @BeforeAll
-    override fun onBeforeAll() {
-        super.onBeforeAll()
-        kordLoginAsync()
-    }
-
     @BeforeTest
     fun onBefore() {
         live = LiveEntityMock(kord)
-    }
-
-    @AfterTest
-    fun onAfter() {
-        if (live.isActive) {
-            live.shutdown()
-        }
     }
 
     @Test

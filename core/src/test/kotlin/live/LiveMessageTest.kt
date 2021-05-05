@@ -19,9 +19,7 @@ import kotlin.test.*
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordExperimental::class, KordPreview::class)
 @EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
-class LiveMessageTest : AbstractLiveEntityTest() {
-
-    override val token = System.getenv("KORD_TEST_TOKEN")
+class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
 
     private lateinit var category: Category
 
@@ -29,12 +27,9 @@ class LiveMessageTest : AbstractLiveEntityTest() {
 
     private lateinit var message: Message
 
-    private lateinit var live: LiveMessage
-
     @BeforeAll
     override fun onBeforeAll() = runBlocking {
         super.onBeforeAll()
-        kordLoginAsync()
         guild = createGuild()
         category = createCategory(guild!!)
         channel = createTextChannel(category)
@@ -44,13 +39,6 @@ class LiveMessageTest : AbstractLiveEntityTest() {
     fun onBefore() = runBlocking {
         message = createMessage()
         live = message.live()
-    }
-
-    @AfterTest
-    fun onAfter() {
-        if (live.isActive) {
-            live.shutdown()
-        }
     }
 
     private suspend fun createMessage(): Message = channel.createMessage(UUID.randomUUID().toString())
@@ -140,7 +128,7 @@ class LiveMessageTest : AbstractLiveEntityTest() {
                 countDown()
             }
 
-            // Create message already created ?
+            // Message already created ?
         }
     }
 

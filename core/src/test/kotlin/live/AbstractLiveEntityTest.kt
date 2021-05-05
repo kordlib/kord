@@ -1,11 +1,13 @@
 package live
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.createTextChannel
 import dev.kord.core.behavior.createCategory
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.channel.Category
 import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.rest.builder.channel.CategoryCreateBuilder
 import dev.kord.rest.builder.channel.TextChannelCreateBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
@@ -18,19 +20,24 @@ import org.junit.jupiter.api.BeforeAll
 import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import kotlin.test.AfterTest
 import kotlin.test.assertEquals
 
-abstract class AbstractLiveEntityTest {
+@OptIn(KordPreview::class)
+abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
-    abstract val token: String
+    private var token: String = System.getenv("KORD_TEST_TOKEN")
 
     protected lateinit var kord: Kord
+
+    protected lateinit var live: LIVE
 
     protected var guild: Guild? = null
 
     @BeforeAll
     open fun onBeforeAll() = runBlocking {
         kord = createKord()
+        kordLoginAsync()
     }
 
     @AfterAll
@@ -42,6 +49,13 @@ abstract class AbstractLiveEntityTest {
                 kord.logout()
                 kord.shutdown()
             }
+        }
+    }
+
+    @AfterTest
+    open fun onAfter() {
+        if (this::live.isInitialized && live.isActive) {
+            live.shutdown()
         }
     }
 
