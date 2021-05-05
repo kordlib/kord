@@ -2,18 +2,20 @@ package live
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
-import dev.kord.core.behavior.edit
+import dev.kord.common.entity.DiscordPartialEmoji
+import dev.kord.common.entity.MessageReactionAddData
+import dev.kord.common.entity.MessageType
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.cache.data.MessageData
+import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.ReactionEmoji
-import dev.kord.core.entity.channel.Category
-import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.live.*
+import dev.kord.gateway.MessageReactionAdd
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
-import java.util.*
 import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -21,27 +23,35 @@ import kotlin.test.*
 @EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
 class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
 
-    private lateinit var category: Category
-
-    private lateinit var channel: TextChannel
-
-    private lateinit var message: Message
-
-    @BeforeAll
-    override fun onBeforeAll() = runBlocking {
-        super.onBeforeAll()
-        guild = createGuild()
-        category = createCategory(guild!!)
-        channel = createTextChannel(category)
-    }
-
     @BeforeTest
     fun onBefore() = runBlocking {
-        message = createMessage()
-        live = message.live()
+        //message = createMessage(channel)
+        live = LiveMessage(
+            guildId = null,
+            message = Message(
+                kord = kord,
+                data = MessageData(
+                    id = Snowflake(0),
+                    channelId = Snowflake(1),
+                    author = UserData(
+                        id = Snowflake(2),
+                        username = "test",
+                        discriminator = "test"
+                    ),
+                    content = "",
+                    timestamp = "",
+                    tts = false,
+                    mentionEveryone = false,
+                    mentions = emptyList(),
+                    mentionRoles = emptyList(),
+                    attachments = emptyList(),
+                    embeds = emptyList(),
+                    pinned = false,
+                    type = MessageType.Default
+                )
+            )
+        )
     }
-
-    private suspend fun createMessage(): Message = channel.createMessage(UUID.randomUUID().toString())
 
     @Test
     fun `Check onReactionAdd is called when event is received`() {
@@ -53,7 +63,27 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            message.addReaction(emojiExpected)
+            val eventOtherMessage = MessageReactionAdd(
+                MessageReactionAddData(
+                    messageId = Snowflake(1),
+                    channelId = Snowflake(1),
+                    userId = Snowflake(2),
+                    emoji = DiscordPartialEmoji(null, emojiExpected.name)
+                ),
+                0
+            )
+            sendEvent(eventOtherMessage)
+
+            val event = MessageReactionAdd(
+                MessageReactionAddData(
+                    messageId = Snowflake(0),
+                    channelId = Snowflake(1),
+                    userId = Snowflake(2),
+                    emoji = DiscordPartialEmoji(null, emojiExpected.name)
+                ),
+                0
+            )
+            sendEvent(event)
         }
     }
 
@@ -68,8 +98,25 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            message.addReaction(emojiOther)
-            message.addReaction(emojiExpected)
+            live.onReactionAdd {
+                println(it)
+            }
+
+            fun createEvent(emoji: ReactionEmoji) = MessageReactionAdd(
+                MessageReactionAddData(
+                    messageId = Snowflake(0),
+                    channelId = Snowflake(1),
+                    userId = Snowflake(2),
+                    emoji = DiscordPartialEmoji(null, emoji.name)
+                ),
+                0
+            )
+
+            val eventOtherMessage = createEvent(emojiOther)
+            sendEvent(eventOtherMessage)
+
+            val event = createEvent(emojiExpected)
+            sendEvent(event)
         }
     }
 

@@ -6,10 +6,8 @@ import dev.kord.core.behavior.ban
 import dev.kord.core.behavior.createRole
 import dev.kord.core.behavior.edit
 import dev.kord.core.entity.Member
-import dev.kord.core.live.LiveMember
-import dev.kord.core.live.live
-import dev.kord.core.live.onLeave
-import dev.kord.core.live.onUpdate
+import dev.kord.core.entity.Message
+import dev.kord.core.live.*
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
@@ -29,11 +27,11 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     override fun onBeforeAll() = runBlocking {
         super.onBeforeAll()
         guild = createGuild()
+        member = createMember()
     }
 
     @BeforeTest
     fun onBefore() = runBlocking {
-        member = createMember()
         live = member.live()
     }
 
