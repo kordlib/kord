@@ -2,9 +2,9 @@ object Versions {
     const val kotlin = "1.5.0"
     const val kotlinxSerialization = "1.0.0"
     const val ktor = "1.5.3"
-    const val kotlinxCoroutines = "1.4.3"
+    const val kotlinxCoroutines = "1.5.0-RC"
     const val kotlinLogging = "2.0.4"
-    const val atomicFu = "0.15.2"
+    const val atomicFu = "0.16.1"
     const val binaryCompatibilityValidator = "0.4.0"
 
     //test deps

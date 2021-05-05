@@ -2,23 +2,21 @@ import dev.kord.common.entity.*
 import dev.kord.common.ratelimit.BucketRateLimiter
 import dev.kord.gateway.*
 import dev.kord.gateway.retry.LinearRetry
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.websocket.WebSockets
-import io.ktor.util.KtorExperimentalAPI
+import io.ktor.client.features.websocket.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
-import java.time.Duration
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.seconds
-import kotlin.time.toKotlinDuration
 
+@OptIn(DelicateCoroutinesApi::class)
 @FlowPreview
 @ExperimentalTime
 @ExperimentalCoroutinesApi
@@ -34,8 +32,8 @@ suspend fun main(args: Array<String>) {
             }
         }
 
-        reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
-        sendRateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
+        reconnectRetry = LinearRetry(Duration.seconds(2), Duration.seconds(20), 10)
+        sendRateLimiter = BucketRateLimiter(120, Duration.seconds(60))
     }
 
     gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.Default).onEach {
@@ -59,7 +57,7 @@ suspend fun main(args: Array<String>) {
                     afk = false,
                     activities = listOf(
                         DiscordBotActivity(
-                            "Ping is ${gateway.ping.value?.toLongMilliseconds()}",
+                            "Ping is ${gateway.ping.value?.inWholeMilliseconds}",
                             ActivityType.Game
                         )
                     ),

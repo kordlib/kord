@@ -28,7 +28,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = Jvm.target
         freeCompilerArgs = listOf(
-                CompilerArguments.inlineClasses,
                 CompilerArguments.coroutines,
                 CompilerArguments.time,
                 CompilerArguments.optIn

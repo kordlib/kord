@@ -21,7 +21,7 @@ buildscript {
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version Versions.kotlin
-    id("org.jetbrains.dokka") version "1.4.0"
+    id("org.jetbrains.dokka") version "1.4.30"
     id("org.ajoberstar.git-publish") version "2.1.3"
 
     signing
@@ -33,7 +33,6 @@ apply(plugin = "binary-compatibility-validator")
 
 repositories {
     mavenCentral()
-    jcenter()
     mavenLocal()
 }
 
@@ -178,8 +177,8 @@ subprojects {
                 if (!isJitPack) {
                     repositories {
                         maven {
-                            url = if (Library.isSnapshot) uri(Repo.snapshotsUrl)
-                            else uri(Repo.releasesUrl)
+//                            url = if (Library.isSnapshot) uri(Repo.snapshotsUrl)
+//                            else uri(Repo.releasesUrl)
 
                             credentials {
                                 username = System.getenv("NEXUS_USER")
@@ -219,7 +218,7 @@ tasks {
     dokkaHtmlMultiModule.configure {
         dependsOn(clean)
         outputDirectory.set(file(dokkaOutputDir))
-        documentationFileName.set("DokkaDescription.md")
+//        documentationFileName.set("DokkaDescription.md")
     }
 
 
