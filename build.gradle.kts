@@ -218,7 +218,6 @@ tasks {
     dokkaHtmlMultiModule.configure {
         dependsOn(clean)
         outputDirectory.set(file(dokkaOutputDir))
-//        documentationFileName.set("DokkaDescription.md")
     }
 
 
