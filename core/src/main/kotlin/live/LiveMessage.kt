@@ -54,6 +54,10 @@ inline fun LiveMessage.onReactionRemove(
 @KordPreview
 fun LiveMessage.onReactionRemoveAll(block: suspend (ReactionRemoveAllEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is never called because the message is already created",
+    ReplaceWith("LiveChannel.onMessageCreate")
+)
 @KordPreview
 fun LiveMessage.onCreate(block: suspend (MessageCreateEvent) -> Unit) = on(consumer = block)
 
