@@ -218,7 +218,6 @@ tasks {
     dokkaHtmlMultiModule.configure {
         dependsOn(clean)
         outputDirectory.set(file(dokkaOutputDir))
-        fileLayout.set(org.jetbrains.dokka.gradle.DokkaMultiModuleFileLayout.)
 //        documentationFileName.set("DokkaDescription.md")
     }
 
