@@ -2,12 +2,16 @@ package live
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.cache.data.UserData
+import dev.kord.core.entity.User
 import dev.kord.core.live.LiveUser
-import dev.kord.core.live.live
 import dev.kord.core.live.onUpdate
+import dev.kord.gateway.UserUpdate
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -15,9 +19,26 @@ import kotlin.test.Test
 @OptIn(KordExperimental::class, KordPreview::class)
 class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
 
+    private lateinit var userId: Snowflake
+
+    @BeforeAll
+    override fun onBeforeAll() {
+        super.onBeforeAll()
+        userId = Snowflake(0)
+    }
+
     @BeforeTest
     fun onBefore() = runBlocking {
-        live = kord.getSelf().live()
+        live = LiveUser(
+            user = User(
+                kord = kord,
+                data = UserData(
+                    id = userId,
+                    username = "",
+                    discriminator = ""
+                )
+            )
+        )
     }
 
     @Test
@@ -27,9 +48,17 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
                 countDown()
             }
 
-            kord.editSelf {
-                this.username = "RENAME_TEST_LIVE_USER"
-            }
+            val event = UserUpdate(
+                DiscordUser(
+                    id = userId,
+                    username = "",
+                    discriminator = "",
+                    avatar = null
+                ),
+                0
+            )
+
+            sendEvent(event)
         }
     }
 }

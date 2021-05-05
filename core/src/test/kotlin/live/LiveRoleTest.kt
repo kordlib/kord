@@ -1,18 +1,18 @@
 package live
 
-import dev.kord.common.Color
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
-import dev.kord.core.behavior.createRole
-import dev.kord.core.behavior.edit
+import dev.kord.common.entity.*
+import dev.kord.core.cache.data.RoleData
 import dev.kord.core.entity.Role
 import dev.kord.core.live.LiveRole
-import dev.kord.core.live.live
 import dev.kord.core.live.onUpdate
+import dev.kord.gateway.GuildDelete
+import dev.kord.gateway.GuildRoleDelete
+import dev.kord.gateway.GuildRoleUpdate
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -20,24 +20,32 @@ import kotlin.test.Test
 @OptIn(KordExperimental::class, KordPreview::class)
 class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
 
-    lateinit var role: Role
+    private lateinit var roleId: Snowflake
 
     @BeforeAll
-    override fun onBeforeAll() = runBlocking {
+    override fun onBeforeAll() {
         super.onBeforeAll()
-        guild = createGuild()
-        role = createRole()
+        roleId = Snowflake(0)
     }
 
     @BeforeTest
     fun onBefore() {
-        live = role.live()
-    }
-
-    private suspend fun createRole(): Role = requireGuild().createRole {
-        name = "ROLE_TEST_LIVE_ROLE"
-        color = Color(0)
-        mentionable = true
+        live = LiveRole(
+            Role(
+                kord = kord,
+                data = RoleData(
+                    id = roleId,
+                    guildId = guildId,
+                    name = "test",
+                    color = 0,
+                    hoisted = false,
+                    position = 0,
+                    permissions = Permissions(Permission.All),
+                    managed = false,
+                    mentionable = false
+                )
+            )
+        )
     }
 
     @Test
@@ -47,9 +55,24 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 countDown()
             }
 
-            role.edit {
-                color = Color(255, 255, 255)
-            }
+            val event = GuildRoleUpdate(
+                DiscordGuildRole(
+                    guildId = guildId,
+                    role = DiscordRole(
+                        id = roleId,
+                        name = "",
+                        color = 0,
+                        hoist = false,
+                        position = 0,
+                        permissions = Permissions(Permission.All),
+                        managed = false,
+                        mentionable = false
+                    )
+                ),
+                0
+            )
+
+            sendEvent(event)
         }
     }
 
@@ -59,9 +82,17 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
             live.onShutdown {
                 countDown()
             }
-            role.delete()
+
+            val event = GuildRoleDelete(
+                DiscordDeletedGuildRole(
+                    guildId = guildId,
+                    id = roleId
+                ),
+                0
+            )
+
+            sendEvent(event)
         }
-        role = createRole()
     }
 
     @Test
@@ -70,9 +101,15 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
             live.onShutdown {
                 countDown()
             }
-            requireGuild().delete()
+
+            val event = GuildDelete(
+                DiscordUnavailableGuild(
+                    id = guildId
+                ),
+                0
+            )
+
+            sendEvent(event)
         }
-        guild = createGuild()
-        role = createRole()
     }
 }

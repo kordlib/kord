@@ -14,7 +14,6 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

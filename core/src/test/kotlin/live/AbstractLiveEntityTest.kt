@@ -5,25 +5,11 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
-import dev.kord.core.behavior.channel.createTextChannel
-import dev.kord.core.behavior.channel.createVoiceChannel
-import dev.kord.core.behavior.createCategory
-import dev.kord.core.builder.kord.KordBuilder
 import dev.kord.core.builder.kord.Shards
-import dev.kord.core.cache.KordCacheBuilder
-import dev.kord.core.entity.Guild
-import dev.kord.core.entity.Message
-import dev.kord.core.entity.channel.Category
-import dev.kord.core.entity.channel.TextChannel
-import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.gateway.MasterGateway
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
-import dev.kord.rest.builder.channel.CategoryCreateBuilder
-import dev.kord.rest.builder.channel.TextChannelCreateBuilder
-import dev.kord.rest.builder.channel.VoiceChannelCreateBuilder
-import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
@@ -34,7 +20,6 @@ import kotlinx.coroutines.flow.StateFlow
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import java.time.Clock
-import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
@@ -65,15 +50,18 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
     protected lateinit var kord: Kord
 
+    protected lateinit var guildId: Snowflake
+
     protected lateinit var live: LIVE
 
     @BeforeAll
     open fun onBeforeAll() = runBlocking {
         kord = createKord()
+        guildId = Snowflake(2)
     }
 
     @AfterAll
-    open fun onAfterAll() = runBlocking<Unit> {
+    open fun onAfterAll() = runBlocking {
         if (kord.isActive) {
             kord.logout()
             kord.shutdown()

@@ -3,15 +3,12 @@ package live
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.behavior.ban
-import dev.kord.core.behavior.createRole
 import dev.kord.core.behavior.edit
 import dev.kord.core.entity.Member
-import dev.kord.core.entity.Message
 import dev.kord.core.live.*
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
