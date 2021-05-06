@@ -131,6 +131,7 @@ sealed class Permission(val code: DiscordBitSet) {
     object ManageGuild : Permission(0x00000020)
     object AddReactions : Permission(0x00000040)
     object ViewAuditLog : Permission(0x00000080)
+    object Stream : Permission(0x00000200)
     object ViewChannel : Permission(0x00000400)
     object SendMessages : Permission(0x00000800)
     object SendTTSMessages : Permission(0x00001000)
