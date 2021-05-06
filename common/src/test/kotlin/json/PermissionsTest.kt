@@ -1,14 +1,27 @@
 package json
 
 import dev.kord.common.DiscordBitSet
-import dev.kord.common.entity.DiscordRole
-import dev.kord.common.entity.Permissions
+import dev.kord.common.EmptyBitSet
+import dev.kord.common.entity.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.junit.jupiter.api.Test
 
 class PermissionsTest {
+
+    @Test
+    fun `adding permissions together does not swallow the universe`() {
+        Permission.values.fold(Permissions(DiscordBitSet(0))) { acc, permission ->
+            acc + permission
+        }
+    }
+
+    @Test
+    fun `Permission All does not swallow the universe`() {
+        Permission.All //oh yeah, this is worthy of a test
+    }
+
     @Test
     fun `permissions serialization test`() {
         val expected = buildJsonObject {

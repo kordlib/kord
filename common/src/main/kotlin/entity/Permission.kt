@@ -131,6 +131,7 @@ sealed class Permission(val code: DiscordBitSet) {
     object ManageGuild : Permission(0x00000020)
     object AddReactions : Permission(0x00000040)
     object ViewAuditLog : Permission(0x00000080)
+    object Stream : Permission(0x00000200)
     object ViewChannel : Permission(0x00000400)
     object SendMessages : Permission(0x00000800)
     object SendTTSMessages : Permission(0x00001000)
@@ -155,7 +156,7 @@ sealed class Permission(val code: DiscordBitSet) {
     object ManageEmojis : Permission(0x40000000)
     object UseSlashCommands : Permission(0x80000000)
     object RequestToSpeak : Permission(0x100000000)
-    object All : Permission(Permission.values.fold(EmptyBitSet()) { acc, value -> acc + value.code })
+    object All : Permission(values.fold(EmptyBitSet()) { acc, value -> acc.add(value.code); acc })
 
     companion object {
         val values: Set<Permission>
