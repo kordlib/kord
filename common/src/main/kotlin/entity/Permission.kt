@@ -155,7 +155,7 @@ sealed class Permission(val code: DiscordBitSet) {
     object ManageEmojis : Permission(0x40000000)
     object UseSlashCommands : Permission(0x80000000)
     object RequestToSpeak : Permission(0x100000000)
-    object All : Permission(Permission.values.fold(EmptyBitSet()) { acc, value -> acc + value.code })
+    object All : Permission(values.fold(EmptyBitSet()) { acc, value -> acc.add(value.code); acc })
 
     companion object {
         val values: Set<Permission>
