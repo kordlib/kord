@@ -20,6 +20,10 @@ fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveMem
 inline fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveMember.() -> Unit) =
     this.live(dispatcher).apply(block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveMember.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveMember.onLeave(block: suspend (MemberLeaveEvent) -> Unit) = on(consumer = block)
 
@@ -65,7 +69,6 @@ class LiveMember(
         is BanAddEvent -> member.id == event.user.id
         is GuildDeleteEvent -> member.guildId == event.guildId
         else -> false
-
     }
 
     override fun update(event: Event) = when (event) {

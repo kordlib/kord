@@ -1,6 +1,5 @@
 package live
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.core.cache.data.MessageData
@@ -9,11 +8,12 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.live.*
 import dev.kord.gateway.*
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
-import kotlin.test.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
@@ -26,8 +26,8 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        messageId = Snowflake(0)
-        channelId = Snowflake(1)
+        messageId = randomId()
+        channelId = randomId()
     }
 
     @BeforeTest
@@ -65,29 +65,25 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
 
             live.onReactionAdd {
-                assertEquals(channelId, it.channelId)
                 assertEquals(messageId, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
                 countDown()
             }
 
-            fun createEvent(channelId: Snowflake, messageId: Snowflake) = MessageReactionAdd(
+            fun createEvent(messageId: Snowflake) = MessageReactionAdd(
                 MessageReactionAddData(
                     messageId = messageId,
-                    channelId = channelId,
+                    channelId = randomId(),
                     userId = Snowflake(2),
                     emoji = DiscordPartialEmoji(null, emojiExpected.name)
                 ),
                 0
             )
 
-            val eventRandomChannel = createEvent(randomId(), messageId)
-            sendEvent(eventRandomChannel)
+            val eventRandomId = createEvent(randomId())
+            sendEvent(eventRandomId)
 
-            val eventRandomMessage = createEvent(channelId, randomId())
-            sendEvent(eventRandomMessage)
-
-            val event = createEvent(channelId, messageId)
+            val event = createEvent(messageId)
             sendEvent(event)
         }
     }
@@ -99,32 +95,28 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             val emojiOther = ReactionEmoji.Unicode("\uD83D\uDC3B")
 
             live.onReactionAdd(emojiExpected) {
-                assertEquals(channelId, it.channelId)
                 assertEquals(messageId, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
                 countDown()
             }
 
-            fun createEvent(channelId: Snowflake, messageId: Snowflake, emoji: ReactionEmoji) = MessageReactionAdd(
+            fun createEvent(messageId: Snowflake, emoji: ReactionEmoji) = MessageReactionAdd(
                 MessageReactionAddData(
                     messageId = messageId,
-                    channelId = channelId,
+                    channelId = randomId(),
                     userId = Snowflake(2),
                     emoji = DiscordPartialEmoji(null, emoji.name)
                 ),
                 0
             )
 
-            val eventRandomChannel = createEvent(randomId(), messageId, emojiExpected)
-            sendEvent(eventRandomChannel)
+            val eventRandomId = createEvent(randomId(), emojiExpected)
+            sendEvent(eventRandomId)
 
-            val eventRandomMessage = createEvent(channelId, randomId(), emojiExpected)
-            sendEvent(eventRandomMessage)
-
-            val eventOtherReaction = createEvent(channelId, messageId, emojiOther)
+            val eventOtherReaction = createEvent(messageId, emojiOther)
             sendEvent(eventOtherReaction)
 
-            val event = createEvent(channelId, messageId, emojiExpected)
+            val event = createEvent(messageId, emojiExpected)
             sendEvent(event)
         }
     }
@@ -135,29 +127,26 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
 
             live.onReactionRemove {
-                assertEquals(channelId, it.channelId)
                 assertEquals(messageId, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
                 countDown()
             }
 
-            fun createEvent(channelId: Snowflake, messageId: Snowflake) = MessageReactionRemove(
+            fun createEvent(messageId: Snowflake) = MessageReactionRemove(
                 MessageReactionRemoveData(
                     messageId = messageId,
-                    channelId = channelId,
+                    channelId = randomId(),
                     userId = Snowflake(2),
                     emoji = DiscordPartialEmoji(null, emojiExpected.name)
                 ),
                 0
             )
 
-            val eventRandomChannel = createEvent(randomId(), messageId)
-            sendEvent(eventRandomChannel)
 
-            val eventRandomMessage = createEvent(channelId, randomId())
-            sendEvent(eventRandomMessage)
+            val eventRandomId = createEvent(randomId())
+            sendEvent(eventRandomId)
 
-            val event = createEvent(channelId, messageId)
+            val event = createEvent(messageId)
             sendEvent(event)
         }
     }
@@ -169,32 +158,28 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             val emojiOther = ReactionEmoji.Unicode("\uD83D\uDC3B")
 
             live.onReactionRemove(emojiExpected) {
-                assertEquals(channelId, it.channelId)
                 assertEquals(messageId, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
                 countDown()
             }
 
-            fun createEvent(channelId: Snowflake, messageId: Snowflake, emoji: ReactionEmoji) = MessageReactionRemove(
+            fun createEvent(messageId: Snowflake, emoji: ReactionEmoji) = MessageReactionRemove(
                 MessageReactionRemoveData(
                     messageId = messageId,
-                    channelId = channelId,
+                    channelId = randomId(),
                     userId = Snowflake(2),
                     emoji = DiscordPartialEmoji(null, emoji.name)
                 ),
                 0
             )
 
-            val eventRandomChannel = createEvent(randomId(), messageId, emojiExpected)
-            sendEvent(eventRandomChannel)
+            val eventRandomId = createEvent(randomId(), emojiExpected)
+            sendEvent(eventRandomId)
 
-            val eventRandomMessage = createEvent(channelId, randomId(), emojiExpected)
-            sendEvent(eventRandomMessage)
-
-            val eventOtherReaction = createEvent(channelId, messageId, emojiOther)
+            val eventOtherReaction = createEvent(messageId, emojiOther)
             sendEvent(eventOtherReaction)
 
-            val event = createEvent(channelId, messageId, emojiExpected)
+            val event = createEvent(messageId, emojiExpected)
             sendEvent(event)
         }
     }
@@ -203,26 +188,22 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check onReactionRemoveAll is called when event is received`() {
         countdownContext(1) {
             live.onReactionRemoveAll {
-                assertEquals(channelId, it.channelId)
                 assertEquals(messageId, it.messageId)
                 countDown()
             }
 
-            fun createEvent(channelId: Snowflake, messageId: Snowflake) = MessageReactionRemoveAll(
+            fun createEvent(messageId: Snowflake) = MessageReactionRemoveAll(
                 AllRemovedMessageReactions(
-                    channelId = channelId,
+                    channelId = randomId(),
                     messageId = messageId,
                 ),
                 0
             )
 
-            val eventRandomChannel = createEvent(randomId(), messageId)
-            sendEvent(eventRandomChannel)
+            val eventRandomId = createEvent(randomId())
+            sendEvent(eventRandomId)
 
-            val eventRandomMessage = createEvent(channelId, randomId())
-            sendEvent(eventRandomMessage)
-
-            val event = createEvent(channelId, messageId)
+            val event = createEvent(messageId)
             sendEvent(event)
         }
     }
@@ -231,26 +212,22 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
-                assertEquals(channelId, it.channelId)
                 assertEquals(messageId, it.messageId)
                 countDown()
             }
 
-            fun createEvent(channelId: Snowflake, messageId: Snowflake) = MessageUpdate(
+            fun createEvent(messageId: Snowflake) = MessageUpdate(
                 DiscordPartialMessage(
                     id = messageId,
-                    channelId = channelId
+                    channelId = randomId()
                 ),
                 0
             )
 
-            val eventRandomChannel = createEvent(randomId(), messageId)
-            sendEvent(eventRandomChannel)
+            val eventRandomId = createEvent(randomId())
+            sendEvent(eventRandomId)
 
-            val eventRandomMessage = createEvent(channelId, randomId())
-            sendEvent(eventRandomMessage)
-
-            val event = createEvent(channelId, messageId)
+            val event = createEvent(messageId)
             sendEvent(event)
         }
     }
@@ -262,28 +239,21 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            fun createEvent(channelId: Snowflake, messageId: Snowflake) = MessageDelete(
+            fun createEvent(messageId: Snowflake) = MessageDelete(
                 DeletedMessage(
                     id = messageId,
-                    channelId = channelId
+                    channelId = randomId()
                 ),
                 0
             )
 
-            val eventRandomChannel = createEvent(randomId(), messageId)
-            sendEvent(eventRandomChannel)
+            val eventRandomId = createEvent(randomId())
+            sendEvent(eventRandomId)
+            waitAndCheckLiveIsActive()
 
-            assertTrue { live.isActive }
-
-            val eventRandomMessage = createEvent(channelId, randomId())
-            sendEvent(eventRandomMessage)
-
-            assertTrue { live.isActive }
-
-            val event = createEvent(channelId, messageId)
+            val event = createEvent(messageId)
             sendEvent(event)
-
-            assertFalse { live.isActive }
+            waitAndCheckLiveIsInactive()
         }
     }
 
@@ -294,33 +264,26 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            fun createEvent(channelId: Snowflake, messageId: Snowflake) = MessageDeleteBulk(
+            fun createEvent(messageId: Snowflake) = MessageDeleteBulk(
                 BulkDeleteData(
                     ids = mutableListOf(messageId),
-                    channelId = channelId
+                    channelId = randomId()
                 ),
                 0
             )
 
-            val eventRandomChannel = createEvent(randomId(), messageId)
-            sendEvent(eventRandomChannel)
+            val eventRandomId = createEvent(randomId())
+            sendEvent(eventRandomId)
+            waitAndCheckLiveIsActive()
 
-            assertTrue { live.isActive }
-
-            val eventRandomMessage = createEvent(channelId, randomId())
-            sendEvent(eventRandomMessage)
-
-            assertTrue { live.isActive }
-
-            val event = createEvent(channelId, messageId)
+            val event = createEvent(messageId)
             sendEvent(event)
-
-            assertFalse { live.isActive }
+            waitAndCheckLiveIsInactive()
         }
     }
 
     @Test
-    fun `Check onShutdown is called when event the channel delete event is received`() = runBlocking {
+    fun `Check onShutdown is called when event the channel delete event is received`() {
         countdownContext(1) {
             live.onShutdown {
                 countDown()
@@ -336,18 +299,16 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
 
             val eventRandomChannel = createEvent(randomId())
             sendEvent(eventRandomChannel)
-
-            assertTrue { live.isActive }
+            waitAndCheckLiveIsActive()
 
             val event = createEvent(channelId)
             sendEvent(event)
-
-            assertFalse { live.isActive }
+            waitAndCheckLiveIsInactive()
         }
     }
 
     @Test
-    fun `Check onShutdown is called when event the guild delete event is received`() = runBlocking {
+    fun `Check onShutdown is called when event the guild delete event is received`() {
         countdownContext(1) {
             live.onShutdown {
                 countDown()
@@ -362,13 +323,11 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
 
             val eventRandomGuild = createEvent(randomId())
             sendEvent(eventRandomGuild)
+            waitAndCheckLiveIsActive()
 
-            assertTrue { live.isActive }
-
-            val event = createEvent(channelId)
+            val event = createEvent(guildId)
             sendEvent(event)
-
-            assertFalse { live.isActive }
+            waitAndCheckLiveIsInactive()
         }
     }
 }

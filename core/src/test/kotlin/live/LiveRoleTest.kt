@@ -1,6 +1,5 @@
 package live
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.core.cache.data.RoleData
@@ -10,11 +9,11 @@ import dev.kord.core.live.onUpdate
 import dev.kord.gateway.GuildDelete
 import dev.kord.gateway.GuildRoleDelete
 import dev.kord.gateway.GuildRoleUpdate
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
-import kotlin.test.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
@@ -40,7 +39,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                     color = 0,
                     hoisted = false,
                     position = 0,
-                    permissions = Permissions(Permission.All),
+                    permissions = Permissions(Permission.CreateInstantInvite),
                     managed = false,
                     mentionable = false
                 )
@@ -52,21 +51,20 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
-                assertEquals(guildId, it.guildId)
                 assertEquals(roleId, it.role.id)
                 countDown()
             }
 
-            fun createEvent(guildId: Snowflake, roleId: Snowflake) = GuildRoleUpdate(
+            fun createEvent(roleId: Snowflake) = GuildRoleUpdate(
                 DiscordGuildRole(
-                    guildId = guildId,
+                    guildId = randomId(),
                     role = DiscordRole(
                         id = roleId,
                         name = "",
                         color = 0,
                         hoist = false,
                         position = 0,
-                        permissions = Permissions(Permission.All),
+                        permissions = Permissions(Permission.BanMembers),
                         managed = false,
                         mentionable = false
                     )
@@ -74,13 +72,10 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 0
             )
 
-            val eventRandomGuild = createEvent(randomId(), roleId)
-            sendEvent(eventRandomGuild)
-
-            val eventRandomRole = createEvent(guildId, randomId())
+            val eventRandomRole = createEvent(randomId())
             sendEvent(eventRandomRole)
 
-            val event = createEvent(guildId, roleId)
+            val event = createEvent(roleId)
             sendEvent(event)
         }
     }
@@ -92,7 +87,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 countDown()
             }
 
-            fun createEvent(guildId: Snowflake, roleId: Snowflake) = GuildRoleDelete(
+            fun createEvent(roleId: Snowflake) = GuildRoleDelete(
                 DiscordDeletedGuildRole(
                     guildId = guildId,
                     id = roleId
@@ -100,25 +95,18 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 0
             )
 
-            val eventRandomGuild = createEvent(randomId(), roleId)
-            sendEvent(eventRandomGuild)
-
-            assertTrue { live.isActive }
-
-            val eventRandomRole = createEvent(guildId, randomId())
+            val eventRandomRole = createEvent(randomId())
             sendEvent(eventRandomRole)
+            waitAndCheckLiveIsActive()
 
-            assertTrue { live.isActive }
-
-            val event = createEvent(guildId, roleId)
+            val event = createEvent(roleId)
             sendEvent(event)
-
-            assertFalse { live.isActive }
+            waitAndCheckLiveIsInactive()
         }
     }
 
     @Test
-    fun `Check onShutdown is called when the guild is deleted`() = runBlocking {
+    fun `Check onShutdown is called when the guild is deleted`() {
         countdownContext(1) {
             live.onShutdown {
                 countDown()
@@ -133,13 +121,11 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
 
             val eventRandomGuild = createEvent(randomId())
             sendEvent(eventRandomGuild)
-
-            assertTrue { live.isActive }
+            waitAndCheckLiveIsActive()
 
             val event = createEvent(guildId)
             sendEvent(event)
-
-            assertFalse { live.isActive }
+            waitAndCheckLiveIsInactive()
         }
     }
 }

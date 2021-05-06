@@ -1,42 +1,41 @@
 package live
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordGuildBan
+import dev.kord.common.entity.DiscordUnavailableGuild
+import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.event.Event
-import dev.kord.core.event.channel.CategoryCreateEvent
 import dev.kord.core.event.guild.BanAddEvent
-import dev.kord.core.event.guild.GuildCreateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
 import dev.kord.gateway.GuildBanAdd
 import dev.kord.gateway.GuildDelete
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.job
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
+import java.util.concurrent.CountDownLatch
 import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
 class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityMock>() {
 
-    @OptIn(KordPreview::class)
+    @Disabled
     inner class LiveEntityMock(override val kord: Kord) :
         AbstractLiveKordEntity(Dispatchers.Default, kord.coroutineContext.job) {
 
-        var counterUpdate: Int = 0
+        var countDownLatch: CountDownLatch? = null
 
-        override val id: Snowflake = Snowflake(1)
+        override val id: Snowflake = randomId()
 
         override fun filter(event: Event): Boolean = event is BanAddEvent
 
         override fun update(event: Event) {
             if (event is BanAddEvent) {
-                counterUpdate++
+                countDownLatch?.countDown()
             }
         }
     }
@@ -47,14 +46,14 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     }
 
     @Test
-    fun `Shutdown entity cancel the lifecycle`() = runBlocking {
+    fun `Shutdown entity cancel the lifecycle`() {
         assertTrue(live.isActive)
         live.shutdown()
         assertFalse(live.isActive)
     }
 
     @Test
-    fun `Children job are cancelled when the live entity is shutdown`() = runBlocking {
+    fun `Children job are cancelled when the live entity is shutdown`() {
         val job = live.on<Event> { }
         assertTrue(job.isActive)
 
@@ -110,10 +109,12 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     }
 
     @Test
-    fun `Check if a the filter and update are executed`() = runBlocking {
-        assertEquals(0, live.counterUpdate)
+    fun `Check if the filter and update are executed`() {
+        // Second countdown in the live entity to check
+        // if the method update is called
+        countdownContext(2, waitMs = 5000) {
+            live.countDownLatch = this
 
-        countdownContext(1) {
             live.on<BanAddEvent> {
                 countDown()
             }
@@ -146,11 +147,6 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
             sendEvent(eventGuildDelete)
         }
-
-        // Two expected because there is 2 jobs.
-        // So when the CategoryCreateEvent is called
-        // each job process the update method
-        assertEquals(2, live.counterUpdate)
     }
 
     @Test

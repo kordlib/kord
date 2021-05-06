@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import java.time.Clock
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -27,6 +28,8 @@ import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.random.Random
 import kotlin.test.AfterTest
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import kotlin.time.Duration
 
 @OptIn(KordPreview::class)
@@ -49,6 +52,10 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         override suspend fun stop() {}
     }
 
+    companion object {
+        private const val DELAY_WAIT_LIVE_ENTITY_CHECK_HEALTH = 50L
+    }
+
     protected lateinit var kord: Kord
 
     protected lateinit var guildId: Snowflake
@@ -58,7 +65,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     @BeforeAll
     open fun onBeforeAll() = runBlocking {
         kord = createKord()
-        guildId = Snowflake(2)
+        guildId = randomId()
     }
 
     @AfterAll
@@ -89,7 +96,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     protected inline fun countdownContext(
         initialCount: Int,
         expectedCount: Long = 0,
-        waitMs: Long = 1000,
+        waitMs: Long = 5000,
         crossinline action: suspend CountDownLatch.() -> Unit
     ) = runBlocking {
         val countdown = CountDownLatch(initialCount)
@@ -102,5 +109,17 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
     fun randomId() = Snowflake(Random.nextLong())
 
-    protected suspend fun sendEvent(event: Event) = GatewayMock.events.emit(event)
+    protected suspend fun sendEvent(event: Event) {
+        GatewayMock.events.emit(event)
+    }
+
+    protected suspend fun waitAndCheckLiveIsActive() {
+        delay(DELAY_WAIT_LIVE_ENTITY_CHECK_HEALTH)
+        assertTrue { live.isActive }
+    }
+
+    protected suspend fun waitAndCheckLiveIsInactive() {
+        delay(DELAY_WAIT_LIVE_ENTITY_CHECK_HEALTH)
+        assertFalse { live.isActive }
+    }
 }

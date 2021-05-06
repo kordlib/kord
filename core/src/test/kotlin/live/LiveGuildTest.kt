@@ -45,7 +45,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    fun `Check onEmojisUpdate is called when event is received`() = runBlocking {
+    fun `Check onEmojisUpdate is called when event is received`() {
         countdownContext(1) {
             live.onEmojisUpdate {
                 assertEquals(guildId, it.guildId)
@@ -127,7 +127,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    fun `Check onPresenceUpdate is called when event is received`() = runBlocking {
+    fun `Check onPresenceUpdate is called when event is received`() {
         countdownContext(1) {
             live.onPresenceUpdate {
                 assertEquals(guildId, it.guildId)
@@ -157,8 +157,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    fun `Check onVoiceServerUpdate is called when event is received`() = runBlocking {
-        countdownContext(2) {
+    fun `Check onVoiceServerUpdate is called when event is received`() {
+        countdownContext(1) {
             live.onVoiceServerUpdate {
                 assertEquals(guildId, it.guildId)
                 countDown()
@@ -182,8 +182,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    fun `Check VoiceStateUpdateEvent is called when event is received`() = runBlocking {
-        countdownContext(2) {
+    fun `Check VoiceStateUpdateEvent is called when event is received`() {
+        countdownContext(1) {
             live.onVoiceStateUpdate {
                 assertEquals(guildId, it.state.guildId)
                 countDown()
