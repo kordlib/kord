@@ -55,28 +55,24 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 countDown()
             }
 
-            fun createEvent(roleId: Snowflake) = GuildRoleUpdate(
-                DiscordGuildRole(
-                    guildId = randomId(),
-                    role = DiscordRole(
-                        id = roleId,
-                        name = "",
-                        color = 0,
-                        hoist = false,
-                        position = 0,
-                        permissions = Permissions(Permission.BanMembers),
-                        managed = false,
-                        mentionable = false
-                    )
-                ),
-                0
-            )
-
-            val eventRandomRole = createEvent(randomId())
-            sendEvent(eventRandomRole)
-
-            val event = createEvent(roleId)
-            sendEvent(event)
+            sendEventValidAndRandomIdWaiting(roleId) {
+                GuildRoleUpdate(
+                    DiscordGuildRole(
+                        guildId = randomId(),
+                        role = DiscordRole(
+                            id = it,
+                            name = "",
+                            color = 0,
+                            hoist = false,
+                            position = 0,
+                            permissions = Permissions(Permission.BanMembers),
+                            managed = false,
+                            mentionable = false
+                        )
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -87,21 +83,15 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 countDown()
             }
 
-            fun createEvent(roleId: Snowflake) = GuildRoleDelete(
-                DiscordDeletedGuildRole(
-                    guildId = guildId,
-                    id = roleId
-                ),
-                0
-            )
-
-            val eventRandomRole = createEvent(randomId())
-            sendEvent(eventRandomRole)
-            waitAndCheckLiveIsActive()
-
-            val event = createEvent(roleId)
-            sendEvent(event)
-            waitAndCheckLiveIsInactive()
+            sendEventValidAndRandomIdWaiting(roleId) {
+                GuildRoleDelete(
+                    DiscordDeletedGuildRole(
+                        guildId = randomId(),
+                        id = it
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -112,20 +102,14 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 countDown()
             }
 
-            fun createEvent(guildId: Snowflake) = GuildDelete(
-                DiscordUnavailableGuild(
-                    id = guildId
-                ),
-                0
-            )
-
-            val eventRandomGuild = createEvent(randomId())
-            sendEvent(eventRandomGuild)
-            waitAndCheckLiveIsActive()
-
-            val event = createEvent(guildId)
-            sendEvent(event)
-            waitAndCheckLiveIsInactive()
+            sendEventValidAndRandomIdWaiting(guildId) {
+                GuildDelete(
+                    DiscordUnavailableGuild(
+                        id = it
+                    ),
+                    0
+                )
+            }
         }
     }
 }

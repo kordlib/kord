@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Disabled
 import java.time.Clock
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -35,7 +34,7 @@ import kotlin.time.Duration
 @OptIn(KordPreview::class)
 abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
-    object GatewayMock : Gateway {
+    class GatewayMock : Gateway {
         override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
 
         @OptIn(FlowPreview::class)
@@ -55,6 +54,8 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     companion object {
         private const val DELAY_WAIT_LIVE_ENTITY_CHECK_HEALTH = 50L
     }
+
+    private lateinit var gateway: GatewayMock
 
     protected lateinit var kord: Kord
 
@@ -83,15 +84,18 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         }
     }
 
-    protected open fun createKord(): Kord = Kord(
-        resources = ClientResources("token", Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
-        cache = DataCache.none(),
-        MasterGateway(mapOf(0 to GatewayMock)),
-        RestClient(KtorRequestHandler("token", clock = Clock.systemUTC())),
-        Snowflake("420"),
-        MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
-        Dispatchers.Default
-    )
+    protected open fun createKord(): Kord {
+        gateway = GatewayMock()
+        return Kord(
+            resources = ClientResources("token", Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
+            cache = DataCache.none(),
+            MasterGateway(mapOf(0 to gateway)),
+            RestClient(KtorRequestHandler("token", clock = Clock.systemUTC())),
+            Snowflake("420"),
+            MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
+            Dispatchers.Default
+        )
+    }
 
     protected inline fun countdownContext(
         initialCount: Int,
@@ -109,17 +113,27 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
     fun randomId() = Snowflake(Random.nextLong())
 
-    protected suspend fun sendEvent(event: Event) {
-        GatewayMock.events.emit(event)
-    }
+    suspend fun sendEvent(event: Event) = gateway.events.emit(event)
 
-    protected suspend fun waitAndCheckLiveIsActive() {
+    suspend fun waitAndCheckLiveIsActive() {
         delay(DELAY_WAIT_LIVE_ENTITY_CHECK_HEALTH)
         assertTrue { live.isActive }
     }
 
-    protected suspend fun waitAndCheckLiveIsInactive() {
+    suspend fun waitAndCheckLiveIsInactive() {
         delay(DELAY_WAIT_LIVE_ENTITY_CHECK_HEALTH)
         assertFalse { live.isActive }
+    }
+
+    suspend inline fun sendEventValidAndRandomId(validId: Snowflake, builderEvent: (Snowflake) -> Event) {
+        sendEvent(builderEvent(randomId()))
+        sendEvent(builderEvent(validId))
+    }
+
+    suspend inline fun sendEventValidAndRandomIdWaiting(validId: Snowflake, builderEvent: (Snowflake) -> Event) {
+        sendEvent(builderEvent(randomId()))
+        waitAndCheckLiveIsActive()
+        sendEvent(builderEvent(validId))
+        waitAndCheckLiveIsInactive()
     }
 }

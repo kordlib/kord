@@ -49,21 +49,17 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
                 countDown()
             }
 
-            fun createEvent(userId: Snowflake) = UserUpdate(
-                DiscordUser(
-                    id = userId,
-                    username = "",
-                    discriminator = "",
-                    avatar = null
-                ),
-                0
-            )
-
-            val otherEvent = createEvent(randomId())
-            sendEvent(otherEvent)
-
-            val event = createEvent(userId)
-            sendEvent(event)
+            sendEventValidAndRandomId(userId) {
+                UserUpdate(
+                    DiscordUser(
+                        id = it,
+                        username = "",
+                        discriminator = "",
+                        avatar = null
+                    ),
+                    0
+                )
+            }
         }
     }
 }

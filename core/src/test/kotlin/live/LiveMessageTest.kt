@@ -40,7 +40,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                     id = messageId,
                     channelId = channelId,
                     author = UserData(
-                        id = Snowflake(2),
+                        id = randomId(),
                         username = "",
                         discriminator = ""
                     ),
@@ -70,21 +70,17 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            fun createEvent(messageId: Snowflake) = MessageReactionAdd(
-                MessageReactionAddData(
-                    messageId = messageId,
-                    channelId = randomId(),
-                    userId = Snowflake(2),
-                    emoji = DiscordPartialEmoji(null, emojiExpected.name)
-                ),
-                0
-            )
-
-            val eventRandomId = createEvent(randomId())
-            sendEvent(eventRandomId)
-
-            val event = createEvent(messageId)
-            sendEvent(event)
+            sendEventValidAndRandomId(messageId) {
+                MessageReactionAdd(
+                    MessageReactionAddData(
+                        messageId = it,
+                        channelId = randomId(),
+                        userId = randomId(),
+                        emoji = DiscordPartialEmoji(null, emojiExpected.name)
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -104,7 +100,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 MessageReactionAddData(
                     messageId = messageId,
                     channelId = randomId(),
-                    userId = Snowflake(2),
+                    userId = randomId(),
                     emoji = DiscordPartialEmoji(null, emoji.name)
                 ),
                 0
@@ -132,22 +128,17 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            fun createEvent(messageId: Snowflake) = MessageReactionRemove(
-                MessageReactionRemoveData(
-                    messageId = messageId,
-                    channelId = randomId(),
-                    userId = Snowflake(2),
-                    emoji = DiscordPartialEmoji(null, emojiExpected.name)
-                ),
-                0
-            )
-
-
-            val eventRandomId = createEvent(randomId())
-            sendEvent(eventRandomId)
-
-            val event = createEvent(messageId)
-            sendEvent(event)
+            sendEventValidAndRandomId(messageId) {
+                MessageReactionRemove(
+                    MessageReactionRemoveData(
+                        messageId = it,
+                        channelId = randomId(),
+                        userId = randomId(),
+                        emoji = DiscordPartialEmoji(null, emojiExpected.name)
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -167,7 +158,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 MessageReactionRemoveData(
                     messageId = messageId,
                     channelId = randomId(),
-                    userId = Snowflake(2),
+                    userId = randomId(),
                     emoji = DiscordPartialEmoji(null, emoji.name)
                 ),
                 0
@@ -192,19 +183,15 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            fun createEvent(messageId: Snowflake) = MessageReactionRemoveAll(
-                AllRemovedMessageReactions(
-                    channelId = randomId(),
-                    messageId = messageId,
-                ),
-                0
-            )
-
-            val eventRandomId = createEvent(randomId())
-            sendEvent(eventRandomId)
-
-            val event = createEvent(messageId)
-            sendEvent(event)
+            sendEventValidAndRandomId(messageId) {
+                MessageReactionRemoveAll(
+                    AllRemovedMessageReactions(
+                        channelId = randomId(),
+                        messageId = it,
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -216,19 +203,15 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            fun createEvent(messageId: Snowflake) = MessageUpdate(
-                DiscordPartialMessage(
-                    id = messageId,
-                    channelId = randomId()
-                ),
-                0
-            )
-
-            val eventRandomId = createEvent(randomId())
-            sendEvent(eventRandomId)
-
-            val event = createEvent(messageId)
-            sendEvent(event)
+            sendEventValidAndRandomId(messageId) {
+                MessageUpdate(
+                    DiscordPartialMessage(
+                        id = it,
+                        channelId = randomId()
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -239,21 +222,15 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            fun createEvent(messageId: Snowflake) = MessageDelete(
-                DeletedMessage(
-                    id = messageId,
-                    channelId = randomId()
-                ),
-                0
-            )
-
-            val eventRandomId = createEvent(randomId())
-            sendEvent(eventRandomId)
-            waitAndCheckLiveIsActive()
-
-            val event = createEvent(messageId)
-            sendEvent(event)
-            waitAndCheckLiveIsInactive()
+            sendEventValidAndRandomIdWaiting(messageId) {
+                MessageDelete(
+                    DeletedMessage(
+                        id = it,
+                        channelId = randomId()
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -264,21 +241,15 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            fun createEvent(messageId: Snowflake) = MessageDeleteBulk(
-                BulkDeleteData(
-                    ids = mutableListOf(messageId),
-                    channelId = randomId()
-                ),
-                0
-            )
-
-            val eventRandomId = createEvent(randomId())
-            sendEvent(eventRandomId)
-            waitAndCheckLiveIsActive()
-
-            val event = createEvent(messageId)
-            sendEvent(event)
-            waitAndCheckLiveIsInactive()
+            sendEventValidAndRandomIdWaiting(messageId) {
+                MessageDeleteBulk(
+                    BulkDeleteData(
+                        ids = mutableListOf(it),
+                        channelId = randomId()
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -289,21 +260,15 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            fun createEvent(channelId: Snowflake) = ChannelDelete(
-                DiscordChannel(
-                    id = channelId,
-                    type = ChannelType.GuildText
-                ),
-                0
-            )
-
-            val eventRandomChannel = createEvent(randomId())
-            sendEvent(eventRandomChannel)
-            waitAndCheckLiveIsActive()
-
-            val event = createEvent(channelId)
-            sendEvent(event)
-            waitAndCheckLiveIsInactive()
+            sendEventValidAndRandomIdWaiting(channelId) {
+                ChannelDelete(
+                    DiscordChannel(
+                        id = it,
+                        type = ChannelType.GuildText
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -314,20 +279,14 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            fun createEvent(guildId: Snowflake) = GuildDelete(
-                DiscordUnavailableGuild(
-                    id = guildId
-                ),
-                0
-            )
-
-            val eventRandomGuild = createEvent(randomId())
-            sendEvent(eventRandomGuild)
-            waitAndCheckLiveIsActive()
-
-            val event = createEvent(guildId)
-            sendEvent(event)
-            waitAndCheckLiveIsInactive()
+            sendEventValidAndRandomIdWaiting(guildId) {
+                GuildDelete(
+                    DiscordUnavailableGuild(
+                        id = it
+                    ),
+                    0
+                )
+            }
         }
     }
 }

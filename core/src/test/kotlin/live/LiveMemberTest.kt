@@ -61,26 +61,22 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                 countDown()
             }
 
-            fun createEvent(userId: Snowflake) = GuildMemberUpdate(
-                DiscordUpdatedGuildMember(
-                    guildId = randomId(),
-                    roles = emptyList(),
-                    user = DiscordUser(
-                        id = userId,
-                        username = "",
-                        discriminator = "",
-                        avatar = null
+            sendEventValidAndRandomId(userId) {
+                GuildMemberUpdate(
+                    DiscordUpdatedGuildMember(
+                        guildId = randomId(),
+                        roles = emptyList(),
+                        user = DiscordUser(
+                            id = it,
+                            username = "",
+                            discriminator = "",
+                            avatar = null
+                        ),
+                        joinedAt = ""
                     ),
-                    joinedAt = ""
-                ),
-                0
-            )
-
-            val eventRandomId = createEvent(randomId())
-            sendEvent(eventRandomId)
-
-            val event = createEvent(userId)
-            sendEvent(event)
+                    0
+                )
+            }
         }
     }
 
@@ -91,26 +87,20 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                 countDown()
             }
 
-            fun createEvent(userId: Snowflake) = GuildMemberRemove(
-                DiscordRemovedGuildMember(
-                    guildId = randomId(),
-                    user = DiscordUser(
-                        id = userId,
-                        username = "",
-                        discriminator = "",
-                        avatar = null
-                    )
-                ),
-                0
-            )
-
-            val eventRandomId = createEvent(randomId())
-            sendEvent(eventRandomId)
-            waitAndCheckLiveIsActive()
-
-            val event = createEvent(userId)
-            sendEvent(event)
-            waitAndCheckLiveIsInactive()
+            sendEventValidAndRandomIdWaiting(userId) {
+                GuildMemberRemove(
+                    DiscordRemovedGuildMember(
+                        guildId = randomId(),
+                        user = DiscordUser(
+                            id = it,
+                            username = "",
+                            discriminator = "",
+                            avatar = null
+                        )
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -121,26 +111,20 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                 countDown()
             }
 
-            fun createEvent(userId: Snowflake) = GuildBanAdd(
-                DiscordGuildBan(
-                    guildId = randomId().asString,
-                    user = DiscordUser(
-                        id = userId,
-                        username = "",
-                        discriminator = "",
-                        avatar = null
-                    )
-                ),
-                0
-            )
-
-            val eventRandomUser = createEvent(randomId())
-            sendEvent(eventRandomUser)
-            waitAndCheckLiveIsActive()
-
-            val event = createEvent(userId)
-            sendEvent(event)
-            waitAndCheckLiveIsInactive()
+            sendEventValidAndRandomIdWaiting(userId) {
+                GuildBanAdd(
+                    DiscordGuildBan(
+                        guildId = randomId().asString,
+                        user = DiscordUser(
+                            id = it,
+                            username = "",
+                            discriminator = "",
+                            avatar = null
+                        )
+                    ),
+                    0
+                )
+            }
         }
     }
 
@@ -151,20 +135,14 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                 countDown()
             }
 
-            fun createEvent(guildId: Snowflake) = GuildDelete(
-                DiscordUnavailableGuild(
-                    id = guildId
-                ),
-                0
-            )
-
-            val eventRandomGuild = createEvent(randomId())
-            sendEvent(eventRandomGuild)
-            waitAndCheckLiveIsActive()
-
-            val event = createEvent(guildId)
-            sendEvent(event)
-            waitAndCheckLiveIsInactive()
+            sendEventValidAndRandomIdWaiting(guildId) {
+                GuildDelete(
+                    DiscordUnavailableGuild(
+                        id = it
+                    ),
+                    0
+                )
+            }
         }
     }
 }
