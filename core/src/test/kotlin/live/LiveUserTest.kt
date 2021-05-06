@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordExperimental::class, KordPreview::class)
@@ -45,10 +46,11 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
+                assertEquals(it.user.id, userId)
                 countDown()
             }
 
-            val event = UserUpdate(
+            fun createEvent(userId: Snowflake) = UserUpdate(
                 DiscordUser(
                     id = userId,
                     username = "",
@@ -58,6 +60,10 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
                 0
             )
 
+            val otherEvent = createEvent(randomId(userId))
+            sendEvent(otherEvent)
+
+            val event = createEvent(userId)
             sendEvent(event)
         }
     }

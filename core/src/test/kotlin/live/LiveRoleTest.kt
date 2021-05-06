@@ -10,11 +10,11 @@ import dev.kord.core.live.onUpdate
 import dev.kord.gateway.GuildDelete
 import dev.kord.gateway.GuildRoleDelete
 import dev.kord.gateway.GuildRoleUpdate
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
-import kotlin.test.BeforeTest
-import kotlin.test.Test
+import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordExperimental::class, KordPreview::class)
@@ -52,10 +52,12 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
+                assertEquals(guildId, it.guildId)
+                assertEquals(roleId, it.role.id)
                 countDown()
             }
 
-            val event = GuildRoleUpdate(
+            fun createEvent(guildId: Snowflake, roleId: Snowflake) = GuildRoleUpdate(
                 DiscordGuildRole(
                     guildId = guildId,
                     role = DiscordRole(
@@ -72,6 +74,13 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 0
             )
 
+            val eventRandomGuild = createEvent(randomId(), roleId)
+            sendEvent(eventRandomGuild)
+
+            val eventRandomRole = createEvent(guildId, randomId())
+            sendEvent(eventRandomRole)
+
+            val event = createEvent(guildId, roleId)
             sendEvent(event)
         }
     }
@@ -83,7 +92,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 countDown()
             }
 
-            val event = GuildRoleDelete(
+            fun createEvent(guildId: Snowflake, roleId: Snowflake) = GuildRoleDelete(
                 DiscordDeletedGuildRole(
                     guildId = guildId,
                     id = roleId
@@ -91,7 +100,20 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 0
             )
 
+            val eventRandomGuild = createEvent(randomId(), roleId)
+            sendEvent(eventRandomGuild)
+
+            assertTrue { live.isActive }
+
+            val eventRandomRole = createEvent(guildId, randomId())
+            sendEvent(eventRandomRole)
+
+            assertTrue { live.isActive }
+
+            val event = createEvent(guildId, roleId)
             sendEvent(event)
+
+            assertFalse { live.isActive }
         }
     }
 
@@ -102,14 +124,22 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 countDown()
             }
 
-            val event = GuildDelete(
+            fun createEvent(guildId: Snowflake) = GuildDelete(
                 DiscordUnavailableGuild(
                     id = guildId
                 ),
                 0
             )
 
+            val eventRandomGuild = createEvent(randomId())
+            sendEvent(eventRandomGuild)
+
+            assertTrue { live.isActive }
+
+            val event = createEvent(guildId)
             sendEvent(event)
+
+            assertFalse { live.isActive }
         }
     }
 }

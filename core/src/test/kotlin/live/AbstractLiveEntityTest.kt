@@ -24,6 +24,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.random.Random
 import kotlin.test.AfterTest
 import kotlin.test.assertEquals
 import kotlin.time.Duration
@@ -86,18 +87,20 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     )
 
     protected inline fun countdownContext(
-        count: Int,
+        initialCount: Int,
         expectedCount: Long = 0,
-        waitMs: Long = 5000,
+        waitMs: Long = 1000,
         crossinline action: suspend CountDownLatch.() -> Unit
     ) = runBlocking {
-        val countdown = CountDownLatch(count)
+        val countdown = CountDownLatch(initialCount)
 
         action(countdown)
 
         countdown.await(waitMs, TimeUnit.MILLISECONDS)
         assertEquals(expectedCount, countdown.count)
     }
+
+    fun randomId() = Snowflake(Random.nextLong())
 
     protected suspend fun sendEvent(event: Event) = GatewayMock.events.emit(event)
 }

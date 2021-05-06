@@ -2,52 +2,72 @@ package live
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
+import dev.kord.core.behavior.createEmoji
+import dev.kord.core.cache.data.GuildData
+import dev.kord.core.entity.Guild
 import dev.kord.core.entity.channel.Category
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.live.*
 import dev.kord.core.rest.imageBinary
+import dev.kord.gateway.GuildEmojisUpdate
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
-import kotlin.test.BeforeTest
-import kotlin.test.Ignore
-import kotlin.test.Test
+import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordExperimental::class, KordPreview::class)
 class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
 
-    private lateinit var category: Category
-
-    private lateinit var channel: TextChannel
-
-    @BeforeAll
-    override fun onBeforeAll() = runBlocking {
-        super.onBeforeAll()
-        guild = createGuild()
-        category = createCategory(requireGuild())
-        channel = createTextChannel(category)
-    }
-
     @BeforeTest
     fun onBefore() = runBlocking {
-        live = requireGuild().live()
+        live = LiveGuild(
+            Guild(
+                kord = kord,
+                data = GuildData(
+                    id = guildId,
+                    name = "",
+                    ownerId = randomId(),
+                    region = "",
+                    afkTimeout = 0,
+                    verificationLevel = VerificationLevel.None,
+                    defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
+                    explicitContentFilter = ExplicitContentFilter.Disabled,
+                    roles = emptyList(),
+                    emojis = emptyList(),
+                    features = emptyList(),
+                    mfaLevel = MFALevel.None,
+                    premiumTier = PremiumTier.None,
+                    preferredLocale = "",
+                    systemChannelFlags = SystemChannelFlags(0)
+                )
+            )
+        )
     }
 
     @Test
     fun `Check onEmojisUpdate is called when event is received`() = runBlocking {
-        countdownContext(2) {
+        countdownContext(1) {
             live.onEmojisUpdate {
+                assertEquals(guildId, it.guildId)
                 countDown()
             }
 
-            // Call event
-            val guildEmoji = requireGuild().createEmoji("kord", imageBinary("images/kord.png"))
-            // Call event
-            guildEmoji.edit {
-                name = "kordimg"
-            }
+            fun createEvent(guildId: Snowflake) = GuildEmojisUpdate(
+                DiscordUpdatedEmojis(
+                    guildId = guildId,
+                    emojis = emptyList()
+                ),
+                0
+            )
+
+            val eventRandomGuild = createEvent(randomId())
+            sendEvent(eventRandomGuild)
+
+            val event = createEvent(guildId)
+            sendEvent(event)
         }
     }
 

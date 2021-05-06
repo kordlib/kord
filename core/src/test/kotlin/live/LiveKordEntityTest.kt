@@ -2,13 +2,17 @@ package live
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.core.Kord
 import dev.kord.core.event.Event
 import dev.kord.core.event.channel.CategoryCreateEvent
+import dev.kord.core.event.guild.BanAddEvent
 import dev.kord.core.event.guild.GuildCreateEvent
+import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
+import dev.kord.gateway.GuildBanAdd
+import dev.kord.gateway.GuildDelete
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.job
@@ -26,12 +30,12 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
         var counterUpdate: Int = 0
 
-        override val id: Snowflake = Snowflake("1")
+        override val id: Snowflake = Snowflake(1)
 
-        override fun filter(event: Event): Boolean = event is CategoryCreateEvent
+        override fun filter(event: Event): Boolean = event is BanAddEvent
 
         override fun update(event: Event) {
-            if (event is CategoryCreateEvent) {
+            if (event is BanAddEvent) {
                 counterUpdate++
             }
         }
@@ -110,17 +114,37 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
         assertEquals(0, live.counterUpdate)
 
         countdownContext(1) {
-            live.on<CategoryCreateEvent> {
+            live.on<BanAddEvent> {
                 countDown()
-                // Enable the listening
             }
 
-            live.on<GuildCreateEvent> {
+            live.on<GuildDeleteEvent> {
                 error("Must not be executed")
             }
 
-            guild = createGuild()
-            createCategory(guild!!)
+            val eventGuildBan = GuildBanAdd(
+                DiscordGuildBan(
+                    guildId = guildId.asString,
+                    user = DiscordUser(
+                        id = randomId(),
+                        username = "",
+                        discriminator = "",
+                        avatar = null
+                    )
+                ),
+                0
+            )
+
+            sendEvent(eventGuildBan)
+
+            val eventGuildDelete = GuildDelete(
+                DiscordUnavailableGuild(
+                    id = randomId()
+                ),
+                0
+            )
+
+            sendEvent(eventGuildDelete)
         }
 
         // Two expected because there is 2 jobs.
@@ -131,7 +155,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
     @Test
     fun `Check the entity is cancelled when kord is cancelled`() = runBlocking {
-        val job = live.on<CategoryCreateEvent> {
+        val job = live.on<BanAddEvent> {
             error("Never called")
         }
 
@@ -151,6 +175,5 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
         assertFalse(job.isActive)
 
         kord = createKord()
-        kordLoginAsync()
     }
 }

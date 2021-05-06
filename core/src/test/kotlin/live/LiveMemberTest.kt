@@ -2,70 +2,123 @@ package live
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
-import dev.kord.core.behavior.ban
-import dev.kord.core.behavior.edit
+import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.Optional
+import dev.kord.core.cache.data.MemberData
+import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.Member
 import dev.kord.core.live.*
+import dev.kord.gateway.GuildBanAdd
+import dev.kord.gateway.GuildDelete
+import dev.kord.gateway.GuildMemberUpdate
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
-import kotlin.test.BeforeTest
-import kotlin.test.Ignore
-import kotlin.test.Test
+import java.util.*
+import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordExperimental::class, KordPreview::class)
 class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
 
-    private lateinit var member: Member
+    private lateinit var userId: Snowflake
 
-    @BeforeAll
-    override fun onBeforeAll() = runBlocking {
+    override fun onBeforeAll() {
         super.onBeforeAll()
-        guild = createGuild()
-        member = createMember()
+        userId = Snowflake(0)
     }
 
     @BeforeTest
     fun onBefore() = runBlocking {
-        live = member.live()
-    }
-
-    private suspend fun createMember(): Member {
-        val guildId = requireGuild().id
-        return kord.getSelf().asMember(guildId)
+        live = LiveMember(
+            Member(
+                kord = kord,
+                memberData = MemberData(
+                    userId = userId,
+                    guildId = guildId,
+                    roles = emptyList(),
+                    joinedAt = "",
+                    premiumSince = Optional.Missing()
+                ),
+                userData = UserData(
+                    id = userId,
+                    username = "",
+                    discriminator = ""
+                )
+            )
+        )
     }
 
     @Test
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
+                assertEquals(guildId, it.guildId)
+                assertEquals(userId, it.member.id)
                 countDown()
             }
 
-            member.edit {
-                val role = requireGuild().createRole {
-                    name = "ROLE_TEST_LIVE_MEMBER"
-                }
-                roles = mutableSetOf(role.id)
-            }
+            fun createEvent(guildId: Snowflake, userId: Snowflake) = GuildMemberUpdate(
+                DiscordUpdatedGuildMember(
+                    guildId = guildId,
+                    roles = emptyList(),
+                    user = DiscordUser(
+                        id = userId,
+                        username = "",
+                        discriminator = "",
+                        avatar = null
+                    ),
+                    joinedAt = ""
+                ),
+                0
+            )
+
+            val eventRandomChannel = createEvent(randomId(), userId)
+            sendEvent(eventRandomChannel)
+
+            val eventRandomMessage = createEvent(guildId, randomId())
+            sendEvent(eventRandomMessage)
+
+            val event = createEvent(guildId, userId)
+            sendEvent(event)
         }
     }
 
-    @Ignore
     @Test
     fun `Check onLeave is called when event is received`() {
         countdownContext(1) {
             live.onLeave {
+                assertEquals(guildId, it.guildId)
+                assertEquals(userId, it.user.id)
                 countDown()
             }
 
-            // Need an other member
-            member.kick("LEAVE_TEST_LIVE_MEMBER")
+            fun createEvent(guildId: Snowflake, userId: Snowflake) = GuildMemberUpdate(
+                DiscordUpdatedGuildMember(
+                    guildId = guildId,
+                    roles = emptyList(),
+                    user = DiscordUser(
+                        id = userId,
+                        username = "",
+                        discriminator = "",
+                        avatar = null
+                    ),
+                    joinedAt = ""
+                ),
+                0
+            )
+
+            val eventRandomChannel = createEvent(randomId(), userId)
+            sendEvent(eventRandomChannel)
+
+            val eventRandomMessage = createEvent(guildId, randomId())
+            sendEvent(eventRandomMessage)
+
+            val event = createEvent(guildId, userId)
+            sendEvent(event)
         }
     }
 
-    @Ignore
     @Test
     fun `Check onShutdown is called when the member is banned`() {
         countdownContext(1) {
@@ -73,10 +126,33 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                 countDown()
             }
 
-            // Need an other member
-            member.ban {
-                this.reason = "BAN_TEST_LIVE_MEMBER"
-            }
+            fun createEvent(guildId: Snowflake, userId: Snowflake) = GuildBanAdd(
+                DiscordGuildBan(
+                    guildId = guildId.asString,
+                    user = DiscordUser(
+                        id = userId,
+                        username = "",
+                        discriminator = "",
+                        avatar = null
+                    )
+                ),
+                0
+            )
+
+            val eventRandomGuild = createEvent(randomId(), userId)
+            sendEvent(eventRandomGuild)
+
+            assertTrue { live.isActive }
+
+            val eventRandomUser = createEvent(guildId, randomId())
+            sendEvent(eventRandomUser)
+
+            assertTrue { live.isActive }
+
+            val event = createEvent(guildId, userId)
+            sendEvent(event)
+
+            assertFalse { live.isActive }
         }
     }
 
@@ -86,9 +162,23 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
             live.onShutdown {
                 countDown()
             }
-            requireGuild().delete()
+
+            fun createEvent(guildId: Snowflake) = GuildDelete(
+                DiscordUnavailableGuild(
+                    id = guildId
+                ),
+                0
+            )
+
+            val eventRandomGuild = createEvent(randomId())
+            sendEvent(eventRandomGuild)
+
+            assertTrue { live.isActive }
+
+            val event = createEvent(guildId)
+            sendEvent(event)
+
+            assertFalse { live.isActive }
         }
-        guild = createGuild()
-        member = createMember()
     }
 }
