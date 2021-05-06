@@ -1,24 +1,21 @@
 package live
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
-import dev.kord.core.behavior.createEmoji
+import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.entity.Guild
-import dev.kord.core.entity.channel.Category
-import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.live.*
-import dev.kord.core.rest.imageBinary
-import dev.kord.gateway.GuildEmojisUpdate
-import kotlinx.coroutines.isActive
+import dev.kord.gateway.*
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.BeforeAll
+import kotlinx.serialization.json.JsonObject
 import org.junit.jupiter.api.TestInstance
-import kotlin.test.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(KordExperimental::class, KordPreview::class)
+@OptIn(KordPreview::class)
 class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
 
     @BeforeTest
@@ -72,46 +69,90 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    fun `Check onBanAdd is called when event is received`() = runBlocking {
+    fun `Check onBanAdd is called when event is received`() {
         countdownContext(1) {
             live.onBanAdd {
+                assertEquals(guildId, it.guildId)
                 countDown()
             }
 
-            val userId = Snowflake("242043299022635020")
-            requireGuild().ban(userId) {
-                this.reason = "BAN_TEST_LIVE_GUILD"
-            }
+            fun createEvent(guildId: Snowflake) = GuildBanAdd(
+                DiscordGuildBan(
+                    guildId = guildId.asString,
+                    user = DiscordUser(
+                        id = randomId(),
+                        username = "",
+                        discriminator = "",
+                        avatar = null
+                    )
+                ),
+                0
+            )
+
+            val eventRandomGuild = createEvent(randomId())
+            sendEvent(eventRandomGuild)
+
+            val event = createEvent(guildId)
+            sendEvent(event)
         }
     }
 
     @Test
-    fun `Check onBanRemove is called when event is received`() = runBlocking {
+    fun `Check onBanRemove is called when event is received`() {
         countdownContext(1) {
             live.onBanRemove {
+                assertEquals(guildId, it.guildId)
                 countDown()
             }
 
-            val userId = Snowflake("242043299022635020")
-            requireGuild().ban(userId) {
-                this.reason = "BAN_TEST_LIVE_GUILD"
-            }
+            fun createEvent(guildId: Snowflake) = GuildBanRemove(
+                DiscordGuildBan(
+                    guildId = guildId.asString,
+                    user = DiscordUser(
+                        id = randomId(),
+                        username = "",
+                        discriminator = "",
+                        avatar = null
+                    )
+                ),
+                0
+            )
 
-            requireGuild().unban(userId)
+            val eventRandomGuild = createEvent(randomId())
+            sendEvent(eventRandomGuild)
+
+            val event = createEvent(guildId)
+            sendEvent(event)
         }
     }
 
-    @Ignore
     @Test
     fun `Check onPresenceUpdate is called when event is received`() = runBlocking {
         countdownContext(1) {
             live.onPresenceUpdate {
+                assertEquals(guildId, it.guildId)
                 countDown()
             }
 
-            kord.editPresence {
-                this.playing("PRESENCE_TEST_LIVE_GUILD")
-            }
+            fun createEvent(guildId: Snowflake) = PresenceUpdate(
+                DiscordPresenceUpdate(
+                    user = DiscordPresenceUser(
+                        id = randomId(),
+                        details = JsonObject(emptyMap())
+                    ),
+                    guildId = guildId.optionalSnowflake(),
+                    status = PresenceStatus.DoNotDisturb,
+                    activities = emptyList(),
+                    clientStatus = DiscordClientStatus()
+                ),
+                0
+            )
+
+            val eventRandomGuild = createEvent(randomId())
+            sendEvent(eventRandomGuild)
+
+            val event = createEvent(guildId)
+            sendEvent(event)
         }
     }
 
@@ -119,28 +160,57 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onVoiceServerUpdate is called when event is received`() = runBlocking {
         countdownContext(2) {
             live.onVoiceServerUpdate {
+                assertEquals(guildId, it.guildId)
                 countDown()
             }
 
-            val voiceChannel = createVoiceChannel(category)
-            voiceChannel.edit {
-                this.userLimit = 1
-            }
+            fun createEvent(guildId: Snowflake) = VoiceServerUpdate(
+                DiscordVoiceServerUpdateData(
+                    guildId = guildId,
+                    token = "",
+                    endpoint = null
+                ),
+                0
+            )
+
+            val eventRandomGuild = createEvent(randomId())
+            sendEvent(eventRandomGuild)
+
+            val event = createEvent(guildId)
+            sendEvent(event)
         }
     }
 
-    @Ignore
     @Test
     fun `Check VoiceStateUpdateEvent is called when event is received`() = runBlocking {
         countdownContext(2) {
             live.onVoiceStateUpdate {
+                assertEquals(guildId, it.state.guildId)
                 countDown()
             }
 
-            val voiceChannel = createVoiceChannel(category)
-            voiceChannel.edit {
-                this.userLimit = 1
-            }
+            fun createEvent(guildId: Snowflake) = VoiceStateUpdate(
+                DiscordVoiceState(
+                    guildId = guildId.optionalSnowflake(),
+                    channelId = null,
+                    userId = randomId(),
+                    sessionId = "",
+                    deaf = false,
+                    mute = false,
+                    selfDeaf = false,
+                    selfMute = false,
+                    selfVideo = false,
+                    suppress = false,
+                    requestToSpeakTimestamp = null
+                ),
+                0
+            )
+
+            val eventRandomGuild = createEvent(randomId())
+            sendEvent(eventRandomGuild)
+
+            val event = createEvent(guildId)
+            sendEvent(event)
         }
     }
 }

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.TestInstance
 import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(KordExperimental::class, KordPreview::class)
+@OptIn(KordPreview::class)
 class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
 
     private lateinit var messageId: Snowflake

@@ -29,7 +29,7 @@ import kotlin.test.AfterTest
 import kotlin.test.assertEquals
 import kotlin.time.Duration
 
-@OptIn(PrivilegedIntent::class, KordPreview::class)
+@OptIn(KordPreview::class)
 abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
     object GatewayMock : Gateway {

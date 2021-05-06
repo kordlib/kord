@@ -17,7 +17,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(KordExperimental::class, KordPreview::class)
+@OptIn(KordPreview::class)
 class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
 
     private lateinit var userId: Snowflake
@@ -60,7 +60,7 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
                 0
             )
 
-            val otherEvent = createEvent(randomId(userId))
+            val otherEvent = createEvent(randomId())
             sendEvent(otherEvent)
 
             val event = createEvent(userId)

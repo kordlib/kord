@@ -17,7 +17,7 @@ import org.junit.jupiter.api.TestInstance
 import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(KordExperimental::class, KordPreview::class)
+@OptIn(KordPreview::class)
 class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
 
     private lateinit var roleId: Snowflake
@@ -86,7 +86,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     }
 
     @Test
-    fun `Check onShutdown is called when the role is deleted`() = runBlocking {
+    fun `Check onShutdown is called when the role is deleted`() {
         countdownContext(1) {
             live.onShutdown {
                 countDown()

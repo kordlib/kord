@@ -18,7 +18,7 @@ import java.util.*
 import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(KordExperimental::class, KordPreview::class)
+@OptIn(KordPreview::class)
 class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
 
     private lateinit var userId: Snowflake
