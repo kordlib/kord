@@ -1,4 +1,4 @@
-package live
+package liveEntity
 
 import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.KordPreview

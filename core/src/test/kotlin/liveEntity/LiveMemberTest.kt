@@ -1,4 +1,4 @@
-package live
+package liveEntity
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
