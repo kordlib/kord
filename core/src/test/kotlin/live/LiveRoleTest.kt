@@ -55,7 +55,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 countDown()
             }
 
-            sendEventValidAndRandomIdWaiting(roleId) {
+            sendEventValidAndRandomId(roleId) {
                 GuildRoleUpdate(
                     DiscordGuildRole(
                         guildId = randomId(),
@@ -83,7 +83,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 countDown()
             }
 
-            sendEventValidAndRandomIdWaiting(roleId) {
+            sendEventValidAndRandomIdCheckLiveActive(roleId) {
                 GuildRoleDelete(
                     DiscordDeletedGuildRole(
                         guildId = randomId(),
@@ -102,7 +102,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                 countDown()
             }
 
-            sendEventValidAndRandomIdWaiting(guildId) {
+            sendEventValidAndRandomIdCheckLiveActive(guildId) {
                 GuildDelete(
                     DiscordUnavailableGuild(
                         id = it

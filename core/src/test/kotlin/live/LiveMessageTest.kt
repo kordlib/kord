@@ -222,7 +222,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            sendEventValidAndRandomIdWaiting(messageId) {
+            sendEventValidAndRandomIdCheckLiveActive(messageId) {
                 MessageDelete(
                     DeletedMessage(
                         id = it,
@@ -241,7 +241,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            sendEventValidAndRandomIdWaiting(messageId) {
+            sendEventValidAndRandomIdCheckLiveActive(messageId) {
                 MessageDeleteBulk(
                     BulkDeleteData(
                         ids = mutableListOf(it),
@@ -260,7 +260,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            sendEventValidAndRandomIdWaiting(channelId) {
+            sendEventValidAndRandomIdCheckLiveActive(channelId) {
                 ChannelDelete(
                     DiscordChannel(
                         id = it,
@@ -279,7 +279,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 countDown()
             }
 
-            sendEventValidAndRandomIdWaiting(guildId) {
+            sendEventValidAndRandomIdCheckLiveActive(guildId) {
                 GuildDelete(
                     DiscordUnavailableGuild(
                         id = it

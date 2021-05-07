@@ -14,6 +14,7 @@ import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -51,17 +52,13 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         override suspend fun stop() {}
     }
 
-    companion object {
-        private const val DELAY_WAIT_LIVE_ENTITY_CHECK_HEALTH = 50L
-    }
-
     private lateinit var gateway: GatewayMock
 
     protected lateinit var kord: Kord
 
     protected lateinit var guildId: Snowflake
 
-    protected lateinit var live: LIVE
+    lateinit var live: LIVE
 
     @BeforeAll
     open fun onBeforeAll() = runBlocking {
@@ -113,16 +110,9 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
     fun randomId() = Snowflake(Random.nextLong())
 
-    suspend fun sendEvent(event: Event) = gateway.events.emit(event)
-
-    suspend fun waitAndCheckLiveIsActive() {
-        delay(DELAY_WAIT_LIVE_ENTITY_CHECK_HEALTH)
-        assertTrue { live.isActive }
-    }
-
-    suspend fun waitAndCheckLiveIsInactive() {
-        delay(DELAY_WAIT_LIVE_ENTITY_CHECK_HEALTH)
-        assertFalse { live.isActive }
+    suspend fun sendEvent(event: Event) {
+        gateway.events.emit(event)
+        delay(50)
     }
 
     suspend inline fun sendEventValidAndRandomId(validId: Snowflake, builderEvent: (Snowflake) -> Event) {
@@ -130,10 +120,10 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         sendEvent(builderEvent(validId))
     }
 
-    suspend inline fun sendEventValidAndRandomIdWaiting(validId: Snowflake, builderEvent: (Snowflake) -> Event) {
+    suspend inline fun sendEventValidAndRandomIdCheckLiveActive(validId: Snowflake, builderEvent: (Snowflake) -> Event) {
         sendEvent(builderEvent(randomId()))
-        waitAndCheckLiveIsActive()
+        assertTrue { live.isActive }
         sendEvent(builderEvent(validId))
-        waitAndCheckLiveIsInactive()
+        assertFalse { live.isActive }
     }
 }

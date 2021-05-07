@@ -7,7 +7,6 @@ import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.Member
 import dev.kord.core.live.LiveMember
-import dev.kord.core.live.onLeave
 import dev.kord.core.live.onUpdate
 import dev.kord.gateway.GuildBanAdd
 import dev.kord.gateway.GuildDelete
@@ -87,7 +86,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                 countDown()
             }
 
-            sendEventValidAndRandomIdWaiting(userId) {
+            sendEventValidAndRandomIdCheckLiveActive(userId) {
                 GuildMemberRemove(
                     DiscordRemovedGuildMember(
                         guildId = randomId(),
@@ -111,7 +110,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                 countDown()
             }
 
-            sendEventValidAndRandomIdWaiting(userId) {
+            sendEventValidAndRandomIdCheckLiveActive(userId) {
                 GuildBanAdd(
                     DiscordGuildBan(
                         guildId = randomId().asString,
@@ -135,7 +134,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                 countDown()
             }
 
-            sendEventValidAndRandomIdWaiting(guildId) {
+            sendEventValidAndRandomIdCheckLiveActive(guildId) {
                 GuildDelete(
                     DiscordUnavailableGuild(
                         id = it
