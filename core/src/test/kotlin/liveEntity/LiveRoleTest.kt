@@ -52,7 +52,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
         countdownContext(1) {
             live.onUpdate {
                 assertEquals(roleId, it.role.id)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(roleId) {
@@ -80,7 +80,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     fun `Check onShutdown is called when the role is deleted`() {
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomIdCheckLiveActive(roleId) {
@@ -99,7 +99,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     fun `Check onShutdown is called when the guild is deleted`() {
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomIdCheckLiveActive(guildId) {

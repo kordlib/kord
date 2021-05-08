@@ -14,7 +14,6 @@ import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,6 +22,7 @@ import org.junit.jupiter.api.BeforeAll
 import java.time.Clock
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.random.Random
@@ -50,6 +50,22 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         override suspend fun start(configuration: GatewayConfiguration) {}
 
         override suspend fun stop() {}
+    }
+
+    class CounterAtomicLatch(count: Int) {
+
+        private val countdown = CountDownLatch(count)
+        val latchCount get() = countdown.count
+
+        private val counter = AtomicInteger(0)
+        val atomicCount get() = counter.get()
+
+        fun count() {
+            counter.incrementAndGet()
+            countdown.countDown()
+        }
+
+        fun await(timeout: Long, unit: TimeUnit) = countdown.await(timeout, unit)
     }
 
     private lateinit var gateway: GatewayMock
@@ -95,17 +111,17 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     }
 
     protected inline fun countdownContext(
-        initialCount: Int,
-        expectedCount: Long = 0,
+        expectedCount: Int,
         waitMs: Long = 5000,
-        crossinline action: suspend CountDownLatch.() -> Unit
+        crossinline action: suspend CounterAtomicLatch.() -> Unit
     ) = runBlocking {
-        val countdown = CountDownLatch(initialCount)
+        val counter = CounterAtomicLatch(expectedCount)
 
-        action(countdown)
+        action(counter)
 
-        countdown.await(waitMs, TimeUnit.MILLISECONDS)
-        assertEquals(expectedCount, countdown.count)
+        counter.await(waitMs, TimeUnit.MILLISECONDS)
+        assertEquals(0, counter.latchCount)
+        assertEquals(expectedCount, counter.atomicCount)
     }
 
     fun randomId() = Snowflake(Random.nextLong())
@@ -120,7 +136,10 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         sendEvent(builderEvent(validId))
     }
 
-    suspend inline fun sendEventValidAndRandomIdCheckLiveActive(validId: Snowflake, builderEvent: (Snowflake) -> Event) {
+    suspend inline fun sendEventValidAndRandomIdCheckLiveActive(
+        validId: Snowflake,
+        builderEvent: (Snowflake) -> Event
+    ) {
         sendEvent(builderEvent(randomId()))
         assertTrue { live.isActive }
         sendEvent(builderEvent(validId))

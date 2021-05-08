@@ -67,7 +67,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             live.onReactionAdd {
                 assertEquals(messageId, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(messageId) {
@@ -93,7 +93,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             live.onReactionAdd(emojiExpected) {
                 assertEquals(messageId, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
-                countDown()
+                count()
             }
 
             fun createEvent(messageId: Snowflake, emoji: ReactionEmoji) = MessageReactionAdd(
@@ -125,7 +125,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             live.onReactionRemove {
                 assertEquals(messageId, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(messageId) {
@@ -151,7 +151,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             live.onReactionRemove(emojiExpected) {
                 assertEquals(messageId, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
-                countDown()
+                count()
             }
 
             fun createEvent(messageId: Snowflake, emoji: ReactionEmoji) = MessageReactionRemove(
@@ -180,7 +180,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
         countdownContext(1) {
             live.onReactionRemoveAll {
                 assertEquals(messageId, it.messageId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(messageId) {
@@ -200,7 +200,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
         countdownContext(1) {
             live.onUpdate {
                 assertEquals(messageId, it.messageId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(messageId) {
@@ -219,7 +219,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check onShutdown is called when event the message delete event is received`() {
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomIdCheckLiveActive(messageId) {
@@ -238,7 +238,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check onShutdown is called when event the bulk delete event is received`() {
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomIdCheckLiveActive(messageId) {
@@ -257,7 +257,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check onShutdown is called when event the channel delete event is received`() {
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomIdCheckLiveActive(channelId) {
@@ -276,7 +276,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check onShutdown is called when event the guild delete event is received`() {
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomIdCheckLiveActive(guildId) {

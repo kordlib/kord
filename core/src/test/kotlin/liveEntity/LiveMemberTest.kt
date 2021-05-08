@@ -57,7 +57,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
         countdownContext(1) {
             live.onUpdate {
                 assertEquals(userId, it.member.id)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(userId) {
@@ -83,7 +83,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     fun `Check onLeave is called when event is received`() {
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomIdCheckLiveActive(userId) {
@@ -107,7 +107,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     fun `Check onShutdown is called when the member is banned`() {
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomIdCheckLiveActive(userId) {
@@ -131,7 +131,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     fun `Check onShutdown is called when the guild is deleted`() {
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomIdCheckLiveActive(guildId) {

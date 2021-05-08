@@ -46,7 +46,7 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
         countdownContext(1) {
             live.onUpdate {
                 assertEquals(it.user.id, userId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(userId) {

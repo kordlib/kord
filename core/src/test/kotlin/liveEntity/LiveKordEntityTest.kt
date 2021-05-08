@@ -16,7 +16,6 @@ import dev.kord.gateway.GuildDelete
 import kotlinx.coroutines.*
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
-import java.util.concurrent.CountDownLatch
 import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -27,7 +26,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     inner class LiveEntityMock(override val kord: Kord) :
         AbstractLiveKordEntity(Dispatchers.Default, kord.coroutineContext.job) {
 
-        var countDownLatch: CountDownLatch? = null
+        var counter: CounterAtomicLatch? = null
 
         override val id: Snowflake = randomId()
 
@@ -35,7 +34,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
         override fun update(event: Event) {
             if (event is BanAddEvent) {
-                countDownLatch?.countDown()
+                counter?.count()
             }
         }
     }
@@ -66,7 +65,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     fun `Shutdown entity without listening events`() {
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
             live.shutdown()
         }
@@ -88,7 +87,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
         }
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
             live.shutdown()
         }
@@ -102,7 +101,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
         live.onShutdown(null)
         countdownContext(1) {
             live.onShutdown {
-                countDown()
+                count()
             }
             live.shutdown()
         }
@@ -112,11 +111,11 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     fun `Check if the filter and update are executed`() {
         // Second countdown in the live entity to check
         // if the method update is called
-        countdownContext(2, waitMs = 5000) {
-            live.countDownLatch = this
+        countdownContext(3) {
+            live.counter = this
 
             live.on<BanAddEvent> {
-                countDown()
+                count()
             }
 
             live.on<GuildDeleteEvent> {

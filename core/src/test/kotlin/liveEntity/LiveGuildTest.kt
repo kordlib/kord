@@ -51,7 +51,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onEmojisUpdate {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -71,7 +71,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onBanAdd {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -96,7 +96,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onBanRemove {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -121,7 +121,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onPresenceUpdate {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -147,7 +147,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onVoiceServerUpdate {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -168,7 +168,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onVoiceStateUpdate {
                 assertEquals(guildId, it.state.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -197,7 +197,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onWebhookUpdate {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -217,7 +217,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onRoleCreate {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -246,7 +246,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onRoleUpdate {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -275,7 +275,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onRoleDelete {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -295,7 +295,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onMemberJoin {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -326,7 +326,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onMemberUpdate {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -353,7 +353,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onMemberLeave {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -380,7 +380,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
 
             live.onReactionAdd {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -407,7 +407,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             live.onReactionAdd(emojiExpected) {
                 assertEquals(guildId, it.guildId)
                 assertEquals(emojiExpected, it.emoji)
-                countDown()
+                count()
             }
 
             fun createEvent(guildId: Snowflake, emoji: ReactionEmoji) = MessageReactionAdd(
@@ -440,7 +440,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             live.onReactionRemove {
                 assertEquals(guildId, it.guildId)
                 assertEquals(emojiExpected, it.emoji)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -467,7 +467,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             live.onReactionRemove(emojiExpected) {
                 assertEquals(guildId, it.guildId)
                 assertEquals(emojiExpected, it.emoji)
-                countDown()
+                count()
             }
 
             fun createEvent(guildId: Snowflake, emoji: ReactionEmoji) = MessageReactionRemove(
@@ -497,7 +497,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onReactionRemoveAll {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
@@ -518,7 +518,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
         countdownContext(1) {
             live.onMessageCreate {
                 assertEquals(guildId, it.guildId)
-                countDown()
+                count()
             }
 
             sendEventValidAndRandomId(guildId) {
