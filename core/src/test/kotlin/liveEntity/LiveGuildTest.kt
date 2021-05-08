@@ -550,4 +550,169 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             }
         }
     }
+
+    @Test
+    fun `Check onMessageUpdate is called when event is received`() {
+        countdownContext(1) {
+            live.onMessageUpdate {
+                assertEquals(guildId, it.new.guildId.value)
+                count()
+            }
+
+            sendEventValidAndRandomId(guildId) {
+                MessageUpdate(
+                    DiscordPartialMessage(
+                        id = randomId(),
+                        channelId = randomId(),
+                        guildId = it.optionalSnowflake(),
+                    ),
+                    0
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `Check onMessageDelete is called when event is received`() {
+        countdownContext(1) {
+            live.onMessageDelete {
+                assertEquals(guildId, it.guildId)
+                count()
+            }
+
+            sendEventValidAndRandomId(guildId) {
+                MessageDelete(
+                    DeletedMessage(
+                        id = randomId(),
+                        channelId = randomId(),
+                        guildId = it.optionalSnowflake(),
+                    ),
+                    0
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `Check onChannelCreate is called when event is received`() {
+        countdownContext(1) {
+            live.onChannelCreate {
+                assertEquals(guildId, it.channel.data.guildId.value)
+                count()
+            }
+
+            sendEventValidAndRandomId(guildId) {
+                ChannelCreate(
+                    DiscordChannel(
+                        id = randomId(),
+                        type = ChannelType.GuildText,
+                        guildId = it.optionalSnowflake(),
+                    ),
+                    0
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `Check onChannelUpdate is called when event is received`() {
+        countdownContext(1) {
+            live.onChannelUpdate {
+                assertEquals(guildId, it.channel.data.guildId.value)
+                count()
+            }
+
+            sendEventValidAndRandomId(guildId) {
+                ChannelUpdate(
+                    DiscordChannel(
+                        id = randomId(),
+                        type = ChannelType.GuildText,
+                        guildId = it.optionalSnowflake(),
+                    ),
+                    0
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `Check onChannelDelete is called when event is received`() {
+        countdownContext(1) {
+            live.onChannelDelete {
+                assertEquals(guildId, it.channel.data.guildId.value)
+                count()
+            }
+
+            sendEventValidAndRandomId(guildId) {
+                ChannelDelete(
+                    DiscordChannel(
+                        id = randomId(),
+                        type = ChannelType.GuildText,
+                        guildId = it.optionalSnowflake(),
+                    ),
+                    0
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `Check onGuildUpdate is called when event is received`() {
+        countdownContext(1) {
+            live.onGuildUpdate {
+                assertEquals(guildId, it.guild.id)
+                count()
+            }
+
+            sendEventValidAndRandomId(guildId) {
+                GuildUpdate(
+                    DiscordGuild(
+                        id = it,
+                        name = "",
+                        icon = null,
+                        ownerId = randomId(),
+                        region = "",
+                        afkChannelId = null,
+                        afkTimeout = 0,
+                        verificationLevel = VerificationLevel.None,
+                        defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
+                        explicitContentFilter = ExplicitContentFilter.Disabled,
+                        roles = emptyList(),
+                        emojis = emptyList(),
+                        features = emptyList(),
+                        mfaLevel = MFALevel.None,
+                        applicationId = null,
+                        systemChannelId = null,
+                        systemChannelFlags = SystemChannelFlags(0),
+                        rulesChannelId = null,
+                        vanityUrlCode = null,
+                        description = null,
+                        banner = null,
+                        premiumTier = PremiumTier.None,
+                        preferredLocale = "",
+                        publicUpdatesChannelId = null
+                    ),
+                    0
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `Check onShutdown is called when event the guild delete event is received`() {
+        countdownContext(1) {
+            live.onShutdown {
+                count()
+            }
+
+            sendEventValidAndRandomIdCheckLiveActive(guildId) {
+                GuildDelete(
+                    DiscordUnavailableGuild(
+                        id = it,
+                    ),
+                    0
+                )
+            }
+        }
+    }
 }
