@@ -6,6 +6,7 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.Event
+import dev.kord.core.event.channel.CategoryCreateEvent
 import dev.kord.core.event.channel.ChannelCreateEvent
 import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.channel.ChannelUpdateEvent
