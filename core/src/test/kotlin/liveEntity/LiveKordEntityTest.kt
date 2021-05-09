@@ -13,10 +13,17 @@ import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
 import dev.kord.gateway.GuildBanAdd
 import dev.kord.gateway.GuildDelete
-import kotlinx.coroutines.*
+import equality.randomId
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.job
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
-import kotlin.test.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)

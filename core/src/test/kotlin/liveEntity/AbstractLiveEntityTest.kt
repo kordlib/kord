@@ -12,6 +12,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
+import equality.randomId
 import io.ktor.client.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,7 +26,6 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.random.Random
 import kotlin.test.AfterTest
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -123,8 +123,6 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         assertEquals(0, counter.latchCount)
         assertEquals(expectedCount, counter.atomicCount)
     }
-
-    fun randomId() = Snowflake(Random.nextLong())
 
     suspend fun sendEvent(event: Event) {
         gateway.events.emit(event)

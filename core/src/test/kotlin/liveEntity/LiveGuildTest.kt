@@ -9,6 +9,7 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.live.*
 import dev.kord.gateway.*
+import equality.randomId
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonObject
 import org.junit.jupiter.api.TestInstance

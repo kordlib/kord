@@ -1,7 +1,10 @@
 package liveEntity.channel
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
+import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.DiscordChannel
+import dev.kord.common.entity.DiscordUnavailableGuild
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Category
@@ -10,7 +13,6 @@ import dev.kord.core.live.channel.onUpdate
 import dev.kord.gateway.ChannelDelete
 import dev.kord.gateway.ChannelUpdate
 import dev.kord.gateway.GuildDelete
-import dev.kord.gateway.UserUpdate
 import kotlinx.coroutines.runBlocking
 import liveEntity.AbstractLiveEntityTest
 import org.junit.jupiter.api.BeforeAll

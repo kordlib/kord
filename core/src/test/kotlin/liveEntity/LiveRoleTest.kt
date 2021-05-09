@@ -9,6 +9,7 @@ import dev.kord.core.live.onUpdate
 import dev.kord.gateway.GuildDelete
 import dev.kord.gateway.GuildRoleDelete
 import dev.kord.gateway.GuildRoleUpdate
+import equality.randomId
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.BeforeTest

@@ -12,6 +12,7 @@ import dev.kord.gateway.GuildBanAdd
 import dev.kord.gateway.GuildDelete
 import dev.kord.gateway.GuildMemberRemove
 import dev.kord.gateway.GuildMemberUpdate
+import equality.randomId
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
