@@ -66,6 +66,8 @@ sealed class Interaction : InteractionBehavior {
      */
     val version: Int get() = data.version
 
+    abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
+
     companion object {
         fun from(
             data: InteractionData,
@@ -291,6 +293,9 @@ class DmInteraction(
      * The user who invoked the interaction.
      */
     override val user get() = User(data.user.value!!, kord)
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): DmInteraction =
+        DmInteraction(data, applicationId, kord, strategy.supply(kord))
 }
 
 @KordPreview
@@ -325,6 +330,8 @@ class GuildInteraction(
     override val user: UserBehavior
         get() = UserBehavior(member.id, kord)
 
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildInteraction =
+        GuildInteraction(data, applicationId, kord, supplier)
 
 }
 
