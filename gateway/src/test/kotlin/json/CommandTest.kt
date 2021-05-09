@@ -2,6 +2,7 @@
 
 package json
 
+import dev.kord.common.entity.DiscordBotActivity
 import dev.kord.common.entity.DiscordShard
 import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.entity.Snowflake
@@ -108,7 +109,7 @@ class CommandTest {
     @Test
     fun `UpdateState command serialization`() {
         val since = 1242518400L
-        val game = null
+        val game = emptyList<DiscordBotActivity>()
         val status = PresenceStatus.Online
         val afk = false
 
@@ -118,7 +119,7 @@ class CommandTest {
             put("op", OpCode.StatusUpdate.code)
             put("d", buildJsonObject {
                 put("since", since)
-                put("activities", buildJsonArray {})
+                put("activities", JsonArray(emptyList()))
                 put("status", status.value.lowercase(Locale.getDefault()))
                 put("afk", afk)
             })
