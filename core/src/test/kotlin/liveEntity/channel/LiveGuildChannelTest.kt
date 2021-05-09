@@ -6,10 +6,18 @@ import dev.kord.common.entity.DiscordChannel
 import dev.kord.common.entity.DiscordUnavailableGuild
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.optionalSnowflake
+import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Category
+import dev.kord.core.entity.channel.DmChannel
+import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.live.channel.LiveCategory
+import dev.kord.core.live.channel.LiveDmChannel
+import dev.kord.core.live.channel.LiveGuildChannel
 import dev.kord.core.live.channel.onUpdate
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.ChannelDelete
 import dev.kord.gateway.ChannelUpdate
 import dev.kord.gateway.GuildDelete
@@ -24,7 +32,17 @@ import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
-class LiveCategoryTest : LiveChannelTest<LiveCategory>() {
+class LiveGuildChannelTest : LiveChannelTest<LiveGuildChannel>() {
+
+    inner class GuildChannelMock(
+        override val kord: Kord,
+        override val data: ChannelData,
+        override val supplier: EntitySupplier = kord.defaultSupplier
+    ) : GuildMessageChannel {
+        override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildMessageChannel {
+            error("Not invoked in test")
+        }
+    }
 
     override lateinit var channelId: Snowflake
 
@@ -36,8 +54,8 @@ class LiveCategoryTest : LiveChannelTest<LiveCategory>() {
 
     @BeforeTest
     fun onBefore() = runBlocking {
-        live = LiveCategory(
-            Category(
+        live = LiveGuildChannel(
+            GuildChannelMock(
                 kord = kord,
                 data = ChannelData(
                     id = channelId,
