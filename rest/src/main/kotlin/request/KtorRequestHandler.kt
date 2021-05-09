@@ -1,8 +1,8 @@
 package dev.kord.rest.request
 
-import dev.kord.rest.json.optional
 import dev.kord.rest.json.response.DiscordErrorResponse
 import dev.kord.rest.ratelimit.*
+import dev.kord.rest.route.optional
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.*
@@ -61,13 +61,13 @@ class KtorRequestHandler(
                 if (response.contentType() == ContentType.Application.Json)
                     throw KtorRequestException(
                         response,
-                        parser.decodeFromString(DiscordErrorResponse.serializer().optional, body)
+                        DiscordErrorResponse.serializer().optional.deserialize(parser, body)
                     )
                 else throw KtorRequestException(response, null)
             }
             else -> {
                 logger.debug { response.logString(body) }
-                parser.decodeFromString(request.route.strategy, body)
+                request.route.mapper.deserialize(parser, body)
             }
         }
     }

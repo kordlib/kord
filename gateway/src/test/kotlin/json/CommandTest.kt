@@ -61,7 +61,10 @@ class CommandTest {
         val query = "test"
         val limit = 1337
 
-        val request = json.encodeToString(Command.Companion, RequestGuildMembers(Snowflake(guildId), query.optional(), OptionalInt.Value(limit)))
+        val request = json.encodeToString(
+            Command.Companion,
+            RequestGuildMembers(Snowflake(guildId), query.optional(), OptionalInt.Value(limit))
+        )
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.RequestGuildMembers.code)
@@ -83,7 +86,10 @@ class CommandTest {
         val selfMute = true
         val selfDeaf = false
 
-        val status = json.encodeToString(Command.Companion, UpdateVoiceStatus(Snowflake(guildId), Snowflake(channelId), selfMute, selfDeaf))
+        val status = json.encodeToString(
+            Command.Companion,
+            UpdateVoiceStatus(Snowflake(guildId), Snowflake(channelId), selfMute, selfDeaf)
+        )
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.VoiceStateUpdate.code)
@@ -112,7 +118,7 @@ class CommandTest {
             put("op", OpCode.StatusUpdate.code)
             put("d", buildJsonObject {
                 put("since", since)
-                put("activities", null as String?)
+                put("activities", buildJsonArray {})
                 put("status", status.value.lowercase(Locale.getDefault()))
                 put("afk", afk)
             })
@@ -133,8 +139,16 @@ class CommandTest {
         val presence: DiscordPresence? = null
 
         val identify = json.encodeToString(
-                Command.Companion,
-                Identify(token, properties, compress.optional(), largeThreshold.optionalInt(), shard.optional(), presence.optional().coerceToMissing(), Intents.all)
+            Command.Companion,
+            Identify(
+                token,
+                properties,
+                compress.optional(),
+                largeThreshold.optionalInt(),
+                shard.optional(),
+                presence.optional().coerceToMissing(),
+                Intents.all
+            )
         )
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {

@@ -10,41 +10,43 @@ import org.junit.jupiter.api.Test
 
 internal class OptionalIntTest {
 
+    @Serializable
+    private class EmptyOptionalEntity(val value: OptionalInt = OptionalInt.Missing)
+
     @Test
     fun `deserializing nothing in optional assigns Missing`(){
         @Language("json")
         val json = """{}"""
 
-        @Serializable
-        class Entity(val value: OptionalInt = OptionalInt.Missing)
-
-        val entity = Json.decodeFromString<Entity>(json)
+        val entity = Json.decodeFromString<EmptyOptionalEntity>(json)
 
         assert(entity.value is OptionalInt.Missing)
     }
+
+
+    @Serializable
+    private class NullOptionalEntity(@Suppress("unused") val value: OptionalInt = OptionalInt.Missing)
 
     @Test
     fun `deserializing null in optional throws SerializationException`(){
         @Language("json")
         val json = """{ "value":null }"""
 
-        @Serializable
-        class Entity(@Suppress("unused") val value: OptionalInt = OptionalInt.Missing)
 
         org.junit.jupiter.api.assertThrows<SerializationException> {
-            Json.decodeFromString<Entity>(json)
+            Json.decodeFromString<NullOptionalEntity>(json)
         }
     }
+
+    @Serializable
+    class ValueOptionalEntity(@Suppress("unused") val value: OptionalInt = OptionalInt.Missing)
 
     @Test
     fun `deserializing value in optional assigns Value`(){
         @Language("json")
         val json = """{ "value":5 }"""
 
-        @Serializable
-        class Entity(@Suppress("unused") val value: OptionalInt = OptionalInt.Missing)
-
-        val entity = Json.decodeFromString<Entity>(json)
+        val entity = Json.decodeFromString<ValueOptionalEntity>(json)
         require(entity.value is OptionalInt.Value)
 
         assertEquals(5, entity.value.value)
