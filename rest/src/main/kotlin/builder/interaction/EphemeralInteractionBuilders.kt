@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.interaction
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.InteractionResponseType
@@ -17,6 +18,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+@KordDsl
 @KordPreview
 class EphemeralInteractionResponseModifyBuilder : RequestBuilder<InteractionResponseModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
@@ -40,7 +42,7 @@ class EphemeralInteractionResponseModifyBuilder : RequestBuilder<InteractionResp
     }
 }
 
-
+@KordDsl
 @KordPreview
 class EphemeralInteractionResponseCreateBuilder : RequestBuilder<InteractionResponseCreateRequest> {
     private var _content: Optional<String> = Optional.Missing()
