@@ -5,10 +5,8 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerializationException
+import kotlinx.serialization.*
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
@@ -73,6 +71,7 @@ sealed class ApplicationCommandOptionType(val type: Int) {
     object User : ApplicationCommandOptionType(6)
     object Channel : ApplicationCommandOptionType(7)
     object Role : ApplicationCommandOptionType(8)
+    object Mentionable : ApplicationCommandOptionType(9)
     class Unknown(type: Int) : ApplicationCommandOptionType(type)
 
     companion object;
@@ -220,6 +219,7 @@ data class DiscordApplicationCommandInteractionData(
 @KordPreview
 sealed class Option {
     abstract val name: String
+    abstract val type: ApplicationCommandOptionType
 
     internal object Serializer : KSerializer<Option> {
 
@@ -227,6 +227,7 @@ sealed class Option {
             element("name", String.serializer().descriptor, isOptional = false)
             element("value", JsonElement.serializer().descriptor, isOptional = true)
             element("options", JsonArray.serializer().descriptor, isOptional = true)
+            element("type", ApplicationCommandOptionType.serializer().descriptor, isOptional = false)
         }
 
         override fun deserialize(decoder: Decoder): Option {
@@ -234,14 +235,17 @@ sealed class Option {
             val json = decoder.json
 
             var name = ""
-            var jsonValue: JsonPrimitive? = null
+            var jsonValue: JsonElement? = null
             var jsonOptions: JsonArray? = null
+            var type: ApplicationCommandOptionType? = null
             decoder.decodeStructure(descriptor) {
                 while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
                         0 -> name = decodeStringElement(descriptor, index)
-                        1 -> jsonValue = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
+                        1 -> jsonValue = decodeSerializableElement(descriptor, index, JsonElement.serializer())
                         2 -> jsonOptions = decodeSerializableElement(descriptor, index, JsonArray.serializer())
+                        3 -> type =
+                            decodeSerializableElement(descriptor, index, ApplicationCommandOptionType.serializer())
 
                         CompositeDecoder.DECODE_DONE -> return@decodeStructure
                         else -> throw SerializationException("unknown index: $index")
@@ -249,33 +253,67 @@ sealed class Option {
                 }
             }
 
-            jsonValue?.let { value -> // name + value == command option, i.e. an argument
-                return CommandArgument(name, DiscordOptionValue(value))
+            requireNotNull(type) { "'type' expected for $name but was absent" }
+
+            return when (type) {
+                ApplicationCommandOptionType.SubCommand -> {
+                    val options = if (jsonOptions == null) Optional.Missing()
+                    else Optional.Value(jsonOptions!!.map {
+                        json.decodeFromJsonElement(serializer(), it) as CommandArgument<*>
+                    })
+
+                    SubCommand(name, options)
+                }
+
+                ApplicationCommandOptionType.SubCommandGroup -> {
+                    val options = if (jsonOptions == null) Optional.Missing()
+                    else Optional.Value(jsonOptions!!.map {
+                        json.decodeFromJsonElement(serializer(), it) as SubCommand
+                    })
+
+                    CommandGroup(name, options)
+                }
+                ApplicationCommandOptionType.Boolean,
+                ApplicationCommandOptionType.Channel,
+                ApplicationCommandOptionType.Integer,
+                ApplicationCommandOptionType.Mentionable,
+                ApplicationCommandOptionType.Role,
+                ApplicationCommandOptionType.String,
+                ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
+                    json, jsonValue!!, name, type!!
+                )
+                else -> error("unknown ApplicationCommandOptionType $type")
             }
-
-            if (jsonOptions == null) { // name -value -options == can only be sub command
-                return SubCommand(name, Optional.Missing())
-            }
-
-            //options are present, either a subcommand or a group, we'll have to look at its children
-            val nestedOptions = jsonOptions?.map { json.decodeFromJsonElement(serializer(), it) } ?: emptyList()
-
-            if (nestedOptions.isEmpty()) { //only subcommands can have no children
-                return SubCommand(name, Optional(emptyList()))
-            }
-
-            val onlyArguments =
-                nestedOptions.all { it is CommandArgument } //only subcommand can have options at this point
-            if (onlyArguments) return SubCommand(name, Optional(nestedOptions.filterIsInstance<CommandArgument>()))
-
-            val onlySubCommands = nestedOptions.all { it is SubCommand } //only groups can have options at this point
-            if (onlySubCommands) return CommandGroup(name, Optional(nestedOptions.filterIsInstance<SubCommand>()))
-
-            error("option mixed option arguments and option subcommands: $jsonOptions")
         }
 
         override fun serialize(encoder: Encoder, value: Option) {
-            TODO("Not yet implemented")
+            when(value){
+                is CommandArgument<*> -> CommandArgument.Serializer.serialize(encoder, value)
+                is CommandGroup -> encoder.encodeStructure(descriptor) {
+                    encodeSerializableElement(
+                        descriptor, 0, String.serializer(), value.name
+                    )
+                    encodeSerializableElement(
+                        descriptor, 2, Optional.serializer(ListSerializer(Serializer)), value.options
+                    )
+
+                    encodeSerializableElement(
+                        descriptor, 3, ApplicationCommandOptionType.serializer(), value.type
+                    )
+                }
+                is SubCommand -> encoder.encodeStructure(descriptor) {
+                    encodeSerializableElement(
+                        descriptor, 0, String.serializer(), value.name
+                    )
+                    encodeSerializableElement(
+                        descriptor, 2, Optional.serializer(ListSerializer(Serializer)), value.options
+                    )
+
+                    encodeSerializableElement(
+                        descriptor, 3, ApplicationCommandOptionType.serializer(), value.type
+                    )
+                }
+            }
         }
     }
 }
@@ -284,86 +322,220 @@ sealed class Option {
 @KordPreview
 data class SubCommand(
     override val name: String,
-    val options: Optional<List<CommandArgument>> = Optional.Missing()
-) : Option()
+    val options: Optional<List<CommandArgument<@Contextual Any?>>> = Optional.Missing()
+) : Option() {
+    override val type: ApplicationCommandOptionType
+        get() = ApplicationCommandOptionType.SubCommand
+}
 
-@Serializable
 @KordPreview
-data class CommandArgument(
-    override val name: String,
-    @OptIn(KordExperimental::class)
-    val value: DiscordOptionValue<@Serializable(NotSerializable::class) Any?>,
-) : Option()
+@Serializable(with = CommandArgument.Serializer::class)
+sealed class CommandArgument<out T> : Option() {
 
-@Serializable
+    abstract val value: T
+
+    class StringArgument(
+        override val name: String,
+        override val value: String
+    ) : CommandArgument<String>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.String
+
+        override fun toString(): String = "StringArgument(name=$name, value=$value)"
+    }
+
+    class IntegerArgument(
+        override val name: String,
+        override val value: Int
+    ) : CommandArgument<Int>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.Integer
+
+        override fun toString(): String = "IntegerArgument(name=$name, value=$value)"
+    }
+
+    class BooleanArgument(
+        override val name: String,
+        override val value: Boolean
+    ) : CommandArgument<Boolean>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.Boolean
+
+        override fun toString(): String = "BooleanArgument(name=$name, value=$value)"
+    }
+
+    class UserArgument(
+        override val name: String,
+        override val value: Snowflake
+    ) : CommandArgument<Snowflake>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.User
+
+        override fun toString(): String = "UserArgument(name=$name, value=$value)"
+    }
+
+    class ChannelArgument(
+        override val name: String,
+        override val value: Snowflake
+    ) : CommandArgument<Snowflake>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.Channel
+
+        override fun toString(): String = "ChannelArgument(name=$name, value=$value)"
+    }
+
+    class RoleArgument(
+        override val name: String,
+        override val value: Snowflake
+    ) : CommandArgument<Snowflake>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.Role
+
+        override fun toString(): String = "RoleArgument(name=$name, value=$value)"
+    }
+
+    class MentionableArgument(
+        override val name: String,
+        override val value: Snowflake
+    ) : CommandArgument<Snowflake>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.Mentionable
+
+        override fun toString(): String = "MentionableArgument(name=$name, value=$value)"
+    }
+
+    internal object Serializer : KSerializer<CommandArgument<*>> {
+
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("kord.CommandArgument") {
+            element("name", String.serializer().descriptor)
+            element("value", JsonElement.serializer().descriptor)
+            element("type", ApplicationCommandOptionType.serializer().descriptor)
+        }
+
+        override fun serialize(encoder: Encoder, value: CommandArgument<*>) {
+            encoder.encodeStructure(descriptor) {
+                encodeStringElement(descriptor, 0, value.name)
+                encodeSerializableElement(descriptor, 1, ApplicationCommandOptionType.serializer(), value.type)
+                when (value) {
+                    is BooleanArgument -> encodeBooleanElement(descriptor, 3, value.value)
+                    is ChannelArgument -> encodeSerializableElement(
+                        descriptor,
+                        3,
+                        Snowflake.serializer(),
+                        value.value
+                    )
+                    is RoleArgument -> encodeSerializableElement(
+                        descriptor,
+                        3,
+                        Snowflake.serializer(),
+                        value.value
+                    )
+                    is MentionableArgument -> encodeSerializableElement(
+                        descriptor,
+                        3,
+                        Snowflake.serializer(),
+                        value.value
+                    )
+                    is UserArgument -> encodeSerializableElement(
+                        descriptor,
+                        3,
+                        Snowflake.serializer(),
+                        value.value
+                    )
+                    is IntegerArgument -> encodeIntElement(descriptor, 3, value.value)
+                    is StringArgument -> encodeStringElement(descriptor, 3, value.value)
+                }
+            }
+        }
+
+        fun deserialize(
+            json: Json,
+            element: JsonElement,
+            name: String,
+            type: ApplicationCommandOptionType
+        ): CommandArgument<*> = when (type) {
+            ApplicationCommandOptionType.Boolean -> BooleanArgument(
+                name, json.decodeFromJsonElement(Boolean.serializer(), element)
+            )
+            ApplicationCommandOptionType.String -> StringArgument(
+                name, json.decodeFromJsonElement(String.serializer(), element)
+            )
+            ApplicationCommandOptionType.Integer -> IntegerArgument(
+                name, json.decodeFromJsonElement(Int.serializer(), element)
+            )
+            ApplicationCommandOptionType.Channel -> ChannelArgument(
+                name, json.decodeFromJsonElement(Snowflake.serializer(), element)
+            )
+            ApplicationCommandOptionType.Mentionable -> MentionableArgument(
+                name, json.decodeFromJsonElement(Snowflake.serializer(), element)
+            )
+            ApplicationCommandOptionType.Role -> RoleArgument(
+                name, json.decodeFromJsonElement(Snowflake.serializer(), element)
+            )
+            ApplicationCommandOptionType.User -> UserArgument(
+                name, json.decodeFromJsonElement(Snowflake.serializer(), element)
+            )
+            ApplicationCommandOptionType.SubCommand,
+            ApplicationCommandOptionType.SubCommandGroup,
+            is ApplicationCommandOptionType.Unknown -> error("unknown CommandArgument type ${type.type}")
+        }
+
+        override fun deserialize(decoder: Decoder): CommandArgument<*> {
+            decoder.decodeStructure(descriptor) {
+                this as JsonDecoder
+
+                var name = ""
+                var element: JsonElement? = null
+                var type: ApplicationCommandOptionType? = null
+                while (true) {
+                    when (val index = decodeElementIndex(Option.Serializer.descriptor)) {
+                        0 -> name = decodeSerializableElement(descriptor, index, String.serializer())
+                        1 -> element = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                        2 -> type = decodeSerializableElement(
+                            descriptor,
+                            index,
+                            ApplicationCommandOptionType.serializer()
+                        )
+
+                        CompositeDecoder.DECODE_DONE -> break
+                        else -> error("unknown index: $index")
+                    }
+                }
+
+                requireNotNull(element)
+                requireNotNull(type)
+                return deserialize(json, element, name, type)
+            }
+        }
+    }
+}
+
 @KordPreview
 data class CommandGroup(
     override val name: String,
     val options: Optional<List<SubCommand>> = Optional.Missing(),
-) : Option()
-
-@Serializable(DiscordOptionValue.OptionValueSerializer::class)
-@KordPreview
-sealed class DiscordOptionValue<out T>(val value: T) {
-    class IntValue(value: Int) : DiscordOptionValue<Int>(value)
-    class StringValue(value: String) : DiscordOptionValue<String>(value)
-    class BooleanValue(value: Boolean) : DiscordOptionValue<Boolean>(value)
-
-    override fun toString(): String = when (this) {
-        is IntValue -> "OptionValue.IntValue($value)"
-        is StringValue -> "OptionValue.StringValue($value)"
-        is BooleanValue -> "OptionValue.BooleanValue($value)"
-    }
-
-    internal class OptionValueSerializer<T>(serializer: KSerializer<T>) : KSerializer<DiscordOptionValue<*>> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("OptionValue", PrimitiveKind.STRING)
-
-        override fun deserialize(decoder: Decoder): DiscordOptionValue<*> {
-            val value = (decoder as JsonDecoder).decodeJsonElement().jsonPrimitive
-            return when {
-                value.isString -> StringValue(value.toString())
-                value.booleanOrNull != null -> BooleanValue(value.boolean)
-                else -> IntValue(value.int)
-            }
-        }
-
-        override fun serialize(encoder: Encoder, value: DiscordOptionValue<*>) {
-            when (value) {
-                is IntValue -> encoder.encodeInt(value.value)
-                is StringValue -> encoder.encodeString(value.value)
-                is BooleanValue -> encoder.encodeBoolean(value.value)
-            }
-        }
-    }
+) : Option() {
+    override val type: ApplicationCommandOptionType
+        get() = ApplicationCommandOptionType.SubCommandGroup
 }
 
 @KordPreview
-fun DiscordOptionValue(value: JsonPrimitive): DiscordOptionValue<Any> = when {
-    value.isString -> DiscordOptionValue.StringValue(value.content)
-    value.booleanOrNull != null -> DiscordOptionValue.BooleanValue(value.boolean)
-    value.intOrNull != null -> DiscordOptionValue.IntValue(value.int)
-    else -> throw SerializationException("unknown value type for option")
-}
-
-
-@KordPreview
-fun DiscordOptionValue<*>.int(): Int {
+fun CommandArgument<*>.int(): Int {
     return value as? Int ?: error("$value wasn't an Int.")
 }
 
-
 @KordPreview
-fun DiscordOptionValue<*>.string(): String {
+fun CommandArgument<*>.string(): String {
     return value.toString()
 }
 
 @KordPreview
-fun DiscordOptionValue<*>.boolean(): Boolean {
+fun CommandArgument<*>.boolean(): Boolean {
     return value as? Boolean ?: error("$value wasn't a Boolean.")
 }
 
 @KordPreview
-fun DiscordOptionValue<*>.snowflake(): Snowflake {
+fun CommandArgument<*>.snowflake(): Snowflake {
     val id = string().toLongOrNull() ?: error("$value wasn't a Snowflake")
     return Snowflake(id)
 }

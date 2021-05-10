@@ -1,8 +1,7 @@
 package dev.kord.core.entity.interaction
 
-import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.DiscordOptionValue
+import dev.kord.common.entity.CommandArgument
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
@@ -14,10 +13,11 @@ import dev.kord.core.behavior.GuildInteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.channel.MessageChannelBehavior
+import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
+import dev.kord.core.entity.Entity
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Role
 import dev.kord.core.entity.User
@@ -25,7 +25,6 @@ import dev.kord.core.entity.channel.DmChannel
 import dev.kord.core.entity.channel.ResolvedChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.toSnowflakeOrNull
 
 /**
  * An instance of [Interaction] (https://discord.com/developers/docs/interactions/slash-commands#interaction)
@@ -172,7 +171,7 @@ class SubCommand(
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.values.orEmpty()
-            .associate { it.name to OptionValue(it.value, resolved) }
+            .associate { it.name to OptionValue(it, resolved) }
 
 
     override val resolved: ResolvedObjects?
@@ -210,7 +209,7 @@ class GroupCommand(
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.options.orEmpty()
-            .associate { it.name to OptionValue(it.value, resolved) }
+            .associate { it.name to OptionValue(it, resolved) }
 
 
     override val resolved: ResolvedObjects?
@@ -231,49 +230,78 @@ class ResolvedObjects(
     val users: Map<Snowflake, User>? get() = data.users.mapValues { User(it.value, kord) }.value
     val members: Map<Snowflake, Member>?
         get() = data.members.mapValues {
-            Member(
-                it.value,
-                users!!.get(it.key)!!.data,
-                kord
-            )
+            Member(it.value,users!![it.key]!!.data, kord)
         }.value
 
 }
 
 @KordPreview
-sealed class OptionValue<T>(val value: T) {
+sealed class OptionValue<out T>(val value: T) {
 
-    class RoleOptionValue(value: Role) : OptionValue<Role>(value)
-    open class UserOptionValue(value: User) : OptionValue<User>(value)
-    class MemberOptionValue(value: Member) : UserOptionValue(value)
-    class ChannelOptionValue(value: ResolvedChannel) : OptionValue<ResolvedChannel>(value)
-    class IntOptionValue(value: Int) : OptionValue<Int>(value)
-    class StringOptionValue(value: String) : OptionValue<String>(value)
-    class BooleanOptionValue(value: Boolean) : OptionValue<Boolean>(value)
+    class RoleOptionValue(value: Role) : OptionValue<Role>(value) {
+        override fun toString(): String = "RoleOptionValue(value=$value)"
+    }
+    open class UserOptionValue(value: User) : OptionValue<User>(value) {
+        override fun toString(): String = "UserOptionValue(value=$value)"
+    }
+    class MemberOptionValue(value: Member) : UserOptionValue(value) {
+        override fun toString(): String = "MemberOptionValue(value=$value)"
+    }
+    class ChannelOptionValue(value: ResolvedChannel) : OptionValue<ResolvedChannel>(value) {
+        override fun toString(): String = "ChannelOptionValue(value=$value)"
+    }
+    class IntOptionValue(value: Int) : OptionValue<Int>(value) {
+        override fun toString(): String = "IntOptionValue(value=$value)"
+    }
+    class StringOptionValue(value: String) : OptionValue<String>(value) {
+        override fun toString(): String = "StringOptionValue(value=$value)"
+    }
+    class BooleanOptionValue(value: Boolean) : OptionValue<Boolean>(value) {
+        override fun toString(): String = "BooleanOptionValue(value=$value)"
+    }
+    class MentionableOptionValue(value: Entity) : OptionValue<Entity>(value) {
+        override fun toString(): String = "MentionableOptionValue(value=$value)"
+    }
 }
 
 @KordPreview
-fun OptionValue(value: DiscordOptionValue<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
+fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
     return when (value) {
-        is DiscordOptionValue.BooleanValue -> OptionValue.BooleanOptionValue(value.value)
-        is DiscordOptionValue.IntValue -> OptionValue.IntOptionValue(value.value)
-        is DiscordOptionValue.StringValue -> {
-            if (resolvedObjects == null) return OptionValue.StringOptionValue(value.value)
+        is CommandArgument.BooleanArgument -> OptionValue.BooleanOptionValue(value.value)
+        is CommandArgument.IntegerArgument -> OptionValue.IntOptionValue(value.value)
+        is CommandArgument.StringArgument -> OptionValue.StringOptionValue(value.value)
+        is CommandArgument.ChannelArgument -> {
+            val channel = resolvedObjects?.channels.orEmpty()[value.value]
+            requireNotNull(channel) { "channel expected for $value but was missing" }
 
-            val string = value.value
-            val snowflake = string.toLongOrNull().toSnowflakeOrNull() ?: return OptionValue.StringOptionValue(string)
+            OptionValue.ChannelOptionValue(channel)
+        }
 
-            when {
-                resolvedObjects.members?.get(snowflake) != null ->
-                    OptionValue.MemberOptionValue(resolvedObjects.members?.get(snowflake)!!)
-                resolvedObjects.users?.get(snowflake) != null ->
-                    OptionValue.UserOptionValue(resolvedObjects.users?.get(snowflake)!!)
-                resolvedObjects.channels?.get(snowflake) != null ->
-                    OptionValue.ChannelOptionValue(resolvedObjects.channels?.get(snowflake)!!)
-                resolvedObjects.roles?.get(snowflake) != null ->
-                    OptionValue.RoleOptionValue(resolvedObjects.roles?.get(snowflake)!!)
-                else -> OptionValue.StringOptionValue(string)
-            }
+        is CommandArgument.MentionableArgument -> {
+            val channel = resolvedObjects?.channels.orEmpty()[value.value]
+            val user = resolvedObjects?.channels.orEmpty()[value.value]
+            val member = resolvedObjects?.members.orEmpty()[value.value]
+            val role = resolvedObjects?.members.orEmpty()[value.value]
+
+            OptionValue.MentionableOptionValue((channel ?: user ?: member ?: role)!!)
+        }
+
+        is CommandArgument.RoleArgument -> {
+            val role = resolvedObjects?.roles.orEmpty()[value.value]
+            requireNotNull(role) { "role expected for $value but was missing" }
+
+            OptionValue.RoleOptionValue(role)
+        }
+
+        is CommandArgument.UserArgument -> {
+            val member = resolvedObjects?.members.orEmpty()[value.value]
+
+            if (member != null) return OptionValue.MemberOptionValue(member)
+
+            val user = resolvedObjects?.users.orEmpty()[value.value]
+            requireNotNull(user) { "user expected for $value but was missing" }
+
+            OptionValue.UserOptionValue(user)
         }
     }
 }

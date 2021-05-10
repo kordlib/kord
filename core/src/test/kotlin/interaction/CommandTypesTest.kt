@@ -1,6 +1,7 @@
 package interaction
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.ApplicationCommandOptionType
 import dev.kord.common.entity.DiscordApplicationCommandInteractionData
 import dev.kord.core.cache.data.ApplicationCommandInteractionData
 import dev.kord.core.entity.interaction.*
@@ -12,6 +13,7 @@ import kotlin.test.assertEquals
 @KordPreview
 class CommandsTypeTests {
     val arg = buildJsonObject {
+        put("type", ApplicationCommandOptionType.Integer.type)
         put("name", "argument")
         put("value", 1)
     }
@@ -21,6 +23,7 @@ class CommandsTypeTests {
         putJsonArray("options") { add(arg) }
     }
     val partialSubCommand = buildJsonObject {
+        put("type", ApplicationCommandOptionType.SubCommand.type)
         put("name", "subCommand")
         putJsonArray("options") { add(arg) }
     }
@@ -32,8 +35,10 @@ class CommandsTypeTests {
         }
 
     val group = buildJsonObject {
+
         putJsonArray("options") {
             addJsonObject {
+                put("type", ApplicationCommandOptionType.SubCommandGroup.type)
                 put("name", "group")
                 putJsonArray("options") { add(partialSubCommand) }
             }

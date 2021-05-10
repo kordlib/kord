@@ -6,6 +6,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.NotSerializable
 import dev.kord.common.entity.optional.*
 import dev.kord.gateway.InteractionCreate
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -100,15 +101,15 @@ data class ApplicationCommandInteractionData(
 data class OptionData(
     val name: String,
     @OptIn(KordExperimental::class)
-    val value: Optional<DiscordOptionValue<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
-    val values: Optional<List<CommandArgument>> = Optional.Missing(),
+    val value: Optional<CommandArgument<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
+    val values: Optional<List<CommandArgument<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val subCommands: Optional<List<SubCommand>> = Optional.Missing()
 ) {
     companion object {
         fun from(data: Option): OptionData = with(data) {
             when (data) {
                 is SubCommand -> OptionData(name, values = data.options)
-                is CommandArgument -> OptionData(name, value = Optional(data.value))
+                is CommandArgument<*> -> OptionData(name, value = Optional(data))
                 is CommandGroup -> OptionData(name, subCommands = data.options)
             }
         }
