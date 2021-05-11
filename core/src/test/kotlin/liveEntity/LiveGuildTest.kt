@@ -68,6 +68,25 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
+    fun `Check onIntegrationsUpdate is called when event is received`() {
+        countdownContext(1) {
+            live.onIntegrationsUpdate {
+                assertEquals(guildId, it.guildId)
+                count()
+            }
+
+            sendEventValidAndRandomId(guildId) {
+                GuildIntegrationsUpdate(
+                    DiscordGuildIntegrations(
+                        guildId = it
+                    ),
+                    0
+                )
+            }
+        }
+    }
+
+    @Test
     fun `Check onBanAdd is called when event is received`() {
         countdownContext(1) {
             live.onBanAdd {
