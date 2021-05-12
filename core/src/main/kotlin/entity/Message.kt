@@ -1,7 +1,10 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.mapNullable
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -13,6 +16,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.entity.interaction.MessageInteraction
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -173,6 +177,9 @@ class Message(
      * The [Behaviors][UserBehavior] of users mentioned in this message.
      */
     val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(it, kord) }.toSet()
+
+    @KordPreview
+    val interaction: MessageInteraction? get() = data.messageInteraction.mapNullable { MessageInteraction(it, kord) }.value
 
     /**
      * The [users][User] mentioned in this message.

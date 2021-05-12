@@ -1,6 +1,8 @@
 package dev.kord.core.cache.data
 
+import cache.data.MessageInteractionData
 import dev.kord.cache.api.data.description
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
@@ -34,6 +36,7 @@ data class MessageData(
     val flags: Optional<MessageFlags> = Optional.Missing(),
     val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
+    val messageInteraction: Optional<MessageInteractionData> = Optional.Missing()
 ) {
 
     fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
@@ -127,7 +130,8 @@ data class MessageData(
                 messageReference.map { MessageReferenceData.from(it) },
                 flags,
                 stickers.mapList { MessageStickerData.from(it) },
-                referencedMessage.mapNotNull { from(it) }
+                referencedMessage.mapNotNull { from(it) },
+                interaction.map { MessageInteractionData.from(it) }
             )
         }
     }
