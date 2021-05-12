@@ -11,6 +11,7 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 fun VoiceChannel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
@@ -22,6 +23,10 @@ inline fun VoiceChannel.live(
     block: LiveVoiceChannel.() -> Unit
 ) = this.live(dispatcher).apply(block)
 
+@Deprecated(
+    "The block is never called because the channel is already created",
+    ReplaceWith("LiveGuild.onChannelCreate")
+)
 @KordPreview
 fun LiveVoiceChannel.onCreate(block: suspend (VoiceChannelCreateEvent) -> Unit) = on(consumer = block)
 
@@ -57,7 +62,7 @@ fun LiveVoiceChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = 
 class LiveVoiceChannel(
     channel: VoiceChannel,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : LiveChannel(dispatcher), KordEntity by channel {
+) : LiveChannel(dispatcher, channel.kord.coroutineContext.job), KordEntity by channel {
 
     override var channel: VoiceChannel = channel
         private set
@@ -65,9 +70,9 @@ class LiveVoiceChannel(
     override fun update(event: Event) = when (event) {
         is VoiceChannelCreateEvent -> channel = event.channel
         is VoiceChannelUpdateEvent -> channel = event.channel
-        is VoiceChannelDeleteEvent -> shutDown()
+        is VoiceChannelDeleteEvent -> shutdown()
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutdown()
 
         else -> Unit
     }

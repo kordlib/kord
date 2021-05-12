@@ -11,6 +11,7 @@ import dev.kord.core.event.guild.MemberUpdateEvent
 import dev.kord.core.live.channel.LiveGuildChannel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveMember(this, dispatcher)
@@ -19,6 +20,10 @@ fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveMem
 inline fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveMember.() -> Unit) =
     this.live(dispatcher).apply(block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveMember.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveMember.onLeave(block: suspend (MemberLeaveEvent) -> Unit) = on(consumer = block)
 
@@ -37,7 +42,7 @@ fun LiveMember.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = bl
     ReplaceWith("LiveMember.onShutDown((() -> Unit)?)")
 )
 @KordPreview
-inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
+inline fun LiveGuildChannel.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is MemberLeaveEvent || it is BanAddEvent || it is GuildDeleteEvent) {
         block(it)
     }
@@ -54,7 +59,7 @@ fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = 
 class LiveMember(
     member: Member,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher), KordEntity by member {
+) : AbstractLiveKordEntity(dispatcher, member.kord.coroutineContext.job), KordEntity by member {
     var member = member
         private set
 
@@ -64,13 +69,12 @@ class LiveMember(
         is BanAddEvent -> member.id == event.user.id
         is GuildDeleteEvent -> member.guildId == event.guildId
         else -> false
-
     }
 
     override fun update(event: Event) = when (event) {
-        is MemberLeaveEvent -> shutDown()
-        is BanAddEvent -> shutDown()
-        is GuildDeleteEvent -> shutDown()
+        is MemberLeaveEvent -> shutdown()
+        is BanAddEvent -> shutdown()
+        is GuildDeleteEvent -> shutdown()
         is MemberUpdateEvent -> member = event.member
 
         else -> Unit

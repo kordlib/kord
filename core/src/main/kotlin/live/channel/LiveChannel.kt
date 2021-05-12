@@ -16,6 +16,7 @@ import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 
 @KordPreview
 fun Channel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = when (this) {
@@ -72,15 +73,27 @@ fun LiveChannel.onMessageUpdate(block: suspend (MessageUpdateEvent) -> Unit) = o
 @KordPreview
 fun LiveChannel.onMessageDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is never called because the channel is already created",
+    ReplaceWith("LiveGuild.onChannelCreate")
+)
 @KordPreview
 fun LiveChannel.onChannelCreate(block: suspend (ChannelCreateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
 fun LiveChannel.onChannelUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shutdown",
+    ReplaceWith("LiveChannel.onShutDown((() -> Unit)?)")
+)
 @KordPreview
 fun LiveChannel.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is never called because the guild where the channel is located is already created",
+    ReplaceWith("Kord.on<GuildCreateEvent>")
+)
 @KordPreview
 fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(consumer = block)
 
@@ -88,7 +101,7 @@ fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(co
 fun LiveChannel.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-abstract class LiveChannel(dispatcher: CoroutineDispatcher = Dispatchers.Default) : AbstractLiveKordEntity(dispatcher) {
+abstract class LiveChannel(dispatcher: CoroutineDispatcher = Dispatchers.Default, parent: Job) : AbstractLiveKordEntity(dispatcher, parent) {
 
     abstract val channel: Channel
 

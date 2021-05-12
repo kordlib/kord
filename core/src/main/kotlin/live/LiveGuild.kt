@@ -6,6 +6,7 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.Event
+import dev.kord.core.event.channel.CategoryCreateEvent
 import dev.kord.core.event.channel.ChannelCreateEvent
 import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.channel.ChannelUpdateEvent
@@ -18,6 +19,7 @@ import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 fun Guild.live(dispatcher: CoroutineDispatcher = Dispatchers.Default): LiveGuild =
@@ -32,6 +34,9 @@ fun LiveGuild.onEmojisUpdate(block: suspend (EmojisUpdateEvent) -> Unit) = on(co
 
 @KordPreview
 fun LiveGuild.onIntegrationsUpdate(block: suspend (IntegrationsUpdateEvent) -> Unit) = on(consumer = block)
+
+@KordPreview
+fun LiveGuild.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
 fun LiveGuild.onBanRemove(block: suspend (BanRemoveEvent) -> Unit) = on(consumer = block)
@@ -113,6 +118,10 @@ fun LiveGuild.onChannelUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(
 @KordPreview
 fun LiveGuild.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is never called because the guild is already created",
+    ReplaceWith("Kord.on<GuildCreateEvent>")
+)
 @KordPreview
 fun LiveGuild.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(consumer = block)
 
@@ -130,50 +139,54 @@ fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(cons
 class LiveGuild(
     guild: Guild,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher), KordEntity by guild {
+) : AbstractLiveKordEntity(dispatcher, guild.kord.coroutineContext.job), KordEntity by guild {
 
     var guild: Guild = guild
         private set
 
-    override fun filter(event: Event): Boolean = when (event) {
-        is EmojisUpdateEvent -> event.guildId == guild.id
+    override fun filter(event: Event): Boolean {
+        println(event)
+        return when (event) {
+            is EmojisUpdateEvent -> event.guildId == guild.id
 
-        is IntegrationsUpdateEvent -> event.guildId == guild.id
+            is IntegrationsUpdateEvent -> event.guildId == guild.id
 
-        is BanRemoveEvent -> event.guildId == guild.id
+            is BanAddEvent -> event.guildId == guild.id
+            is BanRemoveEvent -> event.guildId == guild.id
 
-        is PresenceUpdateEvent -> event.guildId == guild.id
+            is PresenceUpdateEvent -> event.guildId == guild.id
 
-        is VoiceServerUpdateEvent -> event.guildId == guild.id
-        is VoiceStateUpdateEvent -> event.state.guildId == guild.id
+            is VoiceServerUpdateEvent -> event.guildId == guild.id
+            is VoiceStateUpdateEvent -> event.state.guildId == guild.id
 
-        is WebhookUpdateEvent -> event.guildId == guild.id
+            is WebhookUpdateEvent -> event.guildId == guild.id
 
-        is RoleCreateEvent -> event.guildId == guild.id
-        is RoleUpdateEvent -> event.guildId == guild.id
-        is RoleDeleteEvent -> event.guildId == guild.id
+            is RoleCreateEvent -> event.guildId == guild.id
+            is RoleUpdateEvent -> event.guildId == guild.id
+            is RoleDeleteEvent -> event.guildId == guild.id
 
-        is MemberJoinEvent -> event.guildId == guild.id
-        is MemberUpdateEvent -> event.guildId == guild.id
-        is MemberLeaveEvent -> event.guildId == guild.id
+            is MemberJoinEvent -> event.guildId == guild.id
+            is MemberUpdateEvent -> event.guildId == guild.id
+            is MemberLeaveEvent -> event.guildId == guild.id
 
-        is ReactionAddEvent -> event.guildId == guild.id
-        is ReactionRemoveEvent -> event.guildId == guild.id
-        is ReactionRemoveAllEvent -> event.guildId == guild.id
+            is ReactionAddEvent -> event.guildId == guild.id
+            is ReactionRemoveEvent -> event.guildId == guild.id
+            is ReactionRemoveAllEvent -> event.guildId == guild.id
 
-        is MessageCreateEvent -> event.guildId == guild.id
-        is MessageUpdateEvent -> event.new.guildId.value == guild.id
-        is MessageDeleteEvent -> event.guildId == guild.id
+            is MessageCreateEvent -> event.guildId == guild.id
+            is MessageUpdateEvent -> event.new.guildId.value == guild.id
+            is MessageDeleteEvent -> event.guildId == guild.id
 
-        is ChannelCreateEvent -> event.channel.data.guildId.value == guild.id
-        is ChannelUpdateEvent -> event.channel.data.guildId.value == guild.id
-        is ChannelDeleteEvent -> event.channel.data.guildId.value == guild.id
+            is ChannelCreateEvent -> event.channel.data.guildId.value == guild.id
+            is ChannelUpdateEvent -> event.channel.data.guildId.value == guild.id
+            is ChannelDeleteEvent -> event.channel.data.guildId.value == guild.id
 
-        is GuildCreateEvent -> event.guild.id == guild.id
-        is GuildUpdateEvent -> event.guild.id == guild.id
-        is GuildDeleteEvent -> event.guildId == guild.id
+            is GuildCreateEvent -> event.guild.id == guild.id
+            is GuildUpdateEvent -> event.guild.id == guild.id
+            is GuildDeleteEvent -> event.guildId == guild.id
 
-        else -> false
+            else -> false
+        }
     }
 
     override fun update(event: Event): Unit = when (event) {
@@ -210,7 +223,7 @@ class LiveGuild(
         ), kord)
 
         is GuildUpdateEvent -> guild = event.guild
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutdown()
         else -> Unit
     }
 

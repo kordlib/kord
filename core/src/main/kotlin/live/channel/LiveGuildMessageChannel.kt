@@ -11,6 +11,7 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 fun GuildMessageChannel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
@@ -22,6 +23,10 @@ inline fun GuildMessageChannel.live(
     block: LiveGuildMessageChannel.() -> Unit
 ) = this.live(dispatcher).apply(block)
 
+@Deprecated(
+    "The block is never called because the channel is already created",
+    ReplaceWith("LiveGuild.onChannelCreate")
+)
 @KordPreview
 fun LiveGuildMessageChannel.onCreate(block: suspend (ChannelCreateEvent) -> Unit) = on(consumer = block)
 
@@ -57,7 +62,7 @@ fun LiveGuildMessageChannel.onDelete(block: suspend (GuildDeleteEvent) -> Unit) 
 class LiveGuildMessageChannel(
     channel: GuildMessageChannel,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : LiveChannel(dispatcher), KordEntity by channel {
+) : LiveChannel(dispatcher, channel.kord.coroutineContext.job), KordEntity by channel {
 
     override var channel: GuildMessageChannel = channel
         private set
@@ -65,9 +70,9 @@ class LiveGuildMessageChannel(
     override fun update(event: Event) = when (event) {
         is ChannelCreateEvent -> channel = event.channel as GuildMessageChannel
         is ChannelUpdateEvent -> channel = event.channel as GuildMessageChannel
-        is ChannelDeleteEvent -> shutDown()
+        is ChannelDeleteEvent -> shutdown()
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutdown()
 
         else -> Unit
     }

@@ -15,6 +15,7 @@ import dev.kord.core.event.message.*
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 suspend fun Message.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
@@ -53,6 +54,10 @@ inline fun LiveMessage.onReactionRemove(
 @KordPreview
 fun LiveMessage.onReactionRemoveAll(block: suspend (ReactionRemoveAllEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is never called because the message is already created",
+    ReplaceWith("LiveChannel.onMessageCreate")
+)
 @KordPreview
 fun LiveMessage.onCreate(block: suspend (MessageCreateEvent) -> Unit) = on(consumer = block)
 
@@ -64,7 +69,7 @@ fun LiveMessage.onUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consu
     ReplaceWith("LiveMessage.onShutDown((() -> Unit)?)")
 )
 @KordPreview
-inline fun LiveMessage.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
+inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is MessageDeleteEvent || it is MessageBulkDeleteEvent
         || it is ChannelDeleteEvent || it is GuildDeleteEvent
     ) {
@@ -105,7 +110,7 @@ class LiveMessage(
     message: Message,
     val guildId: Snowflake?,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher), KordEntity by message {
+) : AbstractLiveKordEntity(dispatcher, message.kord.coroutineContext.job), KordEntity by message {
 
     var message: Message = message
         private set
@@ -132,12 +137,12 @@ class LiveMessage(
         is ReactionRemoveAllEvent -> message = Message(message.data.copy(reactions = Optional.Missing()), kord)
 
         is MessageUpdateEvent -> message = Message(message.data + event.new, kord)
-        is MessageDeleteEvent -> shutDown()
-        is MessageBulkDeleteEvent -> shutDown()
+        is MessageDeleteEvent -> shutdown()
+        is MessageBulkDeleteEvent -> shutdown()
 
-        is ChannelDeleteEvent -> shutDown()
+        is ChannelDeleteEvent -> shutdown()
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutdown()
         else -> Unit
     }
 

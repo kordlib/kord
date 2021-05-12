@@ -9,6 +9,7 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.job
 
 @KordPreview
 fun Role.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveRole(this, dispatcher)
@@ -32,7 +33,7 @@ fun LiveRole.onUpdate(block: suspend (RoleUpdateEvent) -> Unit) = on(consumer = 
     ReplaceWith("LiveRole.onShutDown((() -> Unit)?)")
 )
 @KordPreview
-inline fun LiveRole.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
+inline fun LiveRole.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
     if (it is RoleDeleteEvent || it is GuildDeleteEvent) {
         block(it)
     }
@@ -49,7 +50,7 @@ fun LiveRole.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consu
 class LiveRole(
     role: Role,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher), KordEntity by role {
+) : AbstractLiveKordEntity(dispatcher, role.kord.coroutineContext.job), KordEntity by role {
     var role = role
         private set
 
@@ -61,8 +62,8 @@ class LiveRole(
     }
 
     override fun update(event: Event) = when (event) {
-        is RoleDeleteEvent -> shutDown()
-        is GuildDeleteEvent -> shutDown()
+        is RoleDeleteEvent -> shutdown()
+        is GuildDeleteEvent -> shutdown()
         is RoleUpdateEvent -> role = event.role
         else -> Unit
     }
