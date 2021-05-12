@@ -91,4 +91,37 @@ interface GuildApplicationCommandBehavior : ApplicationCommandBehavior {
     override suspend fun delete() {
         service.deleteGuildApplicationCommand(applicationId, guildId, id)
     }
+
+}
+
+@KordPreview
+fun GuildApplicationCommandBehavior(
+    guildId: Snowflake,
+    applicationId: Snowflake,
+    id: Snowflake,
+    service: InteractionService
+): GuildApplicationCommandBehavior = object : GuildApplicationCommandBehavior {
+    override val guildId: Snowflake
+        get() = guildId
+    override val applicationId: Snowflake
+        get() = applicationId
+    override val service: InteractionService
+        get() = service
+    override val id: Snowflake
+        get() = id
+}
+
+
+@KordPreview
+fun GlobalApplicationCommandBehavior(
+    applicationId: Snowflake,
+    id: Snowflake,
+    service: InteractionService
+): GlobalApplicationCommandBehavior = object : GlobalApplicationCommandBehavior {
+    override val applicationId: Snowflake
+        get() = applicationId
+    override val service: InteractionService
+        get() = service
+    override val id: Snowflake
+        get() = id
 }
