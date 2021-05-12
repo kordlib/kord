@@ -20,7 +20,7 @@ import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
-abstract class LiveChannelTest<LIVE: LiveChannel> : AbstractLiveEntityTest<LIVE>() {
+abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE>() {
 
     protected abstract val channelId: Snowflake
 
@@ -34,6 +34,7 @@ abstract class LiveChannelTest<LIVE: LiveChannel> : AbstractLiveEntityTest<LIVE>
         fun checkLiveEntityType(expectedType: KClass<*>, channel: Channel) {
             assertEquals(expectedType, channel.live()::class)
         }
+
         checkLiveEntityType(LiveDmChannel::class, DmChannel(kord = kord, data = data))
         checkLiveEntityType(LiveGuildMessageChannel::class, NewsChannel(kord = kord, data = data))
         checkLiveEntityType(LiveGuildChannel::class, StoreChannel(kord = kord, data = data))
