@@ -90,6 +90,10 @@ fun LiveChannel.onChannelUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = o
 @KordPreview
 fun LiveChannel.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is never called because the guild where the channel is located is already created",
+    ReplaceWith("Kord.on<GuildCreateEvent>")
+)
 @KordPreview
 fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(consumer = block)
 
