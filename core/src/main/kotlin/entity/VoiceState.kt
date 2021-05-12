@@ -50,7 +50,7 @@ class VoiceState(
      * @throws [RequestException] if anything went wrong during the request.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("User getChannelOrNull instead.", ReplaceWith("getChannelOrNull"), DeprecationLevel.ERROR)
+    @Deprecated("Use getChannelOrNull instead.", ReplaceWith("getChannelOrNull"), DeprecationLevel.ERROR)
     suspend fun getChannel(): VoiceChannel? = channelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
