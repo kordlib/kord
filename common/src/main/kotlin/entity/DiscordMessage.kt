@@ -721,7 +721,7 @@ data class AllRemovedMessageReactions(
 @Serializable(with = MessageType.MessageTypeSerializer::class)
 sealed class MessageType(val code: Int) {
     /** The default code for unknown values. */
-    object Unknown : MessageType(Int.MIN_VALUE)
+    class Unknown(code: Int) : MessageType(code)
     object Default : MessageType(0)
     object RecipientAdd : MessageType(1)
     object RecipientRemove : MessageType(2)
@@ -748,7 +748,7 @@ sealed class MessageType(val code: Int) {
 
         override fun deserialize(decoder: Decoder): MessageType {
             val code = decoder.decodeInt()
-            return values.firstOrNull { it.code == code } ?: Unknown
+            return values.firstOrNull { it.code == code } ?: Unknown(code)
         }
 
         override fun serialize(encoder: Encoder, value: MessageType) {
@@ -759,7 +759,6 @@ sealed class MessageType(val code: Int) {
     companion object {
         val values: Set<MessageType>
             get() = setOf(
-                Unknown,
                 Default,
                 RecipientAdd,
                 RecipientRemove,
