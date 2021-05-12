@@ -34,7 +34,7 @@ abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher, parent: J
 
     /**
      * Allows to execute behavior when the entity is shutdown.
-     * Keep in memory an empty job to continue to listen the events.
+     * Keep in memory a job without action to continue to listen events.
      */
     private var shutdownAction: Pair<(() -> Unit), Job>? = null
 
