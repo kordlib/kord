@@ -1,4 +1,4 @@
-package liveEntity
+package live
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
@@ -108,13 +108,13 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             )
 
             val eventRandomId = createEvent(randomId(), emojiExpected)
-            sendEvent(eventRandomId)
+            sendEventAndWait(eventRandomId)
 
             val eventOtherReaction = createEvent(messageId, emojiOther)
-            sendEvent(eventOtherReaction)
+            sendEventAndWait(eventOtherReaction)
 
             val event = createEvent(messageId, emojiExpected)
-            sendEvent(event)
+            sendEventAndWait(event)
         }
     }
 
@@ -166,13 +166,13 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             )
 
             val eventRandomId = createEvent(randomId(), emojiExpected)
-            sendEvent(eventRandomId)
+            sendEventAndWait(eventRandomId)
 
             val eventOtherReaction = createEvent(messageId, emojiOther)
-            sendEvent(eventOtherReaction)
+            sendEventAndWait(eventOtherReaction)
 
             val event = createEvent(messageId, emojiExpected)
-            sendEvent(event)
+            sendEventAndWait(event)
         }
     }
 

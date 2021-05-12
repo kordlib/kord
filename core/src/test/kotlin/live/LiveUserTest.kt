@@ -1,4 +1,4 @@
-package liveEntity
+package live
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordUser

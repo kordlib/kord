@@ -1,4 +1,4 @@
-package liveEntity.channel
+package live.channel
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ChannelType

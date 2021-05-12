@@ -1,4 +1,4 @@
-package liveEntity
+package live
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordGuildBan
@@ -143,7 +143,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
                 0
             )
 
-            sendEvent(eventGuildBan)
+            sendEventAndWait(eventGuildBan)
 
             val eventGuildDelete = GuildDelete(
                 DiscordUnavailableGuild(
@@ -152,7 +152,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
                 0
             )
 
-            sendEvent(eventGuildDelete)
+            sendEventAndWait(eventGuildDelete)
         }
     }
 

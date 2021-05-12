@@ -1,4 +1,4 @@
-package liveEntity
+package live
 
 import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.KordPreview
@@ -124,23 +124,24 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         assertEquals(expectedCount, counter.atomicCount)
     }
 
-    suspend fun sendEvent(event: Event) {
+    suspend fun sendEventAndWait(event: Event, delayMs: Long = 50) {
         gateway.events.emit(event)
-        delay(50)
+        // Let time to receive event from the flow before the next action.
+        delay(delayMs)
     }
 
     suspend inline fun sendEventValidAndRandomId(validId: Snowflake, builderEvent: (Snowflake) -> Event) {
-        sendEvent(builderEvent(randomId()))
-        sendEvent(builderEvent(validId))
+        sendEventAndWait(builderEvent(randomId()))
+        sendEventAndWait(builderEvent(validId))
     }
 
     suspend inline fun sendEventValidAndRandomIdCheckLiveActive(
         validId: Snowflake,
         builderEvent: (Snowflake) -> Event
     ) {
-        sendEvent(builderEvent(randomId()))
+        sendEventAndWait(builderEvent(randomId()))
         assertTrue { live.isActive }
-        sendEvent(builderEvent(validId))
+        sendEventAndWait(builderEvent(validId))
         assertFalse { live.isActive }
     }
 }

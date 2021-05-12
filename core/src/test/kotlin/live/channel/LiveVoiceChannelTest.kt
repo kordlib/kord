@@ -1,4 +1,4 @@
-package liveEntity.channel
+package live.channel
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ChannelType
@@ -6,11 +6,10 @@ import dev.kord.common.entity.DiscordChannel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.entity.channel.DmChannel
-import dev.kord.core.live.channel.LiveDmChannel
+import dev.kord.core.entity.channel.VoiceChannel
+import dev.kord.core.live.channel.LiveVoiceChannel
 import dev.kord.core.live.channel.onUpdate
 import dev.kord.gateway.ChannelUpdate
-import equality.randomId
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
@@ -20,24 +19,24 @@ import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
-class LiveDmChannelTest : LiveChannelTest<LiveDmChannel>() {
+class LiveVoiceChannelTest : LiveChannelTest<LiveVoiceChannel>() {
 
     override lateinit var channelId: Snowflake
 
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        channelId = randomId()
+        channelId = Snowflake(0)
     }
 
     @BeforeTest
     fun onBefore() = runBlocking {
-        live = LiveDmChannel(
-            DmChannel(
+        live = LiveVoiceChannel(
+            VoiceChannel(
                 kord = kord,
                 data = ChannelData(
                     id = channelId,
-                    type = ChannelType.DM,
+                    type = ChannelType.GuildVoice,
                     guildId = guildId.optionalSnowflake()
                 )
             )
@@ -56,7 +55,7 @@ class LiveDmChannelTest : LiveChannelTest<LiveDmChannel>() {
                 ChannelUpdate(
                     DiscordChannel(
                         id = it,
-                        type = ChannelType.DM,
+                        type = ChannelType.GuildVoice,
                     ),
                     0
                 )

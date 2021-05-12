@@ -1,4 +1,4 @@
-package liveEntity.channel
+package live.channel
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ChannelType
@@ -12,7 +12,7 @@ import dev.kord.gateway.ChannelDelete
 import dev.kord.gateway.GuildDelete
 import equality.randomId
 import kotlinx.coroutines.runBlocking
-import liveEntity.AbstractLiveEntityTest
+import live.AbstractLiveEntityTest
 import org.junit.jupiter.api.TestInstance
 import kotlin.reflect.KClass
 import kotlin.test.Test
