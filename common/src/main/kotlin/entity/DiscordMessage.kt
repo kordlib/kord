@@ -739,7 +739,13 @@ sealed class MessageType(val code: Int) {
 
     @Suppress("SpellCheckingInspection")
     object GuildDiscoveryRequalified : MessageType(15)
+    object GuildDiscoveryGracePeriodInitialWarning : MessageType(16)
+    object GuildDiscoveryGracePeriodFinalWarning : MessageType(17)
+    object ThreadCreated : MessageType(18)
     object Reply : MessageType(19)
+    object ApplicationCommand : MessageType(20)
+    object ThreadStarterMessage : MessageType(21)
+    object GuildInviteReminder : MessageType(22)
 
     object MessageTypeSerializer : KSerializer<MessageType> {
 
@@ -775,7 +781,14 @@ sealed class MessageType(val code: Int) {
                 GuildDiscoveryDisqualified,
                 GuildDiscoveryRequalified,
                 Reply,
-            )
+                GuildDiscoveryGracePeriodInitialWarning,
+                GuildDiscoveryGracePeriodFinalWarning,
+                ThreadCreated,
+                ApplicationCommand,
+                ThreadStarterMessage,
+                GuildInviteReminder,
+
+                )
     }
 }
 
