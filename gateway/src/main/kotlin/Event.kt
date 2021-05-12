@@ -31,7 +31,7 @@ private object NullDecoder : DeserializationStrategy<Nothing?> {
         // decodeNull() doesn't consume the literal null therefore parsing doesn't end and in e.g. a heartbeat event
         // the null gets parsed as a key
         decoder.decodeNotNullMark()
-        return null
+        return decoder.decodeNull()
     }
 
 }
