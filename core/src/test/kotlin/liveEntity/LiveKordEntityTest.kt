@@ -14,10 +14,7 @@ import dev.kord.core.live.on
 import dev.kord.gateway.GuildBanAdd
 import dev.kord.gateway.GuildDelete
 import equality.randomId
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.job
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.BeforeTest
@@ -129,6 +126,10 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
                 error("Must not be executed")
             }
 
+            // Wait that the 2 jobs are ready to listen the next events.
+            // Without the delay, the success of the test is uncertain.
+            delay(50)
+
             val eventGuildBan = GuildBanAdd(
                 DiscordGuildBan(
                     guildId = guildId.asString,
@@ -146,7 +147,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
             val eventGuildDelete = GuildDelete(
                 DiscordUnavailableGuild(
-                    id = randomId()
+                    id = guildId
                 ),
                 0
             )
