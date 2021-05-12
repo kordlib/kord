@@ -10,6 +10,7 @@ import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.live.channel.LiveVoiceChannel
 import dev.kord.core.live.channel.onUpdate
 import dev.kord.gateway.ChannelUpdate
+import equality.randomId
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
@@ -26,7 +27,7 @@ class LiveVoiceChannelTest : LiveChannelTest<LiveVoiceChannel>() {
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        channelId = Snowflake(0)
+        channelId = randomId()
     }
 
     @BeforeTest

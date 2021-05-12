@@ -114,7 +114,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             sendEventAndWait(eventOtherReaction)
 
             val event = createEvent(messageId, emojiExpected)
-            sendEventAndWait(event)
+            sendEvent(event)
         }
     }
 
@@ -172,7 +172,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             sendEventAndWait(eventOtherReaction)
 
             val event = createEvent(messageId, emojiExpected)
-            sendEventAndWait(event)
+            sendEvent(event)
         }
     }
 

@@ -25,7 +25,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        roleId = Snowflake(0)
+        roleId = randomId()
     }
 
     @BeforeTest

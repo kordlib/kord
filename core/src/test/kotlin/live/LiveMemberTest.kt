@@ -29,7 +29,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        userId = Snowflake(0)
+        userId = randomId()
     }
 
     @BeforeTest

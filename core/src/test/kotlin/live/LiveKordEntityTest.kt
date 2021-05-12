@@ -152,7 +152,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
                 0
             )
 
-            sendEventAndWait(eventGuildDelete)
+            sendEvent(eventGuildDelete)
         }
     }
 

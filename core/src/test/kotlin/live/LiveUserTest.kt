@@ -8,6 +8,7 @@ import dev.kord.core.entity.User
 import dev.kord.core.live.LiveUser
 import dev.kord.core.live.onUpdate
 import dev.kord.gateway.UserUpdate
+import equality.randomId
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
@@ -24,7 +25,7 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        userId = Snowflake(0)
+        userId = randomId()
     }
 
     @BeforeTest

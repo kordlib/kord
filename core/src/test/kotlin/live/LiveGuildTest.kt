@@ -448,7 +448,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             sendEventAndWait(eventOtherReaction)
 
             val event = createEvent(guildId, emojiExpected)
-            sendEventAndWait(event)
+            sendEvent(event)
         }
     }
 
@@ -508,7 +508,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             sendEventAndWait(eventOtherReaction)
 
             val event = createEvent(guildId, emojiExpected)
-            sendEventAndWait(event)
+            sendEvent(event)
         }
     }
 

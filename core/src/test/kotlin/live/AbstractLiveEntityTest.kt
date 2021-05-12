@@ -104,7 +104,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
             cache = DataCache.none(),
             MasterGateway(mapOf(0 to gateway)),
             RestClient(KtorRequestHandler("token", clock = Clock.systemUTC())),
-            Snowflake("420"),
+            randomId(),
             MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
             Dispatchers.Default
         )
@@ -124,15 +124,9 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         assertEquals(expectedCount, counter.atomicCount)
     }
 
-    suspend fun sendEventAndWait(event: Event, delayMs: Long = 50) {
-        gateway.events.emit(event)
-        // Let time to receive event from the flow before the next action.
-        delay(delayMs)
-    }
-
     suspend inline fun sendEventValidAndRandomId(validId: Snowflake, builderEvent: (Snowflake) -> Event) {
         sendEventAndWait(builderEvent(randomId()))
-        sendEventAndWait(builderEvent(validId))
+        sendEvent(builderEvent(validId))
     }
 
     suspend inline fun sendEventValidAndRandomIdCheckLiveActive(
@@ -144,4 +138,12 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         sendEventAndWait(builderEvent(validId))
         assertFalse { live.isActive }
     }
+
+    suspend fun sendEventAndWait(event: Event, delayMs: Long = 50) {
+        sendEvent(event)
+        // Let time to receive event from the flow before the next action.
+        delay(delayMs)
+    }
+
+    suspend fun sendEvent(event: Event) = gateway.events.emit(event)
 }
