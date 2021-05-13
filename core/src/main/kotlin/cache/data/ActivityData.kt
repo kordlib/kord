@@ -40,7 +40,8 @@ data class ActivityData(
                 assets,
                 secrets,
                 instance,
-                flags
+                flags,
+                buttons
             )
         }
     }
