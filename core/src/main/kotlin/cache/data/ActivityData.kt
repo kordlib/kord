@@ -22,6 +22,7 @@ data class ActivityData(
     val secrets: Optional<DiscordActivitySecrets> = Optional.Missing(),
     val instance: OptionalBoolean = OptionalBoolean.Missing,
     val flags: Optional<ActivityFlags> = Optional.Missing(),
+    val buttons: Optional<List<String>> = Optional.Missing()
 ) {
     companion object {
         fun from(entity: DiscordActivity) = with(entity) {
