@@ -24,7 +24,7 @@ import kotlin.coroutines.CoroutineContext
 interface LiveKordEntity : KordEntity, CoroutineScope {
     val events: Flow<Event>
 
-    fun shutDown()
+    fun shutDown(cause: CancellationException = CancellationException("The live entity has been shut down", null))
 }
 
 @KordPreview
@@ -48,7 +48,7 @@ abstract class AbstractLiveKordEntity(final override val kord: Kord, dispatcher:
         events.launchIn(this)
     }
 
-    override fun shutDown() = cancel()
+    override fun shutDown(cause: CancellationException) = cancel(cause)
 }
 
 /**
