@@ -90,7 +90,7 @@ internal class GuildEventHandler(
         cache.put(data)
         event.guild.cache()
 
-        coreFlow.emit(GuildCreateEvent(Guild(data, kord), shard))
+        coreFlow.emit(GuildUpdateEvent(Guild(data, kord), shard))
     }
 
     private suspend fun handle(event: GuildDelete, shard: Int) = with(event.guild) {
