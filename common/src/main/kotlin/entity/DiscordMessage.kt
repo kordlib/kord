@@ -747,7 +747,7 @@ sealed class MessageType(val code: Int) {
     object ThreadStarterMessage : MessageType(21)
     object GuildInviteReminder : MessageType(22)
 
-    object MessageTypeSerializer : KSerializer<MessageType> {
+    internal object MessageTypeSerializer : KSerializer<MessageType> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
