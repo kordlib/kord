@@ -24,7 +24,7 @@ import kotlin.coroutines.CoroutineContext
 interface LiveKordEntity : KordEntity, CoroutineScope {
     val events: Flow<Event>
 
-    fun shutdown()
+    fun shutDown()
 }
 
 @KordPreview
@@ -62,7 +62,7 @@ abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher, parent: J
             }
     }
 
-    override fun shutdown() {
+    override fun shutDown() {
         if (!isActive) return
 
         cancel()

@@ -25,7 +25,7 @@ inline fun Category.live(
 
 @Deprecated(
     "The block is never called because the channel is already created",
-    ReplaceWith("LiveGuild.onChannelCreate")
+    ReplaceWith("LiveGuild.onChannelCreate(block)")
 )
 @KordPreview
 fun LiveCategory.onCreate(block: suspend (CategoryCreateEvent) -> Unit) = on(consumer = block)
@@ -35,7 +35,7 @@ fun LiveCategory.onUpdate(block: suspend (CategoryUpdateEvent) -> Unit) = on(con
 
 @Deprecated(
     "The block is not called when the live entity is shutdown",
-    ReplaceWith("LiveCategory.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
@@ -46,14 +46,14 @@ inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) =
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveCategory.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveCategory.onDelete(block: suspend (CategoryDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveCategory.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveCategory.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
@@ -70,9 +70,9 @@ class LiveCategory(
     override fun update(event: Event) = when (event) {
         is CategoryCreateEvent -> channel = event.channel
         is CategoryUpdateEvent -> channel = event.channel
-        is CategoryDeleteEvent -> shutdown()
+        is CategoryDeleteEvent -> shutDown()
 
-        is GuildDeleteEvent -> shutdown()
+        is GuildDeleteEvent -> shutDown()
 
         else -> Unit
     }

@@ -25,7 +25,7 @@ inline fun VoiceChannel.live(
 
 @Deprecated(
     "The block is never called because the channel is already created",
-    ReplaceWith("LiveGuild.onChannelCreate")
+    ReplaceWith("LiveGuild.onChannelCreate(block)")
 )
 @KordPreview
 fun LiveVoiceChannel.onCreate(block: suspend (VoiceChannelCreateEvent) -> Unit) = on(consumer = block)
@@ -35,7 +35,7 @@ fun LiveVoiceChannel.onUpdate(block: suspend (VoiceChannelUpdateEvent) -> Unit) 
 
 @Deprecated(
     "The block is not called when the live entity is shutdown",
-    ReplaceWith("LiveVoiceChannel.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 inline fun LiveVoiceChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
@@ -46,14 +46,14 @@ inline fun LiveVoiceChannel.onShutDown(crossinline block: suspend (Event) -> Uni
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveVoiceChannel.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveVoiceChannel.onDelete(block: suspend (VoiceChannelDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveVoiceChannel.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveVoiceChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
@@ -70,9 +70,9 @@ class LiveVoiceChannel(
     override fun update(event: Event) = when (event) {
         is VoiceChannelCreateEvent -> channel = event.channel
         is VoiceChannelUpdateEvent -> channel = event.channel
-        is VoiceChannelDeleteEvent -> shutdown()
+        is VoiceChannelDeleteEvent -> shutDown()
 
-        is GuildDeleteEvent -> shutdown()
+        is GuildDeleteEvent -> shutDown()
 
         else -> Unit
     }

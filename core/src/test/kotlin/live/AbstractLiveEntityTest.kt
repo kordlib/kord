@@ -93,7 +93,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     @AfterTest
     open fun onAfter() {
         if (this::live.isInitialized && live.isActive) {
-            live.shutdown()
+            live.shutDown()
         }
     }
 

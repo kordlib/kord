@@ -51,7 +51,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     @Test
     fun `Shutdown entity cancel the lifecycle`() {
         assertTrue(live.isActive)
-        live.shutdown()
+        live.shutDown()
         assertFalse(live.isActive)
     }
 
@@ -60,7 +60,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
         val job = live.on<Event> { }
         assertTrue(job.isActive)
 
-        live.shutdown()
+        live.shutDown()
         assertTrue(job.isCancelled)
         assertFalse(live.isActive)
     }
@@ -71,7 +71,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
             live.onShutdown {
                 count()
             }
-            live.shutdown()
+            live.shutDown()
         }
     }
 
@@ -81,7 +81,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
             error("Must not be executed")
         }
         live.onShutdown(null)
-        live.shutdown()
+        live.shutDown()
     }
 
     @Test
@@ -93,7 +93,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
             live.onShutdown {
                 count()
             }
-            live.shutdown()
+            live.shutDown()
         }
     }
 
@@ -107,7 +107,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
             live.onShutdown {
                 count()
             }
-            live.shutdown()
+            live.shutDown()
         }
     }
 

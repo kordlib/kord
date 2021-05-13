@@ -20,7 +20,7 @@ inline fun Role.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, bloc
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveRole.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveRole.onDelete(block: suspend (RoleDeleteEvent) -> Unit) = on(consumer = block)
@@ -30,7 +30,7 @@ fun LiveRole.onUpdate(block: suspend (RoleUpdateEvent) -> Unit) = on(consumer = 
 
 @Deprecated(
     "The block is not called when the live entity is shutdown",
-    ReplaceWith("LiveRole.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 inline fun LiveRole.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
@@ -41,7 +41,7 @@ inline fun LiveRole.onShutdown(crossinline block: suspend (Event) -> Unit) = on<
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveRole.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveRole.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
@@ -62,8 +62,8 @@ class LiveRole(
     }
 
     override fun update(event: Event) = when (event) {
-        is RoleDeleteEvent -> shutdown()
-        is GuildDeleteEvent -> shutdown()
+        is RoleDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutDown()
         is RoleUpdateEvent -> role = event.role
         else -> Unit
     }

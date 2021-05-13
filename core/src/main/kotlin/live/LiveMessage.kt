@@ -56,7 +56,7 @@ fun LiveMessage.onReactionRemoveAll(block: suspend (ReactionRemoveAllEvent) -> U
 
 @Deprecated(
     "The block is never called because the message is already created",
-    ReplaceWith("LiveChannel.onMessageCreate")
+    ReplaceWith("LiveChannel.onMessageCreate(block)")
 )
 @KordPreview
 fun LiveMessage.onCreate(block: suspend (MessageCreateEvent) -> Unit) = on(consumer = block)
@@ -66,7 +66,7 @@ fun LiveMessage.onUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consu
 
 @Deprecated(
     "The block is not called when the live entity is shutdown",
-    ReplaceWith("LiveMessage.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
@@ -79,28 +79,28 @@ inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = 
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveMessage.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveMessage.onOnlyDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveMessage.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveMessage.onBulkDelete(block: suspend (MessageBulkDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveMessage.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveMessage.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveMessage.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveMessage.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
@@ -137,12 +137,12 @@ class LiveMessage(
         is ReactionRemoveAllEvent -> message = Message(message.data.copy(reactions = Optional.Missing()), kord)
 
         is MessageUpdateEvent -> message = Message(message.data + event.new, kord)
-        is MessageDeleteEvent -> shutdown()
-        is MessageBulkDeleteEvent -> shutdown()
+        is MessageDeleteEvent -> shutDown()
+        is MessageBulkDeleteEvent -> shutDown()
 
-        is ChannelDeleteEvent -> shutdown()
+        is ChannelDeleteEvent -> shutDown()
 
-        is GuildDeleteEvent -> shutdown()
+        is GuildDeleteEvent -> shutDown()
         else -> Unit
     }
 

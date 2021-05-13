@@ -75,7 +75,7 @@ fun LiveChannel.onMessageDelete(block: suspend (MessageDeleteEvent) -> Unit) = o
 
 @Deprecated(
     "The block is never called because the channel is already created",
-    ReplaceWith("LiveGuild.onChannelCreate")
+    ReplaceWith("LiveGuild.onChannelCreate(block)")
 )
 @KordPreview
 fun LiveChannel.onChannelCreate(block: suspend (ChannelCreateEvent) -> Unit) = on(consumer = block)
@@ -85,14 +85,14 @@ fun LiveChannel.onChannelUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = o
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("LiveChannel.onShutDown((() -> Unit)?)")
+    ReplaceWith("onShutDown(block)")
 )
 @KordPreview
 fun LiveChannel.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is never called because the guild where the channel is located is already created",
-    ReplaceWith("Kord.on<GuildCreateEvent>")
+    ReplaceWith("Kord.on<GuildCreateEvent>(block)")
 )
 @KordPreview
 fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(consumer = block)
