@@ -1,6 +1,7 @@
 package dev.kord.core.live.channel
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.channel.Category
 import dev.kord.core.event.Event
@@ -11,7 +12,6 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.job
 
 @KordPreview
 fun Category.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
@@ -35,7 +35,7 @@ fun LiveCategory.onUpdate(block: suspend (CategoryUpdateEvent) -> Unit) = on(con
 
 @Deprecated(
     "The block is not called when the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
@@ -46,14 +46,14 @@ inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) =
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 fun LiveCategory.onDelete(block: suspend (CategoryDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 fun LiveCategory.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
@@ -62,7 +62,10 @@ fun LiveCategory.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(c
 class LiveCategory(
     channel: Category,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : LiveChannel(dispatcher, channel.kord.coroutineContext.job), KordEntity by channel {
+) : LiveChannel(channel.kord, dispatcher), KordEntity {
+
+    override val id: Snowflake
+        get() = channel.id
 
     override var channel: Category = channel
         private set

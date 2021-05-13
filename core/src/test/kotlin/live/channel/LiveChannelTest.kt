@@ -11,6 +11,7 @@ import dev.kord.core.live.channel.*
 import dev.kord.gateway.ChannelDelete
 import dev.kord.gateway.GuildDelete
 import equality.randomId
+import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
 import live.AbstractLiveEntityTest
 import org.junit.jupiter.api.TestInstance
@@ -45,7 +46,7 @@ abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE
     @Test
     fun `Check onShutdown is called when event the category delete event is received`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 
@@ -64,7 +65,7 @@ abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE
     @Test
     fun `Check onShutdown is called when event the guild delete event is received`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 

@@ -10,6 +10,7 @@ import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.live.*
 import dev.kord.gateway.*
 import equality.randomId
+import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonObject
 import org.junit.jupiter.api.TestInstance
@@ -721,7 +722,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     @Test
     fun `Check onShutdown is called when event the guild delete event is received`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 

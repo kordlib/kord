@@ -9,6 +9,7 @@ import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.live.*
 import dev.kord.gateway.*
 import equality.randomId
+import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
@@ -219,7 +220,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     @Test
     fun `Check onShutdown is called when event the message delete event is received`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 
@@ -238,7 +239,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     @Test
     fun `Check onShutdown is called when event the bulk delete event is received`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 
@@ -257,7 +258,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     @Test
     fun `Check onShutdown is called when event the channel delete event is received`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 
@@ -276,7 +277,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     @Test
     fun `Check onShutdown is called when event the guild delete event is received`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 

@@ -27,8 +27,8 @@ import kotlin.test.assertTrue
 class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityMock>() {
 
     @Disabled
-    inner class LiveEntityMock(override val kord: Kord) :
-        AbstractLiveKordEntity(Dispatchers.Default, kord.coroutineContext.job) {
+    inner class LiveEntityMock(kord: Kord) :
+        AbstractLiveKordEntity(kord, Dispatchers.Default) {
 
         var counter: CounterAtomicLatch? = null
 
@@ -68,43 +68,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     @Test
     fun `Shutdown entity without listening events`() {
         countdownContext(1) {
-            live.onShutdown {
-                count()
-            }
-            live.shutDown()
-        }
-    }
-
-    @Test
-    fun `Replace the shutdown action with null value`() {
-        live.onShutdown {
-            error("Must not be executed")
-        }
-        live.onShutdown(null)
-        live.shutDown()
-    }
-
-    @Test
-    fun `Replace the shutdown action with another action`() {
-        live.onShutdown {
-            error("Must not be executed")
-        }
-        countdownContext(1) {
-            live.onShutdown {
-                count()
-            }
-            live.shutDown()
-        }
-    }
-
-    @Test
-    fun `Replace the shutdown action with null value and another action`() {
-        live.onShutdown {
-            error("Must not be executed")
-        }
-        live.onShutdown(null)
-        countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
             live.shutDown()
@@ -113,9 +77,10 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
     @Test
     fun `Check if the filter and update are executed`() {
-        // Second countdown in the live entity to check
-        // if the method update is called
-        countdownContext(3) {
+        // The expected count is 4 because each job will increment the counter.
+        // Each job (BanAddEvent, GuildDeleteEvent and initial) will process the update function.
+        // Another count is the action for BanAddEvent
+        countdownContext(4) {
             live.counter = this
 
             live.on<BanAddEvent> {
@@ -159,10 +124,6 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     @Test
     fun `Check the entity is cancelled when kord is cancelled`() = runBlocking {
         val job = live.on<BanAddEvent> {
-            error("Never called")
-        }
-
-        live.onShutdown {
             error("Never called")
         }
 

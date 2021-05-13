@@ -1,6 +1,7 @@
 package dev.kord.core.live.channel
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.core.Kord
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.channel.*
 import dev.kord.core.event.Event
@@ -16,7 +17,6 @@ import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 
 @KordPreview
 fun Channel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = when (this) {
@@ -85,7 +85,7 @@ fun LiveChannel.onChannelUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = o
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 fun LiveChannel.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
@@ -101,7 +101,8 @@ fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(co
 fun LiveChannel.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-abstract class LiveChannel(dispatcher: CoroutineDispatcher = Dispatchers.Default, parent: Job) : AbstractLiveKordEntity(dispatcher, parent) {
+abstract class LiveChannel(kord: Kord, dispatcher: CoroutineDispatcher = Dispatchers.Default) :
+    AbstractLiveKordEntity(kord, dispatcher) {
 
     abstract val channel: Channel
 

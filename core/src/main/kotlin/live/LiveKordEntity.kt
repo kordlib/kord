@@ -28,20 +28,14 @@ interface LiveKordEntity : KordEntity, CoroutineScope {
 }
 
 @KordPreview
-abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher, parent: Job) : LiveKordEntity {
+abstract class AbstractLiveKordEntity(final override val kord: Kord, dispatcher: CoroutineDispatcher) : LiveKordEntity {
 
-    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(parent)
-
-    /**
-     * Allows to execute behavior when the entity is shutdown.
-     * Keep in memory a job without action to continue to listen events.
-     */
-    private var shutdownAction: Pair<(() -> Unit), Job>? = null
+    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(kord.coroutineContext.job)
 
     private val mutex = Mutex()
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    override val events: Flow<Event>
+    final override val events: Flow<Event>
         get() = kord.events
             .takeWhile { isActive }
             .filter { filter(it) }
@@ -50,24 +44,11 @@ abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher, parent: J
     protected abstract fun filter(event: Event): Boolean
     protected abstract fun update(event: Event)
 
-    fun onShutdown(action: (() -> Unit)?) {
-        val currentAction = shutdownAction
-
-        shutdownAction =
-            if (action == null) {
-                currentAction?.second?.cancel()
-                null
-            } else {
-                action to (currentAction?.second ?: on<Event> {})
-            }
+    init {
+        events.launchIn(this)
     }
 
-    override fun shutDown() {
-        if (!isActive) return
-
-        cancel()
-        shutdownAction?.first?.invoke()
-    }
+    override fun shutDown() = cancel()
 }
 
 /**

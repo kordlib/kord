@@ -1,6 +1,7 @@
 package dev.kord.core.live
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.map
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
@@ -18,7 +19,6 @@ import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.job
 
 @KordPreview
 fun Guild.live(dispatcher: CoroutineDispatcher = Dispatchers.Default): LiveGuild =
@@ -125,7 +125,7 @@ fun LiveGuild.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(cons
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
@@ -134,7 +134,10 @@ fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(cons
 class LiveGuild(
     guild: Guild,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher, guild.kord.coroutineContext.job), KordEntity by guild {
+) : AbstractLiveKordEntity(guild.kord, dispatcher), KordEntity {
+
+    override val id: Snowflake
+        get() = guild.id
 
     var guild: Guild = guild
         private set

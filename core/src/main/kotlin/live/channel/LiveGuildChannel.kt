@@ -1,6 +1,7 @@
 package dev.kord.core.live.channel
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.GuildMessageChannel
@@ -12,7 +13,6 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.job
 
 @KordPreview
 fun GuildChannel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
@@ -36,7 +36,7 @@ fun LiveGuildChannel.onUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(
 
 @Deprecated(
     "The block is not called when the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
@@ -47,14 +47,14 @@ inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Uni
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 fun LiveGuildChannel.onDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
@@ -63,7 +63,10 @@ fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = 
 class LiveGuildChannel(
     channel: GuildChannel,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : LiveChannel(dispatcher, channel.kord.coroutineContext.job), KordEntity by channel {
+) : LiveChannel(channel.kord, dispatcher), KordEntity {
+
+    override val id: Snowflake
+        get() = channel.id
 
     override var channel: GuildChannel = channel
         private set

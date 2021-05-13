@@ -1,13 +1,13 @@
 package dev.kord.core.live
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.User
 import dev.kord.core.event.Event
 import dev.kord.core.event.user.UserUpdateEvent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.job
 
 @KordPreview
 fun User.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveUser(this, dispatcher)
@@ -25,7 +25,10 @@ fun LiveUser.onUpdate(block: suspend (UserUpdateEvent) -> Unit) = on(consumer = 
 class LiveUser(
     user: User,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher, user.kord.coroutineContext.job), KordEntity by user {
+) : AbstractLiveKordEntity(user.kord, dispatcher), KordEntity {
+
+    override val id: Snowflake
+        get() = user.id
 
     var user: User = user
         private set

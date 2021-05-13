@@ -10,6 +10,7 @@ import dev.kord.gateway.GuildDelete
 import dev.kord.gateway.GuildRoleDelete
 import dev.kord.gateway.GuildRoleUpdate
 import equality.randomId
+import kotlinx.coroutines.job
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
 import kotlin.test.BeforeTest
@@ -80,7 +81,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     @Test
     fun `Check onShutdown is called when the role is deleted`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 
@@ -99,7 +100,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     @Test
     fun `Check onShutdown is called when the guild is deleted`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 

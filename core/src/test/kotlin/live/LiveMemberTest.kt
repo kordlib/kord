@@ -13,6 +13,7 @@ import dev.kord.gateway.GuildDelete
 import dev.kord.gateway.GuildMemberRemove
 import dev.kord.gateway.GuildMemberUpdate
 import equality.randomId
+import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
@@ -83,7 +84,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     @Test
     fun `Check onLeave is called when event is received`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 
@@ -107,7 +108,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     @Test
     fun `Check onShutdown is called when the member is banned`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 
@@ -131,7 +132,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     @Test
     fun `Check onShutdown is called when the guild is deleted`() {
         countdownContext(1) {
-            live.onShutdown {
+            live.coroutineContext.job.invokeOnCompletion {
                 count()
             }
 

@@ -15,7 +15,6 @@ import dev.kord.core.event.message.*
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.job
 
 @KordPreview
 suspend fun Message.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
@@ -66,7 +65,7 @@ fun LiveMessage.onUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consu
 
 @Deprecated(
     "The block is not called when the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
@@ -79,28 +78,28 @@ inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = 
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 fun LiveMessage.onOnlyDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 fun LiveMessage.onBulkDelete(block: suspend (MessageBulkDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 fun LiveMessage.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("onShutDown(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
 )
 @KordPreview
 fun LiveMessage.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
@@ -110,7 +109,10 @@ class LiveMessage(
     message: Message,
     val guildId: Snowflake?,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher, message.kord.coroutineContext.job), KordEntity by message {
+) : AbstractLiveKordEntity(message.kord, dispatcher), KordEntity {
+
+    override val id: Snowflake
+        get() = message.id
 
     var message: Message = message
         private set
