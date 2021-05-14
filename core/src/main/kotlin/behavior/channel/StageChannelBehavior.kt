@@ -3,6 +3,8 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.cache.data.StageInstanceData
+import dev.kord.core.entity.StageInstance
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.StageChannel
 import dev.kord.core.entity.channel.VoiceChannel
@@ -12,6 +14,7 @@ import dev.kord.rest.builder.channel.StageVoiceChannelModifyBuilder
 import dev.kord.rest.builder.guild.CurrentVoiceStateModifyBuilder
 import dev.kord.rest.builder.guild.VoiceStateModifyBuilder
 import dev.kord.rest.request.RestRequestException
+import dev.kord.rest.service.createStageInstance
 import dev.kord.rest.service.modifyCurrentVoiceState
 import dev.kord.rest.service.modifyVoiceState
 import dev.kord.rest.service.patchStageVoiceChannel
@@ -67,6 +70,13 @@ suspend fun StageChannelBehavior.edit(builder: StageVoiceChannelModifyBuilder.()
 
     val data = ChannelData.from(response)
     return Channel.from(data, kord) as StageChannel
+}
+
+suspend fun StageChannelBehavior.createStageInstance(channelId: Snowflake, topic: String): StageInstance {
+    val instance = kord.rest.stageInstance.createStageInstance(channelId, topic)
+    val data = StageInstanceData.from(instance)
+
+    return StageInstance(data, kord, supplier)
 }
 
 fun StageChannelBehavior(

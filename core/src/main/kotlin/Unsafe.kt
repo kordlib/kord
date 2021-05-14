@@ -68,6 +68,10 @@ class Unsafe(private val kord: Kord) {
     fun webhook(id: Snowflake): WebhookBehavior =
         WebhookBehavior(id, kord)
 
+    fun stageInstance(id: Snowflake, channelId: Snowflake): StageInstanceBehavior = StageInstanceBehavior(
+        id, channelId, kord, kord.defaultSupplier
+    )
+
     override fun toString(): String {
         return "Unsafe"
     }
