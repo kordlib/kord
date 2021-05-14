@@ -10,6 +10,7 @@ import dev.kord.core.event.channel.ChannelCreateEvent
 import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.channel.ChannelUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -78,9 +79,9 @@ class LiveGuildChannel(
     override fun update(event: Event) = when (event) {
         is ChannelCreateEvent -> channel = event.channel as GuildMessageChannel
         is ChannelUpdateEvent -> channel = event.channel as GuildMessageChannel
-        is ChannelDeleteEvent -> shutDown()
+        is ChannelDeleteEvent -> shutDown(LiveCancellationException(event, "The channel is deleted"))
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
 
         else -> Unit
     }

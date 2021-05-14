@@ -12,6 +12,7 @@ import dev.kord.core.event.Event
 import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.message.*
+import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -145,12 +146,11 @@ class LiveMessage(
         is ReactionRemoveAllEvent -> message = Message(message.data.copy(reactions = Optional.Missing()), kord)
 
         is MessageUpdateEvent -> message = Message(message.data + event.new, kord)
-        is MessageDeleteEvent -> shutDown()
-        is MessageBulkDeleteEvent -> shutDown()
+        is MessageDeleteEvent, is MessageBulkDeleteEvent -> shutDown(LiveCancellationException(event, "The message is deleted"))
 
-        is ChannelDeleteEvent -> shutDown()
+        is ChannelDeleteEvent -> shutDown(LiveCancellationException(event, "The channel is deleted"))
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
         else -> Unit
     }
 

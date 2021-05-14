@@ -10,6 +10,7 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.guild.MemberLeaveEvent
 import dev.kord.core.event.guild.MemberUpdateEvent
 import dev.kord.core.live.channel.LiveGuildChannel
+import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -80,9 +81,9 @@ class LiveMember(
     }
 
     override fun update(event: Event) = when (event) {
-        is MemberLeaveEvent -> shutDown()
-        is BanAddEvent -> shutDown()
-        is GuildDeleteEvent -> shutDown()
+        is MemberLeaveEvent -> shutDown(LiveCancellationException(event, "The member has left"))
+        is BanAddEvent -> shutDown(LiveCancellationException(event, "The member is banned"))
+        is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
         is MemberUpdateEvent -> member = event.member
 
         else -> Unit

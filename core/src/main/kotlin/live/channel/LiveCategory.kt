@@ -9,6 +9,7 @@ import dev.kord.core.event.channel.CategoryCreateEvent
 import dev.kord.core.event.channel.CategoryDeleteEvent
 import dev.kord.core.event.channel.CategoryUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -77,9 +78,9 @@ class LiveCategory(
     override fun update(event: Event) = when (event) {
         is CategoryCreateEvent -> channel = event.channel
         is CategoryUpdateEvent -> channel = event.channel
-        is CategoryDeleteEvent -> shutDown()
+        is CategoryDeleteEvent -> shutDown(LiveCancellationException(event, "The category is deleted"))
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
 
         else -> Unit
     }

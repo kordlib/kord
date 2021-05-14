@@ -9,6 +9,7 @@ import dev.kord.core.event.channel.VoiceChannelCreateEvent
 import dev.kord.core.event.channel.VoiceChannelDeleteEvent
 import dev.kord.core.event.channel.VoiceChannelUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -77,9 +78,9 @@ class LiveVoiceChannel(
     override fun update(event: Event) = when (event) {
         is VoiceChannelCreateEvent -> channel = event.channel
         is VoiceChannelUpdateEvent -> channel = event.channel
-        is VoiceChannelDeleteEvent -> shutDown()
+        is VoiceChannelDeleteEvent -> shutDown(LiveCancellationException(event, "The channel is deleted"))
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
 
         else -> Unit
     }

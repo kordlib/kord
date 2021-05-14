@@ -1,30 +1,32 @@
 package live
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.DiscordGuildBan
-import dev.kord.common.entity.DiscordUnavailableGuild
-import dev.kord.common.entity.DiscordUser
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.core.Kord
+import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.Event
 import dev.kord.core.event.guild.BanAddEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.event.message.ReactionAddEvent
 import dev.kord.core.live.AbstractLiveKordEntity
+import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
 import dev.kord.gateway.GuildBanAdd
 import dev.kord.gateway.GuildDelete
+import dev.kord.gateway.MessageReactionAdd
 import equality.randomId
 import kotlinx.coroutines.*
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
 class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityMock>() {
+
+    companion object {
+        private const val REASON_SHUTDOWN = "The live entity mock is shut down"
+    }
 
     @Disabled
     inner class LiveEntityMock(kord: Kord) :
@@ -34,11 +36,16 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
         override val id: Snowflake = randomId()
 
-        override fun filter(event: Event): Boolean = event is BanAddEvent
+        override fun filter(event: Event): Boolean = when (event) {
+            is BanAddEvent -> true
+            is ReactionAddEvent -> true
+            else -> false
+        }
 
         override fun update(event: Event) {
-            if (event is BanAddEvent) {
-                counter?.count()
+            when (event) {
+                is BanAddEvent -> counter?.count()
+                is ReactionAddEvent -> shutDown(LiveCancellationException(event, REASON_SHUTDOWN))
             }
         }
     }
@@ -72,6 +79,33 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
                 count()
             }
             live.shutDown()
+        }
+    }
+
+    @Test
+    fun `Entity can retrieve the event causing the completion`() {
+        countdownContext(1) {
+            val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
+
+            live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as ReactionAddEvent
+                assertEquals(emojiExpected, event.emoji)
+                assertEquals(REASON_SHUTDOWN, it.message)
+                count()
+            }
+
+            sendEvent(
+                MessageReactionAdd(
+                    MessageReactionAddData(
+                        messageId = randomId(),
+                        channelId = randomId(),
+                        userId = randomId(),
+                        emoji = DiscordPartialEmoji(null, emojiExpected.name)
+                    ),
+                    0
+                )
+            )
         }
     }
 

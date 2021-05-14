@@ -17,6 +17,7 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
+import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -219,7 +220,7 @@ class LiveGuild(
         ), kord)
 
         is GuildUpdateEvent -> guild = event.guild
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
         else -> Unit
     }
 

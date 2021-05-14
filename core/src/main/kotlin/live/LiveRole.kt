@@ -8,6 +8,7 @@ import dev.kord.core.event.Event
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
+import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -69,8 +70,8 @@ class LiveRole(
     }
 
     override fun update(event: Event) = when (event) {
-        is RoleDeleteEvent -> shutDown()
-        is GuildDeleteEvent -> shutDown()
+        is RoleDeleteEvent -> shutDown(LiveCancellationException(event, "The role is deleted"))
+        is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
         is RoleUpdateEvent -> role = event.role
         else -> Unit
     }
