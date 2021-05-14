@@ -14,11 +14,11 @@ data class MessageInteractionData(
     val id:Snowflake,
     val type:InteractionType,
     val name:String,
-    val user:UserData
+    val user: Snowflake
 ) {
     companion object {
         fun from(entity: DiscordMessageInteraction): MessageInteractionData = with(entity) {
-            MessageInteractionData(id, type, name, user.toData())
+            MessageInteractionData(id, type, name, user.id)
         }
     }
 }

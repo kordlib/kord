@@ -178,6 +178,9 @@ class Message(
      */
     val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(it, kord) }.toSet()
 
+    /**
+     * This is sent on this message object when it is a response to an [dev.kord.core.entity.interaction.Interaction].
+     */
     @KordPreview
     val interaction: MessageInteraction? get() = data.messageInteraction.mapNullable { MessageInteraction(it, kord) }.value
 
