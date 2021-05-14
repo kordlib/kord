@@ -182,7 +182,7 @@ class Message(
      * The [MessageInteraction] sent on this message object when it is a response to an [dev.kord.core.entity.interaction.Interaction].
      */
     @KordPreview
-    val interaction: MessageInteraction? get() = data.messageInteraction.mapNullable { MessageInteraction(it, kord) }.value
+    val interaction: MessageInteraction? get() = data.interaction.mapNullable { MessageInteraction(it, kord) }.value
 
     /**
      * The [users][User] mentioned in this message.
