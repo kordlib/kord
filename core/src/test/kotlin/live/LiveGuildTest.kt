@@ -678,6 +678,48 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
+    fun `Check onGuildCreate is called when event is received`() {
+        countdownContext(1) {
+            live.onGuildCreate {
+                assertEquals(guildId, it.guild.id)
+                count()
+            }
+
+            sendEventValidAndRandomId(guildId) {
+                GuildCreate(
+                    DiscordGuild(
+                        id = it,
+                        name = "",
+                        icon = null,
+                        ownerId = randomId(),
+                        region = "",
+                        afkChannelId = null,
+                        afkTimeout = 0,
+                        verificationLevel = VerificationLevel.None,
+                        defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
+                        explicitContentFilter = ExplicitContentFilter.Disabled,
+                        roles = emptyList(),
+                        emojis = emptyList(),
+                        features = emptyList(),
+                        mfaLevel = MFALevel.None,
+                        applicationId = null,
+                        systemChannelId = null,
+                        systemChannelFlags = SystemChannelFlags(0),
+                        rulesChannelId = null,
+                        vanityUrlCode = null,
+                        description = null,
+                        banner = null,
+                        premiumTier = PremiumTier.None,
+                        preferredLocale = "",
+                        publicUpdatesChannelId = null
+                    ),
+                    0
+                )
+            }
+        }
+    }
+
+    @Test
     fun `Check onGuildUpdate is called when event is received`() {
         countdownContext(1) {
             live.onGuildUpdate {
