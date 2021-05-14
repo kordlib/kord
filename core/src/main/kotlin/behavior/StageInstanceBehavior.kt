@@ -22,6 +22,13 @@ interface StageInstanceBehavior : KordEntity, Strategizable {
         return StageInstance(data, kord, supplier)
     }
 
+    suspend fun asStageInstance(): StageInstance {
+        val channel = kord.rest.stageInstance.getStageInstance(channelId)
+        val data = StageInstanceData.from(channel)
+
+        return StageInstance(data, kord, supplier)
+    }
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StageInstanceBehavior =
         StageInstanceBehavior(id, channelId, kord, strategy.supply(kord))
 }
