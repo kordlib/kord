@@ -146,7 +146,12 @@ class LiveMessage(
         is ReactionRemoveAllEvent -> message = Message(message.data.copy(reactions = Optional.Missing()), kord)
 
         is MessageUpdateEvent -> message = Message(message.data + event.new, kord)
-        is MessageDeleteEvent, is MessageBulkDeleteEvent -> shutDown(LiveCancellationException(event, "The message is deleted"))
+        is MessageDeleteEvent, is MessageBulkDeleteEvent -> shutDown(
+            LiveCancellationException(
+                event,
+                "The message is deleted"
+            )
+        )
 
         is ChannelDeleteEvent -> shutDown(LiveCancellationException(event, "The channel is deleted"))
 
