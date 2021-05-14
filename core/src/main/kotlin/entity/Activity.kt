@@ -57,6 +57,9 @@ class Activity(val data: ActivityData) {
     val flags: ActivityFlags?
         get() = data.flags.value
 
+    val buttons: List<String>?
+        get() = data.buttons.value
+
     override fun toString(): String {
         return "Activity(data=$data)"
     }
