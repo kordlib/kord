@@ -59,6 +59,7 @@ class GuildTest {
             preferredLocale shouldBe "en-US"
             rulesChannelId shouldBe "441688182833020939"
             publicUpdatesChannelId shouldBe "281283303326089216"
+            nsfw shouldBe true
         }
 
     }
