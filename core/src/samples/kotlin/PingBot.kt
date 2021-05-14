@@ -12,17 +12,6 @@ suspend fun main(args: Array<String>) {
     kord.on<MessageCreateEvent> {
         if (message.author?.isBot == true) return@on
         if (message.content == "!ping") message.channel.createMessage("pong")
-        else if (message.content.startsWith("!topic")) {
-            val topic = message.content.substringAfter("topic").trim()
-            val channelId = member?.getVoiceState()!!.channelId!!
-            val channel = getGuild()!!.getChannelOf<StageChannel>(channelId)
-
-            if (topic.isNotEmpty()) {
-                channel.createStageInstance(topic)
-            } else {
-                message.channel.createMessage("Topic: ${channel.getStageInstance().topic}")
-            }
-        }
     }
 
     kord.login { playing("!ping to pong") }

@@ -40,11 +40,9 @@ interface StageChannelBehavior : BaseVoiceChannelBehavior {
         return StageInstance(data, kord, supplier)
     }
 
-    suspend fun getStageInstanceOrNull(): StageInstance? =
-        withStrategy(EntitySupplyStrategy.rest).supplier.getStageInstanceOrNull(id)
+    suspend fun getStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(id)
 
-    suspend fun getStageInstance(): StageInstance =
-        withStrategy(EntitySupplyStrategy.rest).supplier.getStageInstance(id)
+    suspend fun getStageInstance(): StageInstance = supplier.getStageInstance(id)
 
 }
 
