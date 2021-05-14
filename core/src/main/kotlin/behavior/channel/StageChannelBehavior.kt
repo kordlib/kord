@@ -33,7 +33,7 @@ interface StageChannelBehavior : BaseVoiceChannelBehavior {
     }
 
 
-    suspend fun tageInstance(topic: String): StageInstance {
+    suspend fun createStageInstance(topic: String): StageInstance {
         val instance = kord.rest.stageInstance.createStageInstance(id, topic)
         val data = StageInstanceData.from(instance)
 
