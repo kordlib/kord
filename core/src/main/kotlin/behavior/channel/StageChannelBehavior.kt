@@ -4,11 +4,9 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.StageInstanceData
-import dev.kord.core.entity.Guild
 import dev.kord.core.entity.StageInstance
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.StageChannel
-import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.StageVoiceChannelModifyBuilder
@@ -33,6 +31,20 @@ interface StageChannelBehavior : BaseVoiceChannelBehavior {
     ): StageChannelBehavior {
         return StageChannelBehavior(id, guildId, kord, strategy.supply(kord))
     }
+
+
+    suspend fun tageInstance(topic: String): StageInstance {
+        val instance = kord.rest.stageInstance.createStageInstance(id, topic)
+        val data = StageInstanceData.from(instance)
+
+        return StageInstance(data, kord, supplier)
+    }
+
+    suspend fun getStageInstanceOrNull(): StageInstance? =
+        withStrategy(EntitySupplyStrategy.rest).supplier.getStageInstanceOrNull(id)
+
+    suspend fun getStageInstance(): StageInstance =
+        withStrategy(EntitySupplyStrategy.rest).supplier.getStageInstance(id)
 
 }
 
@@ -71,20 +83,6 @@ suspend fun StageChannelBehavior.edit(builder: StageVoiceChannelModifyBuilder.()
 
     val data = ChannelData.from(response)
     return Channel.from(data, kord) as StageChannel
-}
-
-suspend fun StageChannelBehavior.createStageInstance(topic: String): StageInstance {
-    val instance = kord.rest.stageInstance.createStageInstance(id, topic)
-    val data = StageInstanceData.from(instance)
-
-    return StageInstance(data, kord, supplier)
-}
-
-suspend fun StageChannelBehavior.getStageInstance(): StageInstance {
-    val instance = kord.rest.stageInstance.getStageInstance(id)
-    val data = StageInstanceData.from(instance)
-
-    return StageInstance(data, kord, supplier)
 }
 
 fun StageChannelBehavior(

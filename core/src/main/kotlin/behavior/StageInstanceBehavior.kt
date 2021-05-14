@@ -43,4 +43,8 @@ internal fun StageInstanceBehavior(id: Snowflake, channelId: Snowflake, kord: Ko
             get() = id
         override val supplier: EntitySupplier
             get() = supplier
+
+        override fun toString(): String {
+            return "StageInstanceBehavior(id=$id, channelId=$id, kord=$kord, supplier=$supplier)"
+        }
     }
