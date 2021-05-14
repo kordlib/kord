@@ -6,6 +6,7 @@ import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.*
 import dev.kord.core.behavior.channel.*
+import dev.kord.rest.service.InteractionService
 
 /**
  * A class that exposes the creation of `{Entity}Behavior` classes.
@@ -70,5 +71,21 @@ class Unsafe(private val kord: Kord) {
     override fun toString(): String {
         return "Unsafe"
     }
+
+    fun guildApplicationCommand(
+        guildId: Snowflake,
+        applicationId: Snowflake,
+        commandId: Snowflake,
+        service: InteractionService = kord.rest.interaction
+    ): GuildApplicationCommandBehavior =
+        GuildApplicationCommandBehavior(guildId, applicationId, commandId, service)
+
+    fun globalApplicationCommand(
+        applicationId: Snowflake,
+        commandId: Snowflake,
+        service: InteractionService = kord.rest.interaction
+    ): GlobalApplicationCommandBehavior =
+        GlobalApplicationCommandBehavior(applicationId, commandId, service)
+
 
 }

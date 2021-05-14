@@ -196,7 +196,7 @@ data class UpdateVoiceStatus(
 @Serializable
 data class UpdateStatus(
     val since: Long?,
-    val activities: List<DiscordBotActivity>?,
+    val activities: List<DiscordBotActivity>,
     val status: PresenceStatus,
     val afk: Boolean,
 ) : Command()

@@ -665,6 +665,13 @@ sealed class Route<T>(
             NoStrategy
         )
 
+    object SelfVoiceStatePatch:
+        Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/@me", NoStrategy)
+
+
+    object OthersVoiceStatePatch:
+        Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/${UserId}", NoStrategy)
+
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"
     }

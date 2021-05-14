@@ -85,6 +85,36 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
 
 }
 
+
+@KordDsl
+class StageVoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+    override var reason: String? = null
+
+    private var _name: Optional<String> = Optional.Missing()
+    var name: String? by ::_name.delegate()
+
+    private var _position: OptionalInt? = OptionalInt.Missing
+    var position: Int? by ::_position.delegate()
+
+    private var _topic: Optional<String?> = Optional.Missing()
+    var topic: String? by ::_topic.delegate()
+
+    private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
+    var parentId: Snowflake? by ::_parentId.delegate()
+
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+
+    override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
+        name = _name,
+        position = _position,
+        parentId = _parentId,
+        topic = _topic,
+        permissionOverwrites = _permissionOverwrites
+    )
+
+}
+
 @KordDsl
 class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null

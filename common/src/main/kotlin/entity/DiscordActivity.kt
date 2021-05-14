@@ -35,7 +35,8 @@ data class DiscordActivity(
     val assets: Optional<DiscordActivityAssets> = Optional.Missing(),
     val secrets: Optional<DiscordActivitySecrets> = Optional.Missing(),
     val instance: OptionalBoolean = OptionalBoolean.Missing,
-    val flags: Optional<ActivityFlags> = Optional.Missing()
+    val flags: Optional<ActivityFlags> = Optional.Missing(),
+    val buttons: Optional<List<String>> = Optional.Missing()
 )
 
 enum class ActivityFlag(val value: Int) {
@@ -136,7 +137,8 @@ enum class ActivityType(val code: Int) {
     Streaming(1),
     Listening(2),
     Watching(3),
-    Custom(4);
+    Custom(4),
+    Competing(5);
 
     companion object ActivityTypeSerializer : KSerializer<ActivityType> {
         override val descriptor: SerialDescriptor
