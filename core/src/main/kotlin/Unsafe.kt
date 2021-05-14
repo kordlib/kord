@@ -91,5 +91,4 @@ class Unsafe(private val kord: Kord) {
     ): GlobalApplicationCommandBehavior =
         GlobalApplicationCommandBehavior(applicationId, commandId, service)
 
-
 }

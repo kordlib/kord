@@ -73,7 +73,6 @@ sealed class ApplicationCommandOptionType(val type: Int) {
     object User : ApplicationCommandOptionType(6)
     object Channel : ApplicationCommandOptionType(7)
     object Role : ApplicationCommandOptionType(8)
-    object Mentionable : ApplicationCommandOptionType(9)
     class Unknown(type: Int) : ApplicationCommandOptionType(type)
 
     companion object;
@@ -93,7 +92,6 @@ sealed class ApplicationCommandOptionType(val type: Int) {
                 6 -> User
                 7 -> Channel
                 8 -> Role
-                9 -> Mentionable
                 else -> Unknown(type)
             }
         }
