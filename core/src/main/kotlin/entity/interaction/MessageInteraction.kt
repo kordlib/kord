@@ -61,7 +61,7 @@ class MessageInteraction(
      */
     suspend fun getUserOrNull(): User? = supplier.getUserOrNull(user.id)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageInteraction {
         return MessageInteraction(data, kord, strategy.supply(kord))
     }
 }
