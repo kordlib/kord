@@ -109,11 +109,11 @@ class CommandTest {
     @Test
     fun `UpdateState command serialization`() {
         val since = 1242518400L
-        val game = emptyList<DiscordBotActivity>()
+        val activities = listOf<DiscordBotActivity>()
         val status = PresenceStatus.Online
         val afk = false
 
-        val updateStatus = json.encodeToString(Command.Companion, UpdateStatus(since, game, status, afk))
+        val updateStatus = json.encodeToString(Command.Companion, UpdateStatus(since, activities, status, afk))
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.StatusUpdate.code)

@@ -60,33 +60,33 @@ class KordEventDropTest {
         val amount = 1_000
 
         val event = GuildCreate(
-            DiscordGuild(
-                Snowflake("1337"),
-                "discord guild",
-                afkTimeout = 0,
-                defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
-                emojis = emptyList(),
-                explicitContentFilter = ExplicitContentFilter.AllMembers,
-                features = emptyList(),
-                mfaLevel = MFALevel.Elevated,
-                ownerId = Snowflake("123"),
-                preferredLocale = "en",
-                description = "A not really real guild",
-                premiumTier = PremiumTier.None,
-                region = "idk",
-                roles = emptyList(),
-                verificationLevel = VerificationLevel.High,
-                icon = null,
-                afkChannelId = null,
-                applicationId = null,
-                systemChannelFlags = SystemChannelFlags(0),
-                systemChannelId = null,
-                rulesChannelId = null,
-                vanityUrlCode = null,
-                banner = null,
-                publicUpdatesChannelId = null
-            ), 0
-        )
+                DiscordGuild(
+                        Snowflake("1337"),
+                        "discord guild",
+                        afkTimeout = 0,
+                        defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
+                        emojis = emptyList(),
+                        explicitContentFilter = ExplicitContentFilter.AllMembers,
+                        features = emptyList(),
+                        mfaLevel = MFALevel.Elevated,
+                        ownerId = Snowflake("123"),
+                        preferredLocale = "en",
+                        description = "A not really real guild",
+                        premiumTier = PremiumTier.None,
+                        region = "idk",
+                        roles = emptyList(),
+                        verificationLevel = VerificationLevel.High,
+                        icon = null,
+                        afkChannelId = null,
+                        applicationId = null,
+                        systemChannelFlags = SystemChannelFlags(0),
+                        systemChannelId = null,
+                        rulesChannelId = null,
+                        vanityUrlCode = null,
+                        banner = null,
+                        publicUpdatesChannelId = null,
+                    nsfw = false
+                ), 0)
 
         val counter = AtomicInteger(0)
         val countdown = CountDownLatch(amount)

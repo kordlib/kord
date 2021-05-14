@@ -1,14 +1,11 @@
 package dev.kord.core.cache.data
 
 import dev.kord.cache.api.data.description
-import dev.kord.common.entity.DiscordGuildMember
 import dev.kord.common.entity.DiscordVoiceState
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.mapSnowflake
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 val VoiceStateData.id get() = "$userId$guildId"
@@ -31,6 +28,7 @@ data class VoiceStateData(
     val selfMute: Boolean,
     val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val suppress: Boolean,
+    val requestToSpeakTimestamp: String?
 ) {
 
     companion object {
@@ -48,7 +46,8 @@ data class VoiceStateData(
                 selfDeaf = selfDeaf,
                 selfMute = selfMute,
                 selfStream = selfStream,
-                suppress = suppress
+                suppress = suppress,
+                requestToSpeakTimestamp = requestToSpeakTimestamp
             )
         }
     }

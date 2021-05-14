@@ -5,10 +5,7 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
-import dev.kord.rest.builder.guild.GuildCreateBuilder
-import dev.kord.rest.builder.guild.GuildModifyBuilder
-import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
-import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
+import dev.kord.rest.builder.guild.*
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.builder.member.MemberAddBuilder
 import dev.kord.rest.builder.member.MemberModifyBuilder
@@ -387,6 +384,22 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             body(GuildWelcomeScreenModifyRequest.serializer(), request)
         }
 
+
+    suspend fun modifyCurrentVoiceState(guildId: Snowflake, request: CurrentVoiceStateModifyRequest) =
+        call(Route.SelfVoiceStatePatch) {
+            keys[Route.GuildId] = guildId
+            body(CurrentVoiceStateModifyRequest.serializer(), request)
+        }
+
+
+    suspend fun modifyVoiceState(guildId: Snowflake, userId: Snowflake, request: VoiceStateModifyRequest) =
+        call(Route.SelfVoiceStatePatch) {
+            keys[Route.GuildId] = guildId
+            keys[Route.UserId] = userId
+            body(VoiceStateModifyRequest.serializer(), request)
+        }
+
+
 }
 
 @OptIn(ExperimentalContracts::class)
@@ -441,4 +454,29 @@ suspend inline fun GuildService.createCategory(
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val createBuilder = CategoryCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
+}
+
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildService.modifyCurrentVoiceState(
+    guildId: Snowflake,
+    channelId: Snowflake,
+    builder: CurrentVoiceStateModifyBuilder.() -> Unit
+) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val modifyBuilder = CurrentVoiceStateModifyBuilder(channelId).apply(builder)
+    modifyCurrentVoiceState(guildId, modifyBuilder.toRequest())
+}
+
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildService.modifyVoiceState(
+    guildId: Snowflake,
+    channelId: Snowflake,
+    userId: Snowflake,
+    builder: VoiceStateModifyBuilder.() -> Unit
+) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val modifyBuilder = VoiceStateModifyBuilder(channelId).apply(builder)
+    modifyVoiceState(guildId, userId, modifyBuilder.toRequest())
 }

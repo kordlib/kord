@@ -1,14 +1,9 @@
 package dev.kord.core.behavior.channel
 
-import dev.kord.cache.api.query
-
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.cache.data.VoiceStateData
-import dev.kord.core.cache.idEq
-import dev.kord.core.entity.VoiceState
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.exception.EntityNotFoundException
@@ -17,8 +12,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.VoiceChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchVoiceChannel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -27,20 +20,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord Voice Channel associated to a guild.
  */
-interface VoiceChannelBehavior : GuildChannelBehavior {
-
-    /**
-     * Requests to retrieve the present voice states of this channel.
-     *
-     * This property is not resolvable through REST and will always use [KordCache] instead.
-     *
-     * The returned flow is lazily executed, any [RequestException] will be thrown on
-     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
-     */
-    val voiceStates: Flow<VoiceState>
-        get() = kord.cache.query<VoiceStateData> { idEq(VoiceStateData::channelId, id) }
-            .asFlow()
-            .map { VoiceState(it, kord) }
+interface VoiceChannelBehavior : BaseVoiceChannelBehavior {
 
     /**
      * Requests to get the this behavior as a [VoiceChannel].
