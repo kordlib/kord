@@ -218,7 +218,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    fun `Check onShutdown is called when event the message delete event is received`() {
+    fun `Check if live entity is completed when event the message delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()
@@ -237,7 +237,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    fun `Check onShutdown is called when event the bulk delete event is received`() {
+    fun `Check if live entity is completed when event the bulk delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()
@@ -256,7 +256,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    fun `Check onShutdown is called when event the channel delete event is received`() {
+    fun `Check if live entity is completed when event the channel delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()
@@ -275,7 +275,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     }
 
     @Test
-    fun `Check onShutdown is called when event the guild delete event is received`() {
+    fun `Check if live entity is completed when event the guild delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()

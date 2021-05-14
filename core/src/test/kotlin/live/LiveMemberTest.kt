@@ -106,7 +106,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     }
 
     @Test
-    fun `Check onShutdown is called when the member is banned`() {
+    fun `Check if live entity is completed when the member is banned`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()
@@ -130,7 +130,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     }
 
     @Test
-    fun `Check onShutdown is called when the guild is deleted`() {
+    fun `Check if live entity is completed when the guild is deleted`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()

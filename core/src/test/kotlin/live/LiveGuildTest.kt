@@ -762,7 +762,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     }
 
     @Test
-    fun `Check onShutdown is called when event the guild delete event is received`() {
+    fun `Check if live entity is completed when event the guild delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()

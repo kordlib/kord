@@ -79,7 +79,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     }
 
     @Test
-    fun `Check onShutdown is called when the role is deleted`() {
+    fun `Check if live entity is completed when the role is deleted`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()
@@ -98,7 +98,7 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     }
 
     @Test
-    fun `Check onShutdown is called when the guild is deleted`() {
+    fun `Check if live entity is completed when the guild is deleted`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()

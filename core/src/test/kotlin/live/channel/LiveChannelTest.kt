@@ -44,7 +44,7 @@ abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE
     }
 
     @Test
-    fun `Check onShutdown is called when event the category delete event is received`() {
+    fun `Check if live entity is completed when event the category delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()
@@ -63,7 +63,7 @@ abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE
     }
 
     @Test
-    fun `Check onShutdown is called when event the guild delete event is received`() {
+    fun `Check if live entity is completed when event the guild delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
                 count()
