@@ -125,7 +125,8 @@ fun LiveGuild.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(cons
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)

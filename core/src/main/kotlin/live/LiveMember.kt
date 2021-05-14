@@ -22,7 +22,8 @@ inline fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, bl
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveMember.onLeave(block: suspend (MemberLeaveEvent) -> Unit) = on(consumer = block)
@@ -32,14 +33,16 @@ fun LiveMember.onUpdate(block: suspend (MemberUpdateEvent) -> Unit) = on(consume
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveMember.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the live entity is shutdown",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 inline fun LiveGuildChannel.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
@@ -50,7 +53,8 @@ inline fun LiveGuildChannel.onShutdown(crossinline block: suspend (Event) -> Uni
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)

@@ -55,7 +55,8 @@ fun LiveMessage.onReactionRemoveAll(block: suspend (ReactionRemoveAllEvent) -> U
 
 @Deprecated(
     "The block is never called because the message is already created",
-    ReplaceWith("LiveChannel.onMessageCreate(block)")
+    ReplaceWith("LiveChannel.onMessageCreate(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveMessage.onCreate(block: suspend (MessageCreateEvent) -> Unit) = on(consumer = block)
@@ -65,7 +66,8 @@ fun LiveMessage.onUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consu
 
 @Deprecated(
     "The block is not called when the live entity is shutdown",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
@@ -78,28 +80,32 @@ inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = 
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveMessage.onOnlyDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveMessage.onBulkDelete(block: suspend (MessageBulkDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveMessage.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shutdown",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)")
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveMessage.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
