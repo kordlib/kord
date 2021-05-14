@@ -17,8 +17,10 @@ class StageInstanceService(requestHandler: RequestHandler) : RestService(request
             body(StageInstanceCreateRequest.serializer(), request)
         }
 
-    suspend fun updateStageInstance(request: StageInstanceUpdateRequest): DiscordStageInstance =
+    suspend fun updateStageInstance(channelId: Snowflake, request: StageInstanceUpdateRequest): DiscordStageInstance =
         call(Route.StageInstancePost) {
+            keys[Route.ChannelId] = channelId
+
             body(StageInstanceUpdateRequest.serializer(), request)
         }
 
@@ -26,3 +28,12 @@ class StageInstanceService(requestHandler: RequestHandler) : RestService(request
         keys[Route.ChannelId] = channelId
     }
 }
+
+suspend fun StageInstanceService.createStageInstance(channelId: Snowflake, topic: String) = createStageInstance(
+    StageInstanceCreateRequest(channelId, topic)
+)
+
+suspend fun StageInstanceService.updateStageInstance(channelId: Snowflake, topic: String) = updateStageInstance(
+    channelId,
+    StageInstanceUpdateRequest(topic)
+)
