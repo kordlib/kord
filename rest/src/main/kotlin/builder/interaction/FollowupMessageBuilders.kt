@@ -123,8 +123,8 @@ class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessa
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
 
-    private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
-    var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
+    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
     var embeds: MutableList<EmbedRequest> = mutableListOf()
@@ -135,6 +135,17 @@ class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessa
 
     suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
         addFile(path.fileName.toString(), Files.newInputStream(path))
+    }
+
+    /**
+     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
+     * (ping everything), calling this function but not configuring it before the request is build will result in all
+     * pings being ignored.
+     */
+    @OptIn(ExperimentalContracts::class)
+    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
     @OptIn(ExperimentalContracts::class)
@@ -151,7 +162,7 @@ class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessa
                 content = _content,
                 tts = _tts,
                 embeds = Optional.missingOnEmpty(embeds),
-                allowedMentions = _allowedMentions
+                allowedMentions = _allowedMentions.map { it.build() }
             ),
             files,
         )
@@ -167,15 +178,26 @@ class EphemeralFollowupMessageCreateBuilder(var content: String) :
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
 
-    private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
-    var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
+    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+
+    /**
+     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
+     * (ping everything), calling this function but not configuring it before the request is build will result in all
+     * pings being ignored.
+     */
+    @OptIn(ExperimentalContracts::class)
+    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
+    }
 
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(
             FollowupMessageCreateRequest(
                 content = Optional.Value(content),
                 tts = _tts,
-                allowedMentions = _allowedMentions
+                allowedMentions = _allowedMentions.map { it.build() }
             ),
         )
 
