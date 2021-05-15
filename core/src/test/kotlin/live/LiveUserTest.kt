@@ -12,12 +12,15 @@ import equality.randomId
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.Timeout
+import java.util.concurrent.TimeUnit
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
+@Timeout(value = 5, unit = TimeUnit.SECONDS)
 class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
 
     private lateinit var userId: Snowflake

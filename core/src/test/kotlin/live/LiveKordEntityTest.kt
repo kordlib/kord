@@ -18,10 +18,13 @@ import equality.randomId
 import kotlinx.coroutines.*
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.Timeout
+import java.util.concurrent.TimeUnit
 import kotlin.test.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
+@Timeout(value = 5, unit = TimeUnit.SECONDS)
 class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityMock>() {
 
     companion object {
@@ -129,29 +132,36 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
             // Without the delay, the success of the test is uncertain.
             delay(DELAY_TIME)
 
-            val eventGuildBan = GuildBanAdd(
-                DiscordGuildBan(
-                    guildId = guildId.asString,
-                    user = DiscordUser(
-                        id = randomId(),
-                        username = "",
-                        discriminator = "",
-                        avatar = null
+            EventQueueManager(kord).apply {
+                add {
+                    val eventGuildBan = GuildBanAdd(
+                        DiscordGuildBan(
+                            guildId = guildId.asString,
+                            user = DiscordUser(
+                                id = randomId(),
+                                username = "",
+                                discriminator = "",
+                                avatar = null
+                            )
+                        ),
+                        0
                     )
-                ),
-                0
-            )
+                    sendEvent(eventGuildBan)
+                }
 
-            sendEventAndWait(eventGuildBan)
+                add {
+                    val eventGuildDelete = GuildDelete(
+                        DiscordUnavailableGuild(
+                            id = guildId
+                        ),
+                        0
+                    )
 
-            val eventGuildDelete = GuildDelete(
-                DiscordUnavailableGuild(
-                    id = guildId
-                ),
-                0
-            )
+                    sendEvent(eventGuildDelete)
+                }
 
-            sendEvent(eventGuildDelete)
+                start()
+            }
         }
     }
 
