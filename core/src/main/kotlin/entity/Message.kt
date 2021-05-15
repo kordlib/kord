@@ -13,6 +13,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -101,6 +102,11 @@ class Message(
      * The stickers sent with this message.
      */
     val stickers: List<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }
+
+    /**
+     * If the message is a response to an [Interaction], this is the id of the interaction's application
+     */
+    val applicationId: Snowflake? get() = data.applicationId.value
 
     /**
      * The message being replied to.

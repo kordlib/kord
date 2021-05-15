@@ -61,6 +61,7 @@ import kotlin.contracts.contract
  * @param flags Message flags.
  * @param stickers The stickers sent with the message (bots currently can only receive messages with stickers, not send).
  * @param referencedMessage the message associated with [messageReference].
+ * @param applicationId if the message is a response to an [Interaction][DiscordInteraction], this is the id of the interaction's application
  */
 @Serializable
 data class DiscordMessage(
@@ -93,6 +94,8 @@ data class DiscordMessage(
     val type: MessageType,
     val activity: Optional<MessageActivity> = Optional.Missing(),
     val application: Optional<MessageApplication> = Optional.Missing(),
+    @SerialName("application_id")
+    val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
@@ -747,7 +750,7 @@ sealed class MessageType(val code: Int) {
     object ThreadStarterMessage : MessageType(21)
     object GuildInviteReminder : MessageType(22)
 
-    object MessageTypeSerializer : KSerializer<MessageType> {
+    internal object MessageTypeSerializer : KSerializer<MessageType> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
@@ -781,7 +784,14 @@ sealed class MessageType(val code: Int) {
                 GuildDiscoveryDisqualified,
                 GuildDiscoveryRequalified,
                 Reply,
-            )
+                GuildDiscoveryGracePeriodInitialWarning,
+                GuildDiscoveryGracePeriodFinalWarning,
+                ThreadCreated,
+                ApplicationCommand,
+                ThreadStarterMessage,
+                GuildInviteReminder,
+
+                )
     }
 }
 

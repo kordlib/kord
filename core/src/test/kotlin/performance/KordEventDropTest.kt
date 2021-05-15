@@ -85,7 +85,8 @@ class KordEventDropTest {
                         rulesChannelId = null,
                         vanityUrlCode = null,
                         banner = null,
-                        publicUpdatesChannelId = null
+                        publicUpdatesChannelId = null,
+                    nsfw = false
                 ), 0)
 
         val counter = AtomicInteger(0)
