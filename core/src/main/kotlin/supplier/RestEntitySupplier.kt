@@ -333,6 +333,13 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         auditLog.getAuditLogs(guildId, request.copy(before = it.value)).auditLogEntries
     }
 
+    override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = catchNotFound {
+        val instance = kord.rest.stageInstance.getStageInstance(channelId)
+        val data = StageInstanceData.from(instance)
+
+        return StageInstance(data, kord, this)
+    }
+
     override fun toString(): String {
         return "RestEntitySupplier(rest=${kord.rest})"
     }
