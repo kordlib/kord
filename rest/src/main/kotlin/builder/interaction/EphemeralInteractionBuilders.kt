@@ -48,7 +48,11 @@ class EphemeralInteractionResponseModifyBuilder : RequestBuilder<InteractionResp
     }
 
     override fun toRequest(): InteractionResponseModifyRequest {
-        return InteractionResponseModifyRequest(content = _content, allowedMentions = _allowedMentions)
+        return InteractionResponseModifyRequest(
+            content = _content,
+            allowedMentions = _allowedMentions,
+            embeds = _embeds.mapList { it.toRequest() }
+        )
 
     }
 }
