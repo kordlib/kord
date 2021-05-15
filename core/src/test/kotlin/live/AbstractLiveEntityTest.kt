@@ -64,14 +64,13 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
             var job: Job? = null
             job = kord.on<dev.kord.core.event.Event> {
                 if (queue.isEmpty()) {
-                    job!!.cancelAndJoin()
+                    job!!.cancel()
                 } else {
                     pollAndInvoke()
                 }
             }
-            kord.launch(job) {
-                pollAndInvoke()
-            }
+            delay(100)
+            pollAndInvoke()
         }
 
         private suspend fun pollAndInvoke() = queue.poll().invoke()
@@ -171,12 +170,9 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
             }
             // When the wrong event is received.
             add {
+                delay(100)
                 assertTrue { live.isActive }
                 sendEvent(builderEvent(validId))
-            }
-            // When the good event is received.
-            add {
-                assertFalse { live.isActive }
             }
             start()
         }
