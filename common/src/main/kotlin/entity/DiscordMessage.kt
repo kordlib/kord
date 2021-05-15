@@ -1,5 +1,6 @@
 package dev.kord.common.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -102,7 +103,7 @@ data class DiscordMessage(
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
-    val interaction: Optional<DiscordInteraction> = Optional.Missing(),
+    val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
 
     /*
      * don't trust the docs:
@@ -249,6 +250,7 @@ data class DiscordPartialMessage(
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
+    val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
 )
 
 @Serializable
@@ -833,4 +835,13 @@ data class AllowedMentions(
     val roles: List<String>,
     @SerialName("replied_user")
     val repliedUser: OptionalBoolean = OptionalBoolean.Missing
+)
+
+@KordPreview
+@Serializable
+data class DiscordMessageInteraction(
+    val id: Snowflake,
+    val type: InteractionType,
+    val name: String,
+    val user: DiscordUser
 )
