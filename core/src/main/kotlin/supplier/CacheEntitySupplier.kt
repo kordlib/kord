@@ -272,6 +272,8 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.asFlow().map { Template(it, kord) }
     }
 
+    override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = null
+
     override fun toString(): String {
         return "CacheEntitySupplier(cache=$cache)"
     }
