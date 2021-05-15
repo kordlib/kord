@@ -13,12 +13,15 @@ import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.Timeout
+import java.util.concurrent.TimeUnit
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
+@Timeout(value = 5, unit = TimeUnit.SECONDS)
 class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
 
     private lateinit var messageId: Snowflake
@@ -108,14 +111,18 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 0
             )
 
-            val eventRandomId = createEvent(randomId(), emojiExpected)
-            sendEventAndWait(eventRandomId)
-
-            val eventOtherReaction = createEvent(messageId, emojiOther)
-            sendEventAndWait(eventOtherReaction)
-
-            val event = createEvent(messageId, emojiExpected)
-            sendEvent(event)
+            EventQueueManager(kord).apply {
+                add {
+                    sendEvent(createEvent(randomId(), emojiExpected))
+                }
+                add {
+                    sendEvent(createEvent(messageId, emojiOther))
+                }
+                add {
+                    sendEvent(createEvent(messageId, emojiExpected))
+                }
+                start()
+            }
         }
     }
 
@@ -166,14 +173,18 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 0
             )
 
-            val eventRandomId = createEvent(randomId(), emojiExpected)
-            sendEventAndWait(eventRandomId)
-
-            val eventOtherReaction = createEvent(messageId, emojiOther)
-            sendEventAndWait(eventOtherReaction)
-
-            val event = createEvent(messageId, emojiExpected)
-            sendEvent(event)
+            EventQueueManager(kord).apply {
+                add {
+                    sendEvent(createEvent(randomId(), emojiExpected))
+                }
+                add {
+                    sendEvent(createEvent(messageId, emojiOther))
+                }
+                add {
+                    sendEvent(createEvent(messageId, emojiExpected))
+                }
+                start()
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import dev.kord.core.Kord
 import dev.kord.core.builder.kord.Shards
 import dev.kord.core.gateway.MasterGateway
 import dev.kord.core.live.AbstractLiveKordEntity
+import dev.kord.core.on
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
 import dev.kord.rest.request.KtorRequestHandler
@@ -20,7 +21,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Timeout
 import java.time.Clock
+import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
@@ -35,7 +38,7 @@ import kotlin.time.Duration
 @OptIn(KordPreview::class)
 abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
-    class GatewayMock : Gateway {
+    inner class GatewayMock : Gateway {
         override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
 
         @OptIn(FlowPreview::class)
@@ -52,7 +55,32 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         override suspend fun stop() {}
     }
 
-    class CounterAtomicLatch(count: Int) {
+    inner class EventQueueManager(private val kord: Kord) {
+
+        private val queue = LinkedList<suspend () -> Unit>()
+        private var job: Job? = null
+
+        fun add(block: suspend () -> Unit) {
+            queue.add(block)
+        }
+
+        private suspend fun pollAndInvoke() {
+            queue.poll().invoke()
+            if (queue.isEmpty()) {
+                job?.cancelAndJoin()
+            }
+        }
+
+        suspend fun start() {
+            job = kord.on<dev.kord.core.event.Event> {
+                pollAndInvoke()
+            }
+            delay(50)
+            pollAndInvoke()
+        }
+    }
+
+    inner class CounterAtomicLatch(count: Int) {
 
         private val countdown = CountDownLatch(count)
         val latchCount get() = countdown.count
@@ -70,7 +98,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
     private lateinit var gateway: GatewayMock
 
-    protected lateinit var kord: Kord
+    lateinit var kord: Kord
 
     protected lateinit var guildId: Snowflake
 
@@ -124,25 +152,37 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         assertEquals(expectedCount, counter.atomicCount)
     }
 
-    suspend inline fun sendEventValidAndRandomId(validId: Snowflake, builderEvent: (Snowflake) -> Event) {
-        sendEventAndWait(builderEvent(randomId()))
-        sendEvent(builderEvent(validId))
+    suspend inline fun sendEventValidAndRandomId(validId: Snowflake, crossinline builderEvent: (Snowflake) -> Event) {
+        EventQueueManager(kord).apply {
+            add {
+                sendEvent(builderEvent(randomId()))
+            }
+            add {
+                sendEvent(builderEvent(validId))
+            }
+            start()
+        }
     }
 
     suspend inline fun sendEventValidAndRandomIdCheckLiveActive(
         validId: Snowflake,
-        builderEvent: (Snowflake) -> Event
+        crossinline builderEvent: (Snowflake) -> Event
     ) {
-        sendEventAndWait(builderEvent(randomId()))
-        assertTrue { live.isActive }
-        sendEventAndWait(builderEvent(validId))
-        assertFalse { live.isActive }
-    }
-
-    suspend fun sendEventAndWait(event: Event, delayMs: Long = 50) {
-        sendEvent(event)
-        // Let time to receive event from the flow before the next action.
-        delay(delayMs)
+        EventQueueManager(kord).apply {
+            add {
+                sendEvent(builderEvent(randomId()))
+            }
+            // When the wrong event is received.
+            add {
+                assertTrue { live.isActive }
+                sendEvent(builderEvent(validId))
+            }
+            // When the good event is received.
+            add {
+                assertFalse { live.isActive }
+            }
+            start()
+        }
     }
 
     suspend fun sendEvent(event: Event) = gateway.events.emit(event)

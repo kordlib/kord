@@ -14,12 +14,15 @@ import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.JsonObject
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.Timeout
+import java.util.concurrent.TimeUnit
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
+@Timeout(value = 5, unit = TimeUnit.SECONDS)
 class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
 
     @BeforeTest
@@ -442,14 +445,18 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                 0
             )
 
-            val eventRandomId = createEvent(randomId(), emojiExpected)
-            sendEventAndWait(eventRandomId)
-
-            val eventOtherReaction = createEvent(guildId, emojiOther)
-            sendEventAndWait(eventOtherReaction)
-
-            val event = createEvent(guildId, emojiExpected)
-            sendEvent(event)
+            EventQueueManager(kord).apply {
+                add {
+                    sendEvent(createEvent(randomId(), emojiExpected))
+                }
+                add {
+                    sendEvent(createEvent(guildId, emojiOther))
+                }
+                add {
+                    sendEvent(createEvent(guildId, emojiExpected))
+                }
+                start()
+            }
         }
     }
 
@@ -502,14 +509,18 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                 0
             )
 
-            val eventRandomId = createEvent(randomId(), emojiExpected)
-            sendEventAndWait(eventRandomId)
-
-            val eventOtherReaction = createEvent(guildId, emojiOther)
-            sendEventAndWait(eventOtherReaction)
-
-            val event = createEvent(guildId, emojiExpected)
-            sendEvent(event)
+            EventQueueManager(kord).apply {
+                add {
+                    sendEvent(createEvent(randomId(), emojiExpected))
+                }
+                add {
+                    sendEvent(createEvent(guildId, emojiOther))
+                }
+                add {
+                    sendEvent(createEvent(guildId, emojiExpected))
+                }
+                start()
+            }
         }
     }
 
