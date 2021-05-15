@@ -35,6 +35,10 @@ import kotlin.time.Duration
 @OptIn(KordPreview::class)
 abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
+    companion object {
+        const val DELAY_TIME = 400L
+    }
+
     class GatewayMock : Gateway {
         override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
 
@@ -139,7 +143,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         assertFalse { live.isActive }
     }
 
-    suspend fun sendEventAndWait(event: Event, delayMs: Long = 50) {
+    suspend fun sendEventAndWait(event: Event, delayMs: Long = DELAY_TIME) {
         sendEvent(event)
         // Let time to receive event from the flow before the next action.
         delay(delayMs)

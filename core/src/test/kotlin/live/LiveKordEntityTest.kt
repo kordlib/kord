@@ -127,7 +127,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
             // Wait that the 2 jobs are ready to listen the next events.
             // Without the delay, the success of the test is uncertain.
-            delay(50)
+            delay(DELAY_TIME)
 
             val eventGuildBan = GuildBanAdd(
                 DiscordGuildBan(
