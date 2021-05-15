@@ -23,7 +23,7 @@ import dev.kord.core.event.Event
  * you can use [PublicInteractionResponseBehavior.followUp] or [EphemeralInteractionResponseBehavior.followUp] to display additional messages.
  *
  * The resulting follow-up message and its methods may differ based on which method is used.
- * * Following up an acknowledgement results in replacing "The bot is thinking prompt" with the follow-up content.
+ * * Following up an acknowledgement results in replacing "The bot is thinking" prompt with the follow-up content.
  * * Following up a respond results in a completely new message instance.
  *
  * As such, due to how Discord handles ephemeral acknowledgements,
