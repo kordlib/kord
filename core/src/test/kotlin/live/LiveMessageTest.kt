@@ -6,7 +6,13 @@ import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.ReactionEmoji
+import dev.kord.core.event.channel.ChannelDeleteEvent
+import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.event.message.MessageBulkDeleteEvent
+import dev.kord.core.event.message.MessageDeleteEvent
+import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.live.*
+import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.gateway.*
 import equality.randomId
 import kotlinx.coroutines.job
@@ -18,6 +24,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
@@ -214,6 +221,9 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check if live entity is completed when event the message delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as MessageDeleteEvent
+                assertEquals(messageId, event.messageId)
                 count()
             }
 
@@ -233,6 +243,9 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check if live entity is completed when event the bulk delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as MessageBulkDeleteEvent
+                assertTrue { messageId in event.messageIds }
                 count()
             }
 
@@ -252,6 +265,9 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check if live entity is completed when event the channel delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as ChannelDeleteEvent
+                assertEquals(channelId, event.channel.id)
                 count()
             }
 
@@ -271,6 +287,9 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check if live entity is completed when event the guild delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as GuildDeleteEvent
+                assertEquals(guildId, event.guildId)
                 count()
             }
 

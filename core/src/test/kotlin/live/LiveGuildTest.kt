@@ -7,7 +7,9 @@ import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.ReactionEmoji
+import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.*
+import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.gateway.*
 import equality.randomId
 import kotlinx.coroutines.job
@@ -758,6 +760,9 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check if live entity is completed when event the guild delete event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as GuildDeleteEvent
+                assertEquals(guildId, event.guildId)
                 count()
             }
 

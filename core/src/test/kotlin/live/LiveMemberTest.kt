@@ -6,7 +6,11 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.Member
+import dev.kord.core.event.guild.BanAddEvent
+import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.event.guild.MemberLeaveEvent
 import dev.kord.core.live.LiveMember
+import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.onUpdate
 import dev.kord.gateway.GuildBanAdd
 import dev.kord.gateway.GuildDelete
@@ -88,6 +92,9 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     fun `Check onLeave is called when event is received`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as MemberLeaveEvent
+                assertEquals(userId, event.user.id)
                 count()
             }
 
@@ -112,6 +119,9 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     fun `Check if live entity is completed when the member is banned`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as BanAddEvent
+                assertEquals(userId, event.user.id)
                 count()
             }
 
@@ -136,6 +146,9 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     fun `Check if live entity is completed when the guild is deleted`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as GuildDeleteEvent
+                assertEquals(guildId, event.guildId)
                 count()
             }
 

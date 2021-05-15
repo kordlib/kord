@@ -4,7 +4,10 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.core.cache.data.RoleData
 import dev.kord.core.entity.Role
+import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.live.LiveRole
+import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.onUpdate
 import dev.kord.gateway.GuildDelete
 import dev.kord.gateway.GuildRoleDelete
@@ -85,6 +88,9 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     fun `Check if live entity is completed when the role is deleted`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as RoleDeleteEvent
+                assertEquals(roleId, event.roleId)
                 count()
             }
 
@@ -104,6 +110,9 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     fun `Check if live entity is completed when the guild is deleted`() {
         countdownContext(1) {
             live.coroutineContext.job.invokeOnCompletion {
+                it as LiveCancellationException
+                val event = it.event as GuildDeleteEvent
+                assertEquals(guildId, event.guildId)
                 count()
             }
 
