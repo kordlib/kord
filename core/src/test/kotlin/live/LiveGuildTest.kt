@@ -445,18 +445,9 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                 0
             )
 
-            EventQueueManager(kord).apply {
-                add {
-                    sendEvent(createEvent(randomId(), emojiExpected))
-                }
-                add {
-                    sendEvent(createEvent(guildId, emojiOther))
-                }
-                add {
-                    sendEvent(createEvent(guildId, emojiExpected))
-                }
-                start()
-            }
+            sendEventAndWait(createEvent(randomId(), emojiExpected))
+            sendEventAndWait(createEvent(guildId, emojiOther))
+            sendEvent(createEvent(guildId, emojiExpected))
         }
     }
 
@@ -509,18 +500,9 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                 0
             )
 
-            EventQueueManager(kord).apply {
-                add {
-                    sendEvent(createEvent(randomId(), emojiExpected))
-                }
-                add {
-                    sendEvent(createEvent(guildId, emojiOther))
-                }
-                add {
-                    sendEvent(createEvent(guildId, emojiExpected))
-                }
-                start()
-            }
+            sendEventAndWait(createEvent(randomId(), emojiExpected))
+            sendEventAndWait(createEvent(guildId, emojiOther))
+            sendEvent(createEvent(guildId, emojiExpected))
         }
     }
 

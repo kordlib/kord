@@ -132,36 +132,28 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
             // Without the delay, the success of the test is uncertain.
             delay(DELAY_TIME)
 
-            EventQueueManager(kord).apply {
-                add {
-                    val eventGuildBan = GuildBanAdd(
-                        DiscordGuildBan(
-                            guildId = guildId.asString,
-                            user = DiscordUser(
-                                id = randomId(),
-                                username = "",
-                                discriminator = "",
-                                avatar = null
-                            )
-                        ),
-                        0
+            val eventGuildBan = GuildBanAdd(
+                DiscordGuildBan(
+                    guildId = guildId.asString,
+                    user = DiscordUser(
+                        id = randomId(),
+                        username = "",
+                        discriminator = "",
+                        avatar = null
                     )
-                    sendEvent(eventGuildBan)
-                }
+                ),
+                0
+            )
+            sendEventAndWait(eventGuildBan)
 
-                add {
-                    val eventGuildDelete = GuildDelete(
-                        DiscordUnavailableGuild(
-                            id = guildId
-                        ),
-                        0
-                    )
+            val eventGuildDelete = GuildDelete(
+                DiscordUnavailableGuild(
+                    id = guildId
+                ),
+                0
+            )
 
-                    sendEvent(eventGuildDelete)
-                }
-
-                start()
-            }
+            sendEvent(eventGuildDelete)
         }
     }
 

@@ -111,18 +111,9 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 0
             )
 
-            EventQueueManager(kord).apply {
-                add {
-                    sendEvent(createEvent(randomId(), emojiExpected))
-                }
-                add {
-                    sendEvent(createEvent(messageId, emojiOther))
-                }
-                add {
-                    sendEvent(createEvent(messageId, emojiExpected))
-                }
-                start()
-            }
+            sendEventAndWait(createEvent(randomId(), emojiExpected))
+            sendEventAndWait(createEvent(messageId, emojiOther))
+            sendEvent(createEvent(messageId, emojiExpected))
         }
     }
 
@@ -173,18 +164,9 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                 0
             )
 
-            EventQueueManager(kord).apply {
-                add {
-                    sendEvent(createEvent(randomId(), emojiExpected))
-                }
-                add {
-                    sendEvent(createEvent(messageId, emojiOther))
-                }
-                add {
-                    sendEvent(createEvent(messageId, emojiExpected))
-                }
-                start()
-            }
+            sendEvent(createEvent(randomId(), emojiExpected))
+            sendEvent(createEvent(messageId, emojiOther))
+            sendEvent(createEvent(messageId, emojiExpected))
         }
     }
 
