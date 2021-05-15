@@ -29,7 +29,7 @@ import dev.kord.core.event.Event
  * As such, due to how Discord handles ephemeral acknowledgements,
  * a follow-up on a  ephemeral acknowledgement will result in an ephemeral message.
  *
- * In the current iteration, ephemeral messages (regardless of the type) doesn't support files and/or embeds.
+ * In the current iteration, ephemeral messages (regardless of the type) don't support files and/or embeds.
  */
 @KordPreview
 class InteractionCreateEvent(
