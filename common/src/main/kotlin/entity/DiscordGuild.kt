@@ -74,6 +74,7 @@ data class DiscordUnavailableGuild(
  * @param approximateMemberCount The approximate number of members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
  * @param approximatePresenceCount The approximate number of non-offline members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
  * @param welcomeScreen The welcome screen of a Community guild, shown to new members.
+ * @param nsfw true if this guild is [designated as NSFW](https://support.discord.com/hc/en-us/articles/1500005389362-NSFW-Server-Designation)
  */
 @Serializable
 data class DiscordGuild(
@@ -150,7 +151,9 @@ data class DiscordGuild(
     val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_presence_count")
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
-
+    @SerialName("welcome_screen")
+    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
+    val nsfw: Boolean
     )
 
 /**

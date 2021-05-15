@@ -62,6 +62,7 @@ import kotlin.contracts.contract
  * @param flags Message flags.
  * @param stickers The stickers sent with the message (bots currently can only receive messages with stickers, not send).
  * @param referencedMessage the message associated with [messageReference].
+ * @param applicationId if the message is a response to an [Interaction][DiscordInteraction], this is the id of the interaction's application
  */
 @Serializable
 data class DiscordMessage(
@@ -94,6 +95,8 @@ data class DiscordMessage(
     val type: MessageType,
     val activity: Optional<MessageActivity> = Optional.Missing(),
     val application: Optional<MessageApplication> = Optional.Missing(),
+    @SerialName("application_id")
+    val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
@@ -722,41 +725,76 @@ data class AllRemovedMessageReactions(
 )
 
 @Serializable(with = MessageType.MessageTypeSerializer::class)
-enum class MessageType(val code: Int) {
+sealed class MessageType(val code: Int) {
     /** The default code for unknown values. */
-    Unknown(Int.MIN_VALUE),
-    Default(0),
-    RecipientAdd(1),
-    RecipientRemove(2),
-    Call(3),
-    ChannelNameChange(4),
-    ChannelIconChange(5),
-    ChannelPinnedMessage(6),
-    GuildMemberJoin(7),
-    UserPremiumGuildSubscription(8),
-    UserPremiumGuildSubscriptionTierOne(9),
-    UserPremiumGuildSubscriptionTwo(10),
-    UserPremiumGuildSubscriptionThree(11),
-    ChannelFollowAdd(12),
-    GuildDiscoveryDisqualified(14),
+    class Unknown(code: Int) : MessageType(code)
+    object Default : MessageType(0)
+    object RecipientAdd : MessageType(1)
+    object RecipientRemove : MessageType(2)
+    object Call : MessageType(3)
+    object ChannelNameChange : MessageType(4)
+    object ChannelIconChange : MessageType(5)
+    object ChannelPinnedMessage : MessageType(6)
+    object GuildMemberJoin : MessageType(7)
+    object UserPremiumGuildSubscription : MessageType(8)
+    object UserPremiumGuildSubscriptionTierOne : MessageType(9)
+    object UserPremiumGuildSubscriptionTwo : MessageType(10)
+    object UserPremiumGuildSubscriptionThree : MessageType(11)
+    object ChannelFollowAdd : MessageType(12)
+    object GuildDiscoveryDisqualified : MessageType(14)
 
     @Suppress("SpellCheckingInspection")
-    GuildDiscoveryRequalified(15),
-    Reply(19);
+    object GuildDiscoveryRequalified : MessageType(15)
+    object GuildDiscoveryGracePeriodInitialWarning : MessageType(16)
+    object GuildDiscoveryGracePeriodFinalWarning : MessageType(17)
+    object ThreadCreated : MessageType(18)
+    object Reply : MessageType(19)
+    object ApplicationCommand : MessageType(20)
+    object ThreadStarterMessage : MessageType(21)
+    object GuildInviteReminder : MessageType(22)
 
-    companion object MessageTypeSerializer : KSerializer<MessageType> {
+    internal object MessageTypeSerializer : KSerializer<MessageType> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): MessageType {
             val code = decoder.decodeInt()
-            return values().firstOrNull { it.code == code } ?: Unknown
+            return values.firstOrNull { it.code == code } ?: Unknown(code)
         }
 
         override fun serialize(encoder: Encoder, value: MessageType) {
             encoder.encodeInt(value.code)
         }
+    }
+
+    companion object {
+        val values: Set<MessageType>
+            get() = setOf(
+                Default,
+                RecipientAdd,
+                RecipientRemove,
+                Call,
+                ChannelNameChange,
+                ChannelIconChange,
+                ChannelPinnedMessage,
+                GuildMemberJoin,
+                UserPremiumGuildSubscription,
+                UserPremiumGuildSubscriptionTierOne,
+                UserPremiumGuildSubscriptionTwo,
+                UserPremiumGuildSubscriptionThree,
+                ChannelFollowAdd,
+                GuildDiscoveryDisqualified,
+                GuildDiscoveryRequalified,
+                Reply,
+                GuildDiscoveryGracePeriodInitialWarning,
+                GuildDiscoveryGracePeriodFinalWarning,
+                ThreadCreated,
+                ApplicationCommand,
+                ThreadStarterMessage,
+                GuildInviteReminder,
+
+                )
     }
 }
 

@@ -333,6 +333,16 @@ class Guild(
     val maxVideoChannelUsers: Int? get() = data.maxVideoChannelUsers.value
 
     /**
+     * The welcome screen of a Community guild, shown to new members, returned in an [Invite]'s guild object
+     */
+    val welcomeScreen: WelcomeScreen? get() = data.welcomeScreen.unwrap { WelcomeScreen(it, kord) }
+
+    /**
+     * True if this guild is [designated as NSFW](https://support.discord.com/hc/en-us/articles/1500005389362-NSFW-Server-Designation)
+     */
+    val nsfw: Boolean get() = data.nsfw
+
+    /**
      * Requests to get the [VoiceChannel] represented by the [afkChannelId],
      * returns null if the [afkChannelId] isn't present or the channel itself isn't present.
      *
