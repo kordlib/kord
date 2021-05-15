@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Timeout
 import java.time.Clock
 import java.util.*
 import java.util.concurrent.CountDownLatch
@@ -58,26 +57,24 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     inner class EventQueueManager(private val kord: Kord) {
 
         private val queue = LinkedList<suspend () -> Unit>()
-        private var job: Job? = null
 
-        fun add(block: suspend () -> Unit) {
-            queue.add(block)
-        }
-
-        private suspend fun pollAndInvoke() {
-            queue.poll().invoke()
-            if (queue.isEmpty()) {
-                job?.cancelAndJoin()
-            }
-        }
+        fun add(block: suspend () -> Unit) = queue.add(block)
 
         suspend fun start() {
+            var job: Job? = null
             job = kord.on<dev.kord.core.event.Event> {
+                if (queue.isEmpty()) {
+                    job!!.cancelAndJoin()
+                } else {
+                    pollAndInvoke()
+                }
+            }
+            kord.launch(job) {
                 pollAndInvoke()
             }
-            delay(50)
-            pollAndInvoke()
         }
+
+        private suspend fun pollAndInvoke() = queue.poll().invoke()
     }
 
     inner class CounterAtomicLatch(count: Int) {
