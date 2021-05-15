@@ -37,6 +37,10 @@ import kotlin.time.Duration
 @OptIn(KordPreview::class)
 abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
+    companion object {
+        const val DELAY_TIME = 100L
+    }
+
     inner class GatewayMock : Gateway {
         override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
 
@@ -69,7 +73,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
                     pollAndInvoke()
                 }
             }
-            delay(100)
+            delay(DELAY_TIME)
             pollAndInvoke()
         }
 
@@ -170,7 +174,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
             }
             // When the wrong event is received.
             add {
-                delay(100)
+                delay(DELAY_TIME)
                 assertTrue { live.isActive }
                 sendEvent(builderEvent(validId))
             }
