@@ -66,7 +66,7 @@ fun LiveMessage.onCreate(block: suspend (MessageCreateEvent) -> Unit) = on(consu
 fun LiveMessage.onUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the live entity is shutdown",
+    "The block is not called when the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
@@ -80,7 +80,7 @@ inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = 
 }
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
@@ -88,7 +88,7 @@ inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = 
 fun LiveMessage.onOnlyDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
@@ -96,7 +96,7 @@ fun LiveMessage.onOnlyDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(c
 fun LiveMessage.onBulkDelete(block: suspend (MessageBulkDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
@@ -104,7 +104,7 @@ fun LiveMessage.onBulkDelete(block: suspend (MessageBulkDeleteEvent) -> Unit) = 
 fun LiveMessage.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )

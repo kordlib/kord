@@ -66,7 +66,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
     }
 
     @Test
-    fun `Children job are cancelled when the live entity is shutdown`() {
+    fun `Children job are cancelled when the live entity is shut down`() {
         val job = live.on<Event> { }
         assertTrue(job.isActive)
 

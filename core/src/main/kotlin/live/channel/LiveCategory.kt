@@ -26,7 +26,7 @@ inline fun Category.live(
 
 @Deprecated(
     "The block is never called because the channel is already created",
-    ReplaceWith("LiveGuild.onChannelCreate(block)"),
+    ReplaceWith("LiveGuild.onChannelCreate(block)", "dev.kord.core.live"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -36,7 +36,7 @@ fun LiveCategory.onCreate(block: suspend (CategoryCreateEvent) -> Unit) = on(con
 fun LiveCategory.onUpdate(block: suspend (CategoryUpdateEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the live entity is shutdown",
+    "The block is not called when the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
@@ -48,7 +48,7 @@ inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) =
 }
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
@@ -56,7 +56,7 @@ inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) =
 fun LiveCategory.onDelete(block: suspend (CategoryDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )

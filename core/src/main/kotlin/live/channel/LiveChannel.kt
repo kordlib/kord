@@ -85,7 +85,7 @@ fun LiveChannel.onChannelCreate(block: suspend (ChannelCreateEvent) -> Unit) = o
 fun LiveChannel.onChannelUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )

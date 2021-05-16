@@ -36,7 +36,7 @@ fun LiveVoiceChannel.onCreate(block: suspend (VoiceChannelCreateEvent) -> Unit) 
 fun LiveVoiceChannel.onUpdate(block: suspend (VoiceChannelUpdateEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the live entity is shutdown",
+    "The block is not called when the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
@@ -48,7 +48,7 @@ inline fun LiveVoiceChannel.onShutDown(crossinline block: suspend (Event) -> Uni
 }
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
@@ -56,7 +56,7 @@ inline fun LiveVoiceChannel.onShutDown(crossinline block: suspend (Event) -> Uni
 fun LiveVoiceChannel.onDelete(block: suspend (VoiceChannelDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )

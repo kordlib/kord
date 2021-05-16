@@ -35,7 +35,7 @@ fun LiveDmChannel.onCreate(block: suspend (DMChannelCreateEvent) -> Unit) = on(c
 fun LiveDmChannel.onUpdate(block: suspend (DMChannelUpdateEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the live entity is shutdown",
+    "The block is not called when the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
@@ -47,7 +47,7 @@ inline fun LiveDmChannel.onShutDown(crossinline block: suspend (Event) -> Unit) 
 }
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
@@ -55,7 +55,7 @@ inline fun LiveDmChannel.onShutDown(crossinline block: suspend (Event) -> Unit) 
 fun LiveDmChannel.onDelete(block: suspend (DMChannelDeleteEvent) -> Unit) = on(consumer = block)
 
 @Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shutdown",
+    "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
     DeprecationLevel.ERROR
 )
