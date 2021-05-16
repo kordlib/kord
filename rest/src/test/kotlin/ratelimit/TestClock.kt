@@ -9,6 +9,4 @@ import kotlin.time.Duration
 @ExperimentalCoroutinesApi
 class TestClock(val instant: Instant, val scope: TestCoroutineScope) : Clock {
     override fun now(): Instant = instant + Duration.milliseconds(scope.currentTime)
-//    override fun getZone(): ZoneId = zoneId
-//    override fun withZone(zone: ZoneId): Clock = TestClock(instant, scope, zone)
 }
