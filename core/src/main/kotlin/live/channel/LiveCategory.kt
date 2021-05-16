@@ -24,10 +24,10 @@ inline fun Category.live(
     block: LiveCategory.() -> Unit
 ) = this.live(dispatcher).apply(block)
 
+@Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
-    "The block is never called because the channel is already created",
-    ReplaceWith("LiveGuild.onChannelCreate(block)", "dev.kord.core.live"),
-    DeprecationLevel.ERROR
+    "The block is never called because the channel is already created, use LiveGuild.onChannelCreate(block)",
+    level = DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveCategory.onCreate(block: suspend (CategoryCreateEvent) -> Unit) = on(consumer = block)

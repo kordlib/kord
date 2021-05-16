@@ -24,10 +24,10 @@ inline fun VoiceChannel.live(
     block: LiveVoiceChannel.() -> Unit
 ) = this.live(dispatcher).apply(block)
 
+@Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
-    "The block is never called because the channel is already created",
-    ReplaceWith("LiveGuild.onChannelCreate(block)"),
-    DeprecationLevel.ERROR
+    "The block is never called because the channel is already created, use LiveGuild.onChannelCreate(block)",
+    level = DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveVoiceChannel.onCreate(block: suspend (VoiceChannelCreateEvent) -> Unit) = on(consumer = block)
