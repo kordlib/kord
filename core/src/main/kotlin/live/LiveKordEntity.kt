@@ -24,7 +24,7 @@ import kotlin.coroutines.CoroutineContext
 interface LiveKordEntity : KordEntity, CoroutineScope {
     val events: Flow<Event>
 
-    fun shutDown(cause: CancellationException = CancellationException("The live entity has been shut down", null))
+    fun shutDown(cause: CancellationException = CancellationException("The live entity is shut down", null))
 }
 
 @KordPreview
