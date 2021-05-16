@@ -6,7 +6,7 @@ import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
 import mu.KLogger
 import mu.KotlinLogging
-import java.time.Clock
+import kotlinx.datetime.Clock
 
 private val parallelLogger = KotlinLogging.logger {}
 
@@ -24,7 +24,7 @@ private val parallelLogger = KotlinLogging.logger {}
  * @param clock a [Clock] used for calculating suspension times, present for testing purposes.
  */
 @KordUnsafe
-class ParallelRequestRateLimiter(clock: Clock = Clock.systemUTC()) : AbstractRateLimiter(clock) {
+class ParallelRequestRateLimiter(clock: Clock = Clock.System) : AbstractRateLimiter(clock) {
 
     override val logger: KLogger
         get() = parallelLogger

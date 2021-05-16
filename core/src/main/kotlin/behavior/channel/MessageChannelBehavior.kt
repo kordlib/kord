@@ -18,7 +18,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import java.time.Instant
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -210,7 +211,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun typeUntil(instant: Instant) {
-        while (instant.isBefore(Instant.now())) {
+        while (instant < Clock.System.now()) {
             type()
             delay(Duration.seconds(8).inWholeMilliseconds) //bracing ourselves for some network delays
         }

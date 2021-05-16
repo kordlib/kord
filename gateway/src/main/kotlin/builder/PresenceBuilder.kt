@@ -7,7 +7,7 @@ import dev.kord.common.entity.DiscordBotActivity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.gateway.DiscordPresence
 import dev.kord.gateway.UpdateStatus
-import java.time.Instant
+import kotlinx.datetime.Instant
 
 @KordDsl
 class PresenceBuilder {
@@ -36,7 +36,7 @@ class PresenceBuilder {
         game = DiscordBotActivity(name, ActivityType.Competing)
     }
 
-    fun toUpdateStatus(): UpdateStatus = UpdateStatus(since?.toEpochMilli(), game?.let(::listOf).orEmpty(), status, afk)
+    fun toUpdateStatus(): UpdateStatus = UpdateStatus(since?.toEpochMilliseconds(), game?.let(::listOf).orEmpty(), status, afk)
 
-    fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since?.toEpochMilli(), game)
+    fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since?.toEpochMilliseconds(), game)
 }

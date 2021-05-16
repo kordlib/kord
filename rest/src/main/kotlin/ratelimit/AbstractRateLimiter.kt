@@ -10,9 +10,8 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import mu.KLogger
-import java.time.Clock
+import kotlinx.datetime.Clock
 import kotlin.time.Duration as KDuration
-import java.time.Duration
 import java.util.concurrent.ConcurrentHashMap
 
 
@@ -20,7 +19,7 @@ abstract class AbstractRateLimiter internal constructor(val clock: Clock) : Requ
     internal abstract val logger: KLogger
 
     internal val autoBanRateLimiter = BucketRateLimiter(25000, KDuration.minutes(10))
-    internal val globalSuspensionPoint = atomic(Reset(clock.instant()))
+    internal val globalSuspensionPoint = atomic(Reset(clock.now()))
     internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
     internal val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
 
@@ -29,9 +28,9 @@ abstract class AbstractRateLimiter internal constructor(val clock: Clock) : Requ
     internal fun RequestIdentifier.addBucket(id: BucketKey) = routeBuckets.getOrPut(this) { mutableSetOf() }.add(id)
 
     internal suspend fun Reset.await() {
-        val duration = Duration.between(clock.instant(), value)
-        if (duration.isNegative) return
-        delay(duration.toMillis())
+        val duration = clock.now() - value
+        if (duration.isNegative()) return
+        delay(duration)
     }
 
     open override suspend fun await(request: Request<*, *>): RequestToken {
@@ -84,7 +83,7 @@ abstract class AbstractRateLimiter internal constructor(val clock: Clock) : Requ
     }
 
     internal inner class Bucket(val id: BucketKey) {
-        val reset = atomic(Reset(clock.instant()))
+        val reset = atomic(Reset(clock.now()))
         val mutex = Mutex()
 
         suspend fun awaitAndLock() {

@@ -27,8 +27,8 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.Image
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.first
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 import java.util.*
 
 /**
@@ -182,12 +182,7 @@ class Guild(
      * The time at which this guild was joined, if present.
      */
     val joinedTime: Instant?
-        get() = data.joinedAt.value?.let {
-            DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(
-                it,
-                Instant::from
-            )
-        }
+        get() = data.joinedAt.value?.toInstant()
 
     /**
      * The id of the owner.

@@ -1,8 +1,7 @@
 package dev.kord.rest.ratelimit
 
 import dev.kord.rest.request.Request
-import java.lang.Exception
-import java.time.Instant
+import kotlinx.datetime.Instant
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

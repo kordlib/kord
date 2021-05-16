@@ -4,6 +4,7 @@ object Versions {
     const val ktor = "1.5.3"
     const val kotlinxCoroutines = "1.5.0-RC"
     const val kotlinLogging = "2.0.4"
+    const val dateTime = "0.2.0"
     const val atomicFu = "0.16.1"
     const val binaryCompatibilityValidator = "0.4.0"
 
@@ -28,6 +29,7 @@ object Dependencies {
         "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxSerialization}"
     const val `kotlinx-coroutines` = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinxCoroutines}"
     const val `kotlinx-atomicfu` = "org.jetbrains.kotlinx:atomicfu-jvm:${Versions.atomicFu}"
+    const val `kotlinx-datetime` = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.dateTime}"
 
     const val `kotlin-logging` = "io.github.microutils:kotlin-logging:${Versions.kotlinLogging}"
 

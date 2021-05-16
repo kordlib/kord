@@ -9,7 +9,10 @@ import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.*
-import java.time.Instant
+import kotlinx.datetime.Instant
+import kotlinx.datetime.ZoneOffset
+import kotlinx.datetime.toJavaInstant
+import kotlinx.datetime.toLocalDateTime
 import java.time.format.DateTimeFormatter
 
 /**
@@ -152,7 +155,9 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         Optional.Value("embed"),
         _description,
         _url,
-        _timestamp.map { DateTimeFormatter.ISO_INSTANT.format(it) },
+        // TODO: Replace this with kotlinx.datetime
+        // See: https://github.com/Kotlin/kotlinx-datetime/issues/116
+        _timestamp.map { DateTimeFormatter.ISO_INSTANT.format(it.toJavaInstant()) },
         _color,
         _footer.map { it.toRequest() },
         _image.map { EmbedImageRequest(it) },
