@@ -20,10 +20,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import java.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.Duration as KDuration
-import kotlin.time.toKotlinDuration
 
 @FlowPreview
 @KtorExperimentalAPI
@@ -46,7 +44,7 @@ class DefaultGatewayTest {
             }
 
             reconnectRetry = LinearRetry(KDuration.seconds(2), KDuration.seconds(20), 10)
-            sendRateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
+            sendRateLimiter = BucketRateLimiter(120, KDuration.seconds(60))
         }
 
         gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.Default).onEach {

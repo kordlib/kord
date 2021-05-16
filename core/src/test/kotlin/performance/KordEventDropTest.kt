@@ -17,7 +17,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import java.time.Clock
+import kotlinx.datetime.Clock
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.CoroutineContext
@@ -49,7 +49,7 @@ class KordEventDropTest {
         resources = ClientResources("token", Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
         cache = DataCache.none(),
         MasterGateway(mapOf(0 to SpammyGateway)),
-        RestClient(KtorRequestHandler("token", clock = Clock.systemUTC())),
+        RestClient(KtorRequestHandler("token", clock = Clock.System)),
         Snowflake("420"),
         MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
         Dispatchers.Default

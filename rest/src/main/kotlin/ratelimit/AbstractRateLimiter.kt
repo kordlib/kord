@@ -28,7 +28,7 @@ abstract class AbstractRateLimiter internal constructor(val clock: Clock) : Requ
     internal fun RequestIdentifier.addBucket(id: BucketKey) = routeBuckets.getOrPut(this) { mutableSetOf() }.add(id)
 
     internal suspend fun Reset.await() {
-        val duration = clock.now() - value
+        val duration = value - clock.now()
         if (duration.isNegative()) return
         delay(duration)
     }

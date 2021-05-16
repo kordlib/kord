@@ -1,25 +1,25 @@
 package ratelimit
 
 import dev.kord.common.ratelimit.BucketRateLimiter
+import fixed
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import java.time.Clock
-import java.time.Instant
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import java.time.ZoneOffset
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.asserter
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
 
 @ExperimentalTime
 @ExperimentalCoroutinesApi
 class BucketRateLimiterTest {
 
     val interval = Duration.milliseconds(1_000_000)
-    val instant = Instant.now()
-    val clock = Clock.fixed(instant, ZoneOffset.UTC)
+    val instant = Clock.System.now()
+    val clock = Clock.fixed(instant)
     lateinit var rateLimiter: BucketRateLimiter
 
     @BeforeTest
