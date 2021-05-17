@@ -21,7 +21,7 @@ inline fun Role.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, bloc
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -32,7 +32,7 @@ fun LiveRole.onUpdate(block: suspend (RoleUpdateEvent) -> Unit) = on(consumer = 
 
 @Deprecated(
     "The block is not called when the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -44,7 +44,7 @@ inline fun LiveRole.onShutdown(crossinline block: suspend (Event) -> Unit) = on<
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview

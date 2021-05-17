@@ -37,7 +37,7 @@ fun LiveCategory.onUpdate(block: suspend (CategoryUpdateEvent) -> Unit) = on(con
 
 @Deprecated(
     "The block is not called when the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -49,7 +49,7 @@ inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) =
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -57,7 +57,7 @@ fun LiveCategory.onDelete(block: suspend (CategoryDeleteEvent) -> Unit) = on(con
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview

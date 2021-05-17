@@ -54,10 +54,10 @@ inline fun LiveMessage.onReactionRemove(
 @KordPreview
 fun LiveMessage.onReactionRemoveAll(block: suspend (ReactionRemoveAllEvent) -> Unit) = on(consumer = block)
 
+@Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
-    "The block is never called because the message is already created",
-    ReplaceWith("LiveChannel.onMessageCreate(block)"),
-    DeprecationLevel.ERROR
+    "The block is never called because the message is already created, use LiveChannel.onMessageCreate(block)",
+    level = DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveMessage.onCreate(block: suspend (MessageCreateEvent) -> Unit) = on(consumer = block)
@@ -67,7 +67,7 @@ fun LiveMessage.onUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consu
 
 @Deprecated(
     "The block is not called when the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -81,7 +81,7 @@ inline fun LiveMessage.onShutdown(crossinline block: suspend (Event) -> Unit) = 
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -89,7 +89,7 @@ fun LiveMessage.onOnlyDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(c
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -97,7 +97,7 @@ fun LiveMessage.onBulkDelete(block: suspend (MessageBulkDeleteEvent) -> Unit) = 
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -105,7 +105,7 @@ fun LiveMessage.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = o
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview

@@ -25,10 +25,10 @@ inline fun GuildChannel.live(
     block: LiveGuildChannel.() -> Unit
 ) = this.live(dispatcher).apply(block)
 
+@Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
-    "The block is never called because the channel is already created",
-    ReplaceWith("LiveGuild.onChannelCreate(block)"),
-    DeprecationLevel.ERROR
+    "The block is never called because the channel is already created, use LiveGuild.onChannelCreate(block)",
+    level = DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveGuildChannel.onCreate(block: suspend (ChannelCreateEvent) -> Unit) = on(consumer = block)
@@ -38,7 +38,7 @@ fun LiveGuildChannel.onUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(
 
 @Deprecated(
     "The block is not called when the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -50,7 +50,7 @@ inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Uni
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
@@ -58,7 +58,7 @@ fun LiveGuildChannel.onDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)"),
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
     DeprecationLevel.ERROR
 )
 @KordPreview
