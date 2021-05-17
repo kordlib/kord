@@ -73,10 +73,10 @@ fun LiveChannel.onMessageUpdate(block: suspend (MessageUpdateEvent) -> Unit) = o
 @KordPreview
 fun LiveChannel.onMessageDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(consumer = block)
 
+@Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
-    "The block is never called because the channel is already created",
-    ReplaceWith("LiveGuild.onChannelCreate(block)"),
-    DeprecationLevel.ERROR
+    "The block is never called because the channel is already created, use LiveGuild.onChannelCreate(block)",
+    level = DeprecationLevel.ERROR
 )
 @KordPreview
 fun LiveChannel.onChannelCreate(block: suspend (ChannelCreateEvent) -> Unit) = on(consumer = block)
