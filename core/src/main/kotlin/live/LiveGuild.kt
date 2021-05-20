@@ -1,6 +1,7 @@
 package dev.kord.core.live
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.map
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
@@ -16,6 +17,7 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
+import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
@@ -32,6 +34,9 @@ fun LiveGuild.onEmojisUpdate(block: suspend (EmojisUpdateEvent) -> Unit) = on(co
 
 @KordPreview
 fun LiveGuild.onIntegrationsUpdate(block: suspend (IntegrationsUpdateEvent) -> Unit) = on(consumer = block)
+
+@KordPreview
+fun LiveGuild.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
 fun LiveGuild.onBanRemove(block: suspend (BanRemoveEvent) -> Unit) = on(consumer = block)
@@ -119,6 +124,11 @@ fun LiveGuild.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(cons
 @KordPreview
 fun LiveGuild.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shut down",
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
+    DeprecationLevel.ERROR
+)
 @KordPreview
 fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
 
@@ -126,7 +136,10 @@ fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(cons
 class LiveGuild(
     guild: Guild,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher), KordEntity by guild {
+) : AbstractLiveKordEntity(guild.kord, dispatcher), KordEntity {
+
+    override val id: Snowflake
+        get() = guild.id
 
     var guild: Guild = guild
         private set
@@ -136,6 +149,7 @@ class LiveGuild(
 
         is IntegrationsUpdateEvent -> event.guildId == guild.id
 
+        is BanAddEvent -> event.guildId == guild.id
         is BanRemoveEvent -> event.guildId == guild.id
 
         is PresenceUpdateEvent -> event.guildId == guild.id
@@ -206,7 +220,7 @@ class LiveGuild(
         ), kord)
 
         is GuildUpdateEvent -> guild = event.guild
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
         else -> Unit
     }
 

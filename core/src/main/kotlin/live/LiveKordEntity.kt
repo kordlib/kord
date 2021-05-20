@@ -24,18 +24,18 @@ import kotlin.coroutines.CoroutineContext
 interface LiveKordEntity : KordEntity, CoroutineScope {
     val events: Flow<Event>
 
-    fun shutDown()
+    fun shutDown(cause: CancellationException = CancellationException("The live entity is shut down", null))
 }
 
 @KordPreview
-abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher) : LiveKordEntity {
+abstract class AbstractLiveKordEntity(final override val kord: Kord, dispatcher: CoroutineDispatcher) : LiveKordEntity {
 
-    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob()
+    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(kord.coroutineContext.job)
 
     private val mutex = Mutex()
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    override val events: Flow<Event>
+    final override val events: Flow<Event>
         get() = kord.events
             .takeWhile { isActive }
             .filter { filter(it) }
@@ -44,9 +44,11 @@ abstract class AbstractLiveKordEntity(dispatcher: CoroutineDispatcher) : LiveKor
     protected abstract fun filter(event: Event): Boolean
     protected abstract fun update(event: Event)
 
-    override fun shutDown() {
-        cancel("Shutdown executed")
+    init {
+        events.launchIn(this)
     }
+
+    override fun shutDown(cause: CancellationException) = cancel(cause)
 }
 
 /**

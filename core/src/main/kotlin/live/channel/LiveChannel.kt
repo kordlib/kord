@@ -1,6 +1,7 @@
 package dev.kord.core.live.channel
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.core.Kord
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.channel.*
 import dev.kord.core.event.Event
@@ -72,15 +73,30 @@ fun LiveChannel.onMessageUpdate(block: suspend (MessageUpdateEvent) -> Unit) = o
 @KordPreview
 fun LiveChannel.onMessageDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(consumer = block)
 
+@Suppress("DeprecatedCallableAddReplaceWith")
+@Deprecated(
+    "The block is never called because the channel is already created, use LiveGuild.onChannelCreate(block)",
+    level = DeprecationLevel.ERROR
+)
 @KordPreview
 fun LiveChannel.onChannelCreate(block: suspend (ChannelCreateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
 fun LiveChannel.onChannelUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shut down",
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
+    DeprecationLevel.ERROR
+)
 @KordPreview
 fun LiveChannel.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
 
+@Deprecated(
+    "The block is never called because the guild where the channel is located is already created",
+    ReplaceWith("Kord.on<GuildCreateEvent>(block)"),
+    DeprecationLevel.ERROR
+)
 @KordPreview
 fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(consumer = block)
 
@@ -88,7 +104,8 @@ fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(co
 fun LiveChannel.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-abstract class LiveChannel(dispatcher: CoroutineDispatcher = Dispatchers.Default) : AbstractLiveKordEntity(dispatcher) {
+abstract class LiveChannel(kord: Kord, dispatcher: CoroutineDispatcher = Dispatchers.Default) :
+    AbstractLiveKordEntity(kord, dispatcher) {
 
     abstract val channel: Channel
 
