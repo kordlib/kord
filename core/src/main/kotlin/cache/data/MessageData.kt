@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import cache.data.MessageInteractionData
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
@@ -35,6 +36,7 @@ data class MessageData(
     val flags: Optional<MessageFlags> = Optional.Missing(),
     val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
+    val interaction: Optional<MessageInteractionData> = Optional.Missing()
 ) {
 
     fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
@@ -70,6 +72,9 @@ data class MessageData(
             partialMessage.mentionedChannels.mapList { it.id }.switchOnMissing(mentionedChannels.value.orEmpty())
                 .coerceToMissing()
         val stickers = partialMessage.stickers.mapList { MessageStickerData.from(it) }.switchOnMissing(this.stickers)
+        val referencedMessage = partialMessage.referencedMessage.mapNullable { it?.toData() ?: referencedMessage.value }
+        val interaction =
+            partialMessage.interaction.map { MessageInteractionData.from(it) }.switchOnMissing(interaction)
 
         return MessageData(
             id,
@@ -97,6 +102,8 @@ data class MessageData(
             messageReference,
             flags,
             stickers = stickers,
+            referencedMessage = referencedMessage,
+            interaction = interaction
         )
     }
 
@@ -130,7 +137,8 @@ data class MessageData(
                 messageReference.map { MessageReferenceData.from(it) },
                 flags,
                 stickers.mapList { MessageStickerData.from(it) },
-                referencedMessage.mapNotNull { from(it) }
+                referencedMessage.mapNotNull { from(it) },
+                interaction.map { MessageInteractionData.from(it) }
             )
         }
     }

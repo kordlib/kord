@@ -1,4 +1,8 @@
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.createStageInstance
+import dev.kord.core.behavior.channel.getStageInstance
+import dev.kord.core.behavior.getChannelOf
+import dev.kord.core.entity.channel.StageChannel
 import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.core.on
 

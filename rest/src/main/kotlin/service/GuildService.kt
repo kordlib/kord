@@ -393,7 +393,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
 
 
     suspend fun modifyVoiceState(guildId: Snowflake, userId: Snowflake, request: VoiceStateModifyRequest) =
-        call(Route.SelfVoiceStatePatch) {
+        call(Route.OthersVoiceStatePatch) {
             keys[Route.GuildId] = guildId
             keys[Route.UserId] = userId
             body(VoiceStateModifyRequest.serializer(), request)
