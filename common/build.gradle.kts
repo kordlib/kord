@@ -13,6 +13,10 @@ configurations {
     }
 }
 
+dependencies {
+    api(Dependencies.`kotlinx-datetime`)
+}
+
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = Jvm.target

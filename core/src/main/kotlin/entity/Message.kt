@@ -20,8 +20,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 import java.util.*
 
 /**
@@ -70,9 +70,7 @@ class Message(
      * Returns null if the message was never edited.
      */
     val editedTimestamp: Instant?
-        get() = data.editedTimestamp?.let {
-            DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(it, Instant::from)
-        }
+        get() = data.editedTimestamp?.toInstant()
 
     /**
      * The embedded content of this message.
@@ -205,7 +203,7 @@ class Message(
     /**
      * The instant when this message was created.
      */
-    val timestamp: Instant get() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(data.timestamp, Instant::from)
+    val timestamp: Instant get() = data.timestamp.toInstant()
 
     /**
      * Whether this message was send using `\tts`.

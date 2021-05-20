@@ -12,8 +12,8 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.toInstant
-import java.time.Instant
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 
 class ChannelPinsUpdateEvent(
     val data: ChannelPinsUpdateEventData,

@@ -14,7 +14,7 @@ import io.ktor.http.*
 import io.ktor.http.content.*
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
-import java.time.Clock
+import kotlinx.datetime.Clock
 
 internal val jsonDefault = Json {
     encodeDefaults = false
@@ -35,7 +35,7 @@ internal val jsonDefault = Json {
 class KtorRequestHandler(
     private val client: HttpClient,
     private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
-    private val clock: Clock = Clock.systemUTC(),
+    private val clock: Clock = Clock.System,
     private val parser: Json = jsonDefault,
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
@@ -107,7 +107,7 @@ class KtorRequestHandler(
 fun KtorRequestHandler(
     token: String,
     requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
-    clock: Clock = Clock.systemUTC(),
+    clock: Clock = Clock.System,
     parser: Json = jsonDefault,
 ): KtorRequestHandler {
     val client = HttpClient(CIO) {

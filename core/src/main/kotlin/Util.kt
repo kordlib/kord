@@ -21,8 +21,7 @@ import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -38,9 +37,8 @@ internal fun Long?.toSnowflakeOrNull(): Snowflake? = when {
     else -> Snowflake(this)
 }
 
-internal fun String.toInstant() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(this, Instant::from)
-internal fun Int.toInstant() = Instant.ofEpochMilli(toLong())
-internal fun Long.toInstant() = Instant.ofEpochMilli(this)
+internal fun Int.toInstant() = Instant.fromEpochMilliseconds(toLong())
+internal fun Long.toInstant() = Instant.fromEpochMilliseconds(this)
 
 @OptIn(ExperimentalContracts::class)
 internal inline fun <T> catchNotFound(block: () -> T): T? {
