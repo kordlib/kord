@@ -672,6 +672,18 @@ sealed class Route<T>(
     object OthersVoiceStatePatch:
         Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/${UserId}", NoStrategy)
 
+    object StageInstanceGet :
+        Route<DiscordStageInstance>(HttpMethod.Get, "/stage-instances/$ChannelId", DiscordStageInstance.serializer())
+
+    object StageInstancePost :
+        Route<DiscordStageInstance>(HttpMethod.Post, "/stage-instances", DiscordStageInstance.serializer())
+
+    object StageInstancePatch :
+        Route<DiscordStageInstance>(HttpMethod.Patch, "/stage-instances/$ChannelId", DiscordStageInstance.serializer())
+
+    object StageInstanceDelete :
+        Route<Unit>(HttpMethod.Delete, "/stage-instances/$ChannelId", NoStrategy)
+
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"
     }

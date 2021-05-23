@@ -1,5 +1,6 @@
 package dev.kord.core.gateway.handler
 
+import cache.data.MessageInteractionData
 import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.query
@@ -10,6 +11,7 @@ import dev.kord.core.cache.idEq
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.ReactionEmoji
+import dev.kord.core.entity.interaction.MessageInteraction
 import dev.kord.core.event.message.*
 import dev.kord.core.gateway.MasterGateway
 import dev.kord.gateway.*
@@ -58,6 +60,12 @@ internal class MessageEventHandler(
             cache.put(memberData)
             Member(memberData, userData, kord)
         } else null
+
+        //cache interaction user if present.
+        if(interaction is Optional.Value) {
+            val userData = UserData.from(interaction.value!!.user)
+            cache.put(userData)
+        }
 
         mentions.forEach {
             val user = UserData.from(it)
