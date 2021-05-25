@@ -76,6 +76,18 @@ interface GuildApplicationCommandBehavior : ApplicationCommandBehavior {
         return GuildApplicationCommand(data, service, guildId)
     }
 
+    /**
+     * Updates the permissions for this command on the guild.
+     *
+     * @throws [RestRequestException] when something goes wrong during the request.
+     */
+    suspend fun editPermissions(
+        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
+    ) {
+        val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
+        service.editApplicationCommandPermissions(applicationId, guildId, id, request)
+    }
+
     override suspend fun delete() {
         service.deleteGuildApplicationCommand(applicationId, guildId, id)
     }
