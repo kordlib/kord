@@ -316,7 +316,7 @@ sealed class InteractionType(val type: Int) {
     object Ping : InteractionType(1)
     object ApplicationCommand : InteractionType(2)
 
-    /**
+    /*
      * don't trust the docs:
      *
      * this type exists and is needed for components even though it's not documented

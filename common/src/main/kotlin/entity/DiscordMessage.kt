@@ -101,7 +101,7 @@ data class DiscordMessage(
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
 
-    /**
+    /*
      * don't trust the docs:
      * This is a list even though the docs say it's a component
      */
