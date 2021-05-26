@@ -79,3 +79,11 @@ sealed class ButtonStyle(val value: Int) {
         override fun serialize(encoder: Encoder, value: ButtonStyle) = encoder.encodeInt(value.value)
     }
 }
+
+@Serializable
+data class DiscordApplicationComponentCallbackData(
+    @SerialName("custom_id")
+    val customId: Optional<String> = Optional.Missing(),
+    @SerialName("component_type")
+    val componentType: ComponentType
+) : InteractionCallbackData

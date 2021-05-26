@@ -5,6 +5,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.optional
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
@@ -154,14 +155,14 @@ data class ResolvedObjects(
     val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing()
 )
 
-@Serializable
+@Serializable(with = DiscordInteraction.Serializer::class)
 @KordPreview
 data class DiscordInteraction(
     val id: Snowflake,
     @SerialName("application_id")
     val applicationId: Snowflake,
     val type: InteractionType,
-    val data: DiscordApplicationCommandInteractionData,
+    val data: InteractionCallbackData,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("channel_id")
@@ -171,18 +172,162 @@ data class DiscordInteraction(
     val token: String,
     val version: Int,
     val message: Optional<DiscordMessage> = Optional.Missing()
-)
+) {
+    companion object Serializer : KSerializer<DiscordInteraction> {
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Interaction") {
+            element<Snowflake>("id")
+            element<Snowflake>("application_id")
+            element<InteractionType>("type")
+            element<InteractionCallbackData>("data")
+            element<OptionalSnowflake>("guild_id")
+            element<Snowflake>("channel_id")
+            element<Optional<DiscordInteractionGuildMember>>("member")
+            element<Optional<DiscordUser>>("user")
+            element<String>("token")
+            element<Int>("version")
+            element<Optional<DiscordMessage>>("message")
+        }
+
+        override fun deserialize(decoder: Decoder): DiscordInteraction {
+            var id: Snowflake? = null
+            var applicationId: Snowflake? = null
+            var type: InteractionType? = null
+            var data: InteractionCallbackData? = null
+            var guildId: OptionalSnowflake? = null
+            var channelId: Snowflake? = null
+            var member: Optional<DiscordInteractionGuildMember>? = null
+            var user: Optional<DiscordUser>? = null
+            var token: String? = null
+            var version: Int? = null
+            var message: Optional<DiscordMessage>? = null
+
+            return decoder.decodeStructure(descriptor) {
+                while (true) {
+                    when (decodeElementIndex(descriptor)) {
+                        0 -> id = decodeSerializableElement(descriptor, 0, Snowflake.serializer())
+                        1 -> applicationId = decodeSerializableElement(descriptor, 1, Snowflake.serializer())
+                        2 -> type = decodeSerializableElement(descriptor, 2, InteractionType.serializer())
+                        3 -> {
+                            data = when (val safeType = type ?: error("Missing ComponentType")) {
+                                is InteractionType.ApplicationCommand -> decodeSerializableElement(
+                                    descriptor,
+                                    3,
+                                    DiscordApplicationCommandInteractionData.serializer()
+                                )
+                                is InteractionType.Ping -> decodeSerializableElement(
+                                    descriptor,
+                                    3,
+                                    DiscordApplicationCommandInteractionData.serializer()
+                                )
+                                is InteractionType.Component -> decodeSerializableElement(
+                                    descriptor,
+                                    3,
+                                    DiscordApplicationComponentCallbackData.serializer()
+                                )
+                                else -> error("Unknown ComponentType: $safeType")
+                            }
+                        }
+                        4 -> guildId = decodeSerializableElement(descriptor, 4, OptionalSnowflake.serializer())
+                        5 -> channelId = decodeSerializableElement(descriptor, 5, Snowflake.serializer())
+                        6 -> member = decodeSerializableElement(
+                            descriptor,
+                            6,
+                            Optional.OptionalSerializer(DiscordInteractionGuildMember.serializer())
+                        )
+                        7 -> user =
+                            decodeSerializableElement(
+                                descriptor,
+                                7,
+                                Optional.OptionalSerializer(DiscordUser.serializer())
+                            )
+                        8 -> token = decodeStringElement(descriptor, 8)
+                        9 -> version = decodeIntElement(descriptor, 9)
+                        10 -> message = decodeSerializableElement(
+                            descriptor,
+                            7,
+                            Optional.OptionalSerializer(DiscordMessage.serializer())
+                        )
+                        CompositeDecoder.DECODE_DONE -> break
+                    }
+                }
+
+                DiscordInteraction(
+                    id!!,
+                    applicationId!!,
+                    type!!,
+                    data!!,
+                    guildId!!,
+                    channelId!!,
+                    member ?: Optional.Missing(),
+                    user ?: Optional.Missing(),
+                    token!!,
+                    version!!,
+                    message ?: Optional.Missing(),
+                )
+            }
+        }
+
+        override fun serialize(encoder: Encoder, value: DiscordInteraction) {
+            encoder.encodeStructure(descriptor) {
+                encodeSerializableElement(descriptor, 0, Snowflake.serializer(), value.id)
+                encodeSerializableElement(descriptor, 1, Snowflake.serializer(), value.applicationId)
+                encodeSerializableElement(descriptor, 2, InteractionType.serializer(), value.type)
+                when (value.data) {
+                    is DiscordApplicationCommandInteractionData -> encodeSerializableElement(
+                        descriptor, 3, DiscordApplicationCommandInteractionData.serializer(),
+                        value.data
+                    )
+                    is DiscordApplicationComponentCallbackData -> encodeSerializableElement(
+                        descriptor, 3, DiscordApplicationComponentCallbackData.serializer(),
+                        value.data
+                    )
+                    else -> error("Cannot encode unknown interaction type")
+                }
+                encodeSerializableElement(descriptor, 4, OptionalSnowflake.serializer(), value.guildId)
+                encodeSerializableElement(descriptor, 5, Snowflake.serializer(), value.channelId)
+                encodeSerializableElement(
+                    descriptor,
+                    6,
+                    Optional.OptionalSerializer(DiscordInteractionGuildMember.serializer()),
+                    value.member
+                )
+                encodeSerializableElement(
+                    descriptor,
+                    7,
+                    Optional.OptionalSerializer(DiscordUser.serializer()),
+                    value.user
+                )
+                encodeStringElement(descriptor, 8, value.token)
+                encodeIntElement(descriptor, 9, value.version)
+                encodeSerializableElement(
+                    descriptor,
+                    10,
+                    Optional.OptionalSerializer(DiscordMessage.serializer()),
+                    value.message
+                )
+            }
+        }
+    }
+}
 
 @Serializable(InteractionType.Serializer::class)
 @KordPreview
 sealed class InteractionType(val type: Int) {
     object Ping : InteractionType(1)
     object ApplicationCommand : InteractionType(2)
+
+    /**
+     * don't trust the docs:
+     *
+     * this type exists and is needed for components even though it's not documented
+     */
+    object Component : InteractionType(3)
     class Unknown(type: Int) : InteractionType(type)
 
     override fun toString(): String = when (this) {
         Ping -> "InteractionType.Ping($type)"
         ApplicationCommand -> "InteractionType.ApplicationCommand($type)"
+        Component -> "InteractionType.ComponentInvoke($type)"
         is Unknown -> "InteractionType.Unknown($type)"
     }
 
@@ -196,6 +341,7 @@ sealed class InteractionType(val type: Int) {
             return when (val type = decoder.decodeInt()) {
                 1 -> Ping
                 2 -> ApplicationCommand
+                3 -> Component
                 else -> Unknown(type)
             }
         }
@@ -214,7 +360,7 @@ data class DiscordApplicationCommandInteractionData(
     val name: String,
     val resolved: Optional<ResolvedObjects> = Optional.Missing(),
     val options: Optional<List<Option>> = Optional.Missing()
-)
+) : InteractionCallbackData
 
 @Serializable(with = Option.Serializer::class)
 @KordPreview
@@ -288,7 +434,7 @@ sealed class Option {
         }
 
         override fun serialize(encoder: Encoder, value: Option) {
-            when(value){
+            when (value) {
                 is CommandArgument<*> -> CommandArgument.Serializer.serialize(encoder, value)
                 is CommandGroup -> encoder.encodeStructure(descriptor) {
                     encodeSerializableElement(
@@ -624,3 +770,5 @@ data class DiscordGuildApplicationCommandPermission(
         }
     }
 }
+
+interface InteractionCallbackData

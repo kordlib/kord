@@ -57,8 +57,8 @@ sealed class Interaction : InteractionBehavior {
     /**
      * [InteractionCommand] object that contains the data related to the interaction's command.
      */
-    val command: InteractionCommand
-        get() = InteractionCommand(data.data, kord)
+    val command: InteractionCommand?
+        get() = (data.data as? ApplicationCommandInteractionData)?.let { InteractionCommand(it, kord) }
 
     /**
      * read-only property, always 1

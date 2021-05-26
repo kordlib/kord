@@ -5,8 +5,6 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.NotSerializable
 import dev.kord.common.entity.optional.*
-import dev.kord.gateway.InteractionCreate
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -19,7 +17,7 @@ data class InteractionData(
     val id: Snowflake,
     val applicationId: Snowflake,
     val type: InteractionType,
-    val data: ApplicationCommandInteractionData,
+    val data: ApplicationInteractionData,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val channelId: Snowflake,
     val member: Optional<MemberData> = Optional.Missing(),
@@ -35,7 +33,7 @@ data class InteractionData(
                     id,
                     applicationId,
                     type,
-                    ApplicationCommandInteractionData.from(data, guildId.value),
+                    ApplicationInteractionData.from(data, guildId.value),
                     guildId,
                     channelId,
                     member.map { it.toData(it.user.value!!.id, guildId.value!!) },
@@ -70,6 +68,21 @@ data class ResolvedObjectsData(
     }
 }
 
+interface ApplicationInteractionData {
+    companion object {
+
+        fun from(
+            data: InteractionCallbackData,
+            guildId: Snowflake?
+        ): ApplicationInteractionData {
+            return when (data) {
+                is DiscordApplicationCommandInteractionData -> ApplicationCommandInteractionData.from(data, guildId)
+                is DiscordApplicationComponentCallbackData -> ApplicationComponentInteractionData.from(data)
+                else -> error("Unknown type")
+            }
+        }
+    }
+}
 
 @KordPreview
 @Serializable
@@ -78,7 +91,7 @@ data class ApplicationCommandInteractionData(
     val name: String,
     val options: Optional<List<OptionData>> = Optional.Missing(),
     val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing()
-) {
+) : ApplicationInteractionData {
     companion object {
         fun from(
             data: DiscordApplicationCommandInteractionData,
@@ -92,6 +105,25 @@ data class ApplicationCommandInteractionData(
                     data.resolved.map { ResolvedObjectsData.from(it, guildId) }
                 )
 
+            }
+        }
+    }
+}
+
+@KordPreview
+@Serializable
+data class ApplicationComponentInteractionData(
+    val customId: Optional<String> = Optional.Missing(),
+    val componentType: ComponentType
+) : ApplicationInteractionData {
+    companion object {
+        fun from(
+            data: DiscordApplicationComponentCallbackData,
+        ): ApplicationComponentInteractionData {
+            return with(data) {
+                ApplicationComponentInteractionData(
+                    customId, componentType
+                )
             }
         }
     }
