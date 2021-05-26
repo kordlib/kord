@@ -1,5 +1,6 @@
 package dev.kord.common.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.KSerializer
@@ -11,6 +12,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+@KordPreview
 @Serializable
 data class DiscordComponent(
     val type: ComponentType,
@@ -24,6 +26,7 @@ data class DiscordComponent(
     val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
+@KordPreview
 @Serializable(with = ComponentType.Serializer::class)
 sealed class ComponentType(val value: Int) {
 
@@ -53,6 +56,7 @@ sealed class ComponentType(val value: Int) {
     }
 }
 
+@KordPreview
 @Serializable(with = ButtonStyle.Serializer::class)
 sealed class ButtonStyle(val value: Int) {
 
@@ -80,6 +84,7 @@ sealed class ButtonStyle(val value: Int) {
     }
 }
 
+@KordPreview
 @Serializable
 data class DiscordApplicationComponentCallbackData(
     @SerialName("custom_id")
