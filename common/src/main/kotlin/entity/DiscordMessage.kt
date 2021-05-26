@@ -100,7 +100,7 @@ data class DiscordMessage(
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
-    val components: Optional<DiscordComponent> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
 /**

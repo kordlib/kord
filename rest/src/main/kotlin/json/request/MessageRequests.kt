@@ -23,7 +23,8 @@ data class MessageCreateRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     @SerialName("message_reference")
-    val messageReference: Optional<DiscordMessageReference> = Optional.Missing()
+    val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
 
