@@ -548,6 +548,8 @@ sealed class InteractionResponseType(val type: Int) {
     object Pong : InteractionResponseType(1)
     object ChannelMessageWithSource : InteractionResponseType(4)
     object DeferredChannelMessageWithSource : InteractionResponseType(5)
+    object DeferredUpdateMessage : InteractionResponseType(6)
+    object UpdateMessage : InteractionResponseType(7)
     class Unknown(type: Int) : InteractionResponseType(type)
 
     companion object;
@@ -562,6 +564,8 @@ sealed class InteractionResponseType(val type: Int) {
                 1 -> Pong
                 4 -> ChannelMessageWithSource
                 5 -> DeferredChannelMessageWithSource
+                6 -> DeferredUpdateMessage
+                7 -> UpdateMessage
                 else -> Unknown(type)
             }
         }
