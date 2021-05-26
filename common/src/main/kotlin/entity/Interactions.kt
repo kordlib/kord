@@ -170,6 +170,7 @@ data class DiscordInteraction(
     val user: Optional<DiscordUser> = Optional.Missing(),
     val token: String,
     val version: Int,
+    val message: Optional<DiscordMessage> = Optional.Missing()
 )
 
 @Serializable(InteractionType.Serializer::class)
