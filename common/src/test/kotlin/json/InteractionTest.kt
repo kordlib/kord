@@ -29,15 +29,16 @@ class InteractionTest {
 
         val interaction = json.decodeFromString(DiscordInteraction.serializer(), text)
         with(interaction) {
+            val commandData = data as DiscordApplicationCommandInteractionData
             channelId shouldBe "587324906702766226"
             applicationId shouldBe "297153970613387264"
             id shouldBe "793442788670832640"
             version shouldBe 1
             type.type shouldBe 2
             token shouldBe "hunter2"
-            data.name shouldBe "testsubcommands"
-            data.id shouldBe "792107855418490901"
-            val group = data.options.orEmpty().first()
+            commandData.name shouldBe "testsubcommands"
+            commandData.id shouldBe "792107855418490901"
+            val group = commandData.options.orEmpty().first()
             assert(group is CommandGroup)
             group as CommandGroup
             group.name shouldBe "group"
@@ -56,15 +57,16 @@ class InteractionTest {
 
         val interaction = json.decodeFromString(DiscordInteraction.serializer(), text)
         with(interaction) {
+            val commandData = data as DiscordApplicationCommandInteractionData
             channelId shouldBe "587324906702766226"
             applicationId shouldBe "297153970613387264"
             id shouldBe "793442788670832640"
             version shouldBe 1
             type.type shouldBe 2
             token shouldBe "hunter2"
-            data.name shouldBe "testsubcommands"
-            data.id shouldBe "792107855418490901"
-            val subCommand = data.options.orEmpty().first()
+            commandData.name shouldBe "testsubcommands"
+            commandData.id shouldBe "792107855418490901"
+            val subCommand = commandData.options.orEmpty().first()
             assert(subCommand is SubCommand)
             subCommand as SubCommand
             subCommand.name shouldBe "subcommand"
@@ -82,15 +84,16 @@ class InteractionTest {
 
         val interaction = json.decodeFromString(DiscordInteraction.serializer(), text)
         with(interaction) {
+            val commandData = data as DiscordApplicationCommandInteractionData
             channelId shouldBe "587324906702766226"
             applicationId shouldBe "297153970613387264"
             id shouldBe "793442788670832640"
             version shouldBe 1
             type.type shouldBe 2
             token shouldBe "hunter2"
-            data.name shouldBe "testsubcommands"
-            data.id shouldBe "792107855418490901"
-            val arg = data.options.orEmpty().first()
+            commandData.name shouldBe "testsubcommands"
+            commandData.id shouldBe "792107855418490901"
+            val arg = commandData.options.orEmpty().first()
             assert(arg is CommandArgument<*>)
             arg as CommandArgument<*>
             arg.name shouldBe "testint"
