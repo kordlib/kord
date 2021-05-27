@@ -195,7 +195,7 @@ sealed class DiscordInteraction {
         override val id: Snowflake,
         @SerialName("application_id")
         override val applicationId: Snowflake,
-        override val data: DiscordApplicationComponentCallbackData,
+        override val data: DiscordApplicationCommandInteractionData,
         @SerialName("guild_id")
         override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
         @SerialName("channel_id")
@@ -215,7 +215,7 @@ sealed class DiscordInteraction {
         override val id: Snowflake,
         @SerialName("application_id")
         override val applicationId: Snowflake,
-        override val data: DiscordApplicationComponentCallbackData,
+        override val data: DiscordApplicationCommandInteractionData,
         @SerialName("guild_id")
         override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
         @SerialName("channel_id")
