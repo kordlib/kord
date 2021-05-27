@@ -28,9 +28,13 @@ interface LiveKordEntity : KordEntity, CoroutineScope {
 }
 
 @KordPreview
-abstract class AbstractLiveKordEntity(final override val kord: Kord, dispatcher: CoroutineDispatcher) : LiveKordEntity {
+abstract class AbstractLiveKordEntity(
+    override val kord: Kord,
+    dispatcher: CoroutineDispatcher,
+    parent: Job? = kord.coroutineContext.job
+) : LiveKordEntity {
 
-    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(kord.coroutineContext.job)
+    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(parent)
 
     private val mutex = Mutex()
 
@@ -56,9 +60,9 @@ abstract class AbstractLiveKordEntity(final override val kord: Kord, dispatcher:
  * or [Kord] by default and will not propagate any exceptions.
  */
 @KordPreview
-inline fun <reified T : Event> LiveKordEntity.on(noinline consumer: suspend (T) -> Unit) =
+inline fun <reified T : Event> LiveKordEntity.on(scope: CoroutineScope = this, noinline consumer: suspend (T) -> Unit) =
     events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
         runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
-    }.catch { kordLogger.catching(it) }.launchIn(this)
+    }.catch { kordLogger.catching(it) }.launchIn(scope)
 
 

@@ -13,13 +13,21 @@ import dev.kord.core.live.channel.LiveGuildChannel
 import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.job
 
 @KordPreview
-fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveMember(this, dispatcher)
+fun Member.live(
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    parent: Job? = kord.coroutineContext.job
+) = LiveMember(this, dispatcher, parent)
 
 @KordPreview
-inline fun Member.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveMember.() -> Unit) =
-    this.live(dispatcher).apply(block)
+inline fun Member.live(
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    parent: Job? = kord.coroutineContext.job,
+    block: LiveMember.() -> Unit
+) = this.live(dispatcher, parent).apply(block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -63,8 +71,9 @@ fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = 
 @KordPreview
 class LiveMember(
     member: Member,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(member.kord, dispatcher), KordEntity {
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    parent: Job? = member.kord.coroutineContext.job
+) : AbstractLiveKordEntity(member.kord, dispatcher, parent), KordEntity {
 
     override val id: Snowflake
         get() = member.id

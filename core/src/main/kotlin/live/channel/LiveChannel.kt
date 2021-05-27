@@ -17,14 +17,19 @@ import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.job
 
 @KordPreview
-fun Channel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = when (this) {
-    is DmChannel -> this.live(dispatcher)
-    is NewsChannel -> this.live(dispatcher)
-    is StoreChannel -> this.live(dispatcher)
-    is TextChannel -> this.live(dispatcher)
-    is VoiceChannel -> this.live(dispatcher)
+fun Channel.live(
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    parent: Job? = kord.coroutineContext.job
+) = when (this) {
+    is DmChannel -> this.live(dispatcher, parent)
+    is NewsChannel -> this.live(dispatcher, parent)
+    is StoreChannel -> this.live(dispatcher, parent)
+    is TextChannel -> this.live(dispatcher, parent)
+    is VoiceChannel -> this.live(dispatcher, parent)
     else -> error("unsupported channel type")
 }
 
@@ -104,8 +109,11 @@ fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(co
 fun LiveChannel.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(consumer = block)
 
 @KordPreview
-abstract class LiveChannel(kord: Kord, dispatcher: CoroutineDispatcher = Dispatchers.Default) :
-    AbstractLiveKordEntity(kord, dispatcher) {
+abstract class LiveChannel(
+    kord: Kord,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    parent: Job? = kord.coroutineContext.job
+) : AbstractLiveKordEntity(kord, dispatcher, parent) {
 
     abstract val channel: Channel
 

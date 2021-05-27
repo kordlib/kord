@@ -13,15 +13,21 @@ import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.job
 
 @KordPreview
-fun DmChannel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveDmChannel(this, dispatcher)
+fun DmChannel.live(
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    parent: Job? = kord.coroutineContext.job
+) = LiveDmChannel(this, dispatcher, parent)
 
 @KordPreview
 inline fun DmChannel.live(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    parent: Job? = kord.coroutineContext.job,
     block: LiveDmChannel.() -> Unit
-) = this.live(dispatcher).apply(block)
+) = this.live(dispatcher, parent).apply(block)
 
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
@@ -65,8 +71,9 @@ fun LiveDmChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(
 @KordPreview
 class LiveDmChannel(
     channel: DmChannel,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : LiveChannel(channel.kord, dispatcher), KordEntity {
+    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    parent: Job? = channel.kord.coroutineContext.job
+) : LiveChannel(channel.kord, dispatcher, parent), KordEntity {
 
     override val id: Snowflake
         get() = channel.id
