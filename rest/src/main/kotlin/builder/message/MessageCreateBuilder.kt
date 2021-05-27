@@ -1,16 +1,15 @@
 package dev.kord.rest.builder.message
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.AllowedMentionType
-import dev.kord.common.entity.AllowedMentions
-import dev.kord.common.entity.DiscordMessageReference
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.components.CompositeComponentBuilder
 import dev.kord.rest.json.request.MessageCreateRequest
 import dev.kord.rest.json.request.MultipartMessageCreateRequest
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +38,9 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+
+    private var _components: Optional<List<DiscordComponent>> = Optional.Missing()
+    var components: List<DiscordComponent>? by ::_components.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
@@ -82,6 +84,16 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
         allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
+    @OptIn(ExperimentalContracts::class)
+    @KordPreview
+    inline fun components(builder: CompositeComponentBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components = CompositeComponentBuilder().apply(builder).components
+    }
+
     override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
         MessageCreateRequest(
             _content,
@@ -94,7 +106,8 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
                     id = OptionalSnowflake.Value(it),
                     failIfNotExists = _failIfNotExists
                 )
-            }
+            },
+            _components
         ),
         files
     )
