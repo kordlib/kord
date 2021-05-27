@@ -10,7 +10,7 @@ import kotlin.contracts.contract
 
 @KordPreview
 class CompositeComponentBuilder {
-    var components: MutableList<DiscordComponent> = mutableListOf()
+    val components: MutableList<DiscordComponent> = mutableListOf()
 
     @OptIn(ExperimentalContracts::class)
     inline fun actionRow(builder: CompositeComponentBuilder.() -> Unit) {

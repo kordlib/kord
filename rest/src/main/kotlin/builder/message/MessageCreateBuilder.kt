@@ -39,8 +39,8 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    private var _components: Optional<List<DiscordComponent>> = Optional.Missing()
-    var components: List<DiscordComponent>? by ::_components.delegate()
+    private var _components: Optional<MutableList<DiscordComponent>> = Optional.Missing()
+    var components: MutableList<DiscordComponent>? by ::_components.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
