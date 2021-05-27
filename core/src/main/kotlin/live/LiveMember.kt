@@ -11,21 +11,18 @@ import dev.kord.core.event.guild.MemberLeaveEvent
 import dev.kord.core.event.guild.MemberUpdateEvent
 import dev.kord.core.live.channel.LiveGuildChannel
 import dev.kord.core.live.exception.LiveCancellationException
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.job
+import kotlinx.coroutines.*
 
 @KordPreview
 fun Member.live(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = kord.coroutineContext.job
+    parent: CoroutineScope = kord
 ) = LiveMember(this, dispatcher, parent)
 
 @KordPreview
 inline fun Member.live(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = kord.coroutineContext.job,
+    parent: CoroutineScope = kord,
     block: LiveMember.() -> Unit
 ) = this.live(dispatcher, parent).apply(block)
 
@@ -72,7 +69,7 @@ fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = 
 class LiveMember(
     member: Member,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = member.kord.coroutineContext.job
+    parent: CoroutineScope = member.kord
 ) : AbstractLiveKordEntity(member.kord, dispatcher, parent), KordEntity {
 
     override val id: Snowflake

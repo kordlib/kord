@@ -12,21 +12,18 @@ import dev.kord.core.event.channel.ChannelUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.job
+import kotlinx.coroutines.*
 
 @KordPreview
 fun GuildChannel.live(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = kord.coroutineContext.job
+    parent: CoroutineScope = kord
 ) = LiveGuildChannel(this, dispatcher, parent)
 
 @KordPreview
 inline fun GuildChannel.live(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = kord.coroutineContext.job,
+    parent: CoroutineScope = kord,
     block: LiveGuildChannel.() -> Unit
 ) = this.live(dispatcher, parent).apply(block)
 
@@ -73,7 +70,7 @@ fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = 
 class LiveGuildChannel(
     channel: GuildChannel,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = channel.kord.coroutineContext.job
+    parent: CoroutineScope = channel.kord
 ) : LiveChannel(channel.kord, dispatcher, parent), KordEntity {
 
     override val id: Snowflake

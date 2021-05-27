@@ -31,10 +31,10 @@ interface LiveKordEntity : KordEntity, CoroutineScope {
 abstract class AbstractLiveKordEntity(
     override val kord: Kord,
     dispatcher: CoroutineDispatcher,
-    parent: Job? = kord.coroutineContext.job
+    parent: CoroutineScope = kord
 ) : LiveKordEntity {
 
-    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(parent)
+    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(parent.coroutineContext.job)
 
     private val mutex = Mutex()
 

@@ -14,21 +14,18 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.message.*
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.job
+import kotlinx.coroutines.*
 
 @KordPreview
 suspend fun Message.live(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = kord.coroutineContext.job
+    parent: CoroutineScope = kord
 ) = LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id, dispatcher, parent)
 
 @KordPreview
 suspend fun Message.live(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = kord.coroutineContext.job,
+    parent: CoroutineScope = kord,
     block: LiveMessage.() -> Unit
 ) = this.live(dispatcher, parent).apply(block)
 
@@ -123,7 +120,7 @@ class LiveMessage(
     message: Message,
     val guildId: Snowflake?,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = message.kord.coroutineContext.job
+    parent: CoroutineScope = message.kord
 ) : AbstractLiveKordEntity(message.kord, dispatcher, parent), KordEntity {
 
     override val id: Snowflake

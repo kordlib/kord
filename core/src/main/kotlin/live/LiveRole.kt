@@ -9,21 +9,18 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.live.exception.LiveCancellationException
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.job
+import kotlinx.coroutines.*
 
 @KordPreview
 fun Role.live(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = kord.coroutineContext.job
+    parent: CoroutineScope = kord
 ) = LiveRole(this, dispatcher, parent)
 
 @KordPreview
 inline fun Role.live(
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = kord.coroutineContext.job,
+    parent: CoroutineScope = kord,
     block: LiveRole.() -> Unit
 ) = this.live(dispatcher, parent).apply(block)
 
@@ -62,7 +59,7 @@ fun LiveRole.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consu
 class LiveRole(
     role: Role,
     dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: Job? = role.kord.coroutineContext.job
+    parent: CoroutineScope = role.kord
 ) : AbstractLiveKordEntity(role.kord, dispatcher, parent), KordEntity {
 
     override val id: Snowflake
