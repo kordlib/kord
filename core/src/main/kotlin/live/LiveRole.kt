@@ -9,7 +9,9 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.live.exception.LiveCancellationException
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
 fun Role.live(
@@ -30,10 +32,12 @@ inline fun Role.live(
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveRole.onDelete(block: suspend (RoleDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveRole.onDelete(scope: CoroutineScope = this, block: suspend (RoleDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveRole.onUpdate(block: suspend (RoleUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveRole.onUpdate(scope: CoroutineScope = this, block: suspend (RoleUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Deprecated(
     "The block is not called when the live entity is shut down",
@@ -41,11 +45,12 @@ fun LiveRole.onUpdate(block: suspend (RoleUpdateEvent) -> Unit) = on(consumer = 
     DeprecationLevel.ERROR
 )
 @KordPreview
-inline fun LiveRole.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
-    if (it is RoleDeleteEvent || it is GuildDeleteEvent) {
-        block(it)
+inline fun LiveRole.onShutdown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+    on<Event>(scope) {
+        if (it is RoleDeleteEvent || it is GuildDeleteEvent) {
+            block(it)
+        }
     }
-}
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -53,7 +58,8 @@ inline fun LiveRole.onShutdown(crossinline block: suspend (Event) -> Unit) = on<
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveRole.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveRole.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 class LiveRole(

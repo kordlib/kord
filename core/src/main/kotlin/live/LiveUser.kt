@@ -6,7 +6,9 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.User
 import dev.kord.core.event.Event
 import dev.kord.core.event.user.UserUpdateEvent
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
 fun User.live(
@@ -22,7 +24,8 @@ inline fun User.live(
 ) = this.live(dispatcher, parent).apply(block)
 
 @KordPreview
-fun LiveUser.onUpdate(block: suspend (UserUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveUser.onUpdate(scope: CoroutineScope = this, block: suspend (UserUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 class LiveUser(

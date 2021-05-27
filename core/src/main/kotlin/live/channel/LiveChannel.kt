@@ -15,7 +15,9 @@ import dev.kord.core.event.message.*
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
 fun Channel.live(
@@ -38,45 +40,54 @@ inline fun Channel.live(
 ) = this.live(dispatcher, parent).apply(block)
 
 @KordPreview
-fun LiveChannel.onVoiceStateUpdate(block: suspend (VoiceStateUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onVoiceStateUpdate(scope: CoroutineScope = this, block: suspend (VoiceStateUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onReactionAdd(block: suspend (ReactionAddEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onReactionAdd(scope: CoroutineScope = this, block: suspend (ReactionAddEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 inline fun LiveChannel.onReactionAdd(
     reaction: ReactionEmoji,
+    scope: CoroutineScope = this,
     crossinline block: suspend (ReactionAddEvent) -> Unit
-) = on<ReactionAddEvent> {
+) = on<ReactionAddEvent>(scope) {
     if (it.emoji == reaction) {
         block(it)
     }
 }
 
 @KordPreview
-fun LiveChannel.onReactionRemove(block: suspend (ReactionRemoveEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onReactionRemove(scope: CoroutineScope = this, block: suspend (ReactionRemoveEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 inline fun LiveChannel.onReactionRemove(
     reaction: ReactionEmoji,
+    scope: CoroutineScope = this,
     crossinline block: suspend (ReactionRemoveEvent) -> Unit
-) = on<ReactionRemoveEvent> {
+) = on<ReactionRemoveEvent>(scope) {
     if (it.emoji == reaction) {
         block(it)
     }
 }
 
 @KordPreview
-fun LiveChannel.onReactionRemoveAll(block: suspend (ReactionRemoveAllEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onReactionRemoveAll(scope: CoroutineScope = this, block: suspend (ReactionRemoveAllEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onMessageCreate(block: suspend (MessageCreateEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onMessageCreate(scope: CoroutineScope = this, block: suspend (MessageCreateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onMessageUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onMessageUpdate(scope: CoroutineScope = this, block: suspend (MessageUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onMessageDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onMessageDelete(scope: CoroutineScope = this, block: suspend (MessageDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
@@ -84,10 +95,12 @@ fun LiveChannel.onMessageDelete(block: suspend (MessageDeleteEvent) -> Unit) = o
     level = DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveChannel.onChannelCreate(block: suspend (ChannelCreateEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onChannelCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onChannelUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onChannelUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -95,7 +108,8 @@ fun LiveChannel.onChannelUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = o
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveChannel.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onChannelDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Deprecated(
     "The block is never called because the guild where the channel is located is already created",
@@ -103,10 +117,12 @@ fun LiveChannel.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = o
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveChannel.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onGuildCreate(scope: CoroutineScope = this, block: suspend (GuildCreateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveChannel.onGuildUpdate(scope: CoroutineScope = this, block: suspend (GuildUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 abstract class LiveChannel(

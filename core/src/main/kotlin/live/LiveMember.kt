@@ -11,7 +11,9 @@ import dev.kord.core.event.guild.MemberLeaveEvent
 import dev.kord.core.event.guild.MemberUpdateEvent
 import dev.kord.core.live.channel.LiveGuildChannel
 import dev.kord.core.live.exception.LiveCancellationException
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
 fun Member.live(
@@ -32,10 +34,12 @@ inline fun Member.live(
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveMember.onLeave(block: suspend (MemberLeaveEvent) -> Unit) = on(consumer = block)
+fun LiveMember.onLeave(scope: CoroutineScope = this, block: suspend (MemberLeaveEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveMember.onUpdate(block: suspend (MemberUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveMember.onUpdate(scope: CoroutineScope = this, block: suspend (MemberUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -43,7 +47,8 @@ fun LiveMember.onUpdate(block: suspend (MemberUpdateEvent) -> Unit) = on(consume
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveMember.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = block)
+fun LiveMember.onBanAdd(scope: CoroutineScope = this, block: suspend (BanAddEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Deprecated(
     "The block is not called when the live entity is shut down",
@@ -51,11 +56,12 @@ fun LiveMember.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = bl
     DeprecationLevel.ERROR
 )
 @KordPreview
-inline fun LiveGuildChannel.onShutdown(crossinline block: suspend (Event) -> Unit) = on<Event> {
-    if (it is MemberLeaveEvent || it is BanAddEvent || it is GuildDeleteEvent) {
-        block(it)
+inline fun LiveGuildChannel.onShutdown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+    on<Event>(scope) {
+        if (it is MemberLeaveEvent || it is BanAddEvent || it is GuildDeleteEvent) {
+            block(it)
+        }
     }
-}
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -63,7 +69,8 @@ inline fun LiveGuildChannel.onShutdown(crossinline block: suspend (Event) -> Uni
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveGuildChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 class LiveMember(

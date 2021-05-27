@@ -11,7 +11,9 @@ import dev.kord.core.event.channel.CategoryUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 @KordPreview
 fun Category.live(
@@ -32,10 +34,12 @@ inline fun Category.live(
     level = DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveCategory.onCreate(block: suspend (CategoryCreateEvent) -> Unit) = on(consumer = block)
+fun LiveCategory.onCreate(scope: CoroutineScope = this, block: suspend (CategoryCreateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveCategory.onUpdate(block: suspend (CategoryUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveCategory.onUpdate(scope: CoroutineScope = this, block: suspend (CategoryUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Deprecated(
     "The block is not called when the live entity is shut down",
@@ -43,11 +47,12 @@ fun LiveCategory.onUpdate(block: suspend (CategoryUpdateEvent) -> Unit) = on(con
     DeprecationLevel.ERROR
 )
 @KordPreview
-inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
-    if (it is CategoryDeleteEvent || it is GuildDeleteEvent) {
-        block(it)
+inline fun LiveCategory.onShutDown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+    on<Event>(scope) {
+        if (it is CategoryDeleteEvent || it is GuildDeleteEvent) {
+            block(it)
+        }
     }
-}
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -55,7 +60,8 @@ inline fun LiveCategory.onShutDown(crossinline block: suspend (Event) -> Unit) =
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveCategory.onDelete(block: suspend (CategoryDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveCategory.onDelete(scope: CoroutineScope = this, block: suspend (CategoryDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -63,7 +69,8 @@ fun LiveCategory.onDelete(block: suspend (CategoryDeleteEvent) -> Unit) = on(con
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveCategory.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveCategory.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 class LiveCategory(
