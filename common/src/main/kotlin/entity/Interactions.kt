@@ -267,6 +267,7 @@ sealed class InteractionType(val type: Int) {
 
     companion object;
     internal object Serializer : KSerializer<InteractionType> {
+
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("InteractionType", PrimitiveKind.INT)
 
@@ -376,6 +377,7 @@ sealed class Option {
                 else -> error("unknown ApplicationCommandOptionType $type")
             }
         }
+
         override fun serialize(encoder: Encoder, value: Option) {
             when (value) {
                 is CommandArgument<*> -> CommandArgument.Serializer.serialize(encoder, value)
@@ -430,6 +432,7 @@ sealed class CommandArgument<out T> : Option() {
     ) : CommandArgument<String>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.String
+
         override fun toString(): String = "StringArgument(name=$name, value=$value)"
     }
 
@@ -439,6 +442,7 @@ sealed class CommandArgument<out T> : Option() {
     ) : CommandArgument<Int>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Integer
+
         override fun toString(): String = "IntegerArgument(name=$name, value=$value)"
     }
 
@@ -448,6 +452,7 @@ sealed class CommandArgument<out T> : Option() {
     ) : CommandArgument<Boolean>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Boolean
+
         override fun toString(): String = "BooleanArgument(name=$name, value=$value)"
     }
 
@@ -457,6 +462,7 @@ sealed class CommandArgument<out T> : Option() {
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.User
+
         override fun toString(): String = "UserArgument(name=$name, value=$value)"
     }
 
@@ -466,6 +472,7 @@ sealed class CommandArgument<out T> : Option() {
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Channel
+
         override fun toString(): String = "ChannelArgument(name=$name, value=$value)"
     }
 
@@ -475,6 +482,7 @@ sealed class CommandArgument<out T> : Option() {
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Role
+
         override fun toString(): String = "RoleArgument(name=$name, value=$value)"
     }
 
@@ -484,6 +492,7 @@ sealed class CommandArgument<out T> : Option() {
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Mentionable
+
         override fun toString(): String = "MentionableArgument(name=$name, value=$value)"
     }
 
@@ -530,6 +539,7 @@ sealed class CommandArgument<out T> : Option() {
                 }
             }
         }
+
         fun deserialize(
             json: Json,
             element: JsonElement,
@@ -561,6 +571,7 @@ sealed class CommandArgument<out T> : Option() {
             ApplicationCommandOptionType.SubCommandGroup,
             is ApplicationCommandOptionType.Unknown -> error("unknown CommandArgument type ${type.type}")
         }
+
         override fun deserialize(decoder: Decoder): CommandArgument<*> {
             decoder.decodeStructure(descriptor) {
                 this as JsonDecoder
@@ -648,6 +659,7 @@ sealed class InteractionResponseType(val type: Int) {
                 else -> Unknown(type)
             }
         }
+
         override fun serialize(encoder: Encoder, value: InteractionResponseType) {
             encoder.encodeInt(value.type)
         }
@@ -688,12 +700,14 @@ data class DiscordGuildApplicationCommandPermission(
         object Serializer : KSerializer<Type> {
             override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
+
             override fun deserialize(decoder: Decoder): Type =
                 when (val value = decoder.decodeInt()) {
                     1 -> Role
                     2 -> User
                     else -> Unknown(value)
                 }
+
             override fun serialize(encoder: Encoder, value: Type) = encoder.encodeInt(value.value)
         }
     }
