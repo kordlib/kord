@@ -5,28 +5,17 @@ import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.optional.optional
 import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 @KordPreview
-class CompositeComponentBuilder {
+class CompositeComponentBuilder : CompositeActionRowBuilder, CompositeButtonBuilder {
     val components: MutableList<DiscordComponent> = mutableListOf()
 
-    @OptIn(ExperimentalContracts::class)
-    inline fun actionRow(builder: CompositeComponentBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
+    override fun actionRow(builder: CompositeButtonBuilder.() -> Unit) {
         components.add(ActionRow(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
-    inline fun button(builder: ButtonBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
+    override fun button(builder: ButtonBuilder.() -> Unit) {
         components.add(ButtonBuilder().apply(builder).build())
     }
 

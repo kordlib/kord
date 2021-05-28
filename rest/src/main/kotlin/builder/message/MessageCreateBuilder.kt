@@ -9,6 +9,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.components.CompositeActionRowBuilder
 import dev.kord.rest.builder.components.CompositeComponentBuilder
 import dev.kord.rest.json.request.MessageCreateRequest
 import dev.kord.rest.json.request.MultipartMessageCreateRequest
@@ -86,7 +87,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
 
     @OptIn(ExperimentalContracts::class)
     @KordPreview
-    inline fun components(builder: CompositeComponentBuilder.() -> Unit) {
+    inline fun components(builder: CompositeActionRowBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
