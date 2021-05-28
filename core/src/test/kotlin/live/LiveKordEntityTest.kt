@@ -33,7 +33,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
     @Disabled
     inner class LiveEntityMock(kord: Kord) :
-        AbstractLiveKordEntity(kord, Dispatchers.Default) {
+        AbstractLiveKordEntity(kord) {
 
         var counter: CounterAtomicLatch? = null
 

@@ -11,22 +11,21 @@ import dev.kord.core.event.guild.MemberLeaveEvent
 import dev.kord.core.event.guild.MemberUpdateEvent
 import dev.kord.core.live.channel.LiveGuildChannel
 import dev.kord.core.live.exception.LiveCancellationException
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.job
 
 @KordPreview
 fun Member.live(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: CoroutineScope = kord
-) = LiveMember(this, dispatcher, parent)
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job))
+) = LiveMember(this, coroutineScope)
 
 @KordPreview
 inline fun Member.live(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: CoroutineScope = kord,
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job)),
     block: LiveMember.() -> Unit
-) = this.live(dispatcher, parent).apply(block)
+) = this.live(coroutineScope).apply(block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -75,9 +74,8 @@ fun LiveGuildChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend 
 @KordPreview
 class LiveMember(
     member: Member,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: CoroutineScope = member.kord
-) : AbstractLiveKordEntity(member.kord, dispatcher, parent), KordEntity {
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(member.kord.coroutineContext.job))
+) : AbstractLiveKordEntity(member.kord, coroutineScope), KordEntity {
 
     override val id: Snowflake
         get() = member.id

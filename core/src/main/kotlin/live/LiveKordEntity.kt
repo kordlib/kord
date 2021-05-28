@@ -12,7 +12,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlin.coroutines.CoroutineContext
 
 /**
  * A Discord entity that only emits events *related* to this entity.
@@ -30,11 +29,8 @@ interface LiveKordEntity : KordEntity, CoroutineScope {
 @KordPreview
 abstract class AbstractLiveKordEntity(
     override val kord: Kord,
-    dispatcher: CoroutineDispatcher,
-    parent: CoroutineScope = kord
-) : LiveKordEntity {
-
-    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(parent.coroutineContext.job)
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job))
+) : LiveKordEntity, CoroutineScope by coroutineScope {
 
     private val mutex = Mutex()
 

@@ -18,22 +18,21 @@ import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.exception.LiveCancellationException
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.job
 
 @KordPreview
 fun Guild.live(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: CoroutineScope = kord
-): LiveGuild = LiveGuild(this, dispatcher, parent)
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job))
+): LiveGuild = LiveGuild(this, coroutineScope)
 
 @KordPreview
 inline fun Guild.live(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    block: LiveGuild.() -> Unit,
-    parent: CoroutineScope = kord
-) = this.live(dispatcher, parent).apply(block)
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job)),
+    block: LiveGuild.() -> Unit
+) = this.live(coroutineScope).apply(block)
 
 @KordPreview
 fun LiveGuild.onEmojisUpdate(scope: CoroutineScope = this, block: suspend (EmojisUpdateEvent) -> Unit) =
@@ -167,9 +166,8 @@ fun LiveGuild.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildD
 @KordPreview
 class LiveGuild(
     guild: Guild,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: CoroutineScope = guild.kord
-) : AbstractLiveKordEntity(guild.kord, dispatcher, parent), KordEntity {
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(guild.kord.coroutineContext.job))
+) : AbstractLiveKordEntity(guild.kord, coroutineScope), KordEntity {
 
     override val id: Snowflake
         get() = guild.id

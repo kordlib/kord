@@ -15,29 +15,28 @@ import dev.kord.core.event.message.*
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.job
 
 @KordPreview
 fun Channel.live(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: CoroutineScope = kord
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job))
 ) = when (this) {
-    is DmChannel -> this.live(dispatcher, parent)
-    is NewsChannel -> this.live(dispatcher, parent)
-    is StoreChannel -> this.live(dispatcher, parent)
-    is TextChannel -> this.live(dispatcher, parent)
-    is VoiceChannel -> this.live(dispatcher, parent)
+    is DmChannel -> this.live(coroutineScope)
+    is NewsChannel -> this.live(coroutineScope)
+    is StoreChannel -> this.live(coroutineScope)
+    is TextChannel -> this.live(coroutineScope)
+    is VoiceChannel -> this.live(coroutineScope)
     else -> error("unsupported channel type")
 }
 
 @KordPreview
 inline fun Channel.live(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: CoroutineScope = kord,
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job)),
     block: LiveChannel.() -> Unit
-) = this.live(dispatcher, parent).apply(block)
+) = this.live(coroutineScope).apply(block)
 
 @KordPreview
 fun LiveChannel.onVoiceStateUpdate(scope: CoroutineScope = this, block: suspend (VoiceStateUpdateEvent) -> Unit) =
@@ -127,9 +126,8 @@ fun LiveChannel.onGuildUpdate(scope: CoroutineScope = this, block: suspend (Guil
 @KordPreview
 abstract class LiveChannel(
     kord: Kord,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
-    parent: CoroutineScope = kord
-) : AbstractLiveKordEntity(kord, dispatcher, parent) {
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job))
+) : AbstractLiveKordEntity(kord, coroutineScope) {
 
     abstract val channel: Channel
 
