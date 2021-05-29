@@ -34,7 +34,6 @@ abstract class AbstractLiveKordEntity(final override val kord: Kord, dispatcher:
     final override val events: SharedFlow<Event> =
         kord.events.filter { filter(it) }.onEach { update(it) }.shareIn(this, SharingStarted.Eagerly)
 
-
     protected abstract fun filter(event: Event): Boolean
     protected abstract fun update(event: Event)
 
