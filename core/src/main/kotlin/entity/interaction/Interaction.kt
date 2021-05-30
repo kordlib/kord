@@ -350,7 +350,11 @@ class GuildInteraction(
     /**
      * The invoker of the command as [MemberBehavior].
      */
-    val member: MemberBehavior get() = MemberBehavior(guildId, data.member.value!!.userId, kord)
+    val member: Member get() = Member(
+        data.member.value!!,
+        data.user.value!!,
+        kord
+    )
 
     override val channel: GuildMessageChannelBehavior
         get() = GuildMessageChannelBehavior(guildId, channelId, kord)

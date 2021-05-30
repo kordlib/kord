@@ -39,7 +39,8 @@ data class InteractionData(
                     guildId,
                     channelId,
                     member.map { it.toData(it.user.value!!.id, guildId.value!!) },
-                    user.map { it.toData() },
+                    //borrow user from member if present
+                    user.switchOnMissing(member.flatMap { it.user }).map { it.toData() },
                     token,
                     member.map { it.permissions },
                     version

@@ -239,6 +239,15 @@ inline fun <E : Any, T : Any> Optional<E>.map(mapper: (E) -> T): Optional<T> = w
     is Value -> Value(mapper(value))
 }
 
+/**
+ * Applies the [mapper] to the optional if it is a [Value], returns the same optional otherwise.
+ */
+@Suppress("UNCHECKED_CAST")
+inline fun <E : Any, T : Any> Optional<E>.flatMap(mapper: (E) -> Optional<T>): Optional<T> = when (this) {
+    is Missing, is Null<*> -> this as Optional<T>
+    is Value -> mapper(value)
+}
+
 @Suppress("UNCHECKED_CAST")
 @JvmName("mapNullableOptional")
 inline fun <E : Any, T : Any> Optional<E?>.map(mapper: (E) -> T): Optional<T?> = when (this) {
