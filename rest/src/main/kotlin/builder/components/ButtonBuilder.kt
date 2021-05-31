@@ -14,7 +14,9 @@ import kotlin.contracts.contract
 
 @KordPreview
 class ButtonBuilder {
-    private var _style: Optional<ButtonStyle> = Optional.Missing()
+
+    @PublishedApi
+    internal var _style: Optional<ButtonStyle> = Optional.Missing()
     private var _label: Optional<String> = Optional.Missing()
     var label by ::_label.delegate()
     private var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
@@ -32,8 +34,6 @@ class ButtonBuilder {
 
     inner class LinkButtonBuilder {
         var url by ::_url.delegate()
-        @PublishedApi
-        internal var style by ::_style.delegate()
     }
 
     @OptIn(ExperimentalContracts::class)
@@ -43,7 +43,7 @@ class ButtonBuilder {
         }
 
         LinkButtonBuilder().apply(builder).apply {
-            style = ButtonStyle.Link
+            _style = Optional.Value(ButtonStyle.Link)
         }
     }
 
