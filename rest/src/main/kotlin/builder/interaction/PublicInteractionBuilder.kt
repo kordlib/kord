@@ -3,10 +3,12 @@ package dev.kord.rest.builder.interaction
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.AllowedMentions
+import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.components.ActionRowBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.*
@@ -36,6 +38,12 @@ class PublicInteractionResponseCreateBuilder :
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
 
+    @KordPreview
+    private var _components: Optional<MutableList<DiscordComponent>> = Optional.Missing()
+
+    @KordPreview
+    var components: MutableList<DiscordComponent>? by ::_components.delegate()
+
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
 
@@ -56,6 +64,16 @@ class PublicInteractionResponseCreateBuilder :
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (embeds == null) embeds = mutableListOf()
         embeds!! += EmbedBuilder().apply(builder)
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    @KordPreview
+    inline fun components(builder: ActionRowBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components = mutableListOf(ActionRowBuilder().apply(builder).build())
     }
 
     fun addFile(name: String, content: InputStream) {

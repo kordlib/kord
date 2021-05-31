@@ -3,14 +3,10 @@ package dev.kord.rest.builder.message
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.builder.components.CompositeActionRowBuilder
-import dev.kord.rest.builder.components.CompositeComponentBuilder
+import dev.kord.rest.builder.components.ActionRowBuilder
 import dev.kord.rest.json.request.MessageCreateRequest
 import dev.kord.rest.json.request.MultipartMessageCreateRequest
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +36,10 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
+    @KordPreview
     private var _components: Optional<MutableList<DiscordComponent>> = Optional.Missing()
+
+    @KordPreview
     var components: MutableList<DiscordComponent>? by ::_components.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
@@ -87,12 +86,12 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
 
     @OptIn(ExperimentalContracts::class)
     @KordPreview
-    inline fun components(builder: CompositeActionRowBuilder.() -> Unit) {
+    inline fun components(builder: ActionRowBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components = CompositeComponentBuilder().apply(builder).components
+        components = mutableListOf(ActionRowBuilder().apply(builder).build())
     }
 
     override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
