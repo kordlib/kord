@@ -5,8 +5,8 @@ import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.TemplateBehavior
 import dev.kord.core.cache.data.TemplateData
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 
 class Template(val data: TemplateData, override val kord: Kord) : KordObject, TemplateBehavior {
     override val code: String get() = data.code
@@ -21,9 +21,9 @@ class Template(val data: TemplateData, override val kord: Kord) : KordObject, Te
 
     val creator: User get() = User(data.creator, kord)
 
-    val createdAt: Instant get() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(data.createdAt, Instant::from)
+    val createdAt: Instant get() = data.createdAt.toInstant()
 
-    val updatedAt: Instant get() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(data.updatedAt, Instant::from)
+    val updatedAt: Instant get() = data.updatedAt.toInstant()
 
     override val guildId: Snowflake get() = data.sourceGuildId
 

@@ -10,41 +10,45 @@ import org.junit.jupiter.api.Test
 
 internal class OptionalLongTest {
 
+    @Serializable
+    class EmptyOptionalEntity(val value: OptionalLong = OptionalLong.Missing)
+
     @Test
-    fun `deserializing nothing in optional assigns Missing`(){
+    fun `deserializing nothing in optional assigns Missing`() {
         @Language("json")
         val json = """{}"""
 
-        @Serializable
-        class Entity(val value: OptionalLong = OptionalLong.Missing)
 
-        val entity = Json.decodeFromString<Entity>(json)
+        val entity = Json.decodeFromString<EmptyOptionalEntity>(json)
 
         assert(entity.value is OptionalLong.Missing)
     }
 
+
+    @Serializable
+    class NullOptionalEntity(@Suppress("unused") val value: OptionalLong = OptionalLong.Missing)
+
     @Test
-    fun `deserializing null in optional throws SerializationException`(){
+    fun `deserializing null in optional throws SerializationException`() {
         @Language("json")
         val json = """{ "value":null }"""
 
-        @Serializable
-        class Entity(@Suppress("unused") val value: OptionalLong = OptionalLong.Missing)
 
         org.junit.jupiter.api.assertThrows<SerializationException> {
-            Json.decodeFromString<Entity>(json)
+            Json.decodeFromString<NullOptionalEntity>(json)
         }
     }
 
+
+    @Serializable
+    class ValueOptionalEntity(@Suppress("unused") val value: OptionalLong = OptionalLong.Missing)
+
     @Test
-    fun `deserializing value in optional assigns Value`(){
+    fun `deserializing value in optional assigns Value`() {
         @Language("json")
         val json = """{ "value":5 }"""
 
-        @Serializable
-        class Entity(@Suppress("unused") val value: OptionalLong = OptionalLong.Missing)
-
-        val entity = Json.decodeFromString<Entity>(json)
+        val entity = Json.decodeFromString<ValueOptionalEntity>(json)
         require(entity.value is OptionalLong.Value)
 
         Assertions.assertEquals(5, entity.value.value)

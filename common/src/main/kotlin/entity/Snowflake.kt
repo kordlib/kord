@@ -1,5 +1,6 @@
 package dev.kord.common.entity
 
+import kotlinx.datetime.Clock
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -7,10 +8,9 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import java.time.Instant
+import kotlinx.datetime.Instant
 import kotlin.time.Duration
 import kotlin.time.TimeMark
-import kotlin.time.toKotlinDuration
 
 /**
  * A unique identifier for entities [used by discord](https://discord.com/developers/docs/reference#snowflakes).
@@ -28,11 +28,11 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
     /**
      * Creates a Snowflake from a given [instant].
      */
-    constructor(instant: Instant) : this((instant.toEpochMilli() shl 22) - discordEpochLong)
+    constructor(instant: Instant) : this((instant.toEpochMilliseconds() shl 22) - discordEpochLong)
 
     val asString get() = value.toString()
 
-    val timeStamp: Instant get() = Instant.ofEpochMilli(discordEpochLong + (value shr 22))
+    val timeStamp: Instant get() = Instant.fromEpochMilliseconds(discordEpochLong + (value shr 22))
 
     val timeMark: TimeMark get() = SnowflakeMark(value shr 22)
 
@@ -48,7 +48,7 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
 
     companion object {
         private const val discordEpochLong = 1420070400000L
-        val discordEpochStart: Instant = Instant.ofEpochMilli(discordEpochLong)
+        val discordEpochStart: Instant = Instant.fromEpochMilliseconds(discordEpochLong)
 
         /**
          * The maximum value a Snowflake can hold.
@@ -78,7 +78,5 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
 
 private class SnowflakeMark(val epochMilliseconds: Long) : TimeMark() {
 
-    override fun elapsedNow(): Duration =
-        java.time.Duration.between(Instant.ofEpochMilli(epochMilliseconds), Instant.now()).toKotlinDuration()
-
+    override fun elapsedNow(): Duration = Instant.fromEpochMilliseconds(epochMilliseconds) - Clock.System.now()
 }

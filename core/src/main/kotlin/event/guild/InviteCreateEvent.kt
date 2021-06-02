@@ -21,10 +21,9 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.toInstant
-import java.time.Instant
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 import kotlin.time.Duration
-import kotlin.time.seconds
 
 /**
  * Sent when a new invite to a channel is created.
@@ -87,7 +86,7 @@ class InviteCreateEvent(
     /**
      * How long the invite is valid for (in seconds).
      */
-    val maxAge: Duration get() = data.maxAge.seconds
+    val maxAge: Duration get() = Duration.seconds(data.maxAge)
 
     /**
      * The maximum number of times the invite can be used.

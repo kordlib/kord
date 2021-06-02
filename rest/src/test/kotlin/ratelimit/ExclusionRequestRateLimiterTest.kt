@@ -1,7 +1,7 @@
 package dev.kord.rest.ratelimit
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.time.Clock
+import kotlinx.datetime.Clock
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime

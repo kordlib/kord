@@ -59,7 +59,6 @@ data class DefaultGatewayData(
 /**
  * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
  */
-@ObsoleteCoroutinesApi
 class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override val coroutineContext: CoroutineContext = data.dispatcher + SupervisorJob()
