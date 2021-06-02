@@ -3,13 +3,10 @@ package dev.kord.rest.ratelimit
 import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import mu.KLogger
 import mu.KotlinLogging
-import java.time.Clock
-import java.time.Duration
-import java.time.Instant
+import kotlinx.datetime.Clock
 
 private val requestLogger = KotlinLogging.logger {}
 
@@ -20,7 +17,7 @@ private val requestLogger = KotlinLogging.logger {}
  *
  * @param clock a [Clock] used for calculating suspension times, present for testing purposes.
  */
-class ExclusionRequestRateLimiter(clock: Clock = Clock.systemUTC()) : AbstractRateLimiter(clock) {
+class ExclusionRequestRateLimiter(clock: Clock = Clock.System) : AbstractRateLimiter(clock) {
 
     override val logger: KLogger get() = requestLogger
     private val sequentialLock = Mutex()
@@ -31,11 +28,15 @@ class ExclusionRequestRateLimiter(clock: Clock = Clock.systemUTC()) : AbstractRa
     }
 
     override fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken {
-        return ExclusionRequestToken(request.identifier, buckets)
+        return ExclusionRequestToken(this, request.identifier, buckets)
     }
 
-    private inner class ExclusionRequestToken(identity: RequestIdentifier, requestBuckets: List<Bucket>) :
-        AbstractRequestToken(identity, requestBuckets) {
+    private inner class ExclusionRequestToken(
+        rateLimiter: ExclusionRequestRateLimiter,
+        identity: RequestIdentifier,
+        requestBuckets: List<Bucket>
+    ) :
+        AbstractRequestToken(rateLimiter, identity, requestBuckets) {
 
         override suspend fun complete(response: RequestResponse) {
             super.complete(response)

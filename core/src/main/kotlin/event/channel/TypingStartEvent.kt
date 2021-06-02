@@ -18,7 +18,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.toInstant
-import java.time.Instant
+import kotlinx.datetime.Instant
 
 class TypingStartEvent(
     val data: TypingStartEventData,

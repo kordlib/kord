@@ -2,13 +2,11 @@ package dev.kord.rest.ratelimit
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineScope
-import java.time.Clock
-import java.time.Instant
-import java.time.ZoneId
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlin.time.Duration
 
 @ExperimentalCoroutinesApi
-class TestClock(val instant: Instant, val scope: TestCoroutineScope, val zoneId: ZoneId) : Clock() {
-    override fun getZone(): ZoneId = zoneId
-    override fun instant(): Instant = instant.plusMillis(scope.currentTime)
-    override fun withZone(zone: ZoneId): Clock = TestClock(instant, scope, zone)
+class TestClock(val instant: Instant, val scope: TestCoroutineScope) : Clock {
+    override fun now(): Instant = instant + Duration.milliseconds(scope.currentTime)
 }

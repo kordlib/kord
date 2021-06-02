@@ -2,11 +2,9 @@ package dev.kord.common.ratelimit
 
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.time.Clock
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import kotlin.time.Duration
-import kotlin.time.milliseconds
-import kotlin.time.toKotlinDuration
-import java.time.Duration as JavaDuration
 
 
 /**
@@ -19,30 +17,30 @@ import java.time.Duration as JavaDuration
 class BucketRateLimiter(
     private val capacity: Int,
     private val refillInterval: Duration,
-    private val clock: Clock = Clock.systemUTC()
+    private val clock: Clock = Clock.System
 ) : RateLimiter {
 
     private val mutex = Mutex()
 
     private var count = 0
-    private var nextInterval = 0L
+    private var nextInterval = Instant.fromEpochMilliseconds(0)
 
     init {
         require(capacity > 0) { "capacity must be a positive number" }
         require(refillInterval.isPositive()) { "refill interval must be positive" }
     }
 
-    private val isNextInterval get() = nextInterval <= clock.millis()
+    private val isNextInterval get() = nextInterval <= clock.now()
 
     private val isAtCapacity get() = count == capacity
 
     private fun resetState() {
         count = 0
-        nextInterval = clock.millis() + refillInterval.inMilliseconds.toLong()
+        nextInterval = clock.now() + refillInterval
     }
 
     private suspend fun delayUntilNextInterval() {
-        val delay = nextInterval - clock.millis()
+        val delay = nextInterval - clock.now()
         kotlinx.coroutines.delay(delay)
     }
 

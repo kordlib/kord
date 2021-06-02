@@ -25,10 +25,10 @@ class MasterGateway(
      */
     val averagePing
         get(): Duration? {
-            val pings = gateways.values.mapNotNull { it.ping.value?.inMicroseconds }
+            val pings = gateways.values.mapNotNull { it.ping.value?.inWholeMilliseconds }
             if (pings.isEmpty()) return null
 
-            return pings.average().microseconds
+            return Duration.microseconds(pings.average())
         }
 
 

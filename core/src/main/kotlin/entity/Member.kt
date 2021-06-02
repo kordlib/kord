@@ -12,10 +12,9 @@ import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.toInstant
 import kotlinx.coroutines.flow.*
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.Instant
 import java.util.*
 
 /**
@@ -39,7 +38,7 @@ class Member(
     /**
      * When the user joined this [guild].
      */
-    val joinedAt: Instant get() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(memberData.joinedAt, Instant::from)
+    val joinedAt: Instant get() = memberData.joinedAt.toInstant()
 
     /**
      * The guild-specific nickname of the user, if present.
