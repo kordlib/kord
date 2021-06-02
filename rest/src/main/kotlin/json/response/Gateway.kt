@@ -19,5 +19,7 @@ data class SessionStartLimitResponse(
     val total: Int,
     val remaining: Int,
     @SerialName("reset_after")
-    val resetAfter: Int
+    val resetAfter: Int,
+    @SerialName("max_concurrency")
+    val maxConcurrency: Int
 )
