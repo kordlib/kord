@@ -1,16 +1,14 @@
 package dev.kord.rest.builder.message
 
-import dev.kord.common.entity.UserFlags
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapNullable
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.builder.components.ActionRowBuilder
+import dev.kord.rest.builder.components.ActionRowContainerBuilder
 import dev.kord.rest.json.request.MessageEditPatchRequest
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -32,10 +30,7 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     @KordPreview
-    private var _components: Optional<MutableList<DiscordComponent>> = Optional.Missing()
-
-    @KordPreview
-    var components: MutableList<DiscordComponent>? by ::_components.delegate()
+    var components: MutableList<DiscordComponent> = mutableListOf()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
@@ -58,15 +53,16 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
 
     @OptIn(ExperimentalContracts::class)
     @KordPreview
-    inline fun components(builder: ActionRowBuilder.() -> Unit) {
+    inline fun components(builder: ActionRowContainerBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components = mutableListOf(ActionRowBuilder().apply(builder).build())
+        components.addAll(ActionRowContainerBuilder().apply(builder).build())
     }
 
+    @OptIn(KordPreview::class)
     override fun toRequest(): MessageEditPatchRequest = MessageEditPatchRequest(
-        _content, _embed.mapNullable { it?.toRequest() }, _flags, _allowedMentions.mapNullable { it?.build() }
+        _content, _embed.mapNullable { it?.toRequest() }, _flags, _allowedMentions.mapNullable { it?.build() }, Optional.missingOnEmpty(components)
     )
 }

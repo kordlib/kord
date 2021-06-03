@@ -35,7 +35,8 @@ data class InteractionResponseModifyRequest(
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    val flags: Optional<MessageFlags> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
 @KordPreview

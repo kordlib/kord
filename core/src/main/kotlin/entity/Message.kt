@@ -1,5 +1,7 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
@@ -217,6 +219,9 @@ class Message(
      * Returns null if this message was not send using a webhook.
      */
     val webhookId: Snowflake? get() = data.webhookId.value
+
+    @KordPreview
+    val components: List<DiscordComponent> get() = data.components.orEmpty()
 
     /**
      * Returns itself.

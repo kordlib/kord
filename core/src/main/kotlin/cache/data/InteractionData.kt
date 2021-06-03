@@ -24,7 +24,8 @@ data class InteractionData(
     val user: Optional<UserData> = Optional.Missing(),
     val token: String,
     val permissions: Optional<Permissions>,
-    val version: Int
+    val version: Int,
+    val message: Optional<MessageData> = Optional.Missing()
 ) {
     companion object {
         fun from(interaction: DiscordInteraction): InteractionData {
@@ -41,7 +42,10 @@ data class InteractionData(
                     user.switchOnMissing(member.flatMap { it.user }).map { it.toData() },
                     token,
                     member.map { it.permissions },
-                    version
+                    version,
+                    message.map {
+                        MessageData.from(it)
+                    }
                 )
             }
         }

@@ -4,15 +4,8 @@ import dev.kord.common.Color
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class MessageCreateRequest(
@@ -84,6 +77,7 @@ data class MessageEditPatchRequest(
     val flags: Optional<MessageFlags?> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
 @Serializable
