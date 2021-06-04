@@ -15,14 +15,11 @@ import dev.kord.core.event.message.*
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.job
+import kotlinx.coroutines.*
 
 @KordPreview
 fun Channel.live(
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job))
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) = when (this) {
     is DmChannel -> this.live(coroutineScope)
     is NewsChannel -> this.live(coroutineScope)
@@ -34,7 +31,7 @@ fun Channel.live(
 
 @KordPreview
 inline fun Channel.live(
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job)),
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveChannel.() -> Unit
 ) = this.live(coroutineScope).apply(block)
 
@@ -126,7 +123,7 @@ fun LiveChannel.onGuildUpdate(scope: CoroutineScope = this, block: suspend (Guil
 @KordPreview
 abstract class LiveChannel(
     kord: Kord,
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job))
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) : AbstractLiveKordEntity(kord, coroutineScope) {
 
     abstract val channel: Channel

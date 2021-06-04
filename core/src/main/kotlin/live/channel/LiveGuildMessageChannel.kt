@@ -11,19 +11,16 @@ import dev.kord.core.event.channel.ChannelUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.job
+import kotlinx.coroutines.*
 
 @KordPreview
 fun GuildMessageChannel.live(
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job))
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) = LiveGuildMessageChannel(this, coroutineScope)
 
 @KordPreview
 inline fun GuildMessageChannel.live(
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job)),
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveGuildMessageChannel.() -> Unit
 ) = this.live(coroutineScope).apply(block)
 
@@ -76,7 +73,7 @@ fun LiveGuildMessageChannel.onDelete(scope: CoroutineScope = this, block: suspen
 @KordPreview
 class LiveGuildMessageChannel(
     channel: GuildMessageChannel,
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(channel.kord.coroutineContext.job))
+    coroutineScope: CoroutineScope = channel.kord + SupervisorJob(channel.kord.coroutineContext.job)
 ) : LiveChannel(channel.kord, coroutineScope), KordEntity {
 
     override val id: Snowflake

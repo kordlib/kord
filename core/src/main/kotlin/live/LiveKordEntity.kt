@@ -29,7 +29,7 @@ interface LiveKordEntity : KordEntity, CoroutineScope {
 @KordPreview
 abstract class AbstractLiveKordEntity(
     override val kord: Kord,
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job))
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) : LiveKordEntity, CoroutineScope by coroutineScope {
 
     private val mutex = Mutex()

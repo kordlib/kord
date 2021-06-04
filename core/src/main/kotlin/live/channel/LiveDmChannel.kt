@@ -11,19 +11,16 @@ import dev.kord.core.event.channel.DMChannelUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.job
+import kotlinx.coroutines.*
 
 @KordPreview
 fun DmChannel.live(
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job))
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) = LiveDmChannel(this, coroutineScope)
 
 @KordPreview
 inline fun DmChannel.live(
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(kord.coroutineContext.job)),
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveDmChannel.() -> Unit
 ) = this.live(coroutineScope).apply(block)
 
@@ -74,7 +71,7 @@ fun LiveDmChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend (Gu
 @KordPreview
 class LiveDmChannel(
     channel: DmChannel,
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob(channel.kord.coroutineContext.job))
+    coroutineScope: CoroutineScope = channel.kord + SupervisorJob(channel.kord.coroutineContext.job)
 ) : LiveChannel(channel.kord, coroutineScope), KordEntity {
 
     override val id: Snowflake
