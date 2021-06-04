@@ -114,10 +114,8 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
     @Test
     fun `Check if the filter and update are executed`() {
-        // The expected count is 4 because each job will increment the counter.
-        // Each job (BanAddEvent, GuildDeleteEvent and initial) will process the update function.
-        // Another count is the action for BanAddEvent
-        countdownContext(4) {
+        // The update function is called once time (increment counter) and BanAddEvent is managed (increment counter)
+        countdownContext(2) {
             live.counter = this
 
             live.on<BanAddEvent> {

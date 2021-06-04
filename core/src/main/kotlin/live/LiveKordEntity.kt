@@ -10,8 +10,6 @@ import dev.kord.core.kordLogger
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -32,21 +30,12 @@ abstract class AbstractLiveKordEntity(final override val kord: Kord, dispatcher:
 
     override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(kord.coroutineContext.job)
 
-    private val mutex = Mutex()
-
     @Suppress("EXPERIMENTAL_API_USAGE")
-    final override val events: Flow<Event>
-        get() = kord.events
-            .takeWhile { isActive }
-            .filter { filter(it) }
-            .onEach { mutex.withLock { update(it) } }
+    final override val events: SharedFlow<Event> =
+        kord.events.filter { filter(it) }.onEach { update(it) }.shareIn(this, SharingStarted.Eagerly)
 
     protected abstract fun filter(event: Event): Boolean
     protected abstract fun update(event: Event)
-
-    init {
-        events.launchIn(this)
-    }
 
     override fun shutDown(cause: CancellationException) = cancel(cause)
 }
@@ -60,5 +49,3 @@ inline fun <reified T : Event> LiveKordEntity.on(noinline consumer: suspend (T) 
     events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
         runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
     }.catch { kordLogger.catching(it) }.launchIn(this)
-
-
