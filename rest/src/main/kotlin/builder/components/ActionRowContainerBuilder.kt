@@ -20,6 +20,4 @@ class ActionRowContainerBuilder {
 
         components.add(ActionRowBuilder().apply(builder))
     }
-
-    fun build(): List<DiscordComponent> = components.map(ActionRowBuilder::build)
 }

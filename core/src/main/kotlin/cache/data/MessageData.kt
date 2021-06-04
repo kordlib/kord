@@ -141,7 +141,6 @@ data class MessageData(
                 stickers.mapList { MessageStickerData.from(it) },
                 referencedMessage.mapNotNull { from(it) },
                 interaction.map { MessageInteractionData.from(it) },
-                referencedMessage.mapNotNull { from(it) },
                 components = components
             )
         }

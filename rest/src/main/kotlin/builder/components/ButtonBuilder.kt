@@ -9,16 +9,17 @@ import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.optional
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
 @KordPreview
-sealed class ButtonBuilder {
+sealed class ButtonBuilder : ActionRowComponentBuilder {
 
     @PublishedApi
-    internal var _style: Optional<ButtonStyle> = Optional.Missing()
+    internal open var _style: Optional<ButtonStyle> = Optional.Missing()
     private var _label: Optional<String> = Optional.Missing()
     var label by ::_label.delegate()
     private var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
@@ -36,29 +37,10 @@ sealed class ButtonBuilder {
 
     class LinkButtonBuilder : ButtonBuilder() {
         var url by ::_url.delegate()
+        override var _style: Optional<ButtonStyle> = ButtonStyle.Link.optional()
     }
 
-    @OptIn(ExperimentalContracts::class)
-    inline fun link(builder: LinkButtonBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        LinkButtonBuilder().apply(builder).apply {
-            _style = Optional.Value(ButtonStyle.Link)
-        }
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun styled(builder: InteractionButtonBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        InteractionButtonBuilder().apply(builder)
-    }
-
-    fun build(): DiscordComponent = DiscordComponent(
+    override fun build(): DiscordComponent = DiscordComponent(
         ComponentType.Button, _style, _label, _emoji, _customId, _url, _disabled
     )
 }

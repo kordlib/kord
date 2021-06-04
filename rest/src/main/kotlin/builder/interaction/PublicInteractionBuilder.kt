@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.components.ActionRowContainerBuilder
+import dev.kord.rest.builder.components.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.*
@@ -38,7 +39,7 @@ class PublicInteractionResponseCreateBuilder :
     var tts: Boolean? by ::_tts.delegate()
 
     @KordPreview
-    val components: MutableList<DiscordComponent> = mutableListOf()
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
@@ -69,7 +70,7 @@ class PublicInteractionResponseCreateBuilder :
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components.addAll(ActionRowContainerBuilder().apply(builder).build())
+        components.addAll(ActionRowContainerBuilder().apply(builder).components)
     }
 
     fun addFile(name: String, content: InputStream) {
@@ -116,7 +117,7 @@ class PublicInteractionResponseModifyBuilder :
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
-    val components: MutableList<DiscordComponent> = mutableListOf()
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     /**
      * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
@@ -149,7 +150,7 @@ class PublicInteractionResponseModifyBuilder :
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components.addAll(ActionRowContainerBuilder().apply(builder).build())
+        components.addAll(ActionRowContainerBuilder().apply(builder).components)
     }
 
     suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
@@ -162,7 +163,7 @@ class PublicInteractionResponseModifyBuilder :
                 content = _content,
                 embeds = _embeds.mapList { it.toRequest() },
                 allowedMentions = _allowedMentions.map { it.build() },
-                components = Optional.missingOnEmpty(components)
+                components = Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
             ),
             files
         )

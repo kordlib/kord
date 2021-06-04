@@ -85,7 +85,8 @@ class FollowupMessageCreateRequest(
     val avatar: Optional<String> = Optional.Missing(),
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
-    val allowedMentions: Optional<AllowedMentions> = Optional.Missing()
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
 @Serializable
@@ -95,6 +96,7 @@ data class FollowupMessageModifyRequest(
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
 @KordPreview

@@ -12,11 +12,16 @@ import kotlin.contracts.contract
 
 @KordDsl
 @KordPreview
-class ActionRowBuilder {
-    val components = mutableListOf<DiscordComponent>()
+class ActionRowBuilder : MessageComponentBuilder {
+    val components = mutableListOf<ActionRowComponentBuilder>()
 
     @OptIn(ExperimentalContracts::class)
-    inline fun interactionButton(style: ButtonStyle, customId: String, builder: ButtonBuilder.() -> Unit = {}) {
+    inline fun interactionButton(
+        label: String,
+        style: ButtonStyle,
+        customId: String,
+        builder: ButtonBuilder.() -> Unit = {}
+    ) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -24,21 +29,29 @@ class ActionRowBuilder {
         components.add(ButtonBuilder.InteractionButtonBuilder()
             .apply {
                 this.style = style
+                this.label = label
                 this.customId = customId
             }
-            .apply(builder).build())
+            .apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
-    inline fun linkButton(url: String, builder: ButtonBuilder.() -> Unit = {}) {
+    inline fun linkButton(label: String, url: String, builder: ButtonBuilder.() -> Unit = {}) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
         components.add(ButtonBuilder.LinkButtonBuilder()
-            .apply { this.url = url }
-            .apply(builder).build())
+            .apply {
+                this.url = url
+                this.label = label
+            }
+            .apply(builder))
     }
 
-    fun build(): DiscordComponent = DiscordComponent(ComponentType.ActionRow, components = Optional.missingOnEmpty(components))
+    override fun build(): DiscordComponent =
+        DiscordComponent(
+            ComponentType.ActionRow,
+            components = Optional.missingOnEmpty(components.map(ActionRowComponentBuilder::build))
+        )
 }

@@ -3,8 +3,6 @@ package dev.kord.rest.builder.interaction
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.AllowedMentions
-import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
@@ -12,6 +10,7 @@ import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.components.ActionRowContainerBuilder
+import dev.kord.rest.builder.components.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.*
@@ -41,7 +40,7 @@ class PublicFollowupMessageModifyBuilder :
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     @KordPreview
-    var components: MutableList<DiscordComponent> = mutableListOf()
+    var components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
@@ -57,7 +56,7 @@ class PublicFollowupMessageModifyBuilder :
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components.addAll(ActionRowContainerBuilder().apply(builder).build())
+        components.addAll(ActionRowContainerBuilder().apply(builder).components)
     }
 
 
@@ -86,7 +85,8 @@ class PublicFollowupMessageModifyBuilder :
             FollowupMessageModifyRequest(
                 _content,
                 _embeds.mapList { it.toRequest() },
-                _allowedMentions.map { it.build() }
+                _allowedMentions.map { it.build() },
+                Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
             ),
             files
         )
@@ -107,6 +107,8 @@ class EphemeralFollowupMessageModifyBuilder :
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
+    var components: MutableList<MessageComponentBuilder> = mutableListOf()
+
 
     /**
      * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
@@ -122,7 +124,8 @@ class EphemeralFollowupMessageModifyBuilder :
     override fun toRequest(): FollowupMessageModifyRequest {
         return FollowupMessageModifyRequest(
             content = _content,
-            allowedMentions = _allowedMentions.map { it.build() }
+            allowedMentions = _allowedMentions.map { it.build() },
+            components = Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
         )
     }
 }
@@ -144,6 +147,8 @@ class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessa
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
     var embeds: MutableList<EmbedRequest> = mutableListOf()
+
+    var components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     fun addFile(name: String, content: InputStream) {
         files += name to content
@@ -178,7 +183,8 @@ class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessa
                 content = _content,
                 tts = _tts,
                 embeds = Optional.missingOnEmpty(embeds),
-                allowedMentions = _allowedMentions.map { it.build() }
+                allowedMentions = _allowedMentions.map { it.build() },
+                components = Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
             ),
             files,
         )
@@ -208,12 +214,15 @@ class EphemeralFollowupMessageCreateBuilder(var content: String) :
         allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
+    var components: MutableList<MessageComponentBuilder> = mutableListOf()
+
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(
             FollowupMessageCreateRequest(
                 content = Optional.Value(content),
                 tts = _tts,
                 allowedMentions = _allowedMentions.map { it.build() }
+                components = Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
             ),
         )
 

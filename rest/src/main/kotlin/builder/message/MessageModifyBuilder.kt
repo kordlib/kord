@@ -9,6 +9,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapNullable
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.components.ActionRowContainerBuilder
+import dev.kord.rest.builder.components.MessageComponentBuilder
 import dev.kord.rest.json.request.MessageEditPatchRequest
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -30,7 +31,7 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     @KordPreview
-    var components: MutableList<DiscordComponent> = mutableListOf()
+    var components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
@@ -58,11 +59,15 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components.addAll(ActionRowContainerBuilder().apply(builder).build())
+        components.addAll(ActionRowContainerBuilder().apply(builder).components)
     }
 
     @OptIn(KordPreview::class)
     override fun toRequest(): MessageEditPatchRequest = MessageEditPatchRequest(
-        _content, _embed.mapNullable { it?.toRequest() }, _flags, _allowedMentions.mapNullable { it?.build() }, Optional.missingOnEmpty(components)
+        _content,
+        _embed.mapNullable { it?.toRequest() },
+        _flags,
+        _allowedMentions.mapNullable { it?.build() },
+        Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
     )
 }

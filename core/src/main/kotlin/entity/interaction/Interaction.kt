@@ -45,7 +45,6 @@ sealed class Interaction : InteractionBehavior {
      */
     val type: InteractionType get() = data.type
 
-
     abstract val user: UserBehavior
 
     /**
@@ -339,7 +338,7 @@ class ComponentInteraction(
     override val kord: Kord,
     override val supplier: EntitySupplier
 ) : Interaction() {
-    override val user: UserBehavior = User(data.user.value!!, kord)
+    override val user: UserBehavior = UserBehavior(data.member.value!!.userId, kord)
 
     val message: Message
         get() = data.message.unwrap {

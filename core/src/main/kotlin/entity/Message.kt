@@ -1,12 +1,12 @@
 package dev.kord.core.entity
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapNullable
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
@@ -109,7 +109,7 @@ class Message(
     /**
      * If the message is a response to an [Interaction], this is the id of the interaction's application
      */
-    val applicationId: Snowflake? get() = data.applicationId.value
+    val applicationId: Snowflake? get() = data.application.unwrap { it.id }
 
     /**
      * The message being replied to.
