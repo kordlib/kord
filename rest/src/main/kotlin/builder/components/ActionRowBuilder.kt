@@ -17,10 +17,9 @@ class ActionRowBuilder : MessageComponentBuilder {
 
     @OptIn(ExperimentalContracts::class)
     inline fun interactionButton(
-        label: String,
         style: ButtonStyle,
         customId: String,
-        builder: ButtonBuilder.() -> Unit = {}
+        builder: ButtonBuilder.InteractionButtonBuilder.() -> Unit = {}
     ) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -29,14 +28,13 @@ class ActionRowBuilder : MessageComponentBuilder {
         components.add(ButtonBuilder.InteractionButtonBuilder()
             .apply {
                 this.style = style
-                this.label = label
                 this.customId = customId
             }
             .apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
-    inline fun linkButton(label: String, url: String, builder: ButtonBuilder.() -> Unit = {}) {
+    inline fun linkButton(label: String, url: String, builder: ButtonBuilder.LinkButtonBuilder.() -> Unit = {}) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
