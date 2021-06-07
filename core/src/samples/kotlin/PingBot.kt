@@ -18,40 +18,6 @@ suspend fun main(args: Array<String>) {
     kord.on<MessageCreateEvent> {
         if (message.author?.isBot == true) return@on
         if (message.content == "!ping") message.channel.createMessage("pong")
-        if (message.content == "!buttons") {
-            message.channel.createMessage {
-                content = "Ich mag ~~Züge~~ Buttons"
-
-                components {
-                    actionRow {
-                        interactionButton(ButtonStyle.Primary, "eliteblog") {
-                            emoji(ReactionEmoji.Unicode("\uD83D\uDE38"))
-                            disabled = true
-                        }
-//                        interactionButton(
-//                            "eliteblog2"
-//                        ) {
-//                            emoji(ReactionEmoji.Unicode("\uD83D\uDE38"))
-//                        }
-                    }
-//                    actionRow {
-//                        linkButton("DuckDuckGo but gud", "https://google.com")
-//                    }
-                }
-            }
-
-        }
-    }
-
-    kord.on<InteractionCreateEvent> {
-        val interaction1 = interaction
-        if (interaction1 is ComponentInteraction) {
-            if ((interaction1.data.data as ApplicationComponentInteractionData).customId.value == "eliteblog2") {
-                interaction.respondPublic {
-                    content = "Discord sucks!"
-                }
-            }
-        }
     }
 
     kord.login { playing("!ping to pong") }
