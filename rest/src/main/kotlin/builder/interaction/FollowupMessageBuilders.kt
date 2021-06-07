@@ -221,7 +221,7 @@ class EphemeralFollowupMessageCreateBuilder(var content: String) :
             FollowupMessageCreateRequest(
                 content = Optional.Value(content),
                 tts = _tts,
-                allowedMentions = _allowedMentions.map { it.build() }
+                allowedMentions = _allowedMentions.map { it.build() },
                 components = Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
             ),
         )

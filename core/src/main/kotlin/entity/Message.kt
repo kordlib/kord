@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
