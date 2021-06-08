@@ -154,95 +154,21 @@ data class ResolvedObjects(
     val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing()
 )
 
-@Serializable(with = DiscordInteraction.Serializer::class)
+@Serializable()
 @KordPreview
-sealed class DiscordInteraction {
-    abstract val id: Snowflake
-    abstract val applicationId: Snowflake
-    abstract val data: InteractionCallbackData
-    abstract val guildId: OptionalSnowflake
-    abstract val channelId: Snowflake
-    abstract val member: Optional<DiscordInteractionGuildMember>
-    abstract val user: Optional<DiscordUser>
-    abstract val token: String
-    abstract val version: Int
-    abstract val message: Optional<DiscordMessage>
-
-    abstract val type: InteractionType
-
-    companion object Serializer : JsonContentPolymorphicSerializer<DiscordInteraction>(DiscordInteraction::class) {
-        override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out DiscordInteraction> =
-            when (val type = element.jsonObject["type"]!!.jsonPrimitive.int) {
-                InteractionType.Ping.type -> PingInteraction.serializer()
-                InteractionType.ApplicationCommand.type -> CommandInteraction.serializer()
-                InteractionType.Component.type -> ComponentInteraction.serializer()
-                else -> error("Unknown interaction type: $type")
-            }
-    }
-}
-
-@KordPreview
-@Serializable
-data class ComponentInteraction(
-    override val id: Snowflake,
-    @SerialName("application_id")
-    override val applicationId: Snowflake,
-    override val data: DiscordApplicationComponentCallbackData,
-    @SerialName("guild_id")
-    override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    @SerialName("channel_id")
-    override val channelId: Snowflake,
-    override val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
-    override val user: Optional<DiscordUser> = Optional.Missing(),
-    override val token: String,
-    override val version: Int,
-    override val message: Optional<DiscordMessage> = Optional.Missing(),
-) : DiscordInteraction() {
-
-    override val type: InteractionType get() = InteractionType.Component
-}
-
-@KordPreview
-@Serializable
-data class CommandInteraction(
-    override val id: Snowflake,
-    @SerialName("application_id")
-    override val applicationId: Snowflake,
-    override val data: DiscordApplicationCommandInteractionData,
-    @SerialName("guild_id")
-    override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    @SerialName("channel_id")
-    override val channelId: Snowflake,
-    override val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
-    override val user: Optional<DiscordUser> = Optional.Missing(),
-    override val token: String,
-    override val version: Int,
-    override val message: Optional<DiscordMessage> = Optional.Missing(),
-) : DiscordInteraction() {
-
-    override val type: InteractionType get() = InteractionType.ApplicationCommand
-}
-
-@KordPreview
-@Serializable
-data class PingInteraction(
-    override val id: Snowflake,
-    @SerialName("application_id")
-    override val applicationId: Snowflake,
-    override val data: DiscordApplicationCommandInteractionData,
-    @SerialName("guild_id")
-    override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    @SerialName("channel_id")
-    override val channelId: Snowflake,
-    override val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
-    override val user: Optional<DiscordUser> = Optional.Missing(),
-    override val token: String,
-    override val version: Int,
-    override val message: Optional<DiscordMessage> = Optional.Missing(),
-) : DiscordInteraction() {
-
-    override val type: InteractionType get() = InteractionType.Ping
-}
+class DiscordInteraction(
+    val id: Snowflake,
+    val applicationId: Snowflake,
+    val data: InteractionCallbackData,
+    val guildId: OptionalSnowflake,
+    val channelId: Snowflake,
+    val member: Optional<DiscordInteractionGuildMember>,
+    val user: Optional<DiscordUser>,
+    val token: String,
+    val version: Int,
+    val message: Optional<DiscordMessage>,
+    val type: InteractionType
+)
 
 @Serializable(InteractionType.Serializer::class)
 @KordPreview
@@ -287,25 +213,17 @@ sealed class InteractionType(val type: Int) {
     }
 }
 
-sealed class InteractionCallbackData
-
 @Serializable
-@KordPreview
-data class DiscordApplicationCommandInteractionData(
-    val id: Snowflake,
-    val name: String,
+data class InteractionCallbackData(
+    val id: OptionalSnowflake = OptionalSnowflake.Missing,
+    val name: Optional<String> = Optional.Missing(),
     val resolved: Optional<ResolvedObjects> = Optional.Missing(),
-    val options: Optional<List<Option>> = Optional.Missing()
-) : InteractionCallbackData()
-
-@KordPreview
-@Serializable
-data class DiscordApplicationComponentCallbackData(
+    val options: Optional<List<Option>> = Optional.Missing(),
     @SerialName("custom_id")
     val customId: Optional<String> = Optional.Missing(),
     @SerialName("component_type")
-    val componentType: ComponentType
-) : InteractionCallbackData()
+    val componentType: Optional<ComponentType> = Optional.Missing()
+)
 
 @Serializable(with = Option.Serializer::class)
 @KordPreview

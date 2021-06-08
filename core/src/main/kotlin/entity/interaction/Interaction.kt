@@ -11,7 +11,7 @@ import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.behavior.interaction.InteractionBehavior
-import dev.kord.core.cache.data.ApplicationCommandInteractionData
+import dev.kord.core.cache.data.ApplicationInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
 import dev.kord.core.entity.*
@@ -104,7 +104,7 @@ sealed class InteractionCommand : KordObject {
 }
 
 fun InteractionCommand(
-    data: ApplicationCommandInteractionData,
+    data: ApplicationInteractionData,
     kord: Kord
 ): InteractionCommand {
     val firstLevelOptions = data.options.orEmpty()
@@ -128,14 +128,14 @@ fun InteractionCommand(
  */
 @KordPreview
 class RootCommand(
-    val data: ApplicationCommandInteractionData,
+    val data: ApplicationInteractionData,
     override val kord: Kord
 ) : InteractionCommand() {
 
     override val rootId: Snowflake
-        get() = data.id
+        get() = data.id.value!!
 
-    override val rootName get() = data.name
+    override val rootName get() = data.name.value!!
 
     override val options: Map<String, OptionValue<*>>
         get() = data.options.orEmpty()
@@ -151,16 +151,16 @@ class RootCommand(
  */
 @KordPreview
 class SubCommand(
-    val data: ApplicationCommandInteractionData,
+    val data: ApplicationInteractionData,
     override val kord: Kord
 ) : InteractionCommand() {
 
     private val subCommandData = data.options.orEmpty().first()
 
-    override val rootName get() = data.name
+    override val rootName get() = data.name.value!!
 
     override val rootId: Snowflake
-        get() = data.id
+        get() = data.id.value!!
 
     /**
      * Name of the sub-command executed.
@@ -183,7 +183,7 @@ class SubCommand(
  */
 @KordPreview
 class GroupCommand(
-    val data: ApplicationCommandInteractionData,
+    val data: ApplicationInteractionData,
     override val kord: Kord
 ) : InteractionCommand() {
 
@@ -191,9 +191,9 @@ class GroupCommand(
     private val subCommandData get() = groupData.subCommands.orEmpty().first()
 
     override val rootId: Snowflake
-        get() = data.id
+        get() = data.id.value!!
 
-    override val rootName get() = data.name
+    override val rootName get() = data.name.value!!
 
     /**
      * Name of the group of this sub-command.
