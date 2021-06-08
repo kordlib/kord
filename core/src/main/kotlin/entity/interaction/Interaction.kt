@@ -337,7 +337,7 @@ class ComponentInteraction(
     override val applicationId: Snowflake,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : Interaction() {
+) : Interaction(), InteractionBehavior {
     override val user: UserBehavior = UserBehavior(data.member.value!!.userId, kord)
 
     val message: Message
