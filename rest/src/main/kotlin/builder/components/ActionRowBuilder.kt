@@ -19,7 +19,7 @@ class ActionRowBuilder : MessageComponentBuilder {
     inline fun interactionButton(
         style: ButtonStyle,
         customId: String,
-        builder: ButtonBuilder.InteractionButtonBuilder.() -> Unit = {}
+        builder: ButtonBuilder.InteractionButtonBuilder.() -> Unit
     ) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

@@ -40,7 +40,7 @@ class PublicFollowupMessageModifyBuilder :
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     @KordPreview
-    var components: MutableList<MessageComponentBuilder> = mutableListOf()
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
@@ -107,7 +107,7 @@ class EphemeralFollowupMessageModifyBuilder :
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    var components: MutableList<MessageComponentBuilder> = mutableListOf()
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
 
     /**
@@ -148,7 +148,7 @@ class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessa
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
     var embeds: MutableList<EmbedRequest> = mutableListOf()
 
-    var components: MutableList<MessageComponentBuilder> = mutableListOf()
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     fun addFile(name: String, content: InputStream) {
         files += name to content
@@ -214,7 +214,7 @@ class EphemeralFollowupMessageCreateBuilder(var content: String) :
         allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
-    var components: MutableList<MessageComponentBuilder> = mutableListOf()
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(

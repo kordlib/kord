@@ -37,7 +37,7 @@ data class MessageData(
     val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
     val interaction: Optional<MessageInteractionData> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>>
+    val components: Optional<List<DiscordComponent>> = Optional.Missing()
 ) {
 
     fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
