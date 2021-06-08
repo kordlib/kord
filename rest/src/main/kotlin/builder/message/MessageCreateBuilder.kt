@@ -41,7 +41,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     @KordPreview
-    var components: MutableList<MessageComponentBuilder> = mutableListOf()
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
