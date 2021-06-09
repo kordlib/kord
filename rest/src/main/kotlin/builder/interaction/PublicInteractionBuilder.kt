@@ -22,15 +22,15 @@ import kotlin.contracts.contract
 @KordPreview
 @KordDsl
 class PublicInteractionResponseCreateBuilder :
-    RequestBuilder<MultipartInteractionResponseCreateRequest> {
+   BaseInteractionResponseCreateBuilder {
     private var _content: Optional<String> = Optional.Missing()
-    var content: String? by ::_content.delegate()
+    override var content: String? by ::_content.delegate()
 
     private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
-    var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+    override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+    override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
@@ -90,15 +90,15 @@ class PublicInteractionResponseCreateBuilder :
 @KordPreview
 @KordDsl
 class PublicInteractionResponseModifyBuilder :
-    RequestBuilder<MultipartInteractionResponseModifyRequest> {
+    BaseInteractionResponseModifyBuilder {
     private var _content: Optional<String> = Optional.Missing()
-    var content: String? by ::_content.delegate()
+    override var content: String? by ::_content.delegate()
 
     private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
-    var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+    override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+    override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
