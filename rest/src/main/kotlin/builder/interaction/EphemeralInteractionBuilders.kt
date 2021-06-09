@@ -21,9 +21,7 @@ class EphemeralInteractionResponseModifyBuilder : BaseInteractionResponseModifyB
     private var _content: Optional<String> = Optional.Missing()
     override var content: String? by ::_content.delegate()
 
-
-    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
-    override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
@@ -40,8 +38,7 @@ class EphemeralInteractionResponseModifyBuilder : BaseInteractionResponseModifyB
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (embeds == null) embeds = mutableListOf()
-        embeds!! += EmbedBuilder().apply(builder)
+        embeds += EmbedBuilder().apply(builder)
     }
 
     override fun toRequest(): MultipartInteractionResponseModifyRequest {
@@ -49,7 +46,7 @@ class EphemeralInteractionResponseModifyBuilder : BaseInteractionResponseModifyB
             InteractionResponseModifyRequest(
                 content = _content,
                 allowedMentions = _allowedMentions.map { it.build() },
-                embeds = _embeds.mapList { it.toRequest() }
+                embeds = embeds.map { it.toRequest() }
             )
         )
 
@@ -63,8 +60,7 @@ class EphemeralInteractionResponseCreateBuilder : BaseInteractionResponseCreateB
     override var content: String? by ::_content.delegate()
 
 
-    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
-    override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
@@ -81,19 +77,18 @@ class EphemeralInteractionResponseCreateBuilder : BaseInteractionResponseCreateB
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (embeds == null) embeds = mutableListOf()
-        embeds!! += EmbedBuilder().apply(builder)
+        embeds += EmbedBuilder().apply(builder)
     }
 
     override fun toRequest(): MultipartInteractionResponseCreateRequest {
         val flags = Optional.Value(MessageFlags(MessageFlag.Ephemeral))
 
-        val type = if (content == null && embeds == null) InteractionResponseType.DeferredChannelMessageWithSource
+        val type = if (content == null && embeds.isEmpty()) InteractionResponseType.DeferredChannelMessageWithSource
         else InteractionResponseType.ChannelMessageWithSource
         val data = InteractionApplicationCommandCallbackData(
             content = _content,
             flags = flags,
-            embeds = _embeds.mapList { it.toRequest() }
+            embeds = embeds.map { it.toRequest() }
         )
         return MultipartInteractionResponseCreateRequest(
             InteractionResponseCreateRequest(type, data.optional())

@@ -10,9 +10,9 @@ import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
 sealed interface BaseInteractionResponseBuilder<T> : RequestBuilder<T> {
     var content: String?
 
-    var embeds: MutableList<EmbedBuilder>?
+    val embeds: MutableList<EmbedBuilder>?
 
-    var allowedMentions: AllowedMentionsBuilder?
+    val allowedMentions: AllowedMentionsBuilder?
 
 }
 

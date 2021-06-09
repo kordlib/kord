@@ -26,8 +26,7 @@ class PublicInteractionResponseCreateBuilder :
     private var _content: Optional<String> = Optional.Missing()
     override var content: String? by ::_content.delegate()
 
-    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
-    override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+    override var embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
@@ -68,7 +67,7 @@ class PublicInteractionResponseCreateBuilder :
 
     override fun toRequest(): MultipartInteractionResponseCreateRequest {
         val type =
-            if (files.isEmpty() && content == null && embeds == null) InteractionResponseType.DeferredChannelMessageWithSource
+            if (files.isEmpty() && content == null && embeds.isEmpty()) InteractionResponseType.DeferredChannelMessageWithSource
             else InteractionResponseType.ChannelMessageWithSource
 
         return MultipartInteractionResponseCreateRequest(
@@ -76,7 +75,7 @@ class PublicInteractionResponseCreateBuilder :
                 type,
                 InteractionApplicationCommandCallbackData(
                     content = _content,
-                    embeds = _embeds.mapList { it.toRequest() },
+                    embeds = embeds.map { it.toRequest() },
                     allowedMentions = _allowedMentions.map { it.build() },
                     tts = _tts
                 ).optional()
@@ -94,8 +93,7 @@ class PublicInteractionResponseModifyBuilder :
     private var _content: Optional<String> = Optional.Missing()
     override var content: String? by ::_content.delegate()
 
-    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
-    override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+    override var embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
@@ -134,7 +132,7 @@ class PublicInteractionResponseModifyBuilder :
         return MultipartInteractionResponseModifyRequest(
             InteractionResponseModifyRequest(
                 content = _content,
-                embeds = _embeds.mapList { it.toRequest() },
+                embeds = embeds.map { it.toRequest() },
                 allowedMentions = _allowedMentions.map { it.build() },
             ),
             files
