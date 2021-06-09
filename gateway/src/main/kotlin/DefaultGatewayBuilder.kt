@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlin.time.Duration
 import kotlin.time.seconds
 
 class DefaultGatewayBuilder {
@@ -32,9 +33,9 @@ class DefaultGatewayBuilder {
             install(WebSockets)
             install(JsonFeature)
         }
-        val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
-        val sendRateLimiter = sendRateLimiter ?: BucketRateLimiter(120, 60.seconds)
-        val identifyRateLimiter = identifyRateLimiter ?: BucketRateLimiter(1, 5.seconds)
+        val retry = reconnectRetry ?: LinearRetry(Duration.seconds(2), Duration.seconds(20), 10)
+        val sendRateLimiter = sendRateLimiter ?: BucketRateLimiter(120, Duration.seconds(60))
+        val identifyRateLimiter = identifyRateLimiter ?: BucketRateLimiter(1, Duration.seconds(5))
 
         client.requestPipeline.intercept(HttpRequestPipeline.Render) {
             // CIO adds this header even if no extensions are used, which causes it to be empty

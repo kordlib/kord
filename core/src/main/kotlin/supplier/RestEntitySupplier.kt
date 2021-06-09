@@ -19,10 +19,7 @@ import dev.kord.rest.json.request.AuditLogGetRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import dev.kord.rest.service.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -74,8 +71,8 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
 
     override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = flow {
         for (channelData in guild.getGuildChannels(guildId))
-            emit(Channel.from(ChannelData.from(channelData), kord) as GuildChannel)
-    }
+            emit(Channel.from(ChannelData.from(channelData), kord))
+    }.filterIsInstance()
 
     override fun getChannelPins(channelId: Snowflake): Flow<Message> = flow {
         for (messageData in channel.getChannelPins(channelId))
@@ -331,6 +328,13 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         request: AuditLogGetRequest = AuditLogGetRequest()
     ): Flow<DiscordAuditLogEntry> = paginateBackwards(Snowflake.max, batchSize = 100, DiscordAuditLogEntry::id) {
         auditLog.getAuditLogs(guildId, request.copy(before = it.value)).auditLogEntries
+    }
+
+    override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = catchNotFound {
+        val instance = kord.rest.stageInstance.getStageInstance(channelId)
+        val data = StageInstanceData.from(instance)
+
+        return StageInstance(data, kord, this)
     }
 
     override fun toString(): String {

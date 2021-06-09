@@ -9,8 +9,7 @@ import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.*
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
 
 /**
  * A builder for discord embeds.
@@ -152,7 +151,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         Optional.Value("embed"),
         _description,
         _url,
-        _timestamp.map { DateTimeFormatter.ISO_INSTANT.format(it) },
+        _timestamp.map { it.toString() },
         _color,
         _footer.map { it.toRequest() },
         _image.map { EmbedImageRequest(it) },

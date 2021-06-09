@@ -1,8 +1,13 @@
 package dev.kord.core.entity
 
+import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.mapNullable
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
@@ -13,14 +18,16 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.entity.interaction.MessageInteraction
+import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 import java.util.*
 
 /**
@@ -69,9 +76,7 @@ class Message(
      * Returns null if the message was never edited.
      */
     val editedTimestamp: Instant?
-        get() = data.editedTimestamp?.let {
-            DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(it, Instant::from)
-        }
+        get() = data.editedTimestamp?.toInstant()
 
     /**
      * The embedded content of this message.
@@ -101,6 +106,11 @@ class Message(
      * The stickers sent with this message.
      */
     val stickers: List<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }
+
+    /**
+     * If the message is a response to an [Interaction], this is the id of the interaction's application
+     */
+    val applicationId: Snowflake? get() = data.application.unwrap { it.id }
 
     /**
      * The message being replied to.
@@ -175,6 +185,12 @@ class Message(
     val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(it, kord) }.toSet()
 
     /**
+     * The [MessageInteraction] sent on this message object when it is a response to an [dev.kord.core.entity.interaction.Interaction].
+     */
+    @KordPreview
+    val interaction: MessageInteraction? get() = data.interaction.mapNullable { MessageInteraction(it, kord) }.value
+
+    /**
      * The [users][User] mentioned in this message.
      *
      * This request uses state [data] to resolve the entities belonging to the flow,
@@ -199,7 +215,7 @@ class Message(
     /**
      * The instant when this message was created.
      */
-    val timestamp: Instant get() = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(data.timestamp, Instant::from)
+    val timestamp: Instant get() = data.timestamp.toInstant()
 
     /**
      * Whether this message was send using `\tts`.
@@ -217,6 +233,9 @@ class Message(
      * Returns null if this message was not send using a webhook.
      */
     val webhookId: Snowflake? get() = data.webhookId.value
+
+    @KordPreview
+    val components: List<DiscordComponent> get() = data.components.orEmpty()
 
     /**
      * Returns itself.

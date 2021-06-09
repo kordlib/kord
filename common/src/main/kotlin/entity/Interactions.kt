@@ -156,20 +156,21 @@ data class ResolvedObjects(
 
 @Serializable
 @KordPreview
-data class DiscordInteraction(
+class DiscordInteraction(
     val id: Snowflake,
     @SerialName("application_id")
     val applicationId: Snowflake,
-    val type: InteractionType,
-    val data: DiscordApplicationCommandInteractionData,
+    val data: InteractionCallbackData,
     @SerialName("guild_id")
-    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val guildId: OptionalSnowflake,
     @SerialName("channel_id")
     val channelId: Snowflake,
     val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
     val user: Optional<DiscordUser> = Optional.Missing(),
     val token: String,
     val version: Int,
+    val message: Optional<DiscordMessage> = Optional.Missing(),
+    val type: InteractionType
 )
 
 @Serializable(InteractionType.Serializer::class)
@@ -177,11 +178,19 @@ data class DiscordInteraction(
 sealed class InteractionType(val type: Int) {
     object Ping : InteractionType(1)
     object ApplicationCommand : InteractionType(2)
+
+    /*
+     * don't trust the docs:
+     *
+     * this type exists and is needed for components even though it's not documented
+     */
+    object Component : InteractionType(3)
     class Unknown(type: Int) : InteractionType(type)
 
     override fun toString(): String = when (this) {
         Ping -> "InteractionType.Ping($type)"
         ApplicationCommand -> "InteractionType.ApplicationCommand($type)"
+        Component -> "InteractionType.ComponentInvoke($type)"
         is Unknown -> "InteractionType.Unknown($type)"
     }
 
@@ -195,6 +204,7 @@ sealed class InteractionType(val type: Int) {
             return when (val type = decoder.decodeInt()) {
                 1 -> Ping
                 2 -> ApplicationCommand
+                3 -> Component
                 else -> Unknown(type)
             }
         }
@@ -207,12 +217,15 @@ sealed class InteractionType(val type: Int) {
 }
 
 @Serializable
-@KordPreview
-data class DiscordApplicationCommandInteractionData(
-    val id: Snowflake,
-    val name: String,
+data class InteractionCallbackData(
+    val id: OptionalSnowflake = OptionalSnowflake.Missing,
+    val name: Optional<String> = Optional.Missing(),
     val resolved: Optional<ResolvedObjects> = Optional.Missing(),
-    val options: Optional<List<Option>> = Optional.Missing()
+    val options: Optional<List<Option>> = Optional.Missing(),
+    @SerialName("custom_id")
+    val customId: Optional<String> = Optional.Missing(),
+    @SerialName("component_type")
+    val componentType: Optional<ComponentType> = Optional.Missing()
 )
 
 @Serializable(with = Option.Serializer::class)
@@ -287,7 +300,7 @@ sealed class Option {
         }
 
         override fun serialize(encoder: Encoder, value: Option) {
-            when(value){
+            when (value) {
                 is CommandArgument<*> -> CommandArgument.Serializer.serialize(encoder, value)
                 is CommandGroup -> encoder.encodeStructure(descriptor) {
                     encodeSerializableElement(
@@ -540,13 +553,14 @@ fun CommandArgument<*>.snowflake(): Snowflake {
     return Snowflake(id)
 }
 
-
 @Serializable(InteractionResponseType.Serializer::class)
 @KordPreview
 sealed class InteractionResponseType(val type: Int) {
     object Pong : InteractionResponseType(1)
     object ChannelMessageWithSource : InteractionResponseType(4)
     object DeferredChannelMessageWithSource : InteractionResponseType(5)
+    object DeferredUpdateMessage : InteractionResponseType(6)
+    object UpdateMessage : InteractionResponseType(7)
     class Unknown(type: Int) : InteractionResponseType(type)
 
     companion object;
@@ -561,6 +575,8 @@ sealed class InteractionResponseType(val type: Int) {
                 1 -> Pong
                 4 -> ChannelMessageWithSource
                 5 -> DeferredChannelMessageWithSource
+                6 -> DeferredUpdateMessage
+                7 -> UpdateMessage
                 else -> Unknown(type)
             }
         }
@@ -568,10 +584,8 @@ sealed class InteractionResponseType(val type: Int) {
         override fun serialize(encoder: Encoder, value: InteractionResponseType) {
             encoder.encodeInt(value.type)
         }
-
     }
 }
-
 
 @KordPreview
 @Serializable
@@ -619,3 +633,4 @@ data class DiscordGuildApplicationCommandPermission(
         }
     }
 }
+

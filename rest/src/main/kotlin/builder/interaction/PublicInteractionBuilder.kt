@@ -2,11 +2,14 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.AllowedMentions
+import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.components.ActionRowBuilder
+import dev.kord.rest.builder.components.ActionRowContainerBuilder
+import dev.kord.rest.builder.components.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.*
@@ -36,6 +39,9 @@ class PublicInteractionResponseCreateBuilder :
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
 
+    @KordPreview
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
+
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
 
@@ -56,6 +62,16 @@ class PublicInteractionResponseCreateBuilder :
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (embeds == null) embeds = mutableListOf()
         embeds!! += EmbedBuilder().apply(builder)
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    @KordPreview
+    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(ActionRowBuilder().apply(builder))
     }
 
     fun addFile(name: String, content: InputStream) {
@@ -102,6 +118,8 @@ class PublicInteractionResponseModifyBuilder :
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
+
     /**
      * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
      * (ping everything), calling this function but not configuring it before the request is build will result in all
@@ -126,6 +144,16 @@ class PublicInteractionResponseModifyBuilder :
         files += name to content
     }
 
+    @OptIn(ExperimentalContracts::class)
+    @KordPreview
+    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(ActionRowBuilder().apply(builder))
+    }
+
     suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
         addFile(path.fileName.toString(), Files.newInputStream(path))
     }
@@ -136,6 +164,7 @@ class PublicInteractionResponseModifyBuilder :
                 content = _content,
                 embeds = _embeds.mapList { it.toRequest() },
                 allowedMentions = _allowedMentions.map { it.build() },
+                components = Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
             ),
             files
         )
