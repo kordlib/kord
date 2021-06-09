@@ -1,12 +1,13 @@
 package dev.kord.rest.builder.interaction
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
 
-interface BaseInteractionResponseBuilder<T> : RequestBuilder<T> {
+sealed interface BaseInteractionResponseBuilder<T> : RequestBuilder<T> {
     var content: String?
 
     var embeds: MutableList<EmbedBuilder>?
@@ -15,5 +16,7 @@ interface BaseInteractionResponseBuilder<T> : RequestBuilder<T> {
 
 }
 
-typealias BaseInteractionResponseCreateBuilder = BaseInteractionResponseBuilder<MultipartInteractionResponseCreateRequest>
-typealias BaseInteractionResponseModifyBuilder = BaseInteractionResponseBuilder<MultipartInteractionResponseModifyRequest>
+@KordPreview
+interface BaseInteractionResponseCreateBuilder : BaseInteractionResponseBuilder<MultipartInteractionResponseCreateRequest>
+@KordPreview
+interface BaseInteractionResponseModifyBuilder : BaseInteractionResponseBuilder<MultipartInteractionResponseModifyRequest>
