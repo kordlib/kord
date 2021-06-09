@@ -12,6 +12,18 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * Represent a [intractable component within a message sent in Discord](https://discord.com/developers/docs/interactions/message-components#what-are-components).
+ *
+ * @property type the [ComponentType] of the component
+ * @property style the [ButtonStyle] of the component (if it is a button)
+ * @property style the text that appears on the button (if the component is a button)
+ * @property emoji an [DiscordPartialEmoji] that appears on the button (if the component is a button)
+ * @property customId a developer-defined identifier for the button, max 100 characters
+ * @property url a url for link-style buttons
+ * @property disabled whether the button is disabled, default `false`
+ * @property components a list of child components (for action rows)
+ */
 @KordPreview
 @Serializable
 data class DiscordComponent(
@@ -26,10 +38,18 @@ data class DiscordComponent(
     val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
+/**
+ * Representation of different [DiscordComponent] types.
+ *
+ * @property value the raw type value used by the Discord API
+ */
 @KordPreview
 @Serializable(with = ComponentType.Serializer::class)
 sealed class ComponentType(val value: Int) {
 
+    /**
+     * Fallback type used for types that haven't been added to Kord yet.
+     */
     class Unknown(value: Int) : ComponentType(value)
 
     /**
@@ -56,15 +76,50 @@ sealed class ComponentType(val value: Int) {
     }
 }
 
+/**
+ * Representation of different ButtonStyles.
+ *
+ * A cheat sheet on how the styles look like can be found [here](https://discord.com/assets/7bb017ce52cfd6575e21c058feb3883b.png)
+ *
+ * @see ComponentType.Button
+ */
 @KordPreview
 @Serializable(with = ButtonStyle.Serializer::class)
 sealed class ButtonStyle(val value: Int) {
 
+    /**
+     * A fallback style used for styles that haven't been added to Kord yet.
+     */
     class Unknown(value: Int) : ButtonStyle(value)
+
+    /**
+     * Blurple.
+     * Requires: [DiscordComponent.customId]
+     */
     object Primary : ButtonStyle(1)
+
+    /**
+     * Grey.
+     * Requires: [DiscordComponent.customId]
+     */
     object Secondary : ButtonStyle(2)
+
+    /**
+     * Green
+     * Requires: [DiscordComponent.customId]
+     */
     object Success : ButtonStyle(3)
+
+    /**
+     * Red.
+     * Requires: [DiscordComponent.customId]
+     */
     object Danger : ButtonStyle(4)
+
+    /**
+     * Grey, navigates to an URL.
+     * Requires: [DiscordComponent.url]
+     */
     object Link : ButtonStyle(5)
 
     companion object Serializer : KSerializer<ButtonStyle> {

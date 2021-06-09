@@ -63,6 +63,7 @@ import kotlin.contracts.contract
  * @param stickers The stickers sent with the message (bots currently can only receive messages with stickers, not send).
  * @param referencedMessage the message associated with [messageReference].
  * @param applicationId if the message is a response to an [Interaction][DiscordInteraction], this is the id of the interaction's application
+ * @param components a list of [components][DiscordComponent] which have been added to this message
  */
 @Serializable
 data class DiscordMessage(

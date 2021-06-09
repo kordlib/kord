@@ -81,6 +81,18 @@ sealed class Interaction : InteractionBehavior {
 }
 
 /**
+ * The base interaction for all slash-command related interactions.
+ *
+ * @see DmInteraction
+ * @see GuildInteraction
+ */
+@KordPreview
+sealed class CommandInteraction : Interaction() {
+    val command: InteractionCommand
+        get() = InteractionCommand(data.data, kord)
+}
+
+/**
  * The base command of all commands that can be executed under an interaction event.
  */
 @KordPreview
@@ -321,7 +333,7 @@ class DmInteraction(
     override val applicationId: Snowflake,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Interaction() {
+) : CommandInteraction() {
     /**
      * The user who invoked the interaction.
      */
@@ -331,6 +343,9 @@ class DmInteraction(
         DmInteraction(data, applicationId, kord, strategy.supply(kord))
 }
 
+/**
+ * An [Interaction] that was made with a [DiscordComponent].
+ */
 @KordPreview
 class ComponentInteraction(
     override val data: InteractionData,
@@ -345,7 +360,18 @@ class ComponentInteraction(
             Message(it, kord, supplier)
         }!!
 
+    /**
+     * The [components][DiscordComponent] of the message that was interacted with.
+     */
     val components: List<DiscordComponent> get() = message.components
+
+    /**
+     * The [DiscordComponent] the user interacted with.
+     *
+     * @see components
+     * @see DiscordComponent
+     */
+    val component: DiscordComponent get() = message.components.first { it.customId == data.data.customId }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction = ComponentInteraction(
         data, applicationId, kord, strategy.supply(kord)
@@ -358,7 +384,7 @@ class GuildInteraction(
     override val applicationId: Snowflake,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : Interaction(), GuildInteractionBehavior {
+) : CommandInteraction(), GuildInteractionBehavior {
 
     override val guildId: Snowflake
         get() = data.guildId.value!!
