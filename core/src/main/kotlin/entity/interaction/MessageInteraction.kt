@@ -38,7 +38,7 @@ class MessageInteraction(
     /**
      * The [UserBehavior] of the [user][Interaction.user] who invoked the [Interaction]
      */
-    val user: UserBehavior get() = UserBehavior(data.id, kord)
+    val user: UserBehavior get() = UserBehavior(data.user, kord)
 
     /**
      * the [InteractionType] of the interaction [MessageInteraction].

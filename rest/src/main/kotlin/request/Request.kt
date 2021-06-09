@@ -82,17 +82,17 @@ class MultipartRequest<B : Any, R>(
         body?.let {
             append("payload_json", Json.encodeToString(it.strategy, it.body))
         }
-        if (files.size == 1) append("file", filename = files[0].first) {
-            files[0].second.copyTo(outputStream())
-        } else files.forEachIndexed { index, pair ->
-            val name = pair.first
-            val inputStream = pair.second
-            append("file$index", name) { inputStream.copyTo(outputStream()) }
+        try {
+            if (files.size == 1) append("file", filename = files[0].first) {
+                files[0].second.copyTo(outputStream())
+            } else files.forEachIndexed { index, pair ->
+                val name = pair.first
+                val inputStream = pair.second
+                append("file$index", name) { inputStream.copyTo(outputStream()) }
+            }
+        } finally {
+            files.forEach { it.second.close() }
         }
     }
 
 }
-
-
-
-

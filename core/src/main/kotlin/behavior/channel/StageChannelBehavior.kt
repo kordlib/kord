@@ -3,6 +3,7 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.cache.data.StageInstanceData
 import dev.kord.core.entity.StageInstance
 import dev.kord.core.entity.channel.Channel
@@ -31,7 +32,6 @@ interface StageChannelBehavior : BaseVoiceChannelBehavior {
     ): StageChannelBehavior {
         return StageChannelBehavior(id, guildId, kord, strategy.supply(kord))
     }
-
 
     suspend fun createStageInstance(topic: String): StageInstance {
         val instance = kord.rest.stageInstance.createStageInstance(id, topic)

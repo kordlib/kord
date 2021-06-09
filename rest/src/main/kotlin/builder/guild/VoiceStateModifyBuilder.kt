@@ -8,7 +8,7 @@ import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.CurrentVoiceStateModifyRequest
 import dev.kord.rest.json.request.VoiceStateModifyRequest
-import java.time.Instant
+import kotlinx.datetime.Instant
 
 class CurrentVoiceStateModifyBuilder(val channelId: Snowflake) : RequestBuilder<CurrentVoiceStateModifyRequest> {
 
