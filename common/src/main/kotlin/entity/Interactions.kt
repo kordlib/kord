@@ -154,19 +154,22 @@ data class ResolvedObjects(
     val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing()
 )
 
-@Serializable()
+@Serializable
 @KordPreview
 class DiscordInteraction(
     val id: Snowflake,
+    @SerialName("application_id")
     val applicationId: Snowflake,
     val data: InteractionCallbackData,
+    @SerialName("guild_id")
     val guildId: OptionalSnowflake,
+    @SerialName("channel_id")
     val channelId: Snowflake,
-    val member: Optional<DiscordInteractionGuildMember>,
-    val user: Optional<DiscordUser>,
+    val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
+    val user: Optional<DiscordUser> = Optional.Missing(),
     val token: String,
     val version: Int,
-    val message: Optional<DiscordMessage>,
+    val message: Optional<DiscordMessage> = Optional.Missing(),
     val type: InteractionType
 )
 
