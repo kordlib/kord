@@ -1,11 +1,10 @@
 package dev.kord.rest.request
 
 import dev.kord.rest.route.Route
-import io.ktor.client.request.forms.append
-import io.ktor.client.request.forms.formData
-import io.ktor.http.encodeURLQueryComponent
-import io.ktor.util.StringValues
-import io.ktor.utils.io.streams.outputStream
+import io.ktor.client.request.forms.*
+import io.ktor.http.*
+import io.ktor.util.*
+import io.ktor.utils.io.streams.*
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 
@@ -82,17 +81,15 @@ class MultipartRequest<B : Any, R>(
         body?.let {
             append("payload_json", Json.encodeToString(it.strategy, it.body))
         }
-        try {
+
             if (files.size == 1) append("file", filename = files[0].first) {
-                files[0].second.copyTo(outputStream())
+                files[0].second.use { it.copyTo(outputStream()) }
             } else files.forEachIndexed { index, pair ->
                 val name = pair.first
                 val inputStream = pair.second
-                append("file$index", name) { inputStream.copyTo(outputStream()) }
+                append("file$index", name) { inputStream.use { it.copyTo(outputStream()) }  }
             }
-        } finally {
-            files.forEach { it.second.close() }
-        }
+
     }
 
 }

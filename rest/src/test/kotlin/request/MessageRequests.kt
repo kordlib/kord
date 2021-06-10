@@ -12,15 +12,10 @@ import java.io.InputStream
 class MessageRequests {
 	@Test
 	fun `attachment stream closed`() = runBlocking {
-		val linusStream = object : InputStream() {
-			val stream = ClassLoader.getSystemResourceAsStream("images/kord.png")!!
-			var closed = false; private set
-			override fun read() = stream.read()
-			override fun close() { stream.close(); closed = true }
-		}
+		val stream = ClassLoader.getSystemResourceAsStream("images/kord.png")!!
 
-		MultipartRequest<Any, GatewayResponse>(Route.GatewayGet, mapOf(), StringValues.Empty, StringValues.Empty, null, listOf("linus.png" to linusStream))
+		MultipartRequest<Any, GatewayResponse>(Route.GatewayGet, mapOf(), StringValues.Empty, StringValues.Empty, null, listOf("linus.png" to stream))
 
-		assert(linusStream.closed)
+		assertThrows<Exception> { stream.reset() }
 	}
 }
