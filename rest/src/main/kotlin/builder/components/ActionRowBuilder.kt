@@ -25,26 +25,23 @@ class ActionRowBuilder : MessageComponentBuilder {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components.add(ButtonBuilder.InteractionButtonBuilder()
-            .apply {
-                this.style = style
-                this.customId = customId
-            }
-            .apply(builder))
+        components.add(
+            ButtonBuilder.InteractionButtonBuilder(style, customId).apply(builder)
+        )
     }
 
     @OptIn(ExperimentalContracts::class)
-    inline fun linkButton(label: String, url: String, builder: ButtonBuilder.LinkButtonBuilder.() -> Unit = {}) {
+    inline fun linkButton(
+        url: String,
+        builder: ButtonBuilder.LinkButtonBuilder.() -> Unit
+    ) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components.add(ButtonBuilder.LinkButtonBuilder()
-            .apply {
-                this.url = url
-                this.label = label
-            }
-            .apply(builder))
+        components.add(
+            ButtonBuilder.LinkButtonBuilder(url).apply(builder)
+        )
     }
 
     override fun build(): DiscordComponent =

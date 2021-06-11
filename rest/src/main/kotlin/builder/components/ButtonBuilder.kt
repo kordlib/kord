@@ -9,38 +9,82 @@ import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.optional
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 @KordDsl
 @KordPreview
 sealed class ButtonBuilder : ActionRowComponentBuilder {
 
-    @PublishedApi
-    internal open var _style: Optional<ButtonStyle> = Optional.Missing()
-    private var _label: Optional<String> = Optional.Missing()
-    var label by ::_label.delegate()
-    private var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
-    var emoji by ::_emoji.delegate()
-    internal var _customId: Optional<String> = Optional.Missing()
-    internal var _url: Optional<String> = Optional.Missing()
-    private var _disabled: OptionalBoolean = OptionalBoolean.Missing
-    var disabled by ::_disabled.delegate()
+    /**
+     * The text that appears on the button, either this and/or [emoji] need to be set
+     * for the button to be valid.
+     */
+    abstract var label: String?
 
+    /**
+     * The emoji that appears on the button, either this and/or [label] need to be set
+     * for the button to be valid.
+     */
+    abstract var emoji: DiscordPartialEmoji?
 
-    class InteractionButtonBuilder : ButtonBuilder() {
-        var style by ::_style.delegate()
-        var customId by ::_customId.delegate()
+    /**
+     * Whether the button is clickable.
+     */
+    var disabled: Boolean = false
+
+    /**
+     * A builder for a button that can create Interactions when clicked.
+     *
+     * @param style the style of this button, [ButtonStyle.Link] is not valid.
+     * @param customId the ID of this button, used to identify component interactions.
+     */
+    class InteractionButtonBuilder(
+        var style: ButtonStyle,
+        var customId: String
+    ) : ButtonBuilder() {
+
+        private var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
+        override var emoji: DiscordPartialEmoji? by ::_emoji.delegate()
+
+        private var _label: Optional<String> = Optional.Missing()
+        override var label: String? by ::_label.delegate()
+
+        override fun build(): DiscordComponent = DiscordComponent(
+            ComponentType.Button,
+            Optional(style),
+            _label,
+            _emoji,
+            Optional(customId),
+            Optional.Missing(),
+            OptionalBoolean.Value(disabled),
+        )
+
     }
 
-    class LinkButtonBuilder : ButtonBuilder() {
-        var url by ::_url.delegate()
-        override var _style: Optional<ButtonStyle> = ButtonStyle.Link.optional()
+    /**
+     * A button that links to the [url].
+     *
+     * @param url The url to open when clicked.
+     */
+    class LinkButtonBuilder(
+        var url: String
+    ) : ButtonBuilder() {
+
+        private var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
+        override var emoji: DiscordPartialEmoji? by ::_emoji.delegate()
+
+        private var _label: Optional<String> = Optional.Missing()
+        override var label: String? by ::_label.delegate()
+
+        override fun build(): DiscordComponent = DiscordComponent(
+            ComponentType.Button,
+            Optional(ButtonStyle.Link),
+            _label,
+            _emoji,
+            Optional.Missing(),
+            Optional.Value(url),
+            OptionalBoolean.Value(disabled),
+        )
+
     }
 
-    override fun build(): DiscordComponent = DiscordComponent(
-        ComponentType.Button, _style, _label, _emoji, _customId, _url, _disabled
-    )
 }
