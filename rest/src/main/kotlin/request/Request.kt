@@ -81,15 +81,20 @@ class MultipartRequest<B : Any, R>(
         body?.let {
             append("payload_json", Json.encodeToString(it.strategy, it.body))
         }
+        try {
 
-            if (files.size == 1) append("file", filename = files[0].first) {
-                files[0].second.use { it.copyTo(outputStream()) }
-            } else files.forEachIndexed { index, pair ->
+            files.forEachIndexed { index, pair ->
                 val name = pair.first
                 val inputStream = pair.second
-                append("file$index", name) { inputStream.use { it.copyTo(outputStream()) }  }
+                append(
+                    "file$index",
+                    inputStream.readAllBytes(),
+                    Headers.build { append(HttpHeaders.ContentDisposition, "filename=$name") }
+                )
             }
-
+        } finally {
+            files.forEach { it.second.close() }
+        }
     }
-
 }
+
