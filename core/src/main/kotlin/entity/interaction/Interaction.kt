@@ -10,6 +10,7 @@ import dev.kord.core.behavior.GuildInteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
 import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
@@ -362,7 +363,7 @@ class ComponentInteraction(
     override val applicationId: Snowflake,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : Interaction(), InteractionBehavior {
+) : Interaction(), ComponentInteractionBehavior {
 
     override val user: UserBehavior = UserBehavior(data.member.value!!.userId, kord)
 
@@ -387,103 +388,6 @@ class ComponentInteraction(
     val component: ButtonComponent
         get() = message?.components.orEmpty()
             .filterIsInstance<ButtonComponent>().first { it.customId == componentId }
-
-    /**
-     * Acknowledges a component interaction publicly with the intent of updating it later.
-     *
-     * There is no requirement to actually update the message later, calling this is
-     * sufficient to handle the interaction and stops any 'loading' animations in the client.
-     *
-     * There is no noticeable difference between this and [acknowledgeEphemeralDeferredMessageUpdate]
-     * when it comes to acknowledging the interaction, both functions can be called
-     * on public and ephemeral messages. The only difference is in the **followUp** calls,
-     * which will become public or ephemeral respectively.
-     */
-    @OptIn(ExperimentalContracts::class)
-    suspend fun acknowledgePublicDeferredMessageUpdate(): PublicInteractionResponseBehavior {
-        val request = InteractionResponseCreateRequest(
-            type = InteractionResponseType.DeferredUpdateMessage
-        )
-
-        kord.rest.interaction.createInteractionResponse(id, token, request)
-
-        return PublicInteractionResponseBehavior(applicationId, token, kord)
-    }
-
-    /**
-     * Acknowledges a component interaction ephemerally with the intent of updating it later.
-     *
-     * There is no requirement to actually update the message later, calling this is
-     * sufficient to handle the interaction and stops any 'loading' state in the client.
-     *
-     * There is no noticeable difference between this and [acknowledgePublicDeferredMessageUpdate]
-     * when it comes to acknowledging the interaction, both functions can be called
-     * on public and ephemeral messages. The only difference is in the **followUp** calls,
-     * which will become ephemeral or public respectively.
-     */
-    @OptIn(ExperimentalContracts::class)
-    suspend fun acknowledgeEphemeralDeferredMessageUpdate(): EphemeralInteractionResponseBehavior {
-        val request = InteractionResponseCreateRequest(
-            data = Optional.Value(
-                InteractionApplicationCommandCallbackData(
-                    flags = Optional(MessageFlags(MessageFlag.Ephemeral))
-                )
-            ),
-            type = InteractionResponseType.DeferredUpdateMessage
-        )
-
-        kord.rest.interaction.createInteractionResponse(id, token, request)
-
-        return EphemeralInteractionResponseBehavior(applicationId, token, kord)
-    }
-
-    /**
-     * Acknowledges a component interaction publicly and updates the message with the [builder].
-     *
-     * There is no noticeable difference between this and [acknowledgeEphemeralUpdateMessage]
-     * when it comes to acknowledging the interaction, both functions can be called
-     * on public and ephemeral messages. The only difference is in the **followUp** calls,
-     * which will become public or ephemeral respectively.
-     */
-    @OptIn(ExperimentalContracts::class)
-    suspend fun acknowledgePublicUpdateMessage(builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit): PublicInteractionResponseBehavior {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-        val request = UpdateMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
-
-        kord.rest.interaction.createInteractionResponse(
-            id,
-            token,
-            request.copy(request = request.request.copy(InteractionResponseType.UpdateMessage))
-        )
-
-        return PublicInteractionResponseBehavior(applicationId, token, kord)
-    }
-
-    /**
-     * Acknowledges a component interaction ephemerally and updates the message with the [builder].
-     *
-     * There is no noticeable difference between this and [acknowledgeEphemeralUpdateMessage]
-     * when it comes to acknowledging the interaction, both functions can be called
-     * on public and ephemeral messages. The only difference is in the **followUp** calls,
-     * which will become ephemeral or public respectively.
-     */
-    @OptIn(ExperimentalContracts::class)
-    suspend fun acknowledgeEphemeralUpdateMessage(builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit): EphemeralInteractionResponseBehavior {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-        val request = UpdateMessageInteractionResponseCreateBuilder(
-            flags = MessageFlags(MessageFlag.Ephemeral)
-        ).apply(builder).toRequest()
-
-        kord.rest.interaction.createInteractionResponse(
-            id,
-            token,
-            request
-        )
-
-        return EphemeralInteractionResponseBehavior(applicationId, token, kord)
-    }
 
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ComponentInteraction = ComponentInteraction(
