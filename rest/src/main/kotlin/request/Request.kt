@@ -4,7 +4,6 @@ import dev.kord.rest.route.Route
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
 import io.ktor.util.*
-import io.ktor.utils.io.streams.*
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 
@@ -88,7 +87,7 @@ class MultipartRequest<B : Any, R>(
                 val inputStream = pair.second
                 append(
                     "file$index",
-                    inputStream.readAllBytes(),
+                    inputStream.readBytes(),
                     Headers.build { append(HttpHeaders.ContentDisposition, "filename=$name") }
                 )
             }
