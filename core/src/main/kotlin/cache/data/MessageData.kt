@@ -37,7 +37,7 @@ data class MessageData(
     val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
     val interaction: Optional<MessageInteractionData> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val components: Optional<List<ComponentData>> = Optional.Missing()
 ) {
 
     fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
@@ -141,7 +141,7 @@ data class MessageData(
                 stickers.mapList { MessageStickerData.from(it) },
                 referencedMessage.mapNotNull { from(it) },
                 interaction.map { MessageInteractionData.from(it) },
-                components = components
+                components = components.mapList { ComponentData.from(it) }
             )
         }
     }
