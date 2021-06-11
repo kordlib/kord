@@ -1,4 +1,4 @@
-package dev.kord.rest.builder.components
+package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordComponent

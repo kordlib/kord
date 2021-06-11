@@ -7,8 +7,8 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapNullable
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.builder.components.ActionRowBuilder
-import dev.kord.rest.builder.components.MessageComponentBuilder
+import dev.kord.rest.builder.component.ActionRowBuilder
+import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.json.request.MessageEditPatchRequest
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

@@ -6,8 +6,8 @@ import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.builder.components.ActionRowBuilder
-import dev.kord.rest.builder.components.MessageComponentBuilder
+import dev.kord.rest.builder.component.ActionRowBuilder
+import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.*

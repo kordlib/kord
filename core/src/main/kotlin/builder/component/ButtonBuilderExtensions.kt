@@ -4,7 +4,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.core.entity.GuildEmoji
 import dev.kord.core.entity.ReactionEmoji
-import dev.kord.rest.builder.components.ButtonBuilder
+import dev.kord.rest.builder.component.ButtonBuilder
 
 @KordPreview
 fun ButtonBuilder.emoji(emoji: ReactionEmoji) {
