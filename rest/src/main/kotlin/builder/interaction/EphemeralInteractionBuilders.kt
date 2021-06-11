@@ -10,6 +10,8 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.components.ActionRowBuilder
+import dev.kord.rest.builder.components.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
@@ -28,6 +30,7 @@ class EphemeralInteractionResponseModifyBuilder : RequestBuilder<InteractionResp
     private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
     var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
 
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     @OptIn(ExperimentalContracts::class)
     inline fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
@@ -35,9 +38,22 @@ class EphemeralInteractionResponseModifyBuilder : RequestBuilder<InteractionResp
         allowedMentions = AllowedMentionsBuilder().apply(builder).build()
     }
 
+    @OptIn(ExperimentalContracts::class)
+    @KordPreview
+    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(ActionRowBuilder().apply(builder))
+    }
 
     override fun toRequest(): InteractionResponseModifyRequest {
-        return InteractionResponseModifyRequest(content = _content, allowedMentions = _allowedMentions)
+        return InteractionResponseModifyRequest(
+            content = _content,
+            allowedMentions = _allowedMentions,
+            components = Optional.missingOnEmpty(components.map { it.build() })
+        )
 
     }
 }

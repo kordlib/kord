@@ -173,6 +173,16 @@ class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessa
     }
 
     @OptIn(ExperimentalContracts::class)
+    @KordPreview
+    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(ActionRowBuilder().apply(builder))
+    }
+
+    @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -206,6 +216,8 @@ class EphemeralFollowupMessageCreateBuilder(var content: String) :
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
+
     /**
      * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
      * (ping everything), calling this function but not configuring it before the request is build will result in all
@@ -217,7 +229,15 @@ class EphemeralFollowupMessageCreateBuilder(var content: String) :
         allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
-    val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    @OptIn(ExperimentalContracts::class)
+    @KordPreview
+    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(ActionRowBuilder().apply(builder))
+    }
 
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(

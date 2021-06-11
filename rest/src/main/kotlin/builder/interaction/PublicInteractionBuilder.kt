@@ -2,13 +2,11 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.components.ActionRowBuilder
-import dev.kord.rest.builder.components.ActionRowContainerBuilder
 import dev.kord.rest.builder.components.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
@@ -89,12 +87,13 @@ class PublicInteractionResponseCreateBuilder :
 
         return MultipartInteractionResponseCreateRequest(
             InteractionResponseCreateRequest(
-                type,
+                    type,
                 InteractionApplicationCommandCallbackData(
                     content = _content,
                     embeds = _embeds.mapList { it.toRequest() },
                     allowedMentions = _allowedMentions.map { it.build() },
-                    tts = _tts
+                    tts = _tts,
+                    components = Optional.missingOnEmpty(components.map { it.build() })
                 ).optional()
             ),
             files
