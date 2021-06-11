@@ -10,15 +10,25 @@ import dev.kord.core.behavior.GuildInteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.InteractionBehavior
+import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
 import dev.kord.core.cache.data.ApplicationInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.DmChannel
 import dev.kord.core.entity.channel.ResolvedChannel
+import dev.kord.core.entity.component.ButtonComponent
+import dev.kord.core.entity.component.Component
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.builder.interaction.UpdateMessageInteractionResponseCreateBuilder
+import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
+import dev.kord.rest.json.request.InteractionResponseCreateRequest
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * An instance of [Interaction] (https://discord.com/developers/docs/interactions/slash-commands#interaction)
@@ -344,7 +354,7 @@ class DmInteraction(
 }
 
 /**
- * An [Interaction] that was made with a [DiscordComponent].
+ * An [Interaction] that was made with a [Component].
  */
 @KordPreview
 class ComponentInteraction(
@@ -353,25 +363,31 @@ class ComponentInteraction(
     override val kord: Kord,
     override val supplier: EntitySupplier
 ) : Interaction(), InteractionBehavior {
+
     override val user: UserBehavior = UserBehavior(data.member.value!!.userId, kord)
 
-    val message: Message
+    /**
+     * The message that contains the interacted component, null if the message is ephemeral.
+     */
+    val message: Message?
         get() = data.message.unwrap {
             Message(it, kord, supplier)
-        }!!
+        }
 
     /**
-     * The [components][DiscordComponent] of the message that was interacted with.
+     * The [ButtonComponent.customId] that triggered the interaction.
      */
-    val components: List<DiscordComponent> get() = message.components
+    val componentId: String get() = data.data.customId.value!!
 
     /**
-     * The [DiscordComponent] the user interacted with.
+     * The [ButtonComponent] the user interacted with, null if the message is ephemeral.
      *
-     * @see components
-     * @see DiscordComponent
+     * @see Component
      */
-    val component: DiscordComponent get() = message.components.first { it.customId == data.data.customId }
+    val component: ButtonComponent
+        get() = message?.components.orEmpty()
+            .filterIsInstance<ButtonComponent>().first { it.customId == componentId }
+
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction = ComponentInteraction(
         data, applicationId, kord, strategy.supply(kord)

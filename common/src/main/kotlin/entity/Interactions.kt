@@ -169,9 +169,40 @@ class DiscordInteraction(
     val user: Optional<DiscordUser> = Optional.Missing(),
     val token: String,
     val version: Int,
+    @Serializable(with = MaybeMessageSerializer::class)
     val message: Optional<DiscordMessage> = Optional.Missing(),
     val type: InteractionType
-)
+) {
+
+    /**
+     * Serializer that handles incomplete messages in [DiscordInteraction.message]. Discards
+     * any incomplete messages as missing optionals.
+     */
+    private object MaybeMessageSerializer :
+        KSerializer<Optional<DiscordMessage>> by Optional.serializer(DiscordMessage.serializer()) {
+
+        override fun deserialize(decoder: Decoder): Optional<DiscordMessage> {
+            decoder as JsonDecoder
+
+            val element = decoder.decodeJsonElement().jsonObject
+
+            //check if required fields are present, if not, discard the data
+            return if (
+                element["channel_id"] == null ||
+                element["author"] == null
+            ) {
+                Optional.Missing()
+            } else {
+                decoder.json.decodeFromJsonElement(
+                    Optional.serializer(DiscordMessage.serializer()), element
+                )
+            }
+        }
+
+
+    }
+}
+
 
 @Serializable(InteractionType.Serializer::class)
 @KordPreview
@@ -633,4 +664,3 @@ data class DiscordGuildApplicationCommandPermission(
         }
     }
 }
-
