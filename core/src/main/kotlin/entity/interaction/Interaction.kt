@@ -486,7 +486,7 @@ class ComponentInteraction(
     }
 
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction = ComponentInteraction(
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ComponentInteraction = ComponentInteraction(
         data, applicationId, kord, strategy.supply(kord)
     )
 
