@@ -2,13 +2,12 @@ package dev.kord.rest.builder.message
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapNullable
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.builder.components.ActionRowContainerBuilder
+import dev.kord.rest.builder.components.ActionRowBuilder
 import dev.kord.rest.builder.components.MessageComponentBuilder
 import dev.kord.rest.json.request.MessageEditPatchRequest
 import kotlin.contracts.ExperimentalContracts
@@ -54,12 +53,12 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
 
     @OptIn(ExperimentalContracts::class)
     @KordPreview
-    inline fun components(builder: ActionRowContainerBuilder.() -> Unit) {
+    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components.addAll(ActionRowContainerBuilder().apply(builder).components)
+        components.add(ActionRowBuilder().apply(builder))
     }
 
     @OptIn(KordPreview::class)
