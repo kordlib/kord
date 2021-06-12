@@ -50,7 +50,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
      *
      * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
      */
-    suspend fun ackowledgePublic(): PublicInteractionResponseBehavior {
+    suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
         val request = PublicInteractionResponseCreateBuilder().toRequest()
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return PublicInteractionResponseBehavior(applicationId, token, kord)
