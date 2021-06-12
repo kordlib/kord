@@ -153,7 +153,8 @@ data class DiscordGuild(
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("welcome_screen")
     val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
-    val nsfw: Boolean
+    @SerialName("nsfw_level")
+    val nsfwLevel: NsfwLevel
     )
 
 /**
@@ -499,6 +500,40 @@ sealed class MFALevel(val value: Int) {
         override fun serialize(encoder: Encoder, value: MFALevel) {
             encoder.encodeInt(value.value)
         }
+    }
+}
+/**
+ * A representation of a [Discord Verification Level](https://discord.com/developers/docs/resources/guild#guild-object-verification-level).
+ */
+@Serializable(with = NsfwLevel.Serializer::class)
+sealed class NsfwLevel(val value: Int) {
+    class Unknown(value: Int) : NsfwLevel(value)
+
+    object Default : NsfwLevel(0)
+
+    object Explicit : NsfwLevel(1)
+
+    object Safe : NsfwLevel(2)
+
+    object AgeRestricted : NsfwLevel(3)
+
+    internal object Serializer : KSerializer<NsfwLevel> {
+
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("Kord.GuildNsfwLevel", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): NsfwLevel = when (val value = decoder.decodeInt()) {
+            0 -> Default
+            1 -> Explicit
+            2 -> Safe
+            3 -> AgeRestricted
+            else -> Unknown(value)
+        }
+
+        override fun serialize(encoder: Encoder, value: NsfwLevel) {
+            encoder.encodeInt(value.value)
+        }
+
     }
 }
 

@@ -335,7 +335,7 @@ class Guild(
     /**
      * True if this guild is [designated as NSFW](https://support.discord.com/hc/en-us/articles/1500005389362-NSFW-Server-Designation)
      */
-    val nsfw: Boolean get() = data.nsfw
+    val nsfw: NsfwLevel get() = data.nsfwLevel
 
     /**
      * Requests to get the [VoiceChannel] represented by the [afkChannelId],

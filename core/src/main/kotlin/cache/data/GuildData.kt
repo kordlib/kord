@@ -55,7 +55,7 @@ data class GuildData(
     val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     val welcomeScreen: Optional<WelcomeScreenData> = Optional.Missing(),
-    val nsfw: Boolean
+    val nsfwLevel: NsfwLevel
 ) {
     companion object {
 
@@ -116,7 +116,7 @@ data class GuildData(
                 approximateMemberCount = approximateMemberCount,
                 approximatePresenceCount = approximatePresenceCount,
                 welcomeScreen = welcomeScreen.map { WelcomeScreenData.from(it) },
-                nsfw = nsfw
+                nsfwLevel = nsfwLevel
             )
         }
     }
