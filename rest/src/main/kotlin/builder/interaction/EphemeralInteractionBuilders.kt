@@ -81,7 +81,7 @@ class EphemeralInteractionResponseCreateBuilder : BaseInteractionResponseCreateB
         val data = InteractionApplicationCommandCallbackData(
             content = _content,
             flags = flags,
-            embeds = embeds.map { it.toRequest() }
+            embeds = Optional.missingOnEmpty(embeds.map { it.toRequest() })
         )
         return MultipartInteractionResponseCreateRequest(
             InteractionResponseCreateRequest(type, data.optional())

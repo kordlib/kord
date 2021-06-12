@@ -90,7 +90,7 @@ class PublicInteractionResponseCreateBuilder :
                     type,
                 InteractionApplicationCommandCallbackData(
                     content = _content,
-                    embeds = embeds.map { it.toRequest() },
+                    embeds = Optional.missingOnEmpty(embeds.map { it.toRequest() }),
                     allowedMentions = _allowedMentions.map { it.build() },
                     tts = _tts,
                     components = Optional.missingOnEmpty(components.map { it.build() })
