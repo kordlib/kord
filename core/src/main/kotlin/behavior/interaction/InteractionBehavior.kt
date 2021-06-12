@@ -132,10 +132,7 @@ suspend inline fun InteractionBehavior.respondEphemeral(
 ): EphemeralInteractionResponseBehavior {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = EphemeralInteractionResponseCreateBuilder().apply {
-        this.content = content
-        builder()
-    }
+    val builder = EphemeralInteractionResponseCreateBuilder().apply(builder)
     val request = builder.toRequest()
     kord.rest.interaction.createInteractionResponse(id, token, request)
     return EphemeralInteractionResponseBehavior(applicationId, token, kord)
