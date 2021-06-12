@@ -127,7 +127,6 @@ suspend inline fun InteractionBehavior.respondPublic(
 @KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respondEphemeral(
-    content: String,
     builder: EphemeralInteractionResponseCreateBuilder.() -> Unit = {}
 ): EphemeralInteractionResponseBehavior {
 
