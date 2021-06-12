@@ -30,7 +30,7 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     @KordPreview
-    var components: MutableList<MessageComponentBuilder> = mutableListOf()
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
