@@ -2,11 +2,12 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.InteractionResponseType
-import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.rest.builder.RequestBuilder
+import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.*
@@ -15,22 +16,18 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 @KordPreview
 @KordDsl
 class PublicInteractionResponseCreateBuilder :
-    RequestBuilder<MultipartInteractionResponseCreateRequest> {
+   BaseInteractionResponseCreateBuilder {
     private var _content: Optional<String> = Optional.Missing()
-    var content: String? by ::_content.delegate()
+    override var content: String? by ::_content.delegate()
 
-    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
-    var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+    override var embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+    override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
@@ -38,25 +35,6 @@ class PublicInteractionResponseCreateBuilder :
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
-
-
-    /**
-     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
-     * (ping everything), calling this function but not configuring it before the request is build will result in all
-     * pings being ignored.
-     */
-    @OptIn(ExperimentalContracts::class)
-    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
-        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun embed(builder: EmbedBuilder.() -> Unit) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (embeds == null) embeds = mutableListOf()
-        embeds!! += EmbedBuilder().apply(builder)
-    }
 
     fun addFile(name: String, content: InputStream) {
         files += name to content
@@ -68,7 +46,7 @@ class PublicInteractionResponseCreateBuilder :
 
     override fun toRequest(): MultipartInteractionResponseCreateRequest {
         val type =
-            if (files.isEmpty() && content == null && embeds == null) InteractionResponseType.DeferredChannelMessageWithSource
+            if (files.isEmpty() && content == null && embeds.isEmpty()) InteractionResponseType.DeferredChannelMessageWithSource
             else InteractionResponseType.ChannelMessageWithSource
 
         return MultipartInteractionResponseCreateRequest(
@@ -76,7 +54,7 @@ class PublicInteractionResponseCreateBuilder :
                 type,
                 InteractionApplicationCommandCallbackData(
                     content = _content,
-                    embeds = _embeds.mapList { it.toRequest() },
+                    embeds = embeds.map { it.toRequest() },
                     allowedMentions = _allowedMentions.map { it.build() },
                     tts = _tts
                 ).optional()
@@ -90,37 +68,16 @@ class PublicInteractionResponseCreateBuilder :
 @KordPreview
 @KordDsl
 class PublicInteractionResponseModifyBuilder :
-    RequestBuilder<MultipartInteractionResponseModifyRequest> {
+    BaseInteractionResponseModifyBuilder {
     private var _content: Optional<String> = Optional.Missing()
-    var content: String? by ::_content.delegate()
+    override var content: String? by ::_content.delegate()
 
-    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
-    var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+    override var embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+    override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
-
-    /**
-     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
-     * (ping everything), calling this function but not configuring it before the request is build will result in all
-     * pings being ignored.
-     */
-    @OptIn(ExperimentalContracts::class)
-    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
-        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
-    }
-
-
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun embed(builder: EmbedBuilder.() -> Unit) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (embeds == null) embeds = mutableListOf()
-        embeds!! += EmbedBuilder().apply(builder)
-    }
 
     fun addFile(name: String, content: InputStream) {
         files += name to content
@@ -134,7 +91,7 @@ class PublicInteractionResponseModifyBuilder :
         return MultipartInteractionResponseModifyRequest(
             InteractionResponseModifyRequest(
                 content = _content,
-                embeds = _embeds.mapList { it.toRequest() },
+                embeds = embeds.map { it.toRequest() },
                 allowedMentions = _allowedMentions.map { it.build() },
             ),
             files

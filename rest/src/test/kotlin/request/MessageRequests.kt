@@ -4,23 +4,38 @@ import dev.kord.rest.json.response.GatewayResponse
 import dev.kord.rest.route.Route
 import io.ktor.util.*
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.MethodOrderer
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.TestMethodOrder
 import java.io.InputStream
 
 @TestMethodOrder(MethodOrderer.MethodName::class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MessageRequests {
-	@Test
-	fun `attachment stream closed`() = runBlocking {
-		val linusStream = object : InputStream() {
-			val stream = ClassLoader.getSystemResourceAsStream("images/kord.png")!!
-			var closed = false; private set
-			override fun read() = stream.read()
-			override fun close() { stream.close(); closed = true }
-		}
+    @Test
+    fun `attachment stream closed`() = runBlocking {
+        val linusStream = object : InputStream() {
+            val stream = ClassLoader.getSystemResourceAsStream("images/kord.png")!!
+            var closed = false
+                private set
 
-		MultipartRequest<Any, GatewayResponse>(Route.GatewayGet, mapOf(), StringValues.Empty, StringValues.Empty, null, listOf("linus.png" to linusStream))
+            override fun read() = stream.read()
+            override fun close() {
+                stream.close()
+                closed = true
+            }
+        }
 
-		assert(linusStream.closed)
-	}
+        MultipartRequest<Any, GatewayResponse>(
+            Route.GatewayGet,
+            mapOf(),
+            StringValues.Empty,
+            StringValues.Empty,
+            null,
+            listOf("linus.png" to linusStream)
+        )
+
+        assert(linusStream.closed)
+    }
 }
