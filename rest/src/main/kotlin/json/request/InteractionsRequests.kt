@@ -32,7 +32,7 @@ data class ApplicationCommandModifyRequest(
 @KordPreview
 data class InteractionResponseModifyRequest(
     val content: Optional<String> = Optional.Missing(),
-    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    val embeds: List<EmbedRequest> = emptyList(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
@@ -63,7 +63,7 @@ data class MultipartInteractionResponseCreateRequest(
 class InteractionApplicationCommandCallbackData(
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     val content: Optional<String> = Optional.Missing(),
-    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    val embeds: List<EmbedRequest> = emptyList(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),

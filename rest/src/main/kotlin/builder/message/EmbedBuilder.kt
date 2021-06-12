@@ -151,7 +151,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         Optional.Value("embed"),
         _description,
         _url,
-        _timestamp.map { it.toString() },
+        _timestamp,
         _color,
         _footer.map { it.toRequest() },
         _image.map { EmbedImageRequest(it) },

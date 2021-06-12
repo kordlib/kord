@@ -104,13 +104,12 @@ data class DiscordMessage(
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
-    val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
-
     /*
      * don't trust the docs:
      * This is a list even though the docs say it's a component
      */
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val interaction: Optional<DiscordMessageInteraction> = Optional.Missing()
 )
 
 /**

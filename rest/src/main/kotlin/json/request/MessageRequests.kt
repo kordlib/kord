@@ -35,7 +35,7 @@ data class EmbedRequest(
     val type: Optional<String> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<String> = Optional.Missing(),
+    val timestamp: Optional<Instant> = Optional.Missing(),
     val color: Optional<Color> = Optional.Missing(),
     val footer: Optional<EmbedFooterRequest> = Optional.Missing(),
     val image: Optional<EmbedImageRequest> = Optional.Missing(),

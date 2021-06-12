@@ -111,7 +111,6 @@ fun GuildApplicationCommandBehavior(
         get() = id
 }
 
-
 @KordPreview
 fun GlobalApplicationCommandBehavior(
     applicationId: Snowflake,
