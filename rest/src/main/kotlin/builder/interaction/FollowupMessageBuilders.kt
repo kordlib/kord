@@ -33,8 +33,7 @@ class PublicFollowupMessageModifyBuilder :
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
-    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
-    var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+    var embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
@@ -48,8 +47,7 @@ class PublicFollowupMessageModifyBuilder :
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (embeds == null) embeds = mutableListOf()
-        embeds!! += EmbedBuilder().apply(builder)
+        embeds.add(EmbedBuilder().apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
@@ -87,7 +85,7 @@ class PublicFollowupMessageModifyBuilder :
         return MultipartFollowupMessageModifyRequest(
             FollowupMessageModifyRequest(
                 _content,
-                _embeds.mapList { it.toRequest() },
+                Optional.missingOnEmpty(embeds.map(EmbedBuilder::toRequest)),
                 _allowedMentions.map { it.build() },
                 Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
             ),
@@ -104,8 +102,7 @@ class EphemeralFollowupMessageModifyBuilder :
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
-    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
-    var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+    val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
@@ -124,9 +121,18 @@ class EphemeralFollowupMessageModifyBuilder :
         allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
+    @OptIn(ExperimentalContracts::class)
+    inline fun embed(builder: EmbedBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        embeds.add(EmbedBuilder().apply(builder))
+    }
+
     override fun toRequest(): FollowupMessageModifyRequest {
         return FollowupMessageModifyRequest(
             content = _content,
+            embeds = Optional.missingOnEmpty(embeds.map(EmbedBuilder::toRequest)),
             allowedMentions = _allowedMentions.map { it.build() },
             components = Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
         )
