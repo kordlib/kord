@@ -31,6 +31,15 @@ class EphemeralInteractionResponseModifyBuilder : BaseInteractionResponseModifyB
 
     val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
+
+    @OptIn(ExperimentalContracts::class)
+    inline fun embed(builder: EmbedBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        embeds.add(EmbedBuilder().apply(builder))
+    }
+
     @OptIn(ExperimentalContracts::class)
     inline fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -72,6 +81,14 @@ class EphemeralInteractionResponseCreateBuilder : BaseInteractionResponseCreateB
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
+
+    @OptIn(ExperimentalContracts::class)
+    inline fun embed(builder: EmbedBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        embeds.add(EmbedBuilder().apply(builder))
+    }
 
     override fun toRequest(): MultipartInteractionResponseCreateRequest {
         val flags = Optional.Value(MessageFlags(MessageFlag.Ephemeral))
