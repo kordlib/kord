@@ -333,7 +333,7 @@ class Guild(
     val welcomeScreen: WelcomeScreen? get() = data.welcomeScreen.unwrap { WelcomeScreen(it, kord) }
 
     /**
-     * True if this guild is [designated as NSFW](https://support.discord.com/hc/en-us/articles/1500005389362-NSFW-Server-Designation)
+     * The [NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level) of this Guild
      */
     val nsfw: NsfwLevel get() = data.nsfwLevel
 
