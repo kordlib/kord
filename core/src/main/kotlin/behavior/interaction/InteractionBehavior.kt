@@ -93,8 +93,7 @@ fun InteractionBehavior(
         get() = channelId
 
 
-    override val supplier: EntitySupplier
-        get() = strategy.supply(kord)
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
 }
 

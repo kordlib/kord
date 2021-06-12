@@ -1,18 +1,18 @@
 package dev.kord.rest.builder.interaction
 
-import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionResponseType
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.MessageFlags
+import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.map
-import dev.kord.common.entity.optional.optional
+import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.json.request.*
+import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
+import dev.kord.rest.json.request.InteractionResponseCreateRequest
+import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
@@ -23,26 +23,24 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordPreview
-@KordDsl
-class PublicInteractionResponseCreateBuilder :
-    BaseInteractionResponseCreateBuilder {
-    private var _content: Optional<String> = Optional.Missing()
-    override var content: String? by ::_content.delegate()
+class UpdateMessageInteractionResponseCreateBuilder(
+    private val flags: MessageFlags? = null
+) : RequestBuilder<MultipartInteractionResponseCreateRequest> {
 
-    override var embeds: MutableList<EmbedBuilder> = mutableListOf()
+    private var _content: Optional<String> = Optional.Missing()
+    var content: String? by ::_content.delegate()
+
+    val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
-
+    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
 
-    @KordPreview
     val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
-
 
     /**
      * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
@@ -58,8 +56,7 @@ class PublicInteractionResponseCreateBuilder :
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (embeds == null) embeds = mutableListOf()
-        embeds!! += EmbedBuilder().apply(builder)
+        embeds.add(EmbedBuilder().apply(builder))
     }
 
     @OptIn(ExperimentalContracts::class)
@@ -81,17 +78,14 @@ class PublicInteractionResponseCreateBuilder :
     }
 
     override fun toRequest(): MultipartInteractionResponseCreateRequest {
-        val type =
-            if (files.isEmpty() && content == null && embeds.isEmpty()) InteractionResponseType.DeferredChannelMessageWithSource
-            else InteractionResponseType.ChannelMessageWithSource
-
         return MultipartInteractionResponseCreateRequest(
             InteractionResponseCreateRequest(
-                    type,
+                InteractionResponseType.UpdateMessage,
                 InteractionApplicationCommandCallbackData(
                     content = _content,
                     embeds = Optional.missingOnEmpty(embeds.map { it.toRequest() }),
                     allowedMentions = _allowedMentions.map { it.build() },
+                    flags = flags.optional().coerceToMissing(),
                     tts = _tts,
                     components = Optional.missingOnEmpty(components.map { it.build() })
                 ).optional()
@@ -100,52 +94,5 @@ class PublicInteractionResponseCreateBuilder :
         )
 
     }
-}
 
-@KordPreview
-@KordDsl
-class PublicInteractionResponseModifyBuilder :
-    BaseInteractionResponseModifyBuilder {
-    private var _content: Optional<String> = Optional.Missing()
-    override var content: String? by ::_content.delegate()
-
-    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
-
-    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
-
-    val files: MutableList<Pair<String, InputStream>> = mutableListOf()
-
-    val components: MutableList<MessageComponentBuilder> = mutableListOf()
-
-    fun addFile(name: String, content: InputStream) {
-        files += name to content
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    @KordPreview
-    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        components.add(ActionRowBuilder().apply(builder))
-    }
-
-    suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
-        addFile(path.fileName.toString(), Files.newInputStream(path))
-    }
-
-    override fun toRequest(): MultipartInteractionResponseModifyRequest {
-        return MultipartInteractionResponseModifyRequest(
-            InteractionResponseModifyRequest(
-                content = _content,
-                embeds = embeds.map { it.toRequest() },
-                allowedMentions = _allowedMentions.map { it.build() },
-                components = Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
-            ),
-            files
-        )
-
-    }
 }

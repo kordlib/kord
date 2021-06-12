@@ -63,6 +63,7 @@ import kotlin.contracts.contract
  * @param stickers The stickers sent with the message (bots currently can only receive messages with stickers, not send).
  * @param referencedMessage the message associated with [messageReference].
  * @param applicationId if the message is a response to an [Interaction][DiscordInteraction], this is the id of the interaction's application
+ * @param components a list of [components][DiscordComponent] which have been added to this message
  */
 @Serializable
 data class DiscordMessage(
@@ -103,6 +104,11 @@ data class DiscordMessage(
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
+    /*
+     * don't trust the docs:
+     * This is a list even though the docs say it's a component
+     */
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing()
 )
 

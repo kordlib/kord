@@ -49,10 +49,10 @@ class SlashCommands(
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = ApplicationCommandsCreateBuilder().apply(builder).toRequest()
-
+        val commands = service.createGlobalApplicationCommands(applicationId, request)
         return flow {
-            for (command in service.createGlobalApplicationCommands(applicationId, request)) {
-                val data = ApplicationCommandData.from(command)
+            commands.forEach {
+                val data = ApplicationCommandData.from(it)
                 emit(GlobalApplicationCommand(data, service))
             }
         }
@@ -88,9 +88,10 @@ class SlashCommands(
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = ApplicationCommandsCreateBuilder().apply(builder).toRequest()
 
+        val commands = service.createGuildApplicationCommands(applicationId, guildId, request)
         return flow {
-            for (command in service.createGuildApplicationCommands(applicationId, guildId, request)) {
-                val data = ApplicationCommandData.from(command)
+            commands.forEach {
+                val data = ApplicationCommandData.from(it)
                 emit(GuildApplicationCommand(data, service, guildId))
             }
         }

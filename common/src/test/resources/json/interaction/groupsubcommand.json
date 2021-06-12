@@ -27,10 +27,13 @@
   "data": {
     "options": [
       {
+        "type": 2,
         "options": [
           {
+            "type": "1",
             "options": [
               {
+                "type": 4,
                 "value": 1,
                 "name": "testint"
               }

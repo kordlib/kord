@@ -2,10 +2,10 @@ package dev.kord.core
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
-
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.*
 import dev.kord.core.behavior.channel.*
+import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
 import dev.kord.rest.service.InteractionService
 
 /**
@@ -90,5 +90,18 @@ class Unsafe(private val kord: Kord) {
         service: InteractionService = kord.rest.interaction
     ): GlobalApplicationCommandBehavior =
         GlobalApplicationCommandBehavior(applicationId, commandId, service)
+
+    /**
+     * Creates a ComponentInteractionBehavior with the given [id], [channelId],
+     * [token] and [applicationId].
+     */
+    fun componentInteraction(
+        id: Snowflake,
+        channelId: Snowflake,
+        token: String,
+        applicationId: Snowflake = kord.selfId,
+    ): ComponentInteractionBehavior = ComponentInteractionBehavior(
+        id, channelId, token, applicationId, kord
+    )
 
 }

@@ -36,7 +36,8 @@ data class MessageData(
     val flags: Optional<MessageFlags> = Optional.Missing(),
     val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
-    val interaction: Optional<MessageInteractionData> = Optional.Missing()
+    val interaction: Optional<MessageInteractionData> = Optional.Missing(),
+    val components: Optional<List<ComponentData>> = Optional.Missing()
 ) {
 
     fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
@@ -103,7 +104,8 @@ data class MessageData(
             flags,
             stickers = stickers,
             referencedMessage = referencedMessage,
-            interaction = interaction
+            interaction = interaction,
+            components = components
         )
     }
 
@@ -138,7 +140,8 @@ data class MessageData(
                 flags,
                 stickers.mapList { MessageStickerData.from(it) },
                 referencedMessage.mapNotNull { from(it) },
-                interaction.map { MessageInteractionData.from(it) }
+                interaction.map { MessageInteractionData.from(it) },
+                components = components.mapList { ComponentData.from(it) }
             )
         }
     }

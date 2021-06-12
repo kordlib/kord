@@ -159,6 +159,7 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
 }
 
 
+@KordDsl
 @KordPreview
 class ApplicationCommandPermissionsBulkModifyBuilder :
         RequestBuilder<List<PartialDiscordGuildApplicationCommandPermissions>> {
@@ -187,6 +188,7 @@ class ApplicationCommandPermissionsBulkModifyBuilder :
     }
 }
 
+@KordDsl
 @KordPreview
 class ApplicationCommandPermissionsModifyBuilder :
         RequestBuilder<ApplicationCommandPermissionsEditRequest> {

@@ -31,7 +31,7 @@ class MessageInteraction(
     override val id: Snowflake get() = data.id
 
     /**
-     * 	the [name][ApplicationCommand.name] of the [ApplicationCommand] that triggered this message.
+     * the [name][ApplicationCommand.name] of the [ApplicationCommand] that triggered this message.
      */
     val name: String get() = data.name
 
