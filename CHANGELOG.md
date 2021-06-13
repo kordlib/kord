@@ -10,6 +10,7 @@
 * Implement Stage instances (#291)
 * Add Message interaction (#283)
 * Add Ephemeral embed support (#296)
+
 # Changes
 
 * Update deprecated message (#280)
@@ -26,6 +27,26 @@
 
 * Fix memory issues related to Permission combining (#277)
 
+# Dependencies
+
+* kotlin 1.4.32 -> 1.5.10
+* kotlinxSerialization 1.1.0 -> 1.2.1
+* ktor 1.5.2 -> 1.6.0
+* kotlinxCoroutines = 1.4.2 -> 1.5.0
+* kotlinLogging 2.0.4 -> 2.0.6
+* atomicFu 0.15.1 -> 0.16.1
+* binaryCompatibilityValidator 0.4.0 -> 0.5.0
+* kotlinx.datetime 0.2.1
+  
+
+const val kotlin = 
+const val kotlinxSerialization = 
+const val ktor = 
+const val kotlinxCoroutines = 
+const val kotlinLogging = 
+const val dateTime = 
+const val atomicFu = 
+const val binaryCompatibilityValidator = 
 
 # 0.7.0-RC3
 
