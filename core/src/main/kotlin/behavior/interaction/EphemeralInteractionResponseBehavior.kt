@@ -50,7 +50,7 @@ suspend inline fun EphemeralInteractionResponseBehavior.followUp(
     builder: EphemeralFollowupMessageCreateBuilder.() -> Unit = {}
 ): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = EphemeralFollowupMessageCreateBuilder(content).apply(builder)
+    val builder = EphemeralFollowupMessageCreateBuilder().apply(builder)
     val response = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest())
     val message = Message(response.toData(), kord)
     return EphemeralFollowupMessage(message, applicationId, token, kord)
