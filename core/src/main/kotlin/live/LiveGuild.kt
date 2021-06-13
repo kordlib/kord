@@ -18,111 +18,138 @@ import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.exception.LiveCancellationException
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 
 @KordPreview
-fun Guild.live(dispatcher: CoroutineDispatcher = Dispatchers.Default): LiveGuild =
-    LiveGuild(this, dispatcher)
+fun Guild.live(
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
+): LiveGuild = LiveGuild(this, coroutineScope)
 
 @KordPreview
-inline fun Guild.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveGuild.() -> Unit) =
-    this.live(dispatcher).apply(block)
+inline fun Guild.live(
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
+    block: LiveGuild.() -> Unit
+) = this.live(coroutineScope).apply(block)
 
 @KordPreview
-fun LiveGuild.onEmojisUpdate(block: suspend (EmojisUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onEmojisUpdate(scope: CoroutineScope = this, block: suspend (EmojisUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onIntegrationsUpdate(block: suspend (IntegrationsUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onIntegrationsUpdate(scope: CoroutineScope = this, block: suspend (IntegrationsUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onBanAdd(block: suspend (BanAddEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onBanAdd(scope: CoroutineScope = this, block: suspend (BanAddEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onBanRemove(block: suspend (BanRemoveEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onBanRemove(scope: CoroutineScope = this, block: suspend (BanRemoveEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onPresenceUpdate(block: suspend (PresenceUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onPresenceUpdate(scope: CoroutineScope = this, block: suspend (PresenceUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onVoiceServerUpdate(block: suspend (VoiceServerUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onVoiceServerUpdate(scope: CoroutineScope = this, block: suspend (VoiceServerUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onVoiceStateUpdate(block: suspend (VoiceStateUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onVoiceStateUpdate(scope: CoroutineScope = this, block: suspend (VoiceStateUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onWebhookUpdate(block: suspend (WebhookUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onWebhookUpdate(scope: CoroutineScope = this, block: suspend (WebhookUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onRoleCreate(block: suspend (RoleCreateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onRoleCreate(scope: CoroutineScope = this, block: suspend (RoleCreateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onRoleUpdate(block: suspend (RoleUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onRoleUpdate(scope: CoroutineScope = this, block: suspend (RoleUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onRoleDelete(block: suspend (RoleDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onRoleDelete(scope: CoroutineScope = this, block: suspend (RoleDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onMemberJoin(block: suspend (MemberJoinEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onMemberJoin(scope: CoroutineScope = this, block: suspend (MemberJoinEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onMemberUpdate(block: suspend (MemberUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onMemberUpdate(scope: CoroutineScope = this, block: suspend (MemberUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onMemberLeave(block: suspend (MemberLeaveEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onMemberLeave(scope: CoroutineScope = this, block: suspend (MemberLeaveEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onReactionAdd(block: suspend (ReactionAddEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onReactionAdd(scope: CoroutineScope = this, block: suspend (ReactionAddEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 inline fun LiveGuild.onReactionAdd(
     reaction: ReactionEmoji,
-    crossinline block: suspend (ReactionAddEvent) -> Unit
-) = on<ReactionAddEvent> {
+    scope: CoroutineScope = this, crossinline block: suspend (ReactionAddEvent) -> Unit
+) = on<ReactionAddEvent>(scope) {
     if (it.emoji == reaction) {
         block(it)
     }
 }
 
 @KordPreview
-fun LiveGuild.onReactionRemove(block: suspend (ReactionRemoveEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onReactionRemove(scope: CoroutineScope = this, block: suspend (ReactionRemoveEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 inline fun LiveGuild.onReactionRemove(
     reaction: ReactionEmoji,
-    crossinline block: suspend (ReactionRemoveEvent) -> Unit
-) = on<ReactionRemoveEvent> {
+    scope: CoroutineScope = this, crossinline block: suspend (ReactionRemoveEvent) -> Unit
+) = on<ReactionRemoveEvent>(scope) {
     if (it.emoji == reaction) {
         block(it)
     }
 }
 
 @KordPreview
-fun LiveGuild.onReactionRemoveAll(block: suspend (ReactionRemoveAllEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onReactionRemoveAll(scope: CoroutineScope = this, block: suspend (ReactionRemoveAllEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onMessageCreate(block: suspend (MessageCreateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onMessageCreate(scope: CoroutineScope = this, block: suspend (MessageCreateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onMessageUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onMessageUpdate(scope: CoroutineScope = this, block: suspend (MessageUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onMessageDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onMessageDelete(scope: CoroutineScope = this, block: suspend (MessageDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onChannelCreate(block: suspend (ChannelCreateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onChannelCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onChannelUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onChannelUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onChannelDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onGuildCreate(block: suspend (GuildCreateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onGuildCreate(scope: CoroutineScope = this, block: suspend (GuildCreateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuild.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onGuildUpdate(scope: CoroutineScope = this, block: suspend (GuildUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -130,13 +157,14 @@ fun LiveGuild.onGuildUpdate(block: suspend (GuildUpdateEvent) -> Unit) = on(cons
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveGuild.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveGuild.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 class LiveGuild(
     guild: Guild,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(guild.kord, dispatcher), KordEntity {
+    coroutineScope: CoroutineScope = guild.kord + SupervisorJob(guild.kord.coroutineContext.job)
+) : AbstractLiveKordEntity(guild.kord, coroutineScope), KordEntity {
 
     override val id: Snowflake
         get() = guild.id

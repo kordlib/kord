@@ -12,18 +12,18 @@ import dev.kord.core.event.channel.ChannelUpdateEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 
 @KordPreview
-fun GuildChannel.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
-    LiveGuildChannel(this, dispatcher)
+fun GuildChannel.live(
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
+) = LiveGuildChannel(this, coroutineScope)
 
 @KordPreview
 inline fun GuildChannel.live(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveGuildChannel.() -> Unit
-) = this.live(dispatcher).apply(block)
+) = this.live(coroutineScope).apply(block)
 
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
@@ -31,10 +31,12 @@ inline fun GuildChannel.live(
     level = DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveGuildChannel.onCreate(block: suspend (ChannelCreateEvent) -> Unit) = on(consumer = block)
+fun LiveGuildChannel.onCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuildChannel.onUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveGuildChannel.onUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Deprecated(
     "The block is not called when the live entity is shut down",
@@ -42,11 +44,12 @@ fun LiveGuildChannel.onUpdate(block: suspend (ChannelUpdateEvent) -> Unit) = on(
     DeprecationLevel.ERROR
 )
 @KordPreview
-inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
-    if (it is ChannelDeleteEvent || it is GuildDeleteEvent) {
-        block(it)
+inline fun LiveGuildChannel.onShutDown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+    on<Event>(scope) {
+        if (it is ChannelDeleteEvent || it is GuildDeleteEvent) {
+            block(it)
+        }
     }
-}
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -54,7 +57,8 @@ inline fun LiveGuildChannel.onShutDown(crossinline block: suspend (Event) -> Uni
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveGuildChannel.onDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveGuildChannel.onDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -62,13 +66,14 @@ fun LiveGuildChannel.onDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveGuildChannel.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveGuildChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 class LiveGuildChannel(
     channel: GuildChannel,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : LiveChannel(channel.kord, dispatcher), KordEntity {
+    coroutineScope: CoroutineScope = channel.kord + SupervisorJob(channel.kord.coroutineContext.job)
+) : LiveChannel(channel.kord, coroutineScope), KordEntity {
 
     override val id: Snowflake
         get() = channel.id

@@ -6,26 +6,28 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.User
 import dev.kord.core.event.Event
 import dev.kord.core.event.user.UserUpdateEvent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 
 @KordPreview
-fun User.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) = LiveUser(this, dispatcher)
+fun User.live(
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
+) = LiveUser(this, coroutineScope)
 
 @KordPreview
 inline fun User.live(
-    dispatcher: CoroutineDispatcher = Dispatchers.Default,
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveUser.() -> Unit
-) = this.live(dispatcher).apply(block)
+) = this.live(coroutineScope).apply(block)
 
 @KordPreview
-fun LiveUser.onUpdate(block: suspend (UserUpdateEvent) -> Unit) = on(consumer = block)
+fun LiveUser.onUpdate(scope: CoroutineScope = this, block: suspend (UserUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 class LiveUser(
     user: User,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(user.kord, dispatcher), KordEntity {
+    coroutineScope: CoroutineScope = user.kord + SupervisorJob(user.kord.coroutineContext.job)
+) : AbstractLiveKordEntity(user.kord, coroutineScope), KordEntity {
 
     override val id: Snowflake
         get() = user.id

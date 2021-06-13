@@ -26,9 +26,10 @@ interface LiveKordEntity : KordEntity, CoroutineScope {
 }
 
 @KordPreview
-abstract class AbstractLiveKordEntity(final override val kord: Kord, dispatcher: CoroutineDispatcher) : LiveKordEntity {
-
-    override val coroutineContext: CoroutineContext = dispatcher + SupervisorJob(kord.coroutineContext.job)
+abstract class AbstractLiveKordEntity(
+    override val kord: Kord,
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
+) : LiveKordEntity, CoroutineScope by coroutineScope {
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     final override val events: SharedFlow<Event> =
@@ -45,7 +46,7 @@ abstract class AbstractLiveKordEntity(final override val kord: Kord, dispatcher:
  * or [Kord] by default and will not propagate any exceptions.
  */
 @KordPreview
-inline fun <reified T : Event> LiveKordEntity.on(noinline consumer: suspend (T) -> Unit) =
+inline fun <reified T : Event> LiveKordEntity.on(scope: CoroutineScope = this, noinline consumer: suspend (T) -> Unit) =
     events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
         runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
-    }.catch { kordLogger.catching(it) }.launchIn(this)
+    }.catch { kordLogger.catching(it) }.launchIn(scope)
