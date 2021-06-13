@@ -12,80 +12,126 @@ import dev.kord.core.event.Event
 import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.message.*
+import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 
 @KordPreview
-suspend fun Message.live(dispatcher: CoroutineDispatcher = Dispatchers.Default) =
-    LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id, dispatcher)
+suspend fun Message.live(
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
+) = LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id, coroutineScope)
 
 @KordPreview
-suspend fun Message.live(dispatcher: CoroutineDispatcher = Dispatchers.Default, block: LiveMessage.() -> Unit) =
-    this.live(dispatcher).apply(block)
+suspend fun Message.live(
+    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
+    block: LiveMessage.() -> Unit
+) = this.live(coroutineScope).apply(block)
 
 @KordPreview
-fun LiveMessage.onReactionAdd(block: suspend (ReactionAddEvent) -> Unit) = on(consumer = block)
+fun LiveMessage.onReactionAdd(scope: CoroutineScope = this, block: suspend (ReactionAddEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 inline fun LiveMessage.onReactionAdd(
     reaction: ReactionEmoji,
-    crossinline block: suspend (ReactionAddEvent) -> Unit
-) = on<ReactionAddEvent> {
+    scope: CoroutineScope = this, crossinline block: suspend (ReactionAddEvent) -> Unit
+) = on<ReactionAddEvent>(scope) {
     if (it.emoji == reaction) {
         block(it)
     }
 }
 
 @KordPreview
-fun LiveMessage.onReactionRemove(block: suspend (ReactionRemoveEvent) -> Unit) = on(consumer = block)
+fun LiveMessage.onReactionRemove(scope: CoroutineScope = this, block: suspend (ReactionRemoveEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 inline fun LiveMessage.onReactionRemove(
     reaction: ReactionEmoji,
-    crossinline block: suspend (ReactionRemoveEvent) -> Unit
-) = on<ReactionRemoveEvent> {
+    scope: CoroutineScope = this, crossinline block: suspend (ReactionRemoveEvent) -> Unit
+) = on<ReactionRemoveEvent>(scope) {
     if (it.emoji == reaction) {
         block(it)
     }
 }
 
 @KordPreview
-fun LiveMessage.onReactionRemoveAll(block: suspend (ReactionRemoveAllEvent) -> Unit) = on(consumer = block)
+fun LiveMessage.onReactionRemoveAll(scope: CoroutineScope = this, block: suspend (ReactionRemoveAllEvent) -> Unit) =
+    on(scope = scope, consumer = block)
+
+@Suppress("DeprecatedCallableAddReplaceWith")
+@Deprecated(
+    "The block is never called because the message is already created, use LiveChannel.onMessageCreate(block)",
+    level = DeprecationLevel.ERROR
+)
+@KordPreview
+fun LiveMessage.onCreate(scope: CoroutineScope = this, block: suspend (MessageCreateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveMessage.onCreate(block: suspend (MessageCreateEvent) -> Unit) = on(consumer = block)
+fun LiveMessage.onUpdate(scope: CoroutineScope = this, block: suspend (MessageUpdateEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
+@Deprecated(
+    "The block is not called when the live entity is shut down",
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
+    DeprecationLevel.ERROR
+)
 @KordPreview
-fun LiveMessage.onUpdate(block: suspend (MessageUpdateEvent) -> Unit) = on(consumer = block)
-
-@KordPreview
-inline fun LiveMessage.onShutDown(crossinline block: suspend (Event) -> Unit) = on<Event> {
-    if (it is MessageDeleteEvent || it is MessageBulkDeleteEvent
-        || it is ChannelDeleteEvent || it is GuildDeleteEvent
-    ) {
-        block(it)
+inline fun LiveMessage.onShutdown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+    on<Event>(scope) {
+        if (it is MessageDeleteEvent || it is MessageBulkDeleteEvent
+            || it is ChannelDeleteEvent || it is GuildDeleteEvent
+        ) {
+            block(it)
+        }
     }
-}
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shut down",
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
+    DeprecationLevel.ERROR
+)
 @KordPreview
-fun LiveMessage.onOnlyDelete(block: suspend (MessageDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveMessage.onOnlyDelete(scope: CoroutineScope = this, block: suspend (MessageDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shut down",
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
+    DeprecationLevel.ERROR
+)
 @KordPreview
-fun LiveMessage.onBulkDelete(block: suspend (MessageBulkDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveMessage.onBulkDelete(scope: CoroutineScope = this, block: suspend (MessageBulkDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shut down",
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
+    DeprecationLevel.ERROR
+)
 @KordPreview
-fun LiveMessage.onChannelDelete(block: suspend (ChannelDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveMessage.onChannelDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
+@Deprecated(
+    "The block is not called when the entity is deleted because the live entity is shut down",
+    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
+    DeprecationLevel.ERROR
+)
 @KordPreview
-fun LiveMessage.onGuildDelete(block: suspend (GuildDeleteEvent) -> Unit) = on(consumer = block)
+fun LiveMessage.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+    on(scope = scope, consumer = block)
 
 @KordPreview
 class LiveMessage(
     message: Message,
     val guildId: Snowflake?,
-    dispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AbstractLiveKordEntity(dispatcher), KordEntity by message {
+    coroutineScope: CoroutineScope = message.kord + SupervisorJob(message.kord.coroutineContext.job)
+) : AbstractLiveKordEntity(message.kord, coroutineScope), KordEntity {
+
+    override val id: Snowflake
+        get() = message.id
 
     var message: Message = message
         private set
@@ -112,12 +158,16 @@ class LiveMessage(
         is ReactionRemoveAllEvent -> message = Message(message.data.copy(reactions = Optional.Missing()), kord)
 
         is MessageUpdateEvent -> message = Message(message.data + event.new, kord)
-        is MessageDeleteEvent -> shutDown()
-        is MessageBulkDeleteEvent -> shutDown()
+        is MessageDeleteEvent, is MessageBulkDeleteEvent -> shutDown(
+            LiveCancellationException(
+                event,
+                "The message is deleted"
+            )
+        )
 
-        is ChannelDeleteEvent -> shutDown()
+        is ChannelDeleteEvent -> shutDown(LiveCancellationException(event, "The channel is deleted"))
 
-        is GuildDeleteEvent -> shutDown()
+        is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
         else -> Unit
     }
 
