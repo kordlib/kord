@@ -15,11 +15,11 @@
 
 * Update deprecated message (#280)
 * Sealed message types (#282)
-* Improve slash command API and add support for components (#310/#294/#312)
+* Improve slash command API and add support for components (#310 #294 #312)
 
 # Fixes
 
-* Close InputStreams used for attachments (#309/#296)
+* Close InputStreams used for attachments (#309 #296)
 * Make Updatestatus activities not-null (#274)
 * Fix GuildUpdate core handling (#284)
 
