@@ -1,6 +1,6 @@
 # 0.7.0
 
-# Additions
+## Additions
 
 * Implement voice stage channel (#239)
 * Add "Competing" activity type (#272)
@@ -11,23 +11,23 @@
 * Add Message interaction (#283)
 * Add Ephemeral embed support (#296)
 
-# Changes
+## Changes
 
 * Update deprecated message (#280)
 * Sealed message types (#282)
 * Improve slash command API and add support for components (#310 #294 #312)
 
-# Fixes
+## Fixes
 
 * Close InputStreams used for attachments (#309 #296)
 * Make Updatestatus activities not-null (#274)
 * Fix GuildUpdate core handling (#284)
 
-# Performance
+## Performance
 
 * Fix memory issues related to Permission combining (#277)
 
-# Dependencies
+## Dependencies
 
 * kotlin 1.4.32 -> 1.5.10
 * kotlinxSerialization 1.1.0 -> 1.2.1
