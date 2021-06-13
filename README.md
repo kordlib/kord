@@ -2,7 +2,6 @@
 
 [![Discord](https://img.shields.io/discord/556525343595298817.svg?color=&label=Kord&logo=discord&style=for-the-badge)](https://discord.gg/6jcx5ev)
 [![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://search.maven.org/search?q=g:%22dev.kord%22%20AND%20a:%22kord-core%22)
-[![Snapshot](https://img.shields.io/nexus/s/dev.kord/kord-core?label=SNAPSHOT&server=https%3A%2F%2Foss.sonatype.org%2F&style=for-the-badge)](https://oss.sonatype.org/#nexus-search;quick~dev.kord)
 [![Github CI status (branch)](https://img.shields.io/github/workflow/status/kordlib/kord/CI/master?label=CI&style=for-the-badge)]()
 
 __Kord is still in an experimental stage, as such we can't guarantee API stability between releases. While we'd love for
@@ -50,8 +49,7 @@ For Snapshots replace `{version}` with `{branch}-SNAPSHOT`
 
 e.g: `0.7.x-SNAPSHOT`
 
-[![Download](https://img.shields.io/nexus/r/dev.kord/kord-core?color=fb5502&label=Kord&logoColor=05c1fd&server=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2F&style=for-the-badge) ](https://search.maven.org/search?q=g:dev.kord)
-[![Snapshot](https://img.shields.io/nexus/s/dev.kord/kord-core?label=SNAPSHOT&server=https%3A%2F%2Foss.sonatype.org%2F&style=for-the-badge)](https://oss.sonatype.org/#nexus-search;quick~dev.kord)
+[![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://search.maven.org/search?q=g:%22dev.kord%22%20AND%20a:%22kord-core%22)
 
 ### Gradle (groovy)
 
