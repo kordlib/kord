@@ -1,3 +1,32 @@
+# 0.7.0
+
+# Additions
+
+* Implement voice stage channel (#239)
+* Add "Competing" activity type (#272)
+* Add unsafe application commands behavior (#281)
+* Add buttons to Activity (#287)
+* Add Message.applicationId (#289)
+* Implement Stage instances (#291)
+* Add Message interaction (#283)
+* Add Ephemeral embed support (#296)
+# Changes
+
+* Update deprecated message (#280)
+* Sealed message types (#282)
+* Improve slash command API and add support for components (#310/#294/#312)
+
+# Fixes
+
+* Close InputStreams used for attachments (#309/#296)
+* Make Updatestatus activities not-null (#274)
+* Fix GuildUpdate core handling (#284)
+
+# Performance
+
+* Fix memory issues related to Permission combining (#277)
+
+
 # 0.7.0-RC3
 
 ## Fixes
