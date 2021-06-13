@@ -24,36 +24,23 @@ import kotlin.contracts.contract
 @KordPreview
 @KordDsl
 class PublicFollowupMessageModifyBuilder :
-    RequestBuilder<MultipartFollowupMessageModifyRequest> {
+    BaseFollowupMessageBuilder<MultipartFollowupMessageModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
-    var content: String? by ::_content.delegate()
+    override var content: String? by ::_content.delegate()
 
-    val embeds: MutableList<EmbedBuilder> = mutableListOf()
+    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
+
+    private var _tts: OptionalBoolean = OptionalBoolean.Missing
+    override var tts: Boolean? by ::_tts.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+    override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     @KordPreview
-    val components: MutableList<MessageComponentBuilder> = mutableListOf()
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun embed(builder: EmbedBuilder.() -> Unit) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        embeds += EmbedBuilder().apply(builder)
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    @KordPreview
-    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        components.add(ActionRowBuilder().apply(builder))
-    }
+    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
 
     fun addFile(name: String, content: InputStream) {
@@ -63,19 +50,6 @@ class PublicFollowupMessageModifyBuilder :
     suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
         addFile(path.fileName.toString(), Files.newInputStream(path))
     }
-
-    /**
-     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
-     * (ping everything), calling this function but not configuring it before the request is build will result in all
-     * pings being ignored.
-     */
-    @OptIn(ExperimentalContracts::class)
-    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
-        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
-    }
-
-
     override fun toRequest(): MultipartFollowupMessageModifyRequest {
         return MultipartFollowupMessageModifyRequest(
             FollowupMessageModifyRequest(
@@ -93,45 +67,19 @@ class PublicFollowupMessageModifyBuilder :
 @KordPreview
 @KordDsl
 class EphemeralFollowupMessageModifyBuilder :
-    RequestBuilder<FollowupMessageModifyRequest> {
+    BaseFollowupMessageBuilder<FollowupMessageModifyRequest> {
     private var _content: Optional<String> = Optional.Missing()
-    var content: String? by ::_content.delegate()
+    override var content: String? by ::_content.delegate()
 
-    val embeds: MutableList<EmbedBuilder> = mutableListOf()
+    private var _tts: OptionalBoolean = OptionalBoolean.Missing
+    override var tts: Boolean? by ::_tts.delegate()
+
+    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+    override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    val components: MutableList<MessageComponentBuilder> = mutableListOf()
-
-
-    /**
-     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
-     * (ping everything), calling this function but not configuring it before the request is build will result in all
-     * pings being ignored.
-     */
-    @OptIn(ExperimentalContracts::class)
-    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
-        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun embed(builder: EmbedBuilder.() -> Unit) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        embeds += EmbedBuilder().apply(builder)
-    }
-
-
-    @OptIn(ExperimentalContracts::class)
-    @KordPreview
-    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        components.add(ActionRowBuilder().apply(builder))
-    }
+    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     override fun toRequest(): FollowupMessageModifyRequest {
         return FollowupMessageModifyRequest(
@@ -145,59 +93,24 @@ class EphemeralFollowupMessageModifyBuilder :
 
 @KordPreview
 @KordDsl
-class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessageCreateRequest> {
+class PublicFollowupMessageCreateBuilder : BaseFollowupMessageBuilder<MultipartFollowupMessageCreateRequest> {
 
     private var _content: Optional<String> = Optional.Missing()
-    var content: String? by ::_content.delegate()
+    override var content: String? by ::_content.delegate()
 
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
-    var tts: Boolean? by ::_tts.delegate()
+    override var tts: Boolean? by ::_tts.delegate()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+    override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
-    val embeds: MutableList<EmbedBuilder> = mutableListOf()
+    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
-    val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
-    fun addFile(name: String, content: InputStream) {
-        files += name to content
-    }
 
-    suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
-        addFile(path.fileName.toString(), Files.newInputStream(path))
-    }
-
-    /**
-     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
-     * (ping everything), calling this function but not configuring it before the request is build will result in all
-     * pings being ignored.
-     */
-    @OptIn(ExperimentalContracts::class)
-    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
-        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    @KordPreview
-    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        components.add(ActionRowBuilder().apply(builder))
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun embed(builder: EmbedBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-        embeds.add(EmbedBuilder().apply(builder))
-    }
 
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(
@@ -216,50 +129,26 @@ class PublicFollowupMessageCreateBuilder : RequestBuilder<MultipartFollowupMessa
 
 @KordPreview
 @KordDsl
-class EphemeralFollowupMessageCreateBuilder(var content: String) :
-    RequestBuilder<MultipartFollowupMessageCreateRequest> {
+class EphemeralFollowupMessageCreateBuilder : BaseFollowupMessageBuilder<MultipartFollowupMessageCreateRequest> {
+
+    private var _content: Optional<String> = Optional.Missing()
+    override var content: String? by ::_content.delegate()
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
-    var tts: Boolean? by ::_tts.delegate()
+    override var tts: Boolean? by ::_tts.delegate()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
-    var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+    override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    val embeds: MutableList<EmbedBuilder> = mutableListOf()
+    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
-    val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
-    /**
-     * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
-     * (ping everything), calling this function but not configuring it before the request is build will result in all
-     * pings being ignored.
-     */
-    @OptIn(ExperimentalContracts::class)
-    inline fun allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
-        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun embed(builder: EmbedBuilder.() -> Unit) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        embeds += EmbedBuilder().apply(builder)
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    @KordPreview
-    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        components.add(ActionRowBuilder().apply(builder))
-    }
 
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(
             FollowupMessageCreateRequest(
-                content = Optional.Value(content),
+                content = _content,
                 embeds = Optional.missingOnEmpty(embeds.map(EmbedBuilder::toRequest)),
                 tts = _tts,
                 allowedMentions = _allowedMentions.map { it.build() },
@@ -267,4 +156,46 @@ class EphemeralFollowupMessageCreateBuilder(var content: String) :
             ),
         )
 
+
 }
+sealed interface BaseFollowupMessageBuilder<T> : RequestBuilder<T> {
+
+    var tts: Boolean?
+
+    var allowedMentions: AllowedMentionsBuilder?
+
+    val embeds: MutableList<EmbedBuilder>
+
+    val components: MutableList<MessageComponentBuilder>
+
+    val content: String?
+
+}
+
+@OptIn(ExperimentalContracts::class)
+@KordPreview
+inline fun <T> BaseFollowupMessageBuilder<T>.actionRow(builder: ActionRowBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    components.add(ActionRowBuilder().apply(builder))
+}
+
+@OptIn(ExperimentalContracts::class)
+inline fun <T> BaseFollowupMessageBuilder<T>.embed(builder: EmbedBuilder.() -> Unit) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    embeds += EmbedBuilder().apply(builder)
+}
+
+/**
+ * Configures the mentions that should trigger a mention (aka ping). Not calling this function will result in the default behavior
+ * (ping everything), calling this function but not configuring it before the request is build will result in all
+ * pings being ignored.
+ */
+@OptIn(ExperimentalContracts::class)
+inline fun <T> BaseFollowupMessageBuilder<T>.allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+    allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
+}
+
