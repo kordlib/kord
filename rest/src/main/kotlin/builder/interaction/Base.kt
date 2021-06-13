@@ -11,6 +11,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 sealed interface BaseInteractionResponseBuilder<T> : RequestBuilder<T> {
+
     var content: String?
 
     val embeds: MutableList<EmbedBuilder>
