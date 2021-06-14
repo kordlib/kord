@@ -10,6 +10,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.component.ActionRowBuilder
+import dev.kord.rest.builder.component.ComponentBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
@@ -29,23 +30,7 @@ class EphemeralInteractionResponseModifyBuilder : BaseInteractionResponseModifyB
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    val components: MutableList<MessageComponentBuilder> = mutableListOf()
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun allowedMentions(builder: AllowedMentionsBuilder.() -> Unit) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(builder)
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    @KordPreview
-    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        components.add(ActionRowBuilder().apply(builder))
-    }
+    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     override fun toRequest(): MultipartInteractionResponseModifyRequest {
         return MultipartInteractionResponseModifyRequest(
@@ -68,6 +53,8 @@ class EphemeralInteractionResponseCreateBuilder : BaseInteractionResponseCreateB
 
     override val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
+    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
+
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
@@ -81,8 +68,10 @@ class EphemeralInteractionResponseCreateBuilder : BaseInteractionResponseCreateB
         val data = InteractionApplicationCommandCallbackData(
             content = _content,
             flags = flags,
-            embeds = Optional.missingOnEmpty(embeds.map { it.toRequest() })
+            embeds = Optional.missingOnEmpty(embeds.map(EmbedBuilder::toRequest)),
+            components = Optional.missingOnEmpty(components.map(ComponentBuilder::build))
         )
+
         return MultipartInteractionResponseCreateRequest(
             InteractionResponseCreateRequest(type, data.optional())
         )
