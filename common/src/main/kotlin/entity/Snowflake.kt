@@ -71,7 +71,7 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
         override fun deserialize(decoder: Decoder): Snowflake = Snowflake(decoder.decodeLong())
 
         override fun serialize(encoder: Encoder, value: Snowflake) {
-            encoder.encodeString(value.value.toString())
+            encoder.encodeLong(value.value)
         }
     }
 }
