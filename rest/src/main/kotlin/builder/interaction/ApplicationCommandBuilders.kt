@@ -147,7 +147,7 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
     override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
     private var _defaultPermission: OptionalBoolean = OptionalBoolean.Missing
-    private var defaultPermission: Boolean? by ::_defaultPermission.delegate()
+    var defaultPermission: Boolean? by ::_defaultPermission.delegate()
 
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(_name,
