@@ -70,7 +70,7 @@ class CommandTest {
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.RequestGuildMembers.code)
             put("d", buildJsonObject {
-                put("guild_id", guildId)
+                put("guild_id", guildId.toLong())
                 put("query", query)
                 put("limit", limit)
             })
@@ -95,8 +95,8 @@ class CommandTest {
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.VoiceStateUpdate.code)
             put("d", buildJsonObject {
-                put("guild_id", guildId)
-                put("channel_id", channelId)
+                put("guild_id", guildId.toLong())
+                put("channel_id", channelId.toLong())
                 put("self_mute", selfMute)
                 put("self_deaf", selfDeaf)
             })
