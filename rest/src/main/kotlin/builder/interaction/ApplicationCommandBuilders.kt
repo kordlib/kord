@@ -154,7 +154,8 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
         return ApplicationCommandModifyRequest(
             _name,
             _description,
-            _options.mapList { it.toRequest() }, _defaultPermission
+            _options.mapList { it.toRequest() }, 
+            _defaultPermission
         )
 
     }
