@@ -8,7 +8,6 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.optional
-import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
@@ -18,9 +17,6 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 @KordPreview
 @KordDsl
@@ -91,16 +87,6 @@ class PublicInteractionResponseModifyBuilder :
 
     fun addFile(name: String, content: InputStream) {
         files += name to content
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    @KordPreview
-    inline fun actionRow(builder: ActionRowBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        components.add(ActionRowBuilder().apply(builder))
     }
 
     suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
