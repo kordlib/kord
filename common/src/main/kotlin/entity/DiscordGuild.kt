@@ -503,7 +503,7 @@ sealed class MFALevel(val value: Int) {
     }
 }
 /**
- * A representation of a [Discord Verification Level](https://discord.com/developers/docs/resources/guild#guild-object-verification-level).
+ * A representation of a [Discord Guild NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level).
  */
 @Serializable(with = NsfwLevel.Serializer::class)
 sealed class NsfwLevel(val value: Int) {
