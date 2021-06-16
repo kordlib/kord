@@ -107,7 +107,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
             resources = ClientResources("token", Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
             cache = DataCache.none(),
             MasterGateway(mapOf(0 to gateway)),
-            RestClient(KtorRequestHandler("token", clock = Clock.systemUTC())),
+            RestClient(KtorRequestHandler(token = "token")),
             randomId(),
             MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
             Dispatchers.Default

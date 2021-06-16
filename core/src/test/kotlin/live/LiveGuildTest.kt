@@ -47,7 +47,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                     mfaLevel = MFALevel.None,
                     premiumTier = PremiumTier.None,
                     preferredLocale = "",
-                    systemChannelFlags = SystemChannelFlags(0)
+                    systemChannelFlags = SystemChannelFlags(0),
+                    nsfwLevel = NsfwLevel.Default
                 )
             )
         )
@@ -706,7 +707,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         banner = null,
                         premiumTier = PremiumTier.None,
                         preferredLocale = "",
-                        publicUpdatesChannelId = null
+                        publicUpdatesChannelId = null,
+                        nsfwLevel = NsfwLevel.Default
                     ),
                     0
                 )
@@ -748,7 +750,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         banner = null,
                         premiumTier = PremiumTier.None,
                         preferredLocale = "",
-                        publicUpdatesChannelId = null
+                        publicUpdatesChannelId = null,
+                        nsfwLevel = NsfwLevel.Default
                     ),
                     0
                 )
