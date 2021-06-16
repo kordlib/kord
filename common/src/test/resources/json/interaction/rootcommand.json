@@ -25,8 +25,10 @@
   "id": "793442788670832640",
   "guild_id": "556525343595298817",
   "data": {
+    "type": 1,
     "options": [
       {
+        "type": 4,
         "value": 1,
         "name": "testint"
       }

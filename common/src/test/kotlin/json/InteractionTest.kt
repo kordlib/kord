@@ -45,8 +45,8 @@ class InteractionTest {
             subCommand.name shouldBe "groupsubcommand"
             val arg = subCommand.options.orEmpty().first()
             arg.name shouldBe "testint"
-            arg.value.int() shouldBe 1
-            arg.value.string() shouldBe "1"
+            arg.int() shouldBe 1
+            arg.string() shouldBe "1"
         }
     }
 
@@ -70,8 +70,8 @@ class InteractionTest {
             subCommand.name shouldBe "subcommand"
             val arg = subCommand.options.orEmpty().first()
             arg.name shouldBe "testint"
-            arg.value.int() shouldBe 1
-            arg.value.string() shouldBe "1"
+            arg.int() shouldBe 1
+            arg.string() shouldBe "1"
         }
     }
 
@@ -91,11 +91,11 @@ class InteractionTest {
             data.name shouldBe "testsubcommands"
             data.id shouldBe "792107855418490901"
             val arg = data.options.orEmpty().first()
-            assert(arg is CommandArgument)
-            arg as CommandArgument
+            assert(arg is CommandArgument<*>)
+            arg as CommandArgument<*>
             arg.name shouldBe "testint"
-            arg.value.int() shouldBe 1
-            arg.value.string() shouldBe "1"
+            arg.int() shouldBe 1
+            arg.string() shouldBe "1"
         }
     }
 

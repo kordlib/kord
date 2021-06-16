@@ -50,7 +50,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
      *
      * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
      */
-    suspend fun ackowledgePublic(): PublicInteractionResponseBehavior {
+    suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
         val request = PublicInteractionResponseCreateBuilder().toRequest()
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return PublicInteractionResponseBehavior(applicationId, token, kord)
@@ -93,8 +93,7 @@ fun InteractionBehavior(
         get() = channelId
 
 
-    override val supplier: EntitySupplier
-        get() = strategy.supply(kord)
+    override val supplier: EntitySupplier = strategy.supply(kord)
 
 }
 
@@ -128,15 +127,11 @@ suspend inline fun InteractionBehavior.respondPublic(
 @KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend inline fun InteractionBehavior.respondEphemeral(
-    content: String,
-    builder: EphemeralInteractionResponseCreateBuilder.() -> Unit = {}
+    builder: EphemeralInteractionResponseCreateBuilder.() -> Unit
 ): EphemeralInteractionResponseBehavior {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = EphemeralInteractionResponseCreateBuilder().apply {
-        this.content = content
-        builder()
-    }
+    val builder = EphemeralInteractionResponseCreateBuilder().apply(builder)
     val request = builder.toRequest()
     kord.rest.interaction.createInteractionResponse(id, token, request)
     return EphemeralInteractionResponseBehavior(applicationId, token, kord)
