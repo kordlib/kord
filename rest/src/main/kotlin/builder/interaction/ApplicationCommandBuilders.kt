@@ -104,7 +104,8 @@ class ApplicationCommandCreateBuilder(
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(name,
             description,
-            _options.mapList { it.toRequest() }, _defaultPermission)
+            _options.mapList { it.toRequest() }, _defaultPermission
+        )
 
     }
 
@@ -147,12 +148,15 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
     override var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
     private var _defaultPermission: OptionalBoolean = OptionalBoolean.Missing
-    private var defaultPermission: Boolean? by ::_defaultPermission.delegate()
+    var defaultPermission: Boolean? by ::_defaultPermission.delegate()
 
     override fun toRequest(): ApplicationCommandModifyRequest {
-        return ApplicationCommandModifyRequest(_name,
+        return ApplicationCommandModifyRequest(
+            _name,
             _description,
-            _options.mapList { it.toRequest() }, _defaultPermission)
+            _options.mapList { it.toRequest() }, 
+            _defaultPermission
+        )
 
     }
 
@@ -162,15 +166,15 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
 @KordDsl
 @KordPreview
 class ApplicationCommandPermissionsBulkModifyBuilder :
-        RequestBuilder<List<PartialDiscordGuildApplicationCommandPermissions>> {
+    RequestBuilder<List<PartialDiscordGuildApplicationCommandPermissions>> {
 
     @PublishedApi
     internal val permissions = mutableMapOf<Snowflake, ApplicationCommandPermissionsModifyBuilder>()
 
     @OptIn(ExperimentalContracts::class)
     inline fun command(
-            commandId: Snowflake,
-            builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
+        commandId: Snowflake,
+        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
     ) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -182,7 +186,7 @@ class ApplicationCommandPermissionsBulkModifyBuilder :
     override fun toRequest(): List<PartialDiscordGuildApplicationCommandPermissions> {
         return permissions.map { (id, builder) ->
             PartialDiscordGuildApplicationCommandPermissions(
-                    id, builder.permissions.toList()
+                id, builder.permissions.toList()
             )
         }
     }
@@ -191,31 +195,31 @@ class ApplicationCommandPermissionsBulkModifyBuilder :
 @KordDsl
 @KordPreview
 class ApplicationCommandPermissionsModifyBuilder :
-        RequestBuilder<ApplicationCommandPermissionsEditRequest> {
+    RequestBuilder<ApplicationCommandPermissionsEditRequest> {
 
     var permissions = mutableListOf<DiscordGuildApplicationCommandPermission>()
 
     fun role(id: Snowflake, allow: Boolean = true) {
         permissions.add(
-                DiscordGuildApplicationCommandPermission(
-                        id,
-                        DiscordGuildApplicationCommandPermission.Type.Role,
-                        allow
-                )
+            DiscordGuildApplicationCommandPermission(
+                id,
+                DiscordGuildApplicationCommandPermission.Type.Role,
+                allow
+            )
         )
     }
 
     fun user(id: Snowflake, allow: Boolean = true) {
         permissions.add(
-                DiscordGuildApplicationCommandPermission(
-                        id,
-                        DiscordGuildApplicationCommandPermission.Type.User,
-                        allow
-                )
+            DiscordGuildApplicationCommandPermission(
+                id,
+                DiscordGuildApplicationCommandPermission.Type.User,
+                allow
+            )
         )
     }
 
     override fun toRequest(): ApplicationCommandPermissionsEditRequest =
-            ApplicationCommandPermissionsEditRequest(permissions)
+        ApplicationCommandPermissionsEditRequest(permissions)
 
 }

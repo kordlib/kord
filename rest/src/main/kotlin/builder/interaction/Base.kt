@@ -2,6 +2,8 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.component.ActionRowBuilder
+import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
@@ -15,6 +17,8 @@ sealed interface BaseInteractionResponseBuilder<T> : RequestBuilder<T> {
     var content: String?
 
     val embeds: MutableList<EmbedBuilder>
+
+    val components: MutableList<MessageComponentBuilder>
 
     var allowedMentions: AllowedMentionsBuilder?
 
@@ -35,11 +39,26 @@ inline fun <T> BaseInteractionResponseBuilder<T>.embed(builder: EmbedBuilder.() 
 @OptIn(ExperimentalContracts::class)
 inline fun <T> BaseInteractionResponseBuilder<T>.allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-    if(allowedMentions == null) allowedMentions = AllowedMentionsBuilder()
+    if (allowedMentions == null) allowedMentions = AllowedMentionsBuilder()
     allowedMentions!!.apply(block)
 }
 
+
+@OptIn(ExperimentalContracts::class)
 @KordPreview
-interface BaseInteractionResponseCreateBuilder : BaseInteractionResponseBuilder<MultipartInteractionResponseCreateRequest>
+inline fun <T> BaseInteractionResponseBuilder<T>.actionRow(builder: ActionRowBuilder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    components.add(ActionRowBuilder().apply(builder))
+}
+
+
 @KordPreview
-interface BaseInteractionResponseModifyBuilder : BaseInteractionResponseBuilder<MultipartInteractionResponseModifyRequest>
+interface BaseInteractionResponseCreateBuilder :
+    BaseInteractionResponseBuilder<MultipartInteractionResponseCreateRequest>
+
+@KordPreview
+interface BaseInteractionResponseModifyBuilder :
+    BaseInteractionResponseBuilder<MultipartInteractionResponseModifyRequest>

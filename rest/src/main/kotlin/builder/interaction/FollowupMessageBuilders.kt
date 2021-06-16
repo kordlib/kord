@@ -21,7 +21,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-
+@KordPreview
 sealed interface FollowupMessageBuilder<T> : RequestBuilder<T> {
 
     var tts: Boolean?
@@ -35,9 +35,8 @@ sealed interface FollowupMessageBuilder<T> : RequestBuilder<T> {
     val content: String?
 
 }
-
-@OptIn(ExperimentalContracts::class)
 @KordPreview
+@OptIn(ExperimentalContracts::class)
 inline fun <T> FollowupMessageBuilder<T>.actionRow(builder: ActionRowBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -45,7 +44,7 @@ inline fun <T> FollowupMessageBuilder<T>.actionRow(builder: ActionRowBuilder.() 
 
     components.add(ActionRowBuilder().apply(builder))
 }
-
+@KordPreview
 @OptIn(ExperimentalContracts::class)
 inline fun <T> FollowupMessageBuilder<T>.embed(builder: EmbedBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -57,6 +56,7 @@ inline fun <T> FollowupMessageBuilder<T>.embed(builder: EmbedBuilder.() -> Unit)
  * (ping everything), calling this function but not configuring it before the request is build will result in all
  * pings being ignored.
  */
+@KordPreview
 @OptIn(ExperimentalContracts::class)
 inline fun <T> FollowupMessageBuilder<T>.allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
@@ -83,7 +83,6 @@ class PublicFollowupMessageModifyBuilder :
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    @KordPreview
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
 
