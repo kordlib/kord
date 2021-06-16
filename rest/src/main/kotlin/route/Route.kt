@@ -4,7 +4,6 @@ import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
-import dev.kord.rest.json.optional
 import dev.kord.rest.json.response.*
 import io.ktor.http.*
 import kotlinx.serialization.DeserializationStrategy
@@ -15,21 +14,48 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import dev.kord.common.entity.DiscordEmoji as EmojiEntity
 
 internal const val REST_VERSION_PROPERTY_NAME = "dev.kord.rest.version"
 internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v8"
 
+sealed interface ResponseMapper<T> {
+    fun deserialize(json: Json, body: String): T
+}
+
+internal class ValueJsonMapper<T>(val strategy: DeserializationStrategy<T>) : ResponseMapper<T> {
+    override fun deserialize(json: Json, body: String): T = json.decodeFromString(strategy, body)
+    override fun toString(): String = "ValueJsonMapper(strategy=$strategy)"
+}
+
+internal class NullAwareMapper<T>(val strategy: DeserializationStrategy<T>) : ResponseMapper<T?> {
+    override fun deserialize(json: Json, body: String): T? {
+        if (body.isBlank()) return null
+        return json.decodeFromString(strategy, body)
+    }
+
+    override fun toString(): String = "NullAwareMapper(strategy=$strategy)"
+}
+
+internal val <T> DeserializationStrategy<T>.optional: ResponseMapper<T?>
+    get() = NullAwareMapper(this)
+
 sealed class Route<T>(
     val method: HttpMethod,
     val path: String,
-    val strategy: DeserializationStrategy<T>
+    val mapper: ResponseMapper<T>
 ) {
+    constructor(
+        method: HttpMethod,
+        path: String,
+        strategy: DeserializationStrategy<T>
+    ) : this(method, path, ValueJsonMapper(strategy))
 
     @OptIn(ExperimentalSerializationApi::class)
     override fun toString(): String =
-        "Route(method:${method.value},path:$path,strategy:${strategy.descriptor.serialName})"
+        "Route(method:${method.value},path:$path,mapper:$mapper)"
 
     object GatewayGet
         : Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer())
@@ -425,7 +451,7 @@ sealed class Route<T>(
         : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken/slack", NoStrategy)
 
     object ExecuteGithubWebhookPost
-        : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
+        : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken/github", NoStrategy)
 
     object EditWebhookMessage : Route<DiscordMessage>(
         HttpMethod.Patch,
@@ -591,33 +617,33 @@ sealed class Route<T>(
     @KordPreview
     object GuildApplicationCommandPermissionsGet
         : Route<DiscordGuildApplicationCommandPermissions>(
-            HttpMethod.Get,
-            "/applications/${ApplicationId}/guilds/$GuildId/commands/permissions",
-            DiscordGuildApplicationCommandPermissions.serializer()
+        HttpMethod.Get,
+        "/applications/${ApplicationId}/guilds/$GuildId/commands/permissions",
+        DiscordGuildApplicationCommandPermissions.serializer()
     )
 
     @KordPreview
     object ApplicationCommandPermissionsGet
         : Route<DiscordGuildApplicationCommandPermissions>(
-            HttpMethod.Get,
-            "/applications/${ApplicationId}/guilds/$GuildId/commands/$CommandId/permissions",
-            DiscordGuildApplicationCommandPermissions.serializer()
+        HttpMethod.Get,
+        "/applications/${ApplicationId}/guilds/$GuildId/commands/$CommandId/permissions",
+        DiscordGuildApplicationCommandPermissions.serializer()
     )
 
     @KordPreview
     object ApplicationCommandPermissionsPut
         : Route<DiscordGuildApplicationCommandPermissions>(
-            HttpMethod.Put,
-            "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
-            DiscordGuildApplicationCommandPermissions.serializer()
+        HttpMethod.Put,
+        "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
+        DiscordGuildApplicationCommandPermissions.serializer()
     )
 
     @KordPreview
     object ApplicationCommandPermissionsBatchPut
         : Route<List<DiscordGuildApplicationCommandPermissions>>(
-            HttpMethod.Put,
-            "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
-            serializer()
+        HttpMethod.Put,
+        "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
+        serializer()
     )
 
     object FollowupMessageCreate : Route<DiscordMessage>(
@@ -645,6 +671,18 @@ sealed class Route<T>(
 
     object OthersVoiceStatePatch:
         Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/${UserId}", NoStrategy)
+
+    object StageInstanceGet :
+        Route<DiscordStageInstance>(HttpMethod.Get, "/stage-instances/$ChannelId", DiscordStageInstance.serializer())
+
+    object StageInstancePost :
+        Route<DiscordStageInstance>(HttpMethod.Post, "/stage-instances", DiscordStageInstance.serializer())
+
+    object StageInstancePatch :
+        Route<DiscordStageInstance>(HttpMethod.Patch, "/stage-instances/$ChannelId", DiscordStageInstance.serializer())
+
+    object StageInstanceDelete :
+        Route<Unit>(HttpMethod.Delete, "/stage-instances/$ChannelId", NoStrategy)
 
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"

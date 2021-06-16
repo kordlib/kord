@@ -5,7 +5,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ActivityData
 import dev.kord.core.toInstant
-import java.time.Instant
+import kotlinx.datetime.Instant
 
 class Activity(val data: ActivityData) {
 
@@ -56,6 +56,9 @@ class Activity(val data: ActivityData) {
 
     val flags: ActivityFlags?
         get() = data.flags.value
+
+    val buttons: List<String>?
+        get() = data.buttons.value
 
     override fun toString(): String {
         return "Activity(data=$data)"

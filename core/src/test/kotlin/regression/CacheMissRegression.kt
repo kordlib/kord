@@ -108,9 +108,7 @@ class CrashingHandler(val client: HttpClient) : RequestHandler {
 
         }.execute()
 
-        return parser.decodeFromString(request.route.strategy, response.readText())
-
-
+        return request.route.mapper.deserialize(parser, response.readText())
     }
 }
 

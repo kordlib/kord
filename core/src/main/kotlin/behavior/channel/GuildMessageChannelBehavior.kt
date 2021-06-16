@@ -16,8 +16,9 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.time.Duration
-import java.time.Instant
+import kotlinx.datetime.Clock
+import kotlin.time.Duration
+import kotlinx.datetime.Instant
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -70,11 +71,11 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun bulkDelete(messages: Iterable<Snowflake>) {
-        val daysLimit = Instant.now() - Duration.ofDays(14)
+        val daysLimit = Clock.System.now() - Duration.days(14)
         //split up in bulk delete and manual delete
         // if message.timeMark + 14 days > now, then the message isn't 14 days old yet, and we can add it to the bulk delete
         // if message.timeMark + 14 days < now, then the message is more than 14 days old, and we'll have to manually delete them
-        val (younger, older) = messages.partition { it.timeStamp.isAfter(daysLimit) }
+        val (younger, older) = messages.partition { it.timeStamp > daysLimit }
 
         younger.chunked(100).forEach {
             if (it.size < 2) kord.rest.channel.deleteMessage(id, it.first())

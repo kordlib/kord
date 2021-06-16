@@ -11,12 +11,11 @@ import dev.kord.core.cache.data.IntegrationData
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.toInstant
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import java.time.Duration
-import java.time.Instant
-import java.time.temporal.ChronoUnit
+import kotlin.time.Duration
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -99,7 +98,7 @@ class Integration(
      * The grace period in days before expiring subscribers.
      */
     val expireGracePeriod: Duration
-        get() = Duration.of(data.expireGracePeriod.toLong(), ChronoUnit.DAYS)
+        get() = Duration.days(data.expireGracePeriod)
 
     /**
      * The id of the [user][User] for this integration.

@@ -63,6 +63,9 @@ class EntityNotFoundException : Exception {
         fun welcomeScreenNotFound(guildId: Snowflake): Nothing =
             throw EntityNotFoundException("Welcome screen for guild $guildId was not found.")
 
+        fun stageInstanceNotFound(channelId: Snowflake): Nothing =
+            throw EntityNotFoundException("Stage instance for channel $channelId was not found")
+
     }
 
 }

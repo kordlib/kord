@@ -5,9 +5,9 @@ package dev.kord.rest.request
 import dev.kord.rest.ratelimit.BucketKey
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.readBytes
-import java.time.Clock
-import java.time.Duration
-import java.time.Instant
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlin.time.Duration
 
 private const val rateLimitGlobalHeader = "X-RateLimit-Global"
 private const val retryAfterHeader = "Retry-After"
@@ -19,13 +19,13 @@ private const val rateLimitResetAfter = "X-RateLimit-Reset-After"
 
 val HttpResponse.channelResetPoint: Instant
     get() {
-        val unixSeconds = headers[resetTimeHeader]?.toDouble() ?: return Instant.now()
-        return Instant.ofEpochMilli(unixSeconds.times(1000).toLong())
+        val unixSeconds = headers[resetTimeHeader]?.toDouble() ?: return Clock.System.now()
+        return Instant.fromEpochMilliseconds(unixSeconds.times(1000).toLong())
     }
 
 fun HttpResponse.channelResetPoint(clock: Clock): Instant {
-    val seconds = headers[rateLimitResetAfter]?.toDouble() ?: return clock.instant()
-    return clock.instant().plus(Duration.ofMillis(seconds.times(1000).toLong()))
+    val seconds = headers[rateLimitResetAfter]?.toDouble() ?: return clock.now()
+    return clock.now().plus(Duration.milliseconds(seconds.times(1000).toLong()))
 }
 
 val HttpResponse.isRateLimit get() = status.value == 429
@@ -41,8 +41,8 @@ val HttpResponse.bucket: BucketKey? get() = headers[bucketRateLimitKey]?.let { B
  * The unix time (in ms) when the global rate limit gets reset.
  */
 fun HttpResponse.globalSuspensionPoint(clock: Clock): Long {
-    val secondsWait = headers[retryAfterHeader]?.toLong() ?: return clock.millis()
-    return (secondsWait * 1000) + clock.millis()
+    val secondsWait = headers[retryAfterHeader]?.toLong() ?: return clock.now().toEpochMilliseconds()
+    return (secondsWait * 1000) + clock.now().toEpochMilliseconds()
 }
 
 fun HttpResponse.logString(body: String) =

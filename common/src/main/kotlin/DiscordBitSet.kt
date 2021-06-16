@@ -70,7 +70,7 @@ class DiscordBitSet(internal var data: LongArray) {
     }
 
     operator fun plus(another: DiscordBitSet): DiscordBitSet {
-        val dist = LongArray(size)
+        val dist = LongArray(data.size)
         data.copyInto(dist)
         val copy = DiscordBitSet(dist)
         copy.add(another)
@@ -78,7 +78,7 @@ class DiscordBitSet(internal var data: LongArray) {
     }
 
     operator fun minus(another: DiscordBitSet): DiscordBitSet {
-        val dist = LongArray(size)
+        val dist = LongArray(data.size)
         data.copyInto(dist)
         val copy = DiscordBitSet(dist)
         copy.remove(another)

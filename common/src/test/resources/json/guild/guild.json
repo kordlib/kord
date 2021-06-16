@@ -38,5 +38,6 @@
   "system_channel_flags": 0,
   "preferred_locale": "en-US",
   "rules_channel_id": "441688182833020939",
-  "public_updates_channel_id": "281283303326089216"
+  "public_updates_channel_id": "281283303326089216",
+  "nsfw_level": 0
 }

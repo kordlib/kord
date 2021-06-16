@@ -1,8 +1,9 @@
 package interaction
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.DiscordApplicationCommandInteractionData
-import dev.kord.core.cache.data.ApplicationCommandInteractionData
+import dev.kord.common.entity.ApplicationCommandOptionType
+import dev.kord.common.entity.InteractionCallbackData
+import dev.kord.core.cache.data.ApplicationInteractionData
 import dev.kord.core.entity.interaction.*
 import kotlinx.serialization.json.*
 import mockKord
@@ -12,6 +13,7 @@ import kotlin.test.assertEquals
 @KordPreview
 class CommandsTypeTests {
     val arg = buildJsonObject {
+        put("type", ApplicationCommandOptionType.Integer.type)
         put("name", "argument")
         put("value", 1)
     }
@@ -21,6 +23,7 @@ class CommandsTypeTests {
         putJsonArray("options") { add(arg) }
     }
     val partialSubCommand = buildJsonObject {
+        put("type", ApplicationCommandOptionType.SubCommand.type)
         put("name", "subCommand")
         putJsonArray("options") { add(arg) }
     }
@@ -32,8 +35,10 @@ class CommandsTypeTests {
         }
 
     val group = buildJsonObject {
+
         putJsonArray("options") {
             addJsonObject {
+                put("type", ApplicationCommandOptionType.SubCommandGroup.type)
                 put("name", "group")
                 putJsonArray("options") { add(partialSubCommand) }
             }
@@ -44,8 +49,8 @@ class CommandsTypeTests {
 
     @Test
     fun `Correctly infer RootCommand`() {
-        val serializedRoot = Json.decodeFromJsonElement(DiscordApplicationCommandInteractionData.serializer(), root)
-        val data = ApplicationCommandInteractionData.from(serializedRoot, null)
+        val serializedRoot = Json.decodeFromJsonElement(InteractionCallbackData.serializer(), root)
+        val data = ApplicationInteractionData.from(serializedRoot, null)
         val command = InteractionCommand(data, mockKord())
         assert(command is RootCommand)
         command as RootCommand
@@ -56,8 +61,8 @@ class CommandsTypeTests {
 
     @Test
     fun `Correctly infer subcommand`() {
-        val sub = Json.decodeFromJsonElement(DiscordApplicationCommandInteractionData.serializer(), subCommand)
-        val data = ApplicationCommandInteractionData.from(sub, null)
+        val sub = Json.decodeFromJsonElement(InteractionCallbackData.serializer(), subCommand)
+        val data = ApplicationInteractionData.from(sub, null)
         val command = InteractionCommand(data, mockKord())
         assert(command is SubCommand)
         command as SubCommand
@@ -69,8 +74,8 @@ class CommandsTypeTests {
 
     @Test
     fun `Correctly infer group`() {
-        val grouping = Json.decodeFromJsonElement(DiscordApplicationCommandInteractionData.serializer(), group)
-        val data = ApplicationCommandInteractionData.from(grouping, null)
+        val grouping = Json.decodeFromJsonElement(InteractionCallbackData.serializer(), group)
+        val data = ApplicationInteractionData.from(grouping, null)
         val command = InteractionCommand(data, mockKord())
         assert(command is GroupCommand)
         command as GroupCommand

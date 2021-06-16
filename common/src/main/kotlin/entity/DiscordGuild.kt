@@ -74,6 +74,7 @@ data class DiscordUnavailableGuild(
  * @param approximateMemberCount The approximate number of members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
  * @param approximatePresenceCount The approximate number of non-offline members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
  * @param welcomeScreen The welcome screen of a Community guild, shown to new members.
+ * @param nsfwLevel Guild NSFW level.
  */
 @Serializable
 data class DiscordGuild(
@@ -150,7 +151,10 @@ data class DiscordGuild(
     val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_presence_count")
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
-
+    @SerialName("welcome_screen")
+    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
+    @SerialName("nsfw_level")
+    val nsfwLevel: NsfwLevel
     )
 
 /**
@@ -496,6 +500,40 @@ sealed class MFALevel(val value: Int) {
         override fun serialize(encoder: Encoder, value: MFALevel) {
             encoder.encodeInt(value.value)
         }
+    }
+}
+/**
+ * A representation of a [Discord Guild NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level).
+ */
+@Serializable(with = NsfwLevel.Serializer::class)
+sealed class NsfwLevel(val value: Int) {
+    class Unknown(value: Int) : NsfwLevel(value)
+
+    object Default : NsfwLevel(0)
+
+    object Explicit : NsfwLevel(1)
+
+    object Safe : NsfwLevel(2)
+
+    object AgeRestricted : NsfwLevel(3)
+
+    internal object Serializer : KSerializer<NsfwLevel> {
+
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("Kord.GuildNsfwLevel", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): NsfwLevel = when (val value = decoder.decodeInt()) {
+            0 -> Default
+            1 -> Explicit
+            2 -> Safe
+            3 -> AgeRestricted
+            else -> Unknown(value)
+        }
+
+        override fun serialize(encoder: Encoder, value: NsfwLevel) {
+            encoder.encodeInt(value.value)
+        }
+
     }
 }
 

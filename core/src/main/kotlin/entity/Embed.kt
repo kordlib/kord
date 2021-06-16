@@ -9,9 +9,9 @@ import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.*
-import dev.kord.core.toInstant
 import dev.kord.rest.builder.message.EmbedBuilder
-import java.time.Instant
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 
 internal const val embedDeprecationMessage = """
 Embed types should be considered deprecated and might be removed in a future API version.

@@ -8,10 +8,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -31,6 +28,9 @@ private object NullDecoder : DeserializationStrategy<Nothing?> {
 
     @OptIn(ExperimentalSerializationApi::class)
     override fun deserialize(decoder: Decoder): Nothing? {
+        // decodeNull() doesn't consume the literal null therefore parsing doesn't end and in e.g. a heartbeat event
+        // the null gets parsed as a key
+        decoder.decodeNotNullMark()
         return decoder.decodeNull()
     }
 
