@@ -60,8 +60,8 @@ data class DefaultGatewayData(
  * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
  */
 class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
-    private val job = SupervisorJob()
-    override val coroutineContext: CoroutineContext = job +data.dispatcher
+
+    override val coroutineContext: CoroutineContext = SupervisorJob() +data.dispatcher
 
     private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
 

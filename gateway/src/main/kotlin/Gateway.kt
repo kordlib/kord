@@ -70,8 +70,8 @@ interface Gateway : CoroutineScope {
 
     companion object {
         private object None : Gateway {
-            private val job = SupervisorJob()
-            override val coroutineContext: CoroutineContext = job + EmptyCoroutineContext
+
+            override val coroutineContext: CoroutineContext = SupervisorJob() + EmptyCoroutineContext
 
             override val events: SharedFlow<Event>
                 get() = MutableSharedFlow()

@@ -16,8 +16,7 @@ internal abstract class Handler(
     val name: String,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : CoroutineScope {
-    private val job = SupervisorJob()
-    override val coroutineContext: CoroutineContext = job + dispatcher
+    override val coroutineContext: CoroutineContext = SupervisorJob() + dispatcher
 
     init {
         launch {

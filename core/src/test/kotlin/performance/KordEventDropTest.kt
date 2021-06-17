@@ -29,8 +29,8 @@ import kotlin.time.Duration
 class KordEventDropTest {
 
     object SpammyGateway : Gateway {
-        private val job = SupervisorJob()
-        override val coroutineContext: CoroutineContext = job + EmptyCoroutineContext
+
+        override val coroutineContext: CoroutineContext = SupervisorJob() + EmptyCoroutineContext
 
         @OptIn(FlowPreview::class)
         override val events: MutableSharedFlow<Event> = MutableSharedFlow()
