@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.interaction
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ApplicationCommandOption
 import dev.kord.common.entity.ApplicationCommandOptionType
@@ -13,6 +14,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+@KordDsl
 @KordPreview
 sealed class OptionsBuilder(
     var name: String,
@@ -31,6 +33,7 @@ sealed class OptionsBuilder(
     }
 }
 
+@KordDsl
 @KordPreview
 sealed class BaseChoiceBuilder<T>(
     name: String,
@@ -56,6 +59,7 @@ sealed class BaseChoiceBuilder<T>(
 
 }
 
+@KordDsl
 @KordPreview
 class IntChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Int>(name, description, ApplicationCommandOptionType.Integer) {
@@ -66,6 +70,7 @@ class IntChoiceBuilder(name: String, description: String) :
     }
 }
 
+@KordDsl
 @KordPreview
 class StringChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
@@ -76,22 +81,27 @@ class StringChoiceBuilder(name: String, description: String) :
     }
 }
 
+@KordDsl
 @KordPreview
 class BooleanBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Boolean)
 
+@KordDsl
 @KordPreview
 class UserBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.User)
 
+@KordDsl
 @KordPreview
 class RoleBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Role)
 
+@KordDsl
 @KordPreview
 class ChannelBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Channel)
 
+@KordDsl
 @KordPreview
 sealed class BaseCommandOptionBuilder(
     name: String,
@@ -110,6 +120,7 @@ sealed class BaseCommandOptionBuilder(
     }
 }
 
+@KordDsl
 @KordPreview
 class SubCommandBuilder(name: String, description: String) :
     BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommand) {
@@ -160,6 +171,7 @@ class SubCommandBuilder(name: String, description: String) :
     }
 }
 
+@KordDsl
 @KordPreview
 class GroupCommandBuilder(name: String, description: String) :
     BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommandGroup) {

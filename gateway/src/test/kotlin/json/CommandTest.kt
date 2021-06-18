@@ -2,6 +2,7 @@
 
 package json
 
+import dev.kord.common.entity.DiscordBotActivity
 import dev.kord.common.entity.DiscordShard
 import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.entity.Snowflake
@@ -13,6 +14,7 @@ import dev.kord.gateway.*
 import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.util.*
 
 private val json = Json { encodeDefaults = false }
 
@@ -60,12 +62,15 @@ class CommandTest {
         val query = "test"
         val limit = 1337
 
-        val request = json.encodeToString(Command.Companion, RequestGuildMembers(Snowflake(guildId), query.optional(), OptionalInt.Value(limit)))
+        val request = json.encodeToString(
+            Command.Companion,
+            RequestGuildMembers(Snowflake(guildId), query.optional(), OptionalInt.Value(limit))
+        )
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.RequestGuildMembers.code)
             put("d", buildJsonObject {
-                put("guild_id", guildId)
+                put("guild_id", guildId.toLong())
                 put("query", query)
                 put("limit", limit)
             })
@@ -82,13 +87,16 @@ class CommandTest {
         val selfMute = true
         val selfDeaf = false
 
-        val status = json.encodeToString(Command.Companion, UpdateVoiceStatus(Snowflake(guildId), Snowflake(channelId), selfMute, selfDeaf))
+        val status = json.encodeToString(
+            Command.Companion,
+            UpdateVoiceStatus(Snowflake(guildId), Snowflake(channelId), selfMute, selfDeaf)
+        )
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.VoiceStateUpdate.code)
             put("d", buildJsonObject {
-                put("guild_id", guildId)
-                put("channel_id", channelId)
+                put("guild_id", guildId.toLong())
+                put("channel_id", channelId.toLong())
                 put("self_mute", selfMute)
                 put("self_deaf", selfDeaf)
             })
@@ -101,18 +109,18 @@ class CommandTest {
     @Test
     fun `UpdateState command serialization`() {
         val since = 1242518400L
-        val game = null
+        val activities = listOf<DiscordBotActivity>()
         val status = PresenceStatus.Online
         val afk = false
 
-        val updateStatus = json.encodeToString(Command.Companion, UpdateStatus(since, game, status, afk))
+        val updateStatus = json.encodeToString(Command.Companion, UpdateStatus(since, activities, status, afk))
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.StatusUpdate.code)
             put("d", buildJsonObject {
                 put("since", since)
-                put("activities", null as String?)
-                put("status", status.value.toLowerCase())
+                put("activities", JsonArray(emptyList()))
+                put("status", status.value.lowercase(Locale.getDefault()))
                 put("afk", afk)
             })
         })
@@ -132,8 +140,16 @@ class CommandTest {
         val presence: DiscordPresence? = null
 
         val identify = json.encodeToString(
-                Command.Companion,
-                Identify(token, properties, compress.optional(), largeThreshold.optionalInt(), shard.optional(), presence.optional().coerceToMissing(), Intents.all)
+            Command.Companion,
+            Identify(
+                token,
+                properties,
+                compress.optional(),
+                largeThreshold.optionalInt(),
+                shard.optional(),
+                presence.optional().coerceToMissing(),
+                Intents.all
+            )
         )
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {

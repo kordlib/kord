@@ -2,19 +2,13 @@ package dev.kord.gateway
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.gateway.builder.RequestGuildMembersBuilder
 import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import kotlinx.serialization.SerialName
 import mu.KotlinLogging
-import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -77,7 +71,7 @@ interface Gateway : CoroutineScope {
     companion object {
         private object None : Gateway {
 
-            override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
+            override val coroutineContext: CoroutineContext = SupervisorJob() + EmptyCoroutineContext
 
             override val events: SharedFlow<Event>
                 get() = MutableSharedFlow()

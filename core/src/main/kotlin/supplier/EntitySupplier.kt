@@ -1,5 +1,6 @@
 package dev.kord.core.supplier
 
+import dev.kord.common.entity.ChannelType.Unknown
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.entity.*
@@ -8,7 +9,6 @@ import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.exception.EntityNotFoundException
 import kotlinx.coroutines.flow.Flow
-import dev.kord.common.entity.ChannelType.Unknown
 
 /**
  * An abstraction that allows for requesting Discord entities.
@@ -389,6 +389,11 @@ interface EntitySupplier {
         getTemplateOrNull(code) ?: EntityNotFoundException.templateNotFound(code)
 
     fun getTemplates(guildId: Snowflake): Flow<Template>
+
+    suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance?
+
+    suspend fun getStageInstance(channelId: Snowflake): StageInstance =
+        getStageInstanceOrNull(channelId) ?: EntityNotFoundException.stageInstanceNotFound(channelId)
 }
 
 

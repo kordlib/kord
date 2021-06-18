@@ -42,6 +42,7 @@ sealed class InteractionFollowup(val message: Message) : FollowupMessageBehavior
  * @param message The message created by this follow-up.
  * To use the message behavior your application must be authorized as a bot.
  */
+@KordPreview
 class PublicFollowupMessage(
     message: Message,
     override val applicationId: Snowflake,
@@ -65,6 +66,7 @@ class PublicFollowupMessage(
  * Note: Any rest calls made through the [message] object e.g: `message.delete()` will throw since the message
  * is deleted once the client receives it.
  */
+@KordPreview
 class EphemeralFollowupMessage(
     message: Message,
     override val applicationId: Snowflake,

@@ -27,8 +27,8 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.Image
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.first
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 import java.util.*
 
 /**
@@ -182,12 +182,7 @@ class Guild(
      * The time at which this guild was joined, if present.
      */
     val joinedTime: Instant?
-        get() = data.joinedAt.value?.let {
-            DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(
-                it,
-                Instant::from
-            )
-        }
+        get() = data.joinedAt.value?.toInstant()
 
     /**
      * The id of the owner.
@@ -331,6 +326,16 @@ class Guild(
      * The maximum amount of users in a video channel, if present.
      */
     val maxVideoChannelUsers: Int? get() = data.maxVideoChannelUsers.value
+
+    /**
+     * The welcome screen of a Community guild, shown to new members, returned in an [Invite]'s guild object
+     */
+    val welcomeScreen: WelcomeScreen? get() = data.welcomeScreen.unwrap { WelcomeScreen(it, kord) }
+
+    /**
+     * The [NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level) of this Guild
+     */
+    val nsfw: NsfwLevel get() = data.nsfwLevel
 
     /**
      * Requests to get the [VoiceChannel] represented by the [afkChannelId],

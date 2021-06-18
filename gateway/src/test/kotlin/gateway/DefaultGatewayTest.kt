@@ -20,16 +20,15 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
-import java.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.seconds
-import kotlin.time.toKotlinDuration
+import kotlin.time.Duration as KDuration
 
 @FlowPreview
 @KtorExperimentalAPI
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 class DefaultGatewayTest {
+    @OptIn(DelicateCoroutinesApi::class)
     @Test
     @Disabled
     @ExperimentalTime
@@ -44,8 +43,8 @@ class DefaultGatewayTest {
                 }
             }
 
-            reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
-            sendRateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
+            reconnectRetry = LinearRetry(KDuration.seconds(2), KDuration.seconds(20), 10)
+            sendRateLimiter = BucketRateLimiter(120, KDuration.seconds(60))
         }
 
         gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.Default).onEach {
@@ -57,7 +56,7 @@ class DefaultGatewayTest {
                 "!status" -> when (words.getOrNull(1)) {
                     "playing" -> gateway.send(UpdateStatus(status = PresenceStatus.Online, afk = false, activities = listOf(DiscordBotActivity("Kord", ActivityType.Game)), since = null))
                 }
-                "!ping" -> gateway.send(UpdateStatus(status = PresenceStatus.Online, afk = false, activities = listOf(DiscordBotActivity("Ping is ${gateway.ping.value?.toLongMilliseconds()}", ActivityType.Game)), since = null))
+                "!ping" -> gateway.send(UpdateStatus(status = PresenceStatus.Online, afk = false, activities = listOf(DiscordBotActivity("Ping is ${gateway.ping.value?.inWholeMilliseconds}", ActivityType.Game)), since = null))
             }
         }.launchIn(GlobalScope)
 

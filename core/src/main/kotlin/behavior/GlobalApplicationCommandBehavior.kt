@@ -76,7 +76,51 @@ interface GuildApplicationCommandBehavior : ApplicationCommandBehavior {
         return GuildApplicationCommand(data, service, guildId)
     }
 
+    /**
+     * Updates the permissions for this command on the guild.
+     *
+     * @throws [RestRequestException] when something goes wrong during the request.
+     */
+    suspend fun editPermissions(
+        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
+    ) {
+        val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
+        service.editApplicationCommandPermissions(applicationId, guildId, id, request)
+    }
+
     override suspend fun delete() {
         service.deleteGuildApplicationCommand(applicationId, guildId, id)
     }
+
+}
+
+@KordPreview
+fun GuildApplicationCommandBehavior(
+    guildId: Snowflake,
+    applicationId: Snowflake,
+    id: Snowflake,
+    service: InteractionService
+): GuildApplicationCommandBehavior = object : GuildApplicationCommandBehavior {
+    override val guildId: Snowflake
+        get() = guildId
+    override val applicationId: Snowflake
+        get() = applicationId
+    override val service: InteractionService
+        get() = service
+    override val id: Snowflake
+        get() = id
+}
+
+@KordPreview
+fun GlobalApplicationCommandBehavior(
+    applicationId: Snowflake,
+    id: Snowflake,
+    service: InteractionService
+): GlobalApplicationCommandBehavior = object : GlobalApplicationCommandBehavior {
+    override val applicationId: Snowflake
+        get() = applicationId
+    override val service: InteractionService
+        get() = service
+    override val id: Snowflake
+        get() = id
 }

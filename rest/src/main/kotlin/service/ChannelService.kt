@@ -190,13 +190,19 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         messageId: Snowflake,
         builder: MessageModifyBuilder.() -> Unit
     ): DiscordMessage {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return editMessage(channelId, messageId, MessageModifyBuilder().apply(builder).toRequest())
+    }
+
+    suspend fun editMessage(
+        channelId: Snowflake,
+        messageId: Snowflake,
+        request: MessageEditPatchRequest
+    ): DiscordMessage {
         return call(Route.EditMessagePatch) {
             keys[Route.ChannelId] = channelId
             keys[Route.MessageId] = messageId
-            body(MessageEditPatchRequest.serializer(), MessageModifyBuilder().apply(builder).toRequest())
+            body(MessageEditPatchRequest.serializer(), request)
         }
     }
 
@@ -250,6 +256,18 @@ suspend inline fun ChannelService.patchVoiceChannel(
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
     return patchChannel(channelId, VoiceChannelModifyBuilder().apply(builder).toRequest())
+}
+
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun ChannelService.patchStageVoiceChannel(
+    channelId: Snowflake,
+    builder: StageVoiceChannelModifyBuilder.() -> Unit
+): DiscordChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    return patchChannel(channelId, StageVoiceChannelModifyBuilder().apply(builder).toRequest())
 }
 
 @OptIn(ExperimentalContracts::class)

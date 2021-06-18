@@ -46,6 +46,12 @@ class VoiceChannelDeleteEvent(override val channel: VoiceChannel, override val s
     }
 }
 
+class StageChannelDeleteEvent(override val channel: StageChannel, override val shard: Int) : ChannelDeleteEvent {
+    override fun toString(): String {
+        return "StageChannelDeleteEvent(channel=$channel, shard=$shard)"
+    }
+}
+
 
 class UnknownChannelDeleteEvent(override val channel: Channel, override val shard: Int) : ChannelCreateEvent {
     override fun toString(): String {

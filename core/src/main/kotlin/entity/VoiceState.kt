@@ -4,6 +4,7 @@ import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
+import dev.kord.core.behavior.channel.BaseVoiceChannelBehavior
 import dev.kord.core.cache.data.VoiceStateData
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.supplier.EntitySupplier
@@ -36,6 +37,8 @@ class VoiceState(
 
     val isSuppressed: Boolean get() = data.suppress
 
+    val requestToSpeakTimestamp: String? get() = data.requestToSpeakTimestamp
+
     /**
      * Whether this user is streaming using "Go Live".
      */
@@ -48,8 +51,8 @@ class VoiceState(
      * @throws [RequestException] if anything went wrong during the request.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("User getChannelOrNull instead.", ReplaceWith("getChannelOrNull"), DeprecationLevel.ERROR)
-    suspend fun getChannel(): VoiceChannel? = channelId?.let { supplier.getChannelOfOrNull(it) }
+    @Deprecated("Use getChannelOrNull instead.", ReplaceWith("getChannelOrNull"), DeprecationLevel.ERROR)
+    suspend fun getChannel(): BaseVoiceChannelBehavior? = channelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Requests to get the voice channel through the [strategy],
@@ -57,7 +60,7 @@ class VoiceState(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getChannelOrNull(): VoiceChannel? = channelId?.let { supplier.getChannelOfOrNull(it) }
+    suspend fun getChannelOrNull(): BaseVoiceChannelBehavior? = channelId?.let { supplier.getChannelOfOrNull(it) }
 
 
     /**

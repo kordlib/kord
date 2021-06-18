@@ -47,7 +47,7 @@ data class DiscordUpdatedEmojis(
  */
 @Serializable
 data class DiscordPartialEmoji(
-    val id: Snowflake?,
-    val name: String?,
+    val id: Snowflake? = null,
+    val name: String? = null,
     val animated: OptionalBoolean = OptionalBoolean.Missing,
 )

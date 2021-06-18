@@ -18,14 +18,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import java.time.Instant
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.coroutineContext
+import kotlin.time.Duration
 import kotlin.time.TimeMark
-import kotlin.time.seconds
 
 /**
  * The behavior of a Discord channel that can use messages.
@@ -199,7 +200,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     suspend fun typeUntil(mark: TimeMark) {
         while (mark.hasNotPassedNow()) {
             type()
-            delay(8.seconds.toLongMilliseconds()) //bracing ourselves for some network delays
+            delay(Duration.seconds(8).inWholeMilliseconds) //bracing ourselves for some network delays
         }
     }
 
@@ -210,9 +211,9 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun typeUntil(instant: Instant) {
-        while (instant.isBefore(Instant.now())) {
+        while (instant < Clock.System.now()) {
             type()
-            delay(8.seconds.toLongMilliseconds()) //bracing ourselves for some network delays
+            delay(Duration.seconds(8).inWholeMilliseconds) //bracing ourselves for some network delays
         }
     }
 
@@ -297,7 +298,7 @@ suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() -> Unit
     kord.launch(context = coroutineContext) {
         while (typing) {
             type()
-            delay(8.seconds.toLongMilliseconds())
+            delay(Duration.seconds(8).inWholeMilliseconds)
         }
     }
 

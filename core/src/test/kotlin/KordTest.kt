@@ -12,7 +12,7 @@ import java.util.concurrent.CountDownLatch
 internal class KordTest {
 
     @Test
-    @OptIn(KordExperimental::class)
+    @OptIn(KordExperimental::class, kotlinx.coroutines.DelicateCoroutinesApi::class)
     fun `Kord life cycle is correctly ended on shutdown`() {
         val kord = Kord.restOnly(System.getenv("KORD_TEST_TOKEN"))
         val lock = CountDownLatch(1)

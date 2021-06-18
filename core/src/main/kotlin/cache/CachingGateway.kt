@@ -19,8 +19,7 @@ class CachingGateway(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : DataCache by cache, Gateway by gateway, CoroutineScope {
 
-    override val coroutineContext: CoroutineContext
-        get() = Job() + dispatcher
+    override val coroutineContext: CoroutineContext = SupervisorJob() + dispatcher
 
     init {
         gateway.events.filterIsInstance<Close>().onEach { removeKordData() }.launchIn(this)
