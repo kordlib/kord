@@ -15,7 +15,7 @@
 
 * Update deprecated message (#280)
 * Sealed message types (#282)
-* Improve slash command API and add support for components (#310 #294 #312)
+* Improve slash command API and add support for components (#310 #294 #312 #324)
 * Live entities can define a parent job (#304)
 
 ## Fixes
