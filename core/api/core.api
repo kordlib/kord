@@ -1045,9 +1045,8 @@ public abstract interface class dev/kord/core/behavior/interaction/EphemeralInte
 public final class dev/kord/core/behavior/interaction/EphemeralInteractionResponseBehaviorKt {
 	public static final fun EphemeralInteractionResponseBehavior (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/behavior/interaction/EphemeralInteractionResponseBehavior;
 	public static final fun edit (Ldev/kord/core/behavior/interaction/EphemeralInteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun followUp (Ldev/kord/core/behavior/interaction/EphemeralInteractionResponseBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun followUp (Ldev/kord/core/behavior/interaction/EphemeralInteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun followUp$default (Ldev/kord/core/behavior/interaction/EphemeralInteractionResponseBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun followUpEphemeral (Ldev/kord/core/behavior/interaction/EphemeralInteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun followUpPublic (Ldev/kord/core/behavior/interaction/EphemeralInteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/FollowupMessageBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
@@ -1091,8 +1090,7 @@ public final class dev/kord/core/behavior/interaction/InteractionBehavior$Defaul
 public final class dev/kord/core/behavior/interaction/InteractionBehaviorKt {
 	public static final fun InteractionBehavior (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
 	public static synthetic fun InteractionBehavior$default (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;ILjava/lang/Object;)Ldev/kord/core/behavior/interaction/InteractionBehavior;
-	public static final fun respondEphemeral (Ldev/kord/core/behavior/interaction/InteractionBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun respondEphemeral$default (Ldev/kord/core/behavior/interaction/InteractionBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun respondEphemeral (Ldev/kord/core/behavior/interaction/InteractionBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun respondPublic (Ldev/kord/core/behavior/interaction/InteractionBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -2257,9 +2255,9 @@ public final class dev/kord/core/cache/data/GuildApplicationCommandPermissionsDa
 
 public final class dev/kord/core/cache/data/GuildData {
 	public static final field Companion Ldev/kord/core/cache/data/GuildData$Companion;
-	public synthetic fun <init> (IILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/VerificationLevel;Ldev/kord/common/entity/DefaultMessageNotificationLevel;Ldev/kord/common/entity/ExplicitContentFilter;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/MFALevel;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/SystemChannelFlags;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PremiumTier;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/VerificationLevel;Ldev/kord/common/entity/DefaultMessageNotificationLevel;Ldev/kord/common/entity/ExplicitContentFilter;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/MFALevel;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/SystemChannelFlags;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PremiumTier;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Z)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/VerificationLevel;Ldev/kord/common/entity/DefaultMessageNotificationLevel;Ldev/kord/common/entity/ExplicitContentFilter;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/MFALevel;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/SystemChannelFlags;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PremiumTier;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;ZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (IILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/VerificationLevel;Ldev/kord/common/entity/DefaultMessageNotificationLevel;Ldev/kord/common/entity/ExplicitContentFilter;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/MFALevel;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/SystemChannelFlags;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PremiumTier;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/NsfwLevel;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/VerificationLevel;Ldev/kord/common/entity/DefaultMessageNotificationLevel;Ldev/kord/common/entity/ExplicitContentFilter;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/MFALevel;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/SystemChannelFlags;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PremiumTier;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/NsfwLevel;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/VerificationLevel;Ldev/kord/common/entity/DefaultMessageNotificationLevel;Ldev/kord/common/entity/ExplicitContentFilter;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/MFALevel;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/SystemChannelFlags;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PremiumTier;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/NsfwLevel;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component10 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component11 ()I
@@ -2296,14 +2294,14 @@ public final class dev/kord/core/cache/data/GuildData {
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component40 ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun component41 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun component42 ()Z
+	public final fun component42 ()Ldev/kord/common/entity/NsfwLevel;
 	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component6 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component7 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component9 ()Ljava/lang/String;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/VerificationLevel;Ldev/kord/common/entity/DefaultMessageNotificationLevel;Ldev/kord/common/entity/ExplicitContentFilter;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/MFALevel;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/SystemChannelFlags;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PremiumTier;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Z)Ldev/kord/core/cache/data/GuildData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/GuildData;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/VerificationLevel;Ldev/kord/common/entity/DefaultMessageNotificationLevel;Ldev/kord/common/entity/ExplicitContentFilter;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/MFALevel;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/SystemChannelFlags;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PremiumTier;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;ZIILjava/lang/Object;)Ldev/kord/core/cache/data/GuildData;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/VerificationLevel;Ldev/kord/common/entity/DefaultMessageNotificationLevel;Ldev/kord/common/entity/ExplicitContentFilter;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/MFALevel;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/SystemChannelFlags;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PremiumTier;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/NsfwLevel;)Ldev/kord/core/cache/data/GuildData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/GuildData;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/VerificationLevel;Ldev/kord/common/entity/DefaultMessageNotificationLevel;Ldev/kord/common/entity/ExplicitContentFilter;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/MFALevel;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/SystemChannelFlags;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/PremiumTier;Ldev/kord/common/entity/optional/OptionalInt;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/NsfwLevel;IILjava/lang/Object;)Ldev/kord/core/cache/data/GuildData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAfkChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getAfkTimeout ()I
@@ -2329,7 +2327,7 @@ public final class dev/kord/core/cache/data/GuildData {
 	public final fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun getMfaLevel ()Ldev/kord/common/entity/MFALevel;
 	public final fun getName ()Ljava/lang/String;
-	public final fun getNsfw ()Z
+	public final fun getNsfwLevel ()Ldev/kord/common/entity/NsfwLevel;
 	public final fun getOwnerId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getPermissions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getPreferredLocale ()Ljava/lang/String;
@@ -4197,7 +4195,7 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public fun getMembers (Ljava/lang/String;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getMfaLevel ()Ldev/kord/common/entity/MFALevel;
 	public final fun getName ()Ljava/lang/String;
-	public final fun getNsfw ()Z
+	public final fun getNsfw ()Ldev/kord/common/entity/NsfwLevel;
 	public final fun getOwner ()Ldev/kord/core/behavior/MemberBehavior;
 	public final fun getOwner (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getOwnerId ()Ldev/kord/common/entity/Snowflake;
@@ -7124,268 +7122,366 @@ public final class dev/kord/core/gateway/handler/InteractionEventHandler : dev/k
 	public fun handle (Ldev/kord/gateway/Event;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract class dev/kord/core/live/AbstractLiveKordEntity : dev/kord/core/live/LiveKordEntity {
-	public fun <init> ()V
+public abstract class dev/kord/core/live/AbstractLiveKordEntity : dev/kord/core/live/LiveKordEntity, kotlinx/coroutines/CoroutineScope {
+	public fun <init> (Ldev/kord/core/Kord;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/Kord;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	protected abstract fun filter (Ldev/kord/core/event/Event;)Z
-	public fun getEvents ()Lkotlinx/coroutines/flow/Flow;
-	public fun shutDown ()V
+	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
+	public synthetic fun getEvents ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getEvents ()Lkotlinx/coroutines/flow/SharedFlow;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun shutDown (Ljava/util/concurrent/CancellationException;)V
 	protected abstract fun update (Ldev/kord/core/event/Event;)V
 }
 
 public final class dev/kord/core/live/LiveGuild : dev/kord/core/live/AbstractLiveKordEntity, dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/entity/Guild;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun <init> (Ldev/kord/core/entity/Guild;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/entity/Guild;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getGuild ()Ldev/kord/core/entity/Guild;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
 }
 
 public final class dev/kord/core/live/LiveGuildKt {
-	public static final fun live (Ldev/kord/core/entity/Guild;)Ldev/kord/core/live/LiveGuild;
-	public static final fun live (Ldev/kord/core/entity/Guild;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/LiveGuild;
-	public static final fun onBanRemove (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onChannelCreate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onChannelDelete (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onChannelUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onEmojisUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildCreate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildDelete (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onIntegrationsUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onMemberJoin (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onMemberLeave (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onMemberUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onMessageCreate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onMessageDelete (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onMessageUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onPresenceUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionAdd (Ldev/kord/core/live/LiveGuild;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionAdd (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionRemove (Ldev/kord/core/live/LiveGuild;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionRemove (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionRemoveAll (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onRoleCreate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onRoleDelete (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onRoleUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onVoiceServerUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onVoiceStateUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onWebhookUpdate (Ldev/kord/core/live/LiveGuild;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/Guild;Lkotlinx/coroutines/CoroutineScope;)Ldev/kord/core/live/LiveGuild;
+	public static final fun live (Ldev/kord/core/entity/Guild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/LiveGuild;
+	public static synthetic fun live$default (Ldev/kord/core/entity/Guild;Lkotlinx/coroutines/CoroutineScope;ILjava/lang/Object;)Ldev/kord/core/live/LiveGuild;
+	public static synthetic fun live$default (Ldev/kord/core/entity/Guild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/live/LiveGuild;
+	public static final fun onBanAdd (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onBanAdd$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onBanRemove (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onBanRemove$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onChannelCreate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onChannelCreate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onChannelDelete (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onChannelDelete$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onChannelUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onChannelUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onEmojisUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onEmojisUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildCreate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildCreate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildDelete (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildDelete$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onIntegrationsUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onIntegrationsUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onMemberJoin (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onMemberJoin$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onMemberLeave (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onMemberLeave$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onMemberUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onMemberUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onMessageCreate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onMessageCreate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onMessageDelete (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onMessageDelete$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onMessageUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onMessageUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onPresenceUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onPresenceUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionAdd (Ldev/kord/core/live/LiveGuild;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionAdd (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionAdd$default (Ldev/kord/core/live/LiveGuild;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionAdd$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionRemove (Ldev/kord/core/live/LiveGuild;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionRemove (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionRemove$default (Ldev/kord/core/live/LiveGuild;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionRemove$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionRemoveAll (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionRemoveAll$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onRoleCreate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onRoleCreate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onRoleDelete (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onRoleDelete$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onRoleUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onRoleUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onVoiceServerUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onVoiceServerUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onVoiceStateUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onVoiceStateUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onWebhookUpdate (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onWebhookUpdate$default (Ldev/kord/core/live/LiveGuild;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
-public abstract interface class dev/kord/core/live/LiveKordEntity : dev/kord/core/entity/KordEntity {
+public abstract interface class dev/kord/core/live/LiveKordEntity : dev/kord/core/entity/KordEntity, kotlinx/coroutines/CoroutineScope {
 	public abstract fun getEvents ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun shutDown ()V
+	public abstract fun shutDown (Ljava/util/concurrent/CancellationException;)V
 }
 
 public final class dev/kord/core/live/LiveKordEntity$DefaultImpls {
 	public static fun compareTo (Ldev/kord/core/live/LiveKordEntity;Ldev/kord/core/entity/Entity;)I
+	public static synthetic fun shutDown$default (Ldev/kord/core/live/LiveKordEntity;Ljava/util/concurrent/CancellationException;ILjava/lang/Object;)V
 }
 
 public final class dev/kord/core/live/LiveMember : dev/kord/core/live/AbstractLiveKordEntity, dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/entity/Member;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun <init> (Ldev/kord/core/entity/Member;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/entity/Member;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMember ()Ldev/kord/core/entity/Member;
 }
 
 public final class dev/kord/core/live/LiveMemberKt {
-	public static final fun live (Ldev/kord/core/entity/Member;)Ldev/kord/core/live/LiveMember;
-	public static final fun live (Ldev/kord/core/entity/Member;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/LiveMember;
-	public static final fun onBanAdd (Ldev/kord/core/live/LiveMember;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildDelete (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onLeave (Ldev/kord/core/live/LiveMember;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onUpdate (Ldev/kord/core/live/LiveMember;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/Member;Lkotlinx/coroutines/CoroutineScope;)Ldev/kord/core/live/LiveMember;
+	public static final fun live (Ldev/kord/core/entity/Member;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/LiveMember;
+	public static synthetic fun live$default (Ldev/kord/core/entity/Member;Lkotlinx/coroutines/CoroutineScope;ILjava/lang/Object;)Ldev/kord/core/live/LiveMember;
+	public static synthetic fun live$default (Ldev/kord/core/entity/Member;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/live/LiveMember;
+	public static final fun onBanAdd (Ldev/kord/core/live/LiveMember;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onBanAdd$default (Ldev/kord/core/live/LiveMember;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildDelete (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildDelete$default (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onLeave (Ldev/kord/core/live/LiveMember;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onLeave$default (Ldev/kord/core/live/LiveMember;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onShutdown (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onShutdown$default (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onUpdate (Ldev/kord/core/live/LiveMember;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onUpdate$default (Ldev/kord/core/live/LiveMember;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public final class dev/kord/core/live/LiveMessage : dev/kord/core/live/AbstractLiveKordEntity, dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/entity/Message;Ldev/kord/common/entity/Snowflake;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun <init> (Ldev/kord/core/entity/Message;Ldev/kord/common/entity/Snowflake;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/entity/Message;Ldev/kord/common/entity/Snowflake;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMessage ()Ldev/kord/core/entity/Message;
 }
 
 public final class dev/kord/core/live/LiveMessageKt {
-	public static final fun live (Ldev/kord/core/entity/Message;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun live (Ldev/kord/core/entity/Message;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun onBulkDelete (Ldev/kord/core/live/LiveMessage;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onChannelDelete (Ldev/kord/core/live/LiveMessage;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onCreate (Ldev/kord/core/live/LiveMessage;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildDelete (Ldev/kord/core/live/LiveMessage;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onOnlyDelete (Ldev/kord/core/live/LiveMessage;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionAdd (Ldev/kord/core/live/LiveMessage;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionAdd (Ldev/kord/core/live/LiveMessage;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionRemove (Ldev/kord/core/live/LiveMessage;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionRemove (Ldev/kord/core/live/LiveMessage;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionRemoveAll (Ldev/kord/core/live/LiveMessage;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onShutDown (Ldev/kord/core/live/LiveMessage;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onUpdate (Ldev/kord/core/live/LiveMessage;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/Message;Lkotlinx/coroutines/CoroutineScope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun live (Ldev/kord/core/entity/Message;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun live$default (Ldev/kord/core/entity/Message;Lkotlinx/coroutines/CoroutineScope;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun live$default (Ldev/kord/core/entity/Message;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun onBulkDelete (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onBulkDelete$default (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onChannelDelete (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onChannelDelete$default (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onCreate (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onCreate$default (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildDelete (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildDelete$default (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onOnlyDelete (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onOnlyDelete$default (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionAdd (Ldev/kord/core/live/LiveMessage;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionAdd (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionAdd$default (Ldev/kord/core/live/LiveMessage;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionAdd$default (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionRemove (Ldev/kord/core/live/LiveMessage;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionRemove (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionRemove$default (Ldev/kord/core/live/LiveMessage;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionRemove$default (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionRemoveAll (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionRemoveAll$default (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onShutdown (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onShutdown$default (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onUpdate (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onUpdate$default (Ldev/kord/core/live/LiveMessage;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public final class dev/kord/core/live/LiveRole : dev/kord/core/live/AbstractLiveKordEntity, dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/entity/Role;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun <init> (Ldev/kord/core/entity/Role;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/entity/Role;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getRole ()Ldev/kord/core/entity/Role;
 }
 
 public final class dev/kord/core/live/LiveRoleKt {
-	public static final fun live (Ldev/kord/core/entity/Role;)Ldev/kord/core/live/LiveRole;
-	public static final fun live (Ldev/kord/core/entity/Role;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/LiveRole;
-	public static final fun onDelete (Ldev/kord/core/live/LiveRole;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildDelete (Ldev/kord/core/live/LiveRole;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onShutDown (Ldev/kord/core/live/LiveRole;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onUpdate (Ldev/kord/core/live/LiveRole;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/Role;Lkotlinx/coroutines/CoroutineScope;)Ldev/kord/core/live/LiveRole;
+	public static final fun live (Ldev/kord/core/entity/Role;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/LiveRole;
+	public static synthetic fun live$default (Ldev/kord/core/entity/Role;Lkotlinx/coroutines/CoroutineScope;ILjava/lang/Object;)Ldev/kord/core/live/LiveRole;
+	public static synthetic fun live$default (Ldev/kord/core/entity/Role;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/live/LiveRole;
+	public static final fun onDelete (Ldev/kord/core/live/LiveRole;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onDelete$default (Ldev/kord/core/live/LiveRole;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildDelete (Ldev/kord/core/live/LiveRole;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildDelete$default (Ldev/kord/core/live/LiveRole;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onShutdown (Ldev/kord/core/live/LiveRole;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onShutdown$default (Ldev/kord/core/live/LiveRole;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onUpdate (Ldev/kord/core/live/LiveRole;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onUpdate$default (Ldev/kord/core/live/LiveRole;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public final class dev/kord/core/live/LiveUser : dev/kord/core/live/AbstractLiveKordEntity, dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/entity/User;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun <init> (Ldev/kord/core/entity/User;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/entity/User;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getUser ()Ldev/kord/core/entity/User;
 }
 
 public final class dev/kord/core/live/LiveUserKt {
-	public static final fun live (Ldev/kord/core/entity/User;)Ldev/kord/core/live/LiveUser;
-	public static final fun live (Ldev/kord/core/entity/User;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/LiveUser;
-	public static final fun onUpdate (Ldev/kord/core/live/LiveUser;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/User;Lkotlinx/coroutines/CoroutineScope;)Ldev/kord/core/live/LiveUser;
+	public static final fun live (Ldev/kord/core/entity/User;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/LiveUser;
+	public static synthetic fun live$default (Ldev/kord/core/entity/User;Lkotlinx/coroutines/CoroutineScope;ILjava/lang/Object;)Ldev/kord/core/live/LiveUser;
+	public static synthetic fun live$default (Ldev/kord/core/entity/User;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/live/LiveUser;
+	public static final fun onUpdate (Ldev/kord/core/live/LiveUser;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onUpdate$default (Ldev/kord/core/live/LiveUser;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public final class dev/kord/core/live/channel/LiveCategory : dev/kord/core/live/channel/LiveChannel, dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/entity/channel/Category;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun <init> (Ldev/kord/core/entity/channel/Category;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/entity/channel/Category;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getChannel ()Ldev/kord/core/entity/channel/Category;
 	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
 }
 
 public final class dev/kord/core/live/channel/LiveCategoryKt {
-	public static final fun live (Ldev/kord/core/entity/channel/Category;)Ldev/kord/core/live/channel/LiveCategory;
-	public static final fun live (Ldev/kord/core/entity/channel/Category;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveCategory;
-	public static final fun onCreate (Ldev/kord/core/live/channel/LiveCategory;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onDelete (Ldev/kord/core/live/channel/LiveCategory;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildDelete (Ldev/kord/core/live/channel/LiveCategory;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveCategory;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onUpdate (Ldev/kord/core/live/channel/LiveCategory;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/channel/Category;Lkotlinx/coroutines/CoroutineScope;)Ldev/kord/core/live/channel/LiveCategory;
+	public static final fun live (Ldev/kord/core/entity/channel/Category;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveCategory;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/Category;Lkotlinx/coroutines/CoroutineScope;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveCategory;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/Category;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveCategory;
+	public static final fun onCreate (Ldev/kord/core/live/channel/LiveCategory;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onCreate$default (Ldev/kord/core/live/channel/LiveCategory;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onDelete (Ldev/kord/core/live/channel/LiveCategory;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onDelete$default (Ldev/kord/core/live/channel/LiveCategory;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildDelete (Ldev/kord/core/live/channel/LiveCategory;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildDelete$default (Ldev/kord/core/live/channel/LiveCategory;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveCategory;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onShutDown$default (Ldev/kord/core/live/channel/LiveCategory;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onUpdate (Ldev/kord/core/live/channel/LiveCategory;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onUpdate$default (Ldev/kord/core/live/channel/LiveCategory;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public abstract class dev/kord/core/live/channel/LiveChannel : dev/kord/core/live/AbstractLiveKordEntity {
-	public fun <init> ()V
+	public fun <init> (Ldev/kord/core/Kord;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/Kord;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	protected fun filter (Ldev/kord/core/event/Event;)Z
 	public abstract fun getChannel ()Ldev/kord/core/entity/channel/Channel;
 }
 
 public final class dev/kord/core/live/channel/LiveChannelKt {
-	public static final fun live (Ldev/kord/core/entity/channel/Channel;)Ldev/kord/core/live/channel/LiveChannel;
-	public static final fun live (Ldev/kord/core/entity/channel/Channel;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveChannel;
-	public static final fun onChannelCreate (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onChannelDelete (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onChannelUpdate (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildCreate (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildUpdate (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onMessageCreate (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onMessageDelete (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onMessageUpdate (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionAdd (Ldev/kord/core/live/channel/LiveChannel;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionAdd (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionRemove (Ldev/kord/core/live/channel/LiveChannel;Ldev/kord/core/entity/ReactionEmoji;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionRemove (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onReactionRemoveAll (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onVoiceStateUpdate (Ldev/kord/core/live/channel/LiveChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/channel/Channel;Lkotlinx/coroutines/CoroutineScope;)Ldev/kord/core/live/channel/LiveChannel;
+	public static final fun live (Ldev/kord/core/entity/channel/Channel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveChannel;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/Channel;Lkotlinx/coroutines/CoroutineScope;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveChannel;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/Channel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveChannel;
+	public static final fun onChannelCreate (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onChannelCreate$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onChannelDelete (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onChannelDelete$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onChannelUpdate (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onChannelUpdate$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildCreate (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildCreate$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildUpdate (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildUpdate$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onMessageCreate (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onMessageCreate$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onMessageDelete (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onMessageDelete$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onMessageUpdate (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onMessageUpdate$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionAdd (Ldev/kord/core/live/channel/LiveChannel;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionAdd (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionAdd$default (Ldev/kord/core/live/channel/LiveChannel;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionAdd$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionRemove (Ldev/kord/core/live/channel/LiveChannel;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionRemove (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionRemove$default (Ldev/kord/core/live/channel/LiveChannel;Ldev/kord/core/entity/ReactionEmoji;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionRemove$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onReactionRemoveAll (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onReactionRemoveAll$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onVoiceStateUpdate (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onVoiceStateUpdate$default (Ldev/kord/core/live/channel/LiveChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public final class dev/kord/core/live/channel/LiveDmChannel : dev/kord/core/live/channel/LiveChannel, dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/entity/channel/DmChannel;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun <init> (Ldev/kord/core/entity/channel/DmChannel;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/entity/channel/DmChannel;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getChannel ()Ldev/kord/core/entity/channel/DmChannel;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
 }
 
 public final class dev/kord/core/live/channel/LiveDmChannelKt {
-	public static final fun live (Ldev/kord/core/entity/channel/DmChannel;)Ldev/kord/core/live/channel/LiveDmChannel;
-	public static final fun live (Ldev/kord/core/entity/channel/DmChannel;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveDmChannel;
-	public static final fun onCreate (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onDelete (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildDelete (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onUpdate (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/channel/DmChannel;Lkotlinx/coroutines/CoroutineScope;)Ldev/kord/core/live/channel/LiveDmChannel;
+	public static final fun live (Ldev/kord/core/entity/channel/DmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveDmChannel;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/DmChannel;Lkotlinx/coroutines/CoroutineScope;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveDmChannel;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/DmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveDmChannel;
+	public static final fun onCreate (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onCreate$default (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onDelete (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onDelete$default (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildDelete (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildDelete$default (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onShutDown$default (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onUpdate (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onUpdate$default (Ldev/kord/core/live/channel/LiveDmChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public final class dev/kord/core/live/channel/LiveGuildChannel : dev/kord/core/live/channel/LiveChannel, dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/entity/channel/GuildChannel;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun <init> (Ldev/kord/core/entity/channel/GuildChannel;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/entity/channel/GuildChannel;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getChannel ()Ldev/kord/core/entity/channel/GuildChannel;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
 }
 
 public final class dev/kord/core/live/channel/LiveGuildChannelKt {
-	public static final fun live (Ldev/kord/core/entity/channel/GuildChannel;)Ldev/kord/core/live/channel/LiveGuildChannel;
-	public static final fun live (Ldev/kord/core/entity/channel/GuildChannel;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveGuildChannel;
-	public static final fun onCreate (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onDelete (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildDelete (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onUpdate (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/channel/GuildChannel;Lkotlinx/coroutines/CoroutineScope;)Ldev/kord/core/live/channel/LiveGuildChannel;
+	public static final fun live (Ldev/kord/core/entity/channel/GuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveGuildChannel;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/GuildChannel;Lkotlinx/coroutines/CoroutineScope;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveGuildChannel;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/GuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveGuildChannel;
+	public static final fun onCreate (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onCreate$default (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onDelete (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onDelete$default (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildDelete (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildDelete$default (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onShutDown$default (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onUpdate (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onUpdate$default (Ldev/kord/core/live/channel/LiveGuildChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public final class dev/kord/core/live/channel/LiveGuildMessageChannel : dev/kord/core/live/channel/LiveChannel, dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/entity/channel/GuildMessageChannel;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun <init> (Ldev/kord/core/entity/channel/GuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/entity/channel/GuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getChannel ()Ldev/kord/core/entity/channel/GuildMessageChannel;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
 }
 
 public final class dev/kord/core/live/channel/LiveGuildMessageChannelKt {
-	public static final fun live (Ldev/kord/core/entity/channel/GuildMessageChannel;)Ldev/kord/core/live/channel/LiveGuildMessageChannel;
-	public static final fun live (Ldev/kord/core/entity/channel/GuildMessageChannel;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveGuildMessageChannel;
-	public static final fun onChannelDelete (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onCreate (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onDelete (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onUpdate (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/channel/GuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;)Ldev/kord/core/live/channel/LiveGuildMessageChannel;
+	public static final fun live (Ldev/kord/core/entity/channel/GuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveGuildMessageChannel;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/GuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveGuildMessageChannel;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/GuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveGuildMessageChannel;
+	public static final fun onChannelDelete (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onChannelDelete$default (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onCreate (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onCreate$default (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onDelete (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onDelete$default (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onShutDown$default (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onUpdate (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onUpdate$default (Ldev/kord/core/live/channel/LiveGuildMessageChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public final class dev/kord/core/live/channel/LiveVoiceChannel : dev/kord/core/live/channel/LiveChannel, dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/core/entity/channel/VoiceChannel;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun <init> (Ldev/kord/core/entity/channel/VoiceChannel;Lkotlinx/coroutines/CoroutineScope;)V
+	public synthetic fun <init> (Ldev/kord/core/entity/channel/VoiceChannel;Lkotlinx/coroutines/CoroutineScope;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getChannel ()Ldev/kord/core/entity/channel/VoiceChannel;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
 }
 
 public final class dev/kord/core/live/channel/LiveVoiceChannelKt {
-	public static final fun live (Ldev/kord/core/entity/channel/VoiceChannel;)Ldev/kord/core/live/channel/LiveVoiceChannel;
-	public static final fun live (Ldev/kord/core/entity/channel/VoiceChannel;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveVoiceChannel;
-	public static final fun onCreate (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onDelete (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onGuildDelete (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static final fun onUpdate (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun live (Ldev/kord/core/entity/channel/VoiceChannel;Lkotlinx/coroutines/CoroutineScope;)Ldev/kord/core/live/channel/LiveVoiceChannel;
+	public static final fun live (Ldev/kord/core/entity/channel/VoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Ldev/kord/core/live/channel/LiveVoiceChannel;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/VoiceChannel;Lkotlinx/coroutines/CoroutineScope;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveVoiceChannel;
+	public static synthetic fun live$default (Ldev/kord/core/entity/channel/VoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/core/live/channel/LiveVoiceChannel;
+	public static final fun onCreate (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onCreate$default (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onDelete (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onDelete$default (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGuildDelete (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGuildDelete$default (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onShutDown (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onShutDown$default (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onUpdate (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onUpdate$default (Ldev/kord/core/live/channel/LiveVoiceChannel;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public final class dev/kord/core/live/exception/LiveCancellationException : java/util/concurrent/CancellationException {
