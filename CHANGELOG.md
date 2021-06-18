@@ -9,7 +9,7 @@
 * Add Message.applicationId (#289)
 * Implement Stage instances (#291)
 * Add Message interaction (#283)
-* Add Ephemeral embed support (#296)
+* Add Ephemeral embed support (#296 #321)
 
 ## Changes
 
