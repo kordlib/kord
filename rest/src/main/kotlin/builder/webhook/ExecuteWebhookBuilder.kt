@@ -1,11 +1,14 @@
 package dev.kord.rest.builder.webhook
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.component.ActionRowBuilder
+import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.EmbedRequest
@@ -39,9 +42,11 @@ class ExecuteWebhookBuilder : RequestBuilder<MultiPartWebhookExecuteRequest> {
 
     var embeds: MutableList<EmbedRequest> = mutableListOf()
 
-
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+
+    @OptIn(KordPreview::class)
+    val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     fun addFile(name: String, content: InputStream) {
         files += name to content
@@ -68,6 +73,17 @@ class ExecuteWebhookBuilder : RequestBuilder<MultiPartWebhookExecuteRequest> {
         allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
     }
 
+    @OptIn(ExperimentalContracts::class)
+    @KordPreview
+    inline fun <T> actionRow(builder: ActionRowBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(ActionRowBuilder().apply(builder))
+    }
+
+    @OptIn(KordPreview::class)
     override fun toRequest(): MultiPartWebhookExecuteRequest = MultiPartWebhookExecuteRequest(
         WebhookExecuteRequest(
             _content,
@@ -75,7 +91,9 @@ class ExecuteWebhookBuilder : RequestBuilder<MultiPartWebhookExecuteRequest> {
             _avatarUrl,
             _tts,
             Optional.missingOnEmpty(embeds),
-            _allowedMentions.map { it.build() }),
+            _allowedMentions.map { it.build() },
+            Optional.missingOnEmpty(components.map { it.build() })
+        ),
         files
     )
 
