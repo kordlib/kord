@@ -73,7 +73,7 @@ object FakeGateway : Gateway {
         deferred.complete(Unit)
     }
 
-    override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
+    override val coroutineContext: CoroutineContext = SupervisorJob() + EmptyCoroutineContext
 }
 
 class CrashingHandler(val client: HttpClient) : RequestHandler {

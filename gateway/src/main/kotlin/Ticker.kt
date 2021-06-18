@@ -20,8 +20,8 @@ private val logger = KotlinLogging.logger { }
 @ObsoleteCoroutinesApi
 class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.Default) : CoroutineScope {
 
-    override val coroutineContext: CoroutineContext
-        get() = Job() + dispatcher
+
+    override val coroutineContext: CoroutineContext = SupervisorJob() + dispatcher
 
     private val mutex = Mutex()
 

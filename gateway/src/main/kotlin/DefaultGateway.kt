@@ -61,7 +61,7 @@ data class DefaultGatewayData(
  */
 class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
-    override val coroutineContext: CoroutineContext = data.dispatcher + SupervisorJob()
+    override val coroutineContext: CoroutineContext = SupervisorJob() +data.dispatcher
 
     private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
 
