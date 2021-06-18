@@ -27,6 +27,7 @@ data class WebhookExecuteRequest(
     val avatar: Optional<String> = Optional.Missing(),
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
@@ -40,6 +41,7 @@ data class MultiPartWebhookExecuteRequest(
 data class WebhookEditMessageRequest(
     val content: Optional<String> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
