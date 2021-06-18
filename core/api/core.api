@@ -7490,11 +7490,6 @@ public final class dev/kord/core/live/exception/LiveCancellationException : java
 	public final fun getEvent ()Ldev/kord/core/event/Event;
 }
 
-public final class dev/kord/core/rest/CoreRestClient {
-	public fun <init> (Ldev/kord/rest/service/RestClient;)V
-	public final fun getClient ()Ldev/kord/rest/service/RestClient;
-}
-
 public final class dev/kord/core/supplier/CacheEntitySupplier : dev/kord/core/supplier/EntitySupplier {
 	public fun <init> (Ldev/kord/core/Kord;)V
 	public fun getChannel (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
