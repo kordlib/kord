@@ -45,7 +45,7 @@ suspend inline fun EphemeralInteractionResponseBehavior.edit(builder: EphemeralI
  */
 @OptIn(ExperimentalContracts::class)
 @KordPreview
-suspend inline fun EphemeralInteractionResponseBehavior.followUp(
+suspend inline fun EphemeralInteractionResponseBehavior.followUpEphemeral(
     builder: EphemeralFollowupMessageCreateBuilder.() -> Unit
 ): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -64,11 +64,10 @@ suspend inline fun EphemeralInteractionResponseBehavior.followUp(
  *
  * @return created [PublicFollowupMessage]
  */
-@JvmName("unsafeFollowup")
 @OptIn(ExperimentalContracts::class)
 @KordPreview
 @KordUnsafe
-suspend inline fun EphemeralInteractionResponseBehavior.followUp(
+suspend inline fun EphemeralInteractionResponseBehavior.followUpPublic(
     builder: PublicFollowupMessageCreateBuilder.() -> Unit
 ): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
