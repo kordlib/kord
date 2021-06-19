@@ -3,11 +3,8 @@ package dev.kord.rest.builder.interaction
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionResponseType
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.map
-import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
@@ -73,17 +70,19 @@ class PublicInteractionResponseCreateBuilder :
 @KordDsl
 class PublicInteractionResponseModifyBuilder :
     BaseInteractionResponseModifyBuilder {
-    private var _content: Optional<String> = Optional.Missing()
+    private var _content: Optional<String?> = Optional.Missing()
     override var content: String? by ::_content.delegate()
 
-    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
+    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
+    override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
-    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    private var _allowedMentions: Optional<AllowedMentionsBuilder?> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
-    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    private var _components: Optional<MutableList<MessageComponentBuilder>> = Optional.Missing()
+    override var components: MutableList<MessageComponentBuilder>? by ::_components.delegate()
 
     fun addFile(name: String, content: InputStream) {
         files += name to content
@@ -97,9 +96,9 @@ class PublicInteractionResponseModifyBuilder :
         return MultipartInteractionResponseModifyRequest(
             InteractionResponseModifyRequest(
                 content = _content,
-                embeds = embeds.map { it.toRequest() },
+                embeds = Optional(embeds).coerceToMissing().mapList { it.toRequest() },
                 allowedMentions = _allowedMentions.map { it.build() },
-                components = Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
+                components = Optional(components).coerceToMissing().mapList { it.build() },
             ),
             files
         )
