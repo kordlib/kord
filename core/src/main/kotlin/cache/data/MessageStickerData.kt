@@ -1,7 +1,7 @@
 package dev.kord.core.cache.data
 
-import dev.kord.common.entity.DiscordMessageSticker
-import dev.kord.common.entity.MessageStickerType
+import dev.kord.common.entity.DiscordSticker
+import dev.kord.common.entity.StickerFormatType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import kotlinx.serialization.Serializable
@@ -15,11 +15,11 @@ data class MessageStickerData(
     val tags: Optional<String> = Optional.Missing(),
     val asset: String,
     val previewAsset: Optional<String?> = Optional.Missing(),
-    val formatType: MessageStickerType,
+    val formatType: StickerFormatType,
 ) {
 
     companion object {
-        fun from(entity: DiscordMessageSticker): MessageStickerData = with(entity) {
+        fun from(entity: DiscordSticker): MessageStickerData = with(entity) {
             MessageStickerData(id, packId, name, description, tags, asset, previewAsset, formatType)
         }
     }

@@ -1,6 +1,6 @@
 package dev.kord.core.entity
 
-import dev.kord.common.entity.MessageStickerType
+import dev.kord.common.entity.StickerFormatType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageStickerData
@@ -55,7 +55,7 @@ class MessageSticker(val data: MessageStickerData, override val kord: Kord) : Ko
     /**
      * The type of sticker image.
      */
-    val formatType: MessageStickerType
+    val formatType: StickerFormatType
         get() = data.formatType
 
 }
