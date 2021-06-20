@@ -5,40 +5,36 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
-import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.map
-import dev.kord.common.entity.optional.optional
-import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.ComponentBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.*
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 @KordDsl
 @KordPreview
 class EphemeralInteractionResponseModifyBuilder : BaseInteractionResponseModifyBuilder {
-    private var _content: Optional<String> = Optional.Missing()
+    private var _content: Optional<String?> = Optional.Missing()
     override var content: String? by ::_content.delegate()
 
-    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
+    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
+    override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
-    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    private var _allowedMentions: Optional<AllowedMentionsBuilder?> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    private var _components: Optional<MutableList<MessageComponentBuilder>> = Optional.Missing()
+    override var components: MutableList<MessageComponentBuilder>? by ::_components.delegate()
 
     override fun toRequest(): MultipartInteractionResponseModifyRequest {
         return MultipartInteractionResponseModifyRequest(
             InteractionResponseModifyRequest(
                 content = _content,
                 allowedMentions = _allowedMentions.map { it.build() },
-                components = Optional.missingOnEmpty(components.map { it.build() }),
-                embeds = embeds.map { it.toRequest() }
+                components = _components.mapList { it.build() },
+                embeds = _embeds.mapList {  it.toRequest() },
             )
         )
     }

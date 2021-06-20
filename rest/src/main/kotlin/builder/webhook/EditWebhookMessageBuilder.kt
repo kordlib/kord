@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
@@ -24,21 +25,29 @@ class EditWebhookMessageBuilder : RequestBuilder<MultipartWebhookEditMessageRequ
     private var _content: Optional<String> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
-    var embeds: MutableList<EmbedBuilder> = mutableListOf()
+    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
+    var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentions> = Optional.Missing()
     var allowedMentions: AllowedMentions? by ::_allowedMentions.delegate()
 
-    val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    @OptIn(KordPreview::class)
+    private var _components: Optional<MutableList<MessageComponentBuilder>> = Optional.Missing()
+
+    @KordPreview
+    var components: MutableList<MessageComponentBuilder>? by ::_components.delegate()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        embeds.add(EmbedBuilder().apply(builder))
+
+        embeds = (embeds ?: mutableListOf()).also {
+            it.add(EmbedBuilder().apply(builder))
+        }
     }
 
     fun addFile(name: String, content: InputStream) {
@@ -56,15 +65,17 @@ class EditWebhookMessageBuilder : RequestBuilder<MultipartWebhookEditMessageRequ
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components.add(ActionRowBuilder().apply(builder))
+        components = (components ?: mutableListOf()).also {
+            it.add(ActionRowBuilder().apply(builder))
+        }
     }
 
     override fun toRequest(): MultipartWebhookEditMessageRequest = MultipartWebhookEditMessageRequest(
         WebhookEditMessageRequest(
             _content,
-            Optional.missingOnEmpty(embeds.map(EmbedBuilder::toRequest)),
+            _embeds.mapList { it.toRequest() },
             _allowedMentions,
-            Optional.missingOnEmpty(components.map { it.build() })
+            _components.mapList { it.build() }
         ),
         files
     )

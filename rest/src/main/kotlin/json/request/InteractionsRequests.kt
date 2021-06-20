@@ -31,12 +31,12 @@ data class ApplicationCommandModifyRequest(
 @Serializable
 @KordPreview
 data class InteractionResponseModifyRequest(
-    val content: Optional<String> = Optional.Missing(),
-    val embeds: List<EmbedRequest> = emptyList(),
+    val content: Optional<String?> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
+    val flags: Optional<MessageFlags?> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>?> = Optional.Missing()
 )
 
 @KordPreview

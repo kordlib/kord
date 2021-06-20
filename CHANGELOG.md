@@ -1,3 +1,21 @@
+# 0.7.1
+
+## Breaking
+
+* `BaseInteractionResponseBuilder`
+* `BaseInteractionResponseBuilder`
+* `BaseInteractionResponseModifyBuilder`  
+* `EphemeralInteractionResponseModifyBuilder`
+* `PublicInteractionResponseModifyBuilder`
+* `MessageModifyBuilder`
+* `EditWebhookMessageBuilder`
+* `InteractionResponseModifyRequest`
+
+## Changes
+
+* Message-related builders have been changed to accept `null` (for non-collections) and "empty list" (for collections)
+when editing a message. This makes it possible to remove fields from a message without providing a substitution.
+
 # 0.7.0
 
 ## Additions

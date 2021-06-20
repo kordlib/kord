@@ -16,19 +16,30 @@ sealed interface BaseInteractionResponseBuilder<T> : RequestBuilder<T> {
 
     var content: String?
 
-    val embeds: MutableList<EmbedBuilder>
+    val embeds: MutableList<EmbedBuilder>?
 
-    val components: MutableList<MessageComponentBuilder>
+    val components: MutableList<MessageComponentBuilder>?
 
     var allowedMentions: AllowedMentionsBuilder?
 
 
 }
 
-@OptIn(ExperimentalContracts::class)
+@KordPreview
+@OptIn(ExperimentalContracts::class, KordPreview::class)
 inline fun <T> BaseInteractionResponseBuilder<T>.embed(builder: EmbedBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    embeds += EmbedBuilder().apply(builder)
+
+    when(this){
+        is BaseInteractionResponseCreateBuilder -> {
+            embeds.add(EmbedBuilder().apply(builder))
+        }
+        is BaseInteractionResponseModifyBuilder -> {
+            embeds = (embeds ?: mutableListOf()).also {
+                it.add(EmbedBuilder().apply(builder))
+            }
+        }
+    }
 }
 
 /**
@@ -36,6 +47,7 @@ inline fun <T> BaseInteractionResponseBuilder<T>.embed(builder: EmbedBuilder.() 
  * (ping everything), calling this function but not configuring it before the request is build will result in all
  * pings being ignored.
  */
+@KordPreview
 @OptIn(ExperimentalContracts::class)
 inline fun <T> BaseInteractionResponseBuilder<T>.allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
@@ -51,14 +63,36 @@ inline fun <T> BaseInteractionResponseBuilder<T>.actionRow(builder: ActionRowBui
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
 
-    components.add(ActionRowBuilder().apply(builder))
+    when (this) {
+        is BaseInteractionResponseCreateBuilder -> {
+            components.add(ActionRowBuilder().apply(builder))
+        }
+        is BaseInteractionResponseModifyBuilder -> {
+            components = (components ?: mutableListOf()).also {
+                it.add(ActionRowBuilder().apply(builder))
+            }
+        }
+    }
+
 }
 
 
 @KordPreview
 interface BaseInteractionResponseCreateBuilder :
-    BaseInteractionResponseBuilder<MultipartInteractionResponseCreateRequest>
+    BaseInteractionResponseBuilder<MultipartInteractionResponseCreateRequest> {
+
+    override val components: MutableList<MessageComponentBuilder>
+
+    override val embeds: MutableList<EmbedBuilder>
+
+}
 
 @KordPreview
 interface BaseInteractionResponseModifyBuilder :
-    BaseInteractionResponseBuilder<MultipartInteractionResponseModifyRequest>
+    BaseInteractionResponseBuilder<MultipartInteractionResponseModifyRequest> {
+
+    override var components: MutableList<MessageComponentBuilder>?
+
+    override var embeds: MutableList<EmbedBuilder>?
+
+}

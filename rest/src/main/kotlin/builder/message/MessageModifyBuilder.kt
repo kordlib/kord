@@ -5,6 +5,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.mapList
 import dev.kord.common.entity.optional.mapNullable
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.ActionRowBuilder
@@ -29,8 +30,11 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     private var _allowedMentions: Optional<AllowedMentionsBuilder?> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
+    @OptIn(KordPreview::class)
+    private var _components: Optional<MutableList<MessageComponentBuilder>> = Optional.Missing()
+
     @KordPreview
-    val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    var components: MutableList<MessageComponentBuilder>? by ::_components.delegate()
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
@@ -57,8 +61,9 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-
-        components.add(ActionRowBuilder().apply(builder))
+        components = (components ?: mutableListOf()).also {
+            it.add(ActionRowBuilder().apply(builder))
+        }
     }
 
     @OptIn(KordPreview::class)
@@ -67,6 +72,6 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
         _embed.mapNullable { it?.toRequest() },
         _flags,
         _allowedMentions.mapNullable { it?.build() },
-        Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
+        _components.mapList { it.build() }
     )
 }
