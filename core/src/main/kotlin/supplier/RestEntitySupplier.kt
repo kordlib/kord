@@ -337,6 +337,37 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         return StageInstance(data, kord, this)
     }
 
+    override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> =
+        flow {
+            kord.rest.guild.getGuildStickers(guildId).forEach {
+                val data = StickerData.from(it)
+
+                emit(GuildSticker(data, kord))
+            }
+        }
+
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, stickerId: Snowflake): GuildSticker? = catchNotFound {
+        val sticker = kord.rest.guild.getGuildSticker(guildId, stickerId)
+        val data = StickerData.from(sticker)
+
+        GuildSticker(data, kord)
+    }
+
+    override suspend fun getStickerOrNull(stickerId: Snowflake): DiscordSticker? = catchNotFound {
+        val sticker = kord.rest.stickers.getSticker(stickerId)
+        val data = StickerData.from(sticker)
+
+        DiscordSticker(data, kord)
+    }
+
+    override suspend fun getStickerPacks(): Flow<StickerPack> = flow {
+        kord.rest.stickers.getStickerPacks().stickerPacks.forEach {
+            val data = StickerPackData.from(it)
+
+            emit(StickerPack(data, kord))
+        }
+    }
+
     override fun toString(): String {
         return "RestEntitySupplier(rest=${kord.rest})"
     }

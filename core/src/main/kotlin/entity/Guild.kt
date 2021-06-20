@@ -507,6 +507,11 @@ class Guild(
     suspend fun getWidgetChannel(): GuildMessageChannel? =
         widgetChannelId?.let { supplier.getChannelOfOrNull(it) }
 
+    fun getStickers() = supplier.getGuildStickers(id)
+
+    suspend fun getSticker(stickerId: Snowflake) = supplier.getGuildSticker(this.id, stickerId)
+    suspend fun getStickerOrNull(stickerId: Snowflake) = supplier.getGuildStickerOrNull(this.id, stickerId)
+
     /**
      * Returns a new [Guild] with the given [strategy].
      */

@@ -394,6 +394,19 @@ interface EntitySupplier {
 
     suspend fun getStageInstance(channelId: Snowflake): StageInstance =
         getStageInstanceOrNull(channelId) ?: EntityNotFoundException.stageInstanceNotFound(channelId)
+
+    fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker>
+
+    suspend fun getGuildSticker(guildId: Snowflake, stickerId: Snowflake): GuildSticker =
+        getGuildStickerOrNull(guildId, stickerId) ?: EntityNotFoundException.guildStickerNotFound(guildId, stickerId)
+
+    suspend fun getGuildStickerOrNull(guildId: Snowflake, stickerId: Snowflake): GuildSticker?
+
+    suspend fun getSticker(stickerId: Snowflake): DiscordSticker =
+        getStickerOrNull(stickerId) ?: EntityNotFoundException.stickerNotFound(stickerId)
+    suspend fun getStickerOrNull(stickerId: Snowflake): DiscordSticker?
+
+    suspend fun getStickerPacks(): Flow<StickerPack>
 }
 
 

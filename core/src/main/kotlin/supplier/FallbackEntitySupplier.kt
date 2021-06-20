@@ -115,6 +115,17 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         first.getTemplates(guildId).switchIfEmpty(second.getTemplates(guildId))
 
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = first.getStageInstanceOrNull(channelId) ?: second.getStageInstanceOrNull(channelId)
+    override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> =
+        first.getGuildStickers(guildId).switchIfEmpty(second.getGuildStickers(guildId))
+
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, stickerId: Snowflake): GuildSticker? =
+        first.getGuildStickerOrNull(guildId, stickerId) ?: second.getGuildStickerOrNull(guildId, stickerId)
+
+    override suspend fun getStickerOrNull(stickerId: Snowflake): DiscordSticker? =
+        first.getStickerOrNull(stickerId) ?: second.getStickerOrNull(stickerId)
+
+    override suspend fun getStickerPacks(): Flow<StickerPack> =
+        first.getStickerPacks().switchIfEmpty(second.getStickerPacks())
 
 
     override fun toString(): String {

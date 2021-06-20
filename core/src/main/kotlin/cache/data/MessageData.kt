@@ -34,7 +34,7 @@ data class MessageData(
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val messageReference: Optional<MessageReferenceData> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
+    val stickers: Optional<List<StickerData>> = Optional.Missing(),
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
     val interaction: Optional<MessageInteractionData> = Optional.Missing(),
     val components: Optional<List<ComponentData>> = Optional.Missing()
@@ -72,7 +72,7 @@ data class MessageData(
         val mentionedChannels =
             partialMessage.mentionedChannels.mapList { it.id }.switchOnMissing(mentionedChannels.value.orEmpty())
                 .coerceToMissing()
-        val stickers = partialMessage.stickers.mapList { MessageStickerData.from(it) }.switchOnMissing(this.stickers)
+        val stickers = partialMessage.stickers.mapList { StickerData.from(it) }.switchOnMissing(this.stickers)
         val referencedMessage = partialMessage.referencedMessage.mapNullable { it?.toData() ?: referencedMessage.value }
         val interaction =
             partialMessage.interaction.map { MessageInteractionData.from(it) }.switchOnMissing(interaction)
@@ -138,7 +138,7 @@ data class MessageData(
                 applicationId,
                 messageReference.map { MessageReferenceData.from(it) },
                 flags,
-                stickers.mapList { MessageStickerData.from(it) },
+                stickers.mapList { StickerData.from(it) },
                 referencedMessage.mapNotNull { from(it) },
                 interaction.map { MessageInteractionData.from(it) },
                 components = components.mapList { ComponentData.from(it) }

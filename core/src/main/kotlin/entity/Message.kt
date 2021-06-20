@@ -104,7 +104,7 @@ class Message(
     /**
      * The stickers sent with this message.
      */
-    val stickers: List<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }
+    val stickers: List<Sticker> get() = data.stickers.orEmpty().map { Sticker.from(it, kord, supplier) }
 
     /**
      * If the message is a response to an [Interaction], this is the id of the interaction's application
