@@ -98,6 +98,7 @@ sealed class StickerFormatType(val value: Int) {
     }
 }
 
+@Serializable
 data class DiscordStickerPack(
     val id: Snowflake,
     val stickers: List<DiscordSticker>,

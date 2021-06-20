@@ -665,11 +665,11 @@ sealed class Route<T>(
             NoStrategy
         )
 
-    object SelfVoiceStatePatch:
+    object SelfVoiceStatePatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/@me", NoStrategy)
 
 
-    object OthersVoiceStatePatch:
+    object OthersVoiceStatePatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/${UserId}", NoStrategy)
 
     object StageInstanceGet :
@@ -684,6 +684,48 @@ sealed class Route<T>(
     object StageInstanceDelete :
         Route<Unit>(HttpMethod.Delete, "/stage-instances/$ChannelId", NoStrategy)
 
+    object StickersGet : Route<DiscordSticker>(
+        HttpMethod.Get,
+        "/stickers/$StickerId",
+        DiscordSticker.serializer()
+    )
+
+    object StickerPacksGet : Route<StickerPackList>(
+        HttpMethod.Get,
+        "/sticker-packs",
+        StickerPackList.serializer()
+    )
+
+    object GuildStickersGet : Route<List<DiscordSticker>>(
+        HttpMethod.Get,
+        "/guilds/$GuildId/stickers",
+        ListSerializer(DiscordSticker.serializer())
+    )
+
+    object GuildStickersPost : Route<DiscordSticker>(
+        HttpMethod.Post,
+        "/guilds/$GuildId/stickers",
+        DiscordSticker.serializer()
+    )
+
+    object GuildStickerGet : Route<DiscordSticker>(
+        HttpMethod.Get,
+        "/guilds/$GuildId/stickers/$StickerId",
+        DiscordSticker.serializer()
+    )
+
+    object GuildStickerPatch : Route<DiscordSticker>(
+        HttpMethod.Patch,
+        "/guilds/$GuildId/stickers/$StickerId",
+        DiscordSticker.serializer()
+    )
+
+    object GuildStickerDelete : Route<Unit>(
+        HttpMethod.Delete,
+        "/guilds/$GuildId/stickers/$StickerId",
+        NoStrategy
+    )
+
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"
     }
@@ -695,6 +737,7 @@ sealed class Route<T>(
     object GuildId : Key("{guild.id}", true)
     object ChannelId : Key("{channel.id}", true)
     object MessageId : Key("{message.id}")
+    object StickerId : Key("{sticker.id}")
     object Emoji : Key("{emoji}")
     object UserId : Key("{user.id}")
     object OverwriteId : Key("{overwrite.id}")
