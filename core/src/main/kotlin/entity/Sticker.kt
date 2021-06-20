@@ -74,6 +74,8 @@ sealed class Sticker(val data: StickerData, override val kord: Kord, override va
     val sortValue: Int?
         get() = data.sortValue.value
 
+    abstract override fun toString(): String
+
     companion object {
         fun from(data: StickerData, kord: Kord, supplier: EntitySupplier = kord.defaultSupplier): Sticker {
             return if (data.guildId.value != null) {
@@ -88,6 +90,10 @@ sealed class Sticker(val data: StickerData, override val kord: Kord, override va
 class DiscordSticker(data: StickerData, kord: Kord, supplier: EntitySupplier = kord.defaultSupplier) : Sticker(data, kord, supplier) {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
         DiscordSticker(data, kord, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "DiscordSticker(data=$data, kord=$kord, supplier=$supplier)"
+    }
 }
 
 class GuildSticker(data: StickerData, kord: Kord, supplier: EntitySupplier = kord.defaultSupplier) : Sticker(data, kord, supplier), GuildStickerBehavior {
@@ -95,4 +101,8 @@ class GuildSticker(data: StickerData, kord: Kord, supplier: EntitySupplier = kor
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
         GuildSticker(data, kord, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "DiscordSticker(data=$data, kord=$kord, supplier=$supplier)"
+    }
 }

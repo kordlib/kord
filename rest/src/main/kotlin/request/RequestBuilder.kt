@@ -2,7 +2,9 @@ package dev.kord.rest.request
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.route.Route
+import io.ktor.client.request.forms.FormBuilder
 import io.ktor.http.*
+import io.ktor.http.content.PartData
 import kotlinx.serialization.SerializationStrategy
 
 class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
@@ -20,8 +22,15 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     operator fun MutableMap<String, String>.set(key: Route.Key, value: String) = set(key.identifier, value)
 
     fun <E : Any> body(strategy: SerializationStrategy<E>, body: E) {
-        this.body = RequestBody(strategy, body)
+        this.body = RequestBody.Json(strategy, body)
     }
+
+    fun body(data: List<PartData>) {
+        this.body = RequestBody.MultiPart(data)
+    }
+
+    fun formData(block: FormBuilder.() -> Unit) =
+        body(io.ktor.client.request.forms.formData(block))
 
     fun parameter(key: String, value: Snowflake) = parameters.append(key, value.value.toString())
 
@@ -38,8 +47,10 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     }
 
     fun build(): Request<*, T> = when {
-        files.isEmpty() -> JsonRequest(route, keys, parameters.build(), headers.build(), body)
-        else -> MultipartRequest(route, keys, parameters.build(), headers.build(), body, files.orEmpty())
+        body is RequestBody.Json && files.isEmpty() -> JsonRequest(route, keys, parameters.build(), headers.build(),
+            body as RequestBody.Json<*>
+        )
+        else -> MultipartRequest(route, keys, parameters.build(), headers.build(), body, files)
     }
 
 }

@@ -29,4 +29,8 @@ class StickerPack(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable = StickerPack(
         data, kord, strategy.supply(kord)
     )
+
+    override fun toString(): String {
+        return "StickerPack(data=$data, kord=$kord, supplier=$supplier)"
+    }
 }
