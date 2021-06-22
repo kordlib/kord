@@ -6,12 +6,16 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.json.request.*
+import dev.kord.rest.json.request.FollowupMessageCreateRequest
+import dev.kord.rest.json.request.FollowupMessageModifyRequest
+import dev.kord.rest.json.request.MultipartFollowupMessageCreateRequest
+import dev.kord.rest.json.request.MultipartFollowupMessageModifyRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
@@ -24,13 +28,11 @@ import kotlin.contracts.contract
 @KordPreview
 sealed interface FollowupMessageBuilder<T> : RequestBuilder<T> {
 
-    var tts: Boolean?
-
     var allowedMentions: AllowedMentionsBuilder?
 
-    val embeds: MutableList<EmbedBuilder>
+    val embeds: MutableList<EmbedBuilder>?
 
-    val components: MutableList<MessageComponentBuilder>
+    val components: MutableList<MessageComponentBuilder>?
 
     val content: String?
 
@@ -42,13 +44,52 @@ inline fun <T> FollowupMessageBuilder<T>.actionRow(builder: ActionRowBuilder.() 
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
 
-    components.add(ActionRowBuilder().apply(builder))
+    when (this) {
+        is EphemeralFollowupMessageCreateBuilder -> {
+            components.add(ActionRowBuilder().apply(builder))
+        }
+
+        is EphemeralFollowupMessageModifyBuilder -> {
+            components = (components ?: mutableListOf()).also {
+                it.add(ActionRowBuilder().apply(builder))
+            }
+        }
+
+        is PublicFollowupMessageCreateBuilder -> {
+            components.add(ActionRowBuilder().apply(builder))
+        }
+
+        is PublicFollowupMessageModifyBuilder -> {
+            components = (components ?: mutableListOf()).also {
+                it.add(ActionRowBuilder().apply(builder))
+            }
+        }
+    }
+
 }
 @KordPreview
 @OptIn(ExperimentalContracts::class)
 inline fun <T> FollowupMessageBuilder<T>.embed(builder: EmbedBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    embeds += EmbedBuilder().apply(builder)
+
+    when(this){
+        is EphemeralFollowupMessageCreateBuilder -> {
+            embeds.add(EmbedBuilder().apply(builder))
+        }
+        is EphemeralFollowupMessageModifyBuilder -> {
+            embeds = (embeds ?: mutableListOf()).also {
+                it.add(EmbedBuilder().apply(builder))
+            }
+        }
+        is PublicFollowupMessageCreateBuilder -> {
+            embeds.add(EmbedBuilder().apply(builder))
+        }
+        is PublicFollowupMessageModifyBuilder -> {
+            embeds = (embeds ?: mutableListOf()).also {
+                it.add(EmbedBuilder().apply(builder))
+            }
+        }
+    }
 }
 
 /**
@@ -69,22 +110,19 @@ inline fun <T> FollowupMessageBuilder<T>.allowedMentions(block: AllowedMentionsB
 @KordDsl
 class PublicFollowupMessageModifyBuilder :
     FollowupMessageBuilder<MultipartFollowupMessageModifyRequest> {
-    private var _content: Optional<String> = Optional.Missing()
+    private var _content: Optional<String?> = Optional.Missing()
     override var content: String? by ::_content.delegate()
 
-    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
-
-    private var _tts: OptionalBoolean = OptionalBoolean.Missing
-    override var tts: Boolean? by ::_tts.delegate()
+    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
+    override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
-
-    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    private var _allowedMentions: Optional<AllowedMentionsBuilder?> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
-
+    private var _components: Optional<MutableList<MessageComponentBuilder>> = Optional.Missing()
+    override var components: MutableList<MessageComponentBuilder>? by ::_components.delegate()
 
     fun addFile(name: String, content: InputStream) {
         files += name to content
@@ -93,13 +131,14 @@ class PublicFollowupMessageModifyBuilder :
     suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
         addFile(path.fileName.toString(), Files.newInputStream(path))
     }
+
     override fun toRequest(): MultipartFollowupMessageModifyRequest {
         return MultipartFollowupMessageModifyRequest(
             FollowupMessageModifyRequest(
                 _content,
-                Optional.missingOnEmpty(embeds.map(EmbedBuilder::toRequest)),
+                _embeds.mapList { it.toRequest() },
                 _allowedMentions.map { it.build() },
-                Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
+                _components.mapList { it.build() },
             ),
             files
         )
@@ -111,24 +150,24 @@ class PublicFollowupMessageModifyBuilder :
 @KordDsl
 class EphemeralFollowupMessageModifyBuilder :
     FollowupMessageBuilder<FollowupMessageModifyRequest> {
-    private var _content: Optional<String> = Optional.Missing()
+    private var _content: Optional<String?> = Optional.Missing()
     override var content: String? by ::_content.delegate()
 
-    private var _tts: OptionalBoolean = OptionalBoolean.Missing
-    override var tts: Boolean? by ::_tts.delegate()
-
-    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
+    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
+    override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    private var _components: Optional<MutableList<MessageComponentBuilder>> = Optional.Missing()
+    override var components: MutableList<MessageComponentBuilder>? by ::_components.delegate()
 
     override fun toRequest(): FollowupMessageModifyRequest {
         return FollowupMessageModifyRequest(
             content = _content,
             allowedMentions = _allowedMentions.map { it.build() },
-            components = Optional.missingOnEmpty(components.map(MessageComponentBuilder::build))
+            embeds = _embeds.mapList { it.toRequest() },
+            components = _components.mapList { it.build() }
         )
     }
 }
@@ -141,19 +180,17 @@ class PublicFollowupMessageCreateBuilder : FollowupMessageBuilder<MultipartFollo
     private var _content: Optional<String> = Optional.Missing()
     override var content: String? by ::_content.delegate()
 
-
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
-    override var tts: Boolean? by ::_tts.delegate()
+    var tts: Boolean? by ::_tts.delegate()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+
     override val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
-
-
 
     override fun toRequest(): MultipartFollowupMessageCreateRequest =
         MultipartFollowupMessageCreateRequest(
@@ -178,7 +215,7 @@ class EphemeralFollowupMessageCreateBuilder : FollowupMessageBuilder<MultipartFo
     override var content: String? by ::_content.delegate()
 
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
-    override var tts: Boolean? by ::_tts.delegate()
+    var tts: Boolean? by ::_tts.delegate()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()

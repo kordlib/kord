@@ -10,11 +10,18 @@
 * `MessageModifyBuilder`
 * `EditWebhookMessageBuilder`
 * `InteractionResponseModifyRequest`
+* `FollowupMessageBuilder`
+* `PublicFollowupMessageModifyBuilder`
+* `EphemeralFollowupMessageModifyBuilder`
+* `PublicFollowupMessageCreateBuilder`
+* `EphemeralFollowupMessageCreateBuilder`
+* `FollowupMessageModifyRequest`
 
 ## Changes
 
 * Message-related builders have been changed to accept `null` (for non-collections) and "empty list" (for collections)
 when editing a message. This makes it possible to remove fields from a message without providing a substitution.
+* `FollowupMessageBuilder` no longer has the `tts` field, since it does not apply to all its subclasses.
 
 # 0.7.0
 
