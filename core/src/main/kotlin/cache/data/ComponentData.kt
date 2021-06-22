@@ -6,6 +6,7 @@ import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.mapList
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -23,7 +24,7 @@ data class ComponentData(
 
     companion object {
 
-        fun from(entity: DiscordComponent) = with(entity) {
+        fun from(entity: DiscordComponent): ComponentData = with(entity) {
             ComponentData(
                 type,
                 style,
@@ -31,7 +32,8 @@ data class ComponentData(
                 emoji,
                 customId,
                 url,
-                disabled
+                disabled,
+                components.mapList { from(it) }
             )
         }
 
