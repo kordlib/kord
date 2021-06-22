@@ -1,7 +1,10 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
+import dev.kord.common.entity.CommandArgument
+import dev.kord.common.entity.InteractionType
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
@@ -11,25 +14,18 @@ import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
-import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.InteractionBehavior
-import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
 import dev.kord.core.cache.data.ApplicationInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.DmChannel
 import dev.kord.core.entity.channel.ResolvedChannel
+import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.component.ButtonComponent
 import dev.kord.core.entity.component.Component
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.interaction.UpdateMessageInteractionResponseCreateBuilder
-import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
-import dev.kord.rest.json.request.InteractionResponseCreateRequest
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 /**
  * An instance of [Interaction] (https://discord.com/developers/docs/interactions/slash-commands#interaction)
@@ -385,9 +381,11 @@ class ComponentInteraction(
      *
      * @see Component
      */
-    val component: ButtonComponent
+    val component: ButtonComponent?
         get() = message?.components.orEmpty()
-            .filterIsInstance<ButtonComponent>().first { it.customId == componentId }
+            .filterIsInstance<ActionRowComponent>()
+            .flatMap { it.buttons }
+            .firstOrNull { it.customId == componentId }
 
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ComponentInteraction = ComponentInteraction(
