@@ -695,10 +695,10 @@ public final class dev/kord/rest/builder/interaction/EphemeralFollowupMessageCre
 	public fun getComponents ()Ljava/util/List;
 	public fun getContent ()Ljava/lang/String;
 	public fun getEmbeds ()Ljava/util/List;
-	public fun getTts ()Ljava/lang/Boolean;
+	public final fun getTts ()Ljava/lang/Boolean;
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public fun setContent (Ljava/lang/String;)V
-	public fun setTts (Ljava/lang/Boolean;)V
+	public final fun setTts (Ljava/lang/Boolean;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartFollowupMessageCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -709,10 +709,10 @@ public final class dev/kord/rest/builder/interaction/EphemeralFollowupMessageMod
 	public fun getComponents ()Ljava/util/List;
 	public fun getContent ()Ljava/lang/String;
 	public fun getEmbeds ()Ljava/util/List;
-	public fun getTts ()Ljava/lang/Boolean;
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
+	public fun setComponents (Ljava/util/List;)V
 	public fun setContent (Ljava/lang/String;)V
-	public fun setTts (Ljava/lang/Boolean;)V
+	public fun setEmbeds (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/FollowupMessageModifyRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -748,9 +748,7 @@ public abstract interface class dev/kord/rest/builder/interaction/FollowupMessag
 	public abstract fun getComponents ()Ljava/util/List;
 	public abstract fun getContent ()Ljava/lang/String;
 	public abstract fun getEmbeds ()Ljava/util/List;
-	public abstract fun getTts ()Ljava/lang/Boolean;
 	public abstract fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
-	public abstract fun setTts (Ljava/lang/Boolean;)V
 }
 
 public final class dev/kord/rest/builder/interaction/FollowupMessageBuildersKt {
@@ -794,10 +792,10 @@ public final class dev/kord/rest/builder/interaction/PublicFollowupMessageCreate
 	public fun getContent ()Ljava/lang/String;
 	public fun getEmbeds ()Ljava/util/List;
 	public final fun getFiles ()Ljava/util/List;
-	public fun getTts ()Ljava/lang/Boolean;
+	public final fun getTts ()Ljava/lang/Boolean;
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public fun setContent (Ljava/lang/String;)V
-	public fun setTts (Ljava/lang/Boolean;)V
+	public final fun setTts (Ljava/lang/Boolean;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartFollowupMessageCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -811,10 +809,10 @@ public final class dev/kord/rest/builder/interaction/PublicFollowupMessageModify
 	public fun getContent ()Ljava/lang/String;
 	public fun getEmbeds ()Ljava/util/List;
 	public final fun getFiles ()Ljava/util/List;
-	public fun getTts ()Ljava/lang/Boolean;
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
+	public fun setComponents (Ljava/util/List;)V
 	public fun setContent (Ljava/lang/String;)V
-	public fun setTts (Ljava/lang/Boolean;)V
+	public fun setEmbeds (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartFollowupMessageModifyRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
