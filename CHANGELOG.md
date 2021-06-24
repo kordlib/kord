@@ -6,7 +6,7 @@
 
 ## Fixes
 
-* incorrect parsing of mentionables
+* Mentionable arguments now correctly retrieve their entity.
 
 # 0.7.1
 
