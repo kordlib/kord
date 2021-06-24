@@ -1,3 +1,13 @@
+# 0.7.2
+
+## Additions
+
+* Allow adding a mentionable argument to commands
+
+## Fixes
+
+* incorrect parsing of mentionables
+
 # 0.7.1
 
 ## Breaking
