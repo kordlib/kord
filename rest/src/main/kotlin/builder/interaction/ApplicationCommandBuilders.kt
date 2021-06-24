@@ -85,6 +85,15 @@ sealed class BaseApplicationBuilder {
         if (options == null) options = mutableListOf()
         options!!.add(ChannelBuilder(name, description).apply(builder))
     }
+
+    @OptIn(ExperimentalContracts::class)
+    inline fun mentionable(name: String, description: String, builder: MentionableBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        if (options == null) options = mutableListOf()
+        options!!.add(MentionableBuilder(name, description).apply(builder))
+
+    }
+
 }
 
 
@@ -102,7 +111,8 @@ class ApplicationCommandCreateBuilder(
     var defaultPermission: Boolean? by ::_defaultPermission.delegate()
 
     override fun toRequest(): ApplicationCommandCreateRequest {
-        return ApplicationCommandCreateRequest(name,
+        return ApplicationCommandCreateRequest(
+            name,
             description,
             _options.mapList { it.toRequest() }, _defaultPermission
         )
@@ -154,7 +164,7 @@ class ApplicationCommandModifyBuilder : BaseApplicationBuilder(),
         return ApplicationCommandModifyRequest(
             _name,
             _description,
-            _options.mapList { it.toRequest() }, 
+            _options.mapList { it.toRequest() },
             _defaultPermission
         )
 
