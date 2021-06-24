@@ -303,11 +303,11 @@ fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjects?): O
 
         is CommandArgument.MentionableArgument -> {
             val channel = resolvedObjects?.channels.orEmpty()[value.value]
-            val user = resolvedObjects?.channels.orEmpty()[value.value]
+            val user = resolvedObjects?.users.orEmpty()[value.value]
             val member = resolvedObjects?.members.orEmpty()[value.value]
-            val role = resolvedObjects?.members.orEmpty()[value.value]
+            val role = resolvedObjects?.roles.orEmpty()[value.value]
 
-            OptionValue.MentionableOptionValue((channel ?: user ?: member ?: role)!!)
+            OptionValue.MentionableOptionValue((channel ?: member ?: user  ?: role)!!)
         }
 
         is CommandArgument.RoleArgument -> {
@@ -459,3 +459,8 @@ fun OptionValue<*>.boolean() = value as Boolean
 
 @KordPreview
 fun OptionValue<*>.int() = value as Int
+
+@KordPreview
+fun OptionValue<*>.mentionable(): Entity {
+    return value as Entity
+}
