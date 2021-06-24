@@ -1,3 +1,13 @@
+# 0.7.2
+
+## Additions
+
+* Allow adding a mentionable argument to commands
+
+## Fixes
+
+* Mentionable arguments now correctly retrieve their entity.
+
 # 0.7.1
 
 ## Breaking

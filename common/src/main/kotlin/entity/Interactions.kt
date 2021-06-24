@@ -91,6 +91,7 @@ sealed class ApplicationCommandOptionType(val type: Int) {
                 6 -> User
                 7 -> Channel
                 8 -> Role
+                9 -> Mentionable
                 else -> Unknown(type)
             }
         }
