@@ -625,6 +625,8 @@ public abstract class dev/kord/rest/builder/interaction/BaseApplicationBuilder {
 	public final fun group (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun int (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun int$default (Ldev/kord/rest/builder/interaction/BaseApplicationBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun mentionable (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun mentionable$default (Ldev/kord/rest/builder/interaction/BaseApplicationBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun role (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun role$default (Ldev/kord/rest/builder/interaction/BaseApplicationBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public abstract fun setOptions (Ljava/util/List;)V
@@ -695,10 +697,10 @@ public final class dev/kord/rest/builder/interaction/EphemeralFollowupMessageCre
 	public fun getComponents ()Ljava/util/List;
 	public fun getContent ()Ljava/lang/String;
 	public fun getEmbeds ()Ljava/util/List;
-	public fun getTts ()Ljava/lang/Boolean;
+	public final fun getTts ()Ljava/lang/Boolean;
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public fun setContent (Ljava/lang/String;)V
-	public fun setTts (Ljava/lang/Boolean;)V
+	public final fun setTts (Ljava/lang/Boolean;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartFollowupMessageCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -709,10 +711,10 @@ public final class dev/kord/rest/builder/interaction/EphemeralFollowupMessageMod
 	public fun getComponents ()Ljava/util/List;
 	public fun getContent ()Ljava/lang/String;
 	public fun getEmbeds ()Ljava/util/List;
-	public fun getTts ()Ljava/lang/Boolean;
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
+	public fun setComponents (Ljava/util/List;)V
 	public fun setContent (Ljava/lang/String;)V
-	public fun setTts (Ljava/lang/Boolean;)V
+	public fun setEmbeds (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/FollowupMessageModifyRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -748,9 +750,7 @@ public abstract interface class dev/kord/rest/builder/interaction/FollowupMessag
 	public abstract fun getComponents ()Ljava/util/List;
 	public abstract fun getContent ()Ljava/lang/String;
 	public abstract fun getEmbeds ()Ljava/util/List;
-	public abstract fun getTts ()Ljava/lang/Boolean;
 	public abstract fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
-	public abstract fun setTts (Ljava/lang/Boolean;)V
 }
 
 public final class dev/kord/rest/builder/interaction/FollowupMessageBuildersKt {
@@ -769,6 +769,10 @@ public final class dev/kord/rest/builder/interaction/IntChoiceBuilder : dev/kord
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public fun choice (Ljava/lang/String;I)V
 	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;)V
+}
+
+public final class dev/kord/rest/builder/interaction/MentionableBuilder : dev/kord/rest/builder/interaction/OptionsBuilder {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 }
 
 public abstract class dev/kord/rest/builder/interaction/OptionsBuilder : dev/kord/rest/builder/RequestBuilder {
@@ -794,10 +798,10 @@ public final class dev/kord/rest/builder/interaction/PublicFollowupMessageCreate
 	public fun getContent ()Ljava/lang/String;
 	public fun getEmbeds ()Ljava/util/List;
 	public final fun getFiles ()Ljava/util/List;
-	public fun getTts ()Ljava/lang/Boolean;
+	public final fun getTts ()Ljava/lang/Boolean;
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public fun setContent (Ljava/lang/String;)V
-	public fun setTts (Ljava/lang/Boolean;)V
+	public final fun setTts (Ljava/lang/Boolean;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartFollowupMessageCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -811,10 +815,10 @@ public final class dev/kord/rest/builder/interaction/PublicFollowupMessageModify
 	public fun getContent ()Ljava/lang/String;
 	public fun getEmbeds ()Ljava/util/List;
 	public final fun getFiles ()Ljava/util/List;
-	public fun getTts ()Ljava/lang/Boolean;
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
+	public fun setComponents (Ljava/util/List;)V
 	public fun setContent (Ljava/lang/String;)V
-	public fun setTts (Ljava/lang/Boolean;)V
+	public fun setEmbeds (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartFollowupMessageModifyRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -872,6 +876,8 @@ public final class dev/kord/rest/builder/interaction/SubCommandBuilder : dev/kor
 	public static synthetic fun channel$default (Ldev/kord/rest/builder/interaction/SubCommandBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun int (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun int$default (Ldev/kord/rest/builder/interaction/SubCommandBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun mentionable (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun mentionable$default (Ldev/kord/rest/builder/interaction/SubCommandBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun role (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun role$default (Ldev/kord/rest/builder/interaction/SubCommandBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun string (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V

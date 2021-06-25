@@ -5786,6 +5786,7 @@ public final class dev/kord/core/entity/interaction/InteractionKt {
 	public static final fun channel (Ldev/kord/core/entity/interaction/OptionValue;)Ldev/kord/core/entity/channel/ResolvedChannel;
 	public static final fun int (Ldev/kord/core/entity/interaction/OptionValue;)I
 	public static final fun member (Ldev/kord/core/entity/interaction/OptionValue;)Ldev/kord/core/entity/Member;
+	public static final fun mentionable (Ldev/kord/core/entity/interaction/OptionValue;)Ldev/kord/core/entity/Entity;
 	public static final fun role (Ldev/kord/core/entity/interaction/OptionValue;)Ldev/kord/core/entity/Role;
 	public static final fun string (Ldev/kord/core/entity/interaction/OptionValue;)Ljava/lang/String;
 	public static final fun user (Ldev/kord/core/entity/interaction/OptionValue;)Ldev/kord/core/entity/User;

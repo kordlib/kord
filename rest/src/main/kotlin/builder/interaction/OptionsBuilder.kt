@@ -101,6 +101,10 @@ class RoleBuilder(name: String, description: String) :
 class ChannelBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Channel)
 
+@KordPreview
+class MentionableBuilder(name: String, description: String) :
+    OptionsBuilder(name, description, ApplicationCommandOptionType.Mentionable)
+
 @KordDsl
 @KordPreview
 sealed class BaseCommandOptionBuilder(
@@ -169,6 +173,15 @@ class SubCommandBuilder(name: String, description: String) :
         if (options == null) options = mutableListOf()
         options!!.add(ChannelBuilder(name, description).apply(builder))
     }
+
+    @OptIn(ExperimentalContracts::class)
+    inline fun mentionable(name: String, description: String, builder: MentionableBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        if (options == null) options = mutableListOf()
+        options!!.add(MentionableBuilder(name, description).apply(builder))
+
+    }
+
 }
 
 @KordDsl
