@@ -4,9 +4,14 @@
 
 * Allow adding a mentionable argument to commands
 
+## Changes
+
+* Make `Intent#values` a getter function.
+
 ## Fixes
 
 * Mentionable arguments now correctly retrieve their entity.
+* `Intent#values` emitting null when filtering. 
 
 # 0.7.1
 

@@ -2,6 +2,7 @@ package dev.kord.gateway
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.EmptyBitSet
+import dev.kord.common.entity.Permission
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -153,7 +154,8 @@ sealed class Intent(val code: DiscordBitSet) {
     object DirectMessageTyping : Intent(1 shl 14)
     companion object {
         @OptIn(PrivilegedIntent::class)
-        val values = setOf(
+        val values: Set<Intent>
+        get() = setOf(
             DirectMessageTyping,
             GuildIntegrations,
             GuildEmojis,
