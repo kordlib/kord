@@ -17,9 +17,9 @@ import kotlin.contracts.contract
 @KordDsl
 @KordPreview
 sealed class OptionsBuilder(
-    var name: String,
-    var description: String,
-    var type: ApplicationCommandOptionType,
+    protected var name: String,
+    protected var description: String,
+    protected var type: ApplicationCommandOptionType,
 ) :
     RequestBuilder<ApplicationCommandOption> {
     internal var _default: OptionalBoolean = OptionalBoolean.Missing
@@ -28,9 +28,13 @@ sealed class OptionsBuilder(
     internal var _required: OptionalBoolean = OptionalBoolean.Missing
     var required: Boolean? by ::_required.delegate()
 
-    override fun toRequest(): ApplicationCommandOption {
-        return ApplicationCommandOption(type, name, description, _default, _required)
-    }
+    override fun toRequest() = ApplicationCommandOption(
+        type,
+        name,
+        description,
+        _default,
+        _required
+    )
 }
 
 @KordDsl
@@ -38,7 +42,7 @@ sealed class OptionsBuilder(
 sealed class BaseChoiceBuilder<T>(
     name: String,
     description: String,
-    type: ApplicationCommandOptionType,
+    type: ApplicationCommandOptionType
 ) :
     OptionsBuilder(name, description, type) {
     private var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
@@ -46,17 +50,14 @@ sealed class BaseChoiceBuilder<T>(
 
     abstract fun choice(name: String, value: T)
 
-    override fun toRequest(): ApplicationCommandOption {
-        return ApplicationCommandOption(
-            type,
-            name,
-            description,
-            choices = _choices,
-            required = _required,
-            default = _default
-        )
-    }
-
+    override fun toRequest() = ApplicationCommandOption(
+        type,
+        name,
+        description,
+        choices = _choices,
+        required = _required,
+        default = _default
+    )
 }
 
 @KordDsl
@@ -116,12 +117,12 @@ sealed class BaseCommandOptionBuilder(
     private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
     var options by ::_options.delegate()
 
-    override fun toRequest(): ApplicationCommandOption {
-        return ApplicationCommandOption(type,
-            name,
-            description,
-            options = _options.mapList { it.toRequest() })
-    }
+    override fun toRequest() = ApplicationCommandOption(
+        type,
+        name,
+        description,
+        options = _options.mapList { it.toRequest() }
+    )
 }
 
 @KordDsl
