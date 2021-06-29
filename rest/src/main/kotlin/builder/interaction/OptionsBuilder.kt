@@ -17,8 +17,8 @@ import kotlin.contracts.contract
 @KordDsl
 @KordPreview
 sealed class OptionsBuilder(
-    protected var name: String,
-    protected var description: String,
+    var name: String,
+    var description: String,
     protected var type: ApplicationCommandOptionType,
 ) :
     RequestBuilder<ApplicationCommandOption> {
