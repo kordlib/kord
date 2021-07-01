@@ -19,7 +19,7 @@ import kotlin.contracts.contract
 sealed class OptionsBuilder(
     var name: String,
     var description: String,
-    protected var type: ApplicationCommandOptionType,
+    val type: ApplicationCommandOptionType,
 ) :
     RequestBuilder<ApplicationCommandOption> {
     internal var _default: OptionalBoolean = OptionalBoolean.Missing
@@ -182,7 +182,6 @@ class SubCommandBuilder(name: String, description: String) :
         options!!.add(MentionableBuilder(name, description).apply(builder))
 
     }
-
 }
 
 @KordDsl
