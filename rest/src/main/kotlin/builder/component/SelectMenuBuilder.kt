@@ -27,38 +27,11 @@ class SelectMenuBuilder(
     val options: MutableList<SelectOptionBuilder> = mutableListOf()
 
     /**
-     * The minimum amount of values that can be accepted. Accepts a range of `[0,25]`.
-     * Defaults to `1`.
-     *
-     * If a value is set that is bigger than [maximumValues], then [maximumValues] will
-     * be updated to that new value.
-     *
-     * Setting [minimumValues] to a number higher than the amount of possible options is not allowed.
+     * The range of values that can be accepted. Accepts any range between [0,25].
+     * Defaults to `1..1`.
      */
-    var minimumValues: Int = 1
-        set(value) {
-            field = value
-            if (value > maximumValues) {
-                maximumValues = value
-            }
-        }
+    var allowedValues: IntRange = 1..1
 
-    /**
-     * The maximum amount of values that can be accepted. Accepts a range of `[0,25]`.
-     * Defaults to `1`.
-     *
-     * If a value is set that is smaller than [minimumValues], then [minimumValues] will
-     * be updated to that new value.
-     *
-     * Setting [maximumValues] to a number higher than the amount of possible options is not allowed.
-     */
-    var maximumValues: Int = 1
-        set(value) {
-            field = value
-            if (value < minimumValues) {
-                minimumValues = value
-            }
-        }
 
     private var _placeholder: Optional<String> = Optional.Missing()
 
@@ -90,8 +63,8 @@ class SelectMenuBuilder(
             ComponentType.SelectMenu,
             customId = Optional(customId),
             placeholder = _placeholder,
-            minValues = OptionalInt.Value(minimumValues),
-            maxValues = OptionalInt.Value(maximumValues),
+            minValues = OptionalInt.Value(allowedValues.first),
+            maxValues = OptionalInt.Value(allowedValues.last),
             options = Optional(options.map { it.build() })
         )
     }
