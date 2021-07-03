@@ -2,6 +2,7 @@ package json
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.filterList
 import dev.kord.common.entity.optional.orEmpty
 import kotlinx.coroutines.coroutineScope
@@ -117,4 +118,23 @@ class InteractionTest {
             }
         }
     }
+
+    @Test
+    fun `select menu can be deserialized`() {
+        val text = file("selectmenu")
+
+        val interaction = json.decodeFromString(DiscordInteraction.serializer(), text)
+        with(interaction) {
+            applicationId shouldBe "845027738276462632"
+            channelId shouldBe "772908445358620702"
+            with(data){
+                componentType shouldBe ComponentType.SelectMenu
+                customId shouldBe "class_select_1"
+                values shouldBe listOf("mage", "rogue")
+            }
+            guildId shouldBe "772904309264089089"
+            id shouldBe "847587388497854464"
+        }
+    }
+
 }
