@@ -350,54 +350,6 @@ class DmInteraction(
         DmInteraction(data, applicationId, kord, strategy.supply(kord))
 }
 
-/**
- * An [Interaction] that was made with a [Component].
- */
-@KordPreview
-class ComponentInteraction(
-    override val data: InteractionData,
-    override val applicationId: Snowflake,
-    override val kord: Kord,
-    override val supplier: EntitySupplier
-) : Interaction(), ComponentInteractionBehavior {
-
-    override val user: UserBehavior = UserBehavior(data.member.value!!.userId, kord)
-
-    /**
-     * The message that contains the interacted component, null if the message is ephemeral.
-     */
-    val message: Message?
-        get() = data.message.unwrap {
-            Message(it, kord, supplier)
-        }
-
-    /**
-     * The [ButtonComponent.customId] that triggered the interaction.
-     */
-    val componentId: String get() = data.data.customId.value!!
-
-    /**
-     * The [ButtonComponent] the user interacted with, null if the message is ephemeral.
-     *
-     * @see Component
-     */
-    val component: ButtonComponent?
-        get() = message?.components.orEmpty()
-            .filterIsInstance<ActionRowComponent>()
-            .flatMap { it.buttons }
-            .firstOrNull { it.customId == componentId }
-
-
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ComponentInteraction = ComponentInteraction(
-        data, applicationId, kord, strategy.supply(kord)
-    )
-
-    override fun toString(): String {
-        return "ComponentInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
-    }
-
-}
-
 @KordPreview
 class GuildInteraction(
     override val data: InteractionData,
