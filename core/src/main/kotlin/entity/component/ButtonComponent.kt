@@ -8,6 +8,7 @@ import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.interaction.ComponentInteraction
 import dev.kord.core.event.interaction.InteractionCreateEvent
+import dev.kord.core.entity.interaction.ButtonInteraction
 
 /**
  * An interactive component rendered on a Message.
@@ -47,7 +48,7 @@ class ButtonComponent(override val data: ComponentData) : Component {
         }
 
     /**
-     * The custom identifier for any [ComponentInteractions][ComponentInteraction]
+     * The custom identifier for any [ComponentInteractions][ButtonInteraction]
      * this button will trigger. Present if this button is not a link button.
      */
     val customId: String? get() = data.customId.value
