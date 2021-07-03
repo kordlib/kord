@@ -60,6 +60,10 @@ infix fun OptionalInt?.shouldBe(value: Int?){
     Assertions.assertEquals(value, this.value)
 }
 
+infix fun <T> Optional<T>.shouldBe(that: T?) {
+    Assertions.assertEquals(that, this.value)
+}
+
 infix fun <T> T.shouldBe(that: T) {
     Assertions.assertEquals(that, this)
 }

@@ -257,7 +257,8 @@ data class InteractionCallbackData(
     @SerialName("custom_id")
     val customId: Optional<String> = Optional.Missing(),
     @SerialName("component_type")
-    val componentType: Optional<ComponentType> = Optional.Missing()
+    val componentType: Optional<ComponentType> = Optional.Missing(),
+    val values: Optional<List<String>> = Optional.Missing(),
 )
 
 @Serializable(with = Option.Serializer::class)

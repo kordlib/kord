@@ -1,0 +1,119 @@
+{
+  "application_id": "845027738276462632",
+  "channel_id": "772908445358620702",
+  "data": {
+    "component_type":3,
+    "custom_id": "class_select_1",
+    "values": [
+      "mage",
+      "rogue"
+    ]
+  },
+  "guild_id": "772904309264089089",
+  "id": "847587388497854464",
+  "member": {
+    "avatar": null,
+    "deaf": false,
+    "is_pending": false,
+    "joined_at": "2020-11-02T19:25:47.248000+00:00",
+    "mute": false,
+    "nick": "Bot Man",
+    "pending": false,
+    "permissions": "17179869183",
+    "premium_since": null,
+    "roles": [
+      "785609923542777878"
+    ],
+    "user":{
+      "avatar": "a_d5efa99b3eeaa7dd43acca82f5692432",
+      "discriminator": "1337",
+      "id": "53908232506183680",
+      "public_flags": 131141,
+      "username": "Mason"
+    }
+  },
+  "message":{
+    "application_id": "845027738276462632",
+    "attachments": [],
+    "author": {
+      "avatar": null,
+      "bot": true,
+      "discriminator": "5284",
+      "id": "845027738276462632",
+      "public_flags": 0,
+      "username": "Interactions Test"
+    },
+    "channel_id": "772908445358620702",
+    "components": [
+      {
+        "components": [
+          {
+            "custom_id": "class_select_1",
+            "max_values": 1,
+            "min_values": 1,
+            "options": [
+              {
+                "description": "Sneak n stab",
+                "emoji":{
+                  "id": "625891304148303894",
+                  "name": "rogue"
+                },
+                "label": "Rogue",
+                "value": "rogue"
+              },
+              {
+                "description": "Turn 'em into a sheep",
+                "emoji":{
+                  "id": "625891304081063986",
+                  "name": "mage"
+                },
+                "label": "Mage",
+                "value": "mage"
+              },
+              {
+                "description": "You get heals when I'm done doing damage",
+                "emoji":{
+                  "id": "625891303795982337",
+                  "name": "priest"
+                },
+                "label": "Priest",
+                "value": "priest"
+              }
+            ],
+            "placeholder": "Choose a class",
+            "type": 3
+          }
+        ],
+        "type": 1
+      }
+    ],
+    "content": "Mason is looking for new arena partners. What classes do you play?",
+    "edited_timestamp": null,
+    "embeds": [],
+    "flags": 0,
+    "id": "847587334500646933",
+    "interaction": {
+      "id": "847587333942935632",
+      "name": "dropdown",
+      "type": 2,
+      "user": {
+        "avatar": "a_d5efa99b3eeaa7dd43acca82f5692432",
+        "discriminator": "1337",
+        "id": "53908232506183680",
+        "public_flags": 131141,
+        "username": "Mason"
+      }
+    },
+    "mention_everyone": false,
+    "mention_roles":[],
+    "mentions":[],
+    "pinned": false,
+    "timestamp": "2021-05-27T21:29:27.956000+00:00",
+    "tts": false,
+    "type": 20,
+    "webhook_id": "845027738276462632"
+  },
+  "token": "UNIQUE_TOKEN",
+  "type": 3,
+  "version": 1
+}
