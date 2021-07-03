@@ -7,27 +7,29 @@ import dev.kord.core.Kord
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
-import dev.kord.rest.request.RestRequestException
-import dev.kord.rest.service.RestClient
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+
 /**
  * [EntitySupplier] that uses a [RestEntitySupplier] to resolve entities.
  *
  * Resolved entities will always be stored in [cache] if it wasn't null or empty for flows.
  */
-class CacheAwareRestEntitySupplier(val restSupplier: RestEntitySupplier,
-                                   val cache: DataCache,
-                                   val kord: Kord) : EntitySupplier {
+class CacheAwareRestEntitySupplier(
+    val restSupplier: RestEntitySupplier,
+    val cache: DataCache,
+    val kord: Kord
+) : EntitySupplier {
 
 
     override val guilds: Flow<Guild>
-        get() = flow {
-            storeAndEmit(restSupplier.guilds) { it.data }
-        }
+        get() = storeAndEmit(restSupplier.guilds) { it.data }
+
     override val regions: Flow<Region>
-        get() = flow {
-            storeAndEmit(restSupplier.regions) { it.data }
-        }
+        get() = storeAndEmit(restSupplier.regions) { it.data }
+
 
     override suspend fun getGuildOrNull(id: Snowflake): Guild? {
         return storeAndReturn(restSupplier.getGuildOrNull(id)) { it.data }
@@ -46,15 +48,13 @@ class CacheAwareRestEntitySupplier(val restSupplier: RestEntitySupplier,
     }
 
     override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> {
-        return flow {
-            storeAndEmit(restSupplier.getGuildChannels(guildId)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getGuildChannels(guildId)) { it.data }
+
     }
 
     override fun getChannelPins(channelId: Snowflake): Flow<Message> {
-        return flow {
-            storeAndEmit(restSupplier.getChannelPins(channelId)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getChannelPins(channelId)) { it.data }
+
     }
 
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? {
@@ -66,21 +66,15 @@ class CacheAwareRestEntitySupplier(val restSupplier: RestEntitySupplier,
     }
 
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
-        return flow {
-            storeAndEmit(restSupplier.getMessagesAfter(messageId, channelId, limit)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getMessagesAfter(messageId, channelId, limit)) { it.data }
     }
 
     override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
-        return flow {
-            storeAndEmit(restSupplier.getMessagesBefore(messageId, channelId, limit)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getMessagesBefore(messageId, channelId, limit)) { it.data }
     }
 
     override fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
-        return flow {
-            storeAndEmit(restSupplier.getMessagesAround(messageId, channelId, limit)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getMessagesAround(messageId, channelId, limit)) { it.data }
     }
 
     override suspend fun getSelfOrNull(): User? {
@@ -96,9 +90,7 @@ class CacheAwareRestEntitySupplier(val restSupplier: RestEntitySupplier,
     }
 
     override fun getGuildRoles(guildId: Snowflake): Flow<Role> {
-        return flow {
-            storeAndEmit(restSupplier.getGuildRoles(guildId)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getGuildRoles(guildId)) { it.data }
     }
 
     override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? {
@@ -106,21 +98,15 @@ class CacheAwareRestEntitySupplier(val restSupplier: RestEntitySupplier,
     }
 
     override fun getGuildBans(guildId: Snowflake): Flow<Ban> {
-        return flow {
-            storeAndEmit(restSupplier.getGuildBans(guildId)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getGuildBans(guildId)) { it.data }
     }
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> {
-        return flow {
-            storeAndEmit(restSupplier.getGuildMembers(guildId, limit)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getGuildMembers(guildId, limit)) { it.data }
     }
 
     override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> {
-        return flow {
-            storeAndEmit(restSupplier.getGuildVoiceRegions(guildId)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getGuildVoiceRegions(guildId)) { it.data }
     }
 
     override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake): GuildEmoji? {
@@ -128,27 +114,21 @@ class CacheAwareRestEntitySupplier(val restSupplier: RestEntitySupplier,
     }
 
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> {
-        return flow {
-            storeAndEmit(restSupplier.getEmojis(guildId)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getEmojis(guildId)) { it.data }
+
     }
 
     override fun getCurrentUserGuilds(limit: Int): Flow<Guild> {
-        return flow {
-            storeAndEmit(restSupplier.getCurrentUserGuilds(limit)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getCurrentUserGuilds(limit)) { it.data }
+
     }
 
     override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> {
-        return flow {
-            storeAndEmit(restSupplier.getChannelWebhooks(channelId)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getChannelWebhooks(channelId)) { it.data }
     }
 
     override fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook> {
-        return flow {
-            storeAndEmit(restSupplier.getGuildWebhooks(guildId)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getGuildWebhooks(guildId)) { it.data }
     }
 
     override suspend fun getWebhookOrNull(id: Snowflake): Webhook? {
@@ -157,7 +137,6 @@ class CacheAwareRestEntitySupplier(val restSupplier: RestEntitySupplier,
 
     override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? {
         return storeAndReturn(restSupplier.getWebhookWithTokenOrNull(id, token)) { it.data }
-
     }
 
     override suspend fun getTemplateOrNull(code: String): Template? {
@@ -165,9 +144,7 @@ class CacheAwareRestEntitySupplier(val restSupplier: RestEntitySupplier,
     }
 
     override fun getTemplates(guildId: Snowflake): Flow<Template> {
-        return flow {
-            storeAndEmit(restSupplier.getTemplates(guildId)) { it.data }
-        }
+        return storeAndEmit(restSupplier.getTemplates(guildId)) { it.data }
     }
 
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? {
@@ -179,9 +156,11 @@ class CacheAwareRestEntitySupplier(val restSupplier: RestEntitySupplier,
         kord.cache.put(data)
     }
 
-    private suspend inline fun <T, R> FlowCollector<T>.storeAndEmit(source: Flow<T>, crossinline transform: (T) -> R) {
-        source.mapAndStore { transform(it) }
-        emitAll(source)
+    private inline fun <T, R> storeAndEmit(source: Flow<T>, crossinline transform: (T) -> R): Flow<T> {
+        return flow {
+            source.mapAndStore { transform(it) }
+            emitAll(source)
+        }
     }
 
     private suspend inline fun <T, reified R : Any> storeAndReturn(value: T?, transform: (T) -> R): T? {
