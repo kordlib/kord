@@ -1,6 +1,7 @@
 package dev.kord.core.supplier
 
 import dev.kord.core.Kord
+import dev.kord.core.supplier.EntitySupplyStrategy.Companion.cache
 
 /**
  *  A supplier that accepts a [Kord] instance and returns an [EntitySupplier] of type [T].
@@ -36,6 +37,22 @@ interface EntitySupplyStrategy<T : EntitySupplier> {
             override fun toString(): String = "EntitySupplyStrategy.cache"
         }
 
+
+        /**
+         * A supplier providing a strategy which exclusively uses REST calls to fetch entities.
+         * fetched entities are stored in [Kord's cache][kord.cache].
+         * See [CacheAwareRestEntitySupplier] for more details.
+         */
+        val cacheAwareRest = object : EntitySupplyStrategy<EntitySupplier> {
+            override fun supply(kord: Kord): EntitySupplier {
+                return CacheAwareRestEntitySupplier(rest.supply(kord), kord.cache, kord)
+            }
+
+            override fun toString(): String = "EntitySupplyStrategy.cacheAwareRest"
+
+        }
+
+
         /**
          * A supplier providing a strategy which will first operate on the [cache] supplier. When an entity
          * is not present from cache it will be fetched from [rest] instead. Operations that return flows
@@ -46,6 +63,19 @@ interface EntitySupplyStrategy<T : EntitySupplier> {
             override fun supply(kord: Kord): EntitySupplier = cache.supply(kord).withFallback(rest.supply(kord))
 
             override fun toString(): String = "EntitySupplyStrategy.cacheWithRestFallback"
+        }
+
+        /**
+         * A supplier providing a strategy which will first operate on the [cache] supplier. When an entity
+         * is not present from cache it will be fetched from [cacheAwareRest] instead which will update [cache] with fetched elements.
+         * Operations that return flows will only fall back to rest when the returned flow contained no elements.
+         */
+        val cacheWithCacheAwareRestFallback = object : EntitySupplyStrategy<EntitySupplier> {
+
+            override fun supply(kord: Kord): EntitySupplier =
+                cache.supply(kord).withFallback(cacheAwareRest.supply(kord))
+
+            override fun toString(): String = "EntitySupplyStrategy.cacheWithCacheAwareRestFallback"
         }
 
         /**
