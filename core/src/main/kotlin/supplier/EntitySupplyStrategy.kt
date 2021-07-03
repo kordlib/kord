@@ -41,11 +41,11 @@ interface EntitySupplyStrategy<T : EntitySupplier> {
         /**
          * A supplier providing a strategy which exclusively uses REST calls to fetch entities.
          * fetched entities are stored in [Kord's cache][kord.cache].
-         * See [CacheAwareRestEntitySupplier] for more details.
+         * See [StoreEntitySupplier] for more details.
          */
-        val cacheAwareRest = object : EntitySupplyStrategy<EntitySupplier> {
+        val cachingRest = object : EntitySupplyStrategy<EntitySupplier> {
             override fun supply(kord: Kord): EntitySupplier {
-                return CacheAwareRestEntitySupplier(rest.supply(kord), kord.cache, kord)
+                return StoreEntitySupplier(rest.supply(kord), kord.cache, kord)
             }
 
             override fun toString(): String = "EntitySupplyStrategy.cacheAwareRest"
@@ -67,13 +67,13 @@ interface EntitySupplyStrategy<T : EntitySupplier> {
 
         /**
          * A supplier providing a strategy which will first operate on the [cache] supplier. When an entity
-         * is not present from cache it will be fetched from [cacheAwareRest] instead which will update [cache] with fetched elements.
+         * is not present from cache it will be fetched from [cachingRest] instead which will update [cache] with fetched elements.
          * Operations that return flows will only fall back to rest when the returned flow contained no elements.
          */
-        val cacheWithCacheAwareRestFallback = object : EntitySupplyStrategy<EntitySupplier> {
+        val cacheWithCachingRestFallback = object : EntitySupplyStrategy<EntitySupplier> {
 
             override fun supply(kord: Kord): EntitySupplier =
-                cache.supply(kord).withFallback(cacheAwareRest.supply(kord))
+                cache.supply(kord).withFallback(cachingRest.supply(kord))
 
             override fun toString(): String = "EntitySupplyStrategy.cacheWithCacheAwareRestFallback"
         }
