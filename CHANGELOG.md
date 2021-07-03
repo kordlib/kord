@@ -1,3 +1,12 @@
+# 0.7.3
+
+## Additions
+
+* Added a StoreEntitySupplier that will store it's fetched elements in the target cache.
+* Added a strategy for a caching rest supplier.
+* Added a strategy for a caching with a caching rest fall back strategy.
+
+
 # 0.7.2
 
 ## Additions
