@@ -3,6 +3,7 @@ package dev.kord.common.entity
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalInt
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -11,6 +12,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonNames
 
 /**
  * Represent a [intractable component within a message sent in Discord](https://discord.com/developers/docs/interactions/message-components#what-are-components).
@@ -23,6 +25,10 @@ import kotlinx.serialization.encoding.Encoder
  * @property url a url for link-style buttons
  * @property disabled whether the button is disabled, default `false`
  * @property components a list of child components (for action rows)
+ * @property options the select menu options
+ * @property placeholder the placeholder text for the select menu
+ * @property minValues the minimum amount of [options] allowed
+ * @property maxValues the maximum amount of [options] allowed
  */
 @KordPreview
 @Serializable
@@ -35,7 +41,13 @@ data class DiscordComponent(
     val customId: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
     val disabled: OptionalBoolean = OptionalBoolean.Missing,
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
+    val placeholder: Optional<String> = Optional.Missing(),
+    @SerialName("min_values")
+    val minValues: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_values")
+    val maxValues: OptionalInt = OptionalInt.Missing,
 )
 
 /**
@@ -62,6 +74,11 @@ sealed class ComponentType(val value: Int) {
      */
     object Button : ComponentType(2)
 
+    /**
+     * A select menu for picking from choices.
+     */
+    object SelectMenu : ComponentType(3)
+
     companion object Serializer : KSerializer<ComponentType> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ComponentType", PrimitiveKind.INT)
 
@@ -69,6 +86,7 @@ sealed class ComponentType(val value: Int) {
             when (val value = decoder.decodeInt()) {
                 1 -> ActionRow
                 2 -> Button
+                3 -> SelectMenu
                 else -> Unknown(value)
             }
 
