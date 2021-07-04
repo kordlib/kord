@@ -7,11 +7,18 @@ import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
 import dev.kord.voice.command.VoiceCommand
 import dev.kord.voice.command.VoiceIdentifyCommand
+import dev.kord.voice.command.VoiceSelectProtocolCommand
+import dev.kord.voice.command.VoiceSelectProtocolCommandData
 import dev.kord.voice.event.ReadyVoiceEvent
+import dev.kord.voice.event.SessionDescription
 import dev.kord.voice.event.VoiceEvent
 import io.ktor.client.*
 import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
+import io.ktor.network.selector.*
+import io.ktor.network.sockets.*
+import io.ktor.util.network.*
+import io.ktor.utils.io.core.*
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -19,6 +26,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
+import java.net.NetworkInterface
+import java.nio.ByteBuffer
 import kotlin.coroutines.CoroutineContext
 
 data class VoiceOptions(
@@ -29,7 +38,11 @@ data class VoiceOptions(
 )
 
 class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voiceOpitons: VoiceOptions) : VoiceGateway {
+
+    private lateinit var udp: ConnectedDatagramSocket
+
     private lateinit var socket: DefaultClientWebSocketSession
+
     override val events: Flow<VoiceEvent>
         get() = TODO("Not yet implemented")
 
@@ -42,10 +55,17 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
         val voiceStateUpdateVoice = voiceStateUpdateEventWaiter.await()
         val serverUpdateEvent = serverUpdateEventWaiter.await()
 
-        establishConnection(voiceStateUpdateVoice, serverUpdateEvent)
+        val voiceReadyEvent = establishConnection(voiceStateUpdateVoice, serverUpdateEvent)
 
         heartbeat()
 
+        val externalNetwork = ipDiscovery(voiceReadyEvent.ssrc, NetworkAddress(voiceReadyEvent.ip, voiceReadyEvent.port))
+
+        val sessionDescriptionWaiter: Deferred<SessionDescription> = waitFor()
+
+        send(VoiceSelectProtocolCommand("udp", VoiceSelectProtocolCommandData(externalNetwork.hostname, externalNetwork.port, "xsalsa20_poly1305")))
+
+        val sessionDescription = sessionDescriptionWaiter.await()
 
     }
 
@@ -81,7 +101,25 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
 
     }
 
-    private suspend fun establishConnection(voiceState: VoiceStateUpdate, voiceServerUpdate: VoiceServerUpdate): ReadyVoiceEvent {
+    private suspend fun ipDiscovery(ssrc: Int, address: NetworkAddress): NetworkAddress {
+        val buffer = ByteBuffer.allocate(70)
+            .putShort(1)
+            .putShort(70)
+            .putInt(ssrc)
+        val datagram = Datagram(ByteReadPacket(buffer), address)
+        udp.send(datagram)
+        val received = udp.receive().packet
+        received.discardExact(4)
+        val ip = received.readBytes(received.remaining.toInt() - 2).toString().trim()
+        val port = received.readShortLittleEndian().toInt()
+
+        return NetworkAddress(ip, port)
+    }
+
+    private suspend fun establishConnection(
+        voiceState: VoiceStateUpdate,
+        voiceServerUpdate: VoiceServerUpdate
+    ): ReadyVoiceEvent {
         val endpoint = voiceServerUpdate.voiceServerUpdateData.endpoint ?: error("No endpoint recieved.")
         socket = webSocket(endpoint)
         val readyEventWaiter = waitFor<ReadyVoiceEvent>()
@@ -101,6 +139,7 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
     private fun heartbeat() {
         TODO("Not yet implemented")
     }
+
     private suspend inline fun <reified T> waitForTCPGatewayAsync(): Deferred<T> = coroutineScope {
         async {
             gateway.events.filterIsInstance<T>().take(1).first()
