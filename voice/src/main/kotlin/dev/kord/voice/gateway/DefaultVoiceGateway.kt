@@ -1,32 +1,26 @@
 package dev.kord.voice.gateway
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.gateway.Gateway
-import dev.kord.gateway.UpdateVoiceStatus
-import dev.kord.gateway.VoiceServerUpdate
-import dev.kord.gateway.VoiceStateUpdate
-import dev.kord.voice.command.VoiceCommand
-import dev.kord.voice.command.VoiceIdentifyCommand
-import dev.kord.voice.command.VoiceSelectProtocolCommand
-import dev.kord.voice.command.VoiceSelectProtocolCommandData
+import dev.kord.gateway.*
+import dev.kord.voice.command.*
+import dev.kord.voice.event.HelloVoiceEvent
 import dev.kord.voice.event.ReadyVoiceEvent
 import dev.kord.voice.event.SessionDescription
 import dev.kord.voice.event.VoiceEvent
 import io.ktor.client.*
 import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
-import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import io.ktor.util.network.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
-import java.net.NetworkInterface
+import kotlinx.datetime.Clock
 import java.nio.ByteBuffer
 import kotlin.coroutines.CoroutineContext
 
@@ -37,33 +31,40 @@ data class VoiceOptions(
     val selfDeaf: Boolean = false
 )
 
+@ObsoleteCoroutinesApi
 class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voiceOpitons: VoiceOptions) : VoiceGateway {
 
     private lateinit var udp: ConnectedDatagramSocket
 
     private lateinit var socket: DefaultClientWebSocketSession
 
+
+    private val ticker = Ticker()
+
     override val events: Flow<VoiceEvent>
         get() = TODO("Not yet implemented")
 
     override suspend fun connect() {
-        val voiceStateUpdateEventWaiter: Deferred<VoiceStateUpdate> = waitForTCPGatewayAsync()
-        val serverUpdateEventWaiter: Deferred<VoiceServerUpdate> = waitForTCPGatewayAsync()
 
-        sendUpdateVoiceStatus(voiceOpitons)
-
-        val voiceStateUpdateVoice = voiceStateUpdateEventWaiter.await()
-        val serverUpdateEvent = serverUpdateEventWaiter.await()
+        val (voiceStateUpdateVoice, serverUpdateEvent) = retrieveVoiceServerInformation()
 
         val voiceReadyEvent = establishConnection(voiceStateUpdateVoice, serverUpdateEvent)
 
         heartbeat()
 
-        val externalNetwork = ipDiscovery(voiceReadyEvent.ssrc, NetworkAddress(voiceReadyEvent.ip, voiceReadyEvent.port))
+        val externalNetwork = ipDiscovery(
+            voiceReadyEvent.ssrc,
+            NetworkAddress(voiceReadyEvent.ip, voiceReadyEvent.port)
+        )
 
         val sessionDescriptionWaiter: Deferred<SessionDescription> = waitFor()
 
-        send(VoiceSelectProtocolCommand("udp", VoiceSelectProtocolCommandData(externalNetwork.hostname, externalNetwork.port, "xsalsa20_poly1305")))
+        send(
+            VoiceSelectProtocolCommand(
+                "udp",
+                VoiceSelectProtocolCommandData(externalNetwork.hostname, externalNetwork.port, "xsalsa20_poly1305")
+            )
+        )
 
         val sessionDescription = sessionDescriptionWaiter.await()
 
@@ -94,6 +95,18 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
                 selfMute = voiceOpitons.selfMute
             )
         )
+    }
+
+    private suspend fun retrieveVoiceServerInformation(): Pair<VoiceStateUpdate, VoiceServerUpdate> {
+        val voiceStateUpdateEventWaiter: Deferred<VoiceStateUpdate> = waitForTCPGatewayAsync()
+        val serverUpdateEventWaiter: Deferred<VoiceServerUpdate> = waitForTCPGatewayAsync()
+
+        sendUpdateVoiceStatus(voiceOpitons)
+
+        val voiceStateUpdateVoice = voiceStateUpdateEventWaiter.await()
+        val serverUpdateEvent = serverUpdateEventWaiter.await()
+
+        return Pair(voiceStateUpdateVoice, serverUpdateEvent)
     }
 
     private suspend fun webSocket(endpoint: String): DefaultClientWebSocketSession {
@@ -136,21 +149,23 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
     }
 
 
-    private fun heartbeat() {
-        TODO("Not yet implemented")
+    private suspend fun heartbeat() {
+        on<HelloVoiceEvent> {
+            ticker.tickAt(heartbeatInterval) {
+                send(VoiceHeartbeatCommand(Clock.System.now().epochSeconds))
+            }
+        }
+
+        TODO("Ping")
     }
 
-    private suspend inline fun <reified T> waitForTCPGatewayAsync(): Deferred<T> = coroutineScope {
-        async {
-            gateway.events.filterIsInstance<T>().take(1).first()
-        }
+    private suspend inline fun <reified T> waitForTCPGatewayAsync(): Deferred<T> = async {
+        gateway.events.filterIsInstance<T>().take(1).first()
     }
 
 
-    private suspend inline fun <reified T> waitFor(): Deferred<T> = coroutineScope {
-        async {
-            events.filterIsInstance<T>().take(1).first()
-        }
+    private suspend inline fun <reified T> waitFor(): Deferred<T> = async {
+        events.filterIsInstance<T>().take(1).first()
     }
 
 
