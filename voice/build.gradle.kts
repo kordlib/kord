@@ -1,7 +1,7 @@
 dependencies {
 
     api(common)
-
+    api(gateway)
     api(Dependencies.`ktor-client-json`)
     api(Dependencies.`ktor-client-json-jvm`)
     api(Dependencies.`ktor-client-websocket`)
