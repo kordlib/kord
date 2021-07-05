@@ -10,19 +10,25 @@ import dev.kord.voice.event.VoiceEvent
 import io.ktor.client.*
 import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
+import io.ktor.http.cio.websocket.*
 import io.ktor.network.sockets.*
 import io.ktor.util.network.*
 import io.ktor.utils.io.core.*
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.async
+import kotlinx.atomicfu.atomic
+import kotlinx.atomicfu.getAndUpdate
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
 import kotlinx.datetime.Clock
+import kotlinx.serialization.json.Json
+import me.uport.knacl.nacl
+import mu.KotlinLogging
 import java.nio.ByteBuffer
 import kotlin.coroutines.CoroutineContext
+
+private val defaultVoiceGatewayLogger = KotlinLogging.logger {}
 
 data class VoiceOptions(
     val guildId: Snowflake,
@@ -44,6 +50,22 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
     override val events: Flow<VoiceEvent>
         get() = TODO("Not yet implemented")
 
+    private val sequence = atomic<Short>(0)
+
+    private var ssrc: Int? = null
+
+    private lateinit var secretKey: List<Int>
+
+    private val rtpHeader
+        get() = ByteBuffer.allocate(12)
+            .put(0x80.toByte())
+            .put(0x78)
+            .putShort(sequence.getAndUpdate { (it + 1).toShort() })
+            .putInt(sequence.value * 960)
+            .putInt(ssrc!!)
+            .array()
+
+
     override suspend fun connect() {
 
         val (voiceStateUpdateVoice, serverUpdateEvent) = retrieveVoiceServerInformation()
@@ -51,9 +73,9 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
         val voiceReadyEvent = establishConnection(voiceStateUpdateVoice, serverUpdateEvent)
 
         heartbeat()
-
+        val ssrc = voiceReadyEvent.ssrc
         val externalNetwork = ipDiscovery(
-            voiceReadyEvent.ssrc,
+            ssrc,
             NetworkAddress(voiceReadyEvent.ip, voiceReadyEvent.port)
         )
 
@@ -74,8 +96,26 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
         TODO("Not yet implemented")
     }
 
-    override fun send(command: VoiceCommand) {
-        TODO("Not yet implemented")
+
+    private suspend fun trySend(command: VoiceCommand): Boolean {
+        return try {
+            sendUnsafe(command)
+            true
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+    @Suppress("EXPERIMENTAL_API_USAGE")
+    private suspend fun sendUnsafe(command: VoiceCommand) {
+        val json = Json.encodeToString(VoiceCommand, command)
+        defaultVoiceGatewayLogger.trace { "Gateway >>> $json" }
+        socket.send(json)
+    }
+
+
+    override suspend fun send(command: VoiceCommand): Boolean {
+        return trySend(command)
     }
 
 
@@ -84,7 +124,7 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
     }
 
     override val coroutineContext: CoroutineContext
-        get() = TODO("Not yet implemented")
+        get() = SupervisorJob() + Dispatchers.Default
 
     private suspend fun sendUpdateVoiceStatus(voiceOpitons: VoiceOptions) {
         gateway.send(
@@ -157,6 +197,15 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
         }
 
         TODO("Ping")
+    }
+
+    suspend fun sendEncryptedVoice(data: ByteArray) {
+        val currentRtpHeader = rtpHeader
+        val nonce = currentRtpHeader.copyOf(24)
+        val encrypted = nacl.secretbox.seal(data, nonce, secretKey.map { it.toByte() }.toByteArray())
+        defaultVoiceGatewayLogger.trace { "Gateway >>> packet" }
+
+        udp.send(Datagram(ByteReadPacket(currentRtpHeader + encrypted), udp.localAddress))
     }
 
     private suspend inline fun <reified T> waitForTCPGatewayAsync(): Deferred<T> = async {

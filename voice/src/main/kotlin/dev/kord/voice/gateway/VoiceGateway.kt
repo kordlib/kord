@@ -1,9 +1,6 @@
 package dev.kord.voice.gateway
 
-import dev.kord.gateway.Event
-import dev.kord.gateway.Gateway
-import dev.kord.gateway.gatewayOnLogger
-import dev.kord.gateway.on
+
 import dev.kord.voice.command.VoiceCommand
 import dev.kord.voice.event.VoiceEvent
 import io.ktor.util.*
@@ -12,6 +9,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import mu.KotlinLogging
+
+@PublishedApi
+internal val gatewayOnLogger = KotlinLogging.logger("VoiceGateway.on")
 
 interface VoiceGateway : CoroutineScope {
 
@@ -21,7 +22,7 @@ interface VoiceGateway : CoroutineScope {
 
     fun resume()
 
-    fun send(command: VoiceCommand)
+    suspend fun send(command: VoiceCommand): Boolean
 
     fun disconnect()
 }

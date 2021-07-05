@@ -58,6 +58,7 @@ subprojects {
     repositories {
         mavenCentral()
         jcenter()
+        maven(url = "https://m2.dv8tion.net/releases")
         maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
     }
 
@@ -68,6 +69,7 @@ subprojects {
         api(Dependencies.`kotlinx-coroutines`)
         implementation(Dependencies.`kotlinx-atomicfu`)
         implementation(Dependencies.`kotlin-logging`)
+        implementation("com.sedmelluq:lavaplayer:1.3.77")
 
         testImplementation(Dependencies.`kotlin-test`)
         testImplementation(Dependencies.junit5)
