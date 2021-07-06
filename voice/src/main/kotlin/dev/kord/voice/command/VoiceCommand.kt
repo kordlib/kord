@@ -21,20 +21,27 @@ sealed class VoiceCommand {
             val composite = encoder.beginStructure(descriptor)
             when (value) {
                 is VoiceHeartbeatCommand -> {
-                    composite.encodeSerializableElement(descriptor, 0, VoiceOpCode.VoiceOpCodeSerializer, VoiceOpCode.Heartbeat)
-                    composite.encodeSerializableElement(descriptor, 1, VoiceHeartbeatCommand.serializer(), value)
+                    composite.encodeSerializableElement(descriptor, 0, VoiceOpCode, VoiceOpCode.Heartbeat)
+                    composite.encodeSerializableElement(descriptor, 1, VoiceHeartbeatCommand, value)
                 }
 
                 is VoiceResumeCommand -> {
-                    composite.encodeSerializableElement(descriptor, 0, VoiceOpCode.VoiceOpCodeSerializer, VoiceOpCode.Resume)
+                    composite.encodeSerializableElement(descriptor, 0, VoiceOpCode, VoiceOpCode.Resume)
                     composite.encodeSerializableElement(descriptor, 1, VoiceResumeCommand.serializer(), value)
                 }
 
                 is VoiceSelectProtocolCommand -> {
-                    composite.encodeSerializableElement(descriptor, 0, VoiceOpCode.VoiceOpCodeSerializer, VoiceOpCode.SelectProtocol)
+                    composite.encodeSerializableElement(descriptor, 0, VoiceOpCode, VoiceOpCode.SelectProtocol)
                     composite.encodeSerializableElement(descriptor, 1, VoiceSelectProtocolCommand.serializer(), value)
                 }
-
+                is VoiceIdentifyCommand -> {
+                    composite.encodeSerializableElement(descriptor, 0, VoiceOpCode, VoiceOpCode.Identify)
+                    composite.encodeSerializableElement(descriptor, 1, VoiceIdentifyCommand.serializer(), value)
+                }
+                is VoiceSpeakingCommand -> {
+                    composite.encodeSerializableElement(descriptor, 0, VoiceOpCode, VoiceOpCode.Speaking)
+                    composite.encodeSerializableElement(descriptor, 1, VoiceSpeakingCommand.serializer(), value)
+                }
             }
 
             composite.endStructure(descriptor)

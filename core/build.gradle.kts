@@ -15,6 +15,7 @@ dependencies {
     api(common)
     api(rest)
     api(gateway)
+    api(voice)
 
     api(Dependencies.`cache-api`) {
         version {

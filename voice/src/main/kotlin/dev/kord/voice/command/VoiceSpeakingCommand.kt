@@ -7,4 +7,4 @@ data class VoiceSpeakingCommand(
     val speaking: Int,
     val delay: Int,
     val ssrc: Int
-)
+): VoiceCommand()

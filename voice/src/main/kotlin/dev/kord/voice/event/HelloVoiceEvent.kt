@@ -12,15 +12,6 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 data class HelloVoiceEvent(
+    @SerialName("heartbeat_interval")
     val heartbeatInterval: Long
-) : VoiceEvent() {
-        companion object Serializer: SerializationStrategy<HelloVoiceEvent> {
-            override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("VoiceHeartbeat", PrimitiveKind.LONG)
-
-            @OptIn(ExperimentalSerializationApi::class)
-            override fun serialize(encoder: Encoder, value: HelloVoiceEvent) {
-                encoder.encodeSerializableValue(Long.serializer(), value.heartbeatInterval)
-            }
-        }
-
-    }
+) : VoiceEvent()

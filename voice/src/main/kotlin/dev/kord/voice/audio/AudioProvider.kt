@@ -13,8 +13,8 @@ sealed class AudioFrame {
     }
 }
 
-fun interface AudioProvider {
-    suspend fun provide(): ReceiveChannel<AudioFrame>
+interface AudioProvider {
+    val frames: ReceiveChannel<AudioFrame>
 }
 
 

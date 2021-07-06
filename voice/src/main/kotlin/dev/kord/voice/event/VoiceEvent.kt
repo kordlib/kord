@@ -22,11 +22,12 @@ sealed class VoiceEvent {
 
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
-                    when (val index =
-                        decodeElementIndex(descriptor)) {// we assume the all fields to be present *before* the data field
+                    when (val index = decodeElementIndex(descriptor)) {// we assume the all fields to be present *before* the data field
                         CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> {
                             voiceOpCode = VoiceOpCode.deserialize(decoder)
+                        }
+                        1 -> {
                             @Suppress("NON_EXHAUSTIVE_WHEN")
                             when (voiceOpCode) {
                                 VoiceOpCode.HeartbeatACK -> deserializedEvent =
@@ -36,16 +37,19 @@ sealed class VoiceEvent {
                                     decodeSerializableElement(descriptor, index, ReadyVoiceEvent.serializer())
                                 VoiceOpCode.Hello -> deserializedEvent =
                                     decodeSerializableElement(descriptor, index, HelloVoiceEvent.serializer())
+
+                                VoiceOpCode.Speaking -> deserializedEvent =
+                                    decodeSerializableElement(descriptor, index, VoiceSpeakingEvent.serializer())
                                 VoiceOpCode.SessionDescription -> decodeSerializableElement(
                                     descriptor,
                                     index,
                                     SessionDescription.serializer()
                                 )
                             }
-
                         }
                     }
                 }
+
                 endStructure(descriptor)
             }
             return deserializedEvent
