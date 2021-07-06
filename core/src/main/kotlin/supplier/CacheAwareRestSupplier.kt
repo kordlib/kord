@@ -92,7 +92,7 @@ class StoreEntitySupplier(
     }
 
     override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? {
-        return storeAndReturn(getGuildBanOrNull(guildId, userId)) { it.data }
+        return storeAndReturn(supplier.getGuildBanOrNull(guildId, userId)) { it.data }
     }
 
     override fun getGuildBans(guildId: Snowflake): Flow<Ban> {
