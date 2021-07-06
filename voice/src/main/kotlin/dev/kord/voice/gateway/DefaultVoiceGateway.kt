@@ -199,7 +199,7 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
         TODO("Ping")
     }
 
-    suspend fun sendEncryptedVoice(data: ByteArray) {
+    override suspend fun sendEncryptedVoice(data: ByteArray) {
         val currentRtpHeader = rtpHeader
         val nonce = currentRtpHeader.copyOf(24)
         val encrypted = nacl.secretbox.seal(data, nonce, secretKey.map { it.toByte() }.toByteArray())

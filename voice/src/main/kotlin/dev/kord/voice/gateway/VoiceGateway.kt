@@ -20,11 +20,13 @@ interface VoiceGateway : CoroutineScope {
 
     suspend fun connect()
 
-    fun resume()
+    suspend fun resume()
 
     suspend fun send(command: VoiceCommand): Boolean
 
-    fun disconnect()
+    suspend fun disconnect()
+
+    suspend fun sendEncryptedVoice(data: ByteArray)
 }
 
 inline fun <reified T : VoiceEvent> VoiceGateway.on(
