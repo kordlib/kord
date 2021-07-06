@@ -27,18 +27,17 @@ class UpdateMessageInteractionResponseCreateBuilder(
     private val flags: MessageFlags? = null
 ) : RequestBuilder<MultipartInteractionResponseCreateRequest> {
 
-    private var _content: Optional<String> = Optional.Missing()
+    private var _content: Optional<String?> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
-    val embeds: MutableList<EmbedBuilder> = mutableListOf()
+    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
+    var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
-    private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
+    private var _allowedMentions: Optional<AllowedMentionsBuilder?> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    private var _tts: OptionalBoolean = OptionalBoolean.Missing
-    var tts: Boolean? by ::_tts.delegate()
-
-    val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    private var _components: Optional<MutableList<MessageComponentBuilder>> = Optional.Missing()
+    var components: MutableList<MessageComponentBuilder>? by ::_components.delegate()
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
@@ -56,7 +55,9 @@ class UpdateMessageInteractionResponseCreateBuilder(
     @OptIn(ExperimentalContracts::class)
     inline fun embed(builder: EmbedBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        embeds.add(EmbedBuilder().apply(builder))
+        embeds = (embeds ?: mutableListOf()).also {
+            it.add(EmbedBuilder().apply(builder))
+        }
     }
 
     @OptIn(ExperimentalContracts::class)
@@ -66,7 +67,9 @@ class UpdateMessageInteractionResponseCreateBuilder(
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components.add(ActionRowBuilder().apply(builder))
+        components = (components ?: mutableListOf()).also {
+            it.add(ActionRowBuilder().apply(builder))
+        }
     }
 
     fun addFile(name: String, content: InputStream) {
@@ -83,11 +86,10 @@ class UpdateMessageInteractionResponseCreateBuilder(
                 InteractionResponseType.UpdateMessage,
                 InteractionApplicationCommandCallbackData(
                     content = _content,
-                    embeds = Optional.missingOnEmpty(embeds.map { it.toRequest() }),
+                    embeds = _embeds.mapList { it.toRequest() },
                     allowedMentions = _allowedMentions.map { it.build() },
                     flags = flags.optional().coerceToMissing(),
-                    tts = _tts,
-                    components = Optional.missingOnEmpty(components.map { it.build() })
+                    components = _components.mapList { it.build() }
                 ).optional()
             ),
             files
