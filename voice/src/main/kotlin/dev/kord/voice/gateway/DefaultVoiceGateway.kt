@@ -5,7 +5,7 @@ import dev.kord.gateway.*
 import dev.kord.voice.command.*
 import dev.kord.voice.event.HelloVoiceEvent
 import dev.kord.voice.event.ReadyVoiceEvent
-import dev.kord.voice.event.SessionDescription
+import dev.kord.voice.event.SessionDescriptionEvent
 import dev.kord.voice.event.VoiceEvent
 import io.ktor.client.*
 import io.ktor.client.features.websocket.*
@@ -54,7 +54,7 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
 
     internal var ssrc: Int? = null
 
-    private lateinit var secretKey: List<Int>
+    private lateinit var secretKey: ByteArray
 
 
     private val jsonParser = Json {
@@ -81,28 +81,28 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
         val voiceReadyEvent = establishConnection(voiceStateUpdateVoice, serverUpdateEvent)
 
 
-        val ssrc = voiceReadyEvent.ssrc
-        val network = NetworkAddress(voiceReadyEvent.ip,voiceReadyEvent.port)
+        val ssrc = voiceReadyEvent.ready.ssrc
+        this.ssrc = ssrc
+        val network = NetworkAddress(voiceReadyEvent.ready.ip, voiceReadyEvent.ready.port)
         udp = aSocket(ActorSelectorManager(Dispatchers.IO)).udp().connect(network)
 
-        val externalNetwork = ipDiscovery(
-            ssrc,
-            network
-        )
+        val ip = ipDiscovery(network)
 
+        println(network)
 
-        val sessionDescriptionWaiter: Deferred<SessionDescription> = waitFor()
+        println("is closed: ${udp.isClosed}")
 
         send(
             VoiceSelectProtocolCommand(
-                "udp",
-                VoiceSelectProtocolCommandData(externalNetwork.hostname, externalNetwork.port, "xsalsa20_poly1305")
+                protocol = "udp",
+                data = VoiceSelectProtocolCommandData(ip.hostname, ip.port, "xsalsa20_poly1305")
             )
         )
 
-        val sessionDescription = sessionDescriptionWaiter.await()
-        secretKey = sessionDescription.secretKey
+        val sesFrame = events.filterIsInstance<SessionDescriptionEvent>().first()
 
+        println("set key")
+        secretKey = sesFrame.sessionDescription.secretKey.toUByteArray().toByteArray()
     }
 
     override suspend fun resume() {
@@ -124,6 +124,7 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
         val json = Json.encodeToString(VoiceCommand, command)
         defaultVoiceGatewayLogger.trace { "Gateway >>> $json" }
         socket.send(json)
+        println("SENDING: $json")
     }
 
 
@@ -167,17 +168,17 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
 
     }
 
-    private suspend fun ipDiscovery(ssrc: Int, address: NetworkAddress): NetworkAddress {
-        val buffer = ByteBuffer.allocate(70)
-            .putShort(1)
-            .putShort(70)
-            .putInt(ssrc)
-        val datagram = Datagram(ByteReadPacket(buffer), address)
+    private suspend fun ipDiscovery(address: NetworkAddress): NetworkAddress {
+        val buffer = BytePacketBuilder().also {
+            it.writeInt(ssrc!!)
+            it.writeFully(ByteArray(66))
+        }
+        val datagram = Datagram(buffer.build(), address)
         udp.send(datagram)
-        val received = udp.receive().packet
+        val received = udp.incoming.receive().packet
         received.discardExact(4)
-        val ip = received.readBytes(received.remaining.toInt() - 2).toString().trim()
-        val port = received.readShortLittleEndian().toInt()
+        val ip = received.readBytes(64).decodeToString().trimEnd { it.code == 0 }
+        val port = received.readUShort().toInt()
 
         return NetworkAddress(ip, port)
     }
@@ -186,7 +187,7 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
         voiceState: VoiceStateUpdate,
         voiceServerUpdate: VoiceServerUpdate
     ): ReadyVoiceEvent {
-        val endpoint = voiceServerUpdate.voiceServerUpdateData.endpoint ?: error("No endpoint recieved.")
+        val endpoint = voiceServerUpdate.voiceServerUpdateData.endpoint + "?v=4" ?: error("No endpoint recieved.")
         socket = webSocket(endpoint)
         launch {
             readSocket()
@@ -207,20 +208,20 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
 
     private suspend fun heartbeat() {
         on<HelloVoiceEvent> {
-            ticker.tickAt(heartbeatInterval) {
+            ticker.tickAt(hello.heartHeatInterval.toLong()) {
                 send(VoiceHeartbeatCommand(Clock.System.now().epochSeconds))
             }
         }
-
     }
 
     override suspend fun sendEncryptedVoice(data: ByteArray) {
         val currentRtpHeader = rtpHeader
         val nonce = currentRtpHeader.copyOf(24)
-        val encrypted = nacl.secretbox.seal(data, nonce, secretKey.map { it.toByte() }.toByteArray())
+        val encrypted = nacl.secretbox.seal(data, nonce, secretKey)
         defaultVoiceGatewayLogger.trace { "Gateway >>> packet" }
 
-        udp.send(Datagram(ByteReadPacket(currentRtpHeader + encrypted), udp.localAddress))
+        udp.send(Datagram(ByteReadPacket(currentRtpHeader + encrypted), udp.remoteAddress))
+        println("sended")
     }
 
     private suspend inline fun <reified T> waitForTCPGatewayAsync(): Deferred<T> = async {
@@ -230,6 +231,15 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
 
     private suspend inline fun <reified T> waitFor(): Deferred<T> = async {
         events.filterIsInstance<T>().take(1).first()
+    }
+
+    init {
+        launch {
+            events.collect {
+                println("INCOMING: $it")
+            }
+
+        }
     }
 
 
@@ -243,14 +253,19 @@ class DefaultVoiceGateway(val gateway: Gateway, val client: HttpClient, val voic
         }
 
     }
+
     private suspend fun read(frame: Frame) {
         val json =  String(frame.data, Charsets.UTF_8)
 
         try {
+            println("RECEIVED RAW: $json")
             defaultVoiceGatewayLogger.trace { "Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(VoiceEvent.Companion, json) ?: return
+            val event = jsonParser.decodeFromString(VoiceEvent.FrameSerializer, json)
             _events.emit(event)
+            println("EMITTED")
         } catch (exception: Exception) {
+            println("oopsie")
+            exception.printStackTrace()
             defaultVoiceGatewayLogger.error(exception)
         }
 

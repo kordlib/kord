@@ -25,13 +25,15 @@ enum class VoiceOpCode(val code: Int) {
     ClientDisconnect(13);
 
     companion object VoiceOpCodeSerializer : KSerializer<VoiceOpCode> {
+        fun of(value: Int) = values().firstOrNull { it.code == value } ?: Unknown
+
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("voiceO" +
                     "p", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): VoiceOpCode {
             val code = decoder.decodeInt()
-            return values().firstOrNull { it.code == code } ?: Unknown
+            return of(code)
         }
 
         override fun serialize(encoder: Encoder, value: VoiceOpCode) {
