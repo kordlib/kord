@@ -15,6 +15,16 @@
 
 * Make `UpdateMessageInteractionResponseCreateBuilder` fields nullable.
 
+## Breaking
+
+* DiscordComponent
+* InteractionCallbackData
+* ApplicationInteractionData
+* ComponentData
+* CommandInteraction
+* OptionsBuilder
+* UpdateMessageInteractionResponseCreateBuilder
+
 
 # 0.7.2
 
