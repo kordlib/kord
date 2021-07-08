@@ -344,6 +344,7 @@ public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/r
 	public final fun getComponents ()Ljava/util/List;
 	public final fun interactionButton (Ldev/kord/common/entity/ButtonStyle;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun linkButton (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun selectMenu (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
 public abstract interface class dev/kord/rest/builder/component/ActionRowComponentBuilder : dev/kord/rest/builder/component/ComponentBuilder {
@@ -387,6 +388,35 @@ public abstract interface class dev/kord/rest/builder/component/ComponentBuilder
 }
 
 public abstract interface class dev/kord/rest/builder/component/MessageComponentBuilder : dev/kord/rest/builder/component/ComponentBuilder {
+}
+
+public final class dev/kord/rest/builder/component/SelectMenuBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getAllowedValues ()Lkotlin/ranges/IntRange;
+	public final fun getCustomId ()Ljava/lang/String;
+	public final fun getOptions ()Ljava/util/List;
+	public final fun getPlaceholder ()Ljava/lang/String;
+	public final fun option (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun option$default (Ldev/kord/rest/builder/component/SelectMenuBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun setAllowedValues (Lkotlin/ranges/IntRange;)V
+	public final fun setCustomId (Ljava/lang/String;)V
+	public final fun setPlaceholder (Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/component/SelectOptionBuilder {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun build ()Ldev/kord/common/entity/DiscordSelectOption;
+	public final fun getDefault ()Ljava/lang/Boolean;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getEmoji ()Ldev/kord/common/entity/DiscordPartialEmoji;
+	public final fun getLabel ()Ljava/lang/String;
+	public final fun getValue ()Ljava/lang/String;
+	public final fun setDefault (Ljava/lang/Boolean;)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setEmoji (Ldev/kord/common/entity/DiscordPartialEmoji;)V
+	public final fun setLabel (Ljava/lang/String;)V
+	public final fun setValue (Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/guild/CurrentVoiceStateModifyBuilder : dev/kord/rest/builder/RequestBuilder {
@@ -786,7 +816,6 @@ public abstract class dev/kord/rest/builder/interaction/OptionsBuilder : dev/kor
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setRequired (Ljava/lang/Boolean;)V
-	public final fun setType (Ldev/kord/common/entity/ApplicationCommandOptionType;)V
 	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -901,10 +930,10 @@ public final class dev/kord/rest/builder/interaction/UpdateMessageInteractionRes
 	public final fun getContent ()Ljava/lang/String;
 	public final fun getEmbeds ()Ljava/util/List;
 	public final fun getFiles ()Ljava/util/List;
-	public final fun getTts ()Ljava/lang/Boolean;
 	public final fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
+	public final fun setComponents (Ljava/util/List;)V
 	public final fun setContent (Ljava/lang/String;)V
-	public final fun setTts (Ljava/lang/Boolean;)V
+	public final fun setEmbeds (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartInteractionResponseCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
