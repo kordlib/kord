@@ -2,9 +2,18 @@
 
 ## Additions
 
-* Added a StoreEntitySupplier that will store it's fetched elements in the target cache.
-* Added a strategy for a caching rest supplier.
-* Added a strategy for a caching with a caching rest fall back strategy.
+* Add StoreEntitySupplier.
+* Add caching rest strategy.
+* Add cache-rest caching strategy.
+* Add select menus.
+
+## Fixes
+
+* Fix average ping conversion in `MasterGateway`.
+
+## Changes
+
+* Make `UpdateMessageInteractionResponseCreateBuilder` fields nullable.
 
 
 # 0.7.2
@@ -20,7 +29,7 @@
 ## Fixes
 
 * Mentionable arguments now correctly retrieve their entity.
-* `Intent#values` emitting null when filtering. 
+* `Intent.values` emitting null when filtering. 
 
 # 0.7.1
 
