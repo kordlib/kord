@@ -94,7 +94,8 @@ data class ApplicationInteractionData(
     val options: Optional<List<OptionData>> = Optional.Missing(),
     val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing(),
     val customId: Optional<String> = Optional.Missing(),
-    val componentType: Optional<ComponentType> = Optional.Missing()
+    val componentType: Optional<ComponentType> = Optional.Missing(),
+    val values: Optional<List<String>> = Optional.Missing()
 ) {
     companion object {
 
@@ -109,7 +110,8 @@ data class ApplicationInteractionData(
                     options.map { it.map { OptionData.from(it) } },
                     resolved.map { ResolvedObjectsData.from(it, guildId) },
                     customId,
-                    componentType
+                    componentType,
+                    values = values,
                 )
             }
         }
@@ -150,5 +152,3 @@ object NotSerializable : KSerializer<Any?> {
     override val descriptor: SerialDescriptor = String.serializer().descriptor
     override fun serialize(encoder: Encoder, value: Any?) = error("This operation is not supported.")
 }
-
-

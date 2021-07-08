@@ -1,3 +1,32 @@
+# 0.7.3
+
+## Additions
+
+* Add StoreEntitySupplier.
+* Add caching rest strategy.
+* Add cache-rest caching strategy.
+* Add select menus.
+
+## Fixes
+
+* Fix average ping conversion in `MasterGateway`.
+
+## Changes
+
+* Make `UpdateMessageInteractionResponseCreateBuilder` fields nullable.
+* type in option builders is now private
+
+## Breaking
+
+* DiscordComponent
+* InteractionCallbackData
+* ApplicationInteractionData
+* ComponentData
+* CommandInteraction
+* OptionsBuilder
+* UpdateMessageInteractionResponseCreateBuilder
+
+
 # 0.7.2
 
 ## Additions
@@ -11,7 +40,7 @@
 ## Fixes
 
 * Mentionable arguments now correctly retrieve their entity.
-* `Intent#values` emitting null when filtering. 
+* `Intent.values` emitting null when filtering. 
 
 # 0.7.1
 
