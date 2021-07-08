@@ -14,6 +14,7 @@
 ## Changes
 
 * Make `UpdateMessageInteractionResponseCreateBuilder` fields nullable.
+* type in option builders is now private
 
 ## Breaking
 
