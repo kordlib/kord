@@ -65,7 +65,13 @@ data class DiscordChannel(
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("last_pin_timestamp")
     val lastPinTimestamp: Optional<String?> = Optional.Missing(),
-    val permissions: Optional<Permissions> = Optional.Missing()
+    val permissions: Optional<Permissions> = Optional.Missing(),
+    @SerialName("message_count")
+    val messageCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("member_count")
+    val memberCount: OptionalInt = OptionalInt.Missing,
+    val threadMetadata: Optional<DiscordThreadMetadata> = Optional.Missing(),
+    val member: Optional<DiscordThreadMember> = Optional.Missing()
 )
 
 @Serializable(with = ChannelType.Serializer::class)
@@ -94,6 +100,12 @@ sealed class ChannelType(val value: Int) {
     /** A channel in which game developers can sell their game on Discord. */
     object GuildStore : ChannelType(6)
 
+    object NewsThread : ChannelType(10)
+
+    object PrivateThread : ChannelType(11)
+
+    object PublicThread : ChannelType(12)
+
     object GuildStageVoice : ChannelType(13)
 
     companion object;
@@ -110,6 +122,9 @@ sealed class ChannelType(val value: Int) {
             4 -> GuildCategory
             5 -> GuildNews
             6 -> GuildStore
+            10 -> NewsThread
+            11 -> PrivateThread
+            12 -> PublicThread
             13 -> GuildStageVoice
             else -> Unknown(code)
         }
@@ -154,3 +169,14 @@ sealed class OverwriteType(val value: Int) {
         }
     }
 }
+
+@Serializable
+class DiscordThreadMetadata(
+    val archived: Boolean,
+    @SerialName("archiver_id")
+    val archiverId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("archive_timestamp")
+    val archiveTimestamp: String,
+    val autoArchiveDuration: Int,
+    val locked: OptionalBoolean = OptionalBoolean.Missing
+)

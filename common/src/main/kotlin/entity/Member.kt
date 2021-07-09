@@ -82,3 +82,13 @@ data class DiscordUpdatedGuildMember(
     val premiumSince: Optional<String?> = Optional.Missing(),
     val pending: OptionalBoolean = OptionalBoolean.Missing
 )
+
+@Serializable
+data class DiscordThreadMember(
+    val id: Snowflake,
+    @SerialName("user_id")
+    val userId: Snowflake,
+    @SerialName("join_timestamp")
+    val joinTimestamp: String,
+    val flags: Int
+)
