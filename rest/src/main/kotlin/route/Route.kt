@@ -19,7 +19,7 @@ import kotlinx.serialization.serializer
 import dev.kord.common.entity.DiscordEmoji as EmojiEntity
 
 internal const val REST_VERSION_PROPERTY_NAME = "dev.kord.rest.version"
-internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v8"
+internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v9"
 
 sealed interface ResponseMapper<T> {
     fun deserialize(json: Json, body: String): T

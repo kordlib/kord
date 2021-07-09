@@ -35,3 +35,17 @@ interface CategorizableChannel : GuildChannel {
 
 }
 
+/**
+ * Request to create an invite for this channel.
+ *
+ * @return the created [Invite].
+ * @throws RestRequestException if something went wrong during the request.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun CategorizableChannel.createInvite(builder: InviteCreateBuilder.() -> Unit = {}): Invite {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val response = kord.rest.channel.createInvite(id, builder)
+    val data = InviteData.from(response)
+
+    return Invite(data, kord)
+}
