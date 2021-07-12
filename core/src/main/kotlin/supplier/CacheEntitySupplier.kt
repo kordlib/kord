@@ -274,6 +274,14 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = null
 
+    override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> = emptyFlow()
+
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, stickerId: Snowflake): GuildSticker? = null
+
+    override suspend fun getStickerOrNull(stickerId: Snowflake): DiscordSticker? = null
+
+    override suspend fun getStickerPacks(): Flow<StickerPack> = emptyFlow()
+
     override fun toString(): String {
         return "CacheEntitySupplier(cache=$cache)"
     }

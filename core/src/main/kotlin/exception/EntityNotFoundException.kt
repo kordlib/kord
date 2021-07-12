@@ -1,6 +1,7 @@
 package dev.kord.core.exception
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.core.entity.Sticker
 import dev.kord.core.entity.channel.Channel
 
 class EntityNotFoundException : Exception {
@@ -65,6 +66,13 @@ class EntityNotFoundException : Exception {
 
         fun stageInstanceNotFound(channelId: Snowflake): Nothing =
             throw EntityNotFoundException("Stage instance for channel $channelId was not found")
+
+        fun guildStickerNotFound(guildId: Snowflake, stickerId: Snowflake): Nothing {
+            throw EntityNotFoundException("Sticker not found for id $stickerId on guild $guildId")
+        }
+        fun stickerNotFound(stickerId: Snowflake): Nothing {
+            throw EntityNotFoundException("Sticker not found for id $stickerId")
+        }
 
     }
 

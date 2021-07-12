@@ -42,11 +42,16 @@ import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModify
 import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
+import dev.kord.rest.builder.sticker.CreateStickerBuilder
 import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.json.request.CurrentUserNicknameModifyRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
+import io.ktor.client.request.forms.InputProvider
+import io.ktor.utils.io.core.Input
+import io.ktor.utils.io.streams.asInput
 import kotlinx.coroutines.flow.*
+import java.io.InputStream
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -508,6 +513,12 @@ interface GuildBehavior : KordEntity, Strategizable {
 
     suspend fun getTemplateOrNull(code: String) = supplier.getTemplateOrNull(code)
 
+
+    fun getStickers() = supplier.getGuildStickers(id)
+
+    suspend fun getSticker(stickerId: Snowflake) = supplier.getGuildSticker(this.id, stickerId)
+    suspend fun getStickerOrNull(stickerId: Snowflake) = supplier.getGuildStickerOrNull(this.id, stickerId)
+
     /**
      * Returns a new [GuildBehavior] with the given [strategy].
      */
@@ -939,4 +950,64 @@ suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builde
         id,
         builder
     )
+}
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createSticker(
+    name: String,
+    tags: Iterable<String>,
+    file: InputProvider,
+    builder: CreateStickerBuilder.() -> Unit = {}
+): GuildSticker {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    return createSticker(name, tags.joinToString(","), file, builder)
+}
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createSticker(
+    name: String,
+    tags: Iterable<String>,
+    file: InputStream,
+    builder: CreateStickerBuilder.() -> Unit = {}
+): GuildSticker {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    return createSticker(name, tags.joinToString(","), file, builder)
+}
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createSticker(
+    name: String,
+    tags: String,
+    file: InputStream,
+    builder: CreateStickerBuilder.() -> Unit = {}
+): GuildSticker {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    return createSticker(name, tags, InputProvider { file.asInput() }, builder)
+}
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildBehavior.createSticker(
+    name: String,
+    tags: String,
+    file: InputProvider,
+    builder: CreateStickerBuilder.() -> Unit = {}
+): GuildSticker {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    val request = CreateStickerBuilder(name, tags, file).apply(builder).toRequest()
+
+    val sticker = kord.rest.guild.createGuildSticker(id, request)
+    val data = StickerData.from(sticker)
+    return GuildSticker(data, kord, supplier)
 }

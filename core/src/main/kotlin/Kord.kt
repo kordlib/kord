@@ -402,6 +402,9 @@ class Kord(
 
     }
 
+    suspend fun getSticker(stickerId: Snowflake): DiscordSticker = defaultSupplier.getSticker(stickerId)
+    suspend fun getStickerOrNull(stickerId: Snowflake): DiscordSticker? = defaultSupplier.getStickerOrNull(stickerId)
+    suspend fun getStickerPacks(): Flow<StickerPack> = defaultSupplier.getStickerPacks()
 
 }
 

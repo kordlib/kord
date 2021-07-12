@@ -194,6 +194,13 @@ enum class JsonErrorCode(val code: Int) {
     UnknownGuildTemplate(10057),
 
     /**
+     * Unknown sticker.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownSticker(10057),
+
+    /**
      * Unknown interaction.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)

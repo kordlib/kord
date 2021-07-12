@@ -17,6 +17,7 @@ import dev.kord.gateway.*
 import dev.kord.rest.request.JsonRequest
 import dev.kord.rest.request.MultipartRequest
 import dev.kord.rest.request.Request
+import dev.kord.rest.request.RequestBody
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import dev.kord.rest.service.RestClient
@@ -94,12 +95,19 @@ class CrashingHandler(val client: HttpClient) : RequestHandler {
                 @Suppress("UNCHECKED_CAST")
                 when (request) {
                     is MultipartRequest<*, *> -> {
-                        headers.append("payload_json", parser.encodeToString(it.strategy as SerializationStrategy<Any>, it.body))
-                        this.body = MultiPartFormDataContent(request.data)
+                        when (it) {
+                            is RequestBody.Json -> {
+                                headers.append("payload_json", parser.encodeToString(it.strategy as SerializationStrategy<Any>, it.body))
+                                this.body = MultiPartFormDataContent(request.data)
+                            }
+                            is RequestBody.MultiPart -> this.body = it.data
+                            else -> error("Unknown body")
+                        }
                     }
 
                     is JsonRequest<*, *> -> {
-                        val json = parser.encodeToString(it.strategy as SerializationStrategy<Any>, it.body)
+                        val body = it as RequestBody.Json?
+                        val json = parser.encodeToString(body?.strategy as SerializationStrategy<Any>, body.body)
                         this.body = TextContent(json, ContentType.Application.Json)
                     }
                 }

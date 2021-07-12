@@ -3,9 +3,11 @@ package dev.kord.rest.request
 import dev.kord.rest.route.Route
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
+import io.ktor.http.content.PartData
 import io.ktor.util.*
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
+import java.io.InputStream
 
 sealed class Request<B : Any, R> {
     abstract val route: Route<R>
@@ -55,14 +57,17 @@ sealed class RequestIdentifier {
     data class MajorParamIdentifier(val route: Route<*>, val param: String) : RequestIdentifier()
 }
 
-data class RequestBody<T>(val strategy: SerializationStrategy<T>, val body: T) where T : Any
+sealed class RequestBody<T: Any> {
+    data class Json<T : Any>(val strategy: SerializationStrategy<T>, val body: T) : RequestBody<T>()
+    data class MultiPart(val data: List<PartData>) : RequestBody<List<PartData>>()
+}
 
 class JsonRequest<B : Any, R>(
     override val route: Route<R>,
     override val routeParams: Map<Route.Key, String>,
     override val parameters: StringValues,
     override val headers: StringValues,
-    override val body: RequestBody<B>?
+    override val body: RequestBody.Json<B>?
 ) : Request<B, R>() {
     override val files: List<Pair<String, java.io.InputStream>>? = null
 }
@@ -73,27 +78,31 @@ class MultipartRequest<B : Any, R>(
     override val parameters: StringValues,
     override val headers: StringValues,
     override val body: RequestBody<B>?,
-    override val files: List<Pair<String, java.io.InputStream>> = emptyList()
+    override val files: List<Pair<String, InputStream>> = emptyList()
 ) : Request<B, R>() {
 
-    val data = formData {
-        body?.let {
-            append("payload_json", Json.encodeToString(it.strategy, it.body))
-        }
-        try {
-
-            files.forEachIndexed { index, pair ->
-                val name = pair.first
-                val inputStream = pair.second
-                append(
-                    "file$index",
-                    inputStream.readBytes(),
-                    Headers.build { append(HttpHeaders.ContentDisposition, "filename=$name") }
-                )
+    val data =
+        when (body) {
+            is RequestBody.Json? -> formData {
+                body?.let {
+                    append("payload_json", Json.encodeToString(it.strategy, it.body))
+                }
+                try {
+                    files.forEachIndexed { index, pair ->
+                        val name = pair.first
+                        val inputStream = pair.second
+                        append(
+                            "file$index",
+                            inputStream.readBytes(),
+                            Headers.build { append(HttpHeaders.ContentDisposition, "filename=$name") }
+                        )
+                    }
+                } finally {
+                    files.forEach { it.second.close() }
+                }
             }
-        } finally {
-            files.forEach { it.second.close() }
+            is RequestBody.MultiPart -> body.data
+            else -> error("Unknown body type")
         }
-    }
 }
 

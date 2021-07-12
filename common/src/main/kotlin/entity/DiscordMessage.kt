@@ -101,7 +101,7 @@ data class DiscordMessage(
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
+    val stickers: Optional<List<DiscordSticker>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     /*
@@ -111,61 +111,6 @@ data class DiscordMessage(
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing()
 )
-
-/**
- * @param id id of the sticker
- * @param packId id of the pack the sticker is from
- * @param name name of the sticker
- * @param description description of the sticker
- * @param tags a comma-separated list of tags for the sticker
- * @param asset sticker asset hash
- * @param previewAsset sticker preview asset hash
- * @param formatType type of sticker format
- */
-@Serializable
-data class DiscordMessageSticker(
-    val id: Snowflake,
-    @SerialName("pack_id")
-    val packId: Snowflake,
-    val name: String,
-    val description: String,
-    val tags: Optional<String> = Optional.Missing(),
-    val asset: String,
-    @SerialName("preview_asset")
-    // https://github.com/kordlib/kord/issues/207
-    val previewAsset: Optional<String?> = Optional.Missing(),
-    @SerialName("format_type")
-    val formatType: MessageStickerType,
-)
-
-@Serializable(with = MessageStickerType.Serializer::class)
-sealed class MessageStickerType(val value: Int) {
-    class Unknown(value: Int) : MessageStickerType(value)
-    object PNG : MessageStickerType(1)
-    object APNG : MessageStickerType(2)
-    object LOTTIE : MessageStickerType(3)
-
-    companion object {
-        val values: Set<MessageStickerType> = setOf(PNG, APNG, LOTTIE)
-    }
-
-    internal object Serializer : KSerializer<MessageStickerType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.MessageStickerType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): MessageStickerType = when (val value = decoder.decodeInt()) {
-            1 -> PNG
-            2 -> APNG
-            3 -> LOTTIE
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: MessageStickerType) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
-
 
 /**
  * Represents [a partial message sent in a channel within Discord](https://discord.com/developers/docs/resources/channel#message-object).
@@ -247,7 +192,7 @@ data class DiscordPartialMessage(
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
+    val stickers: Optional<List<DiscordSticker>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),

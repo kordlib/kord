@@ -16,6 +16,8 @@ import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
+import io.ktor.client.request.forms.formData
+import io.ktor.utils.io.jvm.javaio.toByteReadChannel
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -400,6 +402,38 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
 
 
+    suspend fun getGuildStickers(guildId: Snowflake) = call(Route.GuildStickersGet) {
+        keys[Route.GuildId] = guildId
+    }
+
+    suspend fun getGuildSticker(guildId: Snowflake, stickerId: Snowflake) = call(Route.GuildStickerGet) {
+        keys[Route.GuildId] = guildId
+        keys[Route.StickerId] = stickerId
+    }
+
+    suspend fun createGuildSticker(guildId: Snowflake, request: CreateStickerRequest) = call(Route.GuildStickersPost) {
+        keys[Route.GuildId] = guildId
+        formData {
+            append("name", request.name)
+            request.description.value?.let {
+                append("description", it)
+            }
+            append("tags", request.tags)
+            append("file", request.file)
+        }
+    }
+
+    suspend fun modifyGuildSticker(guildId: Snowflake, stickerId: Snowflake, request: ModifyGuildStickerRequest) = call(Route.GuildStickerDelete) {
+        keys[Route.GuildId] = guildId
+        keys[Route.StickerId] = stickerId
+
+        body(ModifyGuildStickerRequest.serializer(), request)
+    }
+
+    suspend fun deleteGuildSticker(guildId: Snowflake, stickerId: Snowflake) = call(Route.GuildStickerDelete) {
+        keys[Route.GuildId] = guildId
+        keys[Route.StickerId] = stickerId
+    }
 }
 
 @OptIn(ExperimentalContracts::class)
