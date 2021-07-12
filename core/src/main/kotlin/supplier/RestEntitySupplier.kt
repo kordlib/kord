@@ -11,15 +11,19 @@ import dev.kord.core.catchNotFound
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.entity.channel.thread.ThreadUser
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.paginateBackwards
 import dev.kord.core.paginateForwards
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
+import dev.kord.rest.json.request.ListThreadsRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
+import kotlinx.datetime.Instant
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -335,6 +339,60 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         val data = StageInstanceData.from(instance)
 
         return StageInstance(data, kord, this)
+    }
+
+    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser> = flow {
+        kord.rest.channel.listThreadMembers(channelId).onEach {
+            val data = ThreadUserData.from(it)
+            emit(ThreadUser(data, kord))
+        }
+    }
+
+    override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> = flow {
+        kord.rest.channel.listActiveThreads(channelId).threads.onEach {
+            val data = ChannelData.from(it)
+            emit(ThreadChannel(data, kord))
+        }
+    }
+
+    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+        val flow = flow {
+            kord.rest.channel.listPublicArchivedThreads(channelId, ListThreadsRequest(before, limit)).threads.map {
+                val data = ChannelData.from(it)
+                emit(ThreadChannel(data, kord))
+            }
+        }
+        return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
+    }
+
+    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+        val flow = flow {
+            kord.rest.channel.listPrivateArchivedThreads(channelId, ListThreadsRequest(before, limit)).threads.map {
+                val data = ChannelData.from(it)
+                emit(ThreadChannel(data, kord))
+            }
+        }
+        return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
+    }
+
+    override fun getJoinedPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Instant,
+        limit: Int
+    ): Flow<ThreadChannel> {
+        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+        val flow = flow {
+            kord.rest.channel.listJoinedPrivateArchivedThreads(
+                channelId,
+                ListThreadsRequest(before, limit)
+            ).threads.map {
+                val data = ChannelData.from(it)
+                emit(ThreadChannel(data, kord))
+            }
+        }
+        return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
     }
 
     override fun toString(): String {

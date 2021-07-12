@@ -3,11 +3,11 @@ package dev.kord.core.entity.channel.thread
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
-import dev.kord.core.behavior.channel.threads.ThreadBehavior
+import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
 
-class Thread(val data: ChannelData, override val kord: Kord, override val supplier: EntitySupplier) : ThreadBehavior {
+class ThreadChannel(val data: ChannelData, override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier) : ThreadChannelBehavior {
 
     private val threadData = data.threadsMetadata.value!!
 

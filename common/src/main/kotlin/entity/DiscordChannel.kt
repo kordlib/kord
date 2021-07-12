@@ -100,11 +100,11 @@ sealed class ChannelType(val value: Int) {
     /** A channel in which game developers can sell their game on Discord. */
     object GuildStore : ChannelType(6)
 
-    object NewsThread : ChannelType(10)
+    object PublicNewsThread : ChannelType(10)
 
     object PrivateThread : ChannelType(11)
 
-    object PublicThread : ChannelType(12)
+    object PublicGuildThread : ChannelType(12)
 
     object GuildStageVoice : ChannelType(13)
 
@@ -122,9 +122,9 @@ sealed class ChannelType(val value: Int) {
             4 -> GuildCategory
             5 -> GuildNews
             6 -> GuildStore
-            10 -> NewsThread
+            10 -> PublicNewsThread
             11 -> PrivateThread
-            12 -> PublicThread
+            12 -> PublicGuildThread
             13 -> GuildStageVoice
             else -> Unknown(code)
         }

@@ -4,8 +4,11 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.entity.channel.thread.ThreadUser
 import dev.kord.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
 
 /**
  * Creates supplier providing a strategy which will first operate on this supplier. When an entity
@@ -114,7 +117,35 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override fun getTemplates(guildId: Snowflake): Flow<Template> =
         first.getTemplates(guildId).switchIfEmpty(second.getTemplates(guildId))
 
-    override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = first.getStageInstanceOrNull(channelId) ?: second.getStageInstanceOrNull(channelId)
+    override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? =
+         first.getStageInstanceOrNull(channelId) ?: second.getStageInstanceOrNull(channelId)
+
+    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser> {
+        return first.getThreadMembers(channelId).switchIfEmpty(second.getThreadMembers(channelId))
+    }
+
+    override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> {
+        return first.getActiveThreads(channelId).switchIfEmpty(second.getActiveThreads(channelId))
+    }
+
+    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+        return first.getPublicArchivedThreads(channelId, before, limit)
+            .switchIfEmpty(second.getPublicArchivedThreads(channelId, before, limit))
+    }
+
+    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+        return first.getPrivateArchivedThreads(channelId, before, limit)
+            .switchIfEmpty(second.getPrivateArchivedThreads(channelId, before, limit))
+    }
+
+    override fun getJoinedPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Instant,
+        limit: Int
+    ): Flow<ThreadChannel> {
+        return first.getJoinedPrivateArchivedThreads(channelId, before, limit)
+            .switchIfEmpty(second.getJoinedPrivateArchivedThreads(channelId, before, limit))
+    }
 
 
     override fun toString(): String {
