@@ -3,6 +3,7 @@ package dev.kord.core.behavior.channel.threads
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.cache.data.toData
+import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadUser
 import dev.kord.rest.builder.channel.thread.ThreadModifyBuilder
@@ -12,7 +13,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface ThreadChannelBehavior : GuildChannelBehavior {
+interface ThreadChannelBehavior : GuildChannel, GuildChannelBehavior {
 
     val members: Flow<ThreadUser>
         get() = flow {
@@ -44,5 +45,5 @@ suspend inline fun ThreadChannelBehavior.edit(builder: ThreadModifyBuilder.() ->
     val appliedBuilder = ThreadModifyBuilder().apply(builder)
     val patchedChannel = kord.rest.channel.patchThread(id, appliedBuilder.toRequest(), appliedBuilder.reason)
     val patchedChannelData = patchedChannel.toData()
-    return Thread(patchedChannelData, kord)
+    return ThreadChannel(patchedChannelData, kord)
 }

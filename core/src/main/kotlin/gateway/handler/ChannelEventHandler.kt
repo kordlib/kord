@@ -46,6 +46,7 @@ internal class ChannelEventHandler(
             is StageChannel -> StageChannelCreateEvent(channel, shard)
             is VoiceChannel -> VoiceChannelCreateEvent(channel, shard)
             is Category -> CategoryCreateEvent(channel, shard)
+            //TOOD("Intercept threads")
             else -> UnknownChannelCreateEvent(channel, shard)
         }
 

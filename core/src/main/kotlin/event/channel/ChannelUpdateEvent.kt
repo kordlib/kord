@@ -54,6 +54,13 @@ class StageChannelUpdateEvent(override val channel: StageChannel, override val s
 }
 
 
+class ThreadChannelUpdateEvent(override val channel: ThreadChannel, override val shard: Int) : ChannelUpdateEvent {
+    override fun toString(): String {
+        return "ThreadChannelUpdateEvent(channel=$channel, shard=$shard)"
+    }
+}
+
+
 class UnknownChannelUpdateEvent(override val channel: Channel, override val shard: Int) : ChannelCreateEvent {
     override fun toString(): String {
         return "UnknownChannelUpdateEvent(channel=$channel, shard=$shard)"

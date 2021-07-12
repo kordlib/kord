@@ -15,7 +15,7 @@ class ThreadChannel(val data: ChannelData, override val kord: Kord, override val
 
     override val guildId: Snowflake get() = data.guildId.value!!
 
-    val name: String get() = data.name.value!!
+    override val name: String get() = data.name.value!!
 
     val archived: Boolean get() = threadData.archived
 
