@@ -6,6 +6,7 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -40,7 +41,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws [EntityNotFoundException] if the channel wasn't present.
      * @throws [ClassCastException] if the channel isn't a guild message channel.
      */
-    override suspend fun asChannel(): MessageChannel = super.asChannel() as MessageChannel
+    override suspend fun asChannel(): GuildChannel = super.asChannel() as MessageChannel
 
     /**
      * Requests to get this behavior as a [MessageChannel],
@@ -48,7 +49,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    override suspend fun asChannelOrNull(): MessageChannel? = super.asChannelOrNull() as? MessageChannel
+    override suspend fun asChannelOrNull(): GuildChannel? = super.asChannelOrNull() as? MessageChannel
 
     /**
      * Requests to get all messages in this channel.

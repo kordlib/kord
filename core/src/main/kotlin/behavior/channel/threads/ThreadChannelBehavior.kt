@@ -2,6 +2,7 @@ package dev.kord.core.behavior.channel.threads
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -13,7 +14,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface ThreadChannelBehavior : GuildChannel, GuildChannelBehavior {
+interface ThreadChannelBehavior :  MessageChannelBehavior {
 
     val members: Flow<ThreadUser>
         get() = flow {

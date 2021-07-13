@@ -5,9 +5,17 @@ import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
-class ThreadChannel(val data: ChannelData, override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier) : ThreadChannelBehavior {
+sealed class ThreadChannel(
+    override val data: ChannelData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : GuildMessageChannel, ThreadChannelBehavior {
 
     private val threadData = data.threadsMetadata.value!!
 
@@ -28,5 +36,7 @@ class ThreadChannel(val data: ChannelData, override val kord: Kord, override val
     val autoArchiveDuration: Int get() = threadData.autoArchiveDuration
 
     val ratelimitPerUser: Int? get() = data.rateLimitPerUser.value
+
+
 
 }

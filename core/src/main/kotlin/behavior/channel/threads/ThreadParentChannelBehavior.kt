@@ -4,15 +4,34 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
 
 interface ThreadParentChannelBehavior : GuildChannelBehavior {
 
     val publicActiveThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(id)
 
-    fun getPublicArchivedThreads(messageId: Snowflake, limit: Int = Int.MAX_VALUE) {
-
+    fun getPublicArchivedThreads(
+        channelId: Snowflake,
+        before: Instant,
+        limit: Int = Int.MAX_VALUE
+    ): Flow<ThreadChannel> {
+        return supplier.getPublicArchivedThreads(channelId, before, limit)
     }
 
+    fun getPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Instant,
+        limit: Int = Int.MAX_VALUE
+    ): Flow<ThreadChannel> {
+        return supplier.getPrivateArchivedThreads(channelId, before, limit)
+    }
 
+    fun getJoinedPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Instant,
+        limit: Int = Int.MAX_VALUE
+    ): Flow<ThreadChannel> {
+        return supplier.getJoinedPrivateArchivedThreads(channelId, before, limit)
+    }
 
 }
