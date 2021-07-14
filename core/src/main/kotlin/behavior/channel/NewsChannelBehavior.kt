@@ -5,6 +5,7 @@ import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.NewsChannel
@@ -23,7 +24,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord News Channel associated to a guild.
  */
-interface NewsChannelBehavior : GuildMessageChannelBehavior {
+interface NewsChannelBehavior : ThreadParentChannelBehavior {
 
     /**
      * Requests to get the this behavior as a [NewsChannel].

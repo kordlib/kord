@@ -3,6 +3,7 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TextChannel
@@ -17,7 +18,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface TextChannelBehavior : GuildMessageChannelBehavior {
+interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
 
     /**
      * Requests to get the this behavior as a [TextChannel].
