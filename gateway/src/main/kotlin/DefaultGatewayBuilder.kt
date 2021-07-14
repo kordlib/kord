@@ -19,7 +19,7 @@ import kotlin.time.Duration
 import kotlin.time.seconds
 
 class DefaultGatewayBuilder {
-    var url = "wss://gateway.discord.gg/?v=8&encoding=json&compress=zlib-stream"
+    var url = "wss://gateway.discord.gg/?v=9&encoding=json&compress=zlib-stream"
     var client: HttpClient? = null
     var reconnectRetry: Retry? = null
     var sendRateLimiter: RateLimiter? = null
