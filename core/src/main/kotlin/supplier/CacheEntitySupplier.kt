@@ -291,7 +291,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.asFlow().filter {
             it.threadsMetadata.value?.archived != true
         }.map {
-            ThreadChannel(it, kord)
+            Channel.from(it, kord) as ThreadChannel
         }
     }
 
@@ -304,7 +304,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                     && time != null
                     && time < before
                     && (it.type == ChannelType.PublicGuildThread || it.type == ChannelType.PublicNewsThread)
-        }.take(limit).map { ThreadChannel(it, kord) }
+        }.take(limit).map { Channel.from(it, kord) as ThreadChannel }
     }
 
     override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
@@ -316,7 +316,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                     && time != null
                     && time < before
                     && it.type == ChannelType.PrivateThread
-        }.take(limit).map { ThreadChannel(it, kord) }
+        }.take(limit).map { Channel.from(it, kord) as ThreadChannel }
     }
 
     override fun getJoinedPrivateArchivedThreads(
@@ -333,7 +333,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                     && time < before
                     && it.type == ChannelType.PrivateThread
                     && kord.selfId in getThreadMembers(channelId).map { user -> user.data.id }.toList()
-        }.take(limit).map { ThreadChannel(it, kord) }
+        }.take(limit).map { Channel.from(it, kord) as ThreadChannel }
     }
 
     override fun toString(): String {
