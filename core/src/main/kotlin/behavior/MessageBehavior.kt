@@ -70,7 +70,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete(reason: String?) {
+    suspend fun delete(reason: String? = null) {
         kord.rest.channel.deleteMessage(channelId = channelId, messageId = id, reason = reason)
     }
 

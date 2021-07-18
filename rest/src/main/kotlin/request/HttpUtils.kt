@@ -19,7 +19,7 @@ private const val rateLimitResetAfter = "X-RateLimit-Reset-After"
 private const val auditLogReason = "X-Audit-Log-Reason"
 
 /**
- * Set's the reason that will show up in the [Discord Audit Log]() to [reason] for this request.
+ * Sets the reason that will show up in the [Discord Audit Log]() to [reason] for this request.
  */
 fun <T> RequestBuilder<T>.auditLogReason(reason: String?) = reason?.let { header(auditLogReason, reason) }
 
