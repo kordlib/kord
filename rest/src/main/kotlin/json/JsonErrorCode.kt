@@ -131,6 +131,20 @@ enum class JsonErrorCode(val code: Int) {
     UnknownWebhook(10015),
 
     /**
+     * Unknown webhook service.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownWebhookService(10016),
+
+    /**
+     * Unknown session.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownSession(10020),
+
+    /**
      * Unknown ban.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
@@ -180,6 +194,13 @@ enum class JsonErrorCode(val code: Int) {
     UnknownBranch(10032),
 
     /**
+     * Unknown store directory layout.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownStoreDirectoryLayout(10033),
+
+    /**
      * Unknown redistributable.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
@@ -187,11 +208,32 @@ enum class JsonErrorCode(val code: Int) {
     UnknownRedistributable(10036),
 
     /**
+     * Unknown gift code.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownGiftCode(10038),
+
+    /**
      * Unknown guild template.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     UnknownGuildTemplate(10057),
+
+    /**
+     * Unknown discoverable server category-
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownDiscoverableServerCategory(10059),
+
+    /**
+     * Unknown sticker.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownSticker(10060),
 
     /**
      * Unknown interaction.
@@ -208,6 +250,34 @@ enum class JsonErrorCode(val code: Int) {
     UnknownApplicationCommand(10063),
 
     /**
+    * Unknown application command permissions.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownApplicationCommandPermissions(10066),
+
+    /**
+     * Unknown Stage Instance.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownStageInstance(10067),
+
+    /**
+     * Unknown Guild Member Verification Form.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownGuildMemberVerificationForm(10068),
+
+    /**
+     * Unknown Guild Welcome Screen.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnknownGuildWelcomeScreen(10069),
+
+    /**
      * Bots cannot use this endpoint.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
@@ -220,6 +290,62 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     BotsEndpoint(20002),
+
+    /**
+     * Explicit content cannot be sent to the desired recipient(s).
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    CannotSendExplicitContent(20009),
+
+    /**
+     * You are not authorized to perform this action on this application.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UnauthorizedForAction(20012),
+
+    /**
+     * This action cannot be performed due to slow-mode rate limit.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    SlowModeRateLimit(20016),
+
+    /**
+     * Only the owner of this account can perform this action.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    OnlyOwner(20018),
+
+    /**
+     * This message cannot be edited due to announcement rate limits.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    AnnouncementRateLimit(2022),
+
+    /**
+     * The channel you are writing has hit the write rate limit.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    ChannelWriteRateLimit(20028),
+
+    /**
+     * Your Stage topic, server name, server description, or channel names contain words that are not allowed.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    DisallowedName(20031),
+
+    /**
+     * Guild premium subscription level too low.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    GuildSubscriptionTooLow(20035),
 
     /**
      * Maximum number of guilds reached (100).
@@ -243,6 +369,13 @@ enum class JsonErrorCode(val code: Int) {
     MaxPins(30003),
 
     /**
+     * Maximum number of recipients reached (10).
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxRecipients(30004),
+
+    /**
      * Maximum number of guild roles reached (250).
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
@@ -255,6 +388,13 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     MaxWebhooks(30007),
+
+    /**
+     * Maximum number of emojis reached.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxEmojis(30008),
 
     /**
      * Maximum number of reactions reached (20).
@@ -285,6 +425,62 @@ enum class JsonErrorCode(val code: Int) {
     MaxInvites(30016),
 
     /**
+     * Maximum number of animated emojis reached.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxAnimatedEmojis(30018),
+
+    /**
+     * Maximum number of server members reached.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxServerMembers(30019),
+
+    /**
+     * Maximum number of server categories has been reached (5).
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxServerCategories(30030),
+
+    /**
+     * Guild already has a template.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    GuildAlreadyHadTemplate(30031),
+
+    /**
+     * Max number of thread participants has been reached.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxThreadParticipants(30033),
+
+    /**
+     * Maximum number of bans for non-guild members have been exceeded.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxNonMemberBans(30035),
+
+    /**
+     * Maximum number of bans fetches has been reached.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxBanFetches(30037),
+
+    /**
+     * Maximum number of stickers reached.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxStickers(30039),
+
+    /**
      * Unauthorized. Provide a valid token and try again.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
@@ -297,6 +493,13 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     VerifyAccount(40002),
+
+    /**
+     * You are opening direct messages too fast.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    TooFastDM(40003),
 
     /**
      * Request entity too large. Try sending something smaller in size.
@@ -318,6 +521,27 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     UserBannedFromGuild(40007),
+
+    /**
+     * Target user is not connected to voice.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    UserNotInVoice(40032),
+
+    /**
+     * This message has already been crossposted.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    AlreadyCrossposted(40041),
+
+    /**
+     * An application command with that name already exists.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    ApplicationCommandNameExists(40041),
 
     /**
      * Missing access.
@@ -453,11 +677,46 @@ enum class JsonErrorCode(val code: Int) {
     CannotExecuteOnSystemMessage(50021),
 
     /**
+     * Cannot execute action on this channel type.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    WrongChannelType(50024),
+
+    /**
      * Invalid OAuth2 access token provided.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     InvalidOAuth2AccessToken(50025),
+
+    /**
+     * Missing required OAuth2 scope.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MissingOAuthScope(50026),
+
+    /**
+     * Invalid webhook token provided.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    InvalidWebhookToken(50027),
+
+    /**
+     * Invalid role,
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    InvalidRole(50028),
+
+    /**
+     * "Invalid Recipient(s)"
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    InvalidRecipients(50033),
 
     /**
      * A message provided was too old to bulk delete.
@@ -489,6 +748,20 @@ enum class JsonErrorCode(val code: Int) {
     InvalidAPIVersion(50041),
 
     /**
+     * Cannot self-redeem this gift.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    CannotSelfRedeemGift(50054),
+
+    /**
+     * Payment source required to redeem gift.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    GiftRequiresPaymentSource(50070),
+
+    /**
      * Cannot delete a channel required for Community guilds.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
@@ -501,6 +774,20 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     InvalidStickerSent(50081),
+
+    /**
+     *	Invalid thread notification settings.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    InvalidThreadNotificationSettings(50084),
+
+    /**
+     * `before` value is earlier than the thread creation date.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    BeforeValueBeforeThreadCreate(50085),
 
     /**
      * 2 Factor Authentication is required.
@@ -521,7 +808,42 @@ enum class JsonErrorCode(val code: Int) {
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
-    APIResourceOverloaded(130000);
+    APIResourceOverloaded(130000),
+
+    /**
+     * The Stage is already open.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    StageAlreadyOpen(150006),
+
+    /**
+     * A thread has already been created for this message.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MessageAlreadyHasThread(160004),
+
+    /**
+     * Thread is locked.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    TheadLocked(160005),
+
+    /**
+     * Maximum number of active threads reached.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxActiveThreads(160006),
+
+    /**
+     * Maximum number of active announcement threads reached.
+     *
+     * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
+     */
+    MaxActiveAnnouncementThreads(160007);
 
     companion object JsonErrorCodeSerializer : KSerializer<JsonErrorCode> {
         override val descriptor = PrimitiveSerialDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)
