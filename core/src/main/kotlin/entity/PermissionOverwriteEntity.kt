@@ -64,6 +64,7 @@ class PermissionOverwriteEntity(
      *
      * @param reason an optional reason to be logged in the audit log.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete(reason: String? = null) {

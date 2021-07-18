@@ -95,6 +95,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     /**
      * Requests to delete a message in this channel.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun deleteMessage(id: Snowflake, reason: String? = null): Unit =

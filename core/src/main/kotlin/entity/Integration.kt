@@ -153,6 +153,7 @@ class Integration(
      * Requests to delete the integration.
      *
      * @param reason the reason showing up in the audit log
+     * @param reason the reason showing up in the audit log
      */
     suspend fun delete(reason: String? = null) {
         kord.rest.guild.deleteGuildIntegration(guildId = guildId, integrationId = id, reason = reason)

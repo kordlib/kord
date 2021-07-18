@@ -106,6 +106,7 @@ class GuildEmoji(
     /**
      * Requests to delete this emoji, with the given [reason].
      *
+     * @param reason the reason showing up in the audit log
      * @throws RequestException if anything went wrong during the request.
      */
     suspend fun delete(reason: String? = null) {

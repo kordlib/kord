@@ -356,6 +356,7 @@ interface GuildBehavior : KordEntity, Strategizable {
     /**
      *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun editSelfNickname(newNickname: String? = null, reason: String? = null): String {
@@ -369,6 +370,7 @@ interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests to kick the given [userId].
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun kick(userId: Snowflake, reason: String? = null) {
