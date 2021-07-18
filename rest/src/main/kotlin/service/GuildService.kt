@@ -14,6 +14,7 @@ import dev.kord.rest.builder.role.RoleModifyBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlin.contracts.ExperimentalContracts
@@ -58,7 +59,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             keys[Route.GuildId] = guildId
             val modifyBuilder = GuildModifyBuilder().apply(builder)
             body(GuildModifyRequest.serializer(), modifyBuilder.toRequest())
-            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(modifyBuilder.reason)
         }
     }
 
@@ -74,7 +75,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         call(Route.GuildChannelsPost) {
             keys[Route.GuildId] = guildId
             body(GuildChannelCreateRequest.serializer(), channel)
-            reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(reason)
         }
 
     @OptIn(ExperimentalContracts::class)
@@ -90,7 +91,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             keys[Route.GuildId] = guildId
             val modifyBuilder = GuildChannelPositionModifyBuilder().apply(builder)
             body(GuildChannelPositionModifyRequest.serializer(), modifyBuilder.toRequest())
-            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(modifyBuilder.reason)
         }
     }
 
@@ -150,7 +151,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             keys[Route.UserId] = userId
             val modifyBuilder = MemberModifyBuilder().apply(builder)
             body(GuildMemberModifyRequest.serializer(), modifyBuilder.toRequest())
-            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(modifyBuilder.reason)
         }
     }
 
@@ -159,7 +160,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             keys[Route.GuildId] = guildId
             keys[Route.UserId] = userId
             keys[Route.RoleId] = roleId
-            reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(reason)
         }
 
     suspend fun deleteRoleFromGuildMember(
@@ -171,14 +172,14 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
         keys[Route.RoleId] = roleId
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        auditLogReason(reason)
     }
 
     suspend fun deleteGuildMember(guildId: Snowflake, userId: Snowflake, reason: String? = null) =
         call(Route.GuildMemberDelete) {
             keys[Route.GuildId] = guildId
             keys[Route.UserId] = userId
-            reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(reason)
         }
 
     suspend fun getGuildBans(guildId: Snowflake) = call(Route.GuildBansGet) {
@@ -201,7 +202,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             keys[Route.UserId] = userId
             val createBuilder = BanCreateBuilder().apply(builder)
             body(GuildBanCreateRequest.serializer(), createBuilder.toRequest())
-            createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(createBuilder.reason)
         }
     }
 
@@ -209,7 +210,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         call(Route.GuildBanDelete) {
             keys[Route.GuildId] = guildId
             keys[Route.UserId] = userId
-            reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(reason)
         }
 
     suspend fun getGuildRoles(guildId: Snowflake) = call(Route.GuildRolesGet) {
@@ -226,7 +227,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             keys[Route.GuildId] = guildId
             val createBuilder = RoleCreateBuilder().apply(builder)
             body(GuildRoleCreateRequest.serializer(), createBuilder.toRequest())
-            createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(createBuilder.reason)
         }
     }
 
@@ -241,7 +242,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             keys[Route.GuildId] = guildId
             val modifyBuilder = RolePositionsModifyBuilder().apply(builder)
             body(GuildRolePositionModifyRequest.serializer(), modifyBuilder.toRequest())
-            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(modifyBuilder.reason)
         }
     }
 
@@ -257,7 +258,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             keys[Route.RoleId] = roleId
             val modifyBuilder = RoleModifyBuilder().apply(builder)
             body(GuildRoleModifyRequest.serializer(), modifyBuilder.toRequest())
-            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(modifyBuilder.reason)
         }
     }
 
@@ -265,7 +266,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         call(Route.GuildRoleDelete) {
             keys[Route.GuildId] = guildId
             keys[Route.RoleId] = roleId
-            reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(reason)
         }
 
     suspend fun getGuildPruneCount(guildId: Snowflake, days: Int = 7) = call(Route.GuildPruneCountGet) {
@@ -282,7 +283,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
         parameter("days", days)
         parameter("compute_prune_count", computePruneCount)
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        auditLogReason(reason)
     }
 
     suspend fun getGuildVoiceRegions(guildId: Snowflake) = call(Route.GuildVoiceRegionsGet) {
@@ -313,14 +314,17 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         call(Route.GuildIntegrationPatch) {
             keys[Route.GuildId] = guildId
             keys[Route.IntegrationId] = integrationId
-            body(GuildIntegrationModifyRequest.serializer(), IntegrationModifyBuilder().apply(builder).toRequest())
+            val modifyBuilder = IntegrationModifyBuilder().apply(builder)
+            body(GuildIntegrationModifyRequest.serializer(), modifyBuilder.toRequest())
+            auditLogReason(modifyBuilder.reason)
         }
     }
 
-    suspend fun deleteGuildIntegration(guildId: Snowflake, integrationId: Snowflake) =
+    suspend fun deleteGuildIntegration(guildId: Snowflake, integrationId: Snowflake, reason: String? = null) =
         call(Route.GuildIntegrationDelete) {
             keys[Route.GuildId] = guildId
             keys[Route.IntegrationId] = integrationId
+            auditLogReason(reason)
         }
 
     suspend fun syncGuildIntegration(guildId: Snowflake, integrationId: Snowflake) =
@@ -348,10 +352,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyGuildWidget(guildId: Snowflake, widget: GuildWidgetModifyRequest): DiscordGuildWidget =
+    suspend fun modifyGuildWidget(guildId: Snowflake, widget: GuildWidgetModifyRequest, reason: String? = null): DiscordGuildWidget =
         call(Route.GuildWidgetPatch) {
             keys[Route.GuildId] = guildId
             body(GuildWidgetModifyRequest.serializer(), widget)
+            auditLogReason(reason)
         }
 
     @OptIn(ExperimentalContracts::class)
@@ -360,17 +365,19 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         builder: GuildWidgetModifyBuilder.() -> Unit
     ): DiscordGuildWidget {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return modifyGuildWidget(guildId, GuildWidgetModifyBuilder().apply(builder).toRequest())
+        val modifyBuilder = GuildWidgetModifyBuilder().apply(builder)
+        return modifyGuildWidget(guildId, modifyBuilder.toRequest(), modifyBuilder.reason)
     }
 
     suspend fun getVanityInvite(guildId: Snowflake) = call(Route.GuildVanityInviteGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyCurrentUserNickname(guildId: Snowflake, nick: CurrentUserNicknameModifyRequest) =
+    suspend fun modifyCurrentUserNickname(guildId: Snowflake, nick: CurrentUserNicknameModifyRequest, reason: String? = null) =
         call(Route.GuildCurrentUserNickPatch) {
             keys[Route.GuildId] = guildId
             body(CurrentUserNicknameModifyRequest.serializer(), nick)
+            auditLogReason(reason)
         }
 
     suspend fun getGuildWelcomeScreen(guildId: Snowflake) = call(Route.GuildWelcomeScreenGet) {
@@ -378,10 +385,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
     }
 
 
-    suspend fun modifyGuildWelcomeScreen(guildId: Snowflake, request: GuildWelcomeScreenModifyRequest) =
+    suspend fun modifyGuildWelcomeScreen(guildId: Snowflake, request: GuildWelcomeScreenModifyRequest, reason: String? = null) =
         call(Route.GuildWelcomeScreenPatch) {
             keys[Route.GuildId] = guildId
             body(GuildWelcomeScreenModifyRequest.serializer(), request)
+            auditLogReason(reason)
         }
 
 
@@ -409,7 +417,7 @@ suspend inline fun GuildService.modifyGuildWelcomeScreen(
 ): DiscordWelcomeScreen {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = WelcomeScreenModifyBuilder().apply(builder)
-    return modifyGuildWelcomeScreen(guildId, builder.toRequest())
+    return modifyGuildWelcomeScreen(guildId, builder.toRequest(), builder.reason)
 }
 
 @OptIn(ExperimentalContracts::class)

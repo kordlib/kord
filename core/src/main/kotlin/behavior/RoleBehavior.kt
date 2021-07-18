@@ -69,10 +69,11 @@ interface RoleBehavior : KordEntity, Strategizable {
     /**
      * Requests to delete this role.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete() {
-        kord.rest.guild.deleteGuildRole(guildId = guildId, roleId = id)
+    suspend fun delete(reason: String? = null) {
+        kord.rest.guild.deleteGuildRole(guildId = guildId, roleId = id, reason = reason)
     }
 
     /**

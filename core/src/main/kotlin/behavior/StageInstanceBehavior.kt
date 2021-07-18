@@ -13,7 +13,7 @@ import dev.kord.rest.json.request.StageInstanceUpdateRequest
 interface StageInstanceBehavior : KordEntity, Strategizable {
     val channelId: Snowflake
 
-    suspend fun delete(): Unit = kord.rest.stageInstance.deleteStageInstance(channelId)
+    suspend fun delete(reason: String? = null): Unit = kord.rest.stageInstance.deleteStageInstance(channelId, reason)
 
     suspend fun update(topic: String): StageInstance {
         val instance = kord.rest.stageInstance.updateStageInstance(channelId, StageInstanceUpdateRequest(topic))

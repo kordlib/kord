@@ -7,6 +7,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
+import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest
 import kotlinx.serialization.SerialName
@@ -15,15 +16,18 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class WelcomeScreenModifyBuilder : RequestBuilder<GuildWelcomeScreenModifyRequest> {
+class WelcomeScreenModifyBuilder : AuditRequestBuilder<GuildWelcomeScreenModifyRequest> {
+
+    override var reason: String? = null
 
     private var _enabled: OptionalBoolean = OptionalBoolean.Missing
+
     var enabled: Boolean? by ::_enabled.delegate()
-
     private var _description: Optional<String> = Optional.Missing()
-    var description: String? by ::_description.delegate()
 
+    var description: String? by ::_description.delegate()
     private var _welcomeScreenChannels: Optional<MutableList<WelcomeScreenChannelBuilder>> = Optional.Missing()
+
     var welcomeScreenChannels: MutableList<WelcomeScreenChannelBuilder>? by ::_welcomeScreenChannels.delegate()
 
     @OptIn(ExperimentalContracts::class)

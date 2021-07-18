@@ -358,10 +358,11 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun editSelfNickname(newNickname: String? = null): String {
+    suspend fun editSelfNickname(newNickname: String? = null, reason: String? = null): String {
         return kord.rest.guild.modifyCurrentUserNickname(
             id,
-            CurrentUserNicknameModifyRequest(Optional(newNickname))
+            CurrentUserNicknameModifyRequest(Optional(newNickname)),
+            reason
         ).nick
     }
 
@@ -422,10 +423,11 @@ interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests to unban the given [userId].
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun unban(userId: Snowflake) {
-        kord.rest.guild.deleteGuildBan(guildId = id, userId = userId)
+    suspend fun unban(userId: Snowflake, reason: String? = null) {
+        kord.rest.guild.deleteGuildBan(guildId = id, userId = userId, reason = reason)
     }
 
     /**
@@ -466,10 +468,11 @@ interface GuildBehavior : KordEntity, Strategizable {
      * A user is pruned if they have not been seen within the given [days]
      * and don't have a [Role] assigned in this guild.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun prune(days: Int = 7): Int {
-        return kord.rest.guild.beginGuildPrune(id, days, true).pruned!!
+    suspend fun prune(days: Int = 7, reason: String? = null): Int {
+        return kord.rest.guild.beginGuildPrune(id, days, true, reason).pruned!!
     }
 
     suspend fun getWelcomeScreenOrNull(): WelcomeScreen? =

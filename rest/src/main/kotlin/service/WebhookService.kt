@@ -13,6 +13,7 @@ import dev.kord.rest.json.request.WebhookEditMessageRequest
 import dev.kord.rest.json.request.WebhookExecuteRequest
 import dev.kord.rest.json.request.WebhookModifyRequest
 import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
 import kotlinx.serialization.json.JsonObject
 import kotlin.contracts.ExperimentalContracts
@@ -35,7 +36,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.ChannelId] = channelId
             val createBuilder = WebhookCreateBuilder(name).apply(builder)
             body(WebhookCreateRequest.serializer(), createBuilder.toRequest())
-            createBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(createBuilder.reason)
         }
     }
 
@@ -66,7 +67,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.WebhookId] = webhookId
             val modifyBuilder = WebhookModifyBuilder().apply(builder)
             body(WebhookModifyRequest.serializer(), modifyBuilder.toRequest())
-            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(modifyBuilder.reason)
         }
     }
 
@@ -85,20 +86,20 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.WebhookToken] = token
             val modifyBuilder = WebhookModifyBuilder().apply(builder)
             body(WebhookModifyRequest.serializer(), modifyBuilder.toRequest())
-            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(modifyBuilder.reason)
         }
     }
 
     suspend fun deleteWebhook(webhookId: Snowflake, reason: String? = null) = call(Route.WebhookDelete) {
         keys[Route.WebhookId] = webhookId
-        reason?.let { header("X-Audit-Log-Reason", reason) }
+        auditLogReason(reason)
     }
 
     suspend fun deleteWebhookWithToken(webhookId: Snowflake, token: String, reason: String? = null) =
         call(Route.WebhookByTokenDelete) {
             keys[Route.WebhookId] = webhookId
             keys[Route.WebhookToken] = token
-            reason?.let { header("X-Audit-Log-Reason", reason) }
+            auditLogReason(reason)
         }
 
     @OptIn(ExperimentalContracts::class)

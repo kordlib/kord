@@ -33,10 +33,11 @@ interface GuildEmojiBehavior : KordEntity, Strategizable {
     /**
      * Requests to delete this emoji.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete() {
-        kord.rest.emoji.deleteEmoji(guildId = guildId, emojiId = id)
+    suspend fun delete(reason: String? = null) {
+        kord.rest.emoji.deleteEmoji(guildId = guildId, emojiId = id, reason = reason)
     }
 
     /**
