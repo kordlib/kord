@@ -32,6 +32,7 @@ sealed class ComponentInteraction : Interaction(), ComponentInteractionBehavior 
     override val user: User
         get() = User(data.user.value!!, kord)
 
+
     /**
      * The message that contains the interacted component, null if the message is ephemeral.
      */
