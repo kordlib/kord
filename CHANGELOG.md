@@ -6,7 +6,7 @@
 
 ## Fixes
 
-* Fixed ComponentInteraction#user throwing a NullPointerException when the interaction is in direct message
+* Fixed `ComponentInteraction#user` throwing a `NullPointerException` when the interaction was created in a direct message.
 
 # 0.7.3
 
