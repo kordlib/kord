@@ -2,10 +2,13 @@ package dev.kord.core.entity.channel.thread
 
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.entity.channel.NewsChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * A thread channel instance who's parent is a [NewsChannel].
+ */
 class NewsThreadChannel(
     data: ChannelData,
     kord: Kord,

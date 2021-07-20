@@ -7,7 +7,9 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 
-
+/**
+ * Behavior of channels that can create public threads.
+ */
 interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
 
     val publicActiveThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(id)
@@ -22,6 +24,11 @@ interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
 
 }
 
+/**
+ * Behavior of channels that can create private threads.
+ * This derives from [ThreadParentChannelBehavior]
+ * since Discord allows all public operations on private thread parents.
+ */
 interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
 
     fun getPrivateArchivedThreads(

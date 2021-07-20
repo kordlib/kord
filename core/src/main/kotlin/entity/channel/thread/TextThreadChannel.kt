@@ -4,9 +4,13 @@ import dev.kord.common.entity.ChannelType
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * A thread channel instance who's parent is a [TextChannel].
+ */
 class TextThreadChannel(
     data: ChannelData,
     kord: Kord,
@@ -20,7 +24,7 @@ class TextThreadChannel(
     override suspend fun asChannelOrNull(): TextThreadChannel? = super.asChannelOrNull() as? TextThreadChannel
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildMessageChannel {
-     return TextThreadChannel(data, kord, strategy.supply(kord))
+        return TextThreadChannel(data, kord, strategy.supply(kord))
     }
 
 }
