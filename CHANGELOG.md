@@ -1,3 +1,13 @@
+# 0.7.4
+
+## Changes
+
+* Promote user property in component interaction to a data object.
+
+## Fixes
+
+* Fixed ComponentInteraction#user throwing a NullPointerException when the interaction is in direct message
+
 # 0.7.3
 
 ## Additions
