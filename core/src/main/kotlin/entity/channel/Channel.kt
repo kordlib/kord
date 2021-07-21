@@ -6,8 +6,8 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.entity.channel.thread.NewsThreadChannel
-import dev.kord.core.entity.channel.thread.TextThreadChannel
+import dev.kord.core.entity.channel.thread.NewsChannelThread
+import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -49,9 +49,9 @@ interface Channel : ChannelBehavior {
             GuildCategory -> Category(data, kord)
             GuildNews -> NewsChannel(data, kord)
             GuildStore -> StoreChannel(data, kord)
-            PublicNewsThread -> NewsThreadChannel(data, kord)
-            PrivateThread -> TextThreadChannel(data, kord)
-            PublicGuildThread -> TextThreadChannel(data, kord)
+            PublicNewsThread -> NewsChannelThread(data, kord)
+            PrivateThread -> TextChannelThread(data, kord)
+            PublicGuildThread -> TextChannelThread(data, kord)
 
             else -> object : Channel {
                 override val data: ChannelData = data

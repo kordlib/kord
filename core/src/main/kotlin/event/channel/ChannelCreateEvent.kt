@@ -2,9 +2,8 @@ package dev.kord.core.event.channel
 
 import dev.kord.core.Kord
 import dev.kord.core.entity.channel.*
-import dev.kord.core.entity.channel.thread.NewsThreadChannel
-import dev.kord.core.entity.channel.thread.TextThreadChannel
-import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.entity.channel.thread.NewsChannelThread
+import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.event.Event
 
 interface ChannelCreateEvent : Event {
@@ -56,14 +55,14 @@ class StageChannelCreateEvent(override val channel: StageChannel, override val s
     }
 }
 
-class TextThreadChannelCreateEvent(override val channel: TextThreadChannel, override val shard: Int) : ChannelCreateEvent {
+class TextChannelThreadCreateEvent(override val channel: TextChannelThread, override val shard: Int) : ChannelCreateEvent {
     override fun toString(): String {
         return "TextThreadChannelCreateEvent(channel=$channel, shard=$shard)"
     }
 }
 
 
-class NewsThreadChannelCreateEvent(override val channel: NewsThreadChannel, override val shard: Int) : ChannelCreateEvent {
+class NewsChannelThreadCreateEvent(override val channel: NewsChannelThread, override val shard: Int) : ChannelCreateEvent {
     override fun toString(): String {
         return "NewsThreadChannelCreateEvent(channel=$channel, shard=$shard)"
     }

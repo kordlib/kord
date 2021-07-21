@@ -11,7 +11,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 /**
  * A thread channel instance who's parent is a [TextChannel].
  */
-class TextThreadChannel(
+class TextChannelThread(
     data: ChannelData,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier
@@ -19,12 +19,12 @@ class TextThreadChannel(
     val isPrivate get() = data.type == ChannelType.PrivateThread
 
 
-    override suspend fun asChannel(): TextThreadChannel = super.asChannel() as TextThreadChannel
+    override suspend fun asChannel(): TextChannelThread = super.asChannel() as TextChannelThread
 
-    override suspend fun asChannelOrNull(): TextThreadChannel? = super.asChannelOrNull() as? TextThreadChannel
+    override suspend fun asChannelOrNull(): TextChannelThread? = super.asChannelOrNull() as? TextChannelThread
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildMessageChannel {
-        return TextThreadChannel(data, kord, strategy.supply(kord))
+        return TextChannelThread(data, kord, strategy.supply(kord))
     }
 
 }

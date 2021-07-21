@@ -2,9 +2,8 @@ package dev.kord.core.event.channel
 
 import dev.kord.core.Kord
 import dev.kord.core.entity.channel.*
-import dev.kord.core.entity.channel.thread.NewsThreadChannel
-import dev.kord.core.entity.channel.thread.TextThreadChannel
-import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.entity.channel.thread.NewsChannelThread
+import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.event.Event
 
 interface ChannelDeleteEvent : Event {
@@ -55,14 +54,14 @@ class StageChannelDeleteEvent(override val channel: StageChannel, override val s
     }
 }
 
-class TextThreadChannelDeleteEvent(override val channel: TextThreadChannel, override val shard: Int) : ChannelCreateEvent {
+class TextChannelThreadDeleteEvent(override val channel: TextChannelThread, override val shard: Int) : ChannelCreateEvent {
     override fun toString(): String {
         return "TextThreadChannelDeleteEvent(channel=$channel, shard=$shard)"
     }
 }
 
 
-class NewsThreadChannelDeleteEvent(override val channel: NewsThreadChannel, override val shard: Int) : ChannelCreateEvent {
+class NewsChannelThreadDeleteEvent(override val channel: NewsChannelThread, override val shard: Int) : ChannelCreateEvent {
     override fun toString(): String {
         return "NewsThreadChannelDeleteEvent(channel=$channel, shard=$shard)"
     }

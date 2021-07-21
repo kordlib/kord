@@ -28,7 +28,7 @@ data class ChannelData(
     val lastPinTimestamp: Optional<String?> = Optional.Missing(),
     val permissions: Optional<Permissions> = Optional.Missing(),
     @SerialName("thread_metadata")
-    val threadsMetadata: Optional<ThreadMetadata> = Optional.Missing()
+    val threadsMetadata: Optional<ThreadMetadataData> = Optional.Missing()
 ) {
 
 
@@ -56,7 +56,7 @@ data class ChannelData(
                 parentId,
                 lastPinTimestamp,
                 permissions,
-                threadMetadata.map { ThreadMetadata.from(it) }
+                threadMetadata.map { ThreadMetadataData.from(it) }
             )
         }
     }
@@ -64,7 +64,7 @@ data class ChannelData(
 }
 
 @Serializable
-data class ThreadMetadata(
+data class ThreadMetadataData(
     val archived: Boolean,
     @SerialName("archiver_id")
     val archiverId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -74,8 +74,8 @@ data class ThreadMetadata(
     val locked: OptionalBoolean = OptionalBoolean.Missing
 ) {
     companion object {
-        fun from(threadMetadata: DiscordThreadMetadata): ThreadMetadata = with(threadMetadata) {
-            ThreadMetadata(archived, archiverId, archiveTimestamp, autoArchiveDuration, locked)
+        fun from(threadMetadata: DiscordThreadMetadata): ThreadMetadataData = with(threadMetadata) {
+            ThreadMetadataData(archived, archiverId, archiveTimestamp, autoArchiveDuration, locked)
         }
     }
 }

@@ -9,8 +9,8 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.idEq
 import dev.kord.core.entity.channel.*
-import dev.kord.core.entity.channel.thread.NewsThreadChannel
-import dev.kord.core.entity.channel.thread.TextThreadChannel
+import dev.kord.core.entity.channel.thread.NewsChannelThread
+import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.event.channel.*
 import dev.kord.core.event.channel.data.ChannelPinsUpdateEventData
 import dev.kord.core.event.channel.data.TypingStartEventData
@@ -47,8 +47,8 @@ internal class ChannelEventHandler(
             is TextChannel -> TextChannelCreateEvent(channel, shard)
             is StageChannel -> StageChannelCreateEvent(channel, shard)
             is VoiceChannel -> VoiceChannelCreateEvent(channel, shard)
-            is TextThreadChannel -> TextThreadChannelCreateEvent(channel, shard)
-            is NewsThreadChannel -> NewsThreadChannelCreateEvent(channel, shard)
+            is TextChannelThread -> TextChannelThreadCreateEvent(channel, shard)
+            is NewsChannelThread -> NewsChannelThreadCreateEvent(channel, shard)
             is Category -> CategoryCreateEvent(channel, shard)
             else -> UnknownChannelCreateEvent(channel, shard)
         }
@@ -68,8 +68,8 @@ internal class ChannelEventHandler(
             is StageChannel -> StageChannelUpdateEvent(channel, shard)
             is VoiceChannel -> VoiceChannelUpdateEvent(channel, shard)
             is Category -> CategoryUpdateEvent(channel, shard)
-            is TextThreadChannel -> TextThreadChannelUpdateEvent(channel, shard)
-            is NewsThreadChannel -> NewsThreadChannelUpdateEvent(channel, shard)
+            is TextChannelThread -> TextChannelThreadUpdateEvent(channel, shard)
+            is NewsChannelThread -> NewsChannelThreadUpdateEvent(channel, shard)
             else -> UnknownChannelUpdateEvent(channel, shard)
         }
 
@@ -88,8 +88,8 @@ internal class ChannelEventHandler(
             is StageChannel -> StageChannelDeleteEvent(channel, shard)
             is VoiceChannel -> VoiceChannelDeleteEvent(channel, shard)
             is Category -> CategoryDeleteEvent(channel, shard)
-            is TextThreadChannel -> TextThreadChannelDeleteEvent(channel, shard)
-            is NewsThreadChannel -> NewsThreadChannelDeleteEvent(channel, shard)
+            is TextChannelThread -> TextChannelThreadDeleteEvent(channel, shard)
+            is NewsChannelThread -> NewsChannelThreadDeleteEvent(channel, shard)
             else -> UnknownChannelDeleteEvent(channel, shard)
         }
 
