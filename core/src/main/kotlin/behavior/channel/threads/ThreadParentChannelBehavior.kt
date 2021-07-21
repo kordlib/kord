@@ -13,7 +13,7 @@ import kotlinx.datetime.Instant
  */
 interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
 
-    val publicActiveThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(id)
+    val activeThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(id)
 
     fun getPublicArchivedThreads(
         before: Instant = Clock.System.now(),
