@@ -776,7 +776,7 @@ enum class JsonErrorCode(val code: Int) {
     InvalidStickerSent(50081),
 
     /**
-     *	Invalid thread notification settings.
+     * Invalid thread notification settings.
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
