@@ -221,10 +221,10 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             body(ChannelModifyPatchRequest.serializer(), channel)
             reason?.let { header("X-Audit-Log-Reason", reason) }
         }
-    suspend fun patchThread(threadId: Snowflake, thread: ThreadModifyPatchRequest, reason: String? = null) =
+    suspend fun patchThread(threadId: Snowflake, thread: ChannelModifyPatchRequest, reason: String? = null) =
         call(Route.ChannelPatch) {
             keys[Route.ChannelId] = threadId
-            body(ThreadModifyPatchRequest.serializer(), thread)
+            body(ChannelModifyPatchRequest.serializer(), thread)
             reason?.let { header("X-Audit-Log-Reason", reason) }
         }
 

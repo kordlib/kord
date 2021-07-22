@@ -5,9 +5,9 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
-import dev.kord.rest.json.request.ThreadModifyPatchRequest
+import dev.kord.rest.json.request.ChannelModifyPatchRequest
 
-class ThreadModifyBuilder : AuditRequestBuilder<ThreadModifyPatchRequest> {
+class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
 
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
@@ -24,13 +24,13 @@ class ThreadModifyBuilder : AuditRequestBuilder<ThreadModifyPatchRequest> {
     private var _autoArchiveDuration: OptionalInt = OptionalInt.Missing
     var autoArchiveDuration: Int? by ::_autoArchiveDuration.delegate()
 
-    override fun toRequest(): ThreadModifyPatchRequest {
-        return ThreadModifyPatchRequest(
+    override fun toRequest(): ChannelModifyPatchRequest {
+        return ChannelModifyPatchRequest(
             name = _name,
             locked = _locked,
             archived = _archived,
             autoArchiveDuration = _autoArchiveDuration,
-            ratelimitPerUser = _rateLimitPerUser
+            rateLimitPerUser = _rateLimitPerUser
         )
     }
 

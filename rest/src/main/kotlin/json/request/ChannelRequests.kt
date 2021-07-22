@@ -48,7 +48,11 @@ data class ChannelModifyPatchRequest(
     @SerialName("permission_overwrites")
     val permissionOverwrites: Optional<Set<Overwrite>?> = Optional.Missing(),
     @SerialName("parent_id")
-    val parentId: OptionalSnowflake? = OptionalSnowflake.Missing
+    val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
+    val archived: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("auto_archive_duration")
+    val autoArchiveDuration: OptionalInt = OptionalInt.Missing,
+    val locked: OptionalBoolean = OptionalBoolean.Missing,
 )
 
 @Serializable
