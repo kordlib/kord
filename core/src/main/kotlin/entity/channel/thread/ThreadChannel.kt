@@ -1,5 +1,6 @@
 package dev.kord.core.entity.channel.thread
 
+import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
@@ -15,7 +16,7 @@ sealed class ThreadChannel(
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : GuildMessageChannel, ChannelThreadBehavior {
 
-    private val threadData = data.threadsMetadata.value!!
+    private val threadData get() = data.threadsMetadata.value!!
 
     override val id: Snowflake get() = data.id
 
@@ -23,14 +24,13 @@ sealed class ThreadChannel(
 
     override val name: String get() = data.name.value!!
 
-    val archived: Boolean get() = threadData.archived
+    val isArchived: Boolean get() = threadData.archived
 
-    val locked: Boolean get() = threadData.locked.orElse(false)
-
+    val isLocked: Boolean get() = threadData.locked.orElse(false)
 
     val archiveTimeStamps: String get() = threadData.archiveTimestamp
 
-    val autoArchiveDuration: Int get() = threadData.autoArchiveDuration
+    val autoArchiveDuration: ArchiveDuration get() = threadData.autoArchiveDuration
 
     val ratelimitPerUser: Int? get() = data.rateLimitPerUser.value
 

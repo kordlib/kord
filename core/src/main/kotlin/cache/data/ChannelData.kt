@@ -67,7 +67,7 @@ data class ChannelData(
 data class ThreadMetadataData(
     val archived: Boolean,
     val archiveTimestamp: String,
-    val autoArchiveDuration: Int,
+    val autoArchiveDuration: ArchiveDuration,
     val locked: OptionalBoolean = OptionalBoolean.Missing
 ) {
     companion object {

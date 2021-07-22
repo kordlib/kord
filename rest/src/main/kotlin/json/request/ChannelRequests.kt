@@ -65,37 +65,6 @@ data class StartThreadRequest(
     val autoArchiveDuration: Int
 )
 
-sealed class ArchiveDuration(val duration: Int) {
-    class Unknown(duration: Int) : ArchiveDuration(duration)
-    object Hour : ArchiveDuration(60)
-    object Day : ArchiveDuration(1440)
-    object ThreeDays : ArchiveDuration(4320)
-    object Week : ArchiveDuration(10080)
-
-    object Serializer : KSerializer<ArchiveDuration> {
-        override fun deserialize(decoder: Decoder): ArchiveDuration {
-            val value = decoder.decodeInt()
-            return values.firstOrNull { it.duration == value } ?: Unknown(value)
-        }
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("AutoArchieveDuration", PrimitiveKind.INT)
-
-        override fun serialize(encoder: Encoder, value: ArchiveDuration) {
-            encoder.encodeInt(value.duration)
-        }
-    }
-
-    companion object {
-        val values: Set<ArchiveDuration>
-            get() = setOf(
-                Hour,
-                Day,
-                ThreeDays,
-                Week,
-            )
-    }
-}
 
 data class ListThreadsRequest(
     val before: Instant? = null,

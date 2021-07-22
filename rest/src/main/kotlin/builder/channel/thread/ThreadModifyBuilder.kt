@@ -16,7 +16,7 @@ class ThreadModifyBuilder : AuditRequestBuilder<ThreadModifyPatchRequest> {
     var archived: Boolean? by ::_archived.delegate()
 
     private var _locked: OptionalBoolean = OptionalBoolean.Missing
-    var locked: Boolean? = null
+    var locked: Boolean? by ::_locked.delegate()
 
     private var _rateLimitPerUser: OptionalInt = OptionalInt.Missing
     var rateLimitPerUser: Int? by ::_rateLimitPerUser.delegate()
