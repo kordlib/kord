@@ -707,14 +707,14 @@ sealed class Route<T>(
     object RemoveUserFromThreadDelete :
         Route<Unit>(HttpMethod.Delete, "/channels/${ChannelId}/thread-members/${UserId}", NoStrategy)
 
-    object ListThreadMembersGet :
+    object ThreadMembersGet :
         Route<List<DiscordThreadMember>>(
             HttpMethod.Get,
             "/channels/${ChannelId}/thread-members",
             ListSerializer(DiscordThreadMember.serializer())
         )
 
-    object ListActiveThreadsGet :
+    object ActiveThreadsGet :
         Route<ListThreadsResponse>(
             HttpMethod.Get,
             "/channels/${ChannelId}/threads/active",
@@ -722,7 +722,7 @@ sealed class Route<T>(
         )
 
 
-    object ListPrivateThreadsGet :
+    object PrivateThreadsGet :
         Route<ListThreadsResponse>(
             HttpMethod.Get,
             "/channels/${ChannelId}/threads/private",
@@ -730,21 +730,21 @@ sealed class Route<T>(
         )
 
 
-    object ListPrivateArchivedThreadsGet :
+    object PrivateArchivedThreadsGet :
         Route<ListThreadsResponse>(
             HttpMethod.Get,
             "/channels/${ChannelId}/threads/archived/private",
             ListThreadsResponse.serializer()
         )
 
-    object ListPublicArchivedThreadsGet :
+    object PublicArchivedThreadsGet :
         Route<ListThreadsResponse>(
             HttpMethod.Get,
             "/channels/${ChannelId}/threads/archived/public",
             ListThreadsResponse.serializer()
         )
 
-    object ListJoinedPrivateArchivedThreadsGet :
+    object JoinedPrivateArchivedThreadsGet :
         Route<ListThreadsResponse>(
             HttpMethod.Get,
             "/channels/$ChannelId/users/@me/threads/archived/private",

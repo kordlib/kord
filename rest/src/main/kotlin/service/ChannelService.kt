@@ -290,20 +290,20 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     suspend fun listThreadMembers(channelId: Snowflake): List<DiscordThreadMember> {
-        return call(Route.ListThreadMembersGet) {
+        return call(Route.ThreadMembersGet) {
             keys[Route.ChannelId] = channelId
         }
     }
 
     suspend fun listActiveThreads(channelId: Snowflake): ListThreadsResponse {
-        return call(Route.ListActiveThreadsGet) {
+        return call(Route.ActiveThreadsGet) {
             keys[Route.ChannelId] = channelId
 
         }
     }
 
     suspend fun listPublicArchivedThreads(channelId: Snowflake, request: ListThreadsRequest): ListThreadsResponse {
-        return call(Route.ListPublicArchivedThreadsGet) {
+        return call(Route.PublicArchivedThreadsGet) {
             keys[Route.ChannelId] = channelId
             val before = request.before
             val limit = request.limit
@@ -314,7 +314,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     suspend fun listPrivateArchivedThreads(channelId: Snowflake, request: ListThreadsRequest): ListThreadsResponse {
-        return call(Route.ListPrivateArchivedThreadsGet) {
+        return call(Route.PrivateArchivedThreadsGet) {
             keys[Route.ChannelId] = channelId
             val before = request.before
             val limit = request.limit
@@ -325,7 +325,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     suspend fun listJoinedPrivateArchivedThreads(channelId: Snowflake, request: ListThreadsRequest): ListThreadsResponse {
-        return call(Route.ListJoinedPrivateArchivedThreadsGet) {
+        return call(Route.JoinedPrivateArchivedThreadsGet) {
             keys[Route.ChannelId] = channelId
             val before = request.before
             val limit = request.limit
