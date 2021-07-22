@@ -66,16 +66,13 @@ data class ChannelData(
 @Serializable
 data class ThreadMetadataData(
     val archived: Boolean,
-    @SerialName("archiver_id")
-    val archiverId: OptionalSnowflake = OptionalSnowflake.Missing,
-    @SerialName("archive_timestamp")
     val archiveTimestamp: String,
     val autoArchiveDuration: Int,
     val locked: OptionalBoolean = OptionalBoolean.Missing
 ) {
     companion object {
         fun from(threadMetadata: DiscordThreadMetadata): ThreadMetadataData = with(threadMetadata) {
-            ThreadMetadataData(archived, archiverId, archiveTimestamp, autoArchiveDuration, locked)
+            ThreadMetadataData(archived, archiveTimestamp, autoArchiveDuration, locked)
         }
     }
 }

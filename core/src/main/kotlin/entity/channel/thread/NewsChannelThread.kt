@@ -7,7 +7,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * A thread channel instance who's parent is a [NewsChannel].
+ * A thread channel instance whose parent is a [NewsChannel].
  */
 class NewsChannelThread(
     data: ChannelData,

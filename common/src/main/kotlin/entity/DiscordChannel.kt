@@ -173,10 +173,9 @@ sealed class OverwriteType(val value: Int) {
 @Serializable
 class DiscordThreadMetadata(
     val archived: Boolean,
-    @SerialName("archiver_id")
-    val archiverId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("archive_timestamp")
     val archiveTimestamp: String,
+    @SerialName("auto_archive_duration")
     val autoArchiveDuration: Int,
     val locked: OptionalBoolean = OptionalBoolean.Missing
 )

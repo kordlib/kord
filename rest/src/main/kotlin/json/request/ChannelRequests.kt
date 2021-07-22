@@ -3,7 +3,6 @@ package dev.kord.rest.json.request
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.OverwriteType
 import dev.kord.common.entity.Permissions
-import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -62,28 +61,39 @@ data class ChannelPermissionEditRequest(
 @Serializable
 data class StartThreadRequest(
     val name: String,
+    @SerialName("auto_archive_duration")
     val autoArchiveDuration: Int
 )
 
-enum class ArchieveDuration(val duration: Int) {
-    Unknown(Int.MAX_VALUE),
-    Hour(60),
-    Day(1440),
-    ThreeDays(4320),
-    Week(10080);
+sealed class ArchiveDuration(val duration: Int) {
+    class Unknown(duration: Int) : ArchiveDuration(duration)
+    object Hour : ArchiveDuration(60)
+    object Day : ArchiveDuration(1440)
+    object ThreeDays : ArchiveDuration(4320)
+    object Week : ArchiveDuration(10080)
 
-    object Serializer : KSerializer<ArchieveDuration> {
-        override fun deserialize(decoder: Decoder): ArchieveDuration {
+    object Serializer : KSerializer<ArchiveDuration> {
+        override fun deserialize(decoder: Decoder): ArchiveDuration {
             val value = decoder.decodeInt()
-            return values().firstOrNull { it.duration == value } ?: Unknown
+            return values.firstOrNull { it.duration == value } ?: Unknown(value)
         }
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("AutoArchieveDuration", PrimitiveKind.INT)
 
-        override fun serialize(encoder: Encoder, value: ArchieveDuration) {
+        override fun serialize(encoder: Encoder, value: ArchiveDuration) {
             encoder.encodeInt(value.duration)
         }
+    }
+
+    companion object {
+        val values: Set<ArchiveDuration>
+            get() = setOf(
+                Hour,
+                Day,
+                ThreeDays,
+                Week,
+            )
     }
 }
 

@@ -6,7 +6,7 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.ThreadUserData
 import dev.kord.core.supplier.EntitySupplier
 
-data class ThreadUser(
+class ThreadUser(
     val data: ThreadUserData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier

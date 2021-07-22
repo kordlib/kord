@@ -9,7 +9,7 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
 /**
- * Behavior of channels that can create public threads.
+ * Behavior of channels that can contain public threads.
  */
 interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
 
@@ -25,7 +25,7 @@ interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
 }
 
 /**
- * Behavior of channels that can create private threads.
+ * Behavior of channels that can contain private threads.
  * This derives from [ThreadParentChannelBehavior]
  * since Discord allows all public operations on private thread parents.
  */

@@ -9,7 +9,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * A thread channel instance who's parent is a [TextChannel].
+ * A thread channel instance whose parent is a [TextChannel].
  */
 class TextChannelThread(
     data: ChannelData,
