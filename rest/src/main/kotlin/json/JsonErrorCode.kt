@@ -712,7 +712,7 @@ enum class JsonErrorCode(val code: Int) {
     InvalidRole(50028),
 
     /**
-     * "Invalid Recipient(s)"
+     * Invalid Recipient(s).
      *
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
