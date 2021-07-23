@@ -1,5 +1,6 @@
 package dev.kord.rest.json.request
 
+import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.OverwriteType
 import dev.kord.common.entity.Permissions
@@ -66,7 +67,7 @@ data class ChannelPermissionEditRequest(
 data class StartThreadRequest(
     val name: String,
     @SerialName("auto_archive_duration")
-    val autoArchiveDuration: Int
+    val autoArchiveDuration: ArchiveDuration
 )
 
 

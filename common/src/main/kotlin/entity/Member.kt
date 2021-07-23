@@ -2,6 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -85,9 +86,9 @@ data class DiscordUpdatedGuildMember(
 
 @Serializable
 data class DiscordThreadMember(
-    val id: Snowflake,
+    val id: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("user_id")
-    val userId: Snowflake,
+    val userId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("join_timestamp")
     val joinTimestamp: String,
     val flags: Int

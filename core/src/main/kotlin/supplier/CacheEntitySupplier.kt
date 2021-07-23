@@ -332,7 +332,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                     && time != null
                     && time < before
                     && it.type == ChannelType.PrivateThread
-                    && kord.selfId in getThreadMembers(channelId).map { user -> user.data.id }.toList()
+                    && kord.selfId in getThreadMembers(channelId).mapNotNull { user -> user.data.id.value }.toList()
         }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
     }
 
