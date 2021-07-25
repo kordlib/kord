@@ -351,8 +351,8 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
     override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> = flow {
         kord.rest.channel.listActiveThreads(channelId).threads.onEach {
             val data = ChannelData.from(it)
-            val channel = Channel.from(data, kord) as? ThreadChannel
-            if (channel != null) emit(channel)
+            val channel = Channel.from(data, kord)
+            if (channel is ThreadChannel) emit(channel)
         }
     }
 
@@ -361,8 +361,8 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         val flow = flow {
             kord.rest.channel.listPublicArchivedThreads(channelId, ListThreadsRequest(before, limit)).threads.map {
                 val data = ChannelData.from(it)
-                val channel = Channel.from(data, kord) as? ThreadChannel
-                if (channel != null) emit(channel)
+                val channel = Channel.from(data, kord)
+                if (channel is ThreadChannel) emit(channel)
             }
         }
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
@@ -373,8 +373,8 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         val flow = flow {
             kord.rest.channel.listPrivateArchivedThreads(channelId, ListThreadsRequest(before, limit)).threads.map {
                 val data = ChannelData.from(it)
-                val channel = Channel.from(data, kord) as? ThreadChannel
-                if (channel != null) emit(channel)
+                val channel = Channel.from(data, kord)
+                if (channel is ThreadChannel) emit(channel)
             }
         }
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
@@ -392,8 +392,8 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
                 ListThreadsRequest(before, limit)
             ).threads.map {
                 val data = ChannelData.from(it)
-                val channel = Channel.from(data, kord) as? ThreadChannel
-                if (channel != null) emit(channel)
+                val channel = Channel.from(data, kord)
+                if (channel is ThreadChannel) emit(channel)
             }
         }
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow

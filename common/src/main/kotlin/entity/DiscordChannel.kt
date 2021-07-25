@@ -71,6 +71,8 @@ data class DiscordChannel(
     @SerialName("member_count")
     val memberCount: OptionalInt = OptionalInt.Missing,
     val threadMetadata: Optional<DiscordThreadMetadata> = Optional.Missing(),
+    @SerialName("default_auto_archive_duration")
+    val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     val member: Optional<DiscordThreadMember> = Optional.Missing()
 )
 

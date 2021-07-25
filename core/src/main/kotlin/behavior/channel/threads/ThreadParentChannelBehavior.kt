@@ -1,9 +1,12 @@
 package dev.kord.core.behavior.channel.threads
 
+import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -43,6 +46,26 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
         limit: Int = Int.MAX_VALUE
     ): Flow<ThreadChannel> {
         return supplier.getJoinedPrivateArchivedThreads(id, before, limit)
+    }
+
+    suspend fun startPublicThread(
+        messageId: Snowflake,
+        name: String,
+        archiveDuration: ArchiveDuration
+    ): ThreadChannel {
+
+        val response = kord.rest.channel.startPublicThread(id, messageId, StartThreadRequest(name, archiveDuration))
+        val data = ChannelData.from(response)
+
+        return Channel.from(data, kord) as ThreadChannel
+    }
+
+    suspend fun startPrivateThread(name: String, archiveDuration: ArchiveDuration): ThreadChannel {
+
+        val response = kord.rest.channel.startPrivateThread(id, StartThreadRequest(name, archiveDuration))
+        val data = ChannelData.from(response)
+
+        return Channel.from(data, kord) as ThreadChannel
     }
 
 }

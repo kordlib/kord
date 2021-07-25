@@ -2,6 +2,8 @@ package dev.kord.core.entity.channel.thread
 
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MemberBehavior
@@ -32,7 +34,15 @@ sealed class ThreadChannel(
 
     val autoArchiveDuration: ArchiveDuration get() = threadData.autoArchiveDuration
 
-    val ratelimitPerUser: Int? get() = data.rateLimitPerUser.value
+    val rateLimitPerUser: Int? get() = data.rateLimitPerUser.value
+
+    val memberCount get() = data.memberCount
+
+    val messageCount get() = data.messageCount
+
+    val defaultAutoArchiveDuration: ArchiveDuration? get() = data.defaultAutoArchiveDuration.value
+
+    val member: ThreadUser? get() = data.member.unwrap { ThreadUser(it, kord) }
 
 
 }
