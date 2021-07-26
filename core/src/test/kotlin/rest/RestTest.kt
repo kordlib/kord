@@ -496,21 +496,36 @@ class RestServiceTest {
     @Order(28)
     @Test
     fun `create thread`()  = runBlocking {
-        val thread = channel.startPublicThread("TEST THREAD", ArchiveDuration.Day)
+
+        val publicThread = channel.startPublicThread("TEST THREAD", ArchiveDuration.Day)
         val active = channel.activeThreads
+        assertEquals(false, publicThread.isPrivate)
+
         assertEquals(1, active.toList().size)
-        thread.join()
+        publicThread.join()
 
-        val joint = channel.getJoinedPrivateArchivedThreads()
-        assertEquals(1, joint.toList().size)
+        val privateThread = channel.startPrivateThread("Test PRIVATE THREAD", ArchiveDuration.Day)
+
+        privateThread.join()
+
+        assertEquals(true, privateThread.isPrivate)
+
+        val joined = channel.getPrivateArchivedThreads()
+        assertEquals(1, joined.toList().size)
 
 
-        thread.edit {
+        publicThread.edit {
             archived = true
         }
 
-        val archive = channel.getPublicArchivedThreads()
-        assertEquals(1, archive.toList().size)
+        privateThread.edit {
+            archived = true
+        }
+
+        val publicArchive = channel.getPublicArchivedThreads()
+        assertEquals(1, publicArchive.toList().size)
+
+        val privateArchive = channel.getPrivateArchivedThreads()
 
 
 
