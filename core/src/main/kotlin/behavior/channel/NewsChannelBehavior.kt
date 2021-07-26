@@ -21,6 +21,9 @@ import dev.kord.rest.builder.channel.NewsChannelModifyBuilder
 import dev.kord.rest.json.request.ChannelFollowRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchNewsChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.datetime.Instant
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -30,6 +33,9 @@ import kotlin.contracts.contract
  * The behavior of a Discord News Channel associated to a guild.
  */
 interface NewsChannelBehavior : ThreadParentChannelBehavior {
+
+    override val activeThreads: Flow<NewsChannelThread>
+        get() = super.activeThreads.filterIsInstance()
 
     /**
      * Requests to get the this behavior as a [NewsChannel].
@@ -74,6 +80,10 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
         return super.startPublicThreadWithMessage(messageId, name, archiveDuration) as NewsChannelThread
     }
 
+
+    override fun getPublicArchivedThreads(before: Instant, limit: Int): Flow<NewsChannelThread> {
+        return super.getPublicArchivedThreads(before, limit).filterIsInstance()
+    }
 
     /**
      * Returns a new [NewsChannelBehavior] with the given [strategy].

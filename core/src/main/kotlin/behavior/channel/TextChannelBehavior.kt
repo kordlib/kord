@@ -18,12 +18,18 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.TextChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchTextChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.datetime.Instant
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
+
+    override val activeThreads: Flow<TextChannelThread>
+        get() = super.activeThreads.filterIsInstance()
 
     /**
      * Requests to get the this behavior as a [TextChannel].
@@ -57,6 +63,19 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
     ): TextChannelThread {
         return super.startPublicThreadWithMessage(messageId, name, archiveDuration) as TextChannelThread
     }
+
+    override fun getPublicArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
+        return super.getPublicArchivedThreads(before, limit).filterIsInstance()
+    }
+
+    override fun getPrivateArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
+        return super.getPrivateArchivedThreads(before, limit).filterIsInstance()
+    }
+
+    override fun getJoinedPrivateArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
+        return super.getJoinedPrivateArchivedThreads(before, limit).filterIsInstance()
+    }
+
 
     /**
      * Returns a new [TextChannelBehavior] with the given [strategy].
