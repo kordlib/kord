@@ -1,12 +1,17 @@
 package dev.kord.core.behavior.channel
 
+import dev.kord.common.entity.ArchiveDuration
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
+import dev.kord.core.behavior.channel.threads.startThread
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.thread.TextChannelThread
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -37,6 +42,13 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
      */
     override suspend fun asChannelOrNull(): TextChannel? = super.asChannelOrNull() as? TextChannel
 
+    override suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): TextChannelThread {
+        return startThread(name, archiveDuration, ChannelType.PublicGuildThread) as TextChannelThread
+    }
+
+    override suspend fun startPrivateThread(name: String, archiveDuration: ArchiveDuration): TextChannelThread {
+        return startThread(name, archiveDuration, ChannelType.PrivateThread) as TextChannelThread
+    }
 
     /**
      * Returns a new [TextChannelBehavior] with the given [strategy].

@@ -1,7 +1,8 @@
 package dev.kord.core.behavior.channel.threads
 
 import dev.kord.common.entity.ArchiveDuration
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.optional.Optional
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
@@ -24,6 +25,8 @@ interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
     ): Flow<ThreadChannel> {
         return supplier.getPublicArchivedThreads(id, before, limit)
     }
+
+    suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): ThreadChannel
 
 }
 
@@ -48,24 +51,20 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
         return supplier.getJoinedPrivateArchivedThreads(id, before, limit)
     }
 
-    suspend fun startPublicThread(
-        messageId: Snowflake,
-        name: String,
-        archiveDuration: ArchiveDuration
-    ): ThreadChannel {
+    suspend fun startPrivateThread(name: String, archiveDuration: ArchiveDuration): ThreadChannel
 
-        val response = kord.rest.channel.startPublicThread(id, messageId, StartThreadRequest(name, archiveDuration))
-        val data = ChannelData.from(response)
+}
 
-        return Channel.from(data, kord) as ThreadChannel
-    }
 
-    suspend fun startPrivateThread(name: String, archiveDuration: ArchiveDuration): ThreadChannel {
+internal suspend fun ThreadParentChannelBehavior.startThread(
+    name: String,
+    archiveDuration: ArchiveDuration,
+    type: ChannelType
+): ThreadChannel {
 
-        val response = kord.rest.channel.startPrivateThread(id, StartThreadRequest(name, archiveDuration))
-        val data = ChannelData.from(response)
+    val response =
+        kord.rest.channel.startPrivateThread(id, StartThreadRequest(name, archiveDuration, Optional.Value(type)))
+    val data = ChannelData.from(response)
 
-        return Channel.from(data, kord) as ThreadChannel
-    }
-
+    return Channel.from(data, kord) as ThreadChannel
 }

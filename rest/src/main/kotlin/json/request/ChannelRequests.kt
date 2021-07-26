@@ -1,9 +1,6 @@
 package dev.kord.rest.json.request
 
-import dev.kord.common.entity.ArchiveDuration
-import dev.kord.common.entity.Overwrite
-import dev.kord.common.entity.OverwriteType
-import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -67,7 +64,8 @@ data class ChannelPermissionEditRequest(
 data class StartThreadRequest(
     val name: String,
     @SerialName("auto_archive_duration")
-    val autoArchiveDuration: ArchiveDuration
+    val autoArchiveDuration: ArchiveDuration,
+    val type: Optional<ChannelType> = Optional.Missing()
 )
 
 

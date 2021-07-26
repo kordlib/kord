@@ -1,14 +1,19 @@
 package dev.kord.core.behavior.channel
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.ArchiveDuration
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
+import dev.kord.core.behavior.channel.threads.startThread
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.NewsChannel
+import dev.kord.core.entity.channel.thread.NewsChannelThread
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -82,6 +87,11 @@ fun NewsChannelBehavior(
         is ChannelBehavior -> other.id == id
         else -> false
     }
+
+    override suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): NewsChannelThread {
+        return startThread(name, archiveDuration, ChannelType.PublicNewsThread) as NewsChannelThread
+    }
+
 
     override fun toString(): String {
         return "NewsChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
