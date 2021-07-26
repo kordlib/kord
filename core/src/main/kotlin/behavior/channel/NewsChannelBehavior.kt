@@ -61,6 +61,20 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
         kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target.asString))
     }
 
+
+    override suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): NewsChannelThread {
+        return startThread(name, archiveDuration, ChannelType.PublicNewsThread) as NewsChannelThread
+    }
+
+    override suspend fun startPublicThreadWithMessage(
+        messageId: Snowflake,
+        name: String,
+        archiveDuration: ArchiveDuration
+    ): NewsChannelThread {
+        return super.startPublicThreadWithMessage(messageId, name, archiveDuration) as NewsChannelThread
+    }
+
+
     /**
      * Returns a new [NewsChannelBehavior] with the given [strategy].
      */
@@ -86,18 +100,6 @@ fun NewsChannelBehavior(
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false
-    }
-
-    override suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): NewsChannelThread {
-        return startThread(name, archiveDuration, ChannelType.PublicNewsThread) as NewsChannelThread
-    }
-
-    override suspend fun startPublicThreadWithMessage(
-        messageId: Snowflake,
-        name: String,
-        archiveDuration: ArchiveDuration
-    ): NewsChannelThread {
-        return super.startPublicThreadWithMessage(messageId, name, archiveDuration) as NewsChannelThread
     }
 
     override fun toString(): String {
