@@ -50,6 +50,14 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         return startThread(name, archiveDuration, ChannelType.PrivateThread) as TextChannelThread
     }
 
+    override suspend fun startPublicThreadWithMessage(
+        messageId: Snowflake,
+        name: String,
+        archiveDuration: ArchiveDuration
+    ): TextChannelThread {
+        return super.startPublicThreadWithMessage(messageId, name, archiveDuration) as TextChannelThread
+    }
+
     /**
      * Returns a new [TextChannelBehavior] with the given [strategy].
      */

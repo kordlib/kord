@@ -185,21 +185,6 @@ interface MessageBehavior : KordEntity, Strategizable {
         kord.rest.channel.deletePinnedMessage(channelId = channelId, messageId = id)
     }
 
-
-
-
-    suspend fun startPublicThread(
-        name: String,
-        archiveDuration: ArchiveDuration
-    ): ThreadChannel {
-
-        val response = kord.rest.channel.startPublicThread(channelId, id, StartThreadRequest(name, archiveDuration))
-        val data = ChannelData.from(response)
-
-        return Channel.from(data, kord) as ThreadChannel
-    }
-
-
     /**
      * Returns a new [MessageBehavior] with the given [strategy].
      */

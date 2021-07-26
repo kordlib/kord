@@ -92,6 +92,13 @@ fun NewsChannelBehavior(
         return startThread(name, archiveDuration, ChannelType.PublicNewsThread) as NewsChannelThread
     }
 
+    override suspend fun startPublicThreadWithMessage(
+        messageId: Snowflake,
+        name: String,
+        archiveDuration: ArchiveDuration
+    ): NewsChannelThread {
+        return super.startPublicThreadWithMessage(messageId, name, archiveDuration) as NewsChannelThread
+    }
 
     override fun toString(): String {
         return "NewsChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
