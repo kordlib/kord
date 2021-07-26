@@ -7,6 +7,7 @@ import dev.kord.common.entity.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.*
 import dev.kord.core.behavior.channel.*
+import dev.kord.core.behavior.channel.threads.edit
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.channel.GuildMessageChannel
@@ -490,6 +491,31 @@ class RestServiceTest {
         assertEquals("other description", updated.description)
 
         updated.delete()
+    }
+
+    @Order(28)
+    @Test
+    fun `create thread`()  = runBlocking {
+        val thread = channel.startPublicThread("TEST THREAD", ArchiveDuration.Day)
+        val active = channel.activeThreads
+        assertEquals(1, active.toList().size)
+        thread.join()
+
+        val joint = channel.getJoinedPrivateArchivedThreads()
+        assertEquals(1, joint.toList().size)
+
+
+        thread.edit {
+            archived = true
+        }
+
+        val archive = channel.getPublicArchivedThreads()
+        assertEquals(1, archive.toList().size)
+
+
+
+
+
     }
 
     @Test
