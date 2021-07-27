@@ -3,8 +3,6 @@ package dev.kord.core.entity.channel.thread
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.ThreadUserBehavior
-import dev.kord.core.behavior.UserBehavior
-import dev.kord.core.behavior.channel.threads.ChannelThreadBehavior
 import dev.kord.core.cache.data.ThreadUserData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy

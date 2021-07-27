@@ -4,10 +4,12 @@ import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
+import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.supplier.EntitySupplier
 import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
@@ -27,13 +29,20 @@ interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
         return supplier.getPublicArchivedThreads(id, before, limit)
     }
 
-    suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): ThreadChannel
+    /**
+     * Starts a public thread with [name] and archived after [archiveDuration]
+     */
+    suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration = ArchiveDuration.Day): ThreadChannel
 
 
+    /**
+     * Starts a public thread with [name] and archived after [archiveDuration]
+     * using given [messageId] as a starter message.
+     */
     suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        archiveDuration: ArchiveDuration
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day
     ): ThreadChannel {
 
         val response = kord.rest.channel.startPublicThread(id, messageId, StartThreadRequest(name, archiveDuration))
@@ -66,7 +75,10 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
         return supplier.getJoinedPrivateArchivedThreads(id, before, limit)
     }
 
-    suspend fun startPrivateThread(name: String, archiveDuration: ArchiveDuration): ThreadChannel
+    /**
+     * Starts a private thread with [name] and archived after [archiveDuration]
+     */
+    suspend fun startPrivateThread(name: String, archiveDuration: ArchiveDuration = ArchiveDuration.Day): ThreadChannel
 }
 
 
