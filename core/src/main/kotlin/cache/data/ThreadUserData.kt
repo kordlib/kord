@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordThreadMember
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -16,6 +17,9 @@ data class ThreadUserData(
     val flags: Int
 ) {
     companion object {
+        val description = description(ThreadUserData::id)
+
+
         fun from(data: DiscordThreadMember, thread: Snowflake? = null): ThreadUserData =
             with(data) {
                 val id = this.id.value ?: thread!!
