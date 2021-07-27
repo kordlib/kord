@@ -1,19 +1,15 @@
 package dev.kord.core.behavior
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.behavior.channel.createMessage
-import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.entity.*
-import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.MessageChannel
-import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -22,7 +18,6 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.message.MessageCreateBuilder
 import dev.kord.rest.builder.message.MessageModifyBuilder
 import dev.kord.rest.builder.webhook.EditWebhookMessageBuilder
-import dev.kord.rest.json.request.StartThreadRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
