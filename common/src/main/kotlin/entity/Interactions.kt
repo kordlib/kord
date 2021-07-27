@@ -72,6 +72,7 @@ sealed class ApplicationCommandOptionType(val type: Int) {
     object Channel : ApplicationCommandOptionType(7)
     object Role : ApplicationCommandOptionType(8)
     object Mentionable : ApplicationCommandOptionType(9)
+    object Number : ApplicationCommandOptionType(10)
     class Unknown(type: Int) : ApplicationCommandOptionType(type)
 
     companion object;
@@ -92,6 +93,7 @@ sealed class ApplicationCommandOptionType(val type: Int) {
                 7 -> Channel
                 8 -> Role
                 9 -> Mentionable
+                10 -> Number
                 else -> Unknown(type)
             }
         }
@@ -111,6 +113,7 @@ sealed class Choice<out T> {
     abstract val value: T
 
     class IntChoice(override val name: String, override val value: Int) : Choice<Int>()
+    class NumberChoice(override val name: String, override val value: Double) : Choice<Double>()
     class StringChoice(override val name: String, override val value: String) : Choice<String>()
     internal class ChoiceSerializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
@@ -133,7 +136,11 @@ sealed class Choice<out T> {
                 }
                 endStructure(descriptor)
             }
-            return if (value.isString) StringChoice(name, value.toString()) else IntChoice(name, value.int)
+            return when {
+                value.intOrNull != null -> IntChoice(name, value.int)
+                value.doubleOrNull != null -> NumberChoice(name, value.double)
+                else -> StringChoice(name, value.toString())
+            }
         }
 
         override fun serialize(encoder: Encoder, value: Choice<*>) {
@@ -400,6 +407,16 @@ sealed class CommandArgument<out T> : Option() {
         override fun toString(): String = "IntegerArgument(name=$name, value=$value)"
     }
 
+    class NumberArgument(
+        override val name: String,
+        override val value: Double
+    ) : CommandArgument<Double>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.Number
+
+        override fun toString(): String = "NumberArgument(name=$name, value=$value)"
+    }
+
     class BooleanArgument(
         override val name: String,
         override val value: Boolean
@@ -508,6 +525,10 @@ sealed class CommandArgument<out T> : Option() {
             )
             ApplicationCommandOptionType.Integer -> IntegerArgument(
                 name, json.decodeFromJsonElement(Int.serializer(), element)
+            )
+
+            ApplicationCommandOptionType.Number -> NumberArgument(
+                name, json.decodeFromJsonElement(Double.serializer(), element)
             )
             ApplicationCommandOptionType.Channel -> ChannelArgument(
                 name, json.decodeFromJsonElement(Snowflake.serializer(), element)
