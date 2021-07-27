@@ -23,7 +23,7 @@ class TextChannelThread(
 
     override suspend fun asChannelOrNull(): TextChannelThread? = super.asChannelOrNull() as? TextChannelThread
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildMessageChannel {
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannelThread {
         return TextChannelThread(data, kord, strategy.supply(kord))
     }
 
