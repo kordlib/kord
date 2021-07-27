@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.Color
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.UserFlags
@@ -65,6 +66,12 @@ open class User(
      * Whether this user is a bot account.
      */
     val isBot: Boolean get() = data.bot.discordBoolean
+
+    val accentColor: Color? get() = data.accentColor?.let { Color(it) }
+
+    fun getBannerUrl(format: Image.Format): String? =
+        data.banner?.let { "https://cdn.discordapp.com/banners/${id.asString}/$it.${format.extension}" }
+
 
     override fun hashCode(): Int = id.hashCode()
 
