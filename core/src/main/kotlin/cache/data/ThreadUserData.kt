@@ -18,7 +18,8 @@ data class ThreadUserData(
     companion object {
         fun from(data: DiscordThreadMember, thread: Snowflake? = null): ThreadUserData =
             with(data) {
-                ThreadUserData(this.id.orElse(thread!!), userId, joinTimestamp, flags)
+                val id = this.id.value ?: thread!!
+                ThreadUserData(id, userId, joinTimestamp, flags)
             }
     }
 }
