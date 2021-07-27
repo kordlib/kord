@@ -23,6 +23,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 fun imageBinary(path: String): Image {
     val loader = Unit::class.java.classLoader
@@ -495,23 +496,23 @@ class RestServiceTest {
 
     @Order(28)
     @Test
-    fun `create thread`()  = runBlocking {
-
+    fun `create thread`() = runBlocking {
+        val channel = kord.getChannelOf<TextChannel>(Snowflake("861291970396028931"))!!
         val publicThread = channel.startPublicThread("TEST THREAD")
         val active = channel.activeThreads
         assertEquals(false, publicThread.isPrivate)
 
-        assertEquals(1, active.toList().size)
+        assertTrue(active.toList().isNotEmpty())
         publicThread.join()
 
         val privateThread = channel.startPrivateThread("TEST PRIVATE THREAD")
 
         privateThread.join()
 
-        assertEquals(true, privateThread.isPrivate)
+        assertTrue(privateThread.isPrivate)
 
         val joined = channel.getPrivateArchivedThreads()
-        assertEquals(1, joined.toList().size)
+        assertTrue(joined.toList().isNotEmpty())
 
 
         publicThread.edit {
@@ -523,12 +524,8 @@ class RestServiceTest {
         }
 
         val publicArchive = channel.getPublicArchivedThreads()
-        assertEquals(1, publicArchive.toList().size)
-
+        assertTrue(publicArchive.toList().isNotEmpty())
         val privateArchive = channel.getPrivateArchivedThreads()
-
-
-
 
 
     }

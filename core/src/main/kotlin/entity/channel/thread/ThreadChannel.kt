@@ -11,6 +11,8 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 
 sealed class ThreadChannel(
     override val data: ChannelData,
@@ -41,7 +43,7 @@ sealed class ThreadChannel(
      */
     val isNsfw: Boolean get() = data.nsfw.discordBoolean
 
-    val archiveTimeStamps: String get() = threadData.archiveTimestamp
+    val archiveTimeStamp: Instant get() = threadData.archiveTimestamp.toInstant()
 
     val autoArchiveDuration: ArchiveDuration get() = threadData.autoArchiveDuration
 

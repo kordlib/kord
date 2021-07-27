@@ -70,6 +70,7 @@ data class DiscordChannel(
     val messageCount: OptionalInt = OptionalInt.Missing,
     @SerialName("member_count")
     val memberCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("thread_metadata")
     val threadMetadata: Optional<DiscordThreadMetadata> = Optional.Missing(),
     @SerialName("default_auto_archive_duration")
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
@@ -104,9 +105,11 @@ sealed class ChannelType(val value: Int) {
 
     object PublicNewsThread : ChannelType(10)
 
-    object PrivateThread : ChannelType(11)
+    object PublicGuildThread : ChannelType(11)
 
-    object PublicGuildThread : ChannelType(12)
+    object PrivateThread : ChannelType(12)
+
+
 
     object GuildStageVoice : ChannelType(13)
 
@@ -125,8 +128,8 @@ sealed class ChannelType(val value: Int) {
             5 -> GuildNews
             6 -> GuildStore
             10 -> PublicNewsThread
-            11 -> PrivateThread
-            12 -> PublicGuildThread
+            11 -> PublicGuildThread
+            12 -> PrivateThread
             13 -> GuildStageVoice
             else -> Unknown(code)
         }

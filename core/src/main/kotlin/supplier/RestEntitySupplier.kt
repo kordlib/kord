@@ -5,17 +5,14 @@ import dev.kord.common.entity.DiscordPartialGuild
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.optionalSnowflake
-import dev.kord.core.Kord
+import dev.kord.core.*
 import dev.kord.core.cache.data.*
-import dev.kord.core.catchNotFound
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadUser
 import dev.kord.core.exception.EntityNotFoundException
-import dev.kord.core.paginateBackwards
-import dev.kord.core.paginateForwards
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
 import dev.kord.rest.json.request.ListThreadsRequest
@@ -358,11 +355,16 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
 
     override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
         require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        val flow = flow {
-            kord.rest.channel.listPublicArchivedThreads(channelId, ListThreadsRequest(before, limit)).threads.map {
+
+        val batchSize = min(100, limit)
+
+        val flow = paginateThreads(100, before) {
+            kord.rest.channel.listPublicArchivedThreads(
+                channelId,
+                ListThreadsRequest(before, limit)
+            ).threads.mapNotNull {
                 val data = ChannelData.from(it)
-                val channel = Channel.from(data, kord)
-                if (channel is ThreadChannel) emit(channel)
+                Channel.from(data, kord) as? ThreadChannel
             }
         }
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
@@ -370,11 +372,10 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
 
     override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
         require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        val flow = flow {
-            kord.rest.channel.listPrivateArchivedThreads(channelId, ListThreadsRequest(before, limit)).threads.map {
+        val flow = paginateThreads(100, before) {
+            kord.rest.channel.listPrivateArchivedThreads(channelId, ListThreadsRequest(before, limit)).threads.mapNotNull {
                 val data = ChannelData.from(it)
-                val channel = Channel.from(data, kord)
-                if (channel is ThreadChannel) emit(channel)
+                Channel.from(data, kord) as? ThreadChannel
             }
         }
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
@@ -386,14 +387,13 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         limit: Int
     ): Flow<ThreadChannel> {
         require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        val flow = flow {
+        val flow = paginateThreads(100, before) {
             kord.rest.channel.listJoinedPrivateArchivedThreads(
                 channelId,
                 ListThreadsRequest(before, limit)
-            ).threads.map {
+            ).threads.mapNotNull {
                 val data = ChannelData.from(it)
-                val channel = Channel.from(data, kord)
-                if (channel is ThreadChannel) emit(channel)
+                Channel.from(data, kord)  as? ThreadChannel
             }
         }
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow

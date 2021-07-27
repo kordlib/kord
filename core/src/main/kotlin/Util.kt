@@ -3,16 +3,16 @@ package dev.kord.core
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
 import dev.kord.core.entity.KordEntity
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.Event
-import dev.kord.core.event.user.PresenceUpdateEvent
-import dev.kord.core.event.user.VoiceStateUpdateEvent
-import dev.kord.core.event.guild.WebhookUpdateEvent
 import dev.kord.core.event.channel.*
 import dev.kord.core.event.guild.*
 import dev.kord.core.event.message.*
 import dev.kord.core.event.role.RoleCreateEvent
 import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
+import dev.kord.core.event.user.PresenceUpdateEvent
+import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intents
 import dev.kord.gateway.MessageDelete
@@ -21,6 +21,7 @@ import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -230,6 +231,36 @@ internal fun <C : Collection<T>, T : KordEntity> paginateBackwards(
     request: suspend (position: Position) -> C
 ): Flow<T> =
     paginate(start, batchSize, { it.id }, oldestItem { it.id }, Position::Before, request)
+
+internal fun <C : Collection<T>, T> paginateByDate(
+    start: Instant = Clock.System.now(),
+    batchSize: Int,
+    instantSelector: (Collection<T>) -> Instant?,
+    request: suspend (Instant) -> C
+): Flow<T> = flow {
+
+    var currentTimestamp = start
+    while (true) {
+        val response = request(currentTimestamp)
+
+        for (item in response) emit(item)
+
+        currentTimestamp = instantSelector(response) ?: break
+        if (response.size < batchSize) break
+    }
+}
+
+internal fun paginateThreads(
+    batchSize: Int,
+    start: Instant = Clock.System.now(),
+    request: suspend (Instant) -> Collection<ThreadChannel>
+) =
+    paginateByDate(
+        start,
+        batchSize,
+        { thread -> thread.minOfOrNull { it.archiveTimeStamp } },
+        request
+    )
 
 inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent() = enableEvent(T::class)
 
