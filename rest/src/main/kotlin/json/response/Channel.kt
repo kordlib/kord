@@ -14,6 +14,4 @@ data class PartialChannelResponse(val name: String, val type: ChannelType)
 data class ListThreadsResponse(
     val threads: List<DiscordChannel>,
     val members: List<DiscordThreadMember>,
-    @SerialName("has_more")
-    val hasMore: Boolean
 )
