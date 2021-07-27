@@ -69,7 +69,7 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
     }
 
     fun getJoinedPrivateArchivedThreads(
-        before: Instant = Clock.System.now(),
+        before: Snowflake = Snowflake(Long.MAX_VALUE),
         limit: Int = Int.MAX_VALUE
     ): Flow<ThreadChannel> {
         return supplier.getJoinedPrivateArchivedThreads(id, before, limit)

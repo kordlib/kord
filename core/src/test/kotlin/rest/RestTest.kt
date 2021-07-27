@@ -496,8 +496,9 @@ class RestServiceTest {
 
     @Order(28)
     @Test
+    @Disabled("Requires Community Guild")
     fun `create thread`() = runBlocking {
-        val channel = kord.getChannelOf<TextChannel>(Snowflake("861291970396028931"))!!
+
         val publicThread = channel.startPublicThread("TEST THREAD")
         val active = channel.activeThreads
         assertEquals(false, publicThread.isPrivate)
@@ -511,10 +512,6 @@ class RestServiceTest {
 
         assertTrue(privateThread.isPrivate)
 
-        val joined = channel.getPrivateArchivedThreads()
-        assertTrue(joined.toList().isNotEmpty())
-
-
         publicThread.edit {
             archived = true
         }
@@ -523,9 +520,14 @@ class RestServiceTest {
             archived = true
         }
 
+        val joined = channel.getJoinedPrivateArchivedThreads()
+        assertTrue(joined.toList().isNotEmpty())
+
+
         val publicArchive = channel.getPublicArchivedThreads()
         assertTrue(publicArchive.toList().isNotEmpty())
         val privateArchive = channel.getPrivateArchivedThreads()
+        assertTrue(privateArchive.toList().isNotEmpty())
 
 
     }

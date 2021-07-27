@@ -406,7 +406,7 @@ interface EntitySupplier {
 
     fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
 
-    fun getJoinedPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
+    fun getJoinedPrivateArchivedThreads(channelId: Snowflake, before: Snowflake, limit: Int): Flow<ThreadChannel>
 }
 
 

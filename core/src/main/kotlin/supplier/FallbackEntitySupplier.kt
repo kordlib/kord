@@ -140,7 +140,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override fun getJoinedPrivateArchivedThreads(
         channelId: Snowflake,
-        before: Instant,
+        before: Snowflake,
         limit: Int
     ): Flow<ThreadChannel> {
         return first.getJoinedPrivateArchivedThreads(channelId, before, limit)

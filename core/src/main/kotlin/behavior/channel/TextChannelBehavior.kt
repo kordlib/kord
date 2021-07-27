@@ -72,7 +72,7 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         return super.getPrivateArchivedThreads(before, limit).filterIsInstance()
     }
 
-    override fun getJoinedPrivateArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
+    override fun getJoinedPrivateArchivedThreads(before: Snowflake, limit: Int): Flow<TextChannelThread> {
         return super.getJoinedPrivateArchivedThreads(before, limit).filterIsInstance()
     }
 

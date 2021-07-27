@@ -170,7 +170,7 @@ class StoreEntitySupplier(
 
     override fun getJoinedPrivateArchivedThreads(
         channelId: Snowflake,
-        before: Instant,
+        before: Snowflake,
         limit: Int
     ): Flow<ThreadChannel> {
         return storeOnEach(supplier.getJoinedPrivateArchivedThreads(channelId, before, limit)) { it.data }

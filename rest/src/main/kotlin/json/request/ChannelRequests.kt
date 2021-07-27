@@ -68,8 +68,11 @@ data class StartThreadRequest(
     val type: Optional<ChannelType> = Optional.Missing()
 )
 
-
-data class ListThreadsRequest(
+data class ListThreadsBySnowflakeRequest(
+    val before: Snowflake? = null,
+    val limit: Int? = null
+)
+data class ListThreadsByTimestampRequest(
     val before: Instant? = null,
     val limit: Int? = null
 )

@@ -321,7 +321,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getJoinedPrivateArchivedThreads(
         channelId: Snowflake,
-        before: Instant,
+        before: Snowflake,
         limit: Int
     ): Flow<ThreadChannel> {
         return cache.query<ChannelData> {
@@ -329,8 +329,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.asFlow().filter {
             val time = it.threadsMetadata.value?.archiveTimestamp?.toInstant()
             it.threadsMetadata.value?.archived == true
-                    && time != null
-                    && time < before
+                    && it.id < before
                     && it.type == ChannelType.PrivateThread
                     && kord.selfId in getThreadMembers(channelId).map { user -> user.data.id }.toList()
         }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
