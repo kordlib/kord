@@ -8,6 +8,7 @@ import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.gateway.DiscordInviteUser
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 private val WebhookData.nullableUserId get() = userId.value
@@ -20,6 +21,8 @@ data class UserData(
     val avatar: String? = null,
     val bot: OptionalBoolean = OptionalBoolean.Missing,
     val publicFlags: Optional<UserFlags> = Optional.Missing(),
+    val banner: String? = null,
+    val accentColor: Int? = null
 ) {
     companion object {
 
@@ -32,7 +35,7 @@ data class UserData(
             }
 
         fun from(entity: DiscordUser) = with(entity) {
-            UserData(id, username, discriminator, avatar, bot, publicFlags)
+            UserData(id, username, discriminator, avatar, bot, publicFlags, banner, accentColor)
         }
 
         fun from(entity: DiscordInviteUser) = with(entity) {
