@@ -9,8 +9,7 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.idEq
 import dev.kord.core.entity.channel.*
-import dev.kord.core.entity.channel.thread.NewsChannelThread
-import dev.kord.core.entity.channel.thread.TextChannelThread
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.channel.*
 import dev.kord.core.event.channel.data.ChannelPinsUpdateEventData
 import dev.kord.core.event.channel.data.TypingStartEventData
@@ -48,7 +47,9 @@ internal class ChannelEventHandler(
             is StageChannel -> StageChannelCreateEvent(channel, shard)
             is VoiceChannel -> VoiceChannelCreateEvent(channel, shard)
             is Category -> CategoryCreateEvent(channel, shard)
+            is ThreadChannel -> return
             else -> UnknownChannelCreateEvent(channel, shard)
+
         }
 
         coreFlow.emit(coreEvent)
@@ -66,7 +67,9 @@ internal class ChannelEventHandler(
             is StageChannel -> StageChannelUpdateEvent(channel, shard)
             is VoiceChannel -> VoiceChannelUpdateEvent(channel, shard)
             is Category -> CategoryUpdateEvent(channel, shard)
+            is ThreadChannel -> return
             else -> UnknownChannelUpdateEvent(channel, shard)
+
         }
 
         coreFlow.emit(coreEvent)
@@ -84,6 +87,7 @@ internal class ChannelEventHandler(
             is StageChannel -> StageChannelDeleteEvent(channel, shard)
             is VoiceChannel -> VoiceChannelDeleteEvent(channel, shard)
             is Category -> CategoryDeleteEvent(channel, shard)
+            is ThreadChannel -> return
             else -> UnknownChannelDeleteEvent(channel, shard)
         }
 
