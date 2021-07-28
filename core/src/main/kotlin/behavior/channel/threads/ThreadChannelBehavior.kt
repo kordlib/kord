@@ -95,8 +95,8 @@ interface ThreadChannelBehavior : MessageChannelBehavior {
 }
 
 /**
- * * Editing a thread to set archived to false only requires the current user to be in the thread.
- * * If locked is true, then the user must have [Manage Threads][dev.kord.common.entity.Permission.ManageThreads]
+ * * Editing a thread to set [archived][ThreadChannel.isArchived] to false only requires the current user to be in the thread.
+ * * If [locked][ThreadChannel.isLocked] is true, then the user must have [Manage Threads][dev.kord.common.entity.Permission.ManageThreads]
  * * Editing a thread to change the
  * [name][ThreadModifyBuilder.name],
  * [archived][ThreadModifyBuilder.archived],
