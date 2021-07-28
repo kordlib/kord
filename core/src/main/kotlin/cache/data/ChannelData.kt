@@ -27,11 +27,9 @@ data class ChannelData(
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val lastPinTimestamp: Optional<String?> = Optional.Missing(),
     val permissions: Optional<Permissions> = Optional.Missing(),
-    @SerialName("thread_metadata")
-    val threadsMetadata: Optional<ThreadMetadataData> = Optional.Missing(),
+    val threadMetadata: Optional<ThreadMetadataData> = Optional.Missing(),
     val messageCount: OptionalInt = OptionalInt.Missing,
     val memberCount: OptionalInt = OptionalInt.Missing,
-    @SerialName("default_auto_archive_duration")
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     val member: Optional<ThreadUserData> = Optional.Missing()
 ) {
