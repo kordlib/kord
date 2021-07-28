@@ -241,12 +241,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.ChannelId] = channelId
             body(ChannelFollowRequest.serializer(), request)
         }
-    suspend fun startPublicThread(
+    suspend fun startThreadWithMessage(
         channelId: Snowflake,
         messageId: Snowflake,
         request: StartThreadRequest
     ): DiscordChannel {
-        return call(Route.StartPublicThreadPost) {
+        return call(Route.StartPublicThreadWithMessagePost) {
             keys[Route.ChannelId] = channelId
             keys[Route.MessageId] = messageId
             body(StartThreadRequest.serializer(), request)
@@ -254,11 +254,11 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
 
-    suspend fun startPrivateThread(
+    suspend fun startThread(
         channelId: Snowflake,
         request: StartThreadRequest
     ): DiscordChannel {
-        return call(Route.StartPrivateThreadPost) {
+        return call(Route.StartThreadPost) {
             keys[Route.ChannelId] = channelId
             body(StartThreadRequest.serializer(), request)
         }

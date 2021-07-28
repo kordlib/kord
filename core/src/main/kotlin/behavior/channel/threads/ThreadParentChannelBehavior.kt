@@ -61,7 +61,7 @@ interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
         archiveDuration: ArchiveDuration = ArchiveDuration.Day
     ): ThreadChannel {
 
-        val response = kord.rest.channel.startPublicThread(id, messageId, StartThreadRequest(name, archiveDuration))
+        val response = kord.rest.channel.startThreadWithMessage(id, messageId, StartThreadRequest(name, archiveDuration))
         val data = ChannelData.from(response)
 
         return Channel.from(data, kord) as ThreadChannel
@@ -136,7 +136,7 @@ internal suspend fun ThreadParentChannelBehavior.startThread(
 ): ThreadChannel {
 
     val response =
-        kord.rest.channel.startPrivateThread(id, StartThreadRequest(name, archiveDuration, Optional.Value(type)))
+        kord.rest.channel.startThread(id, StartThreadRequest(name, archiveDuration, Optional.Value(type)))
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel

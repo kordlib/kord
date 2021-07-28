@@ -684,7 +684,7 @@ sealed class Route<T>(
     object StageInstanceDelete :
         Route<Unit>(HttpMethod.Delete, "/stage-instances/$ChannelId", NoStrategy)
 
-    object StartPublicThreadPost :
+    object StartPublicThreadWithMessagePost :
         Route<DiscordChannel>(
             HttpMethod.Post,
             "/channels/${ChannelId}/messages/${MessageId}/threads",
@@ -692,7 +692,7 @@ sealed class Route<T>(
         );
 
 
-    object StartPrivateThreadPost :
+    object StartThreadPost :
         Route<DiscordChannel>(HttpMethod.Post, "/channels/${ChannelId}/threads", DiscordChannel.serializer());
 
     object JoinThreadPut :
