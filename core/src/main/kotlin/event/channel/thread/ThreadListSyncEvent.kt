@@ -30,7 +30,9 @@ class ThreadListSyncEvent(
     val channelIds: List<Snowflake> get() = data.channelIds.orEmpty()
 
     /**
-     * Threads that are being synced [channelIds].
+     * Threads that are being synced for [channelIds].
+     *
+     * @see [channelIds]
      */
     val threads: List<ThreadChannel>
         get() = data.threads.mapNotNull {

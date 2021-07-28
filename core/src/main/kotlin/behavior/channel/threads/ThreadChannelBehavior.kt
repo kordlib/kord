@@ -73,6 +73,13 @@ interface ThreadChannelBehavior : MessageChannelBehavior {
         kord.rest.channel.leaveThread(id)
     }
 
+    /**
+     * Deleting a thread requires the [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] permission.
+     */
+    override suspend fun delete() {
+        super.delete()
+    }
+
     override suspend fun asChannel(): ThreadChannel {
         return super.asChannel() as ThreadChannel
     }
@@ -87,6 +94,15 @@ interface ThreadChannelBehavior : MessageChannelBehavior {
 
 }
 
+/**
+ * * Editing a thread to set archived to false only requires the current user to be in the thread.
+ * * If locked is true, then the user must have [Manage Threads][dev.kord.common.entity.Permission.ManageThreads]
+ * * Editing a thread to change the
+ * [name][ThreadModifyBuilder.name],
+ * [archived][ThreadModifyBuilder.archived],
+ * [autoArchiveDuration][ThreadModifyBuilder.autoArchiveDuration] fields
+ * requires [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] or that the current user is the thread creator.
+ */
 @OptIn(ExperimentalContracts::class)
 suspend inline fun ThreadChannelBehavior.edit(builder: ThreadModifyBuilder.() -> Unit): ThreadChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
