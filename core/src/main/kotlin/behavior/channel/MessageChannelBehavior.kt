@@ -96,9 +96,11 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     /**
      * Requests to delete a message in this channel.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun deleteMessage(id: Snowflake): Unit = kord.rest.channel.deleteMessage(this.id, id)
+    suspend fun deleteMessage(id: Snowflake, reason: String? = null): Unit =
+        kord.rest.channel.deleteMessage(this.id, id, reason)
 
     /**
      * Requests to get all messages in this channel that were created **before** [messageId].

@@ -60,6 +60,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
     /**
      * Requests to kick this member from its guild.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun kick(reason: String? = null) = guild.kick(id, reason)
@@ -67,6 +68,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
     /**
      * Requests to add the [Role] with the [roleId] to this member.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun addRole(roleId: Snowflake, reason: String? = null) {
@@ -92,6 +94,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
     /**
      * Requests to remove the [Role] with the [roleId] from this member.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RequestException] if something went wrong during the request.
      */
     suspend fun removeRole(roleId: Snowflake, reason: String? = null) {

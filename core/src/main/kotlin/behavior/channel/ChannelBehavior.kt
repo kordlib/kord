@@ -42,10 +42,11 @@ interface ChannelBehavior : KordEntity, Strategizable {
     /**
      * Requests to delete a channel (or close it if this is a dm channel).
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete() {
-        kord.rest.channel.deleteChannel(id)
+    suspend fun delete(reason: String? = null) {
+        kord.rest.channel.deleteChannel(id, reason)
     }
 
     /**

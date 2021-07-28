@@ -26,6 +26,7 @@ interface WebhookBehavior : KordEntity, Strategizable {
     /**
      * Requests to delete this webhook, this user must be the creator.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete(reason: String? = null) {
@@ -35,6 +36,7 @@ interface WebhookBehavior : KordEntity, Strategizable {
     /**
      * Requests to delete this webhook.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun delete(token: String, reason: String? = null) {

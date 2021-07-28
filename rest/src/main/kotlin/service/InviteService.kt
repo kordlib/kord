@@ -1,6 +1,7 @@
 package dev.kord.rest.service
 
 import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
 
 class InviteService(requestHandler: RequestHandler) : RestService(requestHandler) {
@@ -11,6 +12,6 @@ class InviteService(requestHandler: RequestHandler) : RestService(requestHandler
 
     suspend fun deleteInvite(code: String, reason: String? = null) = call(Route.InviteDelete) {
         keys[Route.InviteCode] = code
-        reason?.let { header("X-Audit-Log-Reason", it) }
+        auditLogReason(reason)
     }
 }

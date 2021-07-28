@@ -68,9 +68,10 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
      * Requests to bulk delete the [messages].
      * Messages older than 14 days will be deleted individually.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun bulkDelete(messages: Iterable<Snowflake>) {
+    suspend fun bulkDelete(messages: Iterable<Snowflake>, reason: String? = null) {
         val daysLimit = Clock.System.now() - Duration.days(14)
         //split up in bulk delete and manual delete
         // if message.timeMark + 14 days > now, then the message isn't 14 days old yet, and we can add it to the bulk delete
@@ -78,11 +79,11 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
         val (younger, older) = messages.partition { it.timeStamp > daysLimit }
 
         younger.chunked(100).forEach {
-            if (it.size < 2) kord.rest.channel.deleteMessage(id, it.first())
-            else kord.rest.channel.bulkDelete(id, BulkDeleteRequest(it))
+            if (it.size < 2) kord.rest.channel.deleteMessage(id, it.first(), reason)
+            else kord.rest.channel.bulkDelete(id, BulkDeleteRequest(it), reason)
         }
 
-        older.forEach { kord.rest.channel.deleteMessage(id, it) }
+        older.forEach { kord.rest.channel.deleteMessage(id, it, reason) }
     }
 
     /**

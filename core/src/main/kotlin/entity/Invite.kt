@@ -116,6 +116,8 @@ data class Invite(
 
     /**
      * Requests to delete the invite.
+     *
+     * @param reason the reason showing up in the audit log
      */
     suspend fun delete(reason: String? = null) {
         kord.rest.invite.deleteInvite(data.code, reason)

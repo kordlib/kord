@@ -9,6 +9,7 @@ import dev.kord.rest.json.request.*
 import dev.kord.rest.json.response.FollowedChannelResponse
 import dev.kord.rest.json.response.ListThreadsResponse
 import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlin.contracts.ExperimentalContracts
@@ -56,9 +57,10 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.ChannelId] = channelId
     }
 
-    suspend fun addPinnedMessage(channelId: Snowflake, messageId: Snowflake) = call(Route.PinPut) {
+    suspend fun addPinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String?) = call(Route.PinPut) {
         keys[Route.MessageId] = messageId
         keys[Route.ChannelId] = channelId
+        auditLogReason(reason)
     }
 
     suspend fun getChannelPins(channelId: Snowflake) = call(Route.PinsGet) {
@@ -93,10 +95,12 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.Emoji] = emoji
         }
 
-    suspend fun deletePinnedMessage(channelId: Snowflake, messageId: Snowflake) = call(Route.PinDelete) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.MessageId] = messageId
-    }
+    suspend fun deletePinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null) =
+        call(Route.PinDelete) {
+            keys[Route.ChannelId] = channelId
+            keys[Route.MessageId] = messageId
+            auditLogReason(reason)
+        }
 
     suspend fun deleteAllReactions(channelId: Snowflake, messageId: Snowflake) = call(Route.AllReactionsDelete) {
         keys[Route.ChannelId] = channelId
@@ -107,24 +111,25 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         call(Route.MessageDelete) {
             keys[Route.ChannelId] = channelId
             keys[Route.MessageId] = messageId
-            reason?.let { header("X-Audit-Log-Reason", reason) }
+            auditLogReason(reason)
         }
 
-    suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest) = call(Route.BulkMessageDeletePost) {
+    suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest, reason: String?) = call(Route.BulkMessageDeletePost) {
         keys[Route.ChannelId] = channelId
         body(BulkDeleteRequest.serializer(), messages)
+        auditLogReason(reason)
     }
 
     suspend fun deleteChannel(channelId: Snowflake, reason: String? = null) = call(Route.ChannelDelete) {
         keys[Route.ChannelId] = channelId
-        reason?.let { header("X-Audit-Log-Reason", reason) }
+        auditLogReason(reason)
     }
 
     suspend fun deleteChannelPermission(channelId: Snowflake, overwriteId: Snowflake, reason: String? = null) =
         call(Route.ChannelPermissionDelete) {
             keys[Route.ChannelId] = channelId
             keys[Route.OverwriteId] = overwriteId
-            reason?.let { header("X-Audit-Log-Reason", reason) }
+            auditLogReason(reason)
         }
 
     suspend fun editChannelPermissions(
@@ -136,7 +141,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.ChannelId] = channelId
         keys[Route.OverwriteId] = overwriteId
         body(ChannelPermissionEditRequest.serializer(), permissions)
-        reason?.let { header("X-Audit-Log-Reason", reason) }
+        auditLogReason(reason)
     }
 
     suspend fun getReactions(
@@ -181,7 +186,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.ChannelId] = channelId
             val request = InviteCreateBuilder().apply(builder)
             body(InviteCreateRequest.serializer(), request.toRequest())
-            request.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(request.reason)
         }
     }
 
@@ -207,19 +212,11 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         }
     }
 
-
-    suspend fun putChannel(channelId: Snowflake, channel: ChannelModifyPutRequest, reason: String? = null) =
-        call(Route.ChannelPut) {
-            keys[Route.ChannelId] = channelId
-            body(ChannelModifyPutRequest.serializer(), channel)
-            reason?.let { header("X-Audit-Log-Reason", reason) }
-        }
-
     suspend fun patchChannel(channelId: Snowflake, channel: ChannelModifyPatchRequest, reason: String? = null) =
         call(Route.ChannelPatch) {
             keys[Route.ChannelId] = channelId
             body(ChannelModifyPatchRequest.serializer(), channel)
-            reason?.let { header("X-Audit-Log-Reason", reason) }
+            auditLogReason(reason)
         }
     suspend fun patchThread(threadId: Snowflake, thread: ChannelModifyPatchRequest, reason: String? = null) =
         call(Route.ChannelPatch) {
@@ -352,7 +349,8 @@ suspend inline fun ChannelService.patchTextChannel(
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    return patchChannel(channelId, TextChannelModifyBuilder().apply(builder).toRequest())
+    val modifyBuilder = TextChannelModifyBuilder().apply(builder)
+    return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
 @OptIn(ExperimentalContracts::class)
@@ -363,7 +361,8 @@ suspend inline fun ChannelService.patchVoiceChannel(
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    return patchChannel(channelId, VoiceChannelModifyBuilder().apply(builder).toRequest())
+    val modifyBuilder = VoiceChannelModifyBuilder().apply(builder)
+    return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
 
@@ -375,7 +374,8 @@ suspend inline fun ChannelService.patchStageVoiceChannel(
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    return patchChannel(channelId, StageVoiceChannelModifyBuilder().apply(builder).toRequest())
+    val modifyBuilder = StageVoiceChannelModifyBuilder().apply(builder)
+    return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
 @OptIn(ExperimentalContracts::class)
@@ -386,7 +386,8 @@ suspend inline fun ChannelService.patchStoreChannel(
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    return patchChannel(channelId, StoreChannelModifyBuilder().apply(builder).toRequest())
+    val modifyBuilder = StoreChannelModifyBuilder().apply(builder)
+    return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
 @OptIn(ExperimentalContracts::class)
@@ -397,7 +398,8 @@ suspend inline fun ChannelService.patchNewsChannel(
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    return patchChannel(channelId, NewsChannelModifyBuilder().apply(builder).toRequest())
+    val modifyBuilder = NewsChannelModifyBuilder().apply(builder)
+    return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
 @OptIn(ExperimentalContracts::class)
@@ -408,7 +410,8 @@ suspend inline fun ChannelService.patchCategory(
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    return patchChannel(channelId, CategoryModifyBuilder().apply(builder).toRequest())
+    val modifyBuilder = CategoryModifyBuilder().apply(builder)
+    return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
 @OptIn(ExperimentalContracts::class)

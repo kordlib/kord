@@ -8,6 +8,7 @@ import dev.kord.rest.builder.guild.EmojiModifyBuilder
 import dev.kord.rest.json.request.EmojiCreateRequest
 import dev.kord.rest.json.request.EmojiModifyRequest
 import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -30,7 +31,7 @@ class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler)
             val emoji = EmojiCreateBuilder(name, image).apply(builder)
 
             body(EmojiCreateRequest.serializer(), emoji.toRequest())
-            emoji.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(emoji.reason)
         }
     }
 
@@ -38,14 +39,14 @@ class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler)
         call(Route.GuildEmojiPost) {
             keys[Route.GuildId] = guildId
             body(EmojiCreateRequest.serializer(), emoji)
-            reason?.let { header("X-Audit-Log-Reason", reason) }
+            auditLogReason(reason)
         }
 
     suspend fun deleteEmoji(guildId: Snowflake, emojiId: Snowflake, reason: String? = null) =
         call(Route.GuildEmojiDelete) {
             keys[Route.GuildId] = guildId
             keys[Route.EmojiId] = emojiId
-            reason?.let { header("X-Audit-Log-Reason", reason) }
+            auditLogReason(reason)
         }
 
     @OptIn(ExperimentalContracts::class)
@@ -62,7 +63,7 @@ class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler)
             keys[Route.EmojiId] = emojiId
             val modifyBuilder = EmojiModifyBuilder().apply(builder)
             body(EmojiModifyRequest.serializer(), modifyBuilder.toRequest())
-            modifyBuilder.reason?.let { header("X-Audit-Log-Reason", it) }
+            auditLogReason(modifyBuilder.reason)
         }
     }
 
