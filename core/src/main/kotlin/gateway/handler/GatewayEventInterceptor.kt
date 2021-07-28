@@ -26,6 +26,7 @@ class GatewayEventInterceptor(
     private val listeners = listOf(
         MessageEventHandler(kord, gateway, cache, coreFlow),
         ChannelEventHandler(kord, gateway, cache, coreFlow),
+        ThreadEventHandler(kord, gateway, cache, coreFlow),
         GuildEventHandler(kord, gateway, cache, coreFlow),
         LifeCycleEventHandler(kord, gateway, cache, coreFlow),
         UserEventHandler(kord, gateway, cache, coreFlow),
