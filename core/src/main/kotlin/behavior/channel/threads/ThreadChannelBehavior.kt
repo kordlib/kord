@@ -79,8 +79,8 @@ interface ThreadChannelBehavior : MessageChannelBehavior {
     /**
      * Deleting a thread requires the [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] permission.
      */
-    override suspend fun delete() {
-        super.delete()
+    override suspend fun delete(reason: String?) {
+        super.delete(reason)
     }
 
     override suspend fun asChannel(): ThreadChannel {
