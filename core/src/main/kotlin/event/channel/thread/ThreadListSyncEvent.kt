@@ -1,4 +1,4 @@
-package dev.kord.core.event.channel
+package dev.kord.core.event.channel.thread
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
