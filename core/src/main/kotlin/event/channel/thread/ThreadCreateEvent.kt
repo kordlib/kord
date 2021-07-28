@@ -5,7 +5,7 @@ import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.channel.ChannelCreateEvent
 
-interface ThreadChannelCreateEvent : ChannelCreateEvent {
+sealed interface ThreadChannelCreateEvent : ChannelCreateEvent {
     override val channel: ThreadChannel
 }
 

@@ -8,12 +8,12 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
-import dev.kord.core.behavior.channel.threads.startThread
+import dev.kord.core.behavior.channel.threads.unsafeStartPublicThreadWithMessage
+import dev.kord.core.behavior.channel.threads.unsafeStartThread
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.NewsChannel
 import dev.kord.core.entity.channel.thread.NewsChannelThread
-import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -68,16 +68,16 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
     }
 
 
-    override suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): NewsChannelThread {
-        return startThread(name, archiveDuration, ChannelType.PublicNewsThread) as NewsChannelThread
+    suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): NewsChannelThread {
+        return unsafeStartThread(name, archiveDuration, ChannelType.PublicNewsThread) as NewsChannelThread
     }
 
-    override suspend fun startPublicThreadWithMessage(
+     suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
         archiveDuration: ArchiveDuration
     ): NewsChannelThread {
-        return super.startPublicThreadWithMessage(messageId, name, archiveDuration) as NewsChannelThread
+        return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration) as NewsChannelThread
     }
 
 

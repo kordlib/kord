@@ -17,7 +17,7 @@ class TextChannelThread(
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : ThreadChannel {
     /**
-     * Weather this thread is private
+     * Whether this thread is private
      */
     val isPrivate get() = data.type == ChannelType.PrivateThread
 

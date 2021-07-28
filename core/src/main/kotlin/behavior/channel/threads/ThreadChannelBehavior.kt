@@ -28,8 +28,8 @@ interface ThreadChannelBehavior : MessageChannelBehavior {
 
     /**
      * Removes the user identified by [id] from the current thread.
-     * Requires the thread is not archived.
-     * Sending a message to the thread automatically unarchived it.
+     * Requires the thread is not locked.
+     * or current bot has [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] permission
      *
      * @see [ThreadChannel.isArchived]
      * @see [ThreadChannel.isLocked]
@@ -41,7 +41,8 @@ interface ThreadChannelBehavior : MessageChannelBehavior {
 
     /**
      * Adds the user identified by [id] from the current thread.
-     * Requires the thread is not archived.
+     * Requires the thread is not locked.
+     * or current bot has [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] permission
      *
      * @see [ThreadChannel.isArchived]
      * @see [ThreadChannel.isLocked]
@@ -53,7 +54,8 @@ interface ThreadChannelBehavior : MessageChannelBehavior {
 
     /**
      * Join the the current thread.
-     * Requires the thread is not archived.
+     * Requires the thread is not locked.
+     * or current bot has [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] permission
      *
      * @see [ThreadChannel.isArchived]
      * @see [ThreadChannel.isLocked]
@@ -65,7 +67,8 @@ interface ThreadChannelBehavior : MessageChannelBehavior {
 
     /**
      * Leaves the current thread if the bot has already joined.
-     * Requires the thread is not archived.
+     * Requires the thread is not locked.
+     * or current bot has [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] permission
      *
      * @throws [RequestException] if something went wrong during the request.
      */
@@ -111,14 +114,16 @@ suspend inline fun ThreadChannelBehavior.edit(builder: ThreadModifyBuilder.() ->
     return Channel.from(patchedChannel.toData(), kord) as ThreadChannel
 }
 
-fun ThreadChannelBehavior(
+internal fun ThreadChannelBehavior(
     id: Snowflake,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier
 ): ThreadChannelBehavior {
     return object : ThreadChannelBehavior {
+
         override val kord: Kord
             get() = kord
+
         override val id: Snowflake
             get() = id
 

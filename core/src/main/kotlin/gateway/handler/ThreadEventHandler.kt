@@ -59,6 +59,9 @@ class ThreadEventHandler(
             is ThreadChannel -> UnknownChannelThreadUpdateEvent(channel, shard)
             else -> return
         }
+
+        coreFlow.emit(coreEvent)
+
     }
 
     suspend fun handle(event: ThreadDelete, shard: Int) {
@@ -68,30 +71,19 @@ class ThreadEventHandler(
 
         val channel = DeletedThreadChannel(channelData, kord)
         val old = cachedData?.let { Channel.from(cachedData, kord) }
-        when (channel.type) {
+        val coreEvent = when (channel.type) {
             is ChannelType.PublicNewsThread -> NewsChannelThreadDeleteEvent(channel, old as? NewsChannelThread, shard)
             is ChannelType.PrivateThread,
             is ChannelType.GuildText -> TextChannelThreadDeleteEvent(channel, old as? TextChannelThread, shard)
-            else -> UnknownChannelThreadDeleteEvent(channel, shard)
+            else -> UnknownChannelThreadDeleteEvent(channel, old as ThreadChannel, shard)
         }
+        coreFlow.emit(coreEvent)
+
         cache.remove<ChannelData> { idEq(ChannelData::id, channel.id) }
     }
 
     suspend fun handle(event: ThreadListSync, shard: Int) {
         val data = ThreadListSyncData.from(event)
-        /*
-        If this field is omitted the threads are being synced for the whole guild
-        otherwise just syncing mentioned parent ids
-        https://discord.com/developers/docs/topics/gateway#thread-list-sync-thread-list-sync-event-fields
-        so we must clean threads before refilling cache.
-        */
-        cache.remove<ChannelData> {
-            if (data.channelIds is Optional.Missing) {
-                ChannelData::threadMetadata.ne(Optional.Missing)
-                ChannelData::guildId.eq(data.guildId)
-            } else ChannelData::parentId `in` data.channelIds.orEmpty()
-        }
-
 
         data.threads.forEach { thread ->
             cache.put(thread)

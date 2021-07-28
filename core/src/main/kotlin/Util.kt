@@ -260,7 +260,7 @@ internal fun <C : Collection<T>, T> paginateByDate(
 
 /**
  * A special function to paginate [ThreadChannel] endpoints.
- * selects the least time reference found in the response of the request on each pagination.
+ * selects the earliest time reference found in the response of the request on each pagination.
  * see [paginateByDate]
  */
 internal fun paginateThreads(

@@ -5,11 +5,13 @@ import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.exception.RequestException
+import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
@@ -45,27 +47,6 @@ interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
         return supplier.getPublicArchivedThreads(id, before, limit)
     }
 
-    /**
-     * Starts a public thread with [name] and archived after [archiveDuration]
-     */
-    suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration = ArchiveDuration.Day): ThreadChannel
-
-
-    /**
-     * Starts a public thread with [name] and archived after [archiveDuration]
-     * using given [messageId] as a starter message.
-     */
-    suspend fun startPublicThreadWithMessage(
-        messageId: Snowflake,
-        name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day
-    ): ThreadChannel {
-
-        val response = kord.rest.channel.startThreadWithMessage(id, messageId, StartThreadRequest(name, archiveDuration))
-        val data = ChannelData.from(response)
-
-        return Channel.from(data, kord) as ThreadChannel
-    }
 
     override suspend fun asChannel(): ThreadParentChannel {
         return super.asChannel() as ThreadParentChannel
@@ -117,11 +98,6 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
     ): Flow<ThreadChannel> {
         return supplier.getJoinedPrivateArchivedThreads(id, before, limit)
     }
-
-    /**
-     * Starts a private thread with [name] and archived after [archiveDuration]
-     */
-    suspend fun startPrivateThread(name: String, archiveDuration: ArchiveDuration = ArchiveDuration.Day): ThreadChannel
 }
 
 /**
@@ -129,7 +105,7 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
  * [type] should match the parent types.
  * @throws [RequestException] if something went wrong during the request.
  */
-internal suspend fun ThreadParentChannelBehavior.startThread(
+internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
     name: String,
     archiveDuration: ArchiveDuration,
     type: ChannelType
@@ -140,4 +116,63 @@ internal suspend fun ThreadParentChannelBehavior.startThread(
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel
+}
+
+internal suspend fun ThreadParentChannelBehavior.unsafeStartPublicThreadWithMessage(
+    messageId: Snowflake,
+    name: String,
+    archiveDuration: ArchiveDuration = ArchiveDuration.Day
+): ThreadChannel {
+
+    val response = kord.rest.channel.startThreadWithMessage(id, messageId, StartThreadRequest(name, archiveDuration))
+    val data = ChannelData.from(response)
+
+    return Channel.from(data, kord) as ThreadChannel
+}
+
+internal fun ThreadParentChannelBehavior(
+    guildId: Snowflake,
+    id: Snowflake,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+): ThreadParentChannelBehavior {
+    return object : ThreadParentChannelBehavior {
+        override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadParentChannelBehavior {
+            return ThreadParentChannelBehavior(guildId, id, kord, strategy.supply(kord))
+        }
+
+        override val guildId: Snowflake
+            get() = guildId
+        override val kord: Kord
+            get() = kord
+        override val id: Snowflake
+            get() = id
+        override val supplier: EntitySupplier
+            get() = supplier
+
+    }
+}
+
+
+internal fun PrivateThreadParentChannelBehavior(
+    guildId: Snowflake,
+    id: Snowflake,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+): PrivateThreadParentChannelBehavior {
+    return object : PrivateThreadParentChannelBehavior {
+        override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadParentChannelBehavior {
+            return PrivateThreadParentChannelBehavior(guildId, id, kord, strategy.supply(kord))
+        }
+
+        override val guildId: Snowflake
+            get() = guildId
+        override val kord: Kord
+            get() = kord
+        override val id: Snowflake
+            get() = id
+        override val supplier: EntitySupplier
+            get() = supplier
+
+    }
 }

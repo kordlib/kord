@@ -102,7 +102,7 @@ interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
 
 }
 
-fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySupplier): ThreadChannel {
+internal fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySupplier): ThreadChannel {
 
     return object : ThreadChannel {
 

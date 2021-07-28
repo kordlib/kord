@@ -62,7 +62,7 @@ interface Channel : ChannelBehavior {
     }
 }
 
-fun Channel(
+internal fun Channel(
     data: ChannelData,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier
