@@ -48,18 +48,24 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
      */
     override suspend fun asChannelOrNull(): TextChannel? = super.asChannelOrNull() as? TextChannel
 
-    suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): TextChannelThread {
+    suspend fun startPublicThread(
+        name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day
+    ): TextChannelThread {
         return unsafeStartThread(name, archiveDuration, ChannelType.PublicGuildThread) as TextChannelThread
     }
 
-    suspend fun startPrivateThread(name: String, archiveDuration: ArchiveDuration): TextChannelThread {
+    suspend fun startPrivateThread(
+        name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day
+    ): TextChannelThread {
         return unsafeStartThread(name, archiveDuration, ChannelType.PrivateThread) as TextChannelThread
     }
 
     suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        archiveDuration: ArchiveDuration
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day
     ): TextChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration) as TextChannelThread
     }

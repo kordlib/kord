@@ -68,14 +68,17 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
     }
 
 
-    suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): NewsChannelThread {
+    suspend fun startPublicThread(
+        name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day
+    ): NewsChannelThread {
         return unsafeStartThread(name, archiveDuration, ChannelType.PublicNewsThread) as NewsChannelThread
     }
 
-     suspend fun startPublicThreadWithMessage(
+    suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        archiveDuration: ArchiveDuration
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day
     ): NewsChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration) as NewsChannelThread
     }
