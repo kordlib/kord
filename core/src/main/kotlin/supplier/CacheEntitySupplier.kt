@@ -289,7 +289,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return cache.query<ChannelData> {
             idEq(ChannelData::id, channelId)
         }.asFlow().filter {
-            it.threadsMetadata.value?.archived != true
+            it.threadMetadata.value?.archived != true
         }.mapNotNull {
             Channel.from(it, kord) as? ThreadChannel
         }
@@ -299,8 +299,8 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return cache.query<ChannelData> {
             idEq(ChannelData::id, channelId)
         }.asFlow().filter {
-            val time = it.threadsMetadata.value?.archiveTimestamp?.toInstant()
-            it.threadsMetadata.value?.archived != true
+            val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+            it.threadMetadata.value?.archived != true
                     && time != null
                     && time < before
                     && (it.type == ChannelType.PublicGuildThread || it.type == ChannelType.PublicNewsThread)
@@ -311,8 +311,8 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return cache.query<ChannelData> {
             idEq(ChannelData::id, channelId)
         }.asFlow().filter {
-            val time = it.threadsMetadata.value?.archiveTimestamp?.toInstant()
-            it.threadsMetadata.value?.archived == true
+            val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+            it.threadMetadata.value?.archived == true
                     && time != null
                     && time < before
                     && it.type == ChannelType.PrivateThread
@@ -327,8 +327,8 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return cache.query<ChannelData> {
             idEq(ChannelData::id, channelId)
         }.asFlow().filter {
-            val time = it.threadsMetadata.value?.archiveTimestamp?.toInstant()
-            it.threadsMetadata.value?.archived == true
+            val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+            it.threadMetadata.value?.archived == true
                     && it.id < before
                     && it.type == ChannelType.PrivateThread
                     && kord.selfId in getThreadMembers(channelId).map { user -> user.data.id }.toList()
