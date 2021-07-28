@@ -244,23 +244,29 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend fun startThreadWithMessage(
         channelId: Snowflake,
         messageId: Snowflake,
-        request: StartThreadRequest
+        request: StartThreadRequest,
+        reason: String? = null
     ): DiscordChannel {
         return call(Route.StartPublicThreadWithMessagePost) {
             keys[Route.ChannelId] = channelId
             keys[Route.MessageId] = messageId
             body(StartThreadRequest.serializer(), request)
+            reason?.let { header("X-Audit-Log-Reason", reason) }
+
         }
     }
 
 
     suspend fun startThread(
         channelId: Snowflake,
-        request: StartThreadRequest
+        request: StartThreadRequest,
+        reason: String? = null
     ): DiscordChannel {
         return call(Route.StartThreadPost) {
             keys[Route.ChannelId] = channelId
             body(StartThreadRequest.serializer(), request)
+            reason?.let { header("X-Audit-Log-Reason", reason) }
+
         }
     }
 

@@ -107,12 +107,13 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
  */
 internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
     name: String,
-    archiveDuration: ArchiveDuration,
-    type: ChannelType
+    archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+    type: ChannelType,
+    reason: String? = null
 ): ThreadChannel {
 
     val response =
-        kord.rest.channel.startThread(id, StartThreadRequest(name, archiveDuration, Optional.Value(type)))
+        kord.rest.channel.startThread(id, StartThreadRequest(name, archiveDuration, Optional.Value(type)), reason)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel
@@ -121,10 +122,11 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
 internal suspend fun ThreadParentChannelBehavior.unsafeStartPublicThreadWithMessage(
     messageId: Snowflake,
     name: String,
-    archiveDuration: ArchiveDuration = ArchiveDuration.Day
+    archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+    reason: String? = null
 ): ThreadChannel {
 
-    val response = kord.rest.channel.startThreadWithMessage(id, messageId, StartThreadRequest(name, archiveDuration))
+    val response = kord.rest.channel.startThreadWithMessage(id, messageId, StartThreadRequest(name, archiveDuration), reason)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel

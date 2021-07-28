@@ -50,24 +50,28 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
 
     suspend fun startPublicThread(
         name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+        reason: String? = null
+
     ): TextChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PublicGuildThread) as TextChannelThread
+        return unsafeStartThread(name, archiveDuration, ChannelType.PublicGuildThread, reason) as TextChannelThread
     }
 
     suspend fun startPrivateThread(
         name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+        reason: String? = null
     ): TextChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PrivateThread) as TextChannelThread
+        return unsafeStartThread(name, archiveDuration, ChannelType.PrivateThread, reason) as TextChannelThread
     }
 
     suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+        reason: String? = null
     ): TextChannelThread {
-        return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration) as TextChannelThread
+        return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration, reason) as TextChannelThread
     }
 
     override fun getPublicArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
