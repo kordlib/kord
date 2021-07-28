@@ -5,9 +5,10 @@ import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.*
 import dev.kord.core.behavior.channel.*
+import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
+import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
-import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.rest.service.InteractionService
 
 /**
@@ -52,6 +53,13 @@ class Unsafe(private val kord: Kord) {
     fun storeChannel(guildId: Snowflake, id: Snowflake): StoreChannelBehavior =
         StoreChannelBehavior(guildId = guildId, id = id, kord = kord)
 
+
+    fun publicThreadParent(guildId: Snowflake, id: Snowflake): ThreadParentChannelBehavior =
+        ThreadParentChannelBehavior(guildId, id, kord)
+
+
+    fun privateThreadParent(guildId: Snowflake, id: Snowflake): PrivateThreadParentChannelBehavior =
+        PrivateThreadParentChannelBehavior(guildId, id, kord)
 
     fun thread(id: Snowflake): ThreadChannelBehavior =
         ThreadChannelBehavior(id, kord)
