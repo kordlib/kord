@@ -8,8 +8,11 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
@@ -51,6 +54,17 @@ interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
         return Channel.from(data, kord) as ThreadChannel
     }
 
+    override suspend fun asChannel(): ThreadParentChannel {
+        return super.asChannel() as ThreadParentChannel
+    }
+
+    override suspend fun asChannelOrNull(): ThreadParentChannel? {
+        return super.asChannelOrNull() as? ThreadParentChannel
+    }
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildMessageChannelBehavior {
+        return ThreadParentChannelBehavior(guildId, id, kord, strategy.supply(kord))
+    }
 
 }
 
@@ -81,6 +95,26 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
     suspend fun startPrivateThread(name: String, archiveDuration: ArchiveDuration = ArchiveDuration.Day): ThreadChannel
 }
 
+fun ThreadParentChannelBehavior(
+    guildId: Snowflake,
+    id: Snowflake,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+) = object : ThreadParentChannelBehavior {
+    override suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): ThreadChannel {
+        TODO("Not yet implemented")
+    }
+
+    override val guildId: Snowflake
+        get() = guildId
+    override val kord: Kord
+        get() = kord
+    override val id: Snowflake
+        get() = id
+    override val supplier: EntitySupplier
+        get() = supplier
+
+}
 
 internal suspend fun ThreadParentChannelBehavior.startThread(
     name: String,

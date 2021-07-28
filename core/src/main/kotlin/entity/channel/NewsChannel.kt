@@ -18,7 +18,7 @@ class NewsChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CategorizableChannel, GuildMessageChannel, NewsChannelBehavior {
+) : CategorizableChannel, GuildMessageChannel, ThreadParentChannel,  NewsChannelBehavior {
 
     override suspend fun asChannel(): NewsChannel = this
 

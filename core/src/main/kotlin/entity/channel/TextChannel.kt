@@ -17,7 +17,7 @@ class TextChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : GuildMessageChannel, TextChannelBehavior {
+) : GuildMessageChannel, TextChannelBehavior, ThreadParentChannel {
 
     /**
      * Whether the channel is nsfw.
