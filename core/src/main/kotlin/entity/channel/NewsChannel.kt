@@ -1,10 +1,12 @@
 package dev.kord.core.entity.channel
 
+import dev.kord.common.entity.ArchiveDuration
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.behavior.channel.NewsChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
@@ -12,11 +14,11 @@ import java.util.*
 /**
  * An instance of a Discord News Channel associated to a guild.
  */
-data class NewsChannel(
+class NewsChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CategorizableChannel, GuildMessageChannel, NewsChannelBehavior {
+) : CategorizableChannel, GuildMessageChannel, ThreadParentChannel,  NewsChannelBehavior {
 
     override suspend fun asChannel(): NewsChannel = this
 

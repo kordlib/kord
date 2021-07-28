@@ -28,7 +28,7 @@ interface MessageChannel : Channel, MessageChannelBehavior {
     /**
      * The timestamp of the last pin
      */
-    val lastPintTimeStamp: Instant?
+    val lastPinTimeStamp: Instant?
         get() = data.lastPinTimestamp.value?.toInstant()
 
     /**

@@ -16,6 +16,12 @@ private const val resetTimeHeader = "X-RateLimit-Reset"
 private const val bucketRateLimitKey = "X-RateLimit-Bucket"
 private const val rateLimit = "X-RateLimit-Limit"
 private const val rateLimitResetAfter = "X-RateLimit-Reset-After"
+private const val auditLogReason = "X-Audit-Log-Reason"
+
+/**
+ * Sets the reason that will show up in the [Discord Audit Log]() to [reason] for this request.
+ */
+fun <T> RequestBuilder<T>.auditLogReason(reason: String?) = reason?.let { header(auditLogReason, reason) }
 
 val HttpResponse.channelResetPoint: Instant
     get() {

@@ -7,8 +7,11 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.entity.channel.thread.ThreadUser
 import dev.kord.core.exception.EntityNotFoundException
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
 
 /**
  * An abstraction that allows for requesting Discord entities.
@@ -394,6 +397,16 @@ interface EntitySupplier {
 
     suspend fun getStageInstance(channelId: Snowflake): StageInstance =
         getStageInstanceOrNull(channelId) ?: EntityNotFoundException.stageInstanceNotFound(channelId)
+
+    fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser>
+
+    fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel>
+
+    fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
+
+    fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
+
+    fun getJoinedPrivateArchivedThreads(channelId: Snowflake, before: Snowflake, limit: Int): Flow<ThreadChannel>
 }
 
 

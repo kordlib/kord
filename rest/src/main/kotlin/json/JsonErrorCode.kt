@@ -844,6 +844,12 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     MaxActiveAnnouncementThreads(160007);
+    
+    OperationOnAchievedThread(50083),
+
+    InvalidThreadSettings(50084),
+
+    InvalidThreadBefore(50085),;
 
     companion object JsonErrorCodeSerializer : KSerializer<JsonErrorCode> {
         override val descriptor = PrimitiveSerialDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)

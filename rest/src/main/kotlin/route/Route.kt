@@ -19,7 +19,7 @@ import kotlinx.serialization.serializer
 import dev.kord.common.entity.DiscordEmoji as EmojiEntity
 
 internal const val REST_VERSION_PROPERTY_NAME = "dev.kord.rest.version"
-internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v8"
+internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v9"
 
 sealed interface ResponseMapper<T> {
     fun deserialize(json: Json, body: String): T
@@ -683,6 +683,74 @@ sealed class Route<T>(
 
     object StageInstanceDelete :
         Route<Unit>(HttpMethod.Delete, "/stage-instances/$ChannelId", NoStrategy)
+
+    object StartPublicThreadWithMessagePost :
+        Route<DiscordChannel>(
+            HttpMethod.Post,
+            "/channels/${ChannelId}/messages/${MessageId}/threads",
+            DiscordChannel.serializer()
+        );
+
+
+    object StartThreadPost :
+        Route<DiscordChannel>(HttpMethod.Post, "/channels/${ChannelId}/threads", DiscordChannel.serializer());
+
+    object JoinThreadPut :
+        Route<Unit>(HttpMethod.Put, "/channels/${ChannelId}/thread-members/@me", NoStrategy)
+
+    object AddThreadMemberPut :
+        Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/thread-members/${UserId}", NoStrategy)
+
+    object LeaveThreadDelete :
+        Route<Unit>(HttpMethod.Delete, "/channels/${ChannelId}/thread-members/@me", NoStrategy)
+
+    object RemoveUserFromThreadDelete :
+        Route<Unit>(HttpMethod.Delete, "/channels/${ChannelId}/thread-members/${UserId}", NoStrategy)
+
+    object ThreadMembersGet :
+        Route<List<DiscordThreadMember>>(
+            HttpMethod.Get,
+            "/channels/${ChannelId}/thread-members",
+            ListSerializer(DiscordThreadMember.serializer())
+        )
+
+    object ActiveThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/${ChannelId}/threads/active",
+            ListThreadsResponse.serializer()
+        )
+
+
+    object PrivateThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/${ChannelId}/threads/private",
+            ListThreadsResponse.serializer()
+        )
+
+
+    object PrivateArchivedThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/${ChannelId}/threads/archived/private",
+            ListThreadsResponse.serializer()
+        )
+
+    object PublicArchivedThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/${ChannelId}/threads/archived/public",
+            ListThreadsResponse.serializer()
+        )
+
+    object JoinedPrivateArchivedThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/$ChannelId/users/@me/threads/archived/private",
+            ListThreadsResponse.serializer()
+        )
+
 
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"

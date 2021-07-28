@@ -49,6 +49,9 @@ data class DiscordUser(
     val premiumType: Optional<UserPremium> = Optional.Missing(),
     @SerialName("public_flags")
     val publicFlags: Optional<UserFlags> = Optional.Missing(),
+    val banner: String? = null,
+    @SerialName("accent_color")
+    val accentColor: Int? = null
 )
 
 /**

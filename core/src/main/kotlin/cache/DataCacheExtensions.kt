@@ -14,6 +14,7 @@ internal suspend fun DataCache.registerKordData() = register(
     GuildData.description,
     MemberData.description,
     UserData.description,
+    ThreadUserData.description,
     MessageData.description,
     EmojiData.description,
     WebhookData.description,

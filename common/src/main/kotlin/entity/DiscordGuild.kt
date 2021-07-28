@@ -128,6 +128,7 @@ data class DiscordGuild(
     val voiceStates: Optional<List<DiscordVoiceState>> = Optional.Missing(),
     val members: Optional<List<DiscordGuildMember>> = Optional.Missing(),
     val channels: Optional<List<DiscordChannel>> = Optional.Missing(),
+    val threads: Optional<List<DiscordChannel>> = Optional.Missing(),
     val presences: Optional<List<DiscordPresenceUpdate>> = Optional.Missing(),
     @SerialName("max_presences")
     val maxPresences: OptionalInt? = OptionalInt.Missing,

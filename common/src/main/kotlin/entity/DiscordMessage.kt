@@ -109,7 +109,8 @@ data class DiscordMessage(
      * This is a list even though the docs say it's a component
      */
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val interaction: Optional<DiscordMessageInteraction> = Optional.Missing()
+    val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
+    val thread: Optional<DiscordChannel> = Optional.Missing()
 )
 
 /**
@@ -298,7 +299,11 @@ enum class MessageFlag(val code: Int) {
     /* This message came from the urgent message system. */
     Urgent(16),
 
-    Ephemeral(64);
+    HasThread(32),
+
+    Ephemeral(64),
+
+    Loading(128);
 }
 
 @Serializable(with = MessageFlags.Serializer::class)

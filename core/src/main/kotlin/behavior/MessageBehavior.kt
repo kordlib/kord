@@ -67,10 +67,11 @@ interface MessageBehavior : KordEntity, Strategizable {
     /**
      * Requests to delete this message.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete() {
-        kord.rest.channel.deleteMessage(channelId = channelId, messageId = id)
+    suspend fun delete(reason: String? = null) {
+        kord.rest.channel.deleteMessage(channelId = channelId, messageId = id, reason = reason)
     }
 
     /**
@@ -165,19 +166,21 @@ interface MessageBehavior : KordEntity, Strategizable {
     /**
      * Requests to pin this message.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun pin() {
-        kord.rest.channel.addPinnedMessage(channelId = channelId, messageId = id)
+    suspend fun pin(reason: String? = null) {
+        kord.rest.channel.addPinnedMessage(channelId = channelId, messageId = id, reason = reason)
     }
 
     /**
      * Requests to unpin this message.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun unpin() {
-        kord.rest.channel.deletePinnedMessage(channelId = channelId, messageId = id)
+    suspend fun unpin(reason: String? = null) {
+        kord.rest.channel.deletePinnedMessage(channelId = channelId, messageId = id, reason)
     }
 
     /**

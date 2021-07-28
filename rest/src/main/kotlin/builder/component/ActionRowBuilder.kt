@@ -44,6 +44,19 @@ class ActionRowBuilder : MessageComponentBuilder {
         )
     }
 
+    /**
+     * Creates and adds a select menu with the [customId] and configured by the [builder].
+     * An ActionRow with a select menu cannot have any other select menus or buttons.
+     */
+    @OptIn(ExperimentalContracts::class)
+    inline fun selectMenu(customId: String, builder: SelectMenuBuilder.() -> Unit){
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(SelectMenuBuilder(customId).apply(builder))
+    }
+
     override fun build(): DiscordComponent =
         DiscordComponent(
             ComponentType.ActionRow,

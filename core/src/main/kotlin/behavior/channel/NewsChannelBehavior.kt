@@ -1,13 +1,19 @@
 package dev.kord.core.behavior.channel
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.ArchiveDuration
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
+import dev.kord.core.behavior.channel.threads.unsafeStartPublicThreadWithMessage
+import dev.kord.core.behavior.channel.threads.unsafeStartThread
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.NewsChannel
+import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -15,6 +21,9 @@ import dev.kord.rest.builder.channel.NewsChannelModifyBuilder
 import dev.kord.rest.json.request.ChannelFollowRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchNewsChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.datetime.Instant
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -23,7 +32,10 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord News Channel associated to a guild.
  */
-interface NewsChannelBehavior : GuildMessageChannelBehavior {
+interface NewsChannelBehavior : ThreadParentChannelBehavior {
+
+    override val activeThreads: Flow<NewsChannelThread>
+        get() = super.activeThreads.filterIsInstance()
 
     /**
      * Requests to get the this behavior as a [NewsChannel].
@@ -53,6 +65,29 @@ interface NewsChannelBehavior : GuildMessageChannelBehavior {
     @KordPreview
     suspend fun follow(target: Snowflake) {
         kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target.asString))
+    }
+
+
+    suspend fun startPublicThread(
+        name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+        reason: String? = null
+    ): NewsChannelThread {
+        return unsafeStartThread(name, archiveDuration, ChannelType.PublicNewsThread, reason) as NewsChannelThread
+    }
+
+    suspend fun startPublicThreadWithMessage(
+        messageId: Snowflake,
+        name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+        reason: String? = null
+    ): NewsChannelThread {
+        return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration, reason) as NewsChannelThread
+    }
+
+
+    override fun getPublicArchivedThreads(before: Instant, limit: Int): Flow<NewsChannelThread> {
+        return super.getPublicArchivedThreads(before, limit).filterIsInstance()
     }
 
     /**

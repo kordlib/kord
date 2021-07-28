@@ -3,6 +3,7 @@ package dev.kord.core.cache.data
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -25,7 +26,12 @@ data class ChannelData(
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val lastPinTimestamp: Optional<String?> = Optional.Missing(),
-    val permissions: Optional<Permissions> = Optional.Missing()
+    val permissions: Optional<Permissions> = Optional.Missing(),
+    val threadMetadata: Optional<ThreadMetadataData> = Optional.Missing(),
+    val messageCount: OptionalInt = OptionalInt.Missing,
+    val memberCount: OptionalInt = OptionalInt.Missing,
+    val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
+    val member: Optional<ThreadUserData> = Optional.Missing()
 ) {
 
 
@@ -52,11 +58,31 @@ data class ChannelData(
                 applicationId,
                 parentId,
                 lastPinTimestamp,
-                permissions
+                permissions,
+                threadMetadata.map { ThreadMetadataData.from(it) },
+                messageCount,
+                memberCount,
+                defaultAutoArchiveDuration,
+                member.map { ThreadUserData.from(it, id) }
             )
         }
     }
 
 }
+
+@Serializable
+data class ThreadMetadataData(
+    val archived: Boolean,
+    val archiveTimestamp: String,
+    val autoArchiveDuration: ArchiveDuration,
+    val locked: OptionalBoolean = OptionalBoolean.Missing
+) {
+    companion object {
+        fun from(threadMetadata: DiscordThreadMetadata): ThreadMetadataData = with(threadMetadata) {
+            ThreadMetadataData(archived, archiveTimestamp, autoArchiveDuration, locked)
+        }
+    }
+}
+
 
 fun DiscordChannel.toData() = ChannelData.from(this)

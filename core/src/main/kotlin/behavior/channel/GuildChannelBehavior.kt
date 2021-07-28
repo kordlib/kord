@@ -94,13 +94,15 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
     /**
      * Requests to add or replace a [PermissionOverwrite] to this entity.
      *
+     * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun addOverwrite(overwrite: PermissionOverwrite) {
+    suspend fun addOverwrite(overwrite: PermissionOverwrite, reason: String?) {
         kord.rest.channel.editChannelPermissions(
             channelId = id,
             overwriteId = overwrite.target,
-            permissions = overwrite.asRequest()
+            permissions = overwrite.asRequest(),
+            reason = reason
         )
     }
 
