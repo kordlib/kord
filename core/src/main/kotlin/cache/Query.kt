@@ -4,6 +4,7 @@ import dev.kord.cache.api.QueryBuilder
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.optional
 import dev.kord.common.entity.optional.optionalSnowflake
 import kotlin.reflect.KProperty1
 
@@ -13,6 +14,11 @@ fun <T : Any> QueryBuilder<T>.idEq(property: KProperty1<T, Snowflake?>, value: S
 
 @JvmName("optionalIdEq")
 fun <T : Any> QueryBuilder<T>.idEq(property: KProperty1<T, OptionalSnowflake>, value: Snowflake?) {
+    property.eq(value.optionalSnowflake())
+}
+
+@JvmName("optionalNullableIdEq")
+fun <T: Any> QueryBuilder<T>.idEq(property: KProperty1<T, OptionalSnowflake?>, value: Snowflake?) {
     property.eq(value.optionalSnowflake())
 }
 

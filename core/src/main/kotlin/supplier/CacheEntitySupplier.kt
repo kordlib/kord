@@ -288,7 +288,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> {
         return cache.query<ChannelData> {
-            ChannelData::parentId.eq(channelId)
+            idEq(ChannelData::parentId, channelId)
         }.asFlow().filter {
             it.threadMetadata.value?.archived != true
         }.mapNotNull {
@@ -298,10 +298,10 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
         return cache.query<ChannelData> {
-            ChannelData::parentId.eq(channelId)
+            idEq(ChannelData::parentId, channelId)
         }.asFlow().filter {
             val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
-            it.threadMetadata.value?.archived != true
+            it.threadMetadata.value?.archived == true
                     && time != null
                     && time < before
                     && (it.type == ChannelType.PublicGuildThread || it.type == ChannelType.PublicNewsThread)
@@ -310,7 +310,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
         return cache.query<ChannelData> {
-            ChannelData::parentId.eq(channelId)
+            idEq(ChannelData::parentId, channelId)
         }.asFlow().filter {
             val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
             it.threadMetadata.value?.archived == true
@@ -326,7 +326,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         limit: Int
     ): Flow<ThreadChannel> {
         return cache.query<ChannelData> {
-            ChannelData::parentId.eq(channelId)
+            idEq(ChannelData::parentId, channelId)
         }.asFlow().filter {
             it.threadMetadata.value?.archived == true
                     && it.id < before
