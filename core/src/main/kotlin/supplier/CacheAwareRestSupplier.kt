@@ -7,8 +7,11 @@ import dev.kord.core.Kord
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.entity.channel.thread.ThreadUser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
+import kotlinx.datetime.Instant
 
 /**
  * [EntitySupplier] that delegates to another [EntitySupplier] to resolve entities.
@@ -147,6 +150,30 @@ class StoreEntitySupplier(
 
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? {
         return storeAndReturn(supplier.getStageInstanceOrNull(channelId)) { it.data }
+    }
+
+    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser> {
+        return storeOnEach(supplier.getThreadMembers(channelId)) { it.data }
+    }
+
+    override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> {
+        return storeOnEach(supplier.getActiveThreads(channelId)) { it.data }
+    }
+
+    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+        return storeOnEach(supplier.getPublicArchivedThreads(channelId, before, limit)) { it.data }
+    }
+
+    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+        return storeOnEach(supplier.getPrivateArchivedThreads(channelId,before, limit)) { it.data }
+    }
+
+    override fun getJoinedPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Snowflake,
+        limit: Int
+    ): Flow<ThreadChannel> {
+        return storeOnEach(supplier.getJoinedPrivateArchivedThreads(channelId, before, limit)) { it.data }
     }
 
     private inline fun <T, reified R : Any> storeOnEach(source: Flow<T>, crossinline transform: (T) -> R): Flow<T> {

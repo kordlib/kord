@@ -6,6 +6,9 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.channel.thread.NewsChannelThread
+import dev.kord.core.entity.channel.thread.TextChannelThread
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -47,11 +50,26 @@ interface Channel : ChannelBehavior {
             GuildCategory -> Category(data, kord)
             GuildNews -> NewsChannel(data, kord)
             GuildStore -> StoreChannel(data, kord)
-            else -> object : Channel {
-                override val data: ChannelData = data
-                override val kord: Kord = kord
-                override val supplier: EntitySupplier = strategy.supply(kord)
+            PublicNewsThread -> NewsChannelThread(data, kord)
+            PrivateThread -> TextChannelThread(data, kord)
+            PublicGuildThread -> TextChannelThread(data, kord)
+
+            else -> {
+                if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))
+                else ThreadChannel(data, kord, strategy.supply(kord))
             }
         }
+    }
+}
+
+internal fun Channel(
+    data: ChannelData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+): Channel {
+    return object : Channel {
+        override val data: ChannelData = data
+        override val kord: Kord = kord
+        override val supplier: EntitySupplier = supplier
     }
 }

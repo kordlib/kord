@@ -2,10 +2,7 @@ package dev.kord.core.entity
 
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.orElse
-import dev.kord.common.entity.optional.orEmpty
-import dev.kord.common.entity.optional.unwrap
-import dev.kord.common.entity.optional.value
+import dev.kord.common.entity.optional.*
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
@@ -16,17 +13,17 @@ import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.GuildData
-import dev.kord.core.entity.channel.GuildChannel
-import dev.kord.core.entity.channel.GuildMessageChannel
-import dev.kord.core.entity.channel.TextChannel
-import dev.kord.core.entity.channel.VoiceChannel
+import dev.kord.core.entity.channel.*
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.Image
 import dev.kord.rest.service.RestClient
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import java.util.*
@@ -49,6 +46,14 @@ class Guild(
 
     val afkChannel: VoiceChannelBehavior?
         get() = afkChannelId?.let { VoiceChannelBehavior(guildId = id, id = it, kord = kord) }
+
+    val threads: Flow<ThreadChannel>
+        get() = flow {
+            data.threads.mapList {
+               val channel =  Channel.from(it, kord)
+               if(channel is ThreadChannel) emit(channel)
+            }
+        }
 
     /**
      * The afk timeout in seconds.

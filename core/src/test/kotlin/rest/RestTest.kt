@@ -7,6 +7,7 @@ import dev.kord.common.entity.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.*
 import dev.kord.core.behavior.channel.*
+import dev.kord.core.behavior.channel.threads.edit
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.channel.GuildMessageChannel
@@ -22,6 +23,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 fun imageBinary(path: String): Image {
     val loader = Unit::class.java.classLoader
@@ -490,6 +492,44 @@ class RestServiceTest {
         assertEquals("other description", updated.description)
 
         updated.delete()
+    }
+
+    @Order(28)
+    @Test
+    @Disabled("Requires Community Guild")
+    fun `create thread`() = runBlocking {
+
+        val publicThread = channel.startPublicThread("TEST THREAD")
+        val active = channel.activeThreads
+        assertEquals(false, publicThread.isPrivate)
+
+        assertTrue(active.toList().isNotEmpty())
+        publicThread.join()
+
+        val privateThread = channel.startPrivateThread("TEST PRIVATE THREAD")
+
+        privateThread.join()
+
+        assertTrue(privateThread.isPrivate)
+
+        publicThread.edit {
+            archived = true
+        }
+
+        privateThread.edit {
+            archived = true
+        }
+
+        val joined = channel.getJoinedPrivateArchivedThreads()
+        assertTrue(joined.toList().isNotEmpty())
+
+
+        val publicArchive = channel.getPublicArchivedThreads()
+        assertTrue(publicArchive.toList().isNotEmpty())
+        val privateArchive = channel.getPrivateArchivedThreads()
+        assertTrue(privateArchive.toList().isNotEmpty())
+
+
     }
 
     @Test

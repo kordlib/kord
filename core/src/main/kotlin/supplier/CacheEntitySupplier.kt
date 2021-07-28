@@ -2,8 +2,10 @@ package dev.kord.core.supplier
 
 import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.query
+import dev.kord.common.entity.ChannelType
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.any
@@ -13,10 +15,14 @@ import dev.kord.core.cache.idGt
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.entity.channel.thread.ThreadUser
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 
 /**
  * [EntitySupplier] that uses a [DataCache] to resolve entities.
@@ -273,6 +279,61 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = null
+
+    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser> {
+        return cache.query<ThreadUserData> {
+            idEq(ThreadUserData::id, channelId)
+        }.asFlow().map { ThreadUser(it, kord) }
+    }
+
+    override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> {
+        return cache.query<ChannelData> {
+            idEq(ChannelData::parentId, channelId)
+        }.asFlow().filter {
+            it.threadMetadata.value?.archived != true
+        }.mapNotNull {
+            Channel.from(it, kord) as? ThreadChannel
+        }
+    }
+
+    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+        return cache.query<ChannelData> {
+            idEq(ChannelData::parentId, channelId)
+        }.asFlow().filter {
+            val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+            it.threadMetadata.value?.archived == true
+                    && time != null
+                    && time < before
+                    && (it.type == ChannelType.PublicGuildThread || it.type == ChannelType.PublicNewsThread)
+        }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
+    }
+
+    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+        return cache.query<ChannelData> {
+            idEq(ChannelData::parentId, channelId)
+        }.asFlow().filter {
+            val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+            it.threadMetadata.value?.archived == true
+                    && time != null
+                    && time < before
+                    && it.type == ChannelType.PrivateThread
+        }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
+    }
+
+    override fun getJoinedPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Snowflake,
+        limit: Int
+    ): Flow<ThreadChannel> {
+        return cache.query<ChannelData> {
+            idEq(ChannelData::parentId, channelId)
+        }.asFlow().filter {
+            it.threadMetadata.value?.archived == true
+                    && it.id < before
+                    && it.type == ChannelType.PrivateThread
+                    && it.member !is Optional.Missing
+        }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
+    }
 
     override fun toString(): String {
         return "CacheEntitySupplier(cache=$cache)"

@@ -1,23 +1,35 @@
 package dev.kord.core.behavior.channel
 
+import dev.kord.common.entity.ArchiveDuration
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
+import dev.kord.core.behavior.channel.threads.unsafeStartPublicThreadWithMessage
+import dev.kord.core.behavior.channel.threads.unsafeStartThread
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.TextChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchTextChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.datetime.Instant
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface TextChannelBehavior : GuildMessageChannelBehavior {
+interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
+
+    override val activeThreads: Flow<TextChannelThread>
+        get() = super.activeThreads.filterIsInstance()
 
     /**
      * Requests to get the this behavior as a [TextChannel].
@@ -35,6 +47,44 @@ interface TextChannelBehavior : GuildMessageChannelBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      */
     override suspend fun asChannelOrNull(): TextChannel? = super.asChannelOrNull() as? TextChannel
+
+    suspend fun startPublicThread(
+        name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+        reason: String? = null
+
+    ): TextChannelThread {
+        return unsafeStartThread(name, archiveDuration, ChannelType.PublicGuildThread, reason) as TextChannelThread
+    }
+
+    suspend fun startPrivateThread(
+        name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+        reason: String? = null
+    ): TextChannelThread {
+        return unsafeStartThread(name, archiveDuration, ChannelType.PrivateThread, reason) as TextChannelThread
+    }
+
+    suspend fun startPublicThreadWithMessage(
+        messageId: Snowflake,
+        name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+        reason: String? = null
+    ): TextChannelThread {
+        return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration, reason) as TextChannelThread
+    }
+
+    override fun getPublicArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
+        return super.getPublicArchivedThreads(before, limit).filterIsInstance()
+    }
+
+    override fun getPrivateArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
+        return super.getPrivateArchivedThreads(before, limit).filterIsInstance()
+    }
+
+    override fun getJoinedPrivateArchivedThreads(before: Snowflake, limit: Int): Flow<TextChannelThread> {
+        return super.getJoinedPrivateArchivedThreads(before, limit).filterIsInstance()
+    }
 
 
     /**

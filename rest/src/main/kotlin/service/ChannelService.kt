@@ -7,6 +7,7 @@ import dev.kord.rest.builder.message.MessageCreateBuilder
 import dev.kord.rest.builder.message.MessageModifyBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.json.response.FollowedChannelResponse
+import dev.kord.rest.json.response.ListThreadsResponse
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
@@ -220,6 +221,13 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             body(ChannelModifyPatchRequest.serializer(), channel)
             reason?.let { header("X-Audit-Log-Reason", reason) }
         }
+    suspend fun patchThread(threadId: Snowflake, thread: ChannelModifyPatchRequest, reason: String? = null) =
+        call(Route.ChannelPatch) {
+            keys[Route.ChannelId] = threadId
+            body(ChannelModifyPatchRequest.serializer(), thread)
+            reason?.let { header("X-Audit-Log-Reason", reason) }
+        }
+
 
     @KordPreview
     suspend fun crossPost(channelId: Snowflake, messageId: Snowflake): DiscordMessage = call(Route.MessageCrosspost) {
@@ -233,6 +241,106 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.ChannelId] = channelId
             body(ChannelFollowRequest.serializer(), request)
         }
+    suspend fun startThreadWithMessage(
+        channelId: Snowflake,
+        messageId: Snowflake,
+        request: StartThreadRequest,
+        reason: String? = null
+    ): DiscordChannel {
+        return call(Route.StartPublicThreadWithMessagePost) {
+            keys[Route.ChannelId] = channelId
+            keys[Route.MessageId] = messageId
+            body(StartThreadRequest.serializer(), request)
+            reason?.let { header("X-Audit-Log-Reason", reason) }
+
+        }
+    }
+
+
+    suspend fun startThread(
+        channelId: Snowflake,
+        request: StartThreadRequest,
+        reason: String? = null
+    ): DiscordChannel {
+        return call(Route.StartThreadPost) {
+            keys[Route.ChannelId] = channelId
+            body(StartThreadRequest.serializer(), request)
+            reason?.let { header("X-Audit-Log-Reason", reason) }
+
+        }
+    }
+
+    suspend fun joinThread(channelId: Snowflake) {
+        call(Route.JoinThreadPut) {
+            keys[Route.ChannelId] = channelId
+        }
+    }
+
+    suspend fun addUserToThread(channelId: Snowflake, userId: Snowflake) {
+        call(Route.AddThreadMemberPut) {
+            keys[Route.ChannelId] = channelId
+            keys[Route.UserId] = userId
+        }
+    }
+    suspend fun leaveThread(channelId: Snowflake) {
+        call(Route.LeaveThreadDelete) {
+            keys[Route.ChannelId] = channelId
+        }
+    }
+
+    suspend fun removeUserFromThread(channelId: Snowflake, userId: Snowflake) {
+        call(Route.RemoveUserFromThreadDelete) {
+            keys[Route.ChannelId] = channelId
+            keys[Route.UserId] = userId
+        }
+    }
+
+    suspend fun listThreadMembers(channelId: Snowflake): List<DiscordThreadMember> {
+        return call(Route.ThreadMembersGet) {
+            keys[Route.ChannelId] = channelId
+        }
+    }
+
+    suspend fun listActiveThreads(channelId: Snowflake): ListThreadsResponse {
+        return call(Route.ActiveThreadsGet) {
+            keys[Route.ChannelId] = channelId
+
+        }
+    }
+
+    suspend fun listPublicArchivedThreads(channelId: Snowflake, request: ListThreadsByTimestampRequest): ListThreadsResponse {
+        return call(Route.PublicArchivedThreadsGet) {
+            keys[Route.ChannelId] = channelId
+            val before = request.before
+            val limit = request.limit
+            if(before != null) parameter("before", before)
+            if(limit != null) parameter("limit", limit)
+
+        }
+    }
+
+    suspend fun listPrivateArchivedThreads(channelId: Snowflake, request: ListThreadsByTimestampRequest): ListThreadsResponse {
+        return call(Route.PrivateArchivedThreadsGet) {
+            keys[Route.ChannelId] = channelId
+            val before = request.before
+            val limit = request.limit
+            if(before != null) parameter("before", before)
+            if(limit != null) parameter("limit", limit)
+
+        }
+    }
+
+    suspend fun listJoinedPrivateArchivedThreads(channelId: Snowflake, request: ListThreadsBySnowflakeRequest): ListThreadsResponse {
+        return call(Route.JoinedPrivateArchivedThreadsGet) {
+            keys[Route.ChannelId] = channelId
+            val before = request.before
+            val limit = request.limit
+            if(before != null) parameter("before", before)
+            if(limit != null) parameter("limit", limit)
+
+        }
+
+    }
 
 }
 

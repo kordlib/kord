@@ -65,7 +65,16 @@ data class DiscordChannel(
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("last_pin_timestamp")
     val lastPinTimestamp: Optional<String?> = Optional.Missing(),
-    val permissions: Optional<Permissions> = Optional.Missing()
+    val permissions: Optional<Permissions> = Optional.Missing(),
+    @SerialName("message_count")
+    val messageCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("member_count")
+    val memberCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("thread_metadata")
+    val threadMetadata: Optional<DiscordThreadMetadata> = Optional.Missing(),
+    @SerialName("default_auto_archive_duration")
+    val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
+    val member: Optional<DiscordThreadMember> = Optional.Missing()
 )
 
 @Serializable(with = ChannelType.Serializer::class)
@@ -94,6 +103,14 @@ sealed class ChannelType(val value: Int) {
     /** A channel in which game developers can sell their game on Discord. */
     object GuildStore : ChannelType(6)
 
+    object PublicNewsThread : ChannelType(10)
+
+    object PublicGuildThread : ChannelType(11)
+
+    object PrivateThread : ChannelType(12)
+
+
+
     object GuildStageVoice : ChannelType(13)
 
     companion object;
@@ -110,6 +127,9 @@ sealed class ChannelType(val value: Int) {
             4 -> GuildCategory
             5 -> GuildNews
             6 -> GuildStore
+            10 -> PublicNewsThread
+            11 -> PublicGuildThread
+            12 -> PrivateThread
             13 -> GuildStageVoice
             else -> Unknown(code)
         }
@@ -152,5 +172,48 @@ sealed class OverwriteType(val value: Int) {
         override fun serialize(encoder: Encoder, value: OverwriteType) {
             encoder.encodeInt(value.value)
         }
+    }
+}
+
+@Serializable
+class DiscordThreadMetadata(
+    val archived: Boolean,
+    @SerialName("archive_timestamp")
+    val archiveTimestamp: String,
+    @SerialName("auto_archive_duration")
+    val autoArchiveDuration: ArchiveDuration,
+    val locked: OptionalBoolean = OptionalBoolean.Missing
+)
+
+@Serializable(with = ArchiveDuration.Serializer::class)
+sealed class ArchiveDuration(val duration: Int) {
+    class Unknown(duration: Int) : ArchiveDuration(duration)
+    object Hour : ArchiveDuration(60)
+    object Day : ArchiveDuration(1440)
+    object ThreeDays : ArchiveDuration(4320)
+    object Week : ArchiveDuration(10080)
+
+    object Serializer : KSerializer<ArchiveDuration> {
+        override fun deserialize(decoder: Decoder): ArchiveDuration {
+            val value = decoder.decodeInt()
+            return values.firstOrNull { it.duration == value } ?: Unknown(value)
+        }
+
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("AutoArchieveDuration", PrimitiveKind.INT)
+
+        override fun serialize(encoder: Encoder, value: ArchiveDuration) {
+            encoder.encodeInt(value.duration)
+        }
+    }
+
+    companion object {
+        val values: Set<ArchiveDuration>
+            get() = setOf(
+                Hour,
+                Day,
+                ThreeDays,
+                Week,
+            )
     }
 }
