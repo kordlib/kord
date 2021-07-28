@@ -686,7 +686,7 @@ data class DiscordThreadListSync(
     val guildId: Snowflake,
     @SerialName("channel_ids")
     val channelIds: Optional<List<Snowflake>> = Optional.Missing(),
-    val theads: List<DiscordChannel>,
+    val threads: List<DiscordChannel>,
     val members: List<DiscordThreadMember>
 )
 
