@@ -8,6 +8,7 @@ import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.core.entity.channel.thread.TextChannelThread
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -53,11 +54,22 @@ interface Channel : ChannelBehavior {
             PrivateThread -> TextChannelThread(data, kord)
             PublicGuildThread -> TextChannelThread(data, kord)
 
-            else -> object : Channel {
-                override val data: ChannelData = data
-                override val kord: Kord = kord
-                override val supplier: EntitySupplier = strategy.supply(kord)
+            else -> {
+                if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))
+                else ThreadChannel(data, kord, strategy.supply(kord))
             }
         }
+    }
+}
+
+fun Channel(
+    data: ChannelData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+): Channel {
+    return object : Channel {
+        override val data: ChannelData = data
+        override val kord: Kord = kord
+        override val supplier: EntitySupplier = supplier
     }
 }

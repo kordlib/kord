@@ -55,19 +55,6 @@ class StageChannelCreateEvent(override val channel: StageChannel, override val s
     }
 }
 
-class TextChannelThreadCreateEvent(override val channel: TextChannelThread, override val shard: Int) : ChannelCreateEvent {
-    override fun toString(): String {
-        return "TextThreadChannelCreateEvent(channel=$channel, shard=$shard)"
-    }
-}
-
-
-class NewsChannelThreadCreateEvent(override val channel: NewsChannelThread, override val shard: Int) : ChannelCreateEvent {
-    override fun toString(): String {
-        return "NewsThreadChannelCreateEvent(channel=$channel, shard=$shard)"
-    }
-}
-
 class UnknownChannelCreateEvent(override val channel: Channel, override val shard: Int) : ChannelCreateEvent {
     override fun toString(): String {
         return "UnknownChannelCreateEvent(channel=$channel, shard=$shard)"

@@ -10,10 +10,10 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  * A thread channel instance whose parent is a [NewsChannel].
  */
 class NewsChannelThread(
-    data: ChannelData,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier
-) : ThreadChannel(data, kord, supplier) {
+    override val data: ChannelData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : ThreadChannel {
 
 
     override suspend fun asChannel(): NewsChannelThread = super.asChannel() as NewsChannelThread

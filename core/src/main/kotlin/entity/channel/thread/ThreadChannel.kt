@@ -14,19 +14,9 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 
-sealed class ThreadChannel(
-    override val data: ChannelData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier
-) : GuildMessageChannel, ThreadChannelBehavior {
+interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
 
-    private val threadData get() = data.threadsMetadata.value!!
-
-    override val id: Snowflake get() = data.id
-
-    override val guildId: Snowflake get() = data.guildId.value!!
-
-    override val name: String get() = data.name.value!!
+    private val threadData get() = data.threadMetadata.value!!
 
     val ownerId: Snowflake
         get() = data.ownerId.value!!
@@ -65,6 +55,21 @@ sealed class ThreadChannel(
         return super<GuildMessageChannel>.asChannelOrNull() as? ThreadChannel
     }
 
-    abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannel
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannel {
+        return ThreadChannel(data, kord, strategy.supply(kord))
+    }
 
+}
+
+fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySupplier): ThreadChannel {
+
+    return object : ThreadChannel {
+
+        override val data: ChannelData
+            get() = data
+        override val kord: Kord
+            get() = kord
+        override val supplier: EntitySupplier
+            get() = supplier
+    }
 }
