@@ -60,9 +60,9 @@ interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
 
 
     /**
-     * 	amount of seconds a user has to wait before sending another message
-     * 	bots, users with the permission [Manage Messages][dev.kord.common.entity.Permission.ManageMessages] or
-     * 	[Manage Messages][dev.kord.common.entity.Permission.ManageChannels]  are unaffected.
+     * amount of seconds a user has to wait before sending another message
+     * bots, users with the permission [Manage Messages][dev.kord.common.entity.Permission.ManageMessages] or
+     * [Manage Messages][dev.kord.common.entity.Permission.ManageChannels]  are unaffected.
      */
     val rateLimitPerUser: Int? get() = data.rateLimitPerUser.value
 
