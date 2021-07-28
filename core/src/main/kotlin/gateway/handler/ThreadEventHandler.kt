@@ -5,6 +5,7 @@ import dev.kord.cache.api.put
 import dev.kord.cache.api.query
 import dev.kord.cache.api.remove
 import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.*
@@ -78,12 +79,27 @@ class ThreadEventHandler(
 
     suspend fun handle(event: ThreadListSync, shard: Int) {
         val data = ThreadListSyncData.from(event)
-        for (thread in data.threads) {
+        /*
+        If this field is omitted the threads are being synced for the whole guild
+        otherwise just syncing mentioned parent ids
+        https://discord.com/developers/docs/topics/gateway#thread-list-sync-thread-list-sync-event-fields
+        so we must clean threads before refilling cache.
+        */
+        cache.remove<ChannelData> {
+            if (data.channelIds is Optional.Missing) {
+                ChannelData::threadMetadata.ne(Optional.Missing)
+                ChannelData::guildId.eq(data.guildId)
+            } else ChannelData::parentId `in` data.channelIds.orEmpty()
+        }
+
+
+        data.threads.forEach { thread ->
             cache.put(thread)
         }
-        for (member in data.members) {
+        data.members.forEach { member ->
             cache.put(member)
         }
+
         val coreEvent = ThreadListSyncEvent(data, kord, shard)
 
         coreFlow.emit(coreEvent)

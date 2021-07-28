@@ -1,6 +1,7 @@
 package dev.kord.core.behavior.channel.threads
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.toData
@@ -16,23 +17,50 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 interface ThreadChannelBehavior : MessageChannelBehavior {
-
+    /**
+     * Requests to get all members of the current thread..
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
     val members: Flow<ThreadUser>
         get() = supplier.getThreadMembers(id)
 
-
+    /**
+     * Removes the user identified by [id] from the current thread.
+     * Requires the thread is not archived.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
     suspend fun removeUser(userId: Snowflake) {
         kord.rest.channel.removeUserFromThread(id, userId)
     }
 
+    /**
+     * Adds the user identified by [id] from the current thread.
+     *
+     *  @throws [RequestException] if something went wrong during the request.
+     */
     suspend fun addUser(userId: Snowflake) {
         kord.rest.channel.addUserToThread(id, userId)
     }
 
+    /**
+     * Join the the current thread.
+     * Requires the thread is not archived.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
     suspend fun join() {
         kord.rest.channel.joinThread(id)
     }
 
+    /**
+     * Leaves the current thread if the bot has already joined.
+     * Requires the thread is not archived.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
     suspend fun leave() {
         kord.rest.channel.leaveThread(id)
     }

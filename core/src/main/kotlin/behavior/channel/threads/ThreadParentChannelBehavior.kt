@@ -4,14 +4,12 @@ import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
-import dev.kord.core.Kord
+import dev.kord.common.exception.RequestException
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
-import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
@@ -22,9 +20,24 @@ import kotlinx.datetime.Instant
  * Behavior of channels that can contain public threads.
  */
 interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
+    /**
+     * Returns all active public and private threads in the channel.
+     * Threads are ordered by their id, in descending order.
+     *
+     *  The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
 
+     */
     val activeThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(id)
 
+    /**
+     * Returns archived threads in the channel that are public.
+     * Threads are ordered by [ThreadChannel.archiveTimeStamp] in descending order.
+     * Requires the [Read Message History Permission][dev.kord.common.entity.Permission.ReadMessageHistory]
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
     fun getPublicArchivedThreads(
         before: Instant = Clock.System.now(),
         limit: Int = Int.MAX_VALUE
@@ -62,9 +75,7 @@ interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
         return super.asChannelOrNull() as? ThreadParentChannel
     }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildMessageChannelBehavior {
-        return ThreadParentChannelBehavior(guildId, id, kord, strategy.supply(kord))
-    }
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadParentChannelBehavior
 
 }
 
@@ -75,6 +86,16 @@ interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
  */
 interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
 
+    /**
+     * Returns archived threads in the channel that are private.
+     * Threads are ordered by [archive timestamp][ThreadChannel.archiveTimeStamp] in descending order.
+     * Requires the [Read Message History Permission][dev.kord.common.entity.Permission.ReadMessageHistory] and
+     * [Manage Threads Permission][dev.kord.common.entity.Permission.ManageThreads]
+     *
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
     fun getPrivateArchivedThreads(
         before: Instant = Clock.System.now(),
         limit: Int = Int.MAX_VALUE
@@ -82,6 +103,14 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
         return supplier.getPrivateArchivedThreads(id, before, limit)
     }
 
+    /**
+     * Returns archived threads in the channel that are private, and the user has joined.
+     * Threads are ordered by their [id][ThreadChannel.id] in descending order.
+     * Requires the [Read Message History Permission][dev.kord.common.entity.Permission.ReadMessageHistory].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
     fun getJoinedPrivateArchivedThreads(
         before: Snowflake = Snowflake(Long.MAX_VALUE),
         limit: Int = Int.MAX_VALUE
@@ -95,27 +124,11 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
     suspend fun startPrivateThread(name: String, archiveDuration: ArchiveDuration = ArchiveDuration.Day): ThreadChannel
 }
 
-fun ThreadParentChannelBehavior(
-    guildId: Snowflake,
-    id: Snowflake,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier
-) = object : ThreadParentChannelBehavior {
-    override suspend fun startPublicThread(name: String, archiveDuration: ArchiveDuration): ThreadChannel {
-        TODO("Not yet implemented")
-    }
-
-    override val guildId: Snowflake
-        get() = guildId
-    override val kord: Kord
-        get() = kord
-    override val id: Snowflake
-        get() = id
-    override val supplier: EntitySupplier
-        get() = supplier
-
-}
-
+/**
+ * starts a thread in the current thread parent based on [type] using given [name] and archived after [archiveDuration].
+ * [type] should match the parent types.
+ * @throws [RequestException] if something went wrong during the request.
+ */
 internal suspend fun ThreadParentChannelBehavior.startThread(
     name: String,
     archiveDuration: ArchiveDuration,

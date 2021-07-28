@@ -232,6 +232,14 @@ internal fun <C : Collection<T>, T : KordEntity> paginateBackwards(
 ): Flow<T> =
     paginate(start, batchSize, { it.id }, oldestItem { it.id }, Position::Before, request)
 
+/**
+ * Paginates the [Collection] returned by [request] with [start] as a initial reference in time.
+ * [instantSelector] is used to select the new reference to fetch from.
+ *
+ * Termination scenarios:
+ * * [Collection]'s size fall behind [batchSize].
+ * * [instantSelector] returns null.
+ */
 internal fun <C : Collection<T>, T> paginateByDate(
     start: Instant = Clock.System.now(),
     batchSize: Int,
@@ -250,6 +258,11 @@ internal fun <C : Collection<T>, T> paginateByDate(
     }
 }
 
+/**
+ * A special function to paginate [ThreadChannel] endpoints.
+ * selects the least time reference found in the response of the request on each pagination.
+ * see [paginateByDate]
+ */
 internal fun paginateThreads(
     batchSize: Int,
     start: Instant = Clock.System.now(),
