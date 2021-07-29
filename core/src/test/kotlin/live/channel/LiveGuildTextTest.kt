@@ -7,7 +7,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.live.channel.LiveGuildChannel
 import dev.kord.core.live.channel.onUpdate
 import dev.kord.core.supplier.EntitySupplier
@@ -32,8 +32,8 @@ class LiveGuildTextTest : LiveChannelTest<LiveGuildChannel>() {
         override val kord: Kord,
         override val data: ChannelData,
         override val supplier: EntitySupplier = kord.defaultSupplier
-    ) : GuildChannel {
-        override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildChannel {
+    ) : TopGuildChannel {
+        override fun withStrategy(strategy: EntitySupplyStrategy<*>): TopGuildChannel {
             error("Not invoked in test")
         }
     }

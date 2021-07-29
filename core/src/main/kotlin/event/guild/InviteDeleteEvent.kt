@@ -4,10 +4,11 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.cache.data.InviteDeleteData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -25,14 +26,14 @@ class InviteDeleteEvent(
 ) : Event, Strategizable {
 
     /**
-     * The [GuildChannel] of the invite.
+     * The [TopGuildChannel] of the invite.
      */
     val channelId: Snowflake get() = data.channelId
 
     /**
-     * The behavior of the [GuildChannel] of the invite.
+     * The behavior of the [TopGuildChannel] of the invite.
      */
-    val channel: GuildChannelBehavior get() = GuildChannelBehavior(guildId = guildId, id = channelId, kord = kord)
+    val channel: TopGuildChannelBehavior get() = TopGuildChannelBehavior(guildId = guildId, id = channelId, kord = kord)
 
     /**
      * The [Guild] of the invite.
@@ -50,11 +51,11 @@ class InviteDeleteEvent(
     val code: String get() = data.code
 
     /**
-     * Requests to get the [GuildChannel] of the invite.
+     * Requests to get the [TopGuildChannel] of the invite.
      */
-    suspend fun getChannel(): GuildChannel = supplier.getChannelOf(channelId)
+    suspend fun getChannel(): TopGuildChannel = supplier.getChannelOf(channelId)
 
-    suspend fun getChannelOrNull(): GuildChannel? = supplier.getChannelOfOrNull(channelId)
+    suspend fun getChannelOrNull(): TopGuildChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
      * Requests to get the [Guild] of the invite.

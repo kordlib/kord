@@ -9,7 +9,7 @@ import dev.kord.core.*
 import dev.kord.core.cache.data.*
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
@@ -71,7 +71,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
     override suspend fun getChannelOrNull(id: Snowflake): Channel? =
         catchNotFound { Channel.from(channel.getChannel(id).toData(), kord) }
 
-    override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = flow {
+    override fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel> = flow {
         for (channelData in guild.getGuildChannels(guildId))
             emit(Channel.from(ChannelData.from(channelData), kord))
     }.filterIsInstance()

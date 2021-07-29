@@ -105,7 +105,7 @@ interface ThreadChannelBehavior : GuildMessageChannelBehavior {
     }
 
     override suspend fun asChannelOrNull(): ThreadChannel? {
-        return super.asChannelOrNull() as ThreadChannel
+        return super.asChannelOrNull() as? ThreadChannel
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannelBehavior {

@@ -5,7 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
@@ -91,12 +91,12 @@ interface EntitySupplier {
     suspend fun getChannel(id: Snowflake): Channel = getChannelOrNull(id)!!
 
     /**
-     * Requests the [channels][GuildChannel] of the [Guild] with the given [guildId], channels with an [Unknown] type will be filtered out of the list.
+     * Requests the [channels][TopGuildChannel] of the [Guild] with the given [guildId], channels with an [Unknown] type will be filtered out of the list.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel>
+    fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel>
 
     /**
      * Requests the pinned [messages][Message] of the [Channel] with the given [channelId].

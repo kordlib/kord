@@ -5,7 +5,6 @@ import dev.kord.common.entity.optional.value
 import dev.kord.core.behavior.channel.CategoryBehavior
 import dev.kord.core.cache.data.InviteData
 import dev.kord.core.entity.Invite
-import dev.kord.core.toSnowflakeOrNull
 import dev.kord.rest.builder.channel.InviteCreateBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.ExperimentalContracts
@@ -15,7 +14,7 @@ import kotlin.contracts.contract
 /**
  * An instance of a Discord channel associated to a [category].
  */
-interface CategorizableChannel : GuildChannel {
+interface CategorizableChannel : TopGuildChannel {
 
     /**
      * The id of the [category] this channel belongs to, if any.

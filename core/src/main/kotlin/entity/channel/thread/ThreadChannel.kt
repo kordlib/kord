@@ -8,7 +8,6 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -61,7 +60,6 @@ interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
      */
     val autoArchiveDuration: ArchiveDuration get() = threadData.autoArchiveDuration
 
-
     /**
      * amount of seconds a user has to wait before sending another message
      * bots, users with the permission [Manage Messages][dev.kord.common.entity.Permission.ManageMessages] or
@@ -90,6 +88,7 @@ interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
      * The member of the current user in the thread.
      */
     val member: ThreadMember? get() = data.member.unwrap { ThreadMember(it, kord) }
+
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannel {
         return ThreadChannel(data, kord, strategy.supply(kord))

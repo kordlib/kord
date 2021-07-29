@@ -6,7 +6,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
@@ -21,7 +21,7 @@ import kotlinx.datetime.Instant
 /**
  * Behavior of channels that can contain public threads.
  */
-interface ThreadParentChannelBehavior : GuildMessageChannelBehavior {
+interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
     /**
      * Returns all active public and private threads in the channel.
      * Threads are ordered by their id, in descending order.

@@ -8,7 +8,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface InviteChannel : GuildChannel
+interface InviteChannel : TopGuildChannel
 
 /**
  * Request to create an invite for this channel.

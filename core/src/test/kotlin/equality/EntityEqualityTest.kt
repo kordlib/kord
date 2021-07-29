@@ -19,7 +19,6 @@ interface EntityEqualityTest<T : KordEntity> {
         val id = randomId()
         val a = newEntity(id)
         val b = newEntity(id)
-
         assertEquals(a, b)
     }
 

@@ -3,7 +3,7 @@ package dev.kord.core.entity.channel
 import dev.kord.common.entity.optional.getOrThrow
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
@@ -43,7 +43,7 @@ class VoiceChannel(
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
-        is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+        is TopGuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false
     }

@@ -3,7 +3,7 @@ package dev.kord.core.supplier
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.switchIfEmpty
@@ -31,7 +31,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getChannelOrNull(id: Snowflake): Channel? =
         first.getChannelOrNull(id) ?: second.getChannelOrNull(id)
 
-    override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> =
+    override fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel> =
         first.getGuildChannels(guildId).switchIfEmpty(second.getGuildChannels(guildId))
 
     override fun getChannelPins(channelId: Snowflake): Flow<Message> =

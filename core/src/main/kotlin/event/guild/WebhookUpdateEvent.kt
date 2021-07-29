@@ -4,9 +4,10 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -21,13 +22,13 @@ class WebhookUpdateEvent(
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
-    val channel: GuildMessageChannelBehavior get() = GuildMessageChannelBehavior(guildId, channelId, kord)
+    val channel: TopGuildMessageChannelBehavior get() = TopGuildMessageChannelBehavior(guildId, channelId, kord)
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    suspend fun getChannel(): GuildMessageChannel = supplier.getChannelOf(channelId)
+    suspend fun getChannel(): TopGuildMessageChannel = supplier.getChannelOf(channelId)
 
-    suspend fun getChannelOrNull(): GuildMessageChannel? = supplier.getChannelOfOrNull(channelId)
+    suspend fun getChannelOrNull(): TopGuildMessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     suspend fun getGuild(): Guild = guild.asGuild()
 

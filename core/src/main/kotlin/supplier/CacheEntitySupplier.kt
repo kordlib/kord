@@ -14,7 +14,7 @@ import dev.kord.core.cache.idEq
 import dev.kord.core.cache.idGt
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
@@ -116,7 +116,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Channel.from(data, kord)
     }
 
-    override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = cache.query<ChannelData> {
+    override fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel> = cache.query<ChannelData> {
         idEq(ChannelData::guildId, guildId)
     }.asFlow().map { Channel.from(it, kord) }.filterIsInstance()
 

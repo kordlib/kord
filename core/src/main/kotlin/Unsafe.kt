@@ -35,11 +35,11 @@ class Unsafe(private val kord: Kord) {
     fun messageChannel(id: Snowflake): MessageChannelBehavior =
         MessageChannelBehavior(id, kord)
 
-    fun guildChannel(guildId: Snowflake, id: Snowflake): GuildChannelBehavior =
-        GuildChannelBehavior(guildId = guildId, id = id, kord = kord)
+    fun guildChannel(guildId: Snowflake, id: Snowflake): TopGuildChannelBehavior =
+        TopGuildChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun guildMessageChannel(guildId: Snowflake, id: Snowflake): GuildMessageChannelBehavior =
-        GuildMessageChannelBehavior(guildId = guildId, id = id, kord = kord)
+    fun guildMessageChannel(guildId: Snowflake, id: Snowflake): TopGuildMessageChannelBehavior =
+        TopGuildMessageChannelBehavior(guildId = guildId, id = id, kord = kord)
 
     fun newsChannel(guildId: Snowflake, id: Snowflake): NewsChannelBehavior =
         NewsChannelBehavior(guildId = guildId, id = id, kord = kord)

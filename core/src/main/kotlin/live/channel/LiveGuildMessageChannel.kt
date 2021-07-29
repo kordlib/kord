@@ -3,7 +3,7 @@ package dev.kord.core.live.channel
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.KordEntity
-import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.event.Event
 import dev.kord.core.event.channel.ChannelCreateEvent
 import dev.kord.core.event.channel.ChannelDeleteEvent
@@ -14,12 +14,12 @@ import dev.kord.core.live.on
 import kotlinx.coroutines.*
 
 @KordPreview
-fun GuildMessageChannel.live(
+fun TopGuildMessageChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) = LiveGuildMessageChannel(this, coroutineScope)
 
 @KordPreview
-inline fun GuildMessageChannel.live(
+inline fun TopGuildMessageChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveGuildMessageChannel.() -> Unit
 ) = this.live(coroutineScope).apply(block)
@@ -72,19 +72,19 @@ fun LiveGuildMessageChannel.onDelete(scope: CoroutineScope = this, block: suspen
 
 @KordPreview
 class LiveGuildMessageChannel(
-    channel: GuildMessageChannel,
+    channel: TopGuildMessageChannel,
     coroutineScope: CoroutineScope = channel.kord + SupervisorJob(channel.kord.coroutineContext.job)
 ) : LiveChannel(channel.kord, coroutineScope), KordEntity {
 
     override val id: Snowflake
         get() = channel.id
 
-    override var channel: GuildMessageChannel = channel
+    override var channel: TopGuildMessageChannel = channel
         private set
 
     override fun update(event: Event) = when (event) {
-        is ChannelCreateEvent -> channel = event.channel as GuildMessageChannel
-        is ChannelUpdateEvent -> channel = event.channel as GuildMessageChannel
+        is ChannelCreateEvent -> channel = event.channel as TopGuildMessageChannel
+        is ChannelUpdateEvent -> channel = event.channel as TopGuildMessageChannel
         is ChannelDeleteEvent -> shutDown(LiveCancellationException(event, "The channel is deleted"))
 
         is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
