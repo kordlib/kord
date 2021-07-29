@@ -8,7 +8,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
-import dev.kord.core.entity.channel.thread.ThreadUser
+import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
@@ -398,7 +398,7 @@ interface EntitySupplier {
     suspend fun getStageInstance(channelId: Snowflake): StageInstance =
         getStageInstanceOrNull(channelId) ?: EntityNotFoundException.stageInstanceNotFound(channelId)
 
-    fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser>
+    fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember>
 
     fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel>
 

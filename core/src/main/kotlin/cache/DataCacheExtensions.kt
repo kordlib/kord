@@ -1,7 +1,6 @@
 package dev.kord.core.cache
 
 import dev.kord.cache.api.DataCache
-import dev.kord.cache.api.find
 import dev.kord.cache.api.query
 import dev.kord.core.cache.data.*
 
@@ -14,7 +13,7 @@ internal suspend fun DataCache.registerKordData() = register(
     GuildData.description,
     MemberData.description,
     UserData.description,
-    ThreadUserData.description,
+    ThreadMemberData.description,
     MessageData.description,
     EmojiData.description,
     WebhookData.description,

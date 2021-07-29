@@ -8,7 +8,7 @@ class ThreadListSyncData(
     val guildId: Snowflake,
     val channelIds: Optional<List<Snowflake>> = Optional.Missing(),
     val threads: List<ChannelData>,
-    val members: List<ThreadUserData>
+    val members: List<ThreadMemberData>
 ) {
     companion object {
         fun from(event: ThreadListSync): ThreadListSyncData = with(event.sync) {
@@ -16,7 +16,7 @@ class ThreadListSyncData(
                 guildId,
                 channelIds,
                 threads.map { it.toData() },
-                members.map { ThreadUserData.from(it) }
+                members.map { ThreadMemberData.from(it) }
             )
         }
     }

@@ -11,7 +11,7 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
-import dev.kord.core.entity.channel.thread.ThreadUser
+import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
@@ -339,10 +339,10 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         return StageInstance(data, kord, this)
     }
 
-    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser> = flow {
+    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember> = flow {
         kord.rest.channel.listThreadMembers(channelId).onEach {
-            val data = ThreadUserData.from(it)
-            emit(ThreadUser(data, kord))
+            val data = ThreadMemberData.from(it)
+            emit(ThreadMember(data, kord))
         }
     }
 

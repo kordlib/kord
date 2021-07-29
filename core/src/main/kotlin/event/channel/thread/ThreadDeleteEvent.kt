@@ -16,7 +16,7 @@ sealed interface ThreadChannelDeleteEvent : ChannelDeleteEvent {
 class TextChannelThreadDeleteEvent(
     override val channel: DeletedThreadChannel,
     override val old: TextChannelThread?,
-    override val shard: Int
+    override val shard: Int,
 ) : ThreadChannelDeleteEvent {
     override fun toString(): String {
         return "TextThreadChannelDeleteEvent(channel=$channel, shard=$shard)"

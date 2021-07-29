@@ -5,7 +5,7 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
-import dev.kord.core.entity.channel.thread.ThreadUser
+import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
@@ -120,7 +120,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? =
          first.getStageInstanceOrNull(channelId) ?: second.getStageInstanceOrNull(channelId)
 
-    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser> {
+    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember> {
         return first.getThreadMembers(channelId).switchIfEmpty(second.getThreadMembers(channelId))
     }
 

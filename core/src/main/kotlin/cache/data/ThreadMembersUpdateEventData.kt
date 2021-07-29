@@ -9,7 +9,7 @@ class ThreadMembersUpdateEventData(
     val id: Snowflake,
     val guildId: Snowflake,
     val memberCount: Int,
-    val addedMembers: Optional<List<ThreadUserData>> = Optional.Missing(),
+    val addedMembers: Optional<List<ThreadMemberData>> = Optional.Missing(),
     val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing()
 ) {
     companion object {
@@ -18,7 +18,7 @@ class ThreadMembersUpdateEventData(
                 id,
                 guildId,
                 memberCount,
-                addedMembers.mapList { ThreadUserData.from(it) },
+                addedMembers.mapList { ThreadMemberData.from(it) },
                 removedMemberIds
             )
         }
