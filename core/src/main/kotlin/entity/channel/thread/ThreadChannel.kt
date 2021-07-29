@@ -8,6 +8,7 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -26,6 +27,8 @@ interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
 
     val owner: UserBehavior
         get() = UserBehavior(ownerId, kord)
+
+    override val parentId: Snowflake get() = data.parentId.value!!
 
 
     /**
@@ -86,15 +89,7 @@ interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
     /**
      * The member of the current user in the thread.
      */
-    val member: ThreadUser? get() = data.member.unwrap { ThreadUser(it, kord) }
-
-    override suspend fun asChannel(): ThreadChannel {
-        return super<GuildMessageChannel>.asChannel() as ThreadChannel
-    }
-
-    override suspend fun asChannelOrNull(): ThreadChannel? {
-        return super<GuildMessageChannel>.asChannelOrNull() as? ThreadChannel
-    }
+    val member: ThreadMember? get() = data.member.unwrap { ThreadMember(it, kord) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannel {
         return ThreadChannel(data, kord, strategy.supply(kord))
@@ -112,5 +107,7 @@ internal fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySuppli
             get() = kord
         override val supplier: EntitySupplier
             get() = supplier
+        override val guildId: Snowflake
+            get() = data.guildId.value!!
     }
 }

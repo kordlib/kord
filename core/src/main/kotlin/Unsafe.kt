@@ -61,8 +61,8 @@ class Unsafe(private val kord: Kord) {
     fun privateThreadParent(guildId: Snowflake, id: Snowflake): PrivateThreadParentChannelBehavior =
         PrivateThreadParentChannelBehavior(guildId, id, kord)
 
-    fun thread(id: Snowflake): ThreadChannelBehavior =
-        ThreadChannelBehavior(id, kord)
+    fun thread(guildId: Snowflake, parentId: Snowflake, id: Snowflake): ThreadChannelBehavior =
+        ThreadChannelBehavior(guildId, parentId, id, kord)
 
 
     fun guild(id: Snowflake): GuildBehavior =
@@ -77,8 +77,8 @@ class Unsafe(private val kord: Kord) {
     fun user(id: Snowflake): UserBehavior =
         UserBehavior(id, kord)
 
-    fun threadUser(id: Snowflake, threadId: Snowflake) =
-        ThreadUserBehavior(id, threadId, kord)
+    fun threadMember(id: Snowflake, threadId: Snowflake) =
+        ThreadMemberBehavior(id, threadId, kord)
 
     fun member(guildId: Snowflake, id: Snowflake): MemberBehavior =
         MemberBehavior(guildId = guildId, id = id, kord = kord)
