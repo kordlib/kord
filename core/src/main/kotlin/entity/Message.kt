@@ -12,10 +12,7 @@ import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.MessageData
-import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.TopGuildChannel
-import dev.kord.core.entity.channel.TopGuildMessageChannel
-import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.component.Component
 import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.entity.interaction.MessageInteraction
@@ -260,7 +257,7 @@ class Message(
      * @throws [EntityNotFoundException] if the [Guild] wasn't present.
      * @throws [ClassCastException] if this message wasn't made in a guild.
      */
-    suspend fun getGuild(): Guild = supplier.getChannelOf<TopGuildChannel>(channelId).getGuild()
+    suspend fun getGuild(): Guild = supplier.getChannelOf<GuildChannel>(channelId).getGuild()
 
     /**
      * Requests to get the guild of this message,
@@ -268,7 +265,7 @@ class Message(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<TopGuildChannel>(channelId)?.getGuildOrNull()
+    suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
 
     /**
      * Returns a new [Message] with the given [strategy].
