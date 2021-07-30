@@ -3,6 +3,7 @@ package dev.kord.core.entity.interaction
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
@@ -10,6 +11,7 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.Message
+import dev.kord.core.entity.User
 import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.component.ButtonComponent
 import dev.kord.core.entity.component.Component
@@ -27,8 +29,9 @@ import dev.kord.rest.builder.component.SelectMenuBuilder
 @KordPreview
 sealed class ComponentInteraction : Interaction(), ComponentInteractionBehavior {
 
-    override val user: UserBehavior
-        get() = UserBehavior(data.member.value!!.userId, kord)
+    override val user: User
+        get() = User(data.user.value!!, kord)
+
 
     /**
      * The message that contains the interacted component, null if the message is ephemeral.
