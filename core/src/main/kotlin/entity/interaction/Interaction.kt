@@ -13,6 +13,7 @@ import dev.kord.core.behavior.GuildInteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.ApplicationInteractionData
@@ -377,8 +378,8 @@ class GuildInteraction(
         kord
     )
 
-    override val channel: TopGuildMessageChannelBehavior
-        get() = TopGuildMessageChannelBehavior(guildId, channelId, kord)
+    override val channel: GuildMessageChannelBehavior
+        get() = GuildMessageChannelBehavior(guildId, channelId, kord)
 
     override val user: UserBehavior
         get() = UserBehavior(member.id, kord)

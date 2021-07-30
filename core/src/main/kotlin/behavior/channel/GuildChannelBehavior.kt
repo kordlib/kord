@@ -94,7 +94,7 @@ fun GuildChannelBehavior(
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
-        is TopGuildChannelBehavior -> other.id == id && other.guildId == guildId
+        is GuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false
     }

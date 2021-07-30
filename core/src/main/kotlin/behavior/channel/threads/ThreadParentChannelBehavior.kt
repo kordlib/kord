@@ -6,6 +6,8 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
@@ -17,6 +19,7 @@ import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import java.util.*
 
 /**
  * Behavior of channels that can contain public threads.
@@ -126,7 +129,8 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartPublicThreadWithMess
     reason: String? = null
 ): ThreadChannel {
 
-    val response = kord.rest.channel.startThreadWithMessage(id, messageId, StartThreadRequest(name, archiveDuration), reason)
+    val response =
+        kord.rest.channel.startThreadWithMessage(id, messageId, StartThreadRequest(name, archiveDuration), reason)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel
@@ -152,6 +156,14 @@ internal fun ThreadParentChannelBehavior(
         override val supplier: EntitySupplier
             get() = supplier
 
+        override fun hashCode(): Int = Objects.hash(id, guildId)
+
+        override fun equals(other: Any?): Boolean = when (other) {
+            is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+            is ChannelBehavior -> other.id == id
+            else -> false
+        }
+
     }
 }
 
@@ -175,6 +187,14 @@ internal fun PrivateThreadParentChannelBehavior(
             get() = id
         override val supplier: EntitySupplier
             get() = supplier
+
+        override fun hashCode(): Int = Objects.hash(id, guildId)
+
+        override fun equals(other: Any?): Boolean = when (other) {
+            is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+            is ChannelBehavior -> other.id == id
+            else -> false
+        }
 
     }
 }

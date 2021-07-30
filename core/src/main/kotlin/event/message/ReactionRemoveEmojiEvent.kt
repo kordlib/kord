@@ -30,8 +30,8 @@ class ReactionRemoveEmojiEvent(
      */
     val channelId: Snowflake get() = data.channelId
 
-    val channel: TopGuildMessageChannelBehavior
-        get() = TopGuildMessageChannelBehavior(
+    val channel: GuildMessageChannelBehavior
+        get() = GuildMessageChannelBehavior(
             guildId = guildId,
             id = channelId,
             kord = kord
