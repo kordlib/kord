@@ -69,6 +69,12 @@ internal fun GuildMessageChannelBehavior(
     override val kord: Kord = kord
     override val supplier: EntitySupplier = strategy.supply(kord)
 
+    override fun equals(other: Any?): Boolean = when (other) {
+        is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+        is ChannelBehavior -> other.id == id
+        else -> false
+    }
+
     override fun toString(): String {
         return "GuildMessageChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
     }

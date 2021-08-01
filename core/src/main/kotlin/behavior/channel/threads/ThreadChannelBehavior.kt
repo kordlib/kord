@@ -9,6 +9,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
@@ -91,10 +92,22 @@ interface ThreadChannelBehavior : GuildMessageChannelBehavior {
         super.delete(reason)
     }
 
+    /**
+     * Requests to get this channel's [ThreadParentChannel].
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the thread parent wasn't present.
+     */
     suspend fun getParent(): ThreadParentChannel {
         return supplier.getChannelOf(parentId)
     }
 
+    /**
+     * Requests to get this channel's [ThreadParentChannel],
+     * returns null if the thread parent isn't present.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
     suspend fun getParentOrNull(): ThreadParentChannel? {
         return supplier.getChannelOfOrNull(parentId)
     }

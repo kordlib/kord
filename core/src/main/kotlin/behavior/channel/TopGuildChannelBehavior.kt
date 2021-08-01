@@ -24,7 +24,12 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * The behavior of a Discord channel associated to a [guild].
+ * The behavior of a Discord non-thread channel associated to a [guild].
+ * [TopGuildChannelBehavior] incapsulates the behavior we have known pre-threads such as
+ * [NewsChannelBehavior] and [dev.kord.core.behavior.channel.TextChannelBehavior].
+ *
+ * for the behaviors supported for all guild message channels please see [dev.kord.core.behavior.channel.GuildMessageChannelBehavior].
+ *
  */
 interface TopGuildChannelBehavior : GuildChannelBehavior {
 
@@ -98,7 +103,7 @@ interface TopGuildChannelBehavior : GuildChannelBehavior {
 
 }
 
-fun TopGuildChannelBehavior(
+internal fun TopGuildChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,

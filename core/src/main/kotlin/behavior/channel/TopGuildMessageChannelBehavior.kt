@@ -20,7 +20,12 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * The behavior of a Discord message channel associated to a [guild].
+ * The behavior of a Discord non-thread message channel associated to a [guild].
+ * [TopGuildChannelBehavior] encapsulates the behavior we have known pre-threads such as
+ * [VoiceChannelBehavior] and [TextChannelBehavior].
+ *
+ * for the behaviors supported for all guild channels please see [GuildChannelBehavior].
+ *
  */
 interface TopGuildMessageChannelBehavior : TopGuildChannelBehavior, GuildMessageChannelBehavior {
 
