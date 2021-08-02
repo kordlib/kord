@@ -1,5 +1,6 @@
 package dev.kord.core.entity.channel.thread
 
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -25,6 +26,8 @@ class DeletedThreadChannel(
 
     val id: Snowflake
         get() = data.id
+
+    val type: ChannelType get() = data.type
 
     val guildId: Snowflake
         get() =  data.guildId.value!!
