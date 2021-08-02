@@ -228,6 +228,24 @@ sealed class GuildFeature(val value: String) {
     /** Guild has enabled the welcome screen */
     object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
 
+    /** Guild has enabled ticketed events */
+    object TicketedEventsEnabled : GuildFeature("TICKETED_EVENTS_ENABLED")
+
+    /** Guild has enabled monetization */
+    object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
+
+    /** Guild has increased custom sticker slots */
+    object MoreStickers : GuildFeature("MORE_STICKERS")
+
+    /** Guild has access to the three-day archive time for threads */
+    object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
+
+    /** Guild has access to the seven day archive time for threads */
+    object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
+    
+    /** Guild has access to create private threads */
+    object PrivateThreads : GuildFeature("PRIVATE_THREADS")
+
     internal object Serializer : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
@@ -246,6 +264,12 @@ sealed class GuildFeature(val value: String) {
             "ANIMATED_ICON" -> AnimatedIcon
             "BANNER" -> Banner
             "WELCOME_SCREEN_ENABLED" -> WelcomeScreenEnabled
+            "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
+            "MONETIZATION_ENABLED" -> MonetizationEnabled
+            "MORE_STICKERS" -> MoreStickers
+            "THREE_DAY_THREAD_ARCHIVE" -> ThreeDayThreadArchive
+            "SEVEN_DAY_THREAD_ARCHIVE" -> SevenDayThreadArchive
+            "PRIVATE_THREADS" -> PrivateThreads
             else -> Unknown(value)
         }
 
