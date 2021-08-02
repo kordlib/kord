@@ -1,10 +1,8 @@
 package dev.kord.core.behavior.channel
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.*
 import dev.kord.core.exception.EntityNotFoundException
@@ -31,7 +29,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord category associated to a [guild].
  */
-interface CategoryBehavior : GuildChannelBehavior {
+interface CategoryBehavior : TopGuildChannelBehavior {
 
     /**
      * Requests to get this behavior as a [Category].
@@ -89,7 +87,7 @@ fun CategoryBehavior(
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
-        is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+        is TopGuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false
     }

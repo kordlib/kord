@@ -9,7 +9,9 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.GuildData
@@ -111,7 +113,7 @@ class Guild(
     val bannerHash: String? get() = data.banner
 
     /**
-     * The ids of all [channels][GuildChannel].
+     * The ids of all [channels][TopGuildChannel].
      */
     val channelIds: Set<Snowflake> get() = data.channels.orEmpty().toSet()
 
@@ -155,13 +157,13 @@ class Guild(
         ReplaceWith("widgetChannelId"),
         DeprecationLevel.ERROR
     )
-    val embedChannel: GuildChannelBehavior? by ::widgetChannel
+    val embedChannel: TopGuildChannelBehavior? by ::widgetChannel
 
     /**
      * The behavior of the channel widgets will redirect users to, if present.
      */
-    val widgetChannel: GuildChannelBehavior?
-        get() = widgetChannelId?.let { GuildChannelBehavior(guildId = id, id = it, kord = kord) }
+    val widgetChannel: TopGuildChannelBehavior?
+        get() = widgetChannelId?.let { TopGuildChannelBehavior(guildId = id, id = it, kord = kord) }
 
     /**
      * The ids of custom emojis in this guild.
@@ -238,18 +240,18 @@ class Guild(
     /**
      * The behavior of the channel where guild notices such as welcome messages and boost events are posted.
      */
-    val publicUpdatesChannel: GuildMessageChannelBehavior?
+    val publicUpdatesChannel: TopGuildMessageChannelBehavior?
         get() = publicUpdatesChannelId?.let {
-            GuildMessageChannelBehavior(guildId = id, id = it, kord = kord)
+            TopGuildMessageChannelBehavior(guildId = id, id = it, kord = kord)
         }
 
     val preferredLocale: Locale get() = Locale.forLanguageTag(data.preferredLocale)
 
     /**
-     * The behaviors of all [channels][GuildChannel].
+     * The behaviors of all [channels][TopGuildChannel].
      */
-    val channelBehaviors: Set<GuildChannelBehavior>
-        get() = data.channels.orEmpty().asSequence().map { GuildChannelBehavior(id = it, guildId = id, kord = kord) }
+    val channelBehaviors: Set<TopGuildChannelBehavior>
+        get() = data.channels.orEmpty().asSequence().map { TopGuildChannelBehavior(id = it, guildId = id, kord = kord) }
             .toSet()
 
     /**
@@ -270,9 +272,9 @@ class Guild(
     /**
      * The channel behavior in which a discoverable server's rules should be found.
      **/
-    val rulesChannel: GuildMessageChannelBehavior?
+    val rulesChannel: TopGuildMessageChannelBehavior?
         get() = data.rulesChannelId?.let {
-            GuildMessageChannelBehavior(id, it, kord)
+            TopGuildMessageChannelBehavior(id, it, kord)
         }
 
     /**
@@ -367,12 +369,12 @@ class Guild(
     }
 
     /**
-     * Requests to get the [GuildChannel] represented by the [embedChannel],
-     * returns null if the [GuildChannel] isn't present or [embedChannel] is null.
+     * Requests to get the [TopGuildChannel] represented by the [embedChannel],
+     * returns null if the [TopGuildChannel] isn't present or [embedChannel] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getEmbedChannel(): GuildChannel? = widgetChannelId?.let { supplier.getChannelOfOrNull(it) }
+    suspend fun getEmbedChannel(): TopGuildChannel? = widgetChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Requests to get the [GuildEmoji] represented by the [emojiId] in this guild.
@@ -460,7 +462,7 @@ class Guild(
     /**
      * Requests to get The channel where guild notices such as welcome messages and boost events are posted.
      */
-    suspend fun getPublicUpdatesChannel(): GuildMessageChannel? = publicUpdatesChannel?.asChannel()
+    suspend fun getPublicUpdatesChannel(): TopGuildMessageChannel? = publicUpdatesChannel?.asChannel()
 
     /**
      * Requests to get the [voice region][Region] of this guild.
@@ -473,11 +475,11 @@ class Guild(
 
     /**
      * Requests to get the the channel in which a discoverable server's rules should be found represented
-     *, returns null if the [GuildMessageChannel] isn't present, or [rulesChannelId] is null.
+     *, returns null if the [TopGuildMessageChannel] isn't present, or [rulesChannelId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getRulesChannel(): GuildMessageChannel? = rulesChannel?.asChannel()
+    suspend fun getRulesChannel(): TopGuildMessageChannel? = rulesChannel?.asChannel()
 
     /**
      * Gets the splash url in the specified [format], if present.
@@ -509,7 +511,7 @@ class Guild(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getWidgetChannel(): GuildMessageChannel? =
+    suspend fun getWidgetChannel(): TopGuildMessageChannel? =
         widgetChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**

@@ -8,7 +8,7 @@ import dev.kord.core.entity.VoiceState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-interface BaseVoiceChannelBehavior : GuildChannelBehavior {
+interface BaseVoiceChannelBehavior : TopGuildChannelBehavior {
 
     /**
      * Requests to retrieve the present voice states of this channel.

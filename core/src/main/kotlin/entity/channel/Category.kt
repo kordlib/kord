@@ -5,9 +5,9 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.CategoryBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Entity
-import dev.kord.core.entity.KordEntity
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
@@ -19,17 +19,17 @@ class Category(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) : GuildChannel, CategoryBehavior {
+) : TopGuildChannel, CategoryBehavior {
 
     override val guildId: Snowflake
         get() = super.guildId
 
-    override val guild get() = super<GuildChannel>.guild
+    override val guild get() = super<TopGuildChannel>.guild
 
     override suspend fun asChannel(): Category = this
 
     override fun compareTo(other: Entity): Int {
-        return super<GuildChannel>.compareTo(other)
+        return super<TopGuildChannel>.compareTo(other)
     }
 
 

@@ -7,10 +7,9 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.WebhookBehavior
-import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.WebhookData
-import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -65,13 +64,13 @@ data class Webhook(
      * Requests to get the channel this webhook operates in.
      *
      * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the [GuildMessageChannel] wasn't present.
+     * @throws [EntityNotFoundException] if the [TopGuildMessageChannel] wasn't present.
      */
     suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
     /**
      * Requests to get the channel this webhook operates in,
-     * returns null if the [GuildMessageChannel] isn't present.
+     * returns null if the [TopGuildMessageChannel] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */

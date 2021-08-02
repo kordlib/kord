@@ -13,6 +13,8 @@ import dev.kord.core.behavior.GuildInteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.channel.MessageChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.ApplicationInteractionData
 import dev.kord.core.cache.data.InteractionData

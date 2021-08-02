@@ -20,7 +20,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord Store Channel associated to a guild.
  */
-interface StoreChannelBehavior : GuildChannelBehavior {
+interface StoreChannelBehavior : TopGuildChannelBehavior {
 
     /**
      * Requests to get the this behavior as a [StoreChannel].

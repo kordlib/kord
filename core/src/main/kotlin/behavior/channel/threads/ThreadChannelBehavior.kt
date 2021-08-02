@@ -3,27 +3,36 @@ package dev.kord.core.behavior.channel.threads
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.behavior.channel.MessageChannelBehavior
+import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
-import dev.kord.core.entity.channel.thread.ThreadUser
+import dev.kord.core.entity.channel.thread.ThreadMember
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.channel.thread.ThreadModifyBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface ThreadChannelBehavior : MessageChannelBehavior {
+interface ThreadChannelBehavior : GuildMessageChannelBehavior {
+
+    val parentId: Snowflake
+
+    val parent: ThreadParentChannelBehavior get() = ThreadParentChannelBehavior(guildId, parentId, kord)
+
     /**
      * Requests to get all members of the current thread.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val members: Flow<ThreadUser>
+    val members: Flow<ThreadMember>
         get() = supplier.getThreadMembers(id)
 
     /**
@@ -83,16 +92,37 @@ interface ThreadChannelBehavior : MessageChannelBehavior {
         super.delete(reason)
     }
 
+    /**
+     * Requests to get this channel's [ThreadParentChannel].
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     * @throws [EntityNotFoundException] if the thread parent wasn't present.
+     */
+    suspend fun getParent(): ThreadParentChannel {
+        return supplier.getChannelOf(parentId)
+    }
+
+    /**
+     * Requests to get this channel's [ThreadParentChannel],
+     * returns null if the thread parent isn't present.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
+    suspend fun getParentOrNull(): ThreadParentChannel? {
+        return supplier.getChannelOfOrNull(parentId)
+    }
+
+
     override suspend fun asChannel(): ThreadChannel {
         return super.asChannel() as ThreadChannel
     }
 
     override suspend fun asChannelOrNull(): ThreadChannel? {
-        return super.asChannelOrNull() as ThreadChannel
+        return super.asChannelOrNull() as? ThreadChannel
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannelBehavior {
-        return ThreadChannelBehavior(id, kord, strategy.supply(kord))
+        return ThreadChannelBehavior(guildId, parentId, id, kord, strategy.supply(kord))
     }
 
 }
@@ -115,6 +145,8 @@ suspend inline fun ThreadChannelBehavior.edit(builder: ThreadModifyBuilder.() ->
 }
 
 internal fun ThreadChannelBehavior(
+    guildId: Snowflake,
+    parentId: Snowflake,
     id: Snowflake,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier
@@ -126,6 +158,12 @@ internal fun ThreadChannelBehavior(
 
         override val id: Snowflake
             get() = id
+
+        override val parentId: Snowflake
+            get() = parentId
+
+        override val guildId: Snowflake
+            get() = guildId
 
         override val supplier: EntitySupplier
             get() = supplier

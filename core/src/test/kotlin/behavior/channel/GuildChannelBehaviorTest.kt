@@ -4,7 +4,7 @@ import equality.GuildChannelEqualityTest
 import mockKord
 
 @Suppress("DELEGATED_MEMBER_HIDES_SUPERTYPE_OVERRIDE")
-internal class GuildChannelBehaviorTest : GuildChannelEqualityTest<GuildChannelBehavior> by GuildChannelEqualityTest({ id, guildId ->
+internal class GuildChannelBehaviorTest : GuildChannelEqualityTest<TopGuildChannelBehavior> by GuildChannelEqualityTest({ id, guildId ->
     val kord = mockKord()
-    GuildChannelBehavior(id = id, guildId = guildId, kord = kord)
+    TopGuildChannelBehavior(id = id, guildId = guildId, kord = kord)
 })

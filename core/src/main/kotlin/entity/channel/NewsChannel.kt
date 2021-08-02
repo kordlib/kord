@@ -1,12 +1,10 @@
 package dev.kord.core.entity.channel
 
-import dev.kord.common.entity.ArchiveDuration
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.NewsChannelBehavior
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
@@ -18,14 +16,14 @@ class NewsChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CategorizableChannel, GuildMessageChannel, ThreadParentChannel,  NewsChannelBehavior {
+) : CategorizableChannel, TopGuildMessageChannel, ThreadParentChannel,  NewsChannelBehavior {
 
     override suspend fun asChannel(): NewsChannel = this
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
-        is GuildChannelBehavior -> other.id == id && other.guildId == guildId
+        is TopGuildChannelBehavior -> other.id == id && other.guildId == guildId
         is ChannelBehavior -> other.id == id
         else -> false
     }

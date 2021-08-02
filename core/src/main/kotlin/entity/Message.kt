@@ -12,10 +12,7 @@ import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.MessageData
-import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
-import dev.kord.core.entity.channel.GuildMessageChannel
-import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.component.Component
 import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.entity.interaction.MessageInteraction
@@ -245,7 +242,7 @@ class Message(
     /**
      * Requests to get the [author] as a member.
      *
-     * Returns null if the message was not send in a [GuildMessageChannel], or if the [author] is not a [User].
+     * Returns null if the message was not send in a [TopGuildMessageChannel], or if the [author] is not a [User].
      */
     suspend fun getAuthorAsMember(): Member? {
         val author = author ?: return null

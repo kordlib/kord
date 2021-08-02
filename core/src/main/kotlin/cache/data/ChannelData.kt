@@ -3,7 +3,6 @@ package dev.kord.core.cache.data
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -31,7 +30,7 @@ data class ChannelData(
     val messageCount: OptionalInt = OptionalInt.Missing,
     val memberCount: OptionalInt = OptionalInt.Missing,
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
-    val member: Optional<ThreadUserData> = Optional.Missing()
+    val member: Optional<ThreadMemberData> = Optional.Missing()
 ) {
 
 
@@ -63,7 +62,7 @@ data class ChannelData(
                 messageCount,
                 memberCount,
                 defaultAutoArchiveDuration,
-                member.map { ThreadUserData.from(it, id) }
+                member.map { ThreadMemberData.from(it, id) }
             )
         }
     }

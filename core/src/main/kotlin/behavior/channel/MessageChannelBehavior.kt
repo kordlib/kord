@@ -6,7 +6,6 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier

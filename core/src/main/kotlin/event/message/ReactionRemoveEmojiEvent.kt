@@ -5,12 +5,13 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.cache.data.ReactionRemoveEmojiData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -25,7 +26,7 @@ class ReactionRemoveEmojiEvent(
 ) : Event, Strategizable {
 
     /**
-     * The id of the [GuildMessageChannel].
+     * The id of the [TopGuildMessageChannel].
      */
     val channelId: Snowflake get() = data.channelId
 
@@ -55,9 +56,9 @@ class ReactionRemoveEmojiEvent(
      */
     val emoji: ReactionEmoji get() = ReactionEmoji.from(data.emoji)
 
-    suspend fun getChannel(): GuildMessageChannel = supplier.getChannelOf(channelId)
+    suspend fun getChannel(): TopGuildMessageChannel = supplier.getChannelOf(channelId)
 
-    suspend fun getChannelOrNull(): GuildMessageChannel? = supplier.getChannelOfOrNull(channelId)
+    suspend fun getChannelOrNull(): TopGuildMessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 

@@ -7,7 +7,7 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.GuildWidgetData
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
@@ -35,7 +35,7 @@ class GuildWidget(
 
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
-    suspend fun getChannelOrNull(): GuildChannel? = data.channelId?.let { supplier.getChannelOfOrNull(it) }
+    suspend fun getChannelOrNull(): TopGuildChannel? = data.channelId?.let { supplier.getChannelOfOrNull(it) }
 
     suspend inline fun <reified T : Channel> getChannelOfOrNull(): T? =
         data.channelId?.let { supplier.getChannelOfOrNull(it) }

@@ -9,9 +9,9 @@ import dev.kord.core.*
 import dev.kord.core.cache.data.*
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
-import dev.kord.core.entity.channel.thread.ThreadUser
+import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
@@ -71,7 +71,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
     override suspend fun getChannelOrNull(id: Snowflake): Channel? =
         catchNotFound { Channel.from(channel.getChannel(id).toData(), kord) }
 
-    override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = flow {
+    override fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel> = flow {
         for (channelData in guild.getGuildChannels(guildId))
             emit(Channel.from(ChannelData.from(channelData), kord))
     }.filterIsInstance()
@@ -339,10 +339,10 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         return StageInstance(data, kord, this)
     }
 
-    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser> = flow {
+    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember> = flow {
         kord.rest.channel.listThreadMembers(channelId).onEach {
-            val data = ThreadUserData.from(it)
-            emit(ThreadUser(data, kord))
+            val data = ThreadMemberData.from(it)
+            emit(ThreadMember(data, kord))
         }
     }
 

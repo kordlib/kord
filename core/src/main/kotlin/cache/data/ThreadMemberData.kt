@@ -8,7 +8,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ThreadUserData(
+data class ThreadMemberData(
     val id: Snowflake,
     @SerialName("user_id")
     val userId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -17,13 +17,13 @@ data class ThreadUserData(
     val flags: Int
 ) {
     companion object {
-        val description = description(ThreadUserData::id)
+        val description = description(ThreadMemberData::id)
 
 
-        fun from(data: DiscordThreadMember, thread: Snowflake? = null): ThreadUserData =
+        fun from(data: DiscordThreadMember, thread: Snowflake? = null): ThreadMemberData =
             with(data) {
                 val id = this.id.value ?: thread!!
-                ThreadUserData(id, userId, joinTimestamp, flags)
+                ThreadMemberData(id, userId, joinTimestamp, flags)
             }
     }
 }

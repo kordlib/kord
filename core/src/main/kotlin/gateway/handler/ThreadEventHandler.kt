@@ -98,8 +98,8 @@ class ThreadEventHandler(
     }
 
     suspend fun handle(event: ThreadMemberUpdate, shard: Int) {
-        val data = ThreadUserData.from(event.member)
-        val member = ThreadUser(data, kord)
+        val data = ThreadMemberData.from(event.member)
+        val member = ThreadMember(data, kord)
         val coreEvent = ThreadMemberUpdateEvent(member, kord, shard)
         coreFlow.emit(coreEvent)
     }
@@ -107,9 +107,9 @@ class ThreadEventHandler(
     suspend fun handle(event: ThreadMembersUpdate, shard: Int) {
         val data = ThreadMembersUpdateEventData.from(event)
         for (removedMemberId in data.removedMemberIds.orEmpty()) {
-            cache.remove<ThreadUserData> {
-                idEq(ThreadUserData::userId, removedMemberId)
-                idEq(ThreadUserData::id, data.id)
+            cache.remove<ThreadMemberData> {
+                idEq(ThreadMemberData::userId, removedMemberId)
+                idEq(ThreadMemberData::id, data.id)
             }
         }
         for (addedMember in data.addedMembers.orEmpty()) {

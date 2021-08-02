@@ -6,9 +6,9 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
-import dev.kord.core.entity.channel.thread.ThreadUser
+import dev.kord.core.entity.channel.thread.ThreadMember
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Instant
@@ -48,7 +48,7 @@ class StoreEntitySupplier(
         return storeAndReturn(supplier.getChannelOrNull(id)) { it.data }
     }
 
-    override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> {
+    override fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel> {
         return storeOnEach(supplier.getGuildChannels(guildId)) { it.data }
 
     }
@@ -152,7 +152,7 @@ class StoreEntitySupplier(
         return storeAndReturn(supplier.getStageInstanceOrNull(channelId)) { it.data }
     }
 
-    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser> {
+    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember> {
         return storeOnEach(supplier.getThreadMembers(channelId)) { it.data }
     }
 

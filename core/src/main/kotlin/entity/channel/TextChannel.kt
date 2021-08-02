@@ -4,6 +4,7 @@ import dev.kord.common.entity.optional.getOrThrow
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
@@ -17,7 +18,7 @@ class TextChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : GuildMessageChannel, TextChannelBehavior, ThreadParentChannel {
+) : CategorizableChannel, TextChannelBehavior, ThreadParentChannel {
 
     /**
      * Whether the channel is nsfw.

@@ -8,13 +8,12 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.cache.data.InviteCreateData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.User
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -36,12 +35,12 @@ class InviteCreateEvent(
 ) : Event, Strategizable {
 
     /**
-     * The [GuildChannel] the invite is for.
+     * The [TopGuildChannel] the invite is for.
      */
     val channelId: Snowflake get() = data.channelId
 
     /**
-     * The behavior of the [GuildChannel] the invite is for.
+     * The behavior of the [TopGuildChannel] the invite is for.
      */
     val channel: ChannelBehavior get() = ChannelBehavior(id = channelId, kord = kord)
 
@@ -104,12 +103,12 @@ class InviteCreateEvent(
     val uses: Int get() = data.uses
 
     /**
-     * Requests to get the [GuildChannel] this invite is for.
+     * Requests to get the [TopGuildChannel] this invite is for.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
-    suspend fun getChannel(): GuildChannel = supplier.getChannelOf(channelId)
+    suspend fun getChannel(): TopGuildChannel = supplier.getChannelOf(channelId)
 
     /**
      * Requests to get the [Guild] of the invite,
@@ -117,7 +116,7 @@ class InviteCreateEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getChannelOrNUll(): GuildChannel? = supplier.getChannelOfOrNull(channelId)
+    suspend fun getChannelOrNUll(): TopGuildChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
      * Requests to get the [Guild] of the invite.

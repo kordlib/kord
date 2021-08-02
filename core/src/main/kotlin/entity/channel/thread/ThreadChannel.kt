@@ -27,6 +27,8 @@ interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
     val owner: UserBehavior
         get() = UserBehavior(ownerId, kord)
 
+    override val parentId: Snowflake get() = data.parentId.value!!
+
 
     /**
      * Whether the channel is archived.
@@ -58,7 +60,6 @@ interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
      */
     val autoArchiveDuration: ArchiveDuration get() = threadData.autoArchiveDuration
 
-
     /**
      * amount of seconds a user has to wait before sending another message
      * bots, users with the permission [Manage Messages][dev.kord.common.entity.Permission.ManageMessages] or
@@ -86,15 +87,8 @@ interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
     /**
      * The member of the current user in the thread.
      */
-    val member: ThreadUser? get() = data.member.unwrap { ThreadUser(it, kord) }
+    val member: ThreadMember? get() = data.member.unwrap { ThreadMember(it, kord) }
 
-    override suspend fun asChannel(): ThreadChannel {
-        return super<GuildMessageChannel>.asChannel() as ThreadChannel
-    }
-
-    override suspend fun asChannelOrNull(): ThreadChannel? {
-        return super<GuildMessageChannel>.asChannelOrNull() as? ThreadChannel
-    }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannel {
         return ThreadChannel(data, kord, strategy.supply(kord))
@@ -112,5 +106,7 @@ internal fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySuppli
             get() = kord
         override val supplier: EntitySupplier
             get() = supplier
+        override val guildId: Snowflake
+            get() = data.guildId.value!!
     }
 }

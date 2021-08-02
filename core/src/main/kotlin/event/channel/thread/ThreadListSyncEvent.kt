@@ -9,9 +9,9 @@ import dev.kord.core.cache.data.ThreadListSyncData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
-import dev.kord.core.entity.channel.thread.ThreadUser
+import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -52,9 +52,9 @@ class ThreadListSyncEvent(
         }
 
     /**
-     * [ThreadUser] objects for the current user for each of the synced threads.
+     * [ThreadMember] objects for the current user for each of the synced threads.
      */
-    val members: List<ThreadUser> get() = data.members.map { ThreadUser(it, kord) }
+    val members: List<ThreadMember> get() = data.members.map { ThreadMember(it, kord) }
 
     suspend fun getGuild(): Guild {
         return supplier.getGuild(guildId)
@@ -64,7 +64,7 @@ class ThreadListSyncEvent(
         return supplier.getGuildOrNull(guildId)
     }
 
-    suspend fun getChannels(): Flow<GuildChannel> {
+    suspend fun getChannels(): Flow<TopGuildChannel> {
         return supplier.getGuildChannels(guildId).filter { it.id in channelIds }
     }
 

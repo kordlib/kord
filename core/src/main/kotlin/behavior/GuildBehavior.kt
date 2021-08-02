@@ -81,7 +81,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val channels: Flow<GuildChannel>
+    val channels: Flow<TopGuildChannel>
         get() = supplier.getGuildChannels(id)
 
     /**
@@ -395,11 +395,11 @@ interface GuildBehavior : KordEntity, Strategizable {
     suspend fun getBanOrNull(userId: Snowflake): Ban? = supplier.getGuildBanOrNull(id, userId)
 
     /**
-     * Requests to get the [GuildChannel] represented by the [channelId].
+     * Requests to get the [TopGuildChannel] represented by the [channelId].
      *
      * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the [GuildChannel] wasn't present.
-     * @throws [ClassCastException] if the channel is not a [GuildChannel].
+     * @throws [EntityNotFoundException] if the [TopGuildChannel] wasn't present.
+     * @throws [ClassCastException] if the channel is not a [TopGuildChannel].
      * @throws [IllegalArgumentException] if the channel is not part of this guild.
      */
     suspend fun getChannel(channelId: Snowflake): GuildChannel {
@@ -413,7 +413,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * returns null if the [GuildChannel] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
-     * @throws [ClassCastException] if the channel is not a [GuildChannel].
+     * @throws [ClassCastException] if the channel is not a [TopGuildChannel].
      * @throws [IllegalArgumentException] if the channel is not part of this guild.
      */
     suspend fun getChannelOrNull(channelId: Snowflake): GuildChannel? {

@@ -14,9 +14,9 @@ import dev.kord.core.cache.idEq
 import dev.kord.core.cache.idGt
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
-import dev.kord.core.entity.channel.thread.ThreadUser
+import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.FlowPreview
@@ -116,7 +116,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Channel.from(data, kord)
     }
 
-    override fun getGuildChannels(guildId: Snowflake): Flow<GuildChannel> = cache.query<ChannelData> {
+    override fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel> = cache.query<ChannelData> {
         idEq(ChannelData::guildId, guildId)
     }.asFlow().map { Channel.from(it, kord) }.filterIsInstance()
 
@@ -280,10 +280,10 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = null
 
-    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadUser> {
-        return cache.query<ThreadUserData> {
-            idEq(ThreadUserData::id, channelId)
-        }.asFlow().map { ThreadUser(it, kord) }
+    override fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember> {
+        return cache.query<ThreadMemberData> {
+            idEq(ThreadMemberData::id, channelId)
+        }.asFlow().map { ThreadMember(it, kord) }
     }
 
     override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> {
