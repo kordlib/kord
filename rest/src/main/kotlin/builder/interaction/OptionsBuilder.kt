@@ -71,6 +71,17 @@ class IntChoiceBuilder(name: String, description: String) :
     }
 }
 
+@KordPreview
+@KordDsl
+class NumberChoiceBuilder(name: String, description: String) :
+    BaseChoiceBuilder<Double>(name, description, ApplicationCommandOptionType.Number) {
+    override fun choice(name: String, value: Double) {
+        if (choices == null) choices = mutableListOf()
+        choices!!.add(Choice.NumberChoice(name, value))
+    }
+
+}
+
 @KordDsl
 @KordPreview
 class StringChoiceBuilder(name: String, description: String) :

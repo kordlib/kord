@@ -5735,7 +5735,8 @@ public abstract class dev/kord/core/entity/interaction/ComponentInteraction : de
 	public abstract fun getComponent ()Ldev/kord/core/entity/component/Component;
 	public final fun getComponentId ()Ljava/lang/String;
 	public final fun getMessage ()Ldev/kord/core/entity/Message;
-	public fun getUser ()Ldev/kord/core/behavior/UserBehavior;
+	public synthetic fun getUser ()Ldev/kord/core/behavior/UserBehavior;
+	public fun getUser ()Ldev/kord/core/entity/User;
 	public fun hashCode ()I
 	public abstract fun toString ()Ljava/lang/String;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/interaction/ComponentInteraction;

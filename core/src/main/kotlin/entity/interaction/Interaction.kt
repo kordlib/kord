@@ -19,7 +19,10 @@ import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.ApplicationInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
-import dev.kord.core.entity.*
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Role
+import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.DmChannel
 import dev.kord.core.entity.channel.ResolvedChannel
 import dev.kord.core.supplier.EntitySupplier
@@ -273,6 +276,11 @@ sealed class OptionValue<out T>(val value: T) {
         override fun toString(): String = "IntOptionValue(value=$value)"
     }
 
+
+    class NumberOptionValue(value: Double) : OptionValue<Double>(value) {
+        override fun toString(): String = "DoubleOptionValue(value=$value)"
+    }
+
     class StringOptionValue(value: String) : OptionValue<String>(value) {
         override fun toString(): String = "StringOptionValue(value=$value)"
     }
@@ -289,6 +297,7 @@ sealed class OptionValue<out T>(val value: T) {
 @KordPreview
 fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
     return when (value) {
+        is CommandArgument.NumberArgument -> OptionValue.NumberOptionValue(value.value)
         is CommandArgument.BooleanArgument -> OptionValue.BooleanOptionValue(value.value)
         is CommandArgument.IntegerArgument -> OptionValue.IntOptionValue(value.value)
         is CommandArgument.StringArgument -> OptionValue.StringOptionValue(value.value)
@@ -305,7 +314,7 @@ fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjects?): O
             val member = resolvedObjects?.members.orEmpty()[value.value]
             val role = resolvedObjects?.roles.orEmpty()[value.value]
 
-            OptionValue.MentionableOptionValue((channel ?: member ?: user  ?: role)!!)
+            OptionValue.MentionableOptionValue((channel ?: member ?: user ?: role)!!)
         }
 
         is CommandArgument.RoleArgument -> {
@@ -372,11 +381,12 @@ class GuildInteraction(
     /**
      * The invoker of the command as [MemberBehavior].
      */
-    val member: Member get() = Member(
-        data.member.value!!,
-        data.user.value!!,
-        kord
-    )
+    val member: Member
+        get() = Member(
+            data.member.value!!,
+            data.user.value!!,
+            kord
+        )
 
     override val channel: GuildMessageChannelBehavior
         get() = GuildMessageChannelBehavior(guildId, channelId, kord)
@@ -409,6 +419,9 @@ fun OptionValue<*>.boolean() = value as Boolean
 
 @KordPreview
 fun OptionValue<*>.int() = value as Int
+
+@KordPreview
+fun OptionValue<*>.number() = value as Double
 
 @KordPreview
 fun OptionValue<*>.mentionable(): Entity {

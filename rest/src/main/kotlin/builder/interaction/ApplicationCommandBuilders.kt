@@ -48,6 +48,13 @@ sealed class BaseApplicationBuilder {
     }
 
     @OptIn(ExperimentalContracts::class)
+    inline fun number(name: String, description: String, builder: NumberChoiceBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        if (options == null) options = mutableListOf()
+        options!!.add(NumberChoiceBuilder(name, description).apply(builder))
+    }
+
+    @OptIn(ExperimentalContracts::class)
     inline fun group(name: String, description: String, builder: GroupCommandBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
