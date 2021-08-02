@@ -35,11 +35,17 @@ class Unsafe(private val kord: Kord) {
     fun messageChannel(id: Snowflake): MessageChannelBehavior =
         MessageChannelBehavior(id, kord)
 
-    fun guildChannel(guildId: Snowflake, id: Snowflake): TopGuildChannelBehavior =
+    fun topGuildChannel(guildId: Snowflake, id: Snowflake): TopGuildChannelBehavior =
         TopGuildChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun guildMessageChannel(guildId: Snowflake, id: Snowflake): TopGuildMessageChannelBehavior =
+    fun topGuildMessageChannel(guildId: Snowflake, id: Snowflake): TopGuildMessageChannelBehavior =
         TopGuildMessageChannelBehavior(guildId = guildId, id = id, kord = kord)
+
+    fun guildChannel(guildId: Snowflake, id: Snowflake): GuildChannelBehavior =
+        GuildChannelBehavior(guildId, id, kord)
+
+    fun guildMessageChannel(guildId: Snowflake, id: Snowflake): GuildMessageChannelBehavior =
+        GuildMessageChannelBehavior(guildId, id, kord)
 
     fun newsChannel(guildId: Snowflake, id: Snowflake): NewsChannelBehavior =
         NewsChannelBehavior(guildId = guildId, id = id, kord = kord)
@@ -53,10 +59,8 @@ class Unsafe(private val kord: Kord) {
     fun storeChannel(guildId: Snowflake, id: Snowflake): StoreChannelBehavior =
         StoreChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-
     fun publicThreadParent(guildId: Snowflake, id: Snowflake): ThreadParentChannelBehavior =
         ThreadParentChannelBehavior(guildId, id, kord)
-
 
     fun privateThreadParent(guildId: Snowflake, id: Snowflake): PrivateThreadParentChannelBehavior =
         PrivateThreadParentChannelBehavior(guildId, id, kord)
