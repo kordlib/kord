@@ -13,7 +13,8 @@ data class ApplicationCommandData(
     val name: String,
     val description: String,
     val guildId: OptionalSnowflake,
-    val options: Optional<List<ApplicationCommandOptionData>>
+    val options: Optional<List<ApplicationCommandOptionData>>,
+    val version: Snowflake
 ) {
     companion object {
         fun from(command: DiscordApplicationCommand): ApplicationCommandData {
@@ -24,7 +25,9 @@ data class ApplicationCommandData(
                     name,
                     description,
                     guildId,
-                    options.mapList { ApplicationCommandOptionData.from(it) })
+                    options.mapList { ApplicationCommandOptionData.from(it) },
+                    version
+                )
             }
         }
     }

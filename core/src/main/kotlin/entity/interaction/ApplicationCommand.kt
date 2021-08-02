@@ -29,6 +29,8 @@ abstract class ApplicationCommand(
     val description: String
         get() = data.description
 
+    val version: Snowflake get() = data.version
+
     /**
      * Whether this command is the default command suggested in a hierarchy of commands.
      * Only one (sub)command can be the default and will be suggested first.
