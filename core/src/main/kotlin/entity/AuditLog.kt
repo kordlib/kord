@@ -4,9 +4,12 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
+import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.IntegrationData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.cache.data.WebhookData
+import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.thread.ThreadChannel
 
 class AuditLog(val data: DiscordAuditLog, val guildId: Snowflake, override val kord: Kord) : KordObject {
 
@@ -15,6 +18,11 @@ class AuditLog(val data: DiscordAuditLog, val guildId: Snowflake, override val k
     val webhooks: List<Webhook> get() = data.webhooks.map { Webhook(WebhookData.from(it), kord) }
 
     val integrations: List<Snowflake> get() = data.integrations.map { it.id }
+
+    val threads: List<ThreadChannel> get() = data.threads.map {
+       val data =  ChannelData.from(it)
+        Channel.from(data, kord)
+    }.filterIsInstance<ThreadChannel>()
 
     val entries: List<AuditLogEntry> get() = data.auditLogEntries.map { AuditLogEntry(it, kord) }
 
