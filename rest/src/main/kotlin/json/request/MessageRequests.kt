@@ -1,6 +1,7 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.Color
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -11,11 +12,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MessageCreateRequest(
+@OptIn(KordPreview::class)
+data class MessageCreateRequest constructor(
     val content: Optional<String> = Optional.Missing(),
     val nonce: Optional<String> = Optional.Missing(),
     val tts: OptionalBoolean = OptionalBoolean.Missing,
-    val embed: Optional<EmbedRequest> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     @SerialName("message_reference")
@@ -74,13 +76,19 @@ data class EmbedFieldRequest(
 )
 
 @Serializable
+@OptIn(KordPreview::class)
 data class MessageEditPatchRequest(
     val content: Optional<String?> = Optional.Missing(),
-    val embed: Optional<EmbedRequest?> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
     val flags: Optional<MessageFlags?> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing()
+)
+
+data class MultipartMessagePatchRequest(
+    val requests: MessageEditPatchRequest,
+    val files: Optional<List<Pair<String, java.io.InputStream>>> = Optional.Missing()
 )
 
 @Serializable

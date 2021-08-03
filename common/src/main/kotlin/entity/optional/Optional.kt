@@ -303,3 +303,8 @@ fun <T : Any> Optional<T?>.coerceToMissing(): Optional<T> = when (this) {
 fun <T : Any> T.optional(): Optional.Value<T> = Optional.Value(this)
 
 fun <T : Any?> T?.optional(): Optional<T?> = Optional(this)
+
+fun Optional<Boolean>.toPrimitive() : OptionalBoolean = when(this){
+    is Value -> OptionalBoolean.Value(value)
+    else -> OptionalBoolean.Missing
+}

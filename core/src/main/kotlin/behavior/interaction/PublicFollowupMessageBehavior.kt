@@ -8,7 +8,7 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.interaction.PublicFollowupMessageModifyBuilder
+import dev.kord.rest.builder.message.modify.PublicFollowupMessageModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

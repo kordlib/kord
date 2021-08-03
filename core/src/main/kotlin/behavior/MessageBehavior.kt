@@ -15,9 +15,10 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.rest.builder.message.MessageCreateBuilder
-import dev.kord.rest.builder.message.MessageModifyBuilder
-import dev.kord.rest.builder.webhook.EditWebhookMessageBuilder
+import dev.kord.rest.builder.message.create.MessageCreateBuilder
+import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
+import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
+import dev.kord.rest.builder.message.modify.WebhookMessageModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
@@ -221,7 +222,7 @@ fun MessageBehavior(
  * @see editWebhookMessage
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit): Message {
+suspend inline fun MessageBehavior.edit(builder: UserMessageModifyBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -245,7 +246,7 @@ suspend inline fun MessageBehavior.edit(builder: MessageModifyBuilder.() -> Unit
 suspend inline fun MessageBehavior.editWebhookMessage(
     webhookId: Snowflake,
     token: String,
-    builder: EditWebhookMessageBuilder.() -> Unit
+    builder: WebhookMessageModifyBuilder.() -> Unit
 ): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -269,7 +270,7 @@ suspend inline fun MessageBehavior.editWebhookMessage(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun MessageBehavior.reply(builder: MessageCreateBuilder.() -> Unit): Message {
+suspend inline fun MessageBehavior.reply(builder: UserMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

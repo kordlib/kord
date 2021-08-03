@@ -9,7 +9,7 @@ import dev.kord.core.entity.interaction.EphemeralFollowupMessage
 import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.interaction.EphemeralFollowupMessageModifyBuilder
+import dev.kord.rest.builder.message.modify.EphemeralFollowupMessageModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

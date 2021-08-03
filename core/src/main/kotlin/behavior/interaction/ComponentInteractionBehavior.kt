@@ -9,7 +9,8 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.interaction.UpdateMessageInteractionResponseCreateBuilder
+import dev.kord.rest.builder.message.modify.UpdateEphemeralMessageInteractionResponseCreateBuilder
+import dev.kord.rest.builder.message.modify.UpdatePublicMessageInteractionResponseCreateBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import kotlin.contracts.ExperimentalContracts
@@ -118,11 +119,11 @@ fun ComponentInteractionBehavior(
 @KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
-    builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
+    builder: UpdatePublicMessageInteractionResponseCreateBuilder.() -> Unit
 ): PublicInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
-    val request = UpdateMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
+    val request = UpdatePublicMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
 
     kord.rest.interaction.createInteractionResponse(
         id,
@@ -144,13 +145,11 @@ suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
 @KordPreview
 @OptIn(ExperimentalContracts::class)
 suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessage(
-    builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
+    builder: UpdateEphemeralMessageInteractionResponseCreateBuilder.() -> Unit
 ): EphemeralInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
-    val request = UpdateMessageInteractionResponseCreateBuilder(
-        flags = MessageFlags(MessageFlag.Ephemeral)
-    ).apply(builder).toRequest()
+    val request = UpdateEphemeralMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
 
     kord.rest.interaction.createInteractionResponse(
         id,

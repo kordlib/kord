@@ -9,7 +9,6 @@ import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.cache.data.PermissionOverwriteData
-import dev.kord.core.entity.PermissionOverwrite
 import dev.kord.core.entity.PermissionOverwriteEntity
 import dev.kord.core.supplier.EntitySupplyStrategy
 

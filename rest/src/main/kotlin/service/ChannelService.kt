@@ -2,9 +2,10 @@ package dev.kord.rest.service
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.channel.*
-import dev.kord.rest.builder.message.MessageCreateBuilder
-import dev.kord.rest.builder.message.MessageModifyBuilder
+import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
+import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.json.response.FollowedChannelResponse
 import dev.kord.rest.request.RequestHandler
@@ -26,9 +27,9 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createMessage(channelId: Snowflake, builder: MessageCreateBuilder.() -> Unit): DiscordMessage {
+    suspend inline fun createMessage(channelId: Snowflake, builder: UserMessageCreateBuilder.() -> Unit): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val multipartRequest = MessageCreateBuilder().apply(builder).toRequest()
+        val multipartRequest = UserMessageCreateBuilder().apply(builder).toRequest()
         return createMessage(channelId, multipartRequest)
     }
 
@@ -188,10 +189,10 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend inline fun editMessage(
         channelId: Snowflake,
         messageId: Snowflake,
-        builder: MessageModifyBuilder.() -> Unit
+        builder: UserMessageModifyBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return editMessage(channelId, messageId, MessageModifyBuilder().apply(builder).toRequest())
+        return editMessage(channelId, messageId, UserMessageModifyBuilder().apply(builder).toRequest())
     }
 
     suspend fun editMessage(
@@ -205,6 +206,35 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             body(MessageEditPatchRequest.serializer(), request)
         }
     }
+
+    suspend fun editMessage(
+        channelId: Snowflake,
+        messageId: Snowflake,
+        request: MultipartMessagePatchRequest
+    ): DiscordMessage {
+        return call(Route.EditMessagePatch) {
+            keys[Route.ChannelId] = channelId
+            keys[Route.MessageId] = messageId
+            body(MessageEditPatchRequest.serializer(), request.requests)
+
+            request.files.orEmpty().forEach { file(it) }
+        }
+    }
+
+    suspend fun editMessage(
+        channelId: Snowflake,
+        messageId: Snowflake,
+        request: MultipartWebhookEditMessageRequest
+    ): DiscordMessage {
+        return call(Route.EditMessagePatch) {
+            keys[Route.ChannelId] = channelId
+            keys[Route.MessageId] = messageId
+            body(WebhookEditMessageRequest.serializer(), request.request)
+
+            request.files.orEmpty().forEach { file(it) }
+        }
+    }
+
 
 
     suspend fun putChannel(channelId: Snowflake, channel: ChannelModifyPutRequest, reason: String? = null) =

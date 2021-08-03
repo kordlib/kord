@@ -8,9 +8,9 @@ import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.EphemeralFollowupMessage
 import dev.kord.core.entity.interaction.PublicFollowupMessage
-import dev.kord.rest.builder.interaction.EphemeralFollowupMessageCreateBuilder
-import dev.kord.rest.builder.interaction.EphemeralInteractionResponseModifyBuilder
-import dev.kord.rest.builder.interaction.PublicFollowupMessageCreateBuilder
+import dev.kord.rest.builder.message.create.EphemeralFollowupMessageCreateBuilder
+import dev.kord.rest.builder.message.create.PublicFollowupMessageCreateBuilder
+import dev.kord.rest.builder.message.modify.EphemeralInteractionResponseModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
