@@ -298,12 +298,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         }
     }
 
-    suspend fun listActiveThreads(channelId: Snowflake): ListThreadsResponse {
-        return call(Route.ActiveThreadsGet) {
-            keys[Route.ChannelId] = channelId
-
-        }
-    }
 
     suspend fun listPublicArchivedThreads(channelId: Snowflake, request: ListThreadsByTimestampRequest): ListThreadsResponse {
         return call(Route.PublicArchivedThreadsGet) {

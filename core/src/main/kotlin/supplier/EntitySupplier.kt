@@ -400,7 +400,7 @@ interface EntitySupplier {
 
     fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember>
 
-    fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel>
+    fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel>
 
     fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
 

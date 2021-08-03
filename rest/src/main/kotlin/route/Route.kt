@@ -714,13 +714,6 @@ sealed class Route<T>(
             ListSerializer(DiscordThreadMember.serializer())
         )
 
-    object ActiveThreadsGet :
-        Route<ListThreadsResponse>(
-            HttpMethod.Get,
-            "/channels/${ChannelId}/threads/active",
-            ListThreadsResponse.serializer()
-        )
-
 
     object PrivateThreadsGet :
         Route<ListThreadsResponse>(
@@ -750,6 +743,11 @@ sealed class Route<T>(
             "/channels/$ChannelId/users/@me/threads/archived/private",
             ListThreadsResponse.serializer()
         )
+    object ActiveThreadsGet : Route<ListThreadsResponse>(
+        HttpMethod.Get,
+        " /guilds/${GuildId}/threads/active",
+        ListThreadsResponse.serializer()
+    )
 
 
     companion object {

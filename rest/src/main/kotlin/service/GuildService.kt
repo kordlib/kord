@@ -13,6 +13,7 @@ import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RoleModifyBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.request.*
+import dev.kord.rest.json.response.ListThreadsResponse
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
@@ -408,6 +409,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
 
 
+    suspend fun listActiveThreads(guildId: Snowflake): ListThreadsResponse {
+        return call(Route.ActiveThreadsGet) {
+            keys[Route.GuildId] = guildId
+        }
+    }
 }
 
 @OptIn(ExperimentalContracts::class)

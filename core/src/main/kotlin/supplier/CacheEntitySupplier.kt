@@ -286,9 +286,9 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.asFlow().map { ThreadMember(it, kord) }
     }
 
-    override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> {
+    override fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel> {
         return cache.query<ChannelData> {
-            idEq(ChannelData::parentId, channelId)
+            idEq(ChannelData::guildId, guildId)
         }.asFlow().filter {
             it.threadMetadata.value?.archived != true
         }.mapNotNull {
