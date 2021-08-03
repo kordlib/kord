@@ -42,7 +42,7 @@ data class InteractionResponseModifyRequest(
 @KordPreview
 data class MultipartInteractionResponseModifyRequest(
     val request: InteractionResponseModifyRequest,
-    val files: List<Pair<String, InputStream>> = emptyList(),
+    val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing(),
 )
 
 @Serializable
@@ -55,7 +55,7 @@ data class InteractionResponseCreateRequest(
 @KordPreview
 data class MultipartInteractionResponseCreateRequest(
     val request: InteractionResponseCreateRequest,
-    val files: List<Pair<String, InputStream>> = emptyList()
+    val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing()
 )
 
 @Serializable
@@ -73,7 +73,7 @@ class InteractionApplicationCommandCallbackData(
 @KordPreview
 data class MultipartFollowupMessageCreateRequest(
     val request: FollowupMessageCreateRequest,
-    val files: List<Pair<String, InputStream>> = emptyList(),
+    val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing(),
 )
 
 @Serializable
@@ -102,7 +102,7 @@ data class FollowupMessageModifyRequest(
 @KordPreview
 data class MultipartFollowupMessageModifyRequest(
     val request: FollowupMessageModifyRequest,
-    val files: List<Pair<String, java.io.InputStream>> = emptyList(),
+    val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing(),
 )
 
 @Serializable

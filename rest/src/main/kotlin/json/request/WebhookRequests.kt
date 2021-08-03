@@ -1,5 +1,6 @@
 package dev.kord.rest.json.request
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.optional.Optional
@@ -20,7 +21,8 @@ data class WebhookModifyRequest(
 )
 
 @Serializable
-data class WebhookExecuteRequest(
+@OptIn(KordPreview::class)
+data class WebhookExecuteRequest constructor(
     val content: Optional<String> = Optional.Missing(),
     val username: Optional<String> = Optional.Missing(),
     @SerialName("avatar_url")
@@ -38,8 +40,9 @@ data class MultiPartWebhookExecuteRequest(
 )
 
 @Serializable
+@OptIn(KordPreview::class)
 data class WebhookEditMessageRequest(
-    val content: Optional<String> = Optional.Missing(),
+    val content: Optional<String?> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
@@ -48,5 +51,5 @@ data class WebhookEditMessageRequest(
 
 data class MultipartWebhookEditMessageRequest(
     val request: WebhookEditMessageRequest,
-    val files: List<Pair<String, java.io.InputStream>> = emptyList()
+    val files: Optional<List<Pair<String, java.io.InputStream>>> = Optional.Missing()
 )

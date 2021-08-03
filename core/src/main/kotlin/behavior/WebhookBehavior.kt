@@ -10,7 +10,7 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.Webhook
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.webhook.ExecuteWebhookBuilder
+import dev.kord.rest.builder.message.create.WebhookMessageCreateBuilder
 import dev.kord.rest.builder.webhook.WebhookModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import java.util.*
@@ -115,7 +115,7 @@ suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBui
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun WebhookBehavior.execute(token: String, builder: ExecuteWebhookBuilder.() -> Unit): Message {
+suspend inline fun WebhookBehavior.execute(token: String, builder: WebhookMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -138,10 +138,9 @@ suspend inline fun WebhookBehavior.execute(token: String, builder: ExecuteWebhoo
  * Exception if the request wasn't executed.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun WebhookBehavior.executeIgnored(token: String, builder: ExecuteWebhookBuilder.() -> Unit) {
+suspend inline fun WebhookBehavior.executeIgnored(token: String, builder: WebhookMessageCreateBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
     kord.rest.webhook.executeWebhook(token = token, webhookId = id, wait = false, builder = builder)
 }
-

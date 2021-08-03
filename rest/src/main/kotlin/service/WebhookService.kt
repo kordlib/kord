@@ -4,8 +4,9 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.DiscordMessage
 import dev.kord.common.entity.DiscordWebhook
 import dev.kord.common.entity.Snowflake
-import dev.kord.rest.builder.webhook.EditWebhookMessageBuilder
-import dev.kord.rest.builder.webhook.ExecuteWebhookBuilder
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.rest.builder.message.create.WebhookMessageCreateBuilder
+import dev.kord.rest.builder.message.modify.WebhookMessageModifyBuilder
 import dev.kord.rest.builder.webhook.WebhookCreateBuilder
 import dev.kord.rest.builder.webhook.WebhookModifyBuilder
 import dev.kord.rest.json.request.WebhookCreateRequest
@@ -107,7 +108,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         webhookId: Snowflake,
         token: String,
         wait: Boolean,
-        builder: ExecuteWebhookBuilder.() -> Unit
+        builder: WebhookMessageCreateBuilder.() -> Unit
     ): DiscordMessage? {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -117,7 +118,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.WebhookId] = webhookId
             keys[Route.WebhookToken] = token
             parameter("wait", "$wait")
-            val request = ExecuteWebhookBuilder().apply(builder).toRequest()
+            val request = WebhookMessageCreateBuilder().apply(builder).toRequest()
             body(WebhookExecuteRequest.serializer(), request.request)
             request.files.forEach { file(it) }
         }
@@ -146,7 +147,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         webhookId: Snowflake,
         token: String,
         messageId: Snowflake,
-        builder: EditWebhookMessageBuilder.() -> Unit
+        builder: WebhookMessageModifyBuilder.() -> Unit
     ): DiscordMessage {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -157,9 +158,9 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.WebhookId] = webhookId
             keys[Route.WebhookToken] = token
             keys[Route.MessageId] = messageId
-            val body = EditWebhookMessageBuilder().apply(builder).toRequest()
+            val body = WebhookMessageModifyBuilder().apply(builder).toRequest()
             body(WebhookEditMessageRequest.serializer(), body.request)
-            body.files.onEach { file(it) }
+            body.files.orEmpty().onEach { file(it) }
         }
     }
 }

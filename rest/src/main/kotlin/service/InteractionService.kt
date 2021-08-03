@@ -5,6 +5,7 @@ import dev.kord.common.entity.DiscordApplicationCommand
 import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
 import dev.kord.common.entity.PartialDiscordGuildApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
@@ -105,7 +106,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.InteractionId] = interactionId
         keys[Route.InteractionToken] = interactionToken
         body(InteractionResponseCreateRequest.serializer(), request.request)
-        request.files.onEach { file(it) }
+        request.files.orEmpty().onEach { file(it) }
     }
 
 
@@ -128,7 +129,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.ApplicationId] = applicationId
         keys[Route.InteractionToken] = interactionToken
         body(InteractionResponseModifyRequest.serializer(), multipartRequest.request)
-        multipartRequest.files.forEach { file(it) }
+        multipartRequest.files.orEmpty().forEach { file(it) }
     }
 
     suspend fun modifyInteractionResponse(
@@ -156,7 +157,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.ApplicationId] = applicationId
         keys[Route.InteractionToken] = interactionToken
         body(FollowupMessageCreateRequest.serializer(), multipart.request)
-        multipart.files.forEach { file(it) }
+        multipart.files.orEmpty().forEach { file(it) }
 
     }
 
@@ -177,7 +178,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.InteractionToken] = interactionToken
         keys[Route.MessageId] = messageId
         body(FollowupMessageModifyRequest.serializer(), request.request)
-        request.files.forEach { file(it) }
+        request.files.orEmpty().forEach { file(it) }
     }
 
 
