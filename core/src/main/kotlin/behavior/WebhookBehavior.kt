@@ -111,11 +111,11 @@ suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBui
 
 /**
  * Requests to execute this webhook.
- *
+ * if [threadId] is specified the execution will occur in that thread.
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun WebhookBehavior.execute(token: String, builder: WebhookMessageCreateBuilder.() -> Unit): Message {
+suspend inline fun WebhookBehavior.execute(token: String, threadId: Snowflake? = null, builder: WebhookMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -123,6 +123,7 @@ suspend inline fun WebhookBehavior.execute(token: String, builder: WebhookMessag
         token = token,
         webhookId = id,
         wait = true,
+        threadId = threadId,
         builder = builder
     )!!
 
@@ -136,11 +137,12 @@ suspend inline fun WebhookBehavior.execute(token: String, builder: WebhookMessag
  *
  * This is a 'fire and forget' variant of [execute]. It will not wait for a response and might not throw an
  * Exception if the request wasn't executed.
+ * if [threadId] is specified the execution will occur in that thread.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun WebhookBehavior.executeIgnored(token: String, builder: WebhookMessageCreateBuilder.() -> Unit) {
+suspend inline fun WebhookBehavior.executeIgnored(token: String, threadId: Snowflake? = null, builder: WebhookMessageCreateBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.webhook.executeWebhook(token = token, webhookId = id, wait = false, builder = builder)
+    kord.rest.webhook.executeWebhook(token = token, webhookId = id, wait = false, threadId = threadId, builder = builder)
 }

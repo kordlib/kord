@@ -3,8 +3,12 @@ package dev.kord.core.behavior.channel.threads
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.behavior.WebhookBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.execute
+import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.toData
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -15,6 +19,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.channel.thread.ThreadModifyBuilder
+import dev.kord.rest.builder.message.create.WebhookMessageCreateBuilder
+import dev.kord.rest.request.RestRequestException
 import kotlinx.coroutines.flow.Flow
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

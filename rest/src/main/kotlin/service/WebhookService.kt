@@ -107,7 +107,8 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend inline fun executeWebhook(
         webhookId: Snowflake,
         token: String,
-        wait: Boolean,
+        wait: Boolean? = null,
+        threadId: Snowflake? = null,
         builder: WebhookMessageCreateBuilder.() -> Unit
     ): DiscordMessage? {
         contract {
@@ -117,7 +118,8 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         return call(Route.ExecuteWebhookPost) {
             keys[Route.WebhookId] = webhookId
             keys[Route.WebhookToken] = token
-            parameter("wait", "$wait")
+            if(wait != null) parameter("wait", "$wait")
+            if(threadId != null) parameter("thread_id", threadId.asString)
             val request = WebhookMessageCreateBuilder().apply(builder).toRequest()
             body(WebhookExecuteRequest.serializer(), request.request)
             request.files.forEach { file(it) }
