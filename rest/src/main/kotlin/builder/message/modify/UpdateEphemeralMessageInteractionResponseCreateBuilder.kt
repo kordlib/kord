@@ -25,8 +25,6 @@ class UpdateEphemeralMessageInteractionResponseCreateBuilder :
 
     override var embeds: MutableList<EmbedBuilder>? by state::embeds.delegate()
 
-    var flags: MessageFlags? by state::flags.delegate()
-
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()
 
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
@@ -39,9 +37,7 @@ class UpdateEphemeralMessageInteractionResponseCreateBuilder :
                     content = state.content,
                     embeds = state.embeds.mapList { it.toRequest() },
                     allowedMentions = state.allowedMentions.map { it.build() },
-                    flags = state.flags.coerceToMissing()
-                        .map { it + MessageFlag.Ephemeral }
-                        .switchOnMissing(MessageFlags(MessageFlag.Ephemeral)),
+                    flags = Optional(MessageFlags(MessageFlag.Ephemeral)),
                     components = state.components.mapList { it.build() }
                 ).optional()
             ),
