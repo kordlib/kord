@@ -34,7 +34,7 @@ interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
 
      */
-    val activeThreads: Flow<ThreadChannel> get() = guild.activeThreads.filter { it.parentId == id }
+    val activeThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(guildId).filter { it.parentId == id }
 
     /**
      * Returns archived threads in the channel that are public.
