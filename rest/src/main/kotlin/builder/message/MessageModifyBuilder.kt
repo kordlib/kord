@@ -21,8 +21,8 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     private var _content: Optional<String?> = Optional.Missing()
     var content: String? by ::_content.delegate()
 
-    private var _embed: Optional<EmbedBuilder?> = Optional.Missing()
-    var embed: EmbedBuilder? by ::_embed.delegate()
+    private var _embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
+    var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
     private var _flags: Optional<MessageFlags?> = Optional.Missing()
     var flags: MessageFlags? by ::_flags.delegate()
@@ -38,10 +38,9 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
 
     @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
-        contract {
-            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-        }
-        embed = (embed ?: EmbedBuilder()).also(block)
+        contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+        if(embeds == null) embeds = mutableListOf()
+        embeds!!.add(EmbedBuilder().apply(block))
     }
 
     /**
@@ -69,7 +68,7 @@ class MessageModifyBuilder : RequestBuilder<MessageEditPatchRequest> {
     @OptIn(KordPreview::class)
     override fun toRequest(): MessageEditPatchRequest = MessageEditPatchRequest(
         _content,
-        _embed.mapNullable { it?.toRequest() },
+        _embeds.mapList { it.toRequest() },
         _flags,
         _allowedMentions.mapNullable { it?.build() },
         _components.mapList { it.build() }

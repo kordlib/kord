@@ -40,7 +40,7 @@ class ExecuteWebhookBuilder : RequestBuilder<MultiPartWebhookExecuteRequest> {
 
     val files: MutableList<Pair<String, InputStream>> = mutableListOf()
 
-    var embeds: MutableList<EmbedRequest> = mutableListOf()
+    val embeds: MutableList<EmbedRequest> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()

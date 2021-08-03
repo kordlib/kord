@@ -34,8 +34,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     private var _tts: OptionalBoolean = OptionalBoolean.Missing
     var tts: Boolean? by ::_tts.delegate()
 
-    private var _embed: Optional<EmbedBuilder> = Optional.Missing()
-    var embed: EmbedBuilder? by ::_embed.delegate()
+    val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     private var _allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
     var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
@@ -63,7 +62,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
     @OptIn(ExperimentalContracts::class)
     inline fun embed(block: EmbedBuilder.() -> Unit) {
         contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-        embed = (embed ?: EmbedBuilder()).apply(block)
+        embeds.add(EmbedBuilder().apply(block))
     }
 
     fun addFile(name: String, content: InputStream) {
@@ -101,7 +100,7 @@ class MessageCreateBuilder : RequestBuilder<MultipartMessageCreateRequest> {
             _content,
             _nonce,
             _tts,
-            _embed.map { it.toRequest() },
+            Optional.missingOnEmpty(embeds.map(EmbedBuilder::toRequest)),
             _allowedMentions.map { it.build() },
             _messageReference.map {
                 DiscordMessageReference(

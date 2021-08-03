@@ -4,9 +4,7 @@ import dev.kord.common.Color
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,7 +13,7 @@ data class MessageCreateRequest(
     val content: Optional<String> = Optional.Missing(),
     val nonce: Optional<String> = Optional.Missing(),
     val tts: OptionalBoolean = OptionalBoolean.Missing,
-    val embed: Optional<EmbedRequest> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     @SerialName("message_reference")
@@ -76,7 +74,7 @@ data class EmbedFieldRequest(
 @Serializable
 data class MessageEditPatchRequest(
     val content: Optional<String?> = Optional.Missing(),
-    val embed: Optional<EmbedRequest?> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     val flags: Optional<MessageFlags?> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),

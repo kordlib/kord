@@ -265,7 +265,7 @@ suspend inline fun MessageChannelBehavior.createMessage(builder: MessageCreateBu
 }
 
 /**
- * Requests to create a message with only an [embed][MessageCreateBuilder.embed].
+ * Requests to create a message with only an [embed][MessageCreateBuilder.embeds].
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
