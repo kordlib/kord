@@ -156,8 +156,8 @@ class StoreEntitySupplier(
         return storeOnEach(supplier.getThreadMembers(channelId)) { it.data }
     }
 
-    override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> {
-        return storeOnEach(supplier.getActiveThreads(channelId)) { it.data }
+    override fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel> {
+        return storeOnEach(supplier.getActiveThreads(guildId)) { it.data }
     }
 
     override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {

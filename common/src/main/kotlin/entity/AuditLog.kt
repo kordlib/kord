@@ -23,6 +23,7 @@ data class DiscordAuditLog(
     @SerialName("audit_log_entries")
     val auditLogEntries: List<DiscordAuditLogEntry>,
     val integrations: List<DiscordPartialIntegration>,
+    val threads: List<DiscordChannel>
 )
 
 @Serializable
@@ -301,6 +302,20 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
     @SerialName("expire_grace_period")
     object ExpireGracePeriod : AuditLogChangeKey<Int>("expire_grace_period", serializer())
 
+    @SerialName("user_limit")
+    object UserLimit : AuditLogChangeKey<Int>("user_limit", serializer())
+
+    @SerialName("archived")
+    object Archived : AuditLogChangeKey<Boolean>("archived", serializer())
+
+    @SerialName("locked")
+    object Locked : AuditLogChangeKey<Boolean>("locked", serializer())
+
+    @SerialName("auto_archive_duration")
+    object AutoArchiveDuration : AuditLogChangeKey<ArchiveDuration>("auto_archive_duration", serializer())
+
+    @SerialName("default_auto_archive_duration")
+    object DefaultAutoArchiveDuration : AuditLogChangeKey<ArchiveDuration>("default_auto_archive_duration", serializer())
 
     internal class Serializer<T>(val type: KSerializer<T>) : KSerializer<AuditLogChangeKey<T>> {
         override val descriptor: SerialDescriptor
@@ -361,6 +376,11 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
                 "enable_emoticons" -> EnableEmoticons
                 "expire_behavior" -> ExpireBehavior
                 "expire_grace_period" -> ExpireGracePeriod
+                "user_limit" -> UserLimit
+                "locked" -> Locked
+                "archived" -> Archived
+                "auto_archive_duration" -> AutoArchiveDuration
+                "default_auto_archive_duration" -> DefaultAutoArchiveDuration
                 else -> Unknown(name)
             } as AuditLogChangeKey<T>
         }
@@ -405,6 +425,16 @@ sealed class AuditLogEvent(val value: Int) {
     object IntegrationCreate : AuditLogEvent(80)
     object IntegrationUpdate : AuditLogEvent(81)
     object IntegrationDelete : AuditLogEvent(82)
+    object StageInstanceCreate : AuditLogEvent(83)
+    object StageInstanceUpdate : AuditLogEvent(84)
+    object StageInstanceDelete : AuditLogEvent(85)
+    object StickerCreate : AuditLogEvent(90)
+    object StickerUpdate : AuditLogEvent(91)
+    object StickerDelete : AuditLogEvent(92)
+    object ThreadCreate : AuditLogEvent(110)
+    object ThreadUpdate : AuditLogEvent(111)
+    object ThreadDelete : AuditLogEvent(112)
+
 
     internal object Serializer : KSerializer<AuditLogEvent> {
         override val descriptor: SerialDescriptor
@@ -450,6 +480,15 @@ sealed class AuditLogEvent(val value: Int) {
             80 -> IntegrationCreate
             81 -> IntegrationUpdate
             82 -> IntegrationDelete
+            83 -> StageInstanceCreate
+            84 -> StageInstanceUpdate
+            85 -> StageInstanceDelete
+            90 -> StickerCreate
+            91 -> StickerUpdate
+            92 -> StickerDelete
+            110 -> ThreadCreate
+            111 -> ThreadUpdate
+            112 -> ThreadDelete
             else -> Unknown(value)
         }
     }

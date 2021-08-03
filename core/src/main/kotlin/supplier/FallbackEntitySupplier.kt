@@ -124,8 +124,8 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         return first.getThreadMembers(channelId).switchIfEmpty(second.getThreadMembers(channelId))
     }
 
-    override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> {
-        return first.getActiveThreads(channelId).switchIfEmpty(second.getActiveThreads(channelId))
+    override fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel> {
+        return first.getActiveThreads(guildId).switchIfEmpty(second.getActiveThreads(guildId))
     }
 
     override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {

@@ -346,8 +346,8 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         }
     }
 
-    override fun getActiveThreads(channelId: Snowflake): Flow<ThreadChannel> = flow {
-        kord.rest.channel.listActiveThreads(channelId).threads.onEach {
+    override fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel> = flow {
+        kord.rest.guild.listActiveThreads(guildId).threads.onEach {
             val data = ChannelData.from(it)
             val channel = Channel.from(data, kord)
             if (channel is ThreadChannel) emit(channel)
