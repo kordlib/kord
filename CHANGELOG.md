@@ -1,3 +1,9 @@
+# 0.8.0-M2
+
+## Fixes
+* interaction acknowledgements no longer require data 
+* Add SerialName for `InteractionApplicationCommandCallbackData#allowedMentions`
+
 # 0.8.0-M1
 
 ## Additions
