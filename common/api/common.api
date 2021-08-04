@@ -387,6 +387,14 @@ public final class dev/kord/common/entity/AuditLogChangeKey$ApplicationId : dev/
 	public static final field INSTANCE Ldev/kord/common/entity/AuditLogChangeKey$ApplicationId;
 }
 
+public final class dev/kord/common/entity/AuditLogChangeKey$Archived : dev/kord/common/entity/AuditLogChangeKey {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogChangeKey$Archived;
+}
+
+public final class dev/kord/common/entity/AuditLogChangeKey$AutoArchiveDuration : dev/kord/common/entity/AuditLogChangeKey {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogChangeKey$AutoArchiveDuration;
+}
+
 public final class dev/kord/common/entity/AuditLogChangeKey$AvatarHash : dev/kord/common/entity/AuditLogChangeKey {
 	public static final field INSTANCE Ldev/kord/common/entity/AuditLogChangeKey$AvatarHash;
 }
@@ -413,6 +421,10 @@ public final class dev/kord/common/entity/AuditLogChangeKey$Companion {
 
 public final class dev/kord/common/entity/AuditLogChangeKey$Deaf : dev/kord/common/entity/AuditLogChangeKey {
 	public static final field INSTANCE Ldev/kord/common/entity/AuditLogChangeKey$Deaf;
+}
+
+public final class dev/kord/common/entity/AuditLogChangeKey$DefaultAutoArchiveDuration : dev/kord/common/entity/AuditLogChangeKey {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogChangeKey$DefaultAutoArchiveDuration;
 }
 
 public final class dev/kord/common/entity/AuditLogChangeKey$DefaultMessageNotificationLevel : dev/kord/common/entity/AuditLogChangeKey {
@@ -453,6 +465,10 @@ public final class dev/kord/common/entity/AuditLogChangeKey$Id : dev/kord/common
 
 public final class dev/kord/common/entity/AuditLogChangeKey$InviterId : dev/kord/common/entity/AuditLogChangeKey {
 	public static final field INSTANCE Ldev/kord/common/entity/AuditLogChangeKey$InviterId;
+}
+
+public final class dev/kord/common/entity/AuditLogChangeKey$Locked : dev/kord/common/entity/AuditLogChangeKey {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogChangeKey$Locked;
 }
 
 public final class dev/kord/common/entity/AuditLogChangeKey$MFALevel : dev/kord/common/entity/AuditLogChangeKey {
@@ -541,6 +557,10 @@ public final class dev/kord/common/entity/AuditLogChangeKey$Type : dev/kord/comm
 
 public final class dev/kord/common/entity/AuditLogChangeKey$Unknown : dev/kord/common/entity/AuditLogChangeKey {
 	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class dev/kord/common/entity/AuditLogChangeKey$UserLimit : dev/kord/common/entity/AuditLogChangeKey {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogChangeKey$UserLimit;
 }
 
 public final class dev/kord/common/entity/AuditLogChangeKey$Uses : dev/kord/common/entity/AuditLogChangeKey {
@@ -744,6 +764,42 @@ public final class dev/kord/common/entity/AuditLogEvent$RoleDelete : dev/kord/co
 
 public final class dev/kord/common/entity/AuditLogEvent$RoleUpdate : dev/kord/common/entity/AuditLogEvent {
 	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$RoleUpdate;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$StageInstanceCreate : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$StageInstanceCreate;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$StageInstanceDelete : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$StageInstanceDelete;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$StageInstanceUpdate : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$StageInstanceUpdate;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$StickerCreate : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$StickerCreate;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$StickerDelete : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$StickerDelete;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$StickerUpdate : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$StickerUpdate;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$ThreadCreate : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$ThreadCreate;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$ThreadDelete : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$ThreadDelete;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$ThreadUpdate : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$ThreadUpdate;
 }
 
 public final class dev/kord/common/entity/AuditLogEvent$Unknown : dev/kord/common/entity/AuditLogEvent {
@@ -1487,17 +1543,19 @@ public final class dev/kord/common/entity/DiscordAttachment$Companion {
 
 public final class dev/kord/common/entity/DiscordAuditLog {
 	public static final field Companion Ldev/kord/common/entity/DiscordAuditLog$Companion;
-	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Ljava/util/List;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()Ljava/util/List;
-	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ldev/kord/common/entity/DiscordAuditLog;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAuditLog;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAuditLog;
+	public final fun component5 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ldev/kord/common/entity/DiscordAuditLog;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAuditLog;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAuditLog;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAuditLogEntries ()Ljava/util/List;
 	public final fun getIntegrations ()Ljava/util/List;
+	public final fun getThreads ()Ljava/util/List;
 	public final fun getUsers ()Ljava/util/List;
 	public final fun getWebhooks ()Ljava/util/List;
 	public fun hashCode ()I
@@ -6048,6 +6106,7 @@ public final class dev/kord/common/entity/optional/OptionalKt {
 	public static final fun orEmpty (Ldev/kord/common/entity/optional/Optional;)Ljava/util/Set;
 	public static final fun switchOnMissing (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/optional/Optional;
 	public static final fun switchOnMissing (Ldev/kord/common/entity/optional/Optional;Ljava/lang/Object;)Ldev/kord/common/entity/optional/Optional;
+	public static final fun toPrimitive (Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/optional/OptionalBoolean;
 	public static final fun unwrap (Ldev/kord/common/entity/optional/Optional;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 }
 

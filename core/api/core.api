@@ -228,6 +228,7 @@ public abstract interface class dev/kord/core/behavior/GuildBehavior : dev/kord/
 	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun editSelfNickname (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun editWelcomeScreen (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getActiveThreads ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getApplicationCommand (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getBan (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getBanOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -281,6 +282,7 @@ public final class dev/kord/core/behavior/GuildBehavior$DefaultImpls {
 	public static fun editSelfNickname (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun editSelfNickname$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static fun editWelcomeScreen (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getActiveThreads (Ldev/kord/core/behavior/GuildBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getApplicationCommand (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getBan (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getBanOrNull (Ldev/kord/core/behavior/GuildBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -607,34 +609,6 @@ public final class dev/kord/core/behavior/ThreadMemberBehaviorKt {
 	public static synthetic fun ThreadMemberBehavior$default (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILjava/lang/Object;)Ldev/kord/core/behavior/ThreadMemberBehavior;
 }
 
-public abstract interface class dev/kord/core/behavior/ThreadUserBehavior : dev/kord/core/behavior/UserBehavior {
-	public abstract fun getThread ()Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;
-	public abstract fun getThread (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getThreadId ()Ldev/kord/common/entity/Snowflake;
-	public abstract fun getThreadOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/UserBehavior;
-}
-
-public final class dev/kord/core/behavior/ThreadUserBehavior$DefaultImpls {
-	public static fun asMember (Ldev/kord/core/behavior/ThreadUserBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun asMemberOrNull (Ldev/kord/core/behavior/ThreadUserBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun asUser (Ldev/kord/core/behavior/ThreadUserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun asUserOrNull (Ldev/kord/core/behavior/ThreadUserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun compareTo (Ldev/kord/core/behavior/ThreadUserBehavior;Ldev/kord/core/entity/Entity;)I
-	public static fun getDmChannel (Ldev/kord/core/behavior/ThreadUserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getDmChannelOrNull (Ldev/kord/core/behavior/ThreadUserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getMention (Ldev/kord/core/behavior/ThreadUserBehavior;)Ljava/lang/String;
-	public static fun getThread (Ldev/kord/core/behavior/ThreadUserBehavior;)Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;
-	public static fun getThread (Ldev/kord/core/behavior/ThreadUserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getThreadOrNull (Ldev/kord/core/behavior/ThreadUserBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun withStrategy (Ldev/kord/core/behavior/ThreadUserBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/UserBehavior;
-}
-
-public final class dev/kord/core/behavior/ThreadUserBehaviorKt {
-	public static final fun ThreadUserBehavior (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)Ldev/kord/core/behavior/ThreadUserBehavior;
-	public static synthetic fun ThreadUserBehavior$default (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILjava/lang/Object;)Ldev/kord/core/behavior/ThreadUserBehavior;
-}
-
 public abstract interface class dev/kord/core/behavior/UserBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
 	public abstract fun asMember (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun asMemberOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -681,8 +655,10 @@ public final class dev/kord/core/behavior/WebhookBehavior$DefaultImpls {
 public final class dev/kord/core/behavior/WebhookBehaviorKt {
 	public static final fun edit (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun edit (Ldev/kord/core/behavior/WebhookBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun execute (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun executeIgnored (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun execute (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun execute$default (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun executeIgnored (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun executeIgnored$default (Ldev/kord/core/behavior/WebhookBehavior;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/channel/BaseVoiceChannelBehavior : dev/kord/core/behavior/channel/TopGuildChannelBehavior {
@@ -3999,45 +3975,6 @@ public final class dev/kord/core/cache/data/ThreadMetadataData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/core/cache/data/ThreadUserData {
-	public static final field Companion Ldev/kord/core/cache/data/ThreadUserData$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;I)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component2 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()I
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;I)Ldev/kord/core/cache/data/ThreadUserData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/ThreadUserData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;IILjava/lang/Object;)Ldev/kord/core/cache/data/ThreadUserData;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getFlags ()I
-	public final fun getId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getJoinTimestamp ()Ljava/lang/String;
-	public final fun getUserId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/cache/data/ThreadUserData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/core/cache/data/ThreadUserData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/core/cache/data/ThreadUserData;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/core/cache/data/ThreadUserData;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/core/cache/data/ThreadUserData$Companion {
-	public final fun from (Ldev/kord/common/entity/DiscordThreadMember;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/cache/data/ThreadUserData;
-	public static synthetic fun from$default (Ldev/kord/core/cache/data/ThreadUserData$Companion;Ldev/kord/common/entity/DiscordThreadMember;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;)Ldev/kord/core/cache/data/ThreadUserData;
-	public final fun getDescription ()Ldev/kord/cache/api/data/DataDescription;
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public final class dev/kord/core/cache/data/UserData {
 	public static final field Companion Ldev/kord/core/cache/data/UserData$Companion;
 	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ljava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -4399,6 +4336,7 @@ public final class dev/kord/core/entity/AuditLog : dev/kord/core/KordObject {
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getIntegrations ()Ljava/util/List;
 	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getThreads ()Ljava/util/List;
 	public final fun getUsers ()Ljava/util/List;
 	public final fun getWebhooks ()Ljava/util/List;
 }
@@ -4625,6 +4563,7 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public fun editSelfNickname (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun editWelcomeScreen (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun equals (Ljava/lang/Object;)Z
+	public fun getActiveThreads ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getAfkChannel ()Ldev/kord/core/behavior/channel/VoiceChannelBehavior;
 	public final fun getAfkChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAfkChannelId ()Ldev/kord/common/entity/Snowflake;
@@ -6452,33 +6391,6 @@ public final class dev/kord/core/entity/channel/thread/ThreadMember : dev/kord/c
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/UserBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/thread/ThreadMember;
-}
-
-public final class dev/kord/core/entity/channel/thread/ThreadUser : dev/kord/core/behavior/ThreadUserBehavior {
-	public fun <init> (Ldev/kord/core/cache/data/ThreadUserData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
-	public synthetic fun <init> (Ldev/kord/core/cache/data/ThreadUserData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun asMember (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun asMemberOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun asUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun asUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
-	public final fun getData ()Ldev/kord/core/cache/data/ThreadUserData;
-	public fun getDmChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getDmChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getFlags ()I
-	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getJoinTimestamp ()Ljava/lang/String;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getMention ()Ljava/lang/String;
-	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public fun getThread ()Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;
-	public fun getThread (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getThreadId ()Ldev/kord/common/entity/Snowflake;
-	public fun getThreadOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/UserBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
-	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/thread/ThreadUser;
 }
 
 public final class dev/kord/core/entity/component/ActionRowComponent : dev/kord/core/entity/component/Component {

@@ -1,18 +1,22 @@
 # 0.8.0-M1
 
-## Changes
-* `GuildChannel` and `GuildMessageChannel` support common behaviors between non-thread and thread channels.
-* common behaviors between top channels has been moved to `TopGuildChannel` and `TopGuildMessageChannel` respectively.
-
 ## Additions
 
-* Threads support
-* Support user banners
-* Support `NUMBER` type for slash commands.
-* Add new guild features
-* Support `X-Audit-Log` header for V9
-* Add new `OpCode`s and `JsonErrorCode`s
+* Added support for threads. (#349 #358 #353 d1bf947)
+* Added missing JSON error codes. (#347)
+* Added support for slash command number type arguments. (#351)
+* Added support for user banners. (#352)
+* Added missing guild features. (d1bf947)
 
+## Changes
+
+* The `Channel` hierarchy has been changed to support threads. 
+  Some behavior in `GuildChannel(Behavior)` and `GuildMessageChannel(Behavior)` has been removed to accommodate `ThreadChannel`s and 
+  moved to `TopGuildChannel(Behavior)` and `TopGuildMessageChannel(Behavior)` respectively. (#353)
+
+## Fixes
+
+* Fixed missing audit log reasons on certain endpoints. (#346)
 
 
 # 0.7.4
