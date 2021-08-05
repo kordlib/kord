@@ -45,7 +45,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
      */
         suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
             val request =  InteractionResponseCreateRequest(
-                type = InteractionResponseType.ChannelMessageWithSource,
+                type = InteractionResponseType.DeferredChannelMessageWithSource,
                 data = Optional(
                     InteractionApplicationCommandCallbackData(
                         flags = Optional(MessageFlags(MessageFlag.Ephemeral))
