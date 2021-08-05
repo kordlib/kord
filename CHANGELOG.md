@@ -1,3 +1,9 @@
+# 0.8.0-M3
+
+## Fixes
+
+* Fixed Typo in ephemeral acks body causing acking to fail.
+
 # 0.8.0-M2
 
 ## Fixes
