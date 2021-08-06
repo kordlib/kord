@@ -745,7 +745,7 @@ sealed class Route<T>(
         )
     object ActiveThreadsGet : Route<ListThreadsResponse>(
         HttpMethod.Get,
-        " /guilds/${GuildId}/threads/active",
+        "/guilds/${GuildId}/threads/active",
         ListThreadsResponse.serializer()
     )
 

@@ -1,3 +1,9 @@
+# 0.8.0-M4
+
+## Fixes
+
+* Fixed the space in active threads get endpoint causing it to fail.
+
 # 0.8.0-M3
 
 ## Fixes
