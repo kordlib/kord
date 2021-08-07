@@ -329,6 +329,7 @@ sealed class Option {
                 ApplicationCommandOptionType.Boolean,
                 ApplicationCommandOptionType.Channel,
                 ApplicationCommandOptionType.Integer,
+                ApplicationCommandOptionType.Number,
                 ApplicationCommandOptionType.Mentionable,
                 ApplicationCommandOptionType.Role,
                 ApplicationCommandOptionType.String,
