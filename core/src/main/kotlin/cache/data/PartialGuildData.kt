@@ -17,7 +17,7 @@ class PartialGuildData(
     val owner: OptionalBoolean = OptionalBoolean.Missing,
     val permissions: Optional<Permissions> = Optional.Missing(),
     val features: List<GuildFeature>,
-    val welcomeScreen: Optional<WelcomeScreenData>,
+    val welcomeScreen: Optional<WelcomeScreenData> = Optional.Missing(),
 
     ) {
     companion object {
