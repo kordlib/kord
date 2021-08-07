@@ -3,6 +3,7 @@
 ## Fixes
 
 * Fixed the space in active threads get endpoint causing it to fail.
+* Fixed incorrect serialization of `NUMBER` option
 
 # 0.8.0-M3
 
