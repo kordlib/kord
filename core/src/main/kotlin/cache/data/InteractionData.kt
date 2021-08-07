@@ -38,7 +38,7 @@ data class InteractionData(
     val member: Optional<MemberData> = Optional.Missing(),
     val user: Optional<UserData> = Optional.Missing(),
     val token: String,
-    val permissions: Optional<Permissions>,
+    val permissions: Optional<Permissions> = Optional.Missing(),
     val version: Int,
     val message: Optional<MessageData> = Optional.Missing()
 ) {
