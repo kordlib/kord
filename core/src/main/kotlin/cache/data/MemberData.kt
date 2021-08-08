@@ -16,7 +16,7 @@ data class MemberData(
     val nick: Optional<String?> = Optional.Missing(),
     val roles: List<Snowflake>,
     val joinedAt: String,
-    val premiumSince: Optional<String?> = Optional.Missing(),
+    val premiumSince: Optional<String?>,
     val pending: OptionalBoolean = OptionalBoolean.Missing
 ) {
 

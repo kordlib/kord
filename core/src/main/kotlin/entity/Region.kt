@@ -17,8 +17,6 @@ class Region(val data: RegionData, override val kord: Kord) : KordObject {
 
     val isOptimal: Boolean get() = data.optimal
 
-    val isVip: Boolean get() = data.vip
-
     override fun hashCode(): Int = Objects.hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
