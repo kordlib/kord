@@ -3481,17 +3481,16 @@ public final class dev/kord/core/cache/data/ReactionRemoveEmojiData$Companion {
 
 public final class dev/kord/core/cache/data/RegionData {
 	public static final field Companion Ldev/kord/core/cache/data/RegionData$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZZ)V
+	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZ)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Z
 	public final fun component5 ()Z
 	public final fun component6 ()Z
-	public final fun component7 ()Z
-	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZZ)Ldev/kord/core/cache/data/RegionData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/RegionData;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZZILjava/lang/Object;)Ldev/kord/core/cache/data/RegionData;
+	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZ)Ldev/kord/core/cache/data/RegionData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/RegionData;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZILjava/lang/Object;)Ldev/kord/core/cache/data/RegionData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCustom ()Z
 	public final fun getDeprecated ()Z
@@ -3499,7 +3498,6 @@ public final class dev/kord/core/cache/data/RegionData {
 	public final fun getId ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getOptimal ()Z
-	public final fun getVip ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -5126,7 +5124,6 @@ public final class dev/kord/core/entity/Region : dev/kord/core/KordObject {
 	public final fun isCustom ()Z
 	public final fun isDeprecated ()Z
 	public final fun isOptimal ()Z
-	public final fun isVip ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
