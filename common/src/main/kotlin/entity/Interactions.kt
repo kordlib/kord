@@ -507,6 +507,7 @@ sealed class CommandArgument<out T> : Option() {
                         value.value
                     )
                     is IntegerArgument -> encodeIntElement(descriptor, 1, value.value)
+                    is NumberArgument -> encodeDoubleElement(descriptor, 1, value.value)
                     is StringArgument -> encodeStringElement(descriptor, 1, value.value)
                 }
             }
