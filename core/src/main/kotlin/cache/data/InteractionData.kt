@@ -28,6 +28,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @KordPreview
+@Serializable
 data class InteractionData(
     val id: Snowflake,
     val applicationId: Snowflake,
