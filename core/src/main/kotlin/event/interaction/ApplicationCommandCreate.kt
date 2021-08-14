@@ -2,12 +2,37 @@ package dev.kord.core.event.interaction
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
-import dev.kord.core.entity.interaction.GuildApplicationCommand
+import dev.kord.core.entity.application.*
 import dev.kord.core.event.Event
 
-@KordPreview
-class ApplicationCommandCreateEvent(
-    val command: GuildApplicationCommand,
+
+sealed interface ApplicationCommandCreateEvent : Event {
+    val command: GuildApplicationCommand
+}
+
+class ChatInputCommandCreateEvent(
+    override val command: GuildChatInputCommand,
     override val kord: Kord,
-    override val shard: Int
-) : Event
+    override val shard: Int,
+) : ApplicationCommandCreateEvent
+
+
+class UserCommandCreateEvent(
+    override val command: GuildUserCommand,
+    override val kord: Kord,
+    override val shard: Int,
+) : ApplicationCommandCreateEvent
+
+
+class MessageCommandCreateEvent(
+    override val command: GuildMessageCommand,
+    override val kord: Kord,
+    override val shard: Int,
+) : ApplicationCommandCreateEvent
+
+
+class UnknownApplicationCommandCreateEvent(
+    override val command: UnknownGuildApplicationCommand,
+    override val kord: Kord,
+    override val shard: Int,
+) : ApplicationCommandCreateEvent
