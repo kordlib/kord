@@ -29,7 +29,7 @@ unconventional things, and we want to allow you to do those in a safe and suppor
 * [X] [Discord Gateway](https://github.com/kordlib/kord/tree/master/gateway)
 * [x] [Discord Rest API](https://github.com/kordlib/kord/tree/master/rest)
 * [X] [High level abstraction + caching](https://github.com/kordlib/kord/tree/master/core)
-* [ ] Discord Voice (WIP)
+* [X] Discord Voice
 * [ ] Support for multiple processes #7
 
 Right now Kord *should* provide a full mapping of the non-voice API. We're currently working on a testing library for
@@ -194,10 +194,6 @@ suspend fun main() {
 
 We will, there's an [issue](https://github.com/kordlib/kord/issues/69) open to track the features we want/need to make a
 transition to MPP smooth.
-
-## Will you support voice
-
-Yes, please check #101
 
 ## When will you document your code
 
