@@ -1,0 +1,80 @@
+package dev.kord.voice
+
+import dev.kord.gateway.Gateway
+import dev.kord.voice.gateway.Speaking
+import dev.kord.voice.gateway.VoiceGateway
+import kotlin.properties.Delegates
+
+/**
+ * Variables that are accessible to any FrameInterceptor through the [VoiceConnection.frameInterceptorFactory].
+ *
+ * @param gateway the gateway that handles the guild this voice connection is connected to.
+ * @param voiceGateway the underlying [VoiceGateway].
+ * @param ssrc the current SSRC retrieved from Discord.
+ */
+data class FrameInterceptorContext(
+    val gateway: Gateway,
+    val voiceGateway: VoiceGateway,
+    val ssrc: Int,
+)
+
+internal class FrameInterceptorContextBuilder {
+    var gateway: Gateway by Delegates.notNull()
+    var voiceGateway: VoiceGateway by Delegates.notNull()
+    var ssrc: Int by Delegates.notNull()
+
+    fun build() = FrameInterceptorContext(gateway, voiceGateway, ssrc)
+}
+
+internal inline fun FrameInterceptorContext(builder: FrameInterceptorContextBuilder.() -> Unit) =
+    FrameInterceptorContextBuilder().apply(builder).build()
+
+/**
+ * A interceptor for audio frames before they are sent as packets.
+ *
+ * @see DefaultFrameInterceptor
+ */
+fun interface FrameInterceptor {
+    suspend fun intercept(audioFrame: AudioFrame?): AudioFrame?
+}
+
+/**
+ * The default implementation for [FrameInterceptor].
+ * Any custom implementation should extend this and call the super [intercept] method, or else
+ * the speaking flags will not be sent!
+ *
+ * @param connection the voice connection.
+ * @param speakingState the speaking state that will be used when there is audio data to be sent. By default, it is microphone-only.
+ */
+open class DefaultFrameInterceptor(
+    protected val context: FrameInterceptorContext,
+    private val speakingState: SpeakingFlags = SpeakingFlags { +SpeakingFlag.Microphone }
+) : FrameInterceptor {
+    private var framesOfSilence = 5
+    private var isSpeaking = false
+
+    override suspend fun intercept(audioFrame: AudioFrame?): AudioFrame? = with(context) {
+        var frame: AudioFrame? = null
+
+        if (audioFrame != null || framesOfSilence > 0) {
+            if (!isSpeaking && audioFrame != null) {
+                isSpeaking = true
+                voiceGateway.send(Speaking(speakingState, 0, ssrc))
+            }
+
+            frame = audioFrame ?: AudioFrame.SILENCE
+
+            if (audioFrame == null) {
+                framesOfSilence--
+                if (framesOfSilence == 0) {
+                    isSpeaking = false
+                    voiceGateway.send(Speaking(SpeakingFlags(0), 0, ssrc))
+                }
+            } else {
+                framesOfSilence = 5
+            }
+        }
+
+        return frame
+    }
+}
