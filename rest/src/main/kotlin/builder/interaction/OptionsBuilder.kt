@@ -15,7 +15,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-@KordPreview
+
 sealed class OptionsBuilder(
     var name: String,
     var description: String,
@@ -38,7 +38,7 @@ sealed class OptionsBuilder(
 }
 
 @KordDsl
-@KordPreview
+
 sealed class BaseChoiceBuilder<T>(
     name: String,
     description: String,
@@ -61,7 +61,7 @@ sealed class BaseChoiceBuilder<T>(
 }
 
 @KordDsl
-@KordPreview
+
 class IntChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Int>(name, description, ApplicationCommandOptionType.Integer) {
 
@@ -71,7 +71,7 @@ class IntChoiceBuilder(name: String, description: String) :
     }
 }
 
-@KordPreview
+
 @KordDsl
 class NumberChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Double>(name, description, ApplicationCommandOptionType.Number) {
@@ -83,7 +83,7 @@ class NumberChoiceBuilder(name: String, description: String) :
 }
 
 @KordDsl
-@KordPreview
+
 class StringChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
 
@@ -94,31 +94,31 @@ class StringChoiceBuilder(name: String, description: String) :
 }
 
 @KordDsl
-@KordPreview
+
 class BooleanBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Boolean)
 
 @KordDsl
-@KordPreview
+
 class UserBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.User)
 
 @KordDsl
-@KordPreview
+
 class RoleBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Role)
 
 @KordDsl
-@KordPreview
+
 class ChannelBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Channel)
 
-@KordPreview
+
 class MentionableBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Mentionable)
 
 @KordDsl
-@KordPreview
+
 sealed class BaseCommandOptionBuilder(
     name: String,
     description: String,
@@ -137,66 +137,12 @@ sealed class BaseCommandOptionBuilder(
 }
 
 @KordDsl
-@KordPreview
+
 class SubCommandBuilder(name: String, description: String) :
-    BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommand) {
-    @OptIn(ExperimentalContracts::class)
-    inline fun boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (options == null) options = mutableListOf()
-        options!!.add(BooleanBuilder(name, description).apply(builder))
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (options == null) options = mutableListOf()
-        options!!.add(IntChoiceBuilder(name, description).apply(builder))
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun string(
-        name: String,
-        description: String,
-        builder: StringChoiceBuilder.() -> Unit = {},
-    ) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (options == null) options = mutableListOf()
-        options!!.add(StringChoiceBuilder(name, description).apply(builder))
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun role(name: String, description: String, builder: RoleBuilder.() -> Unit = {}) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (options == null) options = mutableListOf()
-        options!!.add(RoleBuilder(name, description).apply(builder))
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun user(name: String, description: String, builder: UserBuilder.() -> Unit = {}) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (options == null) options = mutableListOf()
-        options!!.add(UserBuilder(name, description).apply(builder))
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun channel(name: String, description: String, builder: ChannelBuilder.() -> Unit = {}) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (options == null) options = mutableListOf()
-        options!!.add(ChannelBuilder(name, description).apply(builder))
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    inline fun mentionable(name: String, description: String, builder: MentionableBuilder.() -> Unit = {}) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        if (options == null) options = mutableListOf()
-        options!!.add(MentionableBuilder(name, description).apply(builder))
-
-    }
-}
+    BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommand), BaseInputChatBuilder
 
 @KordDsl
-@KordPreview
+
 class GroupCommandBuilder(name: String, description: String) :
     BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommandGroup) {
     inline fun subCommand(
