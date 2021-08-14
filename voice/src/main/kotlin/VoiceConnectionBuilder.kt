@@ -97,7 +97,6 @@ class VoiceConnectionBuilder(
                 selfId = selfId,
                 guildId = guildId
             ) to VoiceGatewayConfiguration(
-                channelId = channelId,
                 token = voiceServerUpdate.token,
                 sessionId = voiceStateUpdate.sessionId,
                 endpoint = "wss://${voiceServerUpdate.endpoint}?v=4"
