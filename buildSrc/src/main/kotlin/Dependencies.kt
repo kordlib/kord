@@ -7,6 +7,7 @@ object Versions {
     const val dateTime = "0.2.1"
     const val atomicFu = "0.16.1"
     const val binaryCompatibilityValidator = "0.5.0"
+    const val xsala20poly1305 = "0.10.1"
 
     //test deps
     const val kotlinTest = kotlin
@@ -49,6 +50,9 @@ object Dependencies {
     const val `ktor-client-websocket` = "io.ktor:ktor-client-websockets:${Versions.ktor}"
     const val `ktor-client-mock` = "io.ktor:ktor-client-mock:${Versions.ktor}"
     const val `ktor-client-mock-jvm` = "io.ktor:ktor-client-mock-jvm:${Versions.ktor}"
+    const val `ktor-network` = "io.ktor:ktor-network:${Versions.ktor}"
+
+    const val `codahale-xsalsa20poly1305` = "com.codahale:xsalsa20poly1305:${Versions.xsala20poly1305}"
 
     const val `cache-api` = "dev.kord.cache:cache-api"
     const val `cache-map` = "dev.kord.cache:cache-map"
