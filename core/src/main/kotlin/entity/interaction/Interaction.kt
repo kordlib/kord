@@ -111,15 +111,15 @@ sealed interface InteractionCommand : KordObject {
 
     val resolved: ResolvedObjects?
 
-    val strings: Map<String, String> get() = filterOptions(options)
+    val strings: Map<String, String> get() = filterOptions()
 
-    val integers: Map<String, Int> get() = filterOptions(options)
+    val integers: Map<String, Int> get() = filterOptions()
 
-    val numbers: Map<String, Double> get() = filterOptions(options)
+    val numbers: Map<String, Double> get() = filterOptions()
 
-    val booleans: Map<String, Boolean> get() = filterOptions(options)
+    val booleans: Map<String, Boolean> get() = filterOptions()
 
-    private inline fun <reified T> filterOptions(options: Map<String, OptionValue<*>>): Map<String, T> {
+    private inline fun <reified T> filterOptions(): Map<String, T> {
         return buildMap {
             options.onEach { (key, value)  ->
                 val wrappedValue = value.value

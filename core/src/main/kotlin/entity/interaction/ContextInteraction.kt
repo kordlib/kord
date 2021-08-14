@@ -33,7 +33,7 @@ class GlobalChatInputCommandInteraction(
 
 sealed interface  UserCommandInteraction : ApplicationCommandInteraction {
     private val resolvedUsersData  get() = data.data.resolvedObjectsData.value?.users?.value
-    val users: List<User> get() = resolvedUsersData.orEmpty().map { User(it.value, kord) }
+    val users get() = resolvedUsersData.orEmpty().mapValues { User(it.value, kord) }
 }
 
 class GuildUserCommandInteraction(
@@ -42,8 +42,8 @@ class GuildUserCommandInteraction(
     override val supplier: EntitySupplier
 ) : UserCommandInteraction, GuildApplicationCommandInteraction {
     private val resolvedMembersData  get() = data.data?.resolvedObjectsData.value?.members?.value
-    val members: List<Member> get() = resolvedMembersData.orEmpty().map { memberData ->
-        Member(memberData.value, users.first { it.id == memberData.key  }.data, kord) }
+    val members get() = resolvedMembersData.orEmpty().mapValues { memberData ->
+        Member(memberData.value, users[memberData.key]!!.data, kord) }
 }
 
 class GlobalUserCommandInteraction(
@@ -54,8 +54,8 @@ class GlobalUserCommandInteraction(
 
 
 sealed interface  MessageCommandInteraction : ApplicationCommandInteraction {
-    private val resolvedMessagesData  get() = data.data.resolvedObjectsData.value?.messages?.value
-    val messages get() = resolvedMessagesData.orEmpty().map { Message(it.value, kord) }
+    private val resolvedMessagesData get() = data.data.resolvedObjectsData.value?.messages?.value
+    val messages get() = resolvedMessagesData.orEmpty().mapValues { Message(it.value, kord) }
 
 }
 

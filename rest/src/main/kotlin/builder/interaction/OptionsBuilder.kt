@@ -145,11 +145,13 @@ class SubCommandBuilder(name: String, description: String) :
 
 class GroupCommandBuilder(name: String, description: String) :
     BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommandGroup) {
+    @OptIn(ExperimentalContracts::class)
     inline fun subCommand(
         name: String,
         description: String,
         builder: SubCommandBuilder.() -> Unit,
     ) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (options == null) options = mutableListOf()
         options!!.add(SubCommandBuilder(name, description).apply(builder))
     }
