@@ -102,6 +102,31 @@ class VoiceConnection(
     }
 }
 
+/**
+ * Builds a [VoiceConnection] configured by the [builder].
+ *
+ * @param gateway the [Gateway] that handles the guild [guildId].
+ * @param selfId the id of yourself.
+ * @param channelId the id of the initial voice channel you are connecting to.
+ * @param guildId the id of the guild the voice channel resides in.
+ * @param builder the builder.
+ *
+ * @return a [VoiceConnection] that is ready to be used.
+ *
+ * @throws dev.kord.voice.exception.VoiceConnectionInitializationException when there was a problem retrieving voice information from Discord.
+ */
+@OptIn(ExperimentalContracts::class)
+suspend inline fun VoiceConnection(
+    gateway: Gateway,
+    selfId: Snowflake,
+    channelId: Snowflake,
+    guildId: Snowflake,
+    builder: VoiceConnectionBuilder.() -> Unit = {}
+): VoiceConnection {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return VoiceConnectionBuilder(gateway, selfId, channelId, guildId).apply(builder).build()
+}
+
 private fun AudioFramePollerConfigurationBuilder.withConnection(connection: VoiceConnection): AudioFramePollerConfiguration {
     this.provider = connection.audioProvider
     this.interceptorFactory = connection.frameInterceptorFactory
