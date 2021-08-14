@@ -12,7 +12,7 @@ import dev.kord.rest.route.Route
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.serializer
 
-@KordPreview
+
 class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
     suspend fun getGlobalApplicationCommands(applicationId: Snowflake): List<DiscordApplicationCommand> =
         call(Route.GlobalApplicationCommandsGet) {

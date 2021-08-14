@@ -183,7 +183,7 @@ class Message(
     /**
      * The [MessageInteraction] sent on this message object when it is a response to an [dev.kord.core.entity.interaction.Interaction].
      */
-    @KordPreview
+
     val interaction: MessageInteraction? get() = data.interaction.mapNullable { MessageInteraction(it, kord) }.value
 
     /**
@@ -230,7 +230,7 @@ class Message(
      */
     val webhookId: Snowflake? get() = data.webhookId.value
 
-    @KordPreview
+
     val components: List<Component>
         get() = data.components.orEmpty().map { Component(it) }
 

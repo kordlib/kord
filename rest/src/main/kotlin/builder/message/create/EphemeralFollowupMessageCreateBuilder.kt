@@ -9,7 +9,7 @@ import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.FollowupMessageCreateRequest
 import dev.kord.rest.json.request.MultipartFollowupMessageCreateRequest
 
-@KordPreview
+
 class EphemeralFollowupMessageCreateBuilder
     : EphemeralMessageCreateBuilder,
     RequestBuilder<MultipartFollowupMessageCreateRequest> {

@@ -4,7 +4,6 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
 
-@KordPreview
 data class GuildApplicationCommandPermissionsData(
     val id: Snowflake,
     val applicationId: Snowflake,

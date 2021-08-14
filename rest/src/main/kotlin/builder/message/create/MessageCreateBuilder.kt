@@ -38,7 +38,7 @@ sealed interface MessageCreateBuilder {
     /**
      * The message components to include in this message.
      */
-    @KordPreview
+
     val components: MutableList<MessageComponentBuilder>
 
 }
@@ -67,7 +67,7 @@ inline fun MessageCreateBuilder.allowedMentions(block: AllowedMentionsBuilder.()
  * Adds an Action Row to the message, configured by the [builder]. A message can have up to 5 action rows.
  */
 @OptIn(ExperimentalContracts::class)
-@KordPreview
+
 inline fun MessageCreateBuilder.actionRow(builder: ActionRowBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

@@ -27,7 +27,7 @@ class DefaultGatewayBuilder {
     var dispatcher: CoroutineDispatcher = Dispatchers.Default
     var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
-    @OptIn(KtorExperimentalAPI::class, ObsoleteCoroutinesApi::class)
+    @OptIn(ObsoleteCoroutinesApi::class)
     fun build(): DefaultGateway {
         val client = client ?: HttpClient(CIO) {
             install(WebSockets)

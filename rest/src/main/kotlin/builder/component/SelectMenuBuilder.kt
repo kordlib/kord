@@ -16,7 +16,7 @@ import kotlin.contracts.contract
  *
  * @param customId The identifier for the menu, max 100 characters.
  */
-@KordPreview
+
 class SelectMenuBuilder(
     var customId: String
 ) : ActionRowComponentBuilder {

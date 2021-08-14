@@ -16,7 +16,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@KordPreview
 data class InteractionData(
     val id: Snowflake,
     val applicationId: Snowflake,
@@ -56,7 +55,6 @@ data class InteractionData(
     }
 }
 
-@KordPreview
 @Serializable
 data class ResolvedObjectsData(
     val members: Optional<Map<Snowflake, MemberData>> = Optional.Missing(),
@@ -113,7 +111,7 @@ data class ApplicationInteractionData(
     }
 }
 
-@KordPreview
+
 @Serializable
 data class OptionData(
     val name: String,

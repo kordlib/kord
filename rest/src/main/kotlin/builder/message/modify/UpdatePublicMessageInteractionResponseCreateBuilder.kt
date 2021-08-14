@@ -17,7 +17,7 @@ import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 import java.io.InputStream
 
-@KordPreview
+
 class UpdatePublicMessageInteractionResponseCreateBuilder :
     PersistentMessageModifyBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {

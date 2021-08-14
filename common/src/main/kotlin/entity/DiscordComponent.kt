@@ -30,7 +30,7 @@ import kotlinx.serialization.json.JsonNames
  * @property minValues the minimum amount of [options] allowed
  * @property maxValues the maximum amount of [options] allowed
  */
-@KordPreview
+
 @Serializable
 data class DiscordComponent(
     val type: ComponentType,
@@ -55,7 +55,7 @@ data class DiscordComponent(
  *
  * @property value the raw type value used by the Discord API
  */
-@KordPreview
+
 @Serializable(with = ComponentType.Serializer::class)
 sealed class ComponentType(val value: Int) {
 
@@ -101,7 +101,7 @@ sealed class ComponentType(val value: Int) {
  *
  * @see ComponentType.Button
  */
-@KordPreview
+
 @Serializable(with = ButtonStyle.Serializer::class)
 sealed class ButtonStyle(val value: Int) {
 

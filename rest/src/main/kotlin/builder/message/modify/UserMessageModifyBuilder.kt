@@ -29,7 +29,7 @@ class UserMessageModifyBuilder
 
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()
 
-    @KordPreview
+
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
 
     @OptIn(KordPreview::class)

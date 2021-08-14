@@ -1,4 +1,4 @@
-package dev.kord.core.entity.interaction
+package dev.kord.core.entity.application
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordGuildApplicationCommandPermission
@@ -8,7 +8,7 @@ import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-@KordPreview
+
 class GuildApplicationCommandPermission(val data: GuildApplicationCommandPermissionData) {
 
     val id: Snowflake get() = data.id
@@ -18,7 +18,7 @@ class GuildApplicationCommandPermission(val data: GuildApplicationCommandPermiss
     val permission: Boolean get() = data.permission
 }
 
-@KordPreview
+
 class ApplicationCommandPermissions(val data: GuildApplicationCommandPermissionsData) {
     val id: Snowflake get() = data.id
 

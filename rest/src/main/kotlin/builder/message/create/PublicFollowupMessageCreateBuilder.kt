@@ -14,7 +14,7 @@ import java.io.InputStream
 /**
  * Message builder for creating persistent messages following up interaction responses.
  */
-@KordPreview
+
 class PublicFollowupMessageCreateBuilder
     : PersistentMessageCreateBuilder,
     RequestBuilder<MultipartFollowupMessageCreateRequest> {
@@ -27,7 +27,7 @@ class PublicFollowupMessageCreateBuilder
 
     override var allowedMentions: AllowedMentionsBuilder? = null
 
-    @KordPreview
+
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     override val files: MutableList<Pair<String, InputStream>> = mutableListOf()

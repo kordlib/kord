@@ -12,7 +12,7 @@ import dev.kord.core.entity.interaction.SelectMenuInteraction
 /**
  * An interactive dropdown menu rendered on a [Message] that consists of multiple [options].
  */
-@KordPreview
+
 class SelectMenuComponent(override val data: ComponentData) : Component {
 
     /**

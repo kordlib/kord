@@ -11,7 +11,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-@KordPreview
+
 class ActionRowBuilder : MessageComponentBuilder {
     val components = mutableListOf<ActionRowComponentBuilder>()
 

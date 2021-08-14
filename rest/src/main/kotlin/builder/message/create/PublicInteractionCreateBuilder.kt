@@ -15,7 +15,7 @@ import java.io.InputStream
 /**
  * Message builder for publicly responding to an interaction.
  */
-@KordPreview
+
 class PublicInteractionResponseCreateBuilder
     : PersistentMessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {
@@ -28,7 +28,7 @@ class PublicInteractionResponseCreateBuilder
 
     override var allowedMentions: AllowedMentionsBuilder? = null
 
-    @KordPreview
+
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     override val files: MutableList<Pair<String, InputStream>> = mutableListOf()

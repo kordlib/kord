@@ -19,7 +19,7 @@ import kotlin.contracts.contract
  * The behavior of a public [Discord Interaction Response](https://discord.com/developers/docs/interactions/slash-commands#interaction-response)
  * This response is visible to all users in the channel.
  */
-@KordPreview
+
 interface PublicInteractionResponseBehavior : InteractionResponseBehavior {
 
     /**
@@ -41,7 +41,7 @@ interface PublicInteractionResponseBehavior : InteractionResponseBehavior {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@KordPreview
+
 @OptIn(ExperimentalContracts::class)
 suspend inline fun PublicInteractionResponseBehavior.edit(builder: PublicInteractionResponseModifyBuilder.() -> Unit): Message {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -55,7 +55,7 @@ suspend inline fun PublicInteractionResponseBehavior.edit(builder: PublicInterac
  *
  * @return created [PublicFollowupMessage]
  */
-@KordPreview
+
 @OptIn(ExperimentalContracts::class)
 suspend inline fun PublicInteractionResponseBehavior.followUp(builder: PublicFollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -64,7 +64,7 @@ suspend inline fun PublicInteractionResponseBehavior.followUp(builder: PublicFol
     return PublicFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
 }
 
-@KordPreview
+
 fun PublicInteractionResponseBehavior(applicationId: Snowflake, token: String, kord: Kord) =
     object : PublicInteractionResponseBehavior {
         override val applicationId: Snowflake

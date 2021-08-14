@@ -11,7 +11,7 @@ import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.FollowupMessageModifyRequest
 import dev.kord.rest.json.request.MultipartFollowupMessageModifyRequest
 
-@KordPreview
+
 class EphemeralFollowupMessageModifyBuilder
     : EphemeralMessageModifyBuilder,
     RequestBuilder<MultipartFollowupMessageModifyRequest> {

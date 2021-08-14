@@ -10,7 +10,7 @@ import mockKord
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-@KordPreview
+
 class CommandsTypeTests {
     val arg = buildJsonObject {
         put("type", ApplicationCommandOptionType.Integer.type)

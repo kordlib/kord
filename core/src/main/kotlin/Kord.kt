@@ -386,7 +386,7 @@ class Kord(
 
 
     @OptIn(ExperimentalContracts::class)
-    @KordPreview
+
     suspend inline fun createGlobalChatInputCommand(
         name: String,
         description: String,
@@ -398,7 +398,7 @@ class Kord(
 
 
     @OptIn(ExperimentalContracts::class)
-    @KordPreview
+
     suspend inline fun createGlobalMessageCommand(
         name: String,
         builder: MessageCommandCreateBuilder.() -> Unit = {},
@@ -408,7 +408,7 @@ class Kord(
     }
 
     @OptIn(ExperimentalContracts::class)
-    @KordPreview
+
     suspend inline fun createGlobalUserCommand(
         name: String,
         builder: UserCommandCreateBuilder.() -> Unit = {},
@@ -418,7 +418,7 @@ class Kord(
     }
 
     @OptIn(ExperimentalContracts::class)
-    @KordPreview
+
     suspend inline fun createGlobalApplicationCommands(
         builder: MultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GlobalApplicationCommand> {
