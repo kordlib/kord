@@ -17,7 +17,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-@KordPreview
+
 interface ComponentInteractionBehavior : InteractionBehavior {
 
     /**
@@ -80,7 +80,7 @@ interface ComponentInteractionBehavior : InteractionBehavior {
  * Creates a ComponentInteractionBehavior with the given [id], [channelId],
  * [token], [applicationId], [kord] and [strategy].
  */
-@KordPreview
+
 fun ComponentInteractionBehavior(
     id: Snowflake,
     channelId: Snowflake,
@@ -116,7 +116,7 @@ fun ComponentInteractionBehavior(
  * on public and ephemeral messages. The only difference is in the **followUp** calls,
  * which will become public or ephemeral respectively.
  */
-@KordPreview
+
 @OptIn(ExperimentalContracts::class)
 suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
     builder: UpdatePublicMessageInteractionResponseCreateBuilder.() -> Unit
@@ -142,7 +142,7 @@ suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
  * on public and ephemeral messages. The only difference is in the **followUp** calls,
  * which will become ephemeral or public respectively.
  */
-@KordPreview
+
 @OptIn(ExperimentalContracts::class)
 suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessage(
     builder: UpdateEphemeralMessageInteractionResponseCreateBuilder.() -> Unit

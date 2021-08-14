@@ -1,42 +1,37 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.CommandArgument
-import dev.kord.common.entity.InteractionType
-import dev.kord.common.entity.Permissions
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
-import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.behavior.GuildInteractionBehavior
-import dev.kord.core.behavior.MemberBehavior
-import dev.kord.core.behavior.UserBehavior
+import dev.kord.core.behavior.*
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.channel.MessageChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.ApplicationInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
-import dev.kord.core.entity.Entity
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Role
-import dev.kord.core.entity.User
+import dev.kord.core.entity.*
+import dev.kord.core.entity.application.GlobalApplicationCommand
+import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.DmChannel
 import dev.kord.core.entity.channel.ResolvedChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.service.InteractionService
 
 /**
  * An instance of [Interaction] (https://discord.com/developers/docs/interactions/slash-commands#interaction)
  */
-@KordPreview
-sealed class Interaction : InteractionBehavior {
+
+sealed interface Interaction : InteractionBehavior {
 
     abstract val data: InteractionData
 
     override val id: Snowflake get() = data.id
+
+    override val applicationId: Snowflake
+        get() = data.applicationId
 
     /**
      * The channel id where the interaction took place.
@@ -53,7 +48,7 @@ sealed class Interaction : InteractionBehavior {
      */
     val type: InteractionType get() = data.type
 
-    abstract val user: UserBehavior
+    val user: UserBehavior
 
     /**
      * read-only property, always 1
@@ -69,19 +64,13 @@ sealed class Interaction : InteractionBehavior {
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): Interaction {
             return when {
-                data.type == InteractionType.Component -> ComponentInteraction(
+                data.type == InteractionType.Component -> ComponentInteraction(data, kord, strategy.supply(kord))
+                data.guildId !is OptionalSnowflake.Missing -> GuildApplicationCommandInteraction(
                     data,
-                    data.applicationId,
                     kord,
                     strategy.supply(kord)
                 )
-                data.guildId !is OptionalSnowflake.Missing -> GuildInteraction(
-                    data,
-                    data.applicationId,
-                    kord,
-                    strategy.supply(kord)
-                )
-                else -> DmInteraction(data, data.applicationId, kord, strategy.supply(kord))
+                else -> GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
             }
         }
     }
@@ -92,10 +81,10 @@ sealed class Interaction : InteractionBehavior {
  * The base interaction for all slash-command related interactions.
  *
  * @see DmInteraction
- * @see GuildInteraction
+ * @see GuildApplicationCommandInteraction
  */
-@KordPreview
-sealed class CommandInteraction : Interaction() {
+
+sealed class CommandInteraction : Interaction {
     val command: InteractionCommand
         get() = InteractionCommand(data.data, kord)
 }
@@ -103,12 +92,12 @@ sealed class CommandInteraction : Interaction() {
 /**
  * The base command of all commands that can be executed under an interaction event.
  */
-@KordPreview
-sealed class InteractionCommand : KordObject {
+
+sealed interface InteractionCommand : KordObject {
     /**
      * The id of the root command.
      */
-    abstract val rootId: Snowflake
+    val rootId: Snowflake
 
     /**
      * The root command name
@@ -118,9 +107,26 @@ sealed class InteractionCommand : KordObject {
     /**
      * the values passed to the command.
      */
-    abstract val options: Map<String, OptionValue<*>>
+    val options: Map<String, OptionValue<*>>
 
-    abstract val resolved: ResolvedObjects?
+    val resolved: ResolvedObjects?
+
+    val strings: Map<String, String> get() = filterOptions(options)
+
+    val integers: Map<String, Int> get() = filterOptions(options)
+
+    val numbers: Map<String, Double> get() = filterOptions(options)
+
+    val booleans: Map<String, Boolean> get() = filterOptions(options)
+
+    private inline fun <reified T> filterOptions(options: Map<String, OptionValue<*>>): Map<String, T> {
+        return buildMap {
+            options.onEach { (key, value)  ->
+                val wrappedValue = value.value
+                if(wrappedValue is T) put(key, wrappedValue)
+            }
+        }
+    }
 }
 
 fun InteractionCommand(
@@ -144,13 +150,13 @@ fun InteractionCommand(
 /**
  * Represents an invocation of a root command.
  *
- * The root command is the first command defined in in a slash-command structure.
+ * The root command is the first command defined in a slash-command structure.
  */
-@KordPreview
+
 class RootCommand(
     val data: ApplicationInteractionData,
     override val kord: Kord
-) : InteractionCommand() {
+) : InteractionCommand {
 
     override val rootId: Snowflake
         get() = data.id.value!!
@@ -169,11 +175,11 @@ class RootCommand(
 /**
  * Represents an invocation of a sub-command under the [RootCommand]
  */
-@KordPreview
+
 class SubCommand(
     val data: ApplicationInteractionData,
     override val kord: Kord
-) : InteractionCommand() {
+) : InteractionCommand {
 
     private val subCommandData = data.options.orEmpty().first()
 
@@ -201,11 +207,11 @@ class SubCommand(
 /**
  * Represents an invocation of a sub-command under a group.
  */
-@KordPreview
+
 class GroupCommand(
     val data: ApplicationInteractionData,
     override val kord: Kord
-) : InteractionCommand() {
+) : InteractionCommand {
 
     private val groupData get() = data.options.orEmpty().first()
     private val subCommandData get() = groupData.subCommands.orEmpty().first()
@@ -235,7 +241,7 @@ class GroupCommand(
 
 }
 
-@KordPreview
+
 class ResolvedObjects(
     val data: ResolvedObjectsData,
     val kord: Kord,
@@ -245,15 +251,18 @@ class ResolvedObjects(
         get() = data.channels.mapValues { ResolvedChannel(it.value, kord, strategy) }.value
 
     val roles: Map<Snowflake, Role>? get() = data.roles.mapValues { Role(it.value, kord) }.value
+
     val users: Map<Snowflake, User>? get() = data.users.mapValues { User(it.value, kord) }.value
+
     val members: Map<Snowflake, Member>?
-        get() = data.members.mapValues {
-            Member(it.value, users!![it.key]!!.data, kord)
-        }.value
+        get() = data.members.mapValues { Member(it.value, users!![it.key]!!.data, kord) }.value
+
+    val messages: Map<Snowflake, Message>?
+        get() = data.messages.mapValues { Message(it.value, kord) }.value
 
 }
 
-@KordPreview
+
 sealed class OptionValue<out T>(val value: T) {
 
     class RoleOptionValue(value: Role) : OptionValue<Role>(value) {
@@ -292,9 +301,13 @@ sealed class OptionValue<out T>(val value: T) {
     class MentionableOptionValue(value: Entity) : OptionValue<Entity>(value) {
         override fun toString(): String = "MentionableOptionValue(value=$value)"
     }
+
+    class MessageOptionValue(value: Message) : OptionValue<Message>(value) {
+        override fun toString(): String = "MessageOptionValue(value=$value)"
+    }
 }
 
-@KordPreview
+
 fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
     return when (value) {
         is CommandArgument.NumberArgument -> OptionValue.NumberOptionValue(value.value)
@@ -314,7 +327,10 @@ fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjects?): O
             val member = resolvedObjects?.members.orEmpty()[value.value]
             val role = resolvedObjects?.roles.orEmpty()[value.value]
 
-            OptionValue.MentionableOptionValue((channel ?: member ?: user ?: role)!!)
+            val entity = channel ?: member ?: user ?: role
+            requireNotNull(entity) { "user, member, or channel expected for $value but was missing" }
+
+            OptionValue.MentionableOptionValue(entity)
         }
 
         is CommandArgument.RoleArgument -> {
@@ -341,29 +357,40 @@ fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjects?): O
 /**
  * An [Interaction] that took place in a [DmChannel].
  */
-@KordPreview
-class DmInteraction(
-    override val data: InteractionData,
-    override val applicationId: Snowflake,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
-) : CommandInteraction() {
+
+sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInteraction, GlobalApplicationCommandBehavior {
     /**
      * The user who invoked the interaction.
      */
+
+    override val service: InteractionService
+        get() = kord.rest.interaction
+
     override val user get() = User(data.user.value!!, kord)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): DmInteraction =
-        DmInteraction(data, applicationId, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GlobalApplicationCommandInteraction =
+        GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
+
+    override val applicationId: Snowflake
+        get() = super.applicationId
 }
 
-@KordPreview
-class GuildInteraction(
-    override val data: InteractionData,
-    override val applicationId: Snowflake,
-    override val kord: Kord,
-    override val supplier: EntitySupplier
-) : CommandInteraction(), GuildInteractionBehavior {
+fun GlobalApplicationCommandInteraction(
+    data: InteractionData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+): GlobalApplicationCommandInteraction {
+    return when (data.data.type.value) {
+        ApplicationCommandType.ChatInput -> GlobalChatInputCommandInteraction(data, kord, supplier)
+        ApplicationCommandType.User -> GlobalUserCommandInteraction(data, kord, supplier)
+        ApplicationCommandType.Message -> GlobalMessageCommandInteraction(data, kord, supplier)
+        is ApplicationCommandType.Unknown -> error("Unknown interaction.")
+        null -> error("No component type was provided")
+    }
+}
+
+
+sealed interface GuildApplicationCommandInteraction : ApplicationCommandInteraction, GuildInteractionBehavior {
 
     override val guildId: Snowflake
         get() = data.guildId.value!!
@@ -394,36 +421,50 @@ class GuildInteraction(
     override val user: UserBehavior
         get() = UserBehavior(member.id, kord)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildInteraction =
-        GuildInteraction(data, applicationId, kord, supplier)
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildApplicationCommandInteraction =
+        GuildApplicationCommandInteraction(data, kord, strategy.supply(kord))
 
 }
 
-@KordPreview
+fun GuildApplicationCommandInteraction(
+    data: InteractionData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+): GuildApplicationCommandInteraction {
+    return when (data.data.type.value) {
+        ApplicationCommandType.ChatInput -> GuildChatInputCommandInteraction(data, kord, supplier)
+        ApplicationCommandType.User -> GuildUserCommandInteraction(data, kord, supplier)
+        ApplicationCommandType.Message -> GuildMessageCommandInteraction(data, kord, supplier)
+        is ApplicationCommandType.Unknown -> error("Unknown interaction.")
+        null -> error("No interaction type provided.")
+    }
+}
+
+
 fun OptionValue<*>.user(): User = value as User
 
-@KordPreview
+
 fun OptionValue<*>.channel(): ResolvedChannel = value as ResolvedChannel
 
-@KordPreview
+
 fun OptionValue<*>.role(): Role = value as Role
 
-@KordPreview
+
 fun OptionValue<*>.member(): Member = value as Member
 
-@KordPreview
+
 fun OptionValue<*>.string() = value.toString()
 
-@KordPreview
+
 fun OptionValue<*>.boolean() = value as Boolean
 
-@KordPreview
+
 fun OptionValue<*>.int() = value as Int
 
-@KordPreview
+
 fun OptionValue<*>.number() = value as Double
 
-@KordPreview
+
 fun OptionValue<*>.mentionable(): Entity {
     return value as Entity
 }

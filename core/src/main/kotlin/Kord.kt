@@ -14,8 +14,11 @@ import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
+import dev.kord.core.entity.application.GlobalApplicationCommand
+import dev.kord.core.entity.application.GlobalChatInputCommand
+import dev.kord.core.entity.application.GlobalMessageCommand
+import dev.kord.core.entity.application.GlobalUserCommand
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.interaction.GlobalApplicationCommand
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
@@ -27,8 +30,10 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
+import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
+import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
+import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
+import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
@@ -59,20 +64,20 @@ class Kord(
     private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventFlow)
 
     /**
-     * A [SlashCommands] object to deal with Application Commands interactions.
+     * A [ApplicationCommands] object to deal with Application Commands interactions.
      */
-    @KordPreview
+
     val slashCommands: SlashCommands = SlashCommands(selfId, rest.interaction)
 
     /**
      * Global commands made by the bot under this Kord instance.
      */
-    @KordPreview
+
     val globalCommands: Flow<GlobalApplicationCommand>
         get() = slashCommands.getGlobalApplicationCommands()
 
 
-    @KordPreview
+
     suspend fun getGlobalApplicationCommand(commandId: Snowflake) =
         slashCommands.getGlobalApplicationCommand(commandId)
 
@@ -382,19 +387,40 @@ class Kord(
 
     @OptIn(ExperimentalContracts::class)
     @KordPreview
-    suspend inline fun createGlobalApplicationCommand(
+    suspend inline fun createGlobalChatInputCommand(
         name: String,
         description: String,
-        builder: ApplicationCommandCreateBuilder.() -> Unit = {},
-    ): GlobalApplicationCommand {
+        builder: ChatInputCreateBuilder.() -> Unit = {},
+    ): GlobalChatInputCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return slashCommands.createGlobalApplicationCommand(name, description, builder)
+        return slashCommands.createGlobalChatInputCommand(name, description, builder)
+    }
+
+
+    @OptIn(ExperimentalContracts::class)
+    @KordPreview
+    suspend inline fun createGlobalMessageCommand(
+        name: String,
+        builder: MessageCommandCreateBuilder.() -> Unit = {},
+    ): GlobalMessageCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return slashCommands.createGlobalMessageCommand(name, builder)
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    @KordPreview
+    suspend inline fun createGlobalUserCommand(
+        name: String,
+        builder: UserCommandCreateBuilder.() -> Unit = {},
+    ): GlobalUserCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return slashCommands.createGlobalUserCommand(name, builder)
     }
 
     @OptIn(ExperimentalContracts::class)
     @KordPreview
     suspend inline fun createGlobalApplicationCommands(
-        builder: ApplicationCommandsCreateBuilder.() -> Unit,
+        builder: MultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GlobalApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
