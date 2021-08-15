@@ -44,11 +44,85 @@ interface InteractionBehavior : KordEntity, Strategizable {
     suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
 
+    /**
+     * Acknowledges an interaction ephemerally.
+     *
+     * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
+     */
+    suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
+        val request =  InteractionResponseCreateRequest(
+            type = InteractionResponseType.DeferredChannelMessageWithSource,
+            data = Optional(
+                InteractionApplicationCommandCallbackData(
+                    flags = Optional(MessageFlags(MessageFlag.Ephemeral))
+                )
+            )
+        )
+        kord.rest.interaction.createInteractionResponse(id, token, request)
+        return EphemeralInteractionResponseBehavior(applicationId, token, kord)
+    }
+
+    /**
+     * Acknowledges an interaction.
+     *
+     * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
+     */
+    suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
+        val request = InteractionResponseCreateRequest(
+            type = InteractionResponseType.DeferredChannelMessageWithSource
+        )
+        kord.rest.interaction.createInteractionResponse(id, token, request)
+        return PublicInteractionResponseBehavior(applicationId, token, kord)
+    }
+
+
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior =
         InteractionBehavior(id, channelId, token, applicationId, kord, strategy)
 
 }
 
+
+/**
+ * Acknowledges an interaction and responds with [PublicInteractionResponseBehavior].
+ *
+ * @param builder [PublicInteractionResponseCreateBuilder] used to a create an public response.
+ * @return [PublicInteractionResponseBehavior] public response to the interaction.
+ */
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun InteractionBehavior.respondPublic(
+    builder: PublicInteractionResponseCreateBuilder.() -> Unit
+): PublicInteractionResponseBehavior {
+
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+    val request = PublicInteractionResponseCreateBuilder().apply(builder).toRequest()
+    kord.rest.interaction.createInteractionResponse(id, token, request)
+    return PublicInteractionResponseBehavior(applicationId, token, kord)
+
+}
+
+
+/**
+ * Acknowledges an interaction and responds with [EphemeralInteractionResponseBehavior] with ephemeral flag.
+ *
+ * @param builder [EphemeralInteractionResponseCreateBuilder] used to a create an ephemeral response.
+ * @return [EphemeralInteractionResponseBehavior] ephemeral response to the interaction.
+ */
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun InteractionBehavior.respondEphemeral(
+    builder: EphemeralInteractionResponseCreateBuilder.() -> Unit
+): EphemeralInteractionResponseBehavior {
+
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val builder = EphemeralInteractionResponseCreateBuilder().apply(builder)
+    val request = builder.toRequest()
+    kord.rest.interaction.createInteractionResponse(id, token, request)
+    return EphemeralInteractionResponseBehavior(applicationId, token, kord)
+
+}
 
 fun InteractionBehavior(
     id: Snowflake,
