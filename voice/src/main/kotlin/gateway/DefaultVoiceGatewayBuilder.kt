@@ -19,7 +19,8 @@ import kotlin.time.Duration
 
 class DefaultVoiceGatewayBuilder(
     val selfId: Snowflake,
-    val guildId: Snowflake
+    val guildId: Snowflake,
+    val sessionId: String,
 ) {
     var client: HttpClient? = null
     var reconnectRetry: Retry? = null
@@ -54,6 +55,7 @@ class DefaultVoiceGatewayBuilder(
         val data = DefaultVoiceGatewayData(
             selfId,
             guildId,
+            sessionId,
             client,
             retry,
             sendRateLimiter,

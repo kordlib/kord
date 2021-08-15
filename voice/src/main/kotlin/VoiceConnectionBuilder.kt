@@ -95,10 +95,10 @@ class VoiceConnectionBuilder(
 
             VoiceConnectionData(
                 selfId = selfId,
-                guildId = guildId
+                guildId = guildId,
+                sessionId = voiceStateUpdate.sessionId
             ) to VoiceGatewayConfiguration(
                 token = voiceServerUpdate.token,
-                sessionId = voiceStateUpdate.sessionId,
                 endpoint = "wss://${voiceServerUpdate.endpoint}?v=4"
             )
         } ?: throw VoiceConnectionInitializationException("Did not receive a VoiceStateUpdate and VoiceServerUpdate in time!")
@@ -110,15 +110,15 @@ class VoiceConnectionBuilder(
     suspend fun build(): VoiceConnection {
         val (voiceConnectionData, initialGatewayConfiguration) = gateway.updateVoiceState()
 
-        val voiceGateway = DefaultVoiceGatewayBuilder(selfId, guildId)
+        val voiceGateway = DefaultVoiceGatewayBuilder(selfId, guildId, voiceConnectionData.sessionId)
             .also { voiceGatewayBuilder?.invoke(it) }
             .build()
 
         return VoiceConnection(
             gateway,
             voiceGateway,
-            initialGatewayConfiguration,
             voiceConnectionData,
+            initialGatewayConfiguration,
             audioProvider ?: AudioProvider { null },
             frameInterceptorFactory ?: { DefaultFrameInterceptor(it) },
             defaultDispatcher

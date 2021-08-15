@@ -23,10 +23,12 @@ import kotlin.time.TimeSource
  *
  * @param selfId the id of the bot connecting to a voice channel.
  * @param guildId the id of the guild that the bot is connecting to.
+ * @param sessionId the id of the current voice session, given by Discord.
  */
 data class VoiceConnectionData(
     val selfId: Snowflake,
     val guildId: Snowflake,
+    val sessionId: String
 )
 
 private val voiceConnectionLogger = KotlinLogging.logger { }
@@ -36,8 +38,8 @@ private val voiceConnectionLogger = KotlinLogging.logger { }
  *
  * @param gateway the [Gateway] that handles events for the guild this [VoiceConnection] represents.
  * @param voiceGateway the underlying [VoiceGateway] for this voice connection.
- * @param voiceGatewayConfiguration the configuration used for [voiceGateway].
  * @param data the data representing this [VoiceConnection].
+ * @param voiceGatewayConfiguration the configuration used for [voiceGateway].
  * @param audioProvider a [AudioProvider] that will provide [AudioFrame] when required.
  * @param frameInterceptorFactory a factory for [FrameInterceptor]s that is used whenever audio is ready to be sent. See [FrameInterceptor] and [DefaultFrameInterceptor].
  * @param voiceDispatcher the dispatcher used for this voice connection.
@@ -45,8 +47,8 @@ private val voiceConnectionLogger = KotlinLogging.logger { }
 class VoiceConnection(
     val gateway: Gateway,
     val voiceGateway: VoiceGateway,
+    val data: VoiceConnectionData,
     internal var voiceGatewayConfiguration: VoiceGatewayConfiguration,
-    internal val data: VoiceConnectionData,
     var audioProvider: AudioProvider,
     var frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
     voiceDispatcher: CoroutineDispatcher

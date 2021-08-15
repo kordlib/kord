@@ -17,7 +17,7 @@ internal class HandshakeHandler(
         get() = Identify(
             data.guildId,
             data.selfId,
-            configuration.sessionId,
+            data.sessionId,
             configuration.token
         )
 

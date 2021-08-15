@@ -34,6 +34,7 @@ private sealed class State(val retry: Boolean) {
 data class DefaultVoiceGatewayData(
     val selfId: Snowflake,
     val guildId: Snowflake,
+    val sessionId: String,
     val client: HttpClient,
     val reconnectRetry: Retry,
     val sendRateLimiter: RateLimiter,

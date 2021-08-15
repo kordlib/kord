@@ -1,7 +1,6 @@
 package dev.kord.voice.handlers
 
 import dev.kord.gateway.VoiceServerUpdate
-import dev.kord.gateway.VoiceStateUpdate
 import dev.kord.voice.VoiceConnection
 import kotlinx.coroutines.flow.Flow
 import mu.KotlinLogging
