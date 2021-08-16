@@ -1,9 +1,11 @@
 package dev.kord.voice.udp
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.AudioFrame
 import dev.kord.voice.XSalsa20Poly1305Encoder
 import io.ktor.utils.io.core.*
 
+@OptIn(KordVoice::class)
 internal class AudioPacket(
     frame: AudioFrame,
     private val sequence: Short,

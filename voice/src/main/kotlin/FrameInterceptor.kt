@@ -1,5 +1,6 @@
 package dev.kord.voice
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.gateway.Gateway
 import dev.kord.voice.gateway.Speaking
 import dev.kord.voice.gateway.VoiceGateway
@@ -12,12 +13,14 @@ import kotlin.properties.Delegates
  * @param voiceGateway the underlying [VoiceGateway].
  * @param ssrc the current SSRC retrieved from Discord.
  */
+@KordVoice
 data class FrameInterceptorContext(
     val gateway: Gateway,
     val voiceGateway: VoiceGateway,
     val ssrc: Int,
 )
 
+@KordVoice
 internal class FrameInterceptorContextBuilder {
     var gateway: Gateway by Delegates.notNull()
     var voiceGateway: VoiceGateway by Delegates.notNull()
@@ -26,6 +29,7 @@ internal class FrameInterceptorContextBuilder {
     fun build() = FrameInterceptorContext(gateway, voiceGateway, ssrc)
 }
 
+@KordVoice
 internal inline fun FrameInterceptorContext(builder: FrameInterceptorContextBuilder.() -> Unit) =
     FrameInterceptorContextBuilder().apply(builder).build()
 
@@ -34,6 +38,7 @@ internal inline fun FrameInterceptorContext(builder: FrameInterceptorContextBuil
  *
  * @see DefaultFrameInterceptor
  */
+@KordVoice
 fun interface FrameInterceptor {
     suspend fun intercept(audioFrame: AudioFrame?): AudioFrame?
 }
@@ -46,6 +51,7 @@ fun interface FrameInterceptor {
  * @param connection the voice connection.
  * @param speakingState the speaking state that will be used when there is audio data to be sent. By default, it is microphone-only.
  */
+@KordVoice
 open class DefaultFrameInterceptor(
     protected val context: FrameInterceptorContext,
     private val speakingState: SpeakingFlags = SpeakingFlags { +SpeakingFlag.Microphone }

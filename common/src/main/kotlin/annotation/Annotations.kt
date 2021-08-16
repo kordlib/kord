@@ -37,6 +37,19 @@ annotation class KordPreview
 annotation class KordExperimental
 
 /**
+ * Marks a Kord-voice related API as experimental.
+ * Kord voice is experimental and has **no** backward compatibility guarantees, including both binary and source
+ * compatibility. Its API and semantics can and will be changed in next releases.
+ *
+ * Features marked with this annotation will have its use evaluated and changed over time, and might not make it
+ * into the stable api.
+ */
+@MustBeDocumented
+@Retention(value = AnnotationRetention.BINARY)
+@RequiresOptIn(level = RequiresOptIn.Level.WARNING)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
+annotation class KordVoice
+/**
  * Marks a Kord-related API as potentially unsafe.
  *
  * Kord marks targets as unsafe if it exposes functionality in a way that is more error prone than alternatives

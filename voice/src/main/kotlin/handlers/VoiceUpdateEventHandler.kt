@@ -1,5 +1,8 @@
+@file:OptIn(KordVoice::class)
+
 package dev.kord.voice.handlers
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.voice.VoiceConnection
 import kotlinx.coroutines.flow.Flow

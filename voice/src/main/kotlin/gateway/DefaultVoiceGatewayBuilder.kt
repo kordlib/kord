@@ -1,5 +1,6 @@
 package dev.kord.voice.gateway
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.ratelimit.BucketRateLimiter
 import dev.kord.common.ratelimit.RateLimiter
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.time.Duration
 
+@KordVoice
 class DefaultVoiceGatewayBuilder(
     val selfId: Snowflake,
     val guildId: Snowflake,
@@ -66,5 +68,4 @@ class DefaultVoiceGatewayBuilder(
 
         return DefaultVoiceGateway(data)
     }
-
 }

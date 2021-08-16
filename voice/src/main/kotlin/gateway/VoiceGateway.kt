@@ -1,5 +1,6 @@
 package dev.kord.voice.gateway
 
+import dev.kord.common.annotation.KordVoice
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -16,6 +17,7 @@ import kotlin.time.Duration
  *
  * Allows consumers to receive [Event]s through [events] and send [Command]s through [send].
  */
+@KordVoice
 interface VoiceGateway : CoroutineScope {
     /**
      * The incoming [Event]s of the Gateway. Users should expect [kotlinx.coroutines.flow.Flow]s to be hot and remain

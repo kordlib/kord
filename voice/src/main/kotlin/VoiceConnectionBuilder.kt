@@ -2,6 +2,7 @@
 
 package dev.kord.voice
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.*
 import dev.kord.voice.exception.VoiceConnectionInitializationException
@@ -23,6 +24,7 @@ import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger { }
 
+@KordVoice
 class VoiceConnectionBuilder(
     val gateway: Gateway,
     val selfId: Snowflake,

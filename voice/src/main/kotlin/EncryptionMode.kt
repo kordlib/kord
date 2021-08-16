@@ -1,8 +1,10 @@
 package dev.kord.voice
 
+import dev.kord.common.annotation.KordVoice
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@KordVoice
 @Serializable
 enum class EncryptionMode {
     @SerialName("xsalsa20_poly1305")

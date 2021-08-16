@@ -1,5 +1,8 @@
+@file:OptIn(KordVoice::class)
+
 package dev.kord.voice.handlers
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.gateway.*
 import dev.kord.voice.udp.AudioFramePollerConfigurationBuilder

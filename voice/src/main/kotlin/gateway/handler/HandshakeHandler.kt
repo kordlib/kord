@@ -1,11 +1,13 @@
 package dev.kord.voice.gateway.handler
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.common.ratelimit.consume
 import dev.kord.voice.gateway.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.flow.Flow
 
+@OptIn(KordVoice::class)
 internal class HandshakeHandler(
     flow: Flow<Event>,
     private val data: DefaultVoiceGatewayData,

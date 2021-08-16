@@ -1,5 +1,6 @@
 package dev.kord.voice
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
@@ -44,6 +45,7 @@ private val voiceConnectionLogger = KotlinLogging.logger { }
  * @param frameInterceptorFactory a factory for [FrameInterceptor]s that is used whenever audio is ready to be sent. See [FrameInterceptor] and [DefaultFrameInterceptor].
  * @param voiceDispatcher the dispatcher used for this voice connection.
  */
+@KordVoice
 class VoiceConnection(
     val gateway: Gateway,
     val voiceGateway: VoiceGateway,
@@ -117,6 +119,7 @@ class VoiceConnection(
  *
  * @throws dev.kord.voice.exception.VoiceConnectionInitializationException when there was a problem retrieving voice information from Discord.
  */
+@KordVoice
 @OptIn(ExperimentalContracts::class)
 suspend inline fun VoiceConnection(
     gateway: Gateway,
@@ -129,6 +132,7 @@ suspend inline fun VoiceConnection(
     return VoiceConnectionBuilder(gateway, selfId, channelId, guildId).apply(builder).build()
 }
 
+@OptIn(KordVoice::class)
 private fun AudioFramePollerConfigurationBuilder.withConnection(connection: VoiceConnection): AudioFramePollerConfiguration {
     this.provider = connection.audioProvider
     this.interceptorFactory = connection.frameInterceptorFactory

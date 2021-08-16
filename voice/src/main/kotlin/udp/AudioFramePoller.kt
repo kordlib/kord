@@ -1,5 +1,8 @@
+@file:OptIn(KordVoice::class)
+
 package dev.kord.voice.udp
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.AudioProvider
 import dev.kord.voice.FrameInterceptor
 import dev.kord.voice.FrameInterceptorContext

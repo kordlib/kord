@@ -1,5 +1,8 @@
+@file:OptIn(KordVoice::class)
+
 package dev.kord.voice.gateway
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.start
 import dev.kord.voice.EncryptionMode

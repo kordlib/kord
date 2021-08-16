@@ -1,5 +1,6 @@
 package dev.kord.core.entity.channel
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.optional.getOrThrow
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
@@ -64,6 +65,7 @@ class VoiceChannel(
      * @throws dev.kord.voice.exception.VoiceConnectionInitializationException when there was a problem retrieving voice information from Discord.
      * @return a [VoiceConnection] representing the connection to this [VoiceConnection].
      */
+    @KordVoice
     suspend fun connect(builder: VoiceConnectionBuilder.() -> Unit): VoiceConnection {
         val voiceConnection = VoiceConnection(
             getGuild().gateway ?: GatewayNotFoundException.voiceConnectionGatewayNotFound(guildId),

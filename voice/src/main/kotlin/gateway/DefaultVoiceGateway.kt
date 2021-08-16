@@ -1,5 +1,6 @@
 package dev.kord.voice.gateway
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.retry.Retry
@@ -31,6 +32,7 @@ private sealed class State(val retry: Boolean) {
     class Running(retry: Boolean) : State(retry)
 }
 
+@KordVoice
 data class DefaultVoiceGatewayData(
     val selfId: Snowflake,
     val guildId: Snowflake,
@@ -46,6 +48,7 @@ data class DefaultVoiceGatewayData(
 /**
  * The default Voice Gateway implementation of Kord, using an [HttpClient] for the underlying websocket.
  */
+@KordVoice
 class DefaultVoiceGateway(
     private val data: DefaultVoiceGatewayData
 ) : VoiceGateway {

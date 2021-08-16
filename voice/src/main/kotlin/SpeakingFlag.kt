@@ -1,5 +1,6 @@
 package dev.kord.voice
 
+import dev.kord.common.annotation.KordVoice
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -11,12 +12,14 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+@KordVoice
 enum class SpeakingFlag(val code: Int) {
     Microphone(1 shl 0),
     Soundshare(1 shl 1),
     Priority(1 shl 2)
 }
 
+@KordVoice
 @Serializable(with = SpeakingFlags.Serializer::class)
 class SpeakingFlags internal constructor(val code: Int) {
     val flags = SpeakingFlag.values().filter { code and it.code != 0 }
@@ -81,24 +84,29 @@ class SpeakingFlags internal constructor(val code: Int) {
 
 }
 
+@KordVoice
 @OptIn(ExperimentalContracts::class)
 inline fun SpeakingFlags(builder: SpeakingFlags.Builder.() -> Unit): SpeakingFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return SpeakingFlags.Builder().apply(builder).flags()
 }
 
+@KordVoice
 fun SpeakingFlags(vararg flags: SpeakingFlag) = SpeakingFlags {
     flags.forEach { +it }
 }
 
+@KordVoice
 fun SpeakingFlags(vararg flags: SpeakingFlags) = SpeakingFlags {
     flags.forEach { +it }
 }
 
+@KordVoice
 fun SpeakingFlags(flags: Iterable<SpeakingFlag>) = SpeakingFlags {
     flags.forEach { +it }
 }
 
+@KordVoice
 @JvmName("SpeakingFlagsWithIterable")
 fun SpeakingFlags(flags: Iterable<SpeakingFlags>) = SpeakingFlags {
     flags.forEach { +it }

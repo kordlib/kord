@@ -1,8 +1,11 @@
 package dev.kord.voice
 
+import dev.kord.common.annotation.KordVoice
+
 /**
  * A frame of 20ms Opus-encoded audio data.
  */
+@KordVoice
 @JvmInline
 value class AudioFrame(val data: ByteArray) {
     companion object {

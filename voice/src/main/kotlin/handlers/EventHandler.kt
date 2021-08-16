@@ -1,6 +1,5 @@
 package dev.kord.voice.handlers
 
-import dev.kord.voice.gateway.Event
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
