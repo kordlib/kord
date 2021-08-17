@@ -10,7 +10,9 @@ import dev.kord.core.behavior.GuildApplicationCommandBehavior
 import dev.kord.core.cache.data.*
 import dev.kord.rest.service.InteractionService
 
-
+/**
+ * A representation of [Discord Application Command](https://discord.com/developers/docs/interactions/application-commands)
+ */
 sealed interface ApplicationCommand : ApplicationCommandBehavior {
 
     val data: ApplicationCommandData
@@ -38,6 +40,10 @@ class UnknownGlobalApplicationCommand(
 ) : GlobalApplicationCommand
 
 
+/**
+ * A representation of [Discord Application Command](https://discord.com/developers/docs/interactions/application-commands)
+ * in a global context.
+ */
 fun GlobalApplicationCommand(data: ApplicationCommandData, service: InteractionService): GlobalApplicationCommand {
     return when(data.type.value) {
         ApplicationCommandType.ChatInput -> GlobalChatInputCommand(data, service)
@@ -49,6 +55,10 @@ fun GlobalApplicationCommand(data: ApplicationCommandData, service: InteractionS
 }
 
 
+/**
+ * A representation of [Discord Application Command](https://discord.com/developers/docs/interactions/application-commands)
+ * in a guild context
+ */
 sealed interface GuildApplicationCommand : ApplicationCommand, GuildApplicationCommandBehavior
 
 class UnknownGuildApplicationCommand(

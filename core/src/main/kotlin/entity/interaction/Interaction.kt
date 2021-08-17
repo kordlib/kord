@@ -355,7 +355,7 @@ fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjects?): O
 
 
 /**
- * An [Interaction] that took place in a [DmChannel].
+ * An [Interaction] that took place in a Global Context with [GlobalApplicationCommand].
  */
 
 sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInteraction, GlobalApplicationCommandBehavior {
@@ -388,6 +388,10 @@ fun GlobalApplicationCommandInteraction(
         null -> error("No component type was provided")
     }
 }
+
+/**
+ * An [Interaction] that took place in a Global Context with [dev.kord.core.entity.application.GuildApplicationCommand].
+ */
 
 
 sealed interface GuildApplicationCommandInteraction : ApplicationCommandInteraction, GuildInteractionBehavior {

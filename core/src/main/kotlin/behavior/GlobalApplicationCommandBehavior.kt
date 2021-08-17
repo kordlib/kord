@@ -7,7 +7,9 @@ import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuil
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.InteractionService
 
-
+/**
+ * The behavior of [Application Command][dev.kord.core.entity.application.ApplicationCommand].
+ */
 interface ApplicationCommandBehavior : Entity {
     val applicationId: Snowflake
     val service: InteractionService
@@ -22,6 +24,9 @@ interface ApplicationCommandBehavior : Entity {
 }
 
 
+/**
+ * The behavior of [dev.kord.core.entity.application.ApplicationCommand].
+ */
 interface GlobalApplicationCommandBehavior : ApplicationCommandBehavior {
 
     override suspend fun delete() {
@@ -43,6 +48,9 @@ interface GlobalApplicationCommandBehavior : ApplicationCommandBehavior {
 }
 
 
+/**
+ * The behavior of [Application Command][dev.kord.core.entity.application.GuildApplicationCommand].
+ */
 interface GuildApplicationCommandBehavior : ApplicationCommandBehavior {
     val guildId: Snowflake
 

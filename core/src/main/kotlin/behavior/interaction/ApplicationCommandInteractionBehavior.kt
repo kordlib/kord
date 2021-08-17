@@ -13,5 +13,10 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+/**
+ * The behavior of a [Discord Interaction](https://discord.com/developers/docs/interactions/slash-commands#interaction)
+ * with [Application Command type][dev.kord.common.entity.ApplicationCommandType]
+ */
+
 interface ApplicationCommandInteractionBehavior : InteractionBehavior
 
