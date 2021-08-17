@@ -11,7 +11,10 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("gradle-plugin-api", version = "1.5.21"))
+    implementation(kotlin("gradle-plugin"))
+    implementation(kotlin("serialization"))
+    implementation("org.jetbrains.dokka", "dokka-gradle-plugin", "1.5.0")
+    implementation("org.jetbrains.kotlinx", "atomicfu-gradle-plugin", "0.16.1")
     implementation(gradleApi())
     implementation(localGroovy())
 }
