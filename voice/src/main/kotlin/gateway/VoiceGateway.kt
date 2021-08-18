@@ -84,19 +84,39 @@ interface VoiceGateway : CoroutineScope {
 }
 
 /**
- * Enum representation of Discord's [Voice Gateway close codes](https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-close-event-codes).
+ * Representation of Discord's [Voice Gateway close codes](https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-close-event-codes).
  */
-enum class VoiceGatewayCloseCode(val code: Int) {
-    UnknownOpcode(4001),
-    FailedToDecodePayload(4002),
-    NotAuthenticated(4003),
-    AuthenticationFailed(4004),
-    AlreadyAuthenticated(4005),
-    SessionNoLongerValid(4006),
-    SessionTimeout(4009),
-    SeverNotFound(4011),
-    UnknownProtocol(4012),
-    Disconnect(4014),
-    VoiceServerCrashed(4015),
-    UnknownEncryptionMode(4016)
+sealed class VoiceGatewayCloseCode(val code: Int) {
+    class Unknown(code: Int) : VoiceGatewayCloseCode(code)
+    object UnknownOpcode : VoiceGatewayCloseCode(4001)
+    object FailedToDecodePayload : VoiceGatewayCloseCode(4002)
+    object NotAuthenticated : VoiceGatewayCloseCode(4003)
+    object AuthenticationFailed : VoiceGatewayCloseCode(4004)
+    object AlreadyAuthenticated : VoiceGatewayCloseCode(4005)
+    object SessionNoLongerValid : VoiceGatewayCloseCode(4006)
+    object SessionTimeout : VoiceGatewayCloseCode(4009)
+    object ServerNotFound : VoiceGatewayCloseCode(4011)
+    object UnknownProtocol : VoiceGatewayCloseCode(4012)
+    object Disconnect : VoiceGatewayCloseCode(4014)
+    object VoiceServerCrashed : VoiceGatewayCloseCode(4015)
+    object UnknownEncryptionMode : VoiceGatewayCloseCode(4016);
+
+    companion object {
+        fun of(code: Int) =
+            when (code) {
+                4001 -> UnknownOpcode
+                4002 -> FailedToDecodePayload
+                4003 -> NotAuthenticated
+                4004 -> AuthenticationFailed
+                4005 -> AlreadyAuthenticated
+                4006 -> SessionNoLongerValid
+                4009 -> SessionTimeout
+                4011 -> ServerNotFound
+                4012 -> UnknownProtocol
+                4014 -> Disconnect
+                4015 -> VoiceServerCrashed
+                4016 -> UnknownEncryptionMode
+                else -> Unknown(code)
+            }
+    }
 }

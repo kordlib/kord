@@ -199,7 +199,7 @@ class DefaultVoiceGateway(
         } ?: return
 
         defaultVoiceGatewayLogger.trace { "Voice Gateway (${data.guildId.value}) closed: ${reason.code} ${reason.message}" }
-        val discordReason = VoiceGatewayCloseCode.values().firstOrNull { it.code == reason.code.toInt() } ?: return
+        val discordReason = VoiceGatewayCloseCode.of(reason.code.toInt())
 
         data.eventFlow.emit(Close.DiscordClose(discordReason, discordReason.retry))
 
@@ -221,11 +221,12 @@ internal val VoiceGatewayCloseCode.retry
         VoiceGatewayCloseCode.AlreadyAuthenticated -> true
         VoiceGatewayCloseCode.SessionNoLongerValid -> true
         VoiceGatewayCloseCode.SessionTimeout -> true
-        VoiceGatewayCloseCode.SeverNotFound -> false
+        VoiceGatewayCloseCode.ServerNotFound -> false
         VoiceGatewayCloseCode.UnknownProtocol -> false
         VoiceGatewayCloseCode.Disconnect -> false
         VoiceGatewayCloseCode.VoiceServerCrashed -> true
         VoiceGatewayCloseCode.UnknownEncryptionMode -> false
+        is VoiceGatewayCloseCode.Unknown -> true
     }
 
 /**
@@ -240,11 +241,12 @@ internal val VoiceGatewayCloseCode.exceptional
         VoiceGatewayCloseCode.AlreadyAuthenticated -> true
         VoiceGatewayCloseCode.SessionNoLongerValid -> false
         VoiceGatewayCloseCode.SessionTimeout -> false
-        VoiceGatewayCloseCode.SeverNotFound -> true
+        VoiceGatewayCloseCode.ServerNotFound -> true
         VoiceGatewayCloseCode.UnknownProtocol -> true
         VoiceGatewayCloseCode.Disconnect -> false
         VoiceGatewayCloseCode.VoiceServerCrashed -> false
         VoiceGatewayCloseCode.UnknownEncryptionMode -> true
+        is VoiceGatewayCloseCode.Unknown -> false
     }
 
 

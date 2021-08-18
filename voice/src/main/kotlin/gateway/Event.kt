@@ -126,19 +126,8 @@ sealed class Close : Event() {
     object Reconnecting : Close()
 
     /**
-     * The gateway closed and will attempt to start a new session.
-     */
-    object SessionReset : Close()
-
-//    /**
-//     * Discord is no longer responding to the gateway commands, the connection will be closed and an attempt to resume the session will be made.
-//     * Any [commands][Command] send recently might not complete, and won't be automatically requeued.
-//     */
-//    object ZombieConnection : Close()
-
-    /**
      *  The Gateway has failed to establish a connection too many times and will not try to reconnect anymore.
-     *  The user is free to manually connect again using [Gateway.start], otherwise all resources linked to the Gateway should free and the Gateway [detached][Gateway.detach].
+     *  The user is free to manually connect again using [VoiceGateway.start], otherwise all resources linked to the Gateway should free.
      */
     object RetryLimitReached : Close()
 }

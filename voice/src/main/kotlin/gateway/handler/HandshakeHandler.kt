@@ -5,6 +5,7 @@ import dev.kord.common.ratelimit.consume
 import dev.kord.voice.gateway.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
+import kotlinx.atomicfu.update
 import kotlinx.coroutines.flow.Flow
 
 @OptIn(KordVoice::class)
@@ -23,12 +24,12 @@ internal class HandshakeHandler(
             configuration.token
         )
 
-    private val session: AtomicRef<String?> = atomic(null)
+    private val ssrc: AtomicRef<Int?> = atomic(null)
 
-    private val sessionStart get() = session.value == null
+    private val sessionStart get() = ssrc.value == null
 
     private val resume
-        get() = Resume(data.guildId, session.value!!, configuration.token)
+        get() = Resume(data.guildId, data.sessionId, configuration.token)
 
     override fun start() {
         on<Hello> {
@@ -36,6 +37,25 @@ internal class HandshakeHandler(
             data.identifyRateLimiter.consume {
                 if (sessionStart) send(identify)
                 else send(resume)
+            }
+        }
+
+        on<Ready> { ready ->
+            ssrc.update { ready.ssrc }
+        }
+
+        on<Close> {
+            when (it) {
+                Close.UserClose -> ssrc.update { null }
+                is Close.DiscordClose -> when (it.closeCode) {
+                    is VoiceGatewayCloseCode.SessionNoLongerValid -> ssrc.update { null }
+                    else -> {
+                        /* ignore */
+                    }
+                }
+                else -> {
+                    /* ignore */
+                }
             }
         }
     }

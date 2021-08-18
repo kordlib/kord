@@ -8,6 +8,7 @@ import dev.kord.voice.FrameInterceptor
 import dev.kord.voice.FrameInterceptorContext
 import dev.kord.voice.FrameInterceptorContextBuilder
 import io.ktor.network.sockets.*
+import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
 import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
