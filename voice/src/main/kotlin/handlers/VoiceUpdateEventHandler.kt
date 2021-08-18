@@ -17,8 +17,7 @@ internal class VoiceUpdateEventHandler(
 ) : EventHandler<GatewayEvent>(flow, "VoiceUpdateInterceptor") {
     override fun start() {
         on<VoiceServerUpdate> { voiceServerUpdate ->
-            // see if this voice server update interests this voice connection
-            if (voiceServerUpdate.voiceServerUpdateData.guildId != connection.data.guildId) return@on
+            if (!voiceServerUpdate.isRelatedToConnection(connection)) return@on
 
             // update the gateway configuration accordingly
             connection.voiceGatewayConfiguration = connection.voiceGatewayConfiguration.copy(
@@ -31,4 +30,8 @@ internal class VoiceUpdateEventHandler(
             connection.connect()
         }
     }
+}
+
+private fun VoiceServerUpdate.isRelatedToConnection(connection: VoiceConnection): Boolean {
+    return voiceServerUpdateData.guildId != connection.data.guildId
 }

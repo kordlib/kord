@@ -26,10 +26,10 @@ private val logger = KotlinLogging.logger { }
 
 @KordVoice
 class VoiceConnectionBuilder(
-    val gateway: Gateway,
-    val selfId: Snowflake,
-    val channelId: Snowflake,
-    val guildId: Snowflake
+    var gateway: Gateway,
+    var selfId: Snowflake,
+    var channelId: Snowflake,
+    var guildId: Snowflake
 ) {
     /**
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.

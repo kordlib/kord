@@ -21,17 +21,15 @@ data class FrameInterceptorContext(
 )
 
 @KordVoice
-internal class FrameInterceptorContextBuilder {
-    var gateway: Gateway by Delegates.notNull()
-    var voiceGateway: VoiceGateway by Delegates.notNull()
+internal class FrameInterceptorContextBuilder(var gateway: Gateway, var voiceGateway: VoiceGateway) {
     var ssrc: Int by Delegates.notNull()
 
     fun build() = FrameInterceptorContext(gateway, voiceGateway, ssrc)
 }
 
 @KordVoice
-internal inline fun FrameInterceptorContext(builder: FrameInterceptorContextBuilder.() -> Unit) =
-    FrameInterceptorContextBuilder().apply(builder).build()
+internal inline fun FrameInterceptorContext(gateway: Gateway, voiceGateway: VoiceGateway, builder: FrameInterceptorContextBuilder.() -> Unit) =
+    FrameInterceptorContextBuilder(gateway, voiceGateway).apply(builder).build()
 
 /**
  * A interceptor for audio frames before they are sent as packets.

@@ -51,8 +51,8 @@ class VoiceConnection(
     val voiceGateway: VoiceGateway,
     val data: VoiceConnectionData,
     internal var voiceGatewayConfiguration: VoiceGatewayConfiguration,
-    var audioProvider: AudioProvider,
-    var frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
+    val audioProvider: AudioProvider,
+    val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
     voiceDispatcher: CoroutineDispatcher
 ) : CoroutineScope {
     override val coroutineContext: CoroutineContext =
@@ -76,10 +76,8 @@ class VoiceConnection(
     /**
      * Logs into the voice gateway, and begins the process of an audio-ready voice session.
      */
-    fun connect() {
-        launch {
-            voiceGateway.start(voiceGatewayConfiguration)
-        }
+    fun connect() = launch {
+        voiceGateway.start(voiceGatewayConfiguration)
     }
 
     /**
@@ -137,10 +135,7 @@ private fun AudioFramePollerConfigurationBuilder.withConnection(connection: Voic
     this.provider = connection.audioProvider
     this.interceptorFactory = connection.frameInterceptorFactory
 
-    this.baseFrameInterceptorContext = FrameInterceptorContextBuilder().apply {
-        gateway = connection.gateway
-        voiceGateway = connection.voiceGateway
-    }
+    this.baseFrameInterceptorContext = FrameInterceptorContextBuilder(connection.gateway, connection.voiceGateway)
 
     return build()
 }

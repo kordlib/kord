@@ -28,7 +28,7 @@ internal data class AudioFramePollerConfiguration(
     val interceptorFactory: (FrameInterceptorContext) -> FrameInterceptor
 )
 
-internal class AudioFramePollerConfigurationBuilder {
+internal class AudioFramePollerConfigurationBuilder() {
     var udp: DiscordUdpConnection? = null
     var ssrc: Int by Delegates.notNull()
     var key: List<Byte> by Delegates.notNull()
