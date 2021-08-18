@@ -15,15 +15,15 @@ import kotlin.time.Duration
 /**
  * An implementation of the Discord [Gateway](https://discord.com/developers/docs/topics/voice-connections) (see gateway-only, not UDP connection in docs) and its lifecycle.
  *
- * Allows consumers to receive [Event]s through [events] and send [Command]s through [send].
+ * Allows consumers to receive [VoiceEvent]s through [events] and send [Command]s through [send].
  */
 @KordVoice
 interface VoiceGateway : CoroutineScope {
     /**
-     * The incoming [Event]s of the Gateway. Users should expect [kotlinx.coroutines.flow.Flow]s to be hot and remain
+     * The incoming [VoiceEvent]s of the Gateway. Users should expect [kotlinx.coroutines.flow.Flow]s to be hot and remain
      * open for the entire lifecycle of the Gateway.
      */
-    val events: SharedFlow<Event>
+    val events: SharedFlow<VoiceEvent>
 
     /**
      * The [Duration] between the last [Heartbeat] and [HeartbeatAck].
@@ -59,7 +59,7 @@ interface VoiceGateway : CoroutineScope {
             override val coroutineContext: CoroutineContext =
                 SupervisorJob() + EmptyCoroutineContext + CoroutineName("None Voice Gateway")
 
-            override val events: SharedFlow<Event>
+            override val events: SharedFlow<VoiceEvent>
                 get() = MutableSharedFlow()
 
             override val ping: StateFlow<Duration?>

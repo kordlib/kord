@@ -3,8 +3,6 @@
 package dev.kord.voice.gateway
 
 import dev.kord.common.annotation.KordVoice
-import dev.kord.gateway.Gateway
-import dev.kord.gateway.start
 import dev.kord.voice.EncryptionMode
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -20,17 +18,17 @@ import mu.KotlinLogging
 
 private val jsonLogger = KotlinLogging.logger { }
 
-sealed class Event {
-    companion object : DeserializationStrategy<Event?> {
+sealed class VoiceEvent {
+    companion object : DeserializationStrategy<VoiceEvent?> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
             element("op", OpCode.descriptor)
             element("d", JsonElement.serializer().descriptor)
         }
 
         @OptIn(ExperimentalSerializationApi::class)
-        override fun deserialize(decoder: Decoder): Event? {
+        override fun deserialize(decoder: Decoder): VoiceEvent? {
             var op: OpCode? = null
-            var data: Event? = null
+            var data: VoiceEvent? = null
 
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
@@ -79,7 +77,7 @@ data class Ready(
     val ip: String,
     val port: Int,
     val modes: List<EncryptionMode>
-) : Event()
+) : VoiceEvent()
 
 @Serializable
 data class Hello(
@@ -87,22 +85,22 @@ data class Hello(
     val version: Short,
     @SerialName("heartbeat_interval")
     val heartbeatInterval: Double
-) : Event()
+) : VoiceEvent()
 
 @Serializable
-data class HeartbeatAck(val nonce: Long) : Event()
+data class HeartbeatAck(val nonce: Long) : VoiceEvent()
 
 @Serializable
 data class SessionDescription(
     val mode: EncryptionMode,
     @SerialName("secret_key")
     val secretKey: List<UByte>
-) : Event()
+) : VoiceEvent()
 
 @Serializable
-object Resumed : Event()
+object Resumed : VoiceEvent()
 
-sealed class Close : Event() {
+sealed class Close : VoiceEvent() {
     /**
      * The user closed the Gateway connection.
      */

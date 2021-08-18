@@ -42,7 +42,7 @@ data class DefaultVoiceGatewayData(
     val sendRateLimiter: RateLimiter,
     val identifyRateLimiter: RateLimiter,
     val dispatcher: CoroutineDispatcher,
-    val eventFlow: MutableSharedFlow<Event>
+    val eventFlow: MutableSharedFlow<VoiceEvent>
 )
 
 /**
@@ -57,7 +57,7 @@ class DefaultVoiceGateway(
 
     private lateinit var socket: DefaultClientWebSocketSession
 
-    override val events: SharedFlow<Event> = data.eventFlow
+    override val events: SharedFlow<VoiceEvent> = data.eventFlow
 
     private val state: AtomicRef<State> = atomic(State.Stopped)
 
@@ -140,7 +140,7 @@ class DefaultVoiceGateway(
 
         try {
             defaultVoiceGatewayLogger.trace { "Voice Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(Event, json) ?: return
+            val event = jsonParser.decodeFromString(VoiceEvent, json) ?: return
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
             defaultVoiceGatewayLogger.error(exception)

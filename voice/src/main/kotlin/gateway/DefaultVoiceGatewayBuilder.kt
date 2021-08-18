@@ -29,7 +29,7 @@ class DefaultVoiceGatewayBuilder(
     var sendRateLimiter: RateLimiter? = null
     var identifyRateLimiter: RateLimiter? = null
     var dispatcher: CoroutineDispatcher = Dispatchers.Default
-    var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
+    var eventFlow: MutableSharedFlow<VoiceEvent> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
     @OptIn(InternalAPI::class)
     fun build(): DefaultVoiceGateway {

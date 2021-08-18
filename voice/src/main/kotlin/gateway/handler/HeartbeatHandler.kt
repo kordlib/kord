@@ -9,7 +9,7 @@ import kotlin.time.TimeSource
 
 @OptIn(ObsoleteCoroutinesApi::class)
 internal class HeartbeatHandler(
-    flow: Flow<Event>,
+    flow: Flow<VoiceEvent>,
     private val send: suspend (Command) -> Unit,
     private val ping: (Duration) -> Unit,
     private val ticker: Ticker = Ticker(),

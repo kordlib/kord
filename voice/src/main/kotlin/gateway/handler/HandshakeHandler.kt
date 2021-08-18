@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @OptIn(KordVoice::class)
 internal class HandshakeHandler(
-    flow: Flow<Event>,
+    flow: Flow<VoiceEvent>,
     private val data: DefaultVoiceGatewayData,
     private val send: suspend (Command) -> Unit
 ) : Handler(flow, "HandshakeHandler") {

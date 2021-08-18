@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import mu.KotlinLogging
-import dev.kord.voice.gateway.Event as VoiceEvent
+import dev.kord.voice.gateway.VoiceEvent as VoiceEvent
 
 private val udpLifeCycleLogger = KotlinLogging.logger { }
 
