@@ -87,7 +87,8 @@ class FollowupMessageCreateRequest(
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing(),
 )
 
 @Serializable
