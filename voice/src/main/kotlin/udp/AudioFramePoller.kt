@@ -78,12 +78,14 @@ internal class AudioFramePoller(
                 }
 
                 nextFrameTimestamp += Duration.milliseconds(20).inWholeNanoseconds
-                sequence++
 
                 delay(Duration.nanoseconds(max(0, nextFrameTimestamp - currentNanoTime)).inWholeMilliseconds)
 
                 if (packet != null) {
-                    if (udp.isOpen) udp.send(Datagram(packet.asByteReadPacket(), udp.server))
+                    if (udp.isOpen) {
+                        udp.send(Datagram(packet.asByteReadPacket(), udp.server))
+                        sequence++ // only update the sequence if we've actually sent a packet to discord
+                    }
                 }
             }
 
