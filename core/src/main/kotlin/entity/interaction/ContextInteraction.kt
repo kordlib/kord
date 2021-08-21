@@ -50,6 +50,9 @@ class GlobalChatInputCommandInteraction(
  * An [ApplicationCommandInteraction] that's invoked through user commands.
  */
 sealed interface  UserCommandInteraction : ApplicationCommandInteraction {
+
+    val name: String get() = data.data.name.value!!
+
     private val resolvedUsersData  get() = data.data.resolvedObjectsData.value?.users?.value
     val users get() = resolvedUsersData.orEmpty().mapValues { User(it.value, kord) }
 }
@@ -81,6 +84,9 @@ class GlobalUserCommandInteraction(
  * An [ApplicationCommandInteraction] that's invoked through messages.
  */
 sealed interface  MessageCommandInteraction : ApplicationCommandInteraction {
+
+    val name: String get() = data.data.name.value!!
+
     private val resolvedMessagesData get() = data.data.resolvedObjectsData.value?.messages?.value
     val messages get() = resolvedMessagesData.orEmpty().mapValues { Message(it.value, kord) }
 
