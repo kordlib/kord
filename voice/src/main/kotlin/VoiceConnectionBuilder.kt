@@ -121,9 +121,14 @@ class VoiceConnectionBuilder(
             voiceGateway,
             voiceConnectionData,
             initialGatewayConfiguration,
-            audioProvider ?: AudioProvider { null },
+            audioProvider ?: EmptyAudioPlayerProvider,
             frameInterceptorFactory ?: { DefaultFrameInterceptor(it) },
             defaultDispatcher
         )
+    }
+
+    // we can't use the SAM feature or else we break the IR backend, so lets just use this object instead
+    private object EmptyAudioPlayerProvider : AudioProvider {
+        override fun provide(): AudioFrame? = null
     }
 }
