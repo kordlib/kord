@@ -1,10 +1,14 @@
 package dev.kord.core.gateway.handler
 
 import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.put
+import dev.kord.cache.api.remove
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.cache.idEq
 import dev.kord.core.entity.application.*
 import dev.kord.core.entity.interaction.*
 import dev.kord.core.event.interaction.*
@@ -51,6 +55,7 @@ class InteractionEventHandler(
 
     private suspend fun handle(event: ApplicationCommandCreate, shard: Int) {
         val data = ApplicationCommandData.from(event.application)
+        cache.put(data)
         val application = GuildApplicationCommand(data, kord.rest.interaction)
         val coreEvent = when(application) {
             is GuildChatInputCommand -> ChatInputCommandCreateEvent(application, kord, shard)
@@ -64,6 +69,7 @@ class InteractionEventHandler(
 
     private suspend fun handle(event: ApplicationCommandUpdate, shard: Int) {
         val data = ApplicationCommandData.from(event.application)
+        cache.put(data)
         val application = GuildApplicationCommand(data, kord.rest.interaction)
 
         val coreEvent = when(application) {
@@ -77,6 +83,7 @@ class InteractionEventHandler(
 
     private suspend fun handle(event: ApplicationCommandDelete, shard: Int) {
         val data = ApplicationCommandData.from(event.application)
+        cache.remove<ApplicationCommandData> { idEq(ApplicationCommandData::id, data.id) }
         val application = GuildApplicationCommand(data, kord.rest.interaction)
         val coreEvent = when(application) {
             is GuildChatInputCommand -> ChatInputCommandDeleteEvent(application, kord, shard)

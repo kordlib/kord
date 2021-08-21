@@ -68,7 +68,7 @@ fun ComponentInteraction(
     ComponentType.SelectMenu -> SelectMenuInteraction(data, kord, supplier)
     ComponentType.ActionRow -> error("Action rows can't have interactions")
     is ComponentType.Unknown -> UnknownComponentInteraction(data, kord, supplier)
-    null -> error("Didn't find a compoent type")
+    null -> error("Component type was null")
 }
 
 
@@ -122,7 +122,7 @@ class UnknownComponentInteraction(
     }
 
     override fun toString(): String {
-        TODO("Not yet implemented")
+        return "UnknownComponentInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
     }
 }
 

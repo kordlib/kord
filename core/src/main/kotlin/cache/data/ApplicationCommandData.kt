@@ -1,8 +1,10 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.description
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
+import dev.kord.core.entity.application.ApplicationCommand
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,6 +18,9 @@ data class ApplicationCommandData(
     val options: Optional<List<ApplicationCommandOptionData>>
 ) {
     companion object {
+        val description = description(ApplicationCommandData::id) {
+            link(ApplicationCommandData::guildId to GuildData::id)
+        }
         fun from(command: DiscordApplicationCommand): ApplicationCommandData {
             return with(command) {
                 ApplicationCommandData(

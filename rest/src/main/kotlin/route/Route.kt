@@ -616,10 +616,10 @@ sealed class Route<T>(
 
 
     object GuildApplicationCommandPermissionsGet
-        : Route<DiscordGuildApplicationCommandPermissions>(
+        : Route<List<DiscordGuildApplicationCommandPermissions>>(
         HttpMethod.Get,
         "/applications/${ApplicationId}/guilds/$GuildId/commands/permissions",
-        DiscordGuildApplicationCommandPermissions.serializer()
+        ListSerializer(DiscordGuildApplicationCommandPermissions.serializer())
     )
 
 

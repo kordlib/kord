@@ -11,7 +11,7 @@ import dev.kord.core.cache.data.*
 import dev.kord.rest.service.InteractionService
 
 /**
- * A representation of [Discord Application Command](https://discord.com/developers/docs/interactions/application-commands)
+ * A representation of a [Discord Application Command](https://discord.com/developers/docs/interactions/application-commands)
  */
 sealed interface ApplicationCommand : ApplicationCommandBehavior {
 

@@ -8,7 +8,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.InteractionService
 
 /**
- * The behavior of [Application Command][dev.kord.core.entity.application.ApplicationCommand].
+ * The behavior of an [Application Command](https://discord.com/developers/docs/interactions/application-commands).
  */
 interface ApplicationCommandBehavior : Entity {
     val applicationId: Snowflake
@@ -25,7 +25,7 @@ interface ApplicationCommandBehavior : Entity {
 
 
 /**
- * The behavior of [dev.kord.core.entity.application.ApplicationCommand].
+ *  The behavior of an [Application Command](https://discord.com/developers/docs/interactions/application-commands) that can be used in DMs and Guilds.
  */
 interface GlobalApplicationCommandBehavior : ApplicationCommandBehavior {
 

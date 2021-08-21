@@ -11,13 +11,11 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
+import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
-import dev.kord.core.entity.application.GlobalApplicationCommand
-import dev.kord.core.entity.application.GlobalChatInputCommand
-import dev.kord.core.entity.application.GlobalMessageCommand
-import dev.kord.core.entity.application.GlobalUserCommand
+import dev.kord.core.entity.application.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
@@ -30,10 +28,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
-import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
-import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
-import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
-import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
+import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
@@ -64,22 +59,16 @@ class Kord(
     private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventFlow)
 
     /**
-     * A [ApplicationCommands] object to deal with Application Commands interactions.
-     */
-
-    val slashCommands: SlashCommands = SlashCommands(selfId, rest.interaction)
-
-    /**
      * Global commands made by the bot under this Kord instance.
      */
 
     val globalCommands: Flow<GlobalApplicationCommand>
-        get() = slashCommands.getGlobalApplicationCommands()
+        get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
 
 
     suspend fun getGlobalApplicationCommand(commandId: Snowflake) =
-        slashCommands.getGlobalApplicationCommand(commandId)
+        defaultSupplier.getGlobalApplicationCommand(resources.applicationId, commandId)
 
 
     /**
@@ -384,50 +373,140 @@ class Kord(
         }
     }
 
-
     @OptIn(ExperimentalContracts::class)
-
     suspend inline fun createGlobalChatInputCommand(
         name: String,
         description: String,
         builder: ChatInputCreateBuilder.() -> Unit = {},
     ): GlobalChatInputCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return slashCommands.createGlobalChatInputCommand(name, description, builder)
+        val request = ChatInputCreateBuilder(name, description).apply(builder).toRequest()
+        val response = rest.interaction.createGlobalApplicationCommand(resources.applicationId, request)
+        val data = ApplicationCommandData.from(response)
+        return GlobalChatInputCommand(data, rest.interaction)
     }
 
-
     @OptIn(ExperimentalContracts::class)
-
     suspend inline fun createGlobalMessageCommand(
         name: String,
         builder: MessageCommandCreateBuilder.() -> Unit = {},
     ): GlobalMessageCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return slashCommands.createGlobalMessageCommand(name, builder)
+        val request = MessageCommandCreateBuilder(name).apply(builder).toRequest()
+        val response = rest.interaction.createGlobalApplicationCommand(resources.applicationId, request)
+        val data = ApplicationCommandData.from(response)
+        return GlobalMessageCommand(data, rest.interaction)
     }
 
     @OptIn(ExperimentalContracts::class)
-
     suspend inline fun createGlobalUserCommand(
         name: String,
         builder: UserCommandCreateBuilder.() -> Unit = {},
     ): GlobalUserCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return slashCommands.createGlobalUserCommand(name, builder)
+        val request = UserCommandCreateBuilder(name).apply(builder).toRequest()
+        val response = rest.interaction.createGlobalApplicationCommand(resources.applicationId, request)
+        val data = ApplicationCommandData.from(response)
+        return GlobalUserCommand(data, rest.interaction)
     }
 
-    @OptIn(ExperimentalContracts::class)
 
+    @OptIn(ExperimentalContracts::class)
     suspend inline fun createGlobalApplicationCommands(
         builder: MultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GlobalApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return slashCommands.createGlobalApplicationCommands(builder)
-
+        val request = MultiApplicationCommandBuilder().apply(builder).build()
+        val commands = rest.interaction.createGlobalApplicationCommands(resources.applicationId, request)
+        return flow {
+            commands.forEach {
+                val data = ApplicationCommandData.from(it)
+                emit(GlobalApplicationCommand(data, rest.interaction))
+            }
+        }
     }
 
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createGuildChatInputCommand(
+        guildId: Snowflake,
+        name: String,
+        description: String,
+        builder: ChatInputCreateBuilder.() -> Unit = {},
+    ): GuildChatInputCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = ChatInputCreateBuilder(name, description).apply(builder).toRequest()
+        val response = rest.interaction.createGuildApplicationCommand(resources.applicationId, guildId, request)
+        val data = ApplicationCommandData.from(response)
+        return GuildChatInputCommand(data, rest.interaction)
+    }
+
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createGuildMessageCommand(
+        guildId: Snowflake,
+        name: String,
+        builder: MessageCommandCreateBuilder.() -> Unit = {},
+    ): GuildMessageCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = MessageCommandCreateBuilder(name).apply(builder).toRequest()
+        val response = rest.interaction.createGuildApplicationCommand(resources.applicationId, guildId, request)
+        val data = ApplicationCommandData.from(response)
+        return GuildMessageCommand(data, rest.interaction)
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createGuildUserCommand(
+        guildId: Snowflake,
+        name: String,
+        builder: UserCommandCreateBuilder.() -> Unit = {},
+    ): GuildUserCommand {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = UserCommandCreateBuilder(name).apply(builder).toRequest()
+        val response = rest.interaction.createGuildApplicationCommand(resources.applicationId, guildId, request)
+        val data = ApplicationCommandData.from(response)
+        return GuildUserCommand(data, rest.interaction)
+    }
+
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createGuildApplicationCommands(
+        guildId: Snowflake,
+        builder: MultiApplicationCommandBuilder.() -> Unit,
+    ): Flow<GuildApplicationCommand> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = MultiApplicationCommandBuilder().apply(builder).build()
+
+        val commands = rest.interaction.createGuildApplicationCommands(resources.applicationId, guildId, request)
+        return flow {
+            commands.forEach {
+                val data = ApplicationCommandData.from(it)
+                emit(GuildApplicationCommand(data, rest.interaction))
+            }
+        }
+    }
+
+    suspend fun editApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake,
+        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
+    ) {
+        val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
+
+        rest.interaction.editApplicationCommandPermissions(applicationId, guildId, commandId, request)
+    }
+
+    suspend fun bulkEditApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
+    ) {
+        val request = ApplicationCommandPermissionsBulkModifyBuilder().apply(builder).toRequest()
+
+        rest.interaction.bulkEditApplicationCommandPermissions(applicationId, guildId, request)
+    }
 
 }
 

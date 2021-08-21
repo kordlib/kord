@@ -17,7 +17,7 @@ sealed interface ApplicationCommandInteraction : Interaction, ApplicationCommand
 
 
 /**
- * A [ApplicationCommandInteraction] that's invoked through chat input.
+ * An [ApplicationCommandInteraction] that's invoked through chat input.
  */
 sealed interface  ChatInputCommandInteraction : ApplicationCommandInteraction {
     val command: InteractionCommand get() =  InteractionCommand(data.data, kord)
@@ -37,7 +37,7 @@ class GuildChatInputCommandInteraction(
 
 
 /**
- * A [ApplicationCommandInteraction] that's invoked through chat input.
+ * An [ApplicationCommandInteraction] that's invoked through chat input.
  */
 class GlobalChatInputCommandInteraction(
     override val data: InteractionData,
@@ -47,7 +47,7 @@ class GlobalChatInputCommandInteraction(
 
 
 /**
- * A [ApplicationCommandInteraction] that's invoked through user commands.
+ * An [ApplicationCommandInteraction] that's invoked through user commands.
  */
 sealed interface  UserCommandInteraction : ApplicationCommandInteraction {
     private val resolvedUsersData  get() = data.data.resolvedObjectsData.value?.users?.value
@@ -55,7 +55,7 @@ sealed interface  UserCommandInteraction : ApplicationCommandInteraction {
 }
 
 /**
- * A [ApplicationCommandInteraction] that's invoked through user commands specific to a guild.
+ * An [ApplicationCommandInteraction] that's invoked through user commands specific to a guild.
  */
 class GuildUserCommandInteraction(
     override val data: InteractionData,
@@ -68,7 +68,7 @@ class GuildUserCommandInteraction(
 }
 
 /**
- * A [ApplicationCommandInteraction] that's invoked through user commands.
+ * An [ApplicationCommandInteraction] that's invoked through user commands.
  */
 class GlobalUserCommandInteraction(
     override val data: InteractionData,
@@ -78,7 +78,7 @@ class GlobalUserCommandInteraction(
 
 
 /**
- * A [ApplicationCommandInteraction] that's invoked through messages.
+ * An [ApplicationCommandInteraction] that's invoked through messages.
  */
 sealed interface  MessageCommandInteraction : ApplicationCommandInteraction {
     private val resolvedMessagesData get() = data.data.resolvedObjectsData.value?.messages?.value
@@ -87,7 +87,7 @@ sealed interface  MessageCommandInteraction : ApplicationCommandInteraction {
 }
 
 /**
- * A [ApplicationCommandInteraction] that's invoked through messages specific to a guild.
+ * An [ApplicationCommandInteraction] that's invoked through messages specific to a guild.
  */
 class GuildMessageCommandInteraction(
     override val data: InteractionData,
@@ -96,7 +96,7 @@ class GuildMessageCommandInteraction(
 ) : MessageCommandInteraction, GuildApplicationCommandInteraction
 
 /**
- * A [ApplicationCommandInteraction] that's invoked through messages.
+ * An [ApplicationCommandInteraction] that's invoked through messages.
  */
 class GlobalMessageCommandInteraction(
     override val data: InteractionData,
@@ -114,6 +114,6 @@ class UnknownApplicationCommandInteraction(
         get() = UserBehavior(data.user.value!!.id, kord)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction {
-        TODO("Not yet implemented")
+        return UnknownComponentInteraction(data, kord, strategy.supply(kord))
     }
 }

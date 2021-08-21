@@ -195,7 +195,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      */
 
     val commands: Flow<GuildApplicationCommand>
-        get() = kord.slashCommands.getGuildApplicationCommands(id)
+        get() = supplier.getGuildApplicationCommands(kord.resources.applicationId, id)
 
     /**
      * Returns the gateway this guild is part of as per the
@@ -241,7 +241,7 @@ interface GuildBehavior : KordEntity, Strategizable {
 
 
     suspend fun getApplicationCommand(commandId: Snowflake) =
-        kord.slashCommands.getGuildApplicationCommand(id, commandId)
+        supplier.getGuildApplicationCommand(kord.resources.applicationId, id, commandId)
 
     /**
      * Requests to get the this behavior as a [Guild].
@@ -560,7 +560,7 @@ suspend inline fun GuildBehavior.createChatInputCommand(
     builder: ChatInputCreateBuilder.() -> Unit = {},
 ): GuildChatInputCommand {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return kord.slashCommands.createGuildChatInputCommand(id, name, description, builder)
+    return kord.createGuildChatInputCommand(id, name, description, builder)
 }
 
 
@@ -573,7 +573,7 @@ suspend inline fun GuildBehavior.createMessageCommand(
     builder: MessageCommandCreateBuilder.() -> Unit = {},
 ): GuildMessageCommand {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return kord.slashCommands.createGuildMessageCommand(id, name, builder)
+    return kord.createGuildMessageCommand(id, name, builder)
 }
 
 @OptIn(ExperimentalContracts::class)
@@ -583,7 +583,7 @@ suspend inline fun GuildBehavior.createUserCommand(
     builder: UserCommandCreateBuilder.() -> Unit = {},
 ): GuildUserCommand {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return kord.slashCommands.createGuildUserCommand(id, name, builder)
+    return kord.createGuildUserCommand(id, name, builder)
 }
 
 
@@ -594,7 +594,7 @@ suspend inline fun GuildBehavior.createApplicationCommands(
     builder: MultiApplicationCommandBuilder.() -> Unit
 ): Flow<GuildApplicationCommand> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return kord.slashCommands.createGuildApplicationCommands(id, builder)
+    return kord.createGuildApplicationCommands(id, builder)
 }
 
 /**
@@ -973,7 +973,7 @@ suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builde
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
 
-    kord.slashCommands.bulkEditApplicationCommandPermissions(
+    kord.bulkEditApplicationCommandPermissions(
         kord.selfId,
         id,
         builder

@@ -8,6 +8,9 @@ import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.core.*
 import dev.kord.core.cache.data.*
 import dev.kord.core.entity.*
+import dev.kord.core.entity.application.ApplicationCommandPermissions
+import dev.kord.core.entity.application.GlobalApplicationCommand
+import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -48,6 +51,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
     private val webhook: WebhookService get() = kord.rest.webhook
     private val application: ApplicationService get() = kord.rest.application
     private val template: TemplateService = kord.rest.template
+    private val interaction: InteractionService = kord.rest.interaction
 
     override val guilds: Flow<Guild>
         get() = paginateForwards(
@@ -407,6 +411,60 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
             }
         }
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
+    }
+
+    override fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake): Flow<GuildApplicationCommand> = flow {
+        for (command in interaction.getGuildApplicationCommands(applicationId, guildId)) {
+            val data = ApplicationCommandData.from(command)
+            emit(GuildApplicationCommand(data, interaction))
+        }
+    }
+
+
+    override suspend fun getGlobalApplicationCommandOrNull(applicationId: Snowflake, commandId: Snowflake): GlobalApplicationCommand? = catchNotFound {
+        val response = interaction.getGlobalCommand(applicationId, commandId)
+        val data = ApplicationCommandData.from(response)
+        return GlobalApplicationCommand(data, interaction)
+    }
+
+    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> = flow {
+        for (command in interaction.getGlobalApplicationCommands(applicationId)) {
+            val data = ApplicationCommandData.from(command)
+            emit(GlobalApplicationCommand(data, interaction))
+        }
+    }
+
+    override fun getGuildApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+    ): Flow<ApplicationCommandPermissions> = flow {
+         interaction.getGuildApplicationCommandPermissions(applicationId, guildId)
+            .forEach {
+                val data = GuildApplicationCommandPermissionsData.from(it)
+                emit(ApplicationCommandPermissions(data))
+            }
+    }
+
+    override suspend fun getApplicationCommandPermissionsOrNull(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake,
+    ): ApplicationCommandPermissions {
+        val permissions = interaction.getApplicationCommandPermissions(applicationId, guildId, commandId)
+        val data = GuildApplicationCommandPermissionsData.from(permissions)
+
+        return ApplicationCommandPermissions(data)
+    }
+
+
+    override suspend fun getGuildApplicationCommandOrNull(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): GuildApplicationCommand? = catchNotFound {
+        val response = interaction.getGuildCommand(applicationId, guildId, commandId)
+        val data = ApplicationCommandData.from(response)
+        return GuildApplicationCommand(data, interaction)
     }
 
     override fun toString(): String {

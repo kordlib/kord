@@ -15,7 +15,7 @@ interface ChatInputCommandBehavior : ApplicationCommandBehavior {
 }
 
 
-interface GuildInputCommandBehavior : ChatInputCommandBehavior, GuildApplicationCommandBehavior {
+interface GuildChatInputCommandBehavior : ChatInputCommandBehavior, GuildApplicationCommandBehavior {
 
      @OptIn(ExperimentalContracts::class)
      override suspend fun edit(builder: suspend ChatInputModifyBuilder.() -> Unit): GuildChatInputCommand {
@@ -28,7 +28,7 @@ interface GuildInputCommandBehavior : ChatInputCommandBehavior, GuildApplication
 
 
 
-interface GlobalInputCommandBehavior : ChatInputCommandBehavior,GlobalApplicationCommandBehavior {
+interface GlobalChatInputCommandBehavior : ChatInputCommandBehavior,GlobalApplicationCommandBehavior {
 
      @OptIn(ExperimentalContracts::class)
      override suspend fun edit(builder: suspend ChatInputModifyBuilder.() -> Unit): GlobalChatInputCommand {

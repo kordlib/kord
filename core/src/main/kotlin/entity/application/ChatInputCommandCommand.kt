@@ -1,13 +1,12 @@
 package dev.kord.core.entity.application
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ApplicationCommandOptionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.filterList
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.behavior.ChatInputCommandBehavior
-import dev.kord.core.behavior.GlobalInputCommandBehavior
-import dev.kord.core.behavior.GuildInputCommandBehavior
+import dev.kord.core.behavior.GlobalChatInputCommandBehavior
+import dev.kord.core.behavior.GuildChatInputCommandBehavior
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.ApplicationCommandGroupData
 import dev.kord.core.cache.data.ApplicationCommandSubCommandData
@@ -86,14 +85,14 @@ class ChatInputSubCommand(
 class GlobalChatInputCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService,
-) : ChatInputCommandCommand, GlobalApplicationCommand,  GlobalInputCommandBehavior
+) : ChatInputCommandCommand, GlobalApplicationCommand,  GlobalChatInputCommandBehavior
 
 
 
 class GuildChatInputCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService,
-) : ChatInputCommandCommand, GuildApplicationCommand, GuildInputCommandBehavior {
+) : ChatInputCommandCommand, GuildApplicationCommand, GuildChatInputCommandBehavior {
     override val guildId: Snowflake
         get() = data.guildId.value!!
 }

@@ -210,7 +210,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend fun getGuildApplicationCommandPermissions(
             applicationId: Snowflake,
             guildId: Snowflake,
-    ): DiscordGuildApplicationCommandPermissions = call(Route.GuildApplicationCommandPermissionsGet) {
+    ): List<DiscordGuildApplicationCommandPermissions> = call(Route.GuildApplicationCommandPermissionsGet) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.GuildId] = guildId
     }
