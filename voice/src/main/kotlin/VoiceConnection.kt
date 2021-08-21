@@ -17,7 +17,6 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
-import kotlin.time.TimeSource
 
 /**
  * Data that represents a [VoiceConnection], these will never change during the life time of a [VoiceConnection].
@@ -58,7 +57,7 @@ class VoiceConnection(
     override val coroutineContext: CoroutineContext =
         SupervisorJob() + voiceDispatcher + CoroutineName("Voice Connection for Guild ${data.guildId.value}")
 
-    private val audioFramePoller = AudioFramePoller(TimeSource.Monotonic, voiceDispatcher)
+    private val audioFramePoller = AudioFramePoller(voiceDispatcher)
 
     init {
         // handle voice state/server updates (e.g., a move, disconnect, voice server change, etc.)

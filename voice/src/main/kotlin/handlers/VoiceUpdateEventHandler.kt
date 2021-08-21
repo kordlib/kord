@@ -19,6 +19,8 @@ internal class VoiceUpdateEventHandler(
         on<VoiceServerUpdate> { voiceServerUpdate ->
             if (!voiceServerUpdate.isRelatedToConnection(connection)) return@on
 
+            voiceUpdateLogger.trace { "changing voice servers for session ${connection.data.sessionId}" }
+
             // update the gateway configuration accordingly
             connection.voiceGatewayConfiguration = connection.voiceGatewayConfiguration.copy(
                 token = voiceServerUpdate.voiceServerUpdateData.token,

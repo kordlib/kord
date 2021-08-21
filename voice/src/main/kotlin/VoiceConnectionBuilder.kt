@@ -47,8 +47,8 @@ class VoiceConnectionBuilder(
      */
     var audioProvider: AudioProvider? = null
 
-    fun audioProvider(audioProvider: AudioProvider) {
-        this.audioProvider = audioProvider
+    inline fun audioProvider(crossinline provider: () -> AudioFrame?) {
+        this.audioProvider = AudioProvider(provider)
     }
 
     /**
@@ -82,7 +82,7 @@ class VoiceConnectionBuilder(
     }
 
     private suspend fun Gateway.updateVoiceState(): Pair<VoiceConnectionData, VoiceGatewayConfiguration> {
-        gateway.send(
+        send(
             UpdateVoiceStatus(
                 guildId = guildId,
                 channelId = channelId,

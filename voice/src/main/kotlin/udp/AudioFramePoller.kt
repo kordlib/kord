@@ -3,19 +3,15 @@
 package dev.kord.voice.udp
 
 import dev.kord.common.annotation.KordVoice
-import dev.kord.voice.AudioProvider
-import dev.kord.voice.FrameInterceptor
-import dev.kord.voice.FrameInterceptorContext
-import dev.kord.voice.FrameInterceptorContextBuilder
+import dev.kord.voice.*
 import io.ktor.network.sockets.*
-import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
-import kotlin.math.max
 import kotlin.properties.Delegates
-import kotlin.time.Duration
-import kotlin.time.TimeSource
 
 private val audioFramePollerLogger = KotlinLogging.logger { }
 
@@ -41,15 +37,10 @@ internal class AudioFramePollerConfigurationBuilder() {
 }
 
 internal class AudioFramePoller(
-    timeSource: TimeSource,
     pollerDispatcher: CoroutineDispatcher
 ) : CoroutineScope {
     override val coroutineContext: CoroutineContext =
         SupervisorJob() + pollerDispatcher + CoroutineName("Audio Frame Poller")
-
-    private val timeMark = timeSource.markNow()
-
-    private val currentNanoTime get() = timeMark.elapsedNow().inWholeNanoseconds
 
     private fun createFrameInterceptor(configuration: AudioFramePollerConfiguration): FrameInterceptor =
         with(configuration) {
@@ -62,31 +53,28 @@ internal class AudioFramePoller(
         launch {
             val interceptor = createFrameInterceptor(configuration)
             var sequence: Short = 0
-            var nextFrameTimestamp = currentNanoTime
             val key = key.toByteArray()
+
+            val frames = Channel<AudioFrame?>(Channel.RENDEZVOUS)
+            launch { provider.provideFrames(frames) }
 
             audioFramePollerLogger.trace { "audio poller starting." }
 
-            while (udp.isOpen) {
-                val frame = interceptor.intercept(provider.provide())
+            try {
+                frames.receiveAsFlow().collect { frame ->
+                    // we can't use the map function here without causing a ClassCastException regarding inline classes
+                    @Suppress("NAME_SHADOWING") val frame = interceptor.intercept(frame)
 
-                var packet: AudioPacket? = null
+                    if (frame != null) {
+                        val packet = AudioPacket(frame, sequence, sequence * 960, ssrc)
+                        packet.encrypt(key)
 
-                if (frame != null) {
-                    packet = AudioPacket(frame, sequence, sequence * 960, ssrc)
-                    packet.encrypt(key)
-                }
-
-                nextFrameTimestamp += Duration.milliseconds(20).inWholeNanoseconds
-
-                delay(Duration.nanoseconds(max(0, nextFrameTimestamp - currentNanoTime)).inWholeMilliseconds)
-
-                if (packet != null) {
-                    if (udp.isOpen) {
                         udp.send(Datagram(packet.asByteReadPacket(), udp.server))
-                        sequence++ // only update the sequence if we've actually sent a packet to discord
+                        sequence++
                     }
                 }
+            } catch (e: Exception) {
+                /* we're done polling, nothing to worry about */
             }
 
             audioFramePollerLogger.trace { "udp connection closed, stopped polling for audio frames." }
