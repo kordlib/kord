@@ -9,6 +9,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.transform
 import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
 import kotlin.properties.Delegates
@@ -56,23 +57,22 @@ internal class AudioFramePoller(
             val key = key.toByteArray()
 
             val frames = Channel<AudioFrame?>(Channel.RENDEZVOUS)
-            launch { provider.provideFrames(frames) }
+            with(provider) { launch { provideFrames(frames) } }
 
             audioFramePollerLogger.trace { "audio poller starting." }
 
             try {
-                frames.receiveAsFlow().collect { frame ->
-                    // we can't use the map function here without causing a ClassCastException regarding inline classes
-                    @Suppress("NAME_SHADOWING") val frame = interceptor.intercept(frame)
+                frames.receiveAsFlow()
+                    .transform { emit(interceptor.intercept(it)) }
+                    .collect { frame ->
+                        if (frame != null) {
+                            val packet = AudioPacket(frame, sequence, sequence * 960, ssrc)
+                            packet.encrypt(key)
 
-                    if (frame != null) {
-                        val packet = AudioPacket(frame, sequence, sequence * 960, ssrc)
-                        packet.encrypt(key)
-
-                        udp.send(Datagram(packet.asByteReadPacket(), udp.server))
-                        sequence++
+                            udp.send(Datagram(packet.asByteReadPacket(), udp.server))
+                            sequence++
+                        }
                     }
-                }
             } catch (e: Exception) {
                 /* we're done polling, nothing to worry about */
             }

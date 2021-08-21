@@ -1,8 +1,8 @@
 package dev.kord.voice
 
 import dev.kord.common.annotation.KordVoice
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.SendChannel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlin.math.max
@@ -15,7 +15,7 @@ import kotlin.time.TimeSource
  * which should be transmitted to Discord.
  */
 @KordVoice
-interface AudioProvider { // we can't make this a fun interface without breaking the IR compiler
+fun interface AudioProvider {
     /**
      * Provides a single frame of audio, [AudioFrame].
      *
@@ -28,7 +28,7 @@ interface AudioProvider { // we can't make this a fun interface without breaking
      *
      * @param frames the channel where [AudioFrame]s will be sent to.
      */
-    suspend fun provideFrames(frames: SendChannel<AudioFrame?>) = coroutineScope {
+    suspend fun CoroutineScope.provideFrames(frames: SendChannel<AudioFrame?>) {
         val mark = TimeSource.Monotonic.markNow()
         var nextFrameTimestamp = mark.elapsedNow().inWholeNanoseconds
 
@@ -42,9 +42,4 @@ interface AudioProvider { // we can't make this a fun interface without breaking
 
 private suspend inline fun delayUntilNextFrameTimestamp(mark: TimeMark, nextFrameTimestamp: Long) {
     delay(Duration.nanoseconds(max(0, nextFrameTimestamp - mark.elapsedNow().inWholeNanoseconds)).inWholeMilliseconds)
-}
-
-@KordVoice
-inline fun AudioProvider(crossinline provider: () -> AudioFrame?) = object : AudioProvider {
-    override fun provide(): AudioFrame? = provider()
 }

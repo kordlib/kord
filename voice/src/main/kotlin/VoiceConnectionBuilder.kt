@@ -47,8 +47,8 @@ class VoiceConnectionBuilder(
      */
     var audioProvider: AudioProvider? = null
 
-    inline fun audioProvider(crossinline provider: () -> AudioFrame?) {
-        this.audioProvider = AudioProvider(provider)
+    fun audioProvider(provider: AudioProvider) {
+        this.audioProvider = provider
     }
 
     /**
