@@ -44,7 +44,7 @@ internal class UdpLifeCycleHandler(
 
             val ip: NetworkAddress = udpConnection.performIpDiscovery()
 
-            udpLifeCycleLogger.trace { "ip discovered for voice: $ip" }
+            udpLifeCycleLogger.trace { "ip discovered for voice successfully" }
 
             val selectProtocol = SelectProtocol(
                 protocol = "udp",

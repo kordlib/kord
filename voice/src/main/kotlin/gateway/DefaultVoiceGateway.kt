@@ -139,8 +139,15 @@ class DefaultVoiceGateway(
         val json = String(frame.data, Charsets.UTF_8)
 
         try {
-            defaultVoiceGatewayLogger.trace { "Voice Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(VoiceEvent, json) ?: return
+            val event = jsonParser.decodeFromString(VoiceEvent, json)
+
+            if (event is SessionDescription)
+                defaultVoiceGatewayLogger.trace { "Voice Gateway <<< SESSION_DESCRIPTION" }
+            else
+                defaultVoiceGatewayLogger.trace { "Voice Gateway <<< $json" }
+
+            if (event == null) return
+
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
             defaultVoiceGatewayLogger.error(exception)
@@ -180,7 +187,14 @@ class DefaultVoiceGateway(
                 val copy = command.copy(token = "token")
                 "Voice Gateway >>> ${Json.encodeToString(Command, copy)}"
             }
-        } else defaultVoiceGatewayLogger.trace { "Voice Gateway >>> $json" }
+        } else if (command is SelectProtocol) {
+            defaultVoiceGatewayLogger.trace {
+                val copy = command.copy(data = command.data.copy(address = "ip"))
+                "Voice Gateway >>> ${Json.encodeToString(Command, copy)}"
+            }
+        } else {
+            defaultVoiceGatewayLogger.trace { "Voice Gateway >>> $json" }
+        }
         socket.send(Frame.Text(json))
     }
 
