@@ -16,6 +16,6 @@ import kotlinx.serialization.json.*
 @Serializable
 class DiscordErrorResponse(
     val code: JsonErrorCode = JsonErrorCode.Unknown,
-    val errors: JsonElement,
-    val message: String?,
+    val errors: JsonElement? = null,
+    val message: String? = null,
 )
