@@ -39,7 +39,7 @@ private val voiceConnectionLogger = KotlinLogging.logger { }
  * @param gateway the [Gateway] that handles events for the guild this [VoiceConnection] represents.
  * @param voiceGateway the underlying [VoiceGateway] for this voice connection.
  * @param data the data representing this [VoiceConnection].
- * @param voiceGatewayConfiguration the configuration used for [voiceGateway].
+ * @param voiceGatewayConfiguration the configuration used on each new [connect], for the [voiceGateway].
  * @param audioProvider a [AudioProvider] that will provide [AudioFrame] when required.
  * @param frameInterceptorFactory a factory for [FrameInterceptor]s that is used whenever audio is ready to be sent. See [FrameInterceptor] and [DefaultFrameInterceptor].
  * @param voiceDispatcher the dispatcher used for this voice connection.
@@ -49,7 +49,7 @@ class VoiceConnection(
     val gateway: Gateway,
     val voiceGateway: VoiceGateway,
     val data: VoiceConnectionData,
-    internal var voiceGatewayConfiguration: VoiceGatewayConfiguration,
+    var voiceGatewayConfiguration: VoiceGatewayConfiguration,
     val audioProvider: AudioProvider,
     val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
     voiceDispatcher: CoroutineDispatcher
