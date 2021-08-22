@@ -1,6 +1,5 @@
 package dev.kord.core.event.interaction
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.*
 import dev.kord.core.entity.application.*
@@ -33,19 +32,19 @@ import dev.kord.core.event.Event
  * In the current iteration, ephemeral messages (regardless of the type) don't support files and/or embeds.
  */
 
-sealed interface ApplicationCreateEvent : Event {
-    val interaction: ApplicationCommandInteraction
+sealed interface ApplicationInteractionCreateEvent : InteractionCreateEvent {
+    override val interaction: ApplicationCommandInteraction
 }
 
-sealed interface GlobalApplicationCreateEvent : ApplicationCreateEvent {
+sealed interface GlobalApplicationInteractionCreateEvent : ApplicationInteractionCreateEvent {
     override val interaction: GlobalApplicationCommandInteraction
 }
 
-sealed interface GuildApplicationCreateEvent : ApplicationCreateEvent {
+sealed interface GuildApplicationInteractionCreateEvent : ApplicationInteractionCreateEvent {
     override val interaction: GuildApplicationCommandInteraction
 }
 
-sealed interface  UserCommandInteractionCreateEvent : ApplicationCreateEvent {
+sealed interface  UserCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
     override val interaction: UserCommandInteraction
 }
 
@@ -53,16 +52,16 @@ class GuildUserCommandInteractionCreateEvent(
     override val interaction: GuildUserCommandInteraction,
     override val kord: Kord,
     override val shard: Int
-) : GuildApplicationCreateEvent, UserCommandInteractionCreateEvent
+) : GuildApplicationInteractionCreateEvent, UserCommandInteractionCreateEvent
 
 class GlobalUserCommandInteractionCreateEvent(
     override val interaction: GlobalUserCommandInteraction,
     override val kord: Kord,
     override val shard: Int
-) : GlobalApplicationCreateEvent, UserCommandInteractionCreateEvent
+) : GlobalApplicationInteractionCreateEvent, UserCommandInteractionCreateEvent
 
 
-sealed interface  MessageCommandInteractionCreateEvent : ApplicationCreateEvent {
+sealed interface  MessageCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
     override val interaction: MessageCommandInteraction
 }
 
@@ -70,17 +69,17 @@ class GuildMessageCommandInteractionCreateEvent(
     override val interaction: GuildMessageCommandInteraction,
     override val kord: Kord,
     override val shard: Int
-) : GuildApplicationCreateEvent, MessageCommandInteractionCreateEvent
+) : GuildApplicationInteractionCreateEvent, MessageCommandInteractionCreateEvent
 
 class GlobalMessageCommandInteractionCreateEvent(
     override val interaction: GlobalMessageCommandInteraction,
     override val kord: Kord,
     override val shard: Int
-) : GlobalApplicationCreateEvent, MessageCommandInteractionCreateEvent
+) : GlobalApplicationInteractionCreateEvent, MessageCommandInteractionCreateEvent
 
 
 
-sealed interface  ChatInputCommandInteractionCreateEvent : ApplicationCreateEvent {
+sealed interface  ChatInputCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
     override val interaction: ChatInputCommandInteraction
 }
 
@@ -88,10 +87,10 @@ class GuildChatInputCommandInteractionCreateEvent(
     override val interaction: GuildChatInputCommandInteraction,
     override val kord: Kord,
     override val shard: Int
-) : GuildApplicationCreateEvent, ChatInputCommandInteractionCreateEvent
+) : GuildApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent
 
 class GlobalChatInputCommandInteractionCreateEvent(
     override val interaction: GlobalChatInputCommandInteraction,
     override val kord: Kord,
     override val shard: Int
-) : GlobalApplicationCreateEvent, ChatInputCommandInteractionCreateEvent
+) : GlobalApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent

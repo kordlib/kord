@@ -1,5 +1,8 @@
 package dev.kord.core.entity.interaction
 
+import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
@@ -13,7 +16,18 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 /**
  * Represents an interaction of type [ApplicationCommand][dev.kord.common.entity.InteractionType.ApplicationCommand]
  */
-sealed interface ApplicationCommandInteraction : Interaction, ApplicationCommandInteractionBehavior
+sealed interface ApplicationCommandInteraction : Interaction, ApplicationCommandInteractionBehavior {
+    val invokedCommandId: Snowflake get() = data.data.id.value!!
+
+    val name: String get() = data.data.name.value!!
+
+    val invokedCommandType: ApplicationCommandType get() = data.data.type.value!!
+
+    val resolvedObjects: ResolvedObjects? get() = data.data.resolvedObjectsData.unwrap {
+        ResolvedObjects(it, kord)
+    }
+
+}
 
 
 /**
@@ -51,10 +65,7 @@ class GlobalChatInputCommandInteraction(
  */
 sealed interface  UserCommandInteraction : ApplicationCommandInteraction {
 
-    val name: String get() = data.data.name.value!!
-
-    private val resolvedUsersData  get() = data.data.resolvedObjectsData.value?.users?.value
-    val users get() = resolvedUsersData.orEmpty().mapValues { User(it.value, kord) }
+    val users get() = resolvedObjects!!.users
 }
 
 /**
@@ -64,12 +75,7 @@ class GuildUserCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : UserCommandInteraction, GuildApplicationCommandInteraction {
-    private val resolvedMembersData  get() = data.data?.resolvedObjectsData.value?.members?.value
-    val members get() = resolvedMembersData.orEmpty().mapValues { memberData ->
-        Member(memberData.value, users[memberData.key]!!.data, kord) }
-}
-
+) : UserCommandInteraction, GuildApplicationCommandInteraction
 /**
  * An [ApplicationCommandInteraction] that's invoked through user commands.
  */
@@ -85,10 +91,7 @@ class GlobalUserCommandInteraction(
  */
 sealed interface  MessageCommandInteraction : ApplicationCommandInteraction {
 
-    val name: String get() = data.data.name.value!!
-
-    private val resolvedMessagesData get() = data.data.resolvedObjectsData.value?.messages?.value
-    val messages get() = resolvedMessagesData.orEmpty().mapValues { Message(it.value, kord) }
+    val messages get() = resolvedObjects!!.messages
 
 }
 

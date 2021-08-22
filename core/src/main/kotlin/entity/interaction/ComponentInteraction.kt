@@ -42,6 +42,7 @@ sealed interface ComponentInteraction : Interaction, ComponentInteractionBehavio
      */
     val componentId: String get() = data.data.customId.value!!
 
+    val componentType: ComponentType get() = data.data.componentType.value!!
     /**
      * The [Component] the user interacted with, null if the message is ephemeral.
      */

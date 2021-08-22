@@ -26,7 +26,7 @@ import dev.kord.rest.service.InteractionService
 
 sealed interface Interaction : InteractionBehavior {
 
-    abstract val data: InteractionData
+    val data: InteractionData
 
     override val id: Snowflake get() = data.id
 
@@ -102,7 +102,7 @@ sealed interface InteractionCommand : KordObject {
     /**
      * The root command name
      */
-    abstract val rootName: String
+    val rootName: String
 
     /**
      * the values passed to the command.
@@ -143,7 +143,7 @@ fun InteractionCommand(
         rootPredicate -> RootCommand(data, kord)
         groupPredicate -> GroupCommand(data, kord)
         subCommandPredicate -> SubCommand(data, kord)
-        else -> error("The interaction data provided is not an application command")
+        else -> error("The interaction data provided is not an chat input command")
     }
 }
 

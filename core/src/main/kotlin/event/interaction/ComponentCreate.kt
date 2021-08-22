@@ -11,8 +11,8 @@ import dev.kord.core.entity.interaction.SelectMenuInteraction
 import dev.kord.core.event.Event
 
 
-sealed interface ComponentCreateEvent : Event {
-    val interaction: ComponentInteraction
+sealed interface ComponentCreateEvent : InteractionCreateEvent {
+    override val interaction: ComponentInteraction
 }
 
 
