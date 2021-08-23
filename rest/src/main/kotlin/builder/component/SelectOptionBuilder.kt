@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.component
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.DiscordSelectOption
@@ -14,7 +15,7 @@ import dev.kord.common.entity.optional.delegate.delegate
  * @param label The user-facing name of the option, max 25 characters.
  * @param value The dev-define value of the option, max 100 characters.
  */
-
+@KordDsl
 class SelectOptionBuilder(
     var label: String,
     var value: String

@@ -11,7 +11,6 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 
 @KordDsl
-
 sealed class ButtonBuilder : ActionRowComponentBuilder {
 
     /**

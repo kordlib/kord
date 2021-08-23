@@ -27,7 +27,7 @@ class UserCommandModifyBuilder : ApplicationCommandModifyBuilder {
 
 }
 
-
+@KordDsl
 class UserCommandCreateBuilder(override var name: String) : ApplicationCommandCreateBuilder {
     override val type: ApplicationCommandType
         get() = ApplicationCommandType.User

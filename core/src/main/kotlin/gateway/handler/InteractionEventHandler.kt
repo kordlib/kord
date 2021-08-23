@@ -3,10 +3,8 @@ package dev.kord.core.gateway.handler
 import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.remove
-import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ApplicationCommandData
-import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.idEq
 import dev.kord.core.entity.application.*
@@ -45,8 +43,8 @@ class InteractionEventHandler(
             is GuildChatInputCommandInteraction -> GuildChatInputCommandInteractionCreateEvent(interaction, kord, shard)
             is GuildMessageCommandInteraction -> GuildMessageCommandInteractionCreateEvent(interaction, kord, shard)
             is GuildUserCommandInteraction -> GuildUserCommandInteractionCreateEvent(interaction, kord, shard)
-            is ButtonInteraction -> ButtonCreateEvent(interaction, kord, shard)
-            is SelectMenuInteraction -> SelectMenuCreateEvent(interaction, kord, shard)
+            is ButtonInteraction -> ButtonInteractionCreateEvent(interaction, kord, shard)
+            is SelectMenuInteraction -> SelectMenuInteractionCreateEvent(interaction, kord, shard)
             is UnknownComponentInteraction -> error("Unknown component.")
             is UnknownApplicationCommandInteraction -> error("Unknown component.")
         }

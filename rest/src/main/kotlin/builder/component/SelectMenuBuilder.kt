@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.component
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
@@ -16,7 +17,7 @@ import kotlin.contracts.contract
  *
  * @param customId The identifier for the menu, max 100 characters.
  */
-
+@KordDsl
 class SelectMenuBuilder(
     var customId: String
 ) : ActionRowComponentBuilder {

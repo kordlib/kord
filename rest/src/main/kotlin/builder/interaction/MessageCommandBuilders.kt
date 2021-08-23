@@ -27,7 +27,7 @@ class MessageCommandModifyBuilder : ApplicationCommandModifyBuilder {
 
 }
 
-
+@KordDsl
 class MessageCommandCreateBuilder(override var name: String) : ApplicationCommandCreateBuilder {
     override val type: ApplicationCommandType
         get() = ApplicationCommandType.Message

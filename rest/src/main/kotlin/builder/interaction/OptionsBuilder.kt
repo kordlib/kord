@@ -15,7 +15,6 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-
 sealed class OptionsBuilder(
     var name: String,
     var description: String,
@@ -38,7 +37,6 @@ sealed class OptionsBuilder(
 }
 
 @KordDsl
-
 sealed class BaseChoiceBuilder<T>(
     name: String,
     description: String,
@@ -61,7 +59,6 @@ sealed class BaseChoiceBuilder<T>(
 }
 
 @KordDsl
-
 class IntChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Int>(name, description, ApplicationCommandOptionType.Integer) {
 
@@ -137,12 +134,10 @@ sealed class BaseCommandOptionBuilder(
 }
 
 @KordDsl
-
 class SubCommandBuilder(name: String, description: String) :
     BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommand), BaseInputChatBuilder
 
 @KordDsl
-
 class GroupCommandBuilder(name: String, description: String) :
     BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommandGroup) {
     @OptIn(ExperimentalContracts::class)

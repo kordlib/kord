@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.interaction
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.DiscordApplicationCommand
 import dev.kord.rest.builder.RequestBuilder
@@ -7,7 +8,7 @@ import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-
+@KordDsl
 class MultiApplicationCommandBuilder {
     val commands = mutableListOf<ApplicationCommandCreateBuilder>()
 

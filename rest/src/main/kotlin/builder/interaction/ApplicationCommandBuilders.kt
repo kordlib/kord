@@ -34,7 +34,6 @@ interface ApplicationCommandModifyBuilder : RequestBuilder<ApplicationCommandMod
 }
 
 @KordDsl
-
 class ApplicationCommandPermissionsBulkModifyBuilder :
     RequestBuilder<List<PartialDiscordGuildApplicationCommandPermissions>> {
 
@@ -63,7 +62,6 @@ class ApplicationCommandPermissionsBulkModifyBuilder :
 }
 
 @KordDsl
-
 class ApplicationCommandPermissionsModifyBuilder :
     RequestBuilder<ApplicationCommandPermissionsEditRequest> {
 

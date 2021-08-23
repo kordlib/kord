@@ -83,7 +83,7 @@ inline fun BaseInputChatBuilder.boolean(name: String, description: String, build
     options!!.add(BooleanBuilder(name, description).apply(builder))
 }
 
-
+@KordDsl
 interface RootInputChatBuilder : BaseInputChatBuilder
 
 @OptIn(ExperimentalContracts::class)
