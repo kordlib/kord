@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RoleTagsData(
-    val botId: OptionalSnowflake,
-    val integrationId: OptionalSnowflake,
+    val botId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val integrationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val premiumSubscriber: Boolean,
 ) {
 

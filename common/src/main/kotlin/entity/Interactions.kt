@@ -501,35 +501,36 @@ sealed class CommandArgument<out T> : Option() {
         override fun serialize(encoder: Encoder, value: CommandArgument<*>) {
             encoder.encodeStructure(descriptor) {
                 encodeStringElement(descriptor, 0, value.name)
-                encodeSerializableElement(descriptor, 1, ApplicationCommandOptionType.serializer(), value.type)
+                encodeSerializableElement(descriptor, 2, ApplicationCommandOptionType.serializer(), value.type)
                 when (value) {
-                    is BooleanArgument -> encodeBooleanElement(descriptor, 3, value.value)
+                    is BooleanArgument -> encodeBooleanElement(descriptor, 1, value.value)
                     is ChannelArgument -> encodeSerializableElement(
                         descriptor,
-                        3,
+                        1,
                         Snowflake.serializer(),
                         value.value
                     )
                     is RoleArgument -> encodeSerializableElement(
                         descriptor,
-                        3,
+                        1,
                         Snowflake.serializer(),
                         value.value
                     )
                     is MentionableArgument -> encodeSerializableElement(
                         descriptor,
-                        3,
+                        1,
                         Snowflake.serializer(),
                         value.value
                     )
                     is UserArgument -> encodeSerializableElement(
                         descriptor,
-                        3,
+                        1,
                         Snowflake.serializer(),
                         value.value
                     )
-                    is IntegerArgument -> encodeIntElement(descriptor, 3, value.value)
-                    is StringArgument -> encodeStringElement(descriptor, 3, value.value)
+                    is IntegerArgument -> encodeIntElement(descriptor, 1, value.value)
+                    is NumberArgument -> encodeDoubleElement(descriptor, 1, value.value)
+                    is StringArgument -> encodeStringElement(descriptor, 1, value.value)
                 }
             }
         }

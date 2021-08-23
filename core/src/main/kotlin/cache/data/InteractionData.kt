@@ -16,6 +16,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+@Serializable
 data class InteractionData(
     val id: Snowflake,
     val applicationId: Snowflake,
@@ -26,7 +27,7 @@ data class InteractionData(
     val member: Optional<MemberData> = Optional.Missing(),
     val user: Optional<UserData> = Optional.Missing(),
     val token: String,
-    val permissions: Optional<Permissions>,
+    val permissions: Optional<Permissions> = Optional.Missing(),
     val version: Int,
     val message: Optional<MessageData> = Optional.Missing()
 ) {
