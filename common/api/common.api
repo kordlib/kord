@@ -73,6 +73,9 @@ public abstract interface annotation class dev/kord/common/annotation/KordPrevie
 public abstract interface annotation class dev/kord/common/annotation/KordUnsafe : java/lang/annotation/Annotation {
 }
 
+public abstract interface annotation class dev/kord/common/annotation/KordVoice : java/lang/annotation/Annotation {
+}
+
 public final class dev/kord/common/entity/ActivityFlag : java/lang/Enum {
 	public static final field Instance Ldev/kord/common/entity/ActivityFlag;
 	public static final field Join Ldev/kord/common/entity/ActivityFlag;
@@ -135,6 +138,7 @@ public final class dev/kord/common/entity/AllRemovedMessageReactions {
 	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/AllRemovedMessageReactions;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/AllRemovedMessageReactions$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -197,6 +201,7 @@ public final class dev/kord/common/entity/AllowedMentions {
 	public final fun getUsers ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/AllowedMentions;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/AllowedMentions$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -227,6 +232,7 @@ public final class dev/kord/common/entity/ApplicationCommandOption {
 	public final fun getOptions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getRequired ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getType ()Ldev/kord/common/entity/ApplicationCommandOptionType;
+	public static final fun write$Self (Ldev/kord/common/entity/ApplicationCommandOption;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/ApplicationCommandOption$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -297,6 +303,32 @@ public final class dev/kord/common/entity/ApplicationCommandOptionType$Unknown :
 
 public final class dev/kord/common/entity/ApplicationCommandOptionType$User : dev/kord/common/entity/ApplicationCommandOptionType {
 	public static final field INSTANCE Ldev/kord/common/entity/ApplicationCommandOptionType$User;
+}
+
+public abstract class dev/kord/common/entity/ApplicationCommandType {
+	public static final field Companion Ldev/kord/common/entity/ApplicationCommandType$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getValue ()I
+}
+
+public final class dev/kord/common/entity/ApplicationCommandType$ChatInput : dev/kord/common/entity/ApplicationCommandType {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationCommandType$ChatInput;
+}
+
+public final class dev/kord/common/entity/ApplicationCommandType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/ApplicationCommandType$Message : dev/kord/common/entity/ApplicationCommandType {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationCommandType$Message;
+}
+
+public final class dev/kord/common/entity/ApplicationCommandType$Unknown : dev/kord/common/entity/ApplicationCommandType {
+	public fun <init> (I)V
+}
+
+public final class dev/kord/common/entity/ApplicationCommandType$User : dev/kord/common/entity/ApplicationCommandType {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationCommandType$User;
 }
 
 public abstract class dev/kord/common/entity/ArchiveDuration {
@@ -610,6 +642,7 @@ public final class dev/kord/common/entity/AuditLogEntryOptionalInfo {
 	public final fun getType ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/AuditLogEntryOptionalInfo;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/AuditLogEntryOptionalInfo$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -834,6 +867,7 @@ public final class dev/kord/common/entity/BulkDeleteData {
 	public final fun getIds ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/BulkDeleteData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/BulkDeleteData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1145,6 +1179,7 @@ public final class dev/kord/common/entity/DeletedMessage {
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DeletedMessage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DeletedMessage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1203,6 +1238,7 @@ public final class dev/kord/common/entity/DiscordActivity {
 	public final fun getUrl ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordActivity;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordActivity$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1240,6 +1276,7 @@ public final class dev/kord/common/entity/DiscordActivityAssets {
 	public final fun getSmallText ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordActivityAssets;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordActivityAssets$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1274,6 +1311,7 @@ public final class dev/kord/common/entity/DiscordActivityEmoji {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordActivityEmoji;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordActivityEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1307,6 +1345,7 @@ public final class dev/kord/common/entity/DiscordActivityParty {
 	public final fun getSize ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordActivityParty;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordActivityParty$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1360,6 +1399,7 @@ public final class dev/kord/common/entity/DiscordActivitySecrets {
 	public final fun getSpectate ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordActivitySecrets;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordActivitySecrets$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1393,6 +1433,7 @@ public final class dev/kord/common/entity/DiscordActivityTimeStamps {
 	public final fun getStart ()Ldev/kord/common/entity/optional/OptionalLong;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordActivityTimeStamps;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordActivityTimeStamps$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1439,6 +1480,7 @@ public final class dev/kord/common/entity/DiscordAddedGuildMember {
 	public final fun getUser ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordAddedGuildMember;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordAddedGuildMember$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1459,18 +1501,19 @@ public final class dev/kord/common/entity/DiscordAddedGuildMember$Companion {
 
 public final class dev/kord/common/entity/DiscordApplicationCommand {
 	public static final field Companion Ldev/kord/common/entity/DiscordApplicationCommand$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component3 ()Ljava/lang/String;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun component6 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun component7 ()Ldev/kord/common/entity/optional/OptionalBoolean;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/common/entity/DiscordApplicationCommand;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordApplicationCommand;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordApplicationCommand;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component8 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/common/entity/DiscordApplicationCommand;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordApplicationCommand;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordApplicationCommand;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDefaultPermission ()Ldev/kord/common/entity/optional/OptionalBoolean;
@@ -1479,8 +1522,10 @@ public final class dev/kord/common/entity/DiscordApplicationCommand {
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getOptions ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getType ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordApplicationCommand;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordApplicationCommand$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1523,6 +1568,7 @@ public final class dev/kord/common/entity/DiscordAttachment {
 	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordAttachment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordAttachment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1560,6 +1606,7 @@ public final class dev/kord/common/entity/DiscordAuditLog {
 	public final fun getWebhooks ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordAuditLog;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordAuditLog$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1603,6 +1650,7 @@ public final class dev/kord/common/entity/DiscordAuditLogEntry {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordAuditLogEntry;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordAuditLogEntry$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1647,6 +1695,7 @@ public final class dev/kord/common/entity/DiscordAuditLogRoleChange {
 	public final fun getPosition ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordAuditLogRoleChange;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordAuditLogRoleChange$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1681,6 +1730,7 @@ public final class dev/kord/common/entity/DiscordBotActivity {
 	public final fun getUrl ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordBotActivity;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordBotActivity$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1757,6 +1807,7 @@ public final class dev/kord/common/entity/DiscordChannel {
 	public final fun getUserLimit ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordChannel;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordChannel$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1792,6 +1843,7 @@ public final class dev/kord/common/entity/DiscordClientStatus {
 	public final fun getWeb ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordClientStatus;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordClientStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1844,6 +1896,7 @@ public final class dev/kord/common/entity/DiscordComponent {
 	public final fun getUrl ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordComponent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordComponent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1890,6 +1943,7 @@ public final class dev/kord/common/entity/DiscordConnection {
 	public final fun getVisibility ()Ldev/kord/common/entity/DiscordConnectionVisibility;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordConnection;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordConnection$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1943,6 +1997,7 @@ public final class dev/kord/common/entity/DiscordDeletedGuildRole {
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordDeletedGuildRole;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordDeletedGuildRole$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1998,6 +2053,7 @@ public final class dev/kord/common/entity/DiscordEmbed {
 	public final fun getVideo ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordEmbed;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordEmbed$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2031,6 +2087,7 @@ public final class dev/kord/common/entity/DiscordEmbed$Author {
 	public final fun getUrl ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordEmbed$Author;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordEmbed$Author$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2069,6 +2126,7 @@ public final class dev/kord/common/entity/DiscordEmbed$Field {
 	public final fun getValue ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordEmbed$Field;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordEmbed$Field$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2103,6 +2161,7 @@ public final class dev/kord/common/entity/DiscordEmbed$Footer {
 	public final fun getText ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordEmbed$Footer;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordEmbed$Footer$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2140,6 +2199,7 @@ public final class dev/kord/common/entity/DiscordEmbed$Image {
 	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordEmbed$Image;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordEmbed$Image$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2173,6 +2233,7 @@ public final class dev/kord/common/entity/DiscordEmbed$Provider {
 	public final fun getUrl ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordEmbed$Provider;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordEmbed$Provider$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2210,6 +2271,7 @@ public final class dev/kord/common/entity/DiscordEmbed$Thumbnail {
 	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordEmbed$Thumbnail;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordEmbed$Thumbnail$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2245,6 +2307,7 @@ public final class dev/kord/common/entity/DiscordEmbed$Video {
 	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordEmbed$Video;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordEmbed$Video$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2289,6 +2352,7 @@ public final class dev/kord/common/entity/DiscordEmoji {
 	public final fun getUser ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordEmoji;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2413,6 +2477,7 @@ public final class dev/kord/common/entity/DiscordGuild {
 	public final fun getWidgetEnabled ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordGuild;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordGuild$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2446,6 +2511,7 @@ public final class dev/kord/common/entity/DiscordGuildApplicationCommandPermissi
 	public final fun getType ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordGuildApplicationCommandPermission$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2512,6 +2578,7 @@ public final class dev/kord/common/entity/DiscordGuildApplicationCommandPermissi
 	public final fun getPermissions ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordGuildApplicationCommandPermissions;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordGuildApplicationCommandPermissions$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2543,6 +2610,7 @@ public final class dev/kord/common/entity/DiscordGuildBan {
 	public final fun getUser ()Ldev/kord/common/entity/DiscordUser;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordGuildBan;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordGuildBan$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2572,6 +2640,7 @@ public final class dev/kord/common/entity/DiscordGuildIntegrations {
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordGuildIntegrations;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordGuildIntegrations$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2616,6 +2685,7 @@ public final class dev/kord/common/entity/DiscordGuildMember {
 	public final fun getUser ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordGuildMember;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordGuildMember$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2663,6 +2733,7 @@ public final class dev/kord/common/entity/DiscordGuildPreview {
 	public final fun getSplash ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordGuildPreview;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordGuildPreview$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2694,6 +2765,7 @@ public final class dev/kord/common/entity/DiscordGuildRole {
 	public final fun getRole ()Ldev/kord/common/entity/DiscordRole;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordGuildRole;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordGuildRole$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2725,6 +2797,7 @@ public final class dev/kord/common/entity/DiscordGuildWidget {
 	public final fun getEnabled ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordGuildWidget;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordGuildWidget$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2783,6 +2856,7 @@ public final class dev/kord/common/entity/DiscordIntegration {
 	public final fun getUser ()Ldev/kord/common/entity/DiscordUser;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordIntegration;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordIntegration$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2814,6 +2888,7 @@ public final class dev/kord/common/entity/DiscordIntegrationAccount {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordIntegrationAccount;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordIntegrationAccount$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2845,6 +2920,7 @@ public final class dev/kord/common/entity/DiscordIntegrationsAccount {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordIntegrationsAccount;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordIntegrationsAccount$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2879,6 +2955,7 @@ public final class dev/kord/common/entity/DiscordInteraction {
 	public final fun getType ()Ldev/kord/common/entity/InteractionType;
 	public final fun getUser ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getVersion ()I
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordInteraction;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordInteraction$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2921,6 +2998,7 @@ public final class dev/kord/common/entity/DiscordInteractionGuildMember {
 	public final fun getUser ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordInteractionGuildMember;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordInteractionGuildMember$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2965,6 +3043,7 @@ public final class dev/kord/common/entity/DiscordInvite {
 	public final fun getTargetUserType ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordInvite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordInvite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3002,6 +3081,7 @@ public final class dev/kord/common/entity/DiscordInviteMetadata {
 	public final fun getUses ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordInviteMetadata;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordInviteMetadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3037,6 +3117,7 @@ public final class dev/kord/common/entity/DiscordMentionedChannel {
 	public final fun getType ()Ldev/kord/common/entity/ChannelType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordMentionedChannel;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordMentionedChannel$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3125,6 +3206,7 @@ public final class dev/kord/common/entity/DiscordMessage {
 	public final fun getWebhookId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordMessage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordMessage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3160,6 +3242,7 @@ public final class dev/kord/common/entity/DiscordMessageInteraction {
 	public final fun getUser ()Ldev/kord/common/entity/DiscordUser;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordMessageInteraction;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordMessageInteraction$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3205,6 +3288,7 @@ public final class dev/kord/common/entity/DiscordMessageReference {
 	public final fun getId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordMessageReference;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordMessageReference$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3249,6 +3333,7 @@ public final class dev/kord/common/entity/DiscordMessageSticker {
 	public final fun getTags ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordMessageSticker;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordMessageSticker$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3313,6 +3398,7 @@ public final class dev/kord/common/entity/DiscordOptionallyMemberUser {
 	public final fun getVerified ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordOptionallyMemberUser;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordOptionallyMemberUser$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3348,6 +3434,7 @@ public final class dev/kord/common/entity/DiscordPartialEmoji {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordPartialEmoji;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordPartialEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3378,6 +3465,7 @@ public final class dev/kord/common/entity/DiscordPartialGuild {
 	public final fun getOwner ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getPermissions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getWelcomeScreen ()Ldev/kord/common/entity/optional/Optional;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordPartialGuild;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordPartialGuild$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3413,6 +3501,7 @@ public final class dev/kord/common/entity/DiscordPartialIntegration {
 	public final fun getType ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordPartialIntegration;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordPartialIntegration$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3444,6 +3533,7 @@ public final class dev/kord/common/entity/DiscordPartialInvite {
 	public final fun getUses ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordPartialInvite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordPartialInvite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3526,6 +3616,7 @@ public final class dev/kord/common/entity/DiscordPartialMessage {
 	public final fun getWebhookId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordPartialMessage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordPartialMessage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3572,6 +3663,7 @@ public final class dev/kord/common/entity/DiscordPartialRole {
 	public final fun getTags ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordPartialRole;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordPartialRole$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3606,6 +3698,7 @@ public final class dev/kord/common/entity/DiscordPinsUpdateData {
 	public final fun getLastPinTimestamp ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordPinsUpdateData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordPinsUpdateData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3644,6 +3737,7 @@ public final class dev/kord/common/entity/DiscordPresenceUpdate {
 	public final fun getUser ()Ldev/kord/common/entity/DiscordPresenceUser;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordPresenceUpdate;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordPresenceUpdate$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3693,6 +3787,7 @@ public final class dev/kord/common/entity/DiscordRemovedGuildMember {
 	public final fun getUser ()Ldev/kord/common/entity/DiscordUser;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordRemovedGuildMember;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordRemovedGuildMember$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3739,6 +3834,7 @@ public final class dev/kord/common/entity/DiscordRole {
 	public final fun getTags ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordRole;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordRole$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3774,6 +3870,7 @@ public final class dev/kord/common/entity/DiscordRoleTags {
 	public final fun getPremiumSubscriber ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordRoleTags;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordRoleTags$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3802,6 +3899,7 @@ public final class dev/kord/common/entity/DiscordSelectOption {
 	public final fun getEmoji ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getLabel ()Ljava/lang/String;
 	public final fun getValue ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordSelectOption;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordSelectOption$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3860,6 +3958,7 @@ public final class dev/kord/common/entity/DiscordStageInstance {
 	public final fun getTopic ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordStageInstance;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordStageInstance$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3895,6 +3994,7 @@ public final class dev/kord/common/entity/DiscordTeam {
 	public final fun getOwnerUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordTeam;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordTeam$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3921,6 +4021,7 @@ public final class dev/kord/common/entity/DiscordTeamMember {
 	public final fun getPermissions ()Ljava/util/List;
 	public final fun getTeamId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getUser ()Ldev/kord/common/entity/DiscordUser;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordTeamMember;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordTeamMember$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3970,6 +4071,7 @@ public final class dev/kord/common/entity/DiscordTemplate {
 	public fun hashCode ()I
 	public final fun isDirty ()Ljava/lang/Boolean;
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordTemplate;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordTemplate$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4006,6 +4108,7 @@ public final class dev/kord/common/entity/DiscordThreadMember {
 	public final fun getUserId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordThreadMember;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordThreadMember$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4033,6 +4136,7 @@ public final class dev/kord/common/entity/DiscordThreadMetadata {
 	public final fun getArchived ()Z
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getLocked ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordThreadMetadata;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordThreadMetadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4071,6 +4175,7 @@ public final class dev/kord/common/entity/DiscordTyping {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordTyping;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordTyping$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4103,6 +4208,7 @@ public final class dev/kord/common/entity/DiscordUnavailableGuild {
 	public final fun getUnavailable ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordUnavailableGuild;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordUnavailableGuild$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4134,6 +4240,7 @@ public final class dev/kord/common/entity/DiscordUpdatedEmojis {
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordUpdatedEmojis;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordUpdatedEmojis$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4176,6 +4283,7 @@ public final class dev/kord/common/entity/DiscordUpdatedGuildMember {
 	public final fun getUser ()Ldev/kord/common/entity/DiscordUser;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordUpdatedGuildMember;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordUpdatedGuildMember$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4234,6 +4342,7 @@ public final class dev/kord/common/entity/DiscordUser {
 	public final fun getVerified ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordUser;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordUser$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4275,6 +4384,7 @@ public final class dev/kord/common/entity/DiscordVoiceRegion {
 	public final fun getOptimal ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordVoiceRegion;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordVoiceRegion$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4308,6 +4418,7 @@ public final class dev/kord/common/entity/DiscordVoiceServerUpdateData {
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordVoiceServerUpdateData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordVoiceServerUpdateData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4362,6 +4473,7 @@ public final class dev/kord/common/entity/DiscordVoiceState {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordVoiceState;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordVoiceState$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4408,6 +4520,7 @@ public final class dev/kord/common/entity/DiscordWebhook {
 	public final fun getUser ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordWebhook;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordWebhook$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4439,6 +4552,7 @@ public final class dev/kord/common/entity/DiscordWebhooksUpdateData {
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordWebhooksUpdateData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordWebhooksUpdateData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4470,6 +4584,7 @@ public final class dev/kord/common/entity/DiscordWelcomeScreen {
 	public final fun getWelcomeChannels ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordWelcomeScreen;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordWelcomeScreen$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4505,6 +4620,7 @@ public final class dev/kord/common/entity/DiscordWelcomeScreenChannel {
 	public final fun getEmojiName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordWelcomeScreenChannel;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordWelcomeScreenChannel$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4699,6 +4815,7 @@ public final class dev/kord/common/entity/IntegrationApplication {
 	public final fun getSummary ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/IntegrationApplication;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/IntegrationApplication$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4747,18 +4864,20 @@ public final class dev/kord/common/entity/IntegrationExpireBehavior$Unknown : de
 public final class dev/kord/common/entity/InteractionCallbackData {
 	public static final field Companion Ldev/kord/common/entity/InteractionCallbackData$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component6 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/InteractionCallbackData;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/InteractionCallbackData;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/InteractionCallbackData;
+	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component9 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/InteractionCallbackData;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/InteractionCallbackData;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/InteractionCallbackData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getComponentType ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getCustomId ()Ldev/kord/common/entity/optional/Optional;
@@ -4766,9 +4885,12 @@ public final class dev/kord/common/entity/InteractionCallbackData {
 	public final fun getName ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getOptions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getResolved ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getTargetUser ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun getType ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getValues ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/InteractionCallbackData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/InteractionCallbackData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4892,6 +5014,7 @@ public final class dev/kord/common/entity/MessageActivity {
 	public final fun getType ()Ldev/kord/common/entity/MessageActivityType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/MessageActivity;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/MessageActivity$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4960,6 +5083,7 @@ public final class dev/kord/common/entity/MessageApplication {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/MessageApplication;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/MessageApplication$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5043,6 +5167,7 @@ public final class dev/kord/common/entity/MessageReactionAddData {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/MessageReactionAddData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/MessageReactionAddData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5081,6 +5206,7 @@ public final class dev/kord/common/entity/MessageReactionRemoveData {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/MessageReactionRemoveData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/MessageReactionRemoveData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5295,6 +5421,7 @@ public final class dev/kord/common/entity/Overwrite {
 	public final fun getType ()Ldev/kord/common/entity/OverwriteType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/Overwrite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/Overwrite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5348,6 +5475,7 @@ public final class dev/kord/common/entity/PartialDiscordGuildApplicationCommandP
 	public final fun getPermissions ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/PartialDiscordGuildApplicationCommandPermissions;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/PartialDiscordGuildApplicationCommandPermissions$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5407,6 +5535,14 @@ public final class dev/kord/common/entity/Permission$Connect : dev/kord/common/e
 
 public final class dev/kord/common/entity/Permission$CreateInstantInvite : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$CreateInstantInvite;
+}
+
+public final class dev/kord/common/entity/Permission$CreatePrivateThreads : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$CreatePrivateThreads;
+}
+
+public final class dev/kord/common/entity/Permission$CreatePublicThreads : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$CreatePublicThreads;
 }
 
 public final class dev/kord/common/entity/Permission$DeafenMembers : dev/kord/common/entity/Permission {
@@ -5479,6 +5615,10 @@ public final class dev/kord/common/entity/Permission$RequestToSpeak : dev/kord/c
 
 public final class dev/kord/common/entity/Permission$SendMessages : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$SendMessages;
+}
+
+public final class dev/kord/common/entity/Permission$SendMessagesInThreads : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$SendMessagesInThreads;
 }
 
 public final class dev/kord/common/entity/Permission$SendTTSMessages : dev/kord/common/entity/Permission {
@@ -5652,6 +5792,7 @@ public final class dev/kord/common/entity/Reaction {
 	public final fun getMe ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/Reaction;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/Reaction$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5673,22 +5814,25 @@ public final class dev/kord/common/entity/Reaction$Companion {
 public final class dev/kord/common/entity/ResolvedObjects {
 	public static final field Companion Ldev/kord/common/entity/ResolvedObjects$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/ResolvedObjects;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/ResolvedObjects;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/ResolvedObjects;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/ResolvedObjects;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/ResolvedObjects;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/ResolvedObjects;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannels ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getMembers ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getMessages ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getRoles ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getUsers ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/ResolvedObjects;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/ResolvedObjects$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5745,6 +5889,7 @@ public final class dev/kord/common/entity/SubCommand : dev/kord/common/entity/Op
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandOptionType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/SubCommand;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/SubCommand$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
