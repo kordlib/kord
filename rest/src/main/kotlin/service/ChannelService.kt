@@ -262,13 +262,13 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             reason?.let { header("X-Audit-Log-Reason", reason) }
         }
 
-    @KordPreview
+
     suspend fun crossPost(channelId: Snowflake, messageId: Snowflake): DiscordMessage = call(Route.MessageCrosspost) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
     }
 
-    @KordPreview
+
     suspend fun followNewsChannel(channelId: Snowflake, request: ChannelFollowRequest): FollowedChannelResponse =
         call(Route.NewsChannelFollow) {
             keys[Route.ChannelId] = channelId

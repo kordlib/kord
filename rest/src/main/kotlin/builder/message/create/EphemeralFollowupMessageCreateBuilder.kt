@@ -1,6 +1,8 @@
 package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.MessageFlag
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.*
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
@@ -9,7 +11,7 @@ import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.FollowupMessageCreateRequest
 import dev.kord.rest.json.request.MultipartFollowupMessageCreateRequest
 
-@KordPreview
+
 class EphemeralFollowupMessageCreateBuilder
     : EphemeralMessageCreateBuilder,
     RequestBuilder<MultipartFollowupMessageCreateRequest> {
@@ -32,6 +34,7 @@ class EphemeralFollowupMessageCreateBuilder
                 embeds = Optional(embeds).mapList { it.toRequest() },
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
                 components = Optional(components).coerceToMissing().mapList { it.build() },
+                flags = Optional(MessageFlags(MessageFlag.Ephemeral))
             ),
         )
     }

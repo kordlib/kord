@@ -48,7 +48,7 @@ inline fun MessageModifyBuilder.allowedMentions(block: AllowedMentionsBuilder.()
     allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
 }
 
-@KordPreview
+
 @OptIn(ExperimentalContracts::class)
 inline fun MessageModifyBuilder.actionRow(builder: ActionRowBuilder.() -> Unit) {
     contract {

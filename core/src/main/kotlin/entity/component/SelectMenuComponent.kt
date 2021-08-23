@@ -12,7 +12,7 @@ import dev.kord.core.entity.interaction.SelectMenuInteraction
 /**
  * An interactive dropdown menu rendered on a [Message] that consists of multiple [options].
  */
-@KordPreview
+
 class SelectMenuComponent(override val data: ComponentData) : Component {
 
     /**
@@ -44,7 +44,7 @@ class SelectMenuComponent(override val data: ComponentData) : Component {
     override fun equals(other: Any?): Boolean {
         if (other !is SelectMenuComponent) return false
 
-        return other.data == data
+        return customId == other.customId
     }
 
     override fun hashCode(): Int {
@@ -87,7 +87,7 @@ class SelectOption(val data: SelectOptionData) {
     override fun equals(other: Any?): Boolean {
         if (other !is SelectOption) return false
 
-        return other.data == data
+        return data == other.data
     }
 
     override fun hashCode(): Int {

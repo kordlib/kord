@@ -27,7 +27,7 @@ internal class CacheEntitySupplierTest {
     @OptIn(PrivilegedIntent::class, KordUnsafe::class, KordExperimental::class)
     fun `cache does not throw when accessing unregistered entities`(): Unit = runBlocking {
         val kord = Kord(
-                ClientResources("", Shards(0), HttpClient(), EntitySupplyStrategy.cache, Intents.all),
+                ClientResources("",Snowflake(0), Shards(0), HttpClient(), EntitySupplyStrategy.cache, Intents.all),
                 KordCacheBuilder().build(),
                 MasterGateway(mapOf(0 to Gateway.none())),
                 RestClient(KtorRequestHandler("")),

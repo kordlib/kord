@@ -18,7 +18,9 @@ internal suspend fun DataCache.registerKordData() = register(
     EmojiData.description,
     WebhookData.description,
     PresenceData.description,
-    VoiceStateData.description
+    VoiceStateData.description,
+    ApplicationCommandData.description,
+    GuildApplicationCommandPermissionsData.description
 )
 
 /**

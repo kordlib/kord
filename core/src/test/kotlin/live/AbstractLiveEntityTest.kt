@@ -104,7 +104,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     protected open fun createKord(): Kord {
         gateway = GatewayMock()
         return Kord(
-            resources = ClientResources("token", Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
+            resources = ClientResources("token",Snowflake(0), Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
             cache = DataCache.none(),
             MasterGateway(mapOf(0 to gateway)),
             RestClient(KtorRequestHandler(token = "token")),

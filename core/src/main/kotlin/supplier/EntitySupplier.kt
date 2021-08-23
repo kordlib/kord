@@ -4,6 +4,10 @@ import dev.kord.common.entity.ChannelType.Unknown
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.entity.*
+import dev.kord.core.entity.application.ApplicationCommand
+import dev.kord.core.entity.application.ApplicationCommandPermissions
+import dev.kord.core.entity.application.GlobalApplicationCommand
+import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.MessageChannel
@@ -88,7 +92,8 @@ interface EntitySupplier {
      * @throws RequestException if something went wrong while retrieving the channel.
      * @throws EntityNotFoundException if the channel is null.
      */
-    suspend fun getChannel(id: Snowflake): Channel = getChannelOrNull(id)!!
+    suspend fun getChannel(id: Snowflake): Channel =
+        getChannelOrNull(id) ?: EntityNotFoundException.channelNotFound<Channel>(id)
 
     /**
      * Requests the [channels][TopGuildChannel] of the [Guild] with the given [guildId], channels with an [Unknown] type will be filtered out of the list.
@@ -407,6 +412,58 @@ interface EntitySupplier {
     fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
 
     fun getJoinedPrivateArchivedThreads(channelId: Snowflake, before: Snowflake, limit: Int): Flow<ThreadChannel>
+
+    fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake): Flow<GuildApplicationCommand>
+
+    suspend fun getGuildApplicationCommandOrNull(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): GuildApplicationCommand?
+
+    suspend fun getGuildApplicationCommand(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): GuildApplicationCommand =
+
+        getGuildApplicationCommandOrNull(applicationId, guildId, commandId)
+            ?: EntityNotFoundException.applicationCommandNotFound<GuildApplicationCommand>(
+                commandId
+            )
+
+    suspend fun getGlobalApplicationCommandOrNull(
+        applicationId: Snowflake,
+        commandId: Snowflake
+    ): GlobalApplicationCommand?
+
+    suspend fun getGlobalApplicationCommand(applicationId: Snowflake, commandId: Snowflake): GlobalApplicationCommand =
+        getGlobalApplicationCommandOrNull(applicationId, commandId)
+            ?: EntityNotFoundException.applicationCommandNotFound<GlobalApplicationCommand>(commandId)
+
+    fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand>
+
+
+    suspend fun getApplicationCommandPermissionsOrNull(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake,
+    ): ApplicationCommandPermissions?
+
+
+    suspend fun getApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake,
+    ): ApplicationCommandPermissions = getApplicationCommandPermissionsOrNull(applicationId, guildId, commandId)
+        ?: EntityNotFoundException.applicationCommandPermissionsNotFound(commandId)
+
+
+    fun getGuildApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+    ): Flow<ApplicationCommandPermissions>
+
 }
 
 
@@ -428,3 +485,84 @@ suspend inline fun <reified T : Channel> EntitySupplier.getChannelOfOrNull(id: S
  */
 suspend inline fun <reified T : Channel> EntitySupplier.getChannelOf(id: Snowflake): T =
     (getChannelOrNull(id) ?: EntityNotFoundException.channelNotFound<T>(id)) as T
+
+
+/**
+ * Requests the [GlobalApplicationCommand] with the given [id] as type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the global application.
+ * @throws EntityNotFoundException if the global application is null.
+ * @throws ClassCastException if the returned GlobalApplication is not of type [T].
+ */
+suspend inline fun <reified T : GlobalApplicationCommand> EntitySupplier.getGlobalApplicationOf(
+    applicationId: Snowflake,
+    id: Snowflake
+): T = getGlobalApplicationOfOrNull(applicationId, id) ?: EntityNotFoundException.applicationCommandNotFound<T>(id)
+
+
+/**
+ * Requests the [GlobalApplicationCommand] with the given [id] as type [T], returns null if the
+ * command application isn't present or if the channel is not of type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the application command.
+ */
+suspend inline fun <reified T : GlobalApplicationCommand> EntitySupplier.getGlobalApplicationOfOrNull(
+    applicationId: Snowflake,
+    id: Snowflake
+): T? = getGlobalApplicationCommandOrNull(applicationId, id) as? T
+
+
+/**
+ * Requests the [GuildApplicationCommand] with the given [id] as type [T], returns null if the
+ * command application isn't present or if the channel is not of type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the application command.
+ */
+suspend inline fun <reified T : GuildApplicationCommand> EntitySupplier.getGuildApplicationCommandOfOrNull(
+    applicationId: Snowflake,
+    guildId: Snowflake,
+    id: Snowflake
+): T? = getGuildApplicationCommandOrNull(applicationId, guildId, id) as? T
+
+
+/**
+ * Requests the [GuildApplicationCommand] with the given [id] as type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the guild application.
+ * @throws EntityNotFoundException if the guild application is null.
+ * @throws ClassCastException if the returned GuildApplication is not of type [T].
+ */
+suspend inline fun <reified T : GuildApplicationCommand> EntitySupplier.getGuildApplicationCommandOf(
+    applicationId: Snowflake,
+    guildId: Snowflake,
+    id: Snowflake
+): T =
+    (getGuildApplicationCommandOrNull(applicationId, guildId, id)
+        ?: EntityNotFoundException.applicationCommandNotFound<T>(id)) as T
+
+
+/**
+ * Requests the [GlobalApplicationCommand] with the given [id] as type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the global application.
+ * @throws EntityNotFoundException if the global application is null.
+ * @throws ClassCastException if the returned GlobalApplication is not of type [T].
+ */
+suspend inline fun <reified T : GlobalApplicationCommand> EntitySupplier.getGlobalApplicationCommandOf(
+    applicationId: Snowflake,
+    id: Snowflake
+): T =
+    (getGlobalApplicationCommandOrNull(applicationId, id)
+        ?: EntityNotFoundException.applicationCommandNotFound<T>(id)) as T
+
+
+/**
+ * Requests the [GuildApplicationCommand] with the given [id] as type [T], returns null if the
+ * command application isn't present or if the channel is not of type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the application command.
+ */
+suspend inline fun <reified T : GlobalApplicationCommand> EntitySupplier.getGlobalApplicationCommandOfOrNull(
+    applicationId: Snowflake,
+    id: Snowflake
+): T? = getGlobalApplicationCommandOrNull(applicationId, id) as? T

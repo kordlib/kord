@@ -14,7 +14,7 @@ import dev.kord.rest.json.request.InteractionResponseModifyRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
 import java.io.InputStream
 
-@KordPreview
+
 class PublicInteractionResponseModifyBuilder
     : PersistentMessageModifyBuilder,
     RequestBuilder<MultipartInteractionResponseModifyRequest> {
@@ -29,7 +29,7 @@ class PublicInteractionResponseModifyBuilder
 
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()
 
-    @KordPreview
+
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
 
     override fun toRequest(): MultipartInteractionResponseModifyRequest {

@@ -20,7 +20,7 @@ import kotlin.contracts.contract
  * The behavior of a ephemeral [Discord Interaction Response](https://discord.com/developers/docs/interactions/slash-commands#interaction-response)
  * This response is visible to *only* to the user who made the interaction.
  */
-@KordPreview
+
 interface EphemeralInteractionResponseBehavior : InteractionResponseBehavior
 
 /**
@@ -30,7 +30,7 @@ interface EphemeralInteractionResponseBehavior : InteractionResponseBehavior
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@KordPreview
+
 @OptIn(ExperimentalContracts::class)
 suspend inline fun EphemeralInteractionResponseBehavior.edit(builder: EphemeralInteractionResponseModifyBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -44,7 +44,7 @@ suspend inline fun EphemeralInteractionResponseBehavior.edit(builder: EphemeralI
  * @return created [EphemeralFollowupMessage]
  */
 @OptIn(ExperimentalContracts::class)
-@KordPreview
+
 suspend inline fun EphemeralInteractionResponseBehavior.followUpEphemeral(
     builder: EphemeralFollowupMessageCreateBuilder.() -> Unit
 ): EphemeralFollowupMessage {
@@ -65,7 +65,7 @@ suspend inline fun EphemeralInteractionResponseBehavior.followUpEphemeral(
  * @return created [PublicFollowupMessage]
  */
 @OptIn(ExperimentalContracts::class)
-@KordPreview
+
 @KordUnsafe
 suspend inline fun EphemeralInteractionResponseBehavior.followUpPublic(
     builder: PublicFollowupMessageCreateBuilder.() -> Unit
@@ -77,7 +77,7 @@ suspend inline fun EphemeralInteractionResponseBehavior.followUpPublic(
     return PublicFollowupMessage(message, applicationId, token, kord)
 }
 
-@KordPreview
+
 fun EphemeralInteractionResponseBehavior(
     applicationId: Snowflake,
     token: String,

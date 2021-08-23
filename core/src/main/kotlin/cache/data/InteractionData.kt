@@ -2,18 +2,7 @@ package dev.kord.core.cache.data
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.Choice
-import dev.kord.common.entity.CommandArgument
-import dev.kord.common.entity.CommandGroup
-import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordInteraction
-import dev.kord.common.entity.InteractionCallbackData
-import dev.kord.common.entity.InteractionType
-import dev.kord.common.entity.Option
-import dev.kord.common.entity.Permissions
-import dev.kord.common.entity.ResolvedObjects
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.SubCommand
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.flatMap
@@ -27,7 +16,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@KordPreview
 data class InteractionData(
     val id: Snowflake,
     val applicationId: Snowflake,
@@ -67,13 +55,13 @@ data class InteractionData(
     }
 }
 
-@KordPreview
 @Serializable
 data class ResolvedObjectsData(
     val members: Optional<Map<Snowflake, MemberData>> = Optional.Missing(),
     val users: Optional<Map<Snowflake, UserData>> = Optional.Missing(),
     val roles: Optional<Map<Snowflake, RoleData>> = Optional.Missing(),
-    val channels: Optional<Map<Snowflake, ChannelData>> = Optional.Missing()
+    val channels: Optional<Map<Snowflake, ChannelData>> = Optional.Missing(),
+    val messages: Optional<Map<Snowflake, MessageData>> = Optional.Missing()
 ) {
     companion object {
         fun from(data: ResolvedObjects, guildId: Snowflake?): ResolvedObjectsData {
@@ -81,7 +69,8 @@ data class ResolvedObjectsData(
                 members = data.members.mapValues { MemberData.from(it.key, guildId!!, it.value) },
                 channels = data.channels.mapValues { ChannelData.from(it.value) },
                 roles = data.roles.mapValues { RoleData.from(guildId!!, it.value) },
-                users = data.users.mapValues { it.value.toData() }
+                users = data.users.mapValues { it.value.toData() },
+                messages = data.messages.mapValues { it.value.toData() }
             )
         }
     }
@@ -90,6 +79,8 @@ data class ResolvedObjectsData(
 @Serializable
 data class ApplicationInteractionData(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
+    val type: Optional<ApplicationCommandType> = Optional.Missing(),
+    val targetUser: OptionalSnowflake = OptionalSnowflake.Missing,
     val name: Optional<String> = Optional.Missing(),
     val options: Optional<List<OptionData>> = Optional.Missing(),
     val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing(),
@@ -106,6 +97,8 @@ data class ApplicationInteractionData(
             return with(data) {
                 ApplicationInteractionData(
                     id,
+                    type,
+                    targetUser,
                     name,
                     options.map { it.map { OptionData.from(it) } },
                     resolved.map { ResolvedObjectsData.from(it, guildId) },
@@ -118,7 +111,7 @@ data class ApplicationInteractionData(
     }
 }
 
-@KordPreview
+
 @Serializable
 data class OptionData(
     val name: String,

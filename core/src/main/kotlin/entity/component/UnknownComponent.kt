@@ -6,7 +6,7 @@ import dev.kord.core.cache.data.ComponentData
 /**
  * A component type unknown to Kord.
  */
-@KordPreview
+
 class UnknownComponent(override val data: ComponentData) : Component {
 
     override fun toString(): String = "UnknownComponent(data=$data)"

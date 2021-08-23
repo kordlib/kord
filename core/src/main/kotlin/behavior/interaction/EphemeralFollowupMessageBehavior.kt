@@ -19,7 +19,7 @@ import kotlin.contracts.contract
  * The behavior of a [Discord Followup Message](https://discord.com/developers/docs/interactions/slash-commands#followup-messages)
  * This followup message is visible to *only* to the user who made the interaction.
  */
-@KordPreview
+
 interface EphemeralFollowupMessageBehavior : FollowupMessageBehavior {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): EphemeralFollowupMessageBehavior {
@@ -34,7 +34,7 @@ interface EphemeralFollowupMessageBehavior : FollowupMessageBehavior {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@KordPreview
+
 @OptIn(ExperimentalContracts::class)
 suspend inline fun EphemeralFollowupMessageBehavior.edit(builder: EphemeralFollowupMessageModifyBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -43,7 +43,7 @@ suspend inline fun EphemeralFollowupMessageBehavior.edit(builder: EphemeralFollo
     return EphemeralFollowupMessage(Message(response.toData(), kord), applicationId, token, kord)
 }
 
-@KordPreview
+
 fun EphemeralFollowupMessageBehavior(
     id: Snowflake,
     applicationId: Snowflake,

@@ -1,6 +1,7 @@
 package dev.kord.core.exception
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.channel.Channel
 
 class EntityNotFoundException : Exception {
@@ -65,6 +66,13 @@ class EntityNotFoundException : Exception {
 
         fun stageInstanceNotFound(channelId: Snowflake): Nothing =
             throw EntityNotFoundException("Stage instance for channel $channelId was not found")
+
+        fun applicationCommandPermissionsNotFound(commandId: Snowflake): Nothing =
+            entityNotFound("ApplicationCommand", commandId)
+
+        inline fun <reified T : ApplicationCommand> applicationCommandNotFound(commandId: Snowflake): Nothing =
+            entityNotFound(T::class.simpleName!!, commandId)
+
 
     }
 

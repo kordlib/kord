@@ -24,7 +24,7 @@ internal class MessageModifyStateHolder {
 
     var allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
 
-    @KordPreview
+
     var components: Optional<MutableList<MessageComponentBuilder>> = Optional.Missing()
 
 }

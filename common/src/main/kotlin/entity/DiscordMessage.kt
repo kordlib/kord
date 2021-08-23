@@ -65,6 +65,7 @@ import kotlin.contracts.contract
  * @param applicationId if the message is a response to an [Interaction][DiscordInteraction], this is the id of the interaction's application
  * @param components a list of [components][DiscordComponent] which have been added to this message
  */
+
 @Serializable
 data class DiscordMessage(
     val id: Snowflake,
@@ -215,6 +216,7 @@ sealed class MessageStickerType(val value: Int) {
  * @param referencedMessage the message associated with [messageReference].
  */
 @Serializable
+
 data class DiscordPartialMessage(
     val id: Snowflake,
     @SerialName("channel_id")
@@ -842,7 +844,7 @@ data class AllowedMentions(
     val repliedUser: OptionalBoolean = OptionalBoolean.Missing
 )
 
-@KordPreview
+
 @Serializable
 data class DiscordMessageInteraction(
     val id: Snowflake,

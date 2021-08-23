@@ -8,7 +8,7 @@ import dev.kord.core.cache.data.ComponentData
 /**
  * A non-interactive container component for other types of component.
  */
-@KordPreview
+
 class ActionRowComponent(override val data: ComponentData) : Component {
 
     override val type: ComponentType
