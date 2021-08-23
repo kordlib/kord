@@ -1,28 +1,31 @@
 # 0.8.0-M5
+
 ## Breaking
 * slash commands and interactions have been redesigned to support the new command and interaction types.
+
 ## Changes
 
-* Move SlashCommands functions to Kord.
-* ApplicationCommands are now cached.
-* Interaction events are split up into distinct events.
-* Proper hierarchy for applications commands, interactions and their events.
-* Rename `UsePrivate/PublicThreads` to `CreatePrivate/PublicThreads`.
+* Move SlashCommands functions to Kord. (#366)
+* ApplicationCommands are now cached. (#366)
+* Interaction events are split up into distinct events. (#366)
+* Proper hierarchy for applications commands, interactions and their events. (#366)
+* Rename `UsePrivate/PublicThreads` to `CreatePrivate/PublicThreads`. (#366)
+* Include json error in exception message. (#369)
 
 ## Additions
 
-* Experimental Voice support.
-* Context support.
-* Add `ResolvedObjects#messages` to resolve messages.
-* Add `ChannelBehavior#of/OrNull` to safely get a typed channel.
-* Add type safe arguments for chat input commands.
-* Add SendMessagesInThread Permission.
+* Experimental Voice support. #(363)
+* Context support. (#366)
+* Add `ResolvedObjects#messages` to resolve messages. (#366)
+* Add `ChannelBehavior#of/OrNull` to safely get a typed channel. (#366)
+* Add type safe arguments for chat input commands. (#366)
+* Add SendMessagesInThread Permission. (#366)
 
 ## Fixes
 
-* Ephemeral followups not being passed the ephemeral flags
-* Missing optional default values in some data types.
-* incorrect serialization of `CommandArguement`
+* Ephemeral followups not being passed the ephemeral flags. (#368)
+* Missing optional default values in some data types. (#362)
+* incorrect serialization of `CommandArguement`. (#362)
 
 # 0.8.0-M4
 
