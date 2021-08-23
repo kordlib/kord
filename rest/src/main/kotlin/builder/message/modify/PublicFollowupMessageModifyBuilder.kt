@@ -14,7 +14,7 @@ import dev.kord.rest.json.request.FollowupMessageModifyRequest
 import dev.kord.rest.json.request.MultipartFollowupMessageModifyRequest
 import java.io.InputStream
 
-@KordPreview
+
 class PublicFollowupMessageModifyBuilder
     : PersistentMessageModifyBuilder,
     RequestBuilder<MultipartFollowupMessageModifyRequest> {
@@ -29,7 +29,7 @@ class PublicFollowupMessageModifyBuilder
 
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()
 
-    @KordPreview
+
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
 
     override fun toRequest(): MultipartFollowupMessageModifyRequest {

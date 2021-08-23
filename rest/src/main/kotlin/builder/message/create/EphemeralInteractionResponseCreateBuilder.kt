@@ -11,7 +11,7 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.*
 
-@KordPreview
+
 class EphemeralInteractionResponseCreateBuilder :
     EphemeralMessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {

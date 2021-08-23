@@ -19,7 +19,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  * An instance of [MessageInteraction](https://discord.com/developers/docs/interactions/slash-commands#messageinteraction)
  * This is sent on the [Message] object when the message is a response to an [Interaction].
  */
-@KordPreview
+
 class MessageInteraction(
     val data: MessageInteractionData,
     override val kord: Kord,

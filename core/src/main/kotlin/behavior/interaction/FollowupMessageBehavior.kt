@@ -13,7 +13,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
 /**
  * The behavior of a [Discord Followup Message](https://discord.com/developers/docs/interactions/slash-commands#followup-messages)
  */
-@KordPreview
+
 interface FollowupMessageBehavior : KordEntity, Strategizable {
 
     val applicationId: Snowflake

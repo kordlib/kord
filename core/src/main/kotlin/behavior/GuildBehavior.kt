@@ -14,17 +14,14 @@ import dev.kord.core.cache.data.*
 import dev.kord.core.cache.idEq
 import dev.kord.core.catchDiscordError
 import dev.kord.core.entity.*
+import dev.kord.core.entity.application.*
 import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.channel.thread.ThreadChannel
-import dev.kord.core.entity.interaction.GuildApplicationCommand
 import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.sorted
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.*
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
-import dev.kord.core.supplier.getChannelOf
-import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.PrivilegedIntent
 import dev.kord.gateway.RequestGuildMembers
@@ -38,9 +35,7 @@ import dev.kord.rest.builder.guild.EmojiCreateBuilder
 import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
 import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandCreateBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandsCreateBuilder
+import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
@@ -195,9 +190,9 @@ interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Application commands for this guild only.
      */
-    @KordPreview
+
     val commands: Flow<GuildApplicationCommand>
-        get() = kord.slashCommands.getGuildApplicationCommands(id)
+        get() = supplier.getGuildApplicationCommands(kord.resources.applicationId, id)
 
     /**
      * Returns the gateway this guild is part of as per the
@@ -241,9 +236,12 @@ interface GuildBehavior : KordEntity, Strategizable {
             }
     }
 
-    @KordPreview
+
     suspend fun getApplicationCommand(commandId: Snowflake) =
-        kord.slashCommands.getGuildApplicationCommand(id, commandId)
+        supplier.getGuildApplicationCommand(kord.resources.applicationId, id, commandId)
+
+    suspend fun getApplicationCommandOrNull(commandId: Snowflake) =
+        supplier.getGuildApplicationCommandOrNull(kord.resources.applicationId, id, commandId)
 
     /**
      * Requests to get the this behavior as a [Guild].
@@ -531,6 +529,16 @@ interface GuildBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 }
 
+suspend inline fun <reified T: GuildApplicationCommand> GuildBehavior.getApplicationCommandOfOrNull(commandId: Snowflake): T? {
+    return supplier.getGuildApplicationCommandOfOrNull(kord.resources.applicationId,id, commandId)
+}
+
+
+suspend inline fun <reified T: GuildApplicationCommand> GuildBehavior.getApplicationCommandOf(commandId: Snowflake): T? {
+    return supplier.getGuildApplicationCommandOf(kord.resources.applicationId,id, commandId)
+}
+
+
 fun GuildBehavior(
     id: Snowflake,
     kord: Kord,
@@ -555,24 +563,48 @@ fun GuildBehavior(
 
 
 @OptIn(ExperimentalContracts::class)
-@KordPreview
-suspend inline fun GuildBehavior.createApplicationCommand(
+
+suspend inline fun GuildBehavior.createChatInputCommand(
     name: String,
     description: String,
-    builder: ApplicationCommandCreateBuilder.() -> Unit = {},
-): GuildApplicationCommand {
+    builder: ChatInputCreateBuilder.() -> Unit = {},
+): GuildChatInputCommand {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return kord.slashCommands.createGuildApplicationCommand(id, name, description, builder)
+    return kord.createGuildChatInputCommand(id, name, description, builder)
 }
 
 
+
+
 @OptIn(ExperimentalContracts::class)
-@KordPreview
+
+suspend inline fun GuildBehavior.createMessageCommand(
+    name: String,
+    builder: MessageCommandCreateBuilder.() -> Unit = {},
+): GuildMessageCommand {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return kord.createGuildMessageCommand(id, name, builder)
+}
+
+@OptIn(ExperimentalContracts::class)
+
+suspend inline fun GuildBehavior.createUserCommand(
+    name: String,
+    builder: UserCommandCreateBuilder.() -> Unit = {},
+): GuildUserCommand {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return kord.createGuildUserCommand(id, name, builder)
+}
+
+
+
+@OptIn(ExperimentalContracts::class)
+
 suspend inline fun GuildBehavior.createApplicationCommands(
-    builder: ApplicationCommandsCreateBuilder.() -> Unit
+    builder: MultiApplicationCommandBuilder.() -> Unit
 ): Flow<GuildApplicationCommand> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return kord.slashCommands.createGuildApplicationCommands(id, builder)
+    return kord.createGuildApplicationCommands(id, builder)
 }
 
 /**
@@ -945,13 +977,13 @@ inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -
 }
 
 @OptIn(ExperimentalContracts::class)
-@KordPreview
+
 suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
 
-    kord.slashCommands.bulkEditApplicationCommandPermissions(
+    kord.bulkEditApplicationCommandPermissions(
         kord.selfId,
         id,
         builder

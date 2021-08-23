@@ -60,10 +60,9 @@ class KtorRequestHandler(
                 logger.debug { response.logString(body) }
                 if (response.contentType() == ContentType.Application.Json)
                     throw KtorRequestException(
-                        response,
-                        DiscordErrorResponse.serializer().optional.deserialize(parser, body)
+                        response, request, DiscordErrorResponse.serializer().optional.deserialize(parser, body)
                     )
-                else throw KtorRequestException(response, null)
+                else throw KtorRequestException(response, request, null)
             }
             else -> {
                 logger.debug { response.logString(body) }

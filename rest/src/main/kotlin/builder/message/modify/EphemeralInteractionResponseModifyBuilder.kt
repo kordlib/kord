@@ -15,7 +15,7 @@ import dev.kord.rest.json.request.InteractionResponseModifyRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
 import kotlinx.coroutines.Dispatchers
 
-@KordPreview
+
 class EphemeralInteractionResponseModifyBuilder
     : EphemeralMessageModifyBuilder,
     RequestBuilder<MultipartInteractionResponseModifyRequest> {
@@ -28,7 +28,7 @@ class EphemeralInteractionResponseModifyBuilder
 
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()
 
-    @KordPreview
+
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
 
     override fun toRequest(): MultipartInteractionResponseModifyRequest {

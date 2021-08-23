@@ -653,18 +653,18 @@ data class VoiceServerUpdate(val voiceServerUpdateData: DiscordVoiceServerUpdate
 data class WebhooksUpdate(val webhooksUpdateData: DiscordWebhooksUpdateData, override val sequence: Int?) :
     DispatchEvent()
 
-@KordPreview
+
 data class InteractionCreate(val interaction: DiscordInteraction, override val sequence: Int?) : DispatchEvent()
 
-@KordPreview
+
 data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
 
-@KordPreview
+
 data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
 
-@KordPreview
+
 data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
 

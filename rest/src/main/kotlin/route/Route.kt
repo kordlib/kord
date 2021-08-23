@@ -378,7 +378,7 @@ sealed class Route<T>(
         DiscordWelcomeScreen.serializer()
     )
 
-    @KordPreview
+
     object MessageCrosspost
         : Route<DiscordMessage>(
         HttpMethod.Post,
@@ -386,7 +386,7 @@ sealed class Route<T>(
         DiscordMessage.serializer()
     )
 
-    @KordPreview
+
     object NewsChannelFollow
         : Route<FollowedChannelResponse>(
         HttpMethod.Post,
@@ -507,7 +507,7 @@ sealed class Route<T>(
         DiscordTemplate.serializer()
     )
 
-    @KordPreview
+
     object GlobalApplicationCommandsGet
         : Route<List<DiscordApplicationCommand>>(
         HttpMethod.Get,
@@ -515,7 +515,7 @@ sealed class Route<T>(
         ListSerializer(DiscordApplicationCommand.serializer())
     )
 
-    @KordPreview
+
     object GlobalApplicationCommandCreate : Route<DiscordApplicationCommand>(
         HttpMethod.Post,
         "/applications/${ApplicationId}/commands",
@@ -523,14 +523,14 @@ sealed class Route<T>(
     )
 
 
-    @KordPreview
+
     object GlobalApplicationCommandsCreate : Route<List<DiscordApplicationCommand>>(
         HttpMethod.Put,
         "/applications/${ApplicationId}/commands",
         ListSerializer(DiscordApplicationCommand.serializer())
     )
 
-    @KordPreview
+
     object GlobalApplicationCommandModify : Route<DiscordApplicationCommand>(
         HttpMethod.Patch,
         "/applications/${ApplicationId}/commands/${CommandId}",
@@ -538,7 +538,7 @@ sealed class Route<T>(
     )
 
 
-    @KordPreview
+
     object GlobalApplicationCommandGet
         : Route<DiscordApplicationCommand>(
         HttpMethod.Get,
@@ -551,7 +551,7 @@ sealed class Route<T>(
         HttpMethod.Delete, "/applications/${ApplicationId}/commands/${CommandId}", NoStrategy
     )
 
-    @KordPreview
+
     object GuildApplicationCommandsGet
         : Route<List<DiscordApplicationCommand>>(
         HttpMethod.Get,
@@ -559,7 +559,7 @@ sealed class Route<T>(
         ListSerializer(DiscordApplicationCommand.serializer())
     )
 
-    @KordPreview
+
     object GuildApplicationCommandCreate : Route<DiscordApplicationCommand>(
         HttpMethod.Post,
         "/applications/${ApplicationId}/guilds/${GuildId}/commands",
@@ -567,14 +567,14 @@ sealed class Route<T>(
     )
 
 
-    @KordPreview
+
     object GuildApplicationCommandsCreate : Route<List<DiscordApplicationCommand>>(
         HttpMethod.Put,
         "/applications/${ApplicationId}/guilds/${GuildId}/commands",
         ListSerializer(DiscordApplicationCommand.serializer())
     )
 
-    @KordPreview
+
     object GuildApplicationCommandModify
         : Route<DiscordApplicationCommand>(
         HttpMethod.Patch,
@@ -582,7 +582,7 @@ sealed class Route<T>(
         DiscordApplicationCommand.serializer()
     )
 
-    @KordPreview
+
     object GuildApplicationCommandGet
         : Route<DiscordApplicationCommand>(
         HttpMethod.Get,
@@ -614,15 +614,15 @@ sealed class Route<T>(
         :
         Route<Unit>(HttpMethod.Delete, "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original", NoStrategy)
 
-    @KordPreview
+
     object GuildApplicationCommandPermissionsGet
-        : Route<DiscordGuildApplicationCommandPermissions>(
+        : Route<List<DiscordGuildApplicationCommandPermissions>>(
         HttpMethod.Get,
         "/applications/${ApplicationId}/guilds/$GuildId/commands/permissions",
-        DiscordGuildApplicationCommandPermissions.serializer()
+        ListSerializer(DiscordGuildApplicationCommandPermissions.serializer())
     )
 
-    @KordPreview
+
     object ApplicationCommandPermissionsGet
         : Route<DiscordGuildApplicationCommandPermissions>(
         HttpMethod.Get,
@@ -630,7 +630,7 @@ sealed class Route<T>(
         DiscordGuildApplicationCommandPermissions.serializer()
     )
 
-    @KordPreview
+
     object ApplicationCommandPermissionsPut
         : Route<DiscordGuildApplicationCommandPermissions>(
         HttpMethod.Put,
@@ -638,7 +638,7 @@ sealed class Route<T>(
         DiscordGuildApplicationCommandPermissions.serializer()
     )
 
-    @KordPreview
+
     object ApplicationCommandPermissionsBatchPut
         : Route<List<DiscordGuildApplicationCommandPermissions>>(
         HttpMethod.Put,

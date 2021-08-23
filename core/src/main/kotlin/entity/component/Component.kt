@@ -8,7 +8,7 @@ import dev.kord.core.entity.Message
 /**
  * An interactive element inside a [Message].
  */
-@KordPreview
+
 sealed interface Component {
 
     /**
@@ -30,7 +30,7 @@ sealed interface Component {
  * @see SelectMenuComponent
  * @see UnknownComponent
  */
-@KordPreview
+
 fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.ActionRow -> ActionRowComponent(data)
     ComponentType.Button -> ButtonComponent(data)

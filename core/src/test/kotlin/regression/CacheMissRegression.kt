@@ -94,7 +94,10 @@ class CrashingHandler(val client: HttpClient) : RequestHandler {
                 @Suppress("UNCHECKED_CAST")
                 when (request) {
                     is MultipartRequest<*, *> -> {
-                        headers.append("payload_json", parser.encodeToString(it.strategy as SerializationStrategy<Any>, it.body))
+                        headers.append(
+                            "payload_json",
+                            parser.encodeToString(it.strategy as SerializationStrategy<Any>, it.body)
+                        )
                         this.body = MultiPartFormDataContent(request.data)
                     }
 
@@ -119,15 +122,22 @@ class CacheMissingRegressions {
     @BeforeTest
     fun setup() = runBlockingTest { //TODO, move this over to entity supplier tests instead, eventually.
         val token = System.getenv("KORD_TEST_TOKEN")
-        val resources = ClientResources(token, Shards(1), null.configure(token), EntitySupplyStrategy.cacheWithRestFallback, Intents.nonPrivileged)
+        val resources = ClientResources(
+            token,
+            getBotIdFromToken(token),
+            Shards(1),
+            null.configure(token),
+            EntitySupplyStrategy.cacheWithRestFallback,
+            Intents.nonPrivileged
+        )
         kord = Kord(
-                resources,
-                MapDataCache().also { it.registerKordData() },
-                MasterGateway(mapOf(0 to FakeGateway)),
-                RestClient(CrashingHandler(resources.httpClient)),
-                getBotIdFromToken(token),
-                MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
-                Dispatchers.Default
+            resources,
+            MapDataCache().also { it.registerKordData() },
+            MasterGateway(mapOf(0 to FakeGateway)),
+            RestClient(CrashingHandler(resources.httpClient)),
+            getBotIdFromToken(token),
+            MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
+            Dispatchers.Default
         )
     }
 

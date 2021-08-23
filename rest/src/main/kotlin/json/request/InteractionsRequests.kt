@@ -9,17 +9,18 @@ import kotlinx.serialization.Serializable
 import java.io.InputStream
 
 @Serializable
-@KordPreview
+
 data class ApplicationCommandCreateRequest(
     val name: String,
-    val description: String,
+    val type: ApplicationCommandType,
+    val description: Optional<String> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 )
 
 @Serializable
-@KordPreview
+
 data class ApplicationCommandModifyRequest(
     val name: Optional<String> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
@@ -29,7 +30,7 @@ data class ApplicationCommandModifyRequest(
 )
 
 @Serializable
-@KordPreview
+
 data class InteractionResponseModifyRequest(
     val content: Optional<String?> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
@@ -39,27 +40,27 @@ data class InteractionResponseModifyRequest(
     val components: Optional<List<DiscordComponent>?> = Optional.Missing()
 )
 
-@KordPreview
+
 data class MultipartInteractionResponseModifyRequest(
     val request: InteractionResponseModifyRequest,
     val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing(),
 )
 
 @Serializable
-@KordPreview
+
 data class InteractionResponseCreateRequest(
     val type: InteractionResponseType,
     val data: Optional<InteractionApplicationCommandCallbackData> = Optional.Missing()
 )
 
-@KordPreview
+
 data class MultipartInteractionResponseCreateRequest(
     val request: InteractionResponseCreateRequest,
     val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing()
 )
 
 @Serializable
-@KordPreview
+
 class InteractionApplicationCommandCallbackData(
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     val content: Optional<String?> = Optional.Missing(),
@@ -70,14 +71,14 @@ class InteractionApplicationCommandCallbackData(
     val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
-@KordPreview
+
 data class MultipartFollowupMessageCreateRequest(
     val request: FollowupMessageCreateRequest,
     val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing(),
 )
 
 @Serializable
-@KordPreview
+
 class FollowupMessageCreateRequest(
     val content: Optional<String> = Optional.Missing(),
     val username: Optional<String> = Optional.Missing(),
@@ -87,11 +88,12 @@ class FollowupMessageCreateRequest(
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing(),
 )
 
 @Serializable
-@KordPreview
+
 data class FollowupMessageModifyRequest(
     val content: Optional<String?> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
@@ -100,14 +102,14 @@ data class FollowupMessageModifyRequest(
     val components: Optional<List<DiscordComponent>?> = Optional.Missing()
 )
 
-@KordPreview
+
 data class MultipartFollowupMessageModifyRequest(
     val request: FollowupMessageModifyRequest,
     val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing(),
 )
 
 @Serializable
-@KordPreview
+
 data class ApplicationCommandPermissionsEditRequest(
         val permissions: List<DiscordGuildApplicationCommandPermission>
 )

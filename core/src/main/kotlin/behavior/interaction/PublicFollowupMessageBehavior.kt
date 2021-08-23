@@ -18,7 +18,7 @@ import kotlin.contracts.contract
  * The behavior of a [Discord Followup Message](https://discord.com/developers/docs/interactions/slash-commands#followup-messages)
  * This followup message is visible to all users in the channel.
  */
-@KordPreview
+
 interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
 
     /**
@@ -43,7 +43,7 @@ interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@KordPreview
+
 @OptIn(ExperimentalContracts::class)
 suspend inline fun PublicFollowupMessageBehavior.edit(builder: PublicFollowupMessageModifyBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -52,7 +52,7 @@ suspend inline fun PublicFollowupMessageBehavior.edit(builder: PublicFollowupMes
     return PublicFollowupMessage(Message(response.toData(), kord), applicationId, token, kord)
 }
 
-@KordPreview
+
 fun PublicFollowupMessageBehavior(
     id: Snowflake,
     applicationId: Snowflake,

@@ -12,7 +12,7 @@ import dev.kord.rest.route.Route
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.serializer
 
-@KordPreview
+
 class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
     suspend fun getGlobalApplicationCommands(applicationId: Snowflake): List<DiscordApplicationCommand> =
         call(Route.GlobalApplicationCommandsGet) {
@@ -210,7 +210,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend fun getGuildApplicationCommandPermissions(
             applicationId: Snowflake,
             guildId: Snowflake,
-    ): DiscordGuildApplicationCommandPermissions = call(Route.GuildApplicationCommandPermissionsGet) {
+    ): List<DiscordGuildApplicationCommandPermissions> = call(Route.GuildApplicationCommandPermissionsGet) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.GuildId] = guildId
     }

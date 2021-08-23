@@ -32,7 +32,7 @@ class UserMessageCreateBuilder
 
     override var allowedMentions: AllowedMentionsBuilder? = null
 
-    @KordPreview
+
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     /**

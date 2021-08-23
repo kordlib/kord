@@ -6,6 +6,7 @@ import dev.kord.common.entity.ChannelType
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.any
@@ -13,6 +14,9 @@ import dev.kord.core.cache.data.*
 import dev.kord.core.cache.idEq
 import dev.kord.core.cache.idGt
 import dev.kord.core.entity.*
+import dev.kord.core.entity.application.ApplicationCommandPermissions
+import dev.kord.core.entity.application.GlobalApplicationCommand
+import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -333,6 +337,71 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                     && it.type == ChannelType.PrivateThread
                     && it.member !is Optional.Missing
         }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
+    }
+
+    override fun getGuildApplicationCommands(
+        applicationId: Snowflake,
+        guildId: Snowflake
+    ): Flow<GuildApplicationCommand> = cache.query<ApplicationCommandData> {
+            idEq(ApplicationCommandData::guildId, guildId)
+            idEq(ApplicationCommandData::applicationId, applicationId)
+        }.asFlow().map { GuildApplicationCommand(it, kord.rest.interaction) }
+
+
+    override suspend fun getGuildApplicationCommandOrNull(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): GuildApplicationCommand? {
+        val data = cache.query<ApplicationCommandData> {
+            idEq(ApplicationCommandData::id, commandId)
+            idEq(ApplicationCommandData::guildId, guildId)
+            idEq(ApplicationCommandData::applicationId, applicationId)
+        }.singleOrNull() ?: return null
+
+        return GuildApplicationCommand(data, kord.rest.interaction)
+    }
+
+    override suspend fun getGlobalApplicationCommandOrNull(
+        applicationId: Snowflake,
+        commandId: Snowflake
+    ): GlobalApplicationCommand? {
+        val data = cache.query<ApplicationCommandData> {
+            idEq(ApplicationCommandData::id, commandId)
+            idEq(ApplicationCommandData::guildId, null)
+            idEq(ApplicationCommandData::applicationId, applicationId)
+        }.singleOrNull() ?: return null
+
+        return GlobalApplicationCommand(data, kord.rest.interaction)
+    }
+
+    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> =
+        cache.query<ApplicationCommandData> {
+            idEq(ApplicationCommandData::guildId, null)
+            idEq(ApplicationCommandData::applicationId, applicationId)
+        }.asFlow().map { GlobalApplicationCommand(it, kord.rest.interaction) }
+
+    override fun getGuildApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake
+    ): Flow<ApplicationCommandPermissions> = cache.query<GuildApplicationCommandPermissionsData> {
+            idEq(GuildApplicationCommandPermissionsData::guildId, guildId)
+            idEq(GuildApplicationCommandPermissionsData::applicationId, applicationId)
+        }.asFlow().map { ApplicationCommandPermissions(it) }
+
+
+    override suspend fun getApplicationCommandPermissionsOrNull(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): ApplicationCommandPermissions? {
+        val data = cache.query<GuildApplicationCommandPermissionsData> {
+            idEq(GuildApplicationCommandPermissionsData::id, commandId)
+            idEq(GuildApplicationCommandPermissionsData::guildId, guildId)
+            idEq(GuildApplicationCommandPermissionsData::applicationId, applicationId)
+        }.singleOrNull() ?: return null
+
+        return ApplicationCommandPermissions(data)
     }
 
     override fun toString(): String {

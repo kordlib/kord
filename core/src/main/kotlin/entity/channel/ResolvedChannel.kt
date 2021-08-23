@@ -7,7 +7,7 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
-@KordPreview
+
 class ResolvedChannel(
     override val data: ChannelData,
     override val kord: Kord,

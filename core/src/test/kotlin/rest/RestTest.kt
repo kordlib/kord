@@ -14,6 +14,9 @@ import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.createInvite
 import dev.kord.rest.Image
+import dev.kord.rest.builder.interaction.group
+import dev.kord.rest.builder.interaction.int
+import dev.kord.rest.builder.interaction.subCommand
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.RestRequestException
 import kotlinx.coroutines.flow.filterIsInstance
@@ -457,7 +460,7 @@ class RestServiceTest {
 
     @OptIn(KordPreview::class)
     fun `guild application commands`(): Unit = runBlocking {
-        val command = guild.createApplicationCommand("test", "automated test") {
+        val command = guild.createChatInputCommand("test", "automated test") {
             group("test-group", "automated test") {
                 subCommand("test-sub-command", "automated test") {
                     int("integer", "test choice") {

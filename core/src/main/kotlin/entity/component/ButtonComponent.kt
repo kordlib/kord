@@ -7,15 +7,12 @@ import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.interaction.ComponentInteraction
-import dev.kord.core.event.interaction.InteractionCreateEvent
-import dev.kord.core.entity.interaction.ButtonInteraction
-
 /**
  * An interactive component rendered on a Message.
  * If this button contains a [customId] and is clicked by a user,
  * a [InteractionCreateEvent] with a [ComponentInteraction] will fire.
  */
-@KordPreview
+
 class ButtonComponent(override val data: ComponentData) : Component {
 
     override val type: ComponentType

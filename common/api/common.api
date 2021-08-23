@@ -4258,23 +4258,21 @@ public final class dev/kord/common/entity/DiscordUserKt {
 
 public final class dev/kord/common/entity/DiscordVoiceRegion {
 	public static final field Companion Ldev/kord/common/entity/DiscordVoiceRegion$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ZZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZZZZ)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZZZ)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Z
 	public final fun component4 ()Z
 	public final fun component5 ()Z
-	public final fun component6 ()Z
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;ZZZZ)Ldev/kord/common/entity/DiscordVoiceRegion;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordVoiceRegion;Ljava/lang/String;Ljava/lang/String;ZZZZILjava/lang/Object;)Ldev/kord/common/entity/DiscordVoiceRegion;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ZZZ)Ldev/kord/common/entity/DiscordVoiceRegion;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordVoiceRegion;Ljava/lang/String;Ljava/lang/String;ZZZILjava/lang/Object;)Ldev/kord/common/entity/DiscordVoiceRegion;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCustom ()Z
 	public final fun getDeprecated ()Z
 	public final fun getId ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getOptimal ()Z
-	public final fun getVip ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

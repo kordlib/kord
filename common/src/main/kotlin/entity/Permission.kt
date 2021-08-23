@@ -157,8 +157,9 @@ sealed class Permission(val code: DiscordBitSet) {
     object UseSlashCommands : Permission(0x80000000)
     object RequestToSpeak : Permission(0x100000000)
     object ManageThreads : Permission(0x0400000000)
-    object UsePublicThreads : Permission(0x0800000000)
-    object UsePrivateThreads : Permission(0x1000000000)
+    object CreatePublicThreads : Permission(0x0800000000)
+    object CreatePrivateThreads : Permission(0x1000000000)
+    object SendMessagesInThreads : Permission(0x4000000000)
     object All : Permission(values.fold(EmptyBitSet()) { acc, value -> acc.add(value.code); acc })
 
     companion object {
@@ -197,8 +198,9 @@ sealed class Permission(val code: DiscordBitSet) {
                 UseSlashCommands,
                 RequestToSpeak,
                 ManageThreads,
-                UsePublicThreads,
-                UsePrivateThreads,
+                CreatePublicThreads,
+                CreatePrivateThreads,
+                SendMessagesInThreads
             )
     }
 }

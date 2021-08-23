@@ -14,7 +14,7 @@ import dev.kord.common.entity.optional.delegate.delegate
  * @param label The user-facing name of the option, max 25 characters.
  * @param value The dev-define value of the option, max 100 characters.
  */
-@KordPreview
+
 class SelectOptionBuilder(
     var label: String,
     var value: String

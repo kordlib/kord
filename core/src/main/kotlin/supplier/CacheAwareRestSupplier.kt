@@ -5,6 +5,9 @@ import dev.kord.cache.api.put
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.entity.*
+import dev.kord.core.entity.application.ApplicationCommandPermissions
+import dev.kord.core.entity.application.GlobalApplicationCommand
+import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -165,7 +168,7 @@ class StoreEntitySupplier(
     }
 
     override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
-        return storeOnEach(supplier.getPrivateArchivedThreads(channelId,before, limit)) { it.data }
+        return storeOnEach(supplier.getPrivateArchivedThreads(channelId, before, limit)) { it.data }
     }
 
     override fun getJoinedPrivateArchivedThreads(
@@ -174,6 +177,53 @@ class StoreEntitySupplier(
         limit: Int
     ): Flow<ThreadChannel> {
         return storeOnEach(supplier.getJoinedPrivateArchivedThreads(channelId, before, limit)) { it.data }
+    }
+
+    override fun getGuildApplicationCommands(
+        applicationId: Snowflake,
+        guildId: Snowflake
+    ): Flow<GuildApplicationCommand> {
+        return storeOnEach(supplier.getGuildApplicationCommands(applicationId, guildId)) { it.data }
+    }
+
+    override suspend fun getGuildApplicationCommandOrNull(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): GuildApplicationCommand? {
+        return storeAndReturn(supplier.getGuildApplicationCommandOrNull(applicationId, guildId, commandId)) { it.data }
+    }
+
+    override suspend fun getGlobalApplicationCommandOrNull(
+        applicationId: Snowflake,
+        commandId: Snowflake
+    ): GlobalApplicationCommand? {
+        return storeAndReturn(supplier.getGlobalApplicationCommand(applicationId, commandId)) { it.data }
+    }
+
+    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> {
+        return storeOnEach(supplier.getGlobalApplicationCommands(applicationId)) { it.data }
+    }
+
+    override suspend fun getApplicationCommandPermissionsOrNull(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): ApplicationCommandPermissions? {
+        return storeAndReturn(
+            supplier.getApplicationCommandPermissionsOrNull(
+                applicationId,
+                guildId,
+                commandId
+            )
+        ) { it.data }
+    }
+
+    override fun getGuildApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake
+    ): Flow<ApplicationCommandPermissions> {
+        TODO("Not yet implemented")
     }
 
     private inline fun <T, reified R : Any> storeOnEach(source: Flow<T>, crossinline transform: (T) -> R): Flow<T> {

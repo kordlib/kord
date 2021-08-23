@@ -6,9 +6,13 @@ import dev.kord.core.Kord
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.request.RestRequestException
 import java.util.*
 
@@ -55,6 +59,24 @@ interface ChannelBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ChannelBehavior = ChannelBehavior(id, kord, strategy)
 
 }
+
+/**
+ * Requests to get the [Channel] represented by the [id],
+ * returns null if the [Channel] isn't present.
+ *
+ * @throws [RequestException] if anything went wrong during the request.
+ * @throws [ClassCastException] if the channel is not of type [T]
+ */
+suspend inline fun <reified T: Channel> ChannelBehavior.ofOrNull(): T? = supplier.getChannelOfOrNull(id)
+
+/**
+ * Requests to get the [Channel] represented by the [id].
+ *
+ * @throws [RequestException] if anything went wrong during the request.
+ * @throws [EntityNotFoundException] if the [Channel] wasn't present.
+ * @throws [ClassCastException] if the channel is not of type  [T].
+ */
+suspend inline fun <reified T: Channel> ChannelBehavior.of(): T = supplier.getChannelOf(id)
 
 fun ChannelBehavior(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) =
     object : ChannelBehavior {

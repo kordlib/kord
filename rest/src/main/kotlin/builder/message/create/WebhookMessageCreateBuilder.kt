@@ -25,7 +25,7 @@ class WebhookMessageCreateBuilder
 
     override var allowedMentions: AllowedMentionsBuilder? = null
 
-    @KordPreview
+
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     override val files: MutableList<Pair<String, InputStream>> = mutableListOf()

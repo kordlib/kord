@@ -1,14 +1,16 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.description
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
+import dev.kord.core.entity.application.ApplicationCommand
 import kotlinx.serialization.Serializable
 
 @Serializable
-@KordPreview
 data class ApplicationCommandData(
     val id: Snowflake,
+    val type: Optional<ApplicationCommandType> = Optional.Missing(),
     val applicationId: Snowflake,
     val name: String,
     val description: String,
@@ -16,10 +18,14 @@ data class ApplicationCommandData(
     val options: Optional<List<ApplicationCommandOptionData>>
 ) {
     companion object {
+        val description = description(ApplicationCommandData::id) {
+            link(ApplicationCommandData::guildId to GuildData::id)
+        }
         fun from(command: DiscordApplicationCommand): ApplicationCommandData {
             return with(command) {
                 ApplicationCommandData(
                     id,
+                    type,
                     applicationId,
                     name,
                     description,
@@ -31,7 +37,6 @@ data class ApplicationCommandData(
 }
 
 @Serializable
-@KordPreview
 data class ApplicationCommandOptionData(
     val type: ApplicationCommandOptionType,
     val name: String,
@@ -59,7 +64,6 @@ data class ApplicationCommandOptionData(
 }
 
 
-@KordPreview
 @Serializable
 class ApplicationCommandGroupData(
     val name: String,
@@ -67,7 +71,6 @@ class ApplicationCommandGroupData(
     val subCommands: List<ApplicationCommandSubcommandData>
 )
 
-@KordPreview
 @Suppress("FunctionName")
 fun ApplicationCommandGroupData(data: ApplicationCommandOptionData): ApplicationCommandGroupData {
     return ApplicationCommandGroupData(
@@ -78,7 +81,6 @@ fun ApplicationCommandGroupData(data: ApplicationCommandOptionData): Application
 }
 
 
-@KordPreview
 @Serializable
 data class ApplicationCommandSubcommandData(
     val name: String,
@@ -87,7 +89,7 @@ data class ApplicationCommandSubcommandData(
     val parameters: Optional<List<ApplicationCommandParameterData>>
 )
 
-@KordPreview
+
 @Suppress("FunctionName")
 fun ApplicationCommandSubCommandData(data: ApplicationCommandOptionData): ApplicationCommandSubcommandData {
     return ApplicationCommandSubcommandData(
@@ -99,7 +101,7 @@ fun ApplicationCommandSubCommandData(data: ApplicationCommandOptionData): Applic
 }
 
 
-@KordPreview
+
 @Serializable
 data class ApplicationCommandParameterData(
     val name: String,
@@ -108,7 +110,7 @@ data class ApplicationCommandParameterData(
     val choices: Optional<List<ApplicationCommandOptionChoiceData>>
 )
 
-@KordPreview
+
 @Suppress("FunctionName")
 fun ApplicationCommandParameterData(data: ApplicationCommandOptionData): ApplicationCommandParameterData {
     return ApplicationCommandParameterData(
@@ -120,7 +122,7 @@ fun ApplicationCommandParameterData(data: ApplicationCommandOptionData): Applica
 }
 
 @Serializable
-@KordPreview
+
 data class ApplicationCommandOptionChoiceData(
     val name: String,
     val value: String

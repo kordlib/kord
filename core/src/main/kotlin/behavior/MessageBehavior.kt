@@ -116,7 +116,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    @KordPreview
+
     suspend fun publish(): Message {
         val response = kord.rest.channel.crossPost(channelId = channelId, messageId = id)
         val data = MessageData.from(response)

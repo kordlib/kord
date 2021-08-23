@@ -62,7 +62,6 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    @KordPreview
     suspend fun follow(target: Snowflake) {
         kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target.asString))
     }

@@ -14,7 +14,7 @@ import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 
-@KordPreview
+
 class UpdateEphemeralMessageInteractionResponseCreateBuilder :
     EphemeralMessageModifyBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {

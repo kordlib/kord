@@ -2,8 +2,13 @@
 
 ## Fixes
 
-* Fixed the space in active threads get endpoint causing it to fail.
-* Fixed incorrect serialization of `NUMBER` option
+* Fixed the space in active threads get endpoint causing it to fail. (5dd3f380)
+* Fixed incorrect serialization of `NUMBER` option. (#360)
+* Fixed Missing properties in `MemberData`, `InteractionData` and others. (#361)
+
+## Changes
+
+* `Region` no longer has a `vip` property (5dd3f380)
 
 # 0.8.0-M3
 

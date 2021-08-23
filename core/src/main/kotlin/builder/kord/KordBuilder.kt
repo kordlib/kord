@@ -3,6 +3,7 @@
 package dev.kord.core.builder.kord
 
 import dev.kord.cache.api.DataCache
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.ratelimit.BucketRateLimiter
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
@@ -107,6 +108,8 @@ class KordBuilder(val token: String) {
      * will be used when not set.
      */
     var httpClient: HttpClient? = null
+
+    var applicationId: Snowflake? = null
 
     /**
      * The enabled gateway intents, setting intents to null will disable the feature.
@@ -228,7 +231,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token, shardsInfo, client, defaultStrategy, intents)
+        val resources = ClientResources(token,applicationId ?: getBotIdFromToken(token), shardsInfo, client, defaultStrategy, intents)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()

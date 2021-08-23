@@ -8,7 +8,7 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.cache.data.toData
 import kotlinx.serialization.Serializable
 
-@KordPreview
+
 @Serializable
 data class MessageInteractionData(
     val id:Snowflake,

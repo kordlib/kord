@@ -2,6 +2,9 @@ package dev.kord.core.supplier
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.*
+import dev.kord.core.entity.application.ApplicationCommandPermissions
+import dev.kord.core.entity.application.GlobalApplicationCommand
+import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -118,7 +121,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         first.getTemplates(guildId).switchIfEmpty(second.getTemplates(guildId))
 
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? =
-         first.getStageInstanceOrNull(channelId) ?: second.getStageInstanceOrNull(channelId)
+        first.getStageInstanceOrNull(channelId) ?: second.getStageInstanceOrNull(channelId)
 
     override fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember> {
         return first.getThreadMembers(channelId).switchIfEmpty(second.getThreadMembers(channelId))
@@ -146,6 +149,53 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         return first.getJoinedPrivateArchivedThreads(channelId, before, limit)
             .switchIfEmpty(second.getJoinedPrivateArchivedThreads(channelId, before, limit))
     }
+
+    override fun getGuildApplicationCommands(
+        applicationId: Snowflake,
+        guildId: Snowflake
+    ): Flow<GuildApplicationCommand> = first.getGuildApplicationCommands(applicationId, guildId)
+        .switchIfEmpty(second.getGuildApplicationCommands(applicationId, guildId))
+
+
+    override suspend fun getGuildApplicationCommandOrNull(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): GuildApplicationCommand? =
+        first.getGuildApplicationCommandOrNull(applicationId, guildId, commandId)
+            ?: second.getGuildApplicationCommandOrNull(applicationId, guildId, commandId)
+
+
+    override suspend fun getGlobalApplicationCommandOrNull(
+        applicationId: Snowflake,
+        commandId: Snowflake
+    ): GlobalApplicationCommand? =
+        first.getGlobalApplicationCommandOrNull(applicationId, commandId) ?: second.getGlobalApplicationCommandOrNull(
+            applicationId,
+            commandId
+        )
+
+
+    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> =
+        first.getGlobalApplicationCommands(applicationId)
+            .switchIfEmpty(second.getGlobalApplicationCommands(applicationId))
+
+
+    override suspend fun getApplicationCommandPermissionsOrNull(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): ApplicationCommandPermissions? =
+        first.getApplicationCommandPermissionsOrNull(applicationId, guildId, commandId)
+            ?: second.getApplicationCommandPermissionsOrNull(applicationId, guildId, commandId)
+
+
+    override fun getGuildApplicationCommandPermissions(
+        applicationId: Snowflake,
+        guildId: Snowflake
+    ): Flow<ApplicationCommandPermissions> =
+        first.getGuildApplicationCommandPermissions(applicationId, guildId)
+            .switchIfEmpty(second.getGuildApplicationCommandPermissions(applicationId, guildId))
 
 
     override fun toString(): String {
