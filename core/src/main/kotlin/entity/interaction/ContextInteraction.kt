@@ -10,8 +10,10 @@ import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
+import dev.kord.core.entity.application.GuildUserCommand
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import java.util.*
 
 /**
  * Represents an interaction of type [ApplicationCommand][dev.kord.common.entity.InteractionType.ApplicationCommand]
@@ -46,7 +48,16 @@ class GuildChatInputCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : ChatInputCommandInteraction, GuildApplicationCommandInteraction
+) : ChatInputCommandInteraction, GuildApplicationCommandInteraction {
+    override fun equals(other: Any?): Boolean {
+        return if(other !is GuildChatInputCommandInteraction) false
+        else id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(id, guildId)
+    }
+}
 
 
 
@@ -57,7 +68,16 @@ class GlobalChatInputCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : ChatInputCommandInteraction, GlobalApplicationCommandInteraction
+) : ChatInputCommandInteraction, GlobalApplicationCommandInteraction {
+    override fun equals(other: Any?): Boolean {
+        return if(other !is GlobalChatInputCommandInteraction) false
+        else id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(id)
+    }
+}
 
 
 /**
@@ -75,7 +95,16 @@ class GuildUserCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : UserCommandInteraction, GuildApplicationCommandInteraction
+) : UserCommandInteraction, GuildApplicationCommandInteraction {
+    override fun equals(other: Any?): Boolean {
+        return if(other !is GuildUserCommandInteraction) false
+        else id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(id, guildId)
+    }
+}
 /**
  * An [ApplicationCommandInteraction] that's invoked through user commands.
  */
@@ -83,7 +112,16 @@ class GlobalUserCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : UserCommandInteraction, GlobalApplicationCommandInteraction
+) : UserCommandInteraction, GlobalApplicationCommandInteraction {
+    override fun equals(other: Any?): Boolean {
+        return if(other !is GlobalUserCommandInteraction) false
+        else id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(id)
+    }
+}
 
 
 /**
@@ -102,7 +140,16 @@ class GuildMessageCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : MessageCommandInteraction, GuildApplicationCommandInteraction
+) : MessageCommandInteraction, GuildApplicationCommandInteraction {
+    override fun equals(other: Any?): Boolean {
+        return if(other !is GuildMessageCommandInteraction) false
+        else id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(id, guildId)
+    }
+}
 
 /**
  * An [ApplicationCommandInteraction] that's invoked through messages.
@@ -111,18 +158,34 @@ class GlobalMessageCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : MessageCommandInteraction, GlobalApplicationCommandInteraction
+) : MessageCommandInteraction, GlobalApplicationCommandInteraction {
+    override fun equals(other: Any?): Boolean {
+        return if(other !is GlobalMessageCommandInteraction) false
+        else id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(id)
+    }
+}
 
 
 class UnknownApplicationCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : MessageCommandInteraction, ApplicationCommandInteraction {
+) : ApplicationCommandInteraction {
     override val user: UserBehavior
         get() = UserBehavior(data.user.value!!.id, kord)
+    override fun equals(other: Any?): Boolean {
+        return if(other !is ApplicationCommandInteraction) false
+        else id == other.id
+    }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction {
-        return UnknownComponentInteraction(data, kord, strategy.supply(kord))
+    override fun hashCode(): Int {
+        return Objects.hash(id)
+    }
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): UnknownApplicationCommandInteraction {
+        return UnknownApplicationCommandInteraction(data, kord, strategy.supply(kord))
     }
 }

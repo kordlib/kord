@@ -43,6 +43,7 @@ sealed interface ComponentInteraction : Interaction, ComponentInteractionBehavio
     val componentId: String get() = data.data.customId.value!!
 
     val componentType: ComponentType get() = data.data.componentType.value!!
+
     /**
      * The [Component] the user interacted with, null if the message is ephemeral.
      */
@@ -98,14 +99,13 @@ class ButtonInteraction(
 
 
     override fun equals(other: Any?): Boolean {
-        if (other !is Interaction) return false
+        if (other !is ButtonInteraction) return false
 
-        return other.data == data
+        return id == other.id
     }
 
     override fun hashCode(): Int = data.hashCode()
 }
-
 
 
 class UnknownComponentInteraction(
@@ -160,9 +160,9 @@ class SelectMenuInteraction(
 
 
     override fun equals(other: Any?): Boolean {
-        if (other !is Interaction) return false
+        if (other !is SelectMenuInteraction) return false
 
-        return other.data == data
+        return id == other.id
     }
 
     override fun hashCode(): Int = data.hashCode()
