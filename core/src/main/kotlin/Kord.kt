@@ -22,9 +22,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
 import dev.kord.core.gateway.MasterGateway
 import dev.kord.core.gateway.handler.GatewayEventInterceptor
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.core.supplier.*
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
@@ -65,10 +63,6 @@ class Kord(
     val globalCommands: Flow<GlobalApplicationCommand>
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
-
-
-    suspend fun getGlobalApplicationCommand(commandId: Snowflake) =
-        defaultSupplier.getGlobalApplicationCommand(resources.applicationId, commandId)
 
 
     /**
@@ -373,6 +367,50 @@ class Kord(
         }
     }
 
+    fun getGuildApplicationCommands(guildId: Snowflake): Flow<GuildApplicationCommand> {
+        return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId)
+    }
+
+    suspend fun getGuildApplicationCommand(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand {
+        return defaultSupplier.getGuildApplicationCommand(resources.applicationId, guildId, commandId)
+    }
+
+
+    suspend fun getGuildApplicationCommandOrNull(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand? {
+        return defaultSupplier.getGuildApplicationCommandOrNull(resources.applicationId, guildId, commandId)
+    }
+
+
+    suspend inline fun <reified T: GuildApplicationCommand> getGuildApplicationCommandOf(guildId: Snowflake, commandId: Snowflake): T {
+        return defaultSupplier.getGuildApplicationCommandOf(resources.applicationId, guildId, commandId)
+    }
+
+
+    suspend inline fun <reified T: GuildApplicationCommand> getGuildApplicationCommandOfOrNull(guildId: Snowflake, commandId: Snowflake): T? {
+        return defaultSupplier.getGuildApplicationCommandOfOrNull(resources.applicationId, guildId, commandId)
+    }
+
+
+    suspend fun getGlobalApplicationCommand(commandId: Snowflake): GlobalApplicationCommand {
+        return defaultSupplier.getGlobalApplicationCommand(resources.applicationId, commandId)
+    }
+
+
+    suspend fun getGlobalApplicationCommandOrNull(commandId: Snowflake): GlobalApplicationCommand? {
+        return defaultSupplier.getGlobalApplicationCommandOrNull(resources.applicationId, commandId)
+    }
+
+
+    suspend fun <T> getGlobalApplicationCommandOf(commandId: Snowflake): T {
+        return defaultSupplier.getGlobalApplicationCommandOf(resources.applicationId, commandId)
+    }
+
+
+    suspend fun <T> getGlobalApplicationCommandOfOrNull(commandId: Snowflake): T? {
+        return defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
+    }
+
+
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGlobalChatInputCommand(
         name: String,
@@ -426,7 +464,6 @@ class Kord(
             }
         }
     }
-
 
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildChatInputCommand(

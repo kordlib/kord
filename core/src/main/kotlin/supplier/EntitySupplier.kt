@@ -555,3 +555,14 @@ suspend inline fun <reified T : GlobalApplicationCommand> EntitySupplier.getGlob
     (getGlobalApplicationCommandOrNull(applicationId, id)
         ?: EntityNotFoundException.applicationCommandNotFound<T>(id)) as T
 
+
+/**
+ * Requests the [GuildApplicationCommand] with the given [id] as type [T], returns null if the
+ * command application isn't present or if the channel is not of type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the application command.
+ */
+suspend inline fun <reified T : GlobalApplicationCommand> EntitySupplier.getGlobalApplicationCommandOfOrNull(
+    applicationId: Snowflake,
+    id: Snowflake
+): T? = getGlobalApplicationCommandOrNull(applicationId, id) as? T

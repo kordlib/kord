@@ -11,6 +11,13 @@ interface GuildInteractionBehavior : InteractionBehavior {
 
     val guildId: Snowflake
 
+
+    /**
+     * The [GuildBehavior] for the guild the command was executed in.
+     */
+    val guildBehavior get() = GuildBehavior(guildId, kord)
+
+
     suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     suspend fun getGuild(): Guild = supplier.getGuild(guildId)

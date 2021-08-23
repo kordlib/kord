@@ -20,11 +20,8 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.sorted
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.*
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
-import dev.kord.core.supplier.getChannelOf
-import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.PrivilegedIntent
 import dev.kord.gateway.RequestGuildMembers
@@ -242,6 +239,9 @@ interface GuildBehavior : KordEntity, Strategizable {
 
     suspend fun getApplicationCommand(commandId: Snowflake) =
         supplier.getGuildApplicationCommand(kord.resources.applicationId, id, commandId)
+
+    suspend fun getApplicationCommandOrNull(commandId: Snowflake) =
+        supplier.getGuildApplicationCommandOrNull(kord.resources.applicationId, id, commandId)
 
     /**
      * Requests to get the this behavior as a [Guild].
@@ -528,6 +528,16 @@ interface GuildBehavior : KordEntity, Strategizable {
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 }
+
+suspend inline fun <reified T: GuildApplicationCommand> GuildBehavior.getApplicationCommandOfOrNull(commandId: Snowflake): T? {
+    return supplier.getGuildApplicationCommandOfOrNull(kord.resources.applicationId,id, commandId)
+}
+
+
+suspend inline fun <reified T: GuildApplicationCommand> GuildBehavior.getApplicationCommandOf(commandId: Snowflake): T? {
+    return supplier.getGuildApplicationCommandOf(kord.resources.applicationId,id, commandId)
+}
+
 
 fun GuildBehavior(
     id: Snowflake,

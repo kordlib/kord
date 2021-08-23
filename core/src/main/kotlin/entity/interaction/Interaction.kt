@@ -404,10 +404,6 @@ sealed interface GuildApplicationCommandInteraction : ApplicationCommandInteract
      */
     val permissions: Permissions get() = data.permissions.value!!
 
-    /**
-     * The [GuildBehavior] for the guild the command was executed in.
-     */
-    val guild get() = GuildBehavior(guildId, kord)
 
     /**
      * The invoker of the command as [MemberBehavior].
