@@ -32,11 +32,11 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
 
     val asString get() = value.toString()
 
-    val timeStamp: Instant get() = Instant.fromEpochMilliseconds(discordEpochLong + (value shr 22))
+    val timeStamp: Instant get() = Instant.fromEpochMilliseconds(discordEpochLong + (value ushr 22))
 
     val timeMark: TimeMark get() = SnowflakeMark(timeStamp)
 
-    override fun compareTo(other: Snowflake): Int = value.shr(22).compareTo(other.value.shr(22))
+    override fun compareTo(other: Snowflake): Int = value.ushr(22).compareTo(other.value.ushr(22))
 
     override fun toString(): String = "Snowflake(value=$value)"
 
