@@ -1,6 +1,7 @@
 package dev.kord.common.entity
 
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -8,12 +9,17 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.datetime.Instant
 import kotlin.time.Duration
 import kotlin.time.TimeMark
 
 /**
  * A unique identifier for entities [used by discord](https://discord.com/developers/docs/reference#snowflakes).
+ *
+ * Note: this class has a natural ordering that is inconsistent with [equals],
+ * since [compareTo] only compares the first 42 bits of the Long [value] (comparing the timestamp),
+ * whereas [equals] uses all bits of the Long [value].
+ * [compareTo] can return `0` even if [equals] returns `false`,
+ * but [equals] only returns `true` if [compareTo] returns `0`.
  *
  * @constructor Creates a Snowflake from a given Long [value].
  */
@@ -21,7 +27,7 @@ import kotlin.time.TimeMark
 class Snowflake(val value: Long) : Comparable<Snowflake> {
 
     /**
-     * Creates a Snowflake from a given String [value], parsing it a [Long] value.
+     * Creates a Snowflake from a given String [value], parsing it as a [Long] value.
      */
     constructor(value: String) : this(value.toLong())
 
@@ -61,7 +67,6 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
          * Useful when requesting paginated entities.
          */
         val min: Snowflake = Snowflake(0)
-
     }
 
     internal class Serializer : KSerializer<Snowflake> {
