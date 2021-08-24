@@ -78,5 +78,5 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
 
 private class SnowflakeMark(val epochMilliseconds: Long) : TimeMark() {
 
-    override fun elapsedNow(): Duration = Instant.fromEpochMilliseconds(epochMilliseconds) - Clock.System.now()
+    override fun elapsedNow(): Duration = Clock.System.now() - Instant.fromEpochMilliseconds(epochMilliseconds)
 }
