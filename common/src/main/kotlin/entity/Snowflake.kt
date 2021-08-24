@@ -28,7 +28,7 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
     /**
      * Creates a Snowflake from a given [instant].
      */
-    constructor(instant: Instant) : this((instant.toEpochMilliseconds() shl 22) - discordEpochLong)
+    constructor(instant: Instant) : this((instant.toEpochMilliseconds() - discordEpochLong) shl 22)
 
     val asString get() = value.toString()
 
