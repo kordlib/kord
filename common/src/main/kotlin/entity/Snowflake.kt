@@ -34,7 +34,7 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
 
     val timeStamp: Instant get() = Instant.fromEpochMilliseconds(discordEpochLong + (value shr 22))
 
-    val timeMark: TimeMark get() = SnowflakeMark(discordEpochLong + (value shr 22))
+    val timeMark: TimeMark get() = SnowflakeMark(timeStamp)
 
     override fun compareTo(other: Snowflake): Int = value.shr(22).compareTo(other.value.shr(22))
 
@@ -76,7 +76,7 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
     }
 }
 
-private class SnowflakeMark(val epochMilliseconds: Long) : TimeMark() {
+private class SnowflakeMark(private val timeStamp: Instant) : TimeMark() {
 
-    override fun elapsedNow(): Duration = Clock.System.now() - Instant.fromEpochMilliseconds(epochMilliseconds)
+    override fun elapsedNow(): Duration = Clock.System.now() - timeStamp
 }
