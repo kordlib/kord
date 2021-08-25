@@ -47,7 +47,7 @@ class KordEventDropTest {
     }
 
     val kord = Kord(
-        resources = ClientResources("token",Snowflake(0), Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
+        resources = ClientResources("token", Snowflake(0u), Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
         cache = DataCache.none(),
         MasterGateway(mapOf(0 to SpammyGateway)),
         RestClient(KtorRequestHandler("token", clock = Clock.System)),

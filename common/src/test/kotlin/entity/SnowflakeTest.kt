@@ -11,14 +11,14 @@ import kotlin.test.*
 class SnowflakeTest {
 
     @Test
-    fun `Snowflake with value 0 has timeStamp equal to discordEpochStart`() {
-        val snowflake = Snowflake(0)
+    fun `Snowflake with value ULong MIN_VALUE has timeStamp equal to discordEpochStart`() {
+        val snowflake = Snowflake(ULong.MIN_VALUE)
         assertEquals(Snowflake.discordEpochStart, snowflake.timeStamp)
     }
 
     @Test
-    fun `Snowflake with value -1 has timeStamp equal to endOfTime`() {
-        val snowflake = Snowflake(-1)
+    fun `Snowflake with value ULong MAX_VALUE has timeStamp equal to endOfTime`() {
+        val snowflake = Snowflake(ULong.MAX_VALUE)
         assertEquals(Snowflake.endOfTime, snowflake.timeStamp)
     }
 

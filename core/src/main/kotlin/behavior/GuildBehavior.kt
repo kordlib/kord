@@ -3,7 +3,6 @@ package dev.kord.core.behavior
 import dev.kord.cache.api.query
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
@@ -201,7 +200,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      */
     val gateway: Gateway?
         get() {
-            val shard = id.value.shr(22) % kord.resources.shards.totalShards.coerceAtLeast(1)
+            val shard = id.value.shr(22).toLong() % kord.resources.shards.totalShards.coerceAtLeast(1)
             return kord.gateway.gateways[shard.toInt()]
         }
 

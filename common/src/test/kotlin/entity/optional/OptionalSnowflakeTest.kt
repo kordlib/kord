@@ -52,7 +52,7 @@ internal class OptionalSnowflakeTest {
         val entity = Json.decodeFromString<ValueOptionalEntity>(json)
         require(entity.value is OptionalSnowflake.Value)
 
-        Assertions.assertEquals(Snowflake(5), entity.value.value)
+        Assertions.assertEquals(Snowflake(5u), entity.value.value)
     }
 
 }

@@ -21,6 +21,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.random.Random
+import kotlin.random.nextULong
 
 @KordDsl
 class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> {
@@ -29,7 +30,7 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
      * Iterator that generates unique ids for roles and channels.
      */
     val snowflakeGenerator by lazy(LazyThreadSafetyMode.NONE) {
-        generateSequence { Random.nextLong(0, Long.MAX_VALUE) }.filter {
+        generateSequence { Random.nextULong(ULong.MIN_VALUE, ULong.MAX_VALUE) }.filter {
             it !in roles.map { role -> role.id.value?.value }
                     && it !in channels.map { channel -> channel.id.value?.value }
                     && Snowflake(it) != systemChannelId

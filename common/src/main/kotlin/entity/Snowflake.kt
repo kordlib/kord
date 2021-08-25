@@ -2,10 +2,10 @@ package dev.kord.common.entity
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -16,20 +16,20 @@ import kotlin.time.TimeMark
  * A unique identifier for entities [used by discord](https://discord.com/developers/docs/reference#snowflakes).
  *
  * Note: this class has a natural ordering that is inconsistent with [equals],
- * since [compareTo] only compares the first 42 bits of the Long [value] (comparing the timestamp),
- * whereas [equals] uses all bits of the Long [value].
+ * since [compareTo] only compares the first 42 bits of the ULong [value] (comparing the timestamp),
+ * whereas [equals] uses all bits of the ULong [value].
  * [compareTo] can return `0` even if [equals] returns `false`,
  * but [equals] only returns `true` if [compareTo] returns `0`.
  *
- * @constructor Creates a Snowflake from a given Long [value].
+ * @constructor Creates a Snowflake from a given ULong [value].
  */
 @Serializable(with = Snowflake.Serializer::class)
-class Snowflake(val value: Long) : Comparable<Snowflake> {
+class Snowflake(val value: ULong) : Comparable<Snowflake> {
 
     /**
-     * Creates a Snowflake from a given String [value], parsing it as a [Long] value.
+     * Creates a Snowflake from a given String [value], parsing it as a [ULong] value.
      */
-    constructor(value: String) : this(value.toLong())
+    constructor(value: String) : this(value.toULong())
 
     /**
      * Creates a Snowflake from a given [instant].
@@ -42,6 +42,7 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
             .coerceAtLeast(discordEpochLong) // time before is unknown to Snowflakes
             .minus(discordEpochLong)
             .coerceAtMost(maxMillisecondsSinceDiscordEpoch) // time after is unknown to Snowflakes
+            .toULong()
             .shl(22)
     )
 
@@ -53,14 +54,14 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
     /**
      * The point in time this Snowflake represents.
      */
-    val timeStamp: Instant get() = Instant.fromEpochMilliseconds(discordEpochLong + (value ushr 22))
+    val timeStamp: Instant get() = Instant.fromEpochMilliseconds(discordEpochLong + (value shr 22).toLong())
 
     /**
      * A [TimeMark] for the point in time this Snowflake represents.
      */
     val timeMark: TimeMark get() = SnowflakeMark(timeStamp)
 
-    override fun compareTo(other: Snowflake): Int = value.ushr(22).compareTo(other.value.ushr(22))
+    override fun compareTo(other: Snowflake): Int = value.shr(22).compareTo(other.value.shr(22))
 
     override fun toString(): String = "Snowflake(value=$value)"
 
@@ -89,23 +90,25 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
          * The maximum value a Snowflake can hold.
          * Useful when requesting paginated entities.
          */
-        val max: Snowflake = Snowflake(-1)
+        val max: Snowflake = Snowflake(ULong.MAX_VALUE)
 
         /**
          * The minimum value a Snowflake can hold.
          * Useful when requesting paginated entities.
          */
-        val min: Snowflake = Snowflake(0)
+        val min: Snowflake = Snowflake(ULong.MIN_VALUE)
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     internal class Serializer : KSerializer<Snowflake> {
         override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.Snowflake", PrimitiveKind.LONG)
+            get() = @OptIn(ExperimentalUnsignedTypes::class) ULong.serializer().descriptor
 
-        override fun deserialize(decoder: Decoder): Snowflake = Snowflake(decoder.decodeLong())
+        override fun deserialize(decoder: Decoder): Snowflake =
+            Snowflake(decoder.decodeInline(descriptor).decodeLong().toULong())
 
         override fun serialize(encoder: Encoder, value: Snowflake) {
-            encoder.encodeLong(value.value)
+            encoder.encodeInline(descriptor).encodeLong(value.value.toLong())
         }
     }
 }

@@ -5,7 +5,6 @@ import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
-import dev.kord.core.Unsafe
 import dev.kord.core.builder.kord.Shards
 import dev.kord.core.cache.KordCacheBuilder
 import dev.kord.core.gateway.MasterGateway
@@ -27,16 +26,16 @@ internal class CacheEntitySupplierTest {
     @OptIn(PrivilegedIntent::class, KordUnsafe::class, KordExperimental::class)
     fun `cache does not throw when accessing unregistered entities`(): Unit = runBlocking {
         val kord = Kord(
-                ClientResources("",Snowflake(0), Shards(0), HttpClient(), EntitySupplyStrategy.cache, Intents.all),
+                ClientResources("", Snowflake(0u), Shards(0), HttpClient(), EntitySupplyStrategy.cache, Intents.all),
                 KordCacheBuilder().build(),
                 MasterGateway(mapOf(0 to Gateway.none())),
                 RestClient(KtorRequestHandler("")),
-                Snowflake(0),
+                Snowflake(0u),
                 MutableSharedFlow(),
                 Dispatchers.Default
         )
 
-        kord.unsafe.guild(Snowflake(0)).regions.toList()
+        kord.unsafe.guild(Snowflake(0u)).regions.toList()
     }
 
 }

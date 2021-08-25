@@ -1,10 +1,10 @@
 package dev.kord.common.entity.optional
 
 import dev.kord.common.entity.Snowflake
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -66,13 +66,13 @@ sealed class OptionalSnowflake {
      * Represents a field that was assigned a non-null value in the serialized entity.
      * Equality and hashcode is implemented through its [value].
      *
-     * @param longValue the value this optional wraps.
+     * @param uLongValue the value this optional wraps.
      */
-    class Value(private val longValue: Long) : OptionalSnowflake() {
+    class Value(private val uLongValue: ULong) : OptionalSnowflake() {
 
         constructor(value: Snowflake) : this(value.value)
 
-        override val value: Snowflake get() = Snowflake(longValue)
+        override val value: Snowflake get() = Snowflake(uLongValue)
 
         /**
          * Destructures this optional to its [value].
@@ -89,16 +89,17 @@ sealed class OptionalSnowflake {
         override fun hashCode(): Int = value.hashCode()
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     internal object Serializer : KSerializer<OptionalSnowflake> {
-
         override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.OptionalSnowflake", PrimitiveKind.LONG)
+            get() = @OptIn(ExperimentalUnsignedTypes::class) ULong.serializer().descriptor
 
-        override fun deserialize(decoder: Decoder): OptionalSnowflake = Value(decoder.decodeLong())
+        override fun deserialize(decoder: Decoder): OptionalSnowflake =
+            Value(decoder.decodeInline(descriptor).decodeLong().toULong())
 
         override fun serialize(encoder: Encoder, value: OptionalSnowflake) = when (value) {
-            Missing -> Unit//ignore value
-            is Value -> encoder.encodeLong(value.value.value)
+            Missing -> Unit // ignore value
+            is Value -> encoder.encodeInline(descriptor).encodeLong(value.value.value.toLong())
         }
 
     }

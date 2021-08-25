@@ -3,11 +3,12 @@ package equality
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.KordEntity
 import kotlin.random.Random
+import kotlin.random.nextULong
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-val ids = generateSequence { Random.nextLong() }.distinct().iterator()
+val ids = generateSequence { Random.nextULong() }.distinct().iterator()
 fun randomId() = Snowflake(ids.next())
 
 interface EntityEqualityTest<T : KordEntity> {

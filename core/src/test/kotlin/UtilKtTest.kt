@@ -2,7 +2,6 @@ package dev.kord.core
 
 import dev.kord.common.entity.Snowflake
 import kotlinx.coroutines.flow.count
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -13,13 +12,13 @@ internal class UtilKtTest {
     @ExperimentalStdlibApi
     fun `paginate forwards selects the right id`() = runBlockingTest {
 
-        val flow = paginateForwards(start = Snowflake(0), batchSize = 100, idSelector = { it }) {
+        val flow = paginateForwards(start = Snowflake(0u), batchSize = 100, idSelector = { it }) {
             var value = it.value.value
-            if (value >= 1000) return@paginateForwards emptyList<Snowflake>()
-            value += 1 //don't include the position id
+            if (value >= 1000u) return@paginateForwards emptyList<Snowflake>()
+            value += 1u //don't include the position id
 
             buildList(100) {
-                (value until (value + 100)).reversed().forEach { snowflake -> //biggest/youngest -> smallest/oldest
+                (value until (value + 100u)).reversed().forEach { snowflake -> //biggest/youngest -> smallest/oldest
                     add(Snowflake(snowflake))
                 }
             }
@@ -32,13 +31,13 @@ internal class UtilKtTest {
     @ExperimentalStdlibApi
     fun `paginate backwards selects the right id`() = runBlockingTest {
 
-        val flow = paginateBackwards(start = Snowflake(1000), batchSize = 100, idSelector = { it }) {
+        val flow = paginateBackwards(start = Snowflake(1000u), batchSize = 100, idSelector = { it }) {
             var value = it.value.value
-            if (value <= 0) return@paginateBackwards emptyList<Snowflake>()
-            value -= 1 //don't include the position id
+            if (value <= 0u) return@paginateBackwards emptyList<Snowflake>()
+            value -= 1u //don't include the position id
 
             buildList(100) {
-                ((value - 99 /*reverse until, don't count the lowest value*/)..value).reversed().forEach { snowflake -> //biggest/youngest -> smallest/oldest
+                ((value - 99u /*reverse until, don't count the lowest value*/)..value).reversed().forEach { snowflake -> //biggest/youngest -> smallest/oldest
                     add(Snowflake(snowflake))
                 }
             }

@@ -33,7 +33,7 @@ internal fun String?.toSnowflakeOrNull(): Snowflake? = when {
     else -> Snowflake(this)
 }
 
-internal fun Long?.toSnowflakeOrNull(): Snowflake? = when {
+internal fun ULong?.toSnowflakeOrNull(): Snowflake? = when {
     this == null -> null
     else -> Snowflake(this)
 }
@@ -215,7 +215,7 @@ internal fun <C : Collection<T>, T : KordEntity> paginateForwards(
  *  Selects the [Position.Before] the oldest item in the batch.
  */
 internal fun <C : Collection<T>, T> paginateBackwards(
-    start: Snowflake = Snowflake(Long.MAX_VALUE),
+    start: Snowflake = Snowflake.max,
     batchSize: Int,
     idSelector: (T) -> Snowflake,
     request: suspend (position: Position) -> C
@@ -226,7 +226,7 @@ internal fun <C : Collection<T>, T> paginateBackwards(
  *  Selects the [Position.Before] the oldest item in the batch.
  */
 internal fun <C : Collection<T>, T : KordEntity> paginateBackwards(
-    start: Snowflake = Snowflake(Long.MAX_VALUE),
+    start: Snowflake = Snowflake.max,
     batchSize: Int,
     request: suspend (position: Position) -> C
 ): Flow<T> =
