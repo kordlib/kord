@@ -33,13 +33,31 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
 
     /**
      * Creates a Snowflake from a given [instant].
+     *
+     * If the given [instant] is too far in the past / future, this constructor will create
+     * an instance with a [timeStamp] equal to [Snowflake.min] / [Snowflake.max].
      */
-    constructor(instant: Instant) : this((instant.toEpochMilliseconds() - discordEpochLong) shl 22)
+    constructor(instant: Instant) : this(
+        instant.toEpochMilliseconds()
+            .coerceAtLeast(discordEpochLong) // time before is unknown to Snowflakes
+            .minus(discordEpochLong)
+            .coerceAtMost(maxMillisecondsSinceDiscordEpoch) // time after is unknown to Snowflakes
+            .shl(22)
+    )
 
+    /**
+     * A [String] representation of this Snowflake's [value].
+     */
     val asString get() = value.toString()
 
+    /**
+     * The point in time this Snowflake represents.
+     */
     val timeStamp: Instant get() = Instant.fromEpochMilliseconds(discordEpochLong + (value ushr 22))
 
+    /**
+     * A [TimeMark] for the point in time this Snowflake represents.
+     */
     val timeMark: TimeMark get() = SnowflakeMark(timeStamp)
 
     override fun compareTo(other: Snowflake): Int = value.ushr(22).compareTo(other.value.ushr(22))
@@ -53,14 +71,25 @@ class Snowflake(val value: Long) : Comparable<Snowflake> {
     }
 
     companion object {
-        private const val discordEpochLong = 1420070400000L
+        private const val discordEpochLong = 1420070400000L                                 // 42 one bits
+        private const val maxMillisecondsSinceDiscordEpoch = 0b111111111111111111111111111111111111111111L
+
+        /**
+         * The point in time that marks the Discord Epoch (the first second of 2015).
+         */
         val discordEpochStart: Instant = Instant.fromEpochMilliseconds(discordEpochLong)
+
+        /**
+         * The last point in time a Snowflake can represent.
+         */
+        val endOfTime: Instant =
+            Instant.fromEpochMilliseconds(discordEpochLong + maxMillisecondsSinceDiscordEpoch)
 
         /**
          * The maximum value a Snowflake can hold.
          * Useful when requesting paginated entities.
          */
-        val max: Snowflake = Snowflake(Long.MAX_VALUE)
+        val max: Snowflake = Snowflake(-1)
 
         /**
          * The minimum value a Snowflake can hold.
