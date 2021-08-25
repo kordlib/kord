@@ -23,13 +23,13 @@ class SnowflakeTest {
     }
 
     @Test
-    fun `Snowflake created from instant far in the past has timeStamp equal the timeStamp of Snowflake min`() {
+    fun `Snowflake created from instant far in the past has timeStamp equal to the timeStamp of Snowflake min`() {
         val snowflake = Snowflake(Instant.DISTANT_PAST)
         assertEquals(Snowflake.min.timeStamp, snowflake.timeStamp)
     }
 
     @Test
-    fun `Snowflake created from instant far in the future has timeStamp equal the timeStamp of Snowflake max`() {
+    fun `Snowflake created from instant far in the future has timeStamp equal to the timeStamp of Snowflake max`() {
         val snowflake = Snowflake(Instant.DISTANT_FUTURE)
         assertEquals(Snowflake.max.timeStamp, snowflake.timeStamp)
     }
