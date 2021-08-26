@@ -279,8 +279,8 @@ sealed class InteractionType(val type: Int) {
 data class InteractionCallbackData(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     val type: Optional<ApplicationCommandType> = Optional.Missing(),
-    @SerialName("target_user")
-    val targetUser: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("target_id")
+    val targetId: OptionalSnowflake = OptionalSnowflake.Missing,
     val name: Optional<String> = Optional.Missing(),
     val resolved: Optional<ResolvedObjects> = Optional.Missing(),
     val options: Optional<List<Option>> = Optional.Missing(),
