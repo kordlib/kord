@@ -117,3 +117,11 @@ private class SnowflakeMark(private val timeStamp: Instant) : TimeMark() {
 
     override fun elapsedNow(): Duration = Clock.System.now() - timeStamp
 }
+
+/**
+ * Creates a [Snowflake] from a given Long [value].
+ *
+ * Note: a negative [value] will be interpreted as an unsigned integer with the same binary representation, e.g.
+ * passing `-1L` for [value] will return a [Snowflake] with a [value][Snowflake.value] of [ULong.MAX_VALUE].
+ */
+fun Snowflake(value: Long): Snowflake = Snowflake(value.toULong())
