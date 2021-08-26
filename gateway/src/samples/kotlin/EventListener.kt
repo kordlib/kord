@@ -16,11 +16,7 @@ import kotlinx.serialization.json.Json
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-@OptIn(DelicateCoroutinesApi::class)
-@FlowPreview
 @ExperimentalTime
-@ExperimentalCoroutinesApi
-@ObsoleteCoroutinesApi
 suspend fun main(args: Array<String>) {
     val token = args.firstOrNull() ?: error("expected a token")
 
@@ -65,12 +61,10 @@ suspend fun main(args: Array<String>) {
                 )
             )
         }
-    }.launchIn(GlobalScope)
+    }.launchIn(@OptIn(DelicateCoroutinesApi::class) GlobalScope)
 
-    runBlocking {
-        gateway.start(token) {
-            @OptIn(PrivilegedIntent::class)
-            intents = Intents.all
-        }
+    gateway.start(token) {
+        @OptIn(PrivilegedIntent::class)
+        intents = Intents.all
     }
 }
