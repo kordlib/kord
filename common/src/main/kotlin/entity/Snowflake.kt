@@ -100,9 +100,9 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
     }
 
     @OptIn(ExperimentalSerializationApi::class)
-    internal class Serializer : KSerializer<Snowflake> {
-        override val descriptor: SerialDescriptor
-            get() = @OptIn(ExperimentalUnsignedTypes::class) ULong.serializer().descriptor
+    internal object Serializer : KSerializer<Snowflake> {
+        override val descriptor: SerialDescriptor =
+            @OptIn(ExperimentalUnsignedTypes::class) ULong.serializer().descriptor
 
         override fun deserialize(decoder: Decoder): Snowflake =
             Snowflake(decoder.decodeInline(descriptor).decodeLong().toULong())
