@@ -59,7 +59,7 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
     /**
      * A [TimeMark] for the point in time this Snowflake represents.
      */
-    val timeMark: TimeMark get() = SnowflakeMark(timeStamp)
+    val timeMark: TimeMark get() = SnowflakeTimeMark(timeStamp)
 
     override fun compareTo(other: Snowflake): Int = value.shr(22).compareTo(other.value.shr(22))
 
@@ -83,8 +83,7 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
         /**
          * The last point in time a Snowflake can represent.
          */
-        val endOfTime: Instant =
-            Instant.fromEpochMilliseconds(discordEpochLong + maxMillisecondsSinceDiscordEpoch)
+        val endOfTime: Instant = Instant.fromEpochMilliseconds(discordEpochLong + maxMillisecondsSinceDiscordEpoch)
 
         /**
          * The maximum value a Snowflake can hold.
@@ -113,7 +112,7 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
     }
 }
 
-private class SnowflakeMark(private val timeStamp: Instant) : TimeMark() {
+private class SnowflakeTimeMark(private val timeStamp: Instant) : TimeMark() {
 
     override fun elapsedNow(): Duration = Clock.System.now() - timeStamp
 }

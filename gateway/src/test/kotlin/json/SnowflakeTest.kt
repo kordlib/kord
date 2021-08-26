@@ -8,7 +8,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.put
-import java.math.BigInteger
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -52,13 +51,14 @@ class SnowflakeTest {
 
     @Test
     fun `Deserialization of Snowflake as large Number completes successfully`() {
-        val value = ULong.MAX_VALUE
+        // ULong is inline class and therefore cannot extend abstract class Number but put only takes Number
+        val value = ULong.MAX_VALUE.toNumber()
         val json = buildJsonObject {
-            put("snowflake", BigInteger(value.toString())) // put only takes Number, ULong does not extend Number
+            put("snowflake", value)
         }
 
         val container = Json.decodeFromJsonElement<SnowflakeContainer>(json)
-        assertEquals(value, container.snowflake.value)
+        assertEquals(value.value, container.snowflake.value)
     }
 
     @Test
