@@ -75,7 +75,7 @@ class ThreadEventHandler(
             is ChannelType.PublicNewsThread -> NewsChannelThreadDeleteEvent(channel, old as? NewsChannelThread, shard)
             is ChannelType.PrivateThread,
             is ChannelType.GuildText -> TextChannelThreadDeleteEvent(channel, old as? TextChannelThread, shard)
-            else -> UnknownChannelThreadDeleteEvent(channel, old as ThreadChannel, shard)
+            else -> UnknownChannelThreadDeleteEvent(channel, old as? ThreadChannel, shard)
         }
         coreFlow.emit(coreEvent)
 
