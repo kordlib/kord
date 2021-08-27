@@ -2,6 +2,7 @@ package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
@@ -19,6 +20,10 @@ class WebhookMessageCreateBuilder
 
     override var content: String? = null
 
+    var username: String? = null
+
+    var avatarUrl: String? = null
+
     override var tts: Boolean? = null
 
     override val embeds: MutableList<EmbedBuilder> = mutableListOf()
@@ -35,6 +40,8 @@ class WebhookMessageCreateBuilder
         return MultiPartWebhookExecuteRequest(
             WebhookExecuteRequest(
                 content = Optional(content).coerceToMissing(),
+                username = Optional(username).coerceToMissing(),
+                avatar = Optional(avatarUrl).coerceToMissing(),
                 tts = Optional(tts).coerceToMissing().toPrimitive(),
                 embeds = Optional(embeds).mapList { it.toRequest() },
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
