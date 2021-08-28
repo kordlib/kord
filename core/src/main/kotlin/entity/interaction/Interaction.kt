@@ -119,6 +119,16 @@ sealed interface InteractionCommand : KordObject {
 
     val booleans: Map<String, Boolean> get() = filterOptions()
 
+    val users: Map<String, User> get() = filterOptions()
+
+    val members: Map<String, Member> get() = filterOptions()
+
+    val channels: Map<String, ResolvedChannel> get() = filterOptions()
+
+    val roles: Map<String, Role> get() = filterOptions()
+
+    val mentionables: Map<String, Entity> get() = filterOptions()
+
     private inline fun <reified T> filterOptions(): Map<String, T> {
         return buildMap {
             options.onEach { (key, value)  ->
