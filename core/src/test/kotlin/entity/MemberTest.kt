@@ -29,11 +29,11 @@ internal class MemberTest : GuildEntityEqualityTest<Member> by GuildEntityEquali
     fun `members equal users with the same ID`() {
         val kord = mockKord()
         val memberData = mockk<MemberData>()
-        every { memberData.userId } returns Snowflake(0L)
-        every { memberData.guildId } returns Snowflake(1L)
+        every { memberData.userId } returns Snowflake(0u)
+        every { memberData.guildId } returns Snowflake(1u)
 
         val userData = mockk<UserData>()
-        every { userData.id } returns Snowflake(0L)
+        every { userData.id } returns Snowflake(0u)
         val member = Member(memberData, userData, kord)
         val user = User(userData, kord)
 

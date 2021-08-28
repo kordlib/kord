@@ -19,6 +19,8 @@ import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -67,7 +69,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val messages: Flow<Message> get() = getMessagesAfter(Snowflake(0))
+    val messages: Flow<Message> get() = getMessagesAfter(Snowflake.min)
 
     /**
      * Requests to get the pinned messages in this channel.

@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
-import java.time.Clock
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
@@ -104,7 +103,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     protected open fun createKord(): Kord {
         gateway = GatewayMock()
         return Kord(
-            resources = ClientResources("token",Snowflake(0), Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
+            resources = ClientResources("token", Snowflake(0u), Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
             cache = DataCache.none(),
             MasterGateway(mapOf(0 to gateway)),
             RestClient(KtorRequestHandler(token = "token")),

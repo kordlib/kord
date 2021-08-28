@@ -28,14 +28,37 @@ class SnowflakeTest {
     }
 
     @Test
-    fun `Deserialization of Snowflake as Long completes successfully`() {
+    fun `Deserialization of Snowflake as large String completes successfully`() {
+        val value = ULong.MAX_VALUE.toString()
+        val json = buildJsonObject {
+            put("snowflake", value)
+        }
+
+        val container = Json.decodeFromJsonElement<SnowflakeContainer>(json)
+        assertEquals(value, container.snowflake.asString)
+    }
+
+    @Test
+    fun `Deserialization of Snowflake as Number completes successfully`() {
         val value = 1337L
         val json = buildJsonObject {
             put("snowflake", value)
         }
 
         val container = Json.decodeFromJsonElement<SnowflakeContainer>(json)
-        assertEquals(value, container.snowflake.value)
+        assertEquals(value.toULong(), container.snowflake.value)
+    }
+
+    @Test
+    fun `Deserialization of Snowflake as large Number completes successfully`() {
+        // ULong is inline class and therefore cannot extend abstract class Number but put only takes Number
+        val value = ULong.MAX_VALUE.toNumber()
+        val json = buildJsonObject {
+            put("snowflake", value)
+        }
+
+        val container = Json.decodeFromJsonElement<SnowflakeContainer>(json)
+        assertEquals(value.value, container.snowflake.value)
     }
 
     @Test
@@ -46,5 +69,4 @@ class SnowflakeTest {
         val reDecodedContainer = Json.decodeFromString<SnowflakeContainer>(Json.encodeToString(container))
         assertEquals(container, reDecodedContainer)
     }
-
 }

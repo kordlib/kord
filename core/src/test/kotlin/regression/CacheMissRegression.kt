@@ -29,8 +29,6 @@ import io.ktor.http.*
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
@@ -144,7 +142,7 @@ class CacheMissingRegressions {
 
     @Test
     fun `if data not in cache explode`() {
-        val id = 5L
+        val id = 5uL
         assertThrows<IllegalStateException> {
             runBlocking {
                 kord.getChannel(Snowflake(id))
@@ -155,7 +153,7 @@ class CacheMissingRegressions {
     @Test
     fun `if data in cache don't fetch from rest`() {
         runBlocking {
-            val id = Snowflake(5L)
+            val id = Snowflake(5uL)
             kord.cache.put(ChannelData(id, ChannelType.GuildText))
 
             kord.getChannel(id)

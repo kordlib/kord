@@ -41,7 +41,7 @@ fun imageBinary(path: String): Image {
 @EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
 class RestServiceTest {
 
-    private val publicGuildId = Snowflake(322850917248663552)
+    private val publicGuildId = Snowflake(322850917248663552u)
 
     private val token = System.getenv("KORD_TEST_TOKEN")
 
@@ -387,7 +387,7 @@ class RestServiceTest {
     @Order(21)
     fun `errors are thrown correctly`() = runBlocking {
         val exception = assertThrows<RestRequestException> {
-            runBlocking { kord.getChannel(Snowflake(-500)) }
+            runBlocking { kord.getChannel(Snowflake((-500).toULong())) }
         }
 
         assert(exception.error != null)

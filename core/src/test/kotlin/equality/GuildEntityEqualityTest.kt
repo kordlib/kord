@@ -9,7 +9,7 @@ interface GuildEntityEqualityTest<T: KordEntity> : EntityEqualityTest<T> {
 
     fun newEntity(id: Snowflake, guildId: Snowflake): T
 
-    override fun newEntity(id: Snowflake): T = newEntity(id, Snowflake(1))
+    override fun newEntity(id: Snowflake): T = newEntity(id, Snowflake(1u))
 
     @Test
     fun `Guild Entity with different guild ids are not equal`() {

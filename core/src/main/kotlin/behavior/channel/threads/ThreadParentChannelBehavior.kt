@@ -97,7 +97,7 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     fun getJoinedPrivateArchivedThreads(
-        before: Snowflake = Snowflake(Long.MAX_VALUE),
+        before: Snowflake = Snowflake.max,
         limit: Int = Int.MAX_VALUE
     ): Flow<ThreadChannel> {
         return supplier.getJoinedPrivateArchivedThreads(id, before, limit)

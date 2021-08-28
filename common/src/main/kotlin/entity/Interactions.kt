@@ -1,7 +1,6 @@
 package dev.kord.common.entity
 
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -625,7 +624,7 @@ fun CommandArgument<*>.boolean(): Boolean {
 
 
 fun CommandArgument<*>.snowflake(): Snowflake {
-    val id = string().toLongOrNull() ?: error("$value wasn't a Snowflake")
+    val id = string().toULongOrNull() ?: error("$value wasn't a Snowflake")
     return Snowflake(id)
 }
 
