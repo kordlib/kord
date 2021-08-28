@@ -8,7 +8,9 @@ import dev.kord.core.behavior.channel.*
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
+import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
+import dev.kord.core.entity.interaction.ApplicationCommandInteraction
 import dev.kord.rest.service.InteractionService
 
 /**
@@ -93,6 +95,33 @@ class Unsafe(private val kord: Kord) {
     fun stageInstance(id: Snowflake, channelId: Snowflake): StageInstanceBehavior = StageInstanceBehavior(
         id, channelId, kord, kord.defaultSupplier
     )
+
+    fun applicationCommandInteraction(
+        id: Snowflake,
+        channelId: Snowflake,
+        token: String,
+        applicationId: Snowflake
+    ): ApplicationCommandInteractionBehavior {
+        return ApplicationCommandInteractionBehavior(id, channelId, token, applicationId, kord)
+    }
+
+
+    fun globalApplicationCommand(
+        applicationId: Snowflake,
+        id: Snowflake
+    ): GlobalApplicationCommandBehavior {
+        return GlobalApplicationCommandBehavior(applicationId, id, kord.rest.interaction)
+    }
+
+
+    fun globalApplicationCommand(
+        applicationId: Snowflake,
+        guildId: Snowflake,
+        id: Snowflake
+    ): GuildApplicationCommandBehavior {
+        return GuildApplicationCommandBehavior(guildId, applicationId, id, kord.rest.interaction)
+    }
+
 
     override fun toString(): String {
         return "Unsafe"

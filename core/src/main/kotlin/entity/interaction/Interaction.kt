@@ -113,11 +113,21 @@ sealed interface InteractionCommand : KordObject {
 
     val strings: Map<String, String> get() = filterOptions()
 
-    val integers: Map<String, Int> get() = filterOptions()
+    val integers: Map<String, Long> get() = filterOptions()
 
     val numbers: Map<String, Double> get() = filterOptions()
 
     val booleans: Map<String, Boolean> get() = filterOptions()
+
+    val users: Map<String, User> get() = filterOptions()
+
+    val members: Map<String, Member> get() = filterOptions()
+
+    val channels: Map<String, ResolvedChannel> get() = filterOptions()
+
+    val roles: Map<String, Role> get() = filterOptions()
+
+    val mentionables: Map<String, Entity> get() = filterOptions()
 
     private inline fun <reified T> filterOptions(): Map<String, T> {
         return buildMap {
@@ -281,7 +291,7 @@ sealed class OptionValue<out T>(val value: T) {
         override fun toString(): String = "ChannelOptionValue(value=$value)"
     }
 
-    class IntOptionValue(value: Int) : OptionValue<Int>(value) {
+    class IntOptionValue(value: Long) : OptionValue<Long>(value) {
         override fun toString(): String = "IntOptionValue(value=$value)"
     }
 
@@ -459,7 +469,7 @@ fun OptionValue<*>.string() = value.toString()
 fun OptionValue<*>.boolean() = value as Boolean
 
 
-fun OptionValue<*>.int() = value as Int
+fun OptionValue<*>.int() = value as Long
 
 
 fun OptionValue<*>.number() = value as Double

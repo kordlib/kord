@@ -38,7 +38,8 @@ data class ComponentData(
                 components.mapList { from(it) },
                 placeholder = placeholder,
                 minValues = minValues,
-                maxValues =  maxValues
+                maxValues =  maxValues,
+                options = options.mapList { SelectOptionData.from(it) }
             )
         }
 

@@ -7,10 +7,7 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
 import dev.kord.core.cache.data.InteractionData
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
-import dev.kord.core.entity.application.GuildUserCommand
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
@@ -85,7 +82,15 @@ class GlobalChatInputCommandInteraction(
  */
 sealed interface  UserCommandInteraction : ApplicationCommandInteraction {
 
-    val users get() = resolvedObjects!!.users
+    val targetId: Snowflake get() = data.data.targetId.value!!
+
+    val targetBehavior: UserBehavior get() = UserBehavior(targetId, kord)
+
+    suspend fun getTarget(): User = supplier.getUser(targetId)
+
+    suspend fun getTargetOrNull(): User? = supplier.getUserOrNull(targetId)
+
+    val users get() = resolvedObjects!!.users!!
 }
 
 /**
@@ -129,7 +134,15 @@ class GlobalUserCommandInteraction(
  */
 sealed interface  MessageCommandInteraction : ApplicationCommandInteraction {
 
-    val messages get() = resolvedObjects!!.messages
+    val targetId: Snowflake get() = data.data.targetId.value!!
+
+    val targetBehavior: UserBehavior get() = UserBehavior(targetId, kord)
+
+    suspend fun getTarget(): User = supplier.getUser(targetId)
+
+    suspend fun getTargetOrNull(): User? = supplier.getUserOrNull(targetId)
+
+    val messages get() = resolvedObjects!!.messages!!
 
 }
 

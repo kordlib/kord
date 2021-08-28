@@ -13,13 +13,13 @@ class MultiApplicationCommandBuilder {
     val commands = mutableListOf<ApplicationCommandCreateBuilder>()
 
     @OptIn(ExperimentalContracts::class)
-    inline fun message(name: String, builder: MessageCommandCreateBuilder.() -> Unit) {
+    inline fun message(name: String, builder: MessageCommandCreateBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += MessageCommandCreateBuilder(name).apply(builder)
     }
 
     @OptIn(ExperimentalContracts::class)
-    inline fun user(name: String, builder: UserCommandCreateBuilder.() -> Unit) {
+    inline fun user(name: String, builder: UserCommandCreateBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += UserCommandCreateBuilder(name).apply(builder)
     }
@@ -27,7 +27,7 @@ class MultiApplicationCommandBuilder {
     inline fun input(
         name: String,
         description: String,
-        builder: ChatInputCreateBuilder.() -> Unit) {
+        builder: ChatInputCreateBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += ChatInputCreateBuilder(name, description).apply(builder)
     }

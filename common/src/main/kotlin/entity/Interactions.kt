@@ -279,8 +279,8 @@ sealed class InteractionType(val type: Int) {
 data class InteractionCallbackData(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     val type: Optional<ApplicationCommandType> = Optional.Missing(),
-    @SerialName("target_user")
-    val targetUser: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("target_id")
+    val targetId: OptionalSnowflake = OptionalSnowflake.Missing,
     val name: Optional<String> = Optional.Missing(),
     val resolved: Optional<ResolvedObjects> = Optional.Missing(),
     val options: Optional<List<Option>> = Optional.Missing(),
@@ -422,8 +422,8 @@ sealed class CommandArgument<out T> : Option() {
 
     class IntegerArgument(
         override val name: String,
-        override val value: Int
-    ) : CommandArgument<Int>() {
+        override val value: Long
+    ) : CommandArgument<Long>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Integer
 
@@ -528,7 +528,7 @@ sealed class CommandArgument<out T> : Option() {
                         Snowflake.serializer(),
                         value.value
                     )
-                    is IntegerArgument -> encodeIntElement(descriptor, 1, value.value)
+                    is IntegerArgument -> encodeLongElement(descriptor, 1, value.value)
                     is NumberArgument -> encodeDoubleElement(descriptor, 1, value.value)
                     is StringArgument -> encodeStringElement(descriptor, 1, value.value)
                 }
@@ -548,7 +548,7 @@ sealed class CommandArgument<out T> : Option() {
                 name, json.decodeFromJsonElement(String.serializer(), element)
             )
             ApplicationCommandOptionType.Integer -> IntegerArgument(
-                name, json.decodeFromJsonElement(Int.serializer(), element)
+                name, json.decodeFromJsonElement(Long.serializer(), element)
             )
 
             ApplicationCommandOptionType.Number -> NumberArgument(
@@ -609,8 +609,8 @@ data class CommandGroup(
         get() = ApplicationCommandOptionType.SubCommandGroup
 }
 
-fun CommandArgument<*>.int(): Int {
-    return value as? Int ?: error("$value wasn't an Int.")
+fun CommandArgument<*>.int(): Long {
+    return value as? Long ?: error("$value wasn't an int.")
 }
 
 

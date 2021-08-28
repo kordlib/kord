@@ -81,7 +81,7 @@ data class ResolvedObjectsData(
 data class ApplicationInteractionData(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     val type: Optional<ApplicationCommandType> = Optional.Missing(),
-    val targetUser: OptionalSnowflake = OptionalSnowflake.Missing,
+    val targetId: OptionalSnowflake = OptionalSnowflake.Missing,
     val name: Optional<String> = Optional.Missing(),
     val options: Optional<List<OptionData>> = Optional.Missing(),
     val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing(),
@@ -99,7 +99,7 @@ data class ApplicationInteractionData(
                 ApplicationInteractionData(
                     id,
                     type,
-                    targetUser,
+                    targetId,
                     name,
                     options.map { it.map { OptionData.from(it) } },
                     resolved.map { ResolvedObjectsData.from(it, guildId) },
