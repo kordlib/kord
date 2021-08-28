@@ -54,7 +54,7 @@ class CommandsTypeTests {
         val command = InteractionCommand(data, mockKord())
         assert(command is RootCommand)
         command as RootCommand
-        assertEquals(1, command.options["argument"]?.int())
+        assertEquals(1L, command.integers["argument"])
         assertEquals("root", command.rootName)
 
     }
@@ -66,7 +66,7 @@ class CommandsTypeTests {
         val command = InteractionCommand(data, mockKord())
         assert(command is SubCommand)
         command as SubCommand
-        assertEquals(1, command.options["argument"]?.int())
+        assertEquals(1L, command.integers["argument"])
         assertEquals("root", command.rootName)
         assertEquals("subCommand", command.name)
 
@@ -79,7 +79,7 @@ class CommandsTypeTests {
         val command = InteractionCommand(data, mockKord())
         assert(command is GroupCommand)
         command as GroupCommand
-        assertEquals(1, command.options["argument"]?.int())
+        assertEquals(1L, command.integers["argument"])
         assertEquals("root", command.rootName)
         assertEquals("group", command.groupName)
         assertEquals("subCommand", command.name)
