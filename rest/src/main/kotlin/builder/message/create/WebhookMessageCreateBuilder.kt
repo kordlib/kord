@@ -19,6 +19,10 @@ class WebhookMessageCreateBuilder
 
     override var content: String? = null
 
+    var username: String? = null
+
+    var avatarUrl: String? = null
+
     override var tts: Boolean? = null
 
     override val embeds: MutableList<EmbedBuilder> = mutableListOf()
@@ -35,6 +39,8 @@ class WebhookMessageCreateBuilder
         return MultiPartWebhookExecuteRequest(
             WebhookExecuteRequest(
                 content = Optional(content).coerceToMissing(),
+                username = Optional(username).coerceToMissing(),
+                avatar = Optional(avatarUrl).coerceToMissing(),
                 tts = Optional(tts).coerceToMissing().toPrimitive(),
                 embeds = Optional(embeds).mapList { it.toRequest() },
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
