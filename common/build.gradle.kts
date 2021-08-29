@@ -6,7 +6,7 @@ plugins {
 dependencies {
     api(libs.kotlinx.datetime)
 
-    implementation(libs.bundles.common)
+    api(libs.bundles.common)
     testImplementation(libs.bundles.test.implementation)
     testRuntimeOnly(libs.bundles.test.runtime)
 }
