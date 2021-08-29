@@ -2,6 +2,7 @@ package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.*
+import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
@@ -32,7 +33,7 @@ class WebhookMessageCreateBuilder
 
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
-    override val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+    override val files: MutableList<NamedFile> = mutableListOf()
 
     @OptIn(KordPreview::class)
     override fun toRequest(): MultiPartWebhookExecuteRequest {

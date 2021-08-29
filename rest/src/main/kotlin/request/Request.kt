@@ -1,5 +1,6 @@
 package dev.kord.rest.request
 
+import dev.kord.rest.NamedFile
 import dev.kord.rest.route.Route
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
@@ -13,7 +14,7 @@ sealed class Request<B : Any, R> {
     abstract val headers: StringValues
     abstract val parameters: StringValues
     abstract val body: RequestBody<B>?
-    abstract val files: List<Pair<String, java.io.InputStream>>?
+    abstract val files: List<NamedFile>?
 
     val path: String
         get() {
@@ -64,7 +65,7 @@ class JsonRequest<B : Any, R>(
     override val headers: StringValues,
     override val body: RequestBody<B>?
 ) : Request<B, R>() {
-    override val files: List<Pair<String, java.io.InputStream>>? = null
+    override val files: List<NamedFile>? = null
 }
 
 class MultipartRequest<B : Any, R>(
@@ -73,7 +74,7 @@ class MultipartRequest<B : Any, R>(
     override val parameters: StringValues,
     override val headers: StringValues,
     override val body: RequestBody<B>?,
-    override val files: List<Pair<String, java.io.InputStream>> = emptyList()
+    override val files: List<NamedFile> = emptyList()
 ) : Request<B, R>() {
 
     val data = formData {
@@ -83,8 +84,8 @@ class MultipartRequest<B : Any, R>(
         try {
 
             files.forEachIndexed { index, pair ->
-                val name = pair.first
-                val inputStream = pair.second
+
+                val (name, inputStream) = pair
                 append(
                     "file$index",
                     inputStream.readBytes(),
@@ -92,7 +93,7 @@ class MultipartRequest<B : Any, R>(
                 )
             }
         } finally {
-            files.forEach { it.second.close() }
+            files.forEach { it.inputStream.close() }
         }
     }
 }

@@ -2,10 +2,12 @@ package dev.kord.rest.json.request
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.AllowedMentions
+import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.rest.NamedFile
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -36,7 +38,7 @@ data class WebhookExecuteRequest constructor(
 
 data class MultiPartWebhookExecuteRequest(
         val request: WebhookExecuteRequest,
-        val files: List<Pair<String, java.io.InputStream>> = emptyList()
+        val files: List<NamedFile> = emptyList()
 )
 
 @Serializable
@@ -46,10 +48,11 @@ data class WebhookEditMessageRequest(
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing()
 )
 
 data class MultipartWebhookEditMessageRequest(
     val request: WebhookEditMessageRequest,
-    val files: Optional<List<Pair<String, java.io.InputStream>>> = Optional.Missing()
+    val files: Optional<List<NamedFile>> = Optional.Missing()
 )
