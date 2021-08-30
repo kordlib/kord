@@ -128,7 +128,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
             sendEventValidAndRandomIdCheckLiveActive(userId) {
                 GuildBanAdd(
                     DiscordGuildBan(
-                        guildId = randomId().asString,
+                        guildId = randomId(),
                         user = DiscordUser(
                             id = it,
                             username = "",

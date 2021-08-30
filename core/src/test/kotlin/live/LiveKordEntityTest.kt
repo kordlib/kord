@@ -132,7 +132,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
             val eventGuildBan = GuildBanAdd(
                 DiscordGuildBan(
-                    guildId = guildId.asString,
+                    guildId = guildId,
                     user = DiscordUser(
                         id = randomId(),
                         username = "",

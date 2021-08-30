@@ -155,8 +155,8 @@ data class DiscordGuild(
     @SerialName("welcome_screen")
     val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
     @SerialName("nsfw_level")
-    val nsfwLevel: NsfwLevel
-    )
+    val nsfwLevel: NsfwLevel,
+)
 
 /**
  * A partial representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object
@@ -176,7 +176,7 @@ class DiscordPartialGuild(
     val permissions: Optional<Permissions> = Optional.Missing(),
     val features: List<GuildFeature>,
     @SerialName("welcome_screen")
-    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing()
+    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
 )
 
 /**
@@ -242,7 +242,7 @@ sealed class GuildFeature(val value: String) {
 
     /** Guild has access to the seven day archive time for threads */
     object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
-    
+
     /** Guild has access to create private threads */
     object PrivateThreads : GuildFeature("PRIVATE_THREADS")
 
@@ -320,7 +320,7 @@ enum class SystemChannelFlag(val code: Int) {
 @Serializable
 data class DiscordGuildBan(
     @SerialName("guild_id")
-    val guildId: String,
+    val guildId: Snowflake,
     val user: DiscordUser,
 )
 
@@ -402,7 +402,7 @@ data class DiscordVoiceState(
     val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val suppress: Boolean,
     @SerialName("request_to_speak_timestamp")
-    val requestToSpeakTimestamp: String?
+    val requestToSpeakTimestamp: String?,
 )
 
 /**
@@ -526,6 +526,7 @@ sealed class MFALevel(val value: Int) {
         }
     }
 }
+
 /**
  * A representation of a [Discord Guild NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level).
  */
@@ -613,12 +614,12 @@ data class DiscordWelcomeScreenChannel(
     @SerialName("emoji_id")
     val emojiId: Snowflake?,
     @SerialName("emoji_name")
-    val emojiName: String?
+    val emojiName: String?,
 )
 
 @Serializable
 data class DiscordWelcomeScreen(
     val description: String?,
     @SerialName("welcome_channels")
-    val welcomeChannels: List<DiscordWelcomeScreenChannel>
+    val welcomeChannels: List<DiscordWelcomeScreenChannel>,
 )

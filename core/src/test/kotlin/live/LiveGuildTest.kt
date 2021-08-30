@@ -104,7 +104,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             sendEventValidAndRandomId(guildId) {
                 GuildBanAdd(
                     DiscordGuildBan(
-                        guildId = it.asString,
+                        guildId = it,
                         user = DiscordUser(
                             id = randomId(),
                             username = "",
@@ -129,7 +129,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             sendEventValidAndRandomId(guildId) {
                 GuildBanRemove(
                     DiscordGuildBan(
-                        guildId = it.asString,
+                        guildId = it,
                         user = DiscordUser(
                             id = randomId(),
                             username = "",
