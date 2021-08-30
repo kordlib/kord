@@ -1,29 +1,12 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-sourceSets {
-    val samples by creating {
-        compileClasspath += sourceSets["main"].output
-        runtimeClasspath += sourceSets["main"].output
-    }
-}
-
-configurations {
-    val samplesImplementation by getting {
-        extendsFrom(configurations["implementation"])
-    }
+plugins {
+    `kord-module`
+    `kord-sampled-module`
 }
 
 dependencies {
-    api(Dependencies.`kotlinx-datetime`)
-}
+    api(libs.kotlinx.datetime)
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = Jvm.target
-        freeCompilerArgs = listOf(
-                CompilerArguments.coroutines,
-                CompilerArguments.time,
-                CompilerArguments.optIn
-        )
-    }
+    api(libs.bundles.common)
+    testImplementation(libs.bundles.test.implementation)
+    testRuntimeOnly(libs.bundles.test.runtime)
 }

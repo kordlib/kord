@@ -1,14 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-sourceSets {
-    val samples by creating {
-        compileClasspath += sourceSets["main"].output
-        runtimeClasspath += sourceSets["main"].output
-    }
-}
-
-val samplesImplementation by configurations.getting {
-    extendsFrom(configurations["implementation"])
+plugins {
+    `kord-module`
+    `kord-sampled-module`
 }
 
 dependencies {
@@ -17,31 +11,20 @@ dependencies {
     api(gateway)
     api(voice)
 
-    api(Dependencies.`cache-api`) {
-        version {
-            strictly("[0.3.0, 0.4.0[")
-            prefer("latest.release")        }
-    }
+    implementation(libs.bundles.common)
 
-    api(Dependencies.`cache-map`) {
-        version {
-            strictly("[0.3.0, 0.4.0[")
-            prefer("latest.release")
-        }
-    }
+    api(libs.kord.cache.api)
+    api(libs.kord.cache.map)
 
-    samplesImplementation(Dependencies.sl4j)
-    testImplementation(Dependencies.mockk)
+    @Suppress("UnstableApiUsage")
+    samplesImplementation(libs.slf4j.simple)
+    testImplementation(libs.mockk)
+    testImplementation(libs.bundles.test.implementation)
+    testRuntimeOnly(libs.bundles.test.runtime)
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = Jvm.target
-        freeCompilerArgs = listOf(
-            CompilerArguments.coroutines,
-            CompilerArguments.time,
-            CompilerArguments.stdLib,
-            CompilerArguments.optIn
-        )
+        freeCompilerArgs = freeCompilerArgs + CompilerArguments.stdLib
     }
 }
