@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.channel
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Permission
@@ -63,14 +62,14 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
      * @throws [RequestException] if something went wrong during the request.
      */
     suspend fun follow(target: Snowflake) {
-        kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target.asString))
+        kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target))
     }
 
 
     suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
+        reason: String? = null,
     ): NewsChannelThread {
         return unsafeStartThread(name, archiveDuration, ChannelType.PublicNewsThread, reason) as NewsChannelThread
     }
@@ -79,7 +78,7 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
         messageId: Snowflake,
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
+        reason: String? = null,
     ): NewsChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration, reason) as NewsChannelThread
     }
@@ -101,7 +100,7 @@ fun NewsChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
 ): NewsChannelBehavior = object : NewsChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id
