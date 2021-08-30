@@ -69,7 +69,7 @@ interface UserBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     suspend fun getDmChannel(): DmChannel {
-        val response = kord.rest.user.createDM(DMCreateRequest(id.asString))
+        val response = kord.rest.user.createDM(DMCreateRequest(id))
         val data = ChannelData.from(response)
 
         return Channel.from(data, kord) as DmChannel
@@ -106,7 +106,7 @@ interface UserBehavior : KordEntity, Strategizable {
 fun UserBehavior(
     id: Snowflake,
     kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
 ): UserBehavior = object : UserBehavior {
     override val id: Snowflake = id
     override val kord: Kord = kord
