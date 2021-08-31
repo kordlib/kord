@@ -72,5 +72,7 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : KordE
 }
 
 fun Attachment.toRawType(): DiscordAttachment {
-    return DiscordAttachment(id, filename, size, url, proxyUrl, height?.optionalInt(), width?.optionalInt())
+    with(data) {
+        return DiscordAttachment(id, filename, size, url, proxyUrl, height, width)
+    }
 }
