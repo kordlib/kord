@@ -11,27 +11,43 @@ import kotlin.test.*
 class SnowflakeTest {
 
     @Test
-    fun `Snowflake with value ULong MIN_VALUE has timeStamp equal to discordEpochStart`() {
+    fun `min Snowflake's timeStamp is equal to discordEpochStart`() {
+        assertEquals(Snowflake.discordEpochStart, Snowflake.min.timeStamp)
+    }
+
+    @Test
+    fun `max Snowflake's timeStamp is equal to endOfTime`() {
+        assertEquals(Snowflake.endOfTime, Snowflake.max.timeStamp)
+    }
+
+    @Test
+    fun `Snowflake created from ULong MIN_VALUE has timeStamp equal to discordEpochStart`() {
         val snowflake = Snowflake(ULong.MIN_VALUE)
         assertEquals(Snowflake.discordEpochStart, snowflake.timeStamp)
     }
 
     @Test
-    fun `Snowflake with value ULong MAX_VALUE has timeStamp equal to endOfTime`() {
+    fun `Snowflake created from ULong MAX_VALUE has timeStamp equal to endOfTime`() {
         val snowflake = Snowflake(ULong.MAX_VALUE)
         assertEquals(Snowflake.endOfTime, snowflake.timeStamp)
     }
 
     @Test
-    fun `Snowflake created from instant far in the past has timeStamp equal to the timeStamp of Snowflake min`() {
-        val snowflake = Snowflake(Instant.DISTANT_PAST)
-        assertEquals(Snowflake.min.timeStamp, snowflake.timeStamp)
+    fun `Snowflake created from Long MIN_VALUE has timeStamp equal to discordEpochStart`() {
+        val snowflake = Snowflake(Long.MIN_VALUE)
+        assertEquals(Snowflake.discordEpochStart, snowflake.timeStamp)
     }
 
     @Test
-    fun `Snowflake created from instant far in the future has timeStamp equal to the timeStamp of Snowflake max`() {
+    fun `Snowflake created from instant far in the past has timeStamp equal to discordEpochStart`() {
+        val snowflake = Snowflake(Instant.DISTANT_PAST)
+        assertEquals(Snowflake.discordEpochStart, snowflake.timeStamp)
+    }
+
+    @Test
+    fun `Snowflake created from instant far in the future has timeStamp equal to endOfTime`() {
         val snowflake = Snowflake(Instant.DISTANT_FUTURE)
-        assertEquals(Snowflake.max.timeStamp, snowflake.timeStamp)
+        assertEquals(Snowflake.endOfTime, snowflake.timeStamp)
     }
 
     @Test

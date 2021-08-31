@@ -1,5 +1,6 @@
 package dev.kord.common.entity
 
+import dev.kord.common.entity.Snowflake.Companion.validULongRange
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -14,20 +15,36 @@ import kotlin.time.TimeMark
 
 /**
  * A unique identifier for entities [used by discord](https://discord.com/developers/docs/reference#snowflakes).
+ * Snowflakes are IDs with a [timeStamp], which makes them [comparable][Comparable] based on their timestamp.
  *
  * Note: this class has a natural ordering that is inconsistent with [equals],
  * since [compareTo] only compares the first 42 bits of the ULong [value] (comparing the timestamp),
  * whereas [equals] uses all bits of the ULong [value].
  * [compareTo] can return `0` even if [equals] returns `false`,
  * but [equals] only returns `true` if [compareTo] returns `0`.
- *
- * @constructor Creates a Snowflake from a given ULong [value].
  */
 @Serializable(with = Snowflake.Serializer::class)
-class Snowflake(val value: ULong) : Comparable<Snowflake> {
+class Snowflake : Comparable<Snowflake> {
+
+    /**
+     * The raw value of this Snowflake as specified
+     * [here](https://discord.com/developers/docs/reference#snowflakes).
+     */
+    val value: ULong
+
+    /**
+     * Creates a Snowflake from a given ULong [value].
+     *
+     * Values are [coerced in][coerceIn] [validULongRange].
+     */
+    constructor(value: ULong) {
+        this.value = value.coerceIn(validULongRange)
+    }
 
     /**
      * Creates a Snowflake from a given String [value], parsing it as a [ULong] value.
+     *
+     * Values are [coerced in][coerceIn] [validULongRange].
      */
     constructor(value: String) : this(value.toULong())
 
@@ -35,7 +52,7 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
      * Creates a Snowflake from a given [instant].
      *
      * If the given [instant] is too far in the past / future, this constructor will create
-     * an instance with a [timeStamp] equal to [Snowflake.min] / [Snowflake.max].
+     * an instance with a [timeStamp] equal to the timeStamp of [Snowflake.min] / [Snowflake.max].
      */
     constructor(instant: Instant) : this(
         instant.toEpochMilliseconds()
@@ -43,7 +60,7 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
             .minus(discordEpochLong)
             .coerceAtMost(maxMillisecondsSinceDiscordEpoch) // time after is unknown to Snowflakes
             .toULong()
-            .shl(22)
+            .shl(nonTimestampBitCount)
     )
 
     /**
@@ -54,14 +71,16 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
     /**
      * The point in time this Snowflake represents.
      */
-    val timeStamp: Instant get() = Instant.fromEpochMilliseconds(discordEpochLong + (value shr 22).toLong())
+    val timeStamp: Instant
+        get() = Instant.fromEpochMilliseconds(value.shr(nonTimestampBitCount).toLong().plus(discordEpochLong))
 
     /**
      * A [TimeMark] for the point in time this Snowflake represents.
      */
     val timeMark: TimeMark get() = SnowflakeTimeMark(timeStamp)
 
-    override fun compareTo(other: Snowflake): Int = value.shr(22).compareTo(other.value.shr(22))
+    override fun compareTo(other: Snowflake): Int =
+        value.shr(nonTimestampBitCount).compareTo(other.value.shr(nonTimestampBitCount))
 
     override fun toString(): String = "Snowflake(value=$value)"
 
@@ -72,8 +91,17 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
     }
 
     companion object {
-        private const val discordEpochLong = 1420070400000L                                 // 42 one bits
-        private const val maxMillisecondsSinceDiscordEpoch = 0b111111111111111111111111111111111111111111L
+        private const val nonTimestampBitCount = 22
+        private const val discordEpochLong = 1420070400000L
+
+        /**
+         * The range that contains all valid raw Snowflake [value]s.
+         *
+         * Note that this range might change in the future.
+         */
+        val validULongRange: ULongRange = ULong.MIN_VALUE..Long.MAX_VALUE.toULong() // 0..9223372036854775807
+
+        private val maxMillisecondsSinceDiscordEpoch = validULongRange.last.shr(nonTimestampBitCount).toLong()
 
         /**
          * The point in time that marks the Discord Epoch (the first second of 2015).
@@ -89,13 +117,13 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
          * The maximum value a Snowflake can hold.
          * Useful when requesting paginated entities.
          */
-        val max: Snowflake = Snowflake(ULong.MAX_VALUE)
+        val max: Snowflake = Snowflake(validULongRange.last)
 
         /**
          * The minimum value a Snowflake can hold.
          * Useful when requesting paginated entities.
          */
-        val min: Snowflake = Snowflake(ULong.MIN_VALUE)
+        val min: Snowflake = Snowflake(validULongRange.first)
     }
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -120,7 +148,6 @@ private class SnowflakeTimeMark(private val timeStamp: Instant) : TimeMark() {
 /**
  * Creates a [Snowflake] from a given Long [value].
  *
- * Note: a negative [value] will be interpreted as an unsigned integer with the same binary representation, e.g.
- * passing `-1L` for [value] will return a [Snowflake] with a [value][Snowflake.value] of [ULong.MAX_VALUE].
+ * Values are [coerced in][coerceIn] [validULongRange].
  */
-fun Snowflake(value: Long): Snowflake = Snowflake(value.toULong())
+fun Snowflake(value: Long): Snowflake = Snowflake(value.coerceAtLeast(0).toULong())

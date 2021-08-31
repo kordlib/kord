@@ -10,13 +10,15 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Represents a value that encapsulate [the optional and value state of a Long in the Discord API](https://discord.com/developers/docs/reference#nullable-and-optional-resource-fields).
- * Specifically:
-
- * * [Missing] - a Long field that was not present in the serialized entity.
- * * [Value] - a Long field that was assigned a non-null value in the serialized entity.
+ * Represents a value that encapsulate a [Snowflake]'s
+ * [optional and value state in the Discord API](https://discord.com/developers/docs/reference#nullable-and-optional-resource-fields).
  *
- * > Note that there is no nullable variant present. Use Long? or `OptionalSnowflake?` for this case instead.
+ * Specifically:
+ *
+ * * [Missing] - a [Snowflake] field that was not present in the serialized entity.
+ * * [Value] - a [Snowflake] field that was assigned a non-null value in the serialized entity.
+ *
+ * > Note that there is no nullable variant present. Use `Snowflake?` or `OptionalSnowflake?` for this case instead.
  *
  * The base class is (de)serializable with kotlinx.serialization.
  *
@@ -56,17 +58,18 @@ sealed class OptionalSnowflake {
     }
 
     /**
-     * Represents a Long field that was not present in the serialized entity.
+     * Represents a [Snowflake] field that was not present in the serialized entity.
      */
     object Missing : OptionalSnowflake() {
         override fun toString(): String = "OptionalSnowflake.Missing"
     }
 
     /**
-     * Represents a field that was assigned a non-null value in the serialized entity.
+     * Represents a [Snowflake] field that was assigned a non-null value in the serialized entity.
      * Equality and hashcode is implemented through its [value].
      *
-     * @param uLongValue the value this optional wraps.
+     * @param uLongValue the raw value this optional wraps.
+     * See [Snowflake.value] and [Snowflake.validULongRange] for more details.
      */
     class Value(private val uLongValue: ULong) : OptionalSnowflake() {
 
@@ -91,8 +94,8 @@ sealed class OptionalSnowflake {
 
     @OptIn(ExperimentalSerializationApi::class)
     internal object Serializer : KSerializer<OptionalSnowflake> {
-        override val descriptor: SerialDescriptor
-            get() = @OptIn(ExperimentalUnsignedTypes::class) ULong.serializer().descriptor
+        override val descriptor: SerialDescriptor =
+            @OptIn(ExperimentalUnsignedTypes::class) ULong.serializer().descriptor
 
         override fun deserialize(decoder: Decoder): OptionalSnowflake =
             Value(decoder.decodeInline(descriptor).decodeLong().toULong())
@@ -101,9 +104,7 @@ sealed class OptionalSnowflake {
             Missing -> Unit // ignore value
             is Value -> encoder.encodeInline(descriptor).encodeLong(value.value.value.toLong())
         }
-
     }
-
 }
 
 /**
