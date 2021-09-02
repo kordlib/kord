@@ -155,7 +155,7 @@ data class DiscordGuild(
     @SerialName("welcome_screen")
     val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
     @SerialName("nsfw_level")
-    val nsfwLevel: NsfwLevel,
+    val nsfwLevel: NsfwLevel
 )
 
 /**
@@ -176,7 +176,7 @@ class DiscordPartialGuild(
     val permissions: Optional<Permissions> = Optional.Missing(),
     val features: List<GuildFeature>,
     @SerialName("welcome_screen")
-    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
+    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing()
 )
 
 /**
@@ -402,7 +402,7 @@ data class DiscordVoiceState(
     val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val suppress: Boolean,
     @SerialName("request_to_speak_timestamp")
-    val requestToSpeakTimestamp: String?,
+    val requestToSpeakTimestamp: String?
 )
 
 /**
@@ -614,12 +614,12 @@ data class DiscordWelcomeScreenChannel(
     @SerialName("emoji_id")
     val emojiId: Snowflake?,
     @SerialName("emoji_name")
-    val emojiName: String?,
+    val emojiName: String?
 )
 
 @Serializable
 data class DiscordWelcomeScreen(
     val description: String?,
     @SerialName("welcome_channels")
-    val welcomeChannels: List<DiscordWelcomeScreenChannel>,
+    val welcomeChannels: List<DiscordWelcomeScreenChannel>
 )

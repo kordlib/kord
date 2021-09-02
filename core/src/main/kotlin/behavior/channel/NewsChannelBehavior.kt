@@ -69,7 +69,7 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
     suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null,
+        reason: String? = null
     ): NewsChannelThread {
         return unsafeStartThread(name, archiveDuration, ChannelType.PublicNewsThread, reason) as NewsChannelThread
     }
@@ -78,7 +78,7 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
         messageId: Snowflake,
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null,
+        reason: String? = null
     ): NewsChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration, reason) as NewsChannelThread
     }
@@ -100,7 +100,7 @@ fun NewsChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ): NewsChannelBehavior = object : NewsChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id

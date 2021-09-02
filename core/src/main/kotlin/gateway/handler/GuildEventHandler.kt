@@ -27,7 +27,7 @@ internal class GuildEventHandler(
     kord: Kord,
     gateway: MasterGateway,
     cache: DataCache,
-    coreFlow: MutableSharedFlow<CoreEvent>,
+    coreFlow: MutableSharedFlow<CoreEvent>
 ) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
 
     override suspend fun handle(event: Event, shard: Int) = when (event) {

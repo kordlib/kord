@@ -15,18 +15,18 @@ data class DMCreateRequest(
 data class GroupDMCreateRequest(
     @SerialName("access_tokens")
     val tokens: List<String>,
-    val nick: Map<String, String>,
+    val nick: Map<String, String>
 )
 
 @Serializable
 data class CurrentUserModifyRequest(
     val username: Optional<String> = Optional.Missing(),
-    val avatar: Optional<String?> = Optional.Missing(),
+    val avatar: Optional<String?> = Optional.Missing()
 )
 
 @Serializable
 data class UserAddDMRequest(
     @SerialName("access_token")
     val token: String,
-    val nick: String,
+    val nick: String
 )

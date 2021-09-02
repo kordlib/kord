@@ -106,7 +106,7 @@ interface UserBehavior : KordEntity, Strategizable {
 fun UserBehavior(
     id: Snowflake,
     kord: Kord,
-    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ): UserBehavior = object : UserBehavior {
     override val id: Snowflake = id
     override val kord: Kord = kord
