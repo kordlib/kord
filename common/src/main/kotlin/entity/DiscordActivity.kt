@@ -25,7 +25,7 @@ data class DiscordActivity(
     val url: Optional<String?> = Optional.Missing(),
     @SerialName("created_at")
     val createdAt: Long,
-    val timestamps: Optional<DiscordActivityTimeStamps> = Optional.Missing(),
+    val timestamps: Optional<DiscordActivityTimestamps> = Optional.Missing(),
     @SerialName("application_id")
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val details: Optional<String?> = Optional.Missing(),
@@ -67,9 +67,15 @@ class ActivityFlags(val value: Int) {
     }
 }
 
+@Deprecated(
+    "DiscordActivityTimeStamps was renamed to DiscordActivityTimestamps.",
+    ReplaceWith("DiscordActivityTimestamps"),
+    DeprecationLevel.ERROR,
+)
+typealias DiscordActivityTimeStamps = DiscordActivityTimestamps
 
 @Serializable
-data class DiscordActivityTimeStamps(
+data class DiscordActivityTimestamps(
     val start: OptionalLong = OptionalLong.Missing,
     val end: OptionalLong = OptionalLong.Missing
 )

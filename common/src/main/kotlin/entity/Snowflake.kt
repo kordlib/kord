@@ -15,7 +15,7 @@ import kotlin.time.TimeMark
 
 /**
  * A unique identifier for entities [used by discord](https://discord.com/developers/docs/reference#snowflakes).
- * Snowflakes are IDs with a [timeStamp], which makes them [comparable][Comparable] based on their timestamp.
+ * Snowflakes are IDs with a [timestamp], which makes them [comparable][Comparable] based on their timestamp.
  *
  * Note: this class has a natural ordering that is inconsistent with [equals],
  * since [compareTo] only compares the first 42 bits of the ULong [value] (comparing the timestamp),
@@ -49,13 +49,13 @@ class Snowflake : Comparable<Snowflake> {
     constructor(value: String) : this(value.toULong())
 
     /**
-     * Creates a Snowflake from a given [instant].
+     * Creates a Snowflake from a given [timestamp].
      *
-     * If the given [instant] is too far in the past / future, this constructor will create
-     * an instance with a [timeStamp] equal to the timeStamp of [Snowflake.min] / [Snowflake.max].
+     * If the given timestamp is too far in the past / future, this constructor will create an instance with a
+     * [timestamp][Snowflake.timestamp] equal to the timestamp of [Snowflake.min] / [Snowflake.max].
      */
-    constructor(instant: Instant) : this(
-        instant.toEpochMilliseconds()
+    constructor(timestamp: Instant) : this(
+        timestamp.toEpochMilliseconds()
             .coerceAtLeast(discordEpochLong) // time before is unknown to Snowflakes
             .minus(discordEpochLong)
             .coerceAtMost(maxMillisecondsSinceDiscordEpoch) // time after is unknown to Snowflakes
@@ -71,13 +71,20 @@ class Snowflake : Comparable<Snowflake> {
     /**
      * The point in time this Snowflake represents.
      */
+    @Deprecated("timeStamp was renamed to timestamp.", ReplaceWith("timestamp"), DeprecationLevel.ERROR)
     val timeStamp: Instant
+        get() = timestamp
+
+    /**
+     * The point in time this Snowflake represents.
+     */
+    val timestamp: Instant
         get() = Instant.fromEpochMilliseconds(value.shr(nonTimestampBitCount).toLong().plus(discordEpochLong))
 
     /**
      * A [TimeMark] for the point in time this Snowflake represents.
      */
-    val timeMark: TimeMark get() = SnowflakeTimeMark(timeStamp)
+    val timeMark: TimeMark get() = SnowflakeTimeMark(timestamp)
 
     override fun compareTo(other: Snowflake): Int =
         value.shr(nonTimestampBitCount).compareTo(other.value.shr(nonTimestampBitCount))
@@ -151,9 +158,9 @@ class Snowflake : Comparable<Snowflake> {
     }
 }
 
-private class SnowflakeTimeMark(private val timeStamp: Instant) : TimeMark() {
+private class SnowflakeTimeMark(private val timestamp: Instant) : TimeMark() {
 
-    override fun elapsedNow(): Duration = Clock.System.now() - timeStamp
+    override fun elapsedNow(): Duration = Clock.System.now() - timestamp
 }
 
 /**

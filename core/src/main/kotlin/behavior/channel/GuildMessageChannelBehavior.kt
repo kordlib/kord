@@ -1,18 +1,13 @@
 package dev.kord.core.behavior.channel
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.GuildMessageChannel
-import dev.kord.core.entity.channel.TopGuildMessageChannel
-import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.request.BulkDeleteRequest
 import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Clock
-import java.util.*
 import kotlin.time.Duration
 
 /**
@@ -33,7 +28,7 @@ interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBeha
         //split up in bulk delete and manual delete
         // if message.timeMark + 14 days > now, then the message isn't 14 days old yet, and we can add it to the bulk delete
         // if message.timeMark + 14 days < now, then the message is more than 14 days old, and we'll have to manually delete them
-        val (younger, older) = messages.partition { it.timeStamp > daysLimit }
+        val (younger, older) = messages.partition { it.timestamp > daysLimit }
 
         younger.chunked(100).forEach {
             if (it.size < 2) kord.rest.channel.deleteMessage(id, it.first(), reason)

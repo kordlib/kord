@@ -12,8 +12,16 @@ data class CurrentVoiceStateModifyRequest(
     val channelId: Snowflake,
     val suppress: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("request_to_speak_timestamp")
-    val requestToSpeakTimeStamp: Optional<String> = Optional.Missing()
-)
+    val requestToSpeakTimestamp: Optional<String> = Optional.Missing(),
+) {
+    @Deprecated(
+        "requestToSpeakTimeStamp was renamed to requestToSpeakTimestamp.",
+        ReplaceWith("requestToSpeakTimestamp"),
+        DeprecationLevel.ERROR,
+    )
+    val requestToSpeakTimeStamp: Optional<String>
+        get() = requestToSpeakTimestamp
+}
 
 
 @Serializable
