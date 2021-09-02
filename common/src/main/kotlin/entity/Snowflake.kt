@@ -106,7 +106,18 @@ class Snowflake : Comparable<Snowflake> {
         /**
          * The point in time that marks the Discord Epoch (the first second of 2015).
          */
-        val discordEpochStart: Instant = Instant.fromEpochMilliseconds(discordEpochLong)
+        @Deprecated(
+            "Snowflake.discordEpochStart was renamed to Snowflake.discordEpoch.",
+            ReplaceWith("Snowflake.discordEpoch"),
+            DeprecationLevel.ERROR,
+        )
+        val discordEpochStart: Instant
+            get() = discordEpoch
+
+        /**
+         * The point in time that marks the Discord Epoch (the first second of 2015).
+         */
+        val discordEpoch: Instant = Instant.fromEpochMilliseconds(discordEpochLong)
 
         /**
          * The last point in time a Snowflake can represent.

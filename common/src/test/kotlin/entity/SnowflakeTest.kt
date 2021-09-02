@@ -11,8 +11,8 @@ import kotlin.test.*
 class SnowflakeTest {
 
     @Test
-    fun `min Snowflake's timeStamp is equal to discordEpochStart`() {
-        assertEquals(Snowflake.discordEpochStart, Snowflake.min.timeStamp)
+    fun `min Snowflake's timeStamp is equal to discordEpoch`() {
+        assertEquals(Snowflake.discordEpoch, Snowflake.min.timeStamp)
     }
 
     @Test
@@ -21,9 +21,9 @@ class SnowflakeTest {
     }
 
     @Test
-    fun `Snowflake created from ULong MIN_VALUE has timeStamp equal to discordEpochStart`() {
+    fun `Snowflake created from ULong MIN_VALUE has timeStamp equal to discordEpoch`() {
         val snowflake = Snowflake(ULong.MIN_VALUE)
-        assertEquals(Snowflake.discordEpochStart, snowflake.timeStamp)
+        assertEquals(Snowflake.discordEpoch, snowflake.timeStamp)
     }
 
     @Test
@@ -33,15 +33,15 @@ class SnowflakeTest {
     }
 
     @Test
-    fun `Snowflake created from Long MIN_VALUE has timeStamp equal to discordEpochStart`() {
+    fun `Snowflake created from Long MIN_VALUE has timeStamp equal to discordEpoch`() {
         val snowflake = Snowflake(Long.MIN_VALUE)
-        assertEquals(Snowflake.discordEpochStart, snowflake.timeStamp)
+        assertEquals(Snowflake.discordEpoch, snowflake.timeStamp)
     }
 
     @Test
-    fun `Snowflake created from instant far in the past has timeStamp equal to discordEpochStart`() {
+    fun `Snowflake created from instant far in the past has timeStamp equal to discordEpoch`() {
         val snowflake = Snowflake(Instant.DISTANT_PAST)
-        assertEquals(Snowflake.discordEpochStart, snowflake.timeStamp)
+        assertEquals(Snowflake.discordEpoch, snowflake.timeStamp)
     }
 
     @Test
