@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 val ids = generateSequence {
-    Random.nextULong(Snowflake.validULongRange) // limit to valid range to guarantee distinct generated Snowflakes
+    Random.nextULong(Snowflake.validValues) // limit to valid range to guarantee distinct generated Snowflakes
 }.distinct().iterator()
 
 fun randomId() = Snowflake(ids.next())

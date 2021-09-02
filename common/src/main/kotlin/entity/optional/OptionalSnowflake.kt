@@ -69,7 +69,7 @@ sealed class OptionalSnowflake {
      * Equality and hashcode is implemented through its [value].
      *
      * @param uLongValue the raw value this optional wraps.
-     * See [Snowflake.value] and [Snowflake.validULongRange] for more details.
+     * See [Snowflake.value] and [Snowflake.validValues] for more details.
      */
     class Value(private val uLongValue: ULong) : OptionalSnowflake() {
 

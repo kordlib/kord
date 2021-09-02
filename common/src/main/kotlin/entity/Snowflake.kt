@@ -1,6 +1,6 @@
 package dev.kord.common.entity
 
-import dev.kord.common.entity.Snowflake.Companion.validULongRange
+import dev.kord.common.entity.Snowflake.Companion.validValues
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -35,16 +35,16 @@ class Snowflake : Comparable<Snowflake> {
     /**
      * Creates a Snowflake from a given ULong [value].
      *
-     * Values are [coerced in][coerceIn] [validULongRange].
+     * Values are [coerced in][coerceIn] [validValues].
      */
     constructor(value: ULong) {
-        this.value = value.coerceIn(validULongRange)
+        this.value = value.coerceIn(validValues)
     }
 
     /**
      * Creates a Snowflake from a given String [value], parsing it as a [ULong] value.
      *
-     * Values are [coerced in][coerceIn] [validULongRange].
+     * Values are [coerced in][coerceIn] [validValues].
      */
     constructor(value: String) : this(value.toULong())
 
@@ -102,13 +102,13 @@ class Snowflake : Comparable<Snowflake> {
         private const val discordEpochLong = 1420070400000L
 
         /**
-         * The range that contains all valid raw Snowflake [value]s.
+         * A range that contains all valid raw Snowflake [value]s.
          *
          * Note that this range might change in the future.
          */
-        val validULongRange: ULongRange = ULong.MIN_VALUE..Long.MAX_VALUE.toULong() // 0..9223372036854775807
+        val validValues: ULongRange = ULong.MIN_VALUE..Long.MAX_VALUE.toULong() // 0..9223372036854775807
 
-        private val maxMillisecondsSinceDiscordEpoch = validULongRange.last.shr(nonTimestampBitCount).toLong()
+        private val maxMillisecondsSinceDiscordEpoch = validValues.last.shr(nonTimestampBitCount).toLong()
 
         /**
          * The point in time that marks the Discord Epoch (the first second of 2015).
@@ -135,13 +135,13 @@ class Snowflake : Comparable<Snowflake> {
          * The maximum value a Snowflake can hold.
          * Useful when requesting paginated entities.
          */
-        val max: Snowflake = Snowflake(validULongRange.last)
+        val max: Snowflake = Snowflake(validValues.last)
 
         /**
          * The minimum value a Snowflake can hold.
          * Useful when requesting paginated entities.
          */
-        val min: Snowflake = Snowflake(validULongRange.first)
+        val min: Snowflake = Snowflake(validValues.first)
     }
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -166,6 +166,6 @@ private class SnowflakeTimeMark(private val timestamp: Instant) : TimeMark() {
 /**
  * Creates a [Snowflake] from a given Long [value].
  *
- * Values are [coerced in][coerceIn] [validULongRange].
+ * Values are [coerced in][coerceIn] [validValues].
  */
 fun Snowflake(value: Long): Snowflake = Snowflake(value.coerceAtLeast(0).toULong())
