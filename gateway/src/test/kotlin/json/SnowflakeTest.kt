@@ -29,7 +29,7 @@ class SnowflakeTest {
 
     @Test
     fun `Deserialization of Snowflake as large String completes successfully`() {
-        val value = ULong.MAX_VALUE.toString()
+        val value = Snowflake.validULongRange.last.toString()
         val json = buildJsonObject {
             put("snowflake", value)
         }
@@ -52,7 +52,7 @@ class SnowflakeTest {
     @Test
     fun `Deserialization of Snowflake as large Number completes successfully`() {
         // ULong is inline class and therefore cannot extend abstract class Number but put only takes Number
-        val value = ULong.MAX_VALUE.toNumber()
+        val value = Snowflake.validULongRange.last.toNumber()
         val json = buildJsonObject {
             put("snowflake", value)
         }

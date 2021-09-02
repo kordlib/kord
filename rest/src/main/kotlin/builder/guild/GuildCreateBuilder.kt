@@ -30,7 +30,7 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
      * Iterator that generates unique ids for roles and channels.
      */
     val snowflakeGenerator by lazy(LazyThreadSafetyMode.NONE) {
-        generateSequence { Random.nextULong() }.filter {
+        generateSequence { Random.nextULong(Snowflake.validULongRange) }.filter {
             it !in roles.map { role -> role.id.value?.value }
                     && it !in channels.map { channel -> channel.id.value?.value }
                     && Snowflake(it) != systemChannelId
