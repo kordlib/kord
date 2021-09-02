@@ -3,6 +3,7 @@ package dev.kord.core
 import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
 import dev.kord.common.entity.PresenceStatus
@@ -210,6 +211,7 @@ class Kord(
      * returns null if the [Channel] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the channel wasn't present.
      */
     suspend fun getChannel(
         id: Snowflake,
@@ -297,9 +299,9 @@ class Kord(
 
     /**
      * Requests to get the [User] that with the [id] through the [strategy],
-     * returns null if the [User] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
      */
     suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User? =
         strategy.supply(this).getUserOrNull(id)
