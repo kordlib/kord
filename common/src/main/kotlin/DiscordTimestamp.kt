@@ -23,10 +23,8 @@ data class DiscordTimestamp(
     val style: DiscordTimestampStyle = DiscordTimestampStyle.ShortDateTime
 ) : Comparable<DiscordTimestamp> {
 
-    /**
-     * Assemble the timestamp to the format supported by discord
-     */
-    override fun toString(): String = "<t:$time:${style.style}>"
+    val value: String
+        get() = "<t:$time:${style.style}>"
 
     override fun equals(other: Any?): Boolean = other is DiscordTimestamp && other.time == time
     operator fun plus(value: Long): DiscordTimestamp = DiscordTimestamp(time + value, style)
@@ -37,6 +35,8 @@ data class DiscordTimestamp(
         time < other.time -> -1
         else -> 0
     }
+
+    override fun toString() = value
 }
 
 fun LocalDateTime.toDiscordTimestamp(style: DiscordTimestampStyle? = null) =
