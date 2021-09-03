@@ -1,5 +1,6 @@
 package dev.kord.common
 
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
@@ -40,6 +41,9 @@ data class DiscordTimestamp(
 
 fun LocalDateTime.toDiscordTimestamp(style: DiscordTimestampStyle? = null) =
     DiscordTimestamp(toInstant(TimeZone.UTC).toEpochMilliseconds(), style ?: DiscordTimestampStyle.ShortDateTime)
+
+fun Instant.toDiscordTimestamp(style: DiscordTimestampStyle? = null) =
+    DiscordTimestamp(toEpochMilliseconds(), style ?: DiscordTimestampStyle.ShortDateTime)
 
 /**
  * The class representing the [style of a timestamp](https://discord.com/developers/docs/reference#message-formatting-timestamp-styles)
