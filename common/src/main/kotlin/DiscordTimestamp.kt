@@ -30,20 +30,16 @@ data class DiscordTimestamp(
     operator fun plus(value: Long): DiscordTimestamp = DiscordTimestamp(time + value, style)
     operator fun minus(value: Long): DiscordTimestamp = DiscordTimestamp(time - value, style)
 
-    override fun compareTo(other: DiscordTimestamp): Int = when {
-        time > other.time -> 1
-        time < other.time -> -1
-        else -> 0
-    }
+    override fun compareTo(other: DiscordTimestamp): Int = time.compareTo(other.time)
 
     override fun toString() = value
 }
 
-fun LocalDateTime.toDiscordTimestamp(style: DiscordTimestampStyle? = null) =
-    DiscordTimestamp(toInstant(TimeZone.UTC).toEpochMilliseconds(), style ?: DiscordTimestampStyle.ShortDateTime)
+fun LocalDateTime.toDiscordTimestamp(style: DiscordTimestampStyle = DiscordTimestampStyle.ShortDateTime) =
+    toInstant(TimeZone.UTC).toDiscordTimestamp(style)
 
-fun Instant.toDiscordTimestamp(style: DiscordTimestampStyle? = null) =
-    DiscordTimestamp(toEpochMilliseconds(), style ?: DiscordTimestampStyle.ShortDateTime)
+fun Instant.toDiscordTimestamp(style: DiscordTimestampStyle = DiscordTimestampStyle.ShortDateTime) =
+    DiscordTimestamp(toEpochMilliseconds(), style)
 
 /**
  * The class representing the [style of a timestamp](https://discord.com/developers/docs/reference#message-formatting-timestamp-styles)
