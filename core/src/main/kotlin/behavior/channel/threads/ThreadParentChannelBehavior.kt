@@ -38,7 +38,7 @@ interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
 
     /**
      * Returns archived threads in the channel that are public.
-     * Threads are ordered by [ThreadChannel.archiveTimeStamp] in descending order.
+     * Threads are ordered by [ThreadChannel.archiveTimestamp] in descending order.
      * Requires the [Read Message History Permission][dev.kord.common.entity.Permission.ReadMessageHistory]
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
@@ -73,7 +73,7 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
 
     /**
      * Returns archived threads in the channel that are private.
-     * Threads are ordered by [archive timestamp][ThreadChannel.archiveTimeStamp] in descending order.
+     * Threads are ordered by [archive timestamp][ThreadChannel.archiveTimestamp] in descending order.
      * Requires the [Read Message History Permission][dev.kord.common.entity.Permission.ReadMessageHistory] and
      * [Manage Threads Permission][dev.kord.common.entity.Permission.ManageThreads]
      *

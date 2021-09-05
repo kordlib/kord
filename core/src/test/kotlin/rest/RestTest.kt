@@ -10,15 +10,14 @@ import dev.kord.core.behavior.channel.*
 import dev.kord.core.behavior.channel.threads.edit
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.ReactionEmoji
-import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.channel.createInvite
 import dev.kord.rest.Image
 import dev.kord.rest.builder.interaction.group
 import dev.kord.rest.builder.interaction.int
 import dev.kord.rest.builder.interaction.subCommand
 import dev.kord.rest.request.RequestHandler
-import dev.kord.rest.request.RestRequestException
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
@@ -384,17 +383,6 @@ class RestServiceTest {
     }
 
     @Test
-    @Order(21)
-    fun `errors are thrown correctly`() = runBlocking {
-        val exception = assertThrows<RestRequestException> {
-            runBlocking { kord.getChannel(Snowflake((-500).toULong())) }
-        }
-
-        assert(exception.error != null)
-    }
-
-    @Test
-
     @Order(21)
     fun `category channel creation`(): Unit = runBlocking {
         val category = guild.createCategory("my category")

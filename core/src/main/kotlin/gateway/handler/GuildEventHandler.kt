@@ -107,7 +107,7 @@ internal class GuildEventHandler(
         cache.put(user)
         val user = User(data, kord)
 
-        coreFlow.emit(BanAddEvent(user, Snowflake(guildId), shard))
+        coreFlow.emit(BanAddEvent(user, guildId, shard))
     }
 
     private suspend fun handle(event: GuildBanRemove, shard: Int) = with(event.ban) {
@@ -115,7 +115,7 @@ internal class GuildEventHandler(
         cache.put(user)
         val user = User(data, kord)
 
-        coreFlow.emit(BanRemoveEvent(user, Snowflake(guildId), shard))
+        coreFlow.emit(BanRemoveEvent(user, guildId, shard))
     }
 
     private suspend fun handle(event: GuildEmojisUpdate, shard: Int) = with(event.emoji) {
@@ -243,5 +243,4 @@ internal class GuildEventHandler(
         val data = InviteDeleteData.from(invite)
         coreFlow.emit(InviteDeleteEvent(data, kord, shard))
     }
-
 }

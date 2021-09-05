@@ -8,7 +8,10 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-val ids = generateSequence { Random.nextULong() }.distinct().iterator()
+val ids = generateSequence {
+    Random.nextULong(Snowflake.validValues) // limit to valid range to guarantee distinct generated Snowflakes
+}.distinct().iterator()
+
 fun randomId() = Snowflake(ids.next())
 
 interface EntityEqualityTest<T : KordEntity> {

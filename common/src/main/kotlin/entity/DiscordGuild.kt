@@ -156,7 +156,7 @@ data class DiscordGuild(
     val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
     @SerialName("nsfw_level")
     val nsfwLevel: NsfwLevel
-    )
+)
 
 /**
  * A partial representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object
@@ -242,7 +242,7 @@ sealed class GuildFeature(val value: String) {
 
     /** Guild has access to the seven day archive time for threads */
     object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
-    
+
     /** Guild has access to create private threads */
     object PrivateThreads : GuildFeature("PRIVATE_THREADS")
 
@@ -320,7 +320,7 @@ enum class SystemChannelFlag(val code: Int) {
 @Serializable
 data class DiscordGuildBan(
     @SerialName("guild_id")
-    val guildId: String,
+    val guildId: Snowflake,
     val user: DiscordUser,
 )
 
@@ -526,6 +526,7 @@ sealed class MFALevel(val value: Int) {
         }
     }
 }
+
 /**
  * A representation of a [Discord Guild NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level).
  */

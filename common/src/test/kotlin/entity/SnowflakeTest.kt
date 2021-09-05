@@ -11,38 +11,54 @@ import kotlin.test.*
 class SnowflakeTest {
 
     @Test
-    fun `Snowflake with value ULong MIN_VALUE has timeStamp equal to discordEpochStart`() {
+    fun `min Snowflake's timestamp is equal to discordEpoch`() {
+        assertEquals(Snowflake.discordEpoch, Snowflake.min.timestamp)
+    }
+
+    @Test
+    fun `max Snowflake's timestamp is equal to endOfTime`() {
+        assertEquals(Snowflake.endOfTime, Snowflake.max.timestamp)
+    }
+
+    @Test
+    fun `Snowflake created from ULong MIN_VALUE has timestamp equal to discordEpoch`() {
         val snowflake = Snowflake(ULong.MIN_VALUE)
-        assertEquals(Snowflake.discordEpochStart, snowflake.timeStamp)
+        assertEquals(Snowflake.discordEpoch, snowflake.timestamp)
     }
 
     @Test
-    fun `Snowflake with value ULong MAX_VALUE has timeStamp equal to endOfTime`() {
+    fun `Snowflake created from ULong MAX_VALUE has timestamp equal to endOfTime`() {
         val snowflake = Snowflake(ULong.MAX_VALUE)
-        assertEquals(Snowflake.endOfTime, snowflake.timeStamp)
+        assertEquals(Snowflake.endOfTime, snowflake.timestamp)
     }
 
     @Test
-    fun `Snowflake created from instant far in the past has timeStamp equal to the timeStamp of Snowflake min`() {
+    fun `Snowflake created from Long MIN_VALUE has timestamp equal to discordEpoch`() {
+        val snowflake = Snowflake(Long.MIN_VALUE)
+        assertEquals(Snowflake.discordEpoch, snowflake.timestamp)
+    }
+
+    @Test
+    fun `Snowflake created from instant far in the past has timestamp equal to discordEpoch`() {
         val snowflake = Snowflake(Instant.DISTANT_PAST)
-        assertEquals(Snowflake.min.timeStamp, snowflake.timeStamp)
+        assertEquals(Snowflake.discordEpoch, snowflake.timestamp)
     }
 
     @Test
-    fun `Snowflake created from instant far in the future has timeStamp equal to the timeStamp of Snowflake max`() {
+    fun `Snowflake created from instant far in the future has timestamp equal to endOfTime`() {
         val snowflake = Snowflake(Instant.DISTANT_FUTURE)
-        assertEquals(Snowflake.max.timeStamp, snowflake.timeStamp)
+        assertEquals(Snowflake.endOfTime, snowflake.timestamp)
     }
 
     @Test
-    fun `Snowflake's timeStamp calculates an Instant close to the Instant the Snowflake was created from`() {
+    fun `Snowflake's timestamp calculates an Instant close to the Instant the Snowflake was created from`() {
         val instant = Clock.System.now()
         val snowflake = Snowflake(instant)
 
         // snowflake timestamps have a millisecond accuracy -> allow +/-1 millisecond from original instant
         val validTimeRange = instant.minus(1, MILLISECOND)..instant.plus(1, MILLISECOND)
 
-        assertContains(validTimeRange, snowflake.timeStamp)
+        assertContains(validTimeRange, snowflake.timestamp)
     }
 
     @Test

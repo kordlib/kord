@@ -53,7 +53,18 @@ interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
     /**
      * timestamp when the thread's archive status was last changed.
      */
-    val archiveTimeStamp: Instant get() = threadData.archiveTimestamp.toInstant()
+    @Deprecated(
+        "archiveTimeStamp was renamed to archiveTimestamp.",
+        ReplaceWith("archiveTimestamp"),
+        DeprecationLevel.ERROR,
+    )
+    val archiveTimeStamp: Instant
+        get() = archiveTimestamp
+
+    /**
+     * timestamp when the thread's archive status was last changed.
+     */
+    val archiveTimestamp: Instant get() = threadData.archiveTimestamp.toInstant()
 
     /**
      * The time in which the thread will be auto archived after inactivity.

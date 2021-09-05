@@ -271,7 +271,7 @@ internal fun paginateThreads(
     paginateByDate(
         start,
         batchSize,
-        { threads -> threads.minOfOrNull { it.archiveTimeStamp } },
+        { threads -> threads.minOfOrNull { it.archiveTimestamp } },
         request
     )
 

@@ -1,5 +1,6 @@
 package dev.kord.common.entity
 
+import dev.kord.common.entity.Snowflake.Companion.validValues
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -14,37 +15,55 @@ import kotlin.time.TimeMark
 
 /**
  * A unique identifier for entities [used by discord](https://discord.com/developers/docs/reference#snowflakes).
+ * Snowflakes are IDs with a [timestamp], which makes them [comparable][Comparable] based on their timestamp.
  *
  * Note: this class has a natural ordering that is inconsistent with [equals],
  * since [compareTo] only compares the first 42 bits of the ULong [value] (comparing the timestamp),
  * whereas [equals] uses all bits of the ULong [value].
  * [compareTo] can return `0` even if [equals] returns `false`,
  * but [equals] only returns `true` if [compareTo] returns `0`.
- *
- * @constructor Creates a Snowflake from a given ULong [value].
  */
 @Serializable(with = Snowflake.Serializer::class)
-class Snowflake(val value: ULong) : Comparable<Snowflake> {
+class Snowflake : Comparable<Snowflake> {
+
+    /**
+     * The raw value of this Snowflake as specified
+     * [here](https://discord.com/developers/docs/reference#snowflakes).
+     */
+    val value: ULong
+
+    /**
+     * Creates a Snowflake from a given ULong [value].
+     *
+     * Values are [coerced in][coerceIn] [validValues].
+     */
+    constructor(value: ULong) {
+        this.value = value.coerceIn(validValues)
+    }
 
     /**
      * Creates a Snowflake from a given String [value], parsing it as a [ULong] value.
+     *
+     * Values are [coerced in][coerceIn] [validValues].
      */
     constructor(value: String) : this(value.toULong())
 
     /**
-     * Creates a Snowflake from a given [instant].
+     * Creates a Snowflake from a given [timestamp].
      *
-     * If the given [instant] is too far in the past / future, this constructor will create
-     * an instance with a [timeStamp] equal to [Snowflake.min] / [Snowflake.max].
+     * If the given timestamp is too far in the past / future, this constructor will create an instance with a
+     * [timestamp][Snowflake.timestamp] equal to the timestamp of [Snowflake.min] / [Snowflake.max].
      */
-    constructor(instant: Instant) : this(
-        instant.toEpochMilliseconds()
+    constructor(timestamp: Instant) : this(
+        timestamp.toEpochMilliseconds()
             .coerceAtLeast(discordEpochLong) // time before is unknown to Snowflakes
             .minus(discordEpochLong)
-            .coerceAtMost(maxMillisecondsSinceDiscordEpoch) // time after is unknown to Snowflakes
             .toULong()
-            .shl(22)
+            .coerceAtMost(maxMillisecondsSinceDiscordEpoch) // time after is unknown to Snowflakes
+            .shl(nonTimestampBitCount)
     )
+
+    private val millisecondsSinceDiscordEpoch get() = value shr nonTimestampBitCount
 
     /**
      * A [String] representation of this Snowflake's [value].
@@ -54,48 +73,75 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
     /**
      * The point in time this Snowflake represents.
      */
-    val timeStamp: Instant get() = Instant.fromEpochMilliseconds(discordEpochLong + (value shr 22).toLong())
+    @Deprecated("timeStamp was renamed to timestamp.", ReplaceWith("timestamp"), DeprecationLevel.ERROR)
+    val timeStamp: Instant
+        get() = timestamp
+
+    /**
+     * The point in time this Snowflake represents.
+     */
+    val timestamp: Instant
+        get() = Instant.fromEpochMilliseconds(discordEpochLong + millisecondsSinceDiscordEpoch.toLong())
 
     /**
      * A [TimeMark] for the point in time this Snowflake represents.
      */
-    val timeMark: TimeMark get() = SnowflakeTimeMark(timeStamp)
+    val timeMark: TimeMark get() = SnowflakeTimeMark(timestamp)
 
-    override fun compareTo(other: Snowflake): Int = value.shr(22).compareTo(other.value.shr(22))
+    override fun compareTo(other: Snowflake): Int =
+        millisecondsSinceDiscordEpoch.compareTo(other.millisecondsSinceDiscordEpoch)
 
     override fun toString(): String = "Snowflake(value=$value)"
 
     override fun hashCode(): Int = value.hashCode()
 
-    override fun equals(other: Any?): Boolean {
-        return (other as? Snowflake ?: return false).value == value
-    }
+    override fun equals(other: Any?): Boolean = other is Snowflake && this.value == other.value
 
     companion object {
-        private const val discordEpochLong = 1420070400000L                                 // 42 one bits
-        private const val maxMillisecondsSinceDiscordEpoch = 0b111111111111111111111111111111111111111111L
+        private const val nonTimestampBitCount = 22
+        private const val discordEpochLong = 1420070400000L
 
         /**
-         * The point in time that marks the Discord Epoch (the first second of 2015).
+         * A range that contains all valid raw Snowflake [value]s.
+         *
+         * Note that this range might change in the future.
          */
-        val discordEpochStart: Instant = Instant.fromEpochMilliseconds(discordEpochLong)
-
-        /**
-         * The last point in time a Snowflake can represent.
-         */
-        val endOfTime: Instant = Instant.fromEpochMilliseconds(discordEpochLong + maxMillisecondsSinceDiscordEpoch)
-
-        /**
-         * The maximum value a Snowflake can hold.
-         * Useful when requesting paginated entities.
-         */
-        val max: Snowflake = Snowflake(ULong.MAX_VALUE)
+        val validValues: ULongRange = ULong.MIN_VALUE..Long.MAX_VALUE.toULong() // 0..9223372036854775807
 
         /**
          * The minimum value a Snowflake can hold.
          * Useful when requesting paginated entities.
          */
-        val min: Snowflake = Snowflake(ULong.MIN_VALUE)
+        val min: Snowflake = Snowflake(validValues.first)
+
+        /**
+         * The maximum value a Snowflake can hold.
+         * Useful when requesting paginated entities.
+         */
+        val max: Snowflake = Snowflake(validValues.last)
+
+        /**
+         * The point in time that marks the Discord Epoch (the first second of 2015).
+         */
+        @Deprecated(
+            "Snowflake.discordEpochStart was renamed to Snowflake.discordEpoch.",
+            ReplaceWith("Snowflake.discordEpoch"),
+            DeprecationLevel.ERROR,
+        )
+        val discordEpochStart: Instant
+            get() = discordEpoch
+
+        /**
+         * The point in time that marks the Discord Epoch (the first second of 2015).
+         */
+        val discordEpoch: Instant = Instant.fromEpochMilliseconds(discordEpochLong)
+
+        /**
+         * The last point in time a Snowflake can represent.
+         */
+        val endOfTime: Instant = max.timestamp
+
+        private val maxMillisecondsSinceDiscordEpoch = max.millisecondsSinceDiscordEpoch
     }
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -112,15 +158,14 @@ class Snowflake(val value: ULong) : Comparable<Snowflake> {
     }
 }
 
-private class SnowflakeTimeMark(private val timeStamp: Instant) : TimeMark() {
+private class SnowflakeTimeMark(private val timestamp: Instant) : TimeMark() {
 
-    override fun elapsedNow(): Duration = Clock.System.now() - timeStamp
+    override fun elapsedNow(): Duration = Clock.System.now() - timestamp
 }
 
 /**
  * Creates a [Snowflake] from a given Long [value].
  *
- * Note: a negative [value] will be interpreted as an unsigned integer with the same binary representation, e.g.
- * passing `-1L` for [value] will return a [Snowflake] with a [value][Snowflake.value] of [ULong.MAX_VALUE].
+ * Values are [coerced in][coerceIn] [validValues].
  */
-fun Snowflake(value: Long): Snowflake = Snowflake(value.toULong())
+fun Snowflake(value: Long): Snowflake = Snowflake(value.coerceAtLeast(0).toULong())

@@ -28,8 +28,18 @@ interface MessageChannel : Channel, MessageChannelBehavior {
     /**
      * The timestamp of the last pin
      */
+    @Deprecated(
+        "lastPinTimeStamp was renamed to lastPinTimestamp.",
+        ReplaceWith("lastPinTimestamp"),
+        DeprecationLevel.ERROR,
+    )
     val lastPinTimeStamp: Instant?
-        get() = data.lastPinTimestamp.value?.toInstant()
+        get() = lastPinTimestamp
+
+    /**
+     * The timestamp of the last pin
+     */
+    val lastPinTimestamp: Instant? get() = data.lastPinTimestamp.value?.toInstant()
 
     /**
      * Requests to get the last message sent to this channel,

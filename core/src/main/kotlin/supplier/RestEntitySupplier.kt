@@ -332,7 +332,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
     fun getAuditLogEntries(
         guildId: Snowflake,
         request: AuditLogGetRequest = AuditLogGetRequest()
-    ): Flow<DiscordAuditLogEntry> = paginateBackwards(Snowflake.max, batchSize = 100, DiscordAuditLogEntry::id) {
+    ): Flow<DiscordAuditLogEntry> = paginateBackwards(batchSize = 100, idSelector = DiscordAuditLogEntry::id) {
         auditLog.getAuditLogs(guildId, request.copy(before = it.value)).auditLogEntries
     }
 

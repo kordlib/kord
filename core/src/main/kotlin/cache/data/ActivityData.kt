@@ -12,7 +12,7 @@ data class ActivityData(
     val type: ActivityType,
     val url: Optional<String?> = Optional.Missing(),
     val createdAt: Long,
-    val timestamps: Optional<DiscordActivityTimeStamps> = Optional.Missing(),
+    val timestamps: Optional<DiscordActivityTimestamps> = Optional.Missing(),
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val details: Optional<String?> = Optional.Missing(),
     val state: Optional<String?> = Optional.Missing(),

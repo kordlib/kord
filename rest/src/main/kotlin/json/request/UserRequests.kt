@@ -1,5 +1,6 @@
 package dev.kord.rest.json.request
 
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -7,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DMCreateRequest(
     @SerialName("recipient_id")
-    val userId: String
+    val userId: Snowflake,
 )
 
 @Serializable

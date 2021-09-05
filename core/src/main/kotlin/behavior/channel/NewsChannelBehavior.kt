@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.channel
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Permission
@@ -63,7 +62,7 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
      * @throws [RequestException] if something went wrong during the request.
      */
     suspend fun follow(target: Snowflake) {
-        kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target.asString))
+        kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target))
     }
 
 
