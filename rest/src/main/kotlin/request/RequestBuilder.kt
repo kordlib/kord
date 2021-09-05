@@ -1,6 +1,7 @@
 package dev.kord.rest.request
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.rest.NamedFile
 import dev.kord.rest.route.Route
 import io.ktor.http.*
 import kotlinx.serialization.SerializationStrategy
@@ -15,7 +16,7 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     private val parameters = ParametersBuilder()
 
     private var body: RequestBody<*>? = null
-    private val files: MutableList<Pair<String, java.io.InputStream>> = mutableListOf()
+    private val files: MutableList<NamedFile> = mutableListOf()
 
     operator fun MutableMap<String, String>.set(key: Route.Key, value: String) = set(key.identifier, value)
 
@@ -30,11 +31,11 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     fun header(key: String, value: String) = headers.append(key, value.encodeURLQueryComponent())
 
     fun file(name: String, input: java.io.InputStream) {
-        files.add(name to input)
+        files.add(NamedFile(name, input))
     }
 
-    fun file(pair: Pair<String, java.io.InputStream>) {
-        files.add(pair)
+    fun file(file: NamedFile) {
+        files.add(file)
     }
 
     fun build(): Request<*, T> = when {

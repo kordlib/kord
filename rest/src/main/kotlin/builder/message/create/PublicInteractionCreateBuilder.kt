@@ -3,6 +3,7 @@ package dev.kord.rest.builder.message.create
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.optional.*
+import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
@@ -31,7 +32,7 @@ class PublicInteractionResponseCreateBuilder
 
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
-    override val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+    override val files: MutableList<NamedFile> = mutableListOf()
 
     override fun toRequest(): MultipartInteractionResponseCreateRequest {
         return MultipartInteractionResponseCreateRequest(

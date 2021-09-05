@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordMessageReference
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
+import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
@@ -50,7 +51,7 @@ class UserMessageCreateBuilder
      */
     var failIfNotExists: Boolean? = null
 
-    override val files: MutableList<Pair<String, InputStream>> = mutableListOf()
+    override val files: MutableList<NamedFile> = mutableListOf()
 
     @OptIn(KordPreview::class)
     override fun toRequest(): MultipartMessageCreateRequest {

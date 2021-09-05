@@ -1,5 +1,6 @@
 package dev.kord.rest.request
 
+import dev.kord.rest.NamedFile
 import dev.kord.rest.json.response.GatewayResponse
 import dev.kord.rest.route.Route
 import io.ktor.util.*
@@ -33,7 +34,7 @@ class MessageRequests {
             StringValues.Empty,
             StringValues.Empty,
             null,
-            listOf("linus.png" to linusStream)
+            listOf(NamedFile("linus.png", linusStream))
         )
 
         assert(linusStream.closed)

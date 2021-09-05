@@ -1,6 +1,5 @@
 package dev.kord.rest.builder.message.modify
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
@@ -36,10 +35,11 @@ class EphemeralInteractionResponseModifyBuilder
         return MultipartInteractionResponseModifyRequest(
             InteractionResponseModifyRequest(
                 content = state.content,
-                allowedMentions = state.allowedMentions.map { it.build() },
-                components = state.components.mapList { it.build() },
                 embeds = state.embeds.mapList { it.toRequest() },
-                flags = Optional(MessageFlags(MessageFlag.Ephemeral))
+                allowedMentions = state.allowedMentions.map { it.build() },
+                flags = Optional(MessageFlags(MessageFlag.Ephemeral)),
+                components = state.components.mapList { it.build() },
+                attachments = state.attachments
             )
         )
     }

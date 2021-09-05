@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.rest.NamedFile
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.io.InputStream
@@ -37,13 +38,14 @@ data class InteractionResponseModifyRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
     val flags: Optional<MessageFlags?> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>?> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
+    val attachments: Optional<MutableList<DiscordAttachment>?> = Optional.Missing()
 )
 
 
 data class MultipartInteractionResponseModifyRequest(
     val request: InteractionResponseModifyRequest,
-    val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing(),
+    val files: Optional<List<NamedFile>> = Optional.Missing(),
 )
 
 @Serializable
@@ -56,7 +58,7 @@ data class InteractionResponseCreateRequest(
 
 data class MultipartInteractionResponseCreateRequest(
     val request: InteractionResponseCreateRequest,
-    val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing()
+    val files: Optional<List<NamedFile>> = Optional.Missing()
 )
 
 @Serializable
@@ -74,7 +76,7 @@ class InteractionApplicationCommandCallbackData(
 
 data class MultipartFollowupMessageCreateRequest(
     val request: FollowupMessageCreateRequest,
-    val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing(),
+    val files: List<NamedFile> = emptyList(),
 )
 
 @Serializable
@@ -99,13 +101,14 @@ data class FollowupMessageModifyRequest(
     val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>?> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
+    val attachments: Optional<List<DiscordAttachment>?> = Optional.Missing()
 )
 
 
 data class MultipartFollowupMessageModifyRequest(
     val request: FollowupMessageModifyRequest,
-    val files: Optional<List<Pair<String, InputStream>>> = Optional.Missing(),
+    val files: Optional<List<NamedFile>> = Optional.Missing()
 )
 
 @Serializable

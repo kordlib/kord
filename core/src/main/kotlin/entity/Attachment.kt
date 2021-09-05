@@ -1,6 +1,8 @@
 package dev.kord.core.entity
 
+import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.optionalInt
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.AttachmentData
@@ -67,4 +69,10 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : KordE
         return "Attachment(data=$data, kord=$kord)"
     }
 
+}
+
+fun Attachment.toRawType(): DiscordAttachment {
+    with(data) {
+        return DiscordAttachment(id, filename, size, url, proxyUrl, height, width)
+    }
 }

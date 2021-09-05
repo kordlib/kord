@@ -5,9 +5,8 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.rest.NamedFile
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -28,7 +27,7 @@ data class MessageCreateRequest constructor(
 
 data class MultipartMessageCreateRequest(
     val request: MessageCreateRequest,
-    val files: List<Pair<String, java.io.InputStream>> = emptyList(),
+    val files: List<NamedFile> = emptyList(),
 )
 
 @Serializable
@@ -83,12 +82,13 @@ data class MessageEditPatchRequest(
     val flags: Optional<MessageFlags?> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing()
 )
 
 data class MultipartMessagePatchRequest(
     val requests: MessageEditPatchRequest,
-    val files: Optional<List<Pair<String, java.io.InputStream>>> = Optional.Missing()
+    val files: Optional<List<NamedFile>> = Optional.Missing()
 )
 
 @Serializable
