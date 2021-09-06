@@ -12,8 +12,8 @@ import dev.kord.gateway.Event as GatewayEvent
 private val voiceUpdateLogger = KotlinLogging.logger { }
 
 internal class VoiceUpdateEventHandler(
-    private val connection: VoiceConnection,
     flow: Flow<GatewayEvent>,
+    private val connection: VoiceConnection,
 ) : EventHandler<GatewayEvent>(flow, "VoiceUpdateInterceptor") {
     override fun start() {
         on<VoiceServerUpdate> { voiceServerUpdate ->

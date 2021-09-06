@@ -4,13 +4,12 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
-import dev.kord.voice.gateway.VoiceGateway
-import dev.kord.voice.gateway.VoiceGatewayConfiguration
+import dev.kord.voice.gateway.*
+import dev.kord.voice.handlers.StreamsHandler
 import dev.kord.voice.handlers.UdpLifeCycleHandler
 import dev.kord.voice.handlers.VoiceUpdateEventHandler
-import dev.kord.voice.udp.AudioFramePoller
-import dev.kord.voice.udp.AudioFramePollerConfiguration
-import dev.kord.voice.udp.AudioFramePollerConfigurationBuilder
+import dev.kord.voice.udp.*
+import dev.kord.voice.udp.AudioFrameSender
 import kotlinx.coroutines.*
 import mu.KotlinLogging
 import kotlin.contracts.ExperimentalContracts
@@ -46,30 +45,33 @@ private val voiceConnectionLogger = KotlinLogging.logger { }
  */
 @KordVoice
 class VoiceConnection(
+    val data: VoiceConnectionData,
     val gateway: Gateway,
     val voiceGateway: VoiceGateway,
-    val data: VoiceConnectionData,
+    val udp: VoiceUdpConnection,
     var voiceGatewayConfiguration: VoiceGatewayConfiguration,
     val audioProvider: AudioProvider,
+    val frameSender: AudioFrameSender,
     val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
     voiceDispatcher: CoroutineDispatcher
 ) : CoroutineScope {
     override val coroutineContext: CoroutineContext =
         SupervisorJob() + voiceDispatcher + CoroutineName("Voice Connection for Guild ${data.guildId.value}")
 
-    private val audioFramePoller = AudioFramePoller(voiceDispatcher)
+    /**
+     * A representation of all incoming audio streams through the UDP connection.
+     */
+    val streams: Streams = Streams(this, voiceDispatcher)
 
     init {
         // handle voice state/server updates (e.g., a move, disconnect, voice server change, etc.)
-        VoiceUpdateEventHandler(this, gateway.events)
+        VoiceUpdateEventHandler(gateway.events, this)
+
+        // keep Streams up to date.
+        StreamsHandler(voiceGateway.events, streams)
 
         // handle the lifecycle of the udp connection
-        UdpLifeCycleHandler(
-            voiceGateway.events,
-            voiceGateway::send,
-            { audioFramePoller.start(it.withConnection(this)) },
-            voiceDispatcher
-        )
+        UdpLifeCycleHandler(voiceGateway.events, this)
     }
 
     /**
@@ -127,14 +129,4 @@ suspend inline fun VoiceConnection(
 ): VoiceConnection {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return VoiceConnectionBuilder(gateway, selfId, channelId, guildId).apply(builder).build()
-}
-
-@OptIn(KordVoice::class)
-private fun AudioFramePollerConfigurationBuilder.withConnection(connection: VoiceConnection): AudioFramePollerConfiguration {
-    this.provider = connection.audioProvider
-    this.interceptorFactory = connection.frameInterceptorFactory
-
-    this.baseFrameInterceptorContext = FrameInterceptorContextBuilder(connection.gateway, connection.voiceGateway)
-
-    return build()
 }

@@ -4,45 +4,36 @@ package dev.kord.voice.handlers
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.EncryptionMode
-import dev.kord.voice.gateway.*
-import dev.kord.voice.udp.AudioFramePollerConfigurationBuilder
-import dev.kord.voice.udp.DiscordUdpConnection
-import dev.kord.voice.udp.VoiceUdpConnection
+import dev.kord.voice.FrameInterceptorContextBuilder
+import dev.kord.voice.VoiceConnection
+import dev.kord.voice.gateway.Ready
+import dev.kord.voice.gateway.SelectProtocol
+import dev.kord.voice.gateway.SessionDescription
+import dev.kord.voice.gateway.VoiceEvent
+import dev.kord.voice.udp.AudioFrameSenderConfiguration
+import dev.kord.voice.udp.VoiceUdpConnectionConfiguration
 import io.ktor.util.network.*
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import mu.KotlinLogging
-import dev.kord.voice.gateway.VoiceEvent as VoiceEvent
+import kotlin.properties.Delegates
 
 private val udpLifeCycleLogger = KotlinLogging.logger { }
 
+@OptIn(KordVoice::class)
 internal class UdpLifeCycleHandler(
     flow: Flow<VoiceEvent>,
-    private val send: suspend (Command) -> Unit,
-    private val poll: (AudioFramePollerConfigurationBuilder) -> Unit,
-    private val udpDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val connection: VoiceConnection
 ) : EventHandler<VoiceEvent>(flow, "UdpInterceptor") {
-    private var framePollerConfigurationBuilder = AudioFramePollerConfigurationBuilder()
-    private var udp: DiscordUdpConnection? = null
+    private var ssrc by Delegates.notNull<UInt>()
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override fun start() {
         on<Ready> {
-            framePollerConfigurationBuilder = AudioFramePollerConfigurationBuilder() // new config
+            this.ssrc = it.ssrc
 
-            framePollerConfigurationBuilder.ssrc = it.ssrc
+            connection.udp.start(VoiceUdpConnectionConfiguration(NetworkAddress(it.ip, it.port), it.ssrc))
 
-            val udpConnection = VoiceUdpConnection(
-                server = NetworkAddress(it.ip, it.port),
-                ssrc = it.ssrc,
-                dispatcher = udpDispatcher
-            )
-
-            udp = udpConnection
-            framePollerConfigurationBuilder.udp = udpConnection
-
-            val ip: NetworkAddress = udpConnection.performIpDiscovery()
+            val ip: NetworkAddress = connection.udp.discoverIp()
 
             udpLifeCycleLogger.trace { "ip discovered for voice successfully" }
 
@@ -55,17 +46,21 @@ internal class UdpLifeCycleHandler(
                 )
             )
 
-            send(selectProtocol)
+            connection.voiceGateway.send(selectProtocol)
         }
 
         on<SessionDescription> {
-            framePollerConfigurationBuilder.key = it.secretKey.toUByteArray().toByteArray().toList()
+            with(connection) {
+                val config = AudioFrameSenderConfiguration(
+                    ssrc = ssrc,
+                    key = it.secretKey.toUByteArray().toByteArray(),
+                    provider = audioProvider,
+                    baseFrameInterceptorContext = FrameInterceptorContextBuilder(gateway, voiceGateway),
+                    interceptorFactory = frameInterceptorFactory
+                )
 
-            poll(framePollerConfigurationBuilder) // we can start polling at this point
-        }
-
-        on<Close> {
-            udp?.close()
+                frameSender.start(config)
+            }
         }
     }
 }

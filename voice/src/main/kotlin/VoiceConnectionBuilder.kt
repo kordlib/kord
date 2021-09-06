@@ -7,6 +7,8 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.*
 import dev.kord.voice.exception.VoiceConnectionInitializationException
 import dev.kord.voice.gateway.*
+import dev.kord.voice.udp.*
+import dev.kord.voice.udp.DefaultVoiceUdpConnection
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
@@ -43,9 +45,15 @@ class VoiceConnectionBuilder(
     var client: HttpClient? = null
 
     /**
-     * The [AudioProvider] for this [VoiceConnection]. No audio will be sent when one is not set.
+     * The [AudioProvider] for this [VoiceConnection]. No audio will be provided when one is not set.
      */
     var audioProvider: AudioProvider? = null
+
+    /**
+     * The [dev.kord.voice.udp.AudioFrameSender] for this [VoiceConnection]. If null, [dev.kord.voice.udp.DefaultAudioFrameSender]
+     * will be used.
+     */
+    var audioSender: AudioFrameSender? = null
 
     fun audioProvider(provider: AudioProvider) {
         this.audioProvider = provider
@@ -73,6 +81,12 @@ class VoiceConnectionBuilder(
     var selfDeaf: Boolean = false
 
     private var voiceGatewayBuilder: (DefaultVoiceGatewayBuilder.() -> Unit)? = null
+
+    /**
+     * A [dev.kord.voice.udp.VoiceUdpConnection] implementation to be used. If null, a default will be used.
+     */
+    var udp: VoiceUdpConnection? = null
+
 
     /**
      * A builder to customize the voice connection's underlying [VoiceGateway].
@@ -115,20 +129,26 @@ class VoiceConnectionBuilder(
         val voiceGateway = DefaultVoiceGatewayBuilder(selfId, guildId, voiceConnectionData.sessionId)
             .also { voiceGatewayBuilder?.invoke(it) }
             .build()
+        val udp = udp ?: DefaultVoiceUdpConnection(DefaultVoiceUdpConnectionData(defaultDispatcher))
+        val audioProvider = audioProvider ?: EmptyAudioPlayerProvider
+        val audioSender = audioSender ?: DefaultAudioFrameSender(DefaultAudioFrameSenderData(udp, defaultDispatcher))
+        val frameInterceptorFactory = frameInterceptorFactory ?: { DefaultFrameInterceptor(it) }
 
         return VoiceConnection(
+            voiceConnectionData,
             gateway,
             voiceGateway,
-            voiceConnectionData,
+            udp,
             initialGatewayConfiguration,
-            audioProvider ?: EmptyAudioPlayerProvider,
-            frameInterceptorFactory ?: { DefaultFrameInterceptor(it) },
+            audioProvider,
+            audioSender,
+            frameInterceptorFactory,
             defaultDispatcher
         )
     }
 
     // we can't use the SAM feature or else we break the IR backend, so lets just use this object instead
     private object EmptyAudioPlayerProvider : AudioProvider {
-        override fun provide(): AudioFrame? = null
+        override suspend fun provide(): AudioFrame? = null
     }
 }
