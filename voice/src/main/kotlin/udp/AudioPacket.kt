@@ -1,6 +1,6 @@
 package dev.kord.voice.udp
 
-import dev.kord.voice.XSalsa20Poly1305Encoder
+import dev.kord.voice.XSalsa20Poly1305Codec
 import io.ktor.utils.io.core.*
 
 @OptIn(ExperimentalUnsignedTypes::class)
@@ -28,7 +28,7 @@ sealed class AudioPacket(
         fun decrypt(key: ByteArray): DecryptedPacket {
             val nonce = ByteArray(NONCE_LENGTH)
             header.copyInto(nonce, 0, 0, RTP_HEADER_LENGTH)
-            val decrypted = XSalsa20Poly1305Encoder.decrypt(data, key, nonce) ?: error("couldn't decrypt audio data")
+            val decrypted = XSalsa20Poly1305Codec.decrypt(data, key, nonce) ?: error("couldn't decrypt audio data")
             return DecryptedPacket(sequence, timestamp, ssrc, decrypted)
         }
     }
@@ -47,7 +47,7 @@ sealed class AudioPacket(
         fun encrypt(key: ByteArray): EncryptedPacket {
             val nonce = ByteArray(NONCE_LENGTH)
             header.copyInto(nonce, 0, 0, RTP_HEADER_LENGTH)
-            val encrypted = XSalsa20Poly1305Encoder.encrypt(data, key, nonce)
+            val encrypted = XSalsa20Poly1305Codec.encrypt(data, key, nonce)
             return EncryptedPacket(sequence, timestamp, ssrc, encrypted)
         }
     }
