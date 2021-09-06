@@ -30,9 +30,9 @@ sealed class Command {
                     composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.Heartbeat)
                     composite.encodeLongElement(descriptor, 1, value.nonce)
                 }
-                is Speaking -> {
+                is SendSpeaking -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.Speaking)
-                    composite.encodeSerializableElement(descriptor, 1, Speaking.serializer(), value)
+                    composite.encodeSerializableElement(descriptor, 1, SendSpeaking.serializer(), value)
                 }
                 is SelectProtocol -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.SelectProtocol)
@@ -64,10 +64,10 @@ data class Identify(
 data class Heartbeat(val nonce: Long) : Command()
 
 @Serializable
-data class Speaking(
+data class SendSpeaking(
     val speaking: SpeakingFlags,
     val delay: Int,
-    val ssrc: Int
+    val ssrc: UInt
 ) : Command()
 
 @Serializable

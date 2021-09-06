@@ -24,7 +24,7 @@ internal class HandshakeHandler(
             configuration.token
         )
 
-    private val ssrc: AtomicRef<Int?> = atomic(null)
+    private val ssrc: AtomicRef<UInt?> = atomic(null)
 
     private val sessionStart get() = ssrc.value == null
 

@@ -3,7 +3,9 @@
 package dev.kord.voice.gateway
 
 import dev.kord.common.annotation.KordVoice
+import dev.kord.common.entity.Snowflake
 import dev.kord.voice.EncryptionMode
+import dev.kord.voice.SpeakingFlags
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
@@ -50,6 +52,7 @@ sealed class VoiceEvent {
                                 index,
                                 SessionDescription.serializer()
                             )
+                            OpCode.Speaking -> decodeSerializableElement(descriptor, index, Speaking.serializer())
                             OpCode.Resumed -> Resumed
                             else -> {
                                 val element = decodeNullableSerializableElement(
@@ -73,7 +76,7 @@ sealed class VoiceEvent {
 
 @Serializable
 data class Ready(
-    val ssrc: Int,
+    val ssrc: UInt,
     val ip: String,
     val port: Int,
     val modes: List<EncryptionMode>
@@ -96,6 +99,14 @@ data class SessionDescription(
     @SerialName("secret_key")
     val secretKey: List<UByte>
 ) : VoiceEvent()
+
+@Serializable
+data class Speaking(
+    @SerialName("user_id")
+    val userId: Snowflake,
+    val ssrc: UInt,
+    val speaking: SpeakingFlags
+): VoiceEvent()
 
 @Serializable
 object Resumed : VoiceEvent()

@@ -1,13 +1,13 @@
 package dev.kord.voice.gateway
 
 import dev.kord.common.annotation.KordVoice
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import dev.kord.gateway.Event
+import dev.kord.gateway.Gateway
+import io.ktor.util.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration
@@ -83,6 +83,34 @@ interface VoiceGateway : CoroutineScope {
     }
 }
 
+
+/**
+ * Logger used to report throwables caught in [VoiceGateway.on].
+ */
+@PublishedApi
+internal val voiceGatewayOnLogger = KotlinLogging.logger("Gateway.on")
+
+/**
+ * Convenience method that will invoke the [consumer] on every event [T] created by [VoiceGateway.events].
+ *
+ * The events are buffered in an [unlimited][Channel.UNLIMITED] [buffer][Flow.buffer] and
+ * [launched][CoroutineScope.launch] in the supplied [scope], which is [Gateway] by default.
+ * Each event will be [launched][CoroutineScope.launch] inside the [scope] separately and
+ * any thrown [Throwable] will be caught and logged.
+ *
+ * The returned [Job] is a reference to the created coroutine, call [Job.cancel] to cancel the processing of any further
+ * events for this [consumer].
+ */
+@KordVoice
+inline fun <reified T : VoiceEvent> VoiceGateway.on(
+    scope: CoroutineScope = this,
+    crossinline consumer: suspend T.() -> Unit
+): Job {
+    return this.events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
+        launch { it.runCatching { it.consumer() }.onFailure(voiceGatewayOnLogger::error) }
+    }.launchIn(scope)
+}
+
 /**
  * Representation of Discord's [Voice Gateway close codes](https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-close-event-codes).
  */
@@ -99,7 +127,7 @@ sealed class VoiceGatewayCloseCode(val code: Int) {
     object UnknownProtocol : VoiceGatewayCloseCode(4012)
     object Disconnect : VoiceGatewayCloseCode(4014)
     object VoiceServerCrashed : VoiceGatewayCloseCode(4015)
-    object UnknownEncryptionMode : VoiceGatewayCloseCode(4016);
+    object UnknownEncryptionMode : VoiceGatewayCloseCode(4016)
 
     companion object {
         fun of(code: Int) =
