@@ -21,7 +21,7 @@ fun interface AudioProvider {
      *
      * @return the frame of audio.
      */
-    fun provide(): AudioFrame?
+    suspend fun provide(): AudioFrame?
 
     /**
      * Polls [AudioFrame]s into the [frames] channel at an appropriate interval. Suspends until the coroutine scope is cancelled.

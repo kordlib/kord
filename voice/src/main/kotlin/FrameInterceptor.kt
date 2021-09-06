@@ -2,7 +2,7 @@ package dev.kord.voice
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.gateway.Gateway
-import dev.kord.voice.gateway.Speaking
+import dev.kord.voice.gateway.SendSpeaking
 import dev.kord.voice.gateway.VoiceGateway
 import kotlin.properties.Delegates
 
@@ -17,12 +17,12 @@ import kotlin.properties.Delegates
 data class FrameInterceptorContext(
     val gateway: Gateway,
     val voiceGateway: VoiceGateway,
-    val ssrc: Int,
+    val ssrc: UInt,
 )
 
 @KordVoice
-internal class FrameInterceptorContextBuilder(var gateway: Gateway, var voiceGateway: VoiceGateway) {
-    var ssrc: Int by Delegates.notNull()
+class FrameInterceptorContextBuilder(var gateway: Gateway, var voiceGateway: VoiceGateway) {
+    var ssrc: UInt by Delegates.notNull()
 
     fun build() = FrameInterceptorContext(gateway, voiceGateway, ssrc)
 }
@@ -63,7 +63,7 @@ open class DefaultFrameInterceptor(
         if (audioFrame != null || framesOfSilence > 0) {
             if (!isSpeaking && audioFrame != null) {
                 isSpeaking = true
-                voiceGateway.send(Speaking(speakingState, 0, ssrc))
+                voiceGateway.send(SendSpeaking(speakingState, 0, ssrc))
             }
 
             frame = audioFrame ?: AudioFrame.SILENCE
@@ -72,7 +72,7 @@ open class DefaultFrameInterceptor(
                 framesOfSilence--
                 if (framesOfSilence == 0) {
                     isSpeaking = false
-                    voiceGateway.send(Speaking(SpeakingFlags(0), 0, ssrc))
+                    voiceGateway.send(SendSpeaking(SpeakingFlags(0), 0, ssrc))
                 }
             } else {
                 framesOfSilence = 5
