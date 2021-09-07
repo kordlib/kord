@@ -14,7 +14,7 @@ internal class StreamsHandler(
     @OptIn(ExperimentalUnsignedTypes::class)
     override fun start() {
         on<SessionDescription> {
-            streams.key.set(it.secretKey.toUByteArray().toByteArray())
+            streams.key.value = it.secretKey.toUByteArray().toByteArray()
         }
     }
 }

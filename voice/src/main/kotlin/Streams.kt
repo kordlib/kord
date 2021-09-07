@@ -5,10 +5,14 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.voice.gateway.Speaking
 import dev.kord.voice.gateway.on
 import dev.kord.voice.udp.AudioPacket
-import kotlinx.atomicfu.AtomicArray
-import kotlinx.coroutines.*
+import kotlinx.atomicfu.AtomicRef
+import kotlinx.atomicfu.atomic
+import kotlinx.atomicfu.update
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.*
-import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.CoroutineContext
 
 @KordVoice
@@ -19,8 +23,7 @@ class Streams(
     override val coroutineContext: CoroutineContext =
         SupervisorJob() + dispatcher + CoroutineName("Voice Connection Incoming Streams")
 
-    // this will be set before it is used as the key is received before the udp connection is even established
-    internal val key: AtomicReference<ByteArray> = AtomicReference()
+    internal val key: AtomicRef<ByteArray?> = atomic(null)
 
     /**
      * A flow of all incoming [dev.kord.voice.udp.AudioPacket.DecryptedPacket]s through the UDP connection.
@@ -29,7 +32,7 @@ class Streams(
         connection.udp
             .incoming
             .mapNotNull(AudioPacket::encryptedFrom)
-            .map { it.decrypt(key.get()) }
+            .map { it.decrypt(key.value!!) }
             .shareIn(this, SharingStarted.Lazily)
 
     /**
@@ -45,26 +48,28 @@ class Streams(
      */
     val incomingUserStreams: SharedFlow<Pair<Snowflake, AudioFrame>> = _incomingUserAudioFrames
 
-    private val _ssrcToUser: MutableMap<UInt, Snowflake> = mutableMapOf()
+    private val _ssrcToUser: AtomicRef<MutableMap<UInt, Snowflake>> = atomic(mutableMapOf())
 
     /**
      * A mapping of ssrc to user id.
      * This cache is built over time through the [dev.kord.voice.gateway.VoiceGateway].
      */
-    val ssrcToUser: Map<UInt, Snowflake> get() = _ssrcToUser
+    val ssrcToUser: Map<UInt, Snowflake> by _ssrcToUser
 
     init {
-        connection.voiceGateway.on<Speaking> {
-            _ssrcToUser.computeIfAbsent(ssrc) {
-                launch {
-                    _incomingUserAudioFrames.emitAll(
-                        incomingAudioFrames
-                            .filter { (ssrc, _) -> ssrc == this@on.ssrc }
-                            .map { (_, frame) -> userId to frame }
-                    )
+        connection.voiceGateway.on<Speaking>(scope = this) {
+            _ssrcToUser.update {
+                it.computeIfAbsent(ssrc) {
+                    incomingAudioFrames
+                        .filter { (ssrc, _) -> ssrc == this@on.ssrc }
+                        .map { (_, frame) -> userId to frame }
+                        .onEach { _incomingUserAudioFrames.emit(it) }
+                        .launchIn(this@Streams)
+
+                    userId
                 }
 
-                userId
+                it
             }
         }
     }
