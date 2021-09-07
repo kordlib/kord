@@ -534,24 +534,22 @@ class Kord(
     }
 
     suspend fun editApplicationCommandPermissions(
-        applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
     ) {
         val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
 
-        rest.interaction.editApplicationCommandPermissions(applicationId, guildId, commandId, request)
+        rest.interaction.editApplicationCommandPermissions(resources.applicationId, guildId, commandId, request)
     }
 
     suspend fun bulkEditApplicationCommandPermissions(
-        applicationId: Snowflake,
         guildId: Snowflake,
         builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
     ) {
         val request = ApplicationCommandPermissionsBulkModifyBuilder().apply(builder).toRequest()
 
-        rest.interaction.bulkEditApplicationCommandPermissions(applicationId, guildId, request)
+        rest.interaction.bulkEditApplicationCommandPermissions(resources.applicationId, guildId, request)
     }
 
 }
