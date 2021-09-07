@@ -16,6 +16,7 @@ import kotlin.random.Random
 
 private val audioFrameSenderLogger = KotlinLogging.logger { }
 
+@KordVoice
 data class AudioFrameSenderConfiguration(
     val ssrc: UInt,
     val key: ByteArray,
@@ -24,6 +25,7 @@ data class AudioFrameSenderConfiguration(
     val interceptorFactory: (FrameInterceptorContext) -> FrameInterceptor
 )
 
+@KordVoice
 interface AudioFrameSender : CoroutineScope {
     /**
      * This should start polling frames from [the audio provider][AudioFrameSenderConfiguration.provider] and
@@ -32,6 +34,7 @@ interface AudioFrameSender : CoroutineScope {
     suspend fun start(configuration: AudioFrameSenderConfiguration)
 }
 
+@KordVoice
 data class DefaultAudioFrameSenderData(
     val udp: VoiceUdpConnection,
     val dispatcher: CoroutineDispatcher

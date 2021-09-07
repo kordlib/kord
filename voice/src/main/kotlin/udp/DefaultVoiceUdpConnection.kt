@@ -14,11 +14,13 @@ import kotlin.coroutines.CoroutineContext
 
 private val udpConnectionLogger = KotlinLogging.logger { }
 
+@KordVoice
 data class DefaultVoiceUdpConnectionData(
     val dispatcher: CoroutineDispatcher
 )
 
-internal class DefaultVoiceUdpConnection(
+@KordVoice
+class DefaultVoiceUdpConnection(
     val data: DefaultVoiceUdpConnectionData
 ) : VoiceUdpConnection, CoroutineScope {
     override val coroutineContext: CoroutineContext =

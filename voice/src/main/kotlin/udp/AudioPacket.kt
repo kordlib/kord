@@ -1,9 +1,11 @@
 package dev.kord.voice.udp
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.XSalsa20Poly1305Codec
 import io.ktor.utils.io.core.*
 
 @OptIn(ExperimentalUnsignedTypes::class)
+@KordVoice
 sealed class AudioPacket(
     val sequence: UShort,
     val timestamp: UInt,
