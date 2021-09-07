@@ -64,7 +64,6 @@ class Kord(
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
 
-
     /**
      * The default supplier, obtained through Kord's [resources] and configured through [KordBuilder.defaultStrategy].
      * By default a strategy from [EntitySupplyStrategy.rest].
@@ -371,6 +370,10 @@ class Kord(
         return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId)
     }
 
+    suspend fun getOriginalInteractionResponse(token: String): Message? {
+        return EntitySupplyStrategy.rest.supply(this).getOriginalInteractionOrNull(resources.applicationId, token)
+    }
+
     suspend fun getGuildApplicationCommand(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand {
         return defaultSupplier.getGuildApplicationCommand(resources.applicationId, guildId, commandId)
     }
@@ -381,12 +384,18 @@ class Kord(
     }
 
 
-    suspend inline fun <reified T: GuildApplicationCommand> getGuildApplicationCommandOf(guildId: Snowflake, commandId: Snowflake): T {
+    suspend inline fun <reified T : GuildApplicationCommand> getGuildApplicationCommandOf(
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): T {
         return defaultSupplier.getGuildApplicationCommandOf(resources.applicationId, guildId, commandId)
     }
 
 
-    suspend inline fun <reified T: GuildApplicationCommand> getGuildApplicationCommandOfOrNull(guildId: Snowflake, commandId: Snowflake): T? {
+    suspend inline fun <reified T : GuildApplicationCommand> getGuildApplicationCommandOfOrNull(
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): T? {
         return defaultSupplier.getGuildApplicationCommandOfOrNull(resources.applicationId, guildId, commandId)
     }
 

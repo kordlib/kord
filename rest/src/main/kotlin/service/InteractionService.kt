@@ -120,7 +120,13 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         body(InteractionResponseCreateRequest.serializer(), request)
     }
 
-
+    suspend fun getInteractionResponse(
+        applicationId: Snowflake,
+        interactionToken: String,
+    ) = call(Route.OriginalInteractionResponseGet) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.InteractionToken] = interactionToken
+    }
     suspend fun modifyInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,

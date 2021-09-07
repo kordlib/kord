@@ -603,6 +603,13 @@ sealed class Route<T>(
         NoStrategy
     )
 
+    object OriginalInteractionResponseGet :
+            Route<DiscordMessage>(
+                HttpMethod.Get,
+                "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
+                DiscordMessage.serializer()
+            )
+
     object OriginalInteractionResponseModify :
         Route<DiscordMessage>(
             HttpMethod.Patch,

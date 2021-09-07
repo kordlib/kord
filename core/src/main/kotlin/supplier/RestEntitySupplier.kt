@@ -434,6 +434,16 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         }
     }
 
+     suspend fun getOriginalInteractionOrNull(applicationId: Snowflake, token: String): Message? = catchNotFound {
+        val response = interaction.getInteractionResponse(applicationId, token)
+        val data = MessageData.from(response)
+        Message(data, kord)
+    }
+
+
+    suspend fun getOriginalInteraction(applicationId: Snowflake, token: String): Message {
+        return getOriginalInteractionOrNull(applicationId, token) ?: EntityNotFoundException.interactionNotFound(token)
+    }
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,

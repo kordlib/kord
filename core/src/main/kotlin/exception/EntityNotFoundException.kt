@@ -40,40 +40,40 @@ class EntityNotFoundException : Exception {
         inline fun selfNotFound(): Nothing =
             throw EntityNotFoundException("Self user not found")
 
-        fun roleNotFound(guildId: Snowflake, roleId: Snowflake): Nothing =
+        inline fun roleNotFound(guildId: Snowflake, roleId: Snowflake): Nothing =
             guildEntityNotFound("Role", guildId = guildId, id = roleId)
 
-        fun banNotFound(guildId: Snowflake, userId: Snowflake): Nothing =
+        inline fun banNotFound(guildId: Snowflake, userId: Snowflake): Nothing =
             guildEntityNotFound("Ban", guildId = guildId, id = userId)
 
-        fun emojiNotFound(guildId: Snowflake, emojiId: Snowflake): Nothing =
+        inline fun emojiNotFound(guildId: Snowflake, emojiId: Snowflake): Nothing =
             guildEntityNotFound("GuildEmoji", guildId = guildId, id = emojiId)
 
-        fun webhookNotFound(webhookId: Snowflake): Nothing =
+        inline fun webhookNotFound(webhookId: Snowflake): Nothing =
             entityNotFound("Webhook", webhookId)
 
-        fun inviteNotFound(code: String): Nothing =
+        inline fun inviteNotFound(code: String): Nothing =
             throw EntityNotFoundException("Invite with code $code was not found.")
 
-        fun widgetNotFound(id: Snowflake): Nothing =
+        inline fun widgetNotFound(id: Snowflake): Nothing =
             throw EntityNotFoundException("Widget for guild ${id.value} was not found.")
 
-        fun templateNotFound(code: String): Nothing =
+        inline fun templateNotFound(code: String): Nothing =
             throw EntityNotFoundException("Template $code was not found.")
 
-        fun welcomeScreenNotFound(guildId: Snowflake): Nothing =
+        inline fun welcomeScreenNotFound(guildId: Snowflake): Nothing =
             throw EntityNotFoundException("Welcome screen for guild $guildId was not found.")
 
-        fun stageInstanceNotFound(channelId: Snowflake): Nothing =
-            throw EntityNotFoundException("Stage instance for channel $channelId was not found")
+        inline fun stageInstanceNotFound(channelId: Snowflake): Nothing =
+            throw EntityNotFoundException("Stage instance for channel $channelId was not found.")
 
-        fun applicationCommandPermissionsNotFound(commandId: Snowflake): Nothing =
+        inline fun applicationCommandPermissionsNotFound(commandId: Snowflake): Nothing =
             entityNotFound("ApplicationCommand", commandId)
 
         inline fun <reified T : ApplicationCommand> applicationCommandNotFound(commandId: Snowflake): Nothing =
             entityNotFound(T::class.simpleName!!, commandId)
 
-
+        inline fun interactionNotFound(token: String): Nothing =
+            throw EntityNotFoundException("Interaction with token $token was not found.")
+        }
     }
-
-}
