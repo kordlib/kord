@@ -46,8 +46,8 @@ class DefaultAudioFrameSender(
 
     private fun createFrameInterceptor(configuration: AudioFrameSenderConfiguration): FrameInterceptor =
         with(configuration) {
-            val builder = configuration.baseFrameInterceptorContext
-            builder.ssrc = configuration.ssrc
+            val builder = baseFrameInterceptorContext
+            builder.ssrc = ssrc
             return interceptorFactory(builder.build()) // we should assume that everything else is set before-hand in the base builder
         }
 
@@ -69,7 +69,7 @@ class DefaultAudioFrameSender(
                             sequence = sequence,
                             timestamp = sequence * 960u,
                             ssrc = ssrc,
-                            encryptedData = frame.data
+                            decryptedData = frame.data
                         ).encrypt(key)
 
                         data.udp.send(encryptedPacket.asByteReadPacket())

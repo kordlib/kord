@@ -11,12 +11,12 @@ sealed class AudioPacket(
     val data: ByteArray
 ) {
     @OptIn(ExperimentalIoApi::class)
-    val header = BytePacketBuilder().also {
-        it.writeByte(RTP_TYPE)
-        it.writeByte(RTP_VERSION)
-        it.writeUShort(sequence)
-        it.writeUInt(timestamp)
-        it.writeUInt(ssrc)
+    val header = BytePacketBuilder().apply {
+        writeByte(RTP_TYPE)
+        writeByte(RTP_VERSION)
+        writeUShort(sequence)
+        writeUInt(timestamp)
+        writeUInt(ssrc)
     }.build().readBytes()
 
     class EncryptedPacket(
@@ -42,8 +42,8 @@ sealed class AudioPacket(
         sequence: UShort,
         timestamp: UInt,
         ssrc: UInt,
-        encryptedData: ByteArray
-    ) : AudioPacket(sequence, timestamp, ssrc, encryptedData) {
+        decryptedData: ByteArray
+    ) : AudioPacket(sequence, timestamp, ssrc, decryptedData) {
         fun encrypt(key: ByteArray): EncryptedPacket {
             val nonce = ByteArray(NONCE_LENGTH)
             header.copyInto(nonce, 0, 0, RTP_HEADER_LENGTH)

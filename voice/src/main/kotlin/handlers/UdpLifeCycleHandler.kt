@@ -15,6 +15,7 @@ import dev.kord.voice.udp.VoiceUdpConnectionConfiguration
 import io.ktor.util.network.*
 import kotlinx.coroutines.flow.Flow
 import mu.KotlinLogging
+import java.util.concurrent.atomic.AtomicReference
 import kotlin.properties.Delegates
 
 private val udpLifeCycleLogger = KotlinLogging.logger { }
@@ -24,12 +25,12 @@ internal class UdpLifeCycleHandler(
     flow: Flow<VoiceEvent>,
     private val connection: VoiceConnection
 ) : EventHandler<VoiceEvent>(flow, "UdpInterceptor") {
-    private var ssrc by Delegates.notNull<UInt>()
+    private val ssrc: AtomicReference<UInt> = AtomicReference()
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override fun start() {
         on<Ready> {
-            this.ssrc = it.ssrc
+            this.ssrc.set(it.ssrc)
 
             connection.udp.start(VoiceUdpConnectionConfiguration(NetworkAddress(it.ip, it.port), it.ssrc))
 
@@ -52,7 +53,7 @@ internal class UdpLifeCycleHandler(
         on<SessionDescription> {
             with(connection) {
                 val config = AudioFrameSenderConfiguration(
-                    ssrc = ssrc,
+                    ssrc = ssrc.get(),
                     key = it.secretKey.toUByteArray().toByteArray(),
                     provider = audioProvider,
                     baseFrameInterceptorContext = FrameInterceptorContextBuilder(gateway, voiceGateway),

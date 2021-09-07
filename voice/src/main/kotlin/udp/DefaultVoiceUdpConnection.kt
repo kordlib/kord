@@ -7,6 +7,7 @@ import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import mu.KotlinLogging
+import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.CoroutineContext
 
 private val udpConnectionLogger = KotlinLogging.logger { }
@@ -22,13 +23,13 @@ internal class DefaultVoiceUdpConnection(
         SupervisorJob() + data.dispatcher + CoroutineName("Discord Voice UDP Connection")
 
     private lateinit var socket: ConnectedDatagramSocket
-    private lateinit var configuration: VoiceUdpConnectionConfiguration
+    private val configuration: AtomicReference<VoiceUdpConnectionConfiguration> = AtomicReference()
 
     private val _incoming: MutableSharedFlow<ByteReadPacket> = MutableSharedFlow()
     override val incoming: SharedFlow<ByteReadPacket> = _incoming
 
     override suspend fun start(configuration: VoiceUdpConnectionConfiguration) {
-        this.configuration = configuration
+        this.configuration.set(configuration)
         if (::socket.isInitialized) withContext(Dispatchers.IO) { socket.close() }
 
         socket = aSocket(ActorSelectorManager(coroutineContext)).udp().connect(configuration.server)
@@ -43,7 +44,7 @@ internal class DefaultVoiceUdpConnection(
         udpConnectionLogger.trace { "discovering ip" }
 
         send(buildPacket {
-            writeUInt(configuration.ssrc)
+            writeUInt(configuration.get().ssrc)
             writeFully(ByteArray(66))
         })
 

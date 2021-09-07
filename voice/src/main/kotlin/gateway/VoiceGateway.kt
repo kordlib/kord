@@ -94,7 +94,7 @@ internal val voiceGatewayOnLogger = KotlinLogging.logger("Gateway.on")
  * Convenience method that will invoke the [consumer] on every event [T] created by [VoiceGateway.events].
  *
  * The events are buffered in an [unlimited][Channel.UNLIMITED] [buffer][Flow.buffer] and
- * [launched][CoroutineScope.launch] in the supplied [scope], which is [Gateway] by default.
+ * [launched][CoroutineScope.launch] in the supplied [scope], which is [VoiceGateway] by default.
  * Each event will be [launched][CoroutineScope.launch] inside the [scope] separately and
  * any thrown [Throwable] will be caught and logged.
  *

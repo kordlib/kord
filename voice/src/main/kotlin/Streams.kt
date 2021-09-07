@@ -5,8 +5,10 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.voice.gateway.Speaking
 import dev.kord.voice.gateway.on
 import dev.kord.voice.udp.AudioPacket
+import kotlinx.atomicfu.AtomicArray
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.CoroutineContext
 
 @KordVoice
@@ -18,7 +20,7 @@ class Streams(
         SupervisorJob() + dispatcher + CoroutineName("Voice Connection Incoming Streams")
 
     // this will be set before it is used as the key is received before the udp connection is even established
-    internal lateinit var key: ByteArray
+    internal val key: AtomicReference<ByteArray> = AtomicReference()
 
     /**
      * A flow of all incoming [dev.kord.voice.udp.AudioPacket.DecryptedPacket]s through the UDP connection.
@@ -27,7 +29,7 @@ class Streams(
         connection.udp
             .incoming
             .mapNotNull(AudioPacket::encryptedFrom)
-            .map { it.decrypt(key) }
+            .map { it.decrypt(key.get()) }
             .shareIn(this, SharingStarted.Lazily)
 
     /**
@@ -53,9 +55,7 @@ class Streams(
 
     init {
         connection.voiceGateway.on<Speaking> {
-            if (ssrcToUser[ssrc] == null) {
-                _ssrcToUser[ssrc] = userId
-
+            _ssrcToUser.computeIfAbsent(ssrc) {
                 launch {
                     _incomingUserAudioFrames.emitAll(
                         incomingAudioFrames
@@ -63,6 +63,8 @@ class Streams(
                             .map { (_, frame) -> userId to frame }
                     )
                 }
+
+                userId
             }
         }
     }
