@@ -265,7 +265,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun createGlobalChatInputApplicationCommand(
+    suspend inline fun createGlobalChatInputApplicationCommand(
         applicationId: Snowflake,
         name: String,
         description: String,
@@ -280,7 +280,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun createGlobalMessageCommandApplicationCommand(
+    suspend inline fun createGlobalMessageCommandApplicationCommand(
         applicationId: Snowflake,
         name: String,
         builder: MessageCommandCreateBuilder.() -> Unit = {}
@@ -295,7 +295,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun createGlobalUserCommandApplicationCommand(
+    suspend inline fun createGlobalUserCommandApplicationCommand(
         applicationId: Snowflake,
         name: String,
         builder: UserCommandCreateBuilder.() -> Unit = {}
@@ -324,7 +324,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun modifyGlobalChatInputApplicationCommand(
+    suspend inline fun modifyGlobalChatInputApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
         builder: ChatInputModifyBuilder.() -> Unit
@@ -340,7 +340,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun modifyGlobalMessageApplicationCommand(
+    suspend inline fun modifyGlobalMessageApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
         builder: MessageCommandModifyBuilder.() -> Unit
@@ -355,7 +355,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun modifyGlobalUserApplicationCommand(
+    suspend inline fun modifyGlobalUserApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
         builder: UserCommandModifyBuilder.() -> Unit
@@ -371,7 +371,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun createGuildChatInputApplicationCommand(
+    suspend inline fun createGuildChatInputApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         name: String,
@@ -388,7 +388,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun createGuildMessageCommandApplicationCommand(
+    suspend inline fun createGuildMessageCommandApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         name: String,
@@ -405,7 +405,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun createGuildUserCommandApplicationCommand(
+    suspend inline fun createGuildUserCommandApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         name: String,
@@ -438,7 +438,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun modifyGuildChatInputApplicationCommand(
+    suspend inline fun modifyGuildChatInputApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
@@ -456,7 +456,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun modifyGuildMessageApplicationCommand(
+    suspend inline fun modifyGuildMessageApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
@@ -473,7 +473,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun modifyGuildUserApplicationCommand(
+    suspend inline fun modifyGuildUserApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
@@ -489,7 +489,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
 
-    suspend fun createPublicInteractionResponse(
+    suspend inline fun createPublicInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         builder: PublicInteractionResponseCreateBuilder.() -> Unit
@@ -502,7 +502,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
 
-    suspend fun createEphemeralInteractionResponse(
+    suspend inline fun createEphemeralInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         builder: EphemeralInteractionResponseCreateBuilder.() -> Unit
@@ -515,7 +515,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun modifyPublicInteractionResponse(
+    suspend inline fun modifyPublicInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,
         builder: PublicInteractionResponseModifyBuilder.() -> Unit
@@ -529,7 +529,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun modifyEphemeralInteractionResponse(
+    suspend inline fun modifyEphemeralInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,
         builder: EphemeralInteractionResponseModifyBuilder.() -> Unit
@@ -543,7 +543,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun createEphemeralFollowupMessage(
+    suspend inline fun createEphemeralFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
         builder: EphemeralFollowupMessageCreateBuilder.() -> Unit
@@ -557,7 +557,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun createFollowupMessage(
+    suspend inline fun createFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
         builder: PublicFollowupMessageCreateBuilder.() -> Unit
@@ -571,7 +571,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun modifyPublicFollowupMessage(
+    suspend inline fun modifyPublicFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
@@ -588,7 +588,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun modifyEphemeralFollowupMessage(
+    suspend inline fun modifyEphemeralFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
