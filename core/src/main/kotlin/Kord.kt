@@ -427,8 +427,12 @@ class Kord(
         builder: ChatInputCreateBuilder.() -> Unit = {},
     ): GlobalChatInputCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = ChatInputCreateBuilder(name, description).apply(builder).toRequest()
-        val response = rest.interaction.createGlobalApplicationCommand(resources.applicationId, request)
+        val response = rest.interaction.createGlobalChatInputApplicationCommand(
+            resources.applicationId,
+            name,
+            description,
+            builder
+        )
         val data = ApplicationCommandData.from(response)
         return GlobalChatInputCommand(data, rest.interaction)
     }
@@ -451,8 +455,8 @@ class Kord(
         builder: UserCommandCreateBuilder.() -> Unit = {},
     ): GlobalUserCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = UserCommandCreateBuilder(name).apply(builder).toRequest()
-        val response = rest.interaction.createGlobalApplicationCommand(resources.applicationId, request)
+        val response =
+            rest.interaction.createGlobalUserCommandApplicationCommand(resources.applicationId, name, builder)
         val data = ApplicationCommandData.from(response)
         return GlobalUserCommand(data, rest.interaction)
     }
@@ -464,8 +468,7 @@ class Kord(
     ): Flow<GlobalApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = MultiApplicationCommandBuilder().apply(builder).build()
-        val commands = rest.interaction.createGlobalApplicationCommands(resources.applicationId, request)
+        val commands = rest.interaction.createGlobalApplicationCommands(resources.applicationId, builder)
         return flow {
             commands.forEach {
                 val data = ApplicationCommandData.from(it)
@@ -482,8 +485,14 @@ class Kord(
         builder: ChatInputCreateBuilder.() -> Unit = {},
     ): GuildChatInputCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = ChatInputCreateBuilder(name, description).apply(builder).toRequest()
-        val response = rest.interaction.createGuildApplicationCommand(resources.applicationId, guildId, request)
+        val response =
+            rest.interaction.createGuildChatInputApplicationCommand(
+                resources.applicationId,
+                guildId,
+                name,
+                description,
+                builder
+            )
         val data = ApplicationCommandData.from(response)
         return GuildChatInputCommand(data, rest.interaction)
     }
@@ -496,8 +505,12 @@ class Kord(
         builder: MessageCommandCreateBuilder.() -> Unit = {},
     ): GuildMessageCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = MessageCommandCreateBuilder(name).apply(builder).toRequest()
-        val response = rest.interaction.createGuildApplicationCommand(resources.applicationId, guildId, request)
+        val response = rest.interaction.createGuildMessageCommandApplicationCommand(
+            resources.applicationId,
+            guildId,
+            name,
+            builder
+        )
         val data = ApplicationCommandData.from(response)
         return GuildMessageCommand(data, rest.interaction)
     }
@@ -509,8 +522,13 @@ class Kord(
         builder: UserCommandCreateBuilder.() -> Unit = {},
     ): GuildUserCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = UserCommandCreateBuilder(name).apply(builder).toRequest()
-        val response = rest.interaction.createGuildApplicationCommand(resources.applicationId, guildId, request)
+        val response = rest.interaction.createGuildUserCommandApplicationCommand(
+            resources.applicationId,
+            guildId,
+            name,
+            builder
+        )
+
         val data = ApplicationCommandData.from(response)
         return GuildUserCommand(data, rest.interaction)
     }
@@ -522,9 +540,9 @@ class Kord(
         builder: MultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GuildApplicationCommand> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = MultiApplicationCommandBuilder().apply(builder).build()
 
-        val commands = rest.interaction.createGuildApplicationCommands(resources.applicationId, guildId, request)
+        val commands = rest.interaction.createGuildApplicationCommands(resources.applicationId, guildId, builder)
+
         return flow {
             commands.forEach {
                 val data = ApplicationCommandData.from(it)
@@ -533,24 +551,26 @@ class Kord(
         }
     }
 
-    suspend fun editApplicationCommandPermissions(
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun editApplicationCommandPermissions(
         guildId: Snowflake,
         commandId: Snowflake,
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
     ) {
-        val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
-
-        rest.interaction.editApplicationCommandPermissions(resources.applicationId, guildId, commandId, request)
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        rest.interaction.editApplicationCommandPermissions(resources.applicationId, guildId, commandId, builder)
     }
 
-    suspend fun bulkEditApplicationCommandPermissions(
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun bulkEditApplicationCommandPermissions(
         guildId: Snowflake,
         builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
     ) {
-        val request = ApplicationCommandPermissionsBulkModifyBuilder().apply(builder).toRequest()
-
-        rest.interaction.bulkEditApplicationCommandPermissions(resources.applicationId, guildId, request)
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        rest.interaction.bulkEditApplicationCommandPermissions(resources.applicationId, guildId, builder)
     }
+
 
 }
 
