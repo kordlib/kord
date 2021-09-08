@@ -8,6 +8,7 @@ import dev.kord.voice.gateway.*
 import dev.kord.voice.handlers.StreamsHandler
 import dev.kord.voice.handlers.UdpLifeCycleHandler
 import dev.kord.voice.handlers.VoiceUpdateEventHandler
+import dev.kord.voice.streams.Streams
 import dev.kord.voice.udp.*
 import dev.kord.voice.udp.AudioFrameSender
 import kotlinx.coroutines.*
@@ -50,6 +51,7 @@ class VoiceConnection(
     val voiceGateway: VoiceGateway,
     val udp: VoiceUdpConnection,
     var voiceGatewayConfiguration: VoiceGatewayConfiguration,
+    val streams: Streams,
     val audioProvider: AudioProvider,
     val frameSender: AudioFrameSender,
     val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
@@ -57,11 +59,6 @@ class VoiceConnection(
 ) : CoroutineScope {
     override val coroutineContext: CoroutineContext =
         SupervisorJob() + voiceDispatcher + CoroutineName("Voice Connection for Guild ${data.guildId.value}")
-
-    /**
-     * A representation of all incoming audio streams through the UDP connection.
-     */
-    val streams: Streams = Streams(this, voiceDispatcher)
 
     init {
         // handle voice state/server updates (e.g., a move, disconnect, voice server change, etc.)

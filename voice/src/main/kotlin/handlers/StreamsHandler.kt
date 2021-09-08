@@ -1,9 +1,9 @@
 package dev.kord.voice.handlers
 
 import dev.kord.common.annotation.KordVoice
-import dev.kord.voice.Streams
 import dev.kord.voice.gateway.*
 import dev.kord.voice.gateway.handler.Handler
+import dev.kord.voice.streams.Streams
 import kotlinx.coroutines.flow.Flow
 
 @OptIn(KordVoice::class)
@@ -14,7 +14,7 @@ internal class StreamsHandler(
     @OptIn(ExperimentalUnsignedTypes::class)
     override fun start() {
         on<SessionDescription> {
-            streams.key.value = it.secretKey.toUByteArray().toByteArray()
+            streams.key = it.secretKey.toUByteArray().toByteArray()
         }
     }
 }

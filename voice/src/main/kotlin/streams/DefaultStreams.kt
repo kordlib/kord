@@ -1,10 +1,12 @@
-package dev.kord.voice
+package dev.kord.voice.streams
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
+import dev.kord.voice.AudioFrame
 import dev.kord.voice.gateway.Speaking
-import dev.kord.voice.gateway.on
+import dev.kord.voice.gateway.VoiceGateway
 import dev.kord.voice.udp.AudioPacket
+import dev.kord.voice.udp.VoiceUdpConnection
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
@@ -17,48 +19,35 @@ import kotlinx.coroutines.flow.*
 import kotlin.coroutines.CoroutineContext
 
 @KordVoice
-class Streams(
-    connection: VoiceConnection,
+class DefaultStreams(
+    voiceGateway: VoiceGateway,
+    udp: VoiceUdpConnection,
     dispatcher: CoroutineDispatcher
-) : CoroutineScope {
+) : Streams, CoroutineScope {
     override val coroutineContext: CoroutineContext =
         SupervisorJob() + dispatcher + CoroutineName("Voice Connection Incoming Streams")
 
-    internal val key: AtomicRef<ByteArray?> = atomic(null)
+    override var key: ByteArray? by atomic(null)
 
-    /**
-     * A flow of all incoming [dev.kord.voice.udp.AudioPacket.DecryptedPacket]s through the UDP connection.
-     */
-    val incomingAudioPackets: SharedFlow<AudioPacket.DecryptedPacket> =
-        connection.udp
-            .incoming
+    override val incomingAudioPackets: SharedFlow<AudioPacket.DecryptedPacket> =
+        udp.incoming
             .mapNotNull(AudioPacket::encryptedFrom)
-            .map { it.decrypt(key.value!!) }
+            .map { it.decrypt(key!!) }
             .shareIn(this, SharingStarted.Lazily)
 
-    /**
-     * A flow of all incoming [AudioFrame]s mapped to their ssrc.
-     */
-    val incomingAudioFrames get() = incomingAudioPackets.map { it.ssrc to AudioFrame.fromData(it.data)!! }
+    override val incomingAudioFrames: Flow<Pair<UInt, AudioFrame>>
+        get() = incomingAudioPackets.map { it.ssrc to AudioFrame.fromData(it.data)!! }
 
     private val _incomingUserAudioFrames: MutableSharedFlow<Pair<Snowflake, AudioFrame>> = MutableSharedFlow()
 
-    /**
-     * A flow of incoming [AudioFrame]s mapped to its corresponding user id. Streams for each user are built over time,
-     * or whenever the [dev.kord.voice.gateway.VoiceGateway] receives a [Speaking] event.
-     */
-    val incomingUserStreams: SharedFlow<Pair<Snowflake, AudioFrame>> = _incomingUserAudioFrames
+    override val incomingUserStreams: SharedFlow<Pair<Snowflake, AudioFrame>> = _incomingUserAudioFrames
 
     private val _ssrcToUser: AtomicRef<MutableMap<UInt, Snowflake>> = atomic(mutableMapOf())
 
-    /**
-     * A mapping of ssrc to user id.
-     * This cache is built over time through the [dev.kord.voice.gateway.VoiceGateway].
-     */
-    val ssrcToUser: Map<UInt, Snowflake> by _ssrcToUser
+    override val ssrcToUser: Map<UInt, Snowflake> by _ssrcToUser
 
     init {
-        connection.voiceGateway.events
+        voiceGateway.events
             .filterIsInstance<Speaking>()
             .buffer(Channel.UNLIMITED)
             .onEach { speaking ->
@@ -68,7 +57,7 @@ class Streams(
                             .filter { (ssrc, _) -> speaking.ssrc == ssrc }
                             .map { (_, frame) -> speaking.userId to frame }
                             .onEach { value -> _incomingUserAudioFrames.emit(value) }
-                            .launchIn(this@Streams)
+                            .launchIn(this)
 
                         speaking.userId
                     }

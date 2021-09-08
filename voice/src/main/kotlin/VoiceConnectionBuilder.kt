@@ -7,6 +7,9 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.*
 import dev.kord.voice.exception.VoiceConnectionInitializationException
 import dev.kord.voice.gateway.*
+import dev.kord.voice.streams.DefaultStreams
+import dev.kord.voice.streams.NOPStreams
+import dev.kord.voice.streams.Streams
 import dev.kord.voice.udp.*
 import dev.kord.voice.udp.DefaultVoiceUdpConnection
 import io.ktor.client.*
@@ -87,6 +90,17 @@ class VoiceConnectionBuilder(
      */
     var udp: VoiceUdpConnection? = null
 
+    /**
+     * A flag to control the implementation of [streams]. Set to false by default.
+     * When set to false, a NOP implementation will be used.
+     * When set to true, a proper receiving implementation will be used.
+     */
+    var receiveVoice: Boolean = false
+
+    /**
+     * A [Streams] implementation to be used. This will override the [receiveVoice] flag.
+     */
+    var streams: Streams? = null
 
     /**
      * A builder to customize the voice connection's underlying [VoiceGateway].
@@ -133,6 +147,7 @@ class VoiceConnectionBuilder(
         val audioProvider = audioProvider ?: EmptyAudioPlayerProvider
         val audioSender = audioSender ?: DefaultAudioFrameSender(DefaultAudioFrameSenderData(udp, defaultDispatcher))
         val frameInterceptorFactory = frameInterceptorFactory ?: { DefaultFrameInterceptor(it) }
+        val streams = streams ?: if(receiveVoice) DefaultStreams(voiceGateway, udp, defaultDispatcher) else NOPStreams
 
         return VoiceConnection(
             voiceConnectionData,
@@ -140,6 +155,7 @@ class VoiceConnectionBuilder(
             voiceGateway,
             udp,
             initialGatewayConfiguration,
+            streams,
             audioProvider,
             audioSender,
             frameInterceptorFactory,
