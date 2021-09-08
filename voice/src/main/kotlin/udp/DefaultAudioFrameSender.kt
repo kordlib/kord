@@ -1,12 +1,8 @@
-package udp
+package dev.kord.voice.udp
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.AudioFrame
 import dev.kord.voice.FrameInterceptor
-import dev.kord.voice.udp.AudioFrameSender
-import dev.kord.voice.udp.AudioFrameSenderConfiguration
-import dev.kord.voice.udp.AudioPacket
-import dev.kord.voice.udp.VoiceUdpConnection
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.SupervisorJob
