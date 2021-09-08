@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlin.coroutines.CoroutineContext
 
@@ -57,20 +58,23 @@ class Streams(
     val ssrcToUser: Map<UInt, Snowflake> by _ssrcToUser
 
     init {
-        connection.voiceGateway.on<Speaking>(scope = this) {
-            _ssrcToUser.update {
-                it.computeIfAbsent(ssrc) {
-                    incomingAudioFrames
-                        .filter { (ssrc, _) -> ssrc == this@on.ssrc }
-                        .map { (_, frame) -> userId to frame }
-                        .onEach { _incomingUserAudioFrames.emit(it) }
-                        .launchIn(this@Streams)
+        connection.voiceGateway.events
+            .filterIsInstance<Speaking>()
+            .buffer(Channel.UNLIMITED)
+            .onEach { speaking ->
+                _ssrcToUser.update {
+                    it.computeIfAbsent(speaking.ssrc) {
+                        incomingAudioFrames
+                            .filter { (ssrc, _) -> speaking.ssrc == ssrc }
+                            .map { (_, frame) -> speaking.userId to frame }
+                            .onEach { value -> _incomingUserAudioFrames.emit(value) }
+                            .launchIn(this@Streams)
 
-                    userId
+                        speaking.userId
+                    }
+
+                    it
                 }
-
-                it
-            }
-        }
+            }.launchIn(this)
     }
 }
