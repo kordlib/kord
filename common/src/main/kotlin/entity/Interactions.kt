@@ -26,7 +26,8 @@ data class DiscordApplicationCommand(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_permission")
-    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
+    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
+    val version: Snowflake
 )
 
 @Serializable(with = ApplicationCommandType.Serializer::class)

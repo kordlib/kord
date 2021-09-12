@@ -29,6 +29,10 @@ sealed interface ApplicationCommand : ApplicationCommandBehavior {
     val name: String
         get() = data.name
 
+    val version: Snowflake get() = data.version
+
+    val defaultPermission: Boolean? get() = data.defaultPermission.discordBoolean
+
 
 }
 

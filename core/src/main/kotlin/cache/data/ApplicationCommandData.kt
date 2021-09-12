@@ -15,7 +15,9 @@ data class ApplicationCommandData(
     val name: String,
     val description: String,
     val guildId: OptionalSnowflake,
-    val options: Optional<List<ApplicationCommandOptionData>>
+    val options: Optional<List<ApplicationCommandOptionData>>,
+    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
+    val version: Snowflake
 ) {
     companion object {
         val description = description(ApplicationCommandData::id) {
@@ -30,7 +32,10 @@ data class ApplicationCommandData(
                     name,
                     description,
                     guildId,
-                    options.mapList { ApplicationCommandOptionData.from(it) })
+                    options.mapList { ApplicationCommandOptionData.from(it) },
+                    defaultPermission,
+                    version
+                )
             }
         }
     }
