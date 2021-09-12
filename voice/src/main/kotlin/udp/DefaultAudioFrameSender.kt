@@ -3,6 +3,7 @@ package dev.kord.voice.udp
 import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.AudioFrame
 import dev.kord.voice.FrameInterceptor
+import dev.kord.voice.rtp.AudioPacket
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.SupervisorJob
@@ -51,7 +52,7 @@ class DefaultAudioFrameSender(
                 .transform { emit(interceptor.intercept(it)) }
                 .collect { frame ->
                     if (frame != null) {
-                        val encryptedPacket = AudioPacket.DecryptedPacket(
+                        val encryptedPacket = AudioPacket.DecryptedPacket.create(
                             sequence = sequence,
                             timestamp = sequence * 960u,
                             ssrc = ssrc,

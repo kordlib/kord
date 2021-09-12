@@ -8,6 +8,7 @@ dependencies {
     api(common)
     api(gateway)
 
+    implementation(libs.okio.io)
     implementation(libs.codahale.xsalsa20poly1305)
     api(libs.ktor.client.json)
     api(libs.ktor.client.serialization)

@@ -79,6 +79,7 @@ fun VersionCatalogBuilder.common() {
 
 fun VersionCatalogBuilder.misc() {
     alias("codahale-xsalsa20poly1305").to("com.codahale", "xsalsa20poly1305").version("0.10.1")
+    alias("okio-io").to("com.squareup.okio", "okio").version("3.0.0-alpha.10")
 }
 
 fun VersionCatalogBuilder.tests() {
