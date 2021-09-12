@@ -370,10 +370,6 @@ class Kord(
         return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId)
     }
 
-    suspend fun getOriginalInteractionResponse(token: String): Message? {
-        return EntitySupplyStrategy.rest.supply(this).getOriginalInteractionOrNull(resources.applicationId, token)
-    }
-
     suspend fun getGuildApplicationCommand(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand {
         return defaultSupplier.getGuildApplicationCommand(resources.applicationId, guildId, commandId)
     }
