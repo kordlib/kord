@@ -1,6 +1,7 @@
 plugins {
     `kord-module`
     `kord-sampled-module`
+    `kord-publishing`
 }
 
 dependencies {
