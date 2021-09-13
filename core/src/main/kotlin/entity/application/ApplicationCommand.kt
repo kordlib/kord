@@ -29,8 +29,14 @@ sealed interface ApplicationCommand : ApplicationCommandBehavior {
     val name: String
         get() = data.name
 
+    /**
+     * auto-incrementing version identifier updated during substantial record changes.
+     */
     val version: Snowflake get() = data.version
 
+    /**
+     * whether the command is enabled by default when the app is added to a guild.
+     */
     val defaultPermission: Boolean? get() = data.defaultPermission.discordBoolean
 
 
