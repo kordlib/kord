@@ -20,13 +20,17 @@ interface PersistentMessageModifyBuilder : MessageModifyBuilder {
 
     var attachments: MutableList<DiscordAttachment>?
 
-    fun addFile(name: String, content: InputStream) {
+    fun addFile(name: String, content: InputStream): NamedFile {
+        val namedFile = NamedFile(name, content)
+
         files = (files ?: mutableListOf()).also {
-            it.add(NamedFile(name, content))
+            it.add(namedFile)
         }
+
+        return namedFile
     }
 
-    suspend fun addFile(path: Path) = withContext(Dispatchers.IO) {
+    suspend fun addFile(path: Path): NamedFile = withContext(Dispatchers.IO) {
         addFile(path.fileName.toString(), Files.newInputStream(path))
     }
 

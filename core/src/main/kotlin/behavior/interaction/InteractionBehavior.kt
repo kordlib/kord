@@ -9,6 +9,7 @@ import dev.kord.common.entity.optional.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.KordEntity
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.supplier.EntitySupplier
@@ -75,6 +76,10 @@ interface InteractionBehavior : KordEntity, Strategizable {
         return PublicInteractionResponseBehavior(applicationId, token, kord)
     }
 
+
+    suspend fun getOriginalInteractionResponse(): Message? {
+        return EntitySupplyStrategy.rest.supply(kord).getOriginalInteractionOrNull(applicationId, token)
+    }
 
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior =

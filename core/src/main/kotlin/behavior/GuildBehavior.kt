@@ -978,13 +978,8 @@ inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -
 @OptIn(ExperimentalContracts::class)
 
 suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
-    contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-    }
 
-    kord.bulkEditApplicationCommandPermissions(
-        kord.selfId,
-        id,
-        builder
-    )
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+    kord.bulkEditApplicationCommandPermissions(id, builder)
 }
