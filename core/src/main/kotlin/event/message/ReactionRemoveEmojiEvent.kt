@@ -40,7 +40,7 @@ class ReactionRemoveEmojiEvent(
     /**
      * The id of the [Guild].
      */
-    val guildId: Snowflake get() = data.guildId
+    override val guildId: Snowflake get() = data.guildId
 
     val guild: GuildBehavior get() = GuildBehavior(id = guildId, kord = kord)
 

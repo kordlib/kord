@@ -18,7 +18,7 @@ class MemberJoinEvent(
 
     override val kord: Kord get() = member.kord
 
-    val guildId: Snowflake get() = member.guildId
+    override val guildId: Snowflake get() = member.guildId
 
     val guild: GuildBehavior get() = member.guild
 

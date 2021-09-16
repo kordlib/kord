@@ -38,7 +38,7 @@ class InviteDeleteEvent(
     /**
      * The [Guild] of the invite.
      */
-    val guildId: Snowflake get() = data.guildId
+    override val guildId: Snowflake get() = data.guildId
 
     /**
      * The behavior of the [Guild] of the invite.

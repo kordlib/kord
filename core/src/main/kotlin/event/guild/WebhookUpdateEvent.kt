@@ -15,7 +15,7 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 
 class WebhookUpdateEvent(
-    val guildId: Snowflake,
+    override val guildId: Snowflake,
     val channelId: Snowflake,
     override val kord: Kord,
     override val shard: Int,

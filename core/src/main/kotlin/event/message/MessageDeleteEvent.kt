@@ -17,7 +17,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
 class MessageDeleteEvent(
     val messageId: Snowflake,
     val channelId: Snowflake,
-    val guildId: Snowflake?,
+    override val guildId: Snowflake?,
     val message: Message?,
     override val kord: Kord,
     override val shard: Int,

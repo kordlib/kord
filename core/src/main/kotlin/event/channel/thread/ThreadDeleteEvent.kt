@@ -1,5 +1,6 @@
 package dev.kord.core.event.channel.thread
 
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.entity.channel.thread.DeletedThreadChannel
 import dev.kord.core.entity.channel.thread.NewsChannelThread
@@ -17,6 +18,8 @@ sealed interface ThreadChannelDeleteEvent : Event {
     override val kord: Kord
         get() = channel.kord
 
+    override val guildId: Snowflake?
+        get() = channel.guildId
 }
 
 

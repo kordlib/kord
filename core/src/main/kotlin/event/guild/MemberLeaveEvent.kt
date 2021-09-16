@@ -7,7 +7,7 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.User
 import dev.kord.core.event.Event
 
-class MemberLeaveEvent(val user: User, val guildId: Snowflake, override val shard: Int) : Event {
+class MemberLeaveEvent(val user: User, override val guildId: Snowflake, override val shard: Int) : Event {
 
     override val kord: Kord get() = user.kord
 

@@ -11,7 +11,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 class RoleDeleteEvent(
-    val guildId: Snowflake,
+    override val guildId: Snowflake,
     val roleId: Snowflake,
     val role: Role?,
     override val kord: Kord,

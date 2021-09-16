@@ -11,7 +11,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 
 class VoiceServerUpdateEvent(
     val token: String,
-    val guildId: Snowflake,
+    override val guildId: Snowflake,
     val endpoint: String?,
     override val kord: Kord,
     override val shard: Int,

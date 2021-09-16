@@ -1,5 +1,6 @@
 package dev.kord.core.event.interaction
 
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.*
 import dev.kord.core.entity.application.*
@@ -34,6 +35,8 @@ import dev.kord.core.event.Event
 
 sealed interface ApplicationInteractionCreateEvent : InteractionCreateEvent {
     override val interaction: ApplicationCommandInteraction
+    override val guildId: Snowflake?
+        get() = interaction.data.guildId.value
 }
 
 sealed interface GlobalApplicationInteractionCreateEvent : ApplicationInteractionCreateEvent {

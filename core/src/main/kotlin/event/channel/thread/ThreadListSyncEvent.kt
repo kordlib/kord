@@ -26,7 +26,7 @@ class ThreadListSyncEvent(
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Event, Strategizable {
 
-    val guildId: Snowflake get() = data.guildId
+    override val guildId: Snowflake get() = data.guildId
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 

@@ -18,7 +18,7 @@ class RoleCreateEvent(
 
     override val kord: Kord get() = role.kord
 
-    val guildId: Snowflake get() = role.guildId
+    override val guildId: Snowflake get() = role.guildId
 
     val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 

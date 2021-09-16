@@ -10,7 +10,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 class IntegrationsUpdateEvent(
-    val guildId: Snowflake,
+    override val guildId: Snowflake,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier

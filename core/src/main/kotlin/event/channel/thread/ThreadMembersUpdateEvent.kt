@@ -16,7 +16,7 @@ class ThreadMembersUpdateEvent(
 
     val id: Snowflake get() = data.id
 
-    val guildId: Snowflake get() = data.guildId
+    override val guildId: Snowflake get() = data.guildId
 
     val memberCount: Int get() = data.memberCount
 

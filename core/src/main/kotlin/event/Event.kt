@@ -1,5 +1,6 @@
 package dev.kord.core.event
 
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.CoroutineScope
@@ -20,5 +21,7 @@ interface Event : CoroutineScope {
      * The shard number of the [gateway] that spawned this event.
      */
     val shard: Int
+
+    val guildId: Snowflake?
 
 }

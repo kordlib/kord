@@ -18,9 +18,9 @@ import kotlinx.coroutines.flow.filter
 
 sealed class GatewayEvent : Event
 
-class ConnectEvent(override val kord: Kord, override val shard: Int) : GatewayEvent()
+class ConnectEvent(override val kord: Kord, override val shard: Int, override val guildId: Snowflake? = null) : GatewayEvent()
 
-sealed class DisconnectEvent : GatewayEvent() {
+sealed class DisconnectEvent(override val guildId: Snowflake? = null) : GatewayEvent() {
 
     /**
      * A Gateway was detached, all resources tied to that gateway should be freed.
@@ -117,6 +117,9 @@ class ReadyEvent(
 
     val guilds: Set<GuildBehavior> get() = guildIds.map { GuildBehavior(it, kord) }.toSet()
 
+    override val guildId: Snowflake?
+        get() = null
+
     suspend fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReadyEvent =
@@ -128,6 +131,10 @@ class ReadyEvent(
 }
 
 class ResumedEvent(override val kord: Kord, override val shard: Int) : GatewayEvent() {
+
+    override val guildId: Snowflake?
+        get() = null
+
     override fun toString(): String {
         return "ResumedEvent(kord=$kord, shard=$shard)"
     }

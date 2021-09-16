@@ -21,7 +21,7 @@ class MemberUpdateEvent(
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
-    val guildId: Snowflake get() = member.guildId
+    override val guildId: Snowflake get() = member.guildId
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(deprecationMessage, ReplaceWith("member.id"), level = DeprecationLevel.ERROR)

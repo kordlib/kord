@@ -31,7 +31,7 @@ class TypingStartEvent(
 
     val userId: Snowflake get() = data.userId
 
-    val guildId: Snowflake? get() = data.guildId.value
+    override val guildId: Snowflake? get() = data.guildId.value
 
     val started: Instant get() = data.timestamp.toInstant()
 
