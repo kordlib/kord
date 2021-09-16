@@ -7,7 +7,7 @@ import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.builder.kord.Shards
 import dev.kord.core.cache.KordCacheBuilder
-import dev.kord.core.gateway.MasterGateway
+import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.Intents
 import dev.kord.gateway.PrivilegedIntent
@@ -28,7 +28,7 @@ internal class CacheEntitySupplierTest {
         val kord = Kord(
                 ClientResources("", Snowflake(0u), Shards(0), HttpClient(), EntitySupplyStrategy.cache, Intents.all),
                 KordCacheBuilder().build(),
-                MasterGateway(mapOf(0 to Gateway.none())),
+                DefaultMasterGateway(mapOf(0 to Gateway.none())),
                 RestClient(KtorRequestHandler("")),
                 Snowflake(0u),
                 MutableSharedFlow(),

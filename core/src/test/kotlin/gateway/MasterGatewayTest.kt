@@ -1,6 +1,6 @@
 package gateway
 
-import dev.kord.core.gateway.MasterGateway
+import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.gateway.Command
 import dev.kord.gateway.Event
 import dev.kord.gateway.Gateway
@@ -14,7 +14,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration
 
-internal class MasterGatewayTest {
+internal class DefaultMasterGatewayTest {
 
     @Test
     fun `Gateway takes ping of single child`(){
@@ -23,7 +23,7 @@ internal class MasterGatewayTest {
 
         dummy.ping.value = ping
 
-        val gateway = MasterGateway(
+        val gateway = DefaultMasterGateway(
             mapOf(0 to dummy)
         )
 
@@ -40,7 +40,7 @@ internal class MasterGatewayTest {
         dummy1.ping.value = ping1
         dummy2.ping.value = ping2
 
-        val gateway = MasterGateway(
+        val gateway = DefaultMasterGateway(
             mapOf(0 to dummy1, 1 to dummy2)
         )
 
@@ -51,7 +51,7 @@ internal class MasterGatewayTest {
     fun `Gateway returns null ping when no gateway pings`(){
         val dummy = DummyGateway()
 
-        val gateway = MasterGateway(
+        val gateway = DefaultMasterGateway(
             mapOf(0 to dummy)
         )
 

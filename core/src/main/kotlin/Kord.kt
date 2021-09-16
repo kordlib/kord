@@ -3,7 +3,6 @@ package dev.kord.core
 import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
 import dev.kord.common.entity.PresenceStatus
@@ -22,6 +21,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
 import dev.kord.core.gateway.MasterGateway
 import dev.kord.core.gateway.handler.GatewayEventInterceptor
+import dev.kord.core.gateway.start
 import dev.kord.core.supplier.*
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.PresenceBuilder

@@ -13,7 +13,7 @@ import dev.kord.core.cache.createView
 import dev.kord.core.cache.registerKordData
 import dev.kord.core.event.Event
 import dev.kord.core.exception.KordInitializationException
-import dev.kord.core.gateway.MasterGateway
+import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.DefaultGateway
 import dev.kord.gateway.Gateway
@@ -245,7 +245,7 @@ class KordBuilder(val token: String) {
                     put(shard, gateways[index])
                 }
             }
-            MasterGateway(gateways)
+            DefaultMasterGateway(gateways)
         }
 
         val self = getBotIdFromToken(token)

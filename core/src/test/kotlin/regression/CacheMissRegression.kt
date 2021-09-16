@@ -11,7 +11,7 @@ import dev.kord.core.builder.kord.configure
 import dev.kord.core.builder.kord.getBotIdFromToken
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.registerKordData
-import dev.kord.core.gateway.MasterGateway
+import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
 import dev.kord.rest.request.JsonRequest
@@ -131,7 +131,7 @@ class CacheMissingRegressions {
         kord = Kord(
             resources,
             MapDataCache().also { it.registerKordData() },
-            MasterGateway(mapOf(0 to FakeGateway)),
+            DefaultMasterGateway(mapOf(0 to FakeGateway)),
             RestClient(CrashingHandler(resources.httpClient)),
             getBotIdFromToken(token),
             MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
