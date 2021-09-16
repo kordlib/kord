@@ -43,3 +43,7 @@ data class RoleData(
 
     }
 }
+
+fun DiscordRole.toData(guildId: Snowflake): RoleData {
+    return RoleData.from(DiscordGuildRole(guildId, this))
+}
