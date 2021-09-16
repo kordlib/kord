@@ -6,7 +6,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 
 data class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
 
@@ -19,7 +18,6 @@ interface MasterGateway {
      * Gateways that return `null` are not counted into the average, if all [gateways]
      * return `null` then this property will return `null` as well.
      */
-    @OptIn(ExperimentalTime::class)
     val averagePing: Duration?
 
 
