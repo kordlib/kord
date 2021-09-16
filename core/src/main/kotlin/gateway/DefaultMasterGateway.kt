@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.map
 import kotlin.time.Duration
 
-data class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
-
 class DefaultMasterGateway(
     override val gateways: Map<Int, Gateway>,
 ): MasterGateway {

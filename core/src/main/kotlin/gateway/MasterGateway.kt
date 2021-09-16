@@ -1,15 +1,14 @@
 package dev.kord.core.gateway
 
-import dev.kord.gateway.Command
-import dev.kord.gateway.Gateway
-import dev.kord.gateway.GatewayConfiguration
-import dev.kord.gateway.GatewayConfigurationBuilder
+import dev.kord.gateway.*
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
+
+data class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
 
 interface MasterGateway {
     val gateways: Map<Int, Gateway>
