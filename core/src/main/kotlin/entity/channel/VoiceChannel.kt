@@ -2,17 +2,21 @@ package dev.kord.core.entity.channel
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.optional.getOrThrow
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.Region
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.GatewayNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.voice.VoiceConnection
 import dev.kord.voice.VoiceConnectionBuilder
+import kotlinx.coroutines.flow.first
 import java.util.*
 
 /**
@@ -34,6 +38,20 @@ class VoiceChannel(
      * The user limit of the voice channel.
      */
     val userLimit: Int get() = data.userLimit.getOrThrow()
+
+    /**
+     * The region name of the voice channel
+     */
+    val rtcRegion: String? get() = data.rtcRegion.value
+
+    /**
+     * Requests to get the [voice region][Region] of this guild.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [Region] wasn't present.
+     * @throws [NoSuchElementException] if the [rtcRegion] is not in the available.
+     */
+    suspend fun getRegion(): Region = guild.regions.first { it.id == rtcRegion }
 
     /**
      * returns a new [VoiceChannel] with the given [strategy].

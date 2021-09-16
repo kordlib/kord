@@ -20,7 +20,6 @@ data class GuildData(
     //val owner: OptionalBoolean = OptionalBoolean.Missing, useless?
     val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
-    val region: String,
     val afkChannelId: Snowflake? = null,
     val afkTimeout: Int,
     val widgetEnabled: OptionalBoolean = OptionalBoolean.Missing,
@@ -82,7 +81,6 @@ data class GuildData(
                 //owner = owner,
                 ownerId = ownerId,
                 permissions = permissions,
-                region = region,
                 afkChannelId = afkChannelId,
                 afkTimeout = afkTimeout,
                 widgetEnabled = widgetEnabled,

@@ -90,7 +90,6 @@ data class DiscordGuild(
     @SerialName("owner_id")
     val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
-    val region: String,
     @SerialName("afk_channel_id")
     val afkChannelId: Snowflake?,
     @SerialName("afk_timeout")
