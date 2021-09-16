@@ -53,7 +53,8 @@ class KordEventDropTest {
         RestClient(KtorRequestHandler("token", clock = Clock.System)),
         Snowflake("420"),
         MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
-        Dispatchers.Default
+        Dispatchers.Default,
+        null
     )
 
     @Test

@@ -265,7 +265,8 @@ class KordBuilder(val token: String) {
             rest,
             self,
             eventFlow,
-            defaultDispatcher
+            defaultDispatcher,
+            null
         )
     }
 

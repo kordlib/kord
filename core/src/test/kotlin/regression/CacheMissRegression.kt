@@ -135,7 +135,8 @@ class CacheMissingRegressions {
             RestClient(CrashingHandler(resources.httpClient)),
             getBotIdFromToken(token),
             MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
-            Dispatchers.Default
+            Dispatchers.Default,
+            null
         )
     }
 

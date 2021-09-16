@@ -53,6 +53,7 @@ class Kord(
     val selfId: Snowflake,
     private val eventFlow: MutableSharedFlow<Event>,
     dispatcher: CoroutineDispatcher,
+    val extraContext: (Event.() -> CoroutineContext)?
 ) : CoroutineScope {
     private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventFlow)
 
@@ -596,6 +597,9 @@ suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Ko
 inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline consumer: suspend T.() -> Unit): Job =
     events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
         .onEach {
-            scope.launch { runCatching { consumer(it) }.onFailure { kordLogger.catching(it) } }
+            val context = extraContext
+                ?.let { builder -> scope.coroutineContext + builder.invoke(it) }
+                ?: scope.coroutineContext
+            scope.launch(context) { runCatching { consumer(it) }.onFailure { kordLogger.catching(it) } }
         }
         .launchIn(scope)

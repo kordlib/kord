@@ -7,7 +7,7 @@ import kotlin.coroutines.CoroutineContext
 
 interface Event : CoroutineScope {
     override val coroutineContext: CoroutineContext
-        get() = kord.coroutineContext
+        get() = kord.extraContext?.let { kord.coroutineContext + it.invoke(this) } ?: kord.coroutineContext
 
     /**
      * The Gateway that spawned this event.
