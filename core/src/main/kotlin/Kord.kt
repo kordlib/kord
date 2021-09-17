@@ -53,7 +53,7 @@ class Kord(
     val selfId: Snowflake,
     private val eventFlow: MutableSharedFlow<Event>,
     dispatcher: CoroutineDispatcher,
-    val extraContext: (Event.() -> CoroutineContext)?
+    val extraContext: (Event.() -> CoroutineContext)? = null
 ) : CoroutineScope {
     private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventFlow)
 
