@@ -6,7 +6,7 @@ import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.builder.kord.Shards
 import dev.kord.core.event.guild.GuildCreateEvent
-import dev.kord.core.gateway.MasterGateway
+import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.on
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
@@ -49,7 +49,7 @@ class KordEventDropTest {
     val kord = Kord(
         resources = ClientResources("token", Snowflake(0u), Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
         cache = DataCache.none(),
-        MasterGateway(mapOf(0 to SpammyGateway)),
+        DefaultMasterGateway(mapOf(0 to SpammyGateway)),
         RestClient(KtorRequestHandler("token", clock = Clock.System)),
         Snowflake("420"),
         MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
