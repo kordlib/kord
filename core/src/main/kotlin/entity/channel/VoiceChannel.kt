@@ -12,6 +12,7 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Region
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.GatewayNotFoundException
+import dev.kord.core.firstOrNull
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.voice.VoiceConnection
@@ -52,6 +53,15 @@ class VoiceChannel(
      * @throws [NoSuchElementException] if the [rtcRegion] is not in the available.
      */
     suspend fun getRegion(): Region = guild.regions.first { it.id == rtcRegion }
+
+    /**
+     * Requests to get the [voice region][Region] of this guild.
+     *
+     * returns null if the region was not found
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun getRegionOrNull(): Region? = guild.regions.firstOrNull { it.id == rtcRegion }
 
     /**
      * returns a new [VoiceChannel] with the given [strategy].
