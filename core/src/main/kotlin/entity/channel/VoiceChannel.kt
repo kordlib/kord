@@ -46,7 +46,7 @@ class VoiceChannel(
     val rtcRegion: String? get() = data.rtcRegion.value
 
     /**
-     * Requests to get the [voice region][Region] of this guild.
+     * Requests to get the [voice region][Region] of this channel.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Region] wasn't present.
@@ -55,7 +55,7 @@ class VoiceChannel(
     suspend fun getRegion(): Region = guild.regions.first { it.id == rtcRegion }
 
     /**
-     * Requests to get the [voice region][Region] of this guild.
+     * Requests to get the [voice region][Region] of this channel.
      *
      * returns null if the region was not found
      *
