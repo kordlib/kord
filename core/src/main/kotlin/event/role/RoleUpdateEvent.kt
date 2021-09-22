@@ -9,11 +9,13 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlin.coroutines.CoroutineContext
 
 class RoleUpdateEvent(
     val role: Role,
     override val shard: Int,
-    override val supplier: EntitySupplier = role.kord.defaultSupplier
+    override val supplier: EntitySupplier = role.kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = role.kord.coroutineContext,
 ) : Event, Strategizable {
 
     override val kord: Kord get() = role.kord

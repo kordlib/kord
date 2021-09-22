@@ -19,12 +19,14 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.toInstant
 import kotlinx.datetime.Instant
+import kotlin.coroutines.CoroutineContext
 
 class TypingStartEvent(
     val data: TypingStartEventData,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
     val channelId: Snowflake get() = data.channelId

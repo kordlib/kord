@@ -3,7 +3,6 @@ package dev.kord.core.event.guild
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.cache.data.InviteDeleteData
 import dev.kord.core.entity.Guild
@@ -14,6 +13,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Sent when an invite is deleted.
@@ -22,7 +22,8 @@ class InviteDeleteEvent(
     val data: InviteDeleteData,
     override val kord: Kord,
     override val shard: Int,
-    override val supplier: EntitySupplier = kord.defaultSupplier
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
     /**

@@ -4,7 +4,7 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.*
 import dev.kord.core.entity.application.*
 import dev.kord.core.entity.interaction.*
-import dev.kord.core.event.Event
+import kotlin.coroutines.CoroutineContext
 
 /**
  * This event fires when an interaction is created.
@@ -51,13 +51,15 @@ sealed interface  UserCommandInteractionCreateEvent : ApplicationInteractionCrea
 class GuildUserCommandInteractionCreateEvent(
     override val interaction: GuildUserCommandInteraction,
     override val kord: Kord,
-    override val shard: Int
+    override val shard: Int,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : GuildApplicationInteractionCreateEvent, UserCommandInteractionCreateEvent
 
 class GlobalUserCommandInteractionCreateEvent(
     override val interaction: GlobalUserCommandInteraction,
     override val kord: Kord,
-    override val shard: Int
+    override val shard: Int,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : GlobalApplicationInteractionCreateEvent, UserCommandInteractionCreateEvent
 
 
@@ -68,13 +70,15 @@ sealed interface  MessageCommandInteractionCreateEvent : ApplicationInteractionC
 class GuildMessageCommandInteractionCreateEvent(
     override val interaction: GuildMessageCommandInteraction,
     override val kord: Kord,
-    override val shard: Int
+    override val shard: Int,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : GuildApplicationInteractionCreateEvent, MessageCommandInteractionCreateEvent
 
 class GlobalMessageCommandInteractionCreateEvent(
     override val interaction: GlobalMessageCommandInteraction,
     override val kord: Kord,
-    override val shard: Int
+    override val shard: Int,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : GlobalApplicationInteractionCreateEvent, MessageCommandInteractionCreateEvent
 
 
@@ -86,11 +90,13 @@ sealed interface  ChatInputCommandInteractionCreateEvent : ApplicationInteractio
 class GuildChatInputCommandInteractionCreateEvent(
     override val interaction: GuildChatInputCommandInteraction,
     override val kord: Kord,
-    override val shard: Int
+    override val shard: Int,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : GuildApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent
 
 class GlobalChatInputCommandInteractionCreateEvent(
     override val interaction: GlobalChatInputCommandInteraction,
     override val kord: Kord,
-    override val shard: Int
+    override val shard: Int,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : GlobalApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent

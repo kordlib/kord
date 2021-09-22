@@ -2,13 +2,10 @@ package dev.kord.core.event.guild
 
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.MembersChunkData
-import dev.kord.core.cache.data.PresenceData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Presence
@@ -16,6 +13,7 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlin.coroutines.CoroutineContext
 
 
 @DeprecatedSinceKord("0.7.0")
@@ -26,7 +24,8 @@ class MembersChunkEvent(
     val data: MembersChunkData,
     override val kord: Kord,
     override val shard: Int,
-    override val supplier: EntitySupplier = kord.defaultSupplier
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
     val guildId: Snowflake get() = data.guildId
