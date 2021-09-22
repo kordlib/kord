@@ -79,8 +79,7 @@ class KordRestOnlyBuilder(val token: String) {
             rest,
             selfId,
             MutableSharedFlow(),
-            defaultDispatcher,
-            null
+            defaultDispatcher
         )
     }
 }

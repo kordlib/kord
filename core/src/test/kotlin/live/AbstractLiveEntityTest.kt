@@ -109,8 +109,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
             RestClient(KtorRequestHandler(token = "token")),
             randomId(),
             MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
-            Dispatchers.Default,
-            null
+            Dispatchers.Default
         )
     }
 
