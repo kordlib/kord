@@ -87,10 +87,11 @@ internal class GuildEventHandler(
 
     private suspend fun handle(event: GuildUpdate, shard: Int) {
         val data = GuildData.from(event.guild)
+        val old = cache.query<GuildData> { idEq(GuildData::id, event.guild.id) }.singleOrNull()
         cache.put(data)
         event.guild.cache()
 
-        coreFlow.emit(GuildUpdateEvent(Guild(data, kord), shard))
+        coreFlow.emit(GuildUpdateEvent(Guild(data, kord), old?.let { Guild(it, kord) }, shard))
     }
 
     private suspend fun handle(event: GuildDelete, shard: Int) = with(event.guild) {
