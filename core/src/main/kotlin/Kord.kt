@@ -54,17 +54,12 @@ class Kord(
     val selfId: Snowflake,
     private val eventFlow: MutableSharedFlow<Event>,
     dispatcher: CoroutineDispatcher,
-    interceptorBuilder: Kord.() -> GatewayEventInterceptor = {
-        DefaultGatewayEventInterceptor(
-            this,
-            gateway,
-            cache,
-            eventFlow
-        )
+    interceptorBuilder: () -> GatewayEventInterceptor = {
+        DefaultGatewayEventInterceptor(cache)
     }
 ) : CoroutineScope {
 
-    private val interceptor = interceptorBuilder.invoke(this)
+    private val interceptor = interceptorBuilder.invoke()
 
     /**
      * Global commands made by the bot under this Kord instance.
@@ -114,7 +109,7 @@ class Kord(
         get() = defaultSupplier.guilds
 
     init {
-        launch { interceptor.start() }
+        launch { interceptor.start(gateway.events, eventFlow, this@Kord) }
     }
 
     /**

@@ -13,29 +13,24 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.channel.*
 import dev.kord.core.event.channel.data.ChannelPinsUpdateEventData
 import dev.kord.core.event.channel.data.TypingStartEventData
-import dev.kord.core.gateway.MasterGateway
 import dev.kord.gateway.*
-import kotlinx.coroutines.flow.MutableSharedFlow
 import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class ChannelEventHandler(
-    kord: Kord,
-    gateway: MasterGateway,
-    cache: DataCache,
-    coreFlow: MutableSharedFlow<CoreEvent>
-) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
+    cache: DataCache
+) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int) = when (event) {
-        is ChannelCreate -> handle(event, shard)
-        is ChannelUpdate -> handle(event, shard)
-        is ChannelDelete -> handle(event, shard)
-        is ChannelPinsUpdate -> handle(event, shard)
-        is TypingStart -> handle(event, shard)
-        else -> Unit
+    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
+        is ChannelCreate -> handle(event, shard, kord)
+        is ChannelUpdate -> handle(event, shard, kord)
+        is ChannelDelete -> handle(event, shard, kord)
+        is ChannelPinsUpdate -> handle(event, shard, kord)
+        is TypingStart -> handle(event, shard, kord)
+        else -> null
     }
 
-    private suspend fun handle(event: ChannelCreate, shard: Int) {
+    private suspend fun handle(event: ChannelCreate, shard: Int, kord: Kord): CoreEvent? {
         val data = ChannelData.from(event.channel)
         cache.put(data)
 
@@ -47,15 +42,15 @@ internal class ChannelEventHandler(
             is StageChannel -> StageChannelCreateEvent(channel, shard)
             is VoiceChannel -> VoiceChannelCreateEvent(channel, shard)
             is Category -> CategoryCreateEvent(channel, shard)
-            is ThreadChannel -> return
+            is ThreadChannel -> return null
             else -> UnknownChannelCreateEvent(channel, shard)
 
         }
 
-        coreFlow.emit(coreEvent)
+        return coreEvent
     }
 
-    private suspend fun handle(event: ChannelUpdate, shard: Int) {
+    private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord): CoreEvent? {
         val data = ChannelData.from(event.channel)
         cache.put(data)
 
@@ -67,15 +62,15 @@ internal class ChannelEventHandler(
             is StageChannel -> StageChannelUpdateEvent(channel, shard)
             is VoiceChannel -> VoiceChannelUpdateEvent(channel, shard)
             is Category -> CategoryUpdateEvent(channel, shard)
-            is ThreadChannel -> return
+            is ThreadChannel -> return null
             else -> UnknownChannelUpdateEvent(channel, shard)
 
         }
 
-        coreFlow.emit(coreEvent)
+        return coreEvent
     }
 
-    private suspend fun handle(event: ChannelDelete, shard: Int) {
+    private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord): CoreEvent? {
         cache.remove<ChannelData> { idEq(ChannelData::id, event.channel.id) }
         val data = ChannelData.from(event.channel)
 
@@ -87,24 +82,25 @@ internal class ChannelEventHandler(
             is StageChannel -> StageChannelDeleteEvent(channel, shard)
             is VoiceChannel -> VoiceChannelDeleteEvent(channel, shard)
             is Category -> CategoryDeleteEvent(channel, shard)
-            is ThreadChannel -> return
+            is ThreadChannel -> return null
             else -> UnknownChannelDeleteEvent(channel, shard)
         }
 
-        coreFlow.emit(coreEvent)
+        return coreEvent
     }
 
-    private suspend fun handle(event: ChannelPinsUpdate, shard: Int) = with(event.pins) {
-        val coreEvent = ChannelPinsUpdateEvent(ChannelPinsUpdateEventData.from(this), kord, shard)
+    private suspend fun handle(event: ChannelPinsUpdate, shard: Int, kord: Kord): ChannelPinsUpdateEvent =
+        with(event.pins) {
+            val coreEvent = ChannelPinsUpdateEvent(ChannelPinsUpdateEventData.from(this), kord, shard)
 
-        cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
-            it.copy(lastPinTimestamp = lastPinTimestamp)
+            cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
+                it.copy(lastPinTimestamp = lastPinTimestamp)
+            }
+
+            return coreEvent
         }
 
-        coreFlow.emit(coreEvent)
-    }
-
-    private suspend fun handle(event: TypingStart, shard: Int) = with(event.data) {
+    private suspend fun handle(event: TypingStart, shard: Int, kord: Kord): TypingStartEvent = with(event.data) {
         member.value?.let {
             cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
         }
@@ -115,7 +111,7 @@ internal class ChannelEventHandler(
             shard
         )
 
-        coreFlow.emit(coreEvent)
+        return coreEvent
     }
 
 }
