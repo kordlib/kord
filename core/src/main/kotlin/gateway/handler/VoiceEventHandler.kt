@@ -14,6 +14,7 @@ import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
+import kotlin.coroutines.CoroutineContext
 import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
@@ -21,13 +22,19 @@ internal class VoiceEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
-        is VoiceStateUpdate -> handle(event, shard, kord)
-        is VoiceServerUpdate -> handle(event, shard, kord)
-        else -> null
-    }
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? =
+        when (event) {
+            is VoiceStateUpdate -> handle(event, shard, kord, context)
+            is VoiceServerUpdate -> handle(event, shard, kord, context)
+            else -> null
+        }
 
-    private suspend fun handle(event: VoiceStateUpdate, shard: Int, kord: Kord): VoiceStateUpdateEvent {
+    private suspend fun handle(
+        event: VoiceStateUpdate,
+        shard: Int,
+        kord: Kord,
+        context: CoroutineContext
+    ): VoiceStateUpdateEvent {
         val data = VoiceStateData.from(event.voiceState.guildId.value!!, event.voiceState)
 
         val old = cache.query<VoiceStateData> { idEq(VoiceStateData::id, data.id) }
@@ -36,12 +43,17 @@ internal class VoiceEventHandler(
         cache.put(data)
         val new = VoiceState(data, kord)
 
-        return VoiceStateUpdateEvent(old, new, shard)
+        return VoiceStateUpdateEvent(old, new, shard, context)
     }
 
-    private fun handle(event: VoiceServerUpdate, shard: Int, kord: Kord): VoiceServerUpdateEvent =
+    private fun handle(
+        event: VoiceServerUpdate,
+        shard: Int,
+        kord: Kord,
+        context: CoroutineContext
+    ): VoiceServerUpdateEvent =
         with(event.voiceServerUpdateData) {
-            return VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard)
+            return VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, coroutineContext = context)
         }
 
 }
