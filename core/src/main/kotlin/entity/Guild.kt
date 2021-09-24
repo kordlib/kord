@@ -46,6 +46,10 @@ class Guild(
      */
     val afkChannelId: Snowflake? get() = data.afkChannelId
 
+    override suspend fun asGuild(): Guild = this
+
+    override suspend fun asGuildOrNull(): Guild = this
+
     val afkChannel: VoiceChannelBehavior?
         get() = afkChannelId?.let { VoiceChannelBehavior(guildId = id, id = it, kord = kord) }
 

@@ -5,7 +5,6 @@ import dev.kord.common.entity.optional.getOrThrow
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.StageChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.exception.GatewayNotFoundException
@@ -44,6 +43,8 @@ class StageChannel(
         StageChannel(data, kord, strategy.supply(kord))
 
     override suspend fun asChannel(): StageChannel = this
+
+    override suspend fun asChannelOrNull(): StageChannel = this
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
