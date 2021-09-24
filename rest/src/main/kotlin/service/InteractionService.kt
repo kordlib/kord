@@ -3,14 +3,10 @@ package dev.kord.rest.service
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.interaction.*
-import dev.kord.rest.builder.message.create.EphemeralFollowupMessageCreateBuilder
-import dev.kord.rest.builder.message.create.EphemeralInteractionResponseCreateBuilder
-import dev.kord.rest.builder.message.create.PublicFollowupMessageCreateBuilder
-import dev.kord.rest.builder.message.create.PublicInteractionResponseCreateBuilder
-import dev.kord.rest.builder.message.modify.EphemeralFollowupMessageModifyBuilder
-import dev.kord.rest.builder.message.modify.EphemeralInteractionResponseModifyBuilder
-import dev.kord.rest.builder.message.modify.PublicFollowupMessageModifyBuilder
-import dev.kord.rest.builder.message.modify.PublicInteractionResponseModifyBuilder
+import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
+import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
+import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
+import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
@@ -492,67 +488,29 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend inline fun createPublicInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        builder: PublicInteractionResponseCreateBuilder.() -> Unit
+        ephemeral: Boolean = false,
+        builder: InteractionResponseCreateBuilder.() -> Unit
     ) {
         return createInteractionResponse(
             interactionId,
             interactionToken,
-            PublicInteractionResponseCreateBuilder().apply(builder).toRequest()
+            InteractionResponseCreateBuilder(ephemeral).apply(builder).toRequest()
         )
     }
 
-
-    suspend inline fun createEphemeralInteractionResponse(
-        interactionId: Snowflake,
-        interactionToken: String,
-        builder: EphemeralInteractionResponseCreateBuilder.() -> Unit
-    ) {
-        return createInteractionResponse(
-            interactionId,
-            interactionToken,
-            EphemeralInteractionResponseCreateBuilder().apply(builder).toRequest()
-        )
-    }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyPublicInteractionResponse(
+    suspend inline fun modifyInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,
-        builder: PublicInteractionResponseModifyBuilder.() -> Unit
+        ephemeral: Boolean = false,
+        builder: InteractionResponseModifyBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return modifyInteractionResponse(
             applicationId,
             interactionToken,
-            PublicInteractionResponseModifyBuilder().apply(builder).toRequest()
-        )
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyEphemeralInteractionResponse(
-        applicationId: Snowflake,
-        interactionToken: String,
-        builder: EphemeralInteractionResponseModifyBuilder.() -> Unit
-    ): DiscordMessage {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return modifyInteractionResponse(
-            applicationId,
-            interactionToken,
-            EphemeralInteractionResponseModifyBuilder().apply(builder).toRequest()
-        )
-    }
-
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun createEphemeralFollowupMessage(
-        applicationId: Snowflake,
-        interactionToken: String,
-        builder: EphemeralFollowupMessageCreateBuilder.() -> Unit
-    ): DiscordMessage {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return createFollowupMessage(
-            applicationId,
-            interactionToken,
-            EphemeralFollowupMessageCreateBuilder().apply(builder).toRequest()
+            InteractionResponseModifyBuilder().apply(builder).toRequest()
         )
     }
 
@@ -560,48 +518,34 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend inline fun createFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
-        builder: PublicFollowupMessageCreateBuilder.() -> Unit
+        ephemeral: Boolean = false,
+        builder: FollowupMessageCreateBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return createFollowupMessage(
             applicationId,
             interactionToken,
-            PublicFollowupMessageCreateBuilder().apply(builder).toRequest()
+            FollowupMessageCreateBuilder(ephemeral).apply(builder).toRequest()
         )
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyPublicFollowupMessage(
+    suspend inline fun modifyFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-        builder: PublicFollowupMessageModifyBuilder.() -> Unit = {}
+        ephemeral: Boolean = false,
+        builder: FollowupMessageModifyBuilder.() -> Unit = {}
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return modifyFollowupMessage(
             applicationId,
             interactionToken,
             messageId,
-            PublicFollowupMessageModifyBuilder().apply(builder).toRequest()
+            FollowupMessageModifyBuilder().apply(builder).toRequest()
         )
     }
 
-
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyEphemeralFollowupMessage(
-        applicationId: Snowflake,
-        interactionToken: String,
-        messageId: Snowflake,
-        builder: EphemeralFollowupMessageModifyBuilder.() -> Unit = {}
-    ): DiscordMessage {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return modifyFollowupMessage(
-            applicationId,
-            interactionToken,
-            messageId,
-            EphemeralFollowupMessageModifyBuilder().apply(builder).toRequest()
-        )
-    }
 
     @OptIn(ExperimentalContracts::class)
     suspend inline fun bulkEditApplicationCommandPermissions(
