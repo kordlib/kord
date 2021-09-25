@@ -20,7 +20,7 @@ data class GuildData(
     //val owner: OptionalBoolean = OptionalBoolean.Missing, useless?
     val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
-    @Deprecated("Deprecated in API v9", ReplaceWith("ChannelData#rtcRegion"))
+    @Deprecated("The region field has been moved to Channel#rtcRegion in Discord API v9", ReplaceWith("ChannelData#rtcRegion"))
     val region: String,
     val afkChannelId: Snowflake? = null,
     val afkTimeout: Int,

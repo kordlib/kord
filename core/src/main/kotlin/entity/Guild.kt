@@ -263,7 +263,7 @@ class Guild(
     /**
      * The voice region id for the guild.
      */
-    @Deprecated("Deprecated in API v9", ReplaceWith("Channel#rtcRegion"))
+    @Deprecated("The region field has been moved to Channel#rtcRegion in Discord API v9", ReplaceWith("Channel#rtcRegion"))
     val regionId: String get() = data.region
 
     /**
