@@ -43,6 +43,14 @@ open class User(
     @DeprecatedSinceKord("0.7.0")
     val flags: UserFlags? by ::publicFlags
 
+    override suspend fun asUser(): User {
+        return this
+    }
+
+    override suspend fun asUserOrNull(): User {
+        return this
+    }
+
     /**
      * The flags on a user's account, if present.
      */

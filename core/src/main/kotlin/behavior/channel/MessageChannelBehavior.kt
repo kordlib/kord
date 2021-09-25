@@ -6,6 +6,7 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -53,6 +54,23 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws [RequestException] if something went wrong during the request.
      */
     override suspend fun asChannelOrNull(): MessageChannel? = super.asChannelOrNull() as? MessageChannel
+
+    /**
+     * Retrieve the [MessageChannel] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): MessageChannel = super.fetchChannel() as MessageChannel
+
+
+    /**
+     * Retrieve the [MessageChannel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [MessageChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): MessageChannel? = super.fetchChannelOrNull() as? MessageChannel
 
     /**
      * Requests to get all messages in this channel.

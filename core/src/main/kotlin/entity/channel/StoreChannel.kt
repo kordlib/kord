@@ -22,6 +22,8 @@ data class StoreChannel(
 
     override suspend fun asChannel(): StoreChannel = this
 
+    override suspend fun asChannelOrNull(): StoreChannel = this
+
     /**
      * Returns a new [StoreChannel] with the given [strategy].
      */

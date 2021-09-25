@@ -19,9 +19,9 @@ class NewsChannelThread(
 ) : ThreadChannel {
 
 
-    override suspend fun asChannel(): NewsChannelThread = super.asChannel() as NewsChannelThread
+    override suspend fun asChannel(): NewsChannelThread = this
 
-    override suspend fun asChannelOrNull(): NewsChannelThread? = super.asChannelOrNull() as? NewsChannelThread
+    override suspend fun asChannelOrNull(): NewsChannelThread? = this
 
 
     override suspend fun getParent(): NewsChannel {

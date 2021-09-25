@@ -18,8 +18,6 @@ class NewsChannel(
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : CategorizableChannel, TopGuildMessageChannel, ThreadParentChannel,  NewsChannelBehavior {
 
-    override suspend fun asChannel(): NewsChannel = this
-
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
@@ -27,6 +25,10 @@ class NewsChannel(
         is ChannelBehavior -> other.id == id
         else -> false
     }
+
+    override suspend fun asChannel(): NewsChannel = this
+
+    override suspend fun asChannelOrNull(): NewsChannel = this
 
     /**
      * Returns a new [NewsChannel] with the given [strategy].

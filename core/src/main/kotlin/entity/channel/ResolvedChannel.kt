@@ -1,6 +1,5 @@
 package dev.kord.core.entity.channel
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Permissions
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
@@ -18,6 +17,10 @@ class ResolvedChannel(
     val name: String get() = data.name.value!!
 
     val permissions: Permissions get() = data.permissions.value!!
+
+    override suspend fun asChannel(): Channel = this
+
+    override suspend fun asChannelOrNull(): Channel = this
 
     override val supplier: EntitySupplier
         get() = strategy.supply(kord)

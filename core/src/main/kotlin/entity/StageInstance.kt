@@ -16,4 +16,7 @@ class StageInstance(val data: StageInstanceData, override val kord: Kord, overri
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StageInstanceBehavior =
         StageInstance(data, kord, strategy.supply(kord))
 
+    override suspend fun asStageInstance(): StageInstance = this
+
+    override suspend fun asStageInstanceOrNull(): StageInstance = this
 }

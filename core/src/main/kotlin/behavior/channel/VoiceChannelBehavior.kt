@@ -5,6 +5,7 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -38,6 +39,23 @@ interface VoiceChannelBehavior : BaseVoiceChannelBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      */
     override suspend fun asChannelOrNull(): VoiceChannel? = super.asChannelOrNull() as? VoiceChannel
+
+    /**
+     * Retrieve the [VoiceChannel] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): VoiceChannel = super.fetchChannel() as VoiceChannel
+
+
+    /**
+     * Retrieve the [VoiceChannel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [VoiceChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): VoiceChannel? = super.fetchChannelOrNull() as? VoiceChannel
 
     /**
      * Returns a new [VoiceChannelBehavior] with the given [strategy].

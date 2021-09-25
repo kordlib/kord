@@ -72,6 +72,8 @@ class VoiceChannel(
         VoiceChannel(data, kord, strategy.supply(kord))
 
     override suspend fun asChannel(): VoiceChannel = this
+    
+    override suspend fun asChannelOrNull(): VoiceChannel = this
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 

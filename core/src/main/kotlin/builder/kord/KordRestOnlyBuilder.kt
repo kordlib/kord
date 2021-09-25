@@ -7,7 +7,7 @@ import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.event.Event
 import dev.kord.core.exception.KordInitializationException
-import dev.kord.core.gateway.MasterGateway
+import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.Intents
@@ -75,7 +75,7 @@ class KordRestOnlyBuilder(val token: String) {
         return Kord(
             resources,
             DataCache.none(),
-            MasterGateway(mapOf(0 to Gateway.none())),
+            DefaultMasterGateway(mapOf(0 to Gateway.none())),
             rest,
             selfId,
             MutableSharedFlow(),

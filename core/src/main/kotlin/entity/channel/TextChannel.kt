@@ -38,6 +38,10 @@ class TextChannel(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannel =
         TextChannel(data, kord, strategy.supply(kord))
 
+    override suspend fun asChannel(): TextChannel = this
+
+    override suspend fun asChannelOrNull(): TextChannel = this
+
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {

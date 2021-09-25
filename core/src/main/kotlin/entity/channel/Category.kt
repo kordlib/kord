@@ -28,6 +28,8 @@ class Category(
 
     override suspend fun asChannel(): Category = this
 
+    override suspend fun asChannelOrNull(): Category = this
+
     override fun compareTo(other: Entity): Int {
         return super<TopGuildChannel>.compareTo(other)
     }

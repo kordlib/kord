@@ -5,6 +5,7 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.StoreChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -38,6 +39,23 @@ interface StoreChannelBehavior : TopGuildChannelBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      */
     override suspend fun asChannelOrNull(): StoreChannel? = super.asChannelOrNull() as? StoreChannel
+
+    /**
+     * Retrieve the [StoreChannel] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): StoreChannel = super.fetchChannel() as StoreChannel
+
+
+    /**
+     * Retrieve the [StoreChannel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [StoreChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): StoreChannel? = super.fetchChannelOrNull() as? StoreChannel
 
     /**
      * returns a new [StoreChannelBehavior] with the given [strategy].

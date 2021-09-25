@@ -6,7 +6,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.builder.kord.Shards
-import dev.kord.core.gateway.MasterGateway
+import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
@@ -105,7 +105,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         return Kord(
             resources = ClientResources("token", Snowflake(0u), Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
             cache = DataCache.none(),
-            MasterGateway(mapOf(0 to gateway)),
+            DefaultMasterGateway(mapOf(0 to gateway)),
             RestClient(KtorRequestHandler(token = "token")),
             randomId(),
             MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),

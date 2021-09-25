@@ -34,9 +34,9 @@ class TextChannelThread(
     override val guildId: Snowflake
         get() = data.guildId.value!!
 
-    override suspend fun asChannel(): TextChannelThread = super.asChannel() as TextChannelThread
+    override suspend fun asChannel(): TextChannelThread = this
 
-    override suspend fun asChannelOrNull(): TextChannelThread? = super.asChannelOrNull() as? TextChannelThread
+    override suspend fun asChannelOrNull(): TextChannelThread = this
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannelThread {
         return TextChannelThread(data, kord, strategy.supply(kord))
