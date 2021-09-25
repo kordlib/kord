@@ -5,11 +5,14 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.entity.*
+import dev.kord.core.entity.channel.Category
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
 import java.util.*
 
 /**
@@ -43,6 +46,23 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
      * @throws [RequestException] if something went wrong during the request.
      */
     override suspend fun asChannelOrNull(): GuildChannel? = super.asChannelOrNull() as? GuildChannel
+
+    /**
+     * Retrieve the [GuildChannel] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): GuildChannel = super.fetchChannel() as GuildChannel
+
+
+    /**
+     * Retrieve the [GuildChannel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [GuildChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): GuildChannel? = super.fetchChannelOrNull() as? GuildChannel
 
     /**
      * Requests to get this channel's [Guild].

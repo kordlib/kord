@@ -7,6 +7,7 @@ import dev.kord.core.cache.data.RoleData
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Role
 import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.User
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.indexOfFirstOrNull
 import dev.kord.core.sorted
@@ -60,6 +61,23 @@ interface RoleBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun asRoleOrNull(): Role? = supplier.getRoleOrNull(guildId, id)
+
+    /**
+     * Retrieve the [Role] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    suspend fun fetchRole(): Role = supplier.getRole(guildId, id)
+
+
+    /**
+     * Retrieve the [Role] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [Role] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun fetchRoleOrNull(): Role? = supplier.getRoleOrNull(guildId, id)
 
     /**
      * Requests to change the [position] of this role.

@@ -9,6 +9,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.channel.CategoryModifyBuilder
 import dev.kord.rest.builder.channel.NewsChannelCreateBuilder
 import dev.kord.rest.builder.channel.TextChannelCreateBuilder
@@ -48,7 +49,24 @@ interface CategoryBehavior : TopGuildChannelBehavior {
      * @throws [EntityNotFoundException] if the channel wasn't present.
      * @throws [ClassCastException] if the channel wasn't a category.
      */
-    override suspend fun asChannelOrNull(): Category? = supplier.getChannelOf(id)
+    override suspend fun asChannelOrNull(): Category? = supplier.getChannelOfOrNull(id)
+
+    /**
+     * Retrieve the [Category] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): Category = supplier.getChannelOf(id)
+
+
+    /**
+     * Retrieve the [Category] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [Category] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): Category? = supplier.getChannelOfOrNull(id)
 
 
     /**

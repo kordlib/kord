@@ -259,6 +259,23 @@ interface GuildBehavior : KordEntity, Strategizable {
     suspend fun asGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
 
     /**
+     * Retrieve the [Guild] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    suspend fun fetchGuild(): Guild = supplier.getGuild(id)
+
+
+    /**
+     * Retrieve the [Guild] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [Guild] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun fetchGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
+
+    /**
      * Requests to delete this guild.
      *
      * @throws [RestRequestException] if something went wrong during the request.

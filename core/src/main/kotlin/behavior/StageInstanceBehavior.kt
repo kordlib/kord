@@ -7,6 +7,7 @@ import dev.kord.core.cache.data.StageInstanceData
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.StageInstance
 import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.User
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -39,6 +40,23 @@ interface StageInstanceBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      */
     suspend fun asStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(channelId)
+
+    /**
+     * Retrieve the [StageInstance] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    suspend fun fetchStageInstance(): StageInstance = supplier.getStageInstance(id)
+
+
+    /**
+     * Retrieve the [StageInstance] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [StageInstance] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun fetchStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(id)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StageInstanceBehavior =
         StageInstanceBehavior(id, channelId, kord, strategy.supply(kord))

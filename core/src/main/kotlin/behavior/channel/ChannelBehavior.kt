@@ -3,6 +3,7 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
@@ -42,6 +43,23 @@ interface ChannelBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if something went wrong during the request.
      */
     suspend fun asChannelOrNull(): Channel? = supplier.getChannelOrNull(id)
+
+    /**
+     * Retrieve the [Channel] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    suspend fun fetchChannel(): Channel = supplier.getChannel(id)
+
+
+    /**
+     * Retrieve the [Channel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [Channel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun fetchChannelOrNull(): Channel? = supplier.getChannelOrNull(id)
 
     /**
      * Requests to delete a channel (or close it if this is a dm channel).

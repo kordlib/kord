@@ -58,6 +58,23 @@ interface MemberBehavior : KordEntity, UserBehavior {
     suspend fun asMemberOrNull(): Member? = supplier.getMemberOrNull(guildId, id)
 
     /**
+     * Retrieve the [Member] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    suspend fun fetchMember(): Member = supplier.getMember(guildId, id)
+
+
+    /**
+     * Retrieve the [Member] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [Member] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun fetchMemberOrNull(): Member? = supplier.getMemberOrNull(guildId, id)
+
+    /**
      * Requests to kick this member from its guild.
      *
      * @param reason the reason showing up in the audit log
