@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlin.time.Duration
 
-open class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
+data class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
 
 interface MasterGateway {
     val gateways: Map<Int, Gateway>
