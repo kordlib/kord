@@ -10,6 +10,7 @@ import dev.kord.core.behavior.channel.threads.unsafeStartPublicThreadWithMessage
 import dev.kord.core.behavior.channel.threads.unsafeStartThread
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.exception.EntityNotFoundException
@@ -47,6 +48,23 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      */
     override suspend fun asChannelOrNull(): TextChannel? = super.asChannelOrNull() as? TextChannel
+
+    /**
+     * Retrieve the [TextChannel] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): TextChannel = super.fetchChannel() as TextChannel
+
+
+    /**
+     * Retrieve the [TextChannel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [TextChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): TextChannel? = super.fetchChannelOrNull() as? TextChannel
 
     suspend fun startPublicThread(
         name: String,

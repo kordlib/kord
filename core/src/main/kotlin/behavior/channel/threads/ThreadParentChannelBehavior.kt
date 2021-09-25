@@ -13,6 +13,7 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.request.StartThreadRequest
@@ -59,6 +60,23 @@ interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
     override suspend fun asChannelOrNull(): ThreadParentChannel? {
         return super.asChannelOrNull() as? ThreadParentChannel
     }
+
+    /**
+     * Retrieve the [ThreadParentChannel] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): ThreadParentChannel = super.fetchChannel() as ThreadParentChannel
+
+
+    /**
+     * Retrieve the [ThreadParentChannel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [ThreadParentChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): ThreadParentChannel? = super.fetchChannelOrNull() as? ThreadParentChannel
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadParentChannelBehavior
 

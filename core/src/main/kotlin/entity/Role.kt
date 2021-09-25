@@ -37,6 +37,10 @@ data class Role(
 
     val rawPosition: Int get() = data.position
 
+    override suspend fun asRole(): Role = this
+
+    override suspend fun asRoleOrNull(): Role = this
+
     /**
      * The tags of this role, if present.
      */

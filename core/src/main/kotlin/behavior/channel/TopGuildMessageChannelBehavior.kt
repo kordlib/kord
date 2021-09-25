@@ -63,6 +63,25 @@ interface TopGuildMessageChannelBehavior : TopGuildChannelBehavior, GuildMessage
         super<TopGuildChannelBehavior>.asChannelOrNull() as? TopGuildMessageChannel
 
     /**
+     * Retrieve the [TopGuildMessageChannel] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): TopGuildMessageChannel =
+        super<TopGuildChannelBehavior>.fetchChannel() as TopGuildMessageChannel
+
+
+    /**
+     * Retrieve the [TopGuildMessageChannel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [TopGuildMessageChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): TopGuildMessageChannel? =
+        super<TopGuildChannelBehavior>.fetchChannelOrNull() as? TopGuildMessageChannel
+
+    /**
      * Returns a new [TopGuildMessageChannelBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): TopGuildMessageChannelBehavior =

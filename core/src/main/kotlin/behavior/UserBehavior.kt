@@ -57,6 +57,39 @@ interface UserBehavior : KordEntity, Strategizable {
      */
     suspend fun asUserOrNull(): User? = supplier.getUserOrNull(id)
 
+    /**
+     * Retrieve the [Member] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    suspend fun fetchMember(guildId: Snowflake): Member = supplier.getMember(guildId, id)
+
+    /**
+     * Retrieve the [Member] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [Member] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun fetchMemberOrNull(guildId: Snowflake): Member? = supplier.getMemberOrNull(guildId, id)
+
+    /**
+     * Retrieve the [User] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    suspend fun fetchUser(): User = supplier.getUser(id)
+
+
+    /**
+     * Retrieve the [User] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [User] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun fetchUserOrNull(): User? = supplier.getUserOrNull(id)
+
 
     /**
      * Requests to get or create a [DmChannel] between this bot and the user.

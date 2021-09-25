@@ -64,6 +64,22 @@ interface MessageBehavior : KordEntity, Strategizable {
      */
     suspend fun asMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = id)
 
+    /**
+     * Retrieve the [Message] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    suspend fun fetchMessage(): Message = supplier.getMessage(channelId, id)
+
+
+    /**
+     * Retrieve the [Message] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [Message] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    suspend fun fetchMessageOrNull(): Message? = supplier.getMessageOrNull(channelId, id)
 
     /**
      * Requests to delete this message.
