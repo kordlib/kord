@@ -259,6 +259,13 @@ class Guild(
      */
     val defaultMessageNotificationLevel: DefaultMessageNotificationLevel get() = data.defaultMessageNotifications
 
+
+    /**
+     * The voice region id for the guild.
+     */
+    @Deprecated("Deprecated in API v9", ReplaceWith("Channel#rtcRegion"))
+    val regionId: String get() = data.region
+
     /**
      * The id of the channel in which a discoverable server's rules should be found
      **/

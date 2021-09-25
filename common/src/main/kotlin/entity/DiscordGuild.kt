@@ -90,6 +90,8 @@ data class DiscordGuild(
     @SerialName("owner_id")
     val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
+    @Deprecated("Deprecated in API v9", ReplaceWith("DiscordChannel#rtcRegion"))
+    val region: String,
     @SerialName("afk_channel_id")
     val afkChannelId: Snowflake?,
     @SerialName("afk_timeout")
