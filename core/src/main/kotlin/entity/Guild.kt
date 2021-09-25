@@ -263,9 +263,11 @@ class Guild(
      */
     val defaultMessageNotificationLevel: DefaultMessageNotificationLevel get() = data.defaultMessageNotifications
 
+
     /**
      * The voice region id for the guild.
      */
+    @Deprecated("The region field has been moved to Channel#rtcRegion in Discord API v9", ReplaceWith("Channel#rtcRegion"))
     val regionId: String get() = data.region
 
     /**
@@ -467,15 +469,6 @@ class Guild(
      * Requests to get The channel where guild notices such as welcome messages and boost events are posted.
      */
     suspend fun getPublicUpdatesChannel(): TopGuildMessageChannel? = publicUpdatesChannel?.asChannel()
-
-    /**
-     * Requests to get the [voice region][Region] of this guild.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the [Region] wasn't present.
-     * @throws [NoSuchElementException] if the [regionId] is not in the available [regions].
-     */
-    suspend fun getRegion(): Region = regions.first { it.id == regionId }
 
     /**
      * Requests to get the the channel in which a discoverable server's rules should be found represented

@@ -17,3 +17,7 @@ data class StageInstanceData(
         }
     }
 }
+
+fun DiscordStageInstance.toData(): StageInstanceData {
+    return StageInstanceData.from(this)
+}

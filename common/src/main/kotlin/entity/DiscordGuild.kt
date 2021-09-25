@@ -90,6 +90,7 @@ data class DiscordGuild(
     @SerialName("owner_id")
     val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
+    @Deprecated("The region field has been moved to Channel#rtcRegion in Discord API v9", ReplaceWith("DiscordChannel#rtcRegion"))
     val region: String,
     @SerialName("afk_channel_id")
     val afkChannelId: Snowflake?,

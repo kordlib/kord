@@ -37,3 +37,7 @@ data class EmojiData(
             }
     }
 }
+
+fun DiscordEmoji.toData(guildId: Snowflake, id: Snowflake): EmojiData {
+    return EmojiData.from(guildId, id, this)
+}
