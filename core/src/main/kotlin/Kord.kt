@@ -109,7 +109,13 @@ class Kord(
         get() = defaultSupplier.guilds
 
     init {
-        launch { interceptor.start(gateway.events, eventFlow, this@Kord) }
+        gateway.events
+            .buffer(kotlinx.coroutines.channels.Channel.UNLIMITED)
+            .onEach { event ->
+                val coreEvent = interceptor.handle(event, this)
+                coreEvent?.let { eventFlow.emit(it) }
+            }
+            .launchIn(this)
     }
 
     /**

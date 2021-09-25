@@ -16,7 +16,7 @@ private val logger = KotlinLogging.logger { }
 class DefaultGatewayEventInterceptor(
     cache: DataCache,
     private val eventScope: ((ShardEvent, Kord) -> CoroutineContext)? = null
-) : GatewayEventInterceptor() {
+) : GatewayEventInterceptor {
 
     private val listeners = listOf(
         MessageEventHandler(cache),
