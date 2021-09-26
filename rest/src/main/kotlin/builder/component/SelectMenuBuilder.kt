@@ -5,6 +5,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import kotlin.contracts.ExperimentalContracts
@@ -21,6 +22,13 @@ import kotlin.contracts.contract
 class SelectMenuBuilder(
     var customId: String
 ) : ActionRowComponentBuilder {
+
+    private var _disabled: OptionalBoolean = OptionalBoolean.Missing
+
+    /**
+     * if this select menu is disabled.
+     */
+    var disabled: Boolean? by ::_disabled.delegate()
 
     /**
      * The choices in the select, max 25.
@@ -63,6 +71,7 @@ class SelectMenuBuilder(
         return DiscordComponent(
             ComponentType.SelectMenu,
             customId = Optional(customId),
+            disabled = _disabled,
             placeholder = _placeholder,
             minValues = OptionalInt.Value(allowedValues.first),
             maxValues = OptionalInt.Value(allowedValues.last),
