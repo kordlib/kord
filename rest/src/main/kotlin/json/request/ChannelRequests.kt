@@ -51,6 +51,7 @@ data class ChannelModifyPatchRequest(
     @SerialName("auto_archive_duration")
     val autoArchiveDuration: OptionalInt = OptionalInt.Missing,
     val locked: OptionalBoolean = OptionalBoolean.Missing,
+    val invitable: OptionalBoolean = OptionalBoolean.Missing,
 )
 
 @Serializable
