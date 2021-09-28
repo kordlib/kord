@@ -22,6 +22,7 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
+import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 
 /**
@@ -32,6 +33,7 @@ class InviteCreateEvent(
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
     /**
