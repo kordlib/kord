@@ -41,6 +41,16 @@ class Image private constructor(val data: ByteArray, val format: Format) {
         object GIF : Format("gif")
 
         companion object {
+            val values: Set<Format> get() = setOf(
+                JPEG,
+                PNG ,
+                WEBP,
+                GIF ,
+
+            )
+            fun isSupported(fileName: String): Boolean {
+                return values.any { fileName.endsWith(it.extension, true) }
+            }
             fun fromContentType(type: String) = when (type) {
                 "image/jpeg" -> JPEG
                 "image/png" -> PNG

@@ -1,12 +1,11 @@
 package dev.kord.core.entity
 
-import dev.kord.common.ImageFormat
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.optionalInt
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.AttachmentData
+import dev.kord.rest.Image
 import java.util.*
 
 /**
@@ -58,7 +57,7 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : KordE
     /**
      * If this file is an image. Denoted by the presence of a [width] and [height].
      */
-    val isImage: Boolean get() = ImageFormat.isSupported(filename)
+    val isImage: Boolean get() = Image.Format.isSupported(filename)
 
     override fun hashCode(): Int = Objects.hash(id)
 
