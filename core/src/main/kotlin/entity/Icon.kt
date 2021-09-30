@@ -12,7 +12,7 @@ sealed class Icon(override val kord: Kord, val animated: Boolean, private val ra
     val format: Image.Format
         get() = when {
             animated -> Image.Format.GIF
-            else -> Image.Format.PNG
+            else -> Image.Format.WEBP
         }
 
     val url: String
