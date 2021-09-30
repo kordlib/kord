@@ -104,6 +104,11 @@ class GuildEmoji(
     val user: UserBehavior? get() = userId?.let { UserBehavior(it, kord) }
 
     /**
+     * The image as [Icon] object for the emoji
+     */
+    val image: Icon get() = Icon.EmojiIcon(kord, data)
+
+    /**
      * Requests to delete this emoji, with the given [reason].
      *
      * @param reason the reason showing up in the audit log

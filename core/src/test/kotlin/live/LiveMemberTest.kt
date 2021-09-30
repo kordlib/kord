@@ -50,7 +50,8 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                     guildId = guildId,
                     roles = emptyList(),
                     joinedAt = "",
-                    premiumSince = Optional.Missing()
+                    premiumSince = Optional.Missing(),
+                    avatar = Optional.Missing(),
                 ),
                 userData = UserData(
                     id = userId,
