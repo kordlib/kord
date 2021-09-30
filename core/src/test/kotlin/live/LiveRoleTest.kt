@@ -2,6 +2,7 @@ package live
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.Optional
 import dev.kord.core.cache.data.RoleData
 import dev.kord.core.entity.Role
 import dev.kord.core.event.guild.GuildDeleteEvent
@@ -46,6 +47,8 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                     name = "test",
                     color = 0,
                     hoisted = false,
+                    icon = Optional.Missing(),
+                    unicodeEmoji = Optional.Missing(),
                     position = 0,
                     permissions = Permissions(Permission.CreateInstantInvite),
                     managed = false,
@@ -72,6 +75,8 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                             name = "",
                             color = 0,
                             hoist = false,
+                            icon = Optional.Missing(),
+                            unicodeEmoji = Optional.Missing(),
                             position = 0,
                             permissions = Permissions(Permission.BanMembers),
                             managed = false,
