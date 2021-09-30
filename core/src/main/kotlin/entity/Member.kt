@@ -36,6 +36,12 @@ class Member(
     val displayName: String get() = nickname ?: username
 
     /**
+     * The members guild avatar as [Icon] object
+     */
+    val memberAvatar: Icon?
+        get() = memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, data.id, it, kord) }
+
+    /**
      * When the user joined this [guild].
      */
     val joinedAt: Instant get() = memberData.joinedAt.toInstant()
