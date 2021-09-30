@@ -16,6 +16,7 @@ object DiscordCDN {
     fun memberAvatar(guildId: Snowflake, userId: Snowflake, hash: String) =
         CDNUrl("$BASE_URL/guilds/${guildId.asString}/users/${userId.asString}/avatars/$hash")
 
+    fun roleIcon(roleId: Snowflake, hash: String) = CDNUrl("$BASE_URL/role-icons/${roleId.asString}/$hash")
 }
 
 class CDNUrl(private val rawAssetUri: String) {

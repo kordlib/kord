@@ -27,7 +27,7 @@ data class Role(
 
     val hoisted: Boolean get() = data.hoisted
 
-    val iconUrl: String? get() = data.icon.value?.let { "https://cdn.discordapp.com/role-icons/${data.id}/$it" }
+    val icon: Icon? get() = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
 
     val unicodeEmoji: String? = data.unicodeEmoji.value
 
