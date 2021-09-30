@@ -39,10 +39,7 @@ class Member(
      * The members guild avatar as [Icon] object
      */
     val memberAvatar: Icon?
-        get() = when {
-            memberData.avatar.value != null -> Icon.MemberAvatar(kord, memberData)
-            else -> null
-        }
+        get() = memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, data.id, it, kord) }
 
     /**
      * When the user joined this [guild].

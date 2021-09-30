@@ -106,7 +106,7 @@ class GuildEmoji(
     /**
      * The image as [Icon] object for the emoji
      */
-    val image: Icon get() = Icon.EmojiIcon(kord, data)
+    val image: Icon get() = Icon.EmojiIcon(data.animated.discordBoolean, data.id, kord)
 
     /**
      * Requests to delete this emoji, with the given [reason].

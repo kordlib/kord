@@ -1,13 +1,13 @@
 package dev.kord.core.entity
 
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
-import dev.kord.core.cache.data.EmojiData
-import dev.kord.core.cache.data.MemberData
-import dev.kord.core.cache.data.UserData
 import dev.kord.rest.Image
+import dev.kord.rest.route.CDNUrl
+import dev.kord.rest.route.DiscordCDN
 
-sealed class Icon(override val kord: Kord, val animated: Boolean, private val rawAssetUri: String) : KordObject {
+sealed class Icon(val animated: Boolean, val cdnUrl: CDNUrl, override val kord: Kord) : KordObject {
 
     val format: Image.Format
         get() = when {
@@ -16,60 +16,39 @@ sealed class Icon(override val kord: Kord, val animated: Boolean, private val ra
         }
 
     val url: String
-        get() = "$rawAssetUri.${format.extension}"
+        get() = cdnUrl.toUrl {
+            this.format = this@Icon.format
+        }
 
-    fun getUrl(format: Image.Format): String? {
-        if (format == Image.Format.GIF && !animated) return null
-        return "$rawAssetUri.${format.extension}"
-    }
+    suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl())
 
-    fun getUrl(size: Image.Size): String {
-        return "$url?size=${size.maxRes}"
-    }
+    suspend fun getImage(size: Image.Size): Image =
+        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
+            this.size = size
+        })
 
-    fun getUrl(format: Image.Format, size: Image.Size): String? {
-        if (format == Image.Format.GIF && !animated) return null
-        return "$rawAssetUri.${format.extension}?size=${size.maxRes}"
-    }
+    suspend fun getImage(format: Image.Format): Image =
+        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
+            this.format = format
+        })
 
-    suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, url)
-
-    suspend fun getImage(size: Image.Size): Image = Image.fromUrl(kord.resources.httpClient, getUrl(size))
-
-    suspend fun getImage(format: Image.Format): Image? =
-        getUrl(format)?.let { Image.fromUrl(kord.resources.httpClient, it) }
-
-    suspend fun getImage(format: Image.Format, size: Image.Size): Image? =
-        getUrl(format, size)?.let { Image.fromUrl(kord.resources.httpClient, it) }
+    suspend fun getImage(format: Image.Format, size: Image.Size): Image =
+        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
+            this.format = format
+            this.size = size
+        })
 
     override fun toString(): String {
-        return "Icon(type=${javaClass.name},animated=$animated,rawAssetUri=$rawAssetUri,kord=$kord)"
+        return "Icon(type=${javaClass.name},animated=$animated,cdnUrl=$cdnUrl,kord=$kord)"
     }
 
-    class EmojiIcon(kord: Kord, data: EmojiData) : Icon(
-        kord,
-        data.animated.discordBoolean,
-        "$CDN_BASE_URL/emojis/${data.id.asString}"
-    )
+    class EmojiIcon(animated: Boolean, emojiId: Snowflake, kord: Kord) : Icon(animated, DiscordCDN.emoji(emojiId), kord)
 
-    class DefaultUserAvatar(kord: Kord, data: UserData) :
-        Icon(kord, false, "$CDN_BASE_URL/embed/avatars/${data.discriminator.toInt() % 5}")
+    class DefaultUserAvatar(discriminator: Int, kord: Kord) : Icon(false, DiscordCDN.defaultAvatar(discriminator), kord)
 
-    class UserAvatar(kord: Kord, data: UserData) :
-        Icon(
-            kord,
-            data.avatar!!.startsWith("a_"),
-            "$CDN_BASE_URL/avatars/${data.id.asString}/${data.avatar}"
-        )
+    class UserAvatar(userId: Snowflake, avatarHash: String, kord: Kord) :
+        Icon(avatarHash.startsWith("a_"), DiscordCDN.userAvatar(userId, avatarHash), kord)
 
-    class MemberAvatar(kord: Kord, data: MemberData) :
-        Icon(
-            kord,
-            data.avatar.value!!.startsWith("a_"),
-            "$CDN_BASE_URL/guilds/${data.guildId.asString}/users/${data.userId.asString}/avatars/${data.avatar.value!!}"
-        )
-
-    companion object {
-        private const val CDN_BASE_URL = "https://cdn.discordapp.com"
-    }
+    class MemberAvatar(guildId: Snowflake, userId: Snowflake, avatarHash: String, kord: Kord) :
+        Icon(avatarHash.startsWith("a_"), DiscordCDN.memberAvatar(guildId, userId, avatarHash), kord)
 }
