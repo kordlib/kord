@@ -26,11 +26,13 @@ open class User(
     /**
      * The users avatar as [Icon] object
      */
-    val avatar: Icon
+    val avatar: Icon?
         get() = when {
             data.avatar != null -> Icon.UserAvatar(kord, data)
-            else -> Icon.DefaultUserAvatar(kord, data)
+            else -> null
         }
+
+    val defaultAvatar: Icon get() = Icon.DefaultUserAvatar(kord, data)
 
     /**
      * The username of this user.
