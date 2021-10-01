@@ -24,13 +24,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up JDK 8
         uses: actions/setup-java@v1
         with:
           java-version: 8
+
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
-
         with:
           arguments: --stacktrace --info build -x apiCheck
 
@@ -70,11 +71,16 @@ jobs:
           arguments: --stacktrace --info build -x apiCheck
 
       - name: API Checking with Gradle
-        run: ./gradlew apiCheck
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: apiCheck
+
 
 
       - name: Publish with Gradle
-        run: ./gradlew -x test publish
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: -x test publish
 
 # Disabled for now
 #
