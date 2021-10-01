@@ -61,7 +61,7 @@ interface TopGuildChannel : GuildChannel, TopGuildChannelBehavior {
                 +it.allowed
                 -it.denied
             }
-            roleOverwrites.map {
+            roleOverwrites.forEach {
                 +it.allowed
                 -it.denied
             }
