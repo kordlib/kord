@@ -29,13 +29,10 @@ jobs:
         with:
           java-version: 8
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
 
         with:
           arguments: --stacktrace --info build -x apiCheck build -x apiCheck
-          distributions-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
 
 
   release:
@@ -68,12 +65,9 @@ jobs:
           java-version: 8
 
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v1
+        uses: gradle/gradle-build-action@v2
         with:
           arguments: --stacktrace --info build -x apiCheck
-          distributions-cache-enabled: true
-          dependencies-cache-enabled: true
-          configuration-cache-enabled: true
 
       - name: API Checking with Gradle
         run: ./gradlew apiCheck
