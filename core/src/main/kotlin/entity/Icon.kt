@@ -4,10 +4,10 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.rest.Image
-import dev.kord.rest.route.CdnUrlBuilder
+import dev.kord.rest.route.CdnUrl
 import dev.kord.rest.route.DiscordCdn
 
-sealed class Icon(val animated: Boolean, val cdnUrl: CdnUrlBuilder, override val kord: Kord) : KordObject {
+sealed class Icon(val animated: Boolean, val cdnUrl: CdnUrl, override val kord: Kord) : KordObject {
 
     val format: Image.Format
         get() = when {
