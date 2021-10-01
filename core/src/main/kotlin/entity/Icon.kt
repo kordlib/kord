@@ -51,4 +51,8 @@ sealed class Icon(val animated: Boolean, val cdnUrl: CdnUrl, override val kord: 
 
     class MemberAvatar(guildId: Snowflake, userId: Snowflake, avatarHash: String, kord: Kord) :
         Icon(avatarHash.startsWith("a_"), DiscordCdn.memberAvatar(guildId, userId, avatarHash), kord)
+
+    class RoleIcon(roleId: Snowflake, iconHash: String, kord: Kord) :
+        Icon(iconHash.startsWith("a_"), DiscordCdn.roleIcon(roleId, iconHash), kord)
+
 }

@@ -40,6 +40,9 @@ fun imageBinary(path: String): Image {
 @EnabledIfEnvironmentVariable(named = "KORD_TEST_TOKEN", matches = ".+")
 class RestServiceTest {
 
+    // should we run checks which require boosts on the public guild?
+    private val boostEnabled = System.getenv("KORD_BOOST_ENABLED")?.equals("true", ignoreCase = true) ?: false
+
     private val publicGuildId = Snowflake(322850917248663552u)
 
     private val token = System.getenv("KORD_TEST_TOKEN")
@@ -545,4 +548,29 @@ class RestServiceTest {
         Unit
     }
 
+    @Test
+    fun `create role with image icon`() = runBlocking {
+        if (!boostEnabled)
+            return@runBlocking Unit
+        val guild = kord.getGuild(publicGuildId)!!
+        guild.createRole {
+            name = "Test Image Icon"
+            hoist = true
+            icon = imageBinary("images/kord_icon.png")
+        }
+        return@runBlocking Unit
+    }
+
+    @Test
+    fun `create role with unicode icon`() = runBlocking {
+        if (!boostEnabled)
+            return@runBlocking Unit
+        val guild = kord.getGuild(publicGuildId)!!
+        guild.createRole {
+            name = "Test Unicode Icon"
+            hoist = true
+            unicodeEmoji = "\uD83D\uDE04"
+        }
+        return@runBlocking Unit
+    }
 }
