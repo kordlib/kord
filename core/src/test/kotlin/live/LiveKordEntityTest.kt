@@ -87,7 +87,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
     @Test
     fun `Entity can retrieve the event causing the completion`() {
-        countdownContext(1) {
+        countdownContext(1, 10000) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
 
             live.coroutineContext.job.invokeOnCompletion {
