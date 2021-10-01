@@ -10,21 +10,25 @@ import dev.kord.rest.request.RestRequestException
  * This response is visible to all users in the channel.
  */
 
-interface PublicInteractionResponseBehavior : InteractionResponseBehavior {
+public interface PublicInteractionResponseBehavior : InteractionResponseBehavior {
 
     /**
      * Requests to delete this interaction response.
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete() {
+    public suspend fun delete() {
         kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
     }
 
 }
 
 
-fun PublicInteractionResponseBehavior(applicationId: Snowflake, token: String, kord: Kord) =
+public fun PublicInteractionResponseBehavior(
+    applicationId: Snowflake,
+    token: String,
+    kord: Kord
+): PublicInteractionResponseBehavior =
     object : PublicInteractionResponseBehavior {
         override val applicationId: Snowflake
             get() = applicationId

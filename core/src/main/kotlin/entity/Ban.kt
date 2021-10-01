@@ -13,8 +13,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 /**
  * An instance of a [Discord Ban](https://discord.com/developers/docs/resources/guild#ban-object).
  */
-class Ban(
-    val data: BanData,
+public class Ban(
+    public val data: BanData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordObject, Strategizable {
@@ -22,17 +22,17 @@ class Ban(
     /**
      * The id of the banned user.
      */
-    val userId: Snowflake get() = data.userId
+    public val userId: Snowflake get() = data.userId
 
     /**
      * The reason for the ban, if present.
      */
-    val reason: String? get() = data.reason
+    public val reason: String? get() = data.reason
 
     /**
      * The behavior of the banned user.
      */
-    val user: UserBehavior get() = UserBehavior(id = userId, kord = kord)
+    public val user: UserBehavior get() = UserBehavior(id = userId, kord = kord)
 
     /**
      * Requests to get the [User] that was banned.
@@ -40,7 +40,7 @@ class Ban(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [User] wasn't present.
      */
-    suspend fun getUser(): User = supplier.getUser(userId)
+    public suspend fun getUser(): User = supplier.getUser(userId)
 
     /**
      * Requests to get the [User] that was banned,
@@ -48,7 +48,7 @@ class Ban(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
+    public suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
 
 
     /**

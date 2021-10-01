@@ -7,7 +7,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ActivityData(
+public data class ActivityData(
     val name: String,
     val type: ActivityType,
     val url: Optional<String?> = Optional.Missing(),
@@ -24,8 +24,8 @@ data class ActivityData(
     val flags: Optional<ActivityFlags> = Optional.Missing(),
     val buttons: Optional<List<String>> = Optional.Missing()
 ) {
-    companion object {
-        fun from(entity: DiscordActivity) = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordActivity): ActivityData = with(entity) {
             ActivityData(
                 name,
                 type,

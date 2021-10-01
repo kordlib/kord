@@ -8,7 +8,7 @@ import dev.kord.core.cache.data.MessageStickerData
 /**
  * A sticker image that can be used in messages.
  */
-class MessageSticker(val data: MessageStickerData, override val kord: Kord) : KordEntity {
+public class MessageSticker(public val data: MessageStickerData, override val kord: Kord) : KordEntity {
 
     /**
      * The id of the sticker.
@@ -19,43 +19,43 @@ class MessageSticker(val data: MessageStickerData, override val kord: Kord) : Ko
     /**
      * The id of the pack that contains this sticker.
      */
-    val packId: Snowflake
+    public val packId: Snowflake
         get() = data.packId
 
     /**
      * The name of the sticker.
      */
-    val name: String
+    public val name: String
         get() = data.name
 
     /**
      * The description of the sticker.
      */
-    val description: String
+    public val description: String
         get() = data.description
 
     /**
      * The tags of the sticker.
      */
-    val tags: List<String>
+    public val tags: List<String>
         get() = data.tags.value?.split(",")?.map { it.trim() }.orEmpty()
 
     /**
      * The sticker image hash asset (currently private).
      */
-    val asset: String
+    public val asset: String
         get() = data.asset
 
     /**
      * The sticker preview image has asset (currently private).
      */
-    val previewAsset: String?
+    public val previewAsset: String?
         get() = data.previewAsset.value
 
     /**
      * The type of sticker image.
      */
-    val formatType: MessageStickerType
+    public val formatType: MessageStickerType
         get() = data.formatType
 
 }

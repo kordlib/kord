@@ -24,8 +24,8 @@ import kotlin.contracts.contract
 /**
  * A [Discord integration](https://discord.com/developers/docs/resources/guild#get-guild-integrations).
  */
-class Integration(
-    val data: IntegrationData,
+public class Integration(
+    public val data: IntegrationData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordEntity, Strategizable {
@@ -36,86 +36,86 @@ class Integration(
     /**
      * The name of this integration.
      */
-    val name: String
+    public val name: String
         get() = data.name
 
     /**
      * The type of integration. (`"twitch"`, `"youtube"`, etc)
      */
-    val type: String
+    public val type: String
         get() = data.type
 
     /**
      * Whether this integration is currently active.
      */
-    val isEnabled: Boolean
+    public val isEnabled: Boolean
         get() = data.enabled
 
     /**
      * Whether this integrations is syncing.
      */
-    val isSyncing: Boolean
+    public val isSyncing: Boolean
         get() = data.syncing
 
     /**
      * The id of the [guild][Guild] this integration is tied to.
      */
-    val guildId: Snowflake
+    public val guildId: Snowflake
         get() = data.guildId
 
     /**
      * The behavior of the [guild][Guild] this integration is tied to.
      */
-    val guild: GuildBehavior
+    public val guild: GuildBehavior
         get() = GuildBehavior(id = guildId, kord = kord)
 
     /**
      * The id of the [role][Role] used for 'subscribers' of the integration.
      */
-    val roleId: Snowflake
+    public val roleId: Snowflake
         get() = data.id
 
     /**
      * The behavior of the [role][Role] used for 'subscribers' of the integration.
      */
-    val role: RoleBehavior
+    public val role: RoleBehavior
         get() = RoleBehavior(guildId = guildId, id = roleId, kord = kord)
 
 
     /**
      * Whether this integration requires emoticons to be synced, only supports Twitch right now.
      */
-    val enablesEmoticons: Boolean
+    public val enablesEmoticons: Boolean
         get() = data.enableEmoticons.orElse(false)
 
     /**
      * The behavior used to expire subscribers.
      */
-    val expireBehavior: IntegrationExpireBehavior
+    public val expireBehavior: IntegrationExpireBehavior
         get() = data.expireBehavior
 
     /**
      * The grace period in days before expiring subscribers.
      */
-    val expireGracePeriod: Duration
+    public val expireGracePeriod: Duration
         get() = Duration.days(data.expireGracePeriod)
 
     /**
      * The id of the [user][User] for this integration.
      */
-    val userId: Snowflake
+    public val userId: Snowflake
         get() = data.id
 
     /**
      * The behavior of the [user][User] for this integration.
      */
-    val user: UserBehavior
+    public val user: UserBehavior
         get() = UserBehavior(id = userId, kord = kord)
 
     /**
      * When this integration was last synced.
      */
-    val syncedAt: Instant
+    public val syncedAt: Instant
         get() = data.syncedAt.toInstant()
 
     /**
@@ -124,14 +124,14 @@ class Integration(
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the guild isn't present.
      */
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
      * Requests to get the guild this integration is tied to, returns null if the guild isn't present.
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     /**
      * Requests to get the role used for 'subscribers' of the integration.
@@ -139,7 +139,7 @@ class Integration(
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the role isn't present.
      */
-    suspend fun getRole(): Role = supplier.getRole(guildId = guildId, roleId = roleId)
+    public suspend fun getRole(): Role = supplier.getRole(guildId = guildId, roleId = roleId)
 
     /**
      * Requests to get the role used for 'subscribers' of the integration,
@@ -147,21 +147,21 @@ class Integration(
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getRoleOrNull(): Role? = supplier.getRoleOrNull(guildId = guildId, roleId = roleId)
+    public suspend fun getRoleOrNull(): Role? = supplier.getRoleOrNull(guildId = guildId, roleId = roleId)
 
     /**
      * Requests to delete the integration.
      *
      * @param reason the reason showing up in the audit log
      */
-    suspend fun delete(reason: String? = null) {
+    public suspend fun delete(reason: String? = null) {
         kord.rest.guild.deleteGuildIntegration(guildId = guildId, integrationId = id, reason = reason)
     }
 
     /**
      * Request to sync an integration.
      */
-    suspend fun sync() = kord.rest.guild.syncGuildIntegration(guildId = guildId, integrationId = id)
+    public suspend fun sync(): Unit = kord.rest.guild.syncGuildIntegration(guildId = guildId, integrationId = id)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Integration =
         Integration(data, kord, strategy.supply(kord))
@@ -187,11 +187,9 @@ class Integration(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun Integration.edit(builder: IntegrationModifyBuilder.() -> Unit) {
+public suspend inline fun Integration.edit(builder: IntegrationModifyBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
     kord.rest.guild.modifyGuildIntegration(guildId = guildId, integrationId = id, builder)
 }
-
-

@@ -22,12 +22,12 @@ https://discord.com/developers/docs/resources/channel#embed-object-embed-types
 /**
  * An instance of a [Discord Embed](https://discord.com/developers/docs/resources/channel#embed-object).
  */
-data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
+public data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
 
     /**
      * The title, if present.
      */
-    val title: String? get() = data.title.value
+    public val title: String? get() = data.title.value
 
     /*
      * The type, [Embed.Type.Rich] for webhook and bot created embeds. Null if unknown.
@@ -92,45 +92,45 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
      */
     val fields: List<Field> get() = data.fields.orEmpty().map { Field(it, kord) }
 
-    data class Footer(val data: EmbedFooterData, override val kord: Kord) : KordObject {
+    public data class Footer(val data: EmbedFooterData, override val kord: Kord) : KordObject {
         val text: String get() = data.text
         val iconUrl: String? get() = data.iconUrl.value
         val proxyIconUrl: String? get() = data.proxyIconUrl.value
     }
 
-    data class Image(val data: EmbedImageData, override val kord: Kord) : KordObject {
+    public data class Image(val data: EmbedImageData, override val kord: Kord) : KordObject {
         val url: String? get() = data.url.value
         val proxyUrl: String? get() = data.proxyUrl.value
         val height: Int? get() = data.height.value
         val width: Int? get() = data.width.value
     }
 
-    data class Thumbnail(val data: EmbedThumbnailData, override val kord: Kord) : KordObject {
+    public data class Thumbnail(val data: EmbedThumbnailData, override val kord: Kord) : KordObject {
         val url: String? get() = data.url.value
         val proxyUrl: String? get() = data.proxyUrl.value
         val height: Int? get() = data.height.value
         val width: Int? get() = data.width.value
     }
 
-    data class Video(val data: EmbedVideoData, override val kord: Kord) : KordObject {
+    public data class Video(val data: EmbedVideoData, override val kord: Kord) : KordObject {
         val url: String? get() = data.url.value
         val height: Int? get() = data.height.value
         val width: Int? get() = data.width.value
     }
 
-    data class Provider(val data: EmbedProviderData, override val kord: Kord) : KordObject {
+    public data class Provider(val data: EmbedProviderData, override val kord: Kord) : KordObject {
         val name: String? get() = data.name.value
         val url: String? get() = data.url.value
     }
 
-    data class Author(val data: EmbedAuthorData, override val kord: Kord) : KordObject {
+    public data class Author(val data: EmbedAuthorData, override val kord: Kord) : KordObject {
         val name: String? get() = data.name.value
         val url: String? get() = data.url.value
         val iconUrl: String? get() = data.iconUrl.value
         val proxyIconUrl: String? get() = data.proxyIconUrl.value
     }
 
-    data class Field(val data: EmbedFieldData, override val kord: Kord) : KordObject {
+    public data class Field(val data: EmbedFieldData, override val kord: Kord) : KordObject {
         val name: String get() = data.name
         val value: String get() = data.value
         val inline: Boolean? get() = data.inline.value
@@ -141,7 +141,7 @@ data class Embed(val data: EmbedData, override val kord: Kord) : KordObject {
      *
      * Properties that are part of this embed but not present in the [builder] will be ignored.
      */
-    fun apply(builder: EmbedBuilder) {
+    public fun apply(builder: EmbedBuilder) {
         builder.color = color
 
         author?.let { author ->

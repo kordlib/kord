@@ -1,5 +1,6 @@
 package dev.kord.core.behavior.interaction
 
+import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 
@@ -8,10 +9,10 @@ import dev.kord.core.Kord
  * This response is visible to *only* to the user who made the interaction.
  */
 
-interface EphemeralInteractionResponseBehavior : InteractionResponseBehavior
+public interface EphemeralInteractionResponseBehavior : InteractionResponseBehavior
 
 
-fun EphemeralInteractionResponseBehavior(
+public fun EphemeralInteractionResponseBehavior(
     applicationId: Snowflake,
     token: String,
     kord: Kord

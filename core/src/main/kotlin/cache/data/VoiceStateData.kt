@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordVoiceState
 import dev.kord.common.entity.Snowflake
@@ -8,10 +9,11 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.mapSnowflake
 import kotlinx.serialization.Serializable
 
-val VoiceStateData.id get() = "$userId$guildId"
+public val VoiceStateData.id: String
+    get() = "$userId$guildId"
 
 @Serializable
-data class VoiceStateData(
+public data class VoiceStateData(
     /*
      We assume we're only getting voice state updates from guilds.
      If Discord allows people to voice chat with bots we're in trouble.
@@ -30,11 +32,10 @@ data class VoiceStateData(
     val suppress: Boolean,
     val requestToSpeakTimestamp: String?
 ) {
+    public companion object {
+        public val description: DataDescription<VoiceStateData, String> = description(VoiceStateData::id)
 
-    companion object {
-        val description = description(VoiceStateData::id)
-
-        fun from(guildId: Snowflake, entity: DiscordVoiceState) = with(entity) {
+        public fun from(guildId: Snowflake, entity: DiscordVoiceState): VoiceStateData = with(entity) {
             VoiceStateData(
                 guildId = guildId,
                 channelId = channelId,
@@ -51,6 +52,4 @@ data class VoiceStateData(
             )
         }
     }
-
-
 }

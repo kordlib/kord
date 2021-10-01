@@ -18,38 +18,38 @@ import kotlin.coroutines.CoroutineContext
 
 @DeprecatedSinceKord("0.7.0")
 @Deprecated("Renamed to MembersChunkEvent", ReplaceWith("MembersChunkEvent"), DeprecationLevel.ERROR)
-typealias MemberChunksEvent = MembersChunkEvent
+public typealias MemberChunksEvent = MembersChunkEvent
 
-class MembersChunkEvent(
-    val data: MembersChunkData,
+public class MembersChunkEvent(
+    public val data: MembersChunkData,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
-    val guildId: Snowflake get() = data.guildId
+    public val guildId: Snowflake get() = data.guildId
 
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    val members: Set<Member>
+    public val members: Set<Member>
         get() = data.members.zip(data.users)
             .map { (member, user) -> Member(member, user, kord) }
             .toSet()
 
-    val chunkIndex: Int get() = data.chunkIndex
+    public val chunkIndex: Int get() = data.chunkIndex
 
-    val chunkCount: Int get() = data.chunkCount
+    public val chunkCount: Int get() = data.chunkCount
 
-    val invalidIds: Set<Snowflake> get() = data.notFound.orEmpty()
+    public val invalidIds: Set<Snowflake> get() = data.notFound.orEmpty()
 
-    val presences: List<Presence> get() = data.presences.orEmpty().map { Presence(it, kord) }
+    public val presences: List<Presence> get() = data.presences.orEmpty().map { Presence(it, kord) }
 
-    val nonce: String? get() = data.nonce.value
+    public val nonce: String? get() = data.nonce.value
 
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MembersChunkEvent =
         MembersChunkEvent(data, kord, shard, strategy.supply(kord))

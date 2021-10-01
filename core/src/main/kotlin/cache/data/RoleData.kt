@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordGuildRole
 import dev.kord.common.entity.DiscordRole
@@ -10,7 +11,7 @@ import dev.kord.common.entity.optional.map
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RoleData(
+public data class RoleData(
     val id: Snowflake,
     val guildId: Snowflake,
     val name: String,
@@ -24,10 +25,10 @@ data class RoleData(
     val mentionable: Boolean,
     val tags: Optional<RoleTagsData> = Optional.Missing()
 ) {
-    companion object {
-        val description = description(RoleData::id)
+    public companion object {
+        public val description: DataDescription<RoleData, Snowflake> = description(RoleData::id)
 
-        fun from(guildId: Snowflake, entity: DiscordRole) = with(entity) {
+        public fun from(guildId: Snowflake, entity: DiscordRole): RoleData = with(entity) {
             RoleData(
                 id,
                 guildId,
@@ -43,11 +44,11 @@ data class RoleData(
                 tags.map { RoleTagsData.from(it) })
         }
 
-        fun from(entity: DiscordGuildRole) = from(entity.guildId, entity.role)
+        public fun from(entity: DiscordGuildRole): RoleData = from(entity.guildId, entity.role)
 
     }
 }
 
-fun DiscordRole.toData(guildId: Snowflake): RoleData {
+public fun DiscordRole.toData(guildId: Snowflake): RoleData {
     return RoleData.from(DiscordGuildRole(guildId, this))
 }

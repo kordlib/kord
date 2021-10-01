@@ -8,14 +8,14 @@ import dev.kord.rest.builder.interaction.ChatInputModifyBuilder
 import kotlin.contracts.ExperimentalContracts
 
 
-interface ChatInputCommandBehavior : ApplicationCommandBehavior {
+public interface ChatInputCommandBehavior : ApplicationCommandBehavior {
 
-     suspend fun edit(builder: suspend ChatInputModifyBuilder.() -> Unit): ChatInputCommandCommand
+     public suspend fun edit(builder: suspend ChatInputModifyBuilder.() -> Unit): ChatInputCommandCommand
 
 }
 
 
-interface GuildChatInputCommandBehavior : ChatInputCommandBehavior, GuildApplicationCommandBehavior {
+public interface GuildChatInputCommandBehavior : ChatInputCommandBehavior, GuildApplicationCommandBehavior {
 
      @OptIn(ExperimentalContracts::class)
      override suspend fun edit(builder: suspend ChatInputModifyBuilder.() -> Unit): GuildChatInputCommand {
@@ -28,7 +28,7 @@ interface GuildChatInputCommandBehavior : ChatInputCommandBehavior, GuildApplica
 
 
 
-interface GlobalChatInputCommandBehavior : ChatInputCommandBehavior,GlobalApplicationCommandBehavior {
+public interface GlobalChatInputCommandBehavior : ChatInputCommandBehavior,GlobalApplicationCommandBehavior {
 
      @OptIn(ExperimentalContracts::class)
      override suspend fun edit(builder: suspend ChatInputModifyBuilder.() -> Unit): GlobalChatInputCommand {

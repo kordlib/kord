@@ -16,7 +16,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 /**
  * An instance of a Discord channel associated to a [guild].
  */
-interface GuildChannel : Channel, GuildChannelBehavior {
+public interface GuildChannel : Channel, GuildChannelBehavior {
 
     override val guildId: Snowflake
         get() = data.guildId.value!!
@@ -24,7 +24,7 @@ interface GuildChannel : Channel, GuildChannelBehavior {
     /**
      * The name of this channel.
      */
-    val name: String get() = data.name.value!!
+    public val name: String get() = data.name.value!!
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildChannel
 

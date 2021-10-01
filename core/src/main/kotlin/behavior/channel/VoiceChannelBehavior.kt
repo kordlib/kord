@@ -5,7 +5,6 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -21,7 +20,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord Voice Channel associated to a guild.
  */
-interface VoiceChannelBehavior : BaseVoiceChannelBehavior {
+public interface VoiceChannelBehavior : BaseVoiceChannelBehavior {
 
     /**
      * Requests to get the this behavior as a [VoiceChannel].
@@ -64,12 +63,12 @@ interface VoiceChannelBehavior : BaseVoiceChannelBehavior {
         VoiceChannelBehavior(guildId, id, kord, strategy)
 }
 
-fun VoiceChannelBehavior(
+public fun VoiceChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-) = object : VoiceChannelBehavior {
+): VoiceChannelBehavior = object : VoiceChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id
     override val kord: Kord = kord
@@ -96,7 +95,7 @@ fun VoiceChannelBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun VoiceChannelBehavior.edit(builder: VoiceChannelModifyBuilder.() -> Unit): VoiceChannel {
+public suspend inline fun VoiceChannelBehavior.edit(builder: VoiceChannelModifyBuilder.() -> Unit): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

@@ -18,9 +18,9 @@ import dev.kord.core.live.on
 import kotlinx.coroutines.*
 
 @KordPreview
-fun Channel.live(
+public fun Channel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
-) = when (this) {
+): LiveChannel = when (this) {
     is DmChannel -> this.live(coroutineScope)
     is NewsChannel -> this.live(coroutineScope)
     is StoreChannel -> this.live(coroutineScope)
@@ -30,59 +30,59 @@ fun Channel.live(
 }
 
 @KordPreview
-inline fun Channel.live(
+public inline fun Channel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveChannel.() -> Unit
-) = this.live(coroutineScope).apply(block)
+): LiveChannel = this.live(coroutineScope).apply(block)
 
 @KordPreview
-fun LiveChannel.onVoiceStateUpdate(scope: CoroutineScope = this, block: suspend (VoiceStateUpdateEvent) -> Unit) =
+public fun LiveChannel.onVoiceStateUpdate(scope: CoroutineScope = this, block: suspend (VoiceStateUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onReactionAdd(scope: CoroutineScope = this, block: suspend (ReactionAddEvent) -> Unit) =
+public fun LiveChannel.onReactionAdd(scope: CoroutineScope = this, block: suspend (ReactionAddEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-inline fun LiveChannel.onReactionAdd(
+public inline fun LiveChannel.onReactionAdd(
     reaction: ReactionEmoji,
     scope: CoroutineScope = this,
     crossinline block: suspend (ReactionAddEvent) -> Unit
-) = on<ReactionAddEvent>(scope) {
+): Job = on<ReactionAddEvent>(scope) {
     if (it.emoji == reaction) {
         block(it)
     }
 }
 
 @KordPreview
-fun LiveChannel.onReactionRemove(scope: CoroutineScope = this, block: suspend (ReactionRemoveEvent) -> Unit) =
+public fun LiveChannel.onReactionRemove(scope: CoroutineScope = this, block: suspend (ReactionRemoveEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-inline fun LiveChannel.onReactionRemove(
+public inline fun LiveChannel.onReactionRemove(
     reaction: ReactionEmoji,
     scope: CoroutineScope = this,
     crossinline block: suspend (ReactionRemoveEvent) -> Unit
-) = on<ReactionRemoveEvent>(scope) {
+): Job = on<ReactionRemoveEvent>(scope) {
     if (it.emoji == reaction) {
         block(it)
     }
 }
 
 @KordPreview
-fun LiveChannel.onReactionRemoveAll(scope: CoroutineScope = this, block: suspend (ReactionRemoveAllEvent) -> Unit) =
+public fun LiveChannel.onReactionRemoveAll(scope: CoroutineScope = this, block: suspend (ReactionRemoveAllEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onMessageCreate(scope: CoroutineScope = this, block: suspend (MessageCreateEvent) -> Unit) =
+public fun LiveChannel.onMessageCreate(scope: CoroutineScope = this, block: suspend (MessageCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onMessageUpdate(scope: CoroutineScope = this, block: suspend (MessageUpdateEvent) -> Unit) =
+public fun LiveChannel.onMessageUpdate(scope: CoroutineScope = this, block: suspend (MessageUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onMessageDelete(scope: CoroutineScope = this, block: suspend (MessageDeleteEvent) -> Unit) =
+public fun LiveChannel.onMessageDelete(scope: CoroutineScope = this, block: suspend (MessageDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Suppress("DeprecatedCallableAddReplaceWith")
@@ -91,11 +91,11 @@ fun LiveChannel.onMessageDelete(scope: CoroutineScope = this, block: suspend (Me
     level = DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveChannel.onChannelCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit) =
+public fun LiveChannel.onChannelCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onChannelUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit) =
+public fun LiveChannel.onChannelUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -104,7 +104,7 @@ fun LiveChannel.onChannelUpdate(scope: CoroutineScope = this, block: suspend (Ch
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveChannel.onChannelDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit) =
+public fun LiveChannel.onChannelDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -113,20 +113,20 @@ fun LiveChannel.onChannelDelete(scope: CoroutineScope = this, block: suspend (Ch
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveChannel.onGuildCreate(scope: CoroutineScope = this, block: suspend (GuildCreateEvent) -> Unit) =
+public fun LiveChannel.onGuildCreate(scope: CoroutineScope = this, block: suspend (GuildCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveChannel.onGuildUpdate(scope: CoroutineScope = this, block: suspend (GuildUpdateEvent) -> Unit) =
+public fun LiveChannel.onGuildUpdate(scope: CoroutineScope = this, block: suspend (GuildUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-abstract class LiveChannel(
+public abstract class LiveChannel(
     kord: Kord,
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) : AbstractLiveKordEntity(kord, coroutineScope) {
 
-    abstract val channel: Channel
+    public abstract val channel: Channel
 
     override fun filter(event: Event): Boolean = when (event) {
         is VoiceStateUpdateEvent -> event.state.channelId == channel.id

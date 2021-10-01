@@ -12,14 +12,14 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.*
 import java.util.concurrent.ConcurrentHashMap
 
-typealias Generator<I, T> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>
+public typealias Generator<I, T> = (cache: DataCache, description: DataDescription<T, I>) -> DataEntryCache<out T>
 
-class KordCacheBuilder {
+public class KordCacheBuilder {
 
     /**
      * The default behavior for all types not explicitly configured, by default a [ConcurrentHashMap] is supplied.
      */
-    var defaultGenerator: Generator<Any, Any> = { cache, description ->
+    public var defaultGenerator: Generator<Any, Any> = { cache, description ->
         MapEntryCache(cache, description, MapLikeCollection.concurrentHashMap())
     }
 
@@ -32,7 +32,7 @@ class KordCacheBuilder {
     /**
      * Disables caching for all entries, clearing all custom generators and setting the default to [none].
      */
-    fun disableAll() {
+    public fun disableAll() {
         descriptionGenerators.clear()
         defaultGenerator = none()
     }
@@ -40,18 +40,18 @@ class KordCacheBuilder {
     /**
      * A Generator creating [DataEntryCaches][DataEntryCache] that won't store any entities, can be used to disable caching.
      */
-    fun <T : Any, I : Any> none(): Generator<T, I> = { _, _ -> DataEntryCache.none() }
+    public fun <T : Any, I : Any> none(): Generator<T, I> = { _, _ -> DataEntryCache.none() }
 
     /**
      * A Generator creating [DataEntryCaches][DataEntryCache] with a maximum [size], removing items on last insertion.
      * Shortcut for [lruLinkedHashMap].
      */
-    fun <T : Any, I : Any> lruCache(size: Int = 100): Generator<T, I> = { cache, description ->
+    public fun <T : Any, I : Any> lruCache(size: Int = 100): Generator<T, I> = { cache, description ->
         MapEntryCache(cache, description, MapLikeCollection.lruLinkedHashMap(size))
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Any, I : Any> forDescription(description: DataDescription<T, I>, generator: Generator<T, I>?) {
+    public fun <T : Any, I : Any> forDescription(description: DataDescription<T, I>, generator: Generator<T, I>?) {
         if (generator == null) return run {
             descriptionGenerators.remove(description)
         }
@@ -70,59 +70,59 @@ class KordCacheBuilder {
      *  }
      *  ```
      */
-    fun messages(generator: Generator<MessageData, Snowflake>) = forDescription(MessageData.description, generator)
+    public fun messages(generator: Generator<MessageData, Snowflake>): Unit = forDescription(MessageData.description, generator)
 
     /**
      *  Configures the caching for [RoleData].
      */
-    fun roles(generator: Generator<RoleData, Snowflake>) = forDescription(RoleData.description, generator)
+    public fun roles(generator: Generator<RoleData, Snowflake>): Unit = forDescription(RoleData.description, generator)
 
     /**
      *  Configures the caching for [ChannelData].
      */
-    fun channels(generator: Generator<ChannelData, Snowflake>) = forDescription(ChannelData.description, generator)
+    public fun channels(generator: Generator<ChannelData, Snowflake>): Unit = forDescription(ChannelData.description, generator)
 
     /**
      *  Configures the caching for [GuildData].
      */
-    fun guilds(generator: Generator<GuildData, Snowflake>) = forDescription(GuildData.description, generator)
+    public fun guilds(generator: Generator<GuildData, Snowflake>): Unit = forDescription(GuildData.description, generator)
 
     /**
      *  Configures the caching for [MemberData].
      *  It's advised to configure user and member data similarly, so that every member in cache also has its user data cached.
      *  Failing to do so would result in a performance hit when fetching members.
      */
-    fun members(generator: Generator<MemberData, String>) = forDescription(MemberData.description, generator)
+    public fun members(generator: Generator<MemberData, String>): Unit = forDescription(MemberData.description, generator)
 
     /**
      *  Configures the caching for [UserData].
      *  It's advised to configure user and member data similarly, so that every member in cache also has its user data cached.
      *  Failing to do so would result in a performance hit when fetching members.
      */
-    fun users(generator: Generator<UserData, Snowflake>) = forDescription(UserData.description, generator)
+    public fun users(generator: Generator<UserData, Snowflake>): Unit = forDescription(UserData.description, generator)
 
 
     /**
      *  Configures the caching for [EmojiData].
      */
-    fun emojis(generator: Generator<EmojiData, Snowflake>) = forDescription(EmojiData.description, generator)
+    public fun emojis(generator: Generator<EmojiData, Snowflake>): Unit = forDescription(EmojiData.description, generator)
 
     /**
      *  Configures the caching for [WebhookData].
      */
-    fun webhooks(generator: Generator<WebhookData, Snowflake>) = forDescription(WebhookData.description, generator)
+    public fun webhooks(generator: Generator<WebhookData, Snowflake>): Unit = forDescription(WebhookData.description, generator)
 
     /**
      *  Configures the caching for [PresenceData].
      */
-    fun presences(generator: Generator<PresenceData, String>) = forDescription(PresenceData.description, generator)
+    public fun presences(generator: Generator<PresenceData, String>): Unit = forDescription(PresenceData.description, generator)
 
     /**
      *  Configures the caching for [VoiceStateData].
      */
-    fun voiceState(generator: Generator<VoiceStateData, String>) = forDescription(VoiceStateData.description, generator)
+    public fun voiceState(generator: Generator<VoiceStateData, String>): Unit = forDescription(VoiceStateData.description, generator)
 
-    fun build(): DataCache = DelegatingDataCache(EntrySupplier.invoke { cache, description ->
+    public fun build(): DataCache = DelegatingDataCache(EntrySupplier.invoke { cache, description ->
         val generator = descriptionGenerators[description] ?: defaultGenerator
         generator(cache, description)
     })

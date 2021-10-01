@@ -8,10 +8,10 @@ import dev.kord.cache.api.data.DataDescription
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KType
 
-class ViewKeys(private val keySet: MutableSet<Any> = mutableSetOf()) {
-    val keys: Set<Any> = keySet
+public class ViewKeys(private val keySet: MutableSet<Any> = mutableSetOf()) {
+    public val keys: Set<Any> = keySet
 
-    fun add(key: Any) {
+    public fun add(key: Any) {
         keySet.add(key)
     }
 }
@@ -20,7 +20,7 @@ class ViewKeys(private val keySet: MutableSet<Any> = mutableSetOf()) {
  * A [DataCacheView] that limits removal of cached instances to those inserted in this cache,
  * and not the underlying [cache].
  */
-class DataCacheView(private val cache: DataCache) : DataCache by cache {
+public class DataCacheView(private val cache: DataCache) : DataCache by cache {
     private val keys = ViewKeys()
     private val descriptions = mutableMapOf<KType, DataDescription<out Any, out Any>>()
 

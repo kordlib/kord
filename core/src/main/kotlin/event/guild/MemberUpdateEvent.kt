@@ -14,56 +14,56 @@ import kotlin.coroutines.CoroutineContext
 
 private const val deprecationMessage = "The full member is now available in this Event."
 
-class MemberUpdateEvent(
-    val member: Member,
-    val old: Member?,
+public class MemberUpdateEvent(
+    public val member: Member,
+    public val old: Member?,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
-    val guildId: Snowflake get() = member.guildId
+    public val guildId: Snowflake get() = member.guildId
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(deprecationMessage, ReplaceWith("member.id"), level = DeprecationLevel.ERROR)
-    val memberId: Snowflake by member::id
+    public val memberId: Snowflake by member::id
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(deprecationMessage, ReplaceWith("member"), level = DeprecationLevel.ERROR)
-    val user: User by ::member
+    public val user: User by ::member
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(deprecationMessage, ReplaceWith("member.roleIds"), level = DeprecationLevel.ERROR)
-    val currentRoleIds: Set<Snowflake> by member::roleIds
+    public val currentRoleIds: Set<Snowflake> by member::roleIds
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(deprecationMessage, ReplaceWith("member.nickname"), level = DeprecationLevel.ERROR)
-    val currentNickName: String? by member::nickname
+    public val currentNickName: String? by member::nickname
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(deprecationMessage, ReplaceWith("member.premiumSince"), level = DeprecationLevel.ERROR)
-    val premiumSince: Instant? by member::premiumSince
+    public val premiumSince: Instant? by member::premiumSince
 
-    val guild: GuildBehavior get() = member.guild
+    public val guild: GuildBehavior get() = member.guild
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(deprecationMessage, ReplaceWith("member.roles"), level = DeprecationLevel.ERROR)
-    val currentRoles: Flow<Role> by member::roles
+    public val currentRoles: Flow<Role> by member::roles
 
     @DeprecatedSinceKord("0.7.0")
     @Suppress("RedundantSuspendModifier")
     @Deprecated(deprecationMessage, ReplaceWith("member"), level = DeprecationLevel.ERROR)
-    suspend fun getMember(): Member = member
+    public suspend fun getMember(): Member = member
 
     @DeprecatedSinceKord("0.7.0")
     @Suppress("RedundantSuspendModifier")
     @Deprecated(deprecationMessage, ReplaceWith("member"), level = DeprecationLevel.ERROR)
-    suspend fun getMemberOrNull(): Member? = member
+    public suspend fun getMemberOrNull(): Member? = member
 
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberUpdateEvent =
         MemberUpdateEvent(member, old, kord, shard, strategy.supply(kord))

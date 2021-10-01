@@ -7,7 +7,7 @@ import dev.kord.common.entity.optional.Optional
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MessageStickerData(
+public data class MessageStickerData(
     val id: Snowflake,
     val packId: Snowflake,
     val name: String,
@@ -17,11 +17,9 @@ data class MessageStickerData(
     val previewAsset: Optional<String?> = Optional.Missing(),
     val formatType: MessageStickerType,
 ) {
-
-    companion object {
-        fun from(entity: DiscordMessageSticker): MessageStickerData = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordMessageSticker): MessageStickerData = with(entity) {
             MessageStickerData(id, packId, name, description, tags, asset, previewAsset, formatType)
         }
     }
-
 }

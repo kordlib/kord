@@ -15,8 +15,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 /**
  * An instance of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
  */
-interface Channel : ChannelBehavior {
-    val data: ChannelData
+public interface Channel : ChannelBehavior {
+    public val data: ChannelData
 
     override val id: Snowflake
         get() = data.id
@@ -24,7 +24,7 @@ interface Channel : ChannelBehavior {
     /**
      * The type of this channel.
      */
-    val type: ChannelType get() = data.type
+    public val type: ChannelType get() = data.type
 
     /**
      * Returns a new [Channel] with the given [strategy].
@@ -32,13 +32,13 @@ interface Channel : ChannelBehavior {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Channel =
         from(data, kord, strategy)
 
-    companion object {
+    public companion object {
 
         /**
          * Creates a [Channel] of the type defined in the [ChannelData.type].
          * If the type is not any known type, then an anonymous channel will be created.
          */
-        fun from(
+        public fun from(
             data: ChannelData,
             kord: Kord,
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy

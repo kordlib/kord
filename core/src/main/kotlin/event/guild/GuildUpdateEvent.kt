@@ -5,9 +5,9 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.event.Event
 import kotlin.coroutines.CoroutineContext
 
-class GuildUpdateEvent(
-    val guild: Guild,
-    val old: Guild?,
+public class GuildUpdateEvent(
+    public val guild: Guild,
+    public val old: Guild?,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = guild.kord.coroutineContext,
 ) : Event {

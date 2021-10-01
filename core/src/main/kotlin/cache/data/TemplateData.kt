@@ -5,7 +5,7 @@ import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TemplateData(
+public data class TemplateData(
     val code: String,
     val name: String,
     val description: String?,
@@ -19,8 +19,8 @@ data class TemplateData(
     val isDirty: Boolean?
 
 ) {
-    companion object {
-        fun from(template: DiscordTemplate): TemplateData {
+    public companion object {
+        public fun from(template: DiscordTemplate): TemplateData {
             return with(template) {
                 TemplateData(
                     code,
@@ -40,4 +40,4 @@ data class TemplateData(
     }
 }
 
-fun DiscordTemplate.toData() = TemplateData.from(this)
+public fun DiscordTemplate.toData(): TemplateData = TemplateData.from(this)

@@ -11,40 +11,44 @@ import dev.kord.core.cache.data.WebhookData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 
-class AuditLog(val data: DiscordAuditLog, val guildId: Snowflake, override val kord: Kord) : KordObject {
+public class AuditLog(
+    public val data: DiscordAuditLog,
+    public val guildId: Snowflake,
+    override val kord: Kord,
+) : KordObject {
 
-    val users: List<User> get() = data.users.map { User(UserData.from(it), kord) }
+    public val users: List<User> get() = data.users.map { User(UserData.from(it), kord) }
 
-    val webhooks: List<Webhook> get() = data.webhooks.map { Webhook(WebhookData.from(it), kord) }
+    public val webhooks: List<Webhook> get() = data.webhooks.map { Webhook(WebhookData.from(it), kord) }
 
-    val integrations: List<Snowflake> get() = data.integrations.map { it.id }
+    public val integrations: List<Snowflake> get() = data.integrations.map { it.id }
 
-    val threads: List<ThreadChannel> get() = data.threads.map {
+    public val threads: List<ThreadChannel> get() = data.threads.map {
        val data =  ChannelData.from(it)
         Channel.from(data, kord)
     }.filterIsInstance<ThreadChannel>()
 
-    val entries: List<AuditLogEntry> get() = data.auditLogEntries.map { AuditLogEntry(it, kord) }
+    public val entries: List<AuditLogEntry> get() = data.auditLogEntries.map { AuditLogEntry(it, kord) }
 
 }
 
-class AuditLogEntry(val data: DiscordAuditLogEntry, override val kord: Kord) : KordObject {
-    val targetId: Snowflake? get() = data.targetId
+public class AuditLogEntry(public val data: DiscordAuditLogEntry, override val kord: Kord) : KordObject {
+    public val targetId: Snowflake? get() = data.targetId
 
-    val changes: List<AuditLogChange<*>> get() = data.changes.orEmpty()
+    public val changes: List<AuditLogChange<*>> get() = data.changes.orEmpty()
 
-    val userId: Snowflake get() = data.userId
+    public val userId: Snowflake get() = data.userId
 
-    val id: Snowflake get() = data.id
+    public val id: Snowflake get() = data.id
 
-    val actionType: AuditLogEvent get() = data.actionType
+    public val actionType: AuditLogEvent get() = data.actionType
 
-    val options: AuditLogEntryOptionalInfo? get() = data.options.value
+    public val options: AuditLogEntryOptionalInfo? get() = data.options.value
 
-    val reason: String? get() = data.reason.value
+    public val reason: String? get() = data.reason.value
 
     @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(value: AuditLogChangeKey<T>): AuditLogChange<T>? =
+    public operator fun <T> get(value: AuditLogChangeKey<T>): AuditLogChange<T>? =
         changes.firstOrNull { it.key == value } as? AuditLogChange<T>
 
 }

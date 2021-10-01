@@ -4,12 +4,12 @@ import dev.kord.common.entity.DiscordIntegrationsAccount
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class IntegrationsAccountData(
+public data class IntegrationsAccountData(
     val id: String,
     val name: String,
 ) {
-    companion object {
-        fun from(entity: DiscordIntegrationsAccount): IntegrationsAccountData = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordIntegrationsAccount): IntegrationsAccountData = with(entity) {
             IntegrationsAccountData(id, name)
         }
     }

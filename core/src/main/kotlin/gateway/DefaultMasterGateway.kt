@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.map
 import kotlin.time.Duration
 
-class DefaultMasterGateway(
+public class DefaultMasterGateway(
     override val gateways: Map<Int, Gateway>,
 ): MasterGateway {
 
@@ -18,7 +18,7 @@ class DefaultMasterGateway(
      * Gateways that return `null` are not counted into the average, if all [gateways]
      * return `null` then this property will return `null` as well.
      */
-    override val averagePing
+    override val averagePing: Duration?
         get(): Duration? {
             val pings = gateways.values.mapNotNull { it.ping.value?.inWholeMicroseconds }
             if (pings.isEmpty()) return null

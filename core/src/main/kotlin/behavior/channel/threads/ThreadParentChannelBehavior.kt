@@ -26,7 +26,7 @@ import java.util.*
 /**
  * Behavior of channels that can contain public threads.
  */
-interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
+public interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
     /**
      * Returns all active public and private threads in the channel.
      * Threads are ordered by their id, in descending order.
@@ -35,7 +35,7 @@ interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
 
      */
-    val activeThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(guildId).filter { it.parentId == id }
+    public val activeThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(guildId).filter { it.parentId == id }
 
     /**
      * Returns archived threads in the channel that are public.
@@ -45,7 +45,7 @@ interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    fun getPublicArchivedThreads(
+    public fun getPublicArchivedThreads(
         before: Instant = Clock.System.now(),
         limit: Int = Int.MAX_VALUE
     ): Flow<ThreadChannel> {
@@ -87,7 +87,7 @@ interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
  * This derives from [ThreadParentChannelBehavior]
  * since Discord allows all public operations on private thread parents.
  */
-interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
+public interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
 
     /**
      * Returns archived threads in the channel that are private.
@@ -99,7 +99,7 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    fun getPrivateArchivedThreads(
+    public fun getPrivateArchivedThreads(
         before: Instant = Clock.System.now(),
         limit: Int = Int.MAX_VALUE
     ): Flow<ThreadChannel> {
@@ -114,7 +114,7 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    fun getJoinedPrivateArchivedThreads(
+    public fun getJoinedPrivateArchivedThreads(
         before: Snowflake = Snowflake.max,
         limit: Int = Int.MAX_VALUE
     ): Flow<ThreadChannel> {

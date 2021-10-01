@@ -13,7 +13,7 @@ import java.util.*
  *
  * A file attached to a [Message].
  */
-data class Attachment(val data: AttachmentData, override val kord: Kord) : KordEntity {
+public data class Attachment(val data: AttachmentData, override val kord: Kord) : KordEntity {
 
     override val id: Snowflake
         get() = data.id
@@ -71,7 +71,7 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : KordE
     }
 }
 
-fun Attachment.toRawType(): DiscordAttachment {
+public fun Attachment.toRawType(): DiscordAttachment {
     with(data) {
         return DiscordAttachment(id, filename, size, url, proxyUrl, height, width)
     }

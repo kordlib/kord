@@ -42,9 +42,8 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
-import kotlin.time.seconds
 
-operator fun DefaultGateway.Companion.invoke(
+public operator fun DefaultGateway.Companion.invoke(
     resources: ClientResources,
     retry: Retry = LinearRetry(Duration.seconds(2), Duration.seconds(60), 10)
 ): DefaultGateway {
@@ -59,9 +58,9 @@ operator fun DefaultGateway.Companion.invoke(
 
 private val logger = KotlinLogging.logger { }
 
-data class Shards(val totalShards: Int, val indices: Iterable<Int> = 0 until totalShards)
+public data class Shards(val totalShards: Int, val indices: Iterable<Int> = 0 until totalShards)
 
-class KordBuilder(val token: String) {
+public class KordBuilder(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
         { resources, shards ->
@@ -81,7 +80,7 @@ class KordBuilder(val token: String) {
     /**
      * Enable adding a [Runtime.addShutdownHook] to log out of the [Gateway] when the process is killed.
      */
-    var enableShutdownHook: Boolean = true
+    public var enableShutdownHook: Boolean = true
 
     /**
      * The event flow used by [Kord.eventFlow] to publish [events][Kord.events].
@@ -89,32 +88,32 @@ class KordBuilder(val token: String) {
      *
      * By default a [MutableSharedFlow] with an `extraBufferCapacity` of `Int.MAX_VALUE`.
      */
-    var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(
+    public var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(
         extraBufferCapacity = Int.MAX_VALUE
     )
 
     /**
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
      */
-    var defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    public var defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 
     /**
      * The default strategy used by entities to retrieve entities. [EntitySupplyStrategy.cacheWithRestFallback] by default.
      */
-    var defaultStrategy: EntitySupplyStrategy<*> = EntitySupplyStrategy.cacheWithRestFallback
+    public var defaultStrategy: EntitySupplyStrategy<*> = EntitySupplyStrategy.cacheWithRestFallback
 
     /**
      * The client used for building [Gateways][Gateway] and [RequestHandlers][RequestHandler]. A default implementation
      * will be used when not set.
      */
-    var httpClient: HttpClient? = null
+    public var httpClient: HttpClient? = null
 
-    var applicationId: Snowflake? = null
+    public var applicationId: Snowflake? = null
 
     /**
      * The enabled gateway intents, setting intents to null will disable the feature.
      */
-    var intents: Intents = Intents.nonPrivileged
+    public var intents: Intents = Intents.nonPrivileged
 
 
     /**
@@ -134,7 +133,7 @@ class KordBuilder(val token: String) {
      *}
      * ```
      */
-    fun sharding(shards: (recommended: Int) -> Shards) {
+    public fun sharding(shards: (recommended: Int) -> Shards) {
         this.shardsBuilder = shards
     }
 
@@ -149,7 +148,7 @@ class KordBuilder(val token: String) {
      * }
      * ```
      */
-    fun gateways(gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway>) {
+    public fun gateways(gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway>) {
         this.gatewayBuilder = gatewayBuilder
     }
 
@@ -163,7 +162,7 @@ class KordBuilder(val token: String) {
      * }
      * ```
      */
-    fun requestHandler(handlerBuilder: (resources: ClientResources) -> RequestHandler) {
+    public fun requestHandler(handlerBuilder: (resources: ClientResources) -> RequestHandler) {
         this.handlerBuilder = handlerBuilder
     }
 
@@ -181,7 +180,7 @@ class KordBuilder(val token: String) {
      * ```
      */
     @OptIn(ExperimentalContracts::class)
-    fun cache(builder: KordCacheBuilder.(resources: ClientResources) -> Unit) {
+    public fun cache(builder: KordCacheBuilder.(resources: ClientResources) -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val old = cacheBuilder
         cacheBuilder = { resources: ClientResources ->
@@ -216,7 +215,7 @@ class KordBuilder(val token: String) {
     /**
      * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
      */
-    suspend fun build(): Kord {
+    public suspend fun build(): Kord {
         val client = httpClient.configure(token)
 
         val recommendedShards = client.getGatewayInfo().shards

@@ -16,27 +16,27 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import kotlin.coroutines.CoroutineContext
 
-class ChannelPinsUpdateEvent(
-    val data: ChannelPinsUpdateEventData,
+public class ChannelPinsUpdateEvent(
+    public val data: ChannelPinsUpdateEventData,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
-    val channelId: Snowflake get() = data.channelId
+    public val channelId: Snowflake get() = data.channelId
 
-    val guildId: Snowflake? get() = data.guildId.value
+    public val guildId: Snowflake? get() = data.guildId.value
 
-    val lastPinTimestamp: Instant? get() = data.lastPinTimestamp.value?.toInstant()
+    public val lastPinTimestamp: Instant? get() = data.lastPinTimestamp.value?.toInstant()
 
-    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
+    public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
-    val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
+    public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
-    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
-    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ChannelPinsUpdateEvent =
         ChannelPinsUpdateEvent(data, kord, shard, strategy.supply(kord))

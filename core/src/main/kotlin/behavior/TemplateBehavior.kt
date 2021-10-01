@@ -13,17 +13,17 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface TemplateBehavior : KordObject {
-    val guildId: Snowflake
-    val code: String
+public interface TemplateBehavior : KordObject {
+    public val guildId: Snowflake
+    public val code: String
 
-    suspend fun sync(): Template {
+    public suspend fun sync(): Template {
         val response = kord.rest.template.syncGuildTemplate(guildId, code)
         val data = response.toData()
         return Template(data, kord)
     }
 
-    suspend fun delete(): Template {
+    public suspend fun delete(): Template {
         val response = kord.rest.template.deleteGuildTemplate(guildId, code)
         val data = response.toData()
         return Template(data, kord)
@@ -33,7 +33,7 @@ interface TemplateBehavior : KordObject {
 
 
 @OptIn(ExperimentalContracts::class)
-suspend fun TemplateBehavior.edit(builder: GuildTemplateModifyBuilder.() -> Unit): Template {
+public suspend fun TemplateBehavior.edit(builder: GuildTemplateModifyBuilder.() -> Unit): Template {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.template.modifyGuildTemplate(guildId, code, builder)
     val data = response.toData()
@@ -41,7 +41,7 @@ suspend fun TemplateBehavior.edit(builder: GuildTemplateModifyBuilder.() -> Unit
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend fun TemplateBehavior.createGuild(name: String, builder: GuildFromTemplateCreateBuilder.() -> Unit): Guild {
+public suspend fun TemplateBehavior.createGuild(name: String, builder: GuildFromTemplateCreateBuilder.() -> Unit): Guild {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.template.createGuildFromTemplate(code, name, builder)
     val data = response.toData()
@@ -49,7 +49,7 @@ suspend fun TemplateBehavior.createGuild(name: String, builder: GuildFromTemplat
 }
 
 
-fun TemplateBehavior(guildId: Snowflake, code: String, kord: Kord): TemplateBehavior =
+public fun TemplateBehavior(guildId: Snowflake, code: String, kord: Kord): TemplateBehavior =
     object : TemplateBehavior {
         override val code: String = code
         override val guildId: Snowflake = guildId

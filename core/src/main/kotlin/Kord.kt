@@ -33,6 +33,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import mu.KLogger
 import mu.KotlinLogging
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -40,18 +41,18 @@ import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
-val kordLogger = KotlinLogging.logger { }
+public val kordLogger: KLogger = KotlinLogging.logger { }
 
 
 /**
  * The central adapter between other Kord modules and source of core [events].
  */
-class Kord(
-    val resources: ClientResources,
-    val cache: DataCache,
-    val gateway: MasterGateway,
-    val rest: RestClient,
-    val selfId: Snowflake,
+public class Kord(
+    public val resources: ClientResources,
+    public val cache: DataCache,
+    public val gateway: MasterGateway,
+    public val rest: RestClient,
+    public val selfId: Snowflake,
     private val eventFlow: MutableSharedFlow<Event>,
     dispatcher: CoroutineDispatcher,
     interceptorBuilder: () -> GatewayEventInterceptor = {
@@ -65,7 +66,7 @@ class Kord(
      * Global commands made by the bot under this Kord instance.
      */
 
-    val globalCommands: Flow<GlobalApplicationCommand>
+    public val globalCommands: Flow<GlobalApplicationCommand>
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
 
@@ -75,13 +76,13 @@ class Kord(
      *
      * All [strategizable][Strategizable] [entities][KordEntity] created through this instance will use this supplier by default.
      */
-    val defaultSupplier: EntitySupplier = resources.defaultStrategy.supply(this)
+    public val defaultSupplier: EntitySupplier = resources.defaultStrategy.supply(this)
 
     /**
      * A reference to all exposed [unsafe][KordUnsafe] entity constructors for this instance.
      */
     @OptIn(KordUnsafe::class, KordExperimental::class)
-    val unsafe: Unsafe = Unsafe(this)
+    public val unsafe: Unsafe = Unsafe(this)
 
     /**
      * The events emitted from the [gateway]. Call [Kord.login] to start receiving events.
@@ -97,15 +98,15 @@ class Kord(
      * Behavior like replay cache size, buffer size and overflow behavior are dependant on the
      * supplied [eventFlow]. See [KordBuilder.eventFlow] for more details.
      */
-    val events: SharedFlow<Event>
+    public val events: SharedFlow<Event>
         get() = eventFlow
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + dispatcher
 
-    val regions: Flow<Region>
+    public val regions: Flow<Region>
         get() = defaultSupplier.regions
 
-    val guilds: Flow<Guild>
+    public val guilds: Flow<Guild>
         get() = defaultSupplier.guilds
 
     init {
@@ -122,7 +123,7 @@ class Kord(
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = PresenceStatus.Online }) {
+    public suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = PresenceStatus.Online }) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -137,21 +138,21 @@ class Kord(
     /**
      * Logs out to the configured [Gateways][Gateway].
      */
-    suspend fun logout() = gateway.stopAll()
+    public suspend fun logout(): Unit = gateway.stopAll()
 
     /**
      * Logs out of all connected [Gateways][Gateway] and frees all resources.
      */
-    suspend fun shutdown() {
+    public suspend fun shutdown() {
         gateway.detachAll()
 
         // resolve ambiguous coroutineContext
         (this as CoroutineScope).cancel()
     }
 
-    fun <T : EntitySupplier> with(strategy: EntitySupplyStrategy<T>): T = strategy.supply(this)
+    public fun <T : EntitySupplier> with(strategy: EntitySupplyStrategy<T>): T = strategy.supply(this)
 
-    suspend fun getApplicationInfo(): ApplicationInfo = with(EntitySupplyStrategy.rest).getApplicationInfo()
+    public suspend fun getApplicationInfo(): ApplicationInfo = with(EntitySupplyStrategy.rest).getApplicationInfo()
 
     /**
      * Requests to create a new Guild configured through the [builder].
@@ -167,7 +168,7 @@ class Kord(
         DeprecationLevel.WARNING
     )
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
+    public suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -182,7 +183,7 @@ class Kord(
      * @return The newly created Guild.
      */
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGuild(name: String, builder: GuildCreateBuilder.() -> Unit): Guild {
+    public suspend inline fun createGuild(name: String, builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -199,7 +200,7 @@ class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the preview wasn't present.
      */
-    suspend fun getGuildPreview(
+    public suspend fun getGuildPreview(
         guildId: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): GuildPreview = strategy.supply(this).getGuildPreview(guildId)
@@ -210,7 +211,7 @@ class Kord(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildPreviewOrNull(
+    public suspend fun getGuildPreviewOrNull(
         guildId: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): GuildPreview? = strategy.supply(this).getGuildPreviewOrNull(guildId)
@@ -223,7 +224,7 @@ class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
      */
-    suspend fun getChannel(
+    public suspend fun getChannel(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> =
             resources.defaultStrategy,
@@ -235,12 +236,12 @@ class Kord(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend inline fun <reified T : Channel> getChannelOf(
+    public suspend inline fun <reified T : Channel> getChannelOf(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): T? = strategy.supply(this).getChannelOfOrNull(id)
 
-    suspend fun getGuild(
+    public suspend fun getGuild(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> =
             resources.defaultStrategy,
@@ -252,7 +253,7 @@ class Kord(
      * @throws [RestRequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the webhook was not present.
      */
-    suspend fun getWebhook(
+    public suspend fun getWebhook(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
     ): Webhook = strategy.supply(this).getWebhook(id)
@@ -264,7 +265,7 @@ class Kord(
      * @throws [RestRequestException] if something went wrong during the request.
      */
 
-    suspend fun getWebhookOrNull(
+    public suspend fun getWebhookOrNull(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
     ): Webhook? = strategy.supply(this).getWebhookOrNull(id)
@@ -275,7 +276,7 @@ class Kord(
      * @throws [RestRequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the webhook was not present.
      */
-    suspend fun getWebhookWithToken(
+    public suspend fun getWebhookWithToken(
         id: Snowflake,
         token: String,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
@@ -288,7 +289,7 @@ class Kord(
      * @throws [RestRequestException] if something went wrong during the request.
      */
 
-    suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String, strategy: EntitySupplyStrategy<*>): Webhook? =
+    public suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String, strategy: EntitySupplyStrategy<*>): Webhook? =
         strategy.supply(this).getWebhookWithTokenOrNull(id, token)
 
 
@@ -298,11 +299,11 @@ class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =
+    public suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =
         strategy.supply(this).getSelf()
 
     @OptIn(ExperimentalContracts::class)
-    suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User {
+    public suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
     }
@@ -313,7 +314,7 @@ class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User? =
+    public suspend fun getUser(id: Snowflake, strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User? =
         strategy.supply(this).getUserOrNull(id)
 
     /**
@@ -323,7 +324,7 @@ class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      *
      */
-    suspend fun getInvite(
+    public suspend fun getInvite(
         code: String,
         withCounts: Boolean,
     ): Invite? =
@@ -338,7 +339,7 @@ class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      */
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun editPresence(builder: PresenceBuilder.() -> Unit) {
+    public suspend inline fun editPresence(builder: PresenceBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -356,7 +357,7 @@ class Kord(
         return "Kord(resources=$resources, cache=$cache, gateway=$gateway, rest=$rest, selfId=$selfId)"
     }
 
-    companion object {
+    public companion object {
 
         /**
          * Builds a [Kord] instance configured by the [builder].
@@ -369,7 +370,7 @@ class Kord(
          */
         @OptIn(ExperimentalContracts::class)
         @KordExperimental
-        inline fun restOnly(token: String, builder: KordRestOnlyBuilder.() -> Unit = {}): Kord {
+        public inline fun restOnly(token: String, builder: KordRestOnlyBuilder.() -> Unit = {}): Kord {
             contract {
                 callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
             }
@@ -377,21 +378,21 @@ class Kord(
         }
     }
 
-    fun getGuildApplicationCommands(guildId: Snowflake): Flow<GuildApplicationCommand> {
+    public fun getGuildApplicationCommands(guildId: Snowflake): Flow<GuildApplicationCommand> {
         return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId)
     }
 
-    suspend fun getGuildApplicationCommand(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand {
+    public suspend fun getGuildApplicationCommand(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand {
         return defaultSupplier.getGuildApplicationCommand(resources.applicationId, guildId, commandId)
     }
 
 
-    suspend fun getGuildApplicationCommandOrNull(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand? {
+    public suspend fun getGuildApplicationCommandOrNull(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand? {
         return defaultSupplier.getGuildApplicationCommandOrNull(resources.applicationId, guildId, commandId)
     }
 
 
-    suspend inline fun <reified T : GuildApplicationCommand> getGuildApplicationCommandOf(
+    public suspend inline fun <reified T : GuildApplicationCommand> getGuildApplicationCommandOf(
         guildId: Snowflake,
         commandId: Snowflake
     ): T {
@@ -399,7 +400,7 @@ class Kord(
     }
 
 
-    suspend inline fun <reified T : GuildApplicationCommand> getGuildApplicationCommandOfOrNull(
+    public suspend inline fun <reified T : GuildApplicationCommand> getGuildApplicationCommandOfOrNull(
         guildId: Snowflake,
         commandId: Snowflake
     ): T? {
@@ -407,28 +408,28 @@ class Kord(
     }
 
 
-    suspend fun getGlobalApplicationCommand(commandId: Snowflake): GlobalApplicationCommand {
+    public suspend fun getGlobalApplicationCommand(commandId: Snowflake): GlobalApplicationCommand {
         return defaultSupplier.getGlobalApplicationCommand(resources.applicationId, commandId)
     }
 
 
-    suspend fun getGlobalApplicationCommandOrNull(commandId: Snowflake): GlobalApplicationCommand? {
+    public suspend fun getGlobalApplicationCommandOrNull(commandId: Snowflake): GlobalApplicationCommand? {
         return defaultSupplier.getGlobalApplicationCommandOrNull(resources.applicationId, commandId)
     }
 
 
-    suspend fun <T> getGlobalApplicationCommandOf(commandId: Snowflake): T {
+    public suspend fun <T> getGlobalApplicationCommandOf(commandId: Snowflake): T {
         return defaultSupplier.getGlobalApplicationCommandOf(resources.applicationId, commandId)
     }
 
 
-    suspend fun <T> getGlobalApplicationCommandOfOrNull(commandId: Snowflake): T? {
+    public suspend fun <T> getGlobalApplicationCommandOfOrNull(commandId: Snowflake): T? {
         return defaultSupplier.getGlobalApplicationCommandOfOrNull(resources.applicationId, commandId)
     }
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGlobalChatInputCommand(
+    public suspend inline fun createGlobalChatInputCommand(
         name: String,
         description: String,
         builder: ChatInputCreateBuilder.() -> Unit = {},
@@ -445,7 +446,7 @@ class Kord(
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGlobalMessageCommand(
+    public suspend inline fun createGlobalMessageCommand(
         name: String,
         builder: MessageCommandCreateBuilder.() -> Unit = {},
     ): GlobalMessageCommand {
@@ -457,7 +458,7 @@ class Kord(
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGlobalUserCommand(
+    public suspend inline fun createGlobalUserCommand(
         name: String,
         builder: UserCommandCreateBuilder.() -> Unit = {},
     ): GlobalUserCommand {
@@ -470,7 +471,7 @@ class Kord(
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGlobalApplicationCommands(
+    public suspend inline fun createGlobalApplicationCommands(
         builder: MultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GlobalApplicationCommand> {
 
@@ -485,7 +486,7 @@ class Kord(
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGuildChatInputCommand(
+    public suspend inline fun createGuildChatInputCommand(
         guildId: Snowflake,
         name: String,
         description: String,
@@ -506,7 +507,7 @@ class Kord(
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGuildMessageCommand(
+    public suspend inline fun createGuildMessageCommand(
         guildId: Snowflake,
         name: String,
         builder: MessageCommandCreateBuilder.() -> Unit = {},
@@ -523,7 +524,7 @@ class Kord(
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGuildUserCommand(
+    public suspend inline fun createGuildUserCommand(
         guildId: Snowflake,
         name: String,
         builder: UserCommandCreateBuilder.() -> Unit = {},
@@ -542,7 +543,7 @@ class Kord(
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGuildApplicationCommands(
+    public suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,
         builder: MultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GuildApplicationCommand> {
@@ -559,7 +560,7 @@ class Kord(
     }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun editApplicationCommandPermissions(
+    public suspend inline fun editApplicationCommandPermissions(
         guildId: Snowflake,
         commandId: Snowflake,
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
@@ -570,7 +571,7 @@ class Kord(
 
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun bulkEditApplicationCommandPermissions(
+    public suspend inline fun bulkEditApplicationCommandPermissions(
         guildId: Snowflake,
         builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
     ) {
@@ -587,7 +588,7 @@ class Kord(
  * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Kord {
+public suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Kord {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return KordBuilder(token).apply(builder).build()
 }
@@ -604,7 +605,7 @@ suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Ko
  * The returned [Job] is a reference to the created coroutine, call [Job.cancel] to cancel the processing of any further
  * events for this [consumer].
  */
-inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline consumer: suspend T.() -> Unit): Job =
+public inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline consumer: suspend T.() -> Unit): Job =
     events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
         .onEach { event ->
             scope.launch(event.coroutineContext) { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }

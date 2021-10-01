@@ -20,8 +20,8 @@ import java.util.*
 /**
  * An instance of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
  */
-class Member(
-    val memberData: MemberData,
+public class Member(
+    public val memberData: MemberData,
     userData: UserData,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier
@@ -33,38 +33,38 @@ class Member(
     /**
      * The name as shown in the discord client, prioritizing the [nickname] over the [use].
      */
-    val displayName: String get() = nickname ?: username
+    public val displayName: String get() = nickname ?: username
 
     /**
      * The members guild avatar as [Icon] object
      */
-    val memberAvatar: Icon?
+    public val memberAvatar: Icon?
         get() = memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, data.id, it, kord) }
 
     /**
      * When the user joined this [guild].
      */
-    val joinedAt: Instant get() = memberData.joinedAt.toInstant()
+    public val joinedAt: Instant get() = memberData.joinedAt.toInstant()
 
     /**
      * The guild-specific nickname of the user, if present.
      */
-    val nickname: String? get() = memberData.nick.value
+    public val nickname: String? get() = memberData.nick.value
 
     /**
      * When the user used their Nitro boost on the server.
      */
-    val premiumSince: Instant? get() = memberData.premiumSince.value?.toInstant()
+    public val premiumSince: Instant? get() = memberData.premiumSince.value?.toInstant()
 
     /**
      * The ids of the [roles][Role] that apply to this user.
      */
-    val roleIds: Set<Snowflake> get() = memberData.roles.toSet()
+    public val roleIds: Set<Snowflake> get() = memberData.roles.toSet()
 
     /**
      * The behaviors of the [roles][Role] that apply to this user.
      */
-    val roleBehaviors: Set<RoleBehavior>
+    public val roleBehaviors: Set<RoleBehavior>
         get() = roleIds.map { RoleBehavior(guildId = guildId, id = it, kord = kord) }.toSet()
 
     /**
@@ -76,28 +76,28 @@ class Member(
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val roles: Flow<Role>
+    public val roles: Flow<Role>
         get() = if (roleIds.isEmpty()) emptyFlow()
         else supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
     /**
      * Whether the user has not yet passed the guild's Membership Screening requirements.
      */
-    val isPending: Boolean get() = memberData.pending.discordBoolean
+    public val isPending: Boolean get() = memberData.pending.discordBoolean
 
     /**
      * Whether this member's [id] equals the [Guild.ownerId].
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun isOwner(): Boolean = getGuild().ownerId == id
+    public suspend fun isOwner(): Boolean = getGuild().ownerId == id
 
     /**
      * Requests to calculate a summation of the permissions of this member's [roles].
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getPermissions(): Permissions {
+    public suspend fun getPermissions(): Permissions {
         val guild = getGuild()
         val owner = guild.ownerId == this.id
         if (owner) return Permissions(Permission.All)

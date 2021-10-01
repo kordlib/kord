@@ -4,7 +4,7 @@ import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.KordEntity
@@ -26,21 +26,21 @@ import kotlin.contracts.contract
  * The behavior of a [Discord Interaction](https://discord.com/developers/docs/interactions/slash-commands#interaction)
  */
 
-interface InteractionBehavior : KordEntity, Strategizable {
+public interface InteractionBehavior : KordEntity, Strategizable {
 
-    val applicationId: Snowflake
-    val token: String
-    val channelId: Snowflake
+    public val applicationId: Snowflake
+    public val token: String
+    public val channelId: Snowflake
 
     /**
      * The [MessageChannelBehavior] of the channel the command was executed in.
      */
-    val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
+    public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
-    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
 
-    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
 
     /**
@@ -48,7 +48,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
      *
      * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
      */
-    suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
+    public suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
         val request =  InteractionResponseCreateRequest(
             type = InteractionResponseType.DeferredChannelMessageWithSource,
             data = Optional(
@@ -66,7 +66,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
      *
      * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
      */
-    suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
+    public suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
             type = InteractionResponseType.DeferredChannelMessageWithSource
         )
@@ -75,7 +75,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
     }
 
 
-    suspend fun getOriginalInteractionResponse(): Message? {
+    public suspend fun getOriginalInteractionResponse(): Message? {
         return EntitySupplyStrategy.rest.supply(kord).getOriginalInteractionOrNull(applicationId, token)
     }
 
@@ -94,7 +94,7 @@ interface InteractionBehavior : KordEntity, Strategizable {
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionBehavior.respondPublic(
+public suspend inline fun InteractionBehavior.respondPublic(
     builder: InteractionResponseCreateBuilder.() -> Unit
 ): PublicInteractionResponseBehavior {
 
@@ -115,7 +115,7 @@ suspend inline fun InteractionBehavior.respondPublic(
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionBehavior.respondEphemeral(
+public suspend inline fun InteractionBehavior.respondEphemeral(
     builder: InteractionResponseCreateBuilder.() -> Unit
 ): EphemeralInteractionResponseBehavior {
 
@@ -127,14 +127,14 @@ suspend inline fun InteractionBehavior.respondEphemeral(
 
 }
 
-fun InteractionBehavior(
+public fun InteractionBehavior(
     id: Snowflake,
     channelId: Snowflake,
     token: String,
     applicationId: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-) = object : InteractionBehavior {
+): InteractionBehavior = object : InteractionBehavior {
     override val id: Snowflake
         get() = id
 

@@ -1,19 +1,19 @@
 package dev.kord.core.entity.component
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.interaction.ComponentInteraction
+
 /**
  * An interactive component rendered on a Message.
  * If this button contains a [customId] and is clicked by a user,
  * a [InteractionCreateEvent] with a [ComponentInteraction] will fire.
  */
 
-class ButtonComponent(override val data: ComponentData) : Component {
+public class ButtonComponent(override val data: ComponentData) : Component {
 
     override val type: ComponentType
         get() = ComponentType.Button
@@ -22,17 +22,17 @@ class ButtonComponent(override val data: ComponentData) : Component {
      * The style of this button, [ButtonStyle.Link] buttons will always
      * have a [url].
      */
-    val style: ButtonStyle get() = data.style.value!!
+    public val style: ButtonStyle get() = data.style.value!!
 
     /**
      * The text that appears on the button, if present.
      */
-    val label: String? get() = data.label.value
+    public val label: String? get() = data.label.value
 
     /**
      * The emoji that appears on the button, if present.
      */
-    val emoji: ReactionEmoji?
+    public val emoji: ReactionEmoji?
         get() = with(data.emoji.value) {
             if (this == null) return@with null
 
@@ -48,17 +48,17 @@ class ButtonComponent(override val data: ComponentData) : Component {
      * The custom identifier for any [ComponentInteractions][ButtonInteraction]
      * this button will trigger. Present if this button is not a link button.
      */
-    val customId: String? get() = data.customId.value
+    public val customId: String? get() = data.customId.value
 
     /**
      * The url the button will link to. Present if this button is a link button.
      */
-    val url: String? get() = data.url.value
+    public val url: String? get() = data.url.value
 
     /**
      * Whether this button can be clicked.
      */
-    val disabled: Boolean get() = data.disabled.discordBoolean
+    public val disabled: Boolean get() = data.disabled.discordBoolean
 
     override fun toString(): String = "ButtonComponent(data=$data)"
 

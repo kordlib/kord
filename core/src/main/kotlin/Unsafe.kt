@@ -26,77 +26,77 @@ import dev.kord.rest.service.InteractionService
 @KordUnsafe
 @KordExperimental
 @Suppress("EXPERIMENTAL_API_USAGE")
-class Unsafe(private val kord: Kord) {
+public class Unsafe(private val kord: Kord) {
 
-    fun message(channelId: Snowflake, messageId: Snowflake): MessageBehavior =
+    public fun message(channelId: Snowflake, messageId: Snowflake): MessageBehavior =
         MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
 
-    fun channel(id: Snowflake): ChannelBehavior =
+    public fun channel(id: Snowflake): ChannelBehavior =
         ChannelBehavior(id, kord)
 
-    fun messageChannel(id: Snowflake): MessageChannelBehavior =
+    public fun messageChannel(id: Snowflake): MessageChannelBehavior =
         MessageChannelBehavior(id, kord)
 
-    fun topGuildChannel(guildId: Snowflake, id: Snowflake): TopGuildChannelBehavior =
+    public fun topGuildChannel(guildId: Snowflake, id: Snowflake): TopGuildChannelBehavior =
         TopGuildChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun topGuildMessageChannel(guildId: Snowflake, id: Snowflake): TopGuildMessageChannelBehavior =
+    public fun topGuildMessageChannel(guildId: Snowflake, id: Snowflake): TopGuildMessageChannelBehavior =
         TopGuildMessageChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun guildChannel(guildId: Snowflake, id: Snowflake): GuildChannelBehavior =
+    public fun guildChannel(guildId: Snowflake, id: Snowflake): GuildChannelBehavior =
         GuildChannelBehavior(guildId, id, kord)
 
-    fun guildMessageChannel(guildId: Snowflake, id: Snowflake): GuildMessageChannelBehavior =
+    public fun guildMessageChannel(guildId: Snowflake, id: Snowflake): GuildMessageChannelBehavior =
         GuildMessageChannelBehavior(guildId, id, kord)
 
-    fun newsChannel(guildId: Snowflake, id: Snowflake): NewsChannelBehavior =
+    public fun newsChannel(guildId: Snowflake, id: Snowflake): NewsChannelBehavior =
         NewsChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun textChannel(guildId: Snowflake, id: Snowflake): TextChannelBehavior =
+    public fun textChannel(guildId: Snowflake, id: Snowflake): TextChannelBehavior =
         TextChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun voiceChannel(guildId: Snowflake, id: Snowflake): VoiceChannelBehavior =
+    public fun voiceChannel(guildId: Snowflake, id: Snowflake): VoiceChannelBehavior =
         VoiceChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun storeChannel(guildId: Snowflake, id: Snowflake): StoreChannelBehavior =
+    public fun storeChannel(guildId: Snowflake, id: Snowflake): StoreChannelBehavior =
         StoreChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun publicThreadParent(guildId: Snowflake, id: Snowflake): ThreadParentChannelBehavior =
+    public fun publicThreadParent(guildId: Snowflake, id: Snowflake): ThreadParentChannelBehavior =
         ThreadParentChannelBehavior(guildId, id, kord)
 
-    fun privateThreadParent(guildId: Snowflake, id: Snowflake): PrivateThreadParentChannelBehavior =
+    public fun privateThreadParent(guildId: Snowflake, id: Snowflake): PrivateThreadParentChannelBehavior =
         PrivateThreadParentChannelBehavior(guildId, id, kord)
 
-    fun thread(guildId: Snowflake, parentId: Snowflake, id: Snowflake): ThreadChannelBehavior =
+    public fun thread(guildId: Snowflake, parentId: Snowflake, id: Snowflake): ThreadChannelBehavior =
         ThreadChannelBehavior(guildId, parentId, id, kord)
 
 
-    fun guild(id: Snowflake): GuildBehavior =
+    public fun guild(id: Snowflake): GuildBehavior =
         GuildBehavior(id, kord)
 
-    fun guildEmoji(guildId: Snowflake, id: Snowflake, kord: Kord): GuildEmojiBehavior =
+    public fun guildEmoji(guildId: Snowflake, id: Snowflake, kord: Kord): GuildEmojiBehavior =
         GuildEmojiBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun role(guildId: Snowflake, id: Snowflake): RoleBehavior =
+    public fun role(guildId: Snowflake, id: Snowflake): RoleBehavior =
         RoleBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun user(id: Snowflake): UserBehavior =
+    public fun user(id: Snowflake): UserBehavior =
         UserBehavior(id, kord)
 
-    fun threadMember(id: Snowflake, threadId: Snowflake) =
+    public fun threadMember(id: Snowflake, threadId: Snowflake): ThreadMemberBehavior =
         ThreadMemberBehavior(id, threadId, kord)
 
-    fun member(guildId: Snowflake, id: Snowflake): MemberBehavior =
+    public fun member(guildId: Snowflake, id: Snowflake): MemberBehavior =
         MemberBehavior(guildId = guildId, id = id, kord = kord)
 
-    fun webhook(id: Snowflake): WebhookBehavior =
+    public fun webhook(id: Snowflake): WebhookBehavior =
         WebhookBehavior(id, kord)
 
-    fun stageInstance(id: Snowflake, channelId: Snowflake): StageInstanceBehavior = StageInstanceBehavior(
+    public fun stageInstance(id: Snowflake, channelId: Snowflake): StageInstanceBehavior = StageInstanceBehavior(
         id, channelId, kord, kord.defaultSupplier
     )
 
-    fun applicationCommandInteraction(
+    public fun applicationCommandInteraction(
         id: Snowflake,
         channelId: Snowflake,
         token: String,
@@ -106,7 +106,7 @@ class Unsafe(private val kord: Kord) {
     }
 
 
-    fun globalApplicationCommand(
+    public fun globalApplicationCommand(
         applicationId: Snowflake,
         id: Snowflake
     ): GlobalApplicationCommandBehavior {
@@ -114,7 +114,7 @@ class Unsafe(private val kord: Kord) {
     }
 
 
-    fun globalApplicationCommand(
+    public fun globalApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         id: Snowflake
@@ -127,7 +127,7 @@ class Unsafe(private val kord: Kord) {
         return "Unsafe"
     }
 
-    fun guildApplicationCommand(
+    public fun guildApplicationCommand(
         guildId: Snowflake,
         applicationId: Snowflake,
         commandId: Snowflake,
@@ -135,7 +135,7 @@ class Unsafe(private val kord: Kord) {
     ): GuildApplicationCommandBehavior =
         GuildApplicationCommandBehavior(guildId, applicationId, commandId, service)
 
-    fun globalApplicationCommand(
+    public fun globalApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
         service: InteractionService = kord.rest.interaction
@@ -146,7 +146,7 @@ class Unsafe(private val kord: Kord) {
      * Creates a ComponentInteractionBehavior with the given [id], [channelId],
      * [token] and [applicationId].
      */
-    fun componentInteraction(
+    public fun componentInteraction(
         id: Snowflake,
         channelId: Snowflake,
         token: String,

@@ -3,7 +3,6 @@ package dev.kord.core.entity.channel
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.StoreChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
@@ -13,7 +12,7 @@ import java.util.*
 /**
  * An instance of a Discord Store Channel associated to a guild.
  */
-data class StoreChannel(
+public data class StoreChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
