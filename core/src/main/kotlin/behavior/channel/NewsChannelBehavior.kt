@@ -11,6 +11,7 @@ import dev.kord.core.behavior.channel.threads.unsafeStartPublicThreadWithMessage
 import dev.kord.core.behavior.channel.threads.unsafeStartThread
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.NewsChannel
 import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.core.exception.EntityNotFoundException
@@ -52,6 +53,23 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
      * @throws [RequestException] if something went wrong during the request.
      */
     override suspend fun asChannelOrNull(): NewsChannel? = super.asChannelOrNull() as? NewsChannel
+
+    /**
+     * Retrieve the [NewsChannel] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): NewsChannel = super.fetchChannel() as NewsChannel
+
+
+    /**
+     * Retrieve the [NewsChannel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [NewsChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): NewsChannel? = super.fetchChannelOrNull() as? NewsChannel
 
 
     /**

@@ -27,6 +27,10 @@ data class Role(
 
     val hoisted: Boolean get() = data.hoisted
 
+    val icon: Icon? get() = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
+
+    val unicodeEmoji: String? = data.unicodeEmoji.value
+
     val managed: Boolean get() = data.managed
 
     val mentionable: Boolean get() = data.mentionable
@@ -36,6 +40,10 @@ data class Role(
     val permissions: Permissions get() = data.permissions
 
     val rawPosition: Int get() = data.position
+
+    override suspend fun asRole(): Role = this
+
+    override suspend fun asRoleOrNull(): Role = this
 
     /**
      * The tags of this role, if present.

@@ -13,8 +13,8 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.*
-import kotlinx.datetime.toInstant
 import kotlinx.datetime.Instant
+import kotlinx.datetime.toInstant
 import java.util.*
 
 /**
@@ -34,6 +34,12 @@ class Member(
      * The name as shown in the discord client, prioritizing the [nickname] over the [use].
      */
     val displayName: String get() = nickname ?: username
+
+    /**
+     * The members guild avatar as [Icon] object
+     */
+    val memberAvatar: Icon?
+        get() = memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, data.id, it, kord) }
 
     /**
      * When the user joined this [guild].
@@ -110,6 +116,18 @@ class Member(
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Member =
         Member(memberData, data, kord, strategy.supply(kord))
+
+    override suspend fun asUser(): User = this
+
+    override suspend fun asUserOrNull(): User = this
+
+    override suspend fun asMember(guildId: Snowflake): Member = this
+
+    override suspend fun asMember(): Member = this
+
+    override suspend fun asMemberOrNull(guildId: Snowflake): Member = this
+
+    override suspend fun asMemberOrNull(): Member = this
 
 
     override fun hashCode(): Int = Objects.hash(id, guildId)

@@ -2,7 +2,6 @@ package dev.kord.core.gateway.handler
 
 import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
-import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.User
@@ -10,50 +9,54 @@ import dev.kord.core.event.gateway.ConnectEvent
 import dev.kord.core.event.gateway.DisconnectEvent
 import dev.kord.core.event.gateway.ReadyEvent
 import dev.kord.core.event.gateway.ResumedEvent
-import dev.kord.core.gateway.MasterGateway
 import dev.kord.gateway.*
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlin.coroutines.CoroutineContext
 import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class LifeCycleEventHandler(
-    kord: Kord,
-    gateway: MasterGateway,
-    cache: DataCache,
-    coreFlow: MutableSharedFlow<CoreEvent>
-) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
+    cache: DataCache
+) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int) = when (event) {
-        is Ready -> handle(event, shard)
-        is Resumed -> coreFlow.emit(ResumedEvent(kord, shard))
-        Reconnect -> coreFlow.emit(ConnectEvent(kord, shard))
-        is Close -> when (event) {
-            Close.Detach -> coreFlow.emit(DisconnectEvent.DetachEvent(kord, shard))
-            Close.UserClose -> coreFlow.emit(DisconnectEvent.UserCloseEvent(kord, shard))
-            Close.Timeout -> coreFlow.emit(DisconnectEvent.TimeoutEvent(kord, shard))
-            is Close.DiscordClose -> coreFlow.emit(
-                DisconnectEvent.DiscordCloseEvent(
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? =
+        when (event) {
+            is Ready -> handle(event, shard, kord, context)
+            is Resumed -> ResumedEvent(kord, shard, context)
+            Reconnect -> ConnectEvent(kord, shard, context)
+            is Close -> when (event) {
+                Close.Detach -> DisconnectEvent.DetachEvent(kord, shard, context)
+                Close.UserClose -> DisconnectEvent.UserCloseEvent(kord, shard, context)
+                Close.Timeout -> DisconnectEvent.TimeoutEvent(kord, shard, context)
+                is Close.DiscordClose -> DisconnectEvent.DiscordCloseEvent(
                     kord,
                     shard,
                     event.closeCode,
-                    event.recoverable
+                    event.recoverable,
+                    context
                 )
-            )
-            Close.Reconnecting -> coreFlow.emit(DisconnectEvent.ReconnectingEvent(kord, shard))
-            Close.ZombieConnection -> coreFlow.emit(DisconnectEvent.ZombieConnectionEvent(kord, shard))
-            Close.RetryLimitReached -> coreFlow.emit(DisconnectEvent.RetryLimitReachedEvent(kord, shard))
-            Close.SessionReset -> coreFlow.emit(DisconnectEvent.SessionReset(kord, shard))
+                Close.Reconnecting -> DisconnectEvent.ReconnectingEvent(kord, shard, context)
+                Close.ZombieConnection -> DisconnectEvent.ZombieConnectionEvent(kord, shard, context)
+                Close.RetryLimitReached -> DisconnectEvent.RetryLimitReachedEvent(kord, shard, context)
+                Close.SessionReset -> DisconnectEvent.SessionReset(kord, shard, context)
+            }
+            else -> null
         }
 
-        else -> Unit
-    }
+    private suspend fun handle(event: Ready, shard: Int, kord: Kord, context: CoroutineContext): ReadyEvent =
+        with(event.data) {
+            val guilds = guilds.map { it.id }.toSet()
+            val self = UserData.from(event.data.user)
 
-    private suspend fun handle(event: Ready, shard: Int) = with(event.data) {
-        val guilds = guilds.map { it.id }.toSet()
-        val self = UserData.from(event.data.user)
+            cache.put(self)
 
-        cache.put(self)
-
-        coreFlow.emit(ReadyEvent(event.data.version, guilds, User(self, kord), sessionId, kord, shard))
-    }
+            return ReadyEvent(
+                event.data.version,
+                guilds,
+                User(self, kord),
+                sessionId,
+                kord,
+                shard,
+                coroutineContext = context
+            )
+        }
 }

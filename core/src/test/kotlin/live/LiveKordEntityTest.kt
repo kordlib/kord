@@ -25,6 +25,7 @@ import kotlin.test.*
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
 @Timeout(value = 5, unit = TimeUnit.SECONDS)
+@Disabled
 class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityMock>() {
 
     companion object {
@@ -87,7 +88,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
     @Test
     fun `Entity can retrieve the event causing the completion`() {
-        countdownContext(1) {
+        countdownContext(1, 10000) {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
 
             live.coroutineContext.job.invokeOnCompletion {

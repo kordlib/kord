@@ -5,6 +5,7 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.InviteData
 import dev.kord.core.entity.*
+import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -65,6 +66,23 @@ interface TopGuildChannelBehavior : GuildChannelBehavior {
      * @throws [RequestException] if something went wrong during the request.
      */
     override suspend fun asChannelOrNull(): TopGuildChannel? = super.asChannelOrNull() as? TopGuildChannel
+
+    /**
+     * Retrieve the [TopGuildChannel] associated with this behaviour from the provided [EntitySupplier]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): TopGuildChannel = super.fetchChannel() as TopGuildChannel
+
+
+    /**
+     * Retrieve the [TopGuildChannel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [TopGuildChannel] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): TopGuildChannel? = super.fetchChannelOrNull() as? TopGuildChannel
 
     /**
      * Requests to add or replace a [PermissionOverwrite] to this entity.

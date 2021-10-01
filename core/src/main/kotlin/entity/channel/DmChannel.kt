@@ -49,6 +49,10 @@ data class DmChannel(
             .map { supplier.getUserOrNull(it) }
             .filterNotNull()
 
+    override suspend fun asChannel(): MessageChannel = this
+
+    override suspend fun asChannelOrNull(): MessageChannel = this
+
     /**
      * returns a new [DmChannel] with the given [strategy].
      */

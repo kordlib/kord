@@ -47,6 +47,8 @@ class Message(
     override val channelId: Snowflake
         get() = data.channelId
 
+    override suspend fun asMessageOrNull(): Message = this
+
     /**
      * The files attached to this message.
      */

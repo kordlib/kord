@@ -20,6 +20,7 @@ import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
 import dev.kord.core.gateway.MasterGateway
+import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.gateway.start
 import dev.kord.core.supplier.*
@@ -53,8 +54,12 @@ class Kord(
     val selfId: Snowflake,
     private val eventFlow: MutableSharedFlow<Event>,
     dispatcher: CoroutineDispatcher,
+    interceptorBuilder: () -> GatewayEventInterceptor = {
+        DefaultGatewayEventInterceptor(cache)
+    }
 ) : CoroutineScope {
-    private val interceptor = GatewayEventInterceptor(this, gateway, cache, eventFlow)
+
+    private val interceptor = interceptorBuilder.invoke()
 
     /**
      * Global commands made by the bot under this Kord instance.
@@ -104,7 +109,13 @@ class Kord(
         get() = defaultSupplier.guilds
 
     init {
-        launch { interceptor.start() }
+        gateway.events
+            .buffer(kotlinx.coroutines.channels.Channel.UNLIMITED)
+            .onEach { event ->
+                val coreEvent = interceptor.handle(event, this)
+                coreEvent?.let { eventFlow.emit(it) }
+            }
+            .launchIn(this)
     }
 
     /**
@@ -595,7 +606,7 @@ suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Ko
  */
 inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline consumer: suspend T.() -> Unit): Job =
     events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
-        .onEach {
-            scope.launch { runCatching { consumer(it) }.onFailure { kordLogger.catching(it) } }
+        .onEach { event ->
+            scope.launch(event.coroutineContext) { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
         }
         .launchIn(scope)

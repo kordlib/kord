@@ -27,3 +27,7 @@ data class ThreadMemberData(
             }
     }
 }
+
+fun DiscordThreadMember.toData(threadId: Snowflake?): ThreadMemberData {
+    return ThreadMemberData.from(this, threadId)
+}
