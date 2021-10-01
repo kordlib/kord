@@ -25,6 +25,7 @@ import kotlin.test.*
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
 @Timeout(value = 5, unit = TimeUnit.SECONDS)
+@Disabled
 class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityMock>() {
 
     companion object {
