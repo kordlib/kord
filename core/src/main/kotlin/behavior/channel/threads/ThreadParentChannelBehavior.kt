@@ -4,6 +4,8 @@ import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
@@ -123,7 +125,7 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
 }
 
 /**
- * starts a thread in the current thread parent based on [type] using given [name] and archived after [archiveDuration].
+ * starts a thread in the current thread parent based on [type] using given [name], archived after [archiveDuration] and with [invitable] status.
  * [type] should match the parent types.
  * @throws [RequestException] if something went wrong during the request.
  */
@@ -131,11 +133,12 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
     name: String,
     archiveDuration: ArchiveDuration = ArchiveDuration.Day,
     type: ChannelType,
-    reason: String? = null
+    reason: String? = null,
+    invitable: OptionalBoolean = OptionalBoolean.Missing
 ): ThreadChannel {
 
     val response =
-        kord.rest.channel.startThread(id, StartThreadRequest(name, archiveDuration, Optional.Value(type)), reason)
+        kord.rest.channel.startThread(id, StartThreadRequest(name, archiveDuration, Optional.Value(type), invitable), reason)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel

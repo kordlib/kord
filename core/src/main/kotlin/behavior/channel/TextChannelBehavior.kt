@@ -3,6 +3,7 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
@@ -69,18 +70,20 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
     suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
+        reason: String? = null,
+        invitable: OptionalBoolean = OptionalBoolean.Missing
 
     ): TextChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PublicGuildThread, reason) as TextChannelThread
+        return unsafeStartThread(name, archiveDuration, ChannelType.PublicGuildThread, reason, invitable) as TextChannelThread
     }
 
     suspend fun startPrivateThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
+        reason: String? = null,
+        invitable: OptionalBoolean = OptionalBoolean.Missing
     ): TextChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PrivateThread, reason) as TextChannelThread
+        return unsafeStartThread(name, archiveDuration, ChannelType.PrivateThread, reason, invitable) as TextChannelThread
     }
 
     suspend fun startPublicThreadWithMessage(
