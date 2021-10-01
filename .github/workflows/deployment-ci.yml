@@ -32,7 +32,7 @@ jobs:
         uses: gradle/gradle-build-action@v1
 
         with:
-          arguments:  --stacktrace --info build -x apiCheck build -x apiCheck
+          arguments: --stacktrace --info build -x apiCheck build -x apiCheck
           distributions-cache-enabled: true
           dependencies-cache-enabled: true
           configuration-cache-enabled: true
@@ -70,7 +70,7 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v1
         with:
-          arguments: build
+          arguments: --stacktrace --info build -x apiCheck
           distributions-cache-enabled: true
           dependencies-cache-enabled: true
           configuration-cache-enabled: true
