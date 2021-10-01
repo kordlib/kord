@@ -5,7 +5,6 @@ import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.rest.Image
 import dev.kord.rest.route.CdnUrl
-import dev.kord.rest.route.DiscordCDN
 import dev.kord.rest.route.DiscordCdn
 
 sealed class Icon(val animated: Boolean, val cdnUrl: CdnUrl, override val kord: Kord) : KordObject {
@@ -54,6 +53,6 @@ sealed class Icon(val animated: Boolean, val cdnUrl: CdnUrl, override val kord: 
         Icon(avatarHash.startsWith("a_"), DiscordCdn.memberAvatar(guildId, userId, avatarHash), kord)
 
     class RoleIcon(roleId: Snowflake, iconHash: String, kord: Kord) :
-        Icon(iconHash.startsWith("a_"), DiscordCDN.roleIcon(roleId, iconHash), kord)
+        Icon(iconHash.startsWith("a_"), DiscordCdn.roleIcon(roleId, iconHash), kord)
 
 }
