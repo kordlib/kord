@@ -169,6 +169,7 @@ sealed class Choice<out T> {
             encoder.encodeStructure(descriptor) {
                 encodeStringElement(descriptor, 0, value.name)
                 if (value is IntChoice) encodeIntElement(descriptor, 1, value.value)
+                if (value is NumberChoice) encodeDoubleElement(descriptor, 1, value.value)
                 else encodeStringElement(descriptor, 1, value.value.toString())
             }
         }
