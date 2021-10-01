@@ -32,7 +32,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
         with:
-          arguments: --stacktrace --info build -x apiCheck build -x apiCheck
+          arguments: --stacktrace --info build -x apiCheck
 
 
   release:
