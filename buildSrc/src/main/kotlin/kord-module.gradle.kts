@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.Base64
 
 plugins {
+    java
     kotlin("jvm")
     kotlin("plugin.serialization")
     id("org.jetbrains.dokka")
@@ -150,5 +151,11 @@ tasks {
             }
             sign(publishing.publications[Library.name])
         }
+    }
+
+    java {
+        // We don't use java, but this prevents a Gradle warning,
+        // telling you to target the same java version for java and kt
+        sourceCompatibility = JavaVersion.VERSION_1_8
     }
 }

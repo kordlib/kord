@@ -9,12 +9,14 @@ import dev.kord.core.entity.User
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlin.coroutines.CoroutineContext
 
 class BanRemoveEvent(
     val user: User,
     val guildId: Snowflake,
     override val shard: Int,
-    override val supplier: EntitySupplier = user.kord.defaultSupplier
+    override val supplier: EntitySupplier = user.kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = user.kord.coroutineContext,
 ) : Event, Strategizable {
 
     override val kord: Kord get() = user.kord

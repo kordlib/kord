@@ -13,13 +13,15 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import kotlin.coroutines.CoroutineContext
 
 class WebhookUpdateEvent(
     val guildId: Snowflake,
     val channelId: Snowflake,
     override val kord: Kord,
     override val shard: Int,
-    override val supplier: EntitySupplier = kord.defaultSupplier
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
     val channel: TopGuildMessageChannelBehavior get() = TopGuildMessageChannelBehavior(guildId, channelId, kord)

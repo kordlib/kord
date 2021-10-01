@@ -10,6 +10,7 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlin.coroutines.CoroutineContext
 
 class MessageUpdateEvent(
     val messageId: Snowflake,
@@ -18,7 +19,8 @@ class MessageUpdateEvent(
     val old: Message?,
     override val kord: Kord,
     override val shard: Int,
-    override val supplier: EntitySupplier = kord.defaultSupplier
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
     /**

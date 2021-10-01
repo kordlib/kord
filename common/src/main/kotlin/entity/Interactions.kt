@@ -168,8 +168,11 @@ sealed class Choice<out T> {
         override fun serialize(encoder: Encoder, value: Choice<*>) {
             encoder.encodeStructure(descriptor) {
                 encodeStringElement(descriptor, 0, value.name)
-                if (value is IntChoice) encodeIntElement(descriptor, 1, value.value)
-                else encodeStringElement(descriptor, 1, value.value.toString())
+                when (value) {
+                    is IntChoice -> encodeIntElement(descriptor, 1, value.value)
+                    is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
+                    else -> encodeStringElement(descriptor, 1, value.value.toString())
+                }
             }
         }
     }

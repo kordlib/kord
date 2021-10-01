@@ -2,6 +2,7 @@ package live
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.Optional
 import dev.kord.core.cache.data.RoleData
 import dev.kord.core.entity.Role
 import dev.kord.core.event.guild.GuildDeleteEvent
@@ -15,6 +16,7 @@ import dev.kord.gateway.GuildRoleUpdate
 import equality.randomId
 import kotlinx.coroutines.job
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.Timeout
 import java.util.concurrent.TimeUnit
@@ -25,6 +27,7 @@ import kotlin.test.assertEquals
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
 @Timeout(value = 5, unit = TimeUnit.SECONDS)
+@Disabled
 class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
 
     private lateinit var roleId: Snowflake
@@ -46,6 +49,8 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                     name = "test",
                     color = 0,
                     hoisted = false,
+                    icon = Optional.Missing(),
+                    unicodeEmoji = Optional.Missing(),
                     position = 0,
                     permissions = Permissions(Permission.CreateInstantInvite),
                     managed = false,
@@ -72,6 +77,8 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                             name = "",
                             color = 0,
                             hoist = false,
+                            icon = Optional.Missing(),
+                            unicodeEmoji = Optional.Missing(),
                             position = 0,
                             permissions = Permissions(Permission.BanMembers),
                             managed = false,

@@ -6,9 +6,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
 interface Event : CoroutineScope {
-    override val coroutineContext: CoroutineContext
-        get() = kord.coroutineContext
-
     /**
      * The Gateway that spawned this event.
      */

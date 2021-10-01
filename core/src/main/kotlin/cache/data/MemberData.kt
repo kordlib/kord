@@ -17,27 +17,28 @@ data class MemberData(
     val roles: List<Snowflake>,
     val joinedAt: String,
     val premiumSince: Optional<String?> = Optional.Missing(),
-    val pending: OptionalBoolean = OptionalBoolean.Missing
+    val pending: OptionalBoolean = OptionalBoolean.Missing,
+    val avatar: Optional<String?> = Optional.Missing()
 ) {
 
     companion object {
         val description = description(MemberData::id)
 
         fun from(userId: Snowflake, guildId: Snowflake, entity: DiscordGuildMember) = with(entity) {
-            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
+            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince, avatar = avatar)
         }
 
 
         fun from(userId: Snowflake, guildId: Snowflake, entity: DiscordInteractionGuildMember) = with(entity) {
-            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
+            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince, avatar = avatar)
         }
 
         fun from(userId: Snowflake, entity: DiscordAddedGuildMember) = with(entity) {
-            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince)
+            MemberData(userId = userId, guildId = guildId, nick, roles, joinedAt, premiumSince, avatar = avatar)
         }
 
         fun from(entity: DiscordUpdatedGuildMember) = with(entity) {
-            MemberData(userId = user.id, guildId = guildId, nick, roles, joinedAt, premiumSince, pending)
+            MemberData(userId = user.id, guildId = guildId, nick, roles, joinedAt, premiumSince, pending, avatar = avatar)
         }
 
     }

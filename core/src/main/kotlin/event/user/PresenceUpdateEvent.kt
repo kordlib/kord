@@ -11,6 +11,7 @@ import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlin.coroutines.CoroutineContext
 
 class PresenceUpdateEvent(
     val oldUser: User?,
@@ -19,7 +20,8 @@ class PresenceUpdateEvent(
     val old: Presence?,
     val presence: Presence,
     override val shard: Int,
-    override val supplier: EntitySupplier = presence.kord.defaultSupplier
+    override val supplier: EntitySupplier = presence.kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = presence.kord.coroutineContext,
 ) : Event, Strategizable {
     override val kord: Kord get() = presence.kord
 
