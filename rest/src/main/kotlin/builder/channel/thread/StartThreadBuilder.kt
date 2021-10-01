@@ -2,15 +2,11 @@ package dev.kord.rest.builder.channel.thread
 
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
-import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
-import dev.kord.rest.json.request.ChannelModifyPatchRequest
 import dev.kord.rest.json.request.StartThreadRequest
-import dev.kord.rest.json.request.StartThreadWithMessageRequest
 
 class StartThreadBuilder(var name: String, var autoArchiveDuration: ArchiveDuration, var type: ChannelType) : AuditRequestBuilder<StartThreadRequest> {
     override var reason: String? = null

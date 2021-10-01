@@ -322,7 +322,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         name: String,
         archiveDuration: ArchiveDuration,
         type: ChannelType,
-        builder: StartThreadBuilder.() -> Unit
+        builder: StartThreadBuilder.() -> Unit = {}
     ): DiscordChannel {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val startBuilder = StartThreadBuilder(name, archiveDuration, type).apply(builder)

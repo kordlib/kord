@@ -18,6 +18,7 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -125,7 +126,7 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
 }
 
 /**
- * starts a thread in the current thread parent based on [type] using given [name], archived after [archiveDuration] and with [invitable] status.
+ * starts a thread in the current thread parent based on [type] using given [name] and archived after [archiveDuration].
  * [type] should match the parent types.
  * @throws [RequestException] if something went wrong during the request.
  */
@@ -133,12 +134,10 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
     name: String,
     archiveDuration: ArchiveDuration = ArchiveDuration.Day,
     type: ChannelType,
-    reason: String? = null,
-    invitable: OptionalBoolean = OptionalBoolean.Missing
+    builder: StartThreadBuilder.() -> Unit
 ): ThreadChannel {
-
     val response =
-        kord.rest.channel.startThread(id, StartThreadRequest(name, archiveDuration, Optional.Value(type), invitable), reason)
+        kord.rest.channel.startThread(id, name, archiveDuration, type, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel
