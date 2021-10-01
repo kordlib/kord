@@ -212,7 +212,7 @@ class RestServiceTest {
             denied = Permissions { +Permission.SendTTSMessages }
         }
 
-        channel.asChannel().permissionOverwrites.first().delete()
+        channel.fetchChannel().permissionOverwrites.first().delete()
     }
 
     @Test
