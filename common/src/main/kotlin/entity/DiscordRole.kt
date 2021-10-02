@@ -19,9 +19,9 @@ data class DiscordRole(
     val name: String,
     val color: Int,
     val hoist: Boolean,
-    val icon: Optional<String?>,
+    val icon: Optional<String?> = Optional.Missing(),
     @SerialName("unicode_emoji")
-    val unicodeEmoji: Optional<String?>,
+    val unicodeEmoji: Optional<String?> = Optional.Missing(),
     val position: Int,
     val permissions: Permissions,
     val managed: Boolean,
