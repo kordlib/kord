@@ -2,6 +2,7 @@ package dev.kord.core.event.interaction
 
 import dev.kord.core.Kord
 import dev.kord.core.entity.interaction.*
+import kotlin.coroutines.CoroutineContext
 
 
 sealed interface ComponentInteractionCreateEvent : InteractionCreateEvent {
