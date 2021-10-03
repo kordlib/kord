@@ -8,7 +8,7 @@ import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.StartThreadRequest
 
-class StartThreadBuilder(var name: String, var autoArchiveDuration: ArchiveDuration, var type: ChannelType) : AuditRequestBuilder<StartThreadRequest> {
+class StartThreadBuilder(var name: String, var autoArchiveDuration: ArchiveDuration, val type: ChannelType) : AuditRequestBuilder<StartThreadRequest> {
     override var reason: String? = null
 
     private var _invitable: OptionalBoolean = OptionalBoolean.Missing
