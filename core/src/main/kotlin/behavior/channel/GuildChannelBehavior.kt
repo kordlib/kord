@@ -4,31 +4,30 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.entity.*
-import dev.kord.core.entity.channel.Category
+import dev.kord.core.entity.Entity
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOf
-import dev.kord.core.supplier.getChannelOfOrNull
 import java.util.*
 
 /**
  * The behavior of a Discord channel associated to a [guild].
  */
-interface GuildChannelBehavior : ChannelBehavior, Strategizable {
+public interface GuildChannelBehavior : ChannelBehavior, Strategizable {
 
     /**
      * The id of the guild this channel is associated to.
      */
-    val guildId: Snowflake
+    public val guildId: Snowflake
 
     /**
      * The guild behavior this channel is associated to.
      */
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /**
      * Requests to get this behavior as a [TopGuildChannel].
@@ -70,7 +69,7 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the guild wasn't present.
      */
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
      * Requests to get this channel's [Guild],
@@ -78,7 +77,7 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
 
     override fun compareTo(other: Entity): Int {
@@ -100,7 +99,7 @@ interface GuildChannelBehavior : ChannelBehavior, Strategizable {
 
 }
 
-fun GuildChannelBehavior(
+public fun GuildChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,

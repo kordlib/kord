@@ -5,9 +5,9 @@ import dev.kord.core.entity.User
 import dev.kord.core.event.Event
 import kotlin.coroutines.CoroutineContext
 
-class UserUpdateEvent(
-    val old: User?,
-    val user: User,
+public class UserUpdateEvent(
+    public val old: User?,
+    public val user: User,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = user.kord.coroutineContext,
 ) : Event {

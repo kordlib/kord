@@ -8,7 +8,7 @@ import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class EmbedData(
+public data class EmbedData(
     val title: Optional<String> = Optional.Missing(),
     @Suppress("DEPRECATION")
     val type: Optional<EmbedType> = Optional.Missing(),
@@ -24,8 +24,8 @@ data class EmbedData(
     val author: Optional<EmbedAuthorData> = Optional.Missing(),
     val fields: Optional<List<EmbedFieldData>> = Optional.Missing(),
 ) {
-    companion object {
-        fun from(entity: DiscordEmbed) = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordEmbed): EmbedData = with(entity) {
             EmbedData(
                 title,
                 type,
@@ -46,93 +46,93 @@ data class EmbedData(
 }
 
 @Serializable
-data class EmbedFooterData(
+public data class EmbedFooterData(
     val text: String,
     val iconUrl: Optional<String> = Optional.Missing(),
     val proxyIconUrl: Optional<String> = Optional.Missing(),
 ) {
-    companion object {
-        fun from(entity: DiscordEmbed.Footer) = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordEmbed.Footer): EmbedFooterData = with(entity) {
             EmbedFooterData(text, iconUrl, proxyIconUrl)
         }
     }
 }
 
 @Serializable
-data class EmbedImageData(
+public data class EmbedImageData(
     val url: Optional<String> = Optional.Missing(),
     val proxyUrl: Optional<String> = Optional.Missing(),
     val height: OptionalInt = OptionalInt.Missing,
     val width: OptionalInt = OptionalInt.Missing,
 ) {
-    companion object {
-        fun from(entity: DiscordEmbed.Image) = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordEmbed.Image): EmbedImageData = with(entity) {
             EmbedImageData(url, proxyUrl, height, width)
         }
     }
 }
 
 @Serializable
-data class EmbedThumbnailData(
+public data class EmbedThumbnailData(
     val url: Optional<String> = Optional.Missing(),
     val proxyUrl: Optional<String> = Optional.Missing(),
     val height: OptionalInt = OptionalInt.Missing,
     val width: OptionalInt = OptionalInt.Missing,
 ) {
-    companion object {
-        fun from(entity: DiscordEmbed.Thumbnail) = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordEmbed.Thumbnail): EmbedThumbnailData = with(entity) {
             EmbedThumbnailData(url, proxyUrl, height, width)
         }
     }
 }
 
 @Serializable
-data class EmbedVideoData(
+public data class EmbedVideoData(
     val url: Optional<String> = Optional.Missing(),
     val height: OptionalInt = OptionalInt.Missing,
     val width: OptionalInt = OptionalInt.Missing,
 ) {
-    companion object {
-        fun from(entity: DiscordEmbed.Video) = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordEmbed.Video): EmbedVideoData = with(entity) {
             EmbedVideoData(url, height, width)
         }
     }
 }
 
 @Serializable
-data class EmbedProviderData(
+public data class EmbedProviderData(
     val name: Optional<String> = Optional.Missing(),
     val url: Optional<String?> = Optional.Missing(), //see https://github.com/kordlib/kord/issues/149
 ) {
-    companion object {
-        fun from(entity: DiscordEmbed.Provider) = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordEmbed.Provider): EmbedProviderData = with(entity) {
             EmbedProviderData(name, url)
         }
     }
 }
 
 @Serializable
-data class EmbedAuthorData(
+public data class EmbedAuthorData(
     val name: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
     val iconUrl: Optional<String> = Optional.Missing(),
     val proxyIconUrl: Optional<String> = Optional.Missing(),
 ) {
-    companion object {
-        fun from(entity: DiscordEmbed.Author) = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordEmbed.Author): EmbedAuthorData = with(entity) {
             EmbedAuthorData(name, url, iconUrl, proxyIconUrl)
         }
     }
 }
 
 @Serializable
-data class EmbedFieldData(
+public data class EmbedFieldData(
     val name: String,
     val value: String,
     val inline: OptionalBoolean = OptionalBoolean.Missing,
 ) {
-    companion object {
-        fun from(entity: DiscordEmbed.Field) = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordEmbed.Field): EmbedFieldData = with(entity) {
             EmbedFieldData(name, value, inline)
         }
     }

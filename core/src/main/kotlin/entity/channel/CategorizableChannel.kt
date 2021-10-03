@@ -14,18 +14,18 @@ import kotlin.contracts.contract
 /**
  * An instance of a Discord channel associated to a [category].
  */
-interface CategorizableChannel : TopGuildChannel {
+public interface CategorizableChannel : TopGuildChannel {
 
     /**
      * The id of the [category] this channel belongs to, if any.
      */
-    val categoryId: Snowflake?
+    public val categoryId: Snowflake?
         get() = data.parentId.value
 
     /**
      * The category behavior this channel belongs to, if any.
      */
-    val category: CategoryBehavior?
+    public val category: CategoryBehavior?
         get() = when (val categoryId = categoryId) {
             null -> null
             else -> CategoryBehavior(id = categoryId, guildId = guildId, kord = kord)
@@ -41,7 +41,7 @@ interface CategorizableChannel : TopGuildChannel {
  * @throws RestRequestException if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun CategorizableChannel.createInvite(builder: InviteCreateBuilder.() -> Unit = {}): Invite {
+public suspend inline fun CategorizableChannel.createInvite(builder: InviteCreateBuilder.() -> Unit = {}): Invite {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.createInvite(id, builder)
     val data = InviteData.from(response)

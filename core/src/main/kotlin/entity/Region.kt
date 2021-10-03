@@ -5,17 +5,17 @@ import dev.kord.core.KordObject
 import dev.kord.core.cache.data.RegionData
 import java.util.*
 
-class Region(val data: RegionData, override val kord: Kord) : KordObject {
-    val id: String
+public class Region(public val data: RegionData, override val kord: Kord) : KordObject {
+    public val id: String
         get() = data.id
 
-    val isCustom: Boolean get() = data.custom
+    public val isCustom: Boolean get() = data.custom
 
-    val isDeprecated: Boolean get() = data.deprecated
+    public val isDeprecated: Boolean get() = data.deprecated
 
-    val name: String get() = data.name
+    public val name: String get() = data.name
 
-    val isOptimal: Boolean get() = data.optimal
+    public val isOptimal: Boolean get() = data.optimal
 
     override fun hashCode(): Int = Objects.hash(id)
 

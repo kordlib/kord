@@ -6,17 +6,16 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
-
-class ResolvedChannel(
+public class ResolvedChannel(
     override val data: ChannelData,
     override val kord: Kord,
-    val strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
+    public val strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ) : Channel {
 
 
-    val name: String get() = data.name.value!!
+    public val name: String get() = data.name.value!!
 
-    val permissions: Permissions get() = data.permissions.value!!
+    public val permissions: Permissions get() = data.permissions.value!!
 
     override suspend fun asChannel(): Channel = this
 

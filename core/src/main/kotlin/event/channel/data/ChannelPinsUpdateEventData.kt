@@ -8,13 +8,13 @@ import dev.kord.gateway.ChannelPinsUpdate
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ChannelPinsUpdateEventData(
+public data class ChannelPinsUpdateEventData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val channelId: Snowflake,
     val lastPinTimestamp: Optional<String?> = Optional.Missing()
 ) {
-    companion object {
-        fun from(entity: DiscordPinsUpdateData): ChannelPinsUpdateEventData = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordPinsUpdateData): ChannelPinsUpdateEventData = with(entity) {
             ChannelPinsUpdateEventData(guildId, channelId, lastPinTimestamp)
         }
     }

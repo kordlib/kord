@@ -1,6 +1,5 @@
 package dev.kord.core.entity.component
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ComponentType
 import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.entity.Message
@@ -9,7 +8,7 @@ import dev.kord.core.entity.Message
  * An interactive element inside a [Message].
  */
 
-sealed interface Component {
+public sealed interface Component {
 
     /**
      * The type of component.
@@ -18,9 +17,9 @@ sealed interface Component {
      * @see SelectMenuComponent
      * @see UnknownComponent
      */
-    val type: ComponentType get() = data.type
+    public val type: ComponentType get() = data.type
 
-    val data: ComponentData
+    public val data: ComponentData
 }
 
 /**
@@ -31,7 +30,7 @@ sealed interface Component {
  * @see UnknownComponent
  */
 
-fun Component(data: ComponentData): Component = when (data.type) {
+public fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.ActionRow -> ActionRowComponent(data)
     ComponentType.Button -> ButtonComponent(data)
     ComponentType.SelectMenu -> SelectMenuComponent(data)

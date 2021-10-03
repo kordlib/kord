@@ -18,25 +18,24 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 
-class DeletedThreadChannel(
-    val data: ChannelData,
-    val kord: Kord,
+public class DeletedThreadChannel(
+    public val data: ChannelData,
+    public val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-)  : Strategizable {
+) : Strategizable {
 
-    val id: Snowflake
+    public val id: Snowflake
         get() = data.id
 
-    val type: ChannelType get() = data.type
+    public val type: ChannelType get() = data.type
 
-    val guildId: Snowflake
-        get() =  data.guildId.value!!
+    public val guildId: Snowflake get() = data.guildId.value!!
 
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    val parentId: Snowflake get() = data.parentId!!.value!!
+    public val parentId: Snowflake get() = data.parentId!!.value!!
 
-    val parent: ThreadParentChannelBehavior get() = ThreadParentChannelBehavior(guildId, id, kord)
+    public val parent: ThreadParentChannelBehavior get() = ThreadParentChannelBehavior(guildId, id, kord)
 
     /**
      * Requests to get this channel's [Guild].
@@ -44,7 +43,7 @@ class DeletedThreadChannel(
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the guild wasn't present.
      */
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
      * Requests to get this channel's [Guild],
@@ -52,7 +51,7 @@ class DeletedThreadChannel(
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
 
     /**
@@ -61,7 +60,7 @@ class DeletedThreadChannel(
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the thread parent wasn't present.
      */
-    suspend fun getParent(): ThreadParentChannel {
+    public suspend fun getParent(): ThreadParentChannel {
         return supplier.getChannelOf(parentId)
     }
 
@@ -71,14 +70,11 @@ class DeletedThreadChannel(
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getParentOrNull(): ThreadParentChannel? {
+    public suspend fun getParentOrNull(): ThreadParentChannel? {
         return supplier.getChannelOfOrNull(parentId)
     }
-
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): DeletedThreadChannel {
         return DeletedThreadChannel(data, kord, strategy.supply(kord))
     }
-
-
 }

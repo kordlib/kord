@@ -28,8 +28,8 @@ import kotlin.time.Duration
 /**
  * Sent when a new invite to a channel is created.
  */
-class InviteCreateEvent(
-    val data: InviteCreateData,
+public class InviteCreateEvent(
+    public val data: InviteCreateData,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
@@ -39,47 +39,47 @@ class InviteCreateEvent(
     /**
      * The [TopGuildChannel] the invite is for.
      */
-    val channelId: Snowflake get() = data.channelId
+    public val channelId: Snowflake get() = data.channelId
 
     /**
      * The behavior of the [TopGuildChannel] the invite is for.
      */
-    val channel: ChannelBehavior get() = ChannelBehavior(id = channelId, kord = kord)
+    public val channel: ChannelBehavior get() = ChannelBehavior(id = channelId, kord = kord)
 
     /**
      * The unique invite code.
      */
-    val code: String get() = data.code
+    public val code: String get() = data.code
 
     /**
      * The time at which the invite was created.
      */
-    val createdAt: Instant get() = data.createdAt.toInstant()
+    public val createdAt: Instant get() = data.createdAt.toInstant()
 
     /**
      * The [Guild] of the invite.
      */
-    val guildId: Snowflake? get() = data.guildId.value
+    public val guildId: Snowflake? get() = data.guildId.value
 
     /**
      * The behavior of the [Guild] of the invite.
      */
-    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(id = it, kord = kord) }
+    public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(id = it, kord = kord) }
 
     /**
      * The [User] that created the invite, if present.
      */
-    val inviterId: Snowflake? get() = data.inviterId.value
+    public val inviterId: Snowflake? get() = data.inviterId.value
 
     /**
      * The behavior of the [User] that created the invite, if present.
      */
-    val inviter: UserBehavior? get() = inviterId?.let { UserBehavior(id = it, kord = kord) }
+    public val inviter: UserBehavior? get() = inviterId?.let { UserBehavior(id = it, kord = kord) }
 
     /**
      * The behavior of the [Member] that created the invite.
      */
-    val inviterMember: MemberBehavior?
+    public val inviterMember: MemberBehavior?
         get() {
             return MemberBehavior(guildId = guildId ?: return null, id = inviterId ?: return null, kord = kord)
         }
@@ -87,22 +87,22 @@ class InviteCreateEvent(
     /**
      * How long the invite is valid for (in seconds).
      */
-    val maxAge: Duration get() = Duration.seconds(data.maxAge)
+    public val maxAge: Duration get() = Duration.seconds(data.maxAge)
 
     /**
      * The maximum number of times the invite can be used.
      */
-    val maxUses: Int get() = data.maxUses
+    public val maxUses: Int get() = data.maxUses
 
     /**
      * Whether or not the invite is temporary (invited users will be kicked on disconnect unless they're assigned a role).
      */
-    val isTemporary: Boolean get() = data.temporary
+    public val isTemporary: Boolean get() = data.temporary
 
     /**
      * How many times the invite has been used (always will be 0).
      */
-    val uses: Int get() = data.uses
+    public val uses: Int get() = data.uses
 
     /**
      * Requests to get the [TopGuildChannel] this invite is for.
@@ -110,7 +110,7 @@ class InviteCreateEvent(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
-    suspend fun getChannel(): TopGuildChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): TopGuildChannel = supplier.getChannelOf(channelId)
 
     /**
      * Requests to get the [Guild] of the invite,
@@ -118,7 +118,7 @@ class InviteCreateEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getChannelOrNUll(): TopGuildChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNUll(): TopGuildChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
      * Requests to get the [Guild] of the invite.
@@ -128,7 +128,7 @@ class InviteCreateEvent(
      */
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = DeprecationLevel.ERROR)
-    suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuild(it) }
+    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuild(it) }
 
     /**
      * Requests to get the [Guild] of the invite.
@@ -136,7 +136,7 @@ class InviteCreateEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     /**
      * Requests to get the [User] that created the invite, or null if no inviter created this invite.
@@ -146,7 +146,7 @@ class InviteCreateEvent(
      */
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Use getInviterOrNull instead.", ReplaceWith("getInviterOrNull()"), level = DeprecationLevel.ERROR)
-    suspend fun getInviter(): User? = inviterId?.let { supplier.getUser(it) }
+    public suspend fun getInviter(): User? = inviterId?.let { supplier.getUser(it) }
 
     /**
      * Requests to get the [User] that created the invite,
@@ -154,7 +154,7 @@ class InviteCreateEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getInviterOrNull(): User? = inviterId?.let { supplier.getUserOrNull(it) }
+    public suspend fun getInviterOrNull(): User? = inviterId?.let { supplier.getUserOrNull(it) }
 
     /**
      * Requests to get the [User] that created the invite as a [Member] of the [Guild][getGuild].
@@ -168,7 +168,7 @@ class InviteCreateEvent(
         ReplaceWith("getInviterAsMemberOrNull()"),
         level = DeprecationLevel.ERROR
     )
-    suspend fun getInviterAsMember(): Member? {
+    public suspend fun getInviterAsMember(): Member? {
         return supplier.getMember(guildId = guildId ?: return null, userId = inviterId ?: return null)
     }
 
@@ -178,7 +178,7 @@ class InviteCreateEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getInviterAsMemberOrNull(): Member? {
+    public suspend fun getInviterAsMemberOrNull(): Member? {
         return supplier.getMemberOrNull(guildId = guildId ?: return null, userId = inviterId ?: return null)
     }
 

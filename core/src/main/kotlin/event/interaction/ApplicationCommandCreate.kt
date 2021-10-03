@@ -6,11 +6,11 @@ import dev.kord.core.event.Event
 import kotlin.coroutines.CoroutineContext
 
 
-sealed interface ApplicationCommandCreateEvent : Event {
-    val command: GuildApplicationCommand
+public sealed interface ApplicationCommandCreateEvent : Event {
+    public val command: GuildApplicationCommand
 }
 
-class ChatInputCommandCreateEvent(
+public class ChatInputCommandCreateEvent(
     override val command: GuildChatInputCommand,
     override val kord: Kord,
     override val shard: Int,
@@ -18,7 +18,7 @@ class ChatInputCommandCreateEvent(
 ) : ApplicationCommandCreateEvent
 
 
-class UserCommandCreateEvent(
+public class UserCommandCreateEvent(
     override val command: GuildUserCommand,
     override val kord: Kord,
     override val shard: Int,
@@ -26,7 +26,7 @@ class UserCommandCreateEvent(
 ) : ApplicationCommandCreateEvent
 
 
-class MessageCommandCreateEvent(
+public class MessageCommandCreateEvent(
     override val command: GuildMessageCommand,
     override val kord: Kord,
     override val shard: Int,
@@ -34,7 +34,7 @@ class MessageCommandCreateEvent(
 ) : ApplicationCommandCreateEvent
 
 
-class UnknownApplicationCommandCreateEvent(
+public class UnknownApplicationCommandCreateEvent(
     override val command: UnknownGuildApplicationCommand,
     override val kord: Kord,
     override val shard: Int,

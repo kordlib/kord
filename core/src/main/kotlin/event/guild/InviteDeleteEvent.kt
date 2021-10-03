@@ -18,8 +18,8 @@ import kotlin.coroutines.CoroutineContext
 /**
  * Sent when an invite is deleted.
  */
-class InviteDeleteEvent(
-    val data: InviteDeleteData,
+public class InviteDeleteEvent(
+    public val data: InviteDeleteData,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
@@ -29,41 +29,41 @@ class InviteDeleteEvent(
     /**
      * The [TopGuildChannel] of the invite.
      */
-    val channelId: Snowflake get() = data.channelId
+    public val channelId: Snowflake get() = data.channelId
 
     /**
      * The behavior of the [TopGuildChannel] of the invite.
      */
-    val channel: TopGuildChannelBehavior get() = TopGuildChannelBehavior(guildId = guildId, id = channelId, kord = kord)
+    public val channel: TopGuildChannelBehavior get() = TopGuildChannelBehavior(guildId = guildId, id = channelId, kord = kord)
 
     /**
      * The [Guild] of the invite.
      */
-    val guildId: Snowflake get() = data.guildId
+    public val guildId: Snowflake get() = data.guildId
 
     /**
      * The behavior of the [Guild] of the invite.
      */
-    val guild get() : GuildBehavior = GuildBehavior(id = guildId, kord = kord)
+    public val guild: GuildBehavior get() : GuildBehavior = GuildBehavior(id = guildId, kord = kord)
 
     /**
      * The unique invite code.
      */
-    val code: String get() = data.code
+    public val code: String get() = data.code
 
     /**
      * Requests to get the [TopGuildChannel] of the invite.
      */
-    suspend fun getChannel(): TopGuildChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): TopGuildChannel = supplier.getChannelOf(channelId)
 
-    suspend fun getChannelOrNull(): TopGuildChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): TopGuildChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
      * Requests to get the [Guild] of the invite.
      */
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteDeleteEvent =
         InviteDeleteEvent(data, kord, shard, strategy.supply(kord))

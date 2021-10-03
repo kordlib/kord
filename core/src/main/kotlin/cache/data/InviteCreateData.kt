@@ -6,12 +6,10 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.mapSnowflake
 import dev.kord.gateway.DiscordCreatedInvite
-import dev.kord.gateway.DiscordInviteUser
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class InviteCreateData(
+public data class InviteCreateData(
     val channelId: Snowflake,
     val code: String,
     val createdAt: String,
@@ -25,8 +23,8 @@ data class InviteCreateData(
     val uses: Int,
 ) {
 
-    companion object {
-        fun from(entity: DiscordCreatedInvite): InviteCreateData = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordCreatedInvite): InviteCreateData = with(entity) {
             InviteCreateData(
                 channelId,
                 code,

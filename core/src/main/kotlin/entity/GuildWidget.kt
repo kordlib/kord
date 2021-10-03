@@ -16,32 +16,32 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class GuildWidget(
-    val data: GuildWidgetData,
-    val guildId: Snowflake,
+public class GuildWidget(
+    public val data: GuildWidgetData,
+    public val guildId: Snowflake,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordObject, Strategizable {
 
-    val isEnabled: Boolean get() = data.enabled
+    public val isEnabled: Boolean get() = data.enabled
 
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    val channelId: Snowflake? get() = data.channelId
+    public val channelId: Snowflake? get() = data.channelId
 
-    val channel: ChannelBehavior? get() = data.channelId?.let { ChannelBehavior(it, kord) }
+    public val channel: ChannelBehavior? get() = data.channelId?.let { ChannelBehavior(it, kord) }
 
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
-    suspend fun getChannelOrNull(): TopGuildChannel? = data.channelId?.let { supplier.getChannelOfOrNull(it) }
+    public suspend fun getChannelOrNull(): TopGuildChannel? = data.channelId?.let { supplier.getChannelOfOrNull(it) }
 
-    suspend inline fun <reified T : Channel> getChannelOfOrNull(): T? =
+    public suspend inline fun <reified T : Channel> getChannelOfOrNull(): T? =
         data.channelId?.let { supplier.getChannelOfOrNull(it) }
 
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun edit(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
+    public suspend inline fun edit(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(guildId, builder)), guildId, kord)
     }

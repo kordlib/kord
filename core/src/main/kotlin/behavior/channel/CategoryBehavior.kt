@@ -30,7 +30,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord category associated to a [guild].
  */
-interface CategoryBehavior : TopGuildChannelBehavior {
+public interface CategoryBehavior : TopGuildChannelBehavior {
 
     /**
      * Requests to get this behavior as a [Category].
@@ -75,7 +75,7 @@ interface CategoryBehavior : TopGuildChannelBehavior {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val channels: Flow<CategorizableChannel>
+    public val channels: Flow<CategorizableChannel>
         get() = supplier.getGuildChannels(guildId)
             .filterIsInstance<CategorizableChannel>()
             .filter { it.categoryId == id }
@@ -91,7 +91,7 @@ interface CategoryBehavior : TopGuildChannelBehavior {
 }
 
 
-fun CategoryBehavior(
+public fun CategoryBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
@@ -123,7 +123,7 @@ fun CategoryBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Category {
+public suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Category {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchCategory(id, builder)
     val data = ChannelData.from(response)
@@ -140,7 +140,7 @@ suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Ca
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun CategoryBehavior.createTextChannel(
+public suspend inline fun CategoryBehavior.createTextChannel(
     name: String,
     builder: TextChannelCreateBuilder.() -> Unit = {}
 ): TextChannel {
@@ -165,7 +165,7 @@ suspend inline fun CategoryBehavior.createTextChannel(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun CategoryBehavior.createVoiceChannel(
+public suspend inline fun CategoryBehavior.createVoiceChannel(
     name: String,
     builder: VoiceChannelCreateBuilder.() -> Unit = {}
 ): VoiceChannel {
@@ -189,7 +189,7 @@ suspend inline fun CategoryBehavior.createVoiceChannel(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun CategoryBehavior.createNewsChannel(
+public suspend inline fun CategoryBehavior.createNewsChannel(
     name: String,
     builder: NewsChannelCreateBuilder.() -> Unit = {}
 ): NewsChannel {

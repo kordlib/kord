@@ -5,12 +5,12 @@ import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GuildWidgetData(
+public data class GuildWidgetData(
     val enabled: Boolean,
     val channelId: Snowflake?
 ) {
-    companion object {
-        fun from(entity: DiscordGuildWidget): GuildWidgetData = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordGuildWidget): GuildWidgetData = with(entity) {
             GuildWidgetData(enabled, channelId)
         }
     }

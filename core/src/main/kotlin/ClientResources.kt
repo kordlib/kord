@@ -6,6 +6,7 @@ import dev.kord.gateway.Intents
 import dev.kord.gateway.builder.Shards
 import io.ktor.client.*
 
+
 class ClientResources(
     val token: String,
     val applicationId: Snowflake,

@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.interaction
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
@@ -17,7 +16,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 
-interface ComponentInteractionBehavior : InteractionBehavior {
+public interface ComponentInteractionBehavior : InteractionBehavior {
 
     /**
      * Acknowledges a component interaction publicly with the intent of updating it later.
@@ -31,7 +30,7 @@ interface ComponentInteractionBehavior : InteractionBehavior {
      * which will become public or ephemeral respectively.
      */
     @OptIn(ExperimentalContracts::class)
-    suspend fun acknowledgePublicDeferredMessageUpdate(): PublicInteractionResponseBehavior {
+    public suspend fun acknowledgePublicDeferredMessageUpdate(): PublicInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
             type = InteractionResponseType.DeferredUpdateMessage
         )
@@ -53,7 +52,7 @@ interface ComponentInteractionBehavior : InteractionBehavior {
      * which will become ephemeral or public respectively.
      */
     @OptIn(ExperimentalContracts::class)
-    suspend fun acknowledgeEphemeralDeferredMessageUpdate(): EphemeralInteractionResponseBehavior {
+    public suspend fun acknowledgeEphemeralDeferredMessageUpdate(): EphemeralInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
             data = Optional.Value(
                 InteractionApplicationCommandCallbackData(
@@ -80,7 +79,7 @@ interface ComponentInteractionBehavior : InteractionBehavior {
  * [token], [applicationId], [kord] and [strategy].
  */
 
-fun ComponentInteractionBehavior(
+public fun ComponentInteractionBehavior(
     id: Snowflake,
     channelId: Snowflake,
     token: String,
@@ -117,7 +116,7 @@ fun ComponentInteractionBehavior(
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
+public suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
     builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
 ): PublicInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -143,7 +142,7 @@ suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessage(
+public suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessage(
     builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
 ): EphemeralInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }

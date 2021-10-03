@@ -9,15 +9,15 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TypingStartEventData(
+public data class TypingStartEventData(
     val channelId: Snowflake,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val userId: Snowflake,
     val timestamp: Long,
     val member: Optional<DiscordGuildMember> = Optional.Missing()
 ) {
-    companion object {
-        fun from(entity: DiscordTyping): TypingStartEventData = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordTyping): TypingStartEventData = with(entity) {
             TypingStartEventData(channelId, guildId, userId, timestamp, member)
         }
     }

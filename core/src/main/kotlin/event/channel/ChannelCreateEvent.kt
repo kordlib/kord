@@ -5,13 +5,13 @@ import dev.kord.core.entity.channel.*
 import dev.kord.core.event.Event
 import kotlin.coroutines.CoroutineContext
 
-interface ChannelCreateEvent : Event {
-    val channel: Channel
+public interface ChannelCreateEvent : Event {
+    public val channel: Channel
     override val kord: Kord
         get() = channel.kord
 }
 
-class CategoryCreateEvent(
+public class CategoryCreateEvent(
     override val channel: Category,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -21,7 +21,7 @@ class CategoryCreateEvent(
     }
 }
 
-class DMChannelCreateEvent(
+public class DMChannelCreateEvent(
     override val channel: DmChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -31,7 +31,7 @@ class DMChannelCreateEvent(
     }
 }
 
-class NewsChannelCreateEvent(
+public class NewsChannelCreateEvent(
     override val channel: NewsChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -41,7 +41,7 @@ class NewsChannelCreateEvent(
     }
 }
 
-class StoreChannelCreateEvent(
+public class StoreChannelCreateEvent(
     override val channel: StoreChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -51,7 +51,7 @@ class StoreChannelCreateEvent(
     }
 }
 
-class TextChannelCreateEvent(
+public class TextChannelCreateEvent(
     override val channel: TextChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -61,7 +61,7 @@ class TextChannelCreateEvent(
     }
 }
 
-class VoiceChannelCreateEvent(
+public class VoiceChannelCreateEvent(
     override val channel: VoiceChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -72,7 +72,7 @@ class VoiceChannelCreateEvent(
 }
 
 
-class StageChannelCreateEvent(
+public class StageChannelCreateEvent(
     override val channel: StageChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -82,7 +82,7 @@ class StageChannelCreateEvent(
     }
 }
 
-class UnknownChannelCreateEvent(
+public class UnknownChannelCreateEvent(
     override val channel: Channel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,

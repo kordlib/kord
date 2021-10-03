@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.interaction
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.toData
@@ -19,14 +18,14 @@ import kotlin.contracts.contract
  * This followup message is visible to all users in the channel.
  */
 
-interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
+public interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
 
     /**
      * Requests to delete this followup message.
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete() {
+    public suspend fun delete() {
         kord.rest.interaction.deleteFollowupMessage(applicationId, token, id)
     }
 
@@ -45,7 +44,7 @@ interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun PublicFollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): PublicFollowupMessage {
+public suspend inline fun PublicFollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = FollowupMessageModifyBuilder().apply(builder)
     val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, builder.toRequest())
@@ -53,7 +52,7 @@ suspend inline fun PublicFollowupMessageBehavior.edit(builder: FollowupMessageMo
 }
 
 
-fun PublicFollowupMessageBehavior(
+public fun PublicFollowupMessageBehavior(
     id: Snowflake,
     applicationId: Snowflake,
     token: String,

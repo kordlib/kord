@@ -14,9 +14,9 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlin.coroutines.CoroutineContext
 
-class BanAddEvent(
-    val user: User,
-    val guildId: Snowflake,
+public class BanAddEvent(
+    public val user: User,
+    public val guildId: Snowflake,
     override val shard: Int,
     override val supplier: EntitySupplier = user.kord.defaultSupplier,
     override val coroutineContext: CoroutineContext = user.kord.coroutineContext,
@@ -24,7 +24,7 @@ class BanAddEvent(
 
     override val kord: Kord get() = user.kord
 
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /**
      * Requests to get the [Guild] this ban happened in.
@@ -32,7 +32,7 @@ class BanAddEvent(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the guild wasn't present.
      */
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
      * Requests to get the [Guild] this ban happened in,
@@ -40,7 +40,7 @@ class BanAddEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     /**
      * Requests to get the [Ban] entity this event represents.
@@ -48,7 +48,7 @@ class BanAddEvent(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the ban wasn't present.
      */
-    suspend fun getBan(): Ban = supplier.getGuildBan(guildId, user.id)
+    public suspend fun getBan(): Ban = supplier.getGuildBan(guildId, user.id)
 
     /**
      * Requests to get the [Ban] entity this event represents.
@@ -56,7 +56,7 @@ class BanAddEvent(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the ban wasn't present.
      */
-    suspend fun getBanOrNull(): Ban? = supplier.getGuildBanOrNull(guildId, user.id)
+    public suspend fun getBanOrNull(): Ban? = supplier.getGuildBanOrNull(guildId, user.id)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): BanAddEvent =
         BanAddEvent(user, guildId, shard, strategy.supply(kord))

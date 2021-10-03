@@ -12,15 +12,15 @@ import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.*
 
 @KordPreview
-fun Role.live(
+public fun Role.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
-) = LiveRole(this, coroutineScope)
+): LiveRole = LiveRole(this, coroutineScope)
 
 @KordPreview
-inline fun Role.live(
+public inline fun Role.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveRole.() -> Unit
-) = this.live(coroutineScope).apply(block)
+): LiveRole = this.live(coroutineScope).apply(block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -28,11 +28,11 @@ inline fun Role.live(
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveRole.onDelete(scope: CoroutineScope = this, block: suspend (RoleDeleteEvent) -> Unit) =
+public fun LiveRole.onDelete(scope: CoroutineScope = this, block: suspend (RoleDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveRole.onUpdate(scope: CoroutineScope = this, block: suspend (RoleUpdateEvent) -> Unit) =
+public fun LiveRole.onUpdate(scope: CoroutineScope = this, block: suspend (RoleUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -41,7 +41,7 @@ fun LiveRole.onUpdate(scope: CoroutineScope = this, block: suspend (RoleUpdateEv
     DeprecationLevel.ERROR
 )
 @KordPreview
-inline fun LiveRole.onShutdown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+public inline fun LiveRole.onShutdown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit): Job =
     on<Event>(scope) {
         if (it is RoleDeleteEvent || it is GuildDeleteEvent) {
             block(it)
@@ -54,11 +54,11 @@ inline fun LiveRole.onShutdown(scope: CoroutineScope = this, crossinline block: 
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveRole.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+public fun LiveRole.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-class LiveRole(
+public class LiveRole(
     role: Role,
     coroutineScope: CoroutineScope = role.kord + SupervisorJob(role.kord.coroutineContext.job)
 ) : AbstractLiveKordEntity(role.kord, coroutineScope), KordEntity {
@@ -66,17 +66,17 @@ class LiveRole(
     override val id: Snowflake
         get() = role.id
 
-    var role = role
+    public var role: Role = role
         private set
 
-    override fun filter(event: Event) = when (event) {
+    override fun filter(event: Event): Boolean = when (event) {
         is RoleDeleteEvent -> role.id == event.roleId
         is RoleUpdateEvent -> role.id == event.role.id
         is GuildDeleteEvent -> role.guildId == event.guildId
         else -> false
     }
 
-    override fun update(event: Event) = when (event) {
+    override fun update(event: Event): Unit = when (event) {
         is RoleDeleteEvent -> shutDown(LiveCancellationException(event, "The role is deleted"))
         is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
         is RoleUpdateEvent -> role = event.role

@@ -1,12 +1,13 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ChannelData(
+public data class ChannelData(
     val id: Snowflake,
     val type: ChannelType,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -35,10 +36,10 @@ data class ChannelData(
 ) {
 
 
-    companion object {
-        val description = description(ChannelData::id)
+    public companion object {
+        public val description: DataDescription<ChannelData, Snowflake> = description(ChannelData::id)
 
-        fun from(entity: DiscordChannel) = with(entity) {
+        public fun from(entity: DiscordChannel): ChannelData = with(entity) {
             ChannelData(
                 id,
                 type,
@@ -72,18 +73,18 @@ data class ChannelData(
 }
 
 @Serializable
-data class ThreadMetadataData(
+public data class ThreadMetadataData(
     val archived: Boolean,
     val archiveTimestamp: String,
     val autoArchiveDuration: ArchiveDuration,
     val locked: OptionalBoolean = OptionalBoolean.Missing
 ) {
-    companion object {
-        fun from(threadMetadata: DiscordThreadMetadata): ThreadMetadataData = with(threadMetadata) {
+    public companion object {
+        public fun from(threadMetadata: DiscordThreadMetadata): ThreadMetadataData = with(threadMetadata) {
             ThreadMetadataData(archived, archiveTimestamp, autoArchiveDuration, locked)
         }
     }
 }
 
 
-fun DiscordChannel.toData() = ChannelData.from(this)
+public fun DiscordChannel.toData(): ChannelData = ChannelData.from(this)

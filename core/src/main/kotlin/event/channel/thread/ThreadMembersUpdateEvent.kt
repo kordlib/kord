@@ -9,27 +9,27 @@ import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.event.Event
 import kotlin.coroutines.CoroutineContext
 
-class ThreadMembersUpdateEvent(
-    val data: ThreadMembersUpdateEventData,
+public class ThreadMembersUpdateEvent(
+    public val data: ThreadMembersUpdateEventData,
     override val kord: Kord,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event {
 
-    val id: Snowflake get() = data.id
+    public val id: Snowflake get() = data.id
 
-    val guildId: Snowflake get() = data.guildId
+    public val guildId: Snowflake get() = data.guildId
 
-    val memberCount: Int get() = data.memberCount
+    public val memberCount: Int get() = data.memberCount
 
-    val addedMembers: List<ThreadMember>
+    public val addedMembers: List<ThreadMember>
         get() = data.addedMembers.orEmpty().map {
             ThreadMember(it, kord)
         }
 
-    val removedMemberIds: List<Snowflake> get() = data.removedMemberIds.orEmpty()
+    public val removedMemberIds: List<Snowflake> get() = data.removedMemberIds.orEmpty()
 
-    val removedMemberBehaviors: List<MemberBehavior>
+    public val removedMemberBehaviors: List<MemberBehavior>
         get() = removedMemberIds.map {
             MemberBehavior(guildId, it, kord)
         }

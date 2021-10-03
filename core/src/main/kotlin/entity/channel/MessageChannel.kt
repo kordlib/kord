@@ -13,17 +13,17 @@ import kotlinx.datetime.toInstant
 /**
  * An instance of a Discord channel that can use messages.
  */
-interface MessageChannel : Channel, MessageChannelBehavior {
+public interface MessageChannel : Channel, MessageChannelBehavior {
 
     /**
      * The id of the last message sent to this channel, if present.
      */
-    val lastMessageId: Snowflake? get() = data.lastMessageId.value
+    public val lastMessageId: Snowflake? get() = data.lastMessageId.value
 
     /**
      * The behavior of the last message sent to this channel, if present.
      */
-    val lastMessage: MessageBehavior? get() = lastMessageId?.let { MessageBehavior(id, it, kord) }
+    public val lastMessage: MessageBehavior? get() = lastMessageId?.let { MessageBehavior(id, it, kord) }
 
     /**
      * The timestamp of the last pin
@@ -33,13 +33,13 @@ interface MessageChannel : Channel, MessageChannelBehavior {
         ReplaceWith("lastPinTimestamp"),
         DeprecationLevel.ERROR,
     )
-    val lastPinTimeStamp: Instant?
+    public val lastPinTimeStamp: Instant?
         get() = lastPinTimestamp
 
     /**
      * The timestamp of the last pin
      */
-    val lastPinTimestamp: Instant? get() = data.lastPinTimestamp.value?.toInstant()
+    public val lastPinTimestamp: Instant? get() = data.lastPinTimestamp.value?.toInstant()
 
     /**
      * Requests to get the last message sent to this channel,
@@ -47,7 +47,7 @@ interface MessageChannel : Channel, MessageChannelBehavior {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getLastMessage(): Message? {
+    public suspend fun getLastMessage(): Message? {
         val messageId = lastMessageId ?: return null
 
         return supplier.getMessageOrNull(id, messageId)

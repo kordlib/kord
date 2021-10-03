@@ -8,7 +8,7 @@ import dev.kord.common.entity.optional.mapList
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ComponentData(
+public data class ComponentData(
     val type: ComponentType,
     val style: Optional<ButtonStyle> = Optional.Missing(),
     val label: Optional<String> = Optional.Missing(),
@@ -24,9 +24,9 @@ data class ComponentData(
     val options: Optional<List<SelectOptionData>> = Optional.Missing()
 ) {
 
-    companion object {
+    public companion object {
 
-        fun from(entity: DiscordComponent): ComponentData = with(entity) {
+        public fun from(entity: DiscordComponent): ComponentData = with(entity) {
             ComponentData(
                 type,
                 style,

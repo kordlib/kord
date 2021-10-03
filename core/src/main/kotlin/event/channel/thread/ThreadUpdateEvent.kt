@@ -6,12 +6,12 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.channel.ChannelUpdateEvent
 import kotlin.coroutines.CoroutineContext
 
-sealed interface ThreadUpdateEvent : ChannelUpdateEvent {
+public sealed interface ThreadUpdateEvent : ChannelUpdateEvent {
     override val channel: ThreadChannel
 }
 
 
-class TextChannelThreadUpdateEvent(
+public class TextChannelThreadUpdateEvent(
     override val channel: TextChannelThread,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -23,7 +23,7 @@ class TextChannelThreadUpdateEvent(
 }
 
 
-class NewsChannelThreadUpdateEvent(
+public class NewsChannelThreadUpdateEvent(
     override val channel: NewsChannelThread,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -35,7 +35,7 @@ class NewsChannelThreadUpdateEvent(
 }
 
 
-class UnknownChannelThreadUpdateEvent(
+public class UnknownChannelThreadUpdateEvent(
     override val channel: ThreadChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,

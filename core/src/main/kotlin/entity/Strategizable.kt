@@ -9,17 +9,17 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  *
  * Unless stated otherwise, all members that fetch [Entities][KordEntity] will delegate to the [supplier].
  */
-interface Strategizable {
+public interface Strategizable {
 
     /**
      * The supplier used to request entities.
      */
-    val supplier: EntitySupplier
+    public val supplier: EntitySupplier
 
 
     /**
      * Returns a copy of this class with a new [supplier] provided by the [strategy].
      */
-    fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable
+    public fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable
 
 }

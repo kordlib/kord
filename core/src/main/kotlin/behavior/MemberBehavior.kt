@@ -24,22 +24,22 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
  */
-interface MemberBehavior : KordEntity, UserBehavior {
+public interface MemberBehavior : KordEntity, UserBehavior {
 
     /**
      * The id of the guild this channel is associated to.
      */
-    val guildId: Snowflake
+    public val guildId: Snowflake
 
     /**
      * The guild this channel is associated to.
      */
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /**
      * The raw mention for this member's nickname.
      */
-    val nicknameMention get() = "<@!${id.asString}>"
+    public val nicknameMention: String get() = "<@!${id.asString}>"
 
     /**
      * Requests to get the this behavior as a [Member].
@@ -47,7 +47,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the member wasn't present.
      */
-    suspend fun asMember(): Member = supplier.getMember(guildId, id)
+    public suspend fun asMember(): Member = supplier.getMember(guildId, id)
 
     /**
      * Requests to get this behavior as a [Member],
@@ -55,7 +55,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asMemberOrNull(): Member? = supplier.getMemberOrNull(guildId, id)
+    public suspend fun asMemberOrNull(): Member? = supplier.getMemberOrNull(guildId, id)
 
     /**
      * Retrieve the [Member] associated with this behaviour from the provided [EntitySupplier]
@@ -63,7 +63,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun fetchMember(): Member = supplier.getMember(guildId, id)
+    public suspend fun fetchMember(): Member = supplier.getMember(guildId, id)
 
 
     /**
@@ -72,7 +72,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun fetchMemberOrNull(): Member? = supplier.getMemberOrNull(guildId, id)
+    public suspend fun fetchMemberOrNull(): Member? = supplier.getMemberOrNull(guildId, id)
 
     /**
      * Requests to kick this member from its guild.
@@ -80,7 +80,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun kick(reason: String? = null) = guild.kick(id, reason)
+    public suspend fun kick(reason: String? = null): Unit = guild.kick(id, reason)
 
     /**
      * Requests to add the [Role] with the [roleId] to this member.
@@ -88,7 +88,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun addRole(roleId: Snowflake, reason: String? = null) {
+    public suspend fun addRole(roleId: Snowflake, reason: String? = null) {
         kord.rest.guild.addRoleToGuildMember(guildId = guildId, userId = id, roleId = roleId, reason = reason)
     }
 
@@ -98,7 +98,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Guild] wasn't present.
      */
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
      * Requests to get the [Guild] this member is part of,
@@ -106,7 +106,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     /**
      * Requests to remove the [Role] with the [roleId] from this member.
@@ -114,7 +114,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      * @param reason the reason showing up in the audit log
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun removeRole(roleId: Snowflake, reason: String? = null) {
+    public suspend fun removeRole(roleId: Snowflake, reason: String? = null) {
         kord.rest.guild.deleteRoleFromGuildMember(guildId = guildId, userId = id, roleId = roleId, reason = reason)
     }
 
@@ -126,7 +126,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Presence] wasn't present.
      */
-    suspend fun getPresence(): Presence = getPresenceOrNull() ?: EntityNotFoundException.guildEntityNotFound(
+    public suspend fun getPresence(): Presence = getPresenceOrNull() ?: EntityNotFoundException.guildEntityNotFound(
         "Presence for Member",
         guildId = guildId,
         id = id
@@ -140,7 +140,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getPresenceOrNull(): Presence? {
+    public suspend fun getPresenceOrNull(): Presence? {
         val data = kord.cache.query<PresenceData> {
             idEq(PresenceData::userId, id)
             idEq(PresenceData::guildId, guildId)
@@ -157,7 +157,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [VoiceState] wasn't present.
      */
-    suspend fun getVoiceState(): VoiceState = getVoiceStateOrNull() ?: EntityNotFoundException.guildEntityNotFound(
+    public suspend fun getVoiceState(): VoiceState = getVoiceStateOrNull() ?: EntityNotFoundException.guildEntityNotFound(
         "VoiceState for Member",
         guildId = guildId,
         id = id
@@ -171,7 +171,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getVoiceStateOrNull(): VoiceState? {
+    public suspend fun getVoiceStateOrNull(): VoiceState? {
         val data = kord.cache.query<VoiceStateData> {
             idEq(VoiceStateData::userId, id)
             idEq(VoiceStateData::guildId, guildId)
@@ -188,7 +188,7 @@ interface MemberBehavior : KordEntity, UserBehavior {
 
 }
 
-fun MemberBehavior(
+public fun MemberBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
@@ -218,7 +218,7 @@ fun MemberBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun MemberBehavior.ban(builder: BanCreateBuilder.() -> Unit = {}) {
+public suspend inline fun MemberBehavior.ban(builder: BanCreateBuilder.() -> Unit = {}) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -231,7 +231,7 @@ suspend inline fun MemberBehavior.ban(builder: BanCreateBuilder.() -> Unit = {})
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun MemberBehavior.edit(builder: MemberModifyBuilder.() -> Unit): Member {
+public suspend inline fun MemberBehavior.edit(builder: MemberModifyBuilder.() -> Unit): Member {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
