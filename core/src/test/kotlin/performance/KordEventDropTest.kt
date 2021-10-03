@@ -4,12 +4,12 @@ import dev.kord.cache.api.DataCache
 import dev.kord.common.entity.*
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
+import dev.kord.core.builder.kord.Shards
 import dev.kord.core.event.guild.GuildCreateEvent
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.on
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
-import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
@@ -47,7 +47,7 @@ class KordEventDropTest {
     }
 
     val kord = Kord(
-        resources = ClientResources("token", Snowflake(0u), Shards(1), HttpClient(), EntitySupplyStrategy.cache),
+        resources = ClientResources("token", Snowflake(0u), Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
         cache = DataCache.none(),
         DefaultMasterGateway(mapOf(0 to SpammyGateway)),
         RestClient(KtorRequestHandler("token", clock = Clock.System)),

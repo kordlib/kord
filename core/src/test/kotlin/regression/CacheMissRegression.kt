@@ -6,17 +6,14 @@ import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
+import dev.kord.core.builder.kord.Shards
 import dev.kord.core.builder.kord.configure
 import dev.kord.core.builder.kord.getBotIdFromToken
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.registerKordData
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.gateway.Command
-import dev.kord.gateway.Event
-import dev.kord.gateway.Gateway
-import dev.kord.gateway.GatewayConfiguration
-import dev.kord.gateway.builder.Shards
+import dev.kord.gateway.*
 import dev.kord.rest.request.JsonRequest
 import dev.kord.rest.request.MultipartRequest
 import dev.kord.rest.request.Request
@@ -32,10 +29,7 @@ import io.ktor.http.*
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.serialization.SerializationStrategy
@@ -132,6 +126,7 @@ class CacheMissingRegressions {
             Shards(1),
             null.configure(token),
             EntitySupplyStrategy.cacheWithRestFallback,
+            Intents.nonPrivileged
         )
         kord = Kord(
             resources,
