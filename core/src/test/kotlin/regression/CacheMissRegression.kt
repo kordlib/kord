@@ -6,7 +6,6 @@ import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
-import dev.kord.core.builder.kord.Shards
 import dev.kord.core.builder.kord.configure
 import dev.kord.core.builder.kord.getBotIdFromToken
 import dev.kord.core.cache.data.ChannelData
@@ -14,6 +13,7 @@ import dev.kord.core.cache.registerKordData
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
+import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.JsonRequest
 import dev.kord.rest.request.MultipartRequest
 import dev.kord.rest.request.Request
@@ -126,7 +126,6 @@ class CacheMissingRegressions {
             Shards(1),
             null.configure(token),
             EntitySupplyStrategy.cacheWithRestFallback,
-            Intents.nonPrivileged
         )
         kord = Kord(
             resources,
