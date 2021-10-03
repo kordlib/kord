@@ -131,7 +131,7 @@ class Kord(
         val loginBuilder = LoginBuilder().apply(builder)
         gateway.start(resources.token) {
             shard = DiscordShard(0, resources.shards.totalShards)
-            presence(loginBuilder.presence)
+            presence = loginBuilder.presence
             intents = loginBuilder.intents
             name = loginBuilder.name
         }
