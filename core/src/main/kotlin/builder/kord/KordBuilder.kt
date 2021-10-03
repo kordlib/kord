@@ -17,7 +17,7 @@ import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.DefaultGateway
 import dev.kord.gateway.Gateway
-import dev.kord.gateway.Intents
+import dev.kord.gateway.builder.Shards
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import dev.kord.rest.json.response.BotGatewayResponse
@@ -42,7 +42,6 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
-import kotlin.time.seconds
 
 operator fun DefaultGateway.Companion.invoke(
     resources: ClientResources,
@@ -59,7 +58,6 @@ operator fun DefaultGateway.Companion.invoke(
 
 private val logger = KotlinLogging.logger { }
 
-data class Shards(val totalShards: Int, val indices: Iterable<Int> = 0 until totalShards)
 
 class KordBuilder(val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
@@ -110,12 +108,6 @@ class KordBuilder(val token: String) {
     var httpClient: HttpClient? = null
 
     var applicationId: Snowflake? = null
-
-    /**
-     * The enabled gateway intents, setting intents to null will disable the feature.
-     */
-    var intents: Intents = Intents.nonPrivileged
-
 
     /**
      * Configures the shards this client will connect to, by default `0 until recommended`.
@@ -231,7 +223,7 @@ class KordBuilder(val token: String) {
             }
         }
 
-        val resources = ClientResources(token,applicationId ?: getBotIdFromToken(token), shardsInfo, client, defaultStrategy, intents)
+        val resources = ClientResources(token,applicationId ?: getBotIdFromToken(token), shardsInfo, client, defaultStrategy)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
