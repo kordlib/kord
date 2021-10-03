@@ -72,15 +72,14 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
     suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null,
+        builder: StartThreadBuilder.() -> Unit = {}
     ): TextChannelThread {
         return unsafeStartThread(
             name,
             archiveDuration,
-            ChannelType.PublicGuildThread
-        ) {
-            this.reason = reason
-        } as TextChannelThread
+            ChannelType.PublicGuildThread,
+            builder
+        ) as TextChannelThread
     }
 
     suspend fun startPrivateThread(
