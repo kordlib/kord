@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `kord-module`
     `kord-sampled-module`
+    `kord-publishing`
 }
 
 dependencies {
