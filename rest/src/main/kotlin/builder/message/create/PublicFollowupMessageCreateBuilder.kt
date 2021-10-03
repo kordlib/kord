@@ -1,6 +1,8 @@
 package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.MessageFlag
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.*
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.RequestBuilder
@@ -16,7 +18,7 @@ import java.io.InputStream
  * Message builder for creating persistent messages following up interaction responses.
  */
 
-class PublicFollowupMessageCreateBuilder
+class FollowupMessageCreateBuilder(var ephemeral: Boolean)
     : PersistentMessageCreateBuilder,
     RequestBuilder<MultipartFollowupMessageCreateRequest> {
 
@@ -41,6 +43,7 @@ class PublicFollowupMessageCreateBuilder
                 embeds = Optional(embeds).mapList { it.toRequest() },
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
                 components = Optional(components).coerceToMissing().mapList { it.build() },
+                flags = if(ephemeral) MessageFlags(MessageFlag.Ephemeral).optional() else Optional.Missing()
             ),
             files
         )

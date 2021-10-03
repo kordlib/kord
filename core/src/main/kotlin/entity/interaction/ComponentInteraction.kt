@@ -11,6 +11,7 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
 import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.entity.Member
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
 import dev.kord.core.entity.component.*
@@ -55,6 +56,25 @@ sealed interface ComponentInteraction : Interaction, ComponentInteractionBehavio
 
 }
 
+sealed interface GlobalComponentInteraction : ComponentInteraction
+
+sealed interface GuildComponentInteraction : ComponentInteraction {
+
+    val guildId: Snowflake get() = data.guildId.value!!
+
+    val member: Member get() = Member(data.member.value!!, user.data, kord)
+}
+
+sealed interface ButtonInteraction : ComponentInteraction {
+    override val component: ButtonComponent?
+        get() = message?.components.orEmpty()
+            .filterIsInstance<ActionRowComponent>()
+            .flatMap { it.buttons }
+            .firstOrNull { it.customId == componentId }
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ButtonInteraction
+}
+
 /**
  * Creates a [ComponentInteraction] with the given [data], [applicationId], [kord] and [supplier].
  *
@@ -66,8 +86,16 @@ fun ComponentInteraction(
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier,
 ): ComponentInteraction = when (val type = data.data.componentType.value) {
-    ComponentType.Button -> ButtonInteraction(data, kord, supplier)
-    ComponentType.SelectMenu -> SelectMenuInteraction(data, kord, supplier)
+    ComponentType.Button -> if (data.guildId.value == null) GlobalButtonInteraction(
+        data,
+        kord,
+        supplier
+    ) else GuildButtonInteraction(data, kord, supplier)
+    ComponentType.SelectMenu -> if (data.guildId.value == null) GlobalSelectMenuInteraction(
+        data,
+        kord,
+        supplier
+    ) else GuildSelectMenuInteraction(data, kord, supplier)
     ComponentType.ActionRow -> error("Action rows can't have interactions")
     is ComponentType.Unknown -> UnknownComponentInteraction(data, kord, supplier)
     null -> error("Component type was null")
@@ -78,25 +106,38 @@ fun ComponentInteraction(
  * An interaction created from a user pressing a [ButtonComponent].
  */
 
-class ButtonInteraction(
+class GlobalButtonInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : ComponentInteraction {
+) : GlobalComponentInteraction, ButtonInteraction {
+    override fun equals(other: Any?): Boolean {
+        if (other !is ButtonInteraction) return false
 
-    override val component: ButtonComponent?
-        get() = message?.components.orEmpty()
-            .filterIsInstance<ActionRowComponent>()
-            .flatMap { it.buttons }
-            .firstOrNull { it.customId == componentId }
+        return id == other.id
+    }
+
+    override fun hashCode(): Int = data.hashCode()
+
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ButtonInteraction {
-        return ButtonInteraction(data, kord, strategy.supply(kord))
+        return GlobalButtonInteraction(data, kord, strategy.supply(kord))
     }
 
     override fun toString(): String =
-        "ButtonInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
+        "GlobalButtonInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
+}
 
+
+/**
+ * An interaction created from a user pressing a [ButtonComponent].
+ */
+
+class GuildButtonInteraction(
+    override val data: InteractionData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier
+) : GuildComponentInteraction, ButtonInteraction {
 
     override fun equals(other: Any?): Boolean {
         if (other !is ButtonInteraction) return false
@@ -105,8 +146,15 @@ class ButtonInteraction(
     }
 
     override fun hashCode(): Int = data.hashCode()
-}
 
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ButtonInteraction {
+        return GuildButtonInteraction(data, kord, strategy.supply(kord))
+    }
+
+    override fun toString(): String =
+        "GuildButtonInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
+}
 
 class UnknownComponentInteraction(
     override val data: InteractionData,
@@ -131,11 +179,7 @@ class UnknownComponentInteraction(
  * An interaction created from a user interacting with a [SelectMenuComponent].
  */
 
-class SelectMenuInteraction(
-    override val data: InteractionData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier
-) : ComponentInteraction {
+sealed interface SelectMenuInteraction : ComponentInteraction {
 
     /**
      * The selected values, the expected range should between 0 and 25.
@@ -151,14 +195,19 @@ class SelectMenuInteraction(
             .flatMap { it.selectMenus }
             .firstOrNull { it.customId == componentId }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): SelectMenuInteraction {
-        return SelectMenuInteraction(data, kord, strategy.supply(kord))
-    }
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): SelectMenuInteraction
 
-    override fun toString(): String =
-        "SelectMenuInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
+}
 
+/**
+ * An interaction created from a user pressing a [ButtonComponent].
+ */
 
+class GuildSelectMenuInteraction(
+    override val data: InteractionData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier
+) : GuildComponentInteraction, SelectMenuInteraction {
     override fun equals(other: Any?): Boolean {
         if (other !is SelectMenuInteraction) return false
 
@@ -167,5 +216,38 @@ class SelectMenuInteraction(
 
     override fun hashCode(): Int = data.hashCode()
 
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): SelectMenuInteraction {
+        return GuildSelectMenuInteraction(data, kord, strategy.supply(kord))
+    }
+
+    override fun toString(): String =
+        "GuildSelectMenuInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
 }
 
+
+/**
+ * An interaction created from a user pressing a [ButtonComponent].
+ */
+
+class GlobalSelectMenuInteraction(
+    override val data: InteractionData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier
+) : GlobalComponentInteraction, SelectMenuInteraction {
+    override fun equals(other: Any?): Boolean {
+        if (other !is SelectMenuInteraction) return false
+
+        return id == other.id
+    }
+
+    override fun hashCode(): Int = data.hashCode()
+
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): SelectMenuInteraction {
+        return GlobalSelectMenuInteraction(data, kord, strategy.supply(kord))
+    }
+
+    override fun toString(): String =
+        "GlobalSelectMenuInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
+}

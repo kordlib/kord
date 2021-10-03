@@ -9,8 +9,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.message.modify.UpdateEphemeralMessageInteractionResponseCreateBuilder
-import dev.kord.rest.builder.message.modify.UpdatePublicMessageInteractionResponseCreateBuilder
+import dev.kord.rest.builder.message.create.UpdateMessageInteractionResponseCreateBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import kotlin.contracts.ExperimentalContracts
@@ -119,11 +118,11 @@ fun ComponentInteractionBehavior(
 
 @OptIn(ExperimentalContracts::class)
 suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
-    builder: UpdatePublicMessageInteractionResponseCreateBuilder.() -> Unit
+    builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
 ): PublicInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
-    val request = UpdatePublicMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
+    val request = UpdateMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
 
     kord.rest.interaction.createInteractionResponse(
         id,
@@ -145,11 +144,11 @@ suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
 
 @OptIn(ExperimentalContracts::class)
 suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessage(
-    builder: UpdateEphemeralMessageInteractionResponseCreateBuilder.() -> Unit
+    builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
 ): EphemeralInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
-    val request = UpdateEphemeralMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
+    val request = UpdateMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
 
     kord.rest.interaction.createInteractionResponse(
         id,

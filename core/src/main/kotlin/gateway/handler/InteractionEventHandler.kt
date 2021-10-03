@@ -30,40 +30,18 @@ class InteractionEventHandler(
 
     private fun handle(event: InteractionCreate, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent {
         val data = InteractionData.from(event.interaction)
-        val coreEvent = when (val interaction = Interaction.from(data, kord)) {
-            is GlobalChatInputCommandInteraction -> GlobalChatInputCommandInteractionCreateEvent(
-                interaction,
-                kord,
-                shard,
-                context
-            )
-            is GlobalUserCommandInteraction -> GlobalUserCommandInteractionCreateEvent(
-                interaction,
-                kord,
-                shard,
-                context
-            )
-            is GlobalMessageCommandInteraction -> GlobalMessageCommandInteractionCreateEvent(
-                interaction,
-                kord,
-                shard,
-                context
-            )
-            is GuildChatInputCommandInteraction -> GuildChatInputCommandInteractionCreateEvent(
-                interaction,
-                kord,
-                shard,
-                context
-            )
-            is GuildMessageCommandInteraction -> GuildMessageCommandInteractionCreateEvent(
-                interaction,
-                kord,
-                shard,
-                context
-            )
+        val interaction = Interaction.from(data, kord)
+        val coreEvent = when(interaction) {
+            is GlobalChatInputCommandInteraction -> GlobalChatInputCommandInteractionCreateEvent(interaction, kord, shard, context)
+            is GlobalUserCommandInteraction -> GlobalUserCommandInteractionCreateEvent(interaction, kord, shard, context)
+            is GlobalMessageCommandInteraction -> GlobalMessageCommandInteractionCreateEvent(interaction, kord, shard, context)
+            is GlobalButtonInteraction -> GlobalButtonInteractionCreateEvent(interaction, kord, shard, context)
+            is GlobalSelectMenuInteraction -> GlobalSelectMenuInteractionCreateEvent(interaction, kord, shard, context)
+            is GuildChatInputCommandInteraction -> GuildChatInputCommandInteractionCreateEvent(interaction, kord, shard, context)
+            is GuildMessageCommandInteraction -> GuildMessageCommandInteractionCreateEvent(interaction, kord, shard, context)
             is GuildUserCommandInteraction -> GuildUserCommandInteractionCreateEvent(interaction, kord, shard, context)
-            is ButtonInteraction -> ButtonInteractionCreateEvent(interaction, kord, shard, context)
-            is SelectMenuInteraction -> SelectMenuInteractionCreateEvent(interaction, kord, shard, context)
+            is GuildButtonInteraction -> GuildButtonInteractionCreateEvent(interaction, kord, shard, context)
+            is GuildSelectMenuInteraction -> GuildSelectMenuInteractionCreateEvent(interaction, kord, shard, context)
             is UnknownComponentInteraction -> error("Unknown component.")
             is UnknownApplicationCommandInteraction -> error("Unknown component.")
         }
@@ -96,6 +74,7 @@ class InteractionEventHandler(
     ): CoreEvent {
         val data = ApplicationCommandData.from(event.application)
         cache.put(data)
+        val application = GuildApplicationCommand(data, kord.rest.interaction)
 
         val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
             is GuildChatInputCommand -> ChatInputCommandUpdateEvent(application, kord, shard, context)

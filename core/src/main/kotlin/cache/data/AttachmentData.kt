@@ -2,6 +2,8 @@ package dev.kord.core.cache.data
 
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -15,10 +17,11 @@ data class AttachmentData(
     val proxyUrl: String,
     val height: OptionalInt? = OptionalInt.Missing,
     val width: OptionalInt? = OptionalInt.Missing,
+    val ephemeral: OptionalBoolean = OptionalBoolean.Missing
 ) {
     companion object {
         fun from(entity: DiscordAttachment) = with(entity) {
-            AttachmentData(id, filename, size, url, proxyUrl, height, width)
+            AttachmentData(id, filename, size, url, proxyUrl, height, width, ephemeral)
         }
     }
 }

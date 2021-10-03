@@ -2,10 +2,10 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.optionalInt
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.AttachmentData
+import dev.kord.rest.Image
 import java.util.*
 
 /**
@@ -53,10 +53,11 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : KordE
      */
     val isSpoiler: Boolean get() = filename.startsWith("SPOILER_")
 
+    val isEphemeral: Boolean  get() = data.ephemeral.discordBoolean
     /**
      * If this file is an image. Denoted by the presence of a [width] and [height].
      */
-    val isImage: Boolean get() = height != null && width != null
+    val isImage: Boolean get() = Image.Format.isSupported(filename)
 
     override fun hashCode(): Int = Objects.hash(id)
 
@@ -68,7 +69,6 @@ data class Attachment(val data: AttachmentData, override val kord: Kord) : KordE
     override fun toString(): String {
         return "Attachment(data=$data, kord=$kord)"
     }
-
 }
 
 fun Attachment.toRawType(): DiscordAttachment {
