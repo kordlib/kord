@@ -3,10 +3,8 @@ package dev.kord.core.supplier
 import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.query
 import dev.kord.common.entity.ChannelType
-
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.any
@@ -41,7 +39,7 @@ import kotlinx.datetime.toInstant
  * Returned flows without entities will not throw an [EntityNotFoundException]
  * if none are presented like other `getX` functions. Instead, the flow will be empty.
  */
-class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
+public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     /**
      *
      * The Cache this [CacheEntitySupplier] operates on.
@@ -57,7 +55,7 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      *  The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val channels: Flow<Channel>
+    public val channels: Flow<Channel>
         get() = cache.query<ChannelData>().asFlow().map { Channel.from(it, kord) }
 
     /**
@@ -81,27 +79,27 @@ class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     /**
      *  fetches all cached [Role]s
      */
-    val roles: Flow<Role>
+    public val roles: Flow<Role>
         get() = cache.query<RoleData>().asFlow().map { Role(it, kord) }
 
     /**
      *  fetches all cached [User]s
      */
-    val users: Flow<User>
+    public val users: Flow<User>
         get() = cache.query<UserData>().asFlow().map { User(it, kord) }
 
     /**
      *  fetches all cached [Member]s
      */
     @OptIn(FlowPreview::class)
-    val members: Flow<Member>
+    public val members: Flow<Member>
         get() = cache.query<MemberData>().asFlow().mapNotNull {
             val userData =
                 cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull() ?: return@mapNotNull null
             Member(it, userData, kord)
         }
 
-    suspend fun getRole(id: Snowflake): Role? {
+    public suspend fun getRole(id: Snowflake): Role? {
         val data = cache.query<RoleData> { idEq(RoleData::id, id) }.singleOrNull() ?: return null
 
         return Role(data, kord)

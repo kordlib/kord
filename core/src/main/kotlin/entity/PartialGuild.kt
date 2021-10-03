@@ -14,8 +14,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.Image
 import java.util.*
 
-class PartialGuild(
-    val data: PartialGuildData,
+public class PartialGuild(
+    public val data: PartialGuildData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordEntity, Strategizable {
@@ -23,7 +23,7 @@ class PartialGuild(
     /**
      * The name of this guild.
      */
-    val name: String get() = data.name
+    public val name: String get() = data.name
 
 
     override val id: Snowflake get() = data.id
@@ -31,38 +31,38 @@ class PartialGuild(
     /**
      * The icon hash, if present.
      */
-    val iconHash: String? get() = data.icon
+    public val iconHash: String? get() = data.icon
 
     /**
      * wither who created the invite is the owner or not.
      */
 
-    val owner: Boolean? get() = data.owner.value
+    public val owner: Boolean? get() = data.owner.value
 
 
     /**
      * The welcome screen of a Community guild, shown to new members.
      */
 
-    val welcomeScreen: WelcomeScreen? get() = data.welcomeScreen.unwrap { WelcomeScreen(it, kord) }
+    public val welcomeScreen: WelcomeScreen? get() = data.welcomeScreen.unwrap { WelcomeScreen(it, kord) }
 
 
     /**
      * permissions that the invite creator has, if present.
      */
 
-    val permissions: Permissions? get() = data.permissions.value
+    public val permissions: Permissions? get() = data.permissions.value
 
     /**
      * Gets the icon url, if present.
      */
-    fun getIconUrl(format: Image.Format): String? =
+    public fun getIconUrl(format: Image.Format): String? =
         data.icon?.let { "https://cdn.discordapp.com/icons/${id.asString}/$it.${format.extension}" }
 
     /**
      * Requests to get the icon image in the specified [format], if present.
      */
-    suspend fun getIcon(format: Image.Format): Image? {
+    public suspend fun getIcon(format: Image.Format): Image? {
         val url = getIconUrl(format) ?: return null
 
         return Image.fromUrl(kord.resources.httpClient, url)
@@ -74,7 +74,7 @@ class PartialGuild(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Guild] wasn't present, or the bot is not a part of this [Guild].
      */
-    suspend fun getGuild(): Guild = supplier.getGuild(id)
+    public suspend fun getGuild(): Guild = supplier.getGuild(id)
 
     /**
      * Requests to get the [Guild] for this invite,
@@ -82,7 +82,7 @@ class PartialGuild(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
 
 
     override fun hashCode(): Int = Objects.hash(id)

@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 import dev.kord.core.event.Event as CoreEvent
 
 
-class InteractionEventHandler(
+public class InteractionEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 

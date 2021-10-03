@@ -5,7 +5,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RegionData(
+public data class RegionData(
     val id: String,
     val guildId: OptionalSnowflake,
     val name: String,
@@ -13,8 +13,8 @@ data class RegionData(
     val deprecated: Boolean,
     val custom: Boolean,
 ) {
-    companion object {
-        fun from(guildId: OptionalSnowflake, region: DiscordVoiceRegion) = with(region) {
+    public companion object {
+        public fun from(guildId: OptionalSnowflake, region: DiscordVoiceRegion): RegionData = with(region) {
             RegionData(id, guildId, name, optimal, deprecated, custom)
         }
     }

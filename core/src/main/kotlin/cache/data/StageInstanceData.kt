@@ -5,19 +5,19 @@ import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class StageInstanceData(
+public data class StageInstanceData(
     val id: Snowflake,
     val guildId: Snowflake,
     val channelId: Snowflake,
     val topic: String
 ) {
-    companion object {
-        fun from(stageInstance: DiscordStageInstance) = with(stageInstance) {
+    public companion object {
+        public fun from(stageInstance: DiscordStageInstance): StageInstanceData = with(stageInstance) {
             StageInstanceData(id, guildId, channelId, topic)
         }
     }
 }
 
-fun DiscordStageInstance.toData(): StageInstanceData {
+public fun DiscordStageInstance.toData(): StageInstanceData {
     return StageInstanceData.from(this)
 }

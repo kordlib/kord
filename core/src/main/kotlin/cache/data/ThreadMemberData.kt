@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordThreadMember
 import dev.kord.common.entity.Snowflake
@@ -8,7 +9,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ThreadMemberData(
+public data class ThreadMemberData(
     val id: Snowflake,
     @SerialName("user_id")
     val userId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -16,11 +17,11 @@ data class ThreadMemberData(
     val joinTimestamp: String,
     val flags: Int
 ) {
-    companion object {
-        val description = description(ThreadMemberData::id)
+    public companion object {
+        public val description: DataDescription<ThreadMemberData, Snowflake> = description(ThreadMemberData::id)
 
 
-        fun from(data: DiscordThreadMember, thread: Snowflake? = null): ThreadMemberData =
+        public fun from(data: DiscordThreadMember, thread: Snowflake? = null): ThreadMemberData =
             with(data) {
                 val id = this.id.value ?: thread!!
                 ThreadMemberData(id, userId, joinTimestamp, flags)
@@ -28,6 +29,6 @@ data class ThreadMemberData(
     }
 }
 
-fun DiscordThreadMember.toData(threadId: Snowflake?): ThreadMemberData {
+public fun DiscordThreadMember.toData(threadId: Snowflake?): ThreadMemberData {
     return ThreadMemberData.from(this, threadId)
 }

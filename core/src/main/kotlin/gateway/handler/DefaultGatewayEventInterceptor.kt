@@ -13,7 +13,7 @@ import dev.kord.core.event.Event as CoreEvent
 private val logger = KotlinLogging.logger { }
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-class DefaultGatewayEventInterceptor(
+public class DefaultGatewayEventInterceptor(
     cache: DataCache,
     private val eventScope: ((ShardEvent, Kord) -> CoroutineContext)? = null
 ) : GatewayEventInterceptor {

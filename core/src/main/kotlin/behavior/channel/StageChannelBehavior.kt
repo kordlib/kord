@@ -3,7 +3,6 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.cache.data.StageInstanceData
 import dev.kord.core.entity.StageInstance
 import dev.kord.core.entity.channel.Channel
@@ -22,7 +21,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface StageChannelBehavior : BaseVoiceChannelBehavior {
+public interface StageChannelBehavior : BaseVoiceChannelBehavior {
 
     /**
      * Returns a new [StageChannelBehavior] with the given [strategy].
@@ -33,16 +32,16 @@ interface StageChannelBehavior : BaseVoiceChannelBehavior {
         return StageChannelBehavior(id, guildId, kord, strategy.supply(kord))
     }
 
-    suspend fun createStageInstance(topic: String): StageInstance {
+    public suspend fun createStageInstance(topic: String): StageInstance {
         val instance = kord.rest.stageInstance.createStageInstance(id, topic)
         val data = StageInstanceData.from(instance)
 
         return StageInstance(data, kord, supplier)
     }
 
-    suspend fun getStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(id)
+    public suspend fun getStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(id)
 
-    suspend fun getStageInstance(): StageInstance = supplier.getStageInstance(id)
+    public suspend fun getStageInstance(): StageInstance = supplier.getStageInstance(id)
 
 }
 
@@ -50,7 +49,7 @@ interface StageChannelBehavior : BaseVoiceChannelBehavior {
  * Requests to edit the current user's voice state in this [StageChannel].
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun StageChannelBehavior.editCurrentVoiceState(builder: CurrentVoiceStateModifyBuilder.() -> Unit) {
+public suspend inline fun StageChannelBehavior.editCurrentVoiceState(builder: CurrentVoiceStateModifyBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     kord.rest.guild.modifyCurrentVoiceState(guildId, id, builder)
 }
@@ -59,7 +58,7 @@ suspend inline fun StageChannelBehavior.editCurrentVoiceState(builder: CurrentVo
  * Requests to edit the another user's voice state in this [StageChannel].
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun StageChannelBehavior.editVoiceState(
+public suspend inline fun StageChannelBehavior.editVoiceState(
     userId: Snowflake,
     builder: VoiceStateModifyBuilder.() -> Unit
 ) {
@@ -75,7 +74,7 @@ suspend inline fun StageChannelBehavior.editVoiceState(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend fun StageChannelBehavior.edit(builder: StageVoiceChannelModifyBuilder.() -> Unit): StageChannel {
+public suspend fun StageChannelBehavior.edit(builder: StageVoiceChannelModifyBuilder.() -> Unit): StageChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchStageVoiceChannel(id, builder)
 
@@ -83,7 +82,7 @@ suspend fun StageChannelBehavior.edit(builder: StageVoiceChannelModifyBuilder.()
     return Channel.from(data, kord) as StageChannel
 }
 
-fun StageChannelBehavior(
+public fun StageChannelBehavior(
     id: Snowflake,
     guildId: Snowflake,
     kord: Kord,

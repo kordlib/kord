@@ -1,6 +1,5 @@
 package dev.kord.core.entity
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.mapNullable
@@ -29,8 +28,8 @@ import java.util.*
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
  */
-class Message(
-    val data: MessageData,
+public class Message(
+    public val data: MessageData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : MessageBehavior {
@@ -52,28 +51,28 @@ class Message(
     /**
      * The files attached to this message.
      */
-    val attachments: Set<Attachment> get() = data.attachments.asSequence().map { Attachment(it, kord) }.toSet()
+    public val attachments: Set<Attachment> get() = data.attachments.asSequence().map { Attachment(it, kord) }.toSet()
 
     /**
      * The author of this message, if it was created by a [User].
      *
      * Returns null if the author is not a Discord account, like a [Webhook] or systems message.
      */
-    val author: User?
+    public val author: User?
         get() = if (data.webhookId.value == data.author.id) null
         else User(data.author, kord)
 
     /**
      * The content of this message.
      */
-    val content: String get() = data.content
+    public val content: String get() = data.content
 
     /**
      * The instant when this message was last edited, if ever.
      *
      * Returns null if the message was never edited.
      */
-    val editedTimestamp: Instant?
+    public val editedTimestamp: Instant?
         get() = data.editedTimestamp?.toInstant()
 
     /**
@@ -81,7 +80,7 @@ class Message(
      *
      * This includes automatically embedded [videos][Embed.video] and [urls][Embed.Provider].
      */
-    val embeds: List<Embed> get() = data.embeds.map { Embed(it, kord) }
+    public val embeds: List<Embed> get() = data.embeds.map { Embed(it, kord) }
 
     /**
      * The ids of [Channels][Channel] specifically mentioned in this message.
@@ -89,7 +88,7 @@ class Message(
      * This collection can only contain values on crossposted messages, channels
      * mentioned inside the same guild will not be present.
      */
-    val mentionedChannelIds: Set<Snowflake> get() = data.mentionedChannels.orEmpty().map { it }.toSet()
+    public val mentionedChannelIds: Set<Snowflake> get() = data.mentionedChannels.orEmpty().map { it }.toSet()
 
     /**
      * The [Channels][ChannelBehavior] specifically mentioned in this message.
@@ -97,18 +96,18 @@ class Message(
      * This collection can only contain values on crossposted messages, channels
      * mentioned inside the same guild will not be present.
      */
-    val mentionedChannelBehaviors: Set<ChannelBehavior>
+    public val mentionedChannelBehaviors: Set<ChannelBehavior>
         get() = data.mentionedChannels.orEmpty().map { ChannelBehavior(it, kord) }.toSet()
 
     /**
      * The stickers sent with this message.
      */
-    val stickers: List<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }
+    public val stickers: List<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }
 
     /**
      * If the message is a response to an [Interaction], this is the id of the interaction's application
      */
-    val applicationId: Snowflake? get() = data.application.unwrap { it.id }
+    public val applicationId: Snowflake? get() = data.application.unwrap { it.id }
 
     /**
      * The message being replied to.
@@ -117,7 +116,7 @@ class Message(
      * may not be available (through deletion or other means).
      * Compare [type] to [MessageType.Reply] for a consistent way of identifying replies.
      */
-    val referencedMessage: Message? get() = data.referencedMessage.value?.let { Message(it, kord) }
+    public val referencedMessage: Message? get() = data.referencedMessage.value?.let { Message(it, kord) }
 
     /**
      * reference data sent with crossposted messages and replies.
@@ -128,7 +127,7 @@ class Message(
      * so its state is unknown.
      * If the field exists but is null, the referenced message was deleted.
      */
-    val messageReference: MessageReference? get() = data.messageReference.value?.let { MessageReference(it, kord) }
+    public val messageReference: MessageReference? get() = data.messageReference.value?.let { MessageReference(it, kord) }
 
     /**
      * The [Channels][Channel] specifically mentioned in this message.
@@ -142,18 +141,18 @@ class Message(
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val mentionedChannels: Flow<Channel>
+    public val mentionedChannels: Flow<Channel>
         get() = mentionedChannelIds.asFlow().map { supplier.getChannel(it) }
 
     /**
      * True if this message mentions `@everyone`.
      */
-    val mentionsEveryone: Boolean get() = data.mentionEveryone
+    public val mentionsEveryone: Boolean get() = data.mentionEveryone
 
     /**
      * The [ids][Role.id] of roles mentioned in this message.
      */
-    val mentionedRoleIds: Set<Snowflake> get() = data.mentionRoles.map { it }.toSet()
+    public val mentionedRoleIds: Set<Snowflake> get() = data.mentionRoles.map { it }.toSet()
 
     /**
      * The [roles][Role] mentioned in this message.
@@ -164,7 +163,7 @@ class Message(
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val mentionedRoles: Flow<Role>
+    public val mentionedRoles: Flow<Role>
         get() = flow {
             if (mentionedRoleIds.isEmpty()) return@flow
 
@@ -175,18 +174,18 @@ class Message(
     /**
      * The [ids][User.id] of users mentioned in this message.
      */
-    val mentionedUserIds: Set<Snowflake> get() = data.mentions.map { it }.toSet()
+    public val mentionedUserIds: Set<Snowflake> get() = data.mentions.map { it }.toSet()
 
     /**
      * The [Behaviors][UserBehavior] of users mentioned in this message.
      */
-    val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(it, kord) }.toSet()
+    public val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(it, kord) }.toSet()
 
     /**
      * The [MessageInteraction] sent on this message object when it is a response to an [dev.kord.core.entity.interaction.Interaction].
      */
 
-    val interaction: MessageInteraction? get() = data.interaction.mapNullable { MessageInteraction(it, kord) }.value
+    public val interaction: MessageInteraction? get() = data.interaction.mapNullable { MessageInteraction(it, kord) }.value
 
     /**
      * The [users][User] mentioned in this message.
@@ -197,43 +196,43 @@ class Message(
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val mentionedUsers: Flow<User>
+    public val mentionedUsers: Flow<User>
         get() = data.mentions.asFlow().map { supplier.getUser(it) }
 
     /**
      * Whether the message was pinned in its [channel].
      */
-    val isPinned get() = data.pinned
+    public val isPinned: Boolean get() = data.pinned
 
     /**
      * The reactions to this message.
      */
-    val reactions: Set<Reaction> get() = data.reactions.orEmpty().asSequence().map { Reaction(it, kord) }.toSet()
+    public val reactions: Set<Reaction> get() = data.reactions.orEmpty().asSequence().map { Reaction(it, kord) }.toSet()
 
     /**
      * The instant when this message was created.
      */
-    val timestamp: Instant get() = data.timestamp.toInstant()
+    public val timestamp: Instant get() = data.timestamp.toInstant()
 
     /**
      * Whether this message was send using `\tts`.
      */
-    val tts: Boolean get() = data.tts
+    public val tts: Boolean get() = data.tts
 
     /**
      * The type of this message.
      */
-    val type: MessageType get() = data.type
+    public val type: MessageType get() = data.type
 
     /**
      * The [id][Webhook.id] of the [Webhook] that was used to send this message.
      *
      * Returns null if this message was not send using a webhook.
      */
-    val webhookId: Snowflake? get() = data.webhookId.value
+    public val webhookId: Snowflake? get() = data.webhookId.value
 
 
-    val components: List<Component>
+    public val components: List<Component>
         get() = data.components.orEmpty().map { Component(it) }
 
     /**
@@ -246,7 +245,7 @@ class Message(
      *
      * Returns null if the message was not send in a [TopGuildMessageChannel], or if the [author] is not a [User].
      */
-    suspend fun getAuthorAsMember(): Member? {
+    public suspend fun getAuthorAsMember(): Member? {
         val author = author ?: return null
         val guildId = getGuildOrNull()?.id ?: return null
         return author.asMember(guildId)
@@ -259,7 +258,7 @@ class Message(
      * @throws [EntityNotFoundException] if the [Guild] wasn't present.
      * @throws [ClassCastException] if this message wasn't made in a guild.
      */
-    suspend fun getGuild(): Guild = supplier.getChannelOf<GuildChannel>(channelId).getGuild()
+    public suspend fun getGuild(): Guild = supplier.getChannelOf<GuildChannel>(channelId).getGuild()
 
     /**
      * Requests to get the guild of this message,
@@ -267,7 +266,7 @@ class Message(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
+    public suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
 
     /**
      * Returns a new [Message] with the given [strategy].

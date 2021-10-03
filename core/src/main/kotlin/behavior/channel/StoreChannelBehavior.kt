@@ -5,7 +5,6 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.StoreChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -21,7 +20,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord Store Channel associated to a guild.
  */
-interface StoreChannelBehavior : TopGuildChannelBehavior {
+public interface StoreChannelBehavior : TopGuildChannelBehavior {
 
     /**
      * Requests to get the this behavior as a [StoreChannel].
@@ -67,7 +66,7 @@ interface StoreChannelBehavior : TopGuildChannelBehavior {
 
 }
 
-fun StoreChannelBehavior(
+public fun StoreChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
@@ -99,7 +98,7 @@ fun StoreChannelBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun StoreChannelBehavior.edit(builder: StoreChannelModifyBuilder.() -> Unit): StoreChannel {
+public suspend inline fun StoreChannelBehavior.edit(builder: StoreChannelModifyBuilder.() -> Unit): StoreChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchStoreChannel(id, builder)
     val data = ChannelData.from(response)

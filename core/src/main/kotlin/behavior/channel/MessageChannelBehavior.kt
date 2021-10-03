@@ -6,7 +6,6 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -36,7 +35,7 @@ import kotlin.time.TimeMark
 /**
  * The behavior of a Discord channel that can use messages.
  */
-interface MessageChannelBehavior : ChannelBehavior, Strategizable {
+public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
 
     /**
      * Requests to get the this behavior as a [MessageChannel].
@@ -87,7 +86,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val messages: Flow<Message> get() = getMessagesAfter(Snowflake.min)
+    public val messages: Flow<Message> get() = getMessagesAfter(Snowflake.min)
 
     /**
      * Requests to get the pinned messages in this channel.
@@ -97,7 +96,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val pinnedMessages: Flow<Message>
+    public val pinnedMessages: Flow<Message>
         get() = flow {
             val responses = kord.rest.channel.getChannelPins(id)
 
@@ -112,7 +111,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun createMessage(content: String): Message = createMessage { this.content = content }
+    public suspend fun createMessage(content: String): Message = createMessage { this.content = content }
 
     /**
      * Requests to delete a message in this channel.
@@ -120,7 +119,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun deleteMessage(id: Snowflake, reason: String? = null): Unit =
+    public suspend fun deleteMessage(id: Snowflake, reason: String? = null): Unit =
         kord.rest.channel.deleteMessage(this.id, id, reason)
 
     /**
@@ -144,7 +143,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
-    fun getMessagesBefore(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
+    public fun getMessagesBefore(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
         supplier.getMessagesBefore(channelId = id, messageId = messageId, limit = limit)
 
     /**
@@ -167,7 +166,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
-    fun getMessagesAfter(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
+    public fun getMessagesAfter(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
         supplier.getMessagesAfter(channelId = id, messageId = messageId, limit = limit)
 
     /**
@@ -186,7 +185,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws IllegalArgumentException if the [limit] is outside the range of 1..100.
      */
-    fun getMessagesAround(messageId: Snowflake, limit: Int = 100): Flow<Message> =
+    public fun getMessagesAround(messageId: Snowflake, limit: Int = 100): Flow<Message> =
         supplier.getMessagesAround(channelId = id, messageId = messageId, limit = 100)
 
     /**
@@ -195,7 +194,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws RequestException if something went wrong during the request.
      * @throws EntityNotFoundException if the message is null.
      */
-    suspend fun getMessage(messageId: Snowflake): Message = supplier.getMessage(id, messageId)
+    public suspend fun getMessage(messageId: Snowflake): Message = supplier.getMessage(id, messageId)
 
     /**
      * Requests to get a message with the given [messageId],
@@ -203,7 +202,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws RequestException if something went wrong during the request.
      */
-    suspend fun getMessageOrNull(messageId: Snowflake): Message? = supplier.getMessageOrNull(id, messageId)
+    public suspend fun getMessageOrNull(messageId: Snowflake): Message? = supplier.getMessageOrNull(id, messageId)
 
     /**
      * Requests to trigger the typing indicator for the bot in this channel.
@@ -211,7 +210,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun type() {
+    public suspend fun type() {
         kord.rest.channel.triggerTypingIndicator(id)
     }
 
@@ -221,7 +220,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun typeUntil(mark: TimeMark) {
+    public suspend fun typeUntil(mark: TimeMark) {
         while (mark.hasNotPassedNow()) {
             type()
             delay(Duration.seconds(8).inWholeMilliseconds) //bracing ourselves for some network delays
@@ -234,7 +233,7 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun typeUntil(instant: Instant) {
+    public suspend fun typeUntil(instant: Instant) {
         while (instant < Clock.System.now()) {
             type()
             delay(Duration.seconds(8).inWholeMilliseconds) //bracing ourselves for some network delays
@@ -248,11 +247,11 @@ interface MessageChannelBehavior : ChannelBehavior, Strategizable {
         MessageChannelBehavior(id, kord, strategy)
 }
 
-fun MessageChannelBehavior(
+public fun MessageChannelBehavior(
     id: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-) = object : MessageChannelBehavior {
+): MessageChannelBehavior = object : MessageChannelBehavior {
     override val id: Snowflake = id
     override val kord: Kord = kord
     override val supplier: EntitySupplier = strategy.supply(kord)
@@ -276,7 +275,7 @@ fun MessageChannelBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun MessageChannelBehavior.createMessage(builder: UserMessageCreateBuilder.() -> Unit): Message {
+public suspend inline fun MessageChannelBehavior.createMessage(builder: UserMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -292,7 +291,7 @@ suspend inline fun MessageChannelBehavior.createMessage(builder: UserMessageCrea
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> Unit): Message {
+public suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> Unit): Message {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
     }
@@ -313,7 +312,7 @@ suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> 
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() -> Unit) {
+public suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() -> Unit) {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
     }

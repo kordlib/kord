@@ -21,7 +21,7 @@ import kotlinx.datetime.Instant
  *
  * Resolved entities will always be stored in [cache] if it wasn't null or empty for flows.
  */
-class StoreEntitySupplier(
+public class StoreEntitySupplier(
     private val supplier: EntitySupplier,
     private val cache: DataCache,
     private val kord: Kord

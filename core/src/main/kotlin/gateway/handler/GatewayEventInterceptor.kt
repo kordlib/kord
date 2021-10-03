@@ -7,7 +7,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import dev.kord.core.event.Event as CoreEvent
 
-interface GatewayEventInterceptor {
+public interface GatewayEventInterceptor {
 
-    suspend fun handle(event: ShardEvent, kord: Kord): CoreEvent?
+    public suspend fun handle(event: ShardEvent, kord: Kord): CoreEvent?
 }

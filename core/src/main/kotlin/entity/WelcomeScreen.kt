@@ -11,11 +11,11 @@ import dev.kord.core.entity.channel.WelcomeScreenChannel
  * @property description the server description shown in the welcome screen.
  * @property welcomeScreenChannels  The channels shown in the welcome screen.
  */
-class WelcomeScreen(val data: WelcomeScreenData, override val kord: Kord) : KordObject {
+public class WelcomeScreen(public val data: WelcomeScreenData, override val kord: Kord) : KordObject {
 
-    val description: String? get() = data.description
+    public val description: String? get() = data.description
 
-    val welcomeScreenChannels: List<WelcomeScreenChannel>
+    public val welcomeScreenChannels: List<WelcomeScreenChannel>
         get() = data.welcomeChannels.map { WelcomeScreenChannel(it, kord) }
 
 }

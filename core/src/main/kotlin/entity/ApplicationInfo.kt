@@ -15,8 +15,8 @@ import java.util.*
 /**
  * The details of a [Discord OAuth2](https://discord.com/developers/docs/topics/oauth2) application.
  */
-class ApplicationInfo(
-    val data: ApplicationInfoData,
+public class ApplicationInfo(
+    public val data: ApplicationInfoData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordEntity, Strategizable {
@@ -24,46 +24,46 @@ class ApplicationInfo(
     override val id: Snowflake
         get() = data.id
 
-    val name: String get() = data.name
+    public val name: String get() = data.name
 
-    val description: String get() = data.description
+    public val description: String get() = data.description
 
-    val isPublic: Boolean get() = data.botPublic
+    public val isPublic: Boolean get() = data.botPublic
 
-    val requireCodeGrant: Boolean get() = data.botRequireCodeGrant
+    public val requireCodeGrant: Boolean get() = data.botRequireCodeGrant
 
     /**
      * The rpc origins of this application, empty if disabled.
      */
-    val rpcOrigins: List<String> get() = data.rpcOrigins.coerceToMissing().orEmpty()
+    public val rpcOrigins: List<String> get() = data.rpcOrigins.coerceToMissing().orEmpty()
 
-    val ownerId: Snowflake get() = data.ownerId
+    public val ownerId: Snowflake get() = data.ownerId
 
-    val owner: UserBehavior get() = UserBehavior(ownerId, kord)
+    public val owner: UserBehavior get() = UserBehavior(ownerId, kord)
 
-    val summary: String get() = data.summary
+    public val summary: String get() = data.summary
 
-    val verifyKey: String get() = data.verifyKey
+    public val verifyKey: String get() = data.verifyKey
 
-    val teamId: Snowflake? get() = data.team?.id
+    public val teamId: Snowflake? get() = data.team?.id
 
-    val team: Team? get() = data.team?.let { Team(TeamData.from(it), kord) }
+    public val team: Team? get() = data.team?.let { Team(TeamData.from(it), kord) }
 
-    val guildId: Snowflake? get() = data.guildId.value
+    public val guildId: Snowflake? get() = data.guildId.value
 
-    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
+    public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
-    val primarySkuId: Snowflake? get() = data.primarySkuId.value
+    public val primarySkuId: Snowflake? get() = data.primarySkuId.value
 
-    val slug: String? get() = data.slug.value
+    public val slug: String? get() = data.slug.value
 
-    val coverImageHash: String? get() = data.coverImage.value
+    public val coverImageHash: String? get() = data.coverImage.value
 
-    suspend fun getOwner(): User = supplier.getUser(ownerId)
+    public suspend fun getOwner(): User = supplier.getUser(ownerId)
 
-    suspend fun getOwnerOrNull(): User? = supplier.getUserOrNull(ownerId)
+    public suspend fun getOwnerOrNull(): User? = supplier.getUserOrNull(ownerId)
 
-    suspend fun getGuildOrNull(): Guild? {
+    public suspend fun getGuildOrNull(): Guild? {
         return supplier.getGuildOrNull(guildId ?: return null)
     }
 

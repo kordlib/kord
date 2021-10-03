@@ -22,8 +22,8 @@ import kotlin.contracts.contract
 /**
  * An instance of a [Discord emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
  */
-class GuildEmoji(
-    val data: EmojiData,
+public class GuildEmoji(
+    public val data: EmojiData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordEntity, Strategizable {
@@ -31,48 +31,48 @@ class GuildEmoji(
     override val id: Snowflake
         get() = data.id
 
-    val guildId: Snowflake
+    public val guildId: Snowflake
         get() = data.guildId
 
-    val mention: String
+    public val mention: String
         get() = if (isAnimated) "<a:$name:${id.asString}>" else "<:$name:${id.asString}>"
 
     /**
      * Whether this emoji can be used, may be false due to loss of Server Boosts.
      */
-    val isAvailable: Boolean get() = data.available.discordBoolean
+    public val isAvailable: Boolean get() = data.available.discordBoolean
 
     /**
      * Whether is emoji is animated.
      */
-    val isAnimated: Boolean get() = data.animated.discordBoolean
+    public val isAnimated: Boolean get() = data.animated.discordBoolean
 
     /**
      * Whether is emote is managed by Discord instead of the guild members.
      */
-    val isManaged: Boolean get() = data.managed.discordBoolean
+    public val isManaged: Boolean get() = data.managed.discordBoolean
 
     /**
      * The name of this emoji.
      *
      * This property can be null when trying to get the name of an emoji that was deleted.
      */
-    val name: String? get() = data.name
+    public val name: String? get() = data.name
 
     /**
      * Whether this emoji needs to be wrapped in colons.
      */
-    val requiresColons: Boolean get() = data.requireColons.discordBoolean
+    public val requiresColons: Boolean get() = data.requireColons.discordBoolean
 
     /**
      * The ids of the [roles][Role] for which this emoji was whitelisted.
      */
-    val roleIds: Set<Snowflake> get() = data.roles.orEmpty().toSet()
+    public val roleIds: Set<Snowflake> get() = data.roles.orEmpty().toSet()
 
     /**
      * The behaviors of the [roles][Role] for which this emoji was whitelisted.
      */
-    val roleBehaviors: Set<RoleBehavior>
+    public val roleBehaviors: Set<RoleBehavior>
         get() = data.roles.orEmpty().map { RoleBehavior(guildId = guildId, id = id, kord = kord) }.toSet()
 
     /**
@@ -84,29 +84,29 @@ class GuildEmoji(
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val roles: Flow<Role>
+    public val roles: Flow<Role>
         get() = if (roleIds.isEmpty()) emptyFlow()
         else supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
     /**
      * The behavior of the [Member] who created the emote, if present.
      */
-    val member: MemberBehavior? get() = userId?.let { MemberBehavior(guildId, it, kord) }
+    public val member: MemberBehavior? get() = userId?.let { MemberBehavior(guildId, it, kord) }
 
     /**
      * The id of the [User] who created the emote, if present.
      */
-    val userId: Snowflake? get() = data.userId.value
+    public val userId: Snowflake? get() = data.userId.value
 
     /**
      * The [User] who created the emote, if present.
      */
-    val user: UserBehavior? get() = userId?.let { UserBehavior(it, kord) }
+    public val user: UserBehavior? get() = userId?.let { UserBehavior(it, kord) }
 
     /**
      * The image as [Icon] object for the emoji
      */
-    val image: Icon get() = Icon.EmojiIcon(data.animated.discordBoolean, data.id, kord)
+    public val image: Icon get() = Icon.EmojiIcon(data.animated.discordBoolean, data.id, kord)
 
     /**
      * Requests to delete this emoji, with the given [reason].
@@ -114,7 +114,7 @@ class GuildEmoji(
      * @param reason the reason showing up in the audit log
      * @throws RequestException if anything went wrong during the request.
      */
-    suspend fun delete(reason: String? = null) {
+    public suspend fun delete(reason: String? = null) {
         kord.rest.emoji.deleteEmoji(guildId = guildId, emojiId = id, reason = reason)
     }
 
@@ -124,7 +124,7 @@ class GuildEmoji(
      *  @throws [RequestException] if anything went wrong during the request.
      */
     @OptIn(ExperimentalContracts::class)
-    suspend inline fun edit(builder: EmojiModifyBuilder.() -> Unit) {
+    public suspend inline fun edit(builder: EmojiModifyBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -137,7 +137,7 @@ class GuildEmoji(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getMember(): Member? = userId?.let { supplier.getMemberOrNull(guildId = guildId, userId = it) }
+    public suspend fun getMember(): Member? = userId?.let { supplier.getMemberOrNull(guildId = guildId, userId = it) }
 
     /**
      * Requests to get the creator of the emoji as a [User],
@@ -145,12 +145,12 @@ class GuildEmoji(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getUser(): User? = userId?.let { supplier.getUserOrNull(it) }
+    public suspend fun getUser(): User? = userId?.let { supplier.getUserOrNull(it) }
 
     /**
      * Returns a new [GuildEmoji] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>) = GuildEmoji(data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildEmoji = GuildEmoji(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 

@@ -1,15 +1,11 @@
 package dev.kord.core.entity.interaction
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
-import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
-import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Message
@@ -26,7 +22,7 @@ import dev.kord.rest.builder.component.SelectMenuBuilder
  * @see SelectMenuInteraction
  */
 
-sealed interface ComponentInteraction : Interaction, ComponentInteractionBehavior {
+public sealed interface ComponentInteraction : Interaction, ComponentInteractionBehavior {
 
     override val user: User
         get() = User(data.user.value!!, kord)
@@ -35,20 +31,20 @@ sealed interface ComponentInteraction : Interaction, ComponentInteractionBehavio
     /**
      * The message that contains the interacted component, null if the message is ephemeral.
      */
-    val message: Message?
+    public val message: Message?
         get() = data.message.unwrap { Message(it, kord, supplier) }
 
     /**
      * The [ButtonComponent.customId] or [SelectMenuComponent.customId] that triggered the interaction.
      */
-    val componentId: String get() = data.data.customId.value!!
+    public val componentId: String get() = data.data.customId.value!!
 
-    val componentType: ComponentType get() = data.data.componentType.value!!
+    public val componentType: ComponentType get() = data.data.componentType.value!!
 
     /**
      * The [Component] the user interacted with, null if the message is ephemeral.
      */
-    val component: Component?
+    public val component: Component?
 
     abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): ComponentInteraction
 
@@ -56,16 +52,16 @@ sealed interface ComponentInteraction : Interaction, ComponentInteractionBehavio
 
 }
 
-sealed interface GlobalComponentInteraction : ComponentInteraction
+public sealed interface GlobalComponentInteraction : ComponentInteraction
 
-sealed interface GuildComponentInteraction : ComponentInteraction {
+public sealed interface GuildComponentInteraction : ComponentInteraction {
 
-    val guildId: Snowflake get() = data.guildId.value!!
+    public val guildId: Snowflake get() = data.guildId.value!!
 
-    val member: Member get() = Member(data.member.value!!, user.data, kord)
+    public val member: Member get() = Member(data.member.value!!, user.data, kord)
 }
 
-sealed interface ButtonInteraction : ComponentInteraction {
+public sealed interface ButtonInteraction : ComponentInteraction {
     override val component: ButtonComponent?
         get() = message?.components.orEmpty()
             .filterIsInstance<ActionRowComponent>()
@@ -81,7 +77,7 @@ sealed interface ButtonInteraction : ComponentInteraction {
  * @throws IllegalArgumentException if the interaction is not from a [ButtonComponent] or a [SelectMenuComponent].
  */
 
-fun ComponentInteraction(
+public fun ComponentInteraction(
     data: InteractionData,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier,
@@ -106,7 +102,7 @@ fun ComponentInteraction(
  * An interaction created from a user pressing a [ButtonComponent].
  */
 
-class GlobalButtonInteraction(
+public class GlobalButtonInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
@@ -133,7 +129,7 @@ class GlobalButtonInteraction(
  * An interaction created from a user pressing a [ButtonComponent].
  */
 
-class GuildButtonInteraction(
+public class GuildButtonInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
@@ -156,7 +152,7 @@ class GuildButtonInteraction(
         "GuildButtonInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
 }
 
-class UnknownComponentInteraction(
+public class UnknownComponentInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
@@ -179,7 +175,7 @@ class UnknownComponentInteraction(
  * An interaction created from a user interacting with a [SelectMenuComponent].
  */
 
-sealed interface SelectMenuInteraction : ComponentInteraction {
+public sealed interface SelectMenuInteraction : ComponentInteraction {
 
     /**
      * The selected values, the expected range should between 0 and 25.
@@ -187,7 +183,7 @@ sealed interface SelectMenuInteraction : ComponentInteraction {
      * @see [SelectMenuBuilder.minimumValues]
      * @see [SelectMenuBuilder.maximumValues]
      */
-    val values: List<String> get() = data.data.values.orEmpty()
+    public val values: List<String> get() = data.data.values.orEmpty()
 
     override val component: SelectMenuComponent?
         get() = message?.components.orEmpty()
@@ -203,7 +199,7 @@ sealed interface SelectMenuInteraction : ComponentInteraction {
  * An interaction created from a user pressing a [ButtonComponent].
  */
 
-class GuildSelectMenuInteraction(
+public class GuildSelectMenuInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
@@ -230,7 +226,7 @@ class GuildSelectMenuInteraction(
  * An interaction created from a user pressing a [ButtonComponent].
  */
 
-class GlobalSelectMenuInteraction(
+public class GlobalSelectMenuInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier

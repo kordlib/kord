@@ -5,8 +5,8 @@ import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.event.Event
 import kotlin.coroutines.CoroutineContext
 
-class ThreadMemberUpdateEvent(
-    val member: ThreadMember,
+public class ThreadMemberUpdateEvent(
+    public val member: ThreadMember,
     override val kord: Kord,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,

@@ -7,13 +7,13 @@ import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.event.Event
 import kotlin.coroutines.CoroutineContext
 
-interface ChannelUpdateEvent : Event {
-    val channel: Channel
+public interface ChannelUpdateEvent : Event {
+    public val channel: Channel
     override val kord: Kord
         get() = channel.kord
 }
 
-class CategoryUpdateEvent(
+public class CategoryUpdateEvent(
     override val channel: Category,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -23,7 +23,7 @@ class CategoryUpdateEvent(
     }
 }
 
-class DMChannelUpdateEvent(
+public class DMChannelUpdateEvent(
     override val channel: DmChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -33,7 +33,7 @@ class DMChannelUpdateEvent(
     }
 }
 
-class NewsChannelUpdateEvent(
+public class NewsChannelUpdateEvent(
     override val channel: NewsChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -43,7 +43,7 @@ class NewsChannelUpdateEvent(
     }
 }
 
-class StoreChannelUpdateEvent(
+public class StoreChannelUpdateEvent(
     override val channel: StoreChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -53,7 +53,7 @@ class StoreChannelUpdateEvent(
     }
 }
 
-class TextChannelUpdateEvent(
+public class TextChannelUpdateEvent(
     override val channel: TextChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -63,7 +63,7 @@ class TextChannelUpdateEvent(
     }
 }
 
-class VoiceChannelUpdateEvent(
+public class VoiceChannelUpdateEvent(
     override val channel: VoiceChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -74,7 +74,7 @@ class VoiceChannelUpdateEvent(
 }
 
 
-class StageChannelUpdateEvent(
+public class StageChannelUpdateEvent(
     override val channel: StageChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -84,7 +84,7 @@ class StageChannelUpdateEvent(
     }
 }
 
-class UnknownChannelUpdateEvent(
+public class UnknownChannelUpdateEvent(
     override val channel: Channel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,

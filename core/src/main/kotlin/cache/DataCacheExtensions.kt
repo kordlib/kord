@@ -43,4 +43,4 @@ internal suspend fun DataCache.removeKordData() {
  * Creates a [DataCacheView] for this view, only removing elements that were added
  * directly to this instance.
  */
-suspend fun DataCache.createView(): DataCacheView = DataCacheView(this)
+public suspend fun DataCache.createView(): DataCacheView = DataCacheView(this)

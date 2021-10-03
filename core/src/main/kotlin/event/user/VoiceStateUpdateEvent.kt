@@ -5,9 +5,9 @@ import dev.kord.core.entity.VoiceState
 import dev.kord.core.event.Event
 import kotlin.coroutines.CoroutineContext
 
-class VoiceStateUpdateEvent(
-    val old: VoiceState?,
-    val state: VoiceState,
+public class VoiceStateUpdateEvent(
+    public val old: VoiceState?,
+    public val state: VoiceState,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = state.kord.coroutineContext,
 ) : Event {

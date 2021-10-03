@@ -7,15 +7,15 @@ import dev.kord.core.cache.data.StageInstanceData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
-class StageInstance(
-    val data: StageInstanceData,
+public class StageInstance(
+    public val data: StageInstanceData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : StageInstanceBehavior {
     override val id: Snowflake get() = data.id
-    val guildId: Snowflake get() = data.guildId
+    public val guildId: Snowflake get() = data.guildId
     override val channelId: Snowflake get() = data.channelId
-    val topic: String get() = data.topic
+    public val topic: String get() = data.topic
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StageInstanceBehavior =
         StageInstance(data, kord, strategy.supply(kord))

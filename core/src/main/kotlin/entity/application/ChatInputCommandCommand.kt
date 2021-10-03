@@ -13,87 +13,77 @@ import dev.kord.core.cache.data.ApplicationCommandSubCommandData
 import dev.kord.core.cache.data.ApplicationCommandSubcommandData
 import dev.kord.rest.service.InteractionService
 
+public sealed interface ChatInputCommandCommand : ApplicationCommand, ChatInputCommandBehavior {
 
-
- sealed interface ChatInputCommandCommand : ApplicationCommand, ChatInputCommandBehavior {
-
-    val description: String
+    public val description: String
         get() = data.description
     /**
      * The groups of this command, each group contains at least one [sub command][ChatInputSubCommand].
      */
-    val groups: Map<String, ChatInputGroup>
+    public val groups: Map<String, ChatInputGroup>
         get() = data.options.filterList { it.type == ApplicationCommandOptionType.SubCommandGroup }
             .orEmpty().associate { it.name to ChatInputGroup(ApplicationCommandGroupData(it)) }
 
     /**
      * The directly nested sub commands of this command.
      */
-    val subCommands: Map<String, ChatInputSubCommand>
+    public val subCommands: Map<String, ChatInputSubCommand>
         get() = data.options.filterList { it.type == ApplicationCommandOptionType.SubCommand }
             .orEmpty().associate { it.name to ChatInputSubCommand(ApplicationCommandSubCommandData(it)) }
 
 }
 
-
-class ChatInputGroup(
-    val data: ApplicationCommandGroupData
+public class ChatInputGroup(
+    public val data: ApplicationCommandGroupData
 ) {
     /**
      * The name of the group.
      */
-    val name: String get() = data.name
+    public val name: String get() = data.name
 
     /**
      * The description of the group.
      */
-    val description: String get() = data.description
+    public val description: String get() = data.description
 
     /**
      * The commands directly nested in this group, this map has at least one value.
      */
-    val subcommands: Map<String, ChatInputSubCommand>
+    public val subcommands: Map<String, ChatInputSubCommand>
         get() = data.subCommands.associate { it.name to ChatInputSubCommand(it) }
 }
 
-
-
-class ChatInputSubCommand(
-    val data: ApplicationCommandSubcommandData
+public class ChatInputSubCommand(
+    public val data: ApplicationCommandSubcommandData
 ) {
 
     /**
      * The name of the sub command.
      */
-    val name: String get() = data.name
+    public val name: String get() = data.name
 
     /**
      * The description of the sub command.
      */
-    val description: String get() = data.description
+    public val description: String get() = data.description
 
 
     /**
      * The parameters of this sub command. Is empty if the command takes no parameters.
      */
-    val parameters: Map<String, ApplicationCommandParameter>
+    public val parameters: Map<String, ApplicationCommandParameter>
         get() = data.parameters.orEmpty().associate { it.name to ApplicationCommandParameter(it) }
 }
 
-
-
-class GlobalChatInputCommand(
+public class GlobalChatInputCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService,
 ) : ChatInputCommandCommand, GlobalApplicationCommand,  GlobalChatInputCommandBehavior
 
-
-
-class GuildChatInputCommand(
+public class GuildChatInputCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService,
 ) : ChatInputCommandCommand, GuildApplicationCommand, GuildChatInputCommandBehavior {
     override val guildId: Snowflake
         get() = data.guildId.value!!
 }
-

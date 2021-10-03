@@ -6,7 +6,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.rest.json.response.ApplicationInfoResponse
 
-data class ApplicationInfoData(
+public data class ApplicationInfoData(
     val id: Snowflake,
     val name: String,
     val icon: String? = null,
@@ -23,9 +23,9 @@ data class ApplicationInfoData(
     val slug: Optional<String> = Optional.Missing(),
     val coverImage: Optional<String> = Optional.Missing(),
 ) {
-    companion object {
+    public companion object {
 
-        fun from(entity: ApplicationInfoResponse) = with(entity) {
+        public fun from(entity: ApplicationInfoResponse): ApplicationInfoData = with(entity) {
             ApplicationInfoData(
                 id,
                 name,

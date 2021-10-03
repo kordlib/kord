@@ -16,14 +16,14 @@ import kotlin.contracts.contract
  * The behavior of a [Discord Interaction Response](https://discord.com/developers/docs/interactions/slash-commands#interaction-response)
  */
 
-interface InteractionResponseBehavior : KordObject {
-    val applicationId: Snowflake
-    val token: String
+public interface InteractionResponseBehavior : KordObject {
+    public val applicationId: Snowflake
+    public val token: String
 
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionResponseBehavior.followUp(ephemeral: Boolean = false, builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
+public suspend inline fun InteractionResponseBehavior.followUp(ephemeral: Boolean = false, builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = FollowupMessageCreateBuilder(ephemeral).apply(builder)
     val message = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest())
@@ -40,7 +40,7 @@ suspend inline fun InteractionResponseBehavior.followUp(ephemeral: Boolean = fal
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InteractionResponseBehavior.edit(builder: InteractionResponseModifyBuilder.() -> Unit) {
+public suspend inline fun InteractionResponseBehavior.edit(builder: InteractionResponseModifyBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = InteractionResponseModifyBuilder().apply(builder)
     kord.rest.interaction.modifyInteractionResponse(applicationId, token, builder.toRequest())

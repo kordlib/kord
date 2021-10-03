@@ -5,14 +5,14 @@ import dev.kord.common.entity.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PermissionOverwriteData(
+public data class PermissionOverwriteData(
     val id: Snowflake,
     val type: OverwriteType,
     val allowed: Permissions,
     val denied: Permissions
 ) {
-    companion object {
-        fun from(entity: Overwrite) = with(entity) {
+    public companion object {
+        public fun from(entity: Overwrite): PermissionOverwriteData = with(entity) {
             PermissionOverwriteData(id, type, allow, deny)
         }
     }

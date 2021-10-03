@@ -21,20 +21,19 @@ import kotlin.contracts.contract
  * The behavior of a [Discord Followup Message](https://discord.com/developers/docs/interactions/slash-commands#followup-messages)
  */
 
-interface FollowupMessageBehavior : KordEntity, Strategizable {
+public interface FollowupMessageBehavior : KordEntity, Strategizable {
 
-    val applicationId: Snowflake
-    val token: String
-    val channelId: Snowflake
+    public val applicationId: Snowflake
+    public val token: String
+    public val channelId: Snowflake
 
-    val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
+    public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
-    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
-    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
 }
-
 
 /**
  * Requests to edit this followup message.
@@ -45,7 +44,7 @@ interface FollowupMessageBehavior : KordEntity, Strategizable {
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun FollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): EphemeralFollowupMessage {
+public suspend inline fun FollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = FollowupMessageModifyBuilder().apply(builder)
     val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, builder.toRequest())

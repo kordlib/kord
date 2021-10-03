@@ -10,7 +10,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  * This followup message is visible to *only* to the user who made the interaction.
  */
 
-interface EphemeralFollowupMessageBehavior : FollowupMessageBehavior {
+public interface EphemeralFollowupMessageBehavior : FollowupMessageBehavior {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): EphemeralFollowupMessageBehavior {
         return EphemeralFollowupMessageBehavior(id, applicationId, token, channelId, kord, strategy.supply(kord))
@@ -18,7 +18,7 @@ interface EphemeralFollowupMessageBehavior : FollowupMessageBehavior {
 }
 
 
-fun EphemeralFollowupMessageBehavior(
+public fun EphemeralFollowupMessageBehavior(
     id: Snowflake,
     applicationId: Snowflake,
     token: String,

@@ -14,36 +14,36 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-class Presence(
-    val data: PresenceData,
+public class Presence(
+    public val data: PresenceData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordObject, Strategizable {
 
-    val activities: List<Activity> get() = data.activities.map { Activity(it) }
+    public val activities: List<Activity> get() = data.activities.map { Activity(it) }
 
-    val clientStatus: ClientStatus get() = ClientStatus(data.clientStatus)
+    public val clientStatus: ClientStatus get() = ClientStatus(data.clientStatus)
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Game field is no longer present.", ReplaceWith("activities.firstOrNull()"), DeprecationLevel.ERROR)
-    val game: Activity?
+    public val game: Activity?
         get() = activities.firstOrNull()
 
-    val guildId: Snowflake? get() = data.guildId
+    public val guildId: Snowflake? get() = data.guildId
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("role ids are no longer present.", ReplaceWith("emptySet()"), DeprecationLevel.ERROR)
-    val roleIds: Set<Snowflake>?
+    public val roleIds: Set<Snowflake>?
         get() = emptySet()
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("role ids are no longer present.", ReplaceWith("emptyFlow()"), DeprecationLevel.ERROR)
-    val roles: Flow<Role>
+    public val roles: Flow<Role>
         get() = emptyFlow()
 
-    val status: PresenceStatus get() = data.status
+    public val status: PresenceStatus get() = data.status
 
-    val userId: Snowflake get() = data.userId
+    public val userId: Snowflake get() = data.userId
 
     /**
      * Requests to get the user of this presence.
@@ -51,7 +51,7 @@ class Presence(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [User] wasn't present.
      */
-    suspend fun getUser(): User = supplier.getUser(userId)
+    public suspend fun getUser(): User = supplier.getUser(userId)
 
     /**
      * Requests to get the user of this presence,
@@ -59,7 +59,7 @@ class Presence(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
+    public suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
 
     /**
      * Returns a new [Presence] with the given [strategy].
@@ -73,18 +73,18 @@ class Presence(
 
 }
 
-class ClientStatus(val data: ClientStatusData) {
-    val desktop: Client.Desktop? get() = data.desktop.value?.let { Client.Desktop(it) }
-    val mobile: Client.Mobile? get() = data.mobile.value?.let { Client.Mobile(it) }
-    val web: Client.Web? get() = data.web.value?.let { Client.Web(it) }
+public class ClientStatus(public val data: ClientStatusData) {
+    public val desktop: Client.Desktop? get() = data.desktop.value?.let { Client.Desktop(it) }
+    public val mobile: Client.Mobile? get() = data.mobile.value?.let { Client.Mobile(it) }
+    public val web: Client.Web? get() = data.web.value?.let { Client.Web(it) }
 
     override fun toString(): String {
         return "ClientStatus(data=$data)"
     }
 
-    sealed class Client(val status: PresenceStatus) {
-        class Desktop(status: PresenceStatus) : Client(status)
-        class Mobile(status: PresenceStatus) : Client(status)
-        class Web(status: PresenceStatus) : Client(status)
+    public sealed class Client(public val status: PresenceStatus) {
+        public class Desktop(status: PresenceStatus) : Client(status)
+        public class Mobile(status: PresenceStatus) : Client(status)
+        public class Web(status: PresenceStatus) : Client(status)
     }
 }

@@ -6,11 +6,11 @@ import dev.kord.core.event.Event
 import kotlin.coroutines.CoroutineContext
 
 
-sealed interface ApplicationCommandDeleteEvent : Event {
-    val command: GuildApplicationCommand
+public sealed interface ApplicationCommandDeleteEvent : Event {
+    public val command: GuildApplicationCommand
 }
 
-class ChatInputCommandDeleteEvent(
+public class ChatInputCommandDeleteEvent(
     override val command: GuildChatInputCommand,
     override val kord: Kord,
     override val shard: Int,
@@ -18,7 +18,7 @@ class ChatInputCommandDeleteEvent(
 ) : ApplicationCommandDeleteEvent
 
 
-class UserCommandDeleteEvent(
+public class UserCommandDeleteEvent(
     override val command: GuildUserCommand,
     override val kord: Kord,
     override val shard: Int,
@@ -26,7 +26,7 @@ class UserCommandDeleteEvent(
 ) : ApplicationCommandDeleteEvent
 
 
-class MessageCommandDeleteEvent(
+public class MessageCommandDeleteEvent(
     override val command: GuildMessageCommand,
     override val kord: Kord,
     override val shard: Int,
@@ -34,7 +34,7 @@ class MessageCommandDeleteEvent(
 ) : ApplicationCommandDeleteEvent
 
 
-class UnknownApplicationCommandDeleteEvent(
+public class UnknownApplicationCommandDeleteEvent(
     override val command: UnknownGuildApplicationCommand,
     override val kord: Kord,
     override val shard: Int,

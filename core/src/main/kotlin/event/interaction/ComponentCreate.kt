@@ -5,58 +5,57 @@ import dev.kord.core.entity.interaction.*
 import kotlin.coroutines.CoroutineContext
 
 
-sealed interface ComponentInteractionCreateEvent : InteractionCreateEvent {
+public sealed interface ComponentInteractionCreateEvent : InteractionCreateEvent {
     override val interaction: ComponentInteraction
 }
 
-sealed interface GlobalComponentInteractionCreateEvent : InteractionCreateEvent {
+public sealed interface GlobalComponentInteractionCreateEvent : InteractionCreateEvent {
     override val interaction: GlobalComponentInteraction
 }
 
 
-sealed interface GuildComponentInteractionCreateEvent : InteractionCreateEvent {
+public sealed interface GuildComponentInteractionCreateEvent : InteractionCreateEvent {
     override val interaction: GuildComponentInteraction
 }
 
 
-sealed interface ButtonInteractionCreateEvent : ComponentInteractionCreateEvent {
+public sealed interface ButtonInteractionCreateEvent : ComponentInteractionCreateEvent {
     override val interaction: ButtonInteraction
 }
 
 
-sealed interface  SelectMenuInteractionCreateEvent : ComponentInteractionCreateEvent {
+public sealed interface SelectMenuInteractionCreateEvent : ComponentInteractionCreateEvent {
     override val interaction: SelectMenuInteraction
 }
 
 
-class GuildButtonInteractionCreateEvent(
+public class GuildButtonInteractionCreateEvent(
     override val interaction: GuildButtonInteraction,
     override val kord: Kord,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : ButtonInteractionCreateEvent, GuildComponentInteractionCreateEvent
+) : ButtonInteractionCreateEvent, GuildComponentInteractionCreateEvent
 
 
-class GlobalButtonInteractionCreateEvent(
+public class GlobalButtonInteractionCreateEvent(
     override val interaction: GlobalButtonInteraction,
     override val kord: Kord,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : ButtonInteractionCreateEvent, GlobalComponentInteractionCreateEvent
+) : ButtonInteractionCreateEvent, GlobalComponentInteractionCreateEvent
 
 
-
-class GuildSelectMenuInteractionCreateEvent(
+public class GuildSelectMenuInteractionCreateEvent(
     override val interaction: GuildSelectMenuInteraction,
     override val kord: Kord,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : SelectMenuInteractionCreateEvent, GuildComponentInteractionCreateEvent
+) : SelectMenuInteractionCreateEvent, GuildComponentInteractionCreateEvent
 
 
-class GlobalSelectMenuInteractionCreateEvent(
+public class GlobalSelectMenuInteractionCreateEvent(
     override val interaction: GlobalSelectMenuInteraction,
     override val kord: Kord,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : SelectMenuInteractionCreateEvent, GlobalComponentInteractionCreateEvent
+) : SelectMenuInteractionCreateEvent, GlobalComponentInteractionCreateEvent

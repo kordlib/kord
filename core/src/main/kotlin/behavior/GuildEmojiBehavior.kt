@@ -18,17 +18,17 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Emoij](https://discord.com/developers/docs/resources/emoji).
  */
-interface GuildEmojiBehavior : KordEntity, Strategizable {
+public interface GuildEmojiBehavior : KordEntity, Strategizable {
 
     /**
      * The id of the guild this emojis is part of.
      */
-    val guildId: Snowflake
+    public val guildId: Snowflake
 
     /**
      * The behavior of the guild this emoji is part of.
      */
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /**
      * Requests to delete this emoji.
@@ -36,7 +36,7 @@ interface GuildEmojiBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete(reason: String? = null) {
+    public suspend fun delete(reason: String? = null) {
         kord.rest.emoji.deleteEmoji(guildId = guildId, emojiId = id, reason = reason)
     }
 
@@ -78,7 +78,7 @@ internal fun GuildEmojiBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildEmojiBehavior.edit(builder: EmojiModifyBuilder.() -> Unit): GuildEmoji {
+public suspend inline fun GuildEmojiBehavior.edit(builder: EmojiModifyBuilder.() -> Unit): GuildEmoji {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.emoji.modifyEmoji(guildId, id, builder)
     val data = EmojiData.from(guildId = guildId, id = id, entity = response)

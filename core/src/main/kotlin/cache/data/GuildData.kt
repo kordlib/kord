@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
@@ -10,7 +11,7 @@ private val ChannelData.nullableGuildId get() = guildId.value
 private val WebhookData.nullableGuildId get() = guildId.value
 
 @Serializable
-data class GuildData(
+public data class GuildData(
     val id: Snowflake,
     val name: String,
     val icon: String? = null,
@@ -59,9 +60,9 @@ data class GuildData(
     val nsfwLevel: NsfwLevel,
     val threads: Optional<List<ChannelData>> = Optional.Missing()
 ) {
-    companion object {
+    public companion object {
 
-        val description = description(GuildData::id) {
+        public val description: DataDescription<GuildData, Snowflake> = description(GuildData::id) {
 
             link(GuildData::id to RoleData::guildId)
             link(GuildData::id to ChannelData::nullableGuildId)
@@ -72,7 +73,7 @@ data class GuildData(
             link(GuildData::id to PresenceData::guildId)
         }
 
-        fun from(entity: DiscordGuild) = with(entity) {
+        public fun from(entity: DiscordGuild): GuildData = with(entity) {
             GuildData(
                 id = id,
                 name = name,
@@ -125,4 +126,4 @@ data class GuildData(
     }
 }
 
-fun DiscordGuild.toData() = GuildData.from(this)
+public fun DiscordGuild.toData(): GuildData = GuildData.from(this)

@@ -50,14 +50,14 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
  */
-interface GuildBehavior : KordEntity, Strategizable {
+public interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests to get all present bans for this guild.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val bans: Flow<Ban>
+    public val bans: Flow<Ban>
         get() = supplier.getGuildBans(id)
 
     /**
@@ -68,7 +68,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
 
      */
-    val activeThreads: Flow<ThreadChannel>
+    public val activeThreads: Flow<ThreadChannel>
     get() = supplier.getActiveThreads(id)
 
     /**
@@ -77,7 +77,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val webhooks: Flow<Webhook>
+    public val webhooks: Flow<Webhook>
         get() = supplier.getGuildWebhooks(id)
 
     /**
@@ -87,7 +87,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val channels: Flow<TopGuildChannel>
+    public val channels: Flow<TopGuildChannel>
         get() = supplier.getGuildChannels(id)
 
     /**
@@ -96,13 +96,13 @@ interface GuildBehavior : KordEntity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val emojis: Flow<GuildEmoji>
+    public val emojis: Flow<GuildEmoji>
         get() = supplier.getEmojis(id)
 
     /**
      * Requests to get the integrations of this guild.
      */
-    val integrations: Flow<Integration>
+    public val integrations: Flow<Integration>
         get() = flow {
             kord.rest.guild.getGuildIntegrations(id).forEach {
                 emit(Integration(IntegrationData.from(id, it), kord, supplier))
@@ -114,7 +114,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * This property is not resolvable through REST and will always use [Kord.cache] instead.
      */
-    val presences: Flow<Presence>
+    public val presences: Flow<Presence>
         get() = kord.cache.query<PresenceData> { idEq(PresenceData::guildId, id) }
             .asFlow()
             .map { Presence(it, kord) }
@@ -133,7 +133,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val members: Flow<Member>
+    public val members: Flow<Member>
         get() = supplier.getGuildMembers(id)
 
     /**
@@ -142,7 +142,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val regions: Flow<Region>
+    public val regions: Flow<Region>
         get() = supplier.getGuildVoiceRegions(id)
 
     /**
@@ -151,7 +151,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val roles: Flow<Role>
+    public val roles: Flow<Role>
         get() = supplier.getGuildRoles(id)
 
     /**
@@ -162,7 +162,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val voiceStates: Flow<VoiceState>
+    public val voiceStates: Flow<VoiceState>
         get() = kord.cache
             .query<VoiceStateData> { idEq(VoiceStateData::guildId, id) }
             .asFlow()
@@ -176,21 +176,21 @@ interface GuildBehavior : KordEntity, Strategizable {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val invites: Flow<Invite>
+    public val invites: Flow<Invite>
         get() = flow {
             kord.rest.guild.getGuildInvites(id).forEach {
                 emit(Invite(InviteData.from(it), kord))
             }
         }
 
-    val templates: Flow<Template>
+    public val templates: Flow<Template>
         get() = supplier.getTemplates(id)
 
     /**
      * Application commands for this guild only.
      */
 
-    val commands: Flow<GuildApplicationCommand>
+    public val commands: Flow<GuildApplicationCommand>
         get() = supplier.getGuildApplicationCommands(kord.resources.applicationId, id)
 
     /**
@@ -198,7 +198,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * [Discord sharding rules](https://discord.com/developers/docs/topics/gateway#sharding).
      * Returns `null` if no gateway for the shard is present in [kord].
      */
-    val gateway: Gateway?
+    public val gateway: Gateway?
         get() {
             val shard = id.value.shr(22).toLong() % kord.resources.shards.totalShards.coerceAtLeast(1)
             return kord.gateway.gateways[shard.toInt()]
@@ -219,7 +219,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * If no nonce was provided one will be generated instead.
      */
     @PrivilegedIntent
-    fun requestMembers(request: RequestGuildMembers): Flow<MembersChunkEvent> {
+    public fun requestMembers(request: RequestGuildMembers): Flow<MembersChunkEvent> {
         val gateway = gateway ?: return emptyFlow()
 
         val nonce = request.nonce.value ?: RequestGuildMembers.Nonce.new()
@@ -236,10 +236,10 @@ interface GuildBehavior : KordEntity, Strategizable {
     }
 
 
-    suspend fun getApplicationCommand(commandId: Snowflake) =
+    public suspend fun getApplicationCommand(commandId: Snowflake): GuildApplicationCommand =
         supplier.getGuildApplicationCommand(kord.resources.applicationId, id, commandId)
 
-    suspend fun getApplicationCommandOrNull(commandId: Snowflake) =
+    public suspend fun getApplicationCommandOrNull(commandId: Snowflake): GuildApplicationCommand? =
         supplier.getGuildApplicationCommandOrNull(kord.resources.applicationId, id, commandId)
 
     /**
@@ -248,7 +248,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the guild wasn't present.
      */
-    suspend fun asGuild(): Guild = supplier.getGuild(id)
+    public suspend fun asGuild(): Guild = supplier.getGuild(id)
 
     /**
      * Requests to get this behavior as a [Guild],
@@ -256,7 +256,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
+    public suspend fun asGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
 
     /**
      * Retrieve the [Guild] associated with this behaviour from the provided [EntitySupplier]
@@ -264,7 +264,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun fetchGuild(): Guild = supplier.getGuild(id)
+    public suspend fun fetchGuild(): Guild = supplier.getGuild(id)
 
 
     /**
@@ -273,21 +273,21 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun fetchGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
+    public suspend fun fetchGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
 
     /**
      * Requests to delete this guild.
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete() = kord.rest.guild.deleteGuild(id)
+    public suspend fun delete(): Unit = kord.rest.guild.deleteGuild(id)
 
     /**
      * Requests to leave this guild.
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun leave() = kord.rest.user.leaveGuild(id)
+    public suspend fun leave(): Unit = kord.rest.user.leaveGuild(id)
 
     /**
      * Requests to get the [Member] represented by the [userId].
@@ -295,7 +295,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the member wasn't present.
      */
-    suspend fun getMember(userId: Snowflake): Member = supplier.getMember(id, userId)
+    public suspend fun getMember(userId: Snowflake): Member = supplier.getMember(id, userId)
 
     /**
      * Requests to get up to [limit] members whose [Member.username] or [Member.nickname] match the [query].
@@ -309,7 +309,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * This function is not part of the officially documented Discord API and may be removed/altered/stop working in the future.
      */
     @KordExperimental
-    suspend fun getMembers(query: String, limit: Int = 1000): Flow<Member> = flow {
+    public suspend fun getMembers(query: String, limit: Int = 1000): Flow<Member> = flow {
         kord.rest.guild.getGuildMembers(id, query, limit).forEach {
             emit(
                 Member(
@@ -327,7 +327,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getMemberOrNull(userId: Snowflake): Member? = supplier.getMemberOrNull(id, userId)
+    public suspend fun getMemberOrNull(userId: Snowflake): Member? = supplier.getMemberOrNull(id, userId)
 
 
     /**
@@ -336,7 +336,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Role] wasn't present.
      */
-    suspend fun getRole(roleId: Snowflake): Role = supplier.getRole(guildId = id, roleId = roleId)
+    public suspend fun getRole(roleId: Snowflake): Role = supplier.getRole(guildId = id, roleId = roleId)
 
     /**
      * Requests to get the [Role] represented by the [roleId],
@@ -344,7 +344,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getRoleOrNull(roleId: Snowflake): Role? = supplier.getRoleOrNull(guildId = id, roleId = roleId)
+    public suspend fun getRoleOrNull(roleId: Snowflake): Role? = supplier.getRoleOrNull(guildId = id, roleId = roleId)
 
     /**
      * Requests to get the [Invite] represented by the [code].
@@ -355,7 +355,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Invite] wasn't present.
      */
-    suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
+    public suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
         kord.with(rest).getInvite(code, withCounts)
 
     /**
@@ -366,7 +366,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getInviteOrNull(code: String, withCounts: Boolean = true): Invite? =
+    public suspend fun getInviteOrNull(code: String, withCounts: Boolean = true): Invite? =
         kord.with(rest).getInviteOrNull(code, withCounts)
 
 
@@ -377,7 +377,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      */
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Use editSelfNickname.", ReplaceWith("editSelfNickname(newNickname)"), DeprecationLevel.ERROR)
-    suspend fun modifySelfNickname(newNickname: String? = null): String = editSelfNickname(newNickname)
+    public suspend fun modifySelfNickname(newNickname: String? = null): String = editSelfNickname(newNickname)
 
     /**
      *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
@@ -385,7 +385,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun editSelfNickname(newNickname: String? = null, reason: String? = null): String {
+    public suspend fun editSelfNickname(newNickname: String? = null, reason: String? = null): String {
         return kord.rest.guild.modifyCurrentUserNickname(
             id,
             CurrentUserNicknameModifyRequest(Optional(newNickname)),
@@ -399,7 +399,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun kick(userId: Snowflake, reason: String? = null) {
+    public suspend fun kick(userId: Snowflake, reason: String? = null) {
         kord.rest.guild.deleteGuildMember(guildId = id, userId = userId, reason = reason)
     }
 
@@ -410,7 +410,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Ban] wasn't present.
      */
-    suspend fun getBan(userId: Snowflake): Ban = supplier.getGuildBan(id, userId)
+    public suspend fun getBan(userId: Snowflake): Ban = supplier.getGuildBan(id, userId)
 
     /**
      * Requests to get the [Ban] of the [User] represented by the [userId],
@@ -418,7 +418,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getBanOrNull(userId: Snowflake): Ban? = supplier.getGuildBanOrNull(id, userId)
+    public suspend fun getBanOrNull(userId: Snowflake): Ban? = supplier.getGuildBanOrNull(id, userId)
 
     /**
      * Requests to get the [TopGuildChannel] represented by the [channelId].
@@ -428,7 +428,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [ClassCastException] if the channel is not a [TopGuildChannel].
      * @throws [IllegalArgumentException] if the channel is not part of this guild.
      */
-    suspend fun getChannel(channelId: Snowflake): GuildChannel {
+    public suspend fun getChannel(channelId: Snowflake): GuildChannel {
         val channel = supplier.getChannelOf<GuildChannel>(channelId)
         require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id}" }
         return channel
@@ -442,7 +442,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws [ClassCastException] if the channel is not a [TopGuildChannel].
      * @throws [IllegalArgumentException] if the channel is not part of this guild.
      */
-    suspend fun getChannelOrNull(channelId: Snowflake): GuildChannel? {
+    public suspend fun getChannelOrNull(channelId: Snowflake): GuildChannel? {
         val channel = supplier.getChannelOfOrNull<GuildChannel>(channelId) ?: return null
         require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id}" }
         return channel
@@ -454,7 +454,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun unban(userId: Snowflake, reason: String? = null) {
+    public suspend fun unban(userId: Snowflake, reason: String? = null) {
         kord.rest.guild.deleteGuildBan(guildId = id, userId = userId, reason = reason)
     }
 
@@ -467,7 +467,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @throws RequestException if the guild does not exist or is not public.
      * @throws [EntityNotFoundException] if the preview was not found.
      */
-    suspend fun getPreview(): GuildPreview = kord.with(rest).getGuildPreview(id)
+    public suspend fun getPreview(): GuildPreview = kord.with(rest).getGuildPreview(id)
 
     /**
      * Returns the preview of this guild. The bot does not need to present in this guild
@@ -477,7 +477,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws RequestException if the guild does not exist or is not public.
      */
-    suspend fun getPreviewOrNull(): GuildPreview? = kord.with(rest).getGuildPreviewOrNull(id)
+    public suspend fun getPreviewOrNull(): GuildPreview? = kord.with(rest).getGuildPreviewOrNull(id)
 
     /**
      * Requests to get the amount of users that would be pruned in this guild.
@@ -487,7 +487,7 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun getPruneCount(days: Int = 7): Int =
+    public suspend fun getPruneCount(days: Int = 7): Int =
         kord.rest.guild.getGuildPruneCount(id, days).pruned
 
     /**
@@ -499,17 +499,17 @@ interface GuildBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun prune(days: Int = 7, reason: String? = null): Int {
+    public suspend fun prune(days: Int = 7, reason: String? = null): Int {
         return kord.rest.guild.beginGuildPrune(id, days, true, reason).pruned!!
     }
 
-    suspend fun getWelcomeScreenOrNull(): WelcomeScreen? =
+    public suspend fun getWelcomeScreenOrNull(): WelcomeScreen? =
         rest.supply(kord).getGuildWelcomeScreenOrNull(id)
 
-    suspend fun getWelcomeScreen(): WelcomeScreen =
+    public suspend fun getWelcomeScreen(): WelcomeScreen =
         rest.supply(kord).getGuildWelcomeScreen(id)
 
-    suspend fun editWelcomeScreen(builder: WelcomeScreenModifyBuilder.() -> Unit): WelcomeScreen {
+    public suspend fun editWelcomeScreen(builder: WelcomeScreenModifyBuilder.() -> Unit): WelcomeScreen {
         val request = kord.rest.guild.modifyGuildWelcomeScreen(id, builder)
         val data = WelcomeScreenData.from(request)
         return WelcomeScreen(data, kord)
@@ -524,20 +524,20 @@ interface GuildBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun getVanityUrl(): String? {
+    public suspend fun getVanityUrl(): String? {
         val identifier = catchDiscordError(JsonErrorCode.InviteCodeInvalidOrTaken, JsonErrorCode.MissingAccess) {
             kord.rest.guild.getVanityInvite(id).code
         } ?: return null
         return "https://discord.gg/$identifier"
     }
 
-    suspend fun getWidget(): GuildWidget = supplier.getGuildWidget(id)
+    public suspend fun getWidget(): GuildWidget = supplier.getGuildWidget(id)
 
-    suspend fun getWidgetOrNull(): GuildWidget? = supplier.getGuildWidgetOrNull(id)
+    public suspend fun getWidgetOrNull(): GuildWidget? = supplier.getGuildWidgetOrNull(id)
 
-    suspend fun getTemplate(code: String) = supplier.getTemplate(code)
+    public suspend fun getTemplate(code: String): Template = supplier.getTemplate(code)
 
-    suspend fun getTemplateOrNull(code: String) = supplier.getTemplateOrNull(code)
+    public suspend fun getTemplateOrNull(code: String): Template? = supplier.getTemplateOrNull(code)
 
     /**
      * Returns a new [GuildBehavior] with the given [strategy].
@@ -545,21 +545,21 @@ interface GuildBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 }
 
-suspend inline fun <reified T: GuildApplicationCommand> GuildBehavior.getApplicationCommandOfOrNull(commandId: Snowflake): T? {
+public suspend inline fun <reified T: GuildApplicationCommand> GuildBehavior.getApplicationCommandOfOrNull(commandId: Snowflake): T? {
     return supplier.getGuildApplicationCommandOfOrNull(kord.resources.applicationId,id, commandId)
 }
 
 
-suspend inline fun <reified T: GuildApplicationCommand> GuildBehavior.getApplicationCommandOf(commandId: Snowflake): T? {
+public suspend inline fun <reified T: GuildApplicationCommand> GuildBehavior.getApplicationCommandOf(commandId: Snowflake): T? {
     return supplier.getGuildApplicationCommandOf(kord.resources.applicationId,id, commandId)
 }
 
 
-fun GuildBehavior(
+public fun GuildBehavior(
     id: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
-) = object : GuildBehavior {
+): GuildBehavior = object : GuildBehavior {
     override val id: Snowflake = id
     override val kord: Kord = kord
     override val supplier: EntitySupplier = strategy.supply(kord)
@@ -580,7 +580,7 @@ fun GuildBehavior(
 
 @OptIn(ExperimentalContracts::class)
 
-suspend inline fun GuildBehavior.createChatInputCommand(
+public suspend inline fun GuildBehavior.createChatInputCommand(
     name: String,
     description: String,
     builder: ChatInputCreateBuilder.() -> Unit = {},
@@ -594,7 +594,7 @@ suspend inline fun GuildBehavior.createChatInputCommand(
 
 @OptIn(ExperimentalContracts::class)
 
-suspend inline fun GuildBehavior.createMessageCommand(
+public suspend inline fun GuildBehavior.createMessageCommand(
     name: String,
     builder: MessageCommandCreateBuilder.() -> Unit = {},
 ): GuildMessageCommand {
@@ -604,7 +604,7 @@ suspend inline fun GuildBehavior.createMessageCommand(
 
 @OptIn(ExperimentalContracts::class)
 
-suspend inline fun GuildBehavior.createUserCommand(
+public suspend inline fun GuildBehavior.createUserCommand(
     name: String,
     builder: UserCommandCreateBuilder.() -> Unit = {},
 ): GuildUserCommand {
@@ -616,7 +616,7 @@ suspend inline fun GuildBehavior.createUserCommand(
 
 @OptIn(ExperimentalContracts::class)
 
-suspend inline fun GuildBehavior.createApplicationCommands(
+public suspend inline fun GuildBehavior.createApplicationCommands(
     builder: MultiApplicationCommandBuilder.() -> Unit
 ): Flow<GuildApplicationCommand> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -631,7 +631,7 @@ suspend inline fun GuildBehavior.createApplicationCommands(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): Guild {
+public suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): Guild {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -647,7 +647,7 @@ suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): G
 )
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
+public suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -655,7 +655,7 @@ suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> U
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createEmoji(
+public suspend inline fun GuildBehavior.createEmoji(
     name: String,
     image: Image,
     builder: EmojiCreateBuilder.() -> Unit = {}
@@ -681,7 +681,7 @@ suspend inline fun GuildBehavior.createEmoji(
 )
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
+public suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -697,7 +697,7 @@ suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBui
  */
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createTextChannel(
+public suspend inline fun GuildBehavior.createTextChannel(
     name: String,
     builder: TextChannelCreateBuilder.() -> Unit = {}
 ): TextChannel {
@@ -724,7 +724,7 @@ suspend inline fun GuildBehavior.createTextChannel(
 )
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
+public suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -739,7 +739,7 @@ suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateB
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createVoiceChannel(
+public suspend inline fun GuildBehavior.createVoiceChannel(
     name: String,
     builder: VoiceChannelCreateBuilder.() -> Unit = {}
 ): VoiceChannel {
@@ -766,7 +766,7 @@ suspend inline fun GuildBehavior.createVoiceChannel(
 )
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
+public suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -781,7 +781,7 @@ suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBui
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createNewsChannel(
+public suspend inline fun GuildBehavior.createNewsChannel(
     name: String,
     builder: NewsChannelCreateBuilder.() -> Unit = {}
 ): NewsChannel {
@@ -809,7 +809,7 @@ suspend inline fun GuildBehavior.createNewsChannel(
 )
 @DeprecatedSinceKord("0.7.0")
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
+public suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -824,7 +824,7 @@ suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createCategory(
+public suspend inline fun GuildBehavior.createCategory(
     name: String,
     builder: CategoryCreateBuilder.() -> Unit = {}
 ): Category {
@@ -843,7 +843,7 @@ suspend inline fun GuildBehavior.createCategory(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPositionModifyBuilder.() -> Unit) {
+public suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPositionModifyBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -860,7 +860,7 @@ suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPosit
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyBuilder.() -> Unit): Flow<Role> {
+public suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyBuilder.() -> Unit): Flow<Role> {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -879,7 +879,7 @@ suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyB
 @OptIn(ExperimentalContracts::class)
 @DeprecatedSinceKord("0.7.0")
 @Deprecated("Use createRole instead.", ReplaceWith("createRole(builder)"), DeprecationLevel.ERROR)
-suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit = {}): Role = createRole(builder)
+public suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit = {}): Role = createRole(builder)
 
 /**
  * Requests to add a new role to this guild.
@@ -889,7 +889,7 @@ suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit =
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.createRole(builder: RoleCreateBuilder.() -> Unit = {}): Role {
+public suspend inline fun GuildBehavior.createRole(builder: RoleCreateBuilder.() -> Unit = {}): Role {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -905,7 +905,7 @@ suspend inline fun GuildBehavior.createRole(builder: RoleCreateBuilder.() -> Uni
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
+public suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -920,7 +920,7 @@ suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilde
  * @throws [ClassCastException] if the channel is not of type [T].
  * @throws [IllegalArgumentException] if the channel is not part of this guild.
  */
-suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOf(channelId: Snowflake): T {
+public suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOf(channelId: Snowflake): T {
     val channel = supplier.getChannelOf<T>(channelId)
     require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id}" }
     return channel
@@ -934,14 +934,14 @@ suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOf(channel
  * @throws [ClassCastException] if the channel is not of type [T].
  * @throws [IllegalArgumentException] if the channel is not part of this guild.
  */
-suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfOrNull(channelId: Snowflake): T? {
+public suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfOrNull(channelId: Snowflake): T? {
     val channel = supplier.getChannelOfOrNull<T>(channelId) ?: return null
     require(channel.guildId == this.id) { "channel ${channelId.value} is not in guild ${this.id}" }
     return channel
 }
 
 @OptIn(ExperimentalContracts::class)
-suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
+public suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)
 }
@@ -962,7 +962,7 @@ suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.()
  *  ```
  */
 @OptIn(ExperimentalContracts::class)
-inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> {
+public inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
 }
@@ -986,7 +986,7 @@ inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.(
  */
 @OptIn(ExperimentalContracts::class)
 @PrivilegedIntent
-inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }): Flow<MembersChunkEvent> {
+public inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }): Flow<MembersChunkEvent> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
     return requestMembers(request)
@@ -994,7 +994,7 @@ inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -
 
 @OptIn(ExperimentalContracts::class)
 
-suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
+public suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 

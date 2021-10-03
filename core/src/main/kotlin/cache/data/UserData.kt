@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordOptionallyMemberUser
 import dev.kord.common.entity.DiscordUser
@@ -14,7 +15,7 @@ import kotlinx.serialization.Serializable
 private val WebhookData.nullableUserId get() = userId.value
 
 @Serializable
-data class UserData(
+public data class UserData(
     val id: Snowflake,
     val username: String,
     val discriminator: String,
@@ -24,9 +25,9 @@ data class UserData(
     val banner: String? = null,
     val accentColor: Int? = null
 ) {
-    companion object {
+    public companion object {
 
-        val description
+        public val description: DataDescription<UserData, Snowflake>
             get() = description(UserData::id) {
                 link(UserData::id to MemberData::userId)
                 link(UserData::id to WebhookData::nullableUserId)
@@ -34,19 +35,19 @@ data class UserData(
                 link(UserData::id to PresenceData::userId)
             }
 
-        fun from(entity: DiscordUser) = with(entity) {
+        public fun from(entity: DiscordUser): UserData = with(entity) {
             UserData(id, username, discriminator, avatar, bot, publicFlags, banner, accentColor)
         }
 
-        fun from(entity: DiscordInviteUser) = with(entity) {
+        public fun from(entity: DiscordInviteUser): UserData = with(entity) {
             UserData(id, username, discriminator, avatar, bot, publicFlags)
         }
 
-        fun from(entity: DiscordOptionallyMemberUser) = with(entity) {
+        public fun from(entity: DiscordOptionallyMemberUser): UserData = with(entity) {
             UserData(id, username, discriminator, avatar, bot, publicFlags)
         }
 
     }
 }
 
-fun DiscordUser.toData() = UserData.from(this)
+public fun DiscordUser.toData(): UserData = UserData.from(this)

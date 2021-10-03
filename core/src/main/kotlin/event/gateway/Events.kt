@@ -16,20 +16,20 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlin.coroutines.CoroutineContext
 
-sealed class GatewayEvent : Event
+public sealed class GatewayEvent : Event
 
-class ConnectEvent(
+public class ConnectEvent(
     override val kord: Kord,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : GatewayEvent()
 
-sealed class DisconnectEvent : GatewayEvent() {
+public sealed class DisconnectEvent : GatewayEvent() {
 
     /**
      * A Gateway was detached, all resources tied to that gateway should be freed.
      */
-    class DetachEvent(
+    public class DetachEvent(
         override val kord: Kord,
         override val shard: Int,
         override val coroutineContext: CoroutineContext = kord.coroutineContext,
@@ -42,7 +42,7 @@ sealed class DisconnectEvent : GatewayEvent() {
     /**
      * The user closed the Gateway connection.
      */
-    class UserCloseEvent(
+    public class UserCloseEvent(
         override val kord: Kord,
         override val shard: Int,
         override val coroutineContext: CoroutineContext = kord.coroutineContext,
@@ -55,7 +55,7 @@ sealed class DisconnectEvent : GatewayEvent() {
     /**
      * The connection was closed because of a timeout, probably due to a loss of internet connection.
      */
-    class TimeoutEvent(
+    public class TimeoutEvent(
         override val kord: Kord,
         override val shard: Int,
         override val coroutineContext: CoroutineContext = kord.coroutineContext,
@@ -70,11 +70,11 @@ sealed class DisconnectEvent : GatewayEvent() {
      *
      * @param recoverable true if the gateway will automatically try to reconnect.
      */
-    class DiscordCloseEvent(
+    public class DiscordCloseEvent(
         override val kord: Kord,
         override val shard: Int,
-        val closeCode: GatewayCloseCode,
-        val recoverable: Boolean,
+        public val closeCode: GatewayCloseCode,
+        public val recoverable: Boolean,
         override val coroutineContext: CoroutineContext = kord.coroutineContext,
     ) : DisconnectEvent() {
         override fun toString(): String {
@@ -86,7 +86,7 @@ sealed class DisconnectEvent : GatewayEvent() {
      *  The Gateway has failed to establish a connection too many times and will not try to reconnect anymore.
      *  The user is free to manually connect again using [Gateway.start], otherwise all resources linked to the Gateway should free and the Gateway [detached][Gateway.detach].
      */
-    class RetryLimitReachedEvent(
+    public class RetryLimitReachedEvent(
         override val kord: Kord,
         override val shard: Int,
         override val coroutineContext: CoroutineContext = kord.coroutineContext,
@@ -99,7 +99,7 @@ sealed class DisconnectEvent : GatewayEvent() {
     /**
      * Discord requested a reconnect, the gateway will close and attempt to resume the session.
      */
-    class ReconnectingEvent(
+    public class ReconnectingEvent(
         override val kord: Kord,
         override val shard: Int,
         override val coroutineContext: CoroutineContext = kord.coroutineContext,
@@ -112,7 +112,7 @@ sealed class DisconnectEvent : GatewayEvent() {
     /**
      * The gateway closed and will attempt to start a new session.
      */
-    class SessionReset(
+    public class SessionReset(
         override val kord: Kord,
         override val shard: Int,
         override val coroutineContext: CoroutineContext = kord.coroutineContext,
@@ -126,7 +126,7 @@ sealed class DisconnectEvent : GatewayEvent() {
      * Discord is no longer responding to the gateway commands, the connection will be closed and an attempt to resume the session will be made.
      * Any [commands][Command] send recently might not complete, and won't be automatically requeued.
      */
-    class ZombieConnectionEvent(
+    public class ZombieConnectionEvent(
         override val kord: Kord,
         override val shard: Int,
         override val coroutineContext: CoroutineContext = kord.coroutineContext,
@@ -138,20 +138,20 @@ sealed class DisconnectEvent : GatewayEvent() {
 
 }
 
-class ReadyEvent(
-    val gatewayVersion: Int,
-    val guildIds: Set<Snowflake>,
-    val self: User,
-    val sessionId: String,
+public class ReadyEvent(
+    public val gatewayVersion: Int,
+    public val guildIds: Set<Snowflake>,
+    public val self: User,
+    public val sessionId: String,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : GatewayEvent(), Strategizable {
 
-    val guilds: Set<GuildBehavior> get() = guildIds.map { GuildBehavior(it, kord) }.toSet()
+    public val guilds: Set<GuildBehavior> get() = guildIds.map { GuildBehavior(it, kord) }.toSet()
 
-    suspend fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
+    public suspend fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReadyEvent =
         ReadyEvent(gatewayVersion, guildIds, self, sessionId, kord, shard, strategy.supply(kord))
@@ -161,7 +161,7 @@ class ReadyEvent(
     }
 }
 
-class ResumedEvent(
+public class ResumedEvent(
     override val kord: Kord,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = kord.coroutineContext,

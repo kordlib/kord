@@ -18,7 +18,8 @@ import kotlinx.datetime.Instant
  * is not present from the first supplier it will be fetched from [other] instead. Operations that return flows
  * will only fall back to [other] when the returned flow contained no elements.
  */
-infix fun EntitySupplier.withFallback(other: EntitySupplier): EntitySupplier = FallbackEntitySupplier(this, other)
+public infix fun EntitySupplier.withFallback(other: EntitySupplier): EntitySupplier =
+    FallbackEntitySupplier(this, other)
 
 private class FallbackEntitySupplier(val first: EntitySupplier, val second: EntitySupplier) : EntitySupplier {
 

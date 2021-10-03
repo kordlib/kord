@@ -5,13 +5,13 @@ import dev.kord.core.entity.channel.*
 import dev.kord.core.event.Event
 import kotlin.coroutines.CoroutineContext
 
-interface ChannelDeleteEvent : Event {
-    val channel: Channel
+public interface ChannelDeleteEvent : Event {
+    public val channel: Channel
     override val kord: Kord
         get() = channel.kord
 }
 
-class CategoryDeleteEvent(
+public class CategoryDeleteEvent(
     override val channel: Category,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -21,7 +21,7 @@ class CategoryDeleteEvent(
     }
 }
 
-class DMChannelDeleteEvent(
+public class DMChannelDeleteEvent(
     override val channel: DmChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -31,7 +31,7 @@ class DMChannelDeleteEvent(
     }
 }
 
-class NewsChannelDeleteEvent(
+public class NewsChannelDeleteEvent(
     override val channel: NewsChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -41,7 +41,7 @@ class NewsChannelDeleteEvent(
     }
 }
 
-class StoreChannelDeleteEvent(
+public class StoreChannelDeleteEvent(
     override val channel: StoreChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -51,7 +51,7 @@ class StoreChannelDeleteEvent(
     }
 }
 
-class TextChannelDeleteEvent(
+public class TextChannelDeleteEvent(
     override val channel: TextChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -61,7 +61,7 @@ class TextChannelDeleteEvent(
     }
 }
 
-class VoiceChannelDeleteEvent(
+public class VoiceChannelDeleteEvent(
     override val channel: VoiceChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -71,7 +71,7 @@ class VoiceChannelDeleteEvent(
     }
 }
 
-class StageChannelDeleteEvent(
+public class StageChannelDeleteEvent(
     override val channel: StageChannel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
@@ -81,7 +81,7 @@ class StageChannelDeleteEvent(
     }
 }
 
-class UnknownChannelDeleteEvent(
+public class UnknownChannelDeleteEvent(
     override val channel: Channel,
     override val shard: Int,
     override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,

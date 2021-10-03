@@ -1,6 +1,5 @@
 package dev.kord.core.behavior
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
@@ -30,23 +29,23 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Message](https://discord.com/developers/docs/resources/channel#message-object).
  */
-interface MessageBehavior : KordEntity, Strategizable {
+public interface MessageBehavior : KordEntity, Strategizable {
     /**
      * The channel id this message belongs to.
      */
-    val channelId: Snowflake
+    public val channelId: Snowflake
 
     /**
      * The channel behavior that this message belongs to.
      */
-    val channel get() = MessageChannelBehavior(channelId, kord)
+    public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
     /**
      * Requests to get the channel this message was send in.
      */
-    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
-    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
      * Requests to get the this behavior as a [Message].
@@ -54,7 +53,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the message wasn't present.
      */
-    suspend fun asMessage(): Message = supplier.getMessage(channelId = channelId, messageId = id)
+    public suspend fun asMessage(): Message = supplier.getMessage(channelId = channelId, messageId = id)
 
     /**
      * Requests to get this behavior as a [Message],
@@ -62,7 +61,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = id)
+    public suspend fun asMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = id)
 
     /**
      * Retrieve the [Message] associated with this behaviour from the provided [EntitySupplier]
@@ -70,7 +69,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun fetchMessage(): Message = supplier.getMessage(channelId, id)
+    public suspend fun fetchMessage(): Message = supplier.getMessage(channelId, id)
 
 
     /**
@@ -79,7 +78,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun fetchMessageOrNull(): Message? = supplier.getMessageOrNull(channelId, id)
+    public suspend fun fetchMessageOrNull(): Message? = supplier.getMessageOrNull(channelId, id)
 
     /**
      * Requests to delete this message.
@@ -87,7 +86,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete(reason: String? = null) {
+    public suspend fun delete(reason: String? = null) {
         kord.rest.channel.deleteMessage(channelId = channelId, messageId = id, reason = reason)
     }
 
@@ -100,7 +99,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
 
-    fun getReactors(emoji: ReactionEmoji): Flow<User> =
+    public fun getReactors(emoji: ReactionEmoji): Flow<User> =
         kord.with(EntitySupplyStrategy.rest).getReactors(channelId, id, emoji)
 
     /**
@@ -108,7 +107,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun addReaction(emoji: ReactionEmoji) {
+    public suspend fun addReaction(emoji: ReactionEmoji) {
         kord.rest.channel.createReaction(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
     }
 
@@ -117,7 +116,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun addReaction(emoji: GuildEmoji) {
+    public suspend fun addReaction(emoji: GuildEmoji) {
         addReaction(ReactionEmoji.from(emoji))
     }
 
@@ -133,7 +132,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
 
-    suspend fun publish(): Message {
+    public suspend fun publish(): Message {
         val response = kord.rest.channel.crossPost(channelId = channelId, messageId = id)
         val data = MessageData.from(response)
         return Message(data, kord)
@@ -144,7 +143,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun deleteReaction(userId: Snowflake, emoji: ReactionEmoji) {
+    public suspend fun deleteReaction(userId: Snowflake, emoji: ReactionEmoji) {
         kord.rest.channel.deleteReaction(
             channelId = channelId,
             messageId = id,
@@ -158,7 +157,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun deleteOwnReaction(emoji: ReactionEmoji) {
+    public suspend fun deleteOwnReaction(emoji: ReactionEmoji) {
         kord.rest.channel.deleteOwnReaction(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
     }
 
@@ -167,7 +166,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun deleteAllReactions() {
+    public suspend fun deleteAllReactions() {
         kord.rest.channel.deleteAllReactions(channelId = channelId, messageId = id)
     }
 
@@ -176,7 +175,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun deleteReaction(emoji: ReactionEmoji) {
+    public suspend fun deleteReaction(emoji: ReactionEmoji) {
         kord.rest.channel.deleteAllReactionsForEmoji(channelId = channelId, messageId = id, emoji = emoji.urlFormat)
     }
 
@@ -186,7 +185,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun pin(reason: String? = null) {
+    public suspend fun pin(reason: String? = null) {
         kord.rest.channel.addPinnedMessage(channelId = channelId, messageId = id, reason = reason)
     }
 
@@ -196,7 +195,7 @@ interface MessageBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun unpin(reason: String? = null) {
+    public suspend fun unpin(reason: String? = null) {
         kord.rest.channel.deletePinnedMessage(channelId = channelId, messageId = id, reason)
     }
 
@@ -209,12 +208,12 @@ interface MessageBehavior : KordEntity, Strategizable {
 
 }
 
-fun MessageBehavior(
+public fun MessageBehavior(
     channelId: Snowflake,
     messageId: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
-) = object : MessageBehavior {
+): MessageBehavior = object : MessageBehavior {
     override val channelId: Snowflake = channelId
     override val id: Snowflake = messageId
     override val kord: Kord = kord
@@ -241,7 +240,7 @@ fun MessageBehavior(
  * @see editWebhookMessage
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun MessageBehavior.edit(builder: UserMessageModifyBuilder.() -> Unit): Message {
+public suspend inline fun MessageBehavior.edit(builder: UserMessageModifyBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -262,7 +261,7 @@ suspend inline fun MessageBehavior.edit(builder: UserMessageModifyBuilder.() -> 
  * @see edit
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun MessageBehavior.editWebhookMessage(
+public suspend inline fun MessageBehavior.editWebhookMessage(
     webhookId: Snowflake,
     token: String,
     builder: WebhookMessageModifyBuilder.() -> Unit
@@ -289,7 +288,7 @@ suspend inline fun MessageBehavior.editWebhookMessage(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun MessageBehavior.reply(builder: UserMessageCreateBuilder.() -> Unit): Message {
+public suspend inline fun MessageBehavior.reply(builder: UserMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MessageReferenceData(
+public data class MessageReferenceData(
     @SerialName("message_id")
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("channel_id")
@@ -14,8 +14,8 @@ data class MessageReferenceData(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
 ) {
-    companion object {
-        fun from(entity: DiscordMessageReference): MessageReferenceData = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordMessageReference): MessageReferenceData = with(entity) {
             return MessageReferenceData(id, channelId, guildId)
         }
     }

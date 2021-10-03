@@ -4,14 +4,14 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.gateway.ThreadListSync
 
-class ThreadListSyncData(
-    val guildId: Snowflake,
-    val channelIds: Optional<List<Snowflake>> = Optional.Missing(),
-    val threads: List<ChannelData>,
-    val members: List<ThreadMemberData>
+public class ThreadListSyncData(
+    public val guildId: Snowflake,
+    public val channelIds: Optional<List<Snowflake>> = Optional.Missing(),
+    public val threads: List<ChannelData>,
+    public val members: List<ThreadMemberData>
 ) {
-    companion object {
-        fun from(event: ThreadListSync): ThreadListSyncData = with(event.sync) {
+    public companion object {
+        public fun from(event: ThreadListSync): ThreadListSyncData = with(event.sync) {
             return ThreadListSyncData(
                 guildId,
                 channelIds,

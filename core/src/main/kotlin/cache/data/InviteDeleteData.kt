@@ -5,14 +5,14 @@ import dev.kord.gateway.DiscordDeletedInvite
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class InviteDeleteData(
+public data class InviteDeleteData(
     val channelId: Snowflake,
     val guildId: Snowflake,
     val code: String
 ) {
 
-    companion object {
-        fun from(entity: DiscordDeletedInvite): InviteDeleteData = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordDeletedInvite): InviteDeleteData = with(entity) {
             InviteDeleteData(channelId, guildId, code)
         }
     }

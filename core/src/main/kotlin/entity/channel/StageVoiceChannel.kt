@@ -18,7 +18,7 @@ import java.util.*
  * An instance of a [Discord Stage Channel](https://support.discord.com/hc/en-us/articles/1500005513722)
  * associated to a community guild.
  */
-class StageChannel(
+public class StageChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
@@ -27,12 +27,12 @@ class StageChannel(
     /**
      * The bitrate (in bits) of this channel.
      */
-    val bitrate: Int get() = data.bitrate.getOrThrow()
+    public val bitrate: Int get() = data.bitrate.getOrThrow()
 
     /**
      * The user limit of the voice channel.
      */
-    val userLimit: Int get() = data.userLimit.getOrThrow()
+    public val userLimit: Int get() = data.userLimit.getOrThrow()
 
     /**
      * returns a new [StageChannel] with the given [strategy].
@@ -67,7 +67,7 @@ class StageChannel(
      * @return a [VoiceConnection] representing the connection to this [VoiceConnection].
      */
     @KordVoice
-    suspend fun connect(builder: VoiceConnectionBuilder.() -> Unit): VoiceConnection {
+    public suspend fun connect(builder: VoiceConnectionBuilder.() -> Unit): VoiceConnection {
         val voiceConnection = VoiceConnection(
             getGuild().gateway ?: GatewayNotFoundException.voiceConnectionGatewayNotFound(guildId),
             kord.selfId,

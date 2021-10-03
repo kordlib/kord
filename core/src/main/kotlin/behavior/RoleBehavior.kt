@@ -26,21 +26,21 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Role](https://discord.com/developers/docs/topics/permissions#role-object) associated to a [guild].
  */
-interface RoleBehavior : KordEntity, Strategizable {
+public interface RoleBehavior : KordEntity, Strategizable {
     /**
      * The id of the guild this channel is associated to.
      */
-    val guildId: Snowflake
+    public val guildId: Snowflake
 
     /**
      * The guild behavior this channel is associated to.
      */
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /**
      * The raw mention of this entity.
      */
-    val mention: String
+    public val mention: String
         get() {
             return if (guildId == id) "@everyone"
             else "<@&${id.asString}>"
@@ -52,7 +52,7 @@ interface RoleBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun asRole(): Role = supplier.getRole(guildId, id)
+    public suspend fun asRole(): Role = supplier.getRole(guildId, id)
 
     /**
      * Requests to get this behavior as a [Role] if its not an instance of a [Role],
@@ -60,7 +60,7 @@ interface RoleBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asRoleOrNull(): Role? = supplier.getRoleOrNull(guildId, id)
+    public suspend fun asRoleOrNull(): Role? = supplier.getRoleOrNull(guildId, id)
 
     /**
      * Retrieve the [Role] associated with this behaviour from the provided [EntitySupplier]
@@ -68,7 +68,7 @@ interface RoleBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun fetchRole(): Role = supplier.getRole(guildId, id)
+    public suspend fun fetchRole(): Role = supplier.getRole(guildId, id)
 
 
     /**
@@ -77,7 +77,7 @@ interface RoleBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun fetchRoleOrNull(): Role? = supplier.getRoleOrNull(guildId, id)
+    public suspend fun fetchRoleOrNull(): Role? = supplier.getRoleOrNull(guildId, id)
 
     /**
      * Requests to change the [position] of this role.
@@ -88,7 +88,7 @@ interface RoleBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun changePosition(position: Int): Flow<Role> {
+    public suspend fun changePosition(position: Int): Flow<Role> {
         val response = kord.rest.guild.modifyGuildRolePosition(guildId) {
             move(id to position)
         }
@@ -100,7 +100,7 @@ interface RoleBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun getPosition(): Int = supplier.getGuildRoles(guildId).sorted().indexOfFirstOrNull { it.id == id }!!
+    public suspend fun getPosition(): Int = supplier.getGuildRoles(guildId).sorted().indexOfFirstOrNull { it.id == id }!!
 
     /**
      * Requests to delete this role.
@@ -108,7 +108,7 @@ interface RoleBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete(reason: String? = null) {
+    public suspend fun delete(reason: String? = null) {
         kord.rest.guild.deleteGuildRole(guildId = guildId, roleId = id, reason = reason)
     }
 
@@ -120,7 +120,7 @@ interface RoleBehavior : KordEntity, Strategizable {
 
 }
 
-fun RoleBehavior(
+public fun RoleBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
@@ -152,7 +152,7 @@ fun RoleBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun RoleBehavior.edit(builder: RoleModifyBuilder.() -> Unit): Role {
+public suspend inline fun RoleBehavior.edit(builder: RoleModifyBuilder.() -> Unit): Role {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

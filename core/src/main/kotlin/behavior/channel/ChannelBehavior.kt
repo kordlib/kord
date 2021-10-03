@@ -3,12 +3,9 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
-import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -20,13 +17,13 @@ import java.util.*
 /**
  * The behavior of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
  */
-interface ChannelBehavior : KordEntity, Strategizable {
+public interface ChannelBehavior : KordEntity, Strategizable {
 
     /**
      * This channel [formatted as a mention](https://discord.com/developers/docs/reference#message-formatting)
      * as used by the Discord API.
      */
-    val mention get() = "<#${id.value}>"
+    public val mention: String get() = "<#${id.value}>"
 
     /**
      * Requests to get this behavior as a [Channel] .
@@ -34,7 +31,7 @@ interface ChannelBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
      */
-    suspend fun asChannel(): Channel = supplier.getChannel(id)
+    public suspend fun asChannel(): Channel = supplier.getChannel(id)
 
     /**
      * Requests to get this behavior as a [Channel],
@@ -42,7 +39,7 @@ interface ChannelBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun asChannelOrNull(): Channel? = supplier.getChannelOrNull(id)
+    public suspend fun asChannelOrNull(): Channel? = supplier.getChannelOrNull(id)
 
     /**
      * Retrieve the [Channel] associated with this behaviour from the provided [EntitySupplier]
@@ -50,7 +47,7 @@ interface ChannelBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun fetchChannel(): Channel = supplier.getChannel(id)
+    public suspend fun fetchChannel(): Channel = supplier.getChannel(id)
 
 
     /**
@@ -59,7 +56,7 @@ interface ChannelBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun fetchChannelOrNull(): Channel? = supplier.getChannelOrNull(id)
+    public suspend fun fetchChannelOrNull(): Channel? = supplier.getChannelOrNull(id)
 
     /**
      * Requests to delete a channel (or close it if this is a dm channel).
@@ -67,7 +64,7 @@ interface ChannelBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete(reason: String? = null) {
+    public suspend fun delete(reason: String? = null) {
         kord.rest.channel.deleteChannel(id, reason)
     }
 
@@ -85,7 +82,7 @@ interface ChannelBehavior : KordEntity, Strategizable {
  * @throws [RequestException] if anything went wrong during the request.
  * @throws [ClassCastException] if the channel is not of type [T]
  */
-suspend inline fun <reified T: Channel> ChannelBehavior.ofOrNull(): T? = supplier.getChannelOfOrNull(id)
+public suspend inline fun <reified T: Channel> ChannelBehavior.ofOrNull(): T? = supplier.getChannelOfOrNull(id)
 
 /**
  * Requests to get the [Channel] represented by the [id].
@@ -94,9 +91,9 @@ suspend inline fun <reified T: Channel> ChannelBehavior.ofOrNull(): T? = supplie
  * @throws [EntityNotFoundException] if the [Channel] wasn't present.
  * @throws [ClassCastException] if the channel is not of type  [T].
  */
-suspend inline fun <reified T: Channel> ChannelBehavior.of(): T = supplier.getChannelOf(id)
+public suspend inline fun <reified T: Channel> ChannelBehavior.of(): T = supplier.getChannelOf(id)
 
-fun ChannelBehavior(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy) =
+public fun ChannelBehavior(id: Snowflake, kord: Kord, strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy): ChannelBehavior =
     object : ChannelBehavior {
         override val id: Snowflake = id
         override val kord: Kord = kord
