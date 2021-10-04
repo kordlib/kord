@@ -1,7 +1,6 @@
 package dev.kord.core.entity.interaction
 
 import cache.data.MessageInteractionData
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
@@ -20,8 +19,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  * This is sent on the [Message] object when the message is a response to an [Interaction].
  */
 
-class MessageInteraction(
-    val data: MessageInteractionData,
+public class MessageInteraction(
+    public val data: MessageInteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordEntity, Strategizable {
@@ -33,17 +32,17 @@ class MessageInteraction(
     /**
      * the [name][ApplicationCommand.name] of the [ApplicationCommand] that triggered this message.
      */
-    val name: String get() = data.name
+    public val name: String get() = data.name
 
     /**
      * The [UserBehavior] of the [user][Interaction.user] who invoked the [Interaction]
      */
-    val user: UserBehavior get() = UserBehavior(data.user, kord)
+    public val user: UserBehavior get() = UserBehavior(data.user, kord)
 
     /**
      * the [InteractionType] of the interaction [MessageInteraction].
      */
-    val type: InteractionType get() = data.type
+    public val type: InteractionType get() = data.type
 
     /**
      * Requests the [User] of this interaction message.
@@ -51,7 +50,7 @@ class MessageInteraction(
      * @throws RequestException if something went wrong while retrieving the user.
      * @throws EntityNotFoundException if the user was null.
      */
-    suspend fun getUser(): User = supplier.getUser(user.id)
+    public suspend fun getUser(): User = supplier.getUser(user.id)
 
     /**
      * Requests to get the user of this interaction message,
@@ -59,7 +58,7 @@ class MessageInteraction(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getUserOrNull(): User? = supplier.getUserOrNull(user.id)
+    public suspend fun getUserOrNull(): User? = supplier.getUserOrNull(user.id)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageInteraction {
         return MessageInteraction(data, kord, strategy.supply(kord))

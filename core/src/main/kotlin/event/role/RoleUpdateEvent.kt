@@ -9,22 +9,24 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlin.coroutines.CoroutineContext
 
-class RoleUpdateEvent(
-    val role: Role,
+public class RoleUpdateEvent(
+    public val role: Role,
     override val shard: Int,
-    override val supplier: EntitySupplier = role.kord.defaultSupplier
+    override val supplier: EntitySupplier = role.kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = role.kord.coroutineContext,
 ) : Event, Strategizable {
 
     override val kord: Kord get() = role.kord
 
-    val guildId: Snowflake get() = role.guildId
+    public val guildId: Snowflake get() = role.guildId
 
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleUpdateEvent =
         RoleUpdateEvent(role, shard, strategy.supply(kord))

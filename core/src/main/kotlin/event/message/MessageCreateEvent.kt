@@ -11,13 +11,15 @@ import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.entity.channel.DmChannel
+import kotlin.coroutines.CoroutineContext
 
-class MessageCreateEvent(
-    val message: Message,
-    val guildId: Snowflake?,
-    val member: Member?,
+public class MessageCreateEvent(
+    public val message: Message,
+    public val guildId: Snowflake?,
+    public val member: Member?,
     override val shard: Int,
-    override val supplier: EntitySupplier = message.kord.defaultSupplier
+    override val supplier: EntitySupplier = message.kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = message.kord.coroutineContext,
 ) : Event, Strategizable {
     override val kord: Kord get() = message.kord
 
@@ -27,7 +29,7 @@ class MessageCreateEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageCreateEvent =
         MessageCreateEvent(message, guildId, member, shard, strategy.supply(message.kord))

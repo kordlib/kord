@@ -17,7 +17,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
-data class InteractionData(
+public data class InteractionData(
     val id: Snowflake,
     val applicationId: Snowflake,
     val type: InteractionType,
@@ -31,8 +31,8 @@ data class InteractionData(
     val version: Int,
     val message: Optional<MessageData> = Optional.Missing()
 ) {
-    companion object {
-        fun from(interaction: DiscordInteraction): InteractionData {
+    public companion object {
+        public fun from(interaction: DiscordInteraction): InteractionData {
             return with(interaction) {
                 InteractionData(
                     id,
@@ -57,15 +57,15 @@ data class InteractionData(
 }
 
 @Serializable
-data class ResolvedObjectsData(
+public data class ResolvedObjectsData(
     val members: Optional<Map<Snowflake, MemberData>> = Optional.Missing(),
     val users: Optional<Map<Snowflake, UserData>> = Optional.Missing(),
     val roles: Optional<Map<Snowflake, RoleData>> = Optional.Missing(),
     val channels: Optional<Map<Snowflake, ChannelData>> = Optional.Missing(),
     val messages: Optional<Map<Snowflake, MessageData>> = Optional.Missing()
 ) {
-    companion object {
-        fun from(data: ResolvedObjects, guildId: Snowflake?): ResolvedObjectsData {
+    public companion object {
+        public fun from(data: ResolvedObjects, guildId: Snowflake?): ResolvedObjectsData {
             return ResolvedObjectsData(
                 members = data.members.mapValues { MemberData.from(it.key, guildId!!, it.value) },
                 channels = data.channels.mapValues { ChannelData.from(it.value) },
@@ -78,7 +78,7 @@ data class ResolvedObjectsData(
 }
 
 @Serializable
-data class ApplicationInteractionData(
+public data class ApplicationInteractionData(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     val type: Optional<ApplicationCommandType> = Optional.Missing(),
     val targetId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -89,9 +89,9 @@ data class ApplicationInteractionData(
     val componentType: Optional<ComponentType> = Optional.Missing(),
     val values: Optional<List<String>> = Optional.Missing()
 ) {
-    companion object {
+    public companion object {
 
-        fun from(
+        public fun from(
             data: InteractionCallbackData,
             guildId: Snowflake?
         ): ApplicationInteractionData {
@@ -114,15 +114,15 @@ data class ApplicationInteractionData(
 
 
 @Serializable
-data class OptionData(
+public data class OptionData(
     val name: String,
     @OptIn(KordExperimental::class)
     val value: Optional<CommandArgument<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
     val values: Optional<List<CommandArgument<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val subCommands: Optional<List<SubCommand>> = Optional.Missing()
 ) {
-    companion object {
-        fun from(data: Option): OptionData = with(data) {
+    public companion object {
+        public fun from(data: Option): OptionData = with(data) {
             when (data) {
                 is SubCommand -> OptionData(name, values = data.options)
                 is CommandArgument<*> -> OptionData(name, value = Optional(data))
@@ -141,8 +141,8 @@ data class OptionData(
  * The serialization is handled by [Choice] serializer instead where we don't care about the generic type.
  */
 @KordExperimental
-object NotSerializable : KSerializer<Any?> {
-    override fun deserialize(decoder: Decoder) = error("This operation is not supported.")
+public object NotSerializable : KSerializer<Any?> {
+    override fun deserialize(decoder: Decoder): Nothing = error("This operation is not supported.")
     override val descriptor: SerialDescriptor = String.serializer().descriptor
-    override fun serialize(encoder: Encoder, value: Any?) = error("This operation is not supported.")
+    override fun serialize(encoder: Encoder, value: Any?): Nothing = error("This operation is not supported.")
 }

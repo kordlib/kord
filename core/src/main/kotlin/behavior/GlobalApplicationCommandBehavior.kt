@@ -10,16 +10,16 @@ import dev.kord.rest.service.InteractionService
 /**
  * The behavior of an [Application Command](https://discord.com/developers/docs/interactions/application-commands).
  */
-interface ApplicationCommandBehavior : Entity {
-    val applicationId: Snowflake
-    val service: InteractionService
+public interface ApplicationCommandBehavior : Entity {
+    public val applicationId: Snowflake
+    public val service: InteractionService
 
     /**
      * Requests to delete this command.
      *
      * @throws [RestRequestException] when something goes wrong during the request.
      */
-    suspend fun delete()
+    public suspend fun delete()
 
 }
 
@@ -27,7 +27,7 @@ interface ApplicationCommandBehavior : Entity {
 /**
  *  The behavior of an [Application Command](https://discord.com/developers/docs/interactions/application-commands) that can be used in DMs and Guilds.
  */
-interface GlobalApplicationCommandBehavior : ApplicationCommandBehavior {
+public interface GlobalApplicationCommandBehavior : ApplicationCommandBehavior {
 
     override suspend fun delete() {
         service.deleteGlobalApplicationCommand(applicationId, id)
@@ -38,7 +38,7 @@ interface GlobalApplicationCommandBehavior : ApplicationCommandBehavior {
      *
      * @throws [RestRequestException] when something goes wrong during the request.
      */
-    suspend fun editPermissions(
+    public suspend fun editPermissions(
         guildId: Snowflake,
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
     ) {
@@ -51,15 +51,15 @@ interface GlobalApplicationCommandBehavior : ApplicationCommandBehavior {
 /**
  * The behavior of [Application Command][dev.kord.core.entity.application.GuildApplicationCommand].
  */
-interface GuildApplicationCommandBehavior : ApplicationCommandBehavior {
-    val guildId: Snowflake
+public interface GuildApplicationCommandBehavior : ApplicationCommandBehavior {
+    public val guildId: Snowflake
 
     /**
      * Updates the permissions for this command on the guild.
      *
      * @throws [RestRequestException] when something goes wrong during the request.
      */
-    suspend fun editPermissions(
+    public suspend fun editPermissions(
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
     ) {
         val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
@@ -73,7 +73,7 @@ interface GuildApplicationCommandBehavior : ApplicationCommandBehavior {
 }
 
 
-fun GuildApplicationCommandBehavior(
+public fun GuildApplicationCommandBehavior(
     guildId: Snowflake,
     applicationId: Snowflake,
     id: Snowflake,
@@ -90,7 +90,7 @@ fun GuildApplicationCommandBehavior(
 }
 
 
-fun GlobalApplicationCommandBehavior(
+public fun GlobalApplicationCommandBehavior(
     applicationId: Snowflake,
     id: Snowflake,
     service: InteractionService

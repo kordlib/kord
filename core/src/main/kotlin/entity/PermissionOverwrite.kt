@@ -7,13 +7,13 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.PermissionOverwriteData
 import dev.kord.rest.json.request.ChannelPermissionEditRequest
 
-open class PermissionOverwrite constructor(
-    val data: PermissionOverwriteData,
+public open class PermissionOverwrite constructor(
+    public val data: PermissionOverwriteData,
 ) {
-    val allowed: Permissions get() = data.allowed
-    val denied: Permissions get() = data.denied
-    val target: Snowflake get() = data.id
-    val type: OverwriteType get() = data.type
+    public val allowed: Permissions get() = data.allowed
+    public val denied: Permissions get() = data.denied
+    public val target: Snowflake get() = data.id
+    public val type: OverwriteType get() = data.type
 
     internal fun asRequest() = ChannelPermissionEditRequest(allowed, denied, type)
 
@@ -26,14 +26,26 @@ open class PermissionOverwrite constructor(
         return target == otherOverwrite.target
     }
 
-    companion object {
-        fun forEveryone(guildId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
+    public companion object {
+        public fun forEveryone(
+            guildId: Snowflake,
+            allowed: Permissions = Permissions(),
+            denied: Permissions = Permissions()
+        ): PermissionOverwrite =
             PermissionOverwrite(PermissionOverwriteData(guildId, OverwriteType.Role, allowed, denied))
 
-        fun forMember(memberId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
+        public fun forMember(
+            memberId: Snowflake,
+            allowed: Permissions = Permissions(),
+            denied: Permissions = Permissions()
+        ): PermissionOverwrite =
             PermissionOverwrite(PermissionOverwriteData(memberId, OverwriteType.Member, allowed, denied))
 
-        fun forRole(roleId: Snowflake, allowed: Permissions = Permissions(), denied: Permissions = Permissions()) =
+        public fun forRole(
+            roleId: Snowflake,
+            allowed: Permissions = Permissions(),
+            denied: Permissions = Permissions()
+        ): PermissionOverwrite =
             PermissionOverwrite(PermissionOverwriteData(roleId, OverwriteType.Role, allowed, denied))
     }
 

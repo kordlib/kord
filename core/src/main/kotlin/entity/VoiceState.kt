@@ -13,36 +13,36 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.toSnowflakeOrNull
 
-class VoiceState(
-    val data: VoiceStateData,
+public class VoiceState(
+    public val data: VoiceStateData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordObject, Strategizable {
 
-    val guildId: Snowflake get() = data.guildId
+    public val guildId: Snowflake get() = data.guildId
 
-    val channelId: Snowflake? get() = data.channelId
+    public val channelId: Snowflake? get() = data.channelId
 
-    val userId: Snowflake get() = data.userId
+    public val userId: Snowflake get() = data.userId
 
-    val sessionId: String get() = data.sessionId
+    public val sessionId: String get() = data.sessionId
 
-    val isDeafened: Boolean get() = data.deaf
+    public val isDeafened: Boolean get() = data.deaf
 
-    val isMuted: Boolean get() = data.mute
+    public val isMuted: Boolean get() = data.mute
 
-    val isSelfDeafened: Boolean get() = data.selfDeaf
+    public val isSelfDeafened: Boolean get() = data.selfDeaf
 
-    val isSelfMuted: Boolean get() = data.selfMute
+    public val isSelfMuted: Boolean get() = data.selfMute
 
-    val isSuppressed: Boolean get() = data.suppress
+    public val isSuppressed: Boolean get() = data.suppress
 
-    val requestToSpeakTimestamp: String? get() = data.requestToSpeakTimestamp
+    public val requestToSpeakTimestamp: String? get() = data.requestToSpeakTimestamp
 
     /**
      * Whether this user is streaming using "Go Live".
      */
-    val isSelfSteaming: Boolean get() = data.selfStream.orElse(false)
+    public val isSelfSteaming: Boolean get() = data.selfStream.orElse(false)
 
     /**
      * Requests to get the voice channel of this voice state.
@@ -52,7 +52,7 @@ class VoiceState(
      */
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Use getChannelOrNull instead.", ReplaceWith("getChannelOrNull"), DeprecationLevel.ERROR)
-    suspend fun getChannel(): BaseVoiceChannelBehavior? = channelId?.let { supplier.getChannelOfOrNull(it) }
+    public suspend fun getChannel(): BaseVoiceChannelBehavior? = channelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Requests to get the voice channel through the [strategy],
@@ -60,7 +60,7 @@ class VoiceState(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getChannelOrNull(): BaseVoiceChannelBehavior? = channelId?.let { supplier.getChannelOfOrNull(it) }
+    public suspend fun getChannelOrNull(): BaseVoiceChannelBehavior? = channelId?.let { supplier.getChannelOfOrNull(it) }
 
 
     /**
@@ -69,7 +69,7 @@ class VoiceState(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Guild] wasn't present.
      */
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
      * Requests to get the guild of this voice state,
@@ -77,7 +77,7 @@ class VoiceState(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     /**
      * Requests to get the member that belongs to this voice state.
@@ -85,7 +85,7 @@ class VoiceState(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Member] wasn't present.
      */
-    suspend fun getMember(): Member = supplier.getMember(guildId, userId)
+    public suspend fun getMember(): Member = supplier.getMember(guildId, userId)
 
     /**
      * Requests to get the member that belongs to this voice state,
@@ -93,7 +93,7 @@ class VoiceState(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getMemberOrNull(): Member? = supplier.getMemberOrNull(guildId, userId)
+    public suspend fun getMemberOrNull(): Member? = supplier.getMemberOrNull(guildId, userId)
 
     /**
      * Returns a new [VoiceState] with the given [strategy].

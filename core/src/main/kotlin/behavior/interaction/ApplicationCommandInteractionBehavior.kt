@@ -9,7 +9,7 @@ import dev.kord.core.supplier.EntitySupplier
  * with [Application Command type][dev.kord.common.entity.ApplicationCommandType]
  */
 
-interface ApplicationCommandInteractionBehavior : InteractionBehavior
+public interface ApplicationCommandInteractionBehavior : InteractionBehavior
 
 internal fun ApplicationCommandInteractionBehavior(
     id: Snowflake,

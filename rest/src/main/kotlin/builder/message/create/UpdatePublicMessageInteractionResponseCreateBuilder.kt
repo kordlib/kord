@@ -1,21 +1,22 @@
-package dev.kord.rest.builder.message.modify
+package dev.kord.rest.builder.message.create
 
 import dev.kord.common.entity.InteractionResponseType
+import dev.kord.common.entity.MessageFlag
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.*
-import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.builder.message.create.PersistentMessageCreateBuilder
+import dev.kord.rest.builder.message.create.MessageCreateBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 
 
-class UpdatePublicMessageInteractionResponseCreateBuilder :
-    PersistentMessageCreateBuilder,
+class UpdateMessageInteractionResponseCreateBuilder(var ephemeral: Boolean = false) :
+    MessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {
 
 
@@ -40,7 +41,8 @@ class UpdatePublicMessageInteractionResponseCreateBuilder :
                     embeds = Optional(embeds).mapList { it.toRequest() },
                     allowedMentions = Optional(allowedMentions).map { it.build() },
                     components = Optional(components).mapList { it.build() },
-                    tts = Optional(tts).coerceToMissing().toPrimitive()
+                    tts = Optional(tts).coerceToMissing().toPrimitive(),
+                    flags = Optional(if (ephemeral) MessageFlags(MessageFlag.Ephemeral) else null).coerceToMissing()
                 ).optional()
             ),
             Optional(files)

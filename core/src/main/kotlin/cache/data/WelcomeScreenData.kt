@@ -6,12 +6,12 @@ import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WelcomeScreenData(
+public data class WelcomeScreenData(
     val description: String?,
     val welcomeChannels: List<WelcomeScreenChannelData>,
 ) {
-    companion object {
-        fun from(data: DiscordWelcomeScreen): WelcomeScreenData {
+    public companion object {
+        public fun from(data: DiscordWelcomeScreen): WelcomeScreenData {
             with(data) {
                 return WelcomeScreenData(description, welcomeChannels.map { WelcomeScreenChannelData.from(it) })
             }
@@ -20,14 +20,14 @@ data class WelcomeScreenData(
 }
 
 @Serializable
-data class WelcomeScreenChannelData(
+public data class WelcomeScreenChannelData(
     val channelId: Snowflake,
     val description: String,
     val emojiId: Snowflake?,
     val emojiName: String?,
 ) {
-    companion object {
-        fun from(data: DiscordWelcomeScreenChannel): WelcomeScreenChannelData {
+    public companion object {
+        public fun from(data: DiscordWelcomeScreenChannel): WelcomeScreenChannelData {
             with(data) {
                 return WelcomeScreenChannelData(channelId, description, emojiId, emojiName)
             }

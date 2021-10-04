@@ -5,14 +5,13 @@ plugins {
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://plugins.gradle.org/m2/")
-    }
+    gradlePluginPortal()
 }
 
 dependencies {
-    implementation(kotlin("gradle-plugin"))
-    implementation(kotlin("serialization"))
+    // We currently cannot use Kotlin 1.5.31: https://github.com/kordlib/kord/issues/399
+    implementation(kotlin("gradle-plugin", version = "1.5.30"))
+    implementation(kotlin("serialization", version = "1.5.30"))
     implementation("org.jetbrains.dokka", "dokka-gradle-plugin", "1.5.0")
     implementation("org.jetbrains.kotlinx", "atomicfu-gradle-plugin", "0.16.1")
     implementation(gradleApi())

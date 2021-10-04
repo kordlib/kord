@@ -8,13 +8,13 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 
-interface ThreadMemberBehavior : UserBehavior {
+public interface ThreadMemberBehavior : UserBehavior {
 
-    val threadId: Snowflake
+    public val threadId: Snowflake
 
-    suspend fun getThread(): ThreadChannel = supplier.getChannelOf(threadId)
+    public suspend fun getThread(): ThreadChannel = supplier.getChannelOf(threadId)
 
-    suspend fun getThreadOrNull(): ThreadChannel? = supplier.getChannelOfOrNull(threadId)
+    public suspend fun getThreadOrNull(): ThreadChannel? = supplier.getChannelOfOrNull(threadId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): UserBehavior {
         return ThreadMemberBehavior(id, threadId, kord, strategy.supply(kord))
@@ -22,7 +22,7 @@ interface ThreadMemberBehavior : UserBehavior {
     }
 }
 
-fun ThreadMemberBehavior(
+public fun ThreadMemberBehavior(
     id: Snowflake,
     threadId: Snowflake,
     kord: Kord,

@@ -2,6 +2,8 @@ package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.InteractionResponseType
+import dev.kord.common.entity.MessageFlag
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.*
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.RequestBuilder
@@ -17,7 +19,7 @@ import java.io.InputStream
  * Message builder for publicly responding to an interaction.
  */
 
-class PublicInteractionResponseCreateBuilder
+class InteractionResponseCreateBuilder(var ephemeral: Boolean = false)
     : PersistentMessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {
 
@@ -45,6 +47,7 @@ class PublicInteractionResponseCreateBuilder
                         embeds = Optional(embeds).mapList { it.toRequest() },
                         allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
                         components = Optional(components).coerceToMissing().mapList { it.build() },
+                        flags = Optional(if(ephemeral) MessageFlags(MessageFlag.Ephemeral) else null).coerceToMissing()
                     )
                 )
             ),

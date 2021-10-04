@@ -7,7 +7,7 @@ import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class InviteData(
+public data class InviteData(
     val code: String,
     val guild: Optional<PartialGuildData> = Optional.Missing(),
     val channelId: Snowflake,
@@ -18,9 +18,9 @@ data class InviteData(
     val approximateMemberCount: OptionalInt = OptionalInt.Missing,
 ) {
 
-    companion object {
+    public companion object {
 
-        fun from(entity: DiscordInvite) = with(entity) {
+        public fun from(entity: DiscordInvite): InviteData = with(entity) {
             InviteData(
                 code,
                 guild = guild.map { PartialGuildData.from(it) },

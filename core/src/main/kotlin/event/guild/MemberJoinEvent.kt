@@ -9,22 +9,24 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlin.coroutines.CoroutineContext
 
-class MemberJoinEvent(
-    val member: Member,
+public class MemberJoinEvent(
+    public val member: Member,
     override val shard: Int,
-    override val supplier: EntitySupplier = member.kord.defaultSupplier
+    override val supplier: EntitySupplier = member.kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = member.kord.coroutineContext,
 ) : Event, Strategizable {
 
     override val kord: Kord get() = member.kord
 
-    val guildId: Snowflake get() = member.guildId
+    public val guildId: Snowflake get() = member.guildId
 
-    val guild: GuildBehavior get() = member.guild
+    public val guild: GuildBehavior get() = member.guild
 
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberJoinEvent =
         MemberJoinEvent(member, shard, strategy.supply(kord))

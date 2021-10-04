@@ -9,21 +9,23 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlin.coroutines.CoroutineContext
 
-class RoleDeleteEvent(
-    val guildId: Snowflake,
-    val roleId: Snowflake,
-    val role: Role?,
+public class RoleDeleteEvent(
+    public val guildId: Snowflake,
+    public val roleId: Snowflake,
+    public val role: Role?,
     override val kord: Kord,
     override val shard: Int,
-    override val supplier: EntitySupplier = kord.defaultSupplier
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleDeleteEvent =
         RoleDeleteEvent(guildId, roleId, role, kord, shard, strategy.supply(kord))

@@ -4,8 +4,8 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.InviteData
-import dev.kord.core.entity.*
-import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.Invite
+import dev.kord.core.entity.PermissionOverwrite
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -29,7 +29,7 @@ import kotlin.contracts.contract
  *
  * 'Top' channels are those that do not require a parent channel to be created, and can be found at the top of the UI's hierarchy.
  */
-interface TopGuildChannelBehavior : GuildChannelBehavior {
+public interface TopGuildChannelBehavior : GuildChannelBehavior {
 
     /**
      * Requests to get the invites of this channel.
@@ -39,7 +39,7 @@ interface TopGuildChannelBehavior : GuildChannelBehavior {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val invites: Flow<Invite>
+    public val invites: Flow<Invite>
         get() = flow {
             val responses = kord.rest.channel.getChannelInvites(id)
 
@@ -90,7 +90,7 @@ interface TopGuildChannelBehavior : GuildChannelBehavior {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun addOverwrite(overwrite: PermissionOverwrite, reason: String?) {
+    public suspend fun addOverwrite(overwrite: PermissionOverwrite, reason: String?) {
         kord.rest.channel.editChannelPermissions(
             channelId = id,
             overwriteId = overwrite.target,
@@ -105,7 +105,7 @@ interface TopGuildChannelBehavior : GuildChannelBehavior {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getPosition(): Int = supplier.getGuildChannels(guildId).withIndex().first { it.value.id == id }.index
+    public suspend fun getPosition(): Int = supplier.getGuildChannels(guildId).withIndex().first { it.value.id == id }.index
 
 
     /**
@@ -148,7 +148,7 @@ internal fun TopGuildChannelBehavior(
  *  @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun TopGuildChannelBehavior.editRolePermission(
+public suspend inline fun TopGuildChannelBehavior.editRolePermission(
     roleId: Snowflake,
     builder: ChannelPermissionModifyBuilder.() -> Unit
 ) {
@@ -164,7 +164,7 @@ suspend inline fun TopGuildChannelBehavior.editRolePermission(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun TopGuildChannelBehavior.editMemberPermission(
+public suspend inline fun TopGuildChannelBehavior.editMemberPermission(
     memberId: Snowflake,
     builder: ChannelPermissionModifyBuilder.() -> Unit
 ) {

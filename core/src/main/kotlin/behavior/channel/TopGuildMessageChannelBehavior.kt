@@ -25,7 +25,7 @@ import kotlin.contracts.contract
  * 'Top' channels are those that do not require a parent channel to be created, and can be found at the top of the UI's hierarchy.
  *
  */
-interface TopGuildMessageChannelBehavior : TopGuildChannelBehavior, GuildMessageChannelBehavior {
+public interface TopGuildMessageChannelBehavior : TopGuildChannelBehavior, GuildMessageChannelBehavior {
 
     /**
      * Requests to get all webhooks for this channel.
@@ -35,7 +35,7 @@ interface TopGuildMessageChannelBehavior : TopGuildChannelBehavior, GuildMessage
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val webhooks: Flow<Webhook>
+    public val webhooks: Flow<Webhook>
         get() = flow {
             for (response in kord.rest.webhook.getChannelWebhooks(id)) {
                 val data = WebhookData.from(response)
@@ -121,7 +121,7 @@ internal fun TopGuildMessageChannelBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun TopGuildMessageChannelBehavior.createWebhook(
+public suspend inline fun TopGuildMessageChannelBehavior.createWebhook(
     name: String,
     builder: WebhookCreateBuilder.() -> Unit = {}
 ): Webhook {

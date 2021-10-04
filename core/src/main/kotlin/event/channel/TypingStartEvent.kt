@@ -19,27 +19,29 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.toInstant
 import kotlinx.datetime.Instant
+import kotlin.coroutines.CoroutineContext
 
-class TypingStartEvent(
-    val data: TypingStartEventData,
+public class TypingStartEvent(
+    public val data: TypingStartEventData,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
-    val channelId: Snowflake get() = data.channelId
+    public val channelId: Snowflake get() = data.channelId
 
-    val userId: Snowflake get() = data.userId
+    public val userId: Snowflake get() = data.userId
 
-    val guildId: Snowflake? get() = data.guildId.value
+    public val guildId: Snowflake? get() = data.guildId.value
 
-    val started: Instant get() = data.timestamp.toInstant()
+    public val started: Instant get() = data.timestamp.toInstant()
 
-    val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
+    public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
-    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
+    public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
-    val user: UserBehavior get() = UserBehavior(userId, kord)
+    public val user: UserBehavior get() = UserBehavior(userId, kord)
 
     /**
      * Requests to get the channel triggering the event.
@@ -47,7 +49,7 @@ class TypingStartEvent(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [MessageChannel] wasn't present.
      */
-    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
     /**
      * Requests to get the channel triggering the event,
@@ -55,7 +57,7 @@ class TypingStartEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
      * Requests to get the user triggering the event.
@@ -63,7 +65,7 @@ class TypingStartEvent(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [User] wasn't present.
      */
-    suspend fun getUser(): User = supplier.getUser(userId)
+    public suspend fun getUser(): User = supplier.getUser(userId)
 
     /**
      * Requests to get the user triggering the event,
@@ -71,7 +73,7 @@ class TypingStartEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
+    public suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
 
     /**
      * Requests to get the guild this event was triggered in,
@@ -79,7 +81,7 @@ class TypingStartEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
         TypingStartEvent(

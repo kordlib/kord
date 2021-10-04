@@ -17,26 +17,28 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
+import kotlin.coroutines.CoroutineContext
 
 
-class ThreadListSyncEvent(
-    val data: ThreadListSyncData,
+public class ThreadListSyncEvent(
+    public val data: ThreadListSyncData,
     override val kord: Kord,
     override val shard: Int,
-    override val supplier: EntitySupplier = kord.defaultSupplier
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
-    val guildId: Snowflake get() = data.guildId
+    public val guildId: Snowflake get() = data.guildId
 
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /**
      * the parent channel ids whose threads are being synced.
      * If empty, then threads were synced for the entire guild.
      */
-    val channelIds: List<Snowflake> get() = data.channelIds.orEmpty()
+    public val channelIds: List<Snowflake> get() = data.channelIds.orEmpty()
 
-    val channelBehaviors: List<ThreadParentChannelBehavior>
+    public val channelBehaviors: List<ThreadParentChannelBehavior>
         get() = channelIds.map {
             ThreadParentChannelBehavior(guildId, it, kord)
         }
@@ -46,7 +48,7 @@ class ThreadListSyncEvent(
      *
      * @see [channelIds]
      */
-    val threads: List<ThreadChannel>
+    public val threads: List<ThreadChannel>
         get() = data.threads.mapNotNull {
             Channel.from(it, kord) as? ThreadChannel
         }
@@ -54,17 +56,17 @@ class ThreadListSyncEvent(
     /**
      * [ThreadMember] objects for the current user for each of the synced threads.
      */
-    val members: List<ThreadMember> get() = data.members.map { ThreadMember(it, kord) }
+    public val members: List<ThreadMember> get() = data.members.map { ThreadMember(it, kord) }
 
-    suspend fun getGuild(): Guild {
+    public suspend fun getGuild(): Guild {
         return supplier.getGuild(guildId)
     }
 
-    suspend fun getGuildOrNull(): Guild? {
+    public suspend fun getGuildOrNull(): Guild? {
         return supplier.getGuildOrNull(guildId)
     }
 
-    suspend fun getChannels(): Flow<TopGuildChannel> {
+    public suspend fun getChannels(): Flow<TopGuildChannel> {
         return supplier.getGuildChannels(guildId).filter { it.id in channelIds }
     }
 

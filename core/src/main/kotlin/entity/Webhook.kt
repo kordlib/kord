@@ -18,7 +18,7 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import java.util.*
 
-data class Webhook(
+public data class Webhook(
     val data: WebhookData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
@@ -50,7 +50,7 @@ data class Webhook(
      */
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = DeprecationLevel.ERROR)
-    suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuild(it) }
+    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuild(it) }
 
     /**
      * Requests to get the guild this webhook belongs to,
@@ -58,7 +58,7 @@ data class Webhook(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     /**
      * Requests to get the channel this webhook operates in.
@@ -66,7 +66,7 @@ data class Webhook(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [TopGuildMessageChannel] wasn't present.
      */
-    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
     /**
      * Requests to get the channel this webhook operates in,
@@ -74,7 +74,7 @@ data class Webhook(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
 
     /**

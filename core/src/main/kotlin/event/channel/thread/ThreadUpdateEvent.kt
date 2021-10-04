@@ -4,13 +4,18 @@ import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.channel.ChannelUpdateEvent
+import kotlin.coroutines.CoroutineContext
 
-sealed interface ThreadUpdateEvent : ChannelUpdateEvent {
+public sealed interface ThreadUpdateEvent : ChannelUpdateEvent {
     override val channel: ThreadChannel
 }
 
 
-class TextChannelThreadUpdateEvent(override val channel: TextChannelThread, override val shard: Int) :
+public class TextChannelThreadUpdateEvent(
+    override val channel: TextChannelThread,
+    override val shard: Int,
+    override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
+) :
     ThreadUpdateEvent {
     override fun toString(): String {
         return "TextThreadChannelUpdateEvent(channel=$channel, shard=$shard)"
@@ -18,7 +23,11 @@ class TextChannelThreadUpdateEvent(override val channel: TextChannelThread, over
 }
 
 
-class NewsChannelThreadUpdateEvent(override val channel: NewsChannelThread, override val shard: Int) :
+public class NewsChannelThreadUpdateEvent(
+    override val channel: NewsChannelThread,
+    override val shard: Int,
+    override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
+) :
     ThreadUpdateEvent {
     override fun toString(): String {
         return "NewsThreadChannelUpdateEvent(channel=$channel, shard=$shard)"
@@ -26,7 +35,11 @@ class NewsChannelThreadUpdateEvent(override val channel: NewsChannelThread, over
 }
 
 
-class UnknownChannelThreadUpdateEvent(override val channel: ThreadChannel, override val shard: Int) :
+public class UnknownChannelThreadUpdateEvent(
+    override val channel: ThreadChannel,
+    override val shard: Int,
+    override val coroutineContext: CoroutineContext = channel.kord.coroutineContext,
+) :
     ThreadUpdateEvent {
     override fun toString(): String {
         return "UnknownChannelThreadUpdateEvent(channel=$channel, shard=$shard)"

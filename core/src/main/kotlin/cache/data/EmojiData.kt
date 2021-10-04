@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordEmoji
 import dev.kord.common.entity.Snowflake
@@ -7,7 +8,7 @@ import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class EmojiData(
+public data class EmojiData(
     val id: Snowflake,
     val guildId: Snowflake,
     val name: String? = null,
@@ -18,10 +19,10 @@ data class EmojiData(
     val animated: OptionalBoolean = OptionalBoolean.Missing,
     val available: OptionalBoolean = OptionalBoolean.Missing
 ) {
-    companion object {
-        val description = description(EmojiData::id)
+    public companion object {
+        public val description: DataDescription<EmojiData, Snowflake> = description(EmojiData::id)
 
-        fun from(guildId: Snowflake, id: Snowflake, entity: DiscordEmoji) =
+        public fun from(guildId: Snowflake, id: Snowflake, entity: DiscordEmoji): EmojiData =
             with(entity) {
                 EmojiData(
                     id,
@@ -38,6 +39,6 @@ data class EmojiData(
     }
 }
 
-fun DiscordEmoji.toData(guildId: Snowflake, id: Snowflake): EmojiData {
+public fun DiscordEmoji.toData(guildId: Snowflake, id: Snowflake): EmojiData {
     return EmojiData.from(guildId, id, this)
 }

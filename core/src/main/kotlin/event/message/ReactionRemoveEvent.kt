@@ -14,43 +14,45 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import kotlin.coroutines.CoroutineContext
 
-class ReactionRemoveEvent(
-    val userId: Snowflake,
-    val channelId: Snowflake,
-    val messageId: Snowflake,
-    val guildId: Snowflake?,
-    val emoji: ReactionEmoji,
+public class ReactionRemoveEvent(
+    public val userId: Snowflake,
+    public val channelId: Snowflake,
+    public val messageId: Snowflake,
+    public val guildId: Snowflake?,
+    public val emoji: ReactionEmoji,
     override val kord: Kord,
     override val shard: Int,
-    override val supplier: EntitySupplier = kord.defaultSupplier
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val coroutineContext: CoroutineContext = kord.coroutineContext,
 ) : Event, Strategizable {
 
-    val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
+    public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
-    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
+    public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
-    val message: MessageBehavior get() = MessageBehavior(channelId, messageId, kord)
+    public val message: MessageBehavior get() = MessageBehavior(channelId, messageId, kord)
 
-    val user: UserBehavior get() = UserBehavior(userId, kord)
+    public val user: UserBehavior get() = UserBehavior(userId, kord)
 
-    val userAsMember: MemberBehavior? get() = guildId?.let { MemberBehavior(it, userId, kord) }
+    public val userAsMember: MemberBehavior? get() = guildId?.let { MemberBehavior(it, userId, kord) }
 
-    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
-    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
-    suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
-    suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
+    public suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
 
-    suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
+    public suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
-    suspend fun getUser(): User = supplier.getUser(userId)
+    public suspend fun getUser(): User = supplier.getUser(userId)
 
-    suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
+    public suspend fun getUserOrNull(): User? = supplier.getUserOrNull(userId)
 
-    suspend fun getUserAsMember(): Member? =
+    public suspend fun getUserAsMember(): Member? =
         guildId?.let { supplier.getMemberOrNull(guildId = guildId, userId = userId) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveEvent =

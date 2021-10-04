@@ -12,7 +12,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
 /**
  * A thread channel instance whose parent is a [NewsChannel].
  */
-class NewsChannelThread(
+public class NewsChannelThread(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier

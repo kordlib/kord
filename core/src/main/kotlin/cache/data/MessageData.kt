@@ -1,6 +1,7 @@
 package dev.kord.core.cache.data
 
 import cache.data.MessageInteractionData
+import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
@@ -9,7 +10,7 @@ import kotlinx.serialization.Serializable
 internal val MessageData.authorId get() = author.id
 
 @Serializable
-data class MessageData(
+public data class MessageData(
     val id: Snowflake,
     val channelId: Snowflake,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -40,7 +41,7 @@ data class MessageData(
     val components: Optional<List<ComponentData>> = Optional.Missing()
 ) {
 
-    fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
+    public fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
         val isMe = selfId == reaction.userId
 
         val reactions = if (reactions !is Optional.Value) {
@@ -61,7 +62,7 @@ data class MessageData(
         return copy(reactions = Optional(reactions))
     }
 
-    operator fun plus(partialMessage: DiscordPartialMessage): MessageData {
+    public operator fun plus(partialMessage: DiscordPartialMessage): MessageData {
 
         val editedTimestamp = partialMessage.editedTimestamp.value ?: editedTimestamp
         val content = partialMessage.content.value ?: content
@@ -109,10 +110,10 @@ data class MessageData(
         )
     }
 
-    companion object {
-        val description = description(MessageData::id)
+    public companion object {
+        public val description: DataDescription<MessageData, Snowflake> = description(MessageData::id)
 
-        fun from(entity: DiscordMessage): MessageData = with(entity) {
+        public fun from(entity: DiscordMessage): MessageData = with(entity) {
             MessageData(
                 id,
                 channelId,
@@ -147,4 +148,4 @@ data class MessageData(
     }
 }
 
-fun DiscordMessage.toData() = MessageData.from(this)
+public fun DiscordMessage.toData(): MessageData = MessageData.from(this)

@@ -7,18 +7,17 @@ import dev.kord.core.cache.data.StageInstanceData
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.StageInstance
 import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.User
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.request.StageInstanceUpdateRequest
 
-interface StageInstanceBehavior : KordEntity, Strategizable {
-    val channelId: Snowflake
+public interface StageInstanceBehavior : KordEntity, Strategizable {
+    public val channelId: Snowflake
 
-    suspend fun delete(reason: String? = null): Unit = kord.rest.stageInstance.deleteStageInstance(channelId, reason)
+    public suspend fun delete(reason: String? = null): Unit = kord.rest.stageInstance.deleteStageInstance(channelId, reason)
 
-    suspend fun update(topic: String): StageInstance {
+    public suspend fun update(topic: String): StageInstance {
         val instance = kord.rest.stageInstance.updateStageInstance(channelId, StageInstanceUpdateRequest(topic))
         val data = StageInstanceData.from(instance)
 
@@ -31,7 +30,7 @@ interface StageInstanceBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun asStageInstance(): StageInstance = supplier.getStageInstance(channelId)
+    public suspend fun asStageInstance(): StageInstance = supplier.getStageInstance(channelId)
 
     /**
      * Requests to get this behavior as a [StageInstance] if its not an instance of a [StageInstance],
@@ -39,7 +38,7 @@ interface StageInstanceBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(channelId)
+    public suspend fun asStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(channelId)
 
     /**
      * Retrieve the [StageInstance] associated with this behaviour from the provided [EntitySupplier]
@@ -47,7 +46,7 @@ interface StageInstanceBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun fetchStageInstance(): StageInstance = supplier.getStageInstance(id)
+    public suspend fun fetchStageInstance(): StageInstance = supplier.getStageInstance(id)
 
 
     /**
@@ -56,7 +55,7 @@ interface StageInstanceBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun fetchStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(id)
+    public suspend fun fetchStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(id)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StageInstanceBehavior =
         StageInstanceBehavior(id, channelId, kord, strategy.supply(kord))

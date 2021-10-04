@@ -21,7 +21,8 @@ data class DiscordGuildMember(
     val premiumSince: Optional<String?> = Optional.Missing(),
     val deaf: OptionalBoolean = OptionalBoolean.Missing,
     val mute: OptionalBoolean = OptionalBoolean.Missing,
-    val pending: OptionalBoolean = OptionalBoolean.Missing
+    val pending: OptionalBoolean = OptionalBoolean.Missing,
+    val avatar: Optional<String?> = Optional.Missing(),
 )
 
 
@@ -39,7 +40,8 @@ data class DiscordInteractionGuildMember(
     @SerialName("premium_since")
     val premiumSince: Optional<String?> = Optional.Missing(),
     val permissions: Permissions,
-    val pending: OptionalBoolean = OptionalBoolean.Missing
+    val pending: OptionalBoolean = OptionalBoolean.Missing,
+    val avatar: Optional<String?> = Optional.Missing(),
 )
 
 
@@ -60,7 +62,8 @@ data class DiscordAddedGuildMember(
     val mute: Boolean,
     @SerialName("guild_id")
     val guildId: Snowflake,
-    val pending: OptionalBoolean = OptionalBoolean.Missing
+    val pending: OptionalBoolean = OptionalBoolean.Missing,
+    val avatar: Optional<String?> = Optional.Missing(),
 )
 
 @Serializable
@@ -81,7 +84,8 @@ data class DiscordUpdatedGuildMember(
     val joinedAt: String,
     @SerialName("premium_since")
     val premiumSince: Optional<String?> = Optional.Missing(),
-    val pending: OptionalBoolean = OptionalBoolean.Missing
+    val pending: OptionalBoolean = OptionalBoolean.Missing,
+    val avatar: Optional<String?> = Optional.Missing(),
 )
 
 @Serializable

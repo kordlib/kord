@@ -14,15 +14,15 @@ import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.*
 
 @KordPreview
-fun Member.live(
+public fun Member.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
-) = LiveMember(this, coroutineScope)
+): LiveMember = LiveMember(this, coroutineScope)
 
 @KordPreview
-inline fun Member.live(
+public inline fun Member.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveMember.() -> Unit
-) = this.live(coroutineScope).apply(block)
+): LiveMember = this.live(coroutineScope).apply(block)
 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
@@ -30,11 +30,11 @@ inline fun Member.live(
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveMember.onLeave(scope: CoroutineScope = this, block: suspend (MemberLeaveEvent) -> Unit) =
+public fun LiveMember.onLeave(scope: CoroutineScope = this, block: suspend (MemberLeaveEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveMember.onUpdate(scope: CoroutineScope = this, block: suspend (MemberUpdateEvent) -> Unit) =
+public fun LiveMember.onUpdate(scope: CoroutineScope = this, block: suspend (MemberUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -43,7 +43,7 @@ fun LiveMember.onUpdate(scope: CoroutineScope = this, block: suspend (MemberUpda
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveMember.onBanAdd(scope: CoroutineScope = this, block: suspend (BanAddEvent) -> Unit) =
+public fun LiveMember.onBanAdd(scope: CoroutineScope = this, block: suspend (BanAddEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -52,7 +52,10 @@ fun LiveMember.onBanAdd(scope: CoroutineScope = this, block: suspend (BanAddEven
     DeprecationLevel.ERROR
 )
 @KordPreview
-inline fun LiveGuildChannel.onShutdown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+public inline fun LiveGuildChannel.onShutdown(
+    scope: CoroutineScope = this,
+    crossinline block: suspend (Event) -> Unit
+): Job =
     on<Event>(scope) {
         if (it is MemberLeaveEvent || it is BanAddEvent || it is GuildDeleteEvent) {
             block(it)
@@ -65,11 +68,14 @@ inline fun LiveGuildChannel.onShutdown(scope: CoroutineScope = this, crossinline
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveGuildChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+public fun LiveGuildChannel.onGuildDelete(
+    scope: CoroutineScope = this,
+    block: suspend (GuildDeleteEvent) -> Unit
+): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-class LiveMember(
+public class LiveMember(
     member: Member,
     coroutineScope: CoroutineScope = member.kord + SupervisorJob(member.kord.coroutineContext.job)
 ) : AbstractLiveKordEntity(member.kord, coroutineScope), KordEntity {
@@ -77,10 +83,10 @@ class LiveMember(
     override val id: Snowflake
         get() = member.id
 
-    var member = member
+    public var member: Member = member
         private set
 
-    override fun filter(event: Event) = when (event) {
+    override fun filter(event: Event): Boolean = when (event) {
         is MemberLeaveEvent -> member.id == event.user.id
         is MemberUpdateEvent -> member.id == event.member.id
         is BanAddEvent -> member.id == event.user.id
@@ -88,7 +94,7 @@ class LiveMember(
         else -> false
     }
 
-    override fun update(event: Event) = when (event) {
+    override fun update(event: Event): Unit = when (event) {
         is MemberLeaveEvent -> shutDown(LiveCancellationException(event, "The member has left"))
         is BanAddEvent -> shutDown(LiveCancellationException(event, "The member is banned"))
         is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))

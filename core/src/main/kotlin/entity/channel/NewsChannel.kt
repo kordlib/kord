@@ -12,7 +12,7 @@ import java.util.*
 /**
  * An instance of a Discord News Channel associated to a guild.
  */
-class NewsChannel(
+public class NewsChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier

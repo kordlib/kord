@@ -6,21 +6,20 @@ import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ReactionData(
+public data class ReactionData(
     val count: Int,
     val me: Boolean,
     val emojiId: Snowflake? = null,
     val emojiName: String? = null,
     val emojiAnimated: Boolean
 ) {
-    companion object {
-        fun from(entity: Reaction) = with(entity) {
+    public companion object {
+        public fun from(entity: Reaction): ReactionData = with(entity) {
             ReactionData(count, me, emoji.id, emoji.name, emoji.animated.orElse(false))
         }
 
-        fun from(count: Int, me: Boolean, entity: DiscordPartialEmoji) = with(entity) {
+        public fun from(count: Int, me: Boolean, entity: DiscordPartialEmoji): ReactionData = with(entity) {
             ReactionData(count, me, id, name, animated.orElse(false))
         }
     }
-
 }

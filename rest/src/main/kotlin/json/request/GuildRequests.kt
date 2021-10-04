@@ -123,6 +123,9 @@ data class GuildRoleCreateRequest(
     val color: Optional<Color> = Optional.Missing(),
     @SerialName("hoist")
     val separate: OptionalBoolean = OptionalBoolean.Missing,
+    val icon: Optional<String> = Optional.Missing(),
+    @SerialName("unicode_emoji")
+    val unicodeEmoji: Optional<String> = Optional.Missing(),
     val mentionable: OptionalBoolean = OptionalBoolean.Missing,
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
 )
@@ -160,6 +163,9 @@ data class GuildRoleModifyRequest(
     val color: Optional<Color?> = Optional.Missing(),
     @SerialName("hoist")
     val separate: OptionalBoolean? = OptionalBoolean.Missing,
+    val icon: Optional<String> = Optional.Missing(),
+    @SerialName("unicode_emoji")
+    val unicodeEmoji: Optional<String> = Optional.Missing(),
     val mentionable: OptionalBoolean? = OptionalBoolean.Missing,
 )
 

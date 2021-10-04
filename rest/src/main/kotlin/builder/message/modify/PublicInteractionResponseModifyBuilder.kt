@@ -15,7 +15,7 @@ import dev.kord.rest.json.request.InteractionResponseModifyRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
 
 
-class PublicInteractionResponseModifyBuilder
+class InteractionResponseModifyBuilder
     : PersistentMessageModifyBuilder,
     RequestBuilder<MultipartInteractionResponseModifyRequest> {
 

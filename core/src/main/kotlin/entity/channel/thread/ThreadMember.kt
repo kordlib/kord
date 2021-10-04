@@ -7,8 +7,8 @@ import dev.kord.core.cache.data.ThreadMemberData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
-class ThreadMember(
-    val data: ThreadMemberData,
+public class ThreadMember(
+    public val data: ThreadMemberData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : ThreadMemberBehavior {
@@ -18,9 +18,9 @@ class ThreadMember(
     override val threadId: Snowflake get() = data.id
 
 
-    val joinTimestamp: String get() = data.joinTimestamp
+    public val joinTimestamp: String get() = data.joinTimestamp
 
-    val flags: Int = data.flags
+    public val flags: Int = data.flags
 
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadMember {

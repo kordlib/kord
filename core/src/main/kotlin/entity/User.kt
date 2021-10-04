@@ -16,32 +16,38 @@ import dev.kord.rest.Image
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
  */
-open class User(
-    val data: UserData,
+public open class User(
+    public val data: UserData,
     override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : UserBehavior {
 
     override val id: Snowflake
         get() = data.id
 
-    val avatar: Avatar get() = Avatar(data, kord)
+    /**
+     * The users avatar as [Icon] object
+     */
+    public val avatar: Icon?
+        get() = data.avatar?.let { Icon.UserAvatar(data.id, it, kord) }
+
+    public val defaultAvatar: Icon get() = Icon.DefaultUserAvatar(data.discriminator.toInt(), kord)
 
     /**
      * The username of this user.
      */
-    val username: String get() = data.username
+    public val username: String get() = data.username
 
     /**
      * The 4-digit code at the end of the user's discord tag.
      */
-    val discriminator: String get() = data.discriminator
+    public val discriminator: String get() = data.discriminator
 
     /**
      * The flags on a user's account, if present.
      */
     @Deprecated("Use publicFlags instead.", ReplaceWith("publicFlags"), DeprecationLevel.ERROR)
     @DeprecatedSinceKord("0.7.0")
-    val flags: UserFlags? by ::publicFlags
+    public val flags: UserFlags? by ::publicFlags
 
     override suspend fun asUser(): User {
         return this
@@ -54,7 +60,7 @@ open class User(
     /**
      * The flags on a user's account, if present.
      */
-    val publicFlags: UserFlags? get() = data.publicFlags.value
+    public val publicFlags: UserFlags? get() = data.publicFlags.value
 
     /**
      * The type of Nitro subscription on a user's account, if present.
@@ -62,22 +68,22 @@ open class User(
     @Suppress("DeprecatedCallableAddReplaceWith")
     @Deprecated("premiumType is never present.", level = DeprecationLevel.ERROR)
     @DeprecatedSinceKord("0.7.0")
-    val premiumType: UserPremium?
+    public val premiumType: UserPremium?
         get() = throw NotImplementedError("premiumType is no longer supported.")
 
     /**
      * The complete user tag.
      */
-    val tag: String get() = "$username#$discriminator"
+    public val tag: String get() = "$username#$discriminator"
 
     /**
      * Whether this user is a bot account.
      */
-    val isBot: Boolean get() = data.bot.discordBoolean
+    public val isBot: Boolean get() = data.bot.discordBoolean
 
-    val accentColor: Color? get() = data.accentColor?.let { Color(it) }
+    public val accentColor: Color? get() = data.accentColor?.let { Color(it) }
 
-    fun getBannerUrl(format: Image.Format): String? =
+    public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/${id.asString}/$it.${format.extension}" }
 
 
@@ -97,7 +103,7 @@ open class User(
         return "User(data=$data, kord=$kord, supplier=$supplier)"
     }
 
-    data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
+    public data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 
         /**
          * The default avatar url for this user. Discord uses this for users who don't have a custom avatar set.
@@ -132,7 +138,7 @@ open class User(
         /**
          * Gets the avatar url in given [format], or returns null if the [format] is not supported.
          */
-        fun getUrl(format: Image.Format): String? {
+        public fun getUrl(format: Image.Format): String? {
             val hash = data.avatar ?: return defaultUrl
             if (!isAnimated && format == Image.Format.GIF) return null
 
@@ -142,14 +148,14 @@ open class User(
         /**
          * Gets the avatar url in a supported format and given [size].
          */
-        fun getUrl(size: Image.Size): String {
+        public fun getUrl(size: Image.Size): String {
             return getUrl(supportedFormat, size)!!
         }
 
         /**
          * Gets the avatar url in given [format] and [size], or returns null if the [format] is not supported.
          */
-        fun getUrl(format: Image.Format, size: Image.Size): String? {
+        public fun getUrl(format: Image.Format, size: Image.Size): String? {
             val hash = data.avatar ?: return defaultUrl
             if (!isAnimated && format == Image.Format.GIF) return null
 
@@ -159,17 +165,17 @@ open class User(
         /**
          * Requests to get the [defaultUrl] as an [Image].
          */
-        suspend fun getDefaultImage(): Image = Image.fromUrl(kord.resources.httpClient, defaultUrl)
+        public suspend fun getDefaultImage(): Image = Image.fromUrl(kord.resources.httpClient, defaultUrl)
 
         /**
          * Requests to get the avatar of the user as an [Image], prioritizing gif for animated avatars and png for others.
          */
-        suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, url)
+        public suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, url)
 
         /**
          * Requests to get the avatar of the user as an [Image] given [format], or returns null if the format is not supported.
          */
-        suspend fun getImage(format: Image.Format): Image? {
+        public suspend fun getImage(format: Image.Format): Image? {
             val url = getUrl(format) ?: return null
 
             return Image.fromUrl(kord.resources.httpClient, url)
@@ -178,7 +184,7 @@ open class User(
         /**
          * Requests to get the avatar of the user as an [Image] in given [size].
          */
-        suspend fun getImage(size: Image.Size): Image {
+        public suspend fun getImage(size: Image.Size): Image {
             return Image.fromUrl(kord.resources.httpClient, getUrl(size))
         }
 
@@ -186,7 +192,7 @@ open class User(
          * Requests to get the avatar of the user as an [Image] given [format] and [size], or returns null if the
          * [format] is not supported.
          */
-        suspend fun getImage(format: Image.Format, size: Image.Size): Image? {
+        public suspend fun getImage(format: Image.Format, size: Image.Size): Image? {
             val url = getUrl(format, size) ?: return null
 
             return Image.fromUrl(kord.resources.httpClient, url)

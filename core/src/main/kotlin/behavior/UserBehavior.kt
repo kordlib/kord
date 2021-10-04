@@ -20,9 +20,9 @@ import java.util.*
 /**
  * The behavior of a [Discord User](https://discord.com/developers/docs/resources/user)
  */
-interface UserBehavior : KordEntity, Strategizable {
+public interface UserBehavior : KordEntity, Strategizable {
 
-    val mention: String get() = "<@${id.asString}>"
+    public val mention: String get() = "<@${id.asString}>"
 
     /**
      * Requests to get the this behavior as a [Member] in the [Guild] with the [guildId].
@@ -30,7 +30,7 @@ interface UserBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the member wasn't present.
      */
-    suspend fun asMember(guildId: Snowflake): Member = supplier.getMember(guildId = guildId, userId = id)
+    public suspend fun asMember(guildId: Snowflake): Member = supplier.getMember(guildId = guildId, userId = id)
 
     /**
      * Requests to get this behavior as a [Member] in the [Guild] with the [guildId],
@@ -38,7 +38,7 @@ interface UserBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asMemberOrNull(guildId: Snowflake): Member? = supplier.getMemberOrNull(guildId = guildId, userId = id)
+    public suspend fun asMemberOrNull(guildId: Snowflake): Member? = supplier.getMemberOrNull(guildId = guildId, userId = id)
 
 
     /**
@@ -47,7 +47,7 @@ interface UserBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun asUser(): User = supplier.getUser(id)
+    public suspend fun asUser(): User = supplier.getUser(id)
 
     /**
      * Requests to get this behavior as a [User],
@@ -55,7 +55,7 @@ interface UserBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun asUserOrNull(): User? = supplier.getUserOrNull(id)
+    public suspend fun asUserOrNull(): User? = supplier.getUserOrNull(id)
 
     /**
      * Retrieve the [Member] associated with this behaviour from the provided [EntitySupplier]
@@ -63,7 +63,7 @@ interface UserBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun fetchMember(guildId: Snowflake): Member = supplier.getMember(guildId, id)
+    public suspend fun fetchMember(guildId: Snowflake): Member = supplier.getMember(guildId, id)
 
     /**
      * Retrieve the [Member] associated with this behaviour from the provided [EntitySupplier]
@@ -71,7 +71,7 @@ interface UserBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun fetchMemberOrNull(guildId: Snowflake): Member? = supplier.getMemberOrNull(guildId, id)
+    public suspend fun fetchMemberOrNull(guildId: Snowflake): Member? = supplier.getMemberOrNull(guildId, id)
 
     /**
      * Retrieve the [User] associated with this behaviour from the provided [EntitySupplier]
@@ -79,7 +79,7 @@ interface UserBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    suspend fun fetchUser(): User = supplier.getUser(id)
+    public suspend fun fetchUser(): User = supplier.getUser(id)
 
 
     /**
@@ -88,7 +88,7 @@ interface UserBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun fetchUserOrNull(): User? = supplier.getUserOrNull(id)
+    public suspend fun fetchUserOrNull(): User? = supplier.getUserOrNull(id)
 
 
     /**
@@ -101,7 +101,7 @@ interface UserBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun getDmChannel(): DmChannel {
+    public suspend fun getDmChannel(): DmChannel {
         val response = kord.rest.user.createDM(DMCreateRequest(id))
         val data = ChannelData.from(response)
 
@@ -115,7 +115,7 @@ interface UserBehavior : KordEntity, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun getDmChannelOrNull(): DmChannel? {
+    public suspend fun getDmChannelOrNull(): DmChannel? {
         return try {
             getDmChannel()
         } catch (exception: RestRequestException) {
@@ -136,7 +136,7 @@ interface UserBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): UserBehavior = UserBehavior(id, kord, strategy)
 }
 
-fun UserBehavior(
+public fun UserBehavior(
     id: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy

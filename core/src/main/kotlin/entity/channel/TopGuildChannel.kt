@@ -15,7 +15,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 /**
  * An instance of a Discord channel associated to a [guild].
  */
-interface TopGuildChannel : GuildChannel, TopGuildChannelBehavior {
+public interface TopGuildChannel : GuildChannel, TopGuildChannelBehavior {
 
     override val guildId: Snowflake
         get() = data.guildId.value!!
@@ -23,12 +23,12 @@ interface TopGuildChannel : GuildChannel, TopGuildChannelBehavior {
     /**
      * The raw position of this channel in the guild as displayed by Discord.
      */
-    val rawPosition: Int get() = data.position.value!!
+    public val rawPosition: Int get() = data.position.value!!
 
     /**
      * The permission overwrites for this channel.
      */
-    val permissionOverwrites: Set<PermissionOverwriteEntity>
+    public val permissionOverwrites: Set<PermissionOverwriteEntity>
         get() = data.permissionOverwrites.orEmpty().asSequence()
             .map { PermissionOverwriteData(it.id, it.type, it.allow, it.deny) }
             .map { PermissionOverwriteEntity(guildId, id, it, kord) }
@@ -41,7 +41,7 @@ interface TopGuildChannel : GuildChannel, TopGuildChannelBehavior {
      * @throws [RequestException] if something went wrong during the request.
      * @throws IllegalArgumentException if the [memberId] is not part of this guild.
      */
-    suspend fun getEffectivePermissions(memberId: Snowflake): Permissions {
+    public suspend fun getEffectivePermissions(memberId: Snowflake): Permissions {
         val member = supplier.getMemberOrNull(guildId, memberId)
         require(member != null) {
             "member ${memberId.asString} is not in guild ${guildId.asString}"
@@ -61,7 +61,7 @@ interface TopGuildChannel : GuildChannel, TopGuildChannelBehavior {
                 +it.allowed
                 -it.denied
             }
-            roleOverwrites.map {
+            roleOverwrites.forEach {
                 +it.allowed
                 -it.denied
             }
@@ -76,13 +76,13 @@ interface TopGuildChannel : GuildChannel, TopGuildChannelBehavior {
     /**
      * Gets the permission overwrite for the [memberId] in this channel, if present.
      */
-    fun getPermissionOverwritesForMember(memberId: Snowflake): PermissionOverwriteEntity? =
+    public fun getPermissionOverwritesForMember(memberId: Snowflake): PermissionOverwriteEntity? =
         getPermissionOverwritesForType(memberId, OverwriteType.Member)
 
     /**
      * Gets the permission overwrite for the [roleId] in this channel, if present.
      */
-    fun getPermissionOverwritesForRole(roleId: Snowflake): PermissionOverwriteEntity? =
+    public fun getPermissionOverwritesForRole(roleId: Snowflake): PermissionOverwriteEntity? =
         getPermissionOverwritesForType(roleId, OverwriteType.Role)
 
     private fun getPermissionOverwritesForType(id: Snowflake, type: OverwriteType): PermissionOverwriteEntity? =

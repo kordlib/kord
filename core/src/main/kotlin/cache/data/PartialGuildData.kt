@@ -10,19 +10,17 @@ import dev.kord.common.entity.optional.map
 import kotlinx.serialization.Serializable
 
 @Serializable
-class PartialGuildData(
-    val id: Snowflake,
-    val name: String,
-    val icon: String? = null,
-    val owner: OptionalBoolean = OptionalBoolean.Missing,
-    val permissions: Optional<Permissions> = Optional.Missing(),
-    val features: List<GuildFeature>,
-    val welcomeScreen: Optional<WelcomeScreenData> = Optional.Missing(),
-
-    ) {
-    companion object {
-
-        fun from(partialGuild: DiscordPartialGuild) = with(partialGuild) {
+public class PartialGuildData(
+    public val id: Snowflake,
+    public val name: String,
+    public val icon: String? = null,
+    public val owner: OptionalBoolean = OptionalBoolean.Missing,
+    public val permissions: Optional<Permissions> = Optional.Missing(),
+    public val features: List<GuildFeature>,
+    public val welcomeScreen: Optional<WelcomeScreenData> = Optional.Missing(),
+) {
+    public companion object {
+        public fun from(partialGuild: DiscordPartialGuild): PartialGuildData = with(partialGuild) {
             PartialGuildData(
                 id,
                 name,
@@ -34,6 +32,4 @@ class PartialGuildData(
             )
         }
     }
-
-
 }

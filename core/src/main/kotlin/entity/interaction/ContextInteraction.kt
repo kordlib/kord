@@ -7,6 +7,7 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -15,16 +16,17 @@ import java.util.*
 /**
  * Represents an interaction of type [ApplicationCommand][dev.kord.common.entity.InteractionType.ApplicationCommand]
  */
-sealed interface ApplicationCommandInteraction : Interaction, ApplicationCommandInteractionBehavior {
-    val invokedCommandId: Snowflake get() = data.data.id.value!!
+public sealed interface ApplicationCommandInteraction : Interaction, ApplicationCommandInteractionBehavior {
+    public val invokedCommandId: Snowflake get() = data.data.id.value!!
 
-    val name: String get() = data.data.name.value!!
+    public val name: String get() = data.data.name.value!!
 
-    val invokedCommandType: ApplicationCommandType get() = data.data.type.value!!
+    public val invokedCommandType: ApplicationCommandType get() = data.data.type.value!!
 
-    val resolvedObjects: ResolvedObjects? get() = data.data.resolvedObjectsData.unwrap {
-        ResolvedObjects(it, kord)
-    }
+    public val resolvedObjects: ResolvedObjects?
+        get() = data.data.resolvedObjectsData.unwrap {
+            ResolvedObjects(it, kord)
+        }
 
 }
 
@@ -32,22 +34,20 @@ sealed interface ApplicationCommandInteraction : Interaction, ApplicationCommand
 /**
  * An [ApplicationCommandInteraction] that's invoked through chat input.
  */
-sealed interface  ChatInputCommandInteraction : ApplicationCommandInteraction {
-    val command: InteractionCommand get() =  InteractionCommand(data.data, kord)
-
-
+public sealed interface ChatInputCommandInteraction : ApplicationCommandInteraction {
+    public val command: InteractionCommand get() = InteractionCommand(data.data, kord)
 }
 
 /**
  * A [ApplicationCommandInteraction] that's invoked through chat input specific to a guild.
  */
-class GuildChatInputCommandInteraction(
+public class GuildChatInputCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
 ) : ChatInputCommandInteraction, GuildApplicationCommandInteraction {
     override fun equals(other: Any?): Boolean {
-        return if(other !is GuildChatInputCommandInteraction) false
+        return if (other !is GuildChatInputCommandInteraction) false
         else id == other.id
     }
 
@@ -57,17 +57,16 @@ class GuildChatInputCommandInteraction(
 }
 
 
-
 /**
  * An [ApplicationCommandInteraction] that's invoked through chat input.
  */
-class GlobalChatInputCommandInteraction(
+public class GlobalChatInputCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
 ) : ChatInputCommandInteraction, GlobalApplicationCommandInteraction {
     override fun equals(other: Any?): Boolean {
-        return if(other !is GlobalChatInputCommandInteraction) false
+        return if (other !is GlobalChatInputCommandInteraction) false
         else id == other.id
     }
 
@@ -80,29 +79,29 @@ class GlobalChatInputCommandInteraction(
 /**
  * An [ApplicationCommandInteraction] that's invoked through user commands.
  */
-sealed interface  UserCommandInteraction : ApplicationCommandInteraction {
+public sealed interface UserCommandInteraction : ApplicationCommandInteraction {
 
-    val targetId: Snowflake get() = data.data.targetId.value!!
+    public val targetId: Snowflake get() = data.data.targetId.value!!
 
-    val targetBehavior: UserBehavior get() = UserBehavior(targetId, kord)
+    public val targetBehavior: UserBehavior get() = UserBehavior(targetId, kord)
 
-    suspend fun getTarget(): User = supplier.getUser(targetId)
+    public suspend fun getTarget(): User = supplier.getUser(targetId)
 
-    suspend fun getTargetOrNull(): User? = supplier.getUserOrNull(targetId)
+    public suspend fun getTargetOrNull(): User? = supplier.getUserOrNull(targetId)
 
-    val users get() = resolvedObjects!!.users!!
+    public val users: Map<Snowflake, User> get() = resolvedObjects!!.users!!
 }
 
 /**
  * An [ApplicationCommandInteraction] that's invoked through user commands specific to a guild.
  */
-class GuildUserCommandInteraction(
+public class GuildUserCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
 ) : UserCommandInteraction, GuildApplicationCommandInteraction {
     override fun equals(other: Any?): Boolean {
-        return if(other !is GuildUserCommandInteraction) false
+        return if (other !is GuildUserCommandInteraction) false
         else id == other.id
     }
 
@@ -110,16 +109,17 @@ class GuildUserCommandInteraction(
         return Objects.hash(id, guildId)
     }
 }
+
 /**
  * An [ApplicationCommandInteraction] that's invoked through user commands.
  */
-class GlobalUserCommandInteraction(
+public class GlobalUserCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
 ) : UserCommandInteraction, GlobalApplicationCommandInteraction {
     override fun equals(other: Any?): Boolean {
-        return if(other !is GlobalUserCommandInteraction) false
+        return if (other !is GlobalUserCommandInteraction) false
         else id == other.id
     }
 
@@ -132,30 +132,30 @@ class GlobalUserCommandInteraction(
 /**
  * An [ApplicationCommandInteraction] that's invoked through messages.
  */
-sealed interface  MessageCommandInteraction : ApplicationCommandInteraction {
+public sealed interface MessageCommandInteraction : ApplicationCommandInteraction {
 
-    val targetId: Snowflake get() = data.data.targetId.value!!
+    public val targetId: Snowflake get() = data.data.targetId.value!!
 
-    val targetBehavior: UserBehavior get() = UserBehavior(targetId, kord)
+    public val targetBehavior: UserBehavior get() = UserBehavior(targetId, kord)
 
-    suspend fun getTarget(): User = supplier.getUser(targetId)
+    public suspend fun getTarget(): User = supplier.getUser(targetId)
 
-    suspend fun getTargetOrNull(): User? = supplier.getUserOrNull(targetId)
+    public suspend fun getTargetOrNull(): User? = supplier.getUserOrNull(targetId)
 
-    val messages get() = resolvedObjects!!.messages!!
+    public val messages: Map<Snowflake, Message> get() = resolvedObjects!!.messages!!
 
 }
 
 /**
  * An [ApplicationCommandInteraction] that's invoked through messages specific to a guild.
  */
-class GuildMessageCommandInteraction(
+public class GuildMessageCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
 ) : MessageCommandInteraction, GuildApplicationCommandInteraction {
     override fun equals(other: Any?): Boolean {
-        return if(other !is GuildMessageCommandInteraction) false
+        return if (other !is GuildMessageCommandInteraction) false
         else id == other.id
     }
 
@@ -167,13 +167,13 @@ class GuildMessageCommandInteraction(
 /**
  * An [ApplicationCommandInteraction] that's invoked through messages.
  */
-class GlobalMessageCommandInteraction(
+public class GlobalMessageCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
 ) : MessageCommandInteraction, GlobalApplicationCommandInteraction {
     override fun equals(other: Any?): Boolean {
-        return if(other !is GlobalMessageCommandInteraction) false
+        return if (other !is GlobalMessageCommandInteraction) false
         else id == other.id
     }
 
@@ -183,21 +183,23 @@ class GlobalMessageCommandInteraction(
 }
 
 
-class UnknownApplicationCommandInteraction(
+public class UnknownApplicationCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
 ) : ApplicationCommandInteraction {
     override val user: UserBehavior
         get() = UserBehavior(data.user.value!!.id, kord)
+
     override fun equals(other: Any?): Boolean {
-        return if(other !is ApplicationCommandInteraction) false
+        return if (other !is ApplicationCommandInteraction) false
         else id == other.id
     }
 
     override fun hashCode(): Int {
         return Objects.hash(id)
     }
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): UnknownApplicationCommandInteraction {
         return UnknownApplicationCommandInteraction(data, kord, strategy.supply(kord))
     }

@@ -6,16 +6,14 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RoleTagsData(
+public data class RoleTagsData(
     val botId: OptionalSnowflake = OptionalSnowflake.Missing,
     val integrationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val premiumSubscriber: Boolean,
 ) {
-
-    companion object {
-        fun from(entity: DiscordRoleTags): RoleTagsData = with(entity) {
+    public companion object {
+        public fun from(entity: DiscordRoleTags): RoleTagsData = with(entity) {
             RoleTagsData(botId, integrationId, premiumSubscriber is Optional.Null)
         }
     }
-
 }

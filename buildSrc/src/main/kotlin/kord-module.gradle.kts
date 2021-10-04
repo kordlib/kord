@@ -1,14 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.util.Base64
 
 plugins {
+    java
     kotlin("jvm")
     kotlin("plugin.serialization")
     id("org.jetbrains.dokka")
     id("kotlinx-atomicfu")
-
     `maven-publish`
-    signing
 }
 
 repositories {
@@ -80,75 +78,16 @@ tasks {
     }
 
     publishing {
-        publications {
-            create<MavenPublication>(Library.name) {
-                from(components["kotlin"])
-                groupId = Library.group
-                artifactId = "kord-${project.name}"
-                version = Library.version
-
-                artifact(sourcesJar.get())
-                artifact(dokkaJar.get())
-
-                pom {
-                    name.set(Library.name)
-                    description.set(Library.description)
-                    url.set(Library.description)
-
-                    organization {
-                        name.set("Kord")
-                        url.set("https://github.com/kordlib")
-                    }
-
-                    developers {
-                        developer {
-                            name.set("The Kord Team")
-                        }
-                    }
-
-                    issueManagement {
-                        system.set("GitHub")
-                        url.set("https://github.com/kordlib/kord/issues")
-                    }
-
-                    licenses {
-                        license {
-                            name.set("MIT")
-                            url.set("https://opensource.org/licenses/MIT")
-                        }
-                    }
-                    scm {
-                        connection.set("scm:git:ssh://github.com/kordlib/kord.git")
-                        developerConnection.set("scm:git:ssh://git@github.com:kordlib/kord.git")
-                        url.set(Library.projectUrl)
-                    }
-                }
-
-                if (!isJitPack) {
-                    repositories {
-                        maven {
-                            url = if (Library.isSnapshot) uri(Repo.snapshotsUrl)
-                            else uri(Repo.releasesUrl)
-
-                            credentials {
-                                username = System.getenv("NEXUS_USER")
-                                password = System.getenv("NEXUS_PASSWORD")
-                            }
-                        }
-                    }
-                }
-            }
+        publications.withType<MavenPublication> {
+            from(components["kotlin"])
+            artifact(sourcesJar.get())
+            artifact(dokkaJar.get())
         }
     }
 
-    if (!isJitPack && Library.isRelease) {
-        signing {
-            val signingKey = findProperty("signingKey")?.toString()
-            val signingPassword = findProperty("signingPassword")?.toString()
-            if (signingKey != null && signingPassword != null) {
-                useInMemoryPgpKeys(Base64.getDecoder().decode(signingKey).toString(), signingPassword)
-            }
-            sign(publishing.publications[Library.name])
-        }
+    java {
+        // We don't use java, but this prevents a Gradle warning,
+        // telling you to target the same java version for java and kt
+        sourceCompatibility = JavaVersion.VERSION_1_8
     }
 }
