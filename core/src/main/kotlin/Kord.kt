@@ -25,7 +25,9 @@ import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.gateway.start
 import dev.kord.core.supplier.*
 import dev.kord.gateway.Gateway
+import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
+import dev.kord.gateway.builder.Shards
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
@@ -123,15 +125,16 @@ public class Kord(
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
     @OptIn(ExperimentalContracts::class)
-    public suspend inline fun login(builder: PresenceBuilder.() -> Unit = { status = PresenceStatus.Online }) {
+    public suspend inline fun login(builder: LoginBuilder.() -> Unit = {}) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
+        val loginBuilder = LoginBuilder().apply(builder)
         gateway.start(resources.token) {
             shard = DiscordShard(0, resources.shards.totalShards)
-            presence(builder)
-            intents = resources.intents
-            name = "kord"
+            presence = loginBuilder.presence
+            intents = loginBuilder.intents
+            name = loginBuilder.name
         }
     }
 

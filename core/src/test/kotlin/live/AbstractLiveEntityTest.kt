@@ -5,11 +5,11 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
-import dev.kord.core.builder.kord.Shards
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
+import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
 import equality.randomId
@@ -103,7 +103,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     protected open fun createKord(): Kord {
         gateway = GatewayMock()
         return Kord(
-            resources = ClientResources("token", Snowflake(0u), Shards(1), HttpClient(), EntitySupplyStrategy.cache, Intents.none),
+            resources = ClientResources("token", Snowflake(0u), Shards(1), HttpClient(), EntitySupplyStrategy.cache),
             cache = DataCache.none(),
             DefaultMasterGateway(mapOf(0 to gateway)),
             RestClient(KtorRequestHandler(token = "token")),
