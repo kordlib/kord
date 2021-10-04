@@ -288,62 +288,84 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.asFlow().map { ThreadMember(it, kord) }
     }
 
-    override fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel> {
-        return cache.query<ChannelData> {
+    override fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel> = flow {
+        val result =  cache.query<ChannelData> {
             idEq(ChannelData::guildId, guildId)
-        }.asFlow().filter {
+        }.toCollection()
+            .sortedByDescending { it.id }
+            .asFlow()
+            .filter {
             it.threadMetadata.value?.archived != true
         }.mapNotNull {
             Channel.from(it, kord) as? ThreadChannel
         }
+
+        emitAll(result)
     }
 
-    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
-        return cache.query<ChannelData> {
-            idEq(ChannelData::parentId, channelId)
-        }.asFlow().filter {
-            val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
-            it.threadMetadata.value?.archived == true
-                    && time != null
-                    && time < before
-                    && (it.type == ChannelType.PublicGuildThread || it.type == ChannelType.PublicNewsThread)
-        }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
-    }
+    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> =
+        flow {
+            val result = cache.query<ChannelData> {
+                idEq(ChannelData::parentId, channelId)
+            }.toCollection()
+                .sortedByDescending { it.threadMetadata.value?.archiveTimestamp?.toInstant() }
+                .asFlow()
+                .filter {
+                    val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+                    it.threadMetadata.value?.archived == true
+                            && time != null
+                            && time < before
+                            && (it.type == ChannelType.PublicGuildThread || it.type == ChannelType.PublicNewsThread)
+                }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
 
-    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
-        return cache.query<ChannelData> {
-            idEq(ChannelData::parentId, channelId)
-        }.asFlow().filter {
-            val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
-            it.threadMetadata.value?.archived == true
-                    && time != null
-                    && time < before
-                    && it.type == ChannelType.PrivateThread
-        }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
-    }
+            emitAll(result)
+        }
+
+    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> =
+        flow {
+            val result = cache.query<ChannelData> {
+                idEq(ChannelData::parentId, channelId)
+            }.toCollection()
+                .sortedByDescending { it.threadMetadata.value?.archiveTimestamp?.toInstant() }
+                .asFlow()
+                .filter {
+                    val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+                    it.threadMetadata.value?.archived == true
+                            && time != null
+                            && time < before
+                            && it.type == ChannelType.PrivateThread
+                }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
+
+            emitAll(result)
+        }
 
     override fun getJoinedPrivateArchivedThreads(
         channelId: Snowflake,
         before: Snowflake,
         limit: Int
-    ): Flow<ThreadChannel> {
-        return cache.query<ChannelData> {
+    ): Flow<ThreadChannel> = flow {
+        val result = cache.query<ChannelData> {
             idEq(ChannelData::parentId, channelId)
-        }.asFlow().filter {
-            it.threadMetadata.value?.archived == true
-                    && it.id < before
-                    && it.type == ChannelType.PrivateThread
-                    && it.member !is Optional.Missing
-        }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
+        }.toCollection()
+            .sortedByDescending { it.id }
+            .asFlow()
+            .filter {
+                it.threadMetadata.value?.archived == true
+                        && it.id < before
+                        && it.type == ChannelType.PrivateThread
+                        && it.member !is Optional.Missing
+            }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
+
+        emitAll(result)
     }
 
     override fun getGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake
     ): Flow<GuildApplicationCommand> = cache.query<ApplicationCommandData> {
-            idEq(ApplicationCommandData::guildId, guildId)
-            idEq(ApplicationCommandData::applicationId, applicationId)
-        }.asFlow().map { GuildApplicationCommand(it, kord.rest.interaction) }
+        idEq(ApplicationCommandData::guildId, guildId)
+        idEq(ApplicationCommandData::applicationId, applicationId)
+    }.asFlow().map { GuildApplicationCommand(it, kord.rest.interaction) }
 
 
     override suspend fun getGuildApplicationCommandOrNull(
@@ -383,9 +405,9 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         applicationId: Snowflake,
         guildId: Snowflake
     ): Flow<ApplicationCommandPermissions> = cache.query<GuildApplicationCommandPermissionsData> {
-            idEq(GuildApplicationCommandPermissionsData::guildId, guildId)
-            idEq(GuildApplicationCommandPermissionsData::applicationId, applicationId)
-        }.asFlow().map { ApplicationCommandPermissions(it) }
+        idEq(GuildApplicationCommandPermissionsData::guildId, guildId)
+        idEq(GuildApplicationCommandPermissionsData::applicationId, applicationId)
+    }.asFlow().map { ApplicationCommandPermissions(it) }
 
 
     override suspend fun getApplicationCommandPermissionsOrNull(
