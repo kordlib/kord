@@ -4,6 +4,8 @@ import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
@@ -16,6 +18,7 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -131,11 +134,10 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
     name: String,
     archiveDuration: ArchiveDuration = ArchiveDuration.Day,
     type: ChannelType,
-    reason: String? = null
+    builder: StartThreadBuilder.() -> Unit
 ): ThreadChannel {
-
     val response =
-        kord.rest.channel.startThread(id, StartThreadRequest(name, archiveDuration, Optional.Value(type)), reason)
+        kord.rest.channel.startThread(id, name, archiveDuration, type, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel

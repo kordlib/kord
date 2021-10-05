@@ -3,6 +3,8 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
@@ -16,6 +18,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.TextChannelModifyBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchTextChannel
 import kotlinx.coroutines.flow.Flow
@@ -68,18 +71,23 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
     public suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
-
+        builder: StartThreadBuilder.() -> Unit = {}
     ): TextChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PublicGuildThread, reason) as TextChannelThread
+        return unsafeStartThread(
+            name,
+            archiveDuration,
+            ChannelType.PublicGuildThread,
+            builder
+        ) as TextChannelThread
     }
 
     public suspend fun startPrivateThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
+        builder: StartThreadBuilder.() -> Unit = {}
     ): TextChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PrivateThread, reason) as TextChannelThread
+        val startBuilder = StartThreadBuilder(name, archiveDuration, ChannelType.PrivateThread).apply(builder)
+        return unsafeStartThread(startBuilder.name, startBuilder.autoArchiveDuration, ChannelType.PrivateThread, builder) as TextChannelThread
     }
 
     public suspend fun startPublicThreadWithMessage(

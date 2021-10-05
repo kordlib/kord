@@ -77,11 +77,14 @@ public data class ThreadMetadataData(
     val archived: Boolean,
     val archiveTimestamp: String,
     val autoArchiveDuration: ArchiveDuration,
-    val locked: OptionalBoolean = OptionalBoolean.Missing
+    val locked: OptionalBoolean = OptionalBoolean.Missing,
+    val invitable: OptionalBoolean = OptionalBoolean.Missing
 ) {
-    public companion object {
+    
+  public companion object {
         public fun from(threadMetadata: DiscordThreadMetadata): ThreadMetadataData = with(threadMetadata) {
-            ThreadMetadataData(archived, archiveTimestamp, autoArchiveDuration, locked)
+            ThreadMetadataData(archived, archiveTimestamp, autoArchiveDuration, locked, invitable)
+
         }
     }
 }

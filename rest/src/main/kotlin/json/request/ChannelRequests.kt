@@ -51,6 +51,7 @@ data class ChannelModifyPatchRequest(
     @SerialName("auto_archive_duration")
     val autoArchiveDuration: OptionalInt = OptionalInt.Missing,
     val locked: OptionalBoolean = OptionalBoolean.Missing,
+    val invitable: OptionalBoolean = OptionalBoolean.Missing,
 )
 
 @Serializable
@@ -65,7 +66,8 @@ data class StartThreadRequest(
     val name: String,
     @SerialName("auto_archive_duration")
     val autoArchiveDuration: ArchiveDuration,
-    val type: Optional<ChannelType> = Optional.Missing()
+    val type: Optional<ChannelType> = Optional.Missing(),
+    val invitable: OptionalBoolean = OptionalBoolean.Missing
 )
 
 data class ListThreadsBySnowflakeRequest(

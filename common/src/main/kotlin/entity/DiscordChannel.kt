@@ -184,7 +184,8 @@ class DiscordThreadMetadata(
     val archiveTimestamp: String,
     @SerialName("auto_archive_duration")
     val autoArchiveDuration: ArchiveDuration,
-    val locked: OptionalBoolean = OptionalBoolean.Missing
+    val locked: OptionalBoolean = OptionalBoolean.Missing,
+    val invitable: OptionalBoolean = OptionalBoolean.Missing
 )
 
 @Serializable(with = ArchiveDuration.Serializer::class)
