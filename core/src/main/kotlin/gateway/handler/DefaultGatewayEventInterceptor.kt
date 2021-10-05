@@ -4,6 +4,7 @@ import dev.kord.cache.api.DataCache
 import dev.kord.core.Kord
 import dev.kord.core.gateway.ShardEvent
 import io.ktor.util.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.job
 import mu.KotlinLogging
@@ -37,8 +38,8 @@ public class DefaultGatewayEventInterceptor(
                     event.event,
                     event.shard,
                     kord,
-                    (eventScope?.invoke(event, kord) ?: kord.coroutineContext)
-                            + SupervisorJob(kord.coroutineContext.job)
+                    CoroutineScope((eventScope?.invoke(event, kord) ?: kord.coroutineContext)
+                            + SupervisorJob(kord.coroutineContext.job))
                 )
                 if (coreEvent != null) {
                     return coreEvent

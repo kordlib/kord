@@ -12,6 +12,7 @@ import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.gateway.Event
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlin.coroutines.CoroutineContext
@@ -22,7 +23,7 @@ internal class VoiceEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? =
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? =
         when (event) {
             is VoiceStateUpdate -> handle(event, shard, kord, context)
             is VoiceServerUpdate -> handle(event, shard, kord, context)
@@ -33,7 +34,7 @@ internal class VoiceEventHandler(
         event: VoiceStateUpdate,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): VoiceStateUpdateEvent {
         val data = VoiceStateData.from(event.voiceState.guildId.value!!, event.voiceState)
 
@@ -50,10 +51,10 @@ internal class VoiceEventHandler(
         event: VoiceServerUpdate,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): VoiceServerUpdateEvent =
         with(event.voiceServerUpdateData) {
-            return VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, coroutineContext = context)
+            return VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, coroutineScope = context)
         }
 
 }

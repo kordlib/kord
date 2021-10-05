@@ -6,14 +6,16 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.User
 import dev.kord.core.event.Event
+import dev.kord.core.event.kordCoroutineScope
+import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
 public class MemberLeaveEvent(
     public val user: User,
     public val guildId: Snowflake,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = user.kord.coroutineContext,
-) : Event {
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(user.kord)
+) : Event, CoroutineScope by coroutineScope {
 
     override val kord: Kord get() = user.kord
 

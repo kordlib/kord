@@ -11,7 +11,7 @@ import dev.kord.core.entity.application.*
 import dev.kord.core.entity.interaction.*
 import dev.kord.core.event.interaction.*
 import dev.kord.gateway.*
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineScope
 import dev.kord.core.event.Event as CoreEvent
 
 
@@ -19,7 +19,7 @@ public class InteractionEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? =
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? =
         when (event) {
             is InteractionCreate -> handle(event, shard, kord, context)
             is ApplicationCommandCreate -> handle(event, shard, kord, context)
@@ -28,7 +28,7 @@ public class InteractionEventHandler(
             else -> null
         }
 
-    private fun handle(event: InteractionCreate, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent {
+    private fun handle(event: InteractionCreate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent {
         val data = InteractionData.from(event.interaction)
         val interaction = Interaction.from(data, kord)
         val coreEvent = when(interaction) {
@@ -52,7 +52,7 @@ public class InteractionEventHandler(
         event: ApplicationCommandCreate,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): CoreEvent {
         val data = ApplicationCommandData.from(event.application)
         cache.put(data)
@@ -70,7 +70,7 @@ public class InteractionEventHandler(
         event: ApplicationCommandUpdate,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): CoreEvent {
         val data = ApplicationCommandData.from(event.application)
         cache.put(data)
@@ -89,7 +89,7 @@ public class InteractionEventHandler(
         event: ApplicationCommandDelete,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): CoreEvent {
         val data = ApplicationCommandData.from(event.application)
         cache.remove<ApplicationCommandData> { idEq(ApplicationCommandData::id, data.id) }

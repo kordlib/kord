@@ -10,7 +10,7 @@ import dev.kord.core.event.gateway.DisconnectEvent
 import dev.kord.core.event.gateway.ReadyEvent
 import dev.kord.core.event.gateway.ResumedEvent
 import dev.kord.gateway.*
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineScope
 import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
@@ -18,7 +18,7 @@ internal class LifeCycleEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? =
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? =
         when (event) {
             is Ready -> handle(event, shard, kord, context)
             is Resumed -> ResumedEvent(kord, shard, context)
@@ -42,7 +42,7 @@ internal class LifeCycleEventHandler(
             else -> null
         }
 
-    private suspend fun handle(event: Ready, shard: Int, kord: Kord, context: CoroutineContext): ReadyEvent =
+    private suspend fun handle(event: Ready, shard: Int, kord: Kord, context: CoroutineScope): ReadyEvent =
         with(event.data) {
             val guilds = guilds.map { it.id }.toSet()
             val self = UserData.from(event.data.user)
@@ -56,7 +56,7 @@ internal class LifeCycleEventHandler(
                 sessionId,
                 kord,
                 shard,
-                coroutineContext = context
+                coroutineScope = context
             )
         }
 }

@@ -14,6 +14,7 @@ import dev.kord.core.event.channel.*
 import dev.kord.core.event.channel.data.ChannelPinsUpdateEventData
 import dev.kord.core.event.channel.data.TypingStartEventData
 import dev.kord.gateway.*
+import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 import dev.kord.core.event.Event as CoreEvent
 
@@ -26,7 +27,7 @@ internal class ChannelEventHandler(
         event: Event,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): dev.kord.core.event.Event? = when (event) {
         is ChannelCreate -> handle(event, shard, kord, context)
         is ChannelUpdate -> handle(event, shard, kord, context)
@@ -36,7 +37,7 @@ internal class ChannelEventHandler(
         else -> null
     }
 
-    private suspend fun handle(event: ChannelCreate, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    private suspend fun handle(event: ChannelCreate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
         val data = ChannelData.from(event.channel)
         cache.put(data)
 
@@ -56,7 +57,7 @@ internal class ChannelEventHandler(
         return coreEvent
     }
 
-    private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
         val data = ChannelData.from(event.channel)
         cache.put(data)
 
@@ -76,7 +77,7 @@ internal class ChannelEventHandler(
         return coreEvent
     }
 
-    private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
         cache.remove<ChannelData> { idEq(ChannelData::id, event.channel.id) }
         val data = ChannelData.from(event.channel)
 
@@ -99,14 +100,14 @@ internal class ChannelEventHandler(
         event: ChannelPinsUpdate,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): ChannelPinsUpdateEvent =
         with(event.pins) {
             val coreEvent = ChannelPinsUpdateEvent(
                 ChannelPinsUpdateEventData.from(this),
                 kord,
                 shard,
-                coroutineContext = context
+                coroutineScope = context
             )
 
             cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
@@ -120,7 +121,7 @@ internal class ChannelEventHandler(
         event: TypingStart,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): TypingStartEvent = with(event.data) {
         member.value?.let {
             cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
@@ -130,7 +131,7 @@ internal class ChannelEventHandler(
             TypingStartEventData.from(this),
             kord,
             shard,
-            coroutineContext = context
+            coroutineScope = context
         )
     }
 

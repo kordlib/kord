@@ -4,6 +4,8 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.*
 import dev.kord.core.entity.application.*
 import dev.kord.core.entity.interaction.*
+import dev.kord.core.event.kordCoroutineScope
+import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -52,15 +54,15 @@ public class GuildUserCommandInteractionCreateEvent(
     override val interaction: GuildUserCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : GuildApplicationInteractionCreateEvent, UserCommandInteractionCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : GuildApplicationInteractionCreateEvent, UserCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 public class GlobalUserCommandInteractionCreateEvent(
     override val interaction: GlobalUserCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : GlobalApplicationInteractionCreateEvent, UserCommandInteractionCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : GlobalApplicationInteractionCreateEvent, UserCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 
 public sealed interface  MessageCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
@@ -71,15 +73,15 @@ public class GuildMessageCommandInteractionCreateEvent(
     override val interaction: GuildMessageCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : GuildApplicationInteractionCreateEvent, MessageCommandInteractionCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : GuildApplicationInteractionCreateEvent, MessageCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 public class GlobalMessageCommandInteractionCreateEvent(
     override val interaction: GlobalMessageCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : GlobalApplicationInteractionCreateEvent, MessageCommandInteractionCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : GlobalApplicationInteractionCreateEvent, MessageCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 
 
@@ -91,12 +93,12 @@ public class GuildChatInputCommandInteractionCreateEvent(
     override val interaction: GuildChatInputCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : GuildApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : GuildApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 public class GlobalChatInputCommandInteractionCreateEvent(
     override val interaction: GlobalChatInputCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : GlobalApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : GlobalApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent, CoroutineScope by coroutineScope

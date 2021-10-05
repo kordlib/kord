@@ -13,7 +13,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.thread.*
 import dev.kord.core.event.channel.thread.*
 import dev.kord.gateway.*
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineScope
 import dev.kord.core.event.Event as CoreEvent
 
 public class ThreadEventHandler(
@@ -24,18 +24,18 @@ public class ThreadEventHandler(
         event: Event,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        coroutineScope: CoroutineScope
     ): dev.kord.core.event.Event? = when (event) {
-        is ThreadCreate -> handle(event, shard, kord, context)
-        is ThreadUpdate -> handle(event, shard, kord, context)
-        is ThreadDelete -> handle(event, shard, kord, context)
-        is ThreadListSync -> handle(event, shard, kord, context)
-        is ThreadMemberUpdate -> handle(event, shard, kord, context)
-        is ThreadMembersUpdate -> handle(event, shard, kord, context)
+        is ThreadCreate -> handle(event, shard, kord, coroutineScope)
+        is ThreadUpdate -> handle(event, shard, kord, coroutineScope)
+        is ThreadDelete -> handle(event, shard, kord, coroutineScope)
+        is ThreadListSync -> handle(event, shard, kord, coroutineScope)
+        is ThreadMemberUpdate -> handle(event, shard, kord, coroutineScope)
+        is ThreadMembersUpdate -> handle(event, shard, kord, coroutineScope)
         else -> null
     }
 
-    public suspend fun handle(event: ThreadCreate, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    public suspend fun handle(event: ThreadCreate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
         val channelData = event.channel.toData()
         cache.put(channelData)
 
@@ -48,7 +48,7 @@ public class ThreadEventHandler(
         return coreEvent
     }
 
-    public suspend fun handle(event: ThreadUpdate, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    public suspend fun handle(event: ThreadUpdate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
         val channelData = event.channel.toData()
         cache.put(channelData)
 
@@ -63,7 +63,7 @@ public class ThreadEventHandler(
 
     }
 
-    public suspend fun handle(event: ThreadDelete, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    public suspend fun handle(event: ThreadDelete, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
 
         val channelData = event.channel.toData()
         val cachedData = cache.query<ChannelData> { idEq(ChannelData::id, channelData.id) }.singleOrNull()
@@ -86,7 +86,7 @@ public class ThreadEventHandler(
         return coreEvent
     }
 
-    public suspend fun handle(event: ThreadListSync, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    public suspend fun handle(event: ThreadListSync, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
         val data = ThreadListSyncData.from(event)
 
         data.threads.forEach { thread ->
@@ -96,16 +96,16 @@ public class ThreadEventHandler(
             cache.put(member)
         }
 
-        return ThreadListSyncEvent(data, kord, shard, coroutineContext = context)
+        return ThreadListSyncEvent(data, kord, shard, coroutineScope = context)
     }
 
-    public fun handle(event: ThreadMemberUpdate, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    public fun handle(event: ThreadMemberUpdate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
         val data = ThreadMemberData.from(event.member)
         val member = ThreadMember(data, kord)
         return ThreadMemberUpdateEvent(member, kord, shard, context)
     }
 
-    public suspend fun handle(event: ThreadMembersUpdate, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    public suspend fun handle(event: ThreadMembersUpdate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
         val data = ThreadMembersUpdateEventData.from(event)
         for (removedMemberId in data.removedMemberIds.orEmpty()) {
             cache.remove<ThreadMemberData> {

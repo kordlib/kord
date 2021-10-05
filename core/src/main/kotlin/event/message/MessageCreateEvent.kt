@@ -11,6 +11,8 @@ import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.entity.channel.DmChannel
+import dev.kord.core.event.kordCoroutineScope
+import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
 public class MessageCreateEvent(
@@ -19,8 +21,8 @@ public class MessageCreateEvent(
     public val member: Member?,
     override val shard: Int,
     override val supplier: EntitySupplier = message.kord.defaultSupplier,
-    override val coroutineContext: CoroutineContext = message.kord.coroutineContext,
-) : Event, Strategizable {
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(message.kord)
+) : Event, CoroutineScope by coroutineScope, Strategizable {
     override val kord: Kord get() = message.kord
 
     /**

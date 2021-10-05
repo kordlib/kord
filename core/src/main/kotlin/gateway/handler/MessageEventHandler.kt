@@ -12,10 +12,11 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.message.*
 import dev.kord.gateway.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
-import kotlin.coroutines.CoroutineContext
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class MessageEventHandler(
@@ -26,7 +27,7 @@ internal class MessageEventHandler(
         event: Event,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): dev.kord.core.event.Event? = when (event) {
         is MessageCreate -> handle(event, shard, kord, context)
         is MessageUpdate -> handle(event, shard, kord, context)
@@ -43,7 +44,7 @@ internal class MessageEventHandler(
         event: MessageCreate,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): MessageCreateEvent = with(event.message) {
         val data = MessageData.from(this)
         cache.put(data)
@@ -78,14 +79,14 @@ internal class MessageEventHandler(
             }
         }
 
-        return MessageCreateEvent(Message(data, kord), guildId.value, member, shard, coroutineContext = context)
+        return MessageCreateEvent(Message(data, kord), guildId.value, member, shard, coroutineScope = context)
     }
 
     private suspend fun handle(
         event: MessageUpdate,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): MessageUpdateEvent = with(event.message) {
         val query = cache.query<MessageData> { idEq(MessageData::id, id) }
 
@@ -100,28 +101,28 @@ internal class MessageEventHandler(
             }
         }
 
-        MessageUpdateEvent(id, channelId, this, old, kord, shard, coroutineContext = context)
+        MessageUpdateEvent(id, channelId, this, old, kord, shard, coroutineScope = context)
     }
 
     private suspend fun handle(
         event: MessageDelete,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): MessageDeleteEvent = with(event.message) {
         val query = cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val removed = query.singleOrNull()?.let { Message(it, kord) }
         query.remove()
 
-        return MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard, coroutineContext = context)
+        return MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard, coroutineScope = context)
     }
 
     private suspend fun handle(
         event: MessageDeleteBulk,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): MessageBulkDeleteEvent =
         with(event.messageBulk) {
             val query = cache.query<MessageData> { MessageData::id `in` ids }
@@ -138,7 +139,7 @@ internal class MessageEventHandler(
                 guildId.value,
                 kord,
                 shard,
-                coroutineContext = context
+                coroutineScope = context
             )
         }
 
@@ -146,7 +147,7 @@ internal class MessageEventHandler(
         event: MessageReactionAdd,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): ReactionAddEvent =
         with(event.reaction) {
             /**
@@ -190,7 +191,7 @@ internal class MessageEventHandler(
                 reaction,
                 kord,
                 shard,
-                coroutineContext = context
+                coroutineScope = context
             )
         }
 
@@ -198,7 +199,7 @@ internal class MessageEventHandler(
         event: MessageReactionRemove,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): ReactionRemoveEvent =
         with(event.reaction) {
             /**
@@ -240,7 +241,7 @@ internal class MessageEventHandler(
                 reaction,
                 kord,
                 shard,
-                coroutineContext = context
+                coroutineScope = context
             )
         }
 
@@ -248,7 +249,7 @@ internal class MessageEventHandler(
         event: MessageReactionRemoveAll,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): ReactionRemoveAllEvent =
         with(event.reactions) {
             cache.query<MessageData> { idEq(MessageData::id, messageId) }
@@ -260,7 +261,7 @@ internal class MessageEventHandler(
                 guildId.value,
                 kord,
                 shard,
-                coroutineContext = context
+                coroutineScope = context
             )
         }
 
@@ -268,14 +269,14 @@ internal class MessageEventHandler(
         event: MessageReactionRemoveEmoji,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        context: CoroutineScope
     ): ReactionRemoveEmojiEvent =
         with(event.reaction) {
             cache.query<MessageData> { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
 
             val data = ReactionRemoveEmojiData.from(this)
-            return ReactionRemoveEmojiEvent(data, kord, shard, coroutineContext = context)
+            return ReactionRemoveEmojiEvent(data, kord, shard, coroutineScope = context)
         }
 
 }
