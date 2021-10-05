@@ -1102,14 +1102,6 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilderKt {
 	public static final fun embed (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
 }
 
-public abstract interface class dev/kord/rest/builder/message/create/PersistentMessageCreateBuilder : dev/kord/rest/builder/message/create/MessageCreateBuilder {
-}
-
-public final class dev/kord/rest/builder/message/create/PersistentMessageCreateBuilder$DefaultImpls {
-	public static fun addFile (Ldev/kord/rest/builder/message/create/PersistentMessageCreateBuilder;Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
-	public static fun addFile (Ldev/kord/rest/builder/message/create/PersistentMessageCreateBuilder;Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public final class dev/kord/rest/builder/message/create/UpdateMessageInteractionResponseCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> ()V
 	public fun <init> (Z)V
@@ -1245,14 +1237,6 @@ public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderKt {
 	public static final fun allowedMentions (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun embed (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
-}
-
-public abstract interface class dev/kord/rest/builder/message/modify/PersistentMessageModifyBuilder : dev/kord/rest/builder/message/modify/MessageModifyBuilder {
-}
-
-public final class dev/kord/rest/builder/message/modify/PersistentMessageModifyBuilder$DefaultImpls {
-	public static fun addFile (Ldev/kord/rest/builder/message/modify/PersistentMessageModifyBuilder;Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
-	public static fun addFile (Ldev/kord/rest/builder/message/modify/PersistentMessageModifyBuilder;Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/builder/message/modify/UserMessageModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/modify/MessageModifyBuilder {
