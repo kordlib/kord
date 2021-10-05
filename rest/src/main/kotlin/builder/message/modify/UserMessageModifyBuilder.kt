@@ -15,7 +15,7 @@ import dev.kord.rest.json.request.MessageEditPatchRequest
 import dev.kord.rest.json.request.MultipartMessagePatchRequest
 
 class UserMessageModifyBuilder
-    : PersistentMessageModifyBuilder,
+    : MessageModifyBuilder,
     RequestBuilder<MultipartMessagePatchRequest> {
 
     private var state = MessageModifyStateHolder()

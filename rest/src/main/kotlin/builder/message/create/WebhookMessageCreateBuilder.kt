@@ -15,7 +15,7 @@ import java.io.InputStream
  * Message builder for creating messages as a webhook user.
  */
 class WebhookMessageCreateBuilder
-    : PersistentMessageCreateBuilder,
+    : MessageCreateBuilder,
     RequestBuilder<MultiPartWebhookExecuteRequest> {
 
     override var content: String? = null

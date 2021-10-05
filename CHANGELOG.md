@@ -1,6 +1,43 @@
+# 0.8.0-M6
+
+## Breaking
+
+* Entities asChannel has been replaced with fetchChannel (#396)
+* The asChannel behavior has changed to return the object if it was a concrete entity. (#396)
+* EphemeralBuilder builders have been unified with the persistent messages. (#397)
+* Core events now accept a context in the constructor (#391)
+* Start thread methods have introduced a builder (#398)
+* Shards have been moved to the gateway builder packages (#409)
+
+## Changes
+
+* Intents are now lazily evaluated (#409)
+* Enable explicit api mode for core module (#406)
+* Fixes and improvements for Snowflake (#370)
+* Application commands improvements (#374 #384 #387)
+* MasterGateway and Interceptors are switched into interfaces (#391)
+
+## Additions
+
+* Ephemeral files support (#397)
+* Add missing invitable field (#398)
+* Role icons support (#402)
+* Per-Guild avatar support (#401)
+* Add discord messaging timestamps (#385)
+* Add named files and attachments (#379)
+* Add missing avatar and username properties to `WebhookMessageCreateBuilder` (#376)
+
+## Fixes
+
+* Serialize NumberChoice as a Double, not as a String (#405)
+* Sort threads as documented by discord (#411)
+* Fix NPE on ThreadChannelDelete (#373)
+
+
 # 0.8.0-M5
 
 ## Breaking
+
 * slash commands and interactions have been redesigned to support the new command and interaction types.
 
 ## Changes

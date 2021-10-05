@@ -19,7 +19,7 @@ import java.io.InputStream
  */
 
 class FollowupMessageCreateBuilder(var ephemeral: Boolean)
-    : PersistentMessageCreateBuilder,
+    : MessageCreateBuilder,
     RequestBuilder<MultipartFollowupMessageCreateRequest> {
 
     override var content: String? = null

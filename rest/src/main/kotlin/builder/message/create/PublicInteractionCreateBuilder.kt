@@ -20,7 +20,7 @@ import java.io.InputStream
  */
 
 class InteractionResponseCreateBuilder(var ephemeral: Boolean = false)
-    : PersistentMessageCreateBuilder,
+    : MessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {
 
     override var content: String? = null

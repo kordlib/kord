@@ -14,7 +14,7 @@ import dev.kord.rest.json.request.MultipartWebhookEditMessageRequest
 import dev.kord.rest.json.request.WebhookEditMessageRequest
 
 class WebhookMessageModifyBuilder
-    : PersistentMessageModifyBuilder,
+    : MessageModifyBuilder,
     RequestBuilder<MultipartWebhookEditMessageRequest> {
 
     private var state = MessageModifyStateHolder()

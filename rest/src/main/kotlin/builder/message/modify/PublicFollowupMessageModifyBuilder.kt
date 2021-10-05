@@ -18,7 +18,7 @@ import java.io.InputStream
 
 
 class FollowupMessageModifyBuilder
-    : PersistentMessageModifyBuilder,
+    : MessageModifyBuilder,
     RequestBuilder<MultipartFollowupMessageModifyRequest> {
 
     private var state = MessageModifyStateHolder()
