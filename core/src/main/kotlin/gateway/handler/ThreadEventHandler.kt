@@ -35,27 +35,27 @@ public class ThreadEventHandler(
         else -> null
     }
 
-    public suspend fun handle(event: ThreadCreate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
+    public suspend fun handle(event: ThreadCreate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         val channelData = event.channel.toData()
         cache.put(channelData)
 
         val coreEvent = when (val channel = Channel.from(channelData, kord)) {
-            is NewsChannelThread -> NewsChannelThreadCreateEvent(channel, shard, context)
-            is TextChannelThread -> TextChannelThreadCreateEvent(channel, shard, context)
-            is ThreadChannel -> UnknownChannelThreadCreateEvent(channel, shard, context)
+            is NewsChannelThread -> NewsChannelThreadCreateEvent(channel, shard, coroutineScope)
+            is TextChannelThread -> TextChannelThreadCreateEvent(channel, shard, coroutineScope)
+            is ThreadChannel -> UnknownChannelThreadCreateEvent(channel, shard, coroutineScope)
             else -> return null
         }
         return coreEvent
     }
 
-    public suspend fun handle(event: ThreadUpdate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
+    public suspend fun handle(event: ThreadUpdate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         val channelData = event.channel.toData()
         cache.put(channelData)
 
         val coreEvent = when (val channel = Channel.from(channelData, kord)) {
-            is NewsChannelThread -> NewsChannelThreadUpdateEvent(channel, shard, context)
-            is TextChannelThread -> TextChannelThreadUpdateEvent(channel, shard, context)
-            is ThreadChannel -> UnknownChannelThreadUpdateEvent(channel, shard, context)
+            is NewsChannelThread -> NewsChannelThreadUpdateEvent(channel, shard, coroutineScope)
+            is TextChannelThread -> TextChannelThreadUpdateEvent(channel, shard, coroutineScope)
+            is ThreadChannel -> UnknownChannelThreadUpdateEvent(channel, shard, coroutineScope)
             else -> return null
         }
 
@@ -63,7 +63,7 @@ public class ThreadEventHandler(
 
     }
 
-    public suspend fun handle(event: ThreadDelete, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
+    public suspend fun handle(event: ThreadDelete, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
 
         val channelData = event.channel.toData()
         val cachedData = cache.query<ChannelData> { idEq(ChannelData::id, channelData.id) }.singleOrNull()
@@ -75,18 +75,18 @@ public class ThreadEventHandler(
                 channel,
                 old as? NewsChannelThread,
                 shard,
-                context
+                coroutineScope = coroutineScope
             )
             is ChannelType.PrivateThread,
-            is ChannelType.GuildText -> TextChannelThreadDeleteEvent(channel, old as? TextChannelThread, shard, context)
-            else -> UnknownChannelThreadDeleteEvent(channel, old as? ThreadChannel, shard, context)
+            is ChannelType.GuildText -> TextChannelThreadDeleteEvent(channel, old as? TextChannelThread, shard, coroutineScope)
+            else -> UnknownChannelThreadDeleteEvent(channel, old as? ThreadChannel, shard, coroutineScope)
         }
 
         cache.remove<ChannelData> { idEq(ChannelData::id, channel.id) }
         return coreEvent
     }
 
-    public suspend fun handle(event: ThreadListSync, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
+    public suspend fun handle(event: ThreadListSync, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         val data = ThreadListSyncData.from(event)
 
         data.threads.forEach { thread ->
@@ -96,16 +96,16 @@ public class ThreadEventHandler(
             cache.put(member)
         }
 
-        return ThreadListSyncEvent(data, kord, shard, coroutineScope = context)
+        return ThreadListSyncEvent(data, kord, shard, coroutineScope = coroutineScope)
     }
 
-    public fun handle(event: ThreadMemberUpdate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
+    public fun handle(event: ThreadMemberUpdate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         val data = ThreadMemberData.from(event.member)
         val member = ThreadMember(data, kord)
-        return ThreadMemberUpdateEvent(member, kord, shard, context)
+        return ThreadMemberUpdateEvent(member, kord, shard, coroutineScope)
     }
 
-    public suspend fun handle(event: ThreadMembersUpdate, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? {
+    public suspend fun handle(event: ThreadMembersUpdate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         val data = ThreadMembersUpdateEventData.from(event)
         for (removedMemberId in data.removedMemberIds.orEmpty()) {
             cache.remove<ThreadMemberData> {
@@ -116,6 +116,6 @@ public class ThreadEventHandler(
         for (addedMember in data.addedMembers.orEmpty()) {
             cache.put(addedMember)
         }
-        return ThreadMembersUpdateEvent(data, kord, shard, context)
+        return ThreadMembersUpdateEvent(data, kord, shard, coroutineScope)
     }
 }

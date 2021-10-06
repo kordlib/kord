@@ -23,10 +23,10 @@ internal class VoiceEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? =
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? =
         when (event) {
-            is VoiceStateUpdate -> handle(event, shard, kord, context)
-            is VoiceServerUpdate -> handle(event, shard, kord, context)
+            is VoiceStateUpdate -> handle(event, shard, kord, coroutineScope)
+            is VoiceServerUpdate -> handle(event, shard, kord, coroutineScope)
             else -> null
         }
 
@@ -34,7 +34,7 @@ internal class VoiceEventHandler(
         event: VoiceStateUpdate,
         shard: Int,
         kord: Kord,
-        context: CoroutineScope
+        coroutineScope: CoroutineScope
     ): VoiceStateUpdateEvent {
         val data = VoiceStateData.from(event.voiceState.guildId.value!!, event.voiceState)
 
@@ -44,17 +44,17 @@ internal class VoiceEventHandler(
         cache.put(data)
         val new = VoiceState(data, kord)
 
-        return VoiceStateUpdateEvent(old, new, shard, context)
+        return VoiceStateUpdateEvent(old, new, shard, coroutineScope)
     }
 
     private fun handle(
         event: VoiceServerUpdate,
         shard: Int,
         kord: Kord,
-        context: CoroutineScope
+        coroutineScope: CoroutineScope
     ): VoiceServerUpdateEvent =
         with(event.voiceServerUpdateData) {
-            return VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, coroutineScope = context)
+            return VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, coroutineScope = coroutineScope)
         }
 
 }

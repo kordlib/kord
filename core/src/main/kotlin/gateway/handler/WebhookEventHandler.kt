@@ -14,9 +14,9 @@ internal class WebhookEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineScope): CoreEvent? =
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? =
         when (event) {
-            is WebhooksUpdate -> handle(event, shard, kord, context)
+            is WebhooksUpdate -> handle(event, shard, kord, coroutineScope)
             else -> null
         }
 
