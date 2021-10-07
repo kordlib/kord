@@ -69,7 +69,7 @@ tasks {
             val signingKey = findProperty("signingKey")?.toString()
             val signingPassword = findProperty("signingPassword")?.toString()
             if (signingKey != null && signingPassword != null) {
-                useInMemoryPgpKeys(Base64.getDecoder().decode(signingKey).toString(), signingPassword)
+                useInMemoryPgpKeys(String(Base64.getDecoder().decode(signingKey)), signingPassword)
             }
             sign(publishing.publications[Library.name])
         }
