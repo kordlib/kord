@@ -5,7 +5,7 @@
 * Entities asChannel has been replaced with fetchChannel (#396)
 * The asChannel behavior has changed to return the object if it was a concrete entity. (#396)
 * EphemeralBuilder builders have been unified with the persistent messages. (#397)
-* Core events now accept a context in the constructor (#391)
+* Core events now accept a coroutineScope in the constructor (#391)
 * Start thread methods have introduced a builder (#398)
 * Shards have been moved to the gateway builder packages (#409)
 
