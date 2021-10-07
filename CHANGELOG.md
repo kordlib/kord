@@ -6,7 +6,7 @@
 * EphemeralBuilder builders have been unified with the persistent messages. (#397)
 * Core events now accept a coroutineScope in the constructor (#391)
 * Start thread methods have introduced a builder (#398)
-* Shards have been moved to the gateway builder packages (#409)
+* Shards have been moved to `dev.kord.gateway.builder` (#409)
 
 ## Changes
 
