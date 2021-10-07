@@ -2,8 +2,7 @@
 
 ## Breaking
 
-* Entities asChannel has been replaced with fetchChannel (#396)
-* The asChannel behavior has changed to return the object if it was a concrete entity. (#396)
+* `XBehavior#asX` now returns itself if the concrete type is already a complete entity. Use `XBehavior#fetchChannel` to always retrieve the most up-to-date version of an entity (#396)
 * EphemeralBuilder builders have been unified with the persistent messages. (#397)
 * Core events now accept a coroutineScope in the constructor (#391)
 * Start thread methods have introduced a builder (#398)
