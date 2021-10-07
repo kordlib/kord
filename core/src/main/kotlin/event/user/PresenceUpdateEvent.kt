@@ -8,9 +8,11 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.entity.*
 import dev.kord.core.event.Event
+import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
 public class PresenceUpdateEvent(
@@ -21,8 +23,8 @@ public class PresenceUpdateEvent(
     public val presence: Presence,
     override val shard: Int,
     override val supplier: EntitySupplier = presence.kord.defaultSupplier,
-    override val coroutineContext: CoroutineContext = presence.kord.coroutineContext,
-) : Event, Strategizable {
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(presence.kord)
+) : Event, CoroutineScope by coroutineScope, Strategizable {
     override val kord: Kord get() = presence.kord
 
     /**

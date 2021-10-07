@@ -8,10 +8,12 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.event.Event
 import dev.kord.core.event.channel.data.ChannelPinsUpdateEventData
+import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import kotlin.coroutines.CoroutineContext
@@ -21,8 +23,8 @@ public class ChannelPinsUpdateEvent(
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : Event, Strategizable {
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : Event, CoroutineScope by coroutineScope,Strategizable {
 
     public val channelId: Snowflake get() = data.channelId
 

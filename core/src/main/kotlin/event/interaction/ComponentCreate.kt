@@ -2,6 +2,8 @@ package dev.kord.core.event.interaction
 
 import dev.kord.core.Kord
 import dev.kord.core.entity.interaction.*
+import dev.kord.core.event.kordCoroutineScope
+import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
 
@@ -33,29 +35,29 @@ public class GuildButtonInteractionCreateEvent(
     override val interaction: GuildButtonInteraction,
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : ButtonInteractionCreateEvent, GuildComponentInteractionCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ButtonInteractionCreateEvent, GuildComponentInteractionCreateEvent, CoroutineScope by coroutineScope
 
 
 public class GlobalButtonInteractionCreateEvent(
     override val interaction: GlobalButtonInteraction,
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : ButtonInteractionCreateEvent, GlobalComponentInteractionCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ButtonInteractionCreateEvent, GlobalComponentInteractionCreateEvent, CoroutineScope by coroutineScope
 
 
 public class GuildSelectMenuInteractionCreateEvent(
     override val interaction: GuildSelectMenuInteraction,
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : SelectMenuInteractionCreateEvent, GuildComponentInteractionCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : SelectMenuInteractionCreateEvent, GuildComponentInteractionCreateEvent, CoroutineScope by coroutineScope
 
 
 public class GlobalSelectMenuInteractionCreateEvent(
     override val interaction: GlobalSelectMenuInteraction,
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : SelectMenuInteractionCreateEvent, GlobalComponentInteractionCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : SelectMenuInteractionCreateEvent, GlobalComponentInteractionCreateEvent, CoroutineScope by coroutineScope

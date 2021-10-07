@@ -14,6 +14,7 @@ import dev.kord.core.event.channel.*
 import dev.kord.core.event.channel.data.ChannelPinsUpdateEventData
 import dev.kord.core.event.channel.data.TypingStartEventData
 import dev.kord.gateway.*
+import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 import dev.kord.core.event.Event as CoreEvent
 
@@ -26,70 +27,70 @@ internal class ChannelEventHandler(
         event: Event,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        coroutineScope: CoroutineScope
     ): dev.kord.core.event.Event? = when (event) {
-        is ChannelCreate -> handle(event, shard, kord, context)
-        is ChannelUpdate -> handle(event, shard, kord, context)
-        is ChannelDelete -> handle(event, shard, kord, context)
-        is ChannelPinsUpdate -> handle(event, shard, kord, context)
-        is TypingStart -> handle(event, shard, kord, context)
+        is ChannelCreate -> handle(event, shard, kord, coroutineScope)
+        is ChannelUpdate -> handle(event, shard, kord, coroutineScope)
+        is ChannelDelete -> handle(event, shard, kord, coroutineScope)
+        is ChannelPinsUpdate -> handle(event, shard, kord, coroutineScope)
+        is TypingStart -> handle(event, shard, kord, coroutineScope)
         else -> null
     }
 
-    private suspend fun handle(event: ChannelCreate, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    private suspend fun handle(event: ChannelCreate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         val data = ChannelData.from(event.channel)
         cache.put(data)
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
-            is NewsChannel -> NewsChannelCreateEvent(channel, shard, context)
-            is StoreChannel -> StoreChannelCreateEvent(channel, shard, context)
-            is DmChannel -> DMChannelCreateEvent(channel, shard, context)
-            is TextChannel -> TextChannelCreateEvent(channel, shard, context)
-            is StageChannel -> StageChannelCreateEvent(channel, shard, context)
-            is VoiceChannel -> VoiceChannelCreateEvent(channel, shard, context)
-            is Category -> CategoryCreateEvent(channel, shard, context)
+            is NewsChannel -> NewsChannelCreateEvent(channel, shard, coroutineScope)
+            is StoreChannel -> StoreChannelCreateEvent(channel, shard, coroutineScope)
+            is DmChannel -> DMChannelCreateEvent(channel, shard, coroutineScope)
+            is TextChannel -> TextChannelCreateEvent(channel, shard, coroutineScope)
+            is StageChannel -> StageChannelCreateEvent(channel, shard, coroutineScope)
+            is VoiceChannel -> VoiceChannelCreateEvent(channel, shard, coroutineScope)
+            is Category -> CategoryCreateEvent(channel, shard, coroutineScope)
             is ThreadChannel -> return null
-            else -> UnknownChannelCreateEvent(channel, shard, context)
+            else -> UnknownChannelCreateEvent(channel, shard, coroutineScope)
 
         }
 
         return coreEvent
     }
 
-    private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         val data = ChannelData.from(event.channel)
         cache.put(data)
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
-            is NewsChannel -> NewsChannelUpdateEvent(channel, shard, context)
-            is StoreChannel -> StoreChannelUpdateEvent(channel, shard, context)
-            is DmChannel -> DMChannelUpdateEvent(channel, shard, context)
-            is TextChannel -> TextChannelUpdateEvent(channel, shard, context)
-            is StageChannel -> StageChannelUpdateEvent(channel, shard, context)
-            is VoiceChannel -> VoiceChannelUpdateEvent(channel, shard, context)
-            is Category -> CategoryUpdateEvent(channel, shard, context)
+            is NewsChannel -> NewsChannelUpdateEvent(channel, shard, coroutineScope)
+            is StoreChannel -> StoreChannelUpdateEvent(channel, shard, coroutineScope)
+            is DmChannel -> DMChannelUpdateEvent(channel, shard, coroutineScope)
+            is TextChannel -> TextChannelUpdateEvent(channel, shard, coroutineScope)
+            is StageChannel -> StageChannelUpdateEvent(channel, shard, coroutineScope)
+            is VoiceChannel -> VoiceChannelUpdateEvent(channel, shard, coroutineScope)
+            is Category -> CategoryUpdateEvent(channel, shard, coroutineScope)
             is ThreadChannel -> return null
-            else -> UnknownChannelUpdateEvent(channel, shard, context)
+            else -> UnknownChannelUpdateEvent(channel, shard, coroutineScope)
 
         }
 
         return coreEvent
     }
 
-    private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? {
+    private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         cache.remove<ChannelData> { idEq(ChannelData::id, event.channel.id) }
         val data = ChannelData.from(event.channel)
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
-            is NewsChannel -> NewsChannelDeleteEvent(channel, shard, context)
-            is StoreChannel -> StoreChannelDeleteEvent(channel, shard, context)
-            is DmChannel -> DMChannelDeleteEvent(channel, shard, context)
-            is TextChannel -> TextChannelDeleteEvent(channel, shard, context)
-            is StageChannel -> StageChannelDeleteEvent(channel, shard, context)
-            is VoiceChannel -> VoiceChannelDeleteEvent(channel, shard, context)
-            is Category -> CategoryDeleteEvent(channel, shard, context)
+            is NewsChannel -> NewsChannelDeleteEvent(channel, shard, coroutineScope)
+            is StoreChannel -> StoreChannelDeleteEvent(channel, shard, coroutineScope)
+            is DmChannel -> DMChannelDeleteEvent(channel, shard, coroutineScope)
+            is TextChannel -> TextChannelDeleteEvent(channel, shard, coroutineScope)
+            is StageChannel -> StageChannelDeleteEvent(channel, shard, coroutineScope)
+            is VoiceChannel -> VoiceChannelDeleteEvent(channel, shard, coroutineScope)
+            is Category -> CategoryDeleteEvent(channel, shard, coroutineScope)
             is ThreadChannel -> return null
-            else -> UnknownChannelDeleteEvent(channel, shard, context)
+            else -> UnknownChannelDeleteEvent(channel, shard, coroutineScope)
         }
 
         return coreEvent
@@ -99,14 +100,14 @@ internal class ChannelEventHandler(
         event: ChannelPinsUpdate,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        coroutineScope: CoroutineScope
     ): ChannelPinsUpdateEvent =
         with(event.pins) {
             val coreEvent = ChannelPinsUpdateEvent(
                 ChannelPinsUpdateEventData.from(this),
                 kord,
                 shard,
-                coroutineContext = context
+                coroutineScope = coroutineScope
             )
 
             cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
@@ -120,7 +121,7 @@ internal class ChannelEventHandler(
         event: TypingStart,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        coroutineScope: CoroutineScope
     ): TypingStartEvent = with(event.data) {
         member.value?.let {
             cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
@@ -130,7 +131,7 @@ internal class ChannelEventHandler(
             TypingStartEventData.from(this),
             kord,
             shard,
-            coroutineContext = context
+            coroutineScope = coroutineScope
         )
     }
 

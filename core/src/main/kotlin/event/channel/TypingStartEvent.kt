@@ -12,12 +12,14 @@ import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.event.Event
 import dev.kord.core.event.channel.data.TypingStartEventData
+import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.toInstant
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
 import kotlin.coroutines.CoroutineContext
 
@@ -26,8 +28,8 @@ public class TypingStartEvent(
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : Event, Strategizable {
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : Event, CoroutineScope by coroutineScope, Strategizable {
 
     public val channelId: Snowflake get() = data.channelId
 

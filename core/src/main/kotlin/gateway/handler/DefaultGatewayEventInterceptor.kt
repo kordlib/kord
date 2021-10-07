@@ -2,8 +2,10 @@ package dev.kord.core.gateway.handler
 
 import dev.kord.cache.api.DataCache
 import dev.kord.core.Kord
+import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.gateway.ShardEvent
 import io.ktor.util.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.job
 import mu.KotlinLogging
@@ -15,7 +17,7 @@ private val logger = KotlinLogging.logger { }
 @Suppress("EXPERIMENTAL_API_USAGE")
 public class DefaultGatewayEventInterceptor(
     cache: DataCache,
-    private val eventScope: ((ShardEvent, Kord) -> CoroutineContext)? = null
+    private val eventScope: ((ShardEvent, Kord) -> CoroutineScope) = { _, kord -> kordCoroutineScope(kord) }
 ) : GatewayEventInterceptor {
 
     private val listeners = listOf(
@@ -37,8 +39,7 @@ public class DefaultGatewayEventInterceptor(
                     event.event,
                     event.shard,
                     kord,
-                    (eventScope?.invoke(event, kord) ?: kord.coroutineContext)
-                            + SupervisorJob(kord.coroutineContext.job)
+                    eventScope.invoke(event, kord)
                 )
                 if (coreEvent != null) {
                     return coreEvent

@@ -12,6 +12,7 @@ import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.gateway.Event
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlin.coroutines.CoroutineContext
@@ -22,10 +23,10 @@ internal class VoiceEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? =
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? =
         when (event) {
-            is VoiceStateUpdate -> handle(event, shard, kord, context)
-            is VoiceServerUpdate -> handle(event, shard, kord, context)
+            is VoiceStateUpdate -> handle(event, shard, kord, coroutineScope)
+            is VoiceServerUpdate -> handle(event, shard, kord, coroutineScope)
             else -> null
         }
 
@@ -33,7 +34,7 @@ internal class VoiceEventHandler(
         event: VoiceStateUpdate,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        coroutineScope: CoroutineScope
     ): VoiceStateUpdateEvent {
         val data = VoiceStateData.from(event.voiceState.guildId.value!!, event.voiceState)
 
@@ -43,17 +44,17 @@ internal class VoiceEventHandler(
         cache.put(data)
         val new = VoiceState(data, kord)
 
-        return VoiceStateUpdateEvent(old, new, shard, context)
+        return VoiceStateUpdateEvent(old, new, shard, coroutineScope)
     }
 
     private fun handle(
         event: VoiceServerUpdate,
         shard: Int,
         kord: Kord,
-        context: CoroutineContext
+        coroutineScope: CoroutineScope
     ): VoiceServerUpdateEvent =
         with(event.voiceServerUpdateData) {
-            return VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, coroutineContext = context)
+            return VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, coroutineScope = coroutineScope)
         }
 
 }

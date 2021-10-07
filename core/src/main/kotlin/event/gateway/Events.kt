@@ -7,11 +7,13 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.User
 import dev.kord.core.event.Event
+import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Command
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.GatewayCloseCode
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlin.coroutines.CoroutineContext
@@ -21,8 +23,8 @@ public sealed class GatewayEvent : Event
 public class ConnectEvent(
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : GatewayEvent()
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : GatewayEvent(), CoroutineScope by coroutineScope
 
 public sealed class DisconnectEvent : GatewayEvent() {
 
@@ -32,8 +34,8 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class DetachEvent(
         override val kord: Kord,
         override val shard: Int,
-        override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : DisconnectEvent() {
+        public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+    ) : DisconnectEvent(), CoroutineScope by coroutineScope {
         override fun toString(): String {
             return "DetachEvent(kord=$kord, shard=$shard)"
         }
@@ -45,8 +47,8 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class UserCloseEvent(
         override val kord: Kord,
         override val shard: Int,
-        override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : DisconnectEvent() {
+        public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+    ) : DisconnectEvent(), CoroutineScope by coroutineScope {
         override fun toString(): String {
             return "UserCloseEvent(kord=$kord, shard=$shard)"
         }
@@ -58,8 +60,8 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class TimeoutEvent(
         override val kord: Kord,
         override val shard: Int,
-        override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : DisconnectEvent() {
+        public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+    ) : DisconnectEvent(), CoroutineScope by coroutineScope {
         override fun toString(): String {
             return "TimeoutEvent(kord=$kord, shard=$shard)"
         }
@@ -75,8 +77,8 @@ public sealed class DisconnectEvent : GatewayEvent() {
         override val shard: Int,
         public val closeCode: GatewayCloseCode,
         public val recoverable: Boolean,
-        override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : DisconnectEvent() {
+        public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+    ) : DisconnectEvent(), CoroutineScope by coroutineScope {
         override fun toString(): String {
             return "DiscordCloseEvent(kord=$kord, shard=$shard, closeCode=$closeCode, recoverable=$recoverable)"
         }
@@ -89,8 +91,8 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class RetryLimitReachedEvent(
         override val kord: Kord,
         override val shard: Int,
-        override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : DisconnectEvent() {
+        public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+    ) : DisconnectEvent(), CoroutineScope by coroutineScope {
         override fun toString(): String {
             return "RetryLimitReachedEvent(kord=$kord, shard=$shard)"
         }
@@ -102,8 +104,8 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class ReconnectingEvent(
         override val kord: Kord,
         override val shard: Int,
-        override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : DisconnectEvent() {
+        public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+    ) : DisconnectEvent(), CoroutineScope by coroutineScope {
         override fun toString(): String {
             return "ReconnectingEvent(kord=$kord, shard=$shard)"
         }
@@ -115,8 +117,8 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class SessionReset(
         override val kord: Kord,
         override val shard: Int,
-        override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : DisconnectEvent() {
+        public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+    ) : DisconnectEvent(), CoroutineScope by coroutineScope {
         override fun toString(): String {
             return "SessionReset(kord=$kord, shard=$shard)"
         }
@@ -129,8 +131,8 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class ZombieConnectionEvent(
         override val kord: Kord,
         override val shard: Int,
-        override val coroutineContext: CoroutineContext = kord.coroutineContext,
-    ) : DisconnectEvent() {
+        public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+    ) : DisconnectEvent(), CoroutineScope by coroutineScope {
         override fun toString(): String {
             return "ZombieConnectionEvent(kord=$kord, shard=$shard)"
         }
@@ -146,8 +148,8 @@ public class ReadyEvent(
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : GatewayEvent(), Strategizable {
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : GatewayEvent(), CoroutineScope by coroutineScope, Strategizable {
 
     public val guilds: Set<GuildBehavior> get() = guildIds.map { GuildBehavior(it, kord) }.toSet()
 
@@ -164,8 +166,8 @@ public class ReadyEvent(
 public class ResumedEvent(
     override val kord: Kord,
     override val shard: Int,
-    override val coroutineContext: CoroutineContext = kord.coroutineContext,
-) : GatewayEvent() {
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : GatewayEvent(), CoroutineScope by coroutineScope {
     override fun toString(): String {
         return "ResumedEvent(kord=$kord, shard=$shard)"
     }

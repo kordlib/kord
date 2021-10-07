@@ -10,7 +10,7 @@ import dev.kord.core.event.gateway.DisconnectEvent
 import dev.kord.core.event.gateway.ReadyEvent
 import dev.kord.core.event.gateway.ResumedEvent
 import dev.kord.gateway.*
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineScope
 import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
@@ -18,31 +18,31 @@ internal class LifeCycleEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: CoroutineContext): CoreEvent? =
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? =
         when (event) {
-            is Ready -> handle(event, shard, kord, context)
-            is Resumed -> ResumedEvent(kord, shard, context)
-            Reconnect -> ConnectEvent(kord, shard, context)
+            is Ready -> handle(event, shard, kord, coroutineScope)
+            is Resumed -> ResumedEvent(kord, shard, coroutineScope)
+            Reconnect -> ConnectEvent(kord, shard, coroutineScope)
             is Close -> when (event) {
-                Close.Detach -> DisconnectEvent.DetachEvent(kord, shard, context)
-                Close.UserClose -> DisconnectEvent.UserCloseEvent(kord, shard, context)
-                Close.Timeout -> DisconnectEvent.TimeoutEvent(kord, shard, context)
+                Close.Detach -> DisconnectEvent.DetachEvent(kord, shard, coroutineScope)
+                Close.UserClose -> DisconnectEvent.UserCloseEvent(kord, shard, coroutineScope)
+                Close.Timeout -> DisconnectEvent.TimeoutEvent(kord, shard, coroutineScope)
                 is Close.DiscordClose -> DisconnectEvent.DiscordCloseEvent(
                     kord,
                     shard,
                     event.closeCode,
                     event.recoverable,
-                    context
+                    coroutineScope
                 )
-                Close.Reconnecting -> DisconnectEvent.ReconnectingEvent(kord, shard, context)
-                Close.ZombieConnection -> DisconnectEvent.ZombieConnectionEvent(kord, shard, context)
-                Close.RetryLimitReached -> DisconnectEvent.RetryLimitReachedEvent(kord, shard, context)
-                Close.SessionReset -> DisconnectEvent.SessionReset(kord, shard, context)
+                Close.Reconnecting -> DisconnectEvent.ReconnectingEvent(kord, shard, coroutineScope)
+                Close.ZombieConnection -> DisconnectEvent.ZombieConnectionEvent(kord, shard, coroutineScope)
+                Close.RetryLimitReached -> DisconnectEvent.RetryLimitReachedEvent(kord, shard, coroutineScope)
+                Close.SessionReset -> DisconnectEvent.SessionReset(kord, shard, coroutineScope)
             }
             else -> null
         }
 
-    private suspend fun handle(event: Ready, shard: Int, kord: Kord, context: CoroutineContext): ReadyEvent =
+    private suspend fun handle(event: Ready, shard: Int, kord: Kord, coroutineScope: CoroutineScope): ReadyEvent =
         with(event.data) {
             val guilds = guilds.map { it.id }.toSet()
             val self = UserData.from(event.data.user)
@@ -56,7 +56,7 @@ internal class LifeCycleEventHandler(
                 sessionId,
                 kord,
                 shard,
-                coroutineContext = context
+                coroutineScope = coroutineScope
             )
         }
 }

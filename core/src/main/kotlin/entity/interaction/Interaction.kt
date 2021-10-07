@@ -309,9 +309,6 @@ public sealed class OptionValue<out T>(public val value: T) {
         override fun toString(): String = "MentionableOptionValue(value=$value)"
     }
 
-    public class MessageOptionValue(value: Message) : OptionValue<Message>(value) {
-        override fun toString(): String = "MessageOptionValue(value=$value)"
-    }
 }
 
 
