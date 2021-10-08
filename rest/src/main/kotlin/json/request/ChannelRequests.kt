@@ -51,6 +51,8 @@ data class ChannelModifyPatchRequest(
     @SerialName("auto_archive_duration")
     val autoArchiveDuration: OptionalInt = OptionalInt.Missing,
     val locked: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("rtc_region")
+    val rtcRegion: Optional<String> = Optional.Missing(),
     val invitable: OptionalBoolean = OptionalBoolean.Missing,
 )
 

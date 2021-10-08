@@ -55,6 +55,9 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
+    private var _rtcRegion: Optional<String> = Optional.Missing()
+    var rtcRegion: String? by ::_rtcRegion.delegate()
+
     private var _position: OptionalInt? = OptionalInt.Missing
     var position: Int? by ::_position.delegate()
 
@@ -80,7 +83,8 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
         bitrate = _bitrate,
         userLimit = _userLimit,
         topic = _topic,
-        permissionOverwrites = _permissionOverwrites
+        permissionOverwrites = _permissionOverwrites,
+        rtcRegion = _rtcRegion
     )
 
 }
