@@ -19,14 +19,14 @@ import kotlin.coroutines.CoroutineContext
  * [reactions][ReactionAddEvent] to that message.
  */
 @KordPreview
-interface LiveKordEntity : KordEntity, CoroutineScope {
-    val events: Flow<Event>
+public interface LiveKordEntity : KordEntity, CoroutineScope {
+    public val events: Flow<Event>
 
-    fun shutDown(cause: CancellationException = CancellationException("The live entity is shut down", null))
+    public fun shutDown(cause: CancellationException = CancellationException("The live entity is shut down", null))
 }
 
 @KordPreview
-abstract class AbstractLiveKordEntity(
+public abstract class AbstractLiveKordEntity(
     override val kord: Kord,
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) : LiveKordEntity, CoroutineScope by coroutineScope {
@@ -38,7 +38,7 @@ abstract class AbstractLiveKordEntity(
     protected abstract fun filter(event: Event): Boolean
     protected abstract fun update(event: Event)
 
-    override fun shutDown(cause: CancellationException) = cancel(cause)
+    override fun shutDown(cause: CancellationException): Unit = cancel(cause)
 }
 
 /**
@@ -46,7 +46,10 @@ abstract class AbstractLiveKordEntity(
  * or [Kord] by default and will not propagate any exceptions.
  */
 @KordPreview
-inline fun <reified T : Event> LiveKordEntity.on(scope: CoroutineScope = this, noinline consumer: suspend (T) -> Unit) =
+public inline fun <reified T : Event> LiveKordEntity.on(
+    scope: CoroutineScope = this,
+    noinline consumer: suspend (T) -> Unit
+): Job =
     events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
         runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
     }.catch { kordLogger.catching(it) }.launchIn(scope)

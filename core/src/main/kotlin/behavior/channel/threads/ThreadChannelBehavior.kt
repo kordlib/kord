@@ -3,12 +3,8 @@ package dev.kord.core.behavior.channel.threads
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.behavior.WebhookBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.execute
-import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.toData
-import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -19,18 +15,16 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.channel.thread.ThreadModifyBuilder
-import dev.kord.rest.builder.message.create.WebhookMessageCreateBuilder
-import dev.kord.rest.request.RestRequestException
 import kotlinx.coroutines.flow.Flow
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface ThreadChannelBehavior : GuildMessageChannelBehavior {
+public interface ThreadChannelBehavior : GuildMessageChannelBehavior {
 
-    val parentId: Snowflake
+    public val parentId: Snowflake
 
-    val parent: ThreadParentChannelBehavior get() = ThreadParentChannelBehavior(guildId, parentId, kord)
+    public val parent: ThreadParentChannelBehavior get() = ThreadParentChannelBehavior(guildId, parentId, kord)
 
     /**
      * Requests to get all members of the current thread.
@@ -38,7 +32,7 @@ interface ThreadChannelBehavior : GuildMessageChannelBehavior {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val members: Flow<ThreadMember>
+    public val members: Flow<ThreadMember>
         get() = supplier.getThreadMembers(id)
 
     /**
@@ -50,7 +44,7 @@ interface ThreadChannelBehavior : GuildMessageChannelBehavior {
      * @see [ThreadChannel.isLocked]
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun removeUser(userId: Snowflake) {
+    public suspend fun removeUser(userId: Snowflake) {
         kord.rest.channel.removeUserFromThread(id, userId)
     }
 
@@ -63,7 +57,7 @@ interface ThreadChannelBehavior : GuildMessageChannelBehavior {
      * @see [ThreadChannel.isLocked]
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun addUser(userId: Snowflake) {
+    public suspend fun addUser(userId: Snowflake) {
         kord.rest.channel.addUserToThread(id, userId)
     }
 
@@ -76,7 +70,7 @@ interface ThreadChannelBehavior : GuildMessageChannelBehavior {
      * @see [ThreadChannel.isLocked]
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun join() {
+    public suspend fun join() {
         kord.rest.channel.joinThread(id)
     }
 
@@ -87,7 +81,7 @@ interface ThreadChannelBehavior : GuildMessageChannelBehavior {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun leave() {
+    public suspend fun leave() {
         kord.rest.channel.leaveThread(id)
     }
 
@@ -104,7 +98,7 @@ interface ThreadChannelBehavior : GuildMessageChannelBehavior {
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the thread parent wasn't present.
      */
-    suspend fun getParent(): ThreadParentChannel {
+    public suspend fun getParent(): ThreadParentChannel {
         return supplier.getChannelOf(parentId)
     }
 
@@ -114,7 +108,7 @@ interface ThreadChannelBehavior : GuildMessageChannelBehavior {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun getParentOrNull(): ThreadParentChannel? {
+    public suspend fun getParentOrNull(): ThreadParentChannel? {
         return supplier.getChannelOfOrNull(parentId)
     }
 
@@ -143,7 +137,7 @@ interface ThreadChannelBehavior : GuildMessageChannelBehavior {
  * requires [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] or that the current user is the thread creator.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun ThreadChannelBehavior.edit(builder: ThreadModifyBuilder.() -> Unit): ThreadChannel {
+public suspend inline fun ThreadChannelBehavior.edit(builder: ThreadModifyBuilder.() -> Unit): ThreadChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val appliedBuilder = ThreadModifyBuilder().apply(builder)
     val patchedChannel = kord.rest.channel.patchThread(id, appliedBuilder.toRequest(), appliedBuilder.reason)

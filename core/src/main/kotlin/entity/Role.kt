@@ -11,7 +11,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
 
-data class Role(
+public data class Role(
     val data: RoleData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
@@ -23,19 +23,23 @@ data class Role(
     override val guildId: Snowflake
         get() = data.guildId
 
-    val color: Color get() = Color(data.color)
+    public val color: Color get() = Color(data.color)
 
-    val hoisted: Boolean get() = data.hoisted
+    public val hoisted: Boolean get() = data.hoisted
 
-    val managed: Boolean get() = data.managed
+    val icon: Icon? get() = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
 
-    val mentionable: Boolean get() = data.mentionable
+    val unicodeEmoji: String? = data.unicodeEmoji.value
 
-    val name: String get() = data.name
+    public val managed: Boolean get() = data.managed
 
-    val permissions: Permissions get() = data.permissions
+    public val mentionable: Boolean get() = data.mentionable
 
-    val rawPosition: Int get() = data.position
+    public val name: String get() = data.name
+
+    public val permissions: Permissions get() = data.permissions
+
+    public val rawPosition: Int get() = data.position
 
     override suspend fun asRole(): Role = this
 
@@ -44,7 +48,7 @@ data class Role(
     /**
      * The tags of this role, if present.
      */
-    val tags: RoleTags? get() = data.tags.unwrap { RoleTags(it, guildId, kord) }
+    public val tags: RoleTags? get() = data.tags.unwrap { RoleTags(it, guildId, kord) }
 
     override fun compareTo(other: Entity): Int = when (other) {
         is Role -> compareBy<Role> { it.rawPosition }.thenBy { it.guildId }.compare(this, other)

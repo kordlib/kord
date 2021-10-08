@@ -24,13 +24,17 @@ class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
     private var _autoArchiveDuration: OptionalInt = OptionalInt.Missing
     var autoArchiveDuration: Int? by ::_autoArchiveDuration.delegate()
 
+    private var _invitable: OptionalBoolean = OptionalBoolean.Missing
+    var invitable: Boolean? by ::_invitable.delegate()
+
     override fun toRequest(): ChannelModifyPatchRequest {
         return ChannelModifyPatchRequest(
             name = _name,
             locked = _locked,
             archived = _archived,
             autoArchiveDuration = _autoArchiveDuration,
-            rateLimitPerUser = _rateLimitPerUser
+            rateLimitPerUser = _rateLimitPerUser,
+            invitable = _invitable
         )
     }
 

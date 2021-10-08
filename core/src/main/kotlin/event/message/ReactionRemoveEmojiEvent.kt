@@ -5,7 +5,6 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.cache.data.ReactionRemoveEmojiData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Message
@@ -13,24 +12,28 @@ import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.event.Event
+import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
 
-class ReactionRemoveEmojiEvent(
-    val data: ReactionRemoveEmojiData,
+public class ReactionRemoveEmojiEvent(
+    public val data: ReactionRemoveEmojiData,
     override val kord: Kord,
     override val shard: Int,
-    override val supplier: EntitySupplier = kord.defaultSupplier
-) : Event, Strategizable {
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : Event, CoroutineScope by coroutineScope, Strategizable {
 
     /**
      * The id of the [TopGuildMessageChannel].
      */
-    val channelId: Snowflake get() = data.channelId
+    public val channelId: Snowflake get() = data.channelId
 
-    val channel: GuildMessageChannelBehavior
+    public val channel: GuildMessageChannelBehavior
         get() = GuildMessageChannelBehavior(
             guildId = guildId,
             id = channelId,
@@ -40,33 +43,33 @@ class ReactionRemoveEmojiEvent(
     /**
      * The id of the [Guild].
      */
-    val guildId: Snowflake get() = data.guildId
+    public val guildId: Snowflake get() = data.guildId
 
-    val guild: GuildBehavior get() = GuildBehavior(id = guildId, kord = kord)
+    public val guild: GuildBehavior get() = GuildBehavior(id = guildId, kord = kord)
 
     /**
      * The id of the message.
      */
-    val messageId: Snowflake get() = data.messageId
+    public val messageId: Snowflake get() = data.messageId
 
-    val message: MessageBehavior get() = MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
+    public val message: MessageBehavior get() = MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
 
     /**
      * The emoji that was removed.
      */
-    val emoji: ReactionEmoji get() = ReactionEmoji.from(data.emoji)
+    public val emoji: ReactionEmoji get() = ReactionEmoji.from(data.emoji)
 
-    suspend fun getChannel(): TopGuildMessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): TopGuildMessageChannel = supplier.getChannelOf(channelId)
 
-    suspend fun getChannelOrNull(): TopGuildMessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): TopGuildMessageChannel? = supplier.getChannelOfOrNull(channelId)
 
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
-    suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
+    public suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
 
-    suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
+    public suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveAllEvent =
         ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, strategy.supply(kord))

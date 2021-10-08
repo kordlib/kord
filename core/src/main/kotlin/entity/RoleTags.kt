@@ -11,9 +11,9 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplyStrategy
 
-class RoleTags(
-    val data: RoleTagsData,
-    val guildId: Snowflake,
+public class RoleTags(
+    public val data: RoleTagsData,
+    public val guildId: Snowflake,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordObject, Strategizable {
@@ -21,22 +21,22 @@ class RoleTags(
     /**
      * The ID of the bot this belongs to.
      */
-    val botId: Snowflake? get() = data.botId.value
+    public val botId: Snowflake? get() = data.botId.value
 
     /**
      * The ID of the of the [Integration] this role belongs to.
      */
-    val integrationId: Snowflake? get() = data.integrationId.value
+    public val integrationId: Snowflake? get() = data.integrationId.value
 
     /**
      * Whether this is the guild's premium subscriber role.
      */
-    val isPremiumRole: Boolean get() = data.premiumSubscriber
+    public val isPremiumRole: Boolean get() = data.premiumSubscriber
 
     /**
      * The guild behavior this tag belongs to.
      */
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /**
      * Requests to get the bot of this tag through the [supplier],
@@ -44,7 +44,7 @@ class RoleTags(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getBot(): Member? {
+    public suspend fun getBot(): Member? {
         val id = botId ?: return null
         return supplier.getMemberOrNull(guildId, id)
     }
@@ -55,7 +55,7 @@ class RoleTags(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getIntegration(): Integration? {
+    public suspend fun getIntegration(): Integration? {
         val id = integrationId ?: return null
         val response = kord.rest.guild.getGuildIntegrations(guildId)
             .firstOrNull { it.id == id } ?: return null
@@ -69,7 +69,7 @@ class RoleTags(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Guild] wasn't present.
      */
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
      * Requests to get the guild of this tag through the [supplier],
@@ -77,7 +77,7 @@ class RoleTags(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
         RoleTags(data, guildId, kord, strategy.supply(kord))

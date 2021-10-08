@@ -13,6 +13,7 @@ import dev.kord.gateway.ChannelUpdate
 import equality.randomId
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.Timeout
 import java.util.concurrent.TimeUnit
@@ -23,6 +24,7 @@ import kotlin.test.assertEquals
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
 @Timeout(value = 5, unit = TimeUnit.SECONDS)
+@Disabled
 class LiveVoiceChannelTest : LiveChannelTest<LiveVoiceChannel>() {
 
     override lateinit var channelId: Snowflake

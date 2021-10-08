@@ -428,6 +428,8 @@ data class DiscordAttachment(
     2020-11-06 This field is marked as nullable but can be missing instead.
     */
     val width: OptionalInt? = OptionalInt.Missing,
+
+    val ephemeral: OptionalBoolean = OptionalBoolean.Missing
 )
 
 /**

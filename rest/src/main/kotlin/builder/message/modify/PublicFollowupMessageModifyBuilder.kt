@@ -17,8 +17,8 @@ import dev.kord.rest.json.request.MultipartFollowupMessageModifyRequest
 import java.io.InputStream
 
 
-class PublicFollowupMessageModifyBuilder
-    : PersistentMessageModifyBuilder,
+class FollowupMessageModifyBuilder
+    : MessageModifyBuilder,
     RequestBuilder<MultipartFollowupMessageModifyRequest> {
 
     private var state = MessageModifyStateHolder()

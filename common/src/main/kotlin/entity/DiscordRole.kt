@@ -19,6 +19,9 @@ data class DiscordRole(
     val name: String,
     val color: Int,
     val hoist: Boolean,
+    val icon: Optional<String?> = Optional.Missing(),
+    @SerialName("unicode_emoji")
+    val unicodeEmoji: Optional<String?> = Optional.Missing(),
     val position: Int,
     val permissions: Permissions,
     val managed: Boolean,
@@ -41,6 +44,9 @@ data class DiscordPartialRole(
     val name: Optional<String> = Optional.Missing(),
     val color: OptionalInt = OptionalInt.Missing,
     val hoist: OptionalBoolean = OptionalBoolean.Missing,
+    val icon: Optional<String?> = Optional.Missing(),
+    @SerialName("unicode_emoji")
+    val unicodeEmoji: Optional<String?> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
     val permissions: Optional<Permissions> = Optional.Missing(),
     val managed: OptionalBoolean = OptionalBoolean.Missing,

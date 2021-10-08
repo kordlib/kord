@@ -15,8 +15,8 @@ import dev.kord.rest.json.request.InteractionResponseModifyRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
 
 
-class PublicInteractionResponseModifyBuilder
-    : PersistentMessageModifyBuilder,
+class InteractionResponseModifyBuilder
+    : MessageModifyBuilder,
     RequestBuilder<MultipartInteractionResponseModifyRequest> {
 
     private var state = MessageModifyStateHolder()

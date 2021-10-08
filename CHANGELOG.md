@@ -1,6 +1,42 @@
+# 0.8.0-M6
+
+## Breaking
+
+* `XBehavior#asX` now returns itself if the concrete type is already a complete entity. Use `XBehavior#fetchX` to always retrieve the most up-to-date version of an entity (#396)
+* EphemeralBuilder builders have been unified with the persistent messages. (#397)
+* Core events now accept a coroutineScope in the constructor (#391)
+* Start thread methods have introduced a builder (#398)
+* Shards have been moved to `dev.kord.gateway.builder` (#409)
+
+## Changes
+
+* Intents are now lazily evaluated (#409)
+* Enable explicit api mode for core module (#406)
+* Fixes and improvements for Snowflake (#370)
+* Application commands improvements (#374 #384 #387)
+* MasterGateway and Interceptors are switched into interfaces (#391)
+
+## Additions
+
+* Ephemeral files support (#397)
+* Add missing invitable field (#398)
+* Role icons support (#402)
+* Per-Guild avatar support (#401)
+* Add discord messaging timestamps (#385)
+* Add named files and attachments (#379)
+* Add missing avatar and username properties to `WebhookMessageCreateBuilder` (#376)
+
+## Fixes
+
+* Serialize NumberChoice as a Double, not as a String (#405)
+* Sort threads as documented by discord (#411)
+* Fix NPE on ThreadChannelDelete (#373)
+
+
 # 0.8.0-M5
 
 ## Breaking
+
 * slash commands and interactions have been redesigned to support the new command and interaction types.
 
 ## Changes

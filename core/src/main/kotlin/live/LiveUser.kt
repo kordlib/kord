@@ -9,22 +9,22 @@ import dev.kord.core.event.user.UserUpdateEvent
 import kotlinx.coroutines.*
 
 @KordPreview
-fun User.live(
+public fun User.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
-) = LiveUser(this, coroutineScope)
+): LiveUser = LiveUser(this, coroutineScope)
 
 @KordPreview
-inline fun User.live(
+public inline fun User.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveUser.() -> Unit
-) = this.live(coroutineScope).apply(block)
+): LiveUser = this.live(coroutineScope).apply(block)
 
 @KordPreview
-fun LiveUser.onUpdate(scope: CoroutineScope = this, block: suspend (UserUpdateEvent) -> Unit) =
+public fun LiveUser.onUpdate(scope: CoroutineScope = this, block: suspend (UserUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-class LiveUser(
+public class LiveUser(
     user: User,
     coroutineScope: CoroutineScope = user.kord + SupervisorJob(user.kord.coroutineContext.job)
 ) : AbstractLiveKordEntity(user.kord, coroutineScope), KordEntity {
@@ -32,15 +32,15 @@ class LiveUser(
     override val id: Snowflake
         get() = user.id
 
-    var user: User = user
+    public var user: User = user
         private set
 
-    override fun filter(event: Event) = when (event) {
+    override fun filter(event: Event): Boolean = when (event) {
         is UserUpdateEvent -> user.id == event.user.id
         else -> false
     }
 
-    override fun update(event: Event) = when (event) {
+    override fun update(event: Event): Unit = when (event) {
         is UserUpdateEvent -> user = event.user
         else -> Unit
     }

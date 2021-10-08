@@ -14,15 +14,15 @@ import dev.kord.core.live.on
 import kotlinx.coroutines.*
 
 @KordPreview
-fun VoiceChannel.live(
+public fun VoiceChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
-) = LiveVoiceChannel(this, coroutineScope)
+): LiveVoiceChannel = LiveVoiceChannel(this, coroutineScope)
 
 @KordPreview
-inline fun VoiceChannel.live(
+public inline fun VoiceChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveVoiceChannel.() -> Unit
-) = this.live(coroutineScope).apply(block)
+): LiveVoiceChannel = this.live(coroutineScope).apply(block)
 
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
@@ -30,11 +30,17 @@ inline fun VoiceChannel.live(
     level = DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveVoiceChannel.onCreate(scope: CoroutineScope = this, block: suspend (VoiceChannelCreateEvent) -> Unit) =
+public fun LiveVoiceChannel.onCreate(
+    scope: CoroutineScope = this,
+    block: suspend (VoiceChannelCreateEvent) -> Unit
+): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveVoiceChannel.onUpdate(scope: CoroutineScope = this, block: suspend (VoiceChannelUpdateEvent) -> Unit) =
+public fun LiveVoiceChannel.onUpdate(
+    scope: CoroutineScope = this,
+    block: suspend (VoiceChannelUpdateEvent) -> Unit
+): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -43,7 +49,10 @@ fun LiveVoiceChannel.onUpdate(scope: CoroutineScope = this, block: suspend (Voic
     DeprecationLevel.ERROR
 )
 @KordPreview
-inline fun LiveVoiceChannel.onShutDown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+public inline fun LiveVoiceChannel.onShutDown(
+    scope: CoroutineScope = this,
+    crossinline block: suspend (Event) -> Unit
+): Job =
     on<Event>(scope) {
         if (it is VoiceChannelDeleteEvent || it is GuildDeleteEvent) {
             block(it)
@@ -56,7 +65,10 @@ inline fun LiveVoiceChannel.onShutDown(scope: CoroutineScope = this, crossinline
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveVoiceChannel.onDelete(scope: CoroutineScope = this, block: suspend (VoiceChannelDeleteEvent) -> Unit) =
+public fun LiveVoiceChannel.onDelete(
+    scope: CoroutineScope = this,
+    block: suspend (VoiceChannelDeleteEvent) -> Unit
+): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -65,11 +77,14 @@ fun LiveVoiceChannel.onDelete(scope: CoroutineScope = this, block: suspend (Voic
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveVoiceChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+public fun LiveVoiceChannel.onGuildDelete(
+    scope: CoroutineScope = this,
+    block: suspend (GuildDeleteEvent) -> Unit
+): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-class LiveVoiceChannel(
+public class LiveVoiceChannel(
     channel: VoiceChannel,
     coroutineScope: CoroutineScope = channel.kord + SupervisorJob(channel.kord.coroutineContext.job)
 ) : LiveChannel(channel.kord, coroutineScope), KordEntity {
@@ -80,7 +95,7 @@ class LiveVoiceChannel(
     override var channel: VoiceChannel = channel
         private set
 
-    override fun update(event: Event) = when (event) {
+    override fun update(event: Event): Unit = when (event) {
         is VoiceChannelCreateEvent -> channel = event.channel
         is VoiceChannelUpdateEvent -> channel = event.channel
         is VoiceChannelDeleteEvent -> shutDown(LiveCancellationException(event, "The channel is deleted"))

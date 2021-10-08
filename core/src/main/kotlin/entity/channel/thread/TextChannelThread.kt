@@ -13,7 +13,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
 /**
  * A thread channel instance whose parent is a [TextChannel].
  */
-class TextChannelThread(
+public class TextChannelThread(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
@@ -21,7 +21,7 @@ class TextChannelThread(
     /**
      * Whether this thread is private
      */
-    val isPrivate get() = data.type == ChannelType.PrivateThread
+    public val isPrivate: Boolean get() = data.type == ChannelType.PrivateThread
 
     override suspend fun getParent(): TextChannel {
         return supplier.getChannelOf(parentId)

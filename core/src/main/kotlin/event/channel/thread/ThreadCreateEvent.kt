@@ -4,26 +4,41 @@ import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.channel.ChannelCreateEvent
+import dev.kord.core.event.kordCoroutineScope
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
 
-sealed interface ThreadChannelCreateEvent : ChannelCreateEvent {
+public sealed interface ThreadChannelCreateEvent : ChannelCreateEvent {
     override val channel: ThreadChannel
 }
 
 
-class TextChannelThreadCreateEvent(override val channel: TextChannelThread, override val shard: Int) : ThreadChannelCreateEvent {
+public class TextChannelThreadCreateEvent(
+    override val channel: TextChannelThread,
+    override val shard: Int,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
+) : ThreadChannelCreateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
         return "TextThreadChannelCreateEvent(channel=$channel, shard=$shard)"
     }
 }
 
 
-class NewsChannelThreadCreateEvent(override val channel: NewsChannelThread, override val shard: Int) : ThreadChannelCreateEvent {
+public class NewsChannelThreadCreateEvent(
+    override val channel: NewsChannelThread,
+    override val shard: Int,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
+) : ThreadChannelCreateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
         return "NewsThreadChannelCreateEvent(channel=$channel, shard=$shard)"
     }
 }
 
-class UnknownChannelThreadCreateEvent(override val channel: ThreadChannel, override val shard: Int) : ThreadChannelCreateEvent {
+public class UnknownChannelThreadCreateEvent(
+    override val channel: ThreadChannel,
+    override val shard: Int,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
+) : ThreadChannelCreateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
         return "UnknownChannelThreadCreateEvent(channel=$channel, shard=$shard)"
     }

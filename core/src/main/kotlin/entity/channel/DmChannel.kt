@@ -19,7 +19,7 @@ import java.util.*
 /**
  * An instance of a Discord DM channel.
  */
-data class DmChannel(
+public data class DmChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
@@ -27,13 +27,13 @@ data class DmChannel(
     /**
      * The ids of the recipients of the channel.
      */
-    val recipientIds: Set<Snowflake>
+    public val recipientIds: Set<Snowflake>
         get() = data.recipients.orEmpty().toSet()
 
     /**
      * The behaviors of the recipients of the channel.
      */
-    val recipientBehaviors: Set<UserBehavior> get() = recipientIds.map { UserBehavior(it, kord) }.toSet()
+    public val recipientBehaviors: Set<UserBehavior> get() = recipientIds.map { UserBehavior(it, kord) }.toSet()
 
     /**
      * Requests to get the recipients of the channel.
@@ -44,7 +44,7 @@ data class DmChannel(
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    val recipients: Flow<User>
+    public val recipients: Flow<User>
         get() = data.recipients.orEmpty().asFlow()
             .map { supplier.getUserOrNull(it) }
             .filterNotNull()

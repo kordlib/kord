@@ -3,27 +3,26 @@ package dev.kord.core.gateway.handler
 import dev.kord.cache.api.DataCache
 import dev.kord.core.Kord
 import dev.kord.core.event.guild.WebhookUpdateEvent
-import dev.kord.core.gateway.MasterGateway
 import dev.kord.gateway.Event
 import dev.kord.gateway.WebhooksUpdate
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
 import dev.kord.core.event.Event as CoreEvent
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 internal class WebhookEventHandler(
-    kord: Kord,
-    gateway: MasterGateway,
-    cache: DataCache,
-    coreFlow: MutableSharedFlow<CoreEvent>
-) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
+    cache: DataCache
+) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int) = when (event) {
-        is WebhooksUpdate -> handle(event, shard)
-        else -> Unit
-    }
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? =
+        when (event) {
+            is WebhooksUpdate -> handle(event, shard, kord, coroutineScope)
+            else -> null
+        }
 
-    private suspend fun handle(event: WebhooksUpdate, shard: Int) = with(event.webhooksUpdateData) {
-        coreFlow.emit(WebhookUpdateEvent(guildId, channelId, kord, shard))
-    }
+    private fun handle(event: WebhooksUpdate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): WebhookUpdateEvent =
+        with(event.webhooksUpdateData) {
+            return WebhookUpdateEvent(guildId, channelId, kord, shard, coroutineScope = coroutineScope)
+        }
 
 }

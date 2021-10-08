@@ -1,6 +1,5 @@
 package dev.kord.core.entity.interaction
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.EphemeralFollowupMessageBehavior
@@ -19,7 +18,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  * To use the message behavior your application must be authorized as a bot.
  */
 
-sealed class InteractionFollowup(val message: Message) : FollowupMessageBehavior {
+public sealed class InteractionFollowup(public val message: Message) : FollowupMessageBehavior {
 
     /**
      * The id of the follow-up message.
@@ -43,7 +42,7 @@ sealed class InteractionFollowup(val message: Message) : FollowupMessageBehavior
  * To use the message behavior your application must be authorized as a bot.
  */
 
-class PublicFollowupMessage(
+public class PublicFollowupMessage(
     message: Message,
     override val applicationId: Snowflake,
     override val token: String,
@@ -67,7 +66,7 @@ class PublicFollowupMessage(
  * is deleted once the client receives it.
  */
 
-class EphemeralFollowupMessage(
+public class EphemeralFollowupMessage(
     message: Message,
     override val applicationId: Snowflake,
     override val token: String,

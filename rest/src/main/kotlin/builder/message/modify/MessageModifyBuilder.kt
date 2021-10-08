@@ -1,13 +1,19 @@
 package dev.kord.rest.builder.message.modify
 
 import dev.kord.common.annotation.KordPreview
+import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
+import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.InputStream
+import java.nio.file.Files
+import java.nio.file.Path
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -22,6 +28,28 @@ sealed interface MessageModifyBuilder {
 
     @OptIn(KordPreview::class)
     var components: MutableList<MessageComponentBuilder>?
+
+
+    /**
+     * The files to include as attachments
+     */
+    var files: MutableList<NamedFile>?
+
+    var attachments: MutableList<DiscordAttachment>?
+
+    fun addFile(name: String, content: InputStream): NamedFile {
+        val namedFile = NamedFile(name, content)
+
+        files = (files ?: mutableListOf()).also {
+            it.add(namedFile)
+        }
+
+        return namedFile
+    }
+
+    suspend fun addFile(path: Path): NamedFile = withContext(Dispatchers.IO) {
+        addFile(path.fileName.toString(), Files.newInputStream(path))
+    }
 
 }
 

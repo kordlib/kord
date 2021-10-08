@@ -21,7 +21,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord Webhook](https://discord.com/developers/docs/resources/webhook).
  */
-interface WebhookBehavior : KordEntity, Strategizable {
+public interface WebhookBehavior : KordEntity, Strategizable {
 
     /**
      * Requests to delete this webhook, this user must be the creator.
@@ -29,7 +29,7 @@ interface WebhookBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete(reason: String? = null) {
+    public suspend fun delete(reason: String? = null) {
         kord.rest.webhook.deleteWebhook(id, reason)
     }
 
@@ -39,7 +39,7 @@ interface WebhookBehavior : KordEntity, Strategizable {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    suspend fun delete(token: String, reason: String? = null) {
+    public suspend fun delete(token: String, reason: String? = null) {
         kord.rest.webhook.deleteWebhookWithToken(id, token, reason)
     }
 
@@ -81,7 +81,7 @@ internal fun WebhookBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit): Webhook {
+public suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit): Webhook {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -99,7 +99,7 @@ suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBuilder.() -> Unit): Webhook {
+public suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBuilder.() -> Unit): Webhook {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -115,7 +115,7 @@ suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBui
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun WebhookBehavior.execute(token: String, threadId: Snowflake? = null, builder: WebhookMessageCreateBuilder.() -> Unit): Message {
+public suspend inline fun WebhookBehavior.execute(token: String, threadId: Snowflake? = null, builder: WebhookMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -140,7 +140,7 @@ suspend inline fun WebhookBehavior.execute(token: String, threadId: Snowflake? =
  * if [threadId] is specified the execution will occur in that thread.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun WebhookBehavior.executeIgnored(token: String, threadId: Snowflake? = null, builder: WebhookMessageCreateBuilder.() -> Unit) {
+public suspend inline fun WebhookBehavior.executeIgnored(token: String, threadId: Snowflake? = null, builder: WebhookMessageCreateBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

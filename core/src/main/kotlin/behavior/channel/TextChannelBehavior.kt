@@ -3,6 +3,8 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
@@ -10,13 +12,13 @@ import dev.kord.core.behavior.channel.threads.unsafeStartPublicThreadWithMessage
 import dev.kord.core.behavior.channel.threads.unsafeStartThread
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.TextChannelModifyBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchTextChannel
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +29,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
+public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
 
     override val activeThreads: Flow<TextChannelThread>
         get() = super.activeThreads.filterIsInstance()
@@ -66,24 +68,29 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
      */
     override suspend fun fetchChannelOrNull(): TextChannel? = super.fetchChannelOrNull() as? TextChannel
 
-    suspend fun startPublicThread(
+    public suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
-
+        builder: StartThreadBuilder.() -> Unit = {}
     ): TextChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PublicGuildThread, reason) as TextChannelThread
+        return unsafeStartThread(
+            name,
+            archiveDuration,
+            ChannelType.PublicGuildThread,
+            builder
+        ) as TextChannelThread
     }
 
-    suspend fun startPrivateThread(
+    public suspend fun startPrivateThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
+        builder: StartThreadBuilder.() -> Unit = {}
     ): TextChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PrivateThread, reason) as TextChannelThread
+        val startBuilder = StartThreadBuilder(name, archiveDuration, ChannelType.PrivateThread).apply(builder)
+        return unsafeStartThread(startBuilder.name, startBuilder.autoArchiveDuration, ChannelType.PrivateThread, builder) as TextChannelThread
     }
 
-    suspend fun startPublicThreadWithMessage(
+    public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
@@ -113,7 +120,7 @@ interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
 
 }
 
-fun TextChannelBehavior(
+public fun TextChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
@@ -146,7 +153,7 @@ fun TextChannelBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun TextChannelBehavior.edit(builder: TextChannelModifyBuilder.() -> Unit): TextChannel {
+public suspend inline fun TextChannelBehavior.edit(builder: TextChannelModifyBuilder.() -> Unit): TextChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchTextChannel(id, builder)
     val data = ChannelData.from(response)

@@ -8,28 +8,26 @@ import dev.kord.core.cache.data.TemplateData
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 
-class Template(val data: TemplateData, override val kord: Kord) : KordObject, TemplateBehavior {
+public class Template(public val data: TemplateData, override val kord: Kord) : KordObject, TemplateBehavior {
     override val code: String get() = data.code
 
-    val name: String get() = data.name
+    public val name: String get() = data.name
 
-    val description: String? get() = data.description
+    public val description: String? get() = data.description
 
-    val usageCount: Int get() = data.usageCount
+    public val usageCount: Int get() = data.usageCount
 
-    val creatorId: Snowflake get() = data.creatorId
+    public val creatorId: Snowflake get() = data.creatorId
 
-    val creator: User get() = User(data.creator, kord)
+    public val creator: User get() = User(data.creator, kord)
 
-    val createdAt: Instant get() = data.createdAt.toInstant()
+    public val createdAt: Instant get() = data.createdAt.toInstant()
 
-    val updatedAt: Instant get() = data.updatedAt.toInstant()
+    public val updatedAt: Instant get() = data.updatedAt.toInstant()
 
     override val guildId: Snowflake get() = data.sourceGuildId
 
-    val partialGuild: PartialGuild get() = PartialGuild(data.serializedSourceGuild, kord)
+    public val partialGuild: PartialGuild get() = PartialGuild(data.serializedSourceGuild, kord)
 
-    val dirty: Boolean? = data.isDirty
-
-
+    public val dirty: Boolean? = data.isDirty
 }

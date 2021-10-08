@@ -15,12 +15,11 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.toSnowflakeOrNull
 
 /**
  * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite).
  */
-data class Invite(
+public data class Invite(
     val data: InviteData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
@@ -29,58 +28,58 @@ data class Invite(
     /**
      * The unique code of this invite.
      */
-    val code: String get() = data.code
+    public val code: String get() = data.code
 
     /**
      * The id of the channel this invite is associated to.
      */
-    val channelId: Snowflake get() = data.channelId
+    public val channelId: Snowflake get() = data.channelId
 
     /**
      * Returns [PartialGuild] if the invite was made in a guild, or null if not.
      */
-    val partialGuild: PartialGuild? get() = data.guild.value?.let { PartialGuild(it, kord) }
+    public val partialGuild: PartialGuild? get() = data.guild.value?.let { PartialGuild(it, kord) }
 
     /**
      * The id of the user who created this invite, if present.
      */
-    val inviterId: Snowflake? get() = data.inviterId.value
+    public val inviterId: Snowflake? get() = data.inviterId.value
 
     /**
      * The id of the target user this invite is associated to, if present.
      */
-    val targetUserId: Snowflake? get() = data.targetUserId.value
+    public val targetUserId: Snowflake? get() = data.targetUserId.value
 
     /**
      * The behavior of the channel this invite is associated to.
      */
-    val channel: ChannelBehavior get() = ChannelBehavior(channelId, kord)
+    public val channel: ChannelBehavior get() = ChannelBehavior(channelId, kord)
 
 
     /**
      * The user behavior of the user who created this invite, if present.
      */
-    val inviter: UserBehavior? get() = inviterId?.let { UserBehavior(it, kord) }
+    public val inviter: UserBehavior? get() = inviterId?.let { UserBehavior(it, kord) }
 
     /**
      * The user behavior of the target user this invite is associated to, if present.
      */
-    val targetUser: UserBehavior? get() = targetUserId?.let { UserBehavior(it, kord) }
+    public val targetUser: UserBehavior? get() = targetUserId?.let { UserBehavior(it, kord) }
 
     /**
      * The type of user target for this invite, if present.
      */
-    val targetUserType: TargetUserType? get() = data.targetUserType.value
+    public val targetUserType: TargetUserType? get() = data.targetUserType.value
 
     /**
      * Approximate count of members in the channel this invite is associated to, if present.
      */
-    val approximateMemberCount: Int? get() = data.approximateMemberCount.value
+    public val approximateMemberCount: Int? get() = data.approximateMemberCount.value
 
     /**
      * Approximate count of members online in the channel this invite is associated to, if present. (only present when the target user isn't null)
      */
-    val approximatePresenceCount: Int? get() = data.approximatePresenceCount.value
+    public val approximatePresenceCount: Int? get() = data.approximatePresenceCount.value
 
     /**
      * Requests to get the channel this invite is for.
@@ -88,7 +87,7 @@ data class Invite(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Channel] wasn't present.
      */
-    suspend fun getChannel(): Channel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): Channel = supplier.getChannelOf(channelId)
 
     /**
      * Requests to get the channel this invite is for,
@@ -96,7 +95,7 @@ data class Invite(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getChannelOrNull(): Channel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): Channel? = supplier.getChannelOfOrNull(channelId)
 
     /**
      * Requests to get the creator of the invite for,
@@ -104,7 +103,7 @@ data class Invite(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getInviter(): User? = inviterId?.let { supplier.getUserOrNull(it) }
+    public suspend fun getInviter(): User? = inviterId?.let { supplier.getUserOrNull(it) }
 
     /**
      * Requests to get the user this invite was created for,
@@ -112,14 +111,14 @@ data class Invite(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getTargetUser(): User? = targetUserId?.let { supplier.getUserOrNull(it) }
+    public suspend fun getTargetUser(): User? = targetUserId?.let { supplier.getUserOrNull(it) }
 
     /**
      * Requests to delete the invite.
      *
      * @param reason the reason showing up in the audit log
      */
-    suspend fun delete(reason: String? = null) {
+    public suspend fun delete(reason: String? = null) {
         kord.rest.invite.deleteInvite(data.code, reason)
     }
 

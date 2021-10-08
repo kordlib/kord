@@ -5,7 +5,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class IntegrationData(
+public data class IntegrationData(
     val id: Snowflake,
     val guildId: Snowflake,
     val name: String,
@@ -24,9 +24,9 @@ data class IntegrationData(
     val application: IntegrationApplication,
 ) {
 
-    companion object {
+    public companion object {
 
-        fun from(guildId: Snowflake, response: DiscordIntegration) = with(response) {
+        public fun from(guildId: Snowflake, response: DiscordIntegration): IntegrationData = with(response) {
             IntegrationData(
                 id,
                 guildId,

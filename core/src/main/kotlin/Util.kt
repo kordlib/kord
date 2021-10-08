@@ -71,7 +71,7 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
 }
 
 
-fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
+public fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
     for (entity in toList().sorted()) {
         emit(entity)
     }
@@ -82,14 +82,14 @@ fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
  * and then cancels flow's collection.
  * Returns `null` if the flow was empty.
  */
-suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: suspend (T) -> Boolean): T? =
+public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: suspend (T) -> Boolean): T? =
     filter { predicate(it) }.firstOrNull()
 
 /**
  * The terminal operator that returns `true` if any of the elements match [predicate].
  * The flow's collection is cancelled when a match is found.
  */
-suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
+public suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
     firstOrNull(predicate) != null
 
 /**
@@ -275,13 +275,13 @@ internal fun paginateThreads(
         request
     )
 
-inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent() = enableEvent(T::class)
+public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent(T::class)
 
-fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>) = events.forEach { enableEvent(it) }
-fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>) = events.forEach { enableEvent(it) }
+public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit = events.forEach { enableEvent(it) }
+public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit = events.forEach { enableEvent(it) }
 
 @OptIn(PrivilegedIntent::class)
-fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>) = when (event) {
+public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
     GuildCreateEvent::class,
     GuildDeleteEvent::class,
     RoleCreateEvent::class,

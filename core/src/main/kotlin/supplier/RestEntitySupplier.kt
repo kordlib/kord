@@ -39,7 +39,7 @@ import kotlin.math.min
  * This supplier will always be able to resolve entities if they exist according
  * to Discord, entities will always be up to date at the moment of the call.
  */
-class RestEntitySupplier(val kord: Kord) : EntitySupplier {
+public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     private val auditLog: AuditLogService get() = kord.rest.auditLog
     private val channel: ChannelService get() = kord.rest.channel
@@ -148,7 +148,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
     }
 
-    override fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int) = flow {
+    override fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> = flow {
         val responses = kord.rest.channel.getMessages(channelId, Position.Around(messageId))
 
         for (response in responses) {
@@ -170,11 +170,10 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         return Role(RoleData.from(guildId, response), kord)
     }
 
-    override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake) = catchNotFound {
+    override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? = catchNotFound {
         val response = guild.getGuildBan(guildId, userId)
         val data = BanData.from(guildId, response)
         Ban(data, kord)
-
     }
 
     override fun getGuildRoles(guildId: Snowflake): Flow<Role> = flow {
@@ -212,7 +211,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         }
     }
 
-    fun getReactors(channelId: Snowflake, messageId: Snowflake, emoji: ReactionEmoji): Flow<User> =
+    public fun getReactors(channelId: Snowflake, messageId: Snowflake, emoji: ReactionEmoji): Flow<User> =
         paginateForwards(batchSize = 100, idSelector = { it.id }) { position ->
             kord.rest.channel.getReactions(
                 channelId = channelId,
@@ -226,12 +225,12 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
             User(data, kord)
         }
 
-    override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake) = catchNotFound {
+    override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake): GuildEmoji? = catchNotFound {
         val data = EmojiData.from(guildId, emojiId, emoji.getEmoji(guildId, emojiId))
         GuildEmoji(data, kord)
     }
 
-    override fun getEmojis(guildId: Snowflake) = flow {
+    override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> = flow {
         for (emoji in emoji.getEmojis(guildId)) {
             val data = EmojiData.from(guildId = guildId, id = emoji.id!!, entity = emoji)
             emit(GuildEmoji(data, kord))
@@ -274,12 +273,12 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         return Webhook(data, kord)
     }
 
-    suspend fun getInviteOrNull(code: String, withCounts: Boolean): Invite? = catchNotFound {
+    public suspend fun getInviteOrNull(code: String, withCounts: Boolean): Invite? = catchNotFound {
         val response = invite.getInvite(code, withCounts)
         return Invite(InviteData.from(response), kord)
     }
 
-    suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
+    public suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
         getInviteOrNull(code, withCounts) ?: EntityNotFoundException.inviteNotFound(code)
 
     /**
@@ -288,7 +287,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
      * Entities will be fetched from Discord directly, ignoring any cached values.
      * @throws RestRequestException when the request failed.
      */
-    suspend fun getApplicationInfo(): ApplicationInfo {
+    public suspend fun getApplicationInfo(): ApplicationInfo {
         val response = application.getCurrentApplicationInfo()
         return ApplicationInfo(ApplicationInfoData.from(response), kord)
     }
@@ -312,7 +311,7 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
 
 
     @OptIn(ExperimentalContracts::class)
-    inline fun getAuditLogEntries(
+    public inline fun getAuditLogEntries(
         guildId: Snowflake,
         builder: AuditLogGetRequestBuilder.() -> Unit
     ): Flow<DiscordAuditLogEntry> {
@@ -320,16 +319,16 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         return getAuditLogEntries(guildId, AuditLogGetRequestBuilder().apply(builder).toRequest())
     }
 
-    suspend fun getGuildWelcomeScreenOrNull(guildId: Snowflake): WelcomeScreen? = catchNotFound {
+    public suspend fun getGuildWelcomeScreenOrNull(guildId: Snowflake): WelcomeScreen? = catchNotFound {
         val response = guild.getGuildWelcomeScreen(guildId)
         return WelcomeScreen(WelcomeScreenData.from(response), kord)
     }
 
-    suspend fun getGuildWelcomeScreen(guildId: Snowflake): WelcomeScreen =
+    public suspend fun getGuildWelcomeScreen(guildId: Snowflake): WelcomeScreen =
         getGuildWelcomeScreenOrNull(guildId) ?: EntityNotFoundException.welcomeScreenNotFound(guildId)
 
 
-    fun getAuditLogEntries(
+    public fun getAuditLogEntries(
         guildId: Snowflake,
         request: AuditLogGetRequest = AuditLogGetRequest()
     ): Flow<DiscordAuditLogEntry> = paginateBackwards(batchSize = 100, idSelector = DiscordAuditLogEntry::id) {
@@ -434,14 +433,14 @@ class RestEntitySupplier(val kord: Kord) : EntitySupplier {
         }
     }
 
-     suspend fun getOriginalInteractionOrNull(applicationId: Snowflake, token: String): Message? = catchNotFound {
+     public suspend fun getOriginalInteractionOrNull(applicationId: Snowflake, token: String): Message? = catchNotFound {
         val response = interaction.getInteractionResponse(applicationId, token)
         val data = MessageData.from(response)
         Message(data, kord)
     }
 
 
-    suspend fun getOriginalInteraction(applicationId: Snowflake, token: String): Message {
+    public suspend fun getOriginalInteraction(applicationId: Snowflake, token: String): Message {
         return getOriginalInteractionOrNull(applicationId, token) ?: EntityNotFoundException.interactionNotFound(token)
     }
     override fun getGuildApplicationCommandPermissions(

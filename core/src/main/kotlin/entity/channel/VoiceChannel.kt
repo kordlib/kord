@@ -23,7 +23,7 @@ import java.util.*
 /**
  * An instance of a Discord Voice Channel associated to a guild.
  */
-class VoiceChannel(
+public class VoiceChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
@@ -33,17 +33,17 @@ class VoiceChannel(
     /**
      * The bitrate (in bits) of this channel.
      */
-    val bitrate: Int get() = data.bitrate.getOrThrow()
+    public val bitrate: Int get() = data.bitrate.getOrThrow()
 
     /**
      * The user limit of the voice channel.
      */
-    val userLimit: Int get() = data.userLimit.getOrThrow()
+    public val userLimit: Int get() = data.userLimit.getOrThrow()
 
     /**
      * The region name of the voice channel
      */
-    val rtcRegion: String? get() = data.rtcRegion.value
+    public val rtcRegion: String? get() = data.rtcRegion.value
 
     /**
      * Requests to get the [voice region][Region] of this channel.
@@ -52,7 +52,7 @@ class VoiceChannel(
      * @throws [EntityNotFoundException] if the [Region] wasn't present.
      * @throws [NoSuchElementException] if the [rtcRegion] is not in the available.
      */
-    suspend fun getRegion(): Region = guild.regions.first { it.id == rtcRegion }
+    public suspend fun getRegion(): Region = guild.regions.first { it.id == rtcRegion }
 
     /**
      * Requests to get the [voice region][Region] of this channel.
@@ -61,7 +61,7 @@ class VoiceChannel(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    suspend fun getRegionOrNull(): Region? = guild.regions.firstOrNull { it.id == rtcRegion }
+    public suspend fun getRegionOrNull(): Region? = guild.regions.firstOrNull { it.id == rtcRegion }
 
     /**
      * returns a new [VoiceChannel] with the given [strategy].
@@ -96,7 +96,7 @@ class VoiceChannel(
      * @return a [VoiceConnection] representing the connection to this [VoiceConnection].
      */
     @KordVoice
-    suspend fun connect(builder: VoiceConnectionBuilder.() -> Unit): VoiceConnection {
+    public suspend fun connect(builder: VoiceConnectionBuilder.() -> Unit): VoiceConnection {
         val voiceConnection = VoiceConnection(
             getGuild().gateway ?: GatewayNotFoundException.voiceConnectionGatewayNotFound(guildId),
             kord.selfId,

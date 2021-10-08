@@ -10,33 +10,37 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.event.Event
+import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
 
-class ReactionRemoveAllEvent(
-    val channelId: Snowflake,
-    val messageId: Snowflake,
-    val guildId: Snowflake?,
+public class ReactionRemoveAllEvent(
+    public val channelId: Snowflake,
+    public val messageId: Snowflake,
+    public val guildId: Snowflake?,
     override val kord: Kord,
     override val shard: Int,
-    override val supplier: EntitySupplier = kord.defaultSupplier
-) : Event, Strategizable {
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : Event, CoroutineScope by coroutineScope, Strategizable {
 
-    val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
+    public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
-    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
+    public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
-    val message: MessageBehavior get() = MessageBehavior(channelId, messageId, kord)
+    public val message: MessageBehavior get() = MessageBehavior(channelId, messageId, kord)
 
-    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
-    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
-    suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
-    suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
-    suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
+    public suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
+    public suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveAllEvent =
         ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, strategy.supply(kord))

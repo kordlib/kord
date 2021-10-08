@@ -49,6 +49,7 @@ internal class DefaultMasterGatewayTest {
 
     @Test
     fun `Gateway returns null ping when no gateway pings`(){
+
         val dummy = DummyGateway()
 
         val gateway = DefaultMasterGateway(

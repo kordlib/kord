@@ -15,15 +15,15 @@ import dev.kord.core.live.on
 import kotlinx.coroutines.*
 
 @KordPreview
-fun TopGuildChannel.live(
+public fun TopGuildChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
-) = LiveGuildChannel(this, coroutineScope)
+): LiveGuildChannel = LiveGuildChannel(this, coroutineScope)
 
 @KordPreview
-inline fun TopGuildChannel.live(
+public inline fun TopGuildChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveGuildChannel.() -> Unit
-) = this.live(coroutineScope).apply(block)
+): LiveGuildChannel = this.live(coroutineScope).apply(block)
 
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
@@ -31,11 +31,11 @@ inline fun TopGuildChannel.live(
     level = DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveGuildChannel.onCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit) =
+public fun LiveGuildChannel.onCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveGuildChannel.onUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit) =
+public fun LiveGuildChannel.onUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -44,7 +44,7 @@ fun LiveGuildChannel.onUpdate(scope: CoroutineScope = this, block: suspend (Chan
     DeprecationLevel.ERROR
 )
 @KordPreview
-inline fun LiveGuildChannel.onShutDown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+public inline fun LiveGuildChannel.onShutDown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit): Job =
     on<Event>(scope) {
         if (it is ChannelDeleteEvent || it is GuildDeleteEvent) {
             block(it)
@@ -57,7 +57,7 @@ inline fun LiveGuildChannel.onShutDown(scope: CoroutineScope = this, crossinline
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveGuildChannel.onDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit) =
+public fun LiveGuildChannel.onDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -66,11 +66,11 @@ fun LiveGuildChannel.onDelete(scope: CoroutineScope = this, block: suspend (Chan
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveGuildChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+public fun LiveGuildChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-class LiveGuildChannel(
+public class LiveGuildChannel(
     channel: TopGuildChannel,
     coroutineScope: CoroutineScope = channel.kord + SupervisorJob(channel.kord.coroutineContext.job)
 ) : LiveChannel(channel.kord, coroutineScope), KordEntity {
@@ -81,7 +81,7 @@ class LiveGuildChannel(
     override var channel: TopGuildChannel = channel
         private set
 
-    override fun update(event: Event) = when (event) {
+    override fun update(event: Event): Unit = when (event) {
         is ChannelCreateEvent -> channel = event.channel as TopGuildMessageChannel
         is ChannelUpdateEvent -> channel = event.channel as TopGuildMessageChannel
         is ChannelDeleteEvent -> shutDown(LiveCancellationException(event, "The channel is deleted"))

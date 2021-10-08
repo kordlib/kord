@@ -7,22 +7,26 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.GuildEmoji
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
+import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
 
-class EmojisUpdateEvent(
-    val guildId: Snowflake,
-    val emojis: Set<GuildEmoji>,
+public class EmojisUpdateEvent(
+    public val guildId: Snowflake,
+    public val emojis: Set<GuildEmoji>,
     override val kord: Kord,
     override val shard: Int,
-    override val supplier: EntitySupplier = kord.defaultSupplier
-) : Event, Strategizable {
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : Event, CoroutineScope by coroutineScope, Strategizable {
 
-    val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
+    public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): EmojisUpdateEvent =
         EmojisUpdateEvent(guildId, emojis, kord, shard, strategy.supply(kord))

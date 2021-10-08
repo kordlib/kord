@@ -14,15 +14,15 @@ import dev.kord.core.live.on
 import kotlinx.coroutines.*
 
 @KordPreview
-fun Category.live(
+public fun Category.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
-) = LiveCategory(this, coroutineScope)
+): LiveCategory = LiveCategory(this, coroutineScope)
 
 @KordPreview
-inline fun Category.live(
+public inline fun Category.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveCategory.() -> Unit
-) = this.live(coroutineScope).apply(block)
+): LiveCategory = this.live(coroutineScope).apply(block)
 
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
@@ -30,11 +30,11 @@ inline fun Category.live(
     level = DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveCategory.onCreate(scope: CoroutineScope = this, block: suspend (CategoryCreateEvent) -> Unit) =
+public fun LiveCategory.onCreate(scope: CoroutineScope = this, block: suspend (CategoryCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveCategory.onUpdate(scope: CoroutineScope = this, block: suspend (CategoryUpdateEvent) -> Unit) =
+public fun LiveCategory.onUpdate(scope: CoroutineScope = this, block: suspend (CategoryUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -43,7 +43,7 @@ fun LiveCategory.onUpdate(scope: CoroutineScope = this, block: suspend (Category
     DeprecationLevel.ERROR
 )
 @KordPreview
-inline fun LiveCategory.onShutDown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+public inline fun LiveCategory.onShutDown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit): Job =
     on<Event>(scope) {
         if (it is CategoryDeleteEvent || it is GuildDeleteEvent) {
             block(it)
@@ -56,7 +56,7 @@ inline fun LiveCategory.onShutDown(scope: CoroutineScope = this, crossinline blo
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveCategory.onDelete(scope: CoroutineScope = this, block: suspend (CategoryDeleteEvent) -> Unit) =
+public fun LiveCategory.onDelete(scope: CoroutineScope = this, block: suspend (CategoryDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -65,11 +65,11 @@ fun LiveCategory.onDelete(scope: CoroutineScope = this, block: suspend (Category
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveCategory.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+public fun LiveCategory.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-class LiveCategory(
+public class LiveCategory(
     channel: Category,
     coroutineScope: CoroutineScope = channel.kord + SupervisorJob(channel.kord.coroutineContext.job)
 ) : LiveChannel(channel.kord, coroutineScope), KordEntity {
@@ -80,7 +80,7 @@ class LiveCategory(
     override var channel: Category = channel
         private set
 
-    override fun update(event: Event) = when (event) {
+    override fun update(event: Event): Unit = when (event) {
         is CategoryCreateEvent -> channel = event.channel
         is CategoryUpdateEvent -> channel = event.channel
         is CategoryDeleteEvent -> shutDown(LiveCancellationException(event, "The category is deleted"))

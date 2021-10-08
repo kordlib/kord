@@ -1,38 +1,46 @@
 package dev.kord.core.event.interaction
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.entity.application.*
 import dev.kord.core.event.Event
+import dev.kord.core.event.kordCoroutineScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.job
+import kotlin.coroutines.CoroutineContext
 
 
-sealed interface ApplicationCommandCreateEvent : Event {
-    val command: GuildApplicationCommand
+public sealed interface ApplicationCommandCreateEvent : Event {
+    public val command: GuildApplicationCommand
 }
 
-class ChatInputCommandCreateEvent(
+public class ChatInputCommandCreateEvent(
     override val command: GuildChatInputCommand,
     override val kord: Kord,
     override val shard: Int,
-) : ApplicationCommandCreateEvent
+    public val coroutineScope: CoroutineScope = CoroutineScope(kord.coroutineContext + SupervisorJob(kord.coroutineContext.job)),
+) : ApplicationCommandCreateEvent, CoroutineScope by coroutineScope
 
 
-class UserCommandCreateEvent(
+public class UserCommandCreateEvent(
     override val command: GuildUserCommand,
     override val kord: Kord,
     override val shard: Int,
-) : ApplicationCommandCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ApplicationCommandCreateEvent, CoroutineScope by coroutineScope
 
 
-class MessageCommandCreateEvent(
+public class MessageCommandCreateEvent(
     override val command: GuildMessageCommand,
     override val kord: Kord,
     override val shard: Int,
-) : ApplicationCommandCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ApplicationCommandCreateEvent, CoroutineScope by coroutineScope
 
 
-class UnknownApplicationCommandCreateEvent(
+public class UnknownApplicationCommandCreateEvent(
     override val command: UnknownGuildApplicationCommand,
     override val kord: Kord,
     override val shard: Int,
-) : ApplicationCommandCreateEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ApplicationCommandCreateEvent, CoroutineScope by coroutineScope

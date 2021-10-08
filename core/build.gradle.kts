@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     `kord-module`
     `kord-sampled-module`
+    `kord-publishing`
 }
 
 dependencies {
@@ -21,6 +22,11 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.bundles.test.implementation)
     testRuntimeOnly(libs.bundles.test.runtime)
+}
+
+// Move this into the build script plugins when implemented in all modules
+kotlin {
+    explicitApi()
 }
 
 tasks.withType<KotlinCompile> {

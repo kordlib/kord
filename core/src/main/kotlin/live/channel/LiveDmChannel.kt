@@ -14,15 +14,15 @@ import dev.kord.core.live.on
 import kotlinx.coroutines.*
 
 @KordPreview
-fun DmChannel.live(
+public fun DmChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
-) = LiveDmChannel(this, coroutineScope)
+): LiveDmChannel = LiveDmChannel(this, coroutineScope)
 
 @KordPreview
-inline fun DmChannel.live(
+public inline fun DmChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveDmChannel.() -> Unit
-) = this.live(coroutineScope).apply(block)
+): LiveDmChannel = this.live(coroutineScope).apply(block)
 
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
@@ -30,11 +30,11 @@ inline fun DmChannel.live(
     level = DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveDmChannel.onCreate(scope: CoroutineScope = this, block: suspend (DMChannelCreateEvent) -> Unit) =
+public fun LiveDmChannel.onCreate(scope: CoroutineScope = this, block: suspend (DMChannelCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-fun LiveDmChannel.onUpdate(scope: CoroutineScope = this, block: suspend (DMChannelUpdateEvent) -> Unit) =
+public fun LiveDmChannel.onUpdate(scope: CoroutineScope = this, block: suspend (DMChannelUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -43,7 +43,10 @@ fun LiveDmChannel.onUpdate(scope: CoroutineScope = this, block: suspend (DMChann
     DeprecationLevel.ERROR
 )
 @KordPreview
-inline fun LiveDmChannel.onShutDown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit) =
+public inline fun LiveDmChannel.onShutDown(
+    scope: CoroutineScope = this,
+    crossinline block: suspend (Event) -> Unit
+): Job =
     on<Event>(scope) {
         if (it is DMChannelDeleteEvent || it is GuildDeleteEvent) {
             block(it)
@@ -56,7 +59,7 @@ inline fun LiveDmChannel.onShutDown(scope: CoroutineScope = this, crossinline bl
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveDmChannel.onDelete(scope: CoroutineScope = this, block: suspend (DMChannelDeleteEvent) -> Unit) =
+public fun LiveDmChannel.onDelete(scope: CoroutineScope = this, block: suspend (DMChannelDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @Deprecated(
@@ -65,11 +68,11 @@ fun LiveDmChannel.onDelete(scope: CoroutineScope = this, block: suspend (DMChann
     DeprecationLevel.ERROR
 )
 @KordPreview
-fun LiveDmChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit) =
+public fun LiveDmChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview
-class LiveDmChannel(
+public class LiveDmChannel(
     channel: DmChannel,
     coroutineScope: CoroutineScope = channel.kord + SupervisorJob(channel.kord.coroutineContext.job)
 ) : LiveChannel(channel.kord, coroutineScope), KordEntity {
@@ -80,7 +83,7 @@ class LiveDmChannel(
     override var channel: DmChannel = channel
         private set
 
-    override fun update(event: Event) = when (event) {
+    override fun update(event: Event): Unit = when (event) {
         is DMChannelCreateEvent -> channel = event.channel
         is DMChannelUpdateEvent -> channel = event.channel
         is DMChannelDeleteEvent -> shutDown(LiveCancellationException(event, "The channel is deleted"))

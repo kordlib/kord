@@ -17,6 +17,7 @@ import equality.randomId
 import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
 import live.AbstractLiveEntityTest
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.Timeout
 import java.util.concurrent.TimeUnit
@@ -27,6 +28,7 @@ import kotlin.test.assertEquals
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
 @Timeout(value = 5, unit = TimeUnit.SECONDS)
+@Disabled
 abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE>() {
 
     protected abstract val channelId: Snowflake

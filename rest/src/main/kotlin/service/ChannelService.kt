@@ -4,6 +4,8 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.channel.*
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
@@ -274,6 +276,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.ChannelId] = channelId
             body(ChannelFollowRequest.serializer(), request)
         }
+
     suspend fun startThreadWithMessage(
         channelId: Snowflake,
         messageId: Snowflake,
@@ -285,10 +288,21 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.MessageId] = messageId
             body(StartThreadRequest.serializer(), request)
             reason?.let { header("X-Audit-Log-Reason", reason) }
-
         }
     }
 
+    @OptIn(ExperimentalContracts::class)
+    suspend fun startThreadWithMessage(
+        channelId: Snowflake,
+        messageId: Snowflake,
+        name: String,
+        archiveDuration: ArchiveDuration,
+        builder: StartThreadWithMessageBuilder.() -> Unit
+    ): DiscordChannel {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val startBuilder = StartThreadWithMessageBuilder(name, archiveDuration).apply(builder)
+        return startThreadWithMessage(channelId, messageId, startBuilder.toRequest(), startBuilder.reason)
+    }
 
     suspend fun startThread(
         channelId: Snowflake,
@@ -299,8 +313,20 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.ChannelId] = channelId
             body(StartThreadRequest.serializer(), request)
             reason?.let { header("X-Audit-Log-Reason", reason) }
-
         }
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    suspend fun startThread(
+        channelId: Snowflake,
+        name: String,
+        archiveDuration: ArchiveDuration,
+        type: ChannelType,
+        builder: StartThreadBuilder.() -> Unit = {}
+    ): DiscordChannel {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val startBuilder = StartThreadBuilder(name, archiveDuration, type).apply(builder)
+        return startThread(channelId, startBuilder.toRequest(), startBuilder.reason)
     }
 
     suspend fun joinThread(channelId: Snowflake) {

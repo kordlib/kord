@@ -17,7 +17,7 @@ import java.io.InputStream
  * Message builder for creating messages as a bot user.
  */
 class UserMessageCreateBuilder
-    : PersistentMessageCreateBuilder,
+    : MessageCreateBuilder,
     RequestBuilder<MultipartMessageCreateRequest> {
 
     override var content: String? = null

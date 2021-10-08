@@ -8,7 +8,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-interface InviteChannel : TopGuildChannel
+public interface InviteChannel : TopGuildChannel
 
 /**
  * Request to create an invite for this channel.
@@ -17,7 +17,7 @@ interface InviteChannel : TopGuildChannel
  * @throws RestRequestException if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun InviteChannel.createInvite(builder: InviteCreateBuilder.() -> Unit = {}): Invite {
+public suspend inline fun InviteChannel.createInvite(builder: InviteCreateBuilder.() -> Unit = {}): Invite {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.createInvite(id, builder)
     val data = InviteData.from(response)

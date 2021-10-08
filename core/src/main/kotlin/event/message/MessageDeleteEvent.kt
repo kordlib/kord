@@ -9,30 +9,34 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.event.Event
+import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
 
-class MessageDeleteEvent(
-    val messageId: Snowflake,
-    val channelId: Snowflake,
-    val guildId: Snowflake?,
-    val message: Message?,
+public class MessageDeleteEvent(
+    public val messageId: Snowflake,
+    public val channelId: Snowflake,
+    public val guildId: Snowflake?,
+    public val message: Message?,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Event, Strategizable {
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : Event, CoroutineScope by coroutineScope, Strategizable {
 
-    val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
+    public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
-    val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
+    public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 
-    suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
-    suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
-    suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageDeleteEvent =
         MessageDeleteEvent(messageId, channelId, guildId, message, kord, shard, strategy.supply(kord))

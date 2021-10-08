@@ -14,8 +14,8 @@ import dev.kord.core.supplier.EntitySupplier
  * @property emojiId the emoji id if the emoji is custom.
  * @property emojiName the emoji name if custom, the unicode character if standard, or `null` if no emoji is set.
  */
-class WelcomeScreenChannel(
-    val data: WelcomeScreenChannelData,
+public class WelcomeScreenChannel(
+    public val data: WelcomeScreenChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : ChannelBehavior {
@@ -23,10 +23,10 @@ class WelcomeScreenChannel(
     override val id: Snowflake
         get() = data.channelId
 
-    val description: String get() = data.description
+    public val description: String get() = data.description
 
-    val emojiId: Snowflake? get() = data.emojiId
+    public val emojiId: Snowflake? get() = data.emojiId
 
-    val emojiName: String? get() = data.emojiName
+    public val emojiName: String? get() = data.emojiName
 
 }

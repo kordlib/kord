@@ -11,7 +11,6 @@ import dev.kord.core.behavior.channel.threads.unsafeStartPublicThreadWithMessage
 import dev.kord.core.behavior.channel.threads.unsafeStartThread
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.NewsChannel
 import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.core.exception.EntityNotFoundException
@@ -32,7 +31,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord News Channel associated to a guild.
  */
-interface NewsChannelBehavior : ThreadParentChannelBehavior {
+public interface NewsChannelBehavior : ThreadParentChannelBehavior {
 
     override val activeThreads: Flow<NewsChannelThread>
         get() = super.activeThreads.filterIsInstance()
@@ -79,20 +78,20 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    suspend fun follow(target: Snowflake) {
+    public suspend fun follow(target: Snowflake) {
         kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target))
     }
 
 
-    suspend fun startPublicThread(
+    public suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
         reason: String? = null
     ): NewsChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PublicNewsThread, reason) as NewsChannelThread
+        return unsafeStartThread(name, archiveDuration, ChannelType.PublicNewsThread) { this.reason = reason } as NewsChannelThread
     }
 
-    suspend fun startPublicThreadWithMessage(
+    public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
@@ -114,7 +113,7 @@ interface NewsChannelBehavior : ThreadParentChannelBehavior {
 
 }
 
-fun NewsChannelBehavior(
+public fun NewsChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
@@ -146,7 +145,7 @@ fun NewsChannelBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @OptIn(ExperimentalContracts::class)
-suspend inline fun NewsChannelBehavior.edit(builder: NewsChannelModifyBuilder.() -> Unit): NewsChannel {
+public suspend inline fun NewsChannelBehavior.edit(builder: NewsChannelModifyBuilder.() -> Unit): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

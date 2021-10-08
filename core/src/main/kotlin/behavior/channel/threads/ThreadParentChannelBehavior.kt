@@ -4,6 +4,8 @@ import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
@@ -16,6 +18,7 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -26,7 +29,7 @@ import java.util.*
 /**
  * Behavior of channels that can contain public threads.
  */
-interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
+public interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
     /**
      * Returns all active public and private threads in the channel.
      * Threads are ordered by their id, in descending order.
@@ -35,7 +38,7 @@ interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
 
      */
-    val activeThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(guildId).filter { it.parentId == id }
+    public val activeThreads: Flow<ThreadChannel> get() = supplier.getActiveThreads(guildId).filter { it.parentId == id }
 
     /**
      * Returns archived threads in the channel that are public.
@@ -45,7 +48,7 @@ interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    fun getPublicArchivedThreads(
+    public fun getPublicArchivedThreads(
         before: Instant = Clock.System.now(),
         limit: Int = Int.MAX_VALUE
     ): Flow<ThreadChannel> {
@@ -87,7 +90,7 @@ interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
  * This derives from [ThreadParentChannelBehavior]
  * since Discord allows all public operations on private thread parents.
  */
-interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
+public interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
 
     /**
      * Returns archived threads in the channel that are private.
@@ -99,7 +102,7 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    fun getPrivateArchivedThreads(
+    public fun getPrivateArchivedThreads(
         before: Instant = Clock.System.now(),
         limit: Int = Int.MAX_VALUE
     ): Flow<ThreadChannel> {
@@ -114,7 +117,7 @@ interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavior {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    fun getJoinedPrivateArchivedThreads(
+    public fun getJoinedPrivateArchivedThreads(
         before: Snowflake = Snowflake.max,
         limit: Int = Int.MAX_VALUE
     ): Flow<ThreadChannel> {
@@ -131,11 +134,10 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
     name: String,
     archiveDuration: ArchiveDuration = ArchiveDuration.Day,
     type: ChannelType,
-    reason: String? = null
+    builder: StartThreadBuilder.() -> Unit
 ): ThreadChannel {
-
     val response =
-        kord.rest.channel.startThread(id, StartThreadRequest(name, archiveDuration, Optional.Value(type)), reason)
+        kord.rest.channel.startThread(id, name, archiveDuration, type, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel

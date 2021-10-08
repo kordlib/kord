@@ -10,85 +10,95 @@ import dev.kord.core.cache.idEq
 import dev.kord.core.entity.application.*
 import dev.kord.core.entity.interaction.*
 import dev.kord.core.event.interaction.*
-import dev.kord.core.gateway.MasterGateway
 import dev.kord.gateway.*
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.CoroutineScope
 import dev.kord.core.event.Event as CoreEvent
 
 
-class InteractionEventHandler(
-    kord: Kord,
-    gateway: MasterGateway,
-    cache: DataCache,
-    coreFlow: MutableSharedFlow<CoreEvent>,
-) : BaseGatewayEventHandler(kord, gateway, cache, coreFlow) {
-    override suspend fun handle(event: Event, shard: Int) {
+public class InteractionEventHandler(
+    cache: DataCache
+) : BaseGatewayEventHandler(cache) {
+
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? =
         when (event) {
-            is InteractionCreate -> handle(event, shard)
-            is ApplicationCommandCreate -> handle(event, shard)
-            is ApplicationCommandUpdate -> handle(event, shard)
-            is ApplicationCommandDelete -> handle(event, shard)
-            else -> Unit
+            is InteractionCreate -> handle(event, shard, kord, coroutineScope)
+            is ApplicationCommandCreate -> handle(event, shard, kord, coroutineScope)
+            is ApplicationCommandUpdate -> handle(event, shard, kord, coroutineScope)
+            is ApplicationCommandDelete -> handle(event, shard, kord, coroutineScope)
+            else -> null
         }
 
-    }
-
-    private suspend fun handle(event: InteractionCreate, shard: Int) {
+    private fun handle(event: InteractionCreate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent {
         val data = InteractionData.from(event.interaction)
         val interaction = Interaction.from(data, kord)
         val coreEvent = when(interaction) {
-            is GlobalChatInputCommandInteraction -> GlobalChatInputCommandInteractionCreateEvent(interaction, kord, shard)
-            is GlobalUserCommandInteraction -> GlobalUserCommandInteractionCreateEvent(interaction, kord, shard)
-            is GlobalMessageCommandInteraction -> GlobalMessageCommandInteractionCreateEvent(interaction, kord, shard)
-            is GuildChatInputCommandInteraction -> GuildChatInputCommandInteractionCreateEvent(interaction, kord, shard)
-            is GuildMessageCommandInteraction -> GuildMessageCommandInteractionCreateEvent(interaction, kord, shard)
-            is GuildUserCommandInteraction -> GuildUserCommandInteractionCreateEvent(interaction, kord, shard)
-            is ButtonInteraction -> ButtonInteractionCreateEvent(interaction, kord, shard)
-            is SelectMenuInteraction -> SelectMenuInteractionCreateEvent(interaction, kord, shard)
+            is GlobalChatInputCommandInteraction -> GlobalChatInputCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is GlobalUserCommandInteraction -> GlobalUserCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is GlobalMessageCommandInteraction -> GlobalMessageCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is GlobalButtonInteraction -> GlobalButtonInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is GlobalSelectMenuInteraction -> GlobalSelectMenuInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is GuildChatInputCommandInteraction -> GuildChatInputCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is GuildMessageCommandInteraction -> GuildMessageCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is GuildUserCommandInteraction -> GuildUserCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is GuildButtonInteraction -> GuildButtonInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is GuildSelectMenuInteraction -> GuildSelectMenuInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is UnknownComponentInteraction -> error("Unknown component.")
             is UnknownApplicationCommandInteraction -> error("Unknown component.")
         }
-        coreFlow.emit(coreEvent)
+        return coreEvent
     }
 
-    private suspend fun handle(event: ApplicationCommandCreate, shard: Int) {
+    private suspend fun handle(
+        event: ApplicationCommandCreate,
+        shard: Int,
+        kord: Kord,
+        coroutineScope: CoroutineScope
+    ): CoreEvent {
+        val data = ApplicationCommandData.from(event.application)
+        cache.put(data)
+        val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
+            is GuildChatInputCommand -> ChatInputCommandCreateEvent(application, kord, shard, coroutineScope)
+            is GuildMessageCommand -> MessageCommandCreateEvent(application, kord, shard, coroutineScope)
+            is GuildUserCommand -> UserCommandCreateEvent(application, kord, shard, coroutineScope)
+            is UnknownGuildApplicationCommand -> UnknownApplicationCommandCreateEvent(application, kord, shard, coroutineScope)
+        }
+        return coreEvent
+    }
+
+
+    private suspend fun handle(
+        event: ApplicationCommandUpdate,
+        shard: Int,
+        kord: Kord,
+        coroutineScope: CoroutineScope
+    ): CoreEvent {
         val data = ApplicationCommandData.from(event.application)
         cache.put(data)
         val application = GuildApplicationCommand(data, kord.rest.interaction)
-        val coreEvent = when(application) {
-            is GuildChatInputCommand -> ChatInputCommandCreateEvent(application, kord, shard)
-            is GuildMessageCommand -> MessageCommandCreateEvent(application, kord, shard)
-            is GuildUserCommand -> UserCommandCreateEvent(application, kord, shard)
-            is UnknownGuildApplicationCommand -> UnknownApplicationCommandCreateEvent(application, kord, shard)
+
+        val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
+            is GuildChatInputCommand -> ChatInputCommandUpdateEvent(application, kord, shard, coroutineScope)
+            is GuildMessageCommand -> MessageCommandUpdateEvent(application, kord, shard, coroutineScope)
+            is GuildUserCommand -> UserCommandUpdateEvent(application, kord, shard, coroutineScope)
+            is UnknownGuildApplicationCommand -> UnknownApplicationCommandUpdateEvent(application, kord, shard, coroutineScope)
         }
-        coreFlow.emit(coreEvent)
+        return coreEvent
     }
 
-
-    private suspend fun handle(event: ApplicationCommandUpdate, shard: Int) {
-        val data = ApplicationCommandData.from(event.application)
-        cache.put(data)
-        val application = GuildApplicationCommand(data, kord.rest.interaction)
-
-        val coreEvent = when(application) {
-            is GuildChatInputCommand -> ChatInputCommandUpdateEvent(application, kord, shard)
-            is GuildMessageCommand -> MessageCommandUpdateEvent(application, kord, shard)
-            is GuildUserCommand -> UserCommandUpdateEvent(application, kord, shard)
-            is UnknownGuildApplicationCommand -> UnknownApplicationCommandUpdateEvent(application, kord, shard)
-        }
-        coreFlow.emit(coreEvent)
-    }
-
-    private suspend fun handle(event: ApplicationCommandDelete, shard: Int) {
+    private suspend fun handle(
+        event: ApplicationCommandDelete,
+        shard: Int,
+        kord: Kord,
+        coroutineScope: CoroutineScope
+    ): CoreEvent {
         val data = ApplicationCommandData.from(event.application)
         cache.remove<ApplicationCommandData> { idEq(ApplicationCommandData::id, data.id) }
-        val application = GuildApplicationCommand(data, kord.rest.interaction)
-        val coreEvent = when(application) {
-            is GuildChatInputCommand -> ChatInputCommandDeleteEvent(application, kord, shard)
-            is GuildMessageCommand -> MessageCommandDeleteEvent(application, kord, shard)
-            is GuildUserCommand -> UserCommandDeleteEvent(application, kord, shard)
-            is UnknownGuildApplicationCommand -> UnknownApplicationCommandDeleteEvent(application, kord, shard)
+        val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
+            is GuildChatInputCommand -> ChatInputCommandDeleteEvent(application, kord, shard, coroutineScope)
+            is GuildMessageCommand -> MessageCommandDeleteEvent(application, kord, shard, coroutineScope)
+            is GuildUserCommand -> UserCommandDeleteEvent(application, kord, shard, coroutineScope)
+            is UnknownGuildApplicationCommand -> UnknownApplicationCommandDeleteEvent(application, kord, shard, coroutineScope)
         }
-        coreFlow.emit(coreEvent)
+        return coreEvent
     }
 }

@@ -1,38 +1,44 @@
 package dev.kord.core.event.interaction
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.entity.application.*
 import dev.kord.core.event.Event
+import dev.kord.core.event.kordCoroutineScope
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
 
 
-sealed interface ApplicationCommandDeleteEvent : Event {
-    val command: GuildApplicationCommand
+public sealed interface ApplicationCommandDeleteEvent : Event {
+    public val command: GuildApplicationCommand
 }
 
-class ChatInputCommandDeleteEvent(
+public class ChatInputCommandDeleteEvent(
     override val command: GuildChatInputCommand,
     override val kord: Kord,
     override val shard: Int,
-) : ApplicationCommandDeleteEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ApplicationCommandDeleteEvent, CoroutineScope by coroutineScope
 
 
-class UserCommandDeleteEvent(
+public class UserCommandDeleteEvent(
     override val command: GuildUserCommand,
     override val kord: Kord,
     override val shard: Int,
-) : ApplicationCommandDeleteEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ApplicationCommandDeleteEvent, CoroutineScope by coroutineScope
 
 
-class MessageCommandDeleteEvent(
+public class MessageCommandDeleteEvent(
     override val command: GuildMessageCommand,
     override val kord: Kord,
     override val shard: Int,
-) : ApplicationCommandDeleteEvent
+    public  val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ApplicationCommandDeleteEvent, CoroutineScope by coroutineScope
 
 
-class UnknownApplicationCommandDeleteEvent(
+public class UnknownApplicationCommandDeleteEvent(
     override val command: UnknownGuildApplicationCommand,
     override val kord: Kord,
     override val shard: Int,
-) : ApplicationCommandDeleteEvent
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ApplicationCommandDeleteEvent, CoroutineScope by coroutineScope
