@@ -35,7 +35,7 @@ public suspend inline fun InteractionResponseBehavior.followUp(builder: Followup
 @OptIn(ExperimentalContracts::class)
 public suspend inline fun InteractionResponseBehavior.ephemeralFollowup(builder: FollowupMessageCreateBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = FollowupMessageCreateBuilder(false).apply(builder)
+    val builder = FollowupMessageCreateBuilder(true).apply(builder)
     val message = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest())
     return EphemeralFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
 }

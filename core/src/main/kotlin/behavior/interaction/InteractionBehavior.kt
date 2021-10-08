@@ -1,10 +1,6 @@
 package dev.kord.core.behavior.interaction
 
-import dev.kord.common.entity.InteractionResponseType
-import dev.kord.common.entity.MessageFlag
-import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.KordEntity
@@ -15,9 +11,8 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.rest.builder.message.create.DeferredInteractionCreateBuilder
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
-import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
-import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -49,14 +44,7 @@ public interface InteractionBehavior : KordEntity, Strategizable {
      * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
      */
     public suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
-        val request =  InteractionResponseCreateRequest(
-            type = InteractionResponseType.DeferredChannelMessageWithSource,
-            data = Optional(
-                InteractionApplicationCommandCallbackData(
-                    flags = Optional(MessageFlags(MessageFlag.Ephemeral))
-                )
-            )
-        )
+        val request = DeferredInteractionCreateBuilder(true).toRequest()
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return EphemeralInteractionResponseBehavior(applicationId, token, kord)
     }
@@ -67,9 +55,7 @@ public interface InteractionBehavior : KordEntity, Strategizable {
      * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
      */
     public suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
-        val request = InteractionResponseCreateRequest(
-            type = InteractionResponseType.DeferredChannelMessageWithSource
-        )
+        val request = DeferredInteractionCreateBuilder(false).toRequest()
         kord.rest.interaction.createInteractionResponse(id, token, request)
         return PublicInteractionResponseBehavior(applicationId, token, kord)
     }
@@ -89,7 +75,7 @@ public interface InteractionBehavior : KordEntity, Strategizable {
 /**
  * Acknowledges an interaction and responds with [PublicInteractionResponseBehavior].
  *
- * @param builder [PublicInteractionResponseCreateBuilder] used to a create an public response.
+ * @param builder [InteractionResponseCreateBuilder] used to create a public response.
  * @return [PublicInteractionResponseBehavior] public response to the interaction.
  */
 

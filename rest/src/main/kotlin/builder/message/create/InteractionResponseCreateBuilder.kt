@@ -31,7 +31,6 @@ class InteractionResponseCreateBuilder(var ephemeral: Boolean = false)
 
     override var allowedMentions: AllowedMentionsBuilder? = null
 
-
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     override val files: MutableList<NamedFile> = mutableListOf()
