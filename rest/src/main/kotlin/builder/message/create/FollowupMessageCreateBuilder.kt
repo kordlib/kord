@@ -43,7 +43,7 @@ class FollowupMessageCreateBuilder(var ephemeral: Boolean)
                 embeds = Optional(embeds).mapList { it.toRequest() },
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
                 components = Optional(components).coerceToMissing().mapList { it.build() },
-                flags = if(ephemeral) MessageFlags(MessageFlag.Ephemeral).optional() else Optional.Missing()
+                flags = Optional(if(ephemeral) MessageFlags(MessageFlag.Ephemeral) else null).coerceToMissing()
             ),
             files
         )
