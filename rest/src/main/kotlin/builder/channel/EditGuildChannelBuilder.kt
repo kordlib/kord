@@ -55,7 +55,7 @@ class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest>
     private var _name: Optional<String> = Optional.Missing()
     var name: String? by ::_name.delegate()
 
-    private var _rtcRegion: Optional<String> = Optional.Missing()
+    private var _rtcRegion: Optional<String?> = Optional.Missing()
     var rtcRegion: String? by ::_rtcRegion.delegate()
 
     private var _position: OptionalInt? = OptionalInt.Missing
