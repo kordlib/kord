@@ -4,6 +4,7 @@ import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
+import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
 import dev.kord.core.cache.data.InteractionData
@@ -136,11 +137,11 @@ public sealed interface MessageCommandInteraction : ApplicationCommandInteractio
 
     public val targetId: Snowflake get() = data.data.targetId.value!!
 
-    public val targetBehavior: UserBehavior get() = UserBehavior(targetId, kord)
+    public val targetBehavior: MessageBehavior get() = MessageBehavior(channelId, targetId, kord)
 
-    public suspend fun getTarget(): User = supplier.getUser(targetId)
+    public suspend fun getTarget(): Message = supplier.getMessage(channelId, targetId)
 
-    public suspend fun getTargetOrNull(): User? = supplier.getUserOrNull(targetId)
+    public suspend fun getTargetOrNull(): Message? =  supplier.getMessageOrNull(channelId, targetId)
 
     public val messages: Map<Snowflake, Message> get() = resolvedObjects!!.messages!!
 
