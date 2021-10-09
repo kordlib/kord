@@ -23,6 +23,9 @@ public interface InteractionResponseBehavior : KordObject {
 
 }
 
+/**
+ * Follows up an interaction response without the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral]
+ */
 @OptIn(ExperimentalContracts::class)
 public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -32,6 +35,10 @@ public suspend inline fun InteractionResponseBehavior.followUp(builder: Followup
 }
 
 
+/**
+ * Follows up an interaction response with the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral]
+ *
+ */
 @OptIn(ExperimentalContracts::class)
 public suspend inline fun InteractionResponseBehavior.ephemeralFollowup(builder: FollowupMessageCreateBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }

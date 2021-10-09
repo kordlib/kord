@@ -11,7 +11,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.rest.builder.message.create.DeferredInteractionCreateBuilder
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -44,8 +43,7 @@ public interface InteractionBehavior : KordEntity, Strategizable {
      * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
      */
     public suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
-        val request = DeferredInteractionCreateBuilder(true).toRequest()
-        kord.rest.interaction.createInteractionResponse(id, token, request)
+         kord.rest.interaction.acknowledge(id, token, true)
         return EphemeralInteractionResponseBehavior(applicationId, token, kord)
     }
 
@@ -55,8 +53,7 @@ public interface InteractionBehavior : KordEntity, Strategizable {
      * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
      */
     public suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
-        val request = DeferredInteractionCreateBuilder(false).toRequest()
-        kord.rest.interaction.createInteractionResponse(id, token, request)
+        kord.rest.interaction.acknowledge(id, token)
         return PublicInteractionResponseBehavior(applicationId, token, kord)
     }
 
