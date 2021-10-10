@@ -134,7 +134,7 @@ sealed class Choice<out T> {
     abstract val name: String
     abstract val value: T
 
-    class IntChoice(override val name: String, override val value: Int) : Choice<Int>()
+    class IntChoice(override val name: String, override val value: Long) : Choice<Long>()
     class NumberChoice(override val name: String, override val value: Double) : Choice<Double>()
     class StringChoice(override val name: String, override val value: String) : Choice<String>()
     internal class ChoiceSerializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
@@ -159,7 +159,7 @@ sealed class Choice<out T> {
                 endStructure(descriptor)
             }
             return when {
-                value.intOrNull != null -> IntChoice(name, value.int)
+                value.longOrNull != null -> IntChoice(name, value.long)
                 value.doubleOrNull != null -> NumberChoice(name, value.double)
                 else -> StringChoice(name, value.toString())
             }
@@ -169,7 +169,7 @@ sealed class Choice<out T> {
             encoder.encodeStructure(descriptor) {
                 encodeStringElement(descriptor, 0, value.name)
                 when (value) {
-                    is IntChoice -> encodeIntElement(descriptor, 1, value.value)
+                    is IntChoice -> encodeLongElement(descriptor, 1, value.value)
                     is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
                     else -> encodeStringElement(descriptor, 1, value.value.toString())
                 }

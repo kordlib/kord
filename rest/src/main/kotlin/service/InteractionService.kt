@@ -1,6 +1,8 @@
 package dev.kord.rest.service
 
 import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
@@ -534,7 +536,6 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-        ephemeral: Boolean = false,
         builder: FollowupMessageModifyBuilder.() -> Unit = {}
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -575,6 +576,18 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
             commandId,
             ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
         )
+    }
+
+    public suspend fun acknowledge(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
+        val request =  InteractionResponseCreateRequest(
+            type = InteractionResponseType.DeferredChannelMessageWithSource,
+            data = Optional(
+                InteractionApplicationCommandCallbackData(
+                    flags = Optional(if(ephemeral) MessageFlags(MessageFlag.Ephemeral) else null).coerceToMissing()
+                )
+            )
+        )
+        createInteractionResponse(interactionId, interactionToken, request)
     }
 
 }
