@@ -93,8 +93,8 @@ public suspend inline fun InteractionBehavior.respondPublic(
 /**
  * Acknowledges an interaction and responds with [EphemeralInteractionResponseBehavior] with ephemeral flag.
  *
- * @param builder [EphemeralInteractionResponseCreateBuilder] used to a create an ephemeral response.
- * @return [EphemeralInteractionResponseBehavior] ephemeral response to the interaction.
+ * @param builder [InteractionResponseCreateBuilder] used to a create an ephemeral response.
+ * @return [InteractionResponseBehavior] ephemeral response to the interaction.
  */
 
 @OptIn(ExperimentalContracts::class)
@@ -103,7 +103,7 @@ public suspend inline fun InteractionBehavior.respondEphemeral(
 ): EphemeralInteractionResponseBehavior {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = InteractionResponseCreateBuilder().apply(builder)
+    val builder = InteractionResponseCreateBuilder(true).apply(builder)
     val request = builder.toRequest()
     kord.rest.interaction.createInteractionResponse(id, token, request)
     return EphemeralInteractionResponseBehavior(applicationId, token, kord)
