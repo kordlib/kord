@@ -24,6 +24,11 @@ tasks {
         onlyIf { Library.isRelease }
     }
 
+    withType<JavaCompile> {
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
+    }
+
     withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = Jvm.target

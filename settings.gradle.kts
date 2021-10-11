@@ -32,7 +32,6 @@ dependencyResolutionManagement {
             cache()
             common()
             tests()
-            misc()
         }
     }
 }
@@ -71,15 +70,10 @@ fun VersionCatalogBuilder.common() {
     version("kotlinx-coroutines", "1.5.2")
     alias("kotlinx-serialization").to("org.jetbrains.kotlinx", "kotlinx-serialization-json").version("1.3.0")
     alias("kotlinx-coroutines").to("org.jetbrains.kotlinx", "kotlinx-coroutines").versionRef("kotlinx-coroutines")
-    alias("kotlinx-atomicfu").to("org.jetbrains.kotlinx", "atomicfu").version("0.16.1")
+    alias("kotlinx-atomicfu").to("org.jetbrains.kotlinx", "atomicfu").version("0.16.3")
     alias("kotlin-logging").to("io.github.microutils", "kotlin-logging").version("2.0.11")
 
     bundle("common", listOf("kotlinx-serialization", "kotlinx-coroutines", "kotlinx-atomicfu", "kotlin-logging"))
-}
-
-fun VersionCatalogBuilder.misc() {
-    alias("codahale-xsalsa20poly1305").to("com.codahale", "xsalsa20poly1305").version("0.10.1")
-    alias("okio-io").to("com.squareup.okio", "okio").version("3.0.0-alpha.10")
 }
 
 fun VersionCatalogBuilder.tests() {

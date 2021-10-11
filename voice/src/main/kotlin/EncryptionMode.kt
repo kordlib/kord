@@ -14,12 +14,12 @@ enum class EncryptionMode {
     XSalsa20Poly1305Suffix,
 
     @SerialName("xsalsa20_poly1305_lite")
-    XSalsa20Poly1306Lite,
+    XSalsa20Poly1305Lite,
 
     @SerialName("xsalsa20_poly1305_lite_rtpsize")
     XSalsa20Poly1305LiteRtpsize,
 
-    // video stuff... unused. though required to allow for serialization of ready
+    // video/unreleased-audio stuff... unused. though required to allow for serialization of ready
     @SerialName("aead_aes256_gcm_rtpsize")
     AeadAes256GcmRtpsize,
 
