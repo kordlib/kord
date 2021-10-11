@@ -3,9 +3,9 @@ package dev.kord.voice.streams
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.AudioFrame
-import dev.kord.voice.rtp.AudioPacket
+import io.ktor.util.network.*
 import kotlinx.coroutines.flow.Flow
-
+import udp.RTPPacket
 
 /**
  * A representation of receiving voice through Discord and different stages of processing.
@@ -13,14 +13,14 @@ import kotlinx.coroutines.flow.Flow
 @KordVoice
 interface Streams {
     /**
-     * An encryption key used for decryption of Discord packets.
+     * Starts propagating packets from [server] with the following [key] to decrypt the incoming frames.
      */
-    var key: ByteArray?
+    suspend fun listen(key: ByteArray, server: NetworkAddress)
 
     /**
      * A flow of all incoming [dev.kord.voice.udp.AudioPacket.DecryptedPacket]s through the UDP connection.
      */
-    val incomingAudioPackets: Flow<AudioPacket.DecryptedPacket>
+    val incomingAudioPackets: Flow<RTPPacket>
 
     /**
      * A flow of all incoming [AudioFrame]s mapped to their [ssrc][UInt].
