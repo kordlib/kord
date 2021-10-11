@@ -18,6 +18,7 @@ import dev.kord.voice.streams.Streams
 import dev.kord.voice.udp.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeoutOrNull
@@ -112,8 +113,15 @@ class VoiceConnectionBuilder(
         )
 
         return withTimeoutOrNull(timeout) {
-            val voiceStateUpdate = gateway.events.filterIsInstance<VoiceStateUpdate>().first().voiceState
-            val voiceServerUpdate = gateway.events.filterIsInstance<VoiceServerUpdate>().first().voiceServerUpdateData
+            val voiceStateUpdate = gateway.events.filterIsInstance<VoiceStateUpdate>()
+                .filter { it.voiceState.guildId.value == guildId && it.voiceState.userId == selfId }
+                .first()
+                .voiceState
+
+            val voiceServerUpdate = gateway.events.filterIsInstance<VoiceServerUpdate>()
+                .filter { it.voiceServerUpdateData.guildId == guildId }
+                .first()
+                .voiceServerUpdateData
 
             VoiceConnectionData(
                 selfId = selfId,
