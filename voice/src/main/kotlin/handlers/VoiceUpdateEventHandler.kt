@@ -40,5 +40,5 @@ internal class VoiceUpdateEventHandler(
 }
 
 private fun VoiceServerUpdate.isRelatedToConnection(connection: VoiceConnection): Boolean {
-    return voiceServerUpdateData.guildId != connection.data.guildId
+    return voiceServerUpdateData.guildId == connection.data.guildId
 }
