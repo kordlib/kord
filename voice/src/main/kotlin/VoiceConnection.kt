@@ -28,7 +28,8 @@ import kotlin.coroutines.CoroutineContext
 data class VoiceConnectionData(
     val selfId: Snowflake,
     val guildId: Snowflake,
-    val sessionId: String
+    val sessionId: String,
+    val dispatcher: CoroutineDispatcher
 )
 
 private val voiceConnectionLogger = KotlinLogging.logger { }
@@ -49,16 +50,15 @@ class VoiceConnection(
     val data: VoiceConnectionData,
     val gateway: Gateway,
     val voiceGateway: VoiceGateway,
-    val udp: VoiceUdpConnection,
+    val socket: VoiceUdpSocket,
     var voiceGatewayConfiguration: VoiceGatewayConfiguration,
     val streams: Streams,
     val audioProvider: AudioProvider,
     val frameSender: AudioFrameSender,
     val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
-    voiceDispatcher: CoroutineDispatcher
 ) : CoroutineScope {
     override val coroutineContext: CoroutineContext =
-        SupervisorJob() + voiceDispatcher + CoroutineName("Voice Connection for Guild ${data.guildId.value}")
+        SupervisorJob() + data.dispatcher + CoroutineName("Voice Connection for Guild ${data.guildId.value}")
 
     init {
         // handle voice state/server updates (e.g., a move, disconnect, voice server change, etc.)
@@ -79,10 +79,11 @@ class VoiceConnection(
     }
 
     /**
-     * Disconnects from the voice gateway, does not change the voice state.
+     * Disconnects from the voice servers, does not change the voice state.
      */
     suspend fun disconnect() {
         voiceGateway.stop()
+        socket.stop()
     }
 
     /**

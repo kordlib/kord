@@ -11,7 +11,6 @@ import dev.kord.voice.gateway.SelectProtocol
 import dev.kord.voice.gateway.SessionDescription
 import dev.kord.voice.gateway.VoiceEvent
 import dev.kord.voice.udp.AudioFrameSenderConfiguration
-import dev.kord.voice.udp.VoiceUdpConnectionConfiguration
 import io.ktor.util.network.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
@@ -26,15 +25,15 @@ internal class UdpLifeCycleHandler(
     private val connection: VoiceConnection
 ) : EventHandler<VoiceEvent>(flow, "UdpInterceptor") {
     private val ssrc: AtomicRef<UInt?> = atomic(null)
+    private val server: AtomicRef<NetworkAddress?> = atomic(null)
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override fun start() {
         on<Ready> {
             this.ssrc.value = it.ssrc
+            this.server.value = NetworkAddress(it.ip, it.port)
 
-            connection.udp.start(VoiceUdpConnectionConfiguration(NetworkAddress(it.ip, it.port), it.ssrc))
-
-            val ip: NetworkAddress = connection.udp.discoverIp()
+            val ip: NetworkAddress = connection.socket.discoverIp(this.server.value!!, this.ssrc.value!!.toInt())
 
             udpLifeCycleLogger.trace { "ip discovered for voice successfully" }
 
@@ -43,7 +42,7 @@ internal class UdpLifeCycleHandler(
                 data = SelectProtocol.Data(
                     address = ip.hostname,
                     port = ip.port,
-                    mode = EncryptionMode.XSalsa20Poly1305
+                    mode = EncryptionMode.XSalsa20Poly1305Lite
                 )
             )
 
@@ -57,7 +56,8 @@ internal class UdpLifeCycleHandler(
                     key = it.secretKey.toUByteArray().toByteArray(),
                     provider = audioProvider,
                     baseFrameInterceptorContext = FrameInterceptorContextBuilder(gateway, voiceGateway),
-                    interceptorFactory = frameInterceptorFactory
+                    interceptorFactory = frameInterceptorFactory,
+                    server = server.value!!
                 )
 
                 frameSender.start(config)

@@ -19,6 +19,11 @@ internal class VoiceUpdateEventHandler(
         on<VoiceServerUpdate> { voiceServerUpdate ->
             if (!voiceServerUpdate.isRelatedToConnection(connection)) return@on
 
+            // voice server has gone away.
+            if (voiceServerUpdate.voiceServerUpdateData.endpoint == null) {
+               connection.disconnect()
+            }
+
             voiceUpdateLogger.trace { "changing voice servers for session ${connection.data.sessionId}" }
 
             // update the gateway configuration accordingly
