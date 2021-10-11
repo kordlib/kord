@@ -3,14 +3,12 @@ package dev.kord.voice.udp
 import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.AudioFrame
 import dev.kord.voice.FrameInterceptor
-import dev.kord.voice.rtp.AudioPacket
+import io.ktor.network.sockets.*
+import io.ktor.utils.io.core.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
@@ -20,7 +18,7 @@ private val audioFrameSenderLogger = KotlinLogging.logger { }
 
 @KordVoice
 data class DefaultAudioFrameSenderData(
-    val udp: VoiceUdpConnection,
+    val udp: VoiceUdpSocket,
     val dispatcher: CoroutineDispatcher
 )
 
@@ -39,8 +37,10 @@ class DefaultAudioFrameSender(
         }
 
     override suspend fun start(configuration: AudioFrameSenderConfiguration) = with(configuration) {
-        val interceptor = createFrameInterceptor(configuration)
+        val interceptor: FrameInterceptor = createFrameInterceptor(configuration)
         var sequence: UShort = Random.nextBits(UShort.SIZE_BITS).toUShort()
+
+        val packetProvider = DefaultAudioPackerProvider(key)
 
         val frames = Channel<AudioFrame?>(Channel.RENDEZVOUS)
         with(provider) { launch { provideFrames(frames) } }
@@ -48,25 +48,15 @@ class DefaultAudioFrameSender(
         audioFrameSenderLogger.trace { "audio poller starting." }
 
         try {
-            frames.receiveAsFlow()
-                .transform { emit(interceptor.intercept(it)) }
-                .collect { frame ->
-                    if (frame != null) {
-                        val encryptedPacket = AudioPacket.DecryptedPacket.create(
-                            sequence = sequence,
-                            timestamp = sequence * 960u,
-                            ssrc = ssrc,
-                            decryptedData = frame.data
-                        ).encrypt(key)
-
-                        data.udp.send(encryptedPacket.asByteReadPacket())
-                        sequence++
-                    }
-                }
+            for (frame in frames) {
+                val consumedFrame = interceptor.intercept(frame) ?: continue
+                val packet = packetProvider.provide(sequence, sequence * 960u, ssrc, consumedFrame.data)
+                data.udp.send(Datagram(ByteReadPacket(packet.data, packet.dataStart, packet.viewSize), server))
+                sequence++
+            }
         } catch (e: Exception) {
+            audioFrameSenderLogger.trace(e) { "poller stopped with reason" }
             /* we're done polling, nothing to worry about */
         }
-
-        audioFrameSenderLogger.trace { "udp connection closed, stopped polling for audio frames." }
     }
 }

@@ -7,10 +7,12 @@ import dev.kord.voice.AudioProvider
 import dev.kord.voice.FrameInterceptor
 import dev.kord.voice.FrameInterceptorContext
 import dev.kord.voice.FrameInterceptorContextBuilder
+import io.ktor.util.network.*
 import kotlinx.coroutines.CoroutineScope
 
 @KordVoice
 data class AudioFrameSenderConfiguration(
+    val server: NetworkAddress,
     val ssrc: UInt,
     val key: ByteArray,
     val provider: AudioProvider,

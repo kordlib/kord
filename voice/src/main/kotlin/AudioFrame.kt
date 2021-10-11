@@ -3,7 +3,7 @@ package dev.kord.voice
 import dev.kord.common.annotation.KordVoice
 
 /**
- * A frame of 20ms Opus-encoded audio data.
+ * A frame of 20ms Opus-encoded 48k stereo audio data.
  */
 @KordVoice
 @JvmInline

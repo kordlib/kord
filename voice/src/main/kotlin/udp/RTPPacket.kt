@@ -1,10 +1,17 @@
-package dev.kord.voice.rtp
+package udp
 
-import okio.Buffer
+import dev.kord.voice.io.ByteArrayView
+import dev.kord.voice.io.MutableByteArrayCursor
+import dev.kord.voice.io.mutableCursor
+import dev.kord.voice.io.view
+import io.ktor.utils.io.bits.*
+import io.ktor.utils.io.core.*
 import kotlin.experimental.and
 
+const val RTP_HEADER_LENGTH = 12
+
 /**
- * Originally from [this github library](https://github.com/vidtec/rtp-packet/blob/0b54fdeab5666089215b0074c64a6735b8937f8d/src/main/java/org/vidtec/rfc3550/rtp/RTPPacket.java).
+ * Originally from [this GitHub library](https://github.com/vidtec/rtp-packet/blob/0b54fdeab5666089215b0074c64a6735b8937f8d/src/main/java/org/vidtec/rfc3550/rtp/RTPPacket.java).
  *
  * Ported to Kotlin.
  *
@@ -19,7 +26,7 @@ import kotlin.experimental.and
  */
 @Suppress("ArrayInDataClass")
 @OptIn(ExperimentalUnsignedTypes::class)
-internal data class RTPPacket(
+data class RTPPacket(
     val paddingBytes: UByte,
     val payloadType: Byte,
     val sequence: UShort,
@@ -28,15 +35,13 @@ internal data class RTPPacket(
     val csrcIdentifiers: UIntArray,
     val hasMarker: Boolean,
     val hasExtension: Boolean,
-    val payload: ByteArray,
+    val payload: ByteArrayView,
 ) {
     companion object {
         const val VERSION = 2
 
-        fun fromBytes(buffer: Buffer) = with(buffer) {
-            val initialLength = size
-
-            require(initialLength > 13) { "packet too short" }
+        fun fromPacket(packet: ByteReadPacket): RTPPacket? = with(packet) base@{
+            if (remaining <= 13) return@base null
 
             /*
              * first byte | bit table
@@ -45,15 +50,16 @@ internal data class RTPPacket(
              * 2 = extension bit
              * 3-7 = csrc count
              */
-            val paddingBytes: UByte
+            val hasPadding: Boolean
             val hasExtension: Boolean
             val csrcCount: Byte
             with(readByte()) {
-                require(((toInt() and 0xC0) == VERSION shl 6)) { "invalid version" }
+                // invalid rtp version
+                if ((toInt() and 0xC0) != VERSION shl 6) return@base null
 
-                paddingBytes = if (((toInt() and 0x20) == 0x20)) buffer[initialLength - 1].toUByte() else 0u;
+                hasPadding = (toInt() and 0x20) == 0x20
                 hasExtension = (toInt() and 0x10) == 0x10
-                csrcCount = toByte() and 0x0F
+                csrcCount = this and 0x0F
             }
 
             /*
@@ -73,13 +79,17 @@ internal data class RTPPacket(
             val ssrc = readInt().toUInt()
 
             // each csrc takes up 4 bytes, plus more data is required
-            require(size > csrcCount * 4 + 1) { "packet too short" }
-            val csrcIdentifiers = UIntArray(csrcCount.toInt()) { readInt().toUInt() }
+            if (remaining <= csrcCount * 4 + 1) return@base null
+            val csrcIdentifiers = UIntArray(csrcCount.toInt()) { readUInt() }
 
-            val payload = readByteArray().apply { copyOfRange(0, size - paddingBytes.toInt()) }
+            val payload = readBytes().view()
+
+            val paddingBytes = if (hasPadding) { payload[payload.viewSize - 1] } else 0
+
+            payload.resize(end = payload.dataStart + payload.viewSize - paddingBytes)
 
             RTPPacket(
-                paddingBytes,
+                paddingBytes.toUByte(),
                 payloadType,
                 sequence,
                 timestamp,
@@ -92,33 +102,63 @@ internal data class RTPPacket(
         }
     }
 
-    init {
-        require(payloadType < 127 || payloadType > 0) { "invalid payload type" }
-        require(payload.isNotEmpty()) { "invalid payload" }
+    fun clone(): RTPPacket {
+        return RTPPacket(
+            paddingBytes,
+            payloadType,
+            sequence,
+            timestamp,
+            ssrc,
+            csrcIdentifiers.copyOf(),
+            hasMarker,
+            hasExtension,
+            payload.toByteArray().view()
+        )
     }
 
-    private val header = with(Buffer()) {
+    fun writeHeader(): ByteArray {
+        val buffer = ByteArray(12)
+        writeHeader(buffer.mutableCursor())
+        return buffer
+    }
+
+    fun writeHeader(buffer: MutableByteArrayCursor) = with(buffer) {
+        resize(cursor + RTP_HEADER_LENGTH)
+
         val hasPadding = if (paddingBytes > 0u) 0x20 else 0x00
         val hasExtension = if (hasExtension) 0x10 else 0x0
-        writeByte((VERSION shl 6) or (hasPadding) or (hasExtension) or 0)
-        writeByte(payloadType.toInt())
-        writeShort(sequence.toInt())
+        writeByte(((VERSION shl 6) or (hasPadding) or (hasExtension)).toByte())
+        writeByte(payloadType)
+        writeShort(sequence.toShort())
         writeInt(timestamp.toInt())
         writeInt(ssrc.toInt())
 
-        readByteArray()
+        data
     }
 
-    fun asByteArray() = with(Buffer()) {
-        write(header)
-        write(payload)
+    fun asByteArray(): ByteArray {
+        val buffer = ByteArray(RTP_HEADER_LENGTH + payload.viewSize + paddingBytes.toInt())
+        asByteArrayView(buffer.mutableCursor())
+        return buffer
+    }
+
+    fun asByteArrayView(buffer: MutableByteArrayCursor): ByteArrayView = with(buffer) {
+        resize(cursor + (RTP_HEADER_LENGTH + payload.viewSize + paddingBytes.toInt()))
+
+        val initial = cursor
+
+        // header
+        writeHeader(buffer)
+
+        // payload
+        writeByteView(payload)
 
         if (paddingBytes > 0u) {
-            write(ByteArray(paddingBytes.toInt() - 1) { 0x0 })
-            writeByte(paddingBytes.toInt())
+            writeByteArray(ByteArray(paddingBytes.toInt() - 1) { 0x0 })
+            writeByte(paddingBytes.toByte())
         }
 
-        buffer.readByteArray()
+        data.view(initial, cursor)!!
     }
 
     class Builder(
@@ -142,16 +182,16 @@ internal data class RTPPacket(
             csrcIdentifiers,
             marker,
             hasExtension,
-            payload
+            payload.view()
         )
     }
 }
 
-internal fun RTPPacket(
+fun RTPPacket(
     ssrc: UInt,
     timestamp: UInt,
     sequence: UShort,
     payloadType: Byte,
     payload: ByteArray,
-    builder: RTPPacket.Builder.() -> Unit = {}
+    builder: RTPPacket.Builder.() -> Unit = { }
 ) = RTPPacket.Builder(ssrc, timestamp, sequence, payloadType, payload).apply(builder).build()

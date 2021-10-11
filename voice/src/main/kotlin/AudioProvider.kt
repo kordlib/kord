@@ -33,13 +33,14 @@ fun interface AudioProvider {
         var nextFrameTimestamp = mark.elapsedNow().inWholeNanoseconds
 
         while (isActive) {
-            nextFrameTimestamp += Duration.milliseconds(20).inWholeNanoseconds
-            delayUntilNextFrameTimestamp(mark, nextFrameTimestamp)
             frames.send(provide())
+
+            nextFrameTimestamp += 20_000_000
+            delayUntilNextFrameTimestamp(mark.elapsedNow().inWholeNanoseconds, nextFrameTimestamp)
         }
     }
 }
 
-private suspend inline fun delayUntilNextFrameTimestamp(mark: TimeMark, nextFrameTimestamp: Long) {
-    delay(Duration.nanoseconds(max(0, nextFrameTimestamp - mark.elapsedNow().inWholeNanoseconds)).inWholeMilliseconds)
+private suspend inline fun delayUntilNextFrameTimestamp(now: Long, nextFrameTimestamp: Long) {
+    delay(max(0, nextFrameTimestamp - now) / 1_000_000)
 }
