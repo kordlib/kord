@@ -1,4 +1,4 @@
-package udp
+package dev.kord.voice.udp
 
 import dev.kord.voice.io.ByteArrayView
 import dev.kord.voice.io.MutableByteArrayCursor

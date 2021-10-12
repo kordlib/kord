@@ -6,7 +6,6 @@ import dev.kord.voice.io.ByteArrayView
 import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
-import udp.RTP_HEADER_LENGTH
 
 abstract class AudioPacketProvider(val key: ByteArray) {
     abstract fun provide(sequence: UShort, timestamp: UInt, ssrc: UInt, data: ByteArray): ByteArrayView

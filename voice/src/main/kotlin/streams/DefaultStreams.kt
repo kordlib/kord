@@ -9,6 +9,7 @@ import dev.kord.voice.gateway.Speaking
 import dev.kord.voice.gateway.VoiceGateway
 import dev.kord.voice.io.*
 import dev.kord.voice.udp.PayloadType
+import dev.kord.voice.udp.RTPPacket
 import dev.kord.voice.udp.VoiceUdpSocket
 import io.ktor.util.network.*
 import kotlinx.atomicfu.AtomicRef
@@ -21,7 +22,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import mu.KotlinLogging
-import udp.RTPPacket
 import kotlin.coroutines.CoroutineContext
 
 private val defaultStreamsLogger = KotlinLogging.logger { }
