@@ -3,7 +3,7 @@
 ## Additions
 
 * Add `rtcRegion` to builders. (#413)
-* Reintroduce `InteractionResponseBehavior#ephemeralFollowup`
+* Reintroduce `InteractionResponseBehavior#followUpEphemeral`
 
 ## Fixes
 

@@ -1013,9 +1013,9 @@ public final class dev/kord/common/entity/Choice$Companion {
 }
 
 public final class dev/kord/common/entity/Choice$IntChoice : dev/kord/common/entity/Choice {
-	public fun <init> (Ljava/lang/String;I)V
+	public fun <init> (Ljava/lang/String;J)V
 	public fun getName ()Ljava/lang/String;
-	public fun getValue ()Ljava/lang/Integer;
+	public fun getValue ()Ljava/lang/Long;
 	public synthetic fun getValue ()Ljava/lang/Object;
 }
 

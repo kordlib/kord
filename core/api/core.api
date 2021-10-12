@@ -1564,8 +1564,8 @@ public abstract interface class dev/kord/core/behavior/interaction/InteractionRe
 
 public final class dev/kord/core/behavior/interaction/InteractionResponseBehaviorKt {
 	public static final fun edit (Ldev/kord/core/behavior/interaction/InteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun followUp (Ldev/kord/core/behavior/interaction/InteractionResponseBehavior;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun followUp$default (Ldev/kord/core/behavior/interaction/InteractionResponseBehavior;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun followUp (Ldev/kord/core/behavior/interaction/InteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun followUpEphemeral (Ldev/kord/core/behavior/interaction/InteractionResponseBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/PublicFollowupMessageBehavior : dev/kord/core/behavior/interaction/FollowupMessageBehavior {
@@ -7499,7 +7499,7 @@ public final class dev/kord/core/entity/interaction/GlobalMessageCommandInteract
 	public fun getService ()Ldev/kord/rest/service/InteractionService;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getTarget (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getTargetBehavior ()Ldev/kord/core/behavior/UserBehavior;
+	public fun getTargetBehavior ()Ldev/kord/core/behavior/MessageBehavior;
 	public fun getTargetId ()Ldev/kord/common/entity/Snowflake;
 	public fun getTargetOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getToken ()Ljava/lang/String;
@@ -7793,7 +7793,7 @@ public final class dev/kord/core/entity/interaction/GuildMessageCommandInteracti
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getTarget (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getTargetBehavior ()Ldev/kord/core/behavior/UserBehavior;
+	public fun getTargetBehavior ()Ldev/kord/core/behavior/MessageBehavior;
 	public fun getTargetId ()Ldev/kord/common/entity/Snowflake;
 	public fun getTargetOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getToken ()Ljava/lang/String;
@@ -7988,7 +7988,7 @@ public final class dev/kord/core/entity/interaction/InteractionKt {
 public abstract interface class dev/kord/core/entity/interaction/MessageCommandInteraction : dev/kord/core/entity/interaction/ApplicationCommandInteraction {
 	public abstract fun getMessages ()Ljava/util/Map;
 	public abstract fun getTarget (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getTargetBehavior ()Ldev/kord/core/behavior/UserBehavior;
+	public abstract fun getTargetBehavior ()Ldev/kord/core/behavior/MessageBehavior;
 	public abstract fun getTargetId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getTargetOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -8010,7 +8010,7 @@ public final class dev/kord/core/entity/interaction/MessageCommandInteraction$De
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/MessageCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getResolvedObjects (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public static fun getTarget (Ldev/kord/core/entity/interaction/MessageCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getTargetBehavior (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ldev/kord/core/behavior/UserBehavior;
+	public static fun getTargetBehavior (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ldev/kord/core/behavior/MessageBehavior;
 	public static fun getTargetId (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ldev/kord/common/entity/Snowflake;
 	public static fun getTargetOrNull (Ldev/kord/core/entity/interaction/MessageCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getToken (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ljava/lang/String;
