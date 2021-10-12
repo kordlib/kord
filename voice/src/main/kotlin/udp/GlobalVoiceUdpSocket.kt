@@ -14,7 +14,7 @@ private val globalVoiceSocketLogger = KotlinLogging.logger { }
 
 /**
  * A global [VoiceUdpSocket] for all [dev.kord.voice.VoiceConnection]s, unless specified otherwise.
- * Usually initiated on the first connection, and will stay "open" until [stop] is called.
+ * Initiated once and kept open for the lifetime of this process.
  */
 @KordVoice
 object GlobalVoiceUdpSocket : VoiceUdpSocket {
@@ -61,9 +61,7 @@ object GlobalVoiceUdpSocket : VoiceUdpSocket {
         socket.send(packet)
     }
 
-    override suspend fun stop() {
-        socketScope.cancel()
-    }
+    override suspend fun stop() { /* this doesn't stop until the end of the process */ }
 
     private fun packet(address: NetworkAddress, builder: BytePacketBuilder.() -> Unit): Datagram {
         return Datagram(buildPacket(block = builder), address)
