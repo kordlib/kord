@@ -1,18 +1,19 @@
 package dev.kord.rest.builder.channel
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Overwrite
-import dev.kord.rest.builder.AuditRequestBuilder
-import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 
 @KordDsl
-class VoiceChannelCreateBuilder(var name: String) : AuditRequestBuilder<GuildChannelCreateRequest> {
+class VoiceChannelCreateBuilder(var name: String) :
+    PermissionOverritesBuilder, AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
 
     private var _bitrate: OptionalInt = OptionalInt.Missing
@@ -27,7 +28,8 @@ class VoiceChannelCreateBuilder(var name: String) : AuditRequestBuilder<GuildCha
     private var _position: OptionalInt = OptionalInt.Missing
     var position: Int? by ::_position.delegate()
 
-    val permissionOverwrites: MutableList<Overwrite> = mutableListOf()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>> = Optional.Missing()
+    override var permissionOverwrites by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name = name,
@@ -35,7 +37,7 @@ class VoiceChannelCreateBuilder(var name: String) : AuditRequestBuilder<GuildCha
         userLimit = _userLimit,
         parentId = _parentId,
         position = _position,
-        permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
+        permissionOverwrite = _permissionOverwrites,
         type = ChannelType.GuildVoice
     )
 }
