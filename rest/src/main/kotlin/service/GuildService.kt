@@ -2,17 +2,50 @@ package dev.kord.rest.service
 
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordChannel
+import dev.kord.common.entity.DiscordGuild
+import dev.kord.common.entity.DiscordGuildMember
+import dev.kord.common.entity.DiscordGuildScheduledEvent
+import dev.kord.common.entity.DiscordGuildWidget
+import dev.kord.common.entity.DiscordRole
+import dev.kord.common.entity.DiscordWelcomeScreen
+import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.ban.BanCreateBuilder
-import dev.kord.rest.builder.channel.*
-import dev.kord.rest.builder.guild.*
+import dev.kord.rest.builder.channel.CategoryCreateBuilder
+import dev.kord.rest.builder.channel.GuildChannelPositionModifyBuilder
+import dev.kord.rest.builder.channel.NewsChannelCreateBuilder
+import dev.kord.rest.builder.channel.TextChannelCreateBuilder
+import dev.kord.rest.builder.channel.VoiceChannelCreateBuilder
+import dev.kord.rest.builder.guild.CurrentVoiceStateModifyBuilder
+import dev.kord.rest.builder.guild.GuildCreateBuilder
+import dev.kord.rest.builder.guild.GuildModifyBuilder
+import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
+import dev.kord.rest.builder.guild.VoiceStateModifyBuilder
+import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.builder.member.MemberAddBuilder
 import dev.kord.rest.builder.member.MemberModifyBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RoleModifyBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
-import dev.kord.rest.json.request.*
+import dev.kord.rest.json.request.CurrentUserNicknameModifyRequest
+import dev.kord.rest.json.request.CurrentVoiceStateModifyRequest
+import dev.kord.rest.json.request.GuildBanCreateRequest
+import dev.kord.rest.json.request.GuildChannelCreateRequest
+import dev.kord.rest.json.request.GuildChannelPositionModifyRequest
+import dev.kord.rest.json.request.GuildCreateRequest
+import dev.kord.rest.json.request.GuildIntegrationCreateRequest
+import dev.kord.rest.json.request.GuildIntegrationModifyRequest
+import dev.kord.rest.json.request.GuildMemberAddRequest
+import dev.kord.rest.json.request.GuildMemberModifyRequest
+import dev.kord.rest.json.request.GuildModifyRequest
+import dev.kord.rest.json.request.GuildRoleCreateRequest
+import dev.kord.rest.json.request.GuildRoleModifyRequest
+import dev.kord.rest.json.request.GuildRolePositionModifyRequest
+import dev.kord.rest.json.request.GuildScheduledEventCreateRequest
+import dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest
+import dev.kord.rest.json.request.GuildWidgetModifyRequest
+import dev.kord.rest.json.request.VoiceStateModifyRequest
 import dev.kord.rest.json.response.ListThreadsResponse
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
@@ -353,7 +386,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyGuildWidget(guildId: Snowflake, widget: GuildWidgetModifyRequest, reason: String? = null): DiscordGuildWidget =
+    suspend fun modifyGuildWidget(
+        guildId: Snowflake,
+        widget: GuildWidgetModifyRequest,
+        reason: String? = null
+    ): DiscordGuildWidget =
         call(Route.GuildWidgetPatch) {
             keys[Route.GuildId] = guildId
             body(GuildWidgetModifyRequest.serializer(), widget)
@@ -374,7 +411,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyCurrentUserNickname(guildId: Snowflake, nick: CurrentUserNicknameModifyRequest, reason: String? = null) =
+    suspend fun modifyCurrentUserNickname(
+        guildId: Snowflake,
+        nick: CurrentUserNicknameModifyRequest,
+        reason: String? = null
+    ) =
         call(Route.GuildCurrentUserNickPatch) {
             keys[Route.GuildId] = guildId
             body(CurrentUserNicknameModifyRequest.serializer(), nick)
@@ -386,7 +427,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
     }
 
 
-    suspend fun modifyGuildWelcomeScreen(guildId: Snowflake, request: GuildWelcomeScreenModifyRequest, reason: String? = null) =
+    suspend fun modifyGuildWelcomeScreen(
+        guildId: Snowflake,
+        request: GuildWelcomeScreenModifyRequest,
+        reason: String? = null
+    ) =
         call(Route.GuildWelcomeScreenPatch) {
             keys[Route.GuildId] = guildId
             body(GuildWelcomeScreenModifyRequest.serializer(), request)
@@ -413,6 +458,26 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         return call(Route.ActiveThreadsGet) {
             keys[Route.GuildId] = guildId
         }
+    }
+
+    suspend fun listScheduledEvents(
+        guildId: Snowflake,
+        withUserCount: Boolean? = null
+    ): List<DiscordGuildScheduledEvent> =
+        call(Route.GuildScheduledEventsGet) {
+            keys[Route.GuildId] = guildId
+            if (withUserCount != null) {
+                parameter("with_user_count", withUserCount)
+            }
+        }
+
+    suspend fun createScheduledEvent(
+        guildId: Snowflake,
+        request: GuildScheduledEventCreateRequest
+    ) = call(Route.GuildScheduledEventsPost) {
+        keys[Route.GuildId] = guildId
+
+        body(GuildScheduledEventCreateRequest.serializer(), request)
     }
 }
 

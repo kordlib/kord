@@ -3,8 +3,8 @@ package dev.kord.rest.service
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.rest.request.KtorRequestHandler
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.RequestBuilder
+import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -23,6 +23,7 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
     val template: TemplateService = TemplateService(requestHandler)
     val interaction: InteractionService = InteractionService(requestHandler)
     val stageInstance: StageInstanceService = StageInstanceService(requestHandler)
+    val guildEvents: ScheduledEventService = ScheduledEventService(requestHandler)
 
     /**
      * Sends a request to the given [route]. This function exposes a direct call to the Discord api and allows
