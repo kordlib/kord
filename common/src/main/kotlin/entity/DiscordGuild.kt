@@ -26,7 +26,7 @@ data class DiscordUnavailableGuild(
 )
 
 /**
- * A representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object
+ * A representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object)
  *
  * @param id The guild id.
  * @param name The guild name (2-100 characters, excluding trailing and leading whitespace)

@@ -156,6 +156,7 @@ sealed class Permission(val code: DiscordBitSet) {
     object ManageEmojis : Permission(0x40000000)
     object UseSlashCommands : Permission(0x80000000)
     object RequestToSpeak : Permission(0x100000000)
+    object ManageEvents : Permission(0x0200000000)
     object ManageThreads : Permission(0x0400000000)
     object CreatePublicThreads : Permission(0x0800000000)
     object CreatePrivateThreads : Permission(0x1000000000)
@@ -197,6 +198,7 @@ sealed class Permission(val code: DiscordBitSet) {
                 ManageEmojis,
                 UseSlashCommands,
                 RequestToSpeak,
+                ManageEvents,
                 ManageThreads,
                 CreatePublicThreads,
                 CreatePrivateThreads,
