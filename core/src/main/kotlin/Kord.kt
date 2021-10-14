@@ -5,7 +5,6 @@ import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
-import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
@@ -13,8 +12,24 @@ import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
-import dev.kord.core.entity.*
-import dev.kord.core.entity.application.*
+import dev.kord.core.entity.ApplicationInfo
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.GuildPreview
+import dev.kord.core.entity.GuildScheduledEvent
+import dev.kord.core.entity.Invite
+import dev.kord.core.entity.KordEntity
+import dev.kord.core.entity.Region
+import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.User
+import dev.kord.core.entity.Webhook
+import dev.kord.core.entity.application.GlobalApplicationCommand
+import dev.kord.core.entity.application.GlobalChatInputCommand
+import dev.kord.core.entity.application.GlobalMessageCommand
+import dev.kord.core.entity.application.GlobalUserCommand
+import dev.kord.core.entity.application.GuildApplicationCommand
+import dev.kord.core.entity.application.GuildChatInputCommand
+import dev.kord.core.entity.application.GuildMessageCommand
+import dev.kord.core.entity.application.GuildUserCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
@@ -23,18 +38,40 @@ import dev.kord.core.gateway.MasterGateway
 import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.gateway.start
-import dev.kord.core.supplier.*
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.core.supplier.getGlobalApplicationCommandOf
+import dev.kord.core.supplier.getGlobalApplicationCommandOfOrNull
+import dev.kord.core.supplier.getGuildApplicationCommandOf
+import dev.kord.core.supplier.getGuildApplicationCommandOfOrNull
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
-import dev.kord.gateway.builder.Shards
 import dev.kord.rest.builder.guild.GuildCreateBuilder
-import dev.kord.rest.builder.interaction.*
+import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
+import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
+import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
+import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
+import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import mu.KLogger
 import mu.KotlinLogging
 import kotlin.contracts.ExperimentalContracts
@@ -292,7 +329,11 @@ public class Kord(
      * @throws [RestRequestException] if something went wrong during the request.
      */
 
-    public suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String, strategy: EntitySupplyStrategy<*>): Webhook? =
+    public suspend fun getWebhookWithTokenOrNull(
+        id: Snowflake,
+        token: String,
+        strategy: EntitySupplyStrategy<*>
+    ): Webhook? =
         strategy.supply(this).getWebhookWithTokenOrNull(id, token)
 
 
@@ -390,7 +431,10 @@ public class Kord(
     }
 
 
-    public suspend fun getGuildApplicationCommandOrNull(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand? {
+    public suspend fun getGuildApplicationCommandOrNull(
+        guildId: Snowflake,
+        commandId: Snowflake
+    ): GuildApplicationCommand? {
         return defaultSupplier.getGuildApplicationCommandOrNull(resources.applicationId, guildId, commandId)
     }
 
@@ -582,6 +626,21 @@ public class Kord(
         rest.interaction.bulkEditApplicationCommandPermissions(resources.applicationId, guildId, builder)
     }
 
+    /**
+     * Requests a [GuildScheduledEvent] by its [id].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend inline fun getGuildScheduledEvent(id: Snowflake): GuildScheduledEvent =
+        defaultSupplier.getGuildScheduledEvent(id)
+
+    /**
+     * Requests a [GuildScheduledEvent] by its [id] returns `null` if none could be found.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend inline fun getGuildScheduledEventOrNull(id: Snowflake): GuildScheduledEvent? =
+        defaultSupplier.getGuildScheduledEventOrNull(id)
 
 }
 
@@ -608,7 +667,10 @@ public suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = 
  * The returned [Job] is a reference to the created coroutine, call [Job.cancel] to cancel the processing of any further
  * events for this [consumer].
  */
-public inline fun <reified T : Event> Kord.on(scope: CoroutineScope = this, noinline consumer: suspend T.() -> Unit): Job =
+public inline fun <reified T : Event> Kord.on(
+    scope: CoroutineScope = this,
+    noinline consumer: suspend T.() -> Unit
+): Job =
     events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
         .onEach { event ->
             scope.launch(event.coroutineContext) { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }

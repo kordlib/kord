@@ -5,9 +5,46 @@ import dev.kord.common.entity.DiscordPartialGuild
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.optionalSnowflake
-import dev.kord.core.*
-import dev.kord.core.cache.data.*
-import dev.kord.core.entity.*
+import dev.kord.core.Kord
+import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.ApplicationInfoData
+import dev.kord.core.cache.data.BanData
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.cache.data.EmojiData
+import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
+import dev.kord.core.cache.data.GuildData
+import dev.kord.core.cache.data.GuildPreviewData
+import dev.kord.core.cache.data.GuildScheduledEventData
+import dev.kord.core.cache.data.GuildWidgetData
+import dev.kord.core.cache.data.InviteData
+import dev.kord.core.cache.data.MessageData
+import dev.kord.core.cache.data.RegionData
+import dev.kord.core.cache.data.RoleData
+import dev.kord.core.cache.data.StageInstanceData
+import dev.kord.core.cache.data.ThreadMemberData
+import dev.kord.core.cache.data.UserData
+import dev.kord.core.cache.data.WebhookData
+import dev.kord.core.cache.data.WelcomeScreenData
+import dev.kord.core.cache.data.toData
+import dev.kord.core.catchNotFound
+import dev.kord.core.entity.ApplicationInfo
+import dev.kord.core.entity.Ban
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.GuildEmoji
+import dev.kord.core.entity.GuildPreview
+import dev.kord.core.entity.GuildScheduledEvent
+import dev.kord.core.entity.GuildWidget
+import dev.kord.core.entity.Invite
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Message
+import dev.kord.core.entity.ReactionEmoji
+import dev.kord.core.entity.Region
+import dev.kord.core.entity.Role
+import dev.kord.core.entity.StageInstance
+import dev.kord.core.entity.Template
+import dev.kord.core.entity.User
+import dev.kord.core.entity.Webhook
+import dev.kord.core.entity.WelcomeScreen
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
@@ -16,14 +53,32 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.paginateBackwards
+import dev.kord.core.paginateForwards
+import dev.kord.core.paginateThreads
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
 import dev.kord.rest.json.request.ListThreadsBySnowflakeRequest
 import dev.kord.rest.json.request.ListThreadsByTimestampRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
-import dev.kord.rest.service.*
-import kotlinx.coroutines.flow.*
+import dev.kord.rest.service.ApplicationService
+import dev.kord.rest.service.AuditLogService
+import dev.kord.rest.service.ChannelService
+import dev.kord.rest.service.EmojiService
+import dev.kord.rest.service.GuildService
+import dev.kord.rest.service.InteractionService
+import dev.kord.rest.service.InviteService
+import dev.kord.rest.service.RestClient
+import dev.kord.rest.service.TemplateService
+import dev.kord.rest.service.UserService
+import dev.kord.rest.service.VoiceService
+import dev.kord.rest.service.WebhookService
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.take
 import kotlinx.datetime.Instant
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -452,6 +507,21 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
                 val data = GuildApplicationCommandPermissionsData.from(it)
                 emit(ApplicationCommandPermissions(data))
             }
+    }
+
+    override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> = flow {
+        kord.rest.guild.listScheduledEvents(guildId).forEach {
+            val data = GuildScheduledEventData.from(it)
+
+            emit(GuildScheduledEvent(data, kord))
+        }
+    }
+
+    override suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? = catchNotFound {
+        val event = kord.rest.guildEvents.getScheduledEvent(eventId)
+        val data = GuildScheduledEventData.from(event)
+
+        GuildScheduledEvent(data, kord)
     }
 
     override suspend fun getApplicationCommandPermissionsOrNull(

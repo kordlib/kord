@@ -4,23 +4,71 @@ import dev.kord.cache.api.query
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.ScheduledEntityType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.StageInstancePrivacyLevel
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.*
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.cache.data.EmojiData
+import dev.kord.core.cache.data.GuildData
+import dev.kord.core.cache.data.GuildScheduledEventData
+import dev.kord.core.cache.data.GuildWidgetData
+import dev.kord.core.cache.data.IntegrationData
+import dev.kord.core.cache.data.InviteData
+import dev.kord.core.cache.data.MemberData
+import dev.kord.core.cache.data.PresenceData
+import dev.kord.core.cache.data.RoleData
+import dev.kord.core.cache.data.UserData
+import dev.kord.core.cache.data.VoiceStateData
+import dev.kord.core.cache.data.WelcomeScreenData
 import dev.kord.core.cache.idEq
 import dev.kord.core.catchDiscordError
-import dev.kord.core.entity.*
-import dev.kord.core.entity.application.*
-import dev.kord.core.entity.channel.*
+import dev.kord.core.entity.AuditLogEntry
+import dev.kord.core.entity.Ban
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.GuildEmoji
+import dev.kord.core.entity.GuildPreview
+import dev.kord.core.entity.GuildScheduledEvent
+import dev.kord.core.entity.GuildWidget
+import dev.kord.core.entity.Integration
+import dev.kord.core.entity.Invite
+import dev.kord.core.entity.KordEntity
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.PartialGuild
+import dev.kord.core.entity.Presence
+import dev.kord.core.entity.Region
+import dev.kord.core.entity.Role
+import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.Template
+import dev.kord.core.entity.User
+import dev.kord.core.entity.VoiceState
+import dev.kord.core.entity.Webhook
+import dev.kord.core.entity.WelcomeScreen
+import dev.kord.core.entity.application.GuildApplicationCommand
+import dev.kord.core.entity.application.GuildChatInputCommand
+import dev.kord.core.entity.application.GuildMessageCommand
+import dev.kord.core.entity.application.GuildUserCommand
+import dev.kord.core.entity.channel.Category
+import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.NewsChannel
+import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.TopGuildChannel
+import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.sorted
-import dev.kord.core.supplier.*
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.core.supplier.getGuildApplicationCommandOf
+import dev.kord.core.supplier.getGuildApplicationCommandOfOrNull
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.PrivilegedIntent
 import dev.kord.gateway.RequestGuildMembers
@@ -29,20 +77,45 @@ import dev.kord.gateway.start
 import dev.kord.rest.Image
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.builder.ban.BanCreateBuilder
-import dev.kord.rest.builder.channel.*
+import dev.kord.rest.builder.channel.CategoryCreateBuilder
+import dev.kord.rest.builder.channel.GuildChannelPositionModifyBuilder
+import dev.kord.rest.builder.channel.NewsChannelCreateBuilder
+import dev.kord.rest.builder.channel.TextChannelCreateBuilder
+import dev.kord.rest.builder.channel.VoiceChannelCreateBuilder
 import dev.kord.rest.builder.guild.EmojiCreateBuilder
 import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
+import dev.kord.rest.builder.guild.ScheduledEventCreateBuilder
 import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
-import dev.kord.rest.builder.interaction.*
+import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
+import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
+import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
+import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
+import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.json.request.CurrentUserNicknameModifyRequest
 import dev.kord.rest.request.RestRequestException
-import dev.kord.rest.service.*
-import kotlinx.coroutines.flow.*
-import java.util.*
+import dev.kord.rest.service.RestClient
+import dev.kord.rest.service.createCategory
+import dev.kord.rest.service.createNewsChannel
+import dev.kord.rest.service.createTextChannel
+import dev.kord.rest.service.createVoiceChannel
+import dev.kord.rest.service.modifyGuildWelcomeScreen
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onSubscription
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.takeWhile
+import kotlinx.coroutines.flow.transformWhile
+import kotlinx.datetime.Instant
+import java.util.Objects
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -69,7 +142,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
      */
     public val activeThreads: Flow<ThreadChannel>
-    get() = supplier.getActiveThreads(id)
+        get() = supplier.getActiveThreads(id)
 
     /**
      * Requests to get all present webhooks for this guild.
@@ -203,6 +276,9 @@ public interface GuildBehavior : KordEntity, Strategizable {
             val shard = id.value.shr(22).toLong() % kord.resources.shards.totalShards.coerceAtLeast(1)
             return kord.gateway.gateways[shard.toInt()]
         }
+
+    public val scheduledEvents: Flow<GuildScheduledEvent>
+        get() = supplier.getGuildScheduledEvents(id)
 
     /**
      * Executes the [request] on this gateway, returning a flow of [MembersChunkEvent] responses.
@@ -545,13 +621,13 @@ public interface GuildBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 }
 
-public suspend inline fun <reified T: GuildApplicationCommand> GuildBehavior.getApplicationCommandOfOrNull(commandId: Snowflake): T? {
-    return supplier.getGuildApplicationCommandOfOrNull(kord.resources.applicationId,id, commandId)
+public suspend inline fun <reified T : GuildApplicationCommand> GuildBehavior.getApplicationCommandOfOrNull(commandId: Snowflake): T? {
+    return supplier.getGuildApplicationCommandOfOrNull(kord.resources.applicationId, id, commandId)
 }
 
 
-public suspend inline fun <reified T: GuildApplicationCommand> GuildBehavior.getApplicationCommandOf(commandId: Snowflake): T? {
-    return supplier.getGuildApplicationCommandOf(kord.resources.applicationId,id, commandId)
+public suspend inline fun <reified T : GuildApplicationCommand> GuildBehavior.getApplicationCommandOf(commandId: Snowflake): T? {
+    return supplier.getGuildApplicationCommandOf(kord.resources.applicationId, id, commandId)
 }
 
 
@@ -590,8 +666,6 @@ public suspend inline fun GuildBehavior.createChatInputCommand(
 }
 
 
-
-
 @OptIn(ExperimentalContracts::class)
 
 public suspend inline fun GuildBehavior.createMessageCommand(
@@ -611,7 +685,6 @@ public suspend inline fun GuildBehavior.createUserCommand(
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.createGuildUserCommand(id, name, builder)
 }
-
 
 
 @OptIn(ExperimentalContracts::class)
@@ -993,10 +1066,28 @@ public inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuild
 }
 
 @OptIn(ExperimentalContracts::class)
-
 public suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
     kord.bulkEditApplicationCommandPermissions(id, builder)
+}
+
+/**
+ * Creates a new [GuildScheduledEvent].
+ */
+@OptIn(ExperimentalContracts::class)
+public suspend fun GuildBehavior.createScheduledEvent(
+    name: String,
+    privacyLevel: StageInstancePrivacyLevel,
+    scheduledStartTime: Instant,
+    entityType: ScheduledEntityType,
+    builder: ScheduledEventCreateBuilder.() -> Unit
+): GuildScheduledEvent {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+    val event = kord.rest.guild.createScheduledEvent(id, name, privacyLevel, scheduledStartTime, entityType, builder)
+    val data = GuildScheduledEventData.from(event)
+
+    return GuildScheduledEvent(data, kord, supplier)
 }

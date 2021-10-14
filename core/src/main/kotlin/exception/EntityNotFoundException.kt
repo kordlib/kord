@@ -70,6 +70,9 @@ public class EntityNotFoundException : Exception {
         public inline fun applicationCommandPermissionsNotFound(commandId: Snowflake): Nothing =
             entityNotFound("ApplicationCommand", commandId)
 
+        public inline fun guildScheduledEventNotFound(eventId: Snowflake): Nothing =
+            entityNotFound("GuildScheduledEvent", eventId)
+
         public inline fun <reified T : ApplicationCommand> applicationCommandNotFound(commandId: Snowflake): Nothing =
             entityNotFound(T::class.simpleName!!, commandId)
 

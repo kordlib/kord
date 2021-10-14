@@ -3,14 +3,33 @@ package dev.kord.core
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.*
-import dev.kord.core.behavior.channel.*
+import dev.kord.core.behavior.GlobalApplicationCommandBehavior
+import dev.kord.core.behavior.GuildApplicationCommandBehavior
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.GuildEmojiBehavior
+import dev.kord.core.behavior.GuildScheduledEventBehavior
+import dev.kord.core.behavior.MemberBehavior
+import dev.kord.core.behavior.MessageBehavior
+import dev.kord.core.behavior.RoleBehavior
+import dev.kord.core.behavior.StageInstanceBehavior
+import dev.kord.core.behavior.ThreadMemberBehavior
+import dev.kord.core.behavior.UserBehavior
+import dev.kord.core.behavior.WebhookBehavior
+import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.channel.MessageChannelBehavior
+import dev.kord.core.behavior.channel.NewsChannelBehavior
+import dev.kord.core.behavior.channel.StoreChannelBehavior
+import dev.kord.core.behavior.channel.TextChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
+import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
-import dev.kord.core.entity.interaction.ApplicationCommandInteraction
 import dev.kord.rest.service.InteractionService
 
 /**
@@ -155,4 +174,9 @@ public class Unsafe(private val kord: Kord) {
         id, channelId, token, applicationId, kord
     )
 
+    public fun guildScheduledEvent(id: Snowflake): GuildScheduledEventBehavior =
+        GuildScheduledEventBehavior(
+            id,
+            kord
+        )
 }

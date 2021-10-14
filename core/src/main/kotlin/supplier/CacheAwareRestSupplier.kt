@@ -4,7 +4,20 @@ import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.entity.*
+import dev.kord.core.entity.Ban
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.GuildEmoji
+import dev.kord.core.entity.GuildPreview
+import dev.kord.core.entity.GuildScheduledEvent
+import dev.kord.core.entity.GuildWidget
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Message
+import dev.kord.core.entity.Region
+import dev.kord.core.entity.Role
+import dev.kord.core.entity.StageInstance
+import dev.kord.core.entity.Template
+import dev.kord.core.entity.User
+import dev.kord.core.entity.Webhook
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
@@ -218,6 +231,12 @@ public class StoreEntitySupplier(
             )
         ) { it.data }
     }
+
+    override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =
+        storeOnEach(supplier.getGuildScheduledEvents(guildId)) { it.data }
+
+    override suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? =
+        storeAndReturn(supplier.getGuildScheduledEvent(eventId)) { it.data }
 
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,

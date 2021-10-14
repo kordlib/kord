@@ -8,10 +8,37 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.any
-import dev.kord.core.cache.data.*
+import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.BanData
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.cache.data.EmojiData
+import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
+import dev.kord.core.cache.data.GuildData
+import dev.kord.core.cache.data.GuildPreviewData
+import dev.kord.core.cache.data.MemberData
+import dev.kord.core.cache.data.MessageData
+import dev.kord.core.cache.data.RegionData
+import dev.kord.core.cache.data.RoleData
+import dev.kord.core.cache.data.TemplateData
+import dev.kord.core.cache.data.ThreadMemberData
+import dev.kord.core.cache.data.UserData
+import dev.kord.core.cache.data.WebhookData
 import dev.kord.core.cache.idEq
 import dev.kord.core.cache.idGt
-import dev.kord.core.entity.*
+import dev.kord.core.entity.Ban
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.GuildEmoji
+import dev.kord.core.entity.GuildPreview
+import dev.kord.core.entity.GuildScheduledEvent
+import dev.kord.core.entity.GuildWidget
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Message
+import dev.kord.core.entity.Region
+import dev.kord.core.entity.Role
+import dev.kord.core.entity.StageInstance
+import dev.kord.core.entity.Template
+import dev.kord.core.entity.User
+import dev.kord.core.entity.Webhook
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
@@ -22,7 +49,15 @@ import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.take
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 
@@ -289,16 +324,16 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel> = flow {
-        val result =  cache.query<ChannelData> {
+        val result = cache.query<ChannelData> {
             idEq(ChannelData::guildId, guildId)
         }.toCollection()
             .sortedByDescending { it.id }
             .asFlow()
             .filter {
-            it.threadMetadata.value?.archived != true
-        }.mapNotNull {
-            Channel.from(it, kord) as? ThreadChannel
-        }
+                it.threadMetadata.value?.archived != true
+            }.mapNotNull {
+                Channel.from(it, kord) as? ThreadChannel
+            }
 
         emitAll(result)
     }
@@ -423,6 +458,16 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
         return ApplicationCommandPermissions(data)
     }
+
+    override suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? =
+        cache.query<GuildScheduledEvent>() {
+            idEq(GuildScheduledEvent::id, eventId)
+        }.singleOrNull()
+
+    override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =
+        cache.query<GuildScheduledEvent>() {
+            idEq(GuildScheduledEvent::guildId, guildId)
+        }.asFlow()
 
     override fun toString(): String {
         return "CacheEntitySupplier(cache=$cache)"
