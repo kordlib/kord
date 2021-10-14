@@ -9,7 +9,9 @@ import dev.kord.common.entity.DiscordGuildScheduledEvent
 import dev.kord.common.entity.DiscordGuildWidget
 import dev.kord.common.entity.DiscordRole
 import dev.kord.common.entity.DiscordWelcomeScreen
+import dev.kord.common.entity.ScheduledEntityType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.StageInstancePrivacyLevel
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.CategoryCreateBuilder
 import dev.kord.rest.builder.channel.GuildChannelPositionModifyBuilder
@@ -20,6 +22,7 @@ import dev.kord.rest.builder.guild.CurrentVoiceStateModifyBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.guild.GuildModifyBuilder
 import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
+import dev.kord.rest.builder.guild.ScheduledEventCreateBuilder
 import dev.kord.rest.builder.guild.VoiceStateModifyBuilder
 import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
@@ -51,6 +54,7 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
+import kotlinx.datetime.Instant
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -478,6 +482,29 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
 
         body(GuildScheduledEventCreateRequest.serializer(), request)
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    suspend fun createScheduledEvent(
+        guildId: Snowflake,
+        name: String,
+        privacyLevel: StageInstancePrivacyLevel,
+        scheduledStartTime: Instant,
+        entityType: ScheduledEntityType,
+        builder: ScheduledEventCreateBuilder.() -> Unit = {}
+    ): DiscordGuildScheduledEvent {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        val appliedBuilder = ScheduledEventCreateBuilder(
+            name,
+            privacyLevel,
+            scheduledStartTime,
+            entityType
+        ).apply(builder)
+
+        return createScheduledEvent(guildId, appliedBuilder.toRequest())
     }
 }
 
