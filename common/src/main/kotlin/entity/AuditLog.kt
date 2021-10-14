@@ -3,12 +3,25 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
-import kotlinx.serialization.*
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.descriptors.element
+import kotlinx.serialization.encoding.CompositeDecoder
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.encoding.decodeStructure
+import kotlinx.serialization.encoding.encodeStructure
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.serializer
 import dev.kord.common.Color as CommonColor
 import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
 import dev.kord.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
@@ -92,7 +105,7 @@ data class AuditLogEntryOptionalInfo(
     2020-11-12 field is described as present but is in fact optional
      */
     @SerialName("role_name")
-    val roleName: Optional<String> = Optional.Missing(),
+    val roleName: Optional<String> = Optional.Missing()
 )
 
 @Serializable(with = AuditLogChange.Serializer::class)
@@ -315,7 +328,26 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
     object AutoArchiveDuration : AuditLogChangeKey<ArchiveDuration>("auto_archive_duration", serializer())
 
     @SerialName("default_auto_archive_duration")
-    object DefaultAutoArchiveDuration : AuditLogChangeKey<ArchiveDuration>("default_auto_archive_duration", serializer())
+    object DefaultAutoArchiveDuration :
+        AuditLogChangeKey<ArchiveDuration>("default_auto_archive_duration", serializer())
+
+    @SerialName("entity_type")
+    object EntityType : AuditLogChangeKey<ScheduledEntityType>(
+        "entity_type",
+        serializer()
+    )
+
+    @SerialName("status")
+    object Status : AuditLogChangeKey<GuildScheduledEventStatus>(
+        "status",
+        serializer()
+    )
+
+    @SerialName("sku_ids")
+    object SkuIds : AuditLogChangeKey<List<Snowflake>>(
+        "sku_ids",
+        serializer()
+    )
 
     internal class Serializer<T>(val type: KSerializer<T>) : KSerializer<AuditLogChangeKey<T>> {
         override val descriptor: SerialDescriptor
@@ -381,6 +413,9 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
                 "archived" -> Archived
                 "auto_archive_duration" -> AutoArchiveDuration
                 "default_auto_archive_duration" -> DefaultAutoArchiveDuration
+                "entity_type" -> EntityType
+                "status" -> Status
+                "sku_ids" -> SkuIds
                 else -> Unknown(name)
             } as AuditLogChangeKey<T>
         }
@@ -431,6 +466,9 @@ sealed class AuditLogEvent(val value: Int) {
     object StickerCreate : AuditLogEvent(90)
     object StickerUpdate : AuditLogEvent(91)
     object StickerDelete : AuditLogEvent(92)
+    object GuildScheduledEventCreate : AuditLogEvent(100)
+    object GuildScheduledEventUpdate : AuditLogEvent(101)
+    object GuildScheduledEventDelete : AuditLogEvent(102)
     object ThreadCreate : AuditLogEvent(110)
     object ThreadUpdate : AuditLogEvent(111)
     object ThreadDelete : AuditLogEvent(112)
@@ -486,6 +524,9 @@ sealed class AuditLogEvent(val value: Int) {
             90 -> StickerCreate
             91 -> StickerUpdate
             92 -> StickerDelete
+            100 -> GuildScheduledEventCreate
+            101 -> GuildScheduledEventUpdate
+            102 -> GuildScheduledEventDelete
             110 -> ThreadCreate
             111 -> ThreadUpdate
             112 -> ThreadDelete

@@ -2,6 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
+import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -19,6 +20,12 @@ data class DiscordInvite(
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_member_count")
     val approximateMemberCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("expires_at")
+    val expiresAt: Optional<Instant?> = Optional.Missing(),
+    @SerialName("stage_instance")
+    val stageInstance: Optional<DiscordStageInstance> = Optional.Missing(),
+    @SerialName("guild_scheduled_event")
+    val guildScheduledEvent: Optional<DiscordGuildScheduledEvent> = Optional.Missing(),
 )
 
 @Serializable
