@@ -6,6 +6,9 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.FrameInterceptorContextBuilder
 import dev.kord.voice.VoiceConnection
+import dev.kord.voice.encryption.strategies.LiteNonceStrategy
+import dev.kord.voice.encryption.strategies.NormalNonceStrategy
+import dev.kord.voice.encryption.strategies.SuffixNonceStrategy
 import dev.kord.voice.gateway.*
 import dev.kord.voice.udp.AudioFrameSenderConfiguration
 import io.ktor.util.network.*
@@ -38,12 +41,18 @@ internal class UdpLifeCycleHandler(
 
             udpLifeCycleLogger.trace { "ip discovered for voice successfully" }
 
+            val encryptionMode = when (connection.nonceStrategy) {
+                is LiteNonceStrategy -> EncryptionMode.XSalsa20Poly1305Lite
+                is NormalNonceStrategy -> EncryptionMode.XSalsa20Poly1305
+                is SuffixNonceStrategy -> EncryptionMode.XSalsa20Poly1305Suffix
+            }
+
             val selectProtocol = SelectProtocol(
                 protocol = "udp",
                 data = SelectProtocol.Data(
                     address = ip.hostname,
                     port = ip.port,
-                    mode = EncryptionMode.XSalsa20Poly1305Lite
+                    mode = encryptionMode
                 )
             )
 
@@ -55,6 +64,7 @@ internal class UdpLifeCycleHandler(
                 val config = AudioFrameSenderConfiguration(
                     ssrc = ssrc!!,
                     key = it.secretKey.toUByteArray().toByteArray(),
+                    nonceStrategy = nonceStrategy,
                     provider = audioProvider,
                     baseFrameInterceptorContext = FrameInterceptorContextBuilder(gateway, voiceGateway),
                     interceptorFactory = frameInterceptorFactory,

@@ -23,9 +23,6 @@ internal class XSalsa20Poly1305Encryption(private val key: ByteArray) {
 
             output.writeByteArray(c, boxzerobytesLength, messageBufferLength - boxzerobytesLength)
 
-            // TODO: implement a nonce strategy
-            output.writeByteArray(nonce, length = 4)
-
             return true
         }
 

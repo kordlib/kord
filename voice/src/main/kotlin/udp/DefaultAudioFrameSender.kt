@@ -33,7 +33,7 @@ class DefaultAudioFrameSender(
         val interceptor: FrameInterceptor = createFrameInterceptor(configuration)
         var sequence: UShort = Random.nextBits(UShort.SIZE_BITS).toUShort()
 
-        val packetProvider = DefaultAudioPackerProvider(configuration.key)
+        val packetProvider = DefaultAudioPackerProvider(configuration.key, configuration.nonceStrategy)
 
         val frames = Channel<AudioFrame?>(Channel.RENDEZVOUS)
         with(configuration.provider) { launch { provideFrames(frames) } }

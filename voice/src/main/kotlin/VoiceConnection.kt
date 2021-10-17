@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
+import dev.kord.voice.encryption.strategies.NonceStrategy
 import dev.kord.voice.gateway.VoiceGateway
 import dev.kord.voice.gateway.VoiceGatewayConfiguration
 import dev.kord.voice.handlers.StreamsHandler
@@ -40,6 +41,8 @@ data class VoiceConnectionData(
  * @param data the data representing this [VoiceConnection].
  * @param voiceGatewayConfiguration the configuration used on each new [connect] for the [voiceGateway].
  * @param audioProvider a [AudioProvider] that will provide [AudioFrame] when required.
+ * @param frameSender the [AudioFrameSender] that will handle the sending of audio packets.
+ * @param nonceStrategy the [NonceStrategy] that is used during encryption of audio.
  * @param frameInterceptorFactory a factory for [FrameInterceptor]s that is used whenever audio is ready to be sent. See [FrameInterceptor] and [DefaultFrameInterceptor].
  */
 @KordVoice
@@ -52,6 +55,7 @@ class VoiceConnection(
     val streams: Streams,
     val audioProvider: AudioProvider,
     val frameSender: AudioFrameSender,
+    val nonceStrategy: NonceStrategy,
     val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
 ) {
     val scope: CoroutineScope =
