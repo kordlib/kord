@@ -286,7 +286,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
         /**
          * The maximum length of the [EmbedBuilder.description] field.
          */
-        const val description = 2048
+        const val description = 4096
 
         /**
          * The maximum amount of [EmbedBuilder.Field] in an [EmbedBuilder].
