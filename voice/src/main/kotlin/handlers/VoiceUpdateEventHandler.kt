@@ -12,12 +12,17 @@ import dev.kord.gateway.Event as GatewayEvent
 private val voiceUpdateLogger = KotlinLogging.logger { }
 
 internal class VoiceUpdateEventHandler(
-    private val connection: VoiceConnection,
     flow: Flow<GatewayEvent>,
+    private val connection: VoiceConnection,
 ) : EventHandler<GatewayEvent>(flow, "VoiceUpdateInterceptor") {
     override fun start() {
         on<VoiceServerUpdate> { voiceServerUpdate ->
             if (!voiceServerUpdate.isRelatedToConnection(connection)) return@on
+
+            // voice server has gone away.
+            if (voiceServerUpdate.voiceServerUpdateData.endpoint == null) {
+               connection.disconnect()
+            }
 
             voiceUpdateLogger.trace { "changing voice servers for session ${connection.data.sessionId}" }
 
@@ -35,5 +40,5 @@ internal class VoiceUpdateEventHandler(
 }
 
 private fun VoiceServerUpdate.isRelatedToConnection(connection: VoiceConnection): Boolean {
-    return voiceServerUpdateData.guildId != connection.data.guildId
+    return voiceServerUpdateData.guildId == connection.data.guildId
 }

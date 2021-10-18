@@ -4,25 +4,24 @@ package dev.kord.voice
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
-import dev.kord.gateway.*
+import dev.kord.gateway.Gateway
+import dev.kord.gateway.UpdateVoiceStatus
+import dev.kord.gateway.VoiceServerUpdate
+import dev.kord.gateway.VoiceStateUpdate
 import dev.kord.voice.exception.VoiceConnectionInitializationException
-import dev.kord.voice.gateway.*
-import io.ktor.client.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.websocket.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.util.*
+import dev.kord.voice.gateway.DefaultVoiceGatewayBuilder
+import dev.kord.voice.gateway.VoiceGateway
+import dev.kord.voice.gateway.VoiceGatewayConfiguration
+import dev.kord.voice.streams.DefaultStreams
+import dev.kord.voice.streams.NOPStreams
+import dev.kord.voice.streams.Streams
+import dev.kord.voice.udp.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeoutOrNull
-import mu.KotlinLogging
-
-private val logger = KotlinLogging.logger { }
 
 @KordVoice
 class VoiceConnectionBuilder(
@@ -32,20 +31,25 @@ class VoiceConnectionBuilder(
     var guildId: Snowflake
 ) {
     /**
+     * The amount in milliseconds to wait for the events required to create a [VoiceConnection]. Default is 5000, or 5 seconds.
+     */
+    var timeout: Long = 5000
+
+    /**
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
      */
     var defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 
     /**
-     * The client used for building [Gateways][Gateway] and [RequestHandlers][RequestHandler]. A default implementation
-     * will be used when not set.
-     */
-    var client: HttpClient? = null
-
-    /**
-     * The [AudioProvider] for this [VoiceConnection]. No audio will be sent when one is not set.
+     * The [AudioProvider] for this [VoiceConnection]. No audio will be provided when one is not set.
      */
     var audioProvider: AudioProvider? = null
+
+    /**
+     * The [dev.kord.voice.udp.AudioFrameSender] for this [VoiceConnection]. If null, [dev.kord.voice.udp.DefaultAudioFrameSender]
+     * will be used.
+     */
+    var audioSender: AudioFrameSender? = null
 
     fun audioProvider(provider: AudioProvider) {
         this.audioProvider = provider
@@ -75,6 +79,23 @@ class VoiceConnectionBuilder(
     private var voiceGatewayBuilder: (DefaultVoiceGatewayBuilder.() -> Unit)? = null
 
     /**
+     * A [dev.kord.voice.udp.VoiceUdpSocket] implementation to be used. If null, a default will be used.
+     */
+    var udpSocket: VoiceUdpSocket? = null
+
+    /**
+     * A flag to control the implementation of [streams]. Set to false by default.
+     * When set to false, a NOP implementation will be used.
+     * When set to true, a proper receiving implementation will be used.
+     */
+    var receiveVoice: Boolean = false
+
+    /**
+     * A [Streams] implementation to be used. This will override the [receiveVoice] flag.
+     */
+    var streams: Streams? = null
+
+    /**
      * A builder to customize the voice connection's underlying [VoiceGateway].
      */
     fun voiceGateway(builder: DefaultVoiceGatewayBuilder.() -> Unit) {
@@ -91,14 +112,22 @@ class VoiceConnectionBuilder(
             )
         )
 
-        return withTimeoutOrNull(2000) {
-            val voiceStateUpdate = gateway.events.filterIsInstance<VoiceStateUpdate>().first().voiceState
-            val voiceServerUpdate = gateway.events.filterIsInstance<VoiceServerUpdate>().first().voiceServerUpdateData
+        return withTimeoutOrNull(timeout) {
+            val voiceStateUpdate = gateway.events.filterIsInstance<VoiceStateUpdate>()
+                .filter { it.voiceState.guildId.value == guildId && it.voiceState.userId == selfId }
+                .first()
+                .voiceState
+
+            val voiceServerUpdate = gateway.events.filterIsInstance<VoiceServerUpdate>()
+                .filter { it.voiceServerUpdateData.guildId == guildId }
+                .first()
+                .voiceServerUpdateData
 
             VoiceConnectionData(
                 selfId = selfId,
                 guildId = guildId,
-                sessionId = voiceStateUpdate.sessionId
+                sessionId = voiceStateUpdate.sessionId,
+                dispatcher = defaultDispatcher
             ) to VoiceGatewayConfiguration(
                 token = voiceServerUpdate.token,
                 endpoint = "wss://${voiceServerUpdate.endpoint}?v=4"
@@ -115,20 +144,29 @@ class VoiceConnectionBuilder(
         val voiceGateway = DefaultVoiceGatewayBuilder(selfId, guildId, voiceConnectionData.sessionId)
             .also { voiceGatewayBuilder?.invoke(it) }
             .build()
+        val udpSocket = udpSocket ?: GlobalVoiceUdpSocket
+        val audioProvider = audioProvider ?: EmptyAudioPlayerProvider
+        val audioSender =
+            audioSender ?: DefaultAudioFrameSender(DefaultAudioFrameSenderData(udpSocket, defaultDispatcher))
+        val frameInterceptorFactory = frameInterceptorFactory ?: { DefaultFrameInterceptor(it) }
+        val streams =
+            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, defaultDispatcher) else NOPStreams
 
         return VoiceConnection(
+            voiceConnectionData,
             gateway,
             voiceGateway,
-            voiceConnectionData,
+            udpSocket,
             initialGatewayConfiguration,
-            audioProvider ?: EmptyAudioPlayerProvider,
-            frameInterceptorFactory ?: { DefaultFrameInterceptor(it) },
-            defaultDispatcher
+            streams,
+            audioProvider,
+            audioSender,
+            frameInterceptorFactory,
         )
     }
 
     // we can't use the SAM feature or else we break the IR backend, so lets just use this object instead
     private object EmptyAudioPlayerProvider : AudioProvider {
-        override fun provide(): AudioFrame? = null
+        override suspend fun provide(): AudioFrame? = null
     }
 }

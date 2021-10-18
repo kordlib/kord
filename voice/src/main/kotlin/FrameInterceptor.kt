@@ -2,7 +2,7 @@ package dev.kord.voice
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.gateway.Gateway
-import dev.kord.voice.gateway.Speaking
+import dev.kord.voice.gateway.SendSpeaking
 import dev.kord.voice.gateway.VoiceGateway
 import kotlin.properties.Delegates
 
@@ -17,12 +17,12 @@ import kotlin.properties.Delegates
 data class FrameInterceptorContext(
     val gateway: Gateway,
     val voiceGateway: VoiceGateway,
-    val ssrc: Int,
+    val ssrc: UInt,
 )
 
 @KordVoice
-internal class FrameInterceptorContextBuilder(var gateway: Gateway, var voiceGateway: VoiceGateway) {
-    var ssrc: Int by Delegates.notNull()
+class FrameInterceptorContextBuilder(var gateway: Gateway, var voiceGateway: VoiceGateway) {
+    var ssrc: UInt by Delegates.notNull()
 
     fun build() = FrameInterceptorContext(gateway, voiceGateway, ssrc)
 }
@@ -32,21 +32,23 @@ internal inline fun FrameInterceptorContext(gateway: Gateway, voiceGateway: Voic
     FrameInterceptorContextBuilder(gateway, voiceGateway).apply(builder).build()
 
 /**
- * A interceptor for audio frames before they are sent as packets.
+ * An interceptor for audio frames before they are sent as packets.
  *
  * @see DefaultFrameInterceptor
  */
 @KordVoice
 fun interface FrameInterceptor {
-    suspend fun intercept(audioFrame: AudioFrame?): AudioFrame?
+    suspend fun intercept(frame: AudioFrame?): AudioFrame?
 }
+
+private const val FRAMES_OF_SILENCE_TO_PLAY = 5
 
 /**
  * The default implementation for [FrameInterceptor].
  * Any custom implementation should extend this and call the super [intercept] method, or else
  * the speaking flags will not be sent!
  *
- * @param connection the voice connection.
+ * @param context the context for this interceptor.
  * @param speakingState the speaking state that will be used when there is audio data to be sent. By default, it is microphone-only.
  */
 @KordVoice
@@ -54,29 +56,32 @@ open class DefaultFrameInterceptor(
     protected val context: FrameInterceptorContext,
     private val speakingState: SpeakingFlags = SpeakingFlags { +SpeakingFlag.Microphone }
 ) : FrameInterceptor {
+    private val voiceGateway = context.voiceGateway
+
     private var framesOfSilence = 5
     private var isSpeaking = false
 
-    override suspend fun intercept(audioFrame: AudioFrame?): AudioFrame? = with(context) {
-        var frame: AudioFrame? = null
+    private val nowSpeaking = SendSpeaking(speakingState, 0, context.ssrc)
+    private val notSpeaking = SendSpeaking(SpeakingFlags(0), 0, context.ssrc)
 
-        if (audioFrame != null || framesOfSilence > 0) {
-            if (!isSpeaking && audioFrame != null) {
+    override suspend fun intercept(frame: AudioFrame?): AudioFrame? {
+        if (frame != null || framesOfSilence > 0) { // is there something to process
+            if (!isSpeaking && frame != null) { // if there is audio make sure we are speaking
                 isSpeaking = true
-                voiceGateway.send(Speaking(speakingState, 0, ssrc))
+                voiceGateway.send(nowSpeaking)
             }
 
-            frame = audioFrame ?: AudioFrame.SILENCE
-
-            if (audioFrame == null) {
-                framesOfSilence--
-                if (framesOfSilence == 0) {
+            if (frame == null) { // if we don't have audio then make sure we know that we are sending a frame of silence
+                if (--framesOfSilence == 0) { // we're done with frames of silence if we hit zero
                     isSpeaking = false
-                    voiceGateway.send(Speaking(SpeakingFlags(0), 0, ssrc))
+                    voiceGateway.send(notSpeaking)
                 }
-            } else {
-                framesOfSilence = 5
             }
+            else if (framesOfSilence != FRAMES_OF_SILENCE_TO_PLAY) {
+                framesOfSilence = FRAMES_OF_SILENCE_TO_PLAY // we're playing audio, lets reset the frames of silence.
+            }
+
+            return frame ?: AudioFrame.SILENCE
         }
 
         return frame
