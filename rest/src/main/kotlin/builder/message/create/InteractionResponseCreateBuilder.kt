@@ -19,7 +19,7 @@ import java.io.InputStream
  * Message builder for publicly responding to an interaction.
  */
 
-class InteractionResponseCreateBuilder(var ephemeral: Boolean = false)
+class InteractionResponseCreateBuilder(val ephemeral: Boolean = false)
     : MessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {
 
