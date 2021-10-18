@@ -2,8 +2,6 @@ package dev.kord.voice.gateway
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.ratelimit.BucketRateLimiter
-import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
@@ -24,8 +22,6 @@ class DefaultVoiceGatewayBuilder(
 ) {
     var client: HttpClient? = null
     var reconnectRetry: Retry? = null
-    var sendRateLimiter: RateLimiter? = null
-    var identifyRateLimiter: RateLimiter? = null
     var eventFlow: MutableSharedFlow<VoiceEvent> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
     @OptIn(InternalAPI::class)
@@ -35,8 +31,6 @@ class DefaultVoiceGatewayBuilder(
             install(JsonFeature)
         }
         val retry = reconnectRetry ?: LinearRetry(Duration.seconds(2), Duration.seconds(20), 10)
-        val sendRateLimiter = sendRateLimiter ?: BucketRateLimiter(120, Duration.seconds(60))
-        val identifyRateLimiter = identifyRateLimiter ?: BucketRateLimiter(1, Duration.seconds(5))
 
         client.requestPipeline.intercept(HttpRequestPipeline.Render) {
             // CIO adds this header even if no extensions are used, which causes it to be empty
