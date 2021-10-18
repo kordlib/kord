@@ -4,22 +4,23 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
-import dev.kord.voice.gateway.*
+import dev.kord.voice.gateway.VoiceGateway
+import dev.kord.voice.gateway.VoiceGatewayConfiguration
 import dev.kord.voice.handlers.StreamsHandler
 import dev.kord.voice.handlers.UdpLifeCycleHandler
 import dev.kord.voice.handlers.VoiceUpdateEventHandler
 import dev.kord.voice.streams.Streams
-import dev.kord.voice.udp.*
 import dev.kord.voice.udp.AudioFrameSender
+import dev.kord.voice.udp.VoiceUdpSocket
 import kotlinx.coroutines.*
-import mu.KotlinLogging
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 /**
- * Data that represents a [VoiceConnection], these will never change during the life time of a [VoiceConnection].
+ * Data that represents a [VoiceConnection], these will never change during the lifetime of a [VoiceConnection].
  *
  * @param selfId the id of the bot connecting to a voice channel.
  * @param guildId the id of the guild that the bot is connecting to.
@@ -29,10 +30,7 @@ data class VoiceConnectionData(
     val selfId: Snowflake,
     val guildId: Snowflake,
     val sessionId: String,
-    val dispatcher: CoroutineDispatcher
 )
-
-private val voiceConnectionLogger = KotlinLogging.logger { }
 
 /**
  * A [VoiceConnection] is an adapter that forms the concept of a voice connection, or a connection between you and Discord voice servers.
@@ -40,10 +38,9 @@ private val voiceConnectionLogger = KotlinLogging.logger { }
  * @param gateway the [Gateway] that handles events for the guild this [VoiceConnection] represents.
  * @param voiceGateway the underlying [VoiceGateway] for this voice connection.
  * @param data the data representing this [VoiceConnection].
- * @param voiceGatewayConfiguration the configuration used on each new [connect], for the [voiceGateway].
+ * @param voiceGatewayConfiguration the configuration used on each new [connect] for the [voiceGateway].
  * @param audioProvider a [AudioProvider] that will provide [AudioFrame] when required.
  * @param frameInterceptorFactory a factory for [FrameInterceptor]s that is used whenever audio is ready to be sent. See [FrameInterceptor] and [DefaultFrameInterceptor].
- * @param voiceDispatcher the dispatcher used for this voice connection.
  */
 @KordVoice
 class VoiceConnection(
@@ -56,26 +53,26 @@ class VoiceConnection(
     val audioProvider: AudioProvider,
     val frameSender: AudioFrameSender,
     val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
-) : CoroutineScope {
-    override val coroutineContext: CoroutineContext =
-        SupervisorJob() + data.dispatcher + CoroutineName("Voice Connection for Guild ${data.guildId.value}")
+) {
+    val scope: CoroutineScope =
+        CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}"))
 
     init {
-        // handle voice state/server updates (e.g., a move, disconnect, voice server change, etc.)
-        VoiceUpdateEventHandler(gateway.events, this)
-
-        // keep Streams up to date.
-        StreamsHandler(voiceGateway.events, streams)
-
-        // handle the lifecycle of the udp connection
-        UdpLifeCycleHandler(voiceGateway.events, this)
+        with(scope) {
+            launch { VoiceUpdateEventHandler(gateway.events, this@VoiceConnection).start() }
+            launch { StreamsHandler(voiceGateway.events, streams).start() }
+            launch { UdpLifeCycleHandler(voiceGateway.events, this@VoiceConnection).start() }
+        }
     }
 
     /**
-     * Logs into the voice gateway, and begins the process of an audio-ready voice session.
+     * Starts the [VoiceGateway] for this [VoiceConnection].
+     * This will begin the process for audio transmission.
      */
-    fun connect() = launch {
-        voiceGateway.start(voiceGatewayConfiguration)
+    suspend fun connect(context: CoroutineContext = EmptyCoroutineContext) {
+        scope.launch(context) {
+            voiceGateway.start(voiceGatewayConfiguration)
+        }
     }
 
     /**
@@ -90,8 +87,6 @@ class VoiceConnection(
      * Disconnects from Discord voice servers, and leaves the voice channel.
      */
     suspend fun leave() {
-        disconnect()
-
         gateway.send(
             UpdateVoiceStatus(
                 guildId = data.guildId,
@@ -100,6 +95,18 @@ class VoiceConnection(
                 selfDeaf = false
             )
         )
+
+        disconnect()
+    }
+
+    /**
+     * Releases all resources related to this VoiceConnection (except [gateway]) and then stops its CoroutineScope.
+     */
+    suspend fun shutdown() {
+        leave()
+        voiceGateway.detach()
+
+        scope.cancel()
     }
 }
 

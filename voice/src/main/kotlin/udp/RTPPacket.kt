@@ -4,7 +4,6 @@ import dev.kord.voice.io.ByteArrayView
 import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
-import io.ktor.utils.io.bits.*
 import io.ktor.utils.io.core.*
 import kotlin.experimental.and
 

@@ -18,7 +18,7 @@ interface Streams {
     suspend fun listen(key: ByteArray, server: NetworkAddress)
 
     /**
-     * A flow of all incoming [dev.kord.voice.udp.AudioPacket.DecryptedPacket]s through the UDP connection.
+     * A flow of all incoming [dev.kord.voice.udp.RTPPacket]s through the UDP connection.
      */
     val incomingAudioPackets: Flow<RTPPacket>
 

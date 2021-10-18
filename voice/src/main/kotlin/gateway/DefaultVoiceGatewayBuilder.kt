@@ -13,8 +13,6 @@ import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.util.*
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.time.Duration
 
@@ -28,7 +26,6 @@ class DefaultVoiceGatewayBuilder(
     var reconnectRetry: Retry? = null
     var sendRateLimiter: RateLimiter? = null
     var identifyRateLimiter: RateLimiter? = null
-    var dispatcher: CoroutineDispatcher = Dispatchers.Default
     var eventFlow: MutableSharedFlow<VoiceEvent> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
     @OptIn(InternalAPI::class)
@@ -60,9 +57,6 @@ class DefaultVoiceGatewayBuilder(
             sessionId,
             client,
             retry,
-            sendRateLimiter,
-            identifyRateLimiter,
-            dispatcher,
             eventFlow
         )
 

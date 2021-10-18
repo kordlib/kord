@@ -1,49 +1,27 @@
 package dev.kord.voice.gateway
 
-import io.ktor.util.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.channels.ticker
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import mu.KotlinLogging
-import kotlin.coroutines.CoroutineContext
-
-private val logger = KotlinLogging.logger { }
 
 /**
  * A reusable fixed rate ticker.
- *
- * @param dispatcher The dispatchers the events will be fired on.
  */
 @ObsoleteCoroutinesApi
-class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.Default) : CoroutineScope {
-    override val coroutineContext: CoroutineContext = SupervisorJob() + dispatcher + CoroutineName("Ticker")
+class Ticker {
+    // we only want one of these
+    private var tickerJob: Job? = null
 
-    private val mutex = Mutex()
-
-    private var ticker: ReceiveChannel<Unit>? = null
-
-    suspend fun tickAt(intervalMillis: Long, block: suspend () -> Unit) {
+    suspend fun tickAt(intervalMillis: Long, block: suspend () -> Unit): Unit = coroutineScope {
         stop()
-        mutex.withLock {
-            ticker = ticker(intervalMillis)
-            launch {
-                ticker?.consumeEach {
-                    try {
-                        block()
-                    } catch (exception: Exception) {
-                        logger.error(exception)
-                    }
-                }
+        tickerJob = launch {
+            while (isActive) {
+                block()
+                delay(intervalMillis)
             }
         }
     }
 
-    suspend fun stop() {
-        mutex.withLock {
-            ticker?.cancel()
-        }
+    fun stop() {
+        tickerJob?.cancel()
     }
 }

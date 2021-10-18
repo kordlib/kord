@@ -1,14 +1,11 @@
 package dev.kord.voice.gateway
 
 import dev.kord.common.annotation.KordVoice
-import dev.kord.gateway.Event
-import dev.kord.gateway.Gateway
 import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import mu.KotlinLogging
-import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration
 
@@ -18,7 +15,9 @@ import kotlin.time.Duration
  * Allows consumers to receive [VoiceEvent]s through [events] and send [Command]s through [send].
  */
 @KordVoice
-interface VoiceGateway : CoroutineScope {
+interface VoiceGateway {
+    val scope: CoroutineScope
+
     /**
      * The incoming [VoiceEvent]s of the Gateway. Users should expect [kotlinx.coroutines.flow.Flow]s to be hot and remain
      * open for the entire lifecycle of the Gateway.
@@ -56,8 +55,8 @@ interface VoiceGateway : CoroutineScope {
 
     companion object {
         private object None : VoiceGateway {
-            override val coroutineContext: CoroutineContext =
-                SupervisorJob() + EmptyCoroutineContext + CoroutineName("None Voice Gateway")
+            override val scope: CoroutineScope =
+                CoroutineScope(EmptyCoroutineContext + CoroutineName("None VoiceGateway"))
 
             override val events: SharedFlow<VoiceEvent>
                 get() = MutableSharedFlow()
@@ -71,6 +70,8 @@ interface VoiceGateway : CoroutineScope {
 
             override suspend fun stop() {}
 
+            override suspend fun detach() {}
+
             override fun toString(): String {
                 return "Gateway.None"
             }
@@ -81,6 +82,8 @@ interface VoiceGateway : CoroutineScope {
          */
         fun none(): VoiceGateway = None
     }
+
+    suspend fun detach()
 }
 
 
@@ -103,11 +106,11 @@ internal val voiceGatewayOnLogger = KotlinLogging.logger("Gateway.on")
  */
 @KordVoice
 inline fun <reified T : VoiceEvent> VoiceGateway.on(
-    scope: CoroutineScope = this,
+    scope: CoroutineScope = this.scope,
     crossinline consumer: suspend T.() -> Unit
 ): Job {
     return this.events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
-        launch { it.runCatching { it.consumer() }.onFailure(voiceGatewayOnLogger::error) }
+        scope.launch { it.runCatching { it.consumer() }.onFailure(voiceGatewayOnLogger::error) }
     }.launchIn(scope)
 }
 

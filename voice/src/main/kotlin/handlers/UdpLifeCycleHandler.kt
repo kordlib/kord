@@ -6,15 +6,14 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.FrameInterceptorContextBuilder
 import dev.kord.voice.VoiceConnection
-import dev.kord.voice.gateway.Ready
-import dev.kord.voice.gateway.SelectProtocol
-import dev.kord.voice.gateway.SessionDescription
-import dev.kord.voice.gateway.VoiceEvent
+import dev.kord.voice.gateway.*
 import dev.kord.voice.udp.AudioFrameSenderConfiguration
 import io.ktor.util.network.*
-import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import mu.KotlinLogging
 
 private val udpLifeCycleLogger = KotlinLogging.logger { }
@@ -23,17 +22,19 @@ private val udpLifeCycleLogger = KotlinLogging.logger { }
 internal class UdpLifeCycleHandler(
     flow: Flow<VoiceEvent>,
     private val connection: VoiceConnection
-) : EventHandler<VoiceEvent>(flow, "UdpInterceptor") {
-    private val ssrc: AtomicRef<UInt?> = atomic(null)
-    private val server: AtomicRef<NetworkAddress?> = atomic(null)
+) : ConnectionEventHandler<VoiceEvent>(flow, "UdpInterceptor") {
+    private var ssrc: UInt? by atomic(null)
+    private var server: NetworkAddress? by atomic(null)
+
+    private var audioSenderJob: Job? by atomic(null)
 
     @OptIn(ExperimentalUnsignedTypes::class)
-    override fun start() {
+    override suspend fun start() = coroutineScope {
         on<Ready> {
-            this.ssrc.value = it.ssrc
-            this.server.value = NetworkAddress(it.ip, it.port)
+            ssrc = it.ssrc
+            server = NetworkAddress(it.ip, it.port)
 
-            val ip: NetworkAddress = connection.socket.discoverIp(this.server.value!!, this.ssrc.value!!.toInt())
+            val ip: NetworkAddress = connection.socket.discoverIp(server!!, ssrc!!.toInt())
 
             udpLifeCycleLogger.trace { "ip discovered for voice successfully" }
 
@@ -52,16 +53,22 @@ internal class UdpLifeCycleHandler(
         on<SessionDescription> {
             with(connection) {
                 val config = AudioFrameSenderConfiguration(
-                    ssrc = ssrc.value!!,
+                    ssrc = ssrc!!,
                     key = it.secretKey.toUByteArray().toByteArray(),
                     provider = audioProvider,
                     baseFrameInterceptorContext = FrameInterceptorContextBuilder(gateway, voiceGateway),
                     interceptorFactory = frameInterceptorFactory,
-                    server = server.value!!
+                    server = server!!
                 )
 
-                frameSender.start(config)
+                audioSenderJob?.cancel()
+                audioSenderJob = launch { frameSender.start(config) }
             }
+        }
+
+        on<Close> {
+            audioSenderJob?.cancel()
+            audioSenderJob = null
         }
     }
 }

@@ -5,30 +5,23 @@ import dev.kord.voice.AudioFrame
 import dev.kord.voice.FrameInterceptor
 import io.ktor.network.sockets.*
 import io.ktor.utils.io.core.*
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
-import kotlin.coroutines.CoroutineContext
 import kotlin.random.Random
 
 private val audioFrameSenderLogger = KotlinLogging.logger { }
 
 @KordVoice
 data class DefaultAudioFrameSenderData(
-    val udp: VoiceUdpSocket,
-    val dispatcher: CoroutineDispatcher
+    val udp: VoiceUdpSocket
 )
 
 @KordVoice
 class DefaultAudioFrameSender(
     val data: DefaultAudioFrameSenderData
 ) : AudioFrameSender {
-    override val coroutineContext: CoroutineContext =
-        SupervisorJob() + data.dispatcher + CoroutineName("Default Audio Frame Poller")
-
     private fun createFrameInterceptor(configuration: AudioFrameSenderConfiguration): FrameInterceptor =
         with(configuration) {
             val builder = baseFrameInterceptorContext
@@ -36,22 +29,24 @@ class DefaultAudioFrameSender(
             return interceptorFactory(builder.build()) // we should assume that everything else is set before-hand in the base builder
         }
 
-    override suspend fun start(configuration: AudioFrameSenderConfiguration) = with(configuration) {
+    override suspend fun start(configuration: AudioFrameSenderConfiguration): Unit = coroutineScope {
         val interceptor: FrameInterceptor = createFrameInterceptor(configuration)
         var sequence: UShort = Random.nextBits(UShort.SIZE_BITS).toUShort()
 
-        val packetProvider = DefaultAudioPackerProvider(key)
+        val packetProvider = DefaultAudioPackerProvider(configuration.key)
 
         val frames = Channel<AudioFrame?>(Channel.RENDEZVOUS)
-        with(provider) { launch { provideFrames(frames) } }
+        with(configuration.provider) { launch { provideFrames(frames) } }
 
         audioFrameSenderLogger.trace { "audio poller starting." }
 
         try {
             for (frame in frames) {
                 val consumedFrame = interceptor.intercept(frame) ?: continue
-                val packet = packetProvider.provide(sequence, sequence * 960u, ssrc, consumedFrame.data)
-                data.udp.send(Datagram(ByteReadPacket(packet.data, packet.dataStart, packet.viewSize), server))
+                val packet = packetProvider.provide(sequence, sequence * 960u, configuration.ssrc, consumedFrame.data)
+
+                data.udp.send(Datagram(ByteReadPacket(packet.data, packet.dataStart, packet.viewSize), configuration.server))
+
                 sequence++
             }
         } catch (e: Exception) {

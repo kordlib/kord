@@ -16,8 +16,8 @@ import dev.kord.voice.streams.DefaultStreams
 import dev.kord.voice.streams.NOPStreams
 import dev.kord.voice.streams.Streams
 import dev.kord.voice.udp.*
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
@@ -34,11 +34,6 @@ class VoiceConnectionBuilder(
      * The amount in milliseconds to wait for the events required to create a [VoiceConnection]. Default is 5000, or 5 seconds.
      */
     var timeout: Long = 5000
-
-    /**
-     * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
-     */
-    var defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 
     /**
      * The [AudioProvider] for this [VoiceConnection]. No audio will be provided when one is not set.
@@ -102,7 +97,25 @@ class VoiceConnectionBuilder(
         this.voiceGatewayBuilder = builder
     }
 
-    private suspend fun Gateway.updateVoiceState(): Pair<VoiceConnectionData, VoiceGatewayConfiguration> {
+    private suspend fun Gateway.updateVoiceState(): Pair<VoiceConnectionData, VoiceGatewayConfiguration> = coroutineScope {
+        val voiceStateDeferred = async {
+            withTimeoutOrNull(timeout) {
+                gateway.events.filterIsInstance<VoiceStateUpdate>()
+                    .filter { it.voiceState.guildId.value == guildId && it.voiceState.userId == selfId }
+                    .first()
+                    .voiceState
+            }
+        }
+
+        val voiceServerDeferred = async {
+            withTimeoutOrNull(timeout) {
+                gateway.events.filterIsInstance<VoiceServerUpdate>()
+                    .filter { it.voiceServerUpdateData.guildId == guildId }
+                    .first()
+                    .voiceServerUpdateData
+            }
+        }
+
         send(
             UpdateVoiceStatus(
                 guildId = guildId,
@@ -112,27 +125,20 @@ class VoiceConnectionBuilder(
             )
         )
 
-        return withTimeoutOrNull(timeout) {
-            val voiceStateUpdate = gateway.events.filterIsInstance<VoiceStateUpdate>()
-                .filter { it.voiceState.guildId.value == guildId && it.voiceState.userId == selfId }
-                .first()
-                .voiceState
+        val voiceServer = voiceServerDeferred.await()
+        val voiceState = voiceStateDeferred.await()
 
-            val voiceServerUpdate = gateway.events.filterIsInstance<VoiceServerUpdate>()
-                .filter { it.voiceServerUpdateData.guildId == guildId }
-                .first()
-                .voiceServerUpdateData
+        if (voiceServer == null || voiceState == null)
+            throw VoiceConnectionInitializationException("Did not receive a VoiceStateUpdate and or a VoiceServerUpdate in time!")
 
-            VoiceConnectionData(
-                selfId = selfId,
-                guildId = guildId,
-                sessionId = voiceStateUpdate.sessionId,
-                dispatcher = defaultDispatcher
-            ) to VoiceGatewayConfiguration(
-                token = voiceServerUpdate.token,
-                endpoint = "wss://${voiceServerUpdate.endpoint}?v=4"
-            )
-        } ?: throw VoiceConnectionInitializationException("Did not receive a VoiceStateUpdate and VoiceServerUpdate in time!")
+        VoiceConnectionData(
+            selfId,
+            guildId,
+            voiceState.sessionId
+        ) to VoiceGatewayConfiguration(
+            voiceServer.token,
+            "wss://${voiceServer.endpoint}?v=4"
+        )
     }
 
     /**
@@ -147,10 +153,10 @@ class VoiceConnectionBuilder(
         val udpSocket = udpSocket ?: GlobalVoiceUdpSocket
         val audioProvider = audioProvider ?: EmptyAudioPlayerProvider
         val audioSender =
-            audioSender ?: DefaultAudioFrameSender(DefaultAudioFrameSenderData(udpSocket, defaultDispatcher))
+            audioSender ?: DefaultAudioFrameSender(DefaultAudioFrameSenderData(udpSocket))
         val frameInterceptorFactory = frameInterceptorFactory ?: { DefaultFrameInterceptor(it) }
         val streams =
-            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, defaultDispatcher) else NOPStreams
+            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket) else NOPStreams
 
         return VoiceConnection(
             voiceConnectionData,
