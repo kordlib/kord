@@ -7,7 +7,7 @@ import dev.kord.voice.io.view
 import io.ktor.utils.io.core.*
 import kotlin.experimental.and
 
-const val RTP_HEADER_LENGTH = 12
+internal const val RTP_HEADER_LENGTH = 12
 
 /**
  * Originally from [this GitHub library](https://github.com/vidtec/rtp-packet/blob/0b54fdeab5666089215b0074c64a6735b8937f8d/src/main/java/org/vidtec/rfc3550/rtp/RTPPacket.java).
@@ -25,7 +25,7 @@ const val RTP_HEADER_LENGTH = 12
  */
 @Suppress("ArrayInDataClass")
 @OptIn(ExperimentalUnsignedTypes::class)
-data class RTPPacket(
+public data class RTPPacket(
     val paddingBytes: UByte,
     val payloadType: Byte,
     val sequence: UShort,
@@ -36,10 +36,10 @@ data class RTPPacket(
     val hasExtension: Boolean,
     val payload: ByteArrayView,
 ) {
-    companion object {
-        const val VERSION = 2
+    public companion object {
+        internal const val VERSION = 2
 
-        fun fromPacket(packet: ByteReadPacket): RTPPacket? = with(packet) base@{
+        public fun fromPacket(packet: ByteReadPacket): RTPPacket? = with(packet) base@{
             if (remaining <= 13) return@base null
 
             /*
@@ -101,7 +101,7 @@ data class RTPPacket(
         }
     }
 
-    fun clone(): RTPPacket {
+    public fun clone(): RTPPacket {
         return RTPPacket(
             paddingBytes,
             payloadType,
@@ -115,13 +115,13 @@ data class RTPPacket(
         )
     }
 
-    fun writeHeader(): ByteArray {
+    public fun writeHeader(): ByteArray {
         val buffer = ByteArray(12)
         writeHeader(buffer.mutableCursor())
         return buffer
     }
 
-    fun writeHeader(buffer: MutableByteArrayCursor) = with(buffer) {
+    public fun writeHeader(buffer: MutableByteArrayCursor): Unit = with(buffer) {
         resize(cursor + RTP_HEADER_LENGTH)
 
         val hasPadding = if (paddingBytes > 0u) 0x20 else 0x00
@@ -131,17 +131,15 @@ data class RTPPacket(
         writeShort(sequence.toShort())
         writeInt(timestamp.toInt())
         writeInt(ssrc.toInt())
-
-        data
     }
 
-    fun asByteArray(): ByteArray {
+    public fun asByteArray(): ByteArray {
         val buffer = ByteArray(RTP_HEADER_LENGTH + payload.viewSize + paddingBytes.toInt())
         asByteArrayView(buffer.mutableCursor())
         return buffer
     }
 
-    fun asByteArrayView(buffer: MutableByteArrayCursor): ByteArrayView = with(buffer) {
+    public fun asByteArrayView(buffer: MutableByteArrayCursor): ByteArrayView = with(buffer) {
         resize(cursor + (RTP_HEADER_LENGTH + payload.viewSize + paddingBytes.toInt()))
 
         val initial = cursor
@@ -160,19 +158,19 @@ data class RTPPacket(
         data.view(initial, cursor)!!
     }
 
-    class Builder(
-        var ssrc: UInt,
-        var timestamp: UInt,
-        var sequence: UShort,
-        var payloadType: Byte,
-        var payload: ByteArray
+    public class Builder(
+        public var ssrc: UInt,
+        public var timestamp: UInt,
+        public var sequence: UShort,
+        public var payloadType: Byte,
+        public var payload: ByteArray
     ) {
-        var marker: Boolean = false
-        var paddingBytes: UByte = 0u
-        var hasExtension: Boolean = false
-        var csrcIdentifiers: UIntArray = uintArrayOf()
+        public var marker: Boolean = false
+        public var paddingBytes: UByte = 0u
+        public var hasExtension: Boolean = false
+        public var csrcIdentifiers: UIntArray = uintArrayOf()
 
-        fun build() = RTPPacket(
+        public fun build(): RTPPacket = RTPPacket(
             paddingBytes,
             payloadType,
             sequence,
@@ -186,11 +184,11 @@ data class RTPPacket(
     }
 }
 
-fun RTPPacket(
+public fun RTPPacket(
     ssrc: UInt,
     timestamp: UInt,
     sequence: UShort,
     payloadType: Byte,
     payload: ByteArray,
     builder: RTPPacket.Builder.() -> Unit = { }
-) = RTPPacket.Builder(ssrc, timestamp, sequence, payloadType, payload).apply(builder).build()
+): RTPPacket = RTPPacket.Builder(ssrc, timestamp, sequence, payloadType, payload).apply(builder).build()

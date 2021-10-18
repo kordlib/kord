@@ -11,8 +11,8 @@ import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonObject
 
-sealed class Command {
-    companion object : SerializationStrategy<Command> {
+public sealed class Command {
+    internal companion object : SerializationStrategy<Command> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Command") {
             element("op", OpCode.descriptor)
             element("d", JsonObject.serializer().descriptor)
@@ -50,7 +50,7 @@ sealed class Command {
 }
 
 @Serializable
-data class Identify(
+public data class Identify(
     @SerialName("server_id")
     val serverId: Snowflake,
     @SerialName("user_id")
@@ -61,22 +61,22 @@ data class Identify(
 ) : Command()
 
 @Serializable
-data class Heartbeat(val nonce: Long) : Command()
+public data class Heartbeat(val nonce: Long) : Command()
 
 @Serializable
-data class SendSpeaking(
+public data class SendSpeaking(
     val speaking: SpeakingFlags,
     val delay: Int,
     val ssrc: UInt
 ) : Command()
 
 @Serializable
-data class SelectProtocol(
+public data class SelectProtocol(
     val protocol: String,
     val data: Data
 ) : Command() {
     @Serializable
-    data class Data(
+    public data class Data(
         val address: String,
         val port: Int,
         val mode: EncryptionMode
@@ -84,7 +84,7 @@ data class SelectProtocol(
 }
 
 @Serializable
-data class Resume(
+public data class Resume(
     val serverId: Snowflake,
     val sessionId: String,
     val token: String

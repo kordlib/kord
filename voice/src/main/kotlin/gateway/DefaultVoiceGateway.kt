@@ -31,7 +31,7 @@ private sealed class State(val retry: Boolean) {
 }
 
 @KordVoice
-data class DefaultVoiceGatewayData(
+public data class DefaultVoiceGatewayData(
     val selfId: Snowflake,
     val guildId: Snowflake,
     val sessionId: String,
@@ -44,7 +44,7 @@ data class DefaultVoiceGatewayData(
  * The default Voice Gateway implementation of Kord, using an [HttpClient] for the underlying websocket.
  */
 @KordVoice
-class DefaultVoiceGateway(
+public class DefaultVoiceGateway(
     private val data: DefaultVoiceGatewayData
 ) : VoiceGateway {
     override val scope: CoroutineScope =
@@ -79,7 +79,7 @@ class DefaultVoiceGateway(
     // prevent race conditions caused by suspending due to the reconnectRetry
     private val connectMutex = Mutex(locked = false)
 
-    override suspend fun start(configuration: VoiceGatewayConfiguration) = connectMutex.withLock {
+    override suspend fun start(configuration: VoiceGatewayConfiguration): Unit = connectMutex.withLock {
         resetState(configuration)
 
         while (data.reconnectRetry.hasNext && state.value is State.Running) {
@@ -173,7 +173,7 @@ class DefaultVoiceGateway(
     }
 
 
-    override suspend fun send(command: Command) = stateMutex.withLock {
+    override suspend fun send(command: Command): Unit = stateMutex.withLock {
         sendUnsafe(command)
     }
 

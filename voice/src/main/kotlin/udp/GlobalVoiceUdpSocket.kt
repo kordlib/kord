@@ -20,8 +20,9 @@ private val globalVoiceSocketLogger = KotlinLogging.logger { }
  * Initiated once and kept open for the lifetime of this process.
  */
 @KordVoice
-object GlobalVoiceUdpSocket : VoiceUdpSocket {
-    private val socketScope = CoroutineScope(Dispatchers.Default + SupervisorJob() + CoroutineName("kord-voice-global-socket"))
+public object GlobalVoiceUdpSocket : VoiceUdpSocket {
+    private val socketScope =
+        CoroutineScope(Dispatchers.Default + SupervisorJob() + CoroutineName("kord-voice-global-socket"))
 
     private val _incoming: MutableSharedFlow<Datagram> = MutableSharedFlow()
     override val incoming: SharedFlow<Datagram> = _incoming

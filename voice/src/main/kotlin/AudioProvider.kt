@@ -13,20 +13,20 @@ import kotlin.time.TimeSource
  * which should be transmitted to Discord.
  */
 @KordVoice
-fun interface AudioProvider {
+public fun interface AudioProvider {
     /**
      * Provides a single frame of audio, [AudioFrame].
      *
      * @return the frame of audio.
      */
-    suspend fun provide(): AudioFrame?
+    public suspend fun provide(): AudioFrame?
 
     /**
      * Polls [AudioFrame]s into the [frames] channel at an appropriate interval. Suspends until the coroutine scope is cancelled.
      *
      * @param frames the channel where [AudioFrame]s will be sent to.
      */
-    suspend fun CoroutineScope.provideFrames(frames: SendChannel<AudioFrame?>) {
+    public suspend fun CoroutineScope.provideFrames(frames: SendChannel<AudioFrame?>) {
         val mark = TimeSource.Monotonic.markNow()
         var nextFrameTimestamp = mark.elapsedNow().inWholeNanoseconds
 

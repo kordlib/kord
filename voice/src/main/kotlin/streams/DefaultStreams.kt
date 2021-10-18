@@ -25,7 +25,7 @@ import mu.KotlinLogging
 private val defaultStreamsLogger = KotlinLogging.logger { }
 
 @KordVoice
-class DefaultStreams(
+public class DefaultStreams(
     private val voiceGateway: VoiceGateway,
     private val udp: VoiceUdpSocket,
     private val nonceStrategy: NonceStrategy

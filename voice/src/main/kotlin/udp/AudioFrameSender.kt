@@ -11,7 +11,7 @@ import dev.kord.voice.encryption.strategies.NonceStrategy
 import io.ktor.util.network.*
 
 @KordVoice
-data class AudioFrameSenderConfiguration(
+public data class AudioFrameSenderConfiguration(
     val server: NetworkAddress,
     val ssrc: UInt,
     val key: ByteArray,
@@ -22,10 +22,10 @@ data class AudioFrameSenderConfiguration(
 )
 
 @KordVoice
-interface AudioFrameSender {
+public interface AudioFrameSender {
     /**
      * This should start polling frames from [the audio provider][AudioFrameSenderConfiguration.provider] and
      * send them to Discord.
      */
-    suspend fun start(configuration: AudioFrameSenderConfiguration)
+    public suspend fun start(configuration: AudioFrameSenderConfiguration)
 }

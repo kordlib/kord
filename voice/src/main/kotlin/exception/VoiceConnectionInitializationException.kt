@@ -1,7 +1,7 @@
 package dev.kord.voice.exception
 
-class VoiceConnectionInitializationException : Exception {
-    constructor(message: String) : super(message)
-    constructor(cause: Throwable) : super(cause)
-    constructor(message: String, cause: Throwable) : super(message, cause)
+public class VoiceConnectionInitializationException : Exception {
+    public constructor(message: String) : super(message)
+    public constructor(cause: Throwable) : super(cause)
+    public constructor(message: String, cause: Throwable) : super(message, cause)
 }

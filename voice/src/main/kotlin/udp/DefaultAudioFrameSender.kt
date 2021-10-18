@@ -14,13 +14,13 @@ import kotlin.random.Random
 private val audioFrameSenderLogger = KotlinLogging.logger { }
 
 @KordVoice
-data class DefaultAudioFrameSenderData(
+public data class DefaultAudioFrameSenderData(
     val udp: VoiceUdpSocket
 )
 
 @KordVoice
-class DefaultAudioFrameSender(
-    val data: DefaultAudioFrameSenderData
+public class DefaultAudioFrameSender(
+    public val data: DefaultAudioFrameSenderData
 ) : AudioFrameSender {
     private fun createFrameInterceptor(configuration: AudioFrameSenderConfiguration): FrameInterceptor =
         with(configuration) {

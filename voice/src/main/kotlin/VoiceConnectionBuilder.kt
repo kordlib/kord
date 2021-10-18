@@ -26,35 +26,35 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeoutOrNull
 
 @KordVoice
-class VoiceConnectionBuilder(
-    var gateway: Gateway,
-    var selfId: Snowflake,
-    var channelId: Snowflake,
-    var guildId: Snowflake
+public class VoiceConnectionBuilder(
+    public var gateway: Gateway,
+    public var selfId: Snowflake,
+    public var channelId: Snowflake,
+    public var guildId: Snowflake
 ) {
     /**
      * The amount in milliseconds to wait for the events required to create a [VoiceConnection]. Default is 5000, or 5 seconds.
      */
-    var timeout: Long = 5000
+    public var timeout: Long = 5000
 
     /**
      * The [AudioProvider] for this [VoiceConnection]. No audio will be provided when one is not set.
      */
-    var audioProvider: AudioProvider? = null
+    public var audioProvider: AudioProvider? = null
 
     /**
      * The [dev.kord.voice.udp.AudioFrameSender] for this [VoiceConnection]. If null, [dev.kord.voice.udp.DefaultAudioFrameSender]
      * will be used.
      */
-    var audioSender: AudioFrameSender? = null
+    public var audioSender: AudioFrameSender? = null
 
     /**
      * The nonce strategy to be used for the encryption of audio packets.
      * If `null`, [dev.kord.voice.encryption.strategies.LiteNonceStrategy] will be used.
      */
-    var nonceStrategy: NonceStrategy? = null
+    public var nonceStrategy: NonceStrategy? = null
 
-    fun audioProvider(provider: AudioProvider) {
+    public fun audioProvider(provider: AudioProvider) {
         this.audioProvider = provider
     }
 
@@ -63,45 +63,45 @@ class VoiceConnectionBuilder(
      * When one is not set, a factory will be used to create the default interceptor, see [DefaultFrameInterceptor].
      * This factory will be used to create a new [FrameInterceptor] whenever audio is ready to be sent.
      */
-    var frameInterceptorFactory: ((FrameInterceptorContext) -> FrameInterceptor)? = null
+    public var frameInterceptorFactory: ((FrameInterceptorContext) -> FrameInterceptor)? = null
 
-    fun frameInterceptor(factory: (FrameInterceptorContext) -> FrameInterceptor) {
+    public fun frameInterceptor(factory: (FrameInterceptorContext) -> FrameInterceptor) {
         this.frameInterceptorFactory = factory
     }
 
     /**
      * A boolean indicating whether your voice state will be muted.
      */
-    var selfMute: Boolean = false
+    public var selfMute: Boolean = false
 
     /**
      * A boolean indicating whether your voice state will be deafened.
      */
-    var selfDeaf: Boolean = false
+    public var selfDeaf: Boolean = false
 
     private var voiceGatewayBuilder: (DefaultVoiceGatewayBuilder.() -> Unit)? = null
 
     /**
      * A [dev.kord.voice.udp.VoiceUdpSocket] implementation to be used. If null, a default will be used.
      */
-    var udpSocket: VoiceUdpSocket? = null
+    public var udpSocket: VoiceUdpSocket? = null
 
     /**
      * A flag to control the implementation of [streams]. Set to false by default.
      * When set to false, a NOP implementation will be used.
      * When set to true, a proper receiving implementation will be used.
      */
-    var receiveVoice: Boolean = false
+    public var receiveVoice: Boolean = false
 
     /**
      * A [Streams] implementation to be used. This will override the [receiveVoice] flag.
      */
-    var streams: Streams? = null
+    public var streams: Streams? = null
 
     /**
      * A builder to customize the voice connection's underlying [VoiceGateway].
      */
-    fun voiceGateway(builder: DefaultVoiceGatewayBuilder.() -> Unit) {
+    public fun voiceGateway(builder: DefaultVoiceGatewayBuilder.() -> Unit) {
         this.voiceGatewayBuilder = builder
     }
 
@@ -152,7 +152,7 @@ class VoiceConnectionBuilder(
     /**
      * @throws dev.kord.voice.exception.VoiceConnectionInitializationException when there was a problem retrieving voice information from Discord.
      */
-    suspend fun build(): VoiceConnection {
+    public suspend fun build(): VoiceConnection {
         val (voiceConnectionData, initialGatewayConfiguration) = gateway.updateVoiceState()
 
         val voiceGateway = DefaultVoiceGatewayBuilder(selfId, guildId, voiceConnectionData.sessionId)
