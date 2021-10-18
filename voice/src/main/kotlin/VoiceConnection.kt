@@ -55,7 +55,7 @@ class VoiceConnection(
     val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
 ) {
     val scope: CoroutineScope =
-        CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}"))
+        CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}]"))
 
     init {
         with(scope) {
