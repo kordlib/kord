@@ -8,7 +8,6 @@ import dev.kord.voice.FrameInterceptor
 import dev.kord.voice.FrameInterceptorContext
 import dev.kord.voice.FrameInterceptorContextBuilder
 import io.ktor.util.network.*
-import kotlinx.coroutines.CoroutineScope
 
 @KordVoice
 data class AudioFrameSenderConfiguration(
@@ -21,7 +20,7 @@ data class AudioFrameSenderConfiguration(
 )
 
 @KordVoice
-interface AudioFrameSender : CoroutineScope {
+interface AudioFrameSender {
     /**
      * This should start polling frames from [the audio provider][AudioFrameSenderConfiguration.provider] and
      * send them to Discord.

@@ -2,7 +2,9 @@ package dev.kord.voice.gateway.handler
 
 import dev.kord.voice.gateway.*
 import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import kotlin.time.Duration
 import kotlin.time.TimeMark
 import kotlin.time.TimeSource
@@ -14,19 +16,25 @@ internal class HeartbeatHandler(
     private val ping: (Duration) -> Unit,
     private val ticker: Ticker = Ticker(),
     private val timeSource: TimeSource = TimeSource.Monotonic
-) : Handler(flow, "HeartbeatHandler") {
+) : GatewayEventHandler(flow, "HeartbeatHandler") {
     private var timestamp: TimeMark = timeSource.markNow()
 
-    override fun start() {
+    override suspend fun start() = coroutineScope {
         on<Hello> {
-            ticker.tickAt(it.heartbeatInterval.toLong()) {
-                timestamp = timeSource.markNow()
-                send(Heartbeat(timestamp.elapsedNow().inWholeMilliseconds))
+            launch {
+                ticker.tickAt(it.heartbeatInterval.toLong()) {
+                    timestamp = timeSource.markNow()
+                    send(Heartbeat(timestamp.elapsedNow().inWholeMilliseconds))
+                }
             }
         }
 
         on<HeartbeatAck> {
             ping(timestamp.elapsedNow())
+        }
+
+        on<Close> {
+            ticker.stop()
         }
     }
 }

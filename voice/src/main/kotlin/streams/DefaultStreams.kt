@@ -15,27 +15,20 @@ import io.ktor.util.network.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import mu.KotlinLogging
-import kotlin.coroutines.CoroutineContext
 
 private val defaultStreamsLogger = KotlinLogging.logger { }
 
 @KordVoice
 class DefaultStreams(
-    voiceGateway: VoiceGateway,
+    private val voiceGateway: VoiceGateway,
     private val udp: VoiceUdpSocket,
-    dispatcher: CoroutineDispatcher,
-) : Streams, CoroutineScope {
-    override val coroutineContext: CoroutineContext =
-        SupervisorJob() + dispatcher + CoroutineName("Voice Connection Incoming Streams")
-
-    override suspend fun listen(key: ByteArray, server: NetworkAddress) {
+) : Streams {
+    private fun CoroutineScope.listenForIncoming(key: ByteArray, server: NetworkAddress) {
         udp.incoming
             .filter { it.address == server }
             .mapNotNull { RTPPacket.fromPacket(it.packet) }
@@ -46,25 +39,7 @@ class DefaultStreams(
             .launchIn(this)
     }
 
-    private val _incomingAudioPackets: MutableSharedFlow<RTPPacket> = MutableSharedFlow()
-
-    override val incomingAudioPackets: SharedFlow<RTPPacket> = _incomingAudioPackets
-
-    override val incomingAudioFrames: Flow<Pair<UInt, AudioFrame>>
-        get() = incomingAudioPackets.map { it.ssrc to AudioFrame(it.payload.toByteArray()) }
-
-    private val _incomingUserAudioFrames: MutableSharedFlow<Pair<Snowflake, AudioFrame>> =
-        MutableSharedFlow()
-
-    override val incomingUserStreams: SharedFlow<Pair<Snowflake, AudioFrame>> =
-        _incomingUserAudioFrames
-
-    private val _ssrcToUser: AtomicRef<MutableMap<UInt, Snowflake>> =
-        atomic(mutableMapOf())
-
-    override val ssrcToUser: Map<UInt, Snowflake> by _ssrcToUser
-
-    init {
+    private fun CoroutineScope.listenForUserFrames() {
         voiceGateway.events
             .filterIsInstance<Speaking>()
             .buffer(Channel.UNLIMITED)
@@ -84,6 +59,29 @@ class DefaultStreams(
                 }
             }.launchIn(this)
     }
+
+    override suspend fun listen(key: ByteArray, server: NetworkAddress): Unit = coroutineScope {
+        listenForIncoming(key, server)
+        listenForUserFrames()
+    }
+
+    private val _incomingAudioPackets: MutableSharedFlow<RTPPacket> = MutableSharedFlow()
+
+    override val incomingAudioPackets: SharedFlow<RTPPacket> = _incomingAudioPackets
+
+    override val incomingAudioFrames: Flow<Pair<UInt, AudioFrame>>
+        get() = incomingAudioPackets.map { it.ssrc to AudioFrame(it.payload.toByteArray()) }
+
+    private val _incomingUserAudioFrames: MutableSharedFlow<Pair<Snowflake, AudioFrame>> =
+        MutableSharedFlow()
+
+    override val incomingUserStreams: SharedFlow<Pair<Snowflake, AudioFrame>> =
+        _incomingUserAudioFrames
+
+    private val _ssrcToUser: AtomicRef<MutableMap<UInt, Snowflake>> =
+        atomic(mutableMapOf())
+
+    override val ssrcToUser: Map<UInt, Snowflake> by _ssrcToUser
 }
 
 private fun Flow<RTPPacket>.decrypt(key: ByteArray): Flow<RTPPacket> {
