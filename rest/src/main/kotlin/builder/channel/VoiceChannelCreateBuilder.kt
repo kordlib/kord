@@ -28,8 +28,7 @@ class VoiceChannelCreateBuilder(var name: String) :
     private var _position: OptionalInt = OptionalInt.Missing
     var position: Int? by ::_position.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>> = Optional.Missing()
-    override var permissionOverwrites by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? = mutableSetOf()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name = name,
@@ -37,7 +36,7 @@ class VoiceChannelCreateBuilder(var name: String) :
         userLimit = _userLimit,
         parentId = _parentId,
         position = _position,
-        permissionOverwrite = _permissionOverwrites,
+        permissionOverwrite = Optional.missingOnEmptyOrOnNull(permissionOverwrites),
         type = ChannelType.GuildVoice
     )
 }

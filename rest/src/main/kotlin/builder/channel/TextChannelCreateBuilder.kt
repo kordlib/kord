@@ -31,8 +31,7 @@ class TextChannelCreateBuilder(var name: String) : PermissionOverritesBuilder, A
     private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
     var nsfw: Boolean? by ::_nsfw.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>> = Optional.Missing()
-    override var permissionOverwrites by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? = mutableSetOf()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name,
@@ -42,6 +41,6 @@ class TextChannelCreateBuilder(var name: String) : PermissionOverritesBuilder, A
         _position,
         parentId = _parentId,
         nsfw = _nsfw,
-        permissionOverwrite = _permissionOverwrites,
+        permissionOverwrite = Optional.missingOnEmptyOrOnNull(permissionOverwrites),
     )
 }

@@ -1,7 +1,10 @@
 package dev.kord.common.entity.optional
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional.*
+import dev.kord.common.entity.optional.Optional.Missing
+import dev.kord.common.entity.optional.Optional.Null
+import dev.kord.common.entity.optional.Optional.OptionalSerializer
+import dev.kord.common.entity.optional.Optional.Value
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -127,6 +130,9 @@ sealed class Optional<out T> {
         fun <T, C : Collection<T>> missingOnEmpty(value: C): Optional<C> =
             if (value.isEmpty()) Missing()
             else Value(value)
+
+        fun <T, C : Collection<T>> missingOnEmptyOrOnNull(value: C?): Optional<C> =
+            if (value == null) Missing() else missingOnEmpty(value)
 
         /**
          * Returns a [Missing] optional of type [T].
@@ -304,7 +310,7 @@ fun <T : Any> T.optional(): Optional.Value<T> = Optional.Value(this)
 
 fun <T : Any?> T?.optional(): Optional<T?> = Optional(this)
 
-fun Optional<Boolean>.toPrimitive() : OptionalBoolean = when(this){
+fun Optional<Boolean>.toPrimitive(): OptionalBoolean = when (this) {
     is Value -> OptionalBoolean.Value(value)
     else -> OptionalBoolean.Missing
 }

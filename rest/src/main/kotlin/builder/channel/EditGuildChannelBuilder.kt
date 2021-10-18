@@ -34,8 +34,7 @@ class TextChannelModifyBuilder : PermissionOverritesBuilder,
     private var _rateLimitPerUser: OptionalInt? = OptionalInt.Missing
     var rateLimitPerUser: Int? by ::_rateLimitPerUser.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
-    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? = mutableSetOf()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
@@ -43,7 +42,7 @@ class TextChannelModifyBuilder : PermissionOverritesBuilder,
         topic = _topic,
         nsfw = _nsfw,
         rateLimitPerUser = _rateLimitPerUser,
-        permissionOverwrites = _permissionOverwrites,
+        permissionOverwrites = Optional.missingOnEmptyOrOnNull(permissionOverwrites),
         parentId = _parentId
     )
 
