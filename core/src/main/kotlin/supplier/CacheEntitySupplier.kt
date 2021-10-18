@@ -15,6 +15,7 @@ import dev.kord.core.cache.data.EmojiData
 import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.GuildPreviewData
+import dev.kord.core.cache.data.GuildScheduledEventData
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.RegionData
@@ -459,15 +460,18 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return ApplicationCommandPermissions(data)
     }
 
-    override suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? =
-        cache.query<GuildScheduledEvent>() {
-            idEq(GuildScheduledEvent::id, eventId)
-        }.singleOrNull()
+    override suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? {
+        val data = cache.query<GuildScheduledEventData> {
+            idEq(GuildScheduledEventData::id, eventId)
+        }.singleOrNull() ?: return null
+
+        return GuildScheduledEvent(data, kord)
+    }
 
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =
-        cache.query<GuildScheduledEvent>() {
-            idEq(GuildScheduledEvent::guildId, guildId)
-        }.asFlow()
+        cache.query<GuildScheduledEventData> {
+            idEq(GuildScheduledEventData::guildId, guildId)
+        }.asFlow().map { GuildScheduledEvent(it, kord) }
 
     override fun toString(): String {
         return "CacheEntitySupplier(cache=$cache)"
