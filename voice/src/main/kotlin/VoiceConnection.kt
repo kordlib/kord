@@ -69,8 +69,8 @@ class VoiceConnection(
      * Starts the [VoiceGateway] for this [VoiceConnection].
      * This will begin the process for audio transmission.
      */
-    suspend fun connect(context: CoroutineContext = EmptyCoroutineContext) {
-        scope.launch(context) {
+    suspend fun connect(scope: CoroutineScope = this.scope) {
+        scope.launch {
             voiceGateway.start(voiceGatewayConfiguration)
         }
     }
