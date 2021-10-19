@@ -4,7 +4,7 @@ package dev.kord.voice.handlers
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.EncryptionMode
-import dev.kord.voice.FrameInterceptorContextBuilder
+import dev.kord.voice.FrameInterceptorConfiguration
 import dev.kord.voice.VoiceConnection
 import dev.kord.voice.encryption.strategies.LiteNonceStrategy
 import dev.kord.voice.encryption.strategies.NormalNonceStrategy
@@ -64,11 +64,8 @@ internal class UdpLifeCycleHandler(
                 val config = AudioFrameSenderConfiguration(
                     ssrc = ssrc!!,
                     key = it.secretKey.toUByteArray().toByteArray(),
-                    nonceStrategy = nonceStrategy,
-                    provider = audioProvider,
-                    baseFrameInterceptorContext = FrameInterceptorContextBuilder(gateway, voiceGateway),
-                    interceptorFactory = frameInterceptorFactory,
-                    server = server!!
+                    server = server!!,
+                    interceptorConfiguration = FrameInterceptorConfiguration(gateway, voiceGateway, ssrc!!)
                 )
 
                 audioSenderJob?.cancel()
