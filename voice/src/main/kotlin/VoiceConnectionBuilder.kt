@@ -8,6 +8,8 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
+import dev.kord.voice.encryption.strategies.LiteNonceStrategy
+import dev.kord.voice.encryption.strategies.NonceStrategy
 import dev.kord.voice.exception.VoiceConnectionInitializationException
 import dev.kord.voice.gateway.DefaultVoiceGatewayBuilder
 import dev.kord.voice.gateway.VoiceGateway
@@ -45,6 +47,12 @@ class VoiceConnectionBuilder(
      * will be used.
      */
     var audioSender: AudioFrameSender? = null
+
+    /**
+     * The nonce strategy to be used for the encryption of audio packets.
+     * If `null`, [dev.kord.voice.encryption.strategies.LiteNonceStrategy] will be used.
+     */
+    var nonceStrategy: NonceStrategy? = null
 
     fun audioProvider(provider: AudioProvider) {
         this.audioProvider = provider
@@ -154,9 +162,10 @@ class VoiceConnectionBuilder(
         val audioProvider = audioProvider ?: EmptyAudioPlayerProvider
         val audioSender =
             audioSender ?: DefaultAudioFrameSender(DefaultAudioFrameSenderData(udpSocket))
+        val nonceStrategy = nonceStrategy ?: LiteNonceStrategy()
         val frameInterceptorFactory = frameInterceptorFactory ?: { DefaultFrameInterceptor(it) }
         val streams =
-            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket) else NOPStreams
+            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, nonceStrategy) else NOPStreams
 
         return VoiceConnection(
             voiceConnectionData,
@@ -167,6 +176,7 @@ class VoiceConnectionBuilder(
             streams,
             audioProvider,
             audioSender,
+            nonceStrategy,
             frameInterceptorFactory,
         )
     }

@@ -5,6 +5,7 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.AudioFrame
 import dev.kord.voice.encryption.XSalsa20Poly1305Codec
+import dev.kord.voice.encryption.strategies.NonceStrategy
 import dev.kord.voice.gateway.Speaking
 import dev.kord.voice.gateway.VoiceGateway
 import dev.kord.voice.io.*
@@ -27,13 +28,14 @@ private val defaultStreamsLogger = KotlinLogging.logger { }
 class DefaultStreams(
     private val voiceGateway: VoiceGateway,
     private val udp: VoiceUdpSocket,
+    private val nonceStrategy: NonceStrategy
 ) : Streams {
     private fun CoroutineScope.listenForIncoming(key: ByteArray, server: NetworkAddress) {
         udp.incoming
             .filter { it.address == server }
             .mapNotNull { RTPPacket.fromPacket(it.packet) }
             .filter { it.payloadType == PayloadType.Audio.raw }
-            .decrypt(key)
+            .decrypt(nonceStrategy, key)
             .clean()
             .onEach { _incomingAudioPackets.emit(it) }
             .launchIn(this)
@@ -84,7 +86,7 @@ class DefaultStreams(
     override val ssrcToUser: Map<UInt, Snowflake> by _ssrcToUser
 }
 
-private fun Flow<RTPPacket>.decrypt(key: ByteArray): Flow<RTPPacket> {
+private fun Flow<RTPPacket>.decrypt(nonceStrategy: NonceStrategy, key: ByteArray): Flow<RTPPacket> {
     val codec = XSalsa20Poly1305Codec(key)
     val nonceBuffer = ByteArray(TweetNaclFast.SecretBox.nonceLength).mutableCursor()
 
@@ -94,10 +96,13 @@ private fun Flow<RTPPacket>.decrypt(key: ByteArray): Flow<RTPPacket> {
 
     return mapNotNull {
         nonceBuffer.reset()
-        nonceBuffer.writeByteArray(it.payload.data, it.payload.dataEnd - 4, 4)
-
         decryptedCursor.reset()
-        val decrypted = with(it.payload) { codec.decrypt(data, dataStart, viewSize - 4, nonceBuffer.data, decryptedCursor) }
+
+        nonceBuffer.writeByteView(nonceStrategy.strip(it))
+
+        val decrypted = with(it.payload) {
+            codec.decrypt(data, dataStart, viewSize, nonceBuffer.data, decryptedCursor)
+        }
 
         if (!decrypted) {
             defaultStreamsLogger.trace { "failed to decrypt the packet with data ${it.payload.data.contentToString()} at offset ${it.payload.dataStart} and length ${it.payload.viewSize - 4}" }
