@@ -20,8 +20,8 @@ import mu.KotlinLogging
 
 private val jsonLogger = KotlinLogging.logger { }
 
-sealed class VoiceEvent {
-    companion object : DeserializationStrategy<VoiceEvent?> {
+public sealed class VoiceEvent {
+    internal companion object : DeserializationStrategy<VoiceEvent?> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
             element("op", OpCode.descriptor)
             element("d", JsonElement.serializer().descriptor)
@@ -75,7 +75,7 @@ sealed class VoiceEvent {
 }
 
 @Serializable
-data class Ready(
+public data class Ready(
     val ssrc: UInt,
     val ip: String,
     val port: Int,
@@ -83,7 +83,7 @@ data class Ready(
 ) : VoiceEvent()
 
 @Serializable
-data class Hello(
+public data class Hello(
     @SerialName("v")
     val version: Short,
     @SerialName("heartbeat_interval")
@@ -91,52 +91,52 @@ data class Hello(
 ) : VoiceEvent()
 
 @Serializable
-data class HeartbeatAck(val nonce: Long) : VoiceEvent()
+public data class HeartbeatAck(val nonce: Long) : VoiceEvent()
 
 @Serializable
-data class SessionDescription(
+public data class SessionDescription(
     val mode: EncryptionMode,
     @SerialName("secret_key")
     val secretKey: List<UByte>
 ) : VoiceEvent()
 
 @Serializable
-data class Speaking(
+public data class Speaking(
     @SerialName("user_id")
     val userId: Snowflake,
     val ssrc: UInt,
     val speaking: SpeakingFlags
-): VoiceEvent()
+) : VoiceEvent()
 
 @Serializable
-object Resumed : VoiceEvent()
+public object Resumed : VoiceEvent()
 
-sealed class Close : VoiceEvent() {
+public sealed class Close : VoiceEvent() {
     /**
      * The user closed the Gateway connection.
      */
-    object UserClose : Close()
+    public object UserClose : Close()
 
     /**
      * The connection was closed because of a timeout, probably due to a loss of internet connection.
      */
-    object Timeout : Close()
+    public object Timeout : Close()
 
     /**
      * Discord closed the connection with a [closeCode].
      *
      * @param recoverable true if the gateway will automatically try to reconnect.
      */
-    class DiscordClose(val closeCode: VoiceGatewayCloseCode, val recoverable: Boolean) : Close()
+    public class DiscordClose(public val closeCode: VoiceGatewayCloseCode, public val recoverable: Boolean) : Close()
 
     /**
      * The gateway closed and will attempt to resume the session.
      */
-    object Reconnecting : Close()
+    public object Reconnecting : Close()
 
     /**
      *  The Gateway has failed to establish a connection too many times and will not try to reconnect anymore.
      *  The user is free to manually connect again using [VoiceGateway.start], otherwise all resources linked to the Gateway should free.
      */
-    object RetryLimitReached : Close()
+    public object RetryLimitReached : Close()
 }

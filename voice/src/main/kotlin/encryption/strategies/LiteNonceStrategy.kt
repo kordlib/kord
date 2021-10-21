@@ -7,7 +7,7 @@ import dev.kord.voice.io.view
 import dev.kord.voice.udp.RTPPacket
 import kotlinx.atomicfu.atomic
 
-class LiteNonceStrategy : NonceStrategy {
+public class LiteNonceStrategy : NonceStrategy {
     override val nonceLength: Int = 4
 
     private var count: Int by atomic(0)

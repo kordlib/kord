@@ -8,7 +8,7 @@ import kotlin.random.Random
 
 private const val SUFFIX_NONCE_LENGTH = 24
 
-class SuffixNonceStrategy : NonceStrategy {
+public class SuffixNonceStrategy : NonceStrategy {
     override val nonceLength: Int = SUFFIX_NONCE_LENGTH
 
     private val nonceBuffer: ByteArray = ByteArray(SUFFIX_NONCE_LENGTH)

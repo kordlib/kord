@@ -7,7 +7,7 @@ import dev.kord.voice.io.view
 import dev.kord.voice.udp.RTPPacket
 import dev.kord.voice.udp.RTP_HEADER_LENGTH
 
-class NormalNonceStrategy : NonceStrategy {
+public class NormalNonceStrategy : NonceStrategy {
     // the nonce is already a part of the rtp header, which means this will take up no extra space.
     override val nonceLength: Int = 0
 

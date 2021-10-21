@@ -13,7 +13,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordVoice
-enum class SpeakingFlag(val code: Int) {
+public enum class SpeakingFlag(public val code: Int) {
     Microphone(1 shl 0),
     Soundshare(1 shl 1),
     Priority(1 shl 2)
@@ -21,23 +21,22 @@ enum class SpeakingFlag(val code: Int) {
 
 @KordVoice
 @Serializable(with = SpeakingFlags.Serializer::class)
-class SpeakingFlags internal constructor(val code: Int) {
-    val flags = SpeakingFlag.values().filter { code and it.code != 0 }
+public class SpeakingFlags internal constructor(public val code: Int) {
+    public val flags: List<SpeakingFlag> = SpeakingFlag.values().filter { code and it.code != 0 }
 
-    operator fun contains(flag: SpeakingFlags) = flag.code and this.code == flag.code
+    public operator fun contains(flag: SpeakingFlags): Boolean = flag.code and this.code == flag.code
 
-    operator fun contains(flags: SpeakingFlag) = flags.code and this.code == flags.code
+    public operator fun contains(flags: SpeakingFlag): Boolean = flags.code and this.code == flags.code
 
-    operator fun plus(flags: SpeakingFlags): SpeakingFlags = SpeakingFlags(this.code or flags.code)
+    public operator fun plus(flags: SpeakingFlags): SpeakingFlags = SpeakingFlags(this.code or flags.code)
 
-    operator fun plus(flags: SpeakingFlag): SpeakingFlags = SpeakingFlags(this.code or flags.code)
+    public operator fun plus(flags: SpeakingFlag): SpeakingFlags = SpeakingFlags(this.code or flags.code)
 
-    operator fun minus(flags: SpeakingFlags): SpeakingFlags = SpeakingFlags(this.code xor flags.code)
+    public operator fun minus(flags: SpeakingFlags): SpeakingFlags = SpeakingFlags(this.code xor flags.code)
 
-    operator fun minus(flags: SpeakingFlag): SpeakingFlags = SpeakingFlags(this.code xor flags.code)
+    public operator fun minus(flags: SpeakingFlag): SpeakingFlags = SpeakingFlags(this.code xor flags.code)
 
-
-    inline fun copy(block: Builder.() -> Unit): SpeakingFlags {
+    public inline fun copy(block: Builder.() -> Unit): SpeakingFlags {
         val builder = Builder(code)
         builder.apply(block)
         return builder.flags()
@@ -58,56 +57,56 @@ class SpeakingFlags internal constructor(val code: Int) {
         }
     }
 
-    class Builder(internal var code: Int = 0) {
-        operator fun SpeakingFlag.unaryPlus() {
+    public class Builder(internal var code: Int = 0) {
+        public operator fun SpeakingFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or code
         }
 
-        operator fun SpeakingFlag.unaryMinus() {
+        public operator fun SpeakingFlag.unaryMinus() {
             if (this@Builder.code and code == code) {
                 this@Builder.code = this@Builder.code xor code
             }
         }
 
-        operator fun SpeakingFlags.unaryPlus() {
+        public operator fun SpeakingFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or code
         }
 
-        operator fun SpeakingFlags.unaryMinus() {
+        public operator fun SpeakingFlags.unaryMinus() {
             if (this@Builder.code and code == code) {
                 this@Builder.code = this@Builder.code xor code
             }
         }
 
-        fun flags() = SpeakingFlags(code)
+        public fun flags(): SpeakingFlags = SpeakingFlags(code)
     }
 
 }
 
 @KordVoice
 @OptIn(ExperimentalContracts::class)
-inline fun SpeakingFlags(builder: SpeakingFlags.Builder.() -> Unit): SpeakingFlags {
+public inline fun SpeakingFlags(builder: SpeakingFlags.Builder.() -> Unit): SpeakingFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return SpeakingFlags.Builder().apply(builder).flags()
 }
 
 @KordVoice
-fun SpeakingFlags(vararg flags: SpeakingFlag) = SpeakingFlags {
+public fun SpeakingFlags(vararg flags: SpeakingFlag): SpeakingFlags = SpeakingFlags {
     flags.forEach { +it }
 }
 
 @KordVoice
-fun SpeakingFlags(vararg flags: SpeakingFlags) = SpeakingFlags {
+public fun SpeakingFlags(vararg flags: SpeakingFlags): SpeakingFlags = SpeakingFlags {
     flags.forEach { +it }
 }
 
 @KordVoice
-fun SpeakingFlags(flags: Iterable<SpeakingFlag>) = SpeakingFlags {
+public fun SpeakingFlags(flags: Iterable<SpeakingFlag>): SpeakingFlags = SpeakingFlags {
     flags.forEach { +it }
 }
 
 @KordVoice
 @JvmName("SpeakingFlagsWithIterable")
-fun SpeakingFlags(flags: Iterable<SpeakingFlags>) = SpeakingFlags {
+public fun SpeakingFlags(flags: Iterable<SpeakingFlags>): SpeakingFlags = SpeakingFlags {
     flags.forEach { +it }
 }

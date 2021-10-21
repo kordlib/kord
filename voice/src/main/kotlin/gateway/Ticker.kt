@@ -1,13 +1,12 @@
 package dev.kord.voice.gateway
 
 import kotlinx.coroutines.*
-import mu.KotlinLogging
 
 /**
  * A reusable fixed rate ticker.
  */
 @ObsoleteCoroutinesApi
-class Ticker {
+internal class Ticker {
     // we only want one of these
     private var tickerJob: Job? = null
 

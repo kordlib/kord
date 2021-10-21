@@ -3,9 +3,9 @@ package dev.kord.voice.io
 /**
  * A lightweight read-only view of a ByteArray.
  */
-class ByteArrayView private constructor(val data: ByteArray, start: Int, end: Int) : Iterable<Byte> {
-    companion object {
-        fun from(data: ByteArray, start: Int, end: Int) =
+public class ByteArrayView private constructor(public val data: ByteArray, start: Int, end: Int) : Iterable<Byte> {
+    public companion object {
+        public fun from(data: ByteArray, start: Int, end: Int): ByteArrayView? =
             if ((0 <= start && start <= data.size) && (start <= end && end <= data.size)) ByteArrayView(
                 data,
                 start,
@@ -14,15 +14,15 @@ class ByteArrayView private constructor(val data: ByteArray, start: Int, end: In
             else null
     }
 
-    var dataStart: Int = start
+    public var dataStart: Int = start
         private set
 
-    var dataEnd: Int = end
+    public var dataEnd: Int = end
         private set
 
-    val viewSize: Int get() = dataEnd - dataStart
+    public val viewSize: Int get() = dataEnd - dataStart
 
-    operator fun get(index: Int): Byte {
+    public operator fun get(index: Int): Byte {
         if (dataStart + index > dataEnd) {
             throw ArrayIndexOutOfBoundsException(index)
         }
@@ -47,7 +47,7 @@ class ByteArrayView private constructor(val data: ByteArray, start: Int, end: In
 
     override operator fun iterator(): Iterator<Byte> = ByteArrayViewIterator(this)
 
-    fun asShort(): Short {
+    public fun asShort(): Short {
         require(viewSize == 2) { "this view must be equal to 2 bytes to read as short. instead the size is $viewSize" }
 
         var value = 0
@@ -58,7 +58,7 @@ class ByteArrayView private constructor(val data: ByteArray, start: Int, end: In
         return value.toShort()
     }
 
-    fun asInt(): Int {
+    public fun asInt(): Int {
         require(viewSize == 4) { "this view must be equal to 4 bytes to read as int. instead the size is $viewSize" }
 
         var value = 0
@@ -69,7 +69,7 @@ class ByteArrayView private constructor(val data: ByteArray, start: Int, end: In
         return value
     }
 
-    fun resize(start: Int = this.dataStart, end: Int = this.dataEnd): Boolean {
+    public fun resize(start: Int = this.dataStart, end: Int = this.dataEnd): Boolean {
         // check if the start and end is within bounds and are in the correct order
         return if (start >= 0 && end <= data.size) {
             this.dataStart = start
@@ -81,21 +81,21 @@ class ByteArrayView private constructor(val data: ByteArray, start: Int, end: In
         }
     }
 
-    fun view(start: Int = dataStart, end: Int = dataEnd): ByteArrayView? {
+    public fun view(start: Int = dataStart, end: Int = dataEnd): ByteArrayView? {
         return from(data, start, end)
     }
 
     /**
      * Create a new [ByteArray] that's data contains only this view.
      */
-    fun toByteArray(): ByteArray {
+    public fun toByteArray(): ByteArray {
         return data.copyOfRange(dataStart, dataEnd)
     }
 
     /**
      * Creates a new [ByteArrayView] that's data contains only this view.
      */
-    fun clone(): ByteArrayView {
+    public fun clone(): ByteArrayView {
         return toByteArray().view()
     }
 
@@ -104,5 +104,5 @@ class ByteArrayView private constructor(val data: ByteArray, start: Int, end: In
     }
 }
 
-fun ByteArray.view(start: Int, end: Int) = ByteArrayView.from(this, start, end)
-fun ByteArray.view() = view(0, size)!!
+public fun ByteArray.view(start: Int, end: Int): ByteArrayView? = ByteArrayView.from(this, start, end)
+public fun ByteArray.view(): ByteArrayView = view(0, size)!!

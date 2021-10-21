@@ -9,16 +9,16 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 
 @KordVoice
-interface VoiceUdpSocket {
-    val incoming: SharedFlow<Datagram>
+public interface VoiceUdpSocket {
+    public val incoming: SharedFlow<Datagram>
 
-    suspend fun discoverIp(address: NetworkAddress, ssrc: Int): NetworkAddress
+    public suspend fun discoverIp(address: NetworkAddress, ssrc: Int): NetworkAddress
 
-    suspend fun send(packet: Datagram)
+    public suspend fun send(packet: Datagram)
 
-    suspend fun stop()
+    public suspend fun stop()
 
-    companion object {
+    public companion object {
         private object None : VoiceUdpSocket {
             override val incoming: SharedFlow<Datagram> = MutableSharedFlow()
 
@@ -31,9 +31,10 @@ interface VoiceUdpSocket {
             override suspend fun stop() {}
         }
 
-        fun none(): VoiceUdpSocket = None
+        public fun none(): VoiceUdpSocket = None
     }
 }
 
 @KordVoice
-suspend fun VoiceUdpSocket.receiveFrom(address: NetworkAddress) = incoming.filter { it.address == address }.first()
+public suspend fun VoiceUdpSocket.receiveFrom(address: NetworkAddress): Datagram =
+    incoming.filter { it.address == address }.first()

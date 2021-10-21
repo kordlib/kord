@@ -8,14 +8,14 @@ import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
 
-abstract class AudioPacketProvider(val key: ByteArray, val nonceStrategy: NonceStrategy) {
-    abstract fun provide(sequence: UShort, timestamp: UInt, ssrc: UInt, data: ByteArray): ByteArrayView
+public abstract class AudioPacketProvider(public val key: ByteArray, public val nonceStrategy: NonceStrategy) {
+    public abstract fun provide(sequence: UShort, timestamp: UInt, ssrc: UInt, data: ByteArray): ByteArrayView
 }
 
 private class CouldNotEncryptDataException(val data: ByteArray) :
     RuntimeException("Couldn't encrypt the following data: [${data.joinToString(", ")}]")
 
-class DefaultAudioPackerProvider(key: ByteArray, nonceStrategy: NonceStrategy) :
+public class DefaultAudioPackerProvider(key: ByteArray, nonceStrategy: NonceStrategy) :
     AudioPacketProvider(key, nonceStrategy) {
     private val codec = XSalsa20Poly1305Codec(key)
 

@@ -17,8 +17,6 @@ import kotlinx.coroutines.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 /**
  * Data that represents a [VoiceConnection], these will never change during the lifetime of a [VoiceConnection].
@@ -27,7 +25,7 @@ import kotlin.coroutines.EmptyCoroutineContext
  * @param guildId the id of the guild that the bot is connecting to.
  * @param sessionId the id of the current voice session, given by Discord.
  */
-data class VoiceConnectionData(
+public data class VoiceConnectionData(
     val selfId: Snowflake,
     val guildId: Snowflake,
     val sessionId: String,
@@ -46,19 +44,19 @@ data class VoiceConnectionData(
  * @param frameInterceptorFactory a factory for [FrameInterceptor]s that is used whenever audio is ready to be sent. See [FrameInterceptor] and [DefaultFrameInterceptor].
  */
 @KordVoice
-class VoiceConnection(
-    val data: VoiceConnectionData,
-    val gateway: Gateway,
-    val voiceGateway: VoiceGateway,
-    val socket: VoiceUdpSocket,
-    var voiceGatewayConfiguration: VoiceGatewayConfiguration,
-    val streams: Streams,
-    val audioProvider: AudioProvider,
-    val frameSender: AudioFrameSender,
-    val nonceStrategy: NonceStrategy,
-    val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
+public class VoiceConnection(
+    public val data: VoiceConnectionData,
+    public val gateway: Gateway,
+    public val voiceGateway: VoiceGateway,
+    public val socket: VoiceUdpSocket,
+    public var voiceGatewayConfiguration: VoiceGatewayConfiguration,
+    public val streams: Streams,
+    public val audioProvider: AudioProvider,
+    public val frameSender: AudioFrameSender,
+    public val nonceStrategy: NonceStrategy,
+    public val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
 ) {
-    val scope: CoroutineScope =
+    public val scope: CoroutineScope =
         CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}]"))
 
     init {
@@ -73,7 +71,7 @@ class VoiceConnection(
      * Starts the [VoiceGateway] for this [VoiceConnection].
      * This will begin the process for audio transmission.
      */
-    suspend fun connect(scope: CoroutineScope = this.scope) {
+    public suspend fun connect(scope: CoroutineScope = this.scope) {
         scope.launch {
             voiceGateway.start(voiceGatewayConfiguration)
         }
@@ -82,7 +80,7 @@ class VoiceConnection(
     /**
      * Disconnects from the voice servers, does not change the voice state.
      */
-    suspend fun disconnect() {
+    public suspend fun disconnect() {
         voiceGateway.stop()
         socket.stop()
     }
@@ -90,7 +88,7 @@ class VoiceConnection(
     /**
      * Disconnects from Discord voice servers, and leaves the voice channel.
      */
-    suspend fun leave() {
+    public suspend fun leave() {
         gateway.send(
             UpdateVoiceStatus(
                 guildId = data.guildId,
@@ -106,7 +104,7 @@ class VoiceConnection(
     /**
      * Releases all resources related to this VoiceConnection (except [gateway]) and then stops its CoroutineScope.
      */
-    suspend fun shutdown() {
+    public suspend fun shutdown() {
         leave()
         voiceGateway.detach()
 
@@ -129,7 +127,7 @@ class VoiceConnection(
  */
 @KordVoice
 @OptIn(ExperimentalContracts::class)
-suspend inline fun VoiceConnection(
+public suspend inline fun VoiceConnection(
     gateway: Gateway,
     selfId: Snowflake,
     channelId: Snowflake,

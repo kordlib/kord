@@ -15,17 +15,17 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.time.Duration
 
 @KordVoice
-class DefaultVoiceGatewayBuilder(
-    val selfId: Snowflake,
-    val guildId: Snowflake,
-    val sessionId: String,
+public class DefaultVoiceGatewayBuilder(
+    public val selfId: Snowflake,
+    public val guildId: Snowflake,
+    public val sessionId: String,
 ) {
-    var client: HttpClient? = null
-    var reconnectRetry: Retry? = null
-    var eventFlow: MutableSharedFlow<VoiceEvent> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
+    public var client: HttpClient? = null
+    public var reconnectRetry: Retry? = null
+    public var eventFlow: MutableSharedFlow<VoiceEvent> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
     @OptIn(InternalAPI::class)
-    fun build(): DefaultVoiceGateway {
+    public fun build(): DefaultVoiceGateway {
         val client = client ?: HttpClient(CIO) {
             install(WebSockets)
             install(JsonFeature)

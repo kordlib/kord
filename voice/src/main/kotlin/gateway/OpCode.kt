@@ -7,7 +7,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-enum class OpCode(val code: Int) {
+public enum class OpCode(public val code: Int) {
     Unknown(Int.MIN_VALUE),
     Identify(0),
     SelectProtocol(1),
@@ -21,7 +21,7 @@ enum class OpCode(val code: Int) {
     Resumed(9),
     ClientDisconnect(13);
 
-    companion object OpCodeSerializer : KSerializer<OpCode> {
+    internal companion object OpCodeSerializer : KSerializer<OpCode> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("op", PrimitiveKind.INT)
 

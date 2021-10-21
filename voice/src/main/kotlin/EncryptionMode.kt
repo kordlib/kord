@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @KordVoice
 @Serializable
-enum class EncryptionMode {
+public enum class EncryptionMode {
     @SerialName("xsalsa20_poly1305")
     XSalsa20Poly1305,
 
@@ -16,10 +16,10 @@ enum class EncryptionMode {
     @SerialName("xsalsa20_poly1305_lite")
     XSalsa20Poly1305Lite,
 
+    // video/unreleased-audio stuff... unused. though required to allow for serialization of ready
     @SerialName("xsalsa20_poly1305_lite_rtpsize")
     XSalsa20Poly1305LiteRtpsize,
 
-    // video/unreleased-audio stuff... unused. though required to allow for serialization of ready
     @SerialName("aead_aes256_gcm_rtpsize")
     AeadAes256GcmRtpsize,
 
