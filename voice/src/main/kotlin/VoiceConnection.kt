@@ -39,9 +39,9 @@ public data class VoiceConnectionData(
  * @param data the data representing this [VoiceConnection].
  * @param voiceGatewayConfiguration the configuration used on each new [connect] for the [voiceGateway].
  * @param audioProvider a [AudioProvider] that will provide [AudioFrame] when required.
+ * @param frameInterceptor a [FrameInterceptor] that will intercept all outgoing [AudioFrame]s.
  * @param frameSender the [AudioFrameSender] that will handle the sending of audio packets.
  * @param nonceStrategy the [NonceStrategy] that is used during encryption of audio.
- * @param frameInterceptorFactory a factory for [FrameInterceptor]s that is used whenever audio is ready to be sent. See [FrameInterceptor] and [DefaultFrameInterceptor].
  */
 @KordVoice
 public class VoiceConnection(
@@ -52,9 +52,9 @@ public class VoiceConnection(
     public var voiceGatewayConfiguration: VoiceGatewayConfiguration,
     public val streams: Streams,
     public val audioProvider: AudioProvider,
+    public val frameInterceptor: FrameInterceptor,
     public val frameSender: AudioFrameSender,
     public val nonceStrategy: NonceStrategy,
-    public val frameInterceptorFactory: (FrameInterceptorContext) -> FrameInterceptor,
 ) {
     public val scope: CoroutineScope =
         CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}]"))

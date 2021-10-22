@@ -42,6 +42,20 @@ public class VoiceConnectionBuilder(
      */
     public var audioProvider: AudioProvider? = null
 
+    public fun audioProvider(provider: AudioProvider) {
+        this.audioProvider = provider
+    }
+
+    /**
+     * The [FrameInterceptor] for this [VoiceConnection].
+     * If `null`, [DefaultFrameInterceptor] will be used.
+     */
+    public var frameInterceptor: FrameInterceptor? = null
+
+    public fun frameInterceptor(frameInterceptor: FrameInterceptor) {
+        this.frameInterceptor = frameInterceptor
+    }
+
     /**
      * The [dev.kord.voice.udp.AudioFrameSender] for this [VoiceConnection]. If null, [dev.kord.voice.udp.DefaultAudioFrameSender]
      * will be used.
@@ -53,21 +67,6 @@ public class VoiceConnectionBuilder(
      * If `null`, [dev.kord.voice.encryption.strategies.LiteNonceStrategy] will be used.
      */
     public var nonceStrategy: NonceStrategy? = null
-
-    public fun audioProvider(provider: AudioProvider) {
-        this.audioProvider = provider
-    }
-
-    /**
-     * The [FrameInterceptor] factory for this [VoiceConnection].
-     * When one is not set, a factory will be used to create the default interceptor, see [DefaultFrameInterceptor].
-     * This factory will be used to create a new [FrameInterceptor] whenever audio is ready to be sent.
-     */
-    public var frameInterceptorFactory: ((FrameInterceptorContext) -> FrameInterceptor)? = null
-
-    public fun frameInterceptor(factory: (FrameInterceptorContext) -> FrameInterceptor) {
-        this.frameInterceptorFactory = factory
-    }
 
     /**
      * A boolean indicating whether your voice state will be muted.
@@ -160,10 +159,17 @@ public class VoiceConnectionBuilder(
             .build()
         val udpSocket = udpSocket ?: GlobalVoiceUdpSocket
         val audioProvider = audioProvider ?: EmptyAudioPlayerProvider
-        val audioSender =
-            audioSender ?: DefaultAudioFrameSender(DefaultAudioFrameSenderData(udpSocket))
         val nonceStrategy = nonceStrategy ?: LiteNonceStrategy()
-        val frameInterceptorFactory = frameInterceptorFactory ?: { DefaultFrameInterceptor(it) }
+        val frameInterceptor = frameInterceptor ?: DefaultFrameInterceptor()
+        val audioSender =
+            audioSender ?: DefaultAudioFrameSender(
+                DefaultAudioFrameSenderData(
+                    udpSocket,
+                    frameInterceptor,
+                    audioProvider,
+                    nonceStrategy
+                )
+            )
         val streams =
             streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, nonceStrategy) else NOPStreams
 
@@ -175,9 +181,9 @@ public class VoiceConnectionBuilder(
             initialGatewayConfiguration,
             streams,
             audioProvider,
+            frameInterceptor,
             audioSender,
-            nonceStrategy,
-            frameInterceptorFactory,
+            nonceStrategy
         )
     }
 
