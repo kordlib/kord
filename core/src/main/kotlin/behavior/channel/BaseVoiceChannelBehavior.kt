@@ -39,7 +39,7 @@ public interface BaseVoiceChannelBehavior : TopGuildChannelBehavior {
     @KordVoice
     public suspend fun connect(builder: VoiceConnectionBuilder.() -> Unit): VoiceConnection {
         val voiceConnection = VoiceConnection(
-            getGuild().gateway ?: GatewayNotFoundException.voiceConnectionGatewayNotFound(guildId),
+            guild.gateway ?: GatewayNotFoundException.voiceConnectionGatewayNotFound(guildId),
             kord.selfId,
             id,
             guildId,
