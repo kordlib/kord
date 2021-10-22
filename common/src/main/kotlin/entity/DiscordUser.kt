@@ -108,7 +108,8 @@ enum class UserFlag(val code: Int) {
     System(1 shl 12),
     BugHunterLevel2(1 shl 14),
     VerifiedBot(1 shl 16),
-    VerifiedBotDeveloper(1 shl 17)
+    VerifiedBotDeveloper(1 shl 17),
+    DiscordCertifiedModerator(1 shl 18)
 }
 
 @Serializable(with = UserFlags.UserFlagsSerializer::class)
