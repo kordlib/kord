@@ -30,7 +30,7 @@ unconventional things, and we want to allow you to do those in a safe and suppor
 * [x] [Discord Rest API](https://github.com/kordlib/kord/tree/master/rest)
 * [X] [High level abstraction + caching](https://github.com/kordlib/kord/tree/master/core)
 * [X] Discord Voice
-* [ ] Support for multiple processes #7
+* [ ] Support for multiple processes [#7](https://github.com/kordlib/kord/issues/7)
 
 Right now Kord *should* provide a full mapping of the non-voice API. We're currently working on a testing library for
 easy bot testing against a semi mocked client as well as our own command system to facilitate more complex bot
