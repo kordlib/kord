@@ -29,7 +29,7 @@ unconventional things, and we want to allow you to do those in a safe and suppor
 * [X] [Discord Gateway](https://github.com/kordlib/kord/tree/master/gateway)
 * [x] [Discord Rest API](https://github.com/kordlib/kord/tree/master/rest)
 * [X] [High level abstraction + caching](https://github.com/kordlib/kord/tree/master/core)
-* [X] Discord Voice
+* [X] [Discord Voice](https://github.com/kordlib/kord/tree/master/voice)
 * [ ] Support for multiple processes [#7](https://github.com/kordlib/kord/issues/7)
 
 Right now Kord *should* provide a full mapping of the non-voice API. We're currently working on a testing library for
@@ -185,6 +185,24 @@ suspend fun main() {
     }.launchIn(gateway)
 
     gateway.start("your bot token")
+}
+```
+
+
+### Voice
+
+A mapping of [Discord's Voice Connection](https://discord.com/developers/docs/topics/voice-connections), which maintains the connection and handles audio transmission.
+
+```kotlin
+suspend fun main() {
+    val kord = Kord("your token")
+    val voiceChannel = kord.getChannelOf<VoiceChannel>(id = Snowflake(1))!!
+    
+    voiceChannel.connect {
+        audioProvider { AudioFrame.fromData(/* your opus encoded audio */) }
+    }
+
+    kord.login()
 }
 ```
 
