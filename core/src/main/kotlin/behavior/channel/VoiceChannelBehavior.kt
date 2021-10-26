@@ -19,7 +19,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord Voice Channel associated to a guild.
  */
-public interface VoiceChannelBehavior : BaseVoiceChannelBehavior {
+public interface VoiceChannelBehavior : GuildMessageChannelBehavior,  BaseVoiceChannelBehavior {
 
     /**
      * Requests to get the this behavior as a [VoiceChannel].
@@ -28,7 +28,7 @@ public interface VoiceChannelBehavior : BaseVoiceChannelBehavior {
      * @throws [EntityNotFoundException] if the channel wasn't present.
      * @throws [ClassCastException] if the channel isn't a [VoiceChannel].
      */
-    override suspend fun asChannel(): VoiceChannel = super.asChannel() as VoiceChannel
+    override suspend fun asChannel(): VoiceChannel = super<BaseVoiceChannelBehavior>.asChannel() as VoiceChannel
 
     /**
      * Requests to get this behavior as a [VoiceChannel],
@@ -36,7 +36,7 @@ public interface VoiceChannelBehavior : BaseVoiceChannelBehavior {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    override suspend fun asChannelOrNull(): VoiceChannel? = super.asChannelOrNull() as? VoiceChannel
+    override suspend fun asChannelOrNull(): VoiceChannel? = super<BaseVoiceChannelBehavior>.asChannelOrNull() as? VoiceChannel
 
     /**
      * Retrieve the [VoiceChannel] associated with this behaviour from the provided [EntitySupplier]
@@ -44,7 +44,7 @@ public interface VoiceChannelBehavior : BaseVoiceChannelBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    override suspend fun fetchChannel(): VoiceChannel = super.fetchChannel() as VoiceChannel
+    override suspend fun fetchChannel(): VoiceChannel = super<BaseVoiceChannelBehavior>.fetchChannel() as VoiceChannel
 
 
     /**
@@ -53,7 +53,7 @@ public interface VoiceChannelBehavior : BaseVoiceChannelBehavior {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    override suspend fun fetchChannelOrNull(): VoiceChannel? = super.fetchChannelOrNull() as? VoiceChannel
+    override suspend fun fetchChannelOrNull(): VoiceChannel? = super<BaseVoiceChannelBehavior>.fetchChannelOrNull() as? VoiceChannel
 
     /**
      * Returns a new [VoiceChannelBehavior] with the given [strategy].

@@ -9,12 +9,11 @@ import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Region
 import dev.kord.core.exception.EntityNotFoundException
-import dev.kord.core.exception.GatewayNotFoundException
 import dev.kord.core.firstOrNull
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.voice.VoiceConnection
-import dev.kord.voice.VoiceConnectionBuilder
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.first
 import java.util.*
 
@@ -25,7 +24,7 @@ public class VoiceChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CategorizableChannel, VoiceChannelBehavior {
+) : CategorizableChannel, TopGuildMessageChannel, VoiceChannelBehavior {
 
 
     /**
@@ -70,8 +69,12 @@ public class VoiceChannel(
         VoiceChannel(data, kord, strategy.supply(kord))
 
     override suspend fun asChannel(): VoiceChannel = this
-    
+
     override suspend fun asChannelOrNull(): VoiceChannel = this
+
+    override suspend fun fetchChannelOrNull(): VoiceChannel? = supplier.getChannelOfOrNull(id)
+
+    override suspend fun fetchChannel(): VoiceChannel = supplier.getChannelOf(id)
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
