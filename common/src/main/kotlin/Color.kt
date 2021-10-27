@@ -38,20 +38,20 @@ class Color(rgb: Int) {
         private const val MIN_COLOR = 0
         private const val MAX_COLOR = 0xFFFFFF
 
-        val WHITE = Color(255, 255, 255)
-        val LIGHT_GRAY = Color(192, 192, 192)
-        val GRAY = Color(128, 128, 128)
-        val DARK_GRAY = Color(64, 64, 64)
-        val BLACK = Color(0, 0, 0)
+        val White: Color get() = Color(255, 255, 255)
+        val LightGray: Color get() = Color(192, 192, 192)
+        val Gray: Color get() = Color(128, 128, 128)
+        val DarkGray: Color get() = Color(64, 64, 64)
+        val Black: Color get() = Color(0, 0, 0)
 
-        val RED = Color(255, 0, 0)
-        val ORANGE = Color(255, 175, 175)
-        val YELLOW = Color(255, 255, 0)
-        val GREEN = Color(0, 255, 0)
-        val CYAN = Color(0, 255, 255)
-        val BLUE = Color(0, 0, 255)
-        val PINK = Color(255, 175, 175)
-        val MAGENTA = Color(255, 0, 255)
+        val Red: Color get() = Color(255, 0, 0)
+        val Orange: Color get() = Color(255, 175, 175)
+        val Yellow: Color get() = Color(255, 255, 0)
+        val Green: Color get() = Color(0, 255, 0)
+        val Cyan: Color get() = Color(0, 255, 255)
+        val Blue: Color get() = Color(0, 0, 255)
+        val Pink: Color get() = Color(255, 175, 175)
+        val Magenta: Color get() = Color(255, 0, 255)
     }
 
     internal object Serializer : KSerializer<Color> {
