@@ -12,6 +12,7 @@ import kotlinx.serialization.encoding.Encoder
 @Serializable(with = Color.Serializer::class)
 class Color(rgb: Int) {
     constructor(red: Int, green: Int, blue: Int) : this(rgb(red, green, blue))
+    constructor(hex: String) : this(rgb(hex))
 
     val rgb = rgb and 0xFFFFFF
 
@@ -36,6 +37,21 @@ class Color(rgb: Int) {
     companion object {
         private const val MIN_COLOR = 0
         private const val MAX_COLOR = 0xFFFFFF
+
+        val WHITE = Color(255, 255, 255)
+        val LIGHT_GRAY = Color(192, 192, 192)
+        val GRAY = Color(128, 128, 128)
+        val DARK_GRAY = Color(64, 64, 64)
+        val BLACK = Color(0, 0, 0)
+
+        val RED = Color(255, 0, 0)
+        val ORANGE = Color(255, 175, 175)
+        val YELLOW = Color(255, 255, 0)
+        val GREEN = Color(0, 255, 0)
+        val CYAN = Color(0, 255, 255)
+        val BLUE = Color(0, 0, 255)
+        val PINK = Color(255, 175, 175)
+        val MAGENTA = Color(255, 0, 255)
     }
 
     internal object Serializer : KSerializer<Color> {
@@ -48,6 +64,18 @@ class Color(rgb: Int) {
             encoder.encodeInt(value.rgb)
         }
     }
+}
+
+private fun rgb(hex: String): Int {
+    require(hex.startsWith("#")) { "Hex color must start with a '#'" }
+    require(hex.length == 7) { "Hex color must be 7 characters long, including '#'" }
+
+
+    return rgb(
+        red = hex.substring(1, 3).toInt(16),
+        green = hex.substring(3, 5).toInt(16),
+        blue = hex.substring(5, 7).toInt(16)
+    )
 }
 
 private fun rgb(red: Int, green: Int, blue: Int): Int {
