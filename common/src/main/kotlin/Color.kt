@@ -71,11 +71,7 @@ private fun rgb(hex: String): Int {
     require(hex.length == 7) { "Hex color must be 7 characters long, including '#'" }
 
 
-    return rgb(
-        red = hex.substring(1, 3).toInt(16),
-        green = hex.substring(3, 5).toInt(16),
-        blue = hex.substring(5, 7).toInt(16)
-    )
+    return hex.removePrefix("#").toInt(16)
 }
 
 private fun rgb(red: Int, green: Int, blue: Int): Int {
