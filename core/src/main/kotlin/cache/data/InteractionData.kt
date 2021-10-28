@@ -1,9 +1,21 @@
 package dev.kord.core.cache.data
 
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
+import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.Choice
+import dev.kord.common.entity.CommandArgument
+import dev.kord.common.entity.CommandGroup
+import dev.kord.common.entity.ComponentType
+import dev.kord.common.entity.DiscordInteraction
+import dev.kord.common.entity.InteractionCallbackData
+import dev.kord.common.entity.InteractionType
+import dev.kord.common.entity.Option
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.ResolvedObjects
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.SubCommand
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.flatMap
 import dev.kord.common.entity.optional.map
@@ -119,13 +131,14 @@ public data class OptionData(
     @OptIn(KordExperimental::class)
     val value: Optional<CommandArgument<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
     val values: Optional<List<CommandArgument<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
-    val subCommands: Optional<List<SubCommand>> = Optional.Missing()
+    val subCommands: Optional<List<SubCommand>> = Optional.Missing(),
+    val focused: OptionalBoolean = OptionalBoolean.Missing
 ) {
     public companion object {
         public fun from(data: Option): OptionData = with(data) {
             when (data) {
                 is SubCommand -> OptionData(name, values = data.options)
-                is CommandArgument<*> -> OptionData(name, value = Optional(data))
+                is CommandArgument<*> -> OptionData(name, value = Optional(data), focused = data.focused)
                 is CommandGroup -> OptionData(name, subCommands = data.options)
             }
         }
