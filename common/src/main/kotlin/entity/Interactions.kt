@@ -4,12 +4,34 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.*
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
-import kotlinx.serialization.json.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.descriptors.element
+import kotlinx.serialization.encoding.CompositeDecoder
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.encoding.decodeStructure
+import kotlinx.serialization.encoding.encodeStructure
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonDecoder
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.double
+import kotlinx.serialization.json.doubleOrNull
+import kotlinx.serialization.json.int
+import kotlinx.serialization.json.intOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import mu.KotlinLogging
 
 val kordLogger = KotlinLogging.logger { }
@@ -64,6 +86,7 @@ class ApplicationCommandOption(
     val required: OptionalBoolean = OptionalBoolean.Missing,
     @OptIn(KordExperimental::class)
     val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
+    val autocomplete: OptionalBoolean = OptionalBoolean.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
 )
 
@@ -247,12 +270,15 @@ sealed class InteractionType(val type: Int) {
      * this type exists and is needed for components even though it's not documented
      */
     object Component : InteractionType(3)
+
+    object AutoComplete : InteractionType(4)
     class Unknown(type: Int) : InteractionType(type)
 
     override fun toString(): String = when (this) {
         Ping -> "InteractionType.Ping($type)"
         ApplicationCommand -> "InteractionType.ApplicationCommand($type)"
         Component -> "InteractionType.ComponentInvoke($type)"
+        AutoComplete -> "InteractionType.AutoComplete($type)"
         is Unknown -> "InteractionType.Unknown($type)"
     }
 
@@ -267,6 +293,7 @@ sealed class InteractionType(val type: Int) {
                 1 -> Ping
                 2 -> ApplicationCommand
                 3 -> Component
+                4 -> AutoComplete
                 else -> Unknown(type)
             }
         }
@@ -306,6 +333,7 @@ sealed class Option {
             element("value", JsonElement.serializer().descriptor, isOptional = true)
             element("options", JsonArray.serializer().descriptor, isOptional = true)
             element("type", ApplicationCommandOptionType.serializer().descriptor, isOptional = false)
+            element("focused", String.serializer().descriptor, isOptional = true)
         }
 
         override fun deserialize(decoder: Decoder): Option {
@@ -412,10 +440,12 @@ data class SubCommand(
 sealed class CommandArgument<out T> : Option() {
 
     abstract val value: T
+    abstract val focused: OptionalBoolean
 
     class StringArgument(
         override val name: String,
-        override val value: String
+        override val value: String,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<String>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.String
@@ -425,7 +455,8 @@ sealed class CommandArgument<out T> : Option() {
 
     class IntegerArgument(
         override val name: String,
-        override val value: Long
+        override val value: Long,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Long>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Integer
@@ -435,7 +466,8 @@ sealed class CommandArgument<out T> : Option() {
 
     class NumberArgument(
         override val name: String,
-        override val value: Double
+        override val value: Double,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Double>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Number
@@ -445,7 +477,8 @@ sealed class CommandArgument<out T> : Option() {
 
     class BooleanArgument(
         override val name: String,
-        override val value: Boolean
+        override val value: Boolean,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Boolean>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Boolean
@@ -455,7 +488,8 @@ sealed class CommandArgument<out T> : Option() {
 
     class UserArgument(
         override val name: String,
-        override val value: Snowflake
+        override val value: Snowflake,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.User
@@ -465,7 +499,8 @@ sealed class CommandArgument<out T> : Option() {
 
     class ChannelArgument(
         override val name: String,
-        override val value: Snowflake
+        override val value: Snowflake,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Channel
@@ -475,7 +510,8 @@ sealed class CommandArgument<out T> : Option() {
 
     class RoleArgument(
         override val name: String,
-        override val value: Snowflake
+        override val value: Snowflake,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Role
@@ -485,7 +521,8 @@ sealed class CommandArgument<out T> : Option() {
 
     class MentionableArgument(
         override val name: String,
-        override val value: Snowflake
+        override val value: Snowflake,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Mentionable
@@ -640,6 +677,7 @@ sealed class InteractionResponseType(val type: Int) {
     object DeferredChannelMessageWithSource : InteractionResponseType(5)
     object DeferredUpdateMessage : InteractionResponseType(6)
     object UpdateMessage : InteractionResponseType(7)
+    object ApplicationCommandAutoCompleteResult : InteractionResponseType(8)
     class Unknown(type: Int) : InteractionResponseType(type)
 
     companion object;
@@ -656,6 +694,7 @@ sealed class InteractionResponseType(val type: Int) {
                 5 -> DeferredChannelMessageWithSource
                 6 -> DeferredUpdateMessage
                 7 -> UpdateMessage
+                8 -> ApplicationCommandAutoCompleteResult
                 else -> Unknown(type)
             }
         }
@@ -712,3 +751,8 @@ data class DiscordGuildApplicationCommandPermission(
         }
     }
 }
+
+@Serializable
+data class DiscordAutoComplete<T>(
+    val choices: List<Choice<T>>
+)

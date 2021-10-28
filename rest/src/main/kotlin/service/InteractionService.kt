@@ -4,15 +4,36 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.orEmpty
-import dev.kord.rest.builder.interaction.*
+import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
+import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
+import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
+import dev.kord.rest.builder.interaction.ChatInputModifyBuilder
+import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
+import dev.kord.rest.builder.interaction.MessageCommandModifyBuilder
+import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
+import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
+import dev.kord.rest.builder.interaction.UserCommandModifyBuilder
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
 import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
-import dev.kord.rest.json.request.*
+import dev.kord.rest.json.request.ApplicationCommandCreateRequest
+import dev.kord.rest.json.request.ApplicationCommandModifyRequest
+import dev.kord.rest.json.request.ApplicationCommandPermissionsEditRequest
+import dev.kord.rest.json.request.FollowupMessageCreateRequest
+import dev.kord.rest.json.request.FollowupMessageModifyRequest
+import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
+import dev.kord.rest.json.request.InteractionResponseCreateRequest
+import dev.kord.rest.json.request.InteractionResponseModifyRequest
+import dev.kord.rest.json.request.MultipartFollowupMessageCreateRequest
+import dev.kord.rest.json.request.MultipartFollowupMessageModifyRequest
+import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
+import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.serializer
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -122,6 +143,17 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.InteractionId] = interactionId
         keys[Route.InteractionToken] = interactionToken
         body(InteractionResponseCreateRequest.serializer(), request)
+    }
+
+    suspend inline fun <reified T> createAutoCompleteInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        autoComplete: DiscordAutoComplete<T>,
+        typeSerializer: KSerializer<T> = serializer()
+    ) = call(Route.InteractionResponseCreate) {
+        keys[Route.InteractionId] = interactionId
+        keys[Route.InteractionToken] = interactionToken
+        body(DiscordAutoComplete.serializer(typeSerializer), autoComplete)
     }
 
     suspend fun getInteractionResponse(
@@ -367,7 +399,6 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
 
-
     @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildChatInputApplicationCommand(
         applicationId: Snowflake,
@@ -579,11 +610,11 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     }
 
     public suspend fun acknowledge(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
-        val request =  InteractionResponseCreateRequest(
+        val request = InteractionResponseCreateRequest(
             type = InteractionResponseType.DeferredChannelMessageWithSource,
             data = Optional(
                 InteractionApplicationCommandCallbackData(
-                    flags = Optional(if(ephemeral) MessageFlags(MessageFlag.Ephemeral) else null).coerceToMissing()
+                    flags = Optional(if (ephemeral) MessageFlags(MessageFlag.Ephemeral) else null).coerceToMissing()
                 )
             )
         )
