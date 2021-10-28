@@ -274,42 +274,43 @@ public class ResolvedObjects(
 }
 
 
-public sealed class OptionValue<out T>(public val value: T) {
+public sealed class OptionValue<out T>(public val value: T, public val focused: Boolean) {
 
-    public class RoleOptionValue(value: Role) : OptionValue<Role>(value) {
+    public class RoleOptionValue(value: Role, focused: Boolean) : OptionValue<Role>(value, focused) {
         override fun toString(): String = "RoleOptionValue(value=$value)"
     }
 
-    public open class UserOptionValue(value: User) : OptionValue<User>(value) {
+    public open class UserOptionValue(value: User, focused: Boolean) : OptionValue<User>(value, focused) {
         override fun toString(): String = "UserOptionValue(value=$value)"
     }
 
-    public class MemberOptionValue(value: Member) : UserOptionValue(value) {
+    public class MemberOptionValue(value: Member, focused: Boolean) : UserOptionValue(value, focused) {
         override fun toString(): String = "MemberOptionValue(value=$value)"
     }
 
-    public class ChannelOptionValue(value: ResolvedChannel) : OptionValue<ResolvedChannel>(value) {
+    public class ChannelOptionValue(value: ResolvedChannel, focused: Boolean) :
+        OptionValue<ResolvedChannel>(value, focused) {
         override fun toString(): String = "ChannelOptionValue(value=$value)"
     }
 
-    public class IntOptionValue(value: Long) : OptionValue<Long>(value) {
+    public class IntOptionValue(value: Long, focused: Boolean) : OptionValue<Long>(value, focused) {
         override fun toString(): String = "IntOptionValue(value=$value)"
     }
 
 
-    public class NumberOptionValue(value: Double) : OptionValue<Double>(value) {
+    public class NumberOptionValue(value: Double, focused: Boolean) : OptionValue<Double>(value, focused) {
         override fun toString(): String = "DoubleOptionValue(value=$value)"
     }
 
-    public class StringOptionValue(value: String) : OptionValue<String>(value) {
+    public class StringOptionValue(value: String, focused: Boolean) : OptionValue<String>(value, focused) {
         override fun toString(): String = "StringOptionValue(value=$value)"
     }
 
-    public class BooleanOptionValue(value: Boolean) : OptionValue<Boolean>(value) {
+    public class BooleanOptionValue(value: Boolean, focused: Boolean) : OptionValue<Boolean>(value, focused) {
         override fun toString(): String = "BooleanOptionValue(value=$value)"
     }
 
-    public class MentionableOptionValue(value: Entity) : OptionValue<Entity>(value) {
+    public class MentionableOptionValue(value: Entity, focused: Boolean) : OptionValue<Entity>(value, focused) {
         override fun toString(): String = "MentionableOptionValue(value=$value)"
     }
 
@@ -317,16 +318,17 @@ public sealed class OptionValue<out T>(public val value: T) {
 
 
 public fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
+    val focused = value.focused.orElse(false)
     return when (value) {
-        is CommandArgument.NumberArgument -> OptionValue.NumberOptionValue(value.value)
-        is CommandArgument.BooleanArgument -> OptionValue.BooleanOptionValue(value.value)
-        is CommandArgument.IntegerArgument -> OptionValue.IntOptionValue(value.value)
-        is CommandArgument.StringArgument -> OptionValue.StringOptionValue(value.value)
+        is CommandArgument.NumberArgument -> OptionValue.NumberOptionValue(value.value, focused)
+        is CommandArgument.BooleanArgument -> OptionValue.BooleanOptionValue(value.value, focused)
+        is CommandArgument.IntegerArgument -> OptionValue.IntOptionValue(value.value, focused)
+        is CommandArgument.StringArgument -> OptionValue.StringOptionValue(value.value, focused)
         is CommandArgument.ChannelArgument -> {
             val channel = resolvedObjects?.channels.orEmpty()[value.value]
             requireNotNull(channel) { "channel expected for $value but was missing" }
 
-            OptionValue.ChannelOptionValue(channel)
+            OptionValue.ChannelOptionValue(channel, focused)
         }
 
         is CommandArgument.MentionableArgument -> {
@@ -338,25 +340,25 @@ public fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjec
             val entity = channel ?: member ?: user ?: role
             requireNotNull(entity) { "user, member, or channel expected for $value but was missing" }
 
-            OptionValue.MentionableOptionValue(entity)
+            OptionValue.MentionableOptionValue(entity, focused)
         }
 
         is CommandArgument.RoleArgument -> {
             val role = resolvedObjects?.roles.orEmpty()[value.value]
             requireNotNull(role) { "role expected for $value but was missing" }
 
-            OptionValue.RoleOptionValue(role)
+            OptionValue.RoleOptionValue(role, focused)
         }
 
         is CommandArgument.UserArgument -> {
             val member = resolvedObjects?.members.orEmpty()[value.value]
 
-            if (member != null) return OptionValue.MemberOptionValue(member)
+            if (member != null) return OptionValue.MemberOptionValue(member, focused)
 
             val user = resolvedObjects?.users.orEmpty()[value.value]
             requireNotNull(user) { "user expected for $value but was missing" }
 
-            OptionValue.UserOptionValue(user)
+            OptionValue.UserOptionValue(user, focused)
         }
     }
 }
