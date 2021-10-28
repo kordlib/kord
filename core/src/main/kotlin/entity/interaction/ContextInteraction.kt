@@ -7,12 +7,13 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
+import dev.kord.core.behavior.interaction.AutoCompleteInteractionBehavior
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import java.util.*
+import java.util.Objects
 
 /**
  * Represents an interaction of type [ApplicationCommand][dev.kord.common.entity.InteractionType.ApplicationCommand]
@@ -204,4 +205,21 @@ public class UnknownApplicationCommandInteraction(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): UnknownApplicationCommandInteraction {
         return UnknownApplicationCommandInteraction(data, kord, strategy.supply(kord))
     }
+}
+
+/**
+ * Interaction indicating an auto-complete request from Discord.
+ *
+ * **Follow-ups and normals responses don't work on this type**
+ *
+ * Check [AutoCompleteInteractionBehavior] for response options
+ */
+public class AutoCompleteInteraction(
+    override val data: InteractionData,
+    override val user: UserBehavior,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : AutoCompleteInteractionBehavior, ChatInputCommandInteraction {
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction =
+        AutoCompleteInteraction(data, user, kord, strategy.supply(kord))
 }

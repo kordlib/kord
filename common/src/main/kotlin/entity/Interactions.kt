@@ -344,6 +344,7 @@ sealed class Option {
             var jsonValue: JsonElement? = null
             var jsonOptions: JsonArray? = null
             var type: ApplicationCommandOptionType? = null
+            var focused: OptionalBoolean = OptionalBoolean.Missing
             decoder.decodeStructure(descriptor) {
                 while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
@@ -352,7 +353,8 @@ sealed class Option {
                         2 -> jsonOptions = decodeSerializableElement(descriptor, index, JsonArray.serializer())
                         3 -> type =
                             decodeSerializableElement(descriptor, index, ApplicationCommandOptionType.serializer())
-
+                        4 -> focused =
+                            decodeSerializableElement(descriptor, index, OptionalBoolean.serializer())
                         CompositeDecoder.DECODE_DONE -> return@decodeStructure
                         else -> throw SerializationException("unknown index: $index")
                     }
@@ -387,7 +389,7 @@ sealed class Option {
                 ApplicationCommandOptionType.Role,
                 ApplicationCommandOptionType.String,
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
-                    json, jsonValue!!, name, type!!
+                    json, jsonValue!!, name, type!!, focused
                 )
                 else -> error("unknown ApplicationCommandOptionType $type")
             }
@@ -579,32 +581,33 @@ sealed class CommandArgument<out T> : Option() {
             json: Json,
             element: JsonElement,
             name: String,
-            type: ApplicationCommandOptionType
+            type: ApplicationCommandOptionType,
+            focused: OptionalBoolean
         ): CommandArgument<*> = when (type) {
             ApplicationCommandOptionType.Boolean -> BooleanArgument(
-                name, json.decodeFromJsonElement(Boolean.serializer(), element)
+                name, json.decodeFromJsonElement(Boolean.serializer(), element), focused
             )
             ApplicationCommandOptionType.String -> StringArgument(
-                name, json.decodeFromJsonElement(String.serializer(), element)
+                name, json.decodeFromJsonElement(String.serializer(), element), focused
             )
             ApplicationCommandOptionType.Integer -> IntegerArgument(
-                name, json.decodeFromJsonElement(Long.serializer(), element)
+                name, json.decodeFromJsonElement(Long.serializer(), element), focused
             )
 
             ApplicationCommandOptionType.Number -> NumberArgument(
-                name, json.decodeFromJsonElement(Double.serializer(), element)
+                name, json.decodeFromJsonElement(Double.serializer(), element), focused
             )
             ApplicationCommandOptionType.Channel -> ChannelArgument(
-                name, json.decodeFromJsonElement(Snowflake.serializer(), element)
+                name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
             )
             ApplicationCommandOptionType.Mentionable -> MentionableArgument(
-                name, json.decodeFromJsonElement(Snowflake.serializer(), element)
+                name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
             )
             ApplicationCommandOptionType.Role -> RoleArgument(
-                name, json.decodeFromJsonElement(Snowflake.serializer(), element)
+                name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
             )
             ApplicationCommandOptionType.User -> UserArgument(
-                name, json.decodeFromJsonElement(Snowflake.serializer(), element)
+                name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
             )
             ApplicationCommandOptionType.SubCommand,
             ApplicationCommandOptionType.SubCommandGroup,
@@ -635,7 +638,7 @@ sealed class CommandArgument<out T> : Option() {
 
                 requireNotNull(element)
                 requireNotNull(type)
-                return deserialize(json, element, name, type)
+                return deserialize(json, element, name, type, OptionalBoolean.Missing)
             }
         }
     }

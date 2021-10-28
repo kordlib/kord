@@ -6,7 +6,6 @@ import dev.kord.core.entity.application.*
 import dev.kord.core.entity.interaction.*
 import dev.kord.core.event.kordCoroutineScope
 import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 /**
  * This event fires when an interaction is created.
@@ -46,7 +45,7 @@ public sealed interface GuildApplicationInteractionCreateEvent : ApplicationInte
     override val interaction: GuildApplicationCommandInteraction
 }
 
-public sealed interface  UserCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
+public sealed interface UserCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
     override val interaction: UserCommandInteraction
 }
 
@@ -65,7 +64,7 @@ public class GlobalUserCommandInteractionCreateEvent(
 ) : GlobalApplicationInteractionCreateEvent, UserCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 
-public sealed interface  MessageCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
+public sealed interface MessageCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
     override val interaction: MessageCommandInteraction
 }
 
@@ -84,8 +83,7 @@ public class GlobalMessageCommandInteractionCreateEvent(
 ) : GlobalApplicationInteractionCreateEvent, MessageCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 
-
-public sealed interface  ChatInputCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
+public sealed interface ChatInputCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
     override val interaction: ChatInputCommandInteraction
 }
 
@@ -102,3 +100,17 @@ public class GlobalChatInputCommandInteractionCreateEvent(
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
 ) : GlobalApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent, CoroutineScope by coroutineScope
+
+/**
+ * Interaction received when a users types into an auto-completed option.
+ *
+ * Check [AutoCompleteInteractionBehavior] on how to reply.
+ *
+ * @see AutoCompleteInteraction
+ */
+public class AutoCompleteInteractionCreateEvent(
+    override val interaction: AutoCompleteInteraction,
+    override val kord: Kord,
+    override val shard: Int,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : InteractionCreateEvent, CoroutineScope by coroutineScope

@@ -3,14 +3,26 @@ package dev.kord.rest.service
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
+import dev.kord.common.entity.Choice
+import dev.kord.common.entity.DiscordApplicationCommand
+import dev.kord.common.entity.DiscordAutoComplete
+import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
+import dev.kord.common.entity.DiscordMessage
+import dev.kord.common.entity.InteractionResponseType
+import dev.kord.common.entity.PartialDiscordGuildApplicationCommandPermissions
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
 import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
+import dev.kord.rest.builder.interaction.BaseChoiceBuilder
 import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
 import dev.kord.rest.builder.interaction.ChatInputModifyBuilder
+import dev.kord.rest.builder.interaction.IntChoiceBuilder
 import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
 import dev.kord.rest.builder.interaction.MessageCommandModifyBuilder
 import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
+import dev.kord.rest.builder.interaction.NumberChoiceBuilder
+import dev.kord.rest.builder.interaction.StringChoiceBuilder
 import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
 import dev.kord.rest.builder.interaction.UserCommandModifyBuilder
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
@@ -20,6 +32,7 @@ import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import dev.kord.rest.json.request.ApplicationCommandModifyRequest
 import dev.kord.rest.json.request.ApplicationCommandPermissionsEditRequest
+import dev.kord.rest.json.request.AutoCompleteResponseCreateRequest
 import dev.kord.rest.json.request.FollowupMessageCreateRequest
 import dev.kord.rest.json.request.FollowupMessageModifyRequest
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
@@ -153,7 +166,81 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     ) = call(Route.InteractionResponseCreate) {
         keys[Route.InteractionId] = interactionId
         keys[Route.InteractionToken] = interactionToken
-        body(DiscordAutoComplete.serializer(typeSerializer), autoComplete)
+
+        body(
+            AutoCompleteResponseCreateRequest.serializer(typeSerializer),
+            AutoCompleteResponseCreateRequest(
+                InteractionResponseType.ApplicationCommandAutoCompleteResult,
+                autoComplete
+            )
+        )
+    }
+
+    @PublishedApi
+    internal suspend inline fun <reified T, Builder : BaseChoiceBuilder<T>> createBuilderAutoCompleteInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        builder: Builder,
+        builderFunction: Builder.() -> Unit
+    ) {
+        @Suppress("UNCHECKED_CAST")
+        val choices = builder.apply(builderFunction).choices as List<Choice<T>>
+
+        return createAutoCompleteInteractionResponse(interactionId, interactionToken, DiscordAutoComplete(choices))
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createIntAutoCompleteInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        builderFunction: IntChoiceBuilder.() -> Unit
+    ) {
+        contract {
+            callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return createBuilderAutoCompleteInteractionResponse(
+            interactionId,
+            interactionToken,
+            IntChoiceBuilder("<auto-complete>", ""),
+            builderFunction
+        )
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createNumberAutoCompleteInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        builderFunction: NumberChoiceBuilder.() -> Unit
+    ) {
+        contract {
+            callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return createBuilderAutoCompleteInteractionResponse(
+            interactionId,
+            interactionToken,
+            NumberChoiceBuilder("<auto-complete>", ""),
+            builderFunction
+        )
+    }
+
+    @OptIn(ExperimentalContracts::class)
+    suspend inline fun createStringAutoCompleteInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        builderFunction: StringChoiceBuilder.() -> Unit
+    ) {
+        contract {
+            callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return createBuilderAutoCompleteInteractionResponse(
+            interactionId,
+            interactionToken,
+            StringChoiceBuilder("<auto-complete>", ""),
+            builderFunction
+        )
     }
 
     suspend fun getInteractionResponse(
