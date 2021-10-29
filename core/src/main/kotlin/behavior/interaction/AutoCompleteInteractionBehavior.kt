@@ -22,10 +22,12 @@ public interface AutoCompleteInteractionBehavior : InteractionBehavior
 /**
  * Responds with the int choices specified by [builder].
  *
+ * The provided choices are only suggestions and the user can provide any other input as well.
+ *
  * @see IntChoiceBuilder
  */
 @OptIn(ExperimentalContracts::class)
-public suspend inline fun AutoCompleteInteractionBehavior.respondInt(builder: IntChoiceBuilder.() -> Unit) {
+public suspend inline fun AutoCompleteInteractionBehavior.suggestInt(builder: IntChoiceBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -36,10 +38,11 @@ public suspend inline fun AutoCompleteInteractionBehavior.respondInt(builder: In
 /**
  * Responds with the number choices specified by [builder].
  *
+ * The provided choices are only suggestions and the user can provide any other input as well.
  * @see NumberChoiceBuilder
  */
 @OptIn(ExperimentalContracts::class)
-public suspend inline fun AutoCompleteInteractionBehavior.respondNumber(builder: NumberChoiceBuilder.() -> Unit) {
+public suspend inline fun AutoCompleteInteractionBehavior.suggestNumber(builder: NumberChoiceBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -50,10 +53,12 @@ public suspend inline fun AutoCompleteInteractionBehavior.respondNumber(builder:
 /**
  * Responds with the string choices specified by [builder].
  *
+ * The provided choices are only suggestions and the user can provide any other input as well.
+ *
  * @see StringChoiceBuilder
  */
 @OptIn(ExperimentalContracts::class)
-public suspend inline fun AutoCompleteInteractionBehavior.respondString(builder: StringChoiceBuilder.() -> Unit) {
+public suspend inline fun AutoCompleteInteractionBehavior.suggestString(builder: StringChoiceBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -63,8 +68,10 @@ public suspend inline fun AutoCompleteInteractionBehavior.respondString(builder:
 
 /**
  * Responds with [choices] to this auto-complete request.
+ *
+ * The provided choices are only suggestions and the user can provide any other input as well.
  */
-public suspend inline fun <reified T> AutoCompleteInteractionBehavior.respond(choices: List<Choice<T>>) {
+public suspend inline fun <reified T> AutoCompleteInteractionBehavior.suggest(choices: List<Choice<T>>) {
     kord.rest.interaction.createAutoCompleteInteractionResponse(
         id,
         token,

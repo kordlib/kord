@@ -31,7 +31,7 @@ sealed class OptionsBuilder(
     /**
      * Setting this to `true` allows you to dynamically respond with your choices, depending on the user input.
      *
-     * **Warning:** This disables all input validation, users can submit values before responding to the AutoComplete request
+     * This disables all input validation, users can submit values before responding to the AutoComplete request
      *
      * **Note:** If you set this to `true` you can't add any other choice
      *
