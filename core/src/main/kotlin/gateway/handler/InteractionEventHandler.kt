@@ -69,8 +69,7 @@ public class InteractionEventHandler(
 
     private fun handle(event: InteractionCreate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent {
         val data = InteractionData.from(event.interaction)
-        val interaction = Interaction.from(data, kord)
-        val coreEvent = when(interaction) {
+        val coreEvent = when(val interaction = Interaction.from(data, kord)) {
             is AutoCompleteInteraction -> AutoCompleteInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GlobalChatInputCommandInteraction -> GlobalChatInputCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GlobalUserCommandInteraction -> GlobalUserCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)

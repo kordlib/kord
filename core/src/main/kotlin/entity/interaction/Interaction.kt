@@ -62,10 +62,7 @@ public sealed interface Interaction : InteractionBehavior {
         ): Interaction {
             return when {
                 data.type == InteractionType.Component -> ComponentInteraction(data, kord, strategy.supply(kord))
-                data.type == InteractionType.AutoComplete -> {
-                    val user = User(data.user.value!!, kord, strategy.supply(kord))
-                    AutoCompleteInteraction(data, user, kord, strategy.supply(kord))
-                }
+                data.type == InteractionType.AutoComplete -> AutoCompleteInteraction(data, kord, strategy.supply(kord))
                 data.guildId !is OptionalSnowflake.Missing -> GuildApplicationCommandInteraction(
                     data,
                     kord,

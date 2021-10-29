@@ -108,9 +108,46 @@ public class GlobalChatInputCommandInteractionCreateEvent(
  *
  * @see AutoCompleteInteraction
  */
-public class AutoCompleteInteractionCreateEvent(
-    override val interaction: AutoCompleteInteraction,
+public sealed interface AutoCompleteInteractionCreateEvent : InteractionCreateEvent, ChatInputCommandInteractionCreateEvent
+
+internal fun AutoCompleteInteractionCreateEvent(
+    interaction: AutoCompleteInteraction,
+    kord: Kord,
+    shard: Int,
+    coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+): AutoCompleteInteractionCreateEvent = when (interaction) {
+    is GuildAutoCompleteInteraction -> GuildAutoCompleteInteractionCreateEvent(
+        kord, shard, interaction, coroutineScope
+    )
+    else -> GlobalAutoCompleteInteractionCreateEvent(
+        kord, shard, interaction as GlobalAutoCompleteInteraction, coroutineScope
+    )
+}
+
+/**
+ * Interaction received when a users types into an auto-completed option.
+ *
+ * Check [AutoCompleteInteractionBehavior] on how to reply.
+ *
+ * @see AutoCompleteInteraction
+ */
+public class GlobalAutoCompleteInteractionCreateEvent(
     override val kord: Kord,
     override val shard: Int,
+    override val interaction: GlobalAutoCompleteInteraction,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : InteractionCreateEvent, CoroutineScope by coroutineScope
+) : AutoCompleteInteractionCreateEvent, GlobalApplicationInteractionCreateEvent, CoroutineScope by coroutineScope
+
+/**
+ * Interaction received when a users types into an auto-completed option.
+ *
+ * Check [AutoCompleteInteractionBehavior] on how to reply.
+ *
+ * @see AutoCompleteInteraction
+ */
+public class GuildAutoCompleteInteractionCreateEvent(
+    override val kord: Kord,
+    override val shard: Int,
+    override val interaction: GuildAutoCompleteInteraction,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : AutoCompleteInteractionCreateEvent, CoroutineScope by coroutineScope

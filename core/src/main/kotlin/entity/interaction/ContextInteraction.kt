@@ -2,8 +2,10 @@ package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
+import dev.kord.core.behavior.GuildInteractionBehavior
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
@@ -142,7 +144,7 @@ public sealed interface MessageCommandInteraction : ApplicationCommandInteractio
 
     public suspend fun getTarget(): Message = supplier.getMessage(channelId, targetId)
 
-    public suspend fun getTargetOrNull(): Message? =  supplier.getMessageOrNull(channelId, targetId)
+    public suspend fun getTargetOrNull(): Message? = supplier.getMessageOrNull(channelId, targetId)
 
     public val messages: Map<Snowflake, Message> get() = resolvedObjects!!.messages!!
 
@@ -214,12 +216,52 @@ public class UnknownApplicationCommandInteraction(
  *
  * Check [AutoCompleteInteractionBehavior] for response options
  */
-public class AutoCompleteInteraction(
+public sealed interface AutoCompleteInteraction : AutoCompleteInteractionBehavior, ChatInputCommandInteraction
+
+internal fun AutoCompleteInteraction(
+    data: InteractionData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+): ApplicationCommandInteraction = when (data.guildId) {
+    is OptionalSnowflake.Value -> GuildAutoCompleteInteraction(
+        data, kord, supplier
+    )
+    else -> GlobalAutoCompleteInteraction(data, kord, supplier)
+}
+
+/**
+ * Interaction indicating an auto-complete request from Discord.
+ *
+ * **Follow-ups and normals responses don't work on this type**
+ *
+ * @see ApplicationCommandInteraction
+ */
+public class GlobalAutoCompleteInteraction(
     override val data: InteractionData,
-    override val user: UserBehavior,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : AutoCompleteInteractionBehavior, ChatInputCommandInteraction {
+) : AutoCompleteInteraction, GlobalApplicationCommandInteraction {
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GlobalAutoCompleteInteraction =
+        GlobalAutoCompleteInteraction(data, kord, strategy.supply(kord))
+}
+
+/**
+ * Interaction indicating an auto-complete request from Discord on a guild.
+ *
+ * **Follow-ups and normals responses don't work on this type**
+ *
+ * @see ApplicationCommandInteraction
+ */
+public class GuildAutoCompleteInteraction(
+    override val data: InteractionData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : AutoCompleteInteraction, GuildInteractionBehavior {
+    override val guildId: Snowflake
+        get() = data.guildId.value!!
+
+    override val user: User get() = User(data.user.value!!, kord)
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction =
-        AutoCompleteInteraction(data, user, kord, strategy.supply(kord))
+        GuildAutoCompleteInteraction(data, kord, strategy.supply(kord))
 }
