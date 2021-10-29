@@ -42,7 +42,7 @@ class Color(rgb: Int) {
         val LightGray: Color get() = Color(192, 192, 192)
         val Gray: Color get() = Color(128, 128, 128)
         val DarkGray: Color get() = Color(64, 64, 64)
-        val Black: Color get() = Color(0, 0, 0)
+        val Black: Color get() = Color(1, 1, 1) //000 in Discord's colour system means transparent, workaround that
 
         val Red: Color get() = Color(255, 0, 0)
         val Orange: Color get() = Color(255, 175, 175)
