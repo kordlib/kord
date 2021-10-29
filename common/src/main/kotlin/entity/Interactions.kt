@@ -43,7 +43,10 @@ data class DiscordApplicationCommand(
     @SerialName("application_id")
     val applicationId: Snowflake,
     val name: String,
-    val description: String,
+    /**
+     * Don't trust the docs: This is nullable on non chat input commands.
+     */
+    val description: String?,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
