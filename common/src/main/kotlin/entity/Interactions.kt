@@ -21,7 +21,7 @@ data class DiscordApplicationCommand(
     @SerialName("application_id")
     val applicationId: Snowflake,
     val name: String,
-    val description: String,
+    val description: String?,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
