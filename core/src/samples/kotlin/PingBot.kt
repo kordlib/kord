@@ -10,5 +10,5 @@ suspend fun main(args: Array<String>) {
         if (message.content == "!ping") message.channel.createMessage("pong")
     }
 
-    kord.login { playing("!ping to pong") }
+    kord.login { presence { playing("!ping to pong") } }
 }

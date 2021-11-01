@@ -131,9 +131,6 @@ sealed class Optional<out T> {
             if (value.isEmpty()) Missing()
             else Value(value)
 
-        fun <T, C : Collection<T>> missingOnEmptyOrOnNull(value: C?): Optional<C> =
-            if (value == null) Missing() else missingOnEmpty(value)
-
         /**
          * Returns a [Missing] optional of type [T].
          */

@@ -13,7 +13,7 @@ import dev.kord.rest.json.request.GuildChannelCreateRequest
 
 @KordDsl
 class VoiceChannelCreateBuilder(var name: String) :
-    PermissionOverritesBuilder, AuditRequestBuilder<GuildChannelCreateRequest> {
+    PermissionOverwritesCreateBuilder, AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
 
     private var _bitrate: OptionalInt = OptionalInt.Missing
@@ -28,7 +28,7 @@ class VoiceChannelCreateBuilder(var name: String) :
     private var _position: OptionalInt = OptionalInt.Missing
     var position: Int? by ::_position.delegate()
 
-    override var permissionOverwrites: MutableSet<Overwrite>? = mutableSetOf()
+    override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name = name,
@@ -36,7 +36,7 @@ class VoiceChannelCreateBuilder(var name: String) :
         userLimit = _userLimit,
         parentId = _parentId,
         position = _position,
-        permissionOverwrite = Optional.missingOnEmptyOrOnNull(permissionOverwrites),
+        permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
         type = ChannelType.GuildVoice
     )
 }

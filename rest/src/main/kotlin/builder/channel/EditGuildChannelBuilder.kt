@@ -12,7 +12,7 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
 
 @KordDsl
-class TextChannelModifyBuilder : PermissionOverritesBuilder,
+class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
@@ -34,7 +34,8 @@ class TextChannelModifyBuilder : PermissionOverritesBuilder,
     private var _rateLimitPerUser: OptionalInt? = OptionalInt.Missing
     var rateLimitPerUser: Int? by ::_rateLimitPerUser.delegate()
 
-    override var permissionOverwrites: MutableSet<Overwrite>? = mutableSetOf()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>> = Optional.Missing()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
@@ -42,7 +43,7 @@ class TextChannelModifyBuilder : PermissionOverritesBuilder,
         topic = _topic,
         nsfw = _nsfw,
         rateLimitPerUser = _rateLimitPerUser,
-        permissionOverwrites = Optional.missingOnEmptyOrOnNull(permissionOverwrites),
+        permissionOverwrites = _permissionOverwrites,
         parentId = _parentId
     )
 

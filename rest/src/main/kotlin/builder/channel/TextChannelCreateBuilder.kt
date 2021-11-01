@@ -13,7 +13,7 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 
 @KordDsl
-class TextChannelCreateBuilder(var name: String) : PermissionOverritesBuilder, AuditRequestBuilder<GuildChannelCreateRequest> {
+class TextChannelCreateBuilder(var name: String) : PermissionOverwritesCreateBuilder, AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
 
     private var _topic: Optional<String> = Optional.Missing()
@@ -31,7 +31,7 @@ class TextChannelCreateBuilder(var name: String) : PermissionOverritesBuilder, A
     private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
     var nsfw: Boolean? by ::_nsfw.delegate()
 
-    override var permissionOverwrites: MutableSet<Overwrite>? = mutableSetOf()
+    override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name,
@@ -41,6 +41,6 @@ class TextChannelCreateBuilder(var name: String) : PermissionOverritesBuilder, A
         _position,
         parentId = _parentId,
         nsfw = _nsfw,
-        permissionOverwrite = Optional.missingOnEmptyOrOnNull(permissionOverwrites),
+        permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
     )
 }

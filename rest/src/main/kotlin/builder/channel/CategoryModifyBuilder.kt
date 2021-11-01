@@ -9,7 +9,7 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
 
 @KordDsl
-class CategoryModifyBuilder : PermissionOverritesBuilder, AuditRequestBuilder<ChannelModifyPatchRequest> {
+class CategoryModifyBuilder : PermissionOverwritesModifyBuilder, AuditRequestBuilder<ChannelModifyPatchRequest> {
 
     override var reason: String? = null
 
