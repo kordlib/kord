@@ -8,7 +8,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * Interface containing shared behavior on all builders modifying permission overwrites.
+ * Builder that can modify [permission overwrites][Overwrite].
  */
 interface PermissionOverritesBuilder {
     /**
