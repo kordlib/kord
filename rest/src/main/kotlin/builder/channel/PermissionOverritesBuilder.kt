@@ -18,7 +18,7 @@ interface PermissionOverritesBuilder {
 }
 
 /**
- * adds a [Overwrite] for the [memberId].
+ * Adds an [Overwrite] for the [memberId].
  */
 @OptIn(ExperimentalContracts::class)
 inline fun PermissionOverritesBuilder.addMemberOverwrite(memberId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit) {
