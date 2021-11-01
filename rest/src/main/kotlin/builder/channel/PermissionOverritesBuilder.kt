@@ -31,7 +31,7 @@ inline fun PermissionOverritesBuilder.addMemberOverwrite(memberId: Snowflake, bu
 }
 
 /**
- * adds a [Overwrite] for the [roleId].
+ * Adds an [Overwrite] for the [roleId].
  */
 @OptIn(ExperimentalContracts::class)
 inline fun PermissionOverritesBuilder.addRoleOverwrite(roleId: Snowflake, builder: PermissionOverwriteBuilder.() -> Unit) {
