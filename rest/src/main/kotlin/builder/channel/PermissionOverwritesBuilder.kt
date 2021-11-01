@@ -10,7 +10,7 @@ import kotlin.contracts.contract
 /**
  * Builder that can modify [permission overwrites][Overwrite].
  */
-interface PermissionOverwritesBuilder {
+sealed interface PermissionOverwritesBuilder {
     /**
      * Adds [overwrite] to this builder.
      */
