@@ -15,6 +15,7 @@ public sealed interface ThreadUpdateEvent : ChannelUpdateEvent {
 
 public class TextChannelThreadUpdateEvent(
     override val channel: TextChannelThread,
+    override val old: TextChannelThread?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) :
@@ -27,6 +28,7 @@ public class TextChannelThreadUpdateEvent(
 
 public class NewsChannelThreadUpdateEvent(
     override val channel: NewsChannelThread,
+    override val old: NewsChannelThread?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ThreadUpdateEvent, CoroutineScope by coroutineScope {
@@ -38,6 +40,7 @@ public class NewsChannelThreadUpdateEvent(
 
 public class UnknownChannelThreadUpdateEvent(
     override val channel: ThreadChannel,
+    override val old: ThreadChannel?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ThreadUpdateEvent, CoroutineScope by coroutineScope {

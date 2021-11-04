@@ -16,6 +16,7 @@ import kotlin.coroutines.CoroutineContext
 public class EmojisUpdateEvent(
     public val guildId: Snowflake,
     public val emojis: Set<GuildEmoji>,
+    public val old: Set<GuildEmoji>?,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
@@ -29,7 +30,7 @@ public class EmojisUpdateEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): EmojisUpdateEvent =
-        EmojisUpdateEvent(guildId, emojis, kord, shard, strategy.supply(kord))
+        EmojisUpdateEvent(guildId, emojis, old, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
         return "EmojisUpdateEvent(guildId=$guildId, emojis=$emojis, kord=$kord, shard=$shard, supplier=$supplier)"

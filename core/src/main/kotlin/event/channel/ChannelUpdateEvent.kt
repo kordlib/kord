@@ -9,14 +9,17 @@ import dev.kord.core.event.kordCoroutineScope
 import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
+//TODO("Update the toString representation")
 public interface ChannelUpdateEvent : Event {
     public val channel: Channel
+    public val old: Channel?
     override val kord: Kord
         get() = channel.kord
 }
 
 public class CategoryUpdateEvent(
     override val channel: Category,
+    override val old: Category?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
@@ -27,6 +30,7 @@ public class CategoryUpdateEvent(
 
 public class DMChannelUpdateEvent(
     override val channel: DmChannel,
+    override val old: DmChannel?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
@@ -37,6 +41,7 @@ public class DMChannelUpdateEvent(
 
 public class NewsChannelUpdateEvent(
     override val channel: NewsChannel,
+    override val old: NewsChannel?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
@@ -47,6 +52,7 @@ public class NewsChannelUpdateEvent(
 
 public class StoreChannelUpdateEvent(
     override val channel: StoreChannel,
+    override val old: StoreChannel?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
@@ -57,6 +63,7 @@ public class StoreChannelUpdateEvent(
 
 public class TextChannelUpdateEvent(
     override val channel: TextChannel,
+    override val old: TextChannel?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
@@ -67,6 +74,7 @@ public class TextChannelUpdateEvent(
 
 public class VoiceChannelUpdateEvent(
     override val channel: VoiceChannel,
+    override val old: VoiceChannel?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope{
@@ -78,6 +86,7 @@ public class VoiceChannelUpdateEvent(
 
 public class StageChannelUpdateEvent(
     override val channel: StageChannel,
+    override val old: StageChannel?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
@@ -88,6 +97,7 @@ public class StageChannelUpdateEvent(
 
 public class UnknownChannelUpdateEvent(
     override val channel: Channel,
+    override val old: Channel?,
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
