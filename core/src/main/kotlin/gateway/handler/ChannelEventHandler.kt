@@ -15,6 +15,8 @@ import dev.kord.core.event.channel.data.ChannelPinsUpdateEventData
 import dev.kord.core.event.channel.data.TypingStartEventData
 import dev.kord.gateway.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.singleOrNull
 import kotlin.coroutines.CoroutineContext
 import dev.kord.core.event.Event as CoreEvent
 
@@ -59,20 +61,26 @@ internal class ChannelEventHandler(
 
     private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         val data = ChannelData.from(event.channel)
-        cache.put(data)
+
+        val query = cache.query<ChannelData> {
+            idEq(ChannelData::id, event.channel.id)
+        }
+        val old = query.asFlow().map { Channel.from(it, kord) }.singleOrNull()
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
-            is NewsChannel -> NewsChannelUpdateEvent(channel, shard, coroutineScope)
-            is StoreChannel -> StoreChannelUpdateEvent(channel, shard, coroutineScope)
-            is DmChannel -> DMChannelUpdateEvent(channel, shard, coroutineScope)
-            is TextChannel -> TextChannelUpdateEvent(channel, shard, coroutineScope)
-            is StageChannel -> StageChannelUpdateEvent(channel, shard, coroutineScope)
-            is VoiceChannel -> VoiceChannelUpdateEvent(channel, shard, coroutineScope)
-            is Category -> CategoryUpdateEvent(channel, shard, coroutineScope)
+            is NewsChannel -> NewsChannelUpdateEvent(channel, old as NewsChannel, shard, coroutineScope)
+            is StoreChannel -> StoreChannelUpdateEvent(channel, old as StoreChannel, shard, coroutineScope)
+            is DmChannel -> DMChannelUpdateEvent(channel, old as DmChannel, shard, coroutineScope)
+            is TextChannel -> TextChannelUpdateEvent(channel, old as TextChannel, shard, coroutineScope)
+            is StageChannel -> StageChannelUpdateEvent(channel, old as StageChannel, shard, coroutineScope)
+            is VoiceChannel -> VoiceChannelUpdateEvent(channel, old as VoiceChannel, shard, coroutineScope)
+            is Category -> CategoryUpdateEvent(channel, old as Category, shard, coroutineScope)
             is ThreadChannel -> return null
-            else -> UnknownChannelUpdateEvent(channel, shard, coroutineScope)
+            else -> UnknownChannelUpdateEvent(channel, old, shard, coroutineScope)
 
         }
+
+        cache.put(data)
 
         return coreEvent
     }
