@@ -35,6 +35,6 @@ public class RoleUpdateEvent(
         RoleUpdateEvent(role, old, shard, strategy.supply(kord))
 
     override fun toString(): String {
-        return "RoleUpdateEvent(role=$role, shard=$shard, supplier=$supplier)"
+        return "RoleUpdateEvent(role=$role, old=$old, shard=$shard, supplier=$supplier)"
     }
 }

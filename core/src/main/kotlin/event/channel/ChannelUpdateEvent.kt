@@ -9,7 +9,7 @@ import dev.kord.core.event.kordCoroutineScope
 import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
-//TODO("Update the toString representation")
+
 public interface ChannelUpdateEvent : Event {
     public val channel: Channel
     public val old: Channel?
@@ -24,7 +24,7 @@ public class CategoryUpdateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
-        return "CategoryUpdateEvent(channel=$channel, shard=$shard)"
+        return "CategoryUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }
 
@@ -35,7 +35,7 @@ public class DMChannelUpdateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
-        return "DMChannelUpdateEvent(channel=$channel, shard=$shard)"
+        return "DMChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }
 
@@ -46,7 +46,7 @@ public class NewsChannelUpdateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
-        return "NewsChannelUpdateEvent(channel=$channel, shard=$shard)"
+        return "NewsChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }
 
@@ -57,7 +57,7 @@ public class StoreChannelUpdateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
-        return "StoreChannelUpdateEvent(channel=$channel, shard=$shard)"
+        return "StoreChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }
 
@@ -68,7 +68,7 @@ public class TextChannelUpdateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
-        return "TextChannelUpdateEvent(channel=$channel, shard=$shard)"
+        return "TextChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }
 
@@ -79,7 +79,7 @@ public class VoiceChannelUpdateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope{
     override fun toString(): String {
-        return "VoiceChannelUpdateEvent(channel=$channel, shard=$shard)"
+        return "VoiceChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }
 
@@ -91,7 +91,7 @@ public class StageChannelUpdateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
-        return "StageChannelUpdateEvent(channel=$channel, shard=$shard)"
+        return "StageChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }
 
@@ -102,6 +102,6 @@ public class UnknownChannelUpdateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ChannelUpdateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
-        return "UnknownChannelUpdateEvent(channel=$channel, shard=$shard)"
+        return "UnknownChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }

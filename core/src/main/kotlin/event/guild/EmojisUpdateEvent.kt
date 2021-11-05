@@ -33,6 +33,6 @@ public class EmojisUpdateEvent(
         EmojisUpdateEvent(guildId, emojis, old, kord, shard, strategy.supply(kord))
 
     override fun toString(): String {
-        return "EmojisUpdateEvent(guildId=$guildId, emojis=$emojis, kord=$kord, shard=$shard, supplier=$supplier)"
+        return "EmojisUpdateEvent(guildId=$guildId, emojis=$emojis, old=$old, kord=$kord, shard=$shard, supplier=$supplier)"
     }
 }

@@ -28,7 +28,7 @@ public class MemberLeaveEvent(
     public suspend fun getGuildOrNull(): Guild? = guild.asGuildOrNull()
 
     override fun toString(): String {
-        return "MemberLeaveEvent(user=$user, guildId=$guildId, shard=$shard)"
+        return "MemberLeaveEvent(user=$user, old=$old, guildId=$guildId, shard=$shard)"
     }
 
 }

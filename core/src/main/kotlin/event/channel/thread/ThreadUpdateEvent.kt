@@ -6,7 +6,6 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.channel.ChannelUpdateEvent
 import dev.kord.core.event.kordCoroutineScope
 import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public sealed interface ThreadUpdateEvent : ChannelUpdateEvent {
     override val channel: ThreadChannel
@@ -21,7 +20,7 @@ public class TextChannelThreadUpdateEvent(
 ) :
     ThreadUpdateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
-        return "TextThreadChannelUpdateEvent(channel=$channel, shard=$shard)"
+        return "TextThreadChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }
 
@@ -33,7 +32,7 @@ public class NewsChannelThreadUpdateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ThreadUpdateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
-        return "NewsThreadChannelUpdateEvent(channel=$channel, shard=$shard)"
+        return "NewsThreadChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }
 
@@ -45,6 +44,6 @@ public class UnknownChannelThreadUpdateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 ) : ThreadUpdateEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
-        return "UnknownChannelThreadUpdateEvent(channel=$channel, shard=$shard)"
+        return "UnknownChannelThreadUpdateEvent(channel=$channel, old=$old, shard=$shard)"
     }
 }
