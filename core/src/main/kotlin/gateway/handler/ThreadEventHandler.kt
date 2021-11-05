@@ -50,12 +50,18 @@ public class ThreadEventHandler(
 
     public suspend fun handle(event: ThreadUpdate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         val channelData = event.channel.toData()
+        val oldData = cache.query<ChannelData> {
+            idEq(ChannelData::id, event.channel.id)
+            idEq(ChannelData::guildId, event.channel.guildId.value)
+        }.singleOrNull()
         cache.put(channelData)
 
+        val old = oldData?.let { ThreadChannel(it, kord) }
+
         val coreEvent = when (val channel = Channel.from(channelData, kord)) {
-            is NewsChannelThread -> NewsChannelThreadUpdateEvent(channel, shard, coroutineScope)
-            is TextChannelThread -> TextChannelThreadUpdateEvent(channel, shard, coroutineScope)
-            is ThreadChannel -> UnknownChannelThreadUpdateEvent(channel, shard, coroutineScope)
+            is NewsChannelThread -> NewsChannelThreadUpdateEvent(channel, old as? NewsChannelThread, shard, coroutineScope)
+            is TextChannelThread -> TextChannelThreadUpdateEvent(channel, old as? TextChannelThread, shard, coroutineScope)
+            is ThreadChannel -> UnknownChannelThreadUpdateEvent(channel,old, shard, coroutineScope)
             else -> return null
         }
 
