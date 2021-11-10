@@ -363,7 +363,7 @@ public class Guild(
      * Gets the banner url in the specified format.
      */
     public fun getBannerUrl(format: Image.Format): String? =
-        data.banner?.let { "https://cdn.discordapp.com/banners/${id.asString}/$it.${format.extension}" }
+        data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
     /**
      * Requests to get the banner image in the specified [format], if present.
@@ -421,7 +421,7 @@ public class Guild(
      * Gets the discovery splash url in the specified [format], if present.
      */
     public fun getDiscoverySplashUrl(format: Image.Format): String? =
-        data.splash.value?.let { "discovery-splashes/${id.asString}/${it}.${format.extension}" }
+        data.splash.value?.let { "discovery-splashes/$id/${it}.${format.extension}" }
 
     /**
      * Requests to get the splash image in the specified [format], if present.
@@ -438,7 +438,7 @@ public class Guild(
      * Gets the icon url, if present.
      */
     public fun getIconUrl(format: Image.Format): String? =
-        data.icon?.let { "https://cdn.discordapp.com/icons/${id.asString}/$it.${format.extension}" }
+        data.icon?.let { "https://cdn.discordapp.com/icons/$id/$it.${format.extension}" }
 
     /**
      * Requests to get the icon image in the specified [format], if present.
@@ -482,7 +482,7 @@ public class Guild(
      * Gets the splash url in the specified [format], if present.
      */
     public fun getSplashUrl(format: Image.Format): String? =
-        data.splash.value?.let { "https://cdn.discordapp.com/splashes/${id.asString}/$it.${format.extension}" }
+        data.splash.value?.let { "https://cdn.discordapp.com/splashes/$id/$it.${format.extension}" }
 
     /**
      * Requests to get the splash image in the specified [format], if present.

@@ -20,8 +20,8 @@ class VoiceStateTest {
         val state = Json.decodeFromString(DiscordVoiceState.serializer(), file("voicestate"))
 
         with(state) {
-            channelId!!.asString shouldBe "157733188964188161"
-            userId.asString shouldBe "80351110224678912"
+            channelId!!.toString() shouldBe "157733188964188161"
+            userId.toString() shouldBe "80351110224678912"
             sessionId shouldBe "90326bd25d71d39b9ef95b299e3872ff"
             deaf shouldBe false
             mute shouldBe false

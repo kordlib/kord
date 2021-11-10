@@ -119,7 +119,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.WebhookId] = webhookId
             keys[Route.WebhookToken] = token
             if(wait != null) parameter("wait", "$wait")
-            if(threadId != null) parameter("thread_id", threadId.asString)
+            if(threadId != null) parameter("thread_id", threadId.toString())
             val request = WebhookMessageCreateBuilder().apply(builder).toRequest()
             body(WebhookExecuteRequest.serializer(), request.request)
             request.files.forEach { file(it) }

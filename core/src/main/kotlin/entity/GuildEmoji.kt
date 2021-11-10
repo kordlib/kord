@@ -35,7 +35,7 @@ public class GuildEmoji(
         get() = data.guildId
 
     public val mention: String
-        get() = if (isAnimated) "<a:$name:${id.asString}>" else "<:$name:${id.asString}>"
+        get() = if (isAnimated) "<a:$name:$id>" else "<:$name:$id>"
 
     /**
      * Whether this emoji can be used, may be false due to loss of Server Boosts.

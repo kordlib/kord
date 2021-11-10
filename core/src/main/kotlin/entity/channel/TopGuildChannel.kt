@@ -44,7 +44,7 @@ public interface TopGuildChannel : GuildChannel, TopGuildChannelBehavior {
     public suspend fun getEffectivePermissions(memberId: Snowflake): Permissions {
         val member = supplier.getMemberOrNull(guildId, memberId)
         require(member != null) {
-            "member ${memberId.asString} is not in guild ${guildId.asString}"
+            "member $memberId is not in guild $guildId"
         }
 
         val base = member.getPermissions()

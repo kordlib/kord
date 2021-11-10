@@ -19,14 +19,14 @@ class ChannelTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("dmchannel"))
 
         with(channel) {
-            lastMessageId.value!!.asString shouldBe "3343820033257021450"
+            lastMessageId.value!!.toString() shouldBe "3343820033257021450"
             type.value shouldBe 1
-            id.asString shouldBe "319674150115610528"
+            id.toString() shouldBe "319674150115610528"
             recipients.value!!.size shouldBe 1
             with(recipients.value!!.first()) {
                 username shouldBe "test"
                 discriminator shouldBe "9999"
-                id.asString shouldBe "82198898841029460"
+                id.toString() shouldBe "82198898841029460"
                 avatar shouldBe "33ecab261d4681afa4d85a04691c4a01"
             }
         }
@@ -43,9 +43,9 @@ class ChannelTest {
             name.value shouldBe "Test"
             nsfw.asNullable shouldBe false
             position.value shouldBe 0
-            guildId.value?.asString shouldBe "290926798629997250"
+            guildId.value?.toString() shouldBe "290926798629997250"
             type.value shouldBe 4
-            id.asString shouldBe "399942396007890945"
+            id.toString() shouldBe "399942396007890945"
         }
     }
 
@@ -61,19 +61,19 @@ class ChannelTest {
             with(recipients.value!!.first()) {
                 username shouldBe "test"
                 discriminator shouldBe "9999"
-                id.asString shouldBe "82198898841029460"
+                id.toString() shouldBe "82198898841029460"
                 avatar shouldBe "33ecab261d4681afa4d85a04691c4a01"
             }
             with(recipients.value!![1]) {
                 username shouldBe "test2"
                 discriminator shouldBe "9999"
-                id.asString shouldBe "82198810841029460"
+                id.toString() shouldBe "82198810841029460"
                 avatar shouldBe "33ecab261d4681afa4d85a10691c4a01"
             }
-            lastMessageId.value?.asString shouldBe "3343820033257021450"
+            lastMessageId.value?.toString() shouldBe "3343820033257021450"
             type.value shouldBe 3
-            id.asString shouldBe "319674150115710528"
-            ownerId.value?.asString shouldBe "82198810841029460"
+            id.toString() shouldBe "319674150115710528"
+            ownerId.value?.toString() shouldBe "82198810841029460"
         }
     }
 
@@ -83,16 +83,16 @@ class ChannelTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("guildnewschannel"))
 
         with(channel) {
-            id.asString shouldBe "41771983423143937"
-            guildId.value!!.asString shouldBe "41771983423143937"
+            id.toString() shouldBe "41771983423143937"
+            guildId.value!!.toString() shouldBe "41771983423143937"
             name.value shouldBe "important-news"
             type.value shouldBe 5
             position.value shouldBe 6
             permissionOverwrites.value!! shouldBe emptyList()
             nsfw.value shouldBe true
             topic.value shouldBe "Rumors about Half Life 3"
-            lastMessageId.value?.asString shouldBe "155117677105512449"
-            parentId.value?.asString shouldBe "399942396007890945"
+            lastMessageId.value?.toString() shouldBe "155117677105512449"
+            parentId.value?.toString() shouldBe "399942396007890945"
         }
     }
 
@@ -102,8 +102,8 @@ class ChannelTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("guildtextchannel"))
 
         with(channel) {
-            id.asString shouldBe "41771983423143937"
-            guildId.value!!.asString shouldBe "41771983423143937"
+            id.toString() shouldBe "41771983423143937"
+            guildId.value!!.toString() shouldBe "41771983423143937"
             name.value shouldBe "general"
             type.value shouldBe 0
             position.asNullable!! shouldBe 6
@@ -111,8 +111,8 @@ class ChannelTest {
             rateLimitPerUser.asNullable shouldBe 2
             nsfw.value shouldBe true
             topic.value shouldBe "24/7 chat about how to gank Mike #2"
-            lastMessageId.value?.asString shouldBe "155117677105512449"
-            parentId.value?.asString shouldBe "399942396007890945"
+            lastMessageId.value?.toString() shouldBe "155117677105512449"
+            parentId.value?.toString() shouldBe "399942396007890945"
         }
     }
 
@@ -122,8 +122,8 @@ class ChannelTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("guildvoicechannel"))
 
         with(channel) {
-            id.asString shouldBe "155101607195836416"
-            guildId.value!!.asString shouldBe "41771983423143937"
+            id.toString() shouldBe "155101607195836416"
+            guildId.value!!.toString() shouldBe "41771983423143937"
             name.value shouldBe "ROCKET CHEESE"
             type.value shouldBe 2
             nsfw.asNullable shouldBe false
@@ -131,7 +131,7 @@ class ChannelTest {
             permissionOverwrites.value!! shouldBe emptyList()
             bitrate.value shouldBe 64000
             userLimit.value shouldBe 0
-            parentId.value?.asString shouldBe null
+            parentId.value?.toString() shouldBe null
         }
     }
 
@@ -141,8 +141,8 @@ class ChannelTest {
         val channel = Json.decodeFromString(DiscordChannel.serializer(), file("storechannel"))
 
         with(channel) {
-            id.asString shouldBe "41771983423143937"
-            guildId.value!!.asString shouldBe "41771983423143937"
+            id.toString() shouldBe "41771983423143937"
+            guildId.value!!.toString() shouldBe "41771983423143937"
             name.value shouldBe "buy dota-2"
             type.value shouldBe 6
             position.asNullable shouldBe 0

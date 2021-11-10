@@ -47,10 +47,10 @@ class SerializationTest {
             with(event.data.guilds) {
                 val guild = get(0)
                 with(guild) {
-                    id.asString shouldBe "41771983423143937"
+                    id.toString() shouldBe "41771983423143937"
                 }
                 with(user) {
-                    id.asString shouldBe "80351110224678912"
+                    id.toString() shouldBe "80351110224678912"
                     username shouldBe "Nelly"
                     discriminator shouldBe "1337"
                     avatar shouldBe "8342729096ea3675442027381ff50dfe"
@@ -87,8 +87,8 @@ class SerializationTest {
     fun `ChannelPinsUpdate Event serialization`() {
         val event = Json.decodeFromString(Event.Companion, file("channelpinsupdate")) as ChannelPinsUpdate
         with(event.pins) {
-            guildId.value?.asString shouldBe "41771983423143937"
-            channelId.asString shouldBe "399942396007890945"
+            guildId.value?.toString() shouldBe "41771983423143937"
+            channelId.toString() shouldBe "399942396007890945"
             lastPinTimestamp.value shouldBe "2015-04-26T06:26:56.936000+00:00"
 
         }
@@ -99,8 +99,8 @@ class SerializationTest {
     fun `ChannelCreate Event serialization`() {
         val event = Json.decodeFromString(Event.Companion, file("channelcreate")) as ChannelCreate
         with(event.channel) {
-            id.asString shouldBe "41771983423143937"
-            guildId.value?.asString shouldBe "41771983423143937"
+            id.toString() shouldBe "41771983423143937"
+            guildId.value?.toString() shouldBe "41771983423143937"
             name.value shouldBe "general"
             type.value shouldBe 0
             position.value shouldBe 6
@@ -108,8 +108,8 @@ class SerializationTest {
             rateLimitPerUser.value shouldBe 2
             nsfw.value shouldBe true
             topic.value shouldBe "24/7 chat about how to gank Mike #2"
-            lastMessageId.value?.asString shouldBe "155117677105512449"
-            parentId.value?.asString shouldBe "399942396007890945"
+            lastMessageId.value?.toString() shouldBe "155117677105512449"
+            parentId.value?.toString() shouldBe "399942396007890945"
         }
     }
 
@@ -118,8 +118,8 @@ class SerializationTest {
     fun `ChannelUpdate Event serialization`() {
         val event = Json.decodeFromString(Event.Companion, file("channelupdate")) as ChannelUpdate
         with(event.channel) {
-            id.asString shouldBe "41771983423143937"
-            guildId.value?.asString shouldBe "41771983423143937"
+            id.toString() shouldBe "41771983423143937"
+            guildId.value?.toString() shouldBe "41771983423143937"
             name.value shouldBe "general"
             type.value shouldBe 0
             position.value shouldBe 6
@@ -127,8 +127,8 @@ class SerializationTest {
             rateLimitPerUser.value shouldBe 2
             nsfw.value shouldBe true
             topic.value shouldBe "24/7 chat about how to gank Mike #2"
-            lastMessageId.value?.asString shouldBe "155117677105512449"
-            parentId.value?.asString shouldBe "399942396007890945"
+            lastMessageId.value?.toString() shouldBe "155117677105512449"
+            parentId.value?.toString() shouldBe "399942396007890945"
         }
     }
 
@@ -136,8 +136,8 @@ class SerializationTest {
     fun `ChannelDelete Event serialization`() {
         val event = Json.decodeFromString(Event.Companion, file("channeldelete")) as ChannelDelete
         with(event.channel) {
-            id.asString shouldBe "41771983423143937"
-            guildId.value?.asString shouldBe "41771983423143937"
+            id.toString() shouldBe "41771983423143937"
+            guildId.value?.toString() shouldBe "41771983423143937"
             name.value shouldBe "general"
             type.value shouldBe 0
             position.value shouldBe 6
@@ -145,8 +145,8 @@ class SerializationTest {
             rateLimitPerUser.value shouldBe 2
             nsfw.value shouldBe true
             topic.value shouldBe "24/7 chat about how to gank Mike #2"
-            lastMessageId.value?.asString shouldBe "155117677105512449"
-            parentId?.value?.asString shouldBe "399942396007890945"
+            lastMessageId.value?.toString() shouldBe "155117677105512449"
+            parentId?.value?.toString() shouldBe "399942396007890945"
         }
     }
 

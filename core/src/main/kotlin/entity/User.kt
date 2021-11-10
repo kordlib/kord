@@ -84,7 +84,7 @@ public open class User(
     public val accentColor: Color? get() = data.accentColor?.let { Color(it) }
 
     public fun getBannerUrl(format: Image.Format): String? =
-        data.banner?.let { "https://cdn.discordapp.com/banners/${id.asString}/$it.${format.extension}" }
+        data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
 
     override fun hashCode(): Int = id.hashCode()

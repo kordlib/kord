@@ -53,8 +53,8 @@ class AllowedMentionsBuilder {
 
     fun build(): AllowedMentions = AllowedMentions(
         parse = types.toList(),
-        users = users.map { it.asString },
-        roles = roles.map { it.asString },
+        users = users.map { it.toString() },
+        roles = roles.map { it.toString() },
         repliedUser = _repliedUser
     )
 
