@@ -3,10 +3,6 @@ plugins {
     `kord-publishing`
 }
 
-javaPlatform {
-    allowDependencies()
-}
-
 val me = project
 rootProject.subprojects {
     if (name != me.name) {
@@ -22,7 +18,7 @@ dependencies {
                     if (!artifactId.endsWith("-metadata") &&
                         !artifactId.endsWith("-kotlinMultiplatform")
                     ) {
-                        api(groupId, artifactId, version)
+                        api("$groupId:$artifactId:$version")
                     }
                 }
             }
