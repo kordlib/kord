@@ -42,20 +42,18 @@ public class DefaultFrameInterceptor(private val data: DefaultFrameInterceptorDa
             configuration.voiceGateway.send(SendSpeaking(SpeakingFlags(0), 0, configuration.ssrc))
         }
 
-        return map { frame ->
+        return onEach { frame ->
+            if (frame != null && !isSpeaking) {
+                framesOfSilence = FRAMES_OF_SILENCE_TO_PLAY
+                startSpeaking()
+            } else if ((frame == null) && isSpeaking && (--framesOfSilence == 0)) {
+                stopSpeaking()
+            }
+        }.map { frame ->
             when (framesOfSilence) {
                 0 -> frame
                 else -> frame ?: AudioFrame.SILENCE
             }
-        }.onEach { frame ->
-            if (frame != null && !isSpeaking) {
-                startSpeaking()
-            } else if (frame == null) {
-                if (--framesOfSilence == 0)
-                    stopSpeaking()
-                } else {
-                    framesOfSilence = FRAMES_OF_SILENCE_TO_PLAY
-                }
-            }
+        }
     }
 }
