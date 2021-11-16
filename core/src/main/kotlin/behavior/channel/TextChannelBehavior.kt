@@ -140,7 +140,7 @@ public fun TextChannelBehavior(
     }
 
     override fun toString(): String {
-        return "TextChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier$supplier)"
+        return "TextChannelBehavior(id=$id, guildId=$guildId, kord=$kord, supplier=$supplier)"
     }
 }
 
