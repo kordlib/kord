@@ -16,7 +16,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * An instance of [MessageInteraction](https://discord.com/developers/docs/interactions/slash-commands#messageinteraction)
- * This is sent on the [Message] object when the message is a response to an [Interaction].
+ * This is sent on the [Message] object when the message is a response to an [MessageRespondingInteraction].
  */
 
 public class MessageInteraction(
@@ -25,7 +25,7 @@ public class MessageInteraction(
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordEntity, Strategizable {
     /**
-     * [id][Interaction.id] of the [Interaction] this message is responding to.
+     * [id][MessageRespondingInteraction.id] of the [MessageRespondingInteraction] this message is responding to.
      */
     override val id: Snowflake get() = data.id
 
@@ -35,7 +35,7 @@ public class MessageInteraction(
     public val name: String get() = data.name
 
     /**
-     * The [UserBehavior] of the [user][Interaction.user] who invoked the [Interaction]
+     * The [UserBehavior] of the [user][MessageRespondingInteraction.user] who invoked the [MessageRespondingInteraction]
      */
     public val user: UserBehavior get() = UserBehavior(data.user, kord)
 

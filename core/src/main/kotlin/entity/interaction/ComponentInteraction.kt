@@ -22,7 +22,7 @@ import dev.kord.rest.builder.component.SelectMenuBuilder
  * @see SelectMenuInteraction
  */
 
-public sealed interface ComponentInteraction : Interaction, ComponentInteractionBehavior {
+public sealed interface ComponentInteraction : MessageRespondingInteraction, ComponentInteractionBehavior {
 
     override val user: User
         get() = User(data.user.value!!, kord)

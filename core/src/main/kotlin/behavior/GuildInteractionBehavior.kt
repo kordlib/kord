@@ -1,13 +1,13 @@
 package dev.kord.core.behavior
 
-import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.common.entity.Snowflake
+import dev.kord.core.behavior.interaction.MessageRespondingInteractionBehavior
 import dev.kord.core.entity.Guild
 
 /**
- * The behavior of a [dev.kord.core.entity.interaction.Interaction][Interaction] that was invoked in a [Guild]
+ * The behavior of a [dev.kord.core.entity.interaction.MessageRespondingInteraction][MessageRespondingInteraction] that was invoked in a [Guild]
  */
-public interface GuildInteractionBehavior : InteractionBehavior {
+public interface GuildInteractionBehavior : MessageRespondingInteractionBehavior {
 
     public val guildId: Snowflake
 

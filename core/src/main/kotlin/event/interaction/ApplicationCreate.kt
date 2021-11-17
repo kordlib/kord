@@ -15,10 +15,10 @@ import kotlinx.coroutines.CoroutineScope
  * [Slash Commands][dev.kord.core.entity.interaction.ApplicationCommand].
  *
  * The event should be acknowledged  withing 3 seconds of reception using one of the following methods:
- * * [acknowledgeEphemeral][Interaction.acknowledgeEphemeral] - acknowledges an interaction ephemerally.
- * * [acknowledgePublic][Interaction.acknowledgePublic] - acknowledges an interaction in public.
- * * [respondPublic][Interaction.respondPublic] - same as public acknowledgement, but an immediate result (message) can be supplied.
- * * [respondEphemeral][Interaction.respondEphemeral] - same as ephemeral acknowledgement, but an immediate result (message) can be supplied.
+ * * [acknowledgeEphemeral][MessageRespondingInteraction.acknowledgeEphemeral] - acknowledges an interaction ephemerally.
+ * * [acknowledgePublic][MessageRespondingInteraction.acknowledgePublic] - acknowledges an interaction in public.
+ * * [respondPublic][MessageRespondingInteraction.respondPublic] - same as public acknowledgement, but an immediate result (message) can be supplied.
+ * * [respondEphemeral][MessageRespondingInteraction.respondEphemeral] - same as ephemeral acknowledgement, but an immediate result (message) can be supplied.
  *
  * Once an interaction has been acknowledged,
  * you can use [PublicInteractionResponseBehavior.followUp] or [EphemeralInteractionResponseBehavior.followUp] to display additional messages.
@@ -102,7 +102,7 @@ public class GlobalChatInputCommandInteractionCreateEvent(
 ) : GlobalApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 /**
- * Interaction received when a users types into an auto-completed option.
+ * MessageRespondingInteraction received when a users types into an auto-completed option.
  *
  * Check [AutoCompleteInteractionBehavior] on how to reply.
  *
@@ -125,7 +125,7 @@ internal fun AutoCompleteInteractionCreateEvent(
 }
 
 /**
- * Interaction received when a users types into an auto-completed option.
+ * MessageRespondingInteraction received when a users types into an auto-completed option.
  *
  * Check [AutoCompleteInteractionBehavior] on how to reply.
  *
@@ -139,7 +139,7 @@ public class GlobalAutoCompleteInteractionCreateEvent(
 ) : AutoCompleteInteractionCreateEvent, GlobalApplicationInteractionCreateEvent, CoroutineScope by coroutineScope
 
 /**
- * Interaction received when a users types into an auto-completed option.
+ * MessageRespondingInteraction received when a users types into an auto-completed option.
  *
  * Check [AutoCompleteInteractionBehavior] on how to reply.
  *

@@ -23,7 +23,7 @@ import dev.kord.core.entity.interaction.GuildChatInputCommandInteraction
 import dev.kord.core.entity.interaction.GuildMessageCommandInteraction
 import dev.kord.core.entity.interaction.GuildSelectMenuInteraction
 import dev.kord.core.entity.interaction.GuildUserCommandInteraction
-import dev.kord.core.entity.interaction.Interaction
+import dev.kord.core.entity.interaction.MessageRespondingInteraction
 import dev.kord.core.entity.interaction.UnknownApplicationCommandInteraction
 import dev.kord.core.entity.interaction.UnknownComponentInteraction
 import dev.kord.core.event.interaction.AutoCompleteInteractionCreateEvent
@@ -69,7 +69,7 @@ public class InteractionEventHandler(
 
     private fun handle(event: InteractionCreate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent {
         val data = InteractionData.from(event.interaction)
-        val coreEvent = when(val interaction = Interaction.from(data, kord)) {
+        val coreEvent = when(val interaction = MessageRespondingInteraction.from(data, kord)) {
             is AutoCompleteInteraction -> AutoCompleteInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GlobalChatInputCommandInteraction -> GlobalChatInputCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GlobalUserCommandInteraction -> GlobalUserCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)

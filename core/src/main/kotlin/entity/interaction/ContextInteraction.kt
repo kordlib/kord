@@ -20,7 +20,7 @@ import java.util.Objects
 /**
  * Represents an interaction of type [ApplicationCommand][dev.kord.common.entity.InteractionType.ApplicationCommand]
  */
-public sealed interface ApplicationCommandInteraction : Interaction, ApplicationCommandInteractionBehavior {
+public sealed interface ApplicationCommandInteraction : MessageRespondingInteraction, ApplicationCommandInteractionBehavior {
     public val invokedCommandId: Snowflake get() = data.data.id.value!!
 
     public val name: String get() = data.data.name.value!!
@@ -210,7 +210,7 @@ public class UnknownApplicationCommandInteraction(
 }
 
 /**
- * Interaction indicating an auto-complete request from Discord.
+ * MessageRespondingInteraction indicating an auto-complete request from Discord.
  *
  * **Follow-ups and normals responses don't work on this type**
  *
@@ -230,7 +230,7 @@ internal fun AutoCompleteInteraction(
 }
 
 /**
- * Interaction indicating an auto-complete request from Discord.
+ * MessageRespondingInteraction indicating an auto-complete request from Discord.
  *
  * **Follow-ups and normals responses don't work on this type**
  *
@@ -246,7 +246,7 @@ public class GlobalAutoCompleteInteraction(
 }
 
 /**
- * Interaction indicating an auto-complete request from Discord on a guild.
+ * MessageRespondingInteraction indicating an auto-complete request from Discord on a guild.
  *
  * **Follow-ups and normals responses don't work on this type**
  *
@@ -262,6 +262,6 @@ public class GuildAutoCompleteInteraction(
 
     override val user: User get() = User(data.user.value!!, kord)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageRespondingInteraction =
         GuildAutoCompleteInteraction(data, kord, strategy.supply(kord))
 }
