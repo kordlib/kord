@@ -306,12 +306,15 @@ public fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjec
 }
 
 
+public sealed interface GlobalInteraction : Interaction {
+    override val user: User get() = User(data.user.value!!, kord)
+}
+
 /**
  * An [MessageRespondingInteraction] that took place in a Global Context with [GlobalApplicationCommand].
  */
-
 public sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInteraction,
-    GlobalApplicationCommandBehavior {
+    GlobalApplicationCommandBehavior, GlobalInteraction {
     /**
      * The user who invoked the interaction.
      */
@@ -319,13 +322,11 @@ public sealed interface GlobalApplicationCommandInteraction : ApplicationCommand
     override val service: InteractionService
         get() = kord.rest.interaction
 
-    override val user: User get() = User(data.user.value!!, kord)
-
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GlobalApplicationCommandInteraction =
         GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
 
     override val applicationId: Snowflake
-        get() = super.applicationId
+        get() = super<ApplicationCommandInteraction>.applicationId
 }
 
 public fun GlobalApplicationCommandInteraction(

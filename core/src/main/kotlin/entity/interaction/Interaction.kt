@@ -9,7 +9,7 @@ import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.supplier.EntitySupplyStrategy
 
-public interface Interaction : InteractionBehavior {
+public sealed interface Interaction : InteractionBehavior {
     public val data: InteractionData
 
     override val id: Snowflake get() = data.id
@@ -39,14 +39,14 @@ public interface Interaction : InteractionBehavior {
      */
     public val version: Int get() = data.version
 
-    abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageRespondingInteraction
+    abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
 
     public companion object {
         public fun from(
             data: InteractionData,
             kord: Kord,
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-        ): MessageRespondingInteraction {
+        ): Interaction {
             return when {
                 data.type == InteractionType.Component -> ComponentInteraction(data, kord, strategy.supply(kord))
                 data.type == InteractionType.AutoComplete -> AutoCompleteInteraction(data, kord, strategy.supply(kord))

@@ -20,7 +20,7 @@ import java.util.Objects
 /**
  * Represents an interaction of type [ApplicationCommand][dev.kord.common.entity.InteractionType.ApplicationCommand]
  */
-public sealed interface ApplicationCommandInteraction : MessageRespondingInteraction, ApplicationCommandInteractionBehavior {
+public sealed interface ApplicationCommandInteraction : Interaction, ApplicationCommandInteractionBehavior {
     public val invokedCommandId: Snowflake get() = data.data.id.value!!
 
     public val name: String get() = data.data.name.value!!
@@ -31,16 +31,21 @@ public sealed interface ApplicationCommandInteraction : MessageRespondingInterac
         get() = data.data.resolvedObjectsData.unwrap {
             ResolvedObjects(it, kord)
         }
-
 }
 
 
 /**
- * An [ApplicationCommandInteraction] that's invoked through chat input.
+ * An [ApplicationCommandInteraction] that contains a [command].
  */
-public sealed interface ChatInputCommandInteraction : ApplicationCommandInteraction {
+public sealed interface ChatInputCommandInteraction : Interaction {
     public val command: InteractionCommand get() = InteractionCommand(data.data, kord)
 }
+
+/**
+ * An [ApplicationCommandInteraction] that's invoked through chat input.
+ */
+public sealed interface ChatInputCommandInvocationInteraction : ChatInputCommandInteraction, ApplicationCommandInteraction
+
 
 /**
  * A [ApplicationCommandInteraction] that's invoked through chat input specific to a guild.
@@ -49,7 +54,7 @@ public class GuildChatInputCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : ChatInputCommandInteraction, GuildApplicationCommandInteraction {
+) : ChatInputCommandInvocationInteraction, GuildApplicationCommandInteraction {
     override fun equals(other: Any?): Boolean {
         return if (other !is GuildChatInputCommandInteraction) false
         else id == other.id
@@ -68,7 +73,7 @@ public class GlobalChatInputCommandInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier
-) : ChatInputCommandInteraction, GlobalApplicationCommandInteraction {
+) : ChatInputCommandInvocationInteraction, GlobalApplicationCommandInteraction {
     override fun equals(other: Any?): Boolean {
         return if (other !is GlobalChatInputCommandInteraction) false
         else id == other.id
@@ -222,7 +227,7 @@ internal fun AutoCompleteInteraction(
     data: InteractionData,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier
-): ApplicationCommandInteraction = when (data.guildId) {
+): AutoCompleteInteraction = when (data.guildId) {
     is OptionalSnowflake.Value -> GuildAutoCompleteInteraction(
         data, kord, supplier
     )
@@ -240,7 +245,7 @@ public class GlobalAutoCompleteInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : AutoCompleteInteraction, GlobalApplicationCommandInteraction {
+) : AutoCompleteInteraction, GlobalInteraction {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GlobalAutoCompleteInteraction =
         GlobalAutoCompleteInteraction(data, kord, strategy.supply(kord))
 }
@@ -262,6 +267,6 @@ public class GuildAutoCompleteInteraction(
 
     override val user: User get() = User(data.user.value!!, kord)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageRespondingInteraction =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction =
         GuildAutoCompleteInteraction(data, kord, strategy.supply(kord))
 }

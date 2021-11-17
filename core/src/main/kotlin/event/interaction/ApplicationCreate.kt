@@ -84,7 +84,7 @@ public class GlobalMessageCommandInteractionCreateEvent(
 
 
 public sealed interface ChatInputCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
-    override val interaction: ChatInputCommandInteraction
+    override val interaction: ChatInputCommandInvocationInteraction
 }
 
 public class GuildChatInputCommandInteractionCreateEvent(
@@ -108,7 +108,7 @@ public class GlobalChatInputCommandInteractionCreateEvent(
  *
  * @see AutoCompleteInteraction
  */
-public sealed interface AutoCompleteInteractionCreateEvent : InteractionCreateEvent, ChatInputCommandInteractionCreateEvent
+public sealed interface AutoCompleteInteractionCreateEvent : InteractionCreateEvent
 
 internal fun AutoCompleteInteractionCreateEvent(
     interaction: AutoCompleteInteraction,
@@ -136,7 +136,7 @@ public class GlobalAutoCompleteInteractionCreateEvent(
     override val shard: Int,
     override val interaction: GlobalAutoCompleteInteraction,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : AutoCompleteInteractionCreateEvent, GlobalApplicationInteractionCreateEvent, CoroutineScope by coroutineScope
+) : AutoCompleteInteractionCreateEvent, CoroutineScope by coroutineScope
 
 /**
  * MessageRespondingInteraction received when a users types into an auto-completed option.

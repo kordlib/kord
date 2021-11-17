@@ -23,6 +23,6 @@ public interface InteractionBehavior : KordEntity, Strategizable {
 
     public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageRespondingInteractionBehavior =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior =
         InteractionBehavior(id, channelId, token, applicationId, kord, strategy)
 }

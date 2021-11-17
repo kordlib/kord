@@ -8,7 +8,6 @@ import dev.kord.core.supplier.EntitySupplier
  * The behavior of a [Discord MessageRespondingInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction)
  * with [Application Command type][dev.kord.common.entity.ApplicationCommandType]
  */
-
 public interface ApplicationCommandInteractionBehavior : MessageRespondingInteractionBehavior
 
 internal fun ApplicationCommandInteractionBehavior(
