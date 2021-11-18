@@ -3,15 +3,27 @@ package dev.kord.rest.json.request
 import dev.kord.common.Color
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.entity.*
+import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.DefaultMessageNotificationLevel
+import dev.kord.common.entity.DiscordWelcomeScreenChannel
+import dev.kord.common.entity.ExplicitContentFilter
+import dev.kord.common.entity.IntegrationExpireBehavior
+import dev.kord.common.entity.Overwrite
+import dev.kord.common.entity.Permissions
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.VerificationLevel
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.rest.builder.guild.WelcomeScreenChannelBuilder
-import kotlinx.serialization.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.InternalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
@@ -47,7 +59,7 @@ data class GuildChannelCreateRequest(
     val rateLimitPerUser: Optional<Int> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
-    val permissionOverwrite: Optional<List<Overwrite>> = Optional.Missing(),
+    val permissionOverwrite: Optional<Set<Overwrite>> = Optional.Missing(),
     @SerialName("parent_id")
     val parentId: OptionalSnowflake = OptionalSnowflake.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,

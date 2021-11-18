@@ -30,12 +30,14 @@ internal class VoiceUpdateEventHandler(
 
     override suspend fun start() = coroutineScope {
         on<VoiceStateUpdate> { event ->
-            if (event.voiceState.userId != connection.data.selfId) return@on
+            if (!event.isRelatedToConnection(connection)) return@on
 
             // we're not in a voice channel anymore. anything might've happened
             // discord doesn't tell us whether the channel was deleted or if we were just moved
             // let's just detach in 5 seconds and let it be cancelled if we join a new voice channel in that time.
             if (event.voiceState.channelId == null) {
+                voiceUpdateLogger.trace { "detected a change to a null voice channel for guild ${connection.data.guildId}. waiting ${CONNECTION_DETACH_DURATION_IN_MILLIS}ms before shutdown to see if we were moved." }
+
                 detachJob?.cancel()
                 detachJob = launch {
                     delay(CONNECTION_DETACH_DURATION_IN_MILLIS)
@@ -43,6 +45,7 @@ internal class VoiceUpdateEventHandler(
                     connection.shutdown()
                 }
             } else if (event.voiceState.channelId != null) {
+                voiceUpdateLogger.trace { "detected a voice channel change for guild ${connection.data.guildId}, cancelling detachment." }
                 detachJob?.cancel()
                 detachJob = null
             }
@@ -74,4 +77,9 @@ internal class VoiceUpdateEventHandler(
 @KordVoice
 private fun VoiceServerUpdate.isRelatedToConnection(connection: VoiceConnection): Boolean {
     return voiceServerUpdateData.guildId == connection.data.guildId
+}
+
+@KordVoice
+private fun VoiceStateUpdate.isRelatedToConnection(connection: VoiceConnection): Boolean {
+    return voiceState.guildId.value == connection.data.guildId && voiceState.userId == connection.data.selfId
 }

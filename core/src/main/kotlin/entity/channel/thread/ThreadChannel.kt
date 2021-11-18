@@ -108,7 +108,7 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
 
 }
 
-internal fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySupplier): ThreadChannel {
+internal fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySupplier = kord.defaultSupplier): ThreadChannel {
     return object : ThreadChannel {
 
         override val data: ChannelData
