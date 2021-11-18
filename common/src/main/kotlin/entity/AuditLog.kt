@@ -276,6 +276,9 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
     @SerialName("inviter_id")
     object InviterId : AuditLogChangeKey<Snowflake>("inviter_id", serializer())
 
+    @SerialName("location")
+    object Location : AuditLogChangeKey<String>("location", serializer())
+
     @SerialName("max_uses")
     object MaxUses : AuditLogChangeKey<Int>("max_uses", serializer())
 
@@ -395,6 +398,7 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
                 "code" -> Code
                 "channel_id" -> ChannelId
                 "inviter_id" -> InviterId
+                "location" -> Location
                 "max_uses" -> MaxUses
                 "uses" -> Uses
                 "max_age" -> MaxAges
