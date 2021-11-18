@@ -235,8 +235,8 @@ public class StoreEntitySupplier(
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =
         storeOnEach(supplier.getGuildScheduledEvents(guildId)) { it.data }
 
-    override suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? =
-        storeAndReturn(supplier.getGuildScheduledEvent(eventId)) { it.data }
+    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
+        storeAndReturn(supplier.getGuildScheduledEvent(guildId, eventId)) { it.data }
 
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,

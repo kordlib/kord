@@ -174,9 +174,10 @@ public class Unsafe(private val kord: Kord) {
         id, channelId, token, applicationId, kord
     )
 
-    public fun guildScheduledEvent(id: Snowflake): GuildScheduledEventBehavior =
+    public fun guildScheduledEvent(id: Snowflake, guildId: Snowflake): GuildScheduledEventBehavior =
         GuildScheduledEventBehavior(
             id,
+            guildId,
             kord
         )
 }

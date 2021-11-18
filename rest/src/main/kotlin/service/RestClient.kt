@@ -23,7 +23,6 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
     val template: TemplateService = TemplateService(requestHandler)
     val interaction: InteractionService = InteractionService(requestHandler)
     val stageInstance: StageInstanceService = StageInstanceService(requestHandler)
-    val guildEvents: ScheduledEventService = ScheduledEventService(requestHandler)
 
     /**
      * Sends a request to the given [route]. This function exposes a direct call to the Discord api and allows

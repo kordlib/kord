@@ -12,6 +12,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.scheduled_events.ScheduledEventModifyBuilder
+import dev.kord.rest.service.modifyScheduledEvent
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -20,12 +21,13 @@ import kotlin.contracts.contract
  * Behavior of a [Discord Scheduled Guild Event](ADD LINK).
  */
 public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
+    public val guildId: Snowflake
     /**
      * Deletes this event.
      *
      * @throws RequestException if anything goes wrong during the request
      */
-    public suspend fun delete(): Unit = kord.rest.guildEvents.deleteScheduledEvent(id)
+    public suspend fun delete(): Unit = kord.rest.guild.deleteScheduledEvent(guildId, id)
 
     /**
      * Requests to get this behavior as a [GuildScheduledEvent].
@@ -33,7 +35,7 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the event wasn't present.
      */
-    public suspend fun asGuildScheduledEvent(): GuildScheduledEvent = supplier.getGuildScheduledEvent(id)
+    public suspend fun asGuildScheduledEvent(): GuildScheduledEvent = supplier.getGuildScheduledEvent(guildId, id)
 
     /**
      * Requests to get this behavior as a [Guild],
@@ -41,7 +43,7 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun asGuildScheduledEventOrNull(): GuildScheduledEvent? = supplier.getGuildScheduledEventOrNull(id)
+    public suspend fun asGuildScheduledEventOrNull(): GuildScheduledEvent? = supplier.getGuildScheduledEventOrNull(guildId, id)
 
     /**
      * Fetches to get this behavior as a [GuildScheduledEvent].
@@ -49,7 +51,7 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the event wasn't present.
      */
-    public suspend fun fetchGuildScheduledEvent(): GuildScheduledEvent = supplier.getGuildScheduledEvent(id)
+    public suspend fun fetchGuildScheduledEvent(): GuildScheduledEvent = supplier.getGuildScheduledEvent(guildId, id)
 
     /**
      * Fetches to get the this behavior as a [Guild],
@@ -58,20 +60,22 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun fetchGuildScheduledEventOrNull(): GuildScheduledEvent? =
-        supplier.getGuildScheduledEventOrNull(id)
+        supplier.getGuildScheduledEventOrNull(guildId, id)
 }
 
 internal fun GuildScheduledEventBehavior(
     id: Snowflake,
+    guildId: Snowflake,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier
 ): GuildScheduledEventBehavior = object : GuildScheduledEventBehavior {
     override val kord: Kord = kord
     override val id: Snowflake = id
+    override val guildId: Snowflake = guildId
     override val supplier: EntitySupplier = supplier
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
-        GuildScheduledEventBehavior(id, kord, strategy.supply(kord))
+        GuildScheduledEventBehavior(id, guildId, kord, strategy.supply(kord))
 }
 
 /**
@@ -85,5 +89,5 @@ public suspend inline fun GuildScheduledEventBehavior.edit(builder: ScheduledEve
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
 
-    return kord.rest.guildEvents.modifyScheduledEvent(id, builder)
+    return kord.rest.guild.modifyScheduledEvent(guildId, id, builder)
 }

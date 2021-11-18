@@ -2,7 +2,6 @@ package dev.kord.gateway
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.EmptyBitSet
-import dev.kord.common.entity.Permission
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -152,6 +151,17 @@ sealed class Intent(val code: DiscordBitSet) {
      * - [TypingStart]
      */
     object DirectMessageTyping : Intent(1 shl 14)
+
+    /**
+     * Enables the following events:
+     * - [GuildScheduledEventCreate]
+     * - [GuildScheduledEventUpdate]
+     * - [GuildScheduledEventDelete]
+     * - [GuildScheduledEventUserAdd]
+     * - [GuildScheduledEventUserRemove]
+     */
+    object GuildScheduledEvents : Intent(1 shl 16)
+
     companion object {
         @OptIn(PrivilegedIntent::class)
         val values: Set<Intent>

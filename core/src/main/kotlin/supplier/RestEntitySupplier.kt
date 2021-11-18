@@ -517,8 +517,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
-    override suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? = catchNotFound {
-        val event = kord.rest.guildEvents.getScheduledEvent(eventId)
+    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? = catchNotFound {
+        val event = kord.rest.guild.getScheduledEvent(guildId, eventId)
         val data = GuildScheduledEventData.from(event)
 
         GuildScheduledEvent(data, kord)

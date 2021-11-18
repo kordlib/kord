@@ -460,8 +460,9 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return ApplicationCommandPermissions(data)
     }
 
-    override suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? {
+    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? {
         val data = cache.query<GuildScheduledEventData> {
+            idEq(GuildScheduledEventData::guildId, guildId)
             idEq(GuildScheduledEventData::id, eventId)
         }.singleOrNull() ?: return null
 

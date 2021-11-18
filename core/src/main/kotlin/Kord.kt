@@ -15,7 +15,6 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.ApplicationInfo
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.GuildPreview
-import dev.kord.core.entity.GuildScheduledEvent
 import dev.kord.core.entity.Invite
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Region
@@ -625,23 +624,6 @@ public class Kord(
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         rest.interaction.bulkEditApplicationCommandPermissions(resources.applicationId, guildId, builder)
     }
-
-    /**
-     * Requests a [GuildScheduledEvent] by its [id].
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     */
-    public suspend inline fun getGuildScheduledEvent(id: Snowflake): GuildScheduledEvent =
-        defaultSupplier.getGuildScheduledEvent(id)
-
-    /**
-     * Requests a [GuildScheduledEvent] by its [id] returns `null` if none could be found.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     */
-    public suspend inline fun getGuildScheduledEventOrNull(id: Snowflake): GuildScheduledEvent? =
-        defaultSupplier.getGuildScheduledEventOrNull(id)
-
 }
 
 /**

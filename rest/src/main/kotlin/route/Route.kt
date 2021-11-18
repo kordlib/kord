@@ -24,6 +24,7 @@ import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.DiscordVoiceRegion
 import dev.kord.common.entity.DiscordWebhook
 import dev.kord.common.entity.DiscordWelcomeScreen
+import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
 import dev.kord.rest.json.response.ApplicationInfoResponse
 import dev.kord.rest.json.response.BanResponse
 import dev.kord.rest.json.response.BotGatewayResponse
@@ -630,6 +631,30 @@ sealed class Route<T>(
         ListSerializer(DiscordGuildScheduledEvent.serializer())
     )
 
+    object GuildScheduledEventGet : Route<DiscordGuildScheduledEvent>(
+        HttpMethod.Get,
+        "/guilds/$GuildId/events/$ScheduledEventId",
+        DiscordGuildScheduledEvent.serializer()
+    )
+
+    object GuildScheduledEventUsersGet : Route<GuildScheduledEventUsersResponse>(
+        HttpMethod.Get,
+        "/guilds/$GuildId/events/$ScheduledEventId/users",
+        GuildScheduledEventUsersResponse.serializer()
+    )
+
+    object GuildScheduledEventPatch : Route<DiscordGuildScheduledEvent>(
+        HttpMethod.Patch,
+        "/guilds/$GuildId/events/$ScheduledEventId",
+        DiscordGuildScheduledEvent.serializer()
+    )
+
+    object GuildScheduledEventDelete : Route<Unit>(
+        HttpMethod.Delete,
+        "/guilds/$GuildId/events/$ScheduledEventId",
+        NoStrategy
+    )
+
     object GuildScheduledEventsPost : Route<DiscordGuildScheduledEvent>(
         HttpMethod.Post,
         "/guilds/$GuildId/events",
@@ -794,25 +819,6 @@ sealed class Route<T>(
         HttpMethod.Get,
         "/guilds/${GuildId}/threads/active",
         ListThreadsResponse.serializer()
-    )
-
-
-    object GuildEventsGet : Route<DiscordGuildScheduledEvent>(
-        HttpMethod.Get,
-        "/guild-events/$ScheduledEventId",
-        DiscordGuildScheduledEvent.serializer()
-    )
-
-    object GuildEventsDelete : Route<Unit>(
-        HttpMethod.Get,
-        "/guild-events/$ScheduledEventId",
-        NoStrategy
-    )
-
-    object GuildEventsPatch : Route<DiscordGuildScheduledEvent>(
-        HttpMethod.Patch,
-        "/guild-events/$ScheduledEventId",
-        DiscordGuildScheduledEvent.serializer()
     )
 
 

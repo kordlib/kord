@@ -35,7 +35,7 @@ public class GuildScheduledEvent(
     /**
      * The id of the guild this event is on.
      */
-    public val guildId: Snowflake
+    public override val guildId: Snowflake
         get() = data.guildId
 
     /**

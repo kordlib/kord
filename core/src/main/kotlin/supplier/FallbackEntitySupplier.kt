@@ -214,8 +214,8 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =
         first.getGuildScheduledEvents(guildId).switchIfEmpty(second.getGuildScheduledEvents(guildId))
 
-    override suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? =
-        first.getGuildScheduledEventOrNull(eventId) ?: second.getGuildScheduledEventOrNull(eventId)
+    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
+        first.getGuildScheduledEventOrNull(guildId, eventId) ?: second.getGuildScheduledEventOrNull(guildId, eventId)
 
 
     override fun toString(): String {

@@ -1,5 +1,7 @@
 package dev.kord.rest.builder.scheduled_events
 
+import dev.kord.common.entity.GuildScheduledEventEntityMetadata
+import dev.kord.common.entity.GuildScheduledEventStatus
 import dev.kord.common.entity.ScheduledEntityType
 import dev.kord.common.entity.StageInstancePrivacyLevel
 import dev.kord.common.entity.optional.Optional
@@ -28,12 +30,25 @@ class ScheduledEventModifyBuilder : RequestBuilder<ScheduledEventModifyRequest> 
     private var _entityType: Optional<ScheduledEntityType> = Optional.Missing()
     var entityType by ::_entityType.delegate()
 
+    private var _entityMetadata: Optional<GuildScheduledEventEntityMetadata> = Optional.Missing()
+    var entityMetadata: GuildScheduledEventEntityMetadata? by ::_entityMetadata.delegate()
+
+    private var _scheduledEndTime: Optional<Instant> = Optional.Missing()
+    var scheduledEndTime: Instant? by ::_scheduledEndTime.delegate()
+
+    private var _status: Optional<GuildScheduledEventStatus> = Optional.Missing()
+    var status: GuildScheduledEventStatus? by ::_status.delegate()
+
+
     override fun toRequest(): ScheduledEventModifyRequest = ScheduledEventModifyRequest(
         _channelId,
+        _entityMetadata,
         _name,
         _privacyLevel,
         _scheduledStartTime,
+        _scheduledEndTime,
         _description,
-        _entityType
+        _entityType,
+        _status
     )
 }

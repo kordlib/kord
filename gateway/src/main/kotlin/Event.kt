@@ -464,6 +464,18 @@ sealed class Event {
                     decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
                     sequence
                 )
+                "GUILD_SCHEDULED_EVENT_USER_ADD" -> GuildScheduledEventUserAdd(
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    sequence
+                )
+                "GUILD_SCHEDULED_EVENT_USER_REMOVE" -> GuildScheduledEventUserRemove(
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    sequence
+                )
 
 
                 else -> {
@@ -738,6 +750,16 @@ data class GuildScheduledEventUpdate(val event: DiscordGuildScheduledEvent, over
 
 data class GuildScheduledEventDelete(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
     DispatchEvent()
+
+data class GuildScheduledEventUserAdd(
+    val eventId: Snowflake, val userId: Snowflake, val guildId: Snowflake,
+    override val sequence: Int?
+) : DispatchEvent()
+
+data class GuildScheduledEventUserRemove(
+    val eventId: Snowflake, val userId: Snowflake, val guildId: Snowflake,
+    override val sequence: Int?
+) : DispatchEvent()
 
 @Serializable
 data class DiscordThreadListSync(

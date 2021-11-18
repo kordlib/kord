@@ -7,6 +7,7 @@ import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.DefaultMessageNotificationLevel
 import dev.kord.common.entity.DiscordWelcomeScreenChannel
 import dev.kord.common.entity.ExplicitContentFilter
+import dev.kord.common.entity.GuildScheduledEventEntityMetadata
 import dev.kord.common.entity.IntegrationExpireBehavior
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.Permissions
@@ -257,12 +258,19 @@ data class GuildWelcomeScreenModifyRequest(
 @Serializable
 data class GuildScheduledEventCreateRequest(
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val entityMetadata: Optional<GuildScheduledEventEntityMetadata> = Optional.Missing(),
     val name: String,
     @SerialName("privacy_level")
     val privacyLevel: StageInstancePrivacyLevel,
     @SerialName("scheduled_start_time")
     val scheduledStartTime: Instant,
+    @SerialName("scheduled_end_time")
+    val scheduledEndTime: Optional<Instant>,
     val description: Optional<String> = Optional.Missing(),
     @SerialName("entity_type")
     val entityType: ScheduledEntityType
 )
+
+@Serializable
+data class GuildScheduledEventUsersResponse(val users: List<Unit>)
+

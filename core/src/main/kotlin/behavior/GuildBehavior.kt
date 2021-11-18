@@ -100,6 +100,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import dev.kord.rest.service.createCategory
 import dev.kord.rest.service.createNewsChannel
+import dev.kord.rest.service.createScheduledEvent
 import dev.kord.rest.service.createTextChannel
 import dev.kord.rest.service.createVoiceChannel
 import dev.kord.rest.service.modifyGuildWelcomeScreen
@@ -606,6 +607,23 @@ public interface GuildBehavior : KordEntity, Strategizable {
         } ?: return null
         return "https://discord.gg/$identifier"
     }
+
+
+    /**
+     * Requests a [GuildScheduledEvent] by its [id].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getGuildScheduledEvent(eventId: Snowflake): GuildScheduledEvent =
+        supplier.getGuildScheduledEvent(id, eventId)
+
+    /**
+     * Requests a [GuildScheduledEvent] by its [id] returns `null` if none could be found.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? =
+        supplier.getGuildScheduledEventOrNull(id, eventId)
 
     public suspend fun getWidget(): GuildWidget = supplier.getGuildWidget(id)
 

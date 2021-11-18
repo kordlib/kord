@@ -31,6 +31,7 @@ import dev.kord.rest.builder.member.MemberModifyBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RoleModifyBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
+import dev.kord.rest.builder.scheduled_events.ScheduledEventModifyBuilder
 import dev.kord.rest.json.request.CurrentUserNicknameModifyRequest
 import dev.kord.rest.json.request.CurrentVoiceStateModifyRequest
 import dev.kord.rest.json.request.GuildBanCreateRequest
@@ -48,6 +49,7 @@ import dev.kord.rest.json.request.GuildRolePositionModifyRequest
 import dev.kord.rest.json.request.GuildScheduledEventCreateRequest
 import dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest
 import dev.kord.rest.json.request.GuildWidgetModifyRequest
+import dev.kord.rest.json.request.ScheduledEventModifyRequest
 import dev.kord.rest.json.request.VoiceStateModifyRequest
 import dev.kord.rest.json.response.ListThreadsResponse
 import dev.kord.rest.request.RequestHandler
@@ -475,6 +477,15 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             }
         }
 
+    suspend fun getScheduledEvent(
+        guildId: Snowflake,
+        eventId: Snowflake
+    ): DiscordGuildScheduledEvent =
+        call(Route.GuildScheduledEventGet) {
+            keys[Route.GuildId] = guildId
+            keys[Route.ScheduledEventId] = eventId
+        }
+
     suspend fun createScheduledEvent(
         guildId: Snowflake,
         request: GuildScheduledEventCreateRequest
@@ -484,27 +495,41 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         body(GuildScheduledEventCreateRequest.serializer(), request)
     }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend fun createScheduledEvent(
+    suspend fun modifyScheduledEvent(
         guildId: Snowflake,
-        name: String,
-        privacyLevel: StageInstancePrivacyLevel,
-        scheduledStartTime: Instant,
-        entityType: ScheduledEntityType,
-        builder: ScheduledEventCreateBuilder.() -> Unit = {}
-    ): DiscordGuildScheduledEvent {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        eventId: Snowflake,
+        request: ScheduledEventModifyRequest
+    ) = call(Route.GuildScheduledEventPatch) {
+        keys[Route.GuildId] = guildId
+        keys[Route.ScheduledEventId] = eventId
+
+        body(ScheduledEventModifyRequest.serializer(), request)
+    }
+
+    suspend fun deleteScheduledEvent(
+        guildId: Snowflake,
+        eventId: Snowflake
+    ) = call(Route.GuildScheduledEventDelete) {
+        keys[Route.GuildId] = guildId
+        keys[Route.ScheduledEventId] = eventId
+    }
+
+    suspend fun getScheduledEventUsers(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int? = null,
+        withMember: Boolean? = null
+    ) = call(Route.GuildScheduledEventUsersGet) {
+        keys[Route.GuildId] = guildId
+        keys[Route.ScheduledEventId] = eventId
+
+        if (limit != null) {
+            parameter("limit", limit)
         }
 
-        val appliedBuilder = ScheduledEventCreateBuilder(
-            name,
-            privacyLevel,
-            scheduledStartTime,
-            entityType
-        ).apply(builder)
-
-        return createScheduledEvent(guildId, appliedBuilder.toRequest())
+        if (withMember != null) {
+            parameter("with_member", withMember)
+        }
     }
 }
 
@@ -585,4 +610,42 @@ suspend inline fun GuildService.modifyVoiceState(
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val modifyBuilder = VoiceStateModifyBuilder(channelId).apply(builder)
     modifyVoiceState(guildId, userId, modifyBuilder.toRequest())
+}
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildService.createScheduledEvent(
+    guildId: Snowflake,
+    name: String,
+    privacyLevel: StageInstancePrivacyLevel,
+    scheduledStartTime: Instant,
+    entityType: ScheduledEntityType,
+    builder: ScheduledEventCreateBuilder.() -> Unit = {}
+): DiscordGuildScheduledEvent {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    val appliedBuilder = ScheduledEventCreateBuilder(
+        name,
+        privacyLevel,
+        scheduledStartTime,
+        entityType
+    ).apply(builder)
+
+    return createScheduledEvent(guildId, appliedBuilder.toRequest())
+}
+
+@OptIn(ExperimentalContracts::class)
+suspend inline fun GuildService.modifyScheduledEvent(
+    guildId: Snowflake,
+    eventId: Snowflake,
+    builder: ScheduledEventModifyBuilder.() -> Unit
+): DiscordGuildScheduledEvent {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+
+    val appliedBuilder = ScheduledEventModifyBuilder().apply(builder)
+
+    return modifyScheduledEvent(guildId, eventId, appliedBuilder.toRequest())
 }

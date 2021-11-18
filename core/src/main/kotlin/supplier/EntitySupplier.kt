@@ -468,10 +468,10 @@ public interface EntitySupplier {
 
     public fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent>
 
-    public suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent?
+    public suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent?
 
-    public suspend fun getGuildScheduledEvent(eventId: Snowflake): GuildScheduledEvent =
-        getGuildScheduledEventOrNull(eventId) ?: EntityNotFoundException.guildScheduledEventNotFound(eventId)
+    public suspend fun getGuildScheduledEvent(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent =
+        getGuildScheduledEventOrNull(guildId, eventId) ?: EntityNotFoundException.guildScheduledEventNotFound(eventId)
 }
 
 

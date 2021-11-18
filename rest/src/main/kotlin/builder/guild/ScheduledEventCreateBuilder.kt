@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.guild
 
+import dev.kord.common.entity.GuildScheduledEventEntityMetadata
 import dev.kord.common.entity.ScheduledEntityType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.StageInstancePrivacyLevel
@@ -22,7 +23,20 @@ class ScheduledEventCreateBuilder(
     private var _description: Optional<String> = Optional.Missing()
     var description: String? by ::_description.delegate()
 
+    private var _entityMetadata: Optional<GuildScheduledEventEntityMetadata> = Optional.Missing()
+    var entityMetadata: GuildScheduledEventEntityMetadata? by ::_entityMetadata.delegate()
+
+    private var _scheduledEndTime: Optional<Instant> = Optional.Missing()
+    var scheduledEndTime: Instant? by ::_scheduledEndTime.delegate()
+
     override fun toRequest(): GuildScheduledEventCreateRequest = GuildScheduledEventCreateRequest(
-        _channelId, name, privacyLevel, scheduledStartTime, _description, entityType
+        _channelId,
+        _entityMetadata,
+        name,
+        privacyLevel,
+        scheduledStartTime,
+        _scheduledEndTime,
+        _description,
+        entityType
     )
 }
