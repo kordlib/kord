@@ -31,11 +31,9 @@ sealed class OptionsBuilder(
     /**
      * Setting this to `true` allows you to dynamically respond with your choices, depending on the user input.
      *
-     * This disables all input validation, users can submit values before responding to the AutoComplete request
+     * This disables all input validation, users can submit values before responding to the AutoComplete request.
      *
-     * **Note:** If you set this to `true` you can't add any other choice
-     *
-     * Core users can check the `AutoCompleteInteractionCreateEvent` and `AutoCompleteInteraction` classes.
+     * Enabling this also means that you cannot add any other option.
      */
     var autocomplete: Boolean? by ::_autocomplete.delegate()
 
