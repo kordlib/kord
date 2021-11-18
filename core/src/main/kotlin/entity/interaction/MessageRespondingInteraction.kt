@@ -15,7 +15,6 @@ import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.channel.ResolvedChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.service.InteractionService
 
 /**
  * An instance of [MessageRespondingInteraction] (https://discord.com/developers/docs/interactions/slash-commands#interaction)
@@ -313,15 +312,10 @@ public sealed interface GlobalInteraction : Interaction {
 /**
  * An [MessageRespondingInteraction] that took place in a Global Context with [GlobalApplicationCommand].
  */
-public sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInteraction,
-    GlobalApplicationCommandBehavior, GlobalInteraction {
+public sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInteraction, GlobalInteraction {
     /**
      * The user who invoked the interaction.
      */
-
-    override val service: InteractionService
-        get() = kord.rest.interaction
-
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GlobalApplicationCommandInteraction =
         GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
 
