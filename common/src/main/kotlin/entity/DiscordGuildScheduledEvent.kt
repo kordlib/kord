@@ -1,6 +1,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -10,7 +11,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.JsonArray
 
 /**
  * Representation of a [Guild Scheduled Event Structure](ADD LINK).
@@ -18,9 +18,9 @@ import kotlinx.serialization.json.JsonArray
  * @property id the id of the event
  * @property guildId the id of the guild the event is on
  * @property channelId the id of the channel the event is in
+ * @property creatorId the id of the user that created the scheduled event
  * @property name the name of the event
  * @property description the description of the event
- * @property image the image of the event
  * @property scheduledStartTime the [Instant] in which the event will start
  * @property scheduledEndTime the [Instant] in which the event wil stop, if any
  * @property privacyLevel the [event privacy level][StageInstancePrivacyLevel]
@@ -28,8 +28,7 @@ import kotlinx.serialization.json.JsonArray
  * @property entityType the [ScheduledEntityType] of the event
  * @property entityId entity id
  * @property entityMetadata [metadata][GuildScheduledEventEntityMetadata] for the event
- * @property skuIds sku ids
- * @property skus skus
+ * @property creator the [user][DiscordUser] that created the scheduled event
  * @property userCount users subscribed to the event
  */
 @Serializable
@@ -38,9 +37,10 @@ data class DiscordGuildScheduledEvent(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val channelId: Snowflake?,
+    @SerialName("creator_id")
+    val creatorId: OptionalSnowflake,
     val name: String,
     val description: Optional<String> = Optional.Missing(),
-    val image: String?,
     @SerialName("scheduled_start_time")
     val scheduledStartTime: Instant,
     @SerialName("scheduled_end_time")
@@ -48,16 +48,13 @@ data class DiscordGuildScheduledEvent(
     @SerialName("privacy_level")
     val privacyLevel: StageInstancePrivacyLevel,
     val status: GuildScheduledEventStatus,
-    val type: ScheduledEntityType,
-    @SerialName("entity_id")
-    val entityId: Snowflake?,
     @SerialName("entity_type")
     val entityType: ScheduledEntityType,
+    @SerialName("entity_id")
+    val entityId: Snowflake?,
     @SerialName("entity_metadata")
     val entityMetadata: GuildScheduledEventEntityMetadata,
-    @SerialName("sku_ids")
-    val skuIds: List<Snowflake>,
-    val skus: JsonArray,
+    val creator: Optional<DiscordUser>,
     @SerialName("user_count")
     val userCount: Int
 )
@@ -67,7 +64,7 @@ sealed class ScheduledEntityType(val value: Int) {
     object None : ScheduledEntityType(0)
     object StageInstance : ScheduledEntityType(1)
     object Voice : ScheduledEntityType(2)
-    object Location : ScheduledEntityType(3)
+    object External : ScheduledEntityType(3)
     class Unknown(value: Int) : ScheduledEntityType(value)
 
     companion object Serializer : KSerializer<ScheduledEntityType> {
@@ -78,7 +75,7 @@ sealed class ScheduledEntityType(val value: Int) {
                 0 -> None
                 1 -> StageInstance
                 2 -> Voice
-                3 -> Location
+                3 -> External
                 else -> Unknown(value)
             }
         }

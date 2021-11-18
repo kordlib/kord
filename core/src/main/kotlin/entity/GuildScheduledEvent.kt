@@ -5,6 +5,7 @@ import dev.kord.common.entity.GuildScheduledEventStatus
 import dev.kord.common.entity.ScheduledEntityType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.StageInstancePrivacyLevel
+import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildScheduledEventBehavior
@@ -15,7 +16,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.datetime.Instant
-import kotlinx.serialization.json.JsonArray
 
 /**
  * An instance of a [Guild scheduled event](ADD LINK) belonging to a specific guild.
@@ -45,6 +45,12 @@ public class GuildScheduledEvent(
         get() = data.channelId
 
     /**
+     * The id of the user that created the scheduled event
+     */
+    public val creatorId: Snowflake?
+        get() = data.creatorId.value
+
+    /**
      * The name of this event.
      */
     public val name: String
@@ -55,9 +61,6 @@ public class GuildScheduledEvent(
      */
     public val description: String?
         get() = data.description.value
-
-    public val image: String?
-        get() = data.image
 
     /**
      * The [Instant] in which this event will start.
@@ -83,12 +86,6 @@ public class GuildScheduledEvent(
     public val status: GuildScheduledEventStatus
         get() = data.status
 
-    /**
-     * The [type][ScheduledEntityType] of this event.
-     */
-    public val type: ScheduledEntityType
-        get() = data.type
-
     public val entityId: Snowflake?
         get() = data.entityId
 
@@ -98,12 +95,14 @@ public class GuildScheduledEvent(
     public val entityType: ScheduledEntityType
         get() = data.entityType
 
+    /**
+     * The [entity metadata][GuildScheduledEventEntityMetadata] for the scheduled event
+     */
     public val entityMetadata: GuildScheduledEventEntityMetadata
         get() = data.entityMetadata
-    public val skuIds: List<Snowflake>
-        get() = data.skuIds
-    public val skus: JsonArray
-        get() = data.skus
+
+    public val creator: User?
+        get() = data.creator.unwrap { User(it, kord, supplier) }
 
     /**
      * The amount of users subscribed to this event.
