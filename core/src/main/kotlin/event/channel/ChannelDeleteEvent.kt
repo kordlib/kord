@@ -95,7 +95,7 @@ public class UnknownChannelDeleteEvent(
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(channel.kord)
 
-) : ChannelCreateEvent, CoroutineScope by coroutineScope {
+) : ChannelDeleteEvent, CoroutineScope by coroutineScope {
     override fun toString(): String {
         return "UnknownChannelDeleteEvent(channel=$channel, shard=$shard)"
     }

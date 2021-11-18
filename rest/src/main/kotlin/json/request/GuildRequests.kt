@@ -62,7 +62,7 @@ data class GuildChannelCreateRequest(
     val rateLimitPerUser: Optional<Int> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
-    val permissionOverwrite: Optional<List<Overwrite>> = Optional.Missing(),
+    val permissionOverwrite: Optional<Set<Overwrite>> = Optional.Missing(),
     @SerialName("parent_id")
     val parentId: OptionalSnowflake = OptionalSnowflake.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,

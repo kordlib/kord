@@ -19,7 +19,7 @@ import java.io.InputStream
  * Message builder for publicly responding to an interaction.
  */
 
-class InteractionResponseCreateBuilder(var ephemeral: Boolean = false)
+class InteractionResponseCreateBuilder(val ephemeral: Boolean = false)
     : MessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {
 
@@ -30,7 +30,6 @@ class InteractionResponseCreateBuilder(var ephemeral: Boolean = false)
     override val embeds: MutableList<EmbedBuilder> = mutableListOf()
 
     override var allowedMentions: AllowedMentionsBuilder? = null
-
 
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 

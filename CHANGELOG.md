@@ -1,3 +1,16 @@
+# 0.8.0-M7
+
+## Additions
+
+* Add `rtcRegion` to builders. (#413)
+* Reintroduce `InteractionResponseBehavior#followUpEphemeral`
+
+## Fixes
+
+* Fix `IntChoice` not taking a  `Long`. (#414)
+* Fix `InteractionBehavior#respondEphemeral` missing ephemeral flags. (#414)
+* Fix target type of message command to `Message(Behavior)` instead of `UserBehavior` (#414)
+
 # 0.8.0-M6
 
 ## Breaking

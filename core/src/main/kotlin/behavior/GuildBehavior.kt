@@ -649,7 +649,7 @@ public fun GuildBehavior(
     }
 
     override fun toString(): String {
-        return "GuildBehavior(id=$id, kord=$kord, supplier$supplier)"
+        return "GuildBehavior(id=$id, kord=$kord, supplier=$supplier)"
     }
 }
 

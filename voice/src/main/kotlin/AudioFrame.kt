@@ -3,14 +3,14 @@ package dev.kord.voice
 import dev.kord.common.annotation.KordVoice
 
 /**
- * A frame of 20ms Opus-encoded audio data.
+ * A frame of 20ms Opus-encoded 48k stereo audio data.
  */
 @KordVoice
 @JvmInline
-value class AudioFrame(val data: ByteArray) {
-    companion object {
-        val SILENCE = AudioFrame(byteArrayOf(0xFC.toByte(), 0xFF.toByte(), 0xFE.toByte()))
+public value class AudioFrame(public val data: ByteArray) {
+    public companion object {
+        public val SILENCE: AudioFrame = AudioFrame(byteArrayOf(0xFC.toByte(), 0xFF.toByte(), 0xFE.toByte()))
 
-        fun fromData(data: ByteArray?) = data?.let(::AudioFrame)
+        public fun fromData(data: ByteArray?): AudioFrame? = data?.let(::AudioFrame)
     }
 }

@@ -14,7 +14,7 @@ public data class ApplicationCommandData(
     val type: Optional<ApplicationCommandType> = Optional.Missing(),
     val applicationId: Snowflake,
     val name: String,
-    val description: String,
+    val description: String?,
     val guildId: OptionalSnowflake,
     val options: Optional<List<ApplicationCommandOptionData>>,
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,

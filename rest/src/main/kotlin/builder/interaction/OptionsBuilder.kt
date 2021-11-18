@@ -60,9 +60,9 @@ sealed class BaseChoiceBuilder<T>(
 
 @KordDsl
 class IntChoiceBuilder(name: String, description: String) :
-    BaseChoiceBuilder<Int>(name, description, ApplicationCommandOptionType.Integer) {
+    BaseChoiceBuilder<Long>(name, description, ApplicationCommandOptionType.Integer) {
 
-    override fun choice(name: String, value: Int) {
+    override fun choice(name: String, value: Long) {
         if (choices == null) choices = mutableListOf()
         choices!!.add(Choice.IntChoice(name, value))
     }

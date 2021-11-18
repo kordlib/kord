@@ -52,6 +52,7 @@ import dev.kord.gateway.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
+import kotlinx.coroutines.flow.toSet
 import dev.kord.common.entity.DiscordGuild as GatewayGuild
 import dev.kord.core.event.Event as CoreEvent
 
@@ -186,7 +187,11 @@ internal class GuildEventHandler(
         coroutineScope: CoroutineScope
     ): EmojisUpdateEvent =
         with(event.emoji) {
+
             val data = emojis.map { EmojiData.from(guildId, it.id!!, it) }
+            val old = cache.query<EmojiData> { idEq(EmojiData::guildId, guildId) }.asFlow().map {
+                GuildEmoji(it, kord)
+            }.toSet()
             cache.putAll(data)
 
             val emojis = data.map { GuildEmoji(it, kord) }
@@ -195,7 +200,7 @@ internal class GuildEventHandler(
                 it.copy(emojis = emojis.map { emoji -> emoji.id })
             }
 
-            return EmojisUpdateEvent(guildId, emojis.toSet(), kord, shard, coroutineScope = coroutineScope)
+            return EmojisUpdateEvent(guildId, emojis.toSet(), old, kord, shard, coroutineScope = coroutineScope)
         }
 
 
@@ -233,10 +238,18 @@ internal class GuildEventHandler(
     ): MemberLeaveEvent =
         with(event.member) {
             val userData = UserData.from(user)
-            cache.query<UserData> { idEq(UserData::id, userData.id) }.remove()
-            val user = User(userData, kord)
 
-            return MemberLeaveEvent(user, guildId, shard, coroutineScope = coroutineScope)
+            val oldData = cache.query<MemberData> {
+                idEq(MemberData::userId, userData.id)
+                idEq(MemberData::guildId, guildId)
+            }.singleOrNull()
+
+            cache.query<UserData> { idEq(UserData::id, userData.id) }.remove()
+
+            val user = User(userData, kord)
+            val old = oldData?.let { Member(it, userData, kord) }
+
+            return MemberLeaveEvent(user, old, guildId, shard, coroutineScope = coroutineScope)
         }
 
     private suspend fun handle(
@@ -280,9 +293,16 @@ internal class GuildEventHandler(
         coroutineScope: CoroutineScope
     ): RoleUpdateEvent {
         val data = RoleData.from(event.role)
+
+        val oldData = cache.query<RoleData> {
+            idEq(RoleData::id, data.id)
+            idEq(RoleData::guildId, data.guildId) // TODO("Is this worth keeping?")
+        }.singleOrNull()
+
+        val old = oldData?.let { Role(it, kord) }
         cache.put(data)
 
-        return RoleUpdateEvent(Role(data, kord), shard, coroutineScope = coroutineScope)
+        return RoleUpdateEvent(Role(data, kord), old, shard, coroutineScope = coroutineScope)
     }
 
     private suspend fun handle(

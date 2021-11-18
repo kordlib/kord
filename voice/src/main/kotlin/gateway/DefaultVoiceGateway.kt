@@ -2,7 +2,6 @@ package dev.kord.voice.gateway
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.retry.Retry
 import dev.kord.voice.gateway.handler.HandshakeHandler
 import dev.kord.voice.gateway.handler.HeartbeatHandler
@@ -22,7 +21,6 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
-import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 
 private val defaultVoiceGatewayLogger = KotlinLogging.logger { }
@@ -33,15 +31,12 @@ private sealed class State(val retry: Boolean) {
 }
 
 @KordVoice
-data class DefaultVoiceGatewayData(
+public data class DefaultVoiceGatewayData(
     val selfId: Snowflake,
     val guildId: Snowflake,
     val sessionId: String,
     val client: HttpClient,
     val reconnectRetry: Retry,
-    val sendRateLimiter: RateLimiter,
-    val identifyRateLimiter: RateLimiter,
-    val dispatcher: CoroutineDispatcher,
     val eventFlow: MutableSharedFlow<VoiceEvent>
 )
 
@@ -49,11 +44,11 @@ data class DefaultVoiceGatewayData(
  * The default Voice Gateway implementation of Kord, using an [HttpClient] for the underlying websocket.
  */
 @KordVoice
-class DefaultVoiceGateway(
+public class DefaultVoiceGateway(
     private val data: DefaultVoiceGatewayData
 ) : VoiceGateway {
-    override val coroutineContext: CoroutineContext =
-        SupervisorJob() + data.dispatcher + CoroutineName("Voice Gateway for Guild {${data.guildId.value})")
+    override val scope: CoroutineScope =
+        CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-gateway[$${data.guildId.value}]"))
 
     private lateinit var socket: DefaultClientWebSocketSession
 
@@ -75,19 +70,24 @@ class DefaultVoiceGateway(
 
     init {
         handshakeHandler = HandshakeHandler(events, data, ::trySend)
-        HeartbeatHandler(events, ::trySend, { _ping.value = it })
+        with(scope) {
+            launch { handshakeHandler.start() }
+            launch { HeartbeatHandler(events, ::trySend, { _ping.value = it }).start() }
+        }
     }
 
     // prevent race conditions caused by suspending due to the reconnectRetry
     private val connectMutex = Mutex(locked = false)
 
-    override suspend fun start(configuration: VoiceGatewayConfiguration) = connectMutex.withLock {
+    override suspend fun start(configuration: VoiceGatewayConfiguration): Unit = connectMutex.withLock {
         resetState(configuration)
 
         while (data.reconnectRetry.hasNext && state.value is State.Running) {
             try {
                 socket = webSocket(configuration.endpoint)
             } catch (exception: Exception) {
+                if (exception is CancellationException) break
+
                 defaultVoiceGatewayLogger.error(exception)
                 if (exception is java.nio.channels.UnresolvedAddressException) {
                     data.eventFlow.emit(Close.Timeout)
@@ -101,14 +101,18 @@ class DefaultVoiceGateway(
 
             try {
                 readSocket()
+            } catch (exception: CancellationException) {
+                defaultVoiceGatewayLogger.trace(exception) { "voice gateway stopped" }
             } catch (exception: Exception) {
-                defaultVoiceGatewayLogger.error(exception)
+                defaultVoiceGatewayLogger.error(exception) { "voice gateway stopped"}
             }
 
             defaultVoiceGatewayLogger.trace { "voice gateway connection closing" }
 
             try {
                 handleClose()
+            } catch (exception: CancellationException) {
+                defaultVoiceGatewayLogger.trace(exception) { "" }
             } catch (exception: Exception) {
                 defaultVoiceGatewayLogger.error(exception)
             }
@@ -169,7 +173,7 @@ class DefaultVoiceGateway(
     }
 
 
-    override suspend fun send(command: Command) = stateMutex.withLock {
+    override suspend fun send(command: Command): Unit = stateMutex.withLock {
         sendUnsafe(command)
     }
 
@@ -180,7 +184,6 @@ class DefaultVoiceGateway(
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun sendUnsafe(command: Command) {
-        data.sendRateLimiter.consume()
         val json = Json.encodeToString(Command, command)
         if (command is Identify) {
             defaultVoiceGatewayLogger.trace {
@@ -199,6 +202,12 @@ class DefaultVoiceGateway(
     }
 
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
+
+    override suspend fun detach() {
+        stop()
+        data.client.close()
+        scope.cancel()
+    }
 
     override suspend fun stop() {
         data.eventFlow.emit(Close.UserClose)
@@ -233,7 +242,7 @@ internal val VoiceGatewayCloseCode.retry
         VoiceGatewayCloseCode.NotAuthenticated -> true
         VoiceGatewayCloseCode.AuthenticationFailed -> false
         VoiceGatewayCloseCode.AlreadyAuthenticated -> true
-        VoiceGatewayCloseCode.SessionNoLongerValid -> true
+        VoiceGatewayCloseCode.SessionNoLongerValid -> false
         VoiceGatewayCloseCode.SessionTimeout -> true
         VoiceGatewayCloseCode.ServerNotFound -> false
         VoiceGatewayCloseCode.UnknownProtocol -> false

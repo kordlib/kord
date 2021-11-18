@@ -4,68 +4,78 @@ package dev.kord.voice.handlers
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.EncryptionMode
+import dev.kord.voice.FrameInterceptorConfiguration
+import dev.kord.voice.VoiceConnection
+import dev.kord.voice.encryption.strategies.LiteNonceStrategy
+import dev.kord.voice.encryption.strategies.NormalNonceStrategy
+import dev.kord.voice.encryption.strategies.SuffixNonceStrategy
 import dev.kord.voice.gateway.*
-import dev.kord.voice.udp.AudioFramePollerConfigurationBuilder
-import dev.kord.voice.udp.DiscordUdpConnection
-import dev.kord.voice.udp.VoiceUdpConnection
+import dev.kord.voice.udp.AudioFrameSenderConfiguration
 import io.ktor.util.network.*
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlinx.atomicfu.atomic
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import mu.KotlinLogging
-import dev.kord.voice.gateway.VoiceEvent as VoiceEvent
 
 private val udpLifeCycleLogger = KotlinLogging.logger { }
 
+@OptIn(KordVoice::class)
 internal class UdpLifeCycleHandler(
     flow: Flow<VoiceEvent>,
-    private val send: suspend (Command) -> Unit,
-    private val poll: (AudioFramePollerConfigurationBuilder) -> Unit,
-    private val udpDispatcher: CoroutineDispatcher = Dispatchers.Default
-) : EventHandler<VoiceEvent>(flow, "UdpInterceptor") {
-    private var framePollerConfigurationBuilder = AudioFramePollerConfigurationBuilder()
-    private var udp: DiscordUdpConnection? = null
+    private val connection: VoiceConnection
+) : ConnectionEventHandler<VoiceEvent>(flow, "UdpInterceptor") {
+    private var ssrc: UInt? by atomic(null)
+    private var server: NetworkAddress? by atomic(null)
+
+    private var audioSenderJob: Job? by atomic(null)
 
     @OptIn(ExperimentalUnsignedTypes::class)
-    override fun start() {
+    override suspend fun start() = coroutineScope {
         on<Ready> {
-            framePollerConfigurationBuilder = AudioFramePollerConfigurationBuilder() // new config
+            ssrc = it.ssrc
+            server = NetworkAddress(it.ip, it.port)
 
-            framePollerConfigurationBuilder.ssrc = it.ssrc
-
-            val udpConnection = VoiceUdpConnection(
-                server = NetworkAddress(it.ip, it.port),
-                ssrc = it.ssrc,
-                dispatcher = udpDispatcher
-            )
-
-            udp = udpConnection
-            framePollerConfigurationBuilder.udp = udpConnection
-
-            val ip: NetworkAddress = udpConnection.performIpDiscovery()
+            val ip: NetworkAddress = connection.socket.discoverIp(server!!, ssrc!!.toInt())
 
             udpLifeCycleLogger.trace { "ip discovered for voice successfully" }
+
+            val encryptionMode = when (connection.nonceStrategy) {
+                is LiteNonceStrategy -> EncryptionMode.XSalsa20Poly1305Lite
+                is NormalNonceStrategy -> EncryptionMode.XSalsa20Poly1305
+                is SuffixNonceStrategy -> EncryptionMode.XSalsa20Poly1305Suffix
+            }
 
             val selectProtocol = SelectProtocol(
                 protocol = "udp",
                 data = SelectProtocol.Data(
                     address = ip.hostname,
                     port = ip.port,
-                    mode = EncryptionMode.XSalsa20Poly1305
+                    mode = encryptionMode
                 )
             )
 
-            send(selectProtocol)
+            connection.voiceGateway.send(selectProtocol)
         }
 
         on<SessionDescription> {
-            framePollerConfigurationBuilder.key = it.secretKey.toUByteArray().toByteArray().toList()
+            with(connection) {
+                val config = AudioFrameSenderConfiguration(
+                    ssrc = ssrc!!,
+                    key = it.secretKey.toUByteArray().toByteArray(),
+                    server = server!!,
+                    interceptorConfiguration = FrameInterceptorConfiguration(gateway, voiceGateway, ssrc!!)
+                )
 
-            poll(framePollerConfigurationBuilder) // we can start polling at this point
+                audioSenderJob?.cancel()
+                audioSenderJob = launch { frameSender.start(config) }
+            }
         }
 
         on<Close> {
-            udp?.close()
+            audioSenderJob?.cancel()
+            audioSenderJob = null
         }
     }
 }

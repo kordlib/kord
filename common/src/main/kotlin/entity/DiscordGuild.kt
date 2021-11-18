@@ -247,6 +247,15 @@ sealed class GuildFeature(val value: String) {
     /** Guild has access to create private threads */
     object PrivateThreads : GuildFeature("PRIVATE_THREADS")
 
+    /** Guild has enabled Membership Screening */
+    object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED")
+
+    /** Guild can be previewed before joining via Membership Screening or the directory */
+    object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
+
+    /** Guild is able to set role icons */
+    object RoleIcons : GuildFeature("ROLE_ICONS")
+
     internal object Serializer : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
@@ -271,6 +280,9 @@ sealed class GuildFeature(val value: String) {
             "THREE_DAY_THREAD_ARCHIVE" -> ThreeDayThreadArchive
             "SEVEN_DAY_THREAD_ARCHIVE" -> SevenDayThreadArchive
             "PRIVATE_THREADS" -> PrivateThreads
+            "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
+            "PREVIEW_ENABLED" -> PreviewEnabled
+            "ROLE_ICONS" -> RoleIcons
             else -> Unknown(value)
         }
 
