@@ -5,6 +5,7 @@ import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.DefaultMessageNotificationLevel
+import dev.kord.common.entity.DiscordOptionallyMemberUser
 import dev.kord.common.entity.DiscordWelcomeScreenChannel
 import dev.kord.common.entity.ExplicitContentFilter
 import dev.kord.common.entity.GuildScheduledEventEntityMetadata
@@ -272,5 +273,5 @@ data class GuildScheduledEventCreateRequest(
 )
 
 @Serializable
-data class GuildScheduledEventUsersResponse(val users: List<Unit>)
+data class GuildScheduledEventUsersResponse(val users: List<DiscordOptionallyMemberUser>)
 

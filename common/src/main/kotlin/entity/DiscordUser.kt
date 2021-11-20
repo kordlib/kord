@@ -2,6 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -10,6 +11,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonNames
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -72,6 +74,7 @@ data class DiscordUser(
  * @param premiumType The type of Nitro subscription on a user's account.
  * @param publicFlags The public flags on a user's account. Unlike [flags], these **are** visible ot other users.
  */
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class DiscordOptionallyMemberUser(
     val id: Snowflake,
@@ -90,6 +93,7 @@ data class DiscordOptionallyMemberUser(
     val premiumType: Optional<UserPremium> = Optional.Missing(),
     @SerialName("public_flags")
     val publicFlags: Optional<UserFlags> = Optional.Missing(),
+    @JsonNames("member", "guild_member")
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
 )
 

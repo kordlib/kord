@@ -4,15 +4,19 @@ import dev.kord.common.entity.DiscordGuildScheduledEvent
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.GuildScheduledEvent
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.User
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.scheduled_events.ScheduledEventModifyBuilder
 import dev.kord.rest.service.modifyScheduledEvent
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -22,6 +26,19 @@ import kotlin.contracts.contract
  */
 public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
     public val guildId: Snowflake
+
+    /**
+     * Requests all the users which are interested in this event.
+     *
+     * @throws RequestException if anything goes wrong during the request
+     */
+    public val users: Flow<User> get() = flow {
+        kord.rest.guild.getScheduledEventUsers(guildId, id).users.forEach {
+            val userData = UserData.from(it)
+            emit(User(userData, kord, supplier))
+        }
+    }
+
     /**
      * Deletes this event.
      *
