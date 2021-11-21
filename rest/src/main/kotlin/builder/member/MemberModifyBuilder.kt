@@ -1,13 +1,14 @@
 package dev.kord.rest.builder.member
 
-import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildMemberModifyRequest
+import kotlinx.datetime.Instant
 
 @KordDsl
 class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest> {
@@ -25,6 +26,9 @@ class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest> {
     private var _nickname: Optional<String?> = Optional.Missing()
     var nickname: String? by ::_nickname.delegate()
 
+    private var _communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
+    var communicationDisabledUntil: Instant? by ::_communicationDisabledUntil.delegate()
+
     private var _roles: Optional<MutableSet<Snowflake>?> = Optional.Missing()
     var roles: MutableSet<Snowflake>? by ::_roles.delegate()
 
@@ -33,6 +37,7 @@ class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest> {
         channelId = _voiceChannelId,
         mute = _muted,
         deaf = _deafened,
-        roles = _roles
+        roles = _roles,
+        communicationDisabledUntil = _communicationDisabledUntil
     )
 }

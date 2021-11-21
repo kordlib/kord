@@ -16,6 +16,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
@@ -108,6 +109,8 @@ data class GuildMemberAddRequest(
     val roles: Optional<Set<Snowflake>> = Optional.Missing(),
     val mute: OptionalBoolean = OptionalBoolean.Missing,
     val deaf: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("communication_disabled_until")
+    val communicationDisabledUntil: Optional<Instant> = Optional.Missing()
 )
 
 @Serializable
@@ -118,6 +121,8 @@ data class GuildMemberModifyRequest(
     val deaf: OptionalBoolean? = OptionalBoolean.Missing,
     @SerialName("channel_id")
     val channelId: OptionalSnowflake? = OptionalSnowflake.Missing,
+    @SerialName("communication_disabled_until")
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
 )
 
 
