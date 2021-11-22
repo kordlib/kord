@@ -26,10 +26,11 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.isError
 import dev.kord.rest.route.Route
 import dev.kord.rest.service.RestClient
-import io.ktor.client.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.readText
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -70,7 +71,7 @@ public class KordBuilder(public val token: String) {
         }
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
-        { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter()) }
+        { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = token) }
     private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
 
     /**
@@ -205,7 +206,7 @@ public class KordBuilder(public val token: String) {
      * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
      */
     public suspend fun build(): Kord {
-        val client = httpClient.configure(token)
+        val client = httpClient.configure()
 
         val recommendedShards = client.getGatewayInfo().shards
         val shardsInfo = shardsBuilder(recommendedShards)

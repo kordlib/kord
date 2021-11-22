@@ -1,8 +1,9 @@
 package dev.kord.rest.service
 
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.RequestBuilder
+import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
+import io.ktor.http.HttpHeaders
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -13,7 +14,14 @@ abstract class RestService(@PublishedApi internal val requestHandler: RequestHan
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        val request = RequestBuilder(route).apply(builder).build()
+        val request = RequestBuilder(route)
+            .apply(builder)
+            .apply {
+                if (route.requiresAuthorization) {
+                    header(HttpHeaders.Authorization, "Bot ${requestHandler.token}")
+                }
+            }
+            .build()
         return requestHandler.handle(request)
     }
 
