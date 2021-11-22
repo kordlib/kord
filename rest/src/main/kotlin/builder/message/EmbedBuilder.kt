@@ -273,7 +273,7 @@ class EmbedBuilder : RequestBuilder<EmbedRequest> {
             /**
              * The maximum length of the [Field.value] field.
              */
-            const val value = 2048
+            const val value = 1024
         }
     }
 
