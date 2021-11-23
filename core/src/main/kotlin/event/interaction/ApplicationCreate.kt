@@ -1,9 +1,29 @@
 package dev.kord.core.event.interaction
 
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.*
-import dev.kord.core.entity.application.*
-import dev.kord.core.entity.interaction.*
+import dev.kord.core.behavior.interaction.AutoCompleteInteractionBehavior
+import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
+import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
+import dev.kord.core.behavior.interaction.followUp
+import dev.kord.core.behavior.interaction.respondEphemeral
+import dev.kord.core.behavior.interaction.respondPublic
+import dev.kord.core.entity.application.ApplicationCommand
+import dev.kord.core.entity.interaction.ActionInteraction
+import dev.kord.core.entity.interaction.ApplicationCommandInteraction
+import dev.kord.core.entity.interaction.AutoCompleteInteraction
+import dev.kord.core.entity.interaction.ChatInputCommandInvocationInteraction
+import dev.kord.core.entity.interaction.GlobalApplicationCommandInteraction
+import dev.kord.core.entity.interaction.GlobalAutoCompleteInteraction
+import dev.kord.core.entity.interaction.GlobalChatInputCommandInteraction
+import dev.kord.core.entity.interaction.GlobalMessageCommandInteraction
+import dev.kord.core.entity.interaction.GlobalUserCommandInteraction
+import dev.kord.core.entity.interaction.GuildApplicationCommandInteraction
+import dev.kord.core.entity.interaction.GuildAutoCompleteInteraction
+import dev.kord.core.entity.interaction.GuildChatInputCommandInteraction
+import dev.kord.core.entity.interaction.GuildMessageCommandInteraction
+import dev.kord.core.entity.interaction.GuildUserCommandInteraction
+import dev.kord.core.entity.interaction.MessageCommandInteraction
+import dev.kord.core.entity.interaction.UserCommandInteraction
 import dev.kord.core.event.kordCoroutineScope
 import kotlinx.coroutines.CoroutineScope
 
@@ -12,13 +32,13 @@ import kotlinx.coroutines.CoroutineScope
  *
  *
  * Discord currently has one type of interaction,
- * [Slash Commands][dev.kord.core.entity.interaction.ApplicationCommand].
+ * [Slash Commands][ApplicationCommand].
  *
  * The event should be acknowledged  withing 3 seconds of reception using one of the following methods:
- * * [acknowledgeEphemeral][MessageRespondingInteraction.acknowledgeEphemeral] - acknowledges an interaction ephemerally.
- * * [acknowledgePublic][MessageRespondingInteraction.acknowledgePublic] - acknowledges an interaction in public.
- * * [respondPublic][MessageRespondingInteraction.respondPublic] - same as public acknowledgement, but an immediate result (message) can be supplied.
- * * [respondEphemeral][MessageRespondingInteraction.respondEphemeral] - same as ephemeral acknowledgement, but an immediate result (message) can be supplied.
+ * * [acknowledgeEphemeral][ActionInteraction.acknowledgeEphemeral] - acknowledges an interaction ephemerally.
+ * * [acknowledgePublic][ActionInteraction.acknowledgePublic] - acknowledges an interaction in public.
+ * * [respondPublic][ActionInteraction.respondPublic] - same as public acknowledgement, but an immediate result (message) can be supplied.
+ * * [respondEphemeral][ActionInteraction.respondEphemeral] - same as ephemeral acknowledgement, but an immediate result (message) can be supplied.
  *
  * Once an interaction has been acknowledged,
  * you can use [PublicInteractionResponseBehavior.followUp] or [EphemeralInteractionResponseBehavior.followUp] to display additional messages.
@@ -102,7 +122,7 @@ public class GlobalChatInputCommandInteractionCreateEvent(
 ) : GlobalApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 /**
- * MessageRespondingInteraction received when a users types into an auto-completed option.
+ * ActionInteraction received when a users types into an auto-completed option.
  *
  * Check [AutoCompleteInteractionBehavior] on how to reply.
  *
@@ -125,7 +145,7 @@ internal fun AutoCompleteInteractionCreateEvent(
 }
 
 /**
- * MessageRespondingInteraction received when a users types into an auto-completed option.
+ * ActionInteraction received when a users types into an auto-completed option.
  *
  * Check [AutoCompleteInteractionBehavior] on how to reply.
  *
@@ -139,7 +159,7 @@ public class GlobalAutoCompleteInteractionCreateEvent(
 ) : AutoCompleteInteractionCreateEvent, CoroutineScope by coroutineScope
 
 /**
- * MessageRespondingInteraction received when a users types into an auto-completed option.
+ * ActionInteraction received when a users types into an auto-completed option.
  *
  * Check [AutoCompleteInteractionBehavior] on how to reply.
  *

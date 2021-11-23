@@ -14,7 +14,7 @@ import dev.kord.core.behavior.GuildInteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.interaction.MessageRespondingInteractionBehavior
+import dev.kord.core.behavior.interaction.ActionInteractionBehavior
 import dev.kord.core.cache.data.ApplicationInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
@@ -29,16 +29,20 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * An instance of [MessageRespondingInteraction] (https://discord.com/developers/docs/interactions/slash-commands#interaction)
+ * An instance of [ActionInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction) which does perform an action
+ * (e.g. slash commands and context actions).
+ *
+ * @see DataInteraction
+ * @see Interaction
  */
-public sealed interface MessageRespondingInteraction : Interaction, MessageRespondingInteractionBehavior
+public sealed interface ActionInteraction : Interaction, ActionInteractionBehavior
 
 /**
  * The base interaction for all slash-command related interactions.
  *
  * @see GuildApplicationCommandInteraction
  */
-public sealed class CommandInteraction : MessageRespondingInteraction {
+public sealed class CommandInteraction : ActionInteraction {
     public val command: InteractionCommand
         get() = InteractionCommand(data.data, kord)
 }
@@ -321,7 +325,7 @@ public sealed interface GlobalInteraction : Interaction {
 }
 
 /**
- * An [MessageRespondingInteraction] that took place in a Global Context with [GlobalApplicationCommand].
+ * An [ActionInteraction] that took place in a Global Context with [GlobalApplicationCommand].
  */
 public sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInteraction, GlobalInteraction {
     /**
@@ -349,7 +353,7 @@ public fun GlobalApplicationCommandInteraction(
 }
 
 /**
- * An [MessageRespondingInteraction] that took place in a Global Context with [dev.kord.core.entity.application.GuildApplicationCommand].
+ * An [ActionInteraction] that took place in a Global Context with [dev.kord.core.entity.application.GuildApplicationCommand].
  */
 
 

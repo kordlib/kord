@@ -16,8 +16,8 @@ import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.component.Component
+import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.MessageInteraction
-import dev.kord.core.entity.interaction.MessageRespondingInteraction
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -112,7 +112,7 @@ public class Message(
     public val stickers: List<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }
 
     /**
-     * If the message is a response to an [MessageRespondingInteraction], this is the id of the interaction's application
+     * If the message is a response to an [ActionInteraction], this is the id of the interaction's application
      */
     public val applicationId: Snowflake? get() = data.application.unwrap { it.id }
 
@@ -189,7 +189,7 @@ public class Message(
     public val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(it, kord) }.toSet()
 
     /**
-     * The [MessageInteraction] sent on this message object when it is a response to an [dev.kord.core.entity.interaction.MessageRespondingInteraction].
+     * The [MessageInteraction] sent on this message object when it is a response to an [dev.kord.core.entity.interaction.ActionInteraction].
      */
 
     public val interaction: MessageInteraction? get() = data.interaction.mapNullable { MessageInteraction(it, kord) }.value

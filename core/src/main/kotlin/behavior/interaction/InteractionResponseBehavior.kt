@@ -14,7 +14,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * The behavior of a [Discord MessageRespondingInteraction Response](https://discord.com/developers/docs/interactions/slash-commands#interaction-response)
+ * The behavior of a [Discord ActionInteraction Response](https://discord.com/developers/docs/interactions/slash-commands#interaction-response)
  */
 
 public interface InteractionResponseBehavior : KordObject {

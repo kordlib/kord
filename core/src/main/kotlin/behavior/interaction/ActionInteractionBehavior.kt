@@ -11,9 +11,10 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * The behavior of a [Discord MessageRespondingInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction) which can respond with a message.
+ * The behavior of a [Discord ActionInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction) which does perform an action
+ * (e.g. slash commands and context actions)
  */
-public interface MessageRespondingInteractionBehavior : InteractionBehavior {
+public interface ActionInteractionBehavior : InteractionBehavior {
 
     /**
      * Acknowledges an interaction ephemerally.
@@ -49,7 +50,7 @@ public interface MessageRespondingInteractionBehavior : InteractionBehavior {
  */
 
 @OptIn(ExperimentalContracts::class)
-public suspend inline fun MessageRespondingInteractionBehavior.respondPublic(
+public suspend inline fun ActionInteractionBehavior.respondPublic(
     builder: InteractionResponseCreateBuilder.() -> Unit
 ): PublicInteractionResponseBehavior {
 
@@ -70,7 +71,7 @@ public suspend inline fun MessageRespondingInteractionBehavior.respondPublic(
  */
 
 @OptIn(ExperimentalContracts::class)
-public suspend inline fun MessageRespondingInteractionBehavior.respondEphemeral(
+public suspend inline fun ActionInteractionBehavior.respondEphemeral(
     builder: InteractionResponseCreateBuilder.() -> Unit
 ): EphemeralInteractionResponseBehavior {
 
@@ -89,7 +90,7 @@ public fun InteractionBehavior(
     applicationId: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-): MessageRespondingInteractionBehavior = object : MessageRespondingInteractionBehavior {
+): ActionInteractionBehavior = object : ActionInteractionBehavior {
     override val id: Snowflake
         get() = id
 

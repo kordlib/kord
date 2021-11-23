@@ -9,6 +9,12 @@ import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * An instance of [ActionInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction).
+ *
+ * @see ActionInteraction
+ * @see DataInteraction
+ */
 public sealed interface Interaction : InteractionBehavior {
     public val data: InteractionData
 

@@ -10,13 +10,14 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.User
+import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * An instance of [MessageInteraction](https://discord.com/developers/docs/interactions/slash-commands#messageinteraction)
- * This is sent on the [Message] object when the message is a response to an [MessageRespondingInteraction].
+ * This is sent on the [Message] object when the message is a response to an [ActionInteraction].
  */
 
 public class MessageInteraction(
@@ -25,7 +26,7 @@ public class MessageInteraction(
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordEntity, Strategizable {
     /**
-     * [id][MessageRespondingInteraction.id] of the [MessageRespondingInteraction] this message is responding to.
+     * [id][ActionInteraction.id] of the [ActionInteraction] this message is responding to.
      */
     override val id: Snowflake get() = data.id
 
@@ -35,7 +36,7 @@ public class MessageInteraction(
     public val name: String get() = data.name
 
     /**
-     * The [UserBehavior] of the [user][MessageRespondingInteraction.user] who invoked the [MessageRespondingInteraction]
+     * The [UserBehavior] of the [user][ActionInteraction.user] who invoked the [ActionInteraction]
      */
     public val user: UserBehavior get() = UserBehavior(data.user, kord)
 
@@ -51,6 +52,7 @@ public class MessageInteraction(
      * @throws EntityNotFoundException if the user was null.
      */
     public suspend fun getUser(): User = supplier.getUser(user.id)
+
 
     /**
      * Requests to get the user of this interaction message,

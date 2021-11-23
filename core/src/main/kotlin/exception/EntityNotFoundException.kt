@@ -74,6 +74,6 @@ public class EntityNotFoundException : Exception {
             entityNotFound(T::class.simpleName!!, commandId)
 
         public inline fun interactionNotFound(token: String): Nothing =
-            throw EntityNotFoundException("MessageRespondingInteraction with token $token was not found.")
+            throw EntityNotFoundException("ActionInteraction with token $token was not found.")
     }
 }

@@ -16,7 +16,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 
-public interface ComponentInteractionBehavior : MessageRespondingInteractionBehavior {
+public interface ComponentInteractionBehavior : ActionInteractionBehavior {
 
     /**
      * Acknowledges a component interaction publicly with the intent of updating it later.

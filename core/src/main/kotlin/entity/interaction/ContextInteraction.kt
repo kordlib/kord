@@ -215,13 +215,13 @@ public class UnknownApplicationCommandInteraction(
 }
 
 /**
- * MessageRespondingInteraction indicating an auto-complete request from Discord.
+ * ActionInteraction indicating an auto-complete request from Discord.
  *
  * **Follow-ups and normals responses don't work on this type**
  *
  * Check [AutoCompleteInteractionBehavior] for response options
  */
-public sealed interface AutoCompleteInteraction : AutoCompleteInteractionBehavior, ChatInputCommandInteraction
+public sealed interface AutoCompleteInteraction : AutoCompleteInteractionBehavior, ChatInputCommandInteraction, DataInteraction
 
 internal fun AutoCompleteInteraction(
     data: InteractionData,
@@ -235,7 +235,7 @@ internal fun AutoCompleteInteraction(
 }
 
 /**
- * MessageRespondingInteraction indicating an auto-complete request from Discord.
+ * ActionInteraction indicating an auto-complete request from Discord.
  *
  * **Follow-ups and normals responses don't work on this type**
  *
@@ -251,7 +251,7 @@ public class GlobalAutoCompleteInteraction(
 }
 
 /**
- * MessageRespondingInteraction indicating an auto-complete request from Discord on a guild.
+ * ActionInteraction indicating an auto-complete request from Discord on a guild.
  *
  * **Follow-ups and normals responses don't work on this type**
  *
