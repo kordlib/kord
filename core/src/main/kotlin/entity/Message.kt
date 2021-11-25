@@ -11,19 +11,26 @@ import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.MessageData
-import dev.kord.core.entity.channel.*
+import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.component.Component
-import dev.kord.core.entity.interaction.Interaction
+import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.MessageInteraction
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
-import java.util.*
+import java.util.Objects
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
@@ -105,7 +112,7 @@ public class Message(
     public val stickers: List<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }
 
     /**
-     * If the message is a response to an [Interaction], this is the id of the interaction's application
+     * If the message is a response to an [ActionInteraction], this is the id of the interaction's application
      */
     public val applicationId: Snowflake? get() = data.application.unwrap { it.id }
 
@@ -182,7 +189,7 @@ public class Message(
     public val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(it, kord) }.toSet()
 
     /**
-     * The [MessageInteraction] sent on this message object when it is a response to an [dev.kord.core.entity.interaction.Interaction].
+     * The [MessageInteraction] sent on this message object when it is a response to an [dev.kord.core.entity.interaction.ActionInteraction].
      */
 
     public val interaction: MessageInteraction? get() = data.interaction.mapNullable { MessageInteraction(it, kord) }.value

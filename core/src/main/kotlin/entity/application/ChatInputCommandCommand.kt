@@ -15,8 +15,8 @@ import dev.kord.rest.service.InteractionService
 
 public sealed interface ChatInputCommandCommand : ApplicationCommand, ChatInputCommandBehavior {
 
-    public val description: String
-        get() = data.description!!
+    public val description: String?
+        get() = data.description
     /**
      * The groups of this command, each group contains at least one [sub command][ChatInputSubCommand].
      */

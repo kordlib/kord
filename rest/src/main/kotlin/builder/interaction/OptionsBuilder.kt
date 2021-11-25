@@ -1,7 +1,6 @@
 package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ApplicationCommandOption
 import dev.kord.common.entity.ApplicationCommandOptionType
 import dev.kord.common.entity.Choice
@@ -27,12 +26,24 @@ sealed class OptionsBuilder(
     internal var _required: OptionalBoolean = OptionalBoolean.Missing
     var required: Boolean? by ::_required.delegate()
 
+    internal var _autocomplete: OptionalBoolean = OptionalBoolean.Missing
+
+    /**
+     * Setting this to `true` allows you to dynamically respond with your choices, depending on the user input.
+     *
+     * This disables all input validation, users can submit values before responding to the AutoComplete request.
+     *
+     * Enabling this also means that you cannot add any other option.
+     */
+    var autocomplete: Boolean? by ::_autocomplete.delegate()
+
     override fun toRequest() = ApplicationCommandOption(
         type,
         name,
         description,
         _default,
-        _required
+        _required,
+        autocomplete = _autocomplete
     )
 }
 
@@ -41,8 +52,7 @@ sealed class BaseChoiceBuilder<T>(
     name: String,
     description: String,
     type: ApplicationCommandOptionType
-) :
-    OptionsBuilder(name, description, type) {
+) : OptionsBuilder(name, description, type) {
     private var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
     var choices: MutableList<Choice<*>>? by ::_choices.delegate()
 
@@ -54,7 +64,8 @@ sealed class BaseChoiceBuilder<T>(
         description,
         choices = _choices,
         required = _required,
-        default = _default
+        default = _default,
+        autocomplete = _autocomplete
     )
 }
 

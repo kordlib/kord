@@ -1,25 +1,44 @@
 package dev.kord.core.event.interaction
 
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.*
-import dev.kord.core.entity.application.*
-import dev.kord.core.entity.interaction.*
+import dev.kord.core.behavior.interaction.AutoCompleteInteractionBehavior
+import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
+import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
+import dev.kord.core.behavior.interaction.followUp
+import dev.kord.core.behavior.interaction.respondEphemeral
+import dev.kord.core.behavior.interaction.respondPublic
+import dev.kord.core.entity.application.ApplicationCommand
+import dev.kord.core.entity.interaction.ActionInteraction
+import dev.kord.core.entity.interaction.ApplicationCommandInteraction
+import dev.kord.core.entity.interaction.AutoCompleteInteraction
+import dev.kord.core.entity.interaction.ChatInputCommandInvocationInteraction
+import dev.kord.core.entity.interaction.GlobalApplicationCommandInteraction
+import dev.kord.core.entity.interaction.GlobalAutoCompleteInteraction
+import dev.kord.core.entity.interaction.GlobalChatInputCommandInteraction
+import dev.kord.core.entity.interaction.GlobalMessageCommandInteraction
+import dev.kord.core.entity.interaction.GlobalUserCommandInteraction
+import dev.kord.core.entity.interaction.GuildApplicationCommandInteraction
+import dev.kord.core.entity.interaction.GuildAutoCompleteInteraction
+import dev.kord.core.entity.interaction.GuildChatInputCommandInteraction
+import dev.kord.core.entity.interaction.GuildMessageCommandInteraction
+import dev.kord.core.entity.interaction.GuildUserCommandInteraction
+import dev.kord.core.entity.interaction.MessageCommandInteraction
+import dev.kord.core.entity.interaction.UserCommandInteraction
 import dev.kord.core.event.kordCoroutineScope
 import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 /**
  * This event fires when an interaction is created.
  *
  *
  * Discord currently has one type of interaction,
- * [Slash Commands][dev.kord.core.entity.interaction.ApplicationCommand].
+ * [Slash Commands][ApplicationCommand].
  *
  * The event should be acknowledged  withing 3 seconds of reception using one of the following methods:
- * * [acknowledgeEphemeral][Interaction.acknowledgeEphemeral] - acknowledges an interaction ephemerally.
- * * [acknowledgePublic][Interaction.acknowledgePublic] - acknowledges an interaction in public.
- * * [respondPublic][Interaction.respondPublic] - same as public acknowledgement, but an immediate result (message) can be supplied.
- * * [respondEphemeral][Interaction.respondEphemeral] - same as ephemeral acknowledgement, but an immediate result (message) can be supplied.
+ * * [acknowledgeEphemeral][ActionInteraction.acknowledgeEphemeral] - acknowledges an interaction ephemerally.
+ * * [acknowledgePublic][ActionInteraction.acknowledgePublic] - acknowledges an interaction in public.
+ * * [respondPublic][ActionInteraction.respondPublic] - same as public acknowledgement, but an immediate result (message) can be supplied.
+ * * [respondEphemeral][ActionInteraction.respondEphemeral] - same as ephemeral acknowledgement, but an immediate result (message) can be supplied.
  *
  * Once an interaction has been acknowledged,
  * you can use [PublicInteractionResponseBehavior.followUp] or [EphemeralInteractionResponseBehavior.followUp] to display additional messages.
@@ -46,7 +65,7 @@ public sealed interface GuildApplicationInteractionCreateEvent : ApplicationInte
     override val interaction: GuildApplicationCommandInteraction
 }
 
-public sealed interface  UserCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
+public sealed interface UserCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
     override val interaction: UserCommandInteraction
 }
 
@@ -65,7 +84,7 @@ public class GlobalUserCommandInteractionCreateEvent(
 ) : GlobalApplicationInteractionCreateEvent, UserCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 
-public sealed interface  MessageCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
+public sealed interface MessageCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
     override val interaction: MessageCommandInteraction
 }
 
@@ -84,9 +103,8 @@ public class GlobalMessageCommandInteractionCreateEvent(
 ) : GlobalApplicationInteractionCreateEvent, MessageCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
 
-
-public sealed interface  ChatInputCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
-    override val interaction: ChatInputCommandInteraction
+public sealed interface ChatInputCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
+    override val interaction: ChatInputCommandInvocationInteraction
 }
 
 public class GuildChatInputCommandInteractionCreateEvent(
@@ -102,3 +120,54 @@ public class GlobalChatInputCommandInteractionCreateEvent(
     override val shard: Int,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
 ) : GlobalApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent, CoroutineScope by coroutineScope
+
+/**
+ * ActionInteraction received when a users types into an auto-completed option.
+ *
+ * Check [AutoCompleteInteractionBehavior] on how to reply.
+ *
+ * @see AutoCompleteInteraction
+ */
+public sealed interface AutoCompleteInteractionCreateEvent : InteractionCreateEvent
+
+internal fun AutoCompleteInteractionCreateEvent(
+    interaction: AutoCompleteInteraction,
+    kord: Kord,
+    shard: Int,
+    coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+): AutoCompleteInteractionCreateEvent = when (interaction) {
+    is GuildAutoCompleteInteraction -> GuildAutoCompleteInteractionCreateEvent(
+        kord, shard, interaction, coroutineScope
+    )
+    else -> GlobalAutoCompleteInteractionCreateEvent(
+        kord, shard, interaction as GlobalAutoCompleteInteraction, coroutineScope
+    )
+}
+
+/**
+ * ActionInteraction received when a users types into an auto-completed option.
+ *
+ * Check [AutoCompleteInteractionBehavior] on how to reply.
+ *
+ * @see AutoCompleteInteraction
+ */
+public class GlobalAutoCompleteInteractionCreateEvent(
+    override val kord: Kord,
+    override val shard: Int,
+    override val interaction: GlobalAutoCompleteInteraction,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : AutoCompleteInteractionCreateEvent, CoroutineScope by coroutineScope
+
+/**
+ * ActionInteraction received when a users types into an auto-completed option.
+ *
+ * Check [AutoCompleteInteractionBehavior] on how to reply.
+ *
+ * @see AutoCompleteInteraction
+ */
+public class GuildAutoCompleteInteractionCreateEvent(
+    override val kord: Kord,
+    override val shard: Int,
+    override val interaction: GuildAutoCompleteInteraction,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : AutoCompleteInteractionCreateEvent, CoroutineScope by coroutineScope

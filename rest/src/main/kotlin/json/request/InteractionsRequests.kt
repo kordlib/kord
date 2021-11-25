@@ -1,13 +1,19 @@
 package dev.kord.rest.json.request
 
-import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
+import dev.kord.common.entity.AllowedMentions
+import dev.kord.common.entity.ApplicationCommandOption
+import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.DiscordAttachment
+import dev.kord.common.entity.DiscordAutoComplete
+import dev.kord.common.entity.DiscordComponent
+import dev.kord.common.entity.DiscordGuildApplicationCommandPermission
+import dev.kord.common.entity.InteractionResponseType
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.rest.NamedFile
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.io.InputStream
 
 @Serializable
 
@@ -49,10 +55,15 @@ data class MultipartInteractionResponseModifyRequest(
 )
 
 @Serializable
-
 data class InteractionResponseCreateRequest(
     val type: InteractionResponseType,
     val data: Optional<InteractionApplicationCommandCallbackData> = Optional.Missing()
+)
+
+@Serializable
+data class AutoCompleteResponseCreateRequest<T>(
+    val type: InteractionResponseType,
+    val data: DiscordAutoComplete<T>
 )
 
 
@@ -70,7 +81,7 @@ class InteractionApplicationCommandCallbackData(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
 )
 
 
@@ -114,5 +125,5 @@ data class MultipartFollowupMessageModifyRequest(
 @Serializable
 
 data class ApplicationCommandPermissionsEditRequest(
-        val permissions: List<DiscordGuildApplicationCommandPermission>
+    val permissions: List<DiscordGuildApplicationCommandPermission>
 )

@@ -2,10 +2,17 @@ package dev.kord.core.cache.data
 
 import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
-import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.*
-import dev.kord.core.entity.application.ApplicationCommand
+import dev.kord.common.entity.ApplicationCommandOption
+import dev.kord.common.entity.ApplicationCommandOptionType
+import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.Choice
+import dev.kord.common.entity.DiscordApplicationCommand
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.mapList
+import dev.kord.common.entity.optional.orEmpty
 import kotlinx.serialization.Serializable
 
 @Serializable

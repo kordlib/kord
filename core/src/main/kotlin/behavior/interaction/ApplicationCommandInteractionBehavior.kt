@@ -5,11 +5,10 @@ import dev.kord.core.Kord
 import dev.kord.core.supplier.EntitySupplier
 
 /**
- * The behavior of a [Discord Interaction](https://discord.com/developers/docs/interactions/slash-commands#interaction)
+ * The behavior of a [Discord ActionInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction)
  * with [Application Command type][dev.kord.common.entity.ApplicationCommandType]
  */
-
-public interface ApplicationCommandInteractionBehavior : InteractionBehavior
+public interface ApplicationCommandInteractionBehavior : ActionInteractionBehavior
 
 internal fun ApplicationCommandInteractionBehavior(
     id: Snowflake,
