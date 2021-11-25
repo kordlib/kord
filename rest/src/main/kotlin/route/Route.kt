@@ -2,10 +2,41 @@ package dev.kord.rest.route
 
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
-import dev.kord.rest.json.response.*
-import io.ktor.http.*
+import dev.kord.common.entity.DiscordApplicationCommand
+import dev.kord.common.entity.DiscordAuditLog
+import dev.kord.common.entity.DiscordChannel
+import dev.kord.common.entity.DiscordGuild
+import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
+import dev.kord.common.entity.DiscordGuildMember
+import dev.kord.common.entity.DiscordGuildPreview
+import dev.kord.common.entity.DiscordGuildScheduledEvent
+import dev.kord.common.entity.DiscordGuildWidget
+import dev.kord.common.entity.DiscordIntegration
+import dev.kord.common.entity.DiscordInvite
+import dev.kord.common.entity.DiscordMessage
+import dev.kord.common.entity.DiscordPartialGuild
+import dev.kord.common.entity.DiscordPartialInvite
+import dev.kord.common.entity.DiscordRole
+import dev.kord.common.entity.DiscordStageInstance
+import dev.kord.common.entity.DiscordTemplate
+import dev.kord.common.entity.DiscordThreadMember
+import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.DiscordVoiceRegion
+import dev.kord.common.entity.DiscordWebhook
+import dev.kord.common.entity.DiscordWelcomeScreen
+import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
+import dev.kord.rest.json.response.ApplicationInfoResponse
+import dev.kord.rest.json.response.BanResponse
+import dev.kord.rest.json.response.BotGatewayResponse
+import dev.kord.rest.json.response.Connection
+import dev.kord.rest.json.response.CurrentUserNicknameModifyResponse
+import dev.kord.rest.json.response.FollowedChannelResponse
+import dev.kord.rest.json.response.GatewayResponse
+import dev.kord.rest.json.response.GetPruneResponse
+import dev.kord.rest.json.response.ListThreadsResponse
+import dev.kord.rest.json.response.NothingSerializer
+import dev.kord.rest.json.response.PruneResponse
+import io.ktor.http.HttpMethod
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
@@ -523,7 +554,6 @@ sealed class Route<T>(
     )
 
 
-
     object GlobalApplicationCommandsCreate : Route<List<DiscordApplicationCommand>>(
         HttpMethod.Put,
         "/applications/${ApplicationId}/commands",
@@ -536,7 +566,6 @@ sealed class Route<T>(
         "/applications/${ApplicationId}/commands/${CommandId}",
         DiscordApplicationCommand.serializer()
     )
-
 
 
     object GlobalApplicationCommandGet
@@ -565,7 +594,6 @@ sealed class Route<T>(
         "/applications/${ApplicationId}/guilds/${GuildId}/commands",
         DiscordApplicationCommand.serializer()
     )
-
 
 
     object GuildApplicationCommandsCreate : Route<List<DiscordApplicationCommand>>(
@@ -597,6 +625,42 @@ sealed class Route<T>(
         NoStrategy
     )
 
+    object GuildScheduledEventsGet : Route<List<DiscordGuildScheduledEvent>>(
+        HttpMethod.Get,
+        "/guilds/$GuildId/events",
+        ListSerializer(DiscordGuildScheduledEvent.serializer())
+    )
+
+    object GuildScheduledEventGet : Route<DiscordGuildScheduledEvent>(
+        HttpMethod.Get,
+        "/guilds/$GuildId/events/$ScheduledEventId",
+        DiscordGuildScheduledEvent.serializer()
+    )
+
+    object GuildScheduledEventUsersGet : Route<GuildScheduledEventUsersResponse>(
+        HttpMethod.Get,
+        "/guilds/$GuildId/events/$ScheduledEventId/users",
+        GuildScheduledEventUsersResponse.serializer()
+    )
+
+    object GuildScheduledEventPatch : Route<DiscordGuildScheduledEvent>(
+        HttpMethod.Patch,
+        "/guilds/$GuildId/events/$ScheduledEventId",
+        DiscordGuildScheduledEvent.serializer()
+    )
+
+    object GuildScheduledEventDelete : Route<Unit>(
+        HttpMethod.Delete,
+        "/guilds/$GuildId/events/$ScheduledEventId",
+        NoStrategy
+    )
+
+    object GuildScheduledEventsPost : Route<DiscordGuildScheduledEvent>(
+        HttpMethod.Post,
+        "/guilds/$GuildId/events",
+        DiscordGuildScheduledEvent.serializer()
+    )
+
     object InteractionResponseCreate : Route<Unit>(
         HttpMethod.Post,
         "/interactions/${InteractionId}/${InteractionToken}/callback",
@@ -604,11 +668,11 @@ sealed class Route<T>(
     )
 
     object OriginalInteractionResponseGet :
-            Route<DiscordMessage>(
-                HttpMethod.Get,
-                "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
-                DiscordMessage.serializer()
-            )
+        Route<DiscordMessage>(
+            HttpMethod.Get,
+            "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
+            DiscordMessage.serializer()
+        )
 
     object OriginalInteractionResponseModify :
         Route<DiscordMessage>(
@@ -672,11 +736,11 @@ sealed class Route<T>(
             NoStrategy
         )
 
-    object SelfVoiceStatePatch:
+    object SelfVoiceStatePatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/@me", NoStrategy)
 
 
-    object OthersVoiceStatePatch:
+    object OthersVoiceStatePatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/${UserId}", NoStrategy)
 
     object StageInstanceGet :
@@ -750,6 +814,7 @@ sealed class Route<T>(
             "/channels/$ChannelId/users/@me/threads/archived/private",
             ListThreadsResponse.serializer()
         )
+
     object ActiveThreadsGet : Route<ListThreadsResponse>(
         HttpMethod.Get,
         "/guilds/${GuildId}/threads/active",
@@ -782,6 +847,7 @@ sealed class Route<T>(
     object CommandId : Key("{command.id}", true)
     object InteractionId : Key("interaction.id", true)
     object InteractionToken : Key("{interaction.token}", true)
+    object ScheduledEventId : Key("{event.id}", true)
 
 }
 

@@ -4,13 +4,12 @@ import dev.kord.common.entity.ChannelType.Unknown
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.entity.*
-import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
@@ -467,6 +466,12 @@ public interface EntitySupplier {
         guildId: Snowflake,
     ): Flow<ApplicationCommandPermissions>
 
+    public fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent>
+
+    public suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent?
+
+    public suspend fun getGuildScheduledEvent(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent =
+        getGuildScheduledEventOrNull(guildId, eventId) ?: EntityNotFoundException.guildScheduledEventNotFound(eventId)
 }
 
 

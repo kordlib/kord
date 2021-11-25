@@ -7,17 +7,52 @@ import dev.kord.cache.api.query
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.*
+import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.cache.data.EmojiData
+import dev.kord.core.cache.data.GuildData
+import dev.kord.core.cache.data.GuildScheduledEventData
+import dev.kord.core.cache.data.InviteCreateData
+import dev.kord.core.cache.data.InviteDeleteData
+import dev.kord.core.cache.data.MemberData
+import dev.kord.core.cache.data.MembersChunkData
+import dev.kord.core.cache.data.PresenceData
+import dev.kord.core.cache.data.RoleData
+import dev.kord.core.cache.data.UserData
+import dev.kord.core.cache.data.VoiceStateData
+import dev.kord.core.cache.data.id
 import dev.kord.core.cache.idEq
-import dev.kord.core.entity.*
-import dev.kord.core.event.guild.*
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.GuildEmoji
+import dev.kord.core.entity.GuildScheduledEvent
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Presence
+import dev.kord.core.entity.Role
+import dev.kord.core.entity.User
+import dev.kord.core.event.guild.BanAddEvent
+import dev.kord.core.event.guild.BanRemoveEvent
+import dev.kord.core.event.guild.EmojisUpdateEvent
+import dev.kord.core.event.guild.GuildCreateEvent
+import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.event.guild.GuildScheduledEventCreateEvent
+import dev.kord.core.event.guild.GuildScheduledEventDeleteEvent
+import dev.kord.core.event.guild.GuildScheduledEventUpdateEvent
+import dev.kord.core.event.guild.GuildUpdateEvent
+import dev.kord.core.event.guild.IntegrationsUpdateEvent
+import dev.kord.core.event.guild.InviteCreateEvent
+import dev.kord.core.event.guild.InviteDeleteEvent
+import dev.kord.core.event.guild.MemberJoinEvent
+import dev.kord.core.event.guild.MemberLeaveEvent
+import dev.kord.core.event.guild.MemberUpdateEvent
+import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.event.role.RoleCreateEvent
 import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.gateway.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.singleOrNull
+import kotlinx.coroutines.flow.toSet
 import dev.kord.common.entity.DiscordGuild as GatewayGuild
 import dev.kord.core.event.Event as CoreEvent
 
@@ -42,6 +77,9 @@ internal class GuildEventHandler(
             is GuildRoleUpdate -> handle(event, shard, kord, coroutineScope)
             is GuildRoleDelete -> handle(event, shard, kord, coroutineScope)
             is GuildMembersChunk -> handle(event, shard, kord, coroutineScope)
+            is GuildScheduledEventCreate -> handle(event, shard, kord, coroutineScope)
+            is GuildScheduledEventUpdate -> handle(event, shard, kord, coroutineScope)
+            is GuildScheduledEventDelete -> handle(event, shard, kord, coroutineScope)
             is PresenceUpdate -> handle(event, shard, kord, coroutineScope)
             is InviteCreate -> handle(event, shard, kord, coroutineScope)
             is InviteDelete -> handle(event, shard, kord, coroutineScope)
@@ -115,7 +153,12 @@ internal class GuildEventHandler(
         return GuildDeleteEvent(id, unavailable.orElse(false), old, kord, shard, coroutineScope = coroutineScope)
     }
 
-    private suspend fun handle(event: GuildBanAdd, shard: Int, kord: Kord, coroutineScope: CoroutineScope): BanAddEvent =
+    private suspend fun handle(
+        event: GuildBanAdd,
+        shard: Int,
+        kord: Kord,
+        coroutineScope: CoroutineScope
+    ): BanAddEvent =
         with(event.ban) {
             val data = UserData.from(user)
             cache.put(user)
@@ -300,6 +343,53 @@ internal class GuildEventHandler(
     }
 
     private suspend fun handle(
+        event: GuildScheduledEventCreate,
+        shard: Int,
+        kord: Kord,
+        coroutineScope: CoroutineScope
+    ): GuildScheduledEventCreateEvent {
+        val eventData = GuildScheduledEventData.from(event.event)
+        cache.put(eventData)
+        val scheduledEvent = GuildScheduledEvent(eventData, kord)
+
+        return GuildScheduledEventCreateEvent(scheduledEvent, kord, shard, coroutineScope = coroutineScope)
+    }
+
+    private suspend fun handle(
+        event: GuildScheduledEventUpdate,
+        shard: Int,
+        kord: Kord,
+        coroutineScope: CoroutineScope
+    ): GuildScheduledEventUpdateEvent {
+        val eventData = GuildScheduledEventData.from(event.event)
+        val oldData = cache.query<GuildScheduledEventData> {
+            idEq(GuildScheduledEventData::id, event.event.id)
+        }.singleOrNull()
+        val old = oldData?.let { GuildScheduledEvent(it, kord) }
+        cache.put(eventData)
+        val scheduledEvent = GuildScheduledEvent(eventData, kord)
+
+        return GuildScheduledEventUpdateEvent(scheduledEvent, old, kord, shard, coroutineScope = coroutineScope)
+    }
+
+    private suspend fun handle(
+        event: GuildScheduledEventDelete,
+        shard: Int,
+        kord: Kord,
+        coroutineScope: CoroutineScope
+    ): GuildScheduledEventDeleteEvent {
+        val query = cache.query<GuildScheduledEvent> {
+            idEq(GuildScheduledEvent::id, event.event.id)
+        }
+        query.remove()
+
+        val eventData = GuildScheduledEventData.from(event.event)
+        val scheduledEvent = GuildScheduledEvent(eventData, kord)
+
+        return GuildScheduledEventDeleteEvent(scheduledEvent, kord, shard, coroutineScope = coroutineScope)
+    }
+
+    private suspend fun handle(
         event: PresenceUpdate,
         shard: Int,
         kord: Kord,
@@ -319,7 +409,15 @@ internal class GuildEventHandler(
                 .singleOrNull()
                 ?.let { User(it, kord) }
 
-            return PresenceUpdateEvent(user, this.user, guildId.value!!, old, new, shard, coroutineScope = coroutineScope)
+            return PresenceUpdateEvent(
+                user,
+                this.user,
+                guildId.value!!,
+                old,
+                new,
+                shard,
+                coroutineScope = coroutineScope
+            )
         }
 
     private suspend fun handle(

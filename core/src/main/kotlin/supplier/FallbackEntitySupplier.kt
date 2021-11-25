@@ -1,7 +1,20 @@
 package dev.kord.core.supplier
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.entity.*
+import dev.kord.core.entity.Ban
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.GuildEmoji
+import dev.kord.core.entity.GuildPreview
+import dev.kord.core.entity.GuildScheduledEvent
+import dev.kord.core.entity.GuildWidget
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Message
+import dev.kord.core.entity.Region
+import dev.kord.core.entity.Role
+import dev.kord.core.entity.StageInstance
+import dev.kord.core.entity.Template
+import dev.kord.core.entity.User
+import dev.kord.core.entity.Webhook
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
@@ -197,6 +210,12 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     ): Flow<ApplicationCommandPermissions> =
         first.getGuildApplicationCommandPermissions(applicationId, guildId)
             .switchIfEmpty(second.getGuildApplicationCommandPermissions(applicationId, guildId))
+
+    override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =
+        first.getGuildScheduledEvents(guildId).switchIfEmpty(second.getGuildScheduledEvents(guildId))
+
+    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
+        first.getGuildScheduledEventOrNull(guildId, eventId) ?: second.getGuildScheduledEventOrNull(guildId, eventId)
 
 
     override fun toString(): String {

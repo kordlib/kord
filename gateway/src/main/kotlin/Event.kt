@@ -1,14 +1,52 @@
 package dev.kord.gateway
 
-import dev.kord.common.annotation.KordPreview
-import dev.kord.common.entity.*
+import dev.kord.common.entity.AllRemovedMessageReactions
+import dev.kord.common.entity.BulkDeleteData
+import dev.kord.common.entity.DeletedMessage
+import dev.kord.common.entity.DiscordAddedGuildMember
+import dev.kord.common.entity.DiscordApplicationCommand
+import dev.kord.common.entity.DiscordChannel
+import dev.kord.common.entity.DiscordDeletedGuildRole
+import dev.kord.common.entity.DiscordGuild
+import dev.kord.common.entity.DiscordGuildBan
+import dev.kord.common.entity.DiscordGuildIntegrations
+import dev.kord.common.entity.DiscordGuildRole
+import dev.kord.common.entity.DiscordGuildScheduledEvent
+import dev.kord.common.entity.DiscordInteraction
+import dev.kord.common.entity.DiscordMessage
+import dev.kord.common.entity.DiscordPartialMessage
+import dev.kord.common.entity.DiscordPinsUpdateData
+import dev.kord.common.entity.DiscordPresenceUpdate
+import dev.kord.common.entity.DiscordRemovedGuildMember
+import dev.kord.common.entity.DiscordShard
+import dev.kord.common.entity.DiscordThreadMember
+import dev.kord.common.entity.DiscordTyping
+import dev.kord.common.entity.DiscordUnavailableGuild
+import dev.kord.common.entity.DiscordUpdatedEmojis
+import dev.kord.common.entity.DiscordUpdatedGuildMember
+import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.DiscordVoiceServerUpdateData
+import dev.kord.common.entity.DiscordVoiceState
+import dev.kord.common.entity.DiscordWebhooksUpdateData
+import dev.kord.common.entity.MessageReactionAddData
+import dev.kord.common.entity.MessageReactionRemoveData
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.TargetUserType
+import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.*
+import kotlinx.serialization.DeserializationStrategy
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -414,6 +452,30 @@ sealed class Event {
                     sequence
                 )
 
+                "GUILD_SCHEDULED_EVENT_CREATE" -> GuildScheduledEventCreate(
+                    decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
+                    sequence
+                )
+                "GUILD_SCHEDULED_EVENT_UPDATE" -> GuildScheduledEventUpdate(
+                    decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
+                    sequence
+                )
+                "GUILD_SCHEDULED_EVENT_DELETE" -> GuildScheduledEventDelete(
+                    decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
+                    sequence
+                )
+                "GUILD_SCHEDULED_EVENT_USER_ADD" -> GuildScheduledEventUserAdd(
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    sequence
+                )
+                "GUILD_SCHEDULED_EVENT_USER_REMOVE" -> GuildScheduledEventUserRemove(
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    sequence
+                )
 
 
                 else -> {
@@ -679,6 +741,25 @@ data class ThreadMemberUpdate(val member: DiscordThreadMember, override val sequ
 data class ThreadListSync(val sync: DiscordThreadListSync, override val sequence: Int?) : DispatchEvent()
 
 data class ThreadMembersUpdate(val members: DiscordThreadMembersUpdate, override val sequence: Int?) : DispatchEvent()
+
+data class GuildScheduledEventCreate(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
+    DispatchEvent()
+
+data class GuildScheduledEventUpdate(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
+    DispatchEvent()
+
+data class GuildScheduledEventDelete(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
+    DispatchEvent()
+
+data class GuildScheduledEventUserAdd(
+    val eventId: Snowflake, val userId: Snowflake, val guildId: Snowflake,
+    override val sequence: Int?
+) : DispatchEvent()
+
+data class GuildScheduledEventUserRemove(
+    val eventId: Snowflake, val userId: Snowflake, val guildId: Snowflake,
+    override val sequence: Int?
+) : DispatchEvent()
 
 @Serializable
 data class DiscordThreadListSync(
