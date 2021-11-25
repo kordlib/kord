@@ -68,6 +68,7 @@ class Snowflake : Comparable<Snowflake> {
     /**
      * A [String] representation of this Snowflake's [value].
      */
+    @Deprecated("Use toString() instead", ReplaceWith("toString()"))
     val asString get() = value.toString()
 
     /**
@@ -91,7 +92,10 @@ class Snowflake : Comparable<Snowflake> {
     override fun compareTo(other: Snowflake): Int =
         millisecondsSinceDiscordEpoch.compareTo(other.millisecondsSinceDiscordEpoch)
 
-    override fun toString(): String = "Snowflake(value=$value)"
+    /**
+     * A [String] representation of this Snowflake's [value].
+     */
+    override fun toString(): String = value.toString()
 
     override fun hashCode(): Int = value.hashCode()
 

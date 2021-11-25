@@ -20,10 +20,10 @@ public sealed class ReactionEmoji {
     public data class Custom(val id: Snowflake, override val name: String, val isAnimated: Boolean) : ReactionEmoji() {
 
         override val urlFormat: String
-            get() = "$name:${id.asString}"
+            get() = "$name:$id"
 
         override val mention: String
-            get() = if (isAnimated) "<a:$name:${id.asString}>" else "<:$name:${id.asString}>"
+            get() = if (isAnimated) "<a:$name:$id>" else "<:$name:$id>"
 
 
         override fun toString(): String = "Custom(id=$id, name=$name, isAnimated=$isAnimated)"

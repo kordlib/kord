@@ -17,11 +17,11 @@ infix fun OptionalBoolean.shouldBe(value: Boolean){
 }
 
 infix fun Snowflake?.shouldBe(value: String?){
-    Assertions.assertEquals(value, this?.asString)
+    Assertions.assertEquals(value, this?.toString())
 }
 
 infix fun OptionalSnowflake?.shouldBe(value: String?){
-    Assertions.assertEquals(value, this?.value?.asString)
+    Assertions.assertEquals(value, this?.value?.toString())
 }
 
 infix fun VerificationLevel?.shouldBe(value: VerificationLevel?){

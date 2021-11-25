@@ -52,7 +52,7 @@ data class DiscordPresenceUser(
         override fun serialize(encoder: Encoder, value: DiscordPresenceUser) {
             val jsonEncoder = encoder as? JsonEncoder ?: error("Can be serialized only by JSON")
             val details = value.details.toMutableMap()
-            details["id"] = JsonPrimitive(value.id.asString)
+            details["id"] = JsonPrimitive(value.id.toString())
 
             jsonEncoder.encodeJsonElement(JsonObject(details))
         }

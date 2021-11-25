@@ -43,7 +43,7 @@ public interface RoleBehavior : KordEntity, Strategizable {
     public val mention: String
         get() {
             return if (guildId == id) "@everyone"
-            else "<@&${id.asString}>"
+            else "<@&$id>"
         }
 
     /**

@@ -19,7 +19,7 @@ class EmojiTest {
         val emoji = Json.decodeFromString(DiscordEmoji.serializer(), file("customemoji"))
 
         with(emoji) {
-            id!!.asString shouldBe "41771983429993937"
+            id!!.toString() shouldBe "41771983429993937"
             name shouldBe "LUL"
         }
 

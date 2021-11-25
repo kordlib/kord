@@ -15,11 +15,11 @@ public class EntityNotFoundException : Exception {
 
         @PublishedApi
         internal inline fun entityNotFound(entityType: String, id: Snowflake): Nothing =
-            throw EntityNotFoundException("$entityType with id ${id.asString} was not found.")
+            throw EntityNotFoundException("$entityType with id $id was not found.")
 
         @PublishedApi
         internal inline fun guildEntityNotFound(entityType: String, guildId: Snowflake, id: Snowflake): Nothing =
-            throw EntityNotFoundException("$entityType with id ${id.asString} in guild ${guildId.asString} was not found.")
+            throw EntityNotFoundException("$entityType with id $id in guild $guildId was not found.")
 
 
         public inline fun guildNotFound(guildId: Snowflake): Nothing =
@@ -32,7 +32,7 @@ public class EntityNotFoundException : Exception {
             guildEntityNotFound("Member", guildId = guildId, id = userId)
 
         public inline fun messageNotFound(channelId: Snowflake, messageId: Snowflake): Nothing =
-            throw EntityNotFoundException("Message with id ${messageId.asString} in channel ${channelId.asString} was not found")
+            throw EntityNotFoundException("Message with id $messageId in channel $channelId was not found")
 
         public inline fun userNotFound(userId: Snowflake): Nothing =
             entityNotFound("User", userId)

@@ -10,7 +10,7 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
 
     val keys: MutableMap<Route.Key, String> = HashMap(keySize, 1f)
 
-    operator fun MutableMap<Route.Key, String>.set(key: Route.Key, value: Snowflake) = set(key, value.asString)
+    operator fun MutableMap<Route.Key, String>.set(key: Route.Key, value: Snowflake) = set(key, value.toString())
 
     private val headers = HeadersBuilder()
     private val parameters = ParametersBuilder()

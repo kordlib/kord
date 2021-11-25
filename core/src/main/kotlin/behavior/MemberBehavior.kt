@@ -39,7 +39,7 @@ public interface MemberBehavior : KordEntity, UserBehavior {
     /**
      * The raw mention for this member's nickname.
      */
-    public val nicknameMention: String get() = "<@!${id.asString}>"
+    public val nicknameMention: String get() = "<@!$id>"
 
     /**
      * Requests to get the this behavior as a [Member].

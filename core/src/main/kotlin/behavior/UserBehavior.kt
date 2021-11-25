@@ -22,7 +22,7 @@ import java.util.*
  */
 public interface UserBehavior : KordEntity, Strategizable {
 
-    public val mention: String get() = "<@${id.asString}>"
+    public val mention: String get() = "<@$id>"
 
     /**
      * Requests to get the this behavior as a [Member] in the [Guild] with the [guildId].

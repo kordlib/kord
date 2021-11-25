@@ -19,7 +19,7 @@ class UserTest {
         val user = Json.decodeFromString(DiscordUser.serializer(), file("user"))
 
         with(user) {
-            id.asString shouldBe "80351110224678912"
+            id.toString() shouldBe "80351110224678912"
             username shouldBe "Nelly"
             discriminator shouldBe "1337"
             avatar shouldBe "8342729096ea3675442027381ff50dfe"

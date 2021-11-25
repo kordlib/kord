@@ -57,7 +57,7 @@ public class PartialGuild(
      * Gets the icon url, if present.
      */
     public fun getIconUrl(format: Image.Format): String? =
-        data.icon?.let { "https://cdn.discordapp.com/icons/${id.asString}/$it.${format.extension}" }
+        data.icon?.let { "https://cdn.discordapp.com/icons/$id/$it.${format.extension}" }
 
     /**
      * Requests to get the icon image in the specified [format], if present.

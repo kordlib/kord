@@ -24,7 +24,7 @@ class SnowflakeTest {
         }
 
         val container = Json.decodeFromJsonElement<SnowflakeContainer>(json)
-        assertEquals(value, container.snowflake.asString)
+        assertEquals(value, container.snowflake.toString())
     }
 
     @Test
@@ -35,7 +35,7 @@ class SnowflakeTest {
         }
 
         val container = Json.decodeFromJsonElement<SnowflakeContainer>(json)
-        assertEquals(value, container.snowflake.asString)
+        assertEquals(value, container.snowflake.toString())
     }
 
     @Test
