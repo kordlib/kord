@@ -829,6 +829,79 @@ public final class dev/kord/gateway/GuildRoleUpdate : dev/kord/gateway/DispatchE
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/gateway/GuildScheduledEventCreate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordGuildScheduledEvent;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ljava/lang/Integer;)Ldev/kord/gateway/GuildScheduledEventCreate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/GuildScheduledEventCreate;Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/GuildScheduledEventCreate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEvent ()Ldev/kord/common/entity/DiscordGuildScheduledEvent;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/GuildScheduledEventDelete : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordGuildScheduledEvent;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ljava/lang/Integer;)Ldev/kord/gateway/GuildScheduledEventDelete;
+	public static synthetic fun copy$default (Ldev/kord/gateway/GuildScheduledEventDelete;Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/GuildScheduledEventDelete;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEvent ()Ldev/kord/common/entity/DiscordGuildScheduledEvent;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/GuildScheduledEventUpdate : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordGuildScheduledEvent;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ljava/lang/Integer;)Ldev/kord/gateway/GuildScheduledEventUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/GuildScheduledEventUpdate;Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/GuildScheduledEventUpdate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEvent ()Ldev/kord/common/entity/DiscordGuildScheduledEvent;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/GuildScheduledEventUserAdd : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component4 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Ldev/kord/gateway/GuildScheduledEventUserAdd;
+	public static synthetic fun copy$default (Ldev/kord/gateway/GuildScheduledEventUserAdd;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/GuildScheduledEventUserAdd;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEventId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/GuildScheduledEventUserRemove : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component4 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Ldev/kord/gateway/GuildScheduledEventUserRemove;
+	public static synthetic fun copy$default (Ldev/kord/gateway/GuildScheduledEventUserRemove;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/GuildScheduledEventUserRemove;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEventId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getSequence ()Ljava/lang/Integer;
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/gateway/GuildUpdate : dev/kord/gateway/DispatchEvent {
 	public fun <init> (Ldev/kord/common/entity/DiscordGuild;Ljava/lang/Integer;)V
 	public final fun component1 ()Ldev/kord/common/entity/DiscordGuild;
@@ -988,6 +1061,10 @@ public final class dev/kord/gateway/Intent$GuildMessages : dev/kord/gateway/Inte
 
 public final class dev/kord/gateway/Intent$GuildPresences : dev/kord/gateway/Intent {
 	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildPresences;
+}
+
+public final class dev/kord/gateway/Intent$GuildScheduledEvents : dev/kord/gateway/Intent {
+	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildScheduledEvents;
 }
 
 public final class dev/kord/gateway/Intent$GuildVoiceStates : dev/kord/gateway/Intent {
