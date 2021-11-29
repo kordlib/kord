@@ -1,3 +1,31 @@
+# 0.8.0-M8
+
+
+## Changes
+
+* Embed description limit should be 4096 (#419)
+* use behavior over entity in voice connect method (#428)
+* rewrite frame interceptor (#427)
+* Unify permission overwrite API (Fix #302) (#420)
+* Make Snowflake.toString() more idiomatic, and deprecate .asString (#441)
+
+## Fixes
+
+* fix ButtonBuilder#emoji function (#431)
+* Fix bom dependencies (#440)
+* fix regression in the default frame interceptor (#443)
+* Fix missing '=' in GuildBehavior.toString() (#442)
+
+## Additions
+
+* UserFlag and GuildFeature add-on (#422)
+* Add support for receiving voice and opening up the voice api (#386)
+* implement all encryption modes documented by discord (#424)
+* explicit api for voice (#425)
+* Old properties for Update events (#438)
+* Add AutoComplete (#435)
+* Implement Stage events (#421)
+
 # 0.8.0-M7
 
 ## Additions
