@@ -102,7 +102,10 @@ data class DiscordMessage(
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
+    @Deprecated("Deprecated in favor of stickerItems",ReplaceWith("stickerItems"))
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
+    @SerialName("sticker_items")
+    val stickerItems: Optional<List<DiscordMessagePartialSticker>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     /*
@@ -136,6 +139,14 @@ data class DiscordMessageSticker(
     @SerialName("preview_asset")
     // https://github.com/kordlib/kord/issues/207
     val previewAsset: Optional<String?> = Optional.Missing(),
+    @SerialName("format_type")
+    val formatType: MessageStickerType,
+)
+
+@Serializable
+data class DiscordMessagePartialSticker(
+    val id: Snowflake,
+    val name: String,
     @SerialName("format_type")
     val formatType: MessageStickerType,
 )
