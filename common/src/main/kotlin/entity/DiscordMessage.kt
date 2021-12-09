@@ -102,7 +102,8 @@ data class DiscordMessage(
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
+    @SerialName("sticker_items")
+    val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     /*
@@ -132,12 +133,36 @@ data class DiscordMessageSticker(
     val name: String,
     val description: String,
     val tags: Optional<String> = Optional.Missing(),
-    val asset: String,
-    @SerialName("preview_asset")
-    // https://github.com/kordlib/kord/issues/207
-    val previewAsset: Optional<String?> = Optional.Missing(),
     @SerialName("format_type")
     val formatType: MessageStickerType,
+    val available: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val user: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("sort_value")
+    val sortValue: OptionalInt = OptionalInt.Missing
+)
+
+data class DiscordStickerPack(
+    val id: Snowflake,
+    val stickers: List<DiscordMessageSticker>,
+    val name: String,
+    @SerialName("sku_id")
+    val skuId: Snowflake,
+    @SerialName("cover_sticker_id")
+    val coverStickerId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val description: String,
+    @SerialName("banner_asset_id")
+    val bannerAssetId: Snowflake
+
+)
+
+@Serializable
+data class DiscordStickerItem(
+    val id: Snowflake,
+    val name: String,
+    @SerialName("format_type")
+    val formatType: MessageStickerType
 )
 
 @Serializable(with = MessageStickerType.Serializer::class)
@@ -250,7 +275,7 @@ data class DiscordPartialMessage(
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
+    val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),

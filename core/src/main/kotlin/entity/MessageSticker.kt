@@ -1,9 +1,13 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.MessageStickerType
+import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.unwrap
+import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageStickerData
+import dev.kord.core.cache.data.StickerItemData
 
 /**
  * A sticker image that can be used in messages.
@@ -41,21 +45,33 @@ public class MessageSticker(public val data: MessageStickerData, override val ko
         get() = data.tags.value?.split(",")?.map { it.trim() }.orEmpty()
 
     /**
-     * The sticker image hash asset (currently private).
-     */
-    public val asset: String
-        get() = data.asset
-
-    /**
-     * The sticker preview image has asset (currently private).
-     */
-    public val previewAsset: String?
-        get() = data.previewAsset.value
-
-    /**
      * The type of sticker image.
      */
     public val formatType: MessageStickerType
         get() = data.formatType
 
+    public val available: Boolean
+        get() = data.available.discordBoolean
+
+    public val sortValue: Int?
+        get() = data.sortValue.value
+
+    public val guildId: Snowflake?
+        get() = data.guildId.value
+
+    public val user: User?
+        get() = data.user.unwrap { User(it, kord) }
+}
+
+
+public class StickerItem(public val data: StickerItemData) {
+
+    public val id: Snowflake
+        get() = data.id
+
+    public val name: String
+        get() = data.name
+
+    public val formatType: MessageStickerType
+        get() = data.formatType
 }
