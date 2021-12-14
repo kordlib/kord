@@ -8,22 +8,7 @@ import dev.kord.core.behavior.interaction.followUp
 import dev.kord.core.behavior.interaction.respondEphemeral
 import dev.kord.core.behavior.interaction.respondPublic
 import dev.kord.core.entity.application.ApplicationCommand
-import dev.kord.core.entity.interaction.ActionInteraction
-import dev.kord.core.entity.interaction.ApplicationCommandInteraction
-import dev.kord.core.entity.interaction.AutoCompleteInteraction
-import dev.kord.core.entity.interaction.ChatInputCommandInvocationInteraction
-import dev.kord.core.entity.interaction.GlobalApplicationCommandInteraction
-import dev.kord.core.entity.interaction.GlobalAutoCompleteInteraction
-import dev.kord.core.entity.interaction.GlobalChatInputCommandInteraction
-import dev.kord.core.entity.interaction.GlobalMessageCommandInteraction
-import dev.kord.core.entity.interaction.GlobalUserCommandInteraction
-import dev.kord.core.entity.interaction.GuildApplicationCommandInteraction
-import dev.kord.core.entity.interaction.GuildAutoCompleteInteraction
-import dev.kord.core.entity.interaction.GuildChatInputCommandInteraction
-import dev.kord.core.entity.interaction.GuildMessageCommandInteraction
-import dev.kord.core.entity.interaction.GuildUserCommandInteraction
-import dev.kord.core.entity.interaction.MessageCommandInteraction
-import dev.kord.core.entity.interaction.UserCommandInteraction
+import dev.kord.core.entity.interaction.*
 import dev.kord.core.event.kordCoroutineScope
 import kotlinx.coroutines.CoroutineScope
 
@@ -53,8 +38,8 @@ import kotlinx.coroutines.CoroutineScope
  * In the current iteration, ephemeral messages (regardless of the type) don't support files and/or embeds.
  */
 
-public sealed interface ApplicationInteractionCreateEvent : InteractionCreateEvent {
-    override val interaction: ApplicationCommandInteraction
+public sealed interface ApplicationInteractionCreateEvent : ActionInteractionCreateEvent {
+    override val interaction: ApplicationCommandInvocationInteraction
 }
 
 public sealed interface GlobalApplicationInteractionCreateEvent : ApplicationInteractionCreateEvent {
@@ -128,7 +113,9 @@ public class GlobalChatInputCommandInteractionCreateEvent(
  *
  * @see AutoCompleteInteraction
  */
-public sealed interface AutoCompleteInteractionCreateEvent : InteractionCreateEvent
+public sealed interface AutoCompleteInteractionCreateEvent : DataInteractionCreateEvent {
+    override val interaction: AutoCompleteInteraction
+}
 
 internal fun AutoCompleteInteractionCreateEvent(
     interaction: AutoCompleteInteraction,

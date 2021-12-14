@@ -327,7 +327,7 @@ public sealed interface GlobalInteraction : Interaction {
 /**
  * An [ActionInteraction] that took place in a Global Context with [GlobalApplicationCommand].
  */
-public sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInteraction, GlobalInteraction {
+public sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInvocationInteraction, GlobalInteraction {
     /**
      * The user who invoked the interaction.
      */
@@ -335,7 +335,7 @@ public sealed interface GlobalApplicationCommandInteraction : ApplicationCommand
         GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
 
     override val applicationId: Snowflake
-        get() = super<ApplicationCommandInteraction>.applicationId
+        get() = super<ApplicationCommandInvocationInteraction>.applicationId
 }
 
 public fun GlobalApplicationCommandInteraction(
@@ -357,7 +357,7 @@ public fun GlobalApplicationCommandInteraction(
  */
 
 
-public sealed interface GuildApplicationCommandInteraction : ApplicationCommandInteraction, GuildInteractionBehavior {
+public sealed interface GuildApplicationCommandInteraction : ApplicationCommandInvocationInteraction, GuildInteractionBehavior {
 
     override val guildId: Snowflake
         get() = data.guildId.value!!
