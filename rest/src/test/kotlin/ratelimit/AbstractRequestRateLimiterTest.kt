@@ -13,37 +13,78 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 @ExperimentalCoroutinesApi
 abstract class AbstractRequestRateLimiterTest {
 
-    abstract fun newRequestRateLimiter(clock: Clock) : RequestRateLimiter
+    abstract fun newRequestRateLimiter(clock: Clock): RequestRateLimiter
 
-    private val timeout = Duration.seconds(1000)
+    private val timeout = 1000.seconds
     private val instant = Instant.fromEpochMilliseconds(0)
     private val RateLimit.Companion.exhausted get() = RateLimit(Total(5), Remaining(0))
 
-    private suspend fun RequestRateLimiter.sendRequest(clock: TestClock, guildId: Long, bucketKey: Long = guildId, rateLimit: RateLimit) {
-        val request = JsonRequest<Unit, DiscordGuild>(Route.GuildGet, mapOf(Route.GuildId to guildId.toString()), StringValues.Empty, StringValues.Empty, null)
+    private suspend fun RequestRateLimiter.sendRequest(
+        clock: TestClock,
+        guildId: Long,
+        bucketKey: Long = guildId,
+        rateLimit: RateLimit
+    ) {
+        val request = JsonRequest<Unit, DiscordGuild>(
+            Route.GuildGet,
+            mapOf(Route.GuildId to guildId.toString()),
+            StringValues.Empty,
+            StringValues.Empty,
+            null
+        )
         val token = await(request)
         when (rateLimit.isExhausted) {
-            true -> token.complete(RequestResponse.BucketRateLimit(BucketKey(bucketKey.toString()), rateLimit, Reset(clock.now().plus(timeout))))
-            else -> token.complete(RequestResponse.Accepted(BucketKey(bucketKey.toString()), rateLimit, Reset(clock.now().plus(timeout))))
+            true -> token.complete(
+                RequestResponse.BucketRateLimit(
+                    BucketKey(bucketKey.toString()),
+                    rateLimit,
+                    Reset(clock.now().plus(timeout))
+                )
+            )
+            else -> token.complete(
+                RequestResponse.Accepted(
+                    BucketKey(bucketKey.toString()),
+                    rateLimit,
+                    Reset(clock.now().plus(timeout))
+                )
+            )
         }
     }
 
-    private suspend fun RequestRateLimiter.sendRequest(guildId: Long) : RequestToken {
-        val request = JsonRequest<Unit, DiscordGuild>(Route.GuildGet, mapOf(Route.GuildId to guildId.toString()), StringValues.Empty, StringValues.Empty, null)
+    private suspend fun RequestRateLimiter.sendRequest(guildId: Long): RequestToken {
+        val request = JsonRequest<Unit, DiscordGuild>(
+            Route.GuildGet,
+            mapOf(Route.GuildId to guildId.toString()),
+            StringValues.Empty,
+            StringValues.Empty,
+            null
+        )
         return await(request)
     }
 
     private suspend fun RequestToken.complete(clock: TestClock, bucketKey: Long, rateLimit: RateLimit) {
         when (rateLimit.isExhausted) {
-            true -> complete(RequestResponse.BucketRateLimit(BucketKey(bucketKey.toString()), rateLimit, Reset(clock.now().plus(timeout))))
-            else -> complete(RequestResponse.Accepted(BucketKey(bucketKey.toString()), rateLimit, Reset(clock.now().plus(timeout))))
+            true -> complete(
+                RequestResponse.BucketRateLimit(
+                    BucketKey(bucketKey.toString()),
+                    rateLimit,
+                    Reset(clock.now().plus(timeout))
+                )
+            )
+            else -> complete(
+                RequestResponse.Accepted(
+                    BucketKey(bucketKey.toString()),
+                    rateLimit,
+                    Reset(clock.now().plus(timeout))
+                )
+            )
         }
     }
 
@@ -81,7 +122,7 @@ abstract class AbstractRequestRateLimiterTest {
         val rateLimiter = newRequestRateLimiter(clock)
 
         rateLimiter.sendRequest(clock, 1, 1, rateLimit = RateLimit.exhausted)
-        rateLimiter.sendRequest(clock, 2, 1 , rateLimit = RateLimit(Total(5), Remaining(5))) //discovery
+        rateLimiter.sendRequest(clock, 2, 1, rateLimit = RateLimit(Total(5), Remaining(5))) //discovery
         rateLimiter.sendRequest(clock, 2, 1, rateLimit = RateLimit(Total(5), Remaining(5)))
 
         assertEquals(timeout.inWholeMilliseconds, currentTime)
@@ -105,13 +146,20 @@ abstract class AbstractRequestRateLimiterTest {
         val rateLimiter = newRequestRateLimiter(clock)
 
         rateLimiter.sendRequest(clock, 1, rateLimit = RateLimit(Total(5), Remaining(5)))
-        val request = JsonRequest<Unit, DiscordGuild>(Route.GuildGet, mapOf(Route.GuildId to "1"), StringValues.Empty, StringValues.Empty, null)
+        val request = JsonRequest<Unit, DiscordGuild>(
+            Route.GuildGet,
+            mapOf(Route.GuildId to "1"),
+            StringValues.Empty,
+            StringValues.Empty,
+            null
+        )
 
         try {
             rateLimiter.consume(request) {
                 throw IllegalStateException("something went wrong")
             }
-        } catch (_: IllegalStateException) {}
+        } catch (_: IllegalStateException) {
+        }
 
         withTimeout(1_000_000) {
             rateLimiter.sendRequest(clock, 1, rateLimit = RateLimit.exhausted)

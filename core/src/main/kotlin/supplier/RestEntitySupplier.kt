@@ -5,46 +5,9 @@ import dev.kord.common.entity.DiscordPartialGuild
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.optionalSnowflake
-import dev.kord.core.Kord
-import dev.kord.core.cache.data.ApplicationCommandData
-import dev.kord.core.cache.data.ApplicationInfoData
-import dev.kord.core.cache.data.BanData
-import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.cache.data.EmojiData
-import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
-import dev.kord.core.cache.data.GuildData
-import dev.kord.core.cache.data.GuildPreviewData
-import dev.kord.core.cache.data.GuildScheduledEventData
-import dev.kord.core.cache.data.GuildWidgetData
-import dev.kord.core.cache.data.InviteData
-import dev.kord.core.cache.data.MessageData
-import dev.kord.core.cache.data.RegionData
-import dev.kord.core.cache.data.RoleData
-import dev.kord.core.cache.data.StageInstanceData
-import dev.kord.core.cache.data.ThreadMemberData
-import dev.kord.core.cache.data.UserData
-import dev.kord.core.cache.data.WebhookData
-import dev.kord.core.cache.data.WelcomeScreenData
-import dev.kord.core.cache.data.toData
-import dev.kord.core.catchNotFound
-import dev.kord.core.entity.ApplicationInfo
-import dev.kord.core.entity.Ban
-import dev.kord.core.entity.Guild
-import dev.kord.core.entity.GuildEmoji
-import dev.kord.core.entity.GuildPreview
-import dev.kord.core.entity.GuildScheduledEvent
-import dev.kord.core.entity.GuildWidget
-import dev.kord.core.entity.Invite
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Message
-import dev.kord.core.entity.ReactionEmoji
-import dev.kord.core.entity.Region
-import dev.kord.core.entity.Role
-import dev.kord.core.entity.StageInstance
-import dev.kord.core.entity.Template
-import dev.kord.core.entity.User
-import dev.kord.core.entity.Webhook
-import dev.kord.core.entity.WelcomeScreen
+import dev.kord.core.*
+import dev.kord.core.cache.data.*
+import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
@@ -53,32 +16,14 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
-import dev.kord.core.paginateBackwards
-import dev.kord.core.paginateForwards
-import dev.kord.core.paginateThreads
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
 import dev.kord.rest.json.request.ListThreadsBySnowflakeRequest
 import dev.kord.rest.json.request.ListThreadsByTimestampRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
-import dev.kord.rest.service.ApplicationService
-import dev.kord.rest.service.AuditLogService
-import dev.kord.rest.service.ChannelService
-import dev.kord.rest.service.EmojiService
-import dev.kord.rest.service.GuildService
-import dev.kord.rest.service.InteractionService
-import dev.kord.rest.service.InviteService
-import dev.kord.rest.service.RestClient
-import dev.kord.rest.service.TemplateService
-import dev.kord.rest.service.UserService
-import dev.kord.rest.service.VoiceService
-import dev.kord.rest.service.WebhookService
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.take
+import dev.kord.rest.service.*
+import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -161,14 +106,14 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
      */
     override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? = catchNotFound {
         val discordPreview = guild.getGuildPreview(guildId)
-        return GuildPreview(GuildPreviewData.from(discordPreview), kord)
+        GuildPreview(GuildPreviewData.from(discordPreview), kord)
     }
 
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? = catchNotFound {
         val member = guild.getGuildMember(guildId = guildId, userId = userId)
         val memberData = member.toData(guildId = guildId, userId = userId)
         val userData = member.user.value!!.toData()
-        return Member(memberData, userData, kord)
+        Member(memberData, userData, kord)
     }
 
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? = catchNotFound {
@@ -222,7 +167,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         val response = guild.getGuildRoles(guildId)
             .firstOrNull { it.id == roleId } ?: return@catchNotFound null
 
-        return Role(RoleData.from(guildId, response), kord)
+        Role(RoleData.from(guildId, response), kord)
     }
 
     override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? = catchNotFound {
@@ -320,17 +265,17 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     override suspend fun getWebhookOrNull(id: Snowflake): Webhook? = catchNotFound {
         val data = WebhookData.from(webhook.getWebhook(id))
-        return Webhook(data, kord)
+        Webhook(data, kord)
     }
 
     override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? = catchNotFound {
         val data = WebhookData.from(webhook.getWebhookWithToken(id, token))
-        return Webhook(data, kord)
+        Webhook(data, kord)
     }
 
     public suspend fun getInviteOrNull(code: String, withCounts: Boolean): Invite? = catchNotFound {
         val response = invite.getInvite(code, withCounts)
-        return Invite(InviteData.from(response), kord)
+        Invite(InviteData.from(response), kord)
     }
 
     public suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
@@ -349,12 +294,12 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? = catchNotFound {
         val response = guild.getGuildWidget(guildId)
-        return GuildWidget(GuildWidgetData.from(response), guildId, kord)
+        GuildWidget(GuildWidgetData.from(response), guildId, kord)
     }
 
     override suspend fun getTemplateOrNull(code: String): Template? = catchNotFound {
         val response = template.getGuildTemplate(code)
-        return Template(response.toData(), kord)
+        Template(response.toData(), kord)
     }
 
     override fun getTemplates(guildId: Snowflake): Flow<Template> = flow {
@@ -376,7 +321,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     public suspend fun getGuildWelcomeScreenOrNull(guildId: Snowflake): WelcomeScreen? = catchNotFound {
         val response = guild.getGuildWelcomeScreen(guildId)
-        return WelcomeScreen(WelcomeScreenData.from(response), kord)
+        WelcomeScreen(WelcomeScreenData.from(response), kord)
     }
 
     public suspend fun getGuildWelcomeScreen(guildId: Snowflake): WelcomeScreen =
@@ -394,7 +339,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         val instance = kord.rest.stageInstance.getStageInstance(channelId)
         val data = StageInstanceData.from(instance)
 
-        return StageInstance(data, kord, this)
+        StageInstance(data, kord, this)
     }
 
     override fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember> = flow {
@@ -478,7 +423,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     override suspend fun getGlobalApplicationCommandOrNull(applicationId: Snowflake, commandId: Snowflake): GlobalApplicationCommand? = catchNotFound {
         val response = interaction.getGlobalCommand(applicationId, commandId)
         val data = ApplicationCommandData.from(response)
-        return GlobalApplicationCommand(data, interaction)
+        GlobalApplicationCommand(data, interaction)
     }
 
     override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> = flow {
@@ -543,7 +488,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     ): GuildApplicationCommand? = catchNotFound {
         val response = interaction.getGuildCommand(applicationId, guildId, commandId)
         val data = ApplicationCommandData.from(response)
-        return GuildApplicationCommand(data, interaction)
+        GuildApplicationCommand(data, interaction)
     }
 
     override fun toString(): String {

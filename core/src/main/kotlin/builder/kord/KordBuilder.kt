@@ -41,18 +41,18 @@ import kotlin.concurrent.thread
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 public operator fun DefaultGateway.Companion.invoke(
     resources: ClientResources,
-    retry: Retry = LinearRetry(Duration.seconds(2), Duration.seconds(60), 10)
+    retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)
 ): DefaultGateway {
     return DefaultGateway {
         url = "wss://gateway.discord.gg/"
         client = resources.httpClient
         reconnectRetry = retry
-        sendRateLimiter = BucketRateLimiter(120, Duration.seconds(60))
-        identifyRateLimiter = BucketRateLimiter(1, Duration.seconds(5))
+        sendRateLimiter = BucketRateLimiter(120, 60.seconds)
+        identifyRateLimiter = BucketRateLimiter(1, 5.seconds)
     }
 }
 
@@ -62,7 +62,7 @@ public class KordBuilder(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
         { resources, shards ->
-            val rateLimiter = BucketRateLimiter(1, Duration.seconds(5))
+            val rateLimiter = BucketRateLimiter(1, 5.seconds)
             shards.map {
                 DefaultGateway {
                     client = resources.httpClient

@@ -1,5 +1,6 @@
 package dev.kord.voice.gateway
 
+import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags
@@ -63,6 +64,7 @@ public data class Identify(
 @Serializable
 public data class Heartbeat(val nonce: Long) : Command()
 
+@KordVoice
 @Serializable
 public data class SendSpeaking(
     val speaking: SpeakingFlags,
@@ -75,6 +77,7 @@ public data class SelectProtocol(
     val protocol: String,
     val data: Data
 ) : Command() {
+    @KordVoice
     @Serializable
     public data class Data(
         val address: String,

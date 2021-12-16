@@ -29,7 +29,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.coroutineContext
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeMark
 
 /**
@@ -223,7 +223,7 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     public suspend fun typeUntil(mark: TimeMark) {
         while (mark.hasNotPassedNow()) {
             type()
-            delay(Duration.seconds(8).inWholeMilliseconds) //bracing ourselves for some network delays
+            delay(8.seconds) // bracing ourselves for some network delays
         }
     }
 
@@ -236,7 +236,7 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
     public suspend fun typeUntil(instant: Instant) {
         while (instant < Clock.System.now()) {
             type()
-            delay(Duration.seconds(8).inWholeMilliseconds) //bracing ourselves for some network delays
+            delay(8.seconds) //bracing ourselves for some network delays
         }
     }
 
@@ -321,7 +321,7 @@ public suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() 
     kord.launch(context = coroutineContext) {
         while (typing) {
             type()
-            delay(Duration.seconds(8).inWholeMilliseconds)
+            delay(8.seconds)
         }
     }
 

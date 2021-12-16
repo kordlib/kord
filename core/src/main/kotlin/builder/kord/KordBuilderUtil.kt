@@ -1,19 +1,16 @@
 package dev.kord.core.builder.kord
 
 import dev.kord.common.entity.Snowflake
-import io.ktor.client.HttpClient
-import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.defaultRequest
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.features.websocket.WebSockets
-import io.ktor.client.request.header
-import io.ktor.util.*
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.features.*
+import io.ktor.client.features.json.*
+import io.ktor.client.features.json.serializer.*
+import io.ktor.client.features.websocket.*
+import io.ktor.client.request.*
 import kotlinx.serialization.json.Json
 import java.util.*
 
-@OptIn(KtorExperimentalAPI::class)
 internal fun HttpClientConfig<*>.defaultConfig(token: String) {
     expectSuccess = false
     defaultRequest {
@@ -24,7 +21,6 @@ internal fun HttpClientConfig<*>.defaultConfig(token: String) {
     install(WebSockets)
 }
 
-@OptIn(KtorExperimentalAPI::class)
 internal fun HttpClient?.configure(token: String): HttpClient {
     if (this != null) return this.config {
         defaultConfig(token)

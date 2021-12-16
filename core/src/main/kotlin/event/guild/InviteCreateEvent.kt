@@ -24,8 +24,8 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
-import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Sent when a new invite to a channel is created.
@@ -89,7 +89,7 @@ public class InviteCreateEvent(
     /**
      * How long the invite is valid for (in seconds).
      */
-    public val maxAge: Duration get() = Duration.seconds(data.maxAge)
+    public val maxAge: Duration get() = data.maxAge.seconds
 
     /**
      * The maximum number of times the invite can be used.

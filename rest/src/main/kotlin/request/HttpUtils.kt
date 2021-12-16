@@ -3,11 +3,10 @@
 package dev.kord.rest.request
 
 import dev.kord.rest.ratelimit.BucketKey
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.readBytes
+import io.ktor.client.statement.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 private const val rateLimitGlobalHeader = "X-RateLimit-Global"
 private const val retryAfterHeader = "Retry-After"
@@ -31,7 +30,7 @@ val HttpResponse.channelResetPoint: Instant
 
 fun HttpResponse.channelResetPoint(clock: Clock): Instant {
     val seconds = headers[rateLimitResetAfter]?.toDouble() ?: return clock.now()
-    return clock.now().plus(Duration.milliseconds(seconds.times(1000).toLong()))
+    return clock.now().plus(seconds.seconds)
 }
 
 val HttpResponse.isRateLimit get() = status.value == 429
