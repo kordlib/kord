@@ -9,10 +9,10 @@ import kotlinx.atomicfu.update
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
-import mu.KLogger
 import kotlinx.datetime.Clock
-import kotlin.time.Duration as KDuration
+import mu.KLogger
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.time.Duration as KDuration
 
 
 abstract class AbstractRateLimiter internal constructor(val clock: Clock) : RequestRateLimiter {
@@ -74,6 +74,7 @@ abstract class AbstractRateLimiter internal constructor(val clock: Clock) : Requ
                         logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
                         response.bucketKey.bucket.updateReset(response.reset)
                     }
+                    else -> {}
                 }
 
                 completableDeferred.complete(Unit)

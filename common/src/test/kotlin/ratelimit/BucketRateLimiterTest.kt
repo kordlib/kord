@@ -3,10 +3,10 @@ package ratelimit
 import dev.kord.common.ratelimit.BucketRateLimiter
 import fixed
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import java.time.ZoneOffset
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.asserter
@@ -28,7 +28,7 @@ class BucketRateLimiterTest {
     }
 
     @Test
-    fun `a bucket rate limiter does not ratelimit when under capacity`(): Unit = runBlockingTest {
+    fun `a bucket rate limiter does not ratelimit when under capacity`(): Unit = runTest {
         rateLimiter.consume()
 
         asserter.assertTrue("expected timeout of 0 ms but was $currentTime ms", 0L == currentTime)
