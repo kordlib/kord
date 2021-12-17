@@ -1,10 +1,10 @@
 package dev.kord.rest
 
-import io.ktor.client.HttpClient
-import io.ktor.client.request.request
-import io.ktor.client.statement.HttpResponse
-import io.ktor.http.HttpMethod
-import io.ktor.util.toByteArray
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.util.*
 import kotlinx.coroutines.Dispatchers
 import java.util.*
 
@@ -36,6 +36,8 @@ class Image private constructor(val data: ByteArray, val format: Format) {
 
     sealed class Format(val extensions: List<String>) {
         constructor(vararg extensions: String) : this(extensions.toList())
+
+        val extension: String get() = extensions.first()
 
         object JPEG : Format("jpeg", "jpg")
         object PNG : Format("png")
