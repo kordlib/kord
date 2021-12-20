@@ -160,6 +160,7 @@ sealed class Permission(val code: DiscordBitSet) {
     object CreatePublicThreads : Permission(0x0800000000)
     object CreatePrivateThreads : Permission(0x1000000000)
     object SendMessagesInThreads : Permission(0x4000000000)
+    object ModerateMembers : Permission(0x0000010000000000)
     object All : Permission(values.fold(EmptyBitSet()) { acc, value -> acc.add(value.code); acc })
 
     companion object {
@@ -200,7 +201,8 @@ sealed class Permission(val code: DiscordBitSet) {
                 ManageThreads,
                 CreatePublicThreads,
                 CreatePrivateThreads,
-                SendMessagesInThreads
+                SendMessagesInThreads,
+                ModerateMembers
             )
     }
 }
