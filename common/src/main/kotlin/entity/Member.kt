@@ -45,6 +45,8 @@ data class DiscordInteractionGuildMember(
     val permissions: Permissions,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
+    @SerialName("communication_disabled_until")
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
 )
 
 
@@ -67,6 +69,8 @@ data class DiscordAddedGuildMember(
     val guildId: Snowflake,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
+    @SerialName("communication_disabled_until")
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
 )
 
 @Serializable
