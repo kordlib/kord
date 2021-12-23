@@ -18,13 +18,19 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.Objects
 
 /**
- * Represents an interaction of type [ApplicationCommand][dev.kord.common.entity.InteractionType.ApplicationCommand]
+ * Interaction which contains a contains command data.
  */
 public sealed interface ApplicationCommandInteraction : Interaction, ApplicationCommandInteractionBehavior {
     public val invokedCommandId: Snowflake get() = data.data.id.value!!
 
     public val name: String get() = data.data.name.value!!
 
+}
+
+/**
+ * Represents an interaction of type [ApplicationCommand][dev.kord.common.entity.InteractionType.ApplicationCommand]
+ */
+public sealed interface ApplicationCommandInvocationInteraction : ActionInteraction, ApplicationCommandInteraction {
     public val invokedCommandType: ApplicationCommandType get() = data.data.type.value!!
 
     public val resolvedObjects: ResolvedObjects?
@@ -44,7 +50,7 @@ public sealed interface ChatInputCommandInteraction : Interaction {
 /**
  * An [ApplicationCommandInteraction] that's invoked through chat input.
  */
-public sealed interface ChatInputCommandInvocationInteraction : ChatInputCommandInteraction, ApplicationCommandInteraction
+public sealed interface ChatInputCommandInvocationInteraction : ChatInputCommandInteraction, ApplicationCommandInvocationInteraction
 
 
 /**
@@ -88,7 +94,7 @@ public class GlobalChatInputCommandInteraction(
 /**
  * An [ApplicationCommandInteraction] that's invoked through user commands.
  */
-public sealed interface UserCommandInteraction : ApplicationCommandInteraction {
+public sealed interface UserCommandInteraction : ApplicationCommandInvocationInteraction {
 
     public val targetId: Snowflake get() = data.data.targetId.value!!
 
@@ -141,7 +147,7 @@ public class GlobalUserCommandInteraction(
 /**
  * An [ApplicationCommandInteraction] that's invoked through messages.
  */
-public sealed interface MessageCommandInteraction : ApplicationCommandInteraction {
+public sealed interface MessageCommandInteraction : ApplicationCommandInvocationInteraction {
 
     public val targetId: Snowflake get() = data.data.targetId.value!!
 
