@@ -303,7 +303,7 @@ internal val GatewayConfiguration.identify
         token,
         IdentifyProperties(os, name, name),
         false.optional(),
-        50.optionalInt(),
+        threshold.optionalInt(),
         shard.optional(),
         presence,
         intents
