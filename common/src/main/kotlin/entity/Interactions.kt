@@ -91,6 +91,8 @@ class ApplicationCommandOption(
     val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val autocomplete: OptionalBoolean = OptionalBoolean.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("channel_types")
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing()
 )
 
 /**

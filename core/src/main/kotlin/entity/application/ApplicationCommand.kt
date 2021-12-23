@@ -1,6 +1,7 @@
 package dev.kord.core.entity.application
 
 import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.behavior.ApplicationCommandBehavior
@@ -116,4 +117,6 @@ public class ApplicationCommandParameter(
      * The accepted choices of the parameter. Is empty if the parameter does not have any choices.
      */
     public val choices: Map<String, String> get() = data.choices.orEmpty().associate { it.name to it.value }
+
+    public val channelTypes: List<ChannelType> get() = data.channelTypes.orEmpty()
 }
