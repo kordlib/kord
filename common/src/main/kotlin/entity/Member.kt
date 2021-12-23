@@ -3,6 +3,7 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
+import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -23,6 +24,8 @@ data class DiscordGuildMember(
     val mute: OptionalBoolean = OptionalBoolean.Missing,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
+    @SerialName("communication_disabled_until")
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
 )
 
 
@@ -42,6 +45,8 @@ data class DiscordInteractionGuildMember(
     val permissions: Permissions,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
+    @SerialName("communication_disabled_until")
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
 )
 
 
@@ -64,6 +69,8 @@ data class DiscordAddedGuildMember(
     val guildId: Snowflake,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
+    @SerialName("communication_disabled_until")
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
 )
 
 @Serializable
@@ -86,6 +93,8 @@ data class DiscordUpdatedGuildMember(
     val premiumSince: Optional<String?> = Optional.Missing(),
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
+    @SerialName("communication_disabled_until")
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
 )
 
 @Serializable

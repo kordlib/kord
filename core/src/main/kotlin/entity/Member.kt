@@ -86,6 +86,11 @@ public class Member(
     public val isPending: Boolean get() = memberData.pending.discordBoolean
 
     /**
+     * The [Instant] until the user's timeout expires, or `null` if the user does not have a timeout.
+     */
+    public val communicationDisabledUntil: Instant? get() = memberData.communicationDisabledUntil.value
+
+    /**
      * Whether this member's [id] equals the [Guild.ownerId].
      *
      * @throws [RequestException] if something went wrong during the request.
