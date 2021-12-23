@@ -3,10 +3,12 @@ package dev.kord.rest.builder.interaction
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandOption
 import dev.kord.common.entity.ApplicationCommandOptionType
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Choice
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.delegate.delegateList
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import kotlin.contracts.ExperimentalContracts
@@ -65,7 +67,7 @@ sealed class BaseChoiceBuilder<T>(
         choices = _choices,
         required = _required,
         default = _default,
-        autocomplete = _autocomplete
+        autocomplete = _autocomplete,
     )
 }
 
@@ -119,7 +121,19 @@ class RoleBuilder(name: String, description: String) :
 @KordDsl
 
 class ChannelBuilder(name: String, description: String) :
-    OptionsBuilder(name, description, ApplicationCommandOptionType.Channel)
+    OptionsBuilder(name, description, ApplicationCommandOptionType.Channel) {
+        private var _channelTypes: Optional<List<ChannelType>> = Optional.Missing()
+        var channelTypes: List<ChannelType>? by ::_channelTypes.delegate()
+        override fun toRequest() = ApplicationCommandOption(
+            type,
+            name,
+            description,
+            _default,
+            _required,
+            autocomplete = _autocomplete,
+            channelTypes = _channelTypes
+        )
+    }
 
 
 class MentionableBuilder(name: String, description: String) :

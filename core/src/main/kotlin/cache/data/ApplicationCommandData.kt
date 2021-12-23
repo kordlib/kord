@@ -2,12 +2,7 @@ package dev.kord.core.cache.data
 
 import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
-import dev.kord.common.entity.ApplicationCommandOption
-import dev.kord.common.entity.ApplicationCommandOptionType
-import dev.kord.common.entity.ApplicationCommandType
-import dev.kord.common.entity.Choice
-import dev.kord.common.entity.DiscordApplicationCommand
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -57,7 +52,8 @@ public data class ApplicationCommandOptionData(
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
     val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing(),
-    val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing()
+    val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing()
 ) {
     public companion object {
         public fun from(data: ApplicationCommandOption): ApplicationCommandOptionData {
@@ -69,7 +65,8 @@ public data class ApplicationCommandOptionData(
                     default,
                     required,
                     choices.mapList { ApplicationCommandOptionChoiceData.from(it) },
-                    options.mapList { inner -> from(inner) }
+                    options.mapList { inner -> from(inner) },
+                    channelTypes
                 )
             }
         }
@@ -120,7 +117,8 @@ public data class ApplicationCommandParameterData(
     val name: String,
     val description: String,
     val required: OptionalBoolean,
-    val choices: Optional<List<ApplicationCommandOptionChoiceData>>
+    val choices: Optional<List<ApplicationCommandOptionChoiceData>>,
+    val channelTypes: Optional<List<ChannelType>>
 )
 
 
@@ -130,7 +128,8 @@ public fun ApplicationCommandParameterData(data: ApplicationCommandOptionData): 
         data.name,
         data.description,
         data.required,
-        data.choices
+        data.choices,
+        data.channelTypes
     )
 }
 
