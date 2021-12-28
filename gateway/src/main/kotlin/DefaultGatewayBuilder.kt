@@ -10,13 +10,11 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.util.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlin.time.Duration
-import kotlin.time.seconds
+import kotlin.time.Duration.Companion.seconds
 
 class DefaultGatewayBuilder {
     var url = "wss://gateway.discord.gg/?v=9&encoding=json&compress=zlib-stream"
@@ -33,9 +31,9 @@ class DefaultGatewayBuilder {
             install(WebSockets)
             install(JsonFeature)
         }
-        val retry = reconnectRetry ?: LinearRetry(Duration.seconds(2), Duration.seconds(20), 10)
-        val sendRateLimiter = sendRateLimiter ?: BucketRateLimiter(120, Duration.seconds(60))
-        val identifyRateLimiter = identifyRateLimiter ?: BucketRateLimiter(1, Duration.seconds(5))
+        val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
+        val sendRateLimiter = sendRateLimiter ?: BucketRateLimiter(120, 60.seconds)
+        val identifyRateLimiter = identifyRateLimiter ?: BucketRateLimiter(1, 5.seconds)
 
         client.requestPipeline.intercept(HttpRequestPipeline.Render) {
             // CIO adds this header even if no extensions are used, which causes it to be empty

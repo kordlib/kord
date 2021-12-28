@@ -1,12 +1,13 @@
 package dev.kord.core.gateway
 
-import dev.kord.gateway.*
+import dev.kord.gateway.Gateway
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.map
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.microseconds
 
 public class DefaultMasterGateway(
     override val gateways: Map<Int, Gateway>,
@@ -23,7 +24,7 @@ public class DefaultMasterGateway(
             val pings = gateways.values.mapNotNull { it.ping.value?.inWholeMicroseconds }
             if (pings.isEmpty()) return null
 
-            return Duration.microseconds(pings.average())
+            return pings.average().microseconds
         }
 
 

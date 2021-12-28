@@ -1,46 +1,10 @@
 package dev.kord.gateway
 
-import dev.kord.common.entity.AllRemovedMessageReactions
-import dev.kord.common.entity.BulkDeleteData
-import dev.kord.common.entity.DeletedMessage
-import dev.kord.common.entity.DiscordAddedGuildMember
-import dev.kord.common.entity.DiscordApplicationCommand
-import dev.kord.common.entity.DiscordChannel
-import dev.kord.common.entity.DiscordDeletedGuildRole
-import dev.kord.common.entity.DiscordGuild
-import dev.kord.common.entity.DiscordGuildBan
-import dev.kord.common.entity.DiscordGuildIntegrations
-import dev.kord.common.entity.DiscordGuildRole
-import dev.kord.common.entity.DiscordGuildScheduledEvent
-import dev.kord.common.entity.DiscordInteraction
-import dev.kord.common.entity.DiscordMessage
-import dev.kord.common.entity.DiscordPartialMessage
-import dev.kord.common.entity.DiscordPinsUpdateData
-import dev.kord.common.entity.DiscordPresenceUpdate
-import dev.kord.common.entity.DiscordRemovedGuildMember
-import dev.kord.common.entity.DiscordShard
-import dev.kord.common.entity.DiscordThreadMember
-import dev.kord.common.entity.DiscordTyping
-import dev.kord.common.entity.DiscordUnavailableGuild
-import dev.kord.common.entity.DiscordUpdatedEmojis
-import dev.kord.common.entity.DiscordUpdatedGuildMember
-import dev.kord.common.entity.DiscordUser
-import dev.kord.common.entity.DiscordVoiceServerUpdateData
-import dev.kord.common.entity.DiscordVoiceState
-import dev.kord.common.entity.DiscordWebhooksUpdateData
-import dev.kord.common.entity.MessageReactionAddData
-import dev.kord.common.entity.MessageReactionRemoveData
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.TargetUserType
-import dev.kord.common.entity.UserFlags
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.DeserializationStrategy
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -104,6 +68,7 @@ sealed class Event {
                             when (op) {
                                 OpCode.HeartbeatACK -> data = HeartbeatACK
                                 OpCode.Reconnect -> data = Reconnect
+                                else -> {}
                             }
                         }
                         1 -> eventName =

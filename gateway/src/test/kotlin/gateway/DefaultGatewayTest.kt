@@ -1,14 +1,14 @@
 package gateway
 
 import dev.kord.common.entity.ActivityType
-import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.entity.DiscordBotActivity
+import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.ratelimit.BucketRateLimiter
 import dev.kord.gateway.*
 import dev.kord.gateway.retry.LinearRetry
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.websocket.*
 import io.ktor.util.*
@@ -20,8 +20,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
-import kotlin.time.Duration as KDuration
 
 @FlowPreview
 @KtorExperimentalAPI
@@ -43,8 +43,8 @@ class DefaultGatewayTest {
                 }
             }
 
-            reconnectRetry = LinearRetry(KDuration.seconds(2), KDuration.seconds(20), 10)
-            sendRateLimiter = BucketRateLimiter(120, KDuration.seconds(60))
+            reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
+            sendRateLimiter = BucketRateLimiter(120, 60.seconds)
         }
 
         gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.Default).onEach {

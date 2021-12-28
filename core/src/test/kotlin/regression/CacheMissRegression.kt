@@ -12,7 +12,10 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.registerKordData
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.gateway.*
+import dev.kord.gateway.Command
+import dev.kord.gateway.Event
+import dev.kord.gateway.Gateway
+import dev.kord.gateway.GatewayConfiguration
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.JsonRequest
 import dev.kord.rest.request.MultipartRequest
@@ -29,7 +32,10 @@ import io.ktor.http.*
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.serialization.SerializationStrategy
@@ -41,7 +47,6 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.BeforeTest
 import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 
 
 private val parser = Json {
@@ -57,7 +62,6 @@ object FakeGateway : Gateway {
 
     override val events: SharedFlow<Event> = MutableSharedFlow<Event>()
 
-    @ExperimentalTime
     override val ping: StateFlow<Duration?> = MutableStateFlow(null)
 
     override suspend fun detach() {}

@@ -12,7 +12,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.util.*
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 @KordVoice
 public class DefaultVoiceGatewayBuilder(
@@ -30,7 +30,7 @@ public class DefaultVoiceGatewayBuilder(
             install(WebSockets)
             install(JsonFeature)
         }
-        val retry = reconnectRetry ?: LinearRetry(Duration.seconds(2), Duration.seconds(20), 10)
+        val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
 
         client.requestPipeline.intercept(HttpRequestPipeline.Render) {
             // CIO adds this header even if no extensions are used, which causes it to be empty

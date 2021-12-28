@@ -25,6 +25,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 
 class KordEventDropTest {
 
@@ -100,7 +101,7 @@ class KordEventDropTest {
             SpammyGateway.events.emit(event)
         }
 
-        withTimeout(Duration.minutes(1).inWholeMilliseconds) {
+        withTimeout(1.minutes.inWholeMilliseconds) {
             countdown.await()
         }
         assertEquals(amount, counter.get())

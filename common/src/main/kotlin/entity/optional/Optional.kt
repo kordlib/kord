@@ -1,10 +1,7 @@
 package dev.kord.common.entity.optional
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional.Missing
-import dev.kord.common.entity.optional.Optional.Null
-import dev.kord.common.entity.optional.Optional.OptionalSerializer
-import dev.kord.common.entity.optional.Optional.Value
+import dev.kord.common.entity.optional.Optional.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -12,6 +9,10 @@ import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+
+@PublishedApi
+internal fun Optional<*>.unsupportedOptional(): Nothing =
+    throw UnsupportedOperationException("Got unexpected Optional type: ${this::class.qualifiedName}")
 
 /**
  * Represents a value that encapsulates all [three possible states of a value in the Discord API](https://discord.com/developers/docs/reference#nullable-and-optional-resource-fields).
@@ -41,15 +42,18 @@ import kotlinx.serialization.encoding.Encoder
  * )
  * ```
  */
+// Why this class is open and not sealed:
+// https://github.com/Kotlin/kotlinx.serialization/issues/1705#issuecomment-1001786343
 @Serializable(with = OptionalSerializer::class)
-sealed class Optional<out T> {
+open class Optional<out T> private constructor() {
 
     /**
      * The value this optional wraps.
      * * Both [Missing] and [Null] will always return `null`.
      * * [Value] will always return a non-null value.
      */
-    abstract val value: T?
+    open val value: T?
+        get() = throw UnsupportedOperationException("This is implemented in implementation classes")
 
     /**
      * Represents a field that was not present in the serialized entity.
@@ -100,6 +104,9 @@ sealed class Optional<out T> {
             private val constantNull = Null<Nothing>()
 
             operator fun <T : Any> invoke(): Null<T> = constantNull
+        }
+
+        fun x() {
         }
     }
 
@@ -185,6 +192,7 @@ sealed class Optional<out T> {
             is Missing<*> -> throw SerializationException("missing values cannot be serialized")
             is Null<*> -> encoder.encodeNull()
             is Value -> encoder.encodeSerializableValue(contentSerializer, value.value)
+            else -> value.unsupportedOptional()
         }
     }
 }
@@ -192,27 +200,32 @@ sealed class Optional<out T> {
 fun <T : Any> Optional<T>.switchOnMissing(value: T): Optional<T> = when (this) {
     is Missing -> Value(value)
     is Null<*>, is Value -> this
+    else -> unsupportedOptional()
 }
 
 fun <T : Any> Optional<T>.switchOnMissing(value: Optional<T>): Optional<T> = when (this) {
     is Missing -> value
     is Null<*>, is Value -> this
+    else -> unsupportedOptional()
 }
 
 fun <E> Optional<List<E>>.orEmpty(): List<E> = when (this) {
     is Missing, is Null<*> -> emptyList()
     is Value -> value
+    else -> unsupportedOptional()
 }
 
 fun <E> Optional<Set<E>>.orEmpty(): Set<E> = when (this) {
     is Missing, is Null<*> -> emptySet()
     is Value -> value
+    else -> unsupportedOptional()
 }
 
 @Suppress("UNCHECKED_CAST")
 inline fun <E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<List<T>> = when (this) {
     is Missing, is Null<*> -> this as Optional<List<T>>
     is Value -> Value(value.map(mapper))
+    else -> unsupportedOptional()
 }
 
 
@@ -220,6 +233,7 @@ inline fun <E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<List<T>>
 inline fun <K, V, R> Optional<Map<K, V>>.mapValues(mapper: (Map.Entry<K, V>) -> R): Optional<Map<K, R>> = when (this) {
     is Missing, is Null<*> -> this as Optional<Map<K, R>>
     is Value -> Value(value.mapValues(mapper))
+    else -> unsupportedOptional()
 }
 
 
@@ -227,12 +241,14 @@ inline fun <K, V, R> Optional<Map<K, V>>.mapValues(mapper: (Map.Entry<K, V>) -> 
 inline fun <E> Optional<List<E>>.filterList(mapper: (E) -> Boolean): Optional<List<E>> = when (this) {
     is Missing, is Null<*> -> this
     is Value -> Value(value.filter(mapper))
+    else -> unsupportedOptional()
 }
 
 @Suppress("UNCHECKED_CAST")
 inline fun <reified R> Optional<List<*>>.filterInstanceOfList(): Optional<List<R>> = when (this) {
     is Missing, is Null<*> -> this as Optional<List<R>>
     is Value -> Value(value.filterIsInstance<R>())
+    else -> unsupportedOptional()
 }
 
 
@@ -240,6 +256,7 @@ inline fun <reified R> Optional<List<*>>.filterInstanceOfList(): Optional<List<R
 inline fun <E : Any, T : Any> Optional<E>.map(mapper: (E) -> T): Optional<T> = when (this) {
     is Missing, is Null<*> -> this as Optional<T>
     is Value -> Value(mapper(value))
+    else -> unsupportedOptional()
 }
 
 /**
@@ -249,6 +266,7 @@ inline fun <E : Any, T : Any> Optional<E>.map(mapper: (E) -> T): Optional<T> = w
 inline fun <E : Any, T : Any> Optional<E>.flatMap(mapper: (E) -> Optional<T>): Optional<T> = when (this) {
     is Missing, is Null<*> -> this as Optional<T>
     is Value -> mapper(value)
+    else -> unsupportedOptional()
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -256,12 +274,14 @@ inline fun <E : Any, T : Any> Optional<E>.flatMap(mapper: (E) -> Optional<T>): O
 inline fun <E : Any, T : Any> Optional<E?>.map(mapper: (E) -> T): Optional<T?> = when (this) {
     is Missing, is Null<*> -> this as Optional<T>
     is Value -> Value(mapper(value!!))
+    else -> unsupportedOptional()
 }
 
 @Suppress("UNCHECKED_CAST")
 inline fun <E, T> Optional<E>.mapNullable(mapper: (E) -> T): Optional<T?> = when (this) {
     is Missing, is Null<*> -> this as Optional<T>
     is Value -> Optional(mapper(value))
+    else -> unsupportedOptional()
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -269,11 +289,13 @@ inline fun <E : Any, T> Optional<E?>.mapNotNull(mapper: (E) -> T): Optional<T?> 
     is Missing -> this as Optional<T?>
     is Null<*> -> this as Optional<T?>
     is Value -> Optional(mapper(value!!))
+    else -> unsupportedOptional()
 }
 
 inline fun <E> Optional<List<E>>.firstOrNull(predicate: (E) -> Boolean): E? = when (this) {
     is Missing, is Null<*> -> null
     is Value -> value.firstOrNull(predicate)
+    else -> unsupportedOptional()
 }
 
 
@@ -283,23 +305,27 @@ inline fun <E> Optional<List<E>>.first(predicate: (E) -> Boolean): E = firstOrNu
 inline fun <E : Any> Optional<E>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake = when (this) {
     is Missing, is Null<*> -> OptionalSnowflake.Missing
     is Value -> OptionalSnowflake.Value(mapper(value))
+    else -> unsupportedOptional()
 }
 
 @JvmName("mapNullableSnowflake")
 inline fun <E : Any> Optional<E?>.mapSnowflake(mapper: (E) -> Snowflake): OptionalSnowflake? = when (this) {
     is Missing, is Null<*> -> OptionalSnowflake.Missing
     is Value -> OptionalSnowflake.Value(mapper(value!!))
+    else -> unsupportedOptional()
 }
 
 inline fun <T, R : Any> Optional<T>.unwrap(mapper: (T) -> R): R? = when (this) {
     is Missing, is Null<*> -> null
     is Value -> mapper(value)
+    else -> unsupportedOptional()
 }
 
 @Suppress("UNCHECKED_CAST")
 fun <T : Any> Optional<T?>.coerceToMissing(): Optional<T> = when (this) {
     is Missing, is Null -> Missing()
     is Value -> this as Value<T>
+    else -> unsupportedOptional()
 }
 
 @Suppress("RemoveRedundantQualifierName")

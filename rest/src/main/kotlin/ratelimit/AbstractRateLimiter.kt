@@ -9,16 +9,16 @@ import kotlinx.atomicfu.update
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
-import mu.KLogger
 import kotlinx.datetime.Clock
-import kotlin.time.Duration as KDuration
+import mu.KLogger
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.time.Duration.Companion.minutes
 
 
 abstract class AbstractRateLimiter internal constructor(val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
 
-    internal val autoBanRateLimiter = BucketRateLimiter(25000, KDuration.minutes(10))
+    internal val autoBanRateLimiter = BucketRateLimiter(25000, 10.minutes)
     internal val globalSuspensionPoint = atomic(Reset(clock.now()))
     internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
     internal val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
@@ -74,6 +74,7 @@ abstract class AbstractRateLimiter internal constructor(val clock: Clock) : Requ
                         logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
                         response.bucketKey.bucket.updateReset(response.reset)
                     }
+                    else -> {}
                 }
 
                 completableDeferred.complete(Unit)

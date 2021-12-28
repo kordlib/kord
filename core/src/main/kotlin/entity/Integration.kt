@@ -13,13 +13,14 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import kotlin.time.Duration
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
 
 /**
  * A [Discord integration](https://discord.com/developers/docs/resources/guild#get-guild-integrations).
@@ -98,7 +99,7 @@ public class Integration(
      * The grace period in days before expiring subscribers.
      */
     public val expireGracePeriod: Duration
-        get() = Duration.days(data.expireGracePeriod)
+        get() = data.expireGracePeriod.days
 
     /**
      * The id of the [user][User] for this integration.

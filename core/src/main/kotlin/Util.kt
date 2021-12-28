@@ -104,13 +104,13 @@ public suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (
  */
 internal fun <T> Flow<T>.switchIfEmpty(flow: Flow<T>): Flow<T> = flow {
     var empty = true
-    collect {
+    collectLatest {
         empty = false
         emit(it)
     }
 
     if (empty) {
-        flow.collect {
+        flow.collectLatest {
             emit(it)
         }
     }

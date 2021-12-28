@@ -10,7 +10,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.request.BulkDeleteRequest
 import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Clock
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.days
 
 /**
  * The behavior of a Discord message channel associated to a [guild].
@@ -26,7 +26,7 @@ public interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChan
      * @throws [RestRequestException] if something went wrong during the request.
      */
     public suspend fun bulkDelete(messages: Iterable<Snowflake>, reason: String? = null) {
-        val daysLimit = Clock.System.now() - Duration.days(14)
+        val daysLimit = Clock.System.now() - 14.days
         //split up in bulk delete and manual delete
         // if message.timeMark + 14 days > now, then the message isn't 14 days old yet, and we can add it to the bulk delete
         // if message.timeMark + 14 days < now, then the message is more than 14 days old, and we'll have to manually delete them

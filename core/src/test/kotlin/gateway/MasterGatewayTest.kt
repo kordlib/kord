@@ -8,18 +8,19 @@ import dev.kord.gateway.GatewayConfiguration
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 internal class DefaultMasterGatewayTest {
 
     @Test
-    fun `Gateway takes ping of single child`(){
+    fun `Gateway takes ping of single child`() {
         val dummy = DummyGateway()
-        val ping = Duration.milliseconds(150)
+        val ping = 150.milliseconds
 
         dummy.ping.value = ping
 
@@ -31,11 +32,11 @@ internal class DefaultMasterGatewayTest {
     }
 
     @Test
-    fun `Gateway takes ping average of multiple children`(){
+    fun `Gateway takes ping average of multiple children`() {
         val dummy1 = DummyGateway()
         val dummy2 = DummyGateway()
-        val ping1 = Duration.milliseconds(100)
-        val ping2 = Duration.milliseconds(200)
+        val ping1 = 100.milliseconds
+        val ping2 = 200.milliseconds
 
         dummy1.ping.value = ping1
         dummy2.ping.value = ping2
@@ -44,7 +45,7 @@ internal class DefaultMasterGatewayTest {
             mapOf(0 to dummy1, 1 to dummy2)
         )
 
-        assertEquals(Duration.milliseconds(150), gateway.averagePing)
+        assertEquals(150.milliseconds, gateway.averagePing)
     }
 
     @Test

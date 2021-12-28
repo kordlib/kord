@@ -12,7 +12,9 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.http.cio.websocket.*
 import io.ktor.util.*
-import kotlinx.atomicfu.*
+import kotlinx.atomicfu.AtomicRef
+import kotlinx.atomicfu.atomic
+import kotlinx.atomicfu.update
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -159,14 +161,13 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
 
     private suspend fun readSocket() {
-        socket.incoming.asFlow().buffer(Channel.UNLIMITED).collect {
+        socket.incoming.asFlow().buffer(Channel.UNLIMITED).collectLatest {
             when (it) {
                 is Frame.Binary, is Frame.Text -> read(it)
                 else -> { /*ignore*/
                 }
             }
         }
-
     }
 
     private fun Frame.deflateData(): String {
