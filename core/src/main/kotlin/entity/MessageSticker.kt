@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageStickerData
 import dev.kord.core.cache.data.StickerItemData
+import dev.kord.core.cache.data.StickerPackData
 
 /**
  * A sticker image that can be used in messages.
@@ -64,9 +65,9 @@ public class MessageSticker(public val data: MessageStickerData, override val ko
 }
 
 
-public class StickerItem(public val data: StickerItemData) {
+public class StickerItem(public val data: StickerItemData) : Entity {
 
-    public val id: Snowflake
+    public override val id: Snowflake
         get() = data.id
 
     public val name: String
@@ -74,4 +75,22 @@ public class StickerItem(public val data: StickerItemData) {
 
     public val formatType: MessageStickerType
         get() = data.formatType
+}
+
+public class StickerPack(public val data: StickerPackData, override val kord: Kord) : KordEntity {
+
+    public override val id: Snowflake
+        get() = data.id
+
+    public val name: String get() = data.name
+
+    public val skuId: Snowflake get() = data.skuId
+
+    public val coverStickerId: Snowflake? get() = data.coverStickerId.value
+
+    public val description: String get() = data.description
+
+    public val stickers: List<MessageSticker> get() = data.stickers.map { MessageSticker(it, kord) }
+
+
 }

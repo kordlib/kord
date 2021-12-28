@@ -39,3 +39,20 @@ public data class StickerItemData(
         }
     }
 }
+
+
+public data class StickerPackData(
+    val id: Snowflake,
+    val stickers: List<MessageStickerData>,
+    val name: String,
+    val skuId: Snowflake,
+    val coverStickerId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val description: String,
+    val bannerAssetId: Snowflake
+    ) {
+    public companion object {
+        public fun from(entity: DiscordStickerPack): StickerPackData = with(entity) {
+            StickerPackData(id, stickers.map { MessageStickerData.from(it) }, name, skuId, coverStickerId, description, bannerAssetId)
+        }
+    }
+}

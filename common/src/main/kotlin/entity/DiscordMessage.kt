@@ -142,7 +142,7 @@ data class DiscordMessageSticker(
     @SerialName("sort_value")
     val sortValue: OptionalInt = OptionalInt.Missing
 )
-
+@Serializable
 data class DiscordStickerPack(
     val id: Snowflake,
     val stickers: List<DiscordMessageSticker>,
