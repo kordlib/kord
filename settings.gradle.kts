@@ -67,7 +67,7 @@ fun VersionCatalogBuilder.ktor() {
 }
 
 fun VersionCatalogBuilder.common() {
-    version("kotlinx-coroutines", "1.6.0-RC2")
+    version("kotlinx-coroutines", "1.6.0")
     alias("kotlinx-serialization").to("org.jetbrains.kotlinx", "kotlinx-serialization-json").version("1.3.2")
     alias("kotlinx-coroutines").to("org.jetbrains.kotlinx", "kotlinx-coroutines").versionRef("kotlinx-coroutines")
     alias("kotlinx-atomicfu").to("org.jetbrains.kotlinx", "atomicfu").version("0.17.0")
