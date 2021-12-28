@@ -51,7 +51,7 @@ fun VersionCatalogBuilder.kotlinx() {
 }
 
 fun VersionCatalogBuilder.ktor() {
-    val ktor = version("ktor", "1.6.6")
+    val ktor = version("ktor", "1.6.7")
 
     alias("ktor-client-json").to("io.ktor", "ktor-client-json").versionRef(ktor)
     alias("ktor-client-serialization").to("io.ktor", "ktor-client-serialization").versionRef(ktor)
@@ -71,7 +71,7 @@ fun VersionCatalogBuilder.common() {
     alias("kotlinx-serialization").to("org.jetbrains.kotlinx", "kotlinx-serialization-json").version("1.3.2")
     alias("kotlinx-coroutines").to("org.jetbrains.kotlinx", "kotlinx-coroutines").versionRef("kotlinx-coroutines")
     alias("kotlinx-atomicfu").to("org.jetbrains.kotlinx", "atomicfu").version("0.17.0")
-    alias("kotlin-logging").to("io.github.microutils", "kotlin-logging").version("2.1.17")
+    alias("kotlin-logging").to("io.github.microutils", "kotlin-logging").version("2.1.21")
 
     bundle("common", listOf("kotlinx-serialization", "kotlinx-coroutines", "kotlinx-atomicfu", "kotlin-logging"))
 }
