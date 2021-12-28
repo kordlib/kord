@@ -81,82 +81,54 @@ data class DiscordGuild(
     val id: Snowflake,
     val name: String,
     val icon: String?,
-    @SerialName("icon_hash")
-    val iconHash: Optional<String?> = Optional.Missing(),
+    @SerialName("icon_hash") val iconHash: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
-    @SerialName("discovery_splash")
-    val discoverySplash: Optional<String?> = Optional.Missing(),
+    @SerialName("discovery_splash") val discoverySplash: Optional<String?> = Optional.Missing(),
     val owner: OptionalBoolean = OptionalBoolean.Missing,
-    @SerialName("owner_id")
-    val ownerId: Snowflake,
+    @SerialName("owner_id") val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
-    @Deprecated("The region field has been moved to Channel#rtcRegion in Discord API v9", ReplaceWith("DiscordChannel#rtcRegion"))
-    val region: String,
-    @SerialName("afk_channel_id")
-    val afkChannelId: Snowflake?,
-    @SerialName("afk_timeout")
-    val afkTimeout: Int,
-    @SerialName("widget_enabled")
-    val widgetEnabled: OptionalBoolean = OptionalBoolean.Missing,
-    @SerialName("widget_channel_id")
-    val widgetChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
-    @SerialName("verification_level")
-    val verificationLevel: VerificationLevel,
-    @SerialName("default_message_notifications")
-    val defaultMessageNotifications: DefaultMessageNotificationLevel,
-    @SerialName("explicit_content_filter")
-    val explicitContentFilter: ExplicitContentFilter,
+    @Deprecated(
+        "The region field has been moved to Channel#rtcRegion in Discord API v9",
+        ReplaceWith("DiscordChannel#rtcRegion")
+    ) val region: String,
+    @SerialName("afk_channel_id") val afkChannelId: Snowflake?,
+    @SerialName("afk_timeout") val afkTimeout: Int,
+    @SerialName("widget_enabled") val widgetEnabled: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("widget_channel_id") val widgetChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
+    @SerialName("verification_level") val verificationLevel: VerificationLevel,
+    @SerialName("default_message_notifications") val defaultMessageNotifications: DefaultMessageNotificationLevel,
+    @SerialName("explicit_content_filter") val explicitContentFilter: ExplicitContentFilter,
     val roles: List<DiscordRole>,
     val emojis: List<DiscordEmoji>,
     val features: List<GuildFeature>,
-    @SerialName("mfa_level")
-    val mfaLevel: MFALevel,
-    @SerialName("application_id")
-    val applicationId: Snowflake?,
-    @SerialName("system_channel_id")
-    val systemChannelId: Snowflake?,
-    @SerialName("system_channel_flags")
-    val systemChannelFlags: SystemChannelFlags,
-    @SerialName("rules_channel_id")
-    val rulesChannelId: Snowflake?,
-    @SerialName("joined_at")
-    val joinedAt: Optional<String> = Optional.Missing(),
+    @SerialName("mfa_level") val mfaLevel: MFALevel,
+    @SerialName("application_id") val applicationId: Snowflake?,
+    @SerialName("system_channel_id") val systemChannelId: Snowflake?,
+    @SerialName("system_channel_flags") val systemChannelFlags: SystemChannelFlags,
+    @SerialName("rules_channel_id") val rulesChannelId: Snowflake?,
+    @SerialName("joined_at") val joinedAt: Optional<String> = Optional.Missing(),
     val large: OptionalBoolean = OptionalBoolean.Missing,
     val unavailable: OptionalBoolean = OptionalBoolean.Missing,
-    @SerialName("member_count")
-    val memberCount: OptionalInt = OptionalInt.Missing,
-    @SerialName("voice_states")
-    val voiceStates: Optional<List<DiscordVoiceState>> = Optional.Missing(),
+    @SerialName("member_count") val memberCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("voice_states") val voiceStates: Optional<List<DiscordVoiceState>> = Optional.Missing(),
     val members: Optional<List<DiscordGuildMember>> = Optional.Missing(),
     val channels: Optional<List<DiscordChannel>> = Optional.Missing(),
     val threads: Optional<List<DiscordChannel>> = Optional.Missing(),
     val presences: Optional<List<DiscordPresenceUpdate>> = Optional.Missing(),
-    @SerialName("max_presences")
-    val maxPresences: OptionalInt? = OptionalInt.Missing,
-    @SerialName("max_members")
-    val maxMembers: OptionalInt = OptionalInt.Missing,
-    @SerialName("vanity_url_code")
-    val vanityUrlCode: String?,
+    @SerialName("max_presences") val maxPresences: OptionalInt? = OptionalInt.Missing,
+    @SerialName("max_members") val maxMembers: OptionalInt = OptionalInt.Missing,
+    @SerialName("vanity_url_code") val vanityUrlCode: String?,
     val description: String?,
     val banner: String?,
-    @SerialName("premium_tier")
-    val premiumTier: PremiumTier,
-    @SerialName("premium_subscription_count")
-    val premiumSubscriptionCount: OptionalInt = OptionalInt.Missing,
-    @SerialName("preferred_locale")
-    val preferredLocale: String,
-    @SerialName("public_updates_channel_id")
-    val publicUpdatesChannelId: Snowflake?,
-    @SerialName("max_video_channel_users")
-    val maxVideoChannelUsers: OptionalInt = OptionalInt.Missing,
-    @SerialName("approximate_member_count")
-    val approximateMemberCount: OptionalInt = OptionalInt.Missing,
-    @SerialName("approximate_presence_count")
-    val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
-    @SerialName("welcome_screen")
-    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
-    @SerialName("nsfw_level")
-    val nsfwLevel: NsfwLevel
+    @SerialName("premium_tier") val premiumTier: PremiumTier,
+    @SerialName("premium_subscription_count") val premiumSubscriptionCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("preferred_locale") val preferredLocale: String,
+    @SerialName("public_updates_channel_id") val publicUpdatesChannelId: Snowflake?,
+    @SerialName("max_video_channel_users") val maxVideoChannelUsers: OptionalInt = OptionalInt.Missing,
+    @SerialName("approximate_member_count") val approximateMemberCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("approximate_presence_count") val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("welcome_screen") val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
+    @SerialName("nsfw_level") val nsfwLevel: NsfwLevel
 )
 
 /**
@@ -176,9 +148,15 @@ class DiscordPartialGuild(
     val owner: OptionalBoolean = OptionalBoolean.Missing,
     val permissions: Optional<Permissions> = Optional.Missing(),
     val features: List<GuildFeature>,
-    @SerialName("welcome_screen")
-    val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing()
-)
+    @SerialName("welcome_screen") val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
+    @SerialName("vanity_url_code") val vanityUrlCode: String?,
+    val description: String?,
+    val banner: String?,
+    val splash: Optional<String?> = Optional.Missing(),
+    @SerialName("nsfw_level") val nsfwLevel: NsfwLevel,
+    @SerialName("verification_level")
+    val verificationLevel: VerificationLevel
+    )
 
 /**
  * A representation of a [Discord Guild Feature](https://discord.com/developers/docs/resources/guild#guild-object-guild-features).
@@ -332,15 +310,13 @@ enum class SystemChannelFlag(val code: Int) {
 
 @Serializable
 data class DiscordGuildBan(
-    @SerialName("guild_id")
-    val guildId: Snowflake,
+    @SerialName("guild_id") val guildId: Snowflake,
     val user: DiscordUser,
 )
 
 @Serializable
 data class DiscordGuildIntegrations(
-    @SerialName("guild_id")
-    val guildId: Snowflake,
+    @SerialName("guild_id") val guildId: Snowflake,
 )
 
 @Serializable
@@ -361,17 +337,14 @@ data class DiscordIntegrationAccount(
 @Serializable
 data class DiscordVoiceServerUpdateData(
     val token: String,
-    @SerialName("guild_id")
-    val guildId: Snowflake,
+    @SerialName("guild_id") val guildId: Snowflake,
     val endpoint: String?,
 )
 
 @Serializable
 data class DiscordWebhooksUpdateData(
-    @SerialName("guild_id")
-    val guildId: Snowflake,
-    @SerialName("channel_id")
-    val channelId: Snowflake,
+    @SerialName("guild_id") val guildId: Snowflake,
+    @SerialName("channel_id") val channelId: Snowflake,
 )
 
 /**
@@ -393,29 +366,19 @@ data class DiscordWebhooksUpdateData(
  */
 @Serializable
 data class DiscordVoiceState(
-    @SerialName("guild_id")
-    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    @SerialName("channel_id")
-    val channelId: Snowflake?,
-    @SerialName("user_id")
-    val userId: Snowflake,
-    @SerialName("guild_member")
-    val member: Optional<DiscordGuildMember> = Optional.Missing(),
-    @SerialName("session_id")
-    val sessionId: String,
+    @SerialName("guild_id") val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("channel_id") val channelId: Snowflake?,
+    @SerialName("user_id") val userId: Snowflake,
+    @SerialName("guild_member") val member: Optional<DiscordGuildMember> = Optional.Missing(),
+    @SerialName("session_id") val sessionId: String,
     val deaf: Boolean,
     val mute: Boolean,
-    @SerialName("self_deaf")
-    val selfDeaf: Boolean,
-    @SerialName("self_mute")
-    val selfMute: Boolean,
-    @SerialName("self_video")
-    val selfVideo: Boolean,
-    @SerialName("self_stream")
-    val selfStream: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("self_deaf") val selfDeaf: Boolean,
+    @SerialName("self_mute") val selfMute: Boolean,
+    @SerialName("self_video") val selfVideo: Boolean,
+    @SerialName("self_stream") val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val suppress: Boolean,
-    @SerialName("request_to_speak_timestamp")
-    val requestToSpeakTimestamp: String?
+    @SerialName("request_to_speak_timestamp") val requestToSpeakTimestamp: String?
 )
 
 /**
@@ -621,18 +584,13 @@ sealed class VerificationLevel(val value: Int) {
 
 @Serializable
 data class DiscordWelcomeScreenChannel(
-    @SerialName("channel_id")
-    val channelId: Snowflake,
+    @SerialName("channel_id") val channelId: Snowflake,
     val description: String,
-    @SerialName("emoji_id")
-    val emojiId: Snowflake?,
-    @SerialName("emoji_name")
-    val emojiName: String?
+    @SerialName("emoji_id") val emojiId: Snowflake?,
+    @SerialName("emoji_name") val emojiName: String?
 )
 
 @Serializable
 data class DiscordWelcomeScreen(
-    val description: String?,
-    @SerialName("welcome_channels")
-    val welcomeChannels: List<DiscordWelcomeScreenChannel>
+    val description: String?, @SerialName("welcome_channels") val welcomeChannels: List<DiscordWelcomeScreenChannel>
 )

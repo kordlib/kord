@@ -421,7 +421,7 @@ public class Guild(
      * Gets the discovery splash url in the specified [format], if present.
      */
     public fun getDiscoverySplashUrl(format: Image.Format): String? =
-        data.splash.value?.let { "discovery-splashes/$id/${it}.${format.extension}" }
+        splashHash?.let { "discovery-splashes/$id/${it}.${format.extension}" }
 
     /**
      * Requests to get the splash image in the specified [format], if present.
