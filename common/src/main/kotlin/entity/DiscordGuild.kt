@@ -160,7 +160,9 @@ data class DiscordGuild(
 )
 
 /**
- * A partial representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object
+ * A partial representation of a [Discord Guild structure](https://discord.com/developers/docs/resources/guild#guild-object)
+ *
+ * see [Get Current User Guilds](https://discord.com/developers/docs/resources/user#get-current-user-guilds)
  *
  * @param id The guild id.
  * @param name The guild name (2-100 characters, excluding trailing and leading whitespace)
@@ -169,7 +171,7 @@ data class DiscordGuild(
  * @param features The enabled guild features.
  */
 @Serializable
-class DiscordPartialGuild(
+data class DiscordPartialGuild(
     val id: Snowflake,
     val name: String,
     val icon: String?,
