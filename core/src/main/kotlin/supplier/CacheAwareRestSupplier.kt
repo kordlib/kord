@@ -4,20 +4,7 @@ import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.entity.Ban
-import dev.kord.core.entity.Guild
-import dev.kord.core.entity.GuildEmoji
-import dev.kord.core.entity.GuildPreview
-import dev.kord.core.entity.GuildScheduledEvent
-import dev.kord.core.entity.GuildWidget
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Message
-import dev.kord.core.entity.Region
-import dev.kord.core.entity.Role
-import dev.kord.core.entity.StageInstance
-import dev.kord.core.entity.Template
-import dev.kord.core.entity.User
-import dev.kord.core.entity.Webhook
+import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
@@ -211,7 +198,7 @@ public class StoreEntitySupplier(
         applicationId: Snowflake,
         commandId: Snowflake
     ): GlobalApplicationCommand? {
-        return storeAndReturn(supplier.getGlobalApplicationCommand(applicationId, commandId)) { it.data }
+        return storeAndReturn(supplier.getGlobalApplicationCommandOrNull(applicationId, commandId)) { it.data }
     }
 
     override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> {
@@ -236,13 +223,30 @@ public class StoreEntitySupplier(
         storeOnEach(supplier.getGuildScheduledEvents(guildId)) { it.data }
 
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
-        storeAndReturn(supplier.getGuildScheduledEvent(guildId, eventId)) { it.data }
+        storeAndReturn(supplier.getGuildScheduledEventOrNull(guildId, eventId)) { it.data }
+
+    override suspend fun getStickerOrNull(id: Snowflake): Sticker? {
+        return storeAndReturn(supplier.getStickerOrNull(id)) { it.data }
+    }
+
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): Sticker? {
+        return storeAndReturn(supplier.getGuildStickerOrNull(guildId, id)) { it.data }
+    }
+
+    override fun getNitroStickerPacks(): Flow<StickerPack> {
+        return storeOnEach(supplier.getNitroStickerPacks()) { it.data }
+    }
+
+    override fun getGuildStickers(guildId: Snowflake): Flow<Sticker> {
+        return storeOnEach(supplier.getGuildStickers(guildId)) { it.data }
+
+    }
 
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake
     ): Flow<ApplicationCommandPermissions> {
-        TODO("Not yet implemented")
+        return storeOnEach(supplier.getGuildApplicationCommandPermissions(applicationId, guildId)) { it.data }
     }
 
     private inline fun <T, reified R : Any> storeOnEach(source: Flow<T>, crossinline transform: (T) -> R): Flow<T> {

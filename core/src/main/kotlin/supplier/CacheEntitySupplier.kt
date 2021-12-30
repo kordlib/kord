@@ -1,6 +1,7 @@
 package dev.kord.core.supplier
 
 import dev.kord.cache.api.DataCache
+import dev.kord.cache.api.count
 import dev.kord.cache.api.query
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
@@ -8,38 +9,10 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.any
-import dev.kord.core.cache.data.ApplicationCommandData
-import dev.kord.core.cache.data.BanData
-import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.cache.data.EmojiData
-import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
-import dev.kord.core.cache.data.GuildData
-import dev.kord.core.cache.data.GuildPreviewData
-import dev.kord.core.cache.data.GuildScheduledEventData
-import dev.kord.core.cache.data.MemberData
-import dev.kord.core.cache.data.MessageData
-import dev.kord.core.cache.data.RegionData
-import dev.kord.core.cache.data.RoleData
-import dev.kord.core.cache.data.TemplateData
-import dev.kord.core.cache.data.ThreadMemberData
-import dev.kord.core.cache.data.UserData
-import dev.kord.core.cache.data.WebhookData
+import dev.kord.core.cache.data.*
 import dev.kord.core.cache.idEq
 import dev.kord.core.cache.idGt
-import dev.kord.core.entity.Ban
-import dev.kord.core.entity.Guild
-import dev.kord.core.entity.GuildEmoji
-import dev.kord.core.entity.GuildPreview
-import dev.kord.core.entity.GuildScheduledEvent
-import dev.kord.core.entity.GuildWidget
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Message
-import dev.kord.core.entity.Region
-import dev.kord.core.entity.Role
-import dev.kord.core.entity.StageInstance
-import dev.kord.core.entity.Template
-import dev.kord.core.entity.User
-import dev.kord.core.entity.Webhook
+import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
@@ -467,6 +440,32 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.singleOrNull() ?: return null
 
         return GuildScheduledEvent(data, kord)
+    }
+
+    override suspend fun getStickerOrNull(id: Snowflake): Sticker? {
+        val data = cache.query<StickerData> { idEq(StickerData::id, id) }.singleOrNull() ?: return null
+        return Sticker(data, kord)
+    }
+
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): Sticker? {
+        val data = cache.query<StickerData> {
+            idEq(StickerData::id, id)
+            idEq(StickerData::guildId, guildId)
+        }.singleOrNull() ?: return null
+
+        return Sticker(data, kord)
+    }
+
+    override fun getNitroStickerPacks(): Flow<StickerPack> {
+        return cache.query<StickerPackData>().asFlow().map {
+            StickerPack(it, kord)
+        }
+    }
+
+    override fun getGuildStickers(guildId: Snowflake): Flow<Sticker> {
+        return cache.query<StickerData> { idEq(StickerData::guildId, guildId) }
+            .asFlow()
+            .map { Sticker(it, kord) }
     }
 
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =

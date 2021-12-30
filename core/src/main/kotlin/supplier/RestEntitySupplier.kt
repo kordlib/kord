@@ -412,7 +412,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
     }
 
-    override fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake): Flow<GuildApplicationCommand> = flow {
+    override fun getGuildApplicationCommands(
+        applicationId: Snowflake,
+        guildId: Snowflake
+    ): Flow<GuildApplicationCommand> = flow {
         for (command in interaction.getGuildApplicationCommands(applicationId, guildId)) {
             val data = ApplicationCommandData.from(command)
             emit(GuildApplicationCommand(data, interaction))
@@ -420,7 +423,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
 
-    override suspend fun getGlobalApplicationCommandOrNull(applicationId: Snowflake, commandId: Snowflake): GlobalApplicationCommand? = catchNotFound {
+    override suspend fun getGlobalApplicationCommandOrNull(
+        applicationId: Snowflake,
+        commandId: Snowflake
+    ): GlobalApplicationCommand? = catchNotFound {
         val response = interaction.getGlobalCommand(applicationId, commandId)
         val data = ApplicationCommandData.from(response)
         GlobalApplicationCommand(data, interaction)
@@ -433,7 +439,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
-     public suspend fun getOriginalInteractionOrNull(applicationId: Snowflake, token: String): Message? = catchNotFound {
+    public suspend fun getOriginalInteractionOrNull(applicationId: Snowflake, token: String): Message? = catchNotFound {
         val response = interaction.getInteractionResponse(applicationId, token)
         val data = MessageData.from(response)
         Message(data, kord)
@@ -443,11 +449,12 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     public suspend fun getOriginalInteraction(applicationId: Snowflake, token: String): Message {
         return getOriginalInteractionOrNull(applicationId, token) ?: EntityNotFoundException.interactionNotFound(token)
     }
+
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
     ): Flow<ApplicationCommandPermissions> = flow {
-         interaction.getGuildApplicationCommandPermissions(applicationId, guildId)
+        interaction.getGuildApplicationCommandPermissions(applicationId, guildId)
             .forEach {
                 val data = GuildApplicationCommandPermissionsData.from(it)
                 emit(ApplicationCommandPermissions(data))
@@ -462,11 +469,42 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
-    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? = catchNotFound {
-        val event = kord.rest.guild.getScheduledEvent(guildId, eventId)
-        val data = GuildScheduledEventData.from(event)
+    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
+        catchNotFound {
+            val event = kord.rest.guild.getScheduledEvent(guildId, eventId)
+            val data = GuildScheduledEventData.from(event)
 
-        GuildScheduledEvent(data, kord)
+            GuildScheduledEvent(data, kord)
+        }
+
+    override suspend fun getStickerOrNull(id: Snowflake): Sticker? = catchNotFound {
+        val response = kord.rest.sticker.getSticker(id)
+        val data = StickerData.from(response)
+        Sticker(data, kord)
+    }
+
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): Sticker? = catchNotFound {
+        val response = kord.rest.sticker.getGuildSticker(guildId, id)
+        val data = StickerData.from(response)
+        Sticker(data, kord)
+    }
+
+    override fun getNitroStickerPacks(): Flow<StickerPack> = flow {
+        val responses = kord.rest.sticker.getNitroStickerPacks()
+
+        responses.forEach { response ->
+            val data = StickerPackData.from(response)
+            emit(StickerPack(data, kord))
+        }
+    }
+
+    override fun getGuildStickers(guildId: Snowflake): Flow<Sticker> = flow {
+        val responses = kord.rest.sticker.getGuildStickers(guildId)
+
+        responses.forEach { response ->
+            val data = StickerData.from(response)
+            emit(Sticker(data, kord))
+        }
     }
 
     override suspend fun getApplicationCommandPermissionsOrNull(

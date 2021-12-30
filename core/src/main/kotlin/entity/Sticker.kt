@@ -5,6 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
+import dev.kord.core.behavior.StickerBehavior
 import dev.kord.core.cache.data.StickerData
 import dev.kord.core.cache.data.StickerItemData
 import dev.kord.core.cache.data.StickerPackData
@@ -12,7 +13,7 @@ import dev.kord.core.cache.data.StickerPackData
 /**
  * A sticker image that can be used in messages.
  */
-public class Sticker(public val data: StickerData, override val kord: Kord) : KordEntity {
+public class Sticker(public val data: StickerData, override val kord: Kord) : StickerBehavior {
 
     /**
      * The id of the sticker.
@@ -56,8 +57,8 @@ public class Sticker(public val data: StickerData, override val kord: Kord) : Ko
     public val sortValue: Int?
         get() = data.sortValue.value
 
-    public val guildId: Snowflake?
-        get() = data.guildId.value
+    public override val guildId: Snowflake
+        get() = data.guildId.value!!
 
     public val user: User?
         get() = data.user.unwrap { User(it, kord) }

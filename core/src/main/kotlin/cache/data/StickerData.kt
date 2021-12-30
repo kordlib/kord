@@ -1,5 +1,7 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.DataDescription
+import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import kotlinx.serialization.SerialName
@@ -21,6 +23,13 @@ public data class StickerData(
     val sortValue: OptionalInt = OptionalInt.Missing
 ) {
     public companion object {
+
+        public val description: DataDescription<StickerData, Snowflake> = description(StickerData::id) {
+            link(StickerData::guildId to GuildData::id)
+            link(StickerData::packId to StickerPackData::id)
+        }
+
+
         public fun from(entity: DiscordMessageSticker): StickerData = with(entity) {
             StickerData(id, packId, name, description, tags, formatType, available, guildId, user.map { it.toData() }, sortValue)
         }
@@ -51,6 +60,9 @@ public data class StickerPackData(
     val bannerAssetId: Snowflake
     ) {
     public companion object {
+
+        public val description: DataDescription<StickerPackData, Snowflake> = description(StickerPackData::id)
+
         public fun from(entity: DiscordStickerPack): StickerPackData = with(entity) {
             StickerPackData(id, stickers.map { StickerData.from(it) }, name, skuId, coverStickerId, description, bannerAssetId)
         }
