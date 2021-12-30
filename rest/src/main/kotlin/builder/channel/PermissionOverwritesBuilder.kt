@@ -3,7 +3,6 @@ package dev.kord.rest.builder.channel
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.OverwriteType
 import dev.kord.common.entity.Snowflake
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -45,7 +44,6 @@ interface PermissionOverwritesModifyBuilder : PermissionOverwritesBuilder {
 /**
  * Adds an [Overwrite] for the [memberId].
  */
-@OptIn(ExperimentalContracts::class)
 inline fun PermissionOverwritesBuilder.addMemberOverwrite(
     memberId: Snowflake,
     builder: PermissionOverwriteBuilder.() -> Unit
@@ -61,7 +59,6 @@ inline fun PermissionOverwritesBuilder.addMemberOverwrite(
 /**
  * Adds an [Overwrite] for the [roleId].
  */
-@OptIn(ExperimentalContracts::class)
 inline fun PermissionOverwritesBuilder.addRoleOverwrite(
     roleId: Snowflake,
     builder: PermissionOverwriteBuilder.() -> Unit

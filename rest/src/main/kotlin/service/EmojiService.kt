@@ -10,13 +10,11 @@ import dev.kord.rest.json.request.EmojiModifyRequest
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun createEmoji(
         guildId: Snowflake,
         name: String,
@@ -49,7 +47,6 @@ class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler)
             auditLogReason(reason)
         }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyEmoji(
         guildId: Snowflake,
         emojiId: Snowflake,

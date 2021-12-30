@@ -17,7 +17,6 @@ import dev.kord.rest.builder.scheduled_events.ScheduledEventModifyBuilder
 import dev.kord.rest.service.modifyScheduledEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -100,7 +99,6 @@ internal fun GuildScheduledEventBehavior(
  *
  * @throws RequestException if anything goes wrong during the request
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildScheduledEventBehavior.edit(builder: ScheduledEventModifyBuilder.() -> Unit): DiscordGuildScheduledEvent {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

@@ -12,7 +12,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonNames
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -133,7 +132,6 @@ data class UserFlags constructor(val code: Int) {
         else -> this
     }
 
-    @OptIn(ExperimentalContracts::class)
     inline fun copy(block: UserFlagsBuilder.() -> Unit): UserFlags {
         contract {
             callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -176,7 +174,6 @@ data class UserFlags constructor(val code: Int) {
 }
 
 
-@OptIn(ExperimentalContracts::class)
 inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return UserFlags.UserFlagsBuilder().apply(builder).flags()

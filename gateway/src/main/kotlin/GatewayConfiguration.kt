@@ -5,7 +5,6 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.optional
 import dev.kord.gateway.builder.PresenceBuilder
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -47,7 +46,6 @@ data class GatewayConfigurationBuilder(
     /**
      * Calls the [builder] on a new [PresenceBuilder] and assigns the result to [presence].
      */
-    @OptIn(ExperimentalContracts::class)
     inline fun presence(builder: PresenceBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

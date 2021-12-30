@@ -7,7 +7,6 @@ import dev.kord.core.cache.data.RoleData
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Role
 import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.User
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.indexOfFirstOrNull
 import dev.kord.core.sorted
@@ -19,7 +18,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -151,7 +149,6 @@ public fun RoleBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun RoleBehavior.edit(builder: RoleModifyBuilder.() -> Unit): Role {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

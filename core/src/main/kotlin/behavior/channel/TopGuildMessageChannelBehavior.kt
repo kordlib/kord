@@ -15,7 +15,6 @@ import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -120,7 +119,6 @@ internal fun TopGuildMessageChannelBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun TopGuildMessageChannelBehavior.createWebhook(
     name: String,
     builder: WebhookCreateBuilder.() -> Unit = {}

@@ -23,7 +23,6 @@ import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
@@ -41,7 +40,6 @@ internal fun ULong?.toSnowflakeOrNull(): Snowflake? = when {
 internal fun Int.toInstant() = Instant.fromEpochMilliseconds(toLong())
 internal fun Long.toInstant() = Instant.fromEpochMilliseconds(this)
 
-@OptIn(ExperimentalContracts::class)
 internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -54,7 +52,6 @@ internal inline fun <T> catchNotFound(block: () -> T): T? {
     }
 }
 
-@OptIn(ExperimentalContracts::class)
 internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: () -> T): T? {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)

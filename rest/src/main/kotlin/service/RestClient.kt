@@ -6,7 +6,6 @@ import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.request.RequestBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -33,7 +32,6 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
      * @param route The route to which to send a request.
      * @param block The configuration for this request.
      */
-    @OptIn(ExperimentalContracts::class)
     @KordUnsafe
     @KordExperimental
     suspend inline fun <T> unsafe(route: Route<T>, block: RequestBuilder<T>.() -> Unit): T {

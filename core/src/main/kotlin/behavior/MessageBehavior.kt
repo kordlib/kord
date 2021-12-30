@@ -22,7 +22,6 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -239,7 +238,6 @@ public fun MessageBehavior(
  * @throws [RestRequestException] if something went wrong during the request.
  * @see editWebhookMessage
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MessageBehavior.edit(builder: UserMessageModifyBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -260,7 +258,6 @@ public suspend inline fun MessageBehavior.edit(builder: UserMessageModifyBuilder
  * @throws [RestRequestException] if something went wrong during the request.
  * @see edit
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MessageBehavior.editWebhookMessage(
     webhookId: Snowflake,
     token: String,
@@ -287,7 +284,6 @@ public suspend inline fun MessageBehavior.editWebhookMessage(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MessageBehavior.reply(builder: UserMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

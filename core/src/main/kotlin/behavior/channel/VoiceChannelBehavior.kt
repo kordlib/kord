@@ -13,7 +13,6 @@ import dev.kord.rest.builder.channel.VoiceChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchVoiceChannel
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -94,7 +93,6 @@ public fun VoiceChannelBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun VoiceChannelBehavior.edit(builder: VoiceChannelModifyBuilder.() -> Unit): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

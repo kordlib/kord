@@ -1,6 +1,5 @@
 package dev.kord.rest.service
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.channel.*
@@ -15,7 +14,6 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -30,7 +28,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun createMessage(channelId: Snowflake, builder: UserMessageCreateBuilder.() -> Unit): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val multipartRequest = UserMessageCreateBuilder().apply(builder).toRequest()
@@ -179,7 +176,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             body(UserAddDMRequest.serializer(), addUser)
         }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun createInvite(channelId: Snowflake, builder: InviteCreateBuilder.() -> Unit = {}): DiscordInvite {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -192,7 +188,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun editMessage(
         channelId: Snowflake,
         messageId: Snowflake,
@@ -291,7 +286,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend fun startThreadWithMessage(
         channelId: Snowflake,
         messageId: Snowflake,
@@ -316,7 +310,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend fun startThread(
         channelId: Snowflake,
         name: String,
@@ -397,7 +390,6 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
 
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.patchTextChannel(
     channelId: Snowflake,
     builder: TextChannelModifyBuilder.() -> Unit
@@ -409,7 +401,6 @@ suspend inline fun ChannelService.patchTextChannel(
     return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.patchVoiceChannel(
     channelId: Snowflake,
     builder: VoiceChannelModifyBuilder.() -> Unit
@@ -422,7 +413,6 @@ suspend inline fun ChannelService.patchVoiceChannel(
 }
 
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.patchStageVoiceChannel(
     channelId: Snowflake,
     builder: StageVoiceChannelModifyBuilder.() -> Unit
@@ -433,7 +423,6 @@ suspend inline fun ChannelService.patchStageVoiceChannel(
     return patchChannel(channelId, StageVoiceChannelModifyBuilder().apply(builder).toRequest())
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.patchStoreChannel(
     channelId: Snowflake,
     builder: StoreChannelModifyBuilder.() -> Unit
@@ -445,7 +434,6 @@ suspend inline fun ChannelService.patchStoreChannel(
     return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.patchNewsChannel(
     channelId: Snowflake,
     builder: NewsChannelModifyBuilder.() -> Unit
@@ -457,7 +445,6 @@ suspend inline fun ChannelService.patchNewsChannel(
     return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.patchCategory(
     channelId: Snowflake,
     builder: CategoryModifyBuilder.() -> Unit
@@ -469,7 +456,6 @@ suspend inline fun ChannelService.patchCategory(
     return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.editMemberPermissions(
     channelId: Snowflake,
     memberId: Snowflake,
@@ -482,7 +468,6 @@ suspend inline fun ChannelService.editMemberPermissions(
     editChannelPermissions(channelId, memberId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun ChannelService.editRolePermission(
     channelId: Snowflake,
     roleId: Snowflake,

@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.coroutineContext
@@ -274,7 +273,6 @@ public fun MessageChannelBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MessageChannelBehavior.createMessage(builder: UserMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -290,7 +288,6 @@ public suspend inline fun MessageChannelBehavior.createMessage(builder: UserMess
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> Unit): Message {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -311,7 +308,6 @@ public suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() -> Unit) {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)

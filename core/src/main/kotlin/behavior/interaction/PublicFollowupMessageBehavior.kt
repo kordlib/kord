@@ -9,7 +9,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -42,8 +41,6 @@ public interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun PublicFollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = FollowupMessageModifyBuilder().apply(builder)

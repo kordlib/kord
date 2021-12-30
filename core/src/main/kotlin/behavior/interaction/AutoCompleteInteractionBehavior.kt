@@ -5,7 +5,6 @@ import dev.kord.common.entity.DiscordAutoComplete
 import dev.kord.rest.builder.interaction.IntChoiceBuilder
 import dev.kord.rest.builder.interaction.NumberChoiceBuilder
 import dev.kord.rest.builder.interaction.StringChoiceBuilder
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -26,7 +25,6 @@ public interface AutoCompleteInteractionBehavior : InteractionBehavior
  *
  * @see IntChoiceBuilder
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun AutoCompleteInteractionBehavior.suggestInt(builder: IntChoiceBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -41,7 +39,6 @@ public suspend inline fun AutoCompleteInteractionBehavior.suggestInt(builder: In
  * The provided choices are only suggestions and the user can provide any other input as well.
  * @see NumberChoiceBuilder
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun AutoCompleteInteractionBehavior.suggestNumber(builder: NumberChoiceBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -57,7 +54,6 @@ public suspend inline fun AutoCompleteInteractionBehavior.suggestNumber(builder:
  *
  * @see StringChoiceBuilder
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun AutoCompleteInteractionBehavior.suggestString(builder: StringChoiceBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

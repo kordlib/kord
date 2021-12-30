@@ -10,7 +10,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.RequiresOptIn.Level
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -185,7 +184,6 @@ sealed class Intent(val code: DiscordBitSet) {
     }
 }
 
-@OptIn(ExperimentalContracts::class)
 inline fun Intents(builder: Intents.IntentsBuilder.() -> Unit = {}): Intents {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return Intents.IntentsBuilder().apply(builder).flags()
@@ -250,7 +248,6 @@ data class Intents internal constructor(val code: DiscordBitSet) {
     /**
      * copy this [Intents] and apply the [block] to it.
      */
-    @OptIn(ExperimentalContracts::class)
     inline fun copy(block: IntentsBuilder.() -> Unit): Intents {
         contract {
             callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -313,5 +310,3 @@ object IntentsSerializer : KSerializer<Intents> {
 
     }
 }
-
-

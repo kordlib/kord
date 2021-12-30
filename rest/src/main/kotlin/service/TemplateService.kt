@@ -11,7 +11,6 @@ import dev.kord.rest.json.request.GuildTemplateCreateRequest
 import dev.kord.rest.json.request.GuildTemplateModifyRequest
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -88,7 +87,6 @@ class TemplateService(requestHandler: RequestHandler) : RestService(requestHandl
     /**
      * Create a new guild with a [name] based on a template with the given [code] and configured by the [builder], returns the created guild.
      */
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildFromTemplate(
         code: String,
         name: String,
@@ -104,7 +102,6 @@ class TemplateService(requestHandler: RequestHandler) : RestService(requestHandl
      *
      * Returns the modified [DiscordTemplate].
      */
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyGuildTemplate(
         guildId: Snowflake,
         code: String,
@@ -120,7 +117,6 @@ class TemplateService(requestHandler: RequestHandler) : RestService(requestHandl
      *
      * Returns the new [DiscordTemplate].
      */
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildTemplate(
         guildId: Snowflake,
         name: String,

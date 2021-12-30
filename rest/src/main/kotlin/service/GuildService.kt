@@ -57,13 +57,11 @@ import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlinx.datetime.Instant
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuild(name: String, builder: GuildCreateBuilder.() -> Unit): DiscordGuild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -89,7 +87,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyGuild(guildId: Snowflake, builder: GuildModifyBuilder.() -> Unit): DiscordGuild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -118,7 +115,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             auditLogReason(reason)
         }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyGuildChannelPosition(
         guildId: Snowflake,
         builder: GuildChannelPositionModifyBuilder.() -> Unit
@@ -161,7 +157,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         parameter("limit", "$limit")
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend fun addGuildMember(
         guildId: Snowflake,
         userId: Snowflake,
@@ -176,7 +171,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyGuildMember(
         guildId: Snowflake,
         userId: Snowflake,
@@ -231,7 +225,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.UserId] = userId
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun addGuildBan(guildId: Snowflake, userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -257,7 +250,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.GuildId] = guildId
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun createGuildRole(guildId: Snowflake, builder: RoleCreateBuilder.() -> Unit = {}): DiscordRole {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -271,7 +263,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyGuildRolePosition(
         guildId: Snowflake,
         builder: RolePositionsModifyBuilder.() -> Unit
@@ -286,7 +277,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyGuildRole(
         guildId: Snowflake,
         roleId: Snowflake,
@@ -344,7 +334,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             body(GuildIntegrationCreateRequest.serializer(), integration)
         }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyGuildIntegration(
         guildId: Snowflake,
         integrationId: Snowflake,
@@ -403,7 +392,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             auditLogReason(reason)
         }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyGuildWidget(
         guildId: Snowflake,
         builder: GuildWidgetModifyBuilder.() -> Unit
@@ -533,7 +521,6 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
     }
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.modifyGuildWelcomeScreen(
     guildId: Snowflake,
     builder: WelcomeScreenModifyBuilder.() -> Unit
@@ -543,7 +530,6 @@ suspend inline fun GuildService.modifyGuildWelcomeScreen(
     return modifyGuildWelcomeScreen(guildId, builder.toRequest(), builder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.createTextChannel(
     guildId: Snowflake,
     name: String,
@@ -554,7 +540,6 @@ suspend inline fun GuildService.createTextChannel(
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.createNewsChannel(
     guildId: Snowflake,
     name: String,
@@ -565,7 +550,6 @@ suspend inline fun GuildService.createNewsChannel(
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.createVoiceChannel(
     guildId: Snowflake,
     name: String,
@@ -576,7 +560,6 @@ suspend inline fun GuildService.createVoiceChannel(
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.createCategory(
     guildId: Snowflake,
     name: String,
@@ -588,7 +571,6 @@ suspend inline fun GuildService.createCategory(
 }
 
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.modifyCurrentVoiceState(
     guildId: Snowflake,
     channelId: Snowflake,
@@ -600,7 +582,6 @@ suspend inline fun GuildService.modifyCurrentVoiceState(
 }
 
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.modifyVoiceState(
     guildId: Snowflake,
     channelId: Snowflake,
@@ -612,7 +593,6 @@ suspend inline fun GuildService.modifyVoiceState(
     modifyVoiceState(guildId, userId, modifyBuilder.toRequest())
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.createScheduledEvent(
     guildId: Snowflake,
     name: String,
@@ -635,7 +615,6 @@ suspend inline fun GuildService.createScheduledEvent(
     return createScheduledEvent(guildId, appliedBuilder.toRequest())
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun GuildService.modifyScheduledEvent(
     guildId: Snowflake,
     eventId: Snowflake,
