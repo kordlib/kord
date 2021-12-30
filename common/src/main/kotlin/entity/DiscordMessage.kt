@@ -1,6 +1,5 @@
 package dev.kord.common.entity
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -309,7 +308,7 @@ enum class MessageFlag(val code: Int) {
 }
 
 @Serializable(with = MessageFlags.Serializer::class)
-class MessageFlags internal constructor(val code: Int) {
+data class MessageFlags internal constructor(val code: Int) {
 
     val flags = MessageFlag.values().filter { code and it.code != 0 }
 
