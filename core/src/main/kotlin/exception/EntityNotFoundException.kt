@@ -67,6 +67,9 @@ public class EntityNotFoundException : Exception {
         public inline fun stageInstanceNotFound(channelId: Snowflake): Nothing =
             throw EntityNotFoundException("Stage instance for channel $channelId was not found.")
 
+        public inline fun stickerNotFound(stickerId: Snowflake): Nothing =
+            entityNotFound("Sticker", stickerId)
+
         public inline fun applicationCommandPermissionsNotFound(commandId: Snowflake): Nothing =
             entityNotFound("ApplicationCommand", commandId)
 

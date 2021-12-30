@@ -1,19 +1,18 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.MessageStickerType
-import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.MessageStickerData
+import dev.kord.core.cache.data.StickerData
 import dev.kord.core.cache.data.StickerItemData
 import dev.kord.core.cache.data.StickerPackData
 
 /**
  * A sticker image that can be used in messages.
  */
-public class MessageSticker(public val data: MessageStickerData, override val kord: Kord) : KordEntity {
+public class Sticker(public val data: StickerData, override val kord: Kord) : KordEntity {
 
     /**
      * The id of the sticker.
@@ -90,7 +89,7 @@ public class StickerPack(public val data: StickerPackData, override val kord: Ko
 
     public val description: String get() = data.description
 
-    public val stickers: List<MessageSticker> get() = data.stickers.map { MessageSticker(it, kord) }
+    public val stickers: List<Sticker> get() = data.stickers.map { Sticker(it, kord) }
 
 
 }

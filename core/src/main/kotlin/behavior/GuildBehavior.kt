@@ -11,42 +11,10 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.cache.data.EmojiData
-import dev.kord.core.cache.data.GuildData
-import dev.kord.core.cache.data.GuildScheduledEventData
-import dev.kord.core.cache.data.GuildWidgetData
-import dev.kord.core.cache.data.IntegrationData
-import dev.kord.core.cache.data.InviteData
-import dev.kord.core.cache.data.MemberData
-import dev.kord.core.cache.data.PresenceData
-import dev.kord.core.cache.data.RoleData
-import dev.kord.core.cache.data.UserData
-import dev.kord.core.cache.data.VoiceStateData
-import dev.kord.core.cache.data.WelcomeScreenData
+import dev.kord.core.cache.data.*
 import dev.kord.core.cache.idEq
 import dev.kord.core.catchDiscordError
-import dev.kord.core.entity.AuditLogEntry
-import dev.kord.core.entity.Ban
-import dev.kord.core.entity.Guild
-import dev.kord.core.entity.GuildEmoji
-import dev.kord.core.entity.GuildPreview
-import dev.kord.core.entity.GuildScheduledEvent
-import dev.kord.core.entity.GuildWidget
-import dev.kord.core.entity.Integration
-import dev.kord.core.entity.Invite
-import dev.kord.core.entity.KordEntity
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.PartialGuild
-import dev.kord.core.entity.Presence
-import dev.kord.core.entity.Region
-import dev.kord.core.entity.Role
-import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.Template
-import dev.kord.core.entity.User
-import dev.kord.core.entity.VoiceState
-import dev.kord.core.entity.Webhook
-import dev.kord.core.entity.WelcomeScreen
+import dev.kord.core.entity.*
 import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.application.GuildChatInputCommand
 import dev.kord.core.entity.application.GuildMessageCommand
@@ -75,6 +43,7 @@ import dev.kord.gateway.RequestGuildMembers
 import dev.kord.gateway.builder.RequestGuildMembersBuilder
 import dev.kord.gateway.start
 import dev.kord.rest.Image
+import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.CategoryCreateBuilder
@@ -96,6 +65,8 @@ import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.json.request.CurrentUserNicknameModifyRequest
+import dev.kord.rest.json.request.GuildStickerCreateRequest
+import dev.kord.rest.json.request.MultipartGuildStickerCreateRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import dev.kord.rest.service.createCategory
@@ -209,6 +180,9 @@ public interface GuildBehavior : KordEntity, Strategizable {
      */
     public val members: Flow<Member>
         get() = supplier.getGuildMembers(id)
+
+    public val sticker: Flow<Sticker>
+        get() = supplier.getGuildStickers(id)
 
     /**
      * Requests to get the present voice regions for this guild.
@@ -632,6 +606,17 @@ public interface GuildBehavior : KordEntity, Strategizable {
     public suspend fun getTemplate(code: String): Template = supplier.getTemplate(code)
 
     public suspend fun getTemplateOrNull(code: String): Template? = supplier.getTemplateOrNull(code)
+
+    public suspend fun getSticker(stickerId: Snowflake): Sticker = supplier.getGuildSticker(id, stickerId)
+
+    public suspend fun getStickerOrNull(stickerId: Snowflake): Sticker? = supplier.getGuildStickerOrNull(id, stickerId)
+
+    public suspend fun createSticker(name: String, description: String, tags: String, file: NamedFile): Sticker {
+        val request = MultipartGuildStickerCreateRequest(GuildStickerCreateRequest(name, description, tags), file)
+        val response = kord.rest.sticker.createGuildSticker(id, request)
+        val data = StickerData.from(response)
+        return Sticker(data, kord)
+    }
 
     /**
      * Returns a new [GuildBehavior] with the given [strategy].

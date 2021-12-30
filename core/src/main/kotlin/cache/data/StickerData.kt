@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-public data class MessageStickerData(
+public data class StickerData(
     val id: Snowflake,
     val packId: Snowflake,
     val name: String,
@@ -21,8 +21,8 @@ public data class MessageStickerData(
     val sortValue: OptionalInt = OptionalInt.Missing
 ) {
     public companion object {
-        public fun from(entity: DiscordMessageSticker): MessageStickerData = with(entity) {
-            MessageStickerData(id, packId, name, description, tags, formatType, available, guildId, user.map { it.toData() }, sortValue)
+        public fun from(entity: DiscordMessageSticker): StickerData = with(entity) {
+            StickerData(id, packId, name, description, tags, formatType, available, guildId, user.map { it.toData() }, sortValue)
         }
     }
 }
@@ -43,7 +43,7 @@ public data class StickerItemData(
 
 public data class StickerPackData(
     val id: Snowflake,
-    val stickers: List<MessageStickerData>,
+    val stickers: List<StickerData>,
     val name: String,
     val skuId: Snowflake,
     val coverStickerId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -52,7 +52,7 @@ public data class StickerPackData(
     ) {
     public companion object {
         public fun from(entity: DiscordStickerPack): StickerPackData = with(entity) {
-            StickerPackData(id, stickers.map { MessageStickerData.from(it) }, name, skuId, coverStickerId, description, bannerAssetId)
+            StickerPackData(id, stickers.map { StickerData.from(it) }, name, skuId, coverStickerId, description, bannerAssetId)
         }
     }
 }
