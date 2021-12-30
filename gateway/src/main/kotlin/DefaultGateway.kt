@@ -63,14 +63,13 @@ data class DefaultGatewayData(
  */
 class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() +data.dispatcher
+    override val coroutineContext: CoroutineContext = SupervisorJob() + data.dispatcher
 
     private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
 
     private val _ping = MutableStateFlow<Duration?>(null)
     override val ping: StateFlow<Duration?> get() = _ping
 
-    @OptIn(FlowPreview::class)
     override val events: SharedFlow<Event> = data.eventFlow
 
     private lateinit var socket: DefaultClientWebSocketSession
@@ -271,7 +270,6 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         sendUnsafe(command)
     }
 
-    @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun sendUnsafe(command: Command) {
         data.sendRateLimiter.consume()
         val json = Json.encodeToString(Command.Companion, command)

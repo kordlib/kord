@@ -15,10 +15,8 @@ import dev.kord.gateway.VoiceStateUpdate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
-import kotlin.coroutines.CoroutineContext
 import dev.kord.core.event.Event as CoreEvent
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 internal class VoiceEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {

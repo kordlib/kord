@@ -12,7 +12,6 @@ import kotlin.coroutines.CoroutineContext
 /**
  * A bridge between [DataCache] and [Gateway] that automatically empties cache on disconnect.
  */
-@FlowPreview
 public class CachingGateway(
     private val cache: DataCache,
     private val gateway: Gateway,

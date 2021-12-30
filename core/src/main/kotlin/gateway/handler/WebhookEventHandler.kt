@@ -6,10 +6,8 @@ import dev.kord.core.event.guild.WebhookUpdateEvent
 import dev.kord.gateway.Event
 import dev.kord.gateway.WebhooksUpdate
 import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 import dev.kord.core.event.Event as CoreEvent
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 internal class WebhookEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {

@@ -1,4 +1,3 @@
-@file:Suppress("EXPERIMENTAL_API_USAGE")
 
 package dev.kord.core.builder.kord
 

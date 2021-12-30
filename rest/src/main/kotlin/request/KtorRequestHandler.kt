@@ -31,7 +31,6 @@ internal val jsonDefault = Json {
  * @param clock A [Clock] to calculate bucket reset times, exposed for testing.
  * @param parser Serializer used to parse payloads.
  */
-@Suppress("EXPERIMENTAL_API_USAGE")
 class KtorRequestHandler(
     private val client: HttpClient,
     private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
@@ -86,7 +85,7 @@ class KtorRequestHandler(
                 val requestBody = request.body ?: return@run
                 val json = parser.encodeToString(requestBody.strategy, requestBody.body)
                 logger.debug { request.logString(json) }
-                this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
+                this.body = TextContent(json, ContentType.Application.Json)
             }
             is MultipartRequest -> {
                 val content = request.data

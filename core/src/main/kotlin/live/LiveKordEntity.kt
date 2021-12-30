@@ -10,7 +10,6 @@ import dev.kord.core.kordLogger
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import kotlin.coroutines.CoroutineContext
 
 /**
  * A Discord entity that only emits events *related* to this entity.
@@ -27,11 +26,10 @@ public interface LiveKordEntity : KordEntity, CoroutineScope {
 
 @KordPreview
 public abstract class AbstractLiveKordEntity(
-    override val kord: Kord,
+    final override val kord: Kord,
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) : LiveKordEntity, CoroutineScope by coroutineScope {
 
-    @Suppress("EXPERIMENTAL_API_USAGE")
     final override val events: SharedFlow<Event> =
         kord.events.filter { filter(it) }.onEach { update(it) }.shareIn(this, SharingStarted.Eagerly)
 

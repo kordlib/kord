@@ -6,15 +6,11 @@ import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.gateway.ShardEvent
 import io.ktor.util.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.job
 import mu.KotlinLogging
-import kotlin.coroutines.CoroutineContext
 import dev.kord.core.event.Event as CoreEvent
 
 private val logger = KotlinLogging.logger { }
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 public class DefaultGatewayEventInterceptor(
     cache: DataCache,
     private val eventScope: ((ShardEvent, Kord) -> CoroutineScope) = { _, kord -> kordCoroutineScope(kord) }

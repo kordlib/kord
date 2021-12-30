@@ -13,7 +13,6 @@ import dev.kord.gateway.*
 import kotlinx.coroutines.CoroutineScope
 import dev.kord.core.event.Event as CoreEvent
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 internal class LifeCycleEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {

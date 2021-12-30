@@ -18,9 +18,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
 suspend fun main(args: Array<String>) {
     val token = args.firstOrNull() ?: error("expected a token")
 
