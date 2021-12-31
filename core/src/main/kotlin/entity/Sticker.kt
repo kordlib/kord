@@ -84,7 +84,7 @@ public class GuildSticker(data: StickerData, kord: Kord, override val supplier: 
 public class StickerItem(
     public val data: StickerItemData,
     override val kord: Kord,
-    override val supplier: EntitySupplier
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordEntity, Strategizable {
 
     public override val id: Snowflake

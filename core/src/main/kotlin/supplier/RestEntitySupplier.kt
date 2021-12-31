@@ -483,10 +483,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Sticker(data, kord)
     }
 
-    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): Sticker? = catchNotFound {
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker? = catchNotFound {
         val response = kord.rest.sticker.getGuildSticker(guildId, id)
         val data = StickerData.from(response)
-        Sticker(data, kord)
+        GuildSticker(data, kord)
     }
 
     override fun getNitroStickerPacks(): Flow<StickerPack> = flow {
@@ -498,12 +498,12 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
-    override fun getGuildStickers(guildId: Snowflake): Flow<Sticker> = flow {
+    override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> = flow {
         val responses = kord.rest.sticker.getGuildStickers(guildId)
 
         responses.forEach { response ->
             val data = StickerData.from(response)
-            emit(Sticker(data, kord))
+            emit(GuildSticker(data, kord))
         }
     }
 

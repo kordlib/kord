@@ -229,7 +229,7 @@ public class StoreEntitySupplier(
         return storeAndReturn(supplier.getStickerOrNull(id)) { it.data }
     }
 
-    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): Sticker? {
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker? {
         return storeAndReturn(supplier.getGuildStickerOrNull(guildId, id)) { it.data }
     }
 
@@ -237,7 +237,7 @@ public class StoreEntitySupplier(
         return storeOnEach(supplier.getNitroStickerPacks()) { it.data }
     }
 
-    override fun getGuildStickers(guildId: Snowflake): Flow<Sticker> {
+    override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> {
         return storeOnEach(supplier.getGuildStickers(guildId)) { it.data }
 
     }

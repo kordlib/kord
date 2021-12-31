@@ -109,7 +109,7 @@ public class Message(
     /**
      * The stickers sent with this message.
      */
-    public val stickers: List<StickerItem> get() = data.stickers.orEmpty().map { StickerItem(it) }
+    public val stickers: List<StickerItem> get() = data.stickers.orEmpty().map { StickerItem(it, kord,) }
 
     /**
      * If the message is a response to an [ActionInteraction], this is the id of the interaction's application
