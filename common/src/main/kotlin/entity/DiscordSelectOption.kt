@@ -14,7 +14,7 @@ import kotlinx.serialization.Serializable
  * @param default whether to render this option as selected by default
  */
 @Serializable
-class DiscordSelectOption(
+public data class DiscordSelectOption(
     val label: String,
     val value: String,
     val description: Optional<String> = Optional.Missing(),
