@@ -47,7 +47,7 @@ private sealed class State(val retry: Boolean) {
  * @param sendRateLimiter A rate limiter than follows the Discord API specifications for sending messages.
  * @param identifyRateLimiter: A rate limiter that follows the Discord API specifications for identifying.
  */
-data class DefaultGatewayData(
+public data class DefaultGatewayData(
     val url: String,
     val client: HttpClient,
     val reconnectRetry: Retry,
@@ -60,7 +60,7 @@ data class DefaultGatewayData(
 /**
  * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
  */
-class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
+public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + data.dispatcher
 
@@ -259,7 +259,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
     }
 
-    override suspend fun send(command: Command) = stateMutex.withLock {
+    override suspend fun send(command: Command): Unit = stateMutex.withLock {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         sendUnsafe(command)
     }
@@ -283,14 +283,14 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
 
-    companion object {
+    private companion object {
         private const val gatewayRunningError = "The Gateway is already running, call stop() first."
         private const val gatewayDetachedError =
             "The Gateway has been detached and can no longer be used, create a new instance instead."
     }
 }
 
-inline fun DefaultGateway(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway {
+public inline fun DefaultGateway(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return DefaultGatewayBuilder().apply(builder).build()
 }

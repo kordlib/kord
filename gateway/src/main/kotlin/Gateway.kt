@@ -8,6 +8,7 @@ import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import mu.KLogger
 import mu.KotlinLogging
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -22,13 +23,13 @@ import kotlin.time.Duration
  * through [events] and send [commands](https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-commands)
  * through [send].
  */
-interface Gateway : CoroutineScope {
+public interface Gateway : CoroutineScope {
     /**
      * The incoming [events](https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events)
      * of the Gateway. Users should expect these [Flows](Flow) to be hot and remain open for the entire lifecycle of the
      * Gateway.
      */
-    val events: SharedFlow<Event>
+    public val events: SharedFlow<Event>
 
     /**
      * The duration between the last [Heartbeat] and [HeartbeatACK].
@@ -36,7 +37,7 @@ interface Gateway : CoroutineScope {
      * This flow will have a [value][StateFlow.value] of `null` if the gateway is not
      * [active][Gateway.start], or no [HeartbeatACK] has been received yet.
      */
-    val ping: StateFlow<Duration?>
+    public val ping: StateFlow<Duration?>
 
     /**
      * Starts a reconnection gateway connection with the given [configuration].
@@ -44,7 +45,7 @@ interface Gateway : CoroutineScope {
      *
      * @param configuration the configuration for this gateway session.
      */
-    suspend fun start(configuration: GatewayConfiguration)
+    public suspend fun start(configuration: GatewayConfiguration)
 
     /**
      * Sends a [Command] to the gateway, suspending until the message has been sent.
@@ -52,7 +53,7 @@ interface Gateway : CoroutineScope {
      * @param command The [Command] to send to the gateway.
      * @throws Exception when the gateway connection isn't open.
      */
-    suspend fun send(command: Command)
+    public suspend fun send(command: Command)
 
     /**
      * Close gateway and releases resources.
@@ -60,14 +61,14 @@ interface Gateway : CoroutineScope {
      * **For some implementations this will render the Gateway unopenable,
      * as such, all implementations should be handled as if they are irreversibly closed.**
      */
-    suspend fun detach()
+    public suspend fun detach()
 
     /**
      * Closes the Gateway and ends the current session, suspending until the underlying webSocket is closed.
      */
-    suspend fun stop()
+    public suspend fun stop()
 
-    companion object {
+    public companion object {
         private object None : Gateway {
 
             override val coroutineContext: CoroutineContext = SupervisorJob() + EmptyCoroutineContext
@@ -96,12 +97,12 @@ interface Gateway : CoroutineScope {
         /**
          * Returns a [Gateway] with no-op behavior, an empty [Gateway.events] flow and a ping of [Duration.ZERO].
          */
-        fun none(): Gateway = None
+        public fun none(): Gateway = None
 
     }
 }
 
-suspend inline fun Gateway.editPresence(builder: PresenceBuilder.() -> Unit) {
+public suspend inline fun Gateway.editPresence(builder: PresenceBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
@@ -131,7 +132,7 @@ suspend inline fun Gateway.editPresence(builder: PresenceBuilder.() -> Unit) {
  * @param token The Discord token of the bot.
  * @param config additional configuration for the gateway.
  */
-suspend inline fun Gateway.start(token: String, config: GatewayConfigurationBuilder.() -> Unit = {}) {
+public suspend inline fun Gateway.start(token: String, config: GatewayConfigurationBuilder.() -> Unit = {}) {
     contract {
         callsInPlace(config, InvocationKind.EXACTLY_ONCE)
     }
@@ -144,7 +145,7 @@ suspend inline fun Gateway.start(token: String, config: GatewayConfigurationBuil
  * Logger used to report throwables caught in [Gateway.on].
  */
 @PublishedApi
-internal val gatewayOnLogger = KotlinLogging.logger("Gateway.on")
+internal val gatewayOnLogger: KLogger = KotlinLogging.logger("Gateway.on")
 
 /**
  * Convenience method that will invoke the [consumer] on every event [T] created by [Gateway.events].
@@ -157,7 +158,7 @@ internal val gatewayOnLogger = KotlinLogging.logger("Gateway.on")
  * The returned [Job] is a reference to the created coroutine, call [Job.cancel] to cancel the processing of any further
  * events for this [consumer].
  */
-inline fun <reified T : Event> Gateway.on(
+public inline fun <reified T : Event> Gateway.on(
     scope: CoroutineScope = this,
     crossinline consumer: suspend T.() -> Unit
 ): Job {
@@ -184,7 +185,7 @@ inline fun <reified T : Event> Gateway.on(
  * If no nonce was provided one will be generated instead.
  */
 @OptIn(PrivilegedIntent::class)
-fun Gateway.requestGuildMembers(
+public fun Gateway.requestGuildMembers(
     guildId: Snowflake,
     builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }
 ): Flow<GuildMembersChunk> {
@@ -208,7 +209,7 @@ fun Gateway.requestGuildMembers(
  * If no nonce was provided one will be generated instead.
  */
 @OptIn(PrivilegedIntent::class)
-fun Gateway.requestGuildMembers(request: RequestGuildMembers): Flow<GuildMembersChunk> {
+public fun Gateway.requestGuildMembers(request: RequestGuildMembers): Flow<GuildMembersChunk> {
     val nonce = request.nonce.value ?: RequestGuildMembers.Nonce.new()
     val withNonce = request.copy(nonce = Optional.Value(nonce))
 
@@ -225,7 +226,7 @@ fun Gateway.requestGuildMembers(request: RequestGuildMembers): Flow<GuildMembers
 /**
  * Enum representation of Discord's [Gateway close event codes](https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes).
  */
-enum class GatewayCloseCode(val code: Int) {
+public enum class GatewayCloseCode(public val code: Int) {
     Unknown(4000),
     UnknownOpCode(4001),
     DecodeError(4002),
