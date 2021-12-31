@@ -32,7 +32,7 @@ import kotlinx.serialization.encoding.Encoder
  * @property userCount users subscribed to the event
  */
 @Serializable
-data class DiscordGuildScheduledEvent(
+public data class DiscordGuildScheduledEvent(
     val id: Snowflake,
     @SerialName("guild_id")
     val guildId: Snowflake,
@@ -60,14 +60,14 @@ data class DiscordGuildScheduledEvent(
 )
 
 @Serializable(with = ScheduledEntityType.Serializer::class)
-sealed class ScheduledEntityType(val value: Int) {
-    object None : ScheduledEntityType(0)
-    object StageInstance : ScheduledEntityType(1)
-    object Voice : ScheduledEntityType(2)
-    object External : ScheduledEntityType(3)
-    class Unknown(value: Int) : ScheduledEntityType(value)
+public sealed class ScheduledEntityType(public val value: Int) {
+    public object None : ScheduledEntityType(0)
+    public object StageInstance : ScheduledEntityType(1)
+    public object Voice : ScheduledEntityType(2)
+    public object External : ScheduledEntityType(3)
+    public class Unknown(value: Int) : ScheduledEntityType(value)
 
-    companion object Serializer : KSerializer<ScheduledEntityType> {
+    internal object Serializer : KSerializer<ScheduledEntityType> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ScheduledEntityType", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ScheduledEntityType {
@@ -86,14 +86,14 @@ sealed class ScheduledEntityType(val value: Int) {
 }
 
 @Serializable(with = GuildScheduledEventStatus.Serializer::class)
-sealed class GuildScheduledEventStatus(val value: Int) {
-    object Scheduled : GuildScheduledEventStatus(1)
-    object Active : GuildScheduledEventStatus(2)
-    object Completed : GuildScheduledEventStatus(3)
-    object Cancelled : GuildScheduledEventStatus(4)
-    class Unknown(value: Int) : GuildScheduledEventStatus(value)
+public sealed class GuildScheduledEventStatus(public val value: Int) {
+    public object Scheduled : GuildScheduledEventStatus(1)
+    public object Active : GuildScheduledEventStatus(2)
+    public object Completed : GuildScheduledEventStatus(3)
+    public object Cancelled : GuildScheduledEventStatus(4)
+    public class Unknown(value: Int) : GuildScheduledEventStatus(value)
 
-    companion object Serializer : KSerializer<GuildScheduledEventStatus> {
+    internal object Serializer : KSerializer<GuildScheduledEventStatus> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("GuildScheduledEventStatus", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): GuildScheduledEventStatus {
@@ -118,7 +118,7 @@ sealed class GuildScheduledEventStatus(val value: Int) {
  * @property location location of the event
  */
 @Serializable
-data class GuildScheduledEventEntityMetadata(
+public data class GuildScheduledEventEntityMetadata(
     val speakerIds: Optional<List<Snowflake>> = Optional.Missing(),
     val location: Optional<String> = Optional.Missing()
 )
