@@ -14,10 +14,10 @@ import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonObject
 
-sealed class Command {
+public sealed class Command {
     internal data class Heartbeat(val sequenceNumber: Int? = null) : Command() {
 
-        companion object : SerializationStrategy<Heartbeat> {
+        internal companion object : SerializationStrategy<Heartbeat> {
             override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Heartbeat", PrimitiveKind.INT)
 
             @OptIn(ExperimentalSerializationApi::class)
@@ -28,7 +28,7 @@ sealed class Command {
 
     }
 
-    companion object : SerializationStrategy<Command> {
+    internal companion object : SerializationStrategy<Command> {
 
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Command") {
             element("op", OpCode.descriptor)
@@ -90,7 +90,7 @@ internal data class Identify(
 }
 
 @Serializable
-data class IdentifyProperties(
+public data class IdentifyProperties(
     @Required
     @SerialName("\$os")
     val os: String,
@@ -101,7 +101,7 @@ data class IdentifyProperties(
 )
 
 @Serializable
-data class GuildMembersChunkData(
+public data class GuildMembersChunkData(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val members: List<DiscordGuildMember>,
@@ -116,7 +116,7 @@ data class GuildMembersChunkData(
 )
 
 @Serializable
-data class DiscordPresence(
+public data class DiscordPresence(
     val status: PresenceStatus,
     val afk: Boolean,
     val since: Long? = null,
@@ -160,7 +160,7 @@ internal data class Resume(
  */
 @PrivilegedIntent
 @Serializable
-data class RequestGuildMembers(
+public data class RequestGuildMembers(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val query: Optional<String> = Optional.Missing(),
@@ -171,18 +171,17 @@ data class RequestGuildMembers(
     val nonce: Optional<String> = Optional.Missing()
 ) : Command() {
 
-    object Nonce {
+    public object Nonce {
         private val counter = atomic(0)
 
-        @OptIn(ExperimentalUnsignedTypes::class)
-        fun new(): String = counter.getAndIncrement().toUInt().toString()
+        public fun new(): String = counter.getAndIncrement().toUInt().toString()
 
     }
 
 }
 
 @Serializable
-data class UpdateVoiceStatus(
+public data class UpdateVoiceStatus(
     @SerialName("guild_id")
     val guildId: Snowflake,
     @SerialName("channel_id")
@@ -194,7 +193,7 @@ data class UpdateVoiceStatus(
 ) : Command()
 
 @Serializable
-data class UpdateStatus(
+public data class UpdateStatus(
     val since: Long?,
     val activities: List<DiscordBotActivity>,
     val status: PresenceStatus,
