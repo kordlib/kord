@@ -1,15 +1,15 @@
 package dev.kord.rest.builder.component
 
-import dev.kord.common.annotation.KordPreview
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordComponent
 
-
-sealed interface ComponentBuilder {
-    fun build(): DiscordComponent
+@KordDsl
+public sealed interface ComponentBuilder {
+    public fun build(): DiscordComponent
 }
 
+@KordDsl
+public sealed interface ActionRowComponentBuilder : ComponentBuilder
 
-sealed interface ActionRowComponentBuilder : ComponentBuilder
-
-
-sealed interface MessageComponentBuilder : ComponentBuilder
+@KordDsl
+public sealed interface MessageComponentBuilder : ComponentBuilder
