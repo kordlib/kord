@@ -13,12 +13,10 @@ import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.message.*
 import dev.kord.gateway.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 internal class MessageEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {

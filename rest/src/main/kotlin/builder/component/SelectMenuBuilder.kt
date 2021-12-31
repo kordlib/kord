@@ -1,14 +1,12 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -58,7 +56,6 @@ class SelectMenuBuilder(
      * @param label The user-facing name of the option, max 25 characters.
      * @param value The dev-define value of the option, max 100 characters.
      */
-    @OptIn(ExperimentalContracts::class)
     inline fun option(label: String, value: String, builder: SelectOptionBuilder.() -> Unit = {}) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

@@ -1,5 +1,3 @@
-@file:Suppress("EXPERIMENTAL_API_USAGE")
-
 package json
 
 import dev.kord.common.entity.DiscordVoiceState

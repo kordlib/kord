@@ -8,7 +8,6 @@ import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.json.request.ChannelPositionSwapRequest
 import dev.kord.rest.json.request.GuildChannelPositionModifyRequest
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -25,7 +24,6 @@ class GuildChannelPositionModifyBuilder : AuditRequestBuilder<GuildChannelPositi
         pairs.forEach { move(it) }
     }
 
-    @OptIn(ExperimentalContracts::class)
     inline fun move(channel: Snowflake, builder: GuildChannelSwapBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         swaps.firstOrNull { it.channelId == channel }?.builder() ?: run {

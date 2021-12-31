@@ -9,7 +9,6 @@ import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -26,7 +25,6 @@ public interface InteractionResponseBehavior : KordObject {
 /**
  * Follows up an interaction response without the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral]
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = FollowupMessageCreateBuilder(false).apply(builder)
@@ -39,7 +37,6 @@ public suspend inline fun InteractionResponseBehavior.followUp(builder: Followup
  * Follows up an interaction response with the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral]
  *
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder: FollowupMessageCreateBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = FollowupMessageCreateBuilder(true).apply(builder)
@@ -55,7 +52,6 @@ public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder:
  * @throws [RestRequestException] if something went wrong during the request.
  */
 
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun InteractionResponseBehavior.edit(builder: InteractionResponseModifyBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = InteractionResponseModifyBuilder().apply(builder)

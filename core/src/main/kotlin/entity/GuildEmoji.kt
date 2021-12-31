@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -123,7 +122,6 @@ public class GuildEmoji(
      *
      *  @throws [RequestException] if anything went wrong during the request.
      */
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun edit(builder: EmojiModifyBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

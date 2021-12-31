@@ -44,7 +44,6 @@ import dev.kord.rest.service.InteractionService
  */
 @KordUnsafe
 @KordExperimental
-@Suppress("EXPERIMENTAL_API_USAGE")
 public class Unsafe(private val kord: Kord) {
 
     public fun message(channelId: Snowflake, messageId: Snowflake): MessageBehavior =

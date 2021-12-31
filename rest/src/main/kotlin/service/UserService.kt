@@ -11,7 +11,6 @@ import dev.kord.rest.json.request.GroupDMCreateRequest
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -41,7 +40,6 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
         body(DMCreateRequest.serializer(), dm)
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun createGroupDM(builder: GroupDMCreateBuilder.() -> Unit): DiscordChannel {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -52,7 +50,6 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyCurrentUser(builder: CurrentUserModifyBuilder.() -> Unit): DiscordUser {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

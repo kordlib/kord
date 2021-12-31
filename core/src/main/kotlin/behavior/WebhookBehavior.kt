@@ -14,7 +14,6 @@ import dev.kord.rest.builder.message.create.WebhookMessageCreateBuilder
 import dev.kord.rest.builder.webhook.WebhookModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -80,7 +79,6 @@ internal fun WebhookBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() -> Unit): Webhook {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -98,7 +96,6 @@ public suspend inline fun WebhookBehavior.edit(builder: WebhookModifyBuilder.() 
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookModifyBuilder.() -> Unit): Webhook {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -114,7 +111,6 @@ public suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookMo
  * if [threadId] is specified the execution will occur in that thread.
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun WebhookBehavior.execute(token: String, threadId: Snowflake? = null, builder: WebhookMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -139,7 +135,6 @@ public suspend inline fun WebhookBehavior.execute(token: String, threadId: Snowf
  * Exception if the request wasn't executed.
  * if [threadId] is specified the execution will occur in that thread.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun WebhookBehavior.executeIgnored(token: String, threadId: Snowflake? = null, builder: WebhookMessageCreateBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

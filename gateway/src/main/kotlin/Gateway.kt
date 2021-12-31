@@ -9,7 +9,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import mu.KotlinLogging
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -102,7 +101,6 @@ interface Gateway : CoroutineScope {
     }
 }
 
-@OptIn(ExperimentalContracts::class)
 suspend inline fun Gateway.editPresence(builder: PresenceBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -133,7 +131,6 @@ suspend inline fun Gateway.editPresence(builder: PresenceBuilder.() -> Unit) {
  * @param token The Discord token of the bot.
  * @param config additional configuration for the gateway.
  */
-@OptIn(ExperimentalContracts::class)
 suspend inline fun Gateway.start(token: String, config: GatewayConfigurationBuilder.() -> Unit = {}) {
     contract {
         callsInPlace(config, InvocationKind.EXACTLY_ONCE)
@@ -186,7 +183,7 @@ inline fun <reified T : Event> Gateway.on(
  * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
  * If no nonce was provided one will be generated instead.
  */
-@OptIn(PrivilegedIntent::class, ExperimentalContracts::class)
+@OptIn(PrivilegedIntent::class)
 fun Gateway.requestGuildMembers(
     guildId: Snowflake,
     builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }

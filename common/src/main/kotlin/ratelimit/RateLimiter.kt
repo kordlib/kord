@@ -1,6 +1,5 @@
 package dev.kord.common.ratelimit
 
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -22,7 +21,6 @@ interface RateLimiter {
  *
  * @param action The action that correlates to a single permit.
  */
-@OptIn(ExperimentalContracts::class)
 suspend inline fun <T> RateLimiter.consume(action: () -> T): T {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
@@ -30,4 +28,3 @@ suspend inline fun <T> RateLimiter.consume(action: () -> T): T {
     consume()
     return action()
 }
-

@@ -25,7 +25,6 @@ import dev.kord.rest.route.Position
 import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.math.min
@@ -310,7 +309,6 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
 
-    @OptIn(ExperimentalContracts::class)
     public inline fun getAuditLogEntries(
         guildId: Snowflake,
         builder: AuditLogGetRequestBuilder.() -> Unit

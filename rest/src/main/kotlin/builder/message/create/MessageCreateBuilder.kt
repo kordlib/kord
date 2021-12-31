@@ -1,6 +1,5 @@
 package dev.kord.rest.builder.message.create
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
@@ -11,7 +10,6 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -74,7 +72,6 @@ sealed interface MessageCreateBuilder {
 /**
  * Adds an embed to the message, configured by the [block]. A message can have up to 10 embeds.
  */
-@OptIn(ExperimentalContracts::class)
 inline fun MessageCreateBuilder.embed(block: EmbedBuilder.() -> Unit) {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     embeds.add(EmbedBuilder().apply(block))
@@ -85,7 +82,6 @@ inline fun MessageCreateBuilder.embed(block: EmbedBuilder.() -> Unit) {
  * (ping everything), calling this function but not configuring it before the request is build will result in all
  * pings being ignored.
  */
-@OptIn(ExperimentalContracts::class)
 inline fun MessageCreateBuilder.allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
@@ -94,8 +90,6 @@ inline fun MessageCreateBuilder.allowedMentions(block: AllowedMentionsBuilder.()
 /**
  * Adds an Action Row to the message, configured by the [builder]. A message can have up to 5 action rows.
  */
-@OptIn(ExperimentalContracts::class)
-
 inline fun MessageCreateBuilder.actionRow(builder: ActionRowBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

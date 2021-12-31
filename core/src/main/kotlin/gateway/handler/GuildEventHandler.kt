@@ -56,7 +56,6 @@ import kotlinx.coroutines.flow.toSet
 import dev.kord.common.entity.DiscordGuild as GatewayGuild
 import dev.kord.core.event.Event as CoreEvent
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 internal class GuildEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {

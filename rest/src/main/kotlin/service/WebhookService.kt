@@ -17,13 +17,11 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
 import kotlinx.serialization.json.JsonObject
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 class WebhookService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun createWebhook(
         channelId: Snowflake,
         name: String,
@@ -58,7 +56,6 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.WebhookToken] = token
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyWebhook(webhookId: Snowflake, builder: WebhookModifyBuilder.() -> Unit): DiscordWebhook {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -72,7 +69,6 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun modifyWebhookWithToken(
         webhookId: Snowflake,
         token: String,
@@ -103,7 +99,6 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             auditLogReason(reason)
         }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun executeWebhook(
         webhookId: Snowflake,
         token: String,
@@ -144,7 +139,6 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
             body(JsonObject.serializer(), body)
         }
 
-    @OptIn(ExperimentalContracts::class)
     suspend inline fun editWebhookMessage(
         webhookId: Snowflake,
         token: String,

@@ -6,7 +6,6 @@ import dev.kord.core.entity.Message
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -48,8 +47,6 @@ public interface ActionInteractionBehavior : InteractionBehavior {
  * @param builder [InteractionResponseCreateBuilder] used to create a public response.
  * @return [PublicInteractionResponseBehavior] public response to the interaction.
  */
-
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun ActionInteractionBehavior.respondPublic(
     builder: InteractionResponseCreateBuilder.() -> Unit
 ): PublicInteractionResponseBehavior {
@@ -69,8 +66,6 @@ public suspend inline fun ActionInteractionBehavior.respondPublic(
  * @param builder [InteractionResponseCreateBuilder] used to a create an ephemeral response.
  * @return [InteractionResponseBehavior] ephemeral response to the interaction.
  */
-
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun ActionInteractionBehavior.respondEphemeral(
     builder: InteractionResponseCreateBuilder.() -> Unit
 ): EphemeralInteractionResponseBehavior {

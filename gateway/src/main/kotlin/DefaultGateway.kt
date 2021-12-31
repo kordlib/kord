@@ -26,7 +26,6 @@ import mu.KotlinLogging
 import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -63,14 +62,13 @@ data class DefaultGatewayData(
  */
 class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() +data.dispatcher
+    override val coroutineContext: CoroutineContext = SupervisorJob() + data.dispatcher
 
     private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
 
     private val _ping = MutableStateFlow<Duration?>(null)
     override val ping: StateFlow<Duration?> get() = _ping
 
-    @OptIn(FlowPreview::class)
     override val events: SharedFlow<Event> = data.eventFlow
 
     private lateinit var socket: DefaultClientWebSocketSession
@@ -271,7 +269,6 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         sendUnsafe(command)
     }
 
-    @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun sendUnsafe(command: Command) {
         data.sendRateLimiter.consume()
         val json = Json.encodeToString(Command.Companion, command)
@@ -293,7 +290,6 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 }
 
-@OptIn(ExperimentalContracts::class)
 inline fun DefaultGateway(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return DefaultGatewayBuilder().apply(builder).build()

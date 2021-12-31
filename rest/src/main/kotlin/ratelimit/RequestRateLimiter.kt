@@ -2,7 +2,6 @@ package dev.kord.rest.ratelimit
 
 import dev.kord.rest.request.Request
 import kotlinx.datetime.Instant
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -24,7 +23,6 @@ interface RequestRateLimiter {
  * [Awaits][RequestRateLimiter.await] the rate limits for the [request] and then runs [consumer].
  * Throws an [IllegalStateException] if the supplied [RequestToken] was not completed.
  */
-@OptIn(ExperimentalContracts::class)
 suspend inline fun <T> RequestRateLimiter.consume(
     request: Request<*, *>,
     consumer: (token: RequestToken) -> T

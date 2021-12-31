@@ -9,13 +9,12 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 
 @Serializable(with = Permissions.Companion::class)
-class Permissions constructor(val code: DiscordBitSet) {
+data class Permissions constructor(val code: DiscordBitSet) {
     /**
      *  Returns this [Permissions] as a [Set] of [Permission]
      */
@@ -41,7 +40,6 @@ class Permissions constructor(val code: DiscordBitSet) {
         return permission.code in code
     }
 
-    @OptIn(ExperimentalContracts::class)
     inline fun copy(block: PermissionsBuilder.() -> Unit): Permissions {
         contract {
             callsInPlace(block, InvocationKind.EXACTLY_ONCE)

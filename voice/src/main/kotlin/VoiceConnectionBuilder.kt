@@ -1,5 +1,3 @@
-@file:Suppress("EXPERIMENTAL_API_USAGE")
-
 package dev.kord.voice
 
 import dev.kord.common.annotation.KordVoice

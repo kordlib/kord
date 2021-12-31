@@ -1,20 +1,14 @@
 package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.DiscordGuildApplicationCommandPermission
 import dev.kord.common.entity.PartialDiscordGuildApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import dev.kord.rest.json.request.ApplicationCommandModifyRequest
 import dev.kord.rest.json.request.ApplicationCommandPermissionsEditRequest
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -40,7 +34,6 @@ class ApplicationCommandPermissionsBulkModifyBuilder :
     @PublishedApi
     internal val permissions = mutableMapOf<Snowflake, ApplicationCommandPermissionsModifyBuilder>()
 
-    @OptIn(ExperimentalContracts::class)
     inline fun command(
         commandId: Snowflake,
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,

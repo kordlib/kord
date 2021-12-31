@@ -8,7 +8,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -84,7 +83,6 @@ public class SpeakingFlags internal constructor(public val code: Int) {
 }
 
 @KordVoice
-@OptIn(ExperimentalContracts::class)
 public inline fun SpeakingFlags(builder: SpeakingFlags.Builder.() -> Unit): SpeakingFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return SpeakingFlags.Builder().apply(builder).flags()

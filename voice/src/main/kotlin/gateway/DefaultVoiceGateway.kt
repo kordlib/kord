@@ -182,7 +182,6 @@ public class DefaultVoiceGateway(
         sendUnsafe(command)
     }
 
-    @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun sendUnsafe(command: Command) {
         val json = Json.encodeToString(Command, command)
         if (command is Identify) {

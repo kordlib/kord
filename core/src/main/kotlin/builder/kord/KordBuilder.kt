@@ -1,4 +1,3 @@
-@file:Suppress("EXPERIMENTAL_API_USAGE")
 
 package dev.kord.core.builder.kord
 
@@ -38,7 +37,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import kotlin.concurrent.thread
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration.Companion.seconds
@@ -171,7 +169,6 @@ public class KordBuilder(public val token: String) {
      * }
      * ```
      */
-    @OptIn(ExperimentalContracts::class)
     public fun cache(builder: KordCacheBuilder.(resources: ClientResources) -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val old = cacheBuilder

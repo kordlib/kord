@@ -11,7 +11,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.UpdateMessageInteractionResponseCreateBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -29,7 +28,6 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * on public and ephemeral messages. The only difference is in the **followUp** calls,
      * which will become public or ephemeral respectively.
      */
-    @OptIn(ExperimentalContracts::class)
     public suspend fun acknowledgePublicDeferredMessageUpdate(): PublicInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
             type = InteractionResponseType.DeferredUpdateMessage
@@ -51,7 +49,6 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * on public and ephemeral messages. The only difference is in the **followUp** calls,
      * which will become ephemeral or public respectively.
      */
-    @OptIn(ExperimentalContracts::class)
     public suspend fun acknowledgeEphemeralDeferredMessageUpdate(): EphemeralInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
             data = Optional.Value(
@@ -114,8 +111,6 @@ public fun ComponentInteractionBehavior(
  * on public and ephemeral messages. The only difference is in the **followUp** calls,
  * which will become public or ephemeral respectively.
  */
-
-@OptIn(ExperimentalContracts::class)
 public suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
     builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
 ): PublicInteractionResponseBehavior {
@@ -140,8 +135,6 @@ public suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
  * on public and ephemeral messages. The only difference is in the **followUp** calls,
  * which will become ephemeral or public respectively.
  */
-
-@OptIn(ExperimentalContracts::class)
 public suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessage(
     builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
 ): EphemeralInteractionResponseBehavior {

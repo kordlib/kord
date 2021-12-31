@@ -117,7 +117,6 @@ import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.flow.transformWhile
 import kotlinx.datetime.Instant
 import java.util.Objects
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -672,7 +671,6 @@ public fun GuildBehavior(
 }
 
 
-@OptIn(ExperimentalContracts::class)
 
 public suspend inline fun GuildBehavior.createChatInputCommand(
     name: String,
@@ -684,7 +682,6 @@ public suspend inline fun GuildBehavior.createChatInputCommand(
 }
 
 
-@OptIn(ExperimentalContracts::class)
 
 public suspend inline fun GuildBehavior.createMessageCommand(
     name: String,
@@ -694,7 +691,6 @@ public suspend inline fun GuildBehavior.createMessageCommand(
     return kord.createGuildMessageCommand(id, name, builder)
 }
 
-@OptIn(ExperimentalContracts::class)
 
 public suspend inline fun GuildBehavior.createUserCommand(
     name: String,
@@ -705,7 +701,6 @@ public suspend inline fun GuildBehavior.createUserCommand(
 }
 
 
-@OptIn(ExperimentalContracts::class)
 
 public suspend inline fun GuildBehavior.createApplicationCommands(
     builder: MultiApplicationCommandBuilder.() -> Unit
@@ -721,7 +716,6 @@ public suspend inline fun GuildBehavior.createApplicationCommands(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): Guild {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -737,7 +731,6 @@ public suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> U
     ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)")
 )
 @DeprecatedSinceKord("0.7.0")
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -745,7 +738,6 @@ public suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.
     return createEmoji("name", Image.raw(byteArrayOf(), Image.Format.PNG), builder)
 }
 
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createEmoji(
     name: String,
     image: Image,
@@ -771,7 +763,6 @@ public suspend inline fun GuildBehavior.createEmoji(
     DeprecationLevel.WARNING
 )
 @DeprecatedSinceKord("0.7.0")
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -787,7 +778,6 @@ public suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCr
  * @throws [RestRequestException] if something went wrong during the request.
  */
 
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createTextChannel(
     name: String,
     builder: TextChannelCreateBuilder.() -> Unit = {}
@@ -814,7 +804,6 @@ public suspend inline fun GuildBehavior.createTextChannel(
     DeprecationLevel.WARNING
 )
 @DeprecatedSinceKord("0.7.0")
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -829,7 +818,6 @@ public suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannel
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createVoiceChannel(
     name: String,
     builder: VoiceChannelCreateBuilder.() -> Unit = {}
@@ -856,7 +844,6 @@ public suspend inline fun GuildBehavior.createVoiceChannel(
     DeprecationLevel.WARNING
 )
 @DeprecatedSinceKord("0.7.0")
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -871,7 +858,6 @@ public suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCr
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createNewsChannel(
     name: String,
     builder: NewsChannelCreateBuilder.() -> Unit = {}
@@ -899,7 +885,6 @@ public suspend inline fun GuildBehavior.createNewsChannel(
     DeprecationLevel.WARNING
 )
 @DeprecatedSinceKord("0.7.0")
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -914,7 +899,6 @@ public suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBu
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createCategory(
     name: String,
     builder: CategoryCreateBuilder.() -> Unit = {}
@@ -933,7 +917,6 @@ public suspend inline fun GuildBehavior.createCategory(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPositionModifyBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -950,7 +933,6 @@ public suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChann
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyBuilder.() -> Unit): Flow<Role> {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -967,7 +949,6 @@ public suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositions
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 @DeprecatedSinceKord("0.7.0")
 @Deprecated("Use createRole instead.", ReplaceWith("createRole(builder)"), DeprecationLevel.ERROR)
 public suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit = {}): Role = createRole(builder)
@@ -979,7 +960,6 @@ public suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() ->
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.createRole(builder: RoleCreateBuilder.() -> Unit = {}): Role {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -995,7 +975,6 @@ public suspend inline fun GuildBehavior.createRole(builder: RoleCreateBuilder.()
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -1031,7 +1010,6 @@ public suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfO
     return channel
 }
 
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)
@@ -1052,7 +1030,6 @@ public suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBui
  *  println("user changed nickname from $old to $new")
  *  ```
  */
-@OptIn(ExperimentalContracts::class)
 public inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
@@ -1075,7 +1052,6 @@ public inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBu
  * This function expects [request.nonce][RequestGuildMembers.nonce] to contain a value, but it is not required.
  * If no nonce was provided one will be generated instead.
  */
-@OptIn(ExperimentalContracts::class)
 @PrivilegedIntent
 public inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }): Flow<MembersChunkEvent> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -1083,7 +1059,6 @@ public inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuild
     return requestMembers(request)
 }
 
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
 
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -1094,7 +1069,6 @@ public suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline
 /**
  * Creates a new [GuildScheduledEvent].
  */
-@OptIn(ExperimentalContracts::class)
 public suspend fun GuildBehavior.createScheduledEvent(
     name: String,
     privacyLevel: StageInstancePrivacyLevel,

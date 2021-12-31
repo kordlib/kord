@@ -1,6 +1,5 @@
 package dev.kord.common.entity
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -13,7 +12,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -309,7 +307,7 @@ enum class MessageFlag(val code: Int) {
 }
 
 @Serializable(with = MessageFlags.Serializer::class)
-class MessageFlags internal constructor(val code: Int) {
+data class MessageFlags internal constructor(val code: Int) {
 
     val flags = MessageFlag.values().filter { code and it.code != 0 }
 
@@ -374,7 +372,6 @@ class MessageFlags internal constructor(val code: Int) {
 
 }
 
-@OptIn(ExperimentalContracts::class)
 inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return MessageFlags.Builder().apply(builder).flags()

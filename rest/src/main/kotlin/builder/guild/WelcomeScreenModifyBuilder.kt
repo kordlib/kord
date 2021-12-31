@@ -5,14 +5,10 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -30,7 +26,6 @@ class WelcomeScreenModifyBuilder : AuditRequestBuilder<GuildWelcomeScreenModifyR
 
     var welcomeScreenChannels: MutableList<WelcomeScreenChannelBuilder>? by ::_welcomeScreenChannels.delegate()
 
-    @OptIn(ExperimentalContracts::class)
     inline fun welcomeChannel(id: Snowflake, description: String, builder: WelcomeScreenChannelBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (welcomeScreenChannels == null) welcomeScreenChannels = mutableListOf()

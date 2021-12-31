@@ -27,7 +27,6 @@ class Image private constructor(val data: ByteArray, val format: Format) {
             val contentType = call.headers["Content-Type"]
                 ?: error("expected 'Content-Type' header in image request")
 
-            @Suppress("EXPERIMENTAL_API_USAGE")
             val bytes = call.content.toByteArray()
 
             Image(bytes, Format.fromContentType(contentType))

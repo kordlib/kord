@@ -8,10 +8,8 @@ import dev.kord.common.entity.Choice
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.delegate.delegateList
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -165,7 +163,7 @@ class SubCommandBuilder(name: String, description: String) :
 @KordDsl
 class GroupCommandBuilder(name: String, description: String) :
     BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommandGroup) {
-    @OptIn(ExperimentalContracts::class)
+
     inline fun subCommand(
         name: String,
         description: String,

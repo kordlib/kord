@@ -13,7 +13,6 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -42,8 +41,6 @@ public interface FollowupMessageBehavior : KordEntity, Strategizable {
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun FollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val builder = FollowupMessageModifyBuilder().apply(builder)

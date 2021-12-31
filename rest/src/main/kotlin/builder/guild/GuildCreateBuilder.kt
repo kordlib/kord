@@ -17,7 +17,6 @@ import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 import dev.kord.rest.json.request.GuildCreateRequest
 import dev.kord.rest.json.request.GuildRoleCreateRequest
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.random.Random
@@ -85,7 +84,6 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
      */
     var systemChannelId: Snowflake? by ::_systemChannelId.delegate()
 
-    @OptIn(ExperimentalContracts::class)
     inline fun textChannel(
         name: String,
         id: Snowflake = newUniqueSnowflake(),
@@ -98,7 +96,6 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
         return id
     }
 
-    @OptIn(ExperimentalContracts::class)
     inline fun newsChannel(
         name: String,
         id: Snowflake = newUniqueSnowflake(),
@@ -111,7 +108,6 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
         return id
     }
 
-    @OptIn(ExperimentalContracts::class)
     inline fun category(
         name: String,
         id: Snowflake = newUniqueSnowflake(),
@@ -124,7 +120,6 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
         return id
     }
 
-    @OptIn(ExperimentalContracts::class)
     inline fun role(id: Snowflake = newUniqueSnowflake(), builder: RoleCreateBuilder.() -> Unit): Snowflake {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -133,7 +128,6 @@ class GuildCreateBuilder(var name: String) : RequestBuilder<GuildCreateRequest> 
         return id
     }
 
-    @OptIn(ExperimentalContracts::class)
     inline fun everyoneRole(builder: RoleCreateBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

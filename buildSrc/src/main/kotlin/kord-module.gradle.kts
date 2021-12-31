@@ -35,7 +35,8 @@ tasks {
             freeCompilerArgs = listOf(
                 CompilerArguments.coroutines,
                 CompilerArguments.time,
-                CompilerArguments.optIn
+                CompilerArguments.optIn,
+                CompilerArguments.contracts,
             )
         }
     }

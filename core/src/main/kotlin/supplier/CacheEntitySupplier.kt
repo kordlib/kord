@@ -49,7 +49,6 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.emitAll
@@ -127,7 +126,6 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     /**
      *  fetches all cached [Member]s
      */
-    @OptIn(FlowPreview::class)
     public val members: Flow<Member>
         get() = cache.query<MemberData>().asFlow().mapNotNull {
             val userData =
@@ -311,7 +309,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override fun getTemplates(guildId: Snowflake): Flow<Template> {
-        return cache.query<TemplateData>() {
+        return cache.query<TemplateData> {
             idEq(TemplateData::sourceGuildId, guildId)
         }.asFlow().map { Template(it, kord) }
     }
