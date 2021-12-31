@@ -447,13 +447,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Sticker(data, kord)
     }
 
-    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): Sticker? {
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker? {
         val data = cache.query<StickerData> {
             idEq(StickerData::id, id)
             idEq(StickerData::guildId, guildId)
         }.singleOrNull() ?: return null
 
-        return Sticker(data, kord)
+        return GuildSticker(data, kord)
     }
 
     override fun getNitroStickerPacks(): Flow<StickerPack> {
@@ -462,10 +462,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }
     }
 
-    override fun getGuildStickers(guildId: Snowflake): Flow<Sticker> {
+    override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> {
         return cache.query<StickerData> { idEq(StickerData::guildId, guildId) }
             .asFlow()
-            .map { Sticker(it, kord) }
+            .map { GuildSticker(it, kord) }
     }
 
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =

@@ -208,7 +208,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         first.getStickerOrNull(id) ?: second.getStickerOrNull(id)
 
 
-    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): Sticker? =
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker? =
         first.getGuildStickerOrNull(guildId, id) ?: second.getGuildStickerOrNull(guildId, id)
 
 
@@ -216,7 +216,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         first.getNitroStickerPacks().switchIfEmpty(second.getNitroStickerPacks())
 
 
-    override fun getGuildStickers(guildId: Snowflake): Flow<Sticker> =
+    override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> =
         first.getGuildStickers(guildId).switchIfEmpty(second.getGuildStickers(guildId))
 
 
