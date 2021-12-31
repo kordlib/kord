@@ -12,29 +12,29 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildRoleCreateRequest
 
 @KordDsl
-class RoleCreateBuilder : AuditRequestBuilder<GuildRoleCreateRequest> {
+public class RoleCreateBuilder : AuditRequestBuilder<GuildRoleCreateRequest> {
     override var reason: String? = null
 
     private var _color: Optional<Color> = Optional.Missing()
-    var color: Color? by ::_color.delegate()
+    public var color: Color? by ::_color.delegate()
 
     private var _hoist: OptionalBoolean = OptionalBoolean.Missing
-    var hoist: Boolean? by ::_hoist.delegate()
+    public var hoist: Boolean? by ::_hoist.delegate()
 
     private var _icon: Optional<Image> = Optional.Missing()
-    var icon: Image? by ::_icon.delegate()
+    public var icon: Image? by ::_icon.delegate()
 
     private var _unicodeEmoji: Optional<String> = Optional.Missing()
-    var unicodeEmoji: String? by ::_unicodeEmoji.delegate()
+    public var unicodeEmoji: String? by ::_unicodeEmoji.delegate()
 
     private var _name: Optional<String> = Optional.Missing()
-    var name: String? by ::_name.delegate()
+    public var name: String? by ::_name.delegate()
 
     private var _mentionable: OptionalBoolean = OptionalBoolean.Missing
-    var mentionable: Boolean? by ::_mentionable.delegate()
+    public var mentionable: Boolean? by ::_mentionable.delegate()
 
     private var _permissions: Optional<Permissions> = Optional.Missing()
-    var permissions: Permissions? by ::_permissions.delegate()
+    public var permissions: Permissions? by ::_permissions.delegate()
 
     override fun toRequest(): GuildRoleCreateRequest = GuildRoleCreateRequest(
         color = _color,
