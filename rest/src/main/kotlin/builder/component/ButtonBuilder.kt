@@ -1,7 +1,6 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
@@ -11,24 +10,24 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
 
 @KordDsl
-sealed class ButtonBuilder : ActionRowComponentBuilder {
+public sealed class ButtonBuilder : ActionRowComponentBuilder {
 
     /**
      * The text that appears on the button, either this and/or [emoji] need to be set
      * for the button to be valid.
      */
-    abstract var label: String?
+    public abstract var label: String?
 
     /**
      * The emoji that appears on the button, either this and/or [label] need to be set
      * for the button to be valid.
      */
-    abstract var emoji: DiscordPartialEmoji?
+    public abstract var emoji: DiscordPartialEmoji?
 
     /**
      * Whether the button is clickable.
      */
-    var disabled: Boolean = false
+    public var disabled: Boolean = false
 
     /**
      * A builder for a button that can create Interactions when clicked.
@@ -36,9 +35,9 @@ sealed class ButtonBuilder : ActionRowComponentBuilder {
      * @param style the style of this button, [ButtonStyle.Link] is not valid.
      * @param customId the ID of this button, used to identify component interactions.
      */
-    class InteractionButtonBuilder(
-        var style: ButtonStyle,
-        var customId: String
+    public class InteractionButtonBuilder(
+        public var style: ButtonStyle,
+        public var customId: String,
     ) : ButtonBuilder() {
 
         private var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
@@ -64,8 +63,8 @@ sealed class ButtonBuilder : ActionRowComponentBuilder {
      *
      * @param url The url to open when clicked.
      */
-    class LinkButtonBuilder(
-        var url: String
+    public class LinkButtonBuilder(
+        public var url: String,
     ) : ButtonBuilder() {
 
         private var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
