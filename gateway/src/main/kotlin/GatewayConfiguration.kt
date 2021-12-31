@@ -8,45 +8,45 @@ import dev.kord.gateway.builder.PresenceBuilder
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-data class GatewayConfiguration(
+public data class GatewayConfiguration(
     val token: String,
     val name: String,
     val shard: DiscordShard,
     val presence: Optional<DiscordPresence> = Optional.Missing(),
     val threshold: Int,
-    val intents: Intents
+    val intents: Intents,
 )
 
-data class GatewayConfigurationBuilder(
+public class GatewayConfigurationBuilder(
     /**
      * The token of the bot.
      */
-    val token: String,
+    public val token: String,
     /**
      * The name of the library.
      */
-    var name: String = "Kord",
+    public var name: String = "Kord",
     /**
      * The shard the gateway will connect to.
      */
-    var shard: DiscordShard = DiscordShard(0, 1),
+    public var shard: DiscordShard = DiscordShard(0, 1),
     /**
      * The presence the bot should show on login.
      */
-    var presence: DiscordPresence? = null,
+    public var presence: DiscordPresence? = null,
     /**
      * A value between 50 and 250, representing the maximum amount of members in a guild
      * before the gateway will stop sending info on offline members.
      */
-    var threshold: Int = 250,
+    public var threshold: Int = 250,
 
-    var intents: Intents = Intents.nonPrivileged
+    public var intents: Intents = Intents.nonPrivileged,
 ) {
 
     /**
      * Calls the [builder] on a new [PresenceBuilder] and assigns the result to [presence].
      */
-    inline fun presence(builder: PresenceBuilder.() -> Unit) {
+    public inline fun presence(builder: PresenceBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -56,7 +56,7 @@ data class GatewayConfigurationBuilder(
     /**
      * Returns an immutable version of this builder.
      */
-    fun build(): GatewayConfiguration = GatewayConfiguration(
+    public fun build(): GatewayConfiguration = GatewayConfiguration(
         token,
         name,
         shard,
@@ -64,6 +64,4 @@ data class GatewayConfigurationBuilder(
         threshold,
         intents
     )
-
-    companion object
 }
