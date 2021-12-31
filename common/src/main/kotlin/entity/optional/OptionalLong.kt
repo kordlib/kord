@@ -32,15 +32,15 @@ import kotlinx.serialization.encoding.Encoder
  * ```
  */
 @Serializable(with = OptionalLong.Serializer::class)
-sealed class OptionalLong {
+public sealed class OptionalLong {
 
-    val asNullable: Long?
+    public val asNullable: Long?
         get() = when (this) {
             Missing -> null
             is Value -> value
         }
 
-    val asOptional: Optional<Long>
+    public val asOptional: Optional<Long>
         get() = when (this) {
             Missing -> Optional.Missing()
             is Value -> Optional.Value(value)
@@ -49,7 +49,7 @@ sealed class OptionalLong {
     /**
      * returns [default] if the optional is [Missing], or [Value.value] if is [Value].
      */
-    fun orElse(default: Long): Long = when (this) {
+    public fun orElse(default: Long): Long = when (this) {
         Missing -> default
         is Value -> value
     }
@@ -57,7 +57,7 @@ sealed class OptionalLong {
     /**
      * Represents a Long field that was not present in the serialized entity.
      */
-    object Missing : OptionalLong() {
+    public object Missing : OptionalLong() {
         override fun toString(): String = "OptionalLong.Missing"
     }
 
@@ -67,12 +67,12 @@ sealed class OptionalLong {
      *
      * @param value the value this optional wraps.
      */
-    class Value(val value: Long) : OptionalLong() {
+    public class Value(public val value: Long) : OptionalLong() {
 
         /**
          * Destructures this optional to its [value].
          */
-        operator fun component1(): Long = value
+        public operator fun component1(): Long = value
 
         override fun toString(): String = "Optional.Value(value=$value)"
 
@@ -103,17 +103,16 @@ sealed class OptionalLong {
 /**
  * returns `null` if this is `null`, calls [OptionalLong.asNullable] otherwise.
  */
-val OptionalLong?.asNullable: Long? get() = this?.asNullable
+public val OptionalLong?.asNullable: Long? get() = this?.asNullable
 
 /**
  * returns `null` if this is `null`, calls [OptionalLong.asNullable] otherwise.
  */
-val OptionalLong?.value: Long? get() = this?.asNullable
+public val OptionalLong?.value: Long? get() = this?.asNullable
 
 /**
  * returns [default] if this is `null`, calls [OptionalLong.asNullable] otherwise.
  */
-fun OptionalLong?.orElse(default: Long) = this?.orElse(default) ?: default
+public fun OptionalLong?.orElse(default: Long): Long = this?.orElse(default) ?: default
 
-fun Long?.optional(): OptionalLong = if (this == null) OptionalLong.Missing
-else OptionalLong.Value(this)
+public fun Long?.optional(): OptionalLong = if (this == null) OptionalLong.Missing else OptionalLong.Value(this)
