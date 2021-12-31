@@ -11,7 +11,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.*
 
 @Serializable
-data class DiscordPresenceUpdate(
+public data class DiscordPresenceUpdate(
     val user: DiscordPresenceUser,
     /*
     Don't trust the docs:
@@ -27,7 +27,7 @@ data class DiscordPresenceUpdate(
 )
 
 @Serializable(with = DiscordPresenceUser.Serializer::class)
-data class DiscordPresenceUser(
+public data class DiscordPresenceUser(
     val id: Snowflake,
     val details: JsonObject,
 ) {
@@ -61,23 +61,23 @@ data class DiscordPresenceUser(
 }
 
 @Serializable
-data class DiscordClientStatus(
+public data class DiscordClientStatus(
     val desktop: Optional<PresenceStatus> = Optional.Missing(),
     val mobile: Optional<PresenceStatus> = Optional.Missing(),
     val web: Optional<PresenceStatus> = Optional.Missing(),
 )
 
-@Serializable(with = PresenceStatus.StatusSerializer::class)
-sealed class PresenceStatus(val value: String) {
+@Serializable(with = PresenceStatus.Serializer::class)
+public sealed class PresenceStatus(public val value: String) {
 
-    class Unknown(value: String) : PresenceStatus(value)
-    object Online : PresenceStatus("online")
-    object Idle : PresenceStatus("idle")
-    object DoNotDisturb : PresenceStatus("dnd")
-    object Offline : PresenceStatus("offline")
-    object Invisible : PresenceStatus("invisible")
+    public class Unknown(value: String) : PresenceStatus(value)
+    public object Online : PresenceStatus("online")
+    public object Idle : PresenceStatus("idle")
+    public object DoNotDisturb : PresenceStatus("dnd")
+    public object Offline : PresenceStatus("offline")
+    public object Invisible : PresenceStatus("invisible")
 
-    companion object StatusSerializer : KSerializer<PresenceStatus> {
+    internal object Serializer : KSerializer<PresenceStatus> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Kord.ClientStatus", PrimitiveKind.STRING)
 
         override fun deserialize(decoder: Decoder): PresenceStatus = when (val value = decoder.decodeString()) {
