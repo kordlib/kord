@@ -12,14 +12,14 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
-data class DiscordBotActivity(
+public data class DiscordBotActivity(
     val name: String,
     val type: ActivityType,
     val url: Optional<String?> = Optional.Missing()
 )
 
 @Serializable
-data class DiscordActivity(
+public data class DiscordActivity(
     val name: String,
     val type: ActivityType,
     val url: Optional<String?> = Optional.Missing(),
@@ -39,7 +39,7 @@ data class DiscordActivity(
     val buttons: Optional<List<String>> = Optional.Missing()
 )
 
-enum class ActivityFlag(val value: Int) {
+public enum class ActivityFlag(public val value: Int) {
     Instance(1),
     Join(2),
     Spectate(4),
@@ -49,11 +49,12 @@ enum class ActivityFlag(val value: Int) {
 }
 
 @Serializable(with = ActivityFlags.Serializer::class)
-class ActivityFlags(val value: Int) {
+public class ActivityFlags(public val value: Int) {
 
-    val flags: Set<ActivityFlag> get() = ActivityFlag.values().filter { (it.value and value) == it.value }.toSet()
+    public val flags: Set<ActivityFlag>
+        get() = ActivityFlag.values().filter { (it.value and value) == it.value }.toSet()
 
-    operator fun contains(flag: ActivityFlag): Boolean = (flag.value and value) == flag.value
+    public operator fun contains(flag: ActivityFlag): Boolean = (flag.value and value) == flag.value
 
     internal object Serializer : KSerializer<ActivityFlags> {
         override val descriptor: SerialDescriptor
@@ -72,29 +73,29 @@ class ActivityFlags(val value: Int) {
     ReplaceWith("DiscordActivityTimestamps"),
     DeprecationLevel.ERROR,
 )
-typealias DiscordActivityTimeStamps = DiscordActivityTimestamps
+public typealias DiscordActivityTimeStamps = DiscordActivityTimestamps
 
 @Serializable
-data class DiscordActivityTimestamps(
+public data class DiscordActivityTimestamps(
     val start: OptionalLong = OptionalLong.Missing,
     val end: OptionalLong = OptionalLong.Missing
 )
 
 @Serializable
-data class DiscordActivityEmoji(
+public data class DiscordActivityEmoji(
     val name: String,
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     val animated: OptionalBoolean = OptionalBoolean.Missing
 )
 
 @Serializable
-data class DiscordActivityParty(
+public data class DiscordActivityParty(
     val id: Optional<String> = Optional.Missing(),
     val size: Optional<DiscordActivityPartySize> = Optional.Missing()
 )
 
 @Serializable(DiscordActivityPartySize.Serializer::class)
-data class DiscordActivityPartySize(
+public data class DiscordActivityPartySize(
     val current: Int,
     val maximum: Int
 ) {
@@ -117,7 +118,7 @@ data class DiscordActivityPartySize(
 }
 
 @Serializable
-data class DiscordActivityAssets(
+public data class DiscordActivityAssets(
     @SerialName("large_image")
     val largeImage: Optional<String> = Optional.Missing(),
     @SerialName("large_text")
@@ -129,14 +130,14 @@ data class DiscordActivityAssets(
 )
 
 @Serializable
-data class DiscordActivitySecrets(
+public data class DiscordActivitySecrets(
     val join: Optional<String> = Optional.Missing(),
     val spectate: Optional<String> = Optional.Missing(),
     val match: Optional<String> = Optional.Missing()
 )
 
-@Serializable(with = ActivityType.ActivityTypeSerializer::class)
-enum class ActivityType(val code: Int) {
+@Serializable(with = ActivityType.Serializer::class)
+public enum class ActivityType(public val code: Int) {
     /** The default code for unknown values. */
     Unknown(Int.MIN_VALUE),
     Game(0),
@@ -146,7 +147,7 @@ enum class ActivityType(val code: Int) {
     Custom(4),
     Competing(5);
 
-    companion object ActivityTypeSerializer : KSerializer<ActivityType> {
+    internal object Serializer : KSerializer<ActivityType> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("op", PrimitiveKind.INT)
 
