@@ -20,8 +20,8 @@ import mu.KotlinLogging
 
 private val jsonLogger = KotlinLogging.logger { }
 
-sealed class DispatchEvent : Event() {
-    abstract val sequence: Int?
+public sealed class DispatchEvent : Event() {
+    public abstract val sequence: Int?
 }
 
 private object NullDecoder : DeserializationStrategy<Nothing?> {
@@ -38,8 +38,8 @@ private object NullDecoder : DeserializationStrategy<Nothing?> {
 
 }
 
-sealed class Event {
-    companion object : DeserializationStrategy<Event?> {
+public sealed class Event {
+    internal companion object : DeserializationStrategy<Event?> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
             element("op", OpCode.descriptor)
             element("t", String.serializer().descriptor, isOptional = true)
@@ -456,66 +456,66 @@ sealed class Event {
 }
 
 
-sealed class Close : Event() {
+public sealed class Close : Event() {
 
     /**
      * The Gateway was detached, all resources tied to the gateway should be freed.
      */
-    object Detach : Close()
+    public object Detach : Close()
 
     /**
      * The user closed the Gateway connection.
      */
-    object UserClose : Close()
+    public object UserClose : Close()
 
     /**
      * The connection was closed because of a timeout, probably due to a loss of internet connection.
      */
-    object Timeout : Close()
+    public object Timeout : Close()
 
     /**
      * Discord closed the connection with a [closeCode].
      *
      * @param recoverable true if the gateway will automatically try to reconnect.
      */
-    class DiscordClose(val closeCode: GatewayCloseCode, val recoverable: Boolean) : Close()
+    public data class DiscordClose(val closeCode: GatewayCloseCode, val recoverable: Boolean) : Close()
 
     /**
      * The gateway closed and will attempt to resume the session.
      */
-    object Reconnecting : Close()
+    public object Reconnecting : Close()
 
     /**
      * The gateway closed and will attempt to start a new session.
      */
-    object SessionReset : Close()
+    public object SessionReset : Close()
 
     /**
      * Discord is no longer responding to the gateway commands, the connection will be closed and an attempt to resume the session will be made.
      * Any [commands][Command] send recently might not complete, and won't be automatically requeued.
      */
-    object ZombieConnection : Close()
+    public object ZombieConnection : Close()
 
     /**
      *  The Gateway has failed to establish a connection too many times and will not try to reconnect anymore.
      *  The user is free to manually connect again using [Gateway.start], otherwise all resources linked to the Gateway should free and the Gateway [detached][Gateway.detach].
      */
-    object RetryLimitReached : Close()
+    public object RetryLimitReached : Close()
 }
 
-object HeartbeatACK : Event()
-object Reconnect : Event()
+public object HeartbeatACK : Event()
+public object Reconnect : Event()
 
 @Serializable
-data class Hello(
+public data class Hello(
     @SerialName("heartbeat_interval")
     val heartbeatInterval: Int,
 ) : Event()
 
-data class Ready(val data: ReadyData, override val sequence: Int?) : DispatchEvent()
+public data class Ready(val data: ReadyData, override val sequence: Int?) : DispatchEvent()
 
 @Serializable
-data class ReadyData(
+public data class ReadyData(
     @SerialName("v")
     val version: Int,
     val user: DiscordUser,
@@ -534,9 +534,9 @@ data class ReadyData(
     val shard: Optional<DiscordShard> = Optional.Missing(),
 )
 
-@Serializable(with = Heartbeat.Companion::class)
-data class Heartbeat(val data: Long) : Event() {
-    companion object : KSerializer<Heartbeat> {
+@Serializable(with = Heartbeat.Serializer::class)
+public data class Heartbeat(val data: Long) : Event() {
+    internal object Serializer : KSerializer<Heartbeat> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
 
@@ -549,12 +549,12 @@ data class Heartbeat(val data: Long) : Event() {
 }
 
 @Serializable
-data class Resumed(
+public data class Resumed(
     override val sequence: Int?,
 ) : DispatchEvent()
 
 @Serializable(with = InvalidSession.Serializer::class)
-data class InvalidSession(val resumable: Boolean) : Event() {
+public data class InvalidSession(val resumable: Boolean) : Event() {
 
     internal object Serializer : KSerializer<InvalidSession> {
         override val descriptor: SerialDescriptor
@@ -568,41 +568,45 @@ data class InvalidSession(val resumable: Boolean) : Event() {
     }
 }
 
-data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
-data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
-data class ChannelDelete(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
-data class ChannelPinsUpdate(val pins: DiscordPinsUpdateData, override val sequence: Int?) : DispatchEvent()
+public data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+public data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+public data class ChannelDelete(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+public data class ChannelPinsUpdate(val pins: DiscordPinsUpdateData, override val sequence: Int?) : DispatchEvent()
 
-data class TypingStart(val data: DiscordTyping, override val sequence: Int?) : DispatchEvent()
-data class GuildCreate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
-data class GuildUpdate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
-data class GuildDelete(val guild: DiscordUnavailableGuild, override val sequence: Int?) : DispatchEvent()
-data class GuildBanAdd(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()
-data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()
-data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
-data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegrations, override val sequence: Int?) :
+public data class TypingStart(val data: DiscordTyping, override val sequence: Int?) : DispatchEvent()
+public data class GuildCreate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
+public data class GuildUpdate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
+public data class GuildDelete(val guild: DiscordUnavailableGuild, override val sequence: Int?) : DispatchEvent()
+public data class GuildBanAdd(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()
+public data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()
+public data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
+public data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
 
-data class GuildMemberAdd(val member: DiscordAddedGuildMember, override val sequence: Int?) : DispatchEvent()
-data class GuildMemberRemove(val member: DiscordRemovedGuildMember, override val sequence: Int?) : DispatchEvent()
-data class GuildMemberUpdate(val member: DiscordUpdatedGuildMember, override val sequence: Int?) : DispatchEvent()
-data class GuildRoleCreate(val role: DiscordGuildRole, override val sequence: Int?) : DispatchEvent()
-data class GuildRoleUpdate(val role: DiscordGuildRole, override val sequence: Int?) : DispatchEvent()
-data class GuildRoleDelete(val role: DiscordDeletedGuildRole, override val sequence: Int?) : DispatchEvent()
-data class GuildMembersChunk(val data: GuildMembersChunkData, override val sequence: Int?) : DispatchEvent()
+public data class GuildMemberAdd(val member: DiscordAddedGuildMember, override val sequence: Int?) : DispatchEvent()
+public data class GuildMemberRemove(val member: DiscordRemovedGuildMember, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildMemberUpdate(val member: DiscordUpdatedGuildMember, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildRoleCreate(val role: DiscordGuildRole, override val sequence: Int?) : DispatchEvent()
+public data class GuildRoleUpdate(val role: DiscordGuildRole, override val sequence: Int?) : DispatchEvent()
+public data class GuildRoleDelete(val role: DiscordDeletedGuildRole, override val sequence: Int?) : DispatchEvent()
+public data class GuildMembersChunk(val data: GuildMembersChunkData, override val sequence: Int?) : DispatchEvent()
 
 /**
  * Sent when a new invite to a channel is created.
  */
-data class InviteCreate(val invite: DiscordCreatedInvite, override val sequence: Int?) : DispatchEvent()
+public data class InviteCreate(val invite: DiscordCreatedInvite, override val sequence: Int?) : DispatchEvent()
 
 /**
  * Sent when an invite is deleted.
  */
-data class InviteDelete(val invite: DiscordDeletedInvite, override val sequence: Int?) : DispatchEvent()
+public data class InviteDelete(val invite: DiscordDeletedInvite, override val sequence: Int?) : DispatchEvent()
 
 @Serializable
-data class DiscordDeletedInvite(
+public data class DiscordDeletedInvite(
     @SerialName("channel_id")
     val channelId: Snowflake,
     @SerialName("guild_id")
@@ -611,7 +615,7 @@ data class DiscordDeletedInvite(
 )
 
 @Serializable
-data class DiscordCreatedInvite(
+public data class DiscordCreatedInvite(
     @SerialName("channel_id")
     val channelId: Snowflake,
     val code: String,
@@ -633,7 +637,7 @@ data class DiscordCreatedInvite(
 )
 
 @Serializable
-data class DiscordInviteUser(
+public data class DiscordInviteUser(
     val id: Snowflake,
     val username: String,
     val discriminator: String,
@@ -643,19 +647,24 @@ data class DiscordInviteUser(
     val publicFlags: Optional<UserFlags> = Optional.Missing(),
 )
 
-data class MessageCreate(val message: DiscordMessage, override val sequence: Int?) : DispatchEvent()
-data class MessageUpdate(val message: DiscordPartialMessage, override val sequence: Int?) : DispatchEvent()
-data class MessageDelete(val message: DeletedMessage, override val sequence: Int?) : DispatchEvent()
-data class MessageDeleteBulk(val messageBulk: BulkDeleteData, override val sequence: Int?) : DispatchEvent()
-data class MessageReactionAdd(val reaction: MessageReactionAddData, override val sequence: Int?) : DispatchEvent()
-data class MessageReactionRemove(val reaction: MessageReactionRemoveData, override val sequence: Int?) : DispatchEvent()
-data class MessageReactionRemoveAll(val reactions: AllRemovedMessageReactions, override val sequence: Int?) :
+public data class MessageCreate(val message: DiscordMessage, override val sequence: Int?) : DispatchEvent()
+public data class MessageUpdate(val message: DiscordPartialMessage, override val sequence: Int?) : DispatchEvent()
+public data class MessageDelete(val message: DeletedMessage, override val sequence: Int?) : DispatchEvent()
+public data class MessageDeleteBulk(val messageBulk: BulkDeleteData, override val sequence: Int?) : DispatchEvent()
+public data class MessageReactionAdd(val reaction: MessageReactionAddData, override val sequence: Int?) :
     DispatchEvent()
 
-data class MessageReactionRemoveEmoji(val reaction: DiscordRemovedEmoji, override val sequence: Int?) : DispatchEvent()
+public data class MessageReactionRemove(val reaction: MessageReactionRemoveData, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class MessageReactionRemoveAll(val reactions: AllRemovedMessageReactions, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class MessageReactionRemoveEmoji(val reaction: DiscordRemovedEmoji, override val sequence: Int?) :
+    DispatchEvent()
 
 @Serializable
-data class DiscordRemovedEmoji(
+public data class DiscordRemovedEmoji(
     @SerialName("channel_id")
     val channelId: Snowflake,
     @SerialName("guild_id")
@@ -666,68 +675,75 @@ data class DiscordRemovedEmoji(
 )
 
 @Serializable
-data class DiscordRemovedReactionEmoji(
+public data class DiscordRemovedReactionEmoji(
     val id: Snowflake?,
     val name: String?,
 )
 
-data class PresenceUpdate(val presence: DiscordPresenceUpdate, override val sequence: Int?) : DispatchEvent()
-data class UserUpdate(val user: DiscordUser, override val sequence: Int?) : DispatchEvent()
-data class VoiceStateUpdate(val voiceState: DiscordVoiceState, override val sequence: Int?) : DispatchEvent()
-data class VoiceServerUpdate(val voiceServerUpdateData: DiscordVoiceServerUpdateData, override val sequence: Int?) :
-    DispatchEvent()
-
-data class WebhooksUpdate(val webhooksUpdateData: DiscordWebhooksUpdateData, override val sequence: Int?) :
-    DispatchEvent()
-
-
-data class InteractionCreate(val interaction: DiscordInteraction, override val sequence: Int?) : DispatchEvent()
-
-
-data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
-    DispatchEvent()
-
-
-data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
-    DispatchEvent()
-
-
-data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :
-    DispatchEvent()
-
-data class ThreadCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
-
-data class ThreadUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
-
-data class ThreadDelete(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
-
-data class ThreadMemberUpdate(val member: DiscordThreadMember, override val sequence: Int?) : DispatchEvent()
-
-data class ThreadListSync(val sync: DiscordThreadListSync, override val sequence: Int?) : DispatchEvent()
-
-data class ThreadMembersUpdate(val members: DiscordThreadMembersUpdate, override val sequence: Int?) : DispatchEvent()
-
-data class GuildScheduledEventCreate(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
-    DispatchEvent()
-
-data class GuildScheduledEventUpdate(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
-    DispatchEvent()
-
-data class GuildScheduledEventDelete(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
-    DispatchEvent()
-
-data class GuildScheduledEventUserAdd(
-    val eventId: Snowflake, val userId: Snowflake, val guildId: Snowflake,
-    override val sequence: Int?
+public data class PresenceUpdate(val presence: DiscordPresenceUpdate, override val sequence: Int?) : DispatchEvent()
+public data class UserUpdate(val user: DiscordUser, override val sequence: Int?) : DispatchEvent()
+public data class VoiceStateUpdate(val voiceState: DiscordVoiceState, override val sequence: Int?) : DispatchEvent()
+public data class VoiceServerUpdate(
+    val voiceServerUpdateData: DiscordVoiceServerUpdateData,
+    override val sequence: Int?,
 ) : DispatchEvent()
 
-data class GuildScheduledEventUserRemove(
-    val eventId: Snowflake, val userId: Snowflake, val guildId: Snowflake,
-    override val sequence: Int?
+public data class WebhooksUpdate(val webhooksUpdateData: DiscordWebhooksUpdateData, override val sequence: Int?) :
+    DispatchEvent()
+
+
+public data class InteractionCreate(val interaction: DiscordInteraction, override val sequence: Int?) : DispatchEvent()
+
+
+public data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
+    DispatchEvent()
+
+
+public data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
+    DispatchEvent()
+
+
+public data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class ThreadCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+
+public data class ThreadUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+
+public data class ThreadDelete(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
+
+public data class ThreadMemberUpdate(val member: DiscordThreadMember, override val sequence: Int?) : DispatchEvent()
+
+public data class ThreadListSync(val sync: DiscordThreadListSync, override val sequence: Int?) : DispatchEvent()
+
+public data class ThreadMembersUpdate(val members: DiscordThreadMembersUpdate, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildScheduledEventCreate(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildScheduledEventUpdate(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildScheduledEventDelete(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class GuildScheduledEventUserAdd(
+    val eventId: Snowflake,
+    val userId: Snowflake,
+    val guildId: Snowflake,
+    override val sequence: Int?,
+) : DispatchEvent()
+
+public data class GuildScheduledEventUserRemove(
+    val eventId: Snowflake,
+    val userId: Snowflake,
+    val guildId: Snowflake,
+    override val sequence: Int?,
 ) : DispatchEvent()
 
 @Serializable
-data class DiscordThreadListSync(
+public data class DiscordThreadListSync(
     @SerialName("guild_id")
     val guildId: Snowflake,
     @SerialName("channel_ids")
@@ -737,7 +753,7 @@ data class DiscordThreadListSync(
 )
 
 @Serializable
-data class DiscordThreadMembersUpdate(
+public data class DiscordThreadMembersUpdate(
     val id: Snowflake,
     @SerialName("guild_id")
     val guildId: Snowflake,
