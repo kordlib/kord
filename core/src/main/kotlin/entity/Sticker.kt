@@ -15,11 +15,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 /**
  * A sticker image that can be used in messages.
  */
-public class Sticker(
-    public val data: StickerData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier
-) : StickerBehavior {
+public open class Sticker(public val data: StickerData, override val kord: Kord)  : KordEntity {
 
     /**
      * The id of the sticker.
@@ -63,20 +59,26 @@ public class Sticker(
     public val sortValue: Int?
         get() = data.sortValue.value
 
-    public override val guildId: Snowflake
-        get() = data.guildId.value!!
-
     public val user: User?
         get() = data.user.unwrap { User(it, kord) }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
-        Sticker(data, kord, strategy.supply(kord))
+}
+
+public class GuildSticker(data: StickerData, kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier) : Sticker(data, kord), StickerBehavior {
+    override val guildId: Snowflake
+        get() = data.guildId.value!!
+
 
     override suspend fun asSticker(): Sticker = this
 
     override suspend fun asStickerOrNull(): Sticker = this
 
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
+        return GuildSticker(data, kord, supplier)
+    }
+
 }
+
 
 
 public class StickerItem(

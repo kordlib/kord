@@ -176,7 +176,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
     public val members: Flow<Member>
         get() = supplier.getGuildMembers(id)
 
-    public val sticker: Flow<Sticker>
+    public val stickers: Flow<GuildSticker>
         get() = supplier.getGuildStickers(id)
 
     /**
@@ -602,15 +602,15 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
     public suspend fun getTemplateOrNull(code: String): Template? = supplier.getTemplateOrNull(code)
 
-    public suspend fun getSticker(stickerId: Snowflake): Sticker = supplier.getGuildSticker(id, stickerId)
+    public suspend fun getSticker(stickerId: Snowflake): GuildSticker = supplier.getGuildSticker(id, stickerId)
 
-    public suspend fun getStickerOrNull(stickerId: Snowflake): Sticker? = supplier.getGuildStickerOrNull(id, stickerId)
+    public suspend fun getStickerOrNull(stickerId: Snowflake): GuildSticker? = supplier.getGuildStickerOrNull(id, stickerId)
 
-    public suspend fun createSticker(name: String, description: String, tags: String, file: NamedFile): Sticker {
+    public suspend fun createSticker(name: String, description: String, tags: String, file: NamedFile): GuildSticker {
         val request = MultipartGuildStickerCreateRequest(GuildStickerCreateRequest(name, description, tags), file)
         val response = kord.rest.sticker.createGuildSticker(id, request)
         val data = StickerData.from(response)
-        return Sticker(data, kord)
+        return GuildSticker(data, kord)
     }
 
     /**
