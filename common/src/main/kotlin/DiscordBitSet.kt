@@ -14,26 +14,27 @@ import kotlin.math.min
 
 private const val SAFE_LENGTH = 19
 private const val WIDTH = Byte.SIZE_BITS
-fun EmptyBitSet() = DiscordBitSet(0)
 
-@OptIn(ExperimentalUnsignedTypes::class)
+@Suppress("FunctionName")
+public fun EmptyBitSet(): DiscordBitSet = DiscordBitSet(0)
+
 @Serializable(with = DiscordBitSetSerializer::class)
-class DiscordBitSet(internal var data: LongArray) {
+public class DiscordBitSet(internal var data: LongArray) {
 
-    val isEmpty: Boolean
+    public val isEmpty: Boolean
         get() = data.all { it == 0L }
 
-    val value: String
+    public val value: String
         get() {
             val buffer = ByteBuffer.allocate(data.size * Long.SIZE_BYTES)
             buffer.asLongBuffer().put(data.reversedArray())
             return BigInteger(buffer.array()).toString()
         }
 
-    val size: Int
+    public val size: Int
         get() = data.size * WIDTH
 
-    val binary: String
+    public val binary: String
         get() = data.joinToString("") { it.toULong().toString(2) }.reversed().padEnd(8, '0')
 
     override fun equals(other: Any?): Boolean {
@@ -46,14 +47,14 @@ class DiscordBitSet(internal var data: LongArray) {
 
     private fun getOrZero(i: Int) = data.getOrNull(i) ?: 0L
 
-    operator fun get(index: Int): Boolean {
+    public operator fun get(index: Int): Boolean {
         if (index !in 0 until size) return false
         val indexOfWidth = index / WIDTH
         val bitIndex = index % WIDTH
         return data[indexOfWidth] and (1L shl bitIndex) != 0L
     }
 
-    operator fun contains(other: DiscordBitSet): Boolean {
+    public operator fun contains(other: DiscordBitSet): Boolean {
         if (other.size > size) return false
         for (i in other.data.indices) {
             if (data[i] and other.data[i] != other.data[i]) return false
@@ -61,7 +62,7 @@ class DiscordBitSet(internal var data: LongArray) {
         return true
     }
 
-    operator fun set(index: Int, value: Boolean) {
+    public operator fun set(index: Int, value: Boolean) {
         if (index !in 0 until size) data.copyOf((63 + index) / WIDTH)
         val indexOfWidth = index / WIDTH
         val bitIndex = index % WIDTH
@@ -69,7 +70,7 @@ class DiscordBitSet(internal var data: LongArray) {
         data[index] = data[indexOfWidth] or (bit shl bitIndex)
     }
 
-    operator fun plus(another: DiscordBitSet): DiscordBitSet {
+    public operator fun plus(another: DiscordBitSet): DiscordBitSet {
         val dist = LongArray(data.size)
         data.copyInto(dist)
         val copy = DiscordBitSet(dist)
@@ -77,7 +78,7 @@ class DiscordBitSet(internal var data: LongArray) {
         return copy
     }
 
-    operator fun minus(another: DiscordBitSet): DiscordBitSet {
+    public operator fun minus(another: DiscordBitSet): DiscordBitSet {
         val dist = LongArray(data.size)
         data.copyInto(dist)
         val copy = DiscordBitSet(dist)
@@ -85,7 +86,7 @@ class DiscordBitSet(internal var data: LongArray) {
         return copy
     }
 
-    fun add(another: DiscordBitSet) {
+    public fun add(another: DiscordBitSet) {
         if (another.data.size > data.size) data = data.copyOf(another.data.size)
         for (i in another.data.indices) {
             data[i] = data[i] or another.data[i]
@@ -93,7 +94,7 @@ class DiscordBitSet(internal var data: LongArray) {
     }
 
 
-    fun remove(another: DiscordBitSet) {
+    public fun remove(another: DiscordBitSet) {
         for (i in 0 until min(data.size, another.data.size)) {
             data[i] = data[i] xor (data[i] and another.data[i])
         }
@@ -111,11 +112,11 @@ class DiscordBitSet(internal var data: LongArray) {
 
 }
 
-fun DiscordBitSet(vararg widths: Long): DiscordBitSet {
+public fun DiscordBitSet(vararg widths: Long): DiscordBitSet {
     return DiscordBitSet(widths)
 }
 
-fun DiscordBitSet(value: String): DiscordBitSet {
+public fun DiscordBitSet(value: String): DiscordBitSet {
     if (value.length <= SAFE_LENGTH) {// fast path
         return DiscordBitSet(longArrayOf(value.toULong().toLong()))
     }
@@ -140,7 +141,7 @@ fun DiscordBitSet(value: String): DiscordBitSet {
 }
 
 
-object DiscordBitSetSerializer : KSerializer<DiscordBitSet> {
+internal object DiscordBitSetSerializer : KSerializer<DiscordBitSet> {
     override val descriptor: SerialDescriptor
         get() = PrimitiveSerialDescriptor("DiscordBitSet", PrimitiveKind.STRING)
 
@@ -150,7 +151,5 @@ object DiscordBitSetSerializer : KSerializer<DiscordBitSet> {
 
     override fun serialize(encoder: Encoder, value: DiscordBitSet) {
         encoder.encodeString(value.value)
-
     }
 }
-
