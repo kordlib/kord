@@ -9,11 +9,17 @@ import dev.kord.core.behavior.StickerBehavior
 import dev.kord.core.cache.data.StickerData
 import dev.kord.core.cache.data.StickerItemData
 import dev.kord.core.cache.data.StickerPackData
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * A sticker image that can be used in messages.
  */
-public class Sticker(public val data: StickerData, override val kord: Kord) : StickerBehavior {
+public class Sticker(
+    public val data: StickerData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
+) : StickerBehavior {
 
     /**
      * The id of the sticker.
@@ -62,10 +68,22 @@ public class Sticker(public val data: StickerData, override val kord: Kord) : St
 
     public val user: User?
         get() = data.user.unwrap { User(it, kord) }
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
+        Sticker(data, kord, strategy.supply(kord))
+
+    override suspend fun asSticker(): Sticker = this
+
+    override suspend fun asStickerOrNull(): Sticker = this
+
 }
 
 
-public class StickerItem(public val data: StickerItemData) : Entity {
+public class StickerItem(
+    public val data: StickerItemData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier
+) : KordEntity, Strategizable {
 
     public override val id: Snowflake
         get() = data.id
@@ -75,6 +93,17 @@ public class StickerItem(public val data: StickerItemData) : Entity {
 
     public val formatType: MessageStickerType
         get() = data.formatType
+
+    public suspend fun getStickerOrNull(): Sticker? =
+        supplier.getStickerOrNull(id)
+
+
+    public suspend fun getSticker(): Sticker =
+        supplier.getSticker(id)
+
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
+        StickerItem(data, kord, strategy.supply(kord))
 }
 
 public class StickerPack(public val data: StickerPackData, override val kord: Kord) : KordEntity {

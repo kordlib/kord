@@ -30,13 +30,8 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.sorted
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.*
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
-import dev.kord.core.supplier.getChannelOf
-import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.supplier.getGuildApplicationCommandOf
-import dev.kord.core.supplier.getGuildApplicationCommandOfOrNull
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.PrivilegedIntent
 import dev.kord.gateway.RequestGuildMembers
@@ -629,7 +624,7 @@ public suspend inline fun <reified T : GuildApplicationCommand> GuildBehavior.ge
 }
 
 
-public suspend inline fun <reified T : GuildApplicationCommand> GuildBehavior.getApplicationCommandOf(commandId: Snowflake): T? {
+public suspend inline fun <reified T : GuildApplicationCommand> GuildBehavior.getApplicationCommandOf(commandId: Snowflake): T {
     return supplier.getGuildApplicationCommandOf(kord.resources.applicationId, id, commandId)
 }
 
