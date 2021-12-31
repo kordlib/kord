@@ -24,7 +24,7 @@ private val parallelLogger = KotlinLogging.logger {}
  * @param clock a [Clock] used for calculating suspension times, present for testing purposes.
  */
 @KordUnsafe
-class ParallelRequestRateLimiter(clock: Clock = Clock.System) : AbstractRateLimiter(clock) {
+public class ParallelRequestRateLimiter(clock: Clock = Clock.System) : AbstractRateLimiter(clock) {
 
     override val logger: KLogger
         get() = parallelLogger
