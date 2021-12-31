@@ -11,7 +11,7 @@ import kotlinx.serialization.encoding.Encoder
  * The raw developer team data gotten from the API.
  */
 @Serializable
-data class DiscordTeam(
+public data class DiscordTeam(
     val icon: String?,
     val id: Snowflake,
     val members: List<DiscordTeamMember>,
@@ -22,26 +22,25 @@ data class DiscordTeam(
 /**
  * The state of membership on a Discord developer team.
  */
-@Serializable(with = TeamMembershipState.TeamMembershipStateSerializer::class)
-sealed class TeamMembershipState(val value: Int) {
+@Serializable(with = TeamMembershipState.Serializer::class)
+public sealed class TeamMembershipState(public val value: Int) {
     /**
      * Unknown membership state.
      */
-    class Unknown(value: Int) : TeamMembershipState(value)
+    public class Unknown(value: Int) : TeamMembershipState(value)
 
     /**
      * The user has been invited.
      */
-    object Invited : TeamMembershipState(1)
+    public object Invited : TeamMembershipState(1)
 
     /**
      * The user has accepted the invitation.
      */
-    object Accepted : TeamMembershipState(2)
+    public object Accepted : TeamMembershipState(2)
 
-    @OptIn(ExperimentalSerializationApi::class)
-    @Serializer(forClass = TeamMembershipState::class)
-    companion object TeamMembershipStateSerializer : KSerializer<TeamMembershipState> {
+
+    internal object Serializer : KSerializer<TeamMembershipState> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("membership_state", PrimitiveKind.INT)
@@ -62,7 +61,7 @@ sealed class TeamMembershipState(val value: Int) {
  * The raw developer team member data gotten from the API.
  */
 @Serializable
-class DiscordTeamMember(
+public data class DiscordTeamMember(
     /**
      * An integer enum representing the state of membership of this user.
      * `1` means the user has been invited and `2` means the user has accepted the invitation.
