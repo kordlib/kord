@@ -9,19 +9,19 @@ import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
-    val auditLog: AuditLogService = AuditLogService(requestHandler)
-    val channel: ChannelService = ChannelService(requestHandler)
-    val emoji: EmojiService = EmojiService(requestHandler)
-    val guild: GuildService = GuildService(requestHandler)
-    val invite: InviteService = InviteService(requestHandler)
-    val user: UserService = UserService(requestHandler)
-    val voice: VoiceService = VoiceService(requestHandler)
-    val webhook: WebhookService = WebhookService(requestHandler)
-    val application: ApplicationService = ApplicationService(requestHandler)
-    val template: TemplateService = TemplateService(requestHandler)
-    val interaction: InteractionService = InteractionService(requestHandler)
-    val stageInstance: StageInstanceService = StageInstanceService(requestHandler)
+public class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
+    public val auditLog: AuditLogService = AuditLogService(requestHandler)
+    public val channel: ChannelService = ChannelService(requestHandler)
+    public val emoji: EmojiService = EmojiService(requestHandler)
+    public val guild: GuildService = GuildService(requestHandler)
+    public val invite: InviteService = InviteService(requestHandler)
+    public val user: UserService = UserService(requestHandler)
+    public val voice: VoiceService = VoiceService(requestHandler)
+    public val webhook: WebhookService = WebhookService(requestHandler)
+    public val application: ApplicationService = ApplicationService(requestHandler)
+    public val template: TemplateService = TemplateService(requestHandler)
+    public val interaction: InteractionService = InteractionService(requestHandler)
+    public val stageInstance: StageInstanceService = StageInstanceService(requestHandler)
 
     /**
      * Sends a request to the given [route]. This function exposes a direct call to the Discord api and allows
@@ -34,7 +34,7 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
      */
     @KordUnsafe
     @KordExperimental
-    suspend inline fun <T> unsafe(route: Route<T>, block: RequestBuilder<T>.() -> Unit): T {
+    public suspend inline fun <T> unsafe(route: Route<T>, block: RequestBuilder<T>.() -> Unit): T {
         contract {
             callsInPlace(block, InvocationKind.EXACTLY_ONCE)
         }
@@ -44,7 +44,7 @@ class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
     }
 }
 
-fun RestClient(token: String): RestClient {
+public fun RestClient(token: String): RestClient {
     val requestHandler = KtorRequestHandler(token)
     return RestClient(requestHandler)
 }
