@@ -10,9 +10,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class StickerData(
     val id: Snowflake,
-    val packId: Snowflake,
+    val packId: OptionalSnowflake = OptionalSnowflake.Missing,
     val name: String,
-    val description: String,
+    val description: String?,
     val tags: Optional<String> = Optional.Missing(),
     val formatType: MessageStickerType,
     val available: OptionalBoolean = OptionalBoolean.Missing,

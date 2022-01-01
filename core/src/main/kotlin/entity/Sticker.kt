@@ -26,8 +26,8 @@ public open class Sticker(public val data: StickerData, override val kord: Kord)
     /**
      * The id of the pack that contains this sticker.
      */
-    public val packId: Snowflake
-        get() = data.packId
+    public val packId: Snowflake?
+        get() = data.packId.value
 
     /**
      * The name of the sticker.
@@ -38,7 +38,7 @@ public open class Sticker(public val data: StickerData, override val kord: Kord)
     /**
      * The description of the sticker.
      */
-    public val description: String
+    public val description: String?
         get() = data.description
 
     /**
