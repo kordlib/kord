@@ -5,10 +5,11 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Serializable
-data class InviteCreateRequest(
+public data class InviteCreateRequest(
     @SerialName("max_age")
     val age: OptionalInt = OptionalInt.Missing,
     @SerialName("max_uses")
