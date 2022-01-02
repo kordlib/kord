@@ -5,7 +5,10 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import kotlinx.atomicfu.atomic
-import kotlinx.serialization.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Required
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -13,11 +16,12 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.SerializationStrategy as KSerializationStrategy
 
 public sealed class Command {
     internal data class Heartbeat(val sequenceNumber: Int? = null) : Command() {
 
-        internal companion object : SerializationStrategy<Heartbeat> {
+        object SerializationStrategy : KSerializationStrategy<Heartbeat> {
             override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Heartbeat", PrimitiveKind.INT)
 
             @OptIn(ExperimentalSerializationApi::class)
@@ -28,7 +32,7 @@ public sealed class Command {
 
     }
 
-    internal companion object : SerializationStrategy<Command> {
+    public object SerializationStrategy : KSerializationStrategy<Command> {
 
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Command") {
             element("op", OpCode.Serializer.descriptor)
@@ -61,7 +65,7 @@ public sealed class Command {
                 }
                 is Heartbeat -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.Heartbeat)
-                    composite.encodeSerializableElement(descriptor, 1, Heartbeat.Companion, value)
+                    composite.encodeSerializableElement(descriptor, 1, Heartbeat.SerializationStrategy, value)
                 }
             }
 

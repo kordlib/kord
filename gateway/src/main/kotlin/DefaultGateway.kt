@@ -187,7 +187,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
         try {
             defaultGatewayLogger.trace { "Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(Event.Companion, json) ?: return
+            val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json) ?: return
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
             defaultGatewayLogger.error(exception)
@@ -271,11 +271,11 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private suspend fun sendUnsafe(command: Command) {
         data.sendRateLimiter.consume()
-        val json = Json.encodeToString(Command.Companion, command)
+        val json = Json.encodeToString(Command.SerializationStrategy, command)
         if (command is Identify) {
             defaultGatewayLogger.trace {
                 val copy = command.copy(token = "token")
-                "Gateway >>> ${Json.encodeToString(Command.Companion, copy)}"
+                "Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
             }
         } else defaultGatewayLogger.trace { "Gateway >>> $json" }
         socket.send(Frame.Text(json))

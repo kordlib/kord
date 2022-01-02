@@ -6,7 +6,6 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags
-import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -17,11 +16,12 @@ import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.json.JsonElement
 import mu.KotlinLogging
+import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
 
 public sealed class VoiceEvent {
-    internal companion object : DeserializationStrategy<VoiceEvent?> {
+    public object DeserializationStrategy : KDeserializationStrategy<VoiceEvent?> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
             element("op", OpCode.Serializer.descriptor)
             element("d", JsonElement.serializer().descriptor)

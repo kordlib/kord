@@ -6,14 +6,14 @@ import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.SerializationStrategy as KSerializationStrategy
 
 public sealed class Command {
-    internal companion object : SerializationStrategy<Command> {
+    public object SerializationStrategy : KSerializationStrategy<Command> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Command") {
             element("op", OpCode.Serializer.descriptor)
             element("d", JsonObject.serializer().descriptor)

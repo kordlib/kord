@@ -17,6 +17,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
+import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
 
@@ -24,7 +25,7 @@ public sealed class DispatchEvent : Event() {
     public abstract val sequence: Int?
 }
 
-private object NullDecoder : DeserializationStrategy<Nothing?> {
+private object NullDecoder : KDeserializationStrategy<Nothing?> {
     override val descriptor: SerialDescriptor
         get() = PrimitiveSerialDescriptor("null", PrimitiveKind.STRING)
 
@@ -39,7 +40,7 @@ private object NullDecoder : DeserializationStrategy<Nothing?> {
 }
 
 public sealed class Event {
-    internal companion object : DeserializationStrategy<Event?> {
+    public object DeserializationStrategy : KDeserializationStrategy<Event?> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
             element("op", OpCode.Serializer.descriptor)
             element("t", String.serializer().descriptor, isOptional = true)
