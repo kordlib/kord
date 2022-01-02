@@ -40,11 +40,49 @@ internal class NullAwareMapper<T>(val strategy: DeserializationStrategy<T>) : Re
 internal val <T> DeserializationStrategy<T>.optional: ResponseMapper<T?>
     get() = NullAwareMapper(this)
 
+internal object NoStrategy : DeserializationStrategy<Unit> {
+    @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
+    override val descriptor: SerialDescriptor
+        get() = buildSerialDescriptor("NoStrategy", StructureKind.OBJECT) {}
+
+    override fun deserialize(decoder: Decoder) {}
+}
+
 public sealed class Route<T>(
     public val method: HttpMethod,
     public val path: String,
     public val mapper: ResponseMapper<T>,
 ) {
+
+    public companion object {
+        public val baseUrl: String = "https://discord.com/api/$restVersion"
+    }
+
+
+    public open class Key(public val identifier: String, public val isMajor: Boolean = false) {
+        override fun toString(): String = identifier
+    }
+
+    public object GuildId : Key("{guild.id}", true)
+    public object ChannelId : Key("{channel.id}", true)
+    public object MessageId : Key("{message.id}")
+    public object Emoji : Key("{emoji}")
+    public object UserId : Key("{user.id}")
+    public object OverwriteId : Key("{overwrite.id}")
+    public object EmojiId : Key("{emoji.id}")
+    public object InviteCode : Key("{invite.code}")
+    public object RoleId : Key("{role.id}")
+    public object IntegrationId : Key("{integration.id}")
+    public object WebhookId : Key("{webhook.id}", true)
+    public object WebhookToken : Key("{webhook.token}")
+    public object TemplateCode : Key("{template.code}")
+    public object ApplicationId : Key("{application.id}", true)
+    public object CommandId : Key("{command.id}", true)
+    public object InteractionId : Key("interaction.id", true)
+    public object InteractionToken : Key("{interaction.token}", true)
+    public object ScheduledEventId : Key("{event.id}", true)
+
+
     protected constructor(
         method: HttpMethod,
         path: String,
@@ -786,42 +824,4 @@ public sealed class Route<T>(
             "/guilds/${GuildId}/threads/active",
             ListThreadsResponse.serializer()
         )
-
-
-    public companion object {
-        public val baseUrl: String = "https://discord.com/api/$restVersion"
-    }
-
-    public open class Key(public val identifier: String, public val isMajor: Boolean = false) {
-        override fun toString(): String = identifier
-    }
-
-    public object GuildId : Key("{guild.id}", true)
-    public object ChannelId : Key("{channel.id}", true)
-    public object MessageId : Key("{message.id}")
-    public object Emoji : Key("{emoji}")
-    public object UserId : Key("{user.id}")
-    public object OverwriteId : Key("{overwrite.id}")
-    public object EmojiId : Key("{emoji.id}")
-    public object InviteCode : Key("{invite.code}")
-    public object RoleId : Key("{role.id}")
-    public object IntegrationId : Key("{integration.id}")
-    public object WebhookId : Key("{webhook.id}", true)
-    public object WebhookToken : Key("{webhook.token}")
-    public object TemplateCode : Key("{template.code}")
-    public object ApplicationId : Key("{application.id}", true)
-    public object CommandId : Key("{command.id}", true)
-    public object InteractionId : Key("interaction.id", true)
-    public object InteractionToken : Key("{interaction.token}", true)
-    public object ScheduledEventId : Key("{event.id}", true)
-
-}
-
-internal object NoStrategy : DeserializationStrategy<Unit> {
-    @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
-    override val descriptor: SerialDescriptor
-        get() = buildSerialDescriptor("NoStrategy", StructureKind.OBJECT) {}
-
-    override fun deserialize(decoder: Decoder) {}
-
 }
