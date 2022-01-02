@@ -283,7 +283,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
 
-    private companion object {
+    public companion object {
         private const val gatewayRunningError = "The Gateway is already running, call stop() first."
         private const val gatewayDetachedError =
             "The Gateway has been detached and can no longer be used, create a new instance instead."
