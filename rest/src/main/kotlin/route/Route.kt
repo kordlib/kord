@@ -91,19 +91,37 @@ public sealed class Route<T>(
 
     override fun toString(): String = "Route(method:${method.value},path:$path,mapper:$mapper)"
 
+
+    /*
+     * Gateway:
+     * https://discord.com/developers/docs/topics/gateway
+     */
+
     public object GatewayGet :
         Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer())
 
     public object GatewayBotGet :
         Route<BotGatewayResponse>(HttpMethod.Get, "/gateway/bot", BotGatewayResponse.serializer())
 
+
+    /*
+     * Audit Log:
+     * https://discord.com/developers/docs/resources/audit-log
+     */
+
     public object AuditLogGet :
         Route<DiscordAuditLog>(HttpMethod.Get, "/guilds/$GuildId/audit-logs", DiscordAuditLog.serializer())
+
+
+    /*
+     * Channel:
+     * https://discord.com/developers/docs/resources/channel
+     */
 
     public object ChannelGet :
         Route<DiscordChannel>(HttpMethod.Get, "/channels/$ChannelId", DiscordChannel.serializer())
 
-    public object ChannelPut :
+    public object ChannelPut : // TODO does this route still/even exist?
         Route<DiscordChannel>(HttpMethod.Put, "/channels/$ChannelId", DiscordChannel.serializer())
 
     public object ChannelPatch :
@@ -123,6 +141,13 @@ public sealed class Route<T>(
             HttpMethod.Get,
             "/channels/$ChannelId/messages",
             ListSerializer(DiscordMessage.serializer())
+        )
+
+    public object MessageCrosspost :
+        Route<DiscordMessage>(
+            HttpMethod.Post,
+            "/channels/$ChannelId/messages/$MessageId/crosspost",
+            DiscordMessage.serializer()
         )
 
     public object PinsGet :
@@ -182,6 +207,13 @@ public sealed class Route<T>(
             ListSerializer(DiscordUser.serializer())
         )
 
+    public object NewsChannelFollow :
+        Route<FollowedChannelResponse>(
+            HttpMethod.Post,
+            "/channels/$ChannelId/followers",
+            FollowedChannelResponse.serializer()
+        )
+
     public object TypingIndicatorPost :
         Route<Unit>(HttpMethod.Post, "/channels/$ChannelId/typing", NoStrategy)
 
@@ -193,6 +225,69 @@ public sealed class Route<T>(
 
     public object EditMessagePatch :
         Route<DiscordMessage>(HttpMethod.Patch, "/channels/$ChannelId/messages/$MessageId", DiscordMessage.serializer())
+
+    public object StartPublicThreadWithMessagePost :
+        Route<DiscordChannel>(
+            HttpMethod.Post,
+            "/channels/$ChannelId/messages/$MessageId/threads",
+            DiscordChannel.serializer()
+        )
+
+    public object StartThreadPost :
+        Route<DiscordChannel>(HttpMethod.Post, "/channels/$ChannelId/threads", DiscordChannel.serializer())
+
+    public object JoinThreadPut :
+        Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/thread-members/@me", NoStrategy)
+
+    public object AddThreadMemberPut :
+        Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/thread-members/$UserId", NoStrategy)
+
+    public object LeaveThreadDelete :
+        Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/thread-members/@me", NoStrategy)
+
+    public object RemoveUserFromThreadDelete :
+        Route<Unit>(HttpMethod.Delete, "/channels/$ChannelId/thread-members/$UserId", NoStrategy)
+
+    public object ThreadMembersGet :
+        Route<List<DiscordThreadMember>>(
+            HttpMethod.Get,
+            "/channels/$ChannelId/thread-members",
+            ListSerializer(DiscordThreadMember.serializer())
+        )
+
+    public object PrivateThreadsGet : // TODO does this route still/even exist?
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/$ChannelId/threads/private",
+            ListThreadsResponse.serializer()
+        )
+
+    public object PrivateArchivedThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/$ChannelId/threads/archived/private",
+            ListThreadsResponse.serializer()
+        )
+
+    public object PublicArchivedThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/$ChannelId/threads/archived/public",
+            ListThreadsResponse.serializer()
+        )
+
+    public object JoinedPrivateArchivedThreadsGet :
+        Route<ListThreadsResponse>(
+            HttpMethod.Get,
+            "/channels/$ChannelId/users/@me/threads/archived/private",
+            ListThreadsResponse.serializer()
+        )
+
+
+    /*
+     * Emoji:
+     * https://discord.com/developers/docs/resources/emoji
+     */
 
     public object GuildEmojiGet :
         Route<DiscordEmoji>(HttpMethod.Get, "/guilds/$GuildId/emojis/$EmojiId", DiscordEmoji.serializer())
@@ -209,11 +304,23 @@ public sealed class Route<T>(
     public object GuildEmojiPatch :
         Route<DiscordEmoji>(HttpMethod.Patch, "/guilds/$GuildId/emojis/$EmojiId", DiscordEmoji.serializer())
 
+
+    /*
+     * Invite:
+     * https://discord.com/developers/docs/resources/invite
+     */
+
     public object InviteGet :
         Route<DiscordInvite>(HttpMethod.Get, "/invites/$InviteCode", DiscordInvite.serializer())
 
     public object InviteDelete :
         Route<DiscordInvite>(HttpMethod.Delete, "/invites/$InviteCode", DiscordInvite.serializer())
+
+
+    /*
+     * User:
+     * https://discord.com/developers/docs/resources/user
+     */
 
     public object CurrentUserGet :
         Route<DiscordUser>(HttpMethod.Get, "/users/@me", DiscordUser.serializer())
@@ -240,6 +347,12 @@ public sealed class Route<T>(
     public object UserConnectionsGet :
         Route<List<Connection>>(HttpMethod.Get, "/users/@me/connections", ListSerializer(Connection.serializer()))
 
+
+    /*
+     * Guild:
+     * https://discord.com/developers/docs/resources/guild
+     */
+
     public object GuildPost :
         Route<DiscordGuild>(HttpMethod.Post, "/guilds", DiscordGuild.serializer())
 
@@ -264,6 +377,9 @@ public sealed class Route<T>(
 
     public object GuildChannelsPatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/channels", NoStrategy)
+
+    public object ActiveThreadsGet :
+        Route<ListThreadsResponse>(HttpMethod.Get, "/guilds/$GuildId/threads/active", ListThreadsResponse.serializer())
 
     public object GuildMemberGet :
         Route<DiscordGuildMember>(HttpMethod.Get, "/guilds/$GuildId/members/$UserId", DiscordGuildMember.serializer())
@@ -363,16 +479,16 @@ public sealed class Route<T>(
             ListSerializer(DiscordIntegration.serializer())
         )
 
-    public object GuildIntegrationPost :
+    public object GuildIntegrationPost : // TODO does this endpoint still/even exist?
         Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations", NoStrategy)
 
-    public object GuildIntegrationPatch :
+    public object GuildIntegrationPatch : // TODO does this endpoint still/even exist?
         Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
 
     public object GuildIntegrationDelete :
         Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/integrations/$IntegrationId", NoStrategy)
 
-    public object GuildIntegrationSyncPost :
+    public object GuildIntegrationSyncPost : // TODO does this endpoint still/even exist?
         Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations/$IntegrationId/sync", NoStrategy)
 
     @DeprecatedSinceKord("0.7.0")
@@ -391,48 +507,37 @@ public sealed class Route<T>(
     public object GuildWidgetPatch :
         Route<DiscordGuildWidget>(HttpMethod.Patch, "/guilds/$GuildId/widget", DiscordGuildWidget.serializer())
 
-
     public object GuildVanityInviteGet :
         Route<DiscordPartialInvite>(HttpMethod.Get, "/guilds/$GuildId/vanity-url", DiscordPartialInvite.serializer())
 
     public object GuildWelcomeScreenGet :
         Route<DiscordWelcomeScreen>(
             HttpMethod.Get,
-            "/guilds/${GuildId}/welcome-screen",
+            "/guilds/$GuildId/welcome-screen",
             DiscordWelcomeScreen.serializer()
         )
 
     public object GuildWelcomeScreenPatch :
         Route<DiscordWelcomeScreen>(
             HttpMethod.Patch,
-            "/guilds/${GuildId}/welcome-screen",
+            "/guilds/$GuildId/welcome-screen",
             DiscordWelcomeScreen.serializer()
         )
 
-
-    public object MessageCrosspost :
-        Route<DiscordMessage>(
-            HttpMethod.Post,
-            "/channels/$ChannelId/messages/$MessageId/crosspost",
-            DiscordMessage.serializer()
-        )
-
-
-    public object NewsChannelFollow :
-        Route<FollowedChannelResponse>(
-            HttpMethod.Post,
-            "/channels/$ChannelId/followers",
-            FollowedChannelResponse.serializer()
-        )
-
-
-    /**
-     * Returns the guild preview object for the given id, even if the user is not in the guild.
-     *
-     * This endpoint is only for Public guilds.
-     */
     public object GuildPreviewGet :
-        Route<DiscordGuildPreview>(HttpMethod.Get, "/guilds/${GuildId}/preview", DiscordGuildPreview.serializer())
+        Route<DiscordGuildPreview>(HttpMethod.Get, "/guilds/$GuildId/preview", DiscordGuildPreview.serializer())
+
+    public object SelfVoiceStatePatch :
+        Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/voice-states/@me", NoStrategy)
+
+    public object OthersVoiceStatePatch :
+        Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/voice-states/$UserId", NoStrategy)
+
+
+    /*
+     * Webhook:
+     * https://discord.com/developers/docs/resources/webhook
+     */
 
     public object ChannelWebhooksGet :
         Route<List<DiscordWebhook>>(
@@ -469,8 +574,6 @@ public sealed class Route<T>(
     public object WebhookByTokenDelete :
         Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
 
-    //TODO Make sure of the return of these routes below
-
     public object ExecuteWebhookPost :
         Route<DiscordMessage?>(
             HttpMethod.Post,
@@ -491,6 +594,12 @@ public sealed class Route<T>(
             DiscordMessage.serializer()
         )
 
+
+    /*
+     * Voice:
+     * https://discord.com/developers/docs/resources/voice
+     */
+
     public object VoiceRegionsGet :
         Route<List<DiscordVoiceRegion>>(
             HttpMethod.Get,
@@ -498,210 +607,149 @@ public sealed class Route<T>(
             ListSerializer(DiscordVoiceRegion.serializer())
         )
 
+
+    /*
+     * OAuth2:
+     * https://discord.com/developers/docs/topics/oauth2
+     */
+
     public object CurrentApplicationInfo :
         Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())
 
+
+    /*
+     * Guild Template:
+     * https://discord.com/developers/docs/resources/guild-template
+     */
+
     public object TemplateGet :
-        Route<DiscordTemplate>(HttpMethod.Get, "guilds/templates/${TemplateCode}", DiscordTemplate.serializer())
+        Route<DiscordTemplate>(HttpMethod.Get, "guilds/templates/$TemplateCode", DiscordTemplate.serializer())
 
     public object GuildFromTemplatePost :
-        Route<DiscordGuild>(HttpMethod.Post, "guilds/templates/${TemplateCode}", DiscordGuild.serializer())
+        Route<DiscordGuild>(HttpMethod.Post, "guilds/templates/$TemplateCode", DiscordGuild.serializer())
 
     public object GuildTemplatesGet :
         Route<List<DiscordTemplate>>(
             HttpMethod.Get,
-            "/guilds/${GuildId}/templates",
+            "/guilds/$GuildId/templates",
             ListSerializer(DiscordTemplate.serializer())
         )
 
     public object GuildTemplatePost :
-        Route<DiscordTemplate>(HttpMethod.Post, "/guilds/${GuildId}/templates", DiscordTemplate.serializer())
+        Route<DiscordTemplate>(HttpMethod.Post, "/guilds/$GuildId/templates", DiscordTemplate.serializer())
 
     public object TemplateSyncPut :
-        Route<DiscordTemplate>(
-            HttpMethod.Put,
-            "/guilds/${GuildId}/templates/${TemplateCode}",
-            DiscordTemplate.serializer()
-        )
+        Route<DiscordTemplate>(HttpMethod.Put, "/guilds/$GuildId/templates/$TemplateCode", DiscordTemplate.serializer())
 
     public object TemplatePatch :
         Route<DiscordTemplate>(
             HttpMethod.Patch,
-            "/guilds/${GuildId}/templates/${TemplateCode}",
+            "/guilds/$GuildId/templates/$TemplateCode",
             DiscordTemplate.serializer()
         )
 
     public object TemplateDelete :
         Route<DiscordTemplate>(
             HttpMethod.Delete,
-            "/guilds/${GuildId}/templates/${TemplateCode}",
+            "/guilds/$GuildId/templates/$TemplateCode",
             DiscordTemplate.serializer()
         )
 
 
+    /*
+     * Interactions - Application Commands:
+     * https://discord.com/developers/docs/interactions/application-commands
+     */
+
     public object GlobalApplicationCommandsGet :
         Route<List<DiscordApplicationCommand>>(
             HttpMethod.Get,
-            "/applications/${ApplicationId}/commands",
+            "/applications/$ApplicationId/commands",
             ListSerializer(DiscordApplicationCommand.serializer())
         )
-
 
     public object GlobalApplicationCommandCreate :
         Route<DiscordApplicationCommand>(
             HttpMethod.Post,
-            "/applications/${ApplicationId}/commands",
+            "/applications/$ApplicationId/commands",
             DiscordApplicationCommand.serializer()
         )
-
 
     public object GlobalApplicationCommandsCreate :
         Route<List<DiscordApplicationCommand>>(
             HttpMethod.Put,
-            "/applications/${ApplicationId}/commands",
+            "/applications/$ApplicationId/commands",
             ListSerializer(DiscordApplicationCommand.serializer())
         )
-
 
     public object GlobalApplicationCommandModify :
         Route<DiscordApplicationCommand>(
             HttpMethod.Patch,
-            "/applications/${ApplicationId}/commands/${CommandId}",
+            "/applications/$ApplicationId/commands/$CommandId",
             DiscordApplicationCommand.serializer()
         )
-
 
     public object GlobalApplicationCommandGet :
         Route<DiscordApplicationCommand>(
             HttpMethod.Get,
-            "/applications/${ApplicationId}/commands/${CommandId}",
+            "/applications/$ApplicationId/commands/$CommandId",
             DiscordApplicationCommand.serializer()
         )
 
     public object GlobalApplicationCommandDelete :
-        Route<Unit>(HttpMethod.Delete, "/applications/${ApplicationId}/commands/${CommandId}", NoStrategy)
-
+        Route<Unit>(HttpMethod.Delete, "/applications/$ApplicationId/commands/$CommandId", NoStrategy)
 
     public object GuildApplicationCommandsGet :
         Route<List<DiscordApplicationCommand>>(
             HttpMethod.Get,
-            "/applications/${ApplicationId}/guilds/${GuildId}/commands",
+            "/applications/$ApplicationId/guilds/$GuildId/commands",
             ListSerializer(DiscordApplicationCommand.serializer())
         )
-
 
     public object GuildApplicationCommandCreate :
         Route<DiscordApplicationCommand>(
             HttpMethod.Post,
-            "/applications/${ApplicationId}/guilds/${GuildId}/commands",
+            "/applications/$ApplicationId/guilds/$GuildId/commands",
             DiscordApplicationCommand.serializer()
         )
-
 
     public object GuildApplicationCommandsCreate :
         Route<List<DiscordApplicationCommand>>(
             HttpMethod.Put,
-            "/applications/${ApplicationId}/guilds/${GuildId}/commands",
+            "/applications/$ApplicationId/guilds/$GuildId/commands",
             ListSerializer(DiscordApplicationCommand.serializer())
         )
-
 
     public object GuildApplicationCommandModify :
         Route<DiscordApplicationCommand>(
             HttpMethod.Patch,
-            "/applications/${ApplicationId}/guilds/${GuildId}/commands/${CommandId}",
+            "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId",
             DiscordApplicationCommand.serializer()
         )
-
 
     public object GuildApplicationCommandGet :
         Route<DiscordApplicationCommand>(
             HttpMethod.Get,
-            "/applications/${ApplicationId}/guilds/${GuildId}/commands/${CommandId}",
+            "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId",
             DiscordApplicationCommand.serializer()
         )
 
     public object GuildApplicationCommandDelete :
-        Route<Unit>(
-            HttpMethod.Delete,
-            "/applications/${ApplicationId}/guilds/{guild.id}/commands/${CommandId}",
-            NoStrategy
-        )
-
-    public object GuildScheduledEventsGet :
-        Route<List<DiscordGuildScheduledEvent>>(
-            HttpMethod.Get,
-            "/guilds/$GuildId/events",
-            ListSerializer(DiscordGuildScheduledEvent.serializer())
-        )
-
-    public object GuildScheduledEventGet :
-        Route<DiscordGuildScheduledEvent>(
-            HttpMethod.Get,
-            "/guilds/$GuildId/events/$ScheduledEventId",
-            DiscordGuildScheduledEvent.serializer()
-        )
-
-    public object GuildScheduledEventUsersGet :
-        Route<GuildScheduledEventUsersResponse>(
-            HttpMethod.Get,
-            "/guilds/$GuildId/events/$ScheduledEventId/users",
-            GuildScheduledEventUsersResponse.serializer()
-        )
-
-    public object GuildScheduledEventPatch :
-        Route<DiscordGuildScheduledEvent>(
-            HttpMethod.Patch,
-            "/guilds/$GuildId/events/$ScheduledEventId",
-            DiscordGuildScheduledEvent.serializer()
-        )
-
-    public object GuildScheduledEventDelete :
-        Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/events/$ScheduledEventId", NoStrategy)
-
-    public object GuildScheduledEventsPost :
-        Route<DiscordGuildScheduledEvent>(
-            HttpMethod.Post,
-            "/guilds/$GuildId/events",
-            DiscordGuildScheduledEvent.serializer()
-        )
-
-    public object InteractionResponseCreate :
-        Route<Unit>(HttpMethod.Post, "/interactions/${InteractionId}/${InteractionToken}/callback", NoStrategy)
-
-    public object OriginalInteractionResponseGet :
-        Route<DiscordMessage>(
-            HttpMethod.Get,
-            "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
-            DiscordMessage.serializer()
-        )
-
-    public object OriginalInteractionResponseModify :
-        Route<DiscordMessage>(
-            HttpMethod.Patch,
-            "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
-            DiscordMessage.serializer()
-        )
-
-    public object OriginalInteractionResponseDelete :
-        Route<Unit>(HttpMethod.Delete, "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original", NoStrategy)
-
+        Route<Unit>(HttpMethod.Delete, "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId", NoStrategy)
 
     public object GuildApplicationCommandPermissionsGet :
         Route<List<DiscordGuildApplicationCommandPermissions>>(
             HttpMethod.Get,
-            "/applications/${ApplicationId}/guilds/$GuildId/commands/permissions",
+            "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
             ListSerializer(DiscordGuildApplicationCommandPermissions.serializer())
         )
-
 
     public object ApplicationCommandPermissionsGet :
         Route<DiscordGuildApplicationCommandPermissions>(
             HttpMethod.Get,
-            "/applications/${ApplicationId}/guilds/$GuildId/commands/$CommandId/permissions",
+            "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
             DiscordGuildApplicationCommandPermissions.serializer()
         )
-
 
     public object ApplicationCommandPermissionsPut :
         Route<DiscordGuildApplicationCommandPermissions>(
@@ -710,7 +758,6 @@ public sealed class Route<T>(
             DiscordGuildApplicationCommandPermissions.serializer()
         )
 
-
     public object ApplicationCommandPermissionsBatchPut :
         Route<List<DiscordGuildApplicationCommandPermissions>>(
             HttpMethod.Put,
@@ -718,33 +765,102 @@ public sealed class Route<T>(
             ListSerializer(DiscordGuildApplicationCommandPermissions.serializer())
         )
 
+
+    /*
+     * Guild Scheduled Event:
+     * https://discord.com/developers/docs/resources/guild-scheduled-event
+     */
+
+    public object GuildScheduledEventsGet :
+        Route<List<DiscordGuildScheduledEvent>>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/scheduled-events",
+            ListSerializer(DiscordGuildScheduledEvent.serializer())
+        )
+
+    public object GuildScheduledEventGet :
+        Route<DiscordGuildScheduledEvent>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/scheduled-events/$ScheduledEventId",
+            DiscordGuildScheduledEvent.serializer()
+        )
+
+    public object GuildScheduledEventUsersGet :
+        Route<GuildScheduledEventUsersResponse>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/scheduled-events/$ScheduledEventId/users",
+            GuildScheduledEventUsersResponse.serializer()
+        )
+
+    public object GuildScheduledEventPatch :
+        Route<DiscordGuildScheduledEvent>(
+            HttpMethod.Patch,
+            "/guilds/$GuildId/scheduled-events/$ScheduledEventId",
+            DiscordGuildScheduledEvent.serializer()
+        )
+
+    public object GuildScheduledEventDelete :
+        Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/scheduled-events/$ScheduledEventId", NoStrategy)
+
+    public object GuildScheduledEventsPost :
+        Route<DiscordGuildScheduledEvent>(
+            HttpMethod.Post,
+            "/guilds/$GuildId/scheduled-events",
+            DiscordGuildScheduledEvent.serializer()
+        )
+
+
+    /*
+     * Interactions - Receiving and Responding:
+     * https://discord.com/developers/docs/interactions/receiving-and-responding
+     */
+
+    public object InteractionResponseCreate :
+        Route<Unit>(HttpMethod.Post, "/interactions/$InteractionId/$InteractionToken/callback", NoStrategy)
+
+    public object OriginalInteractionResponseGet :
+        Route<DiscordMessage>(
+            HttpMethod.Get,
+            "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
+            DiscordMessage.serializer()
+        )
+
+    public object OriginalInteractionResponseModify :
+        Route<DiscordMessage>(
+            HttpMethod.Patch,
+            "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
+            DiscordMessage.serializer()
+        )
+
+    public object OriginalInteractionResponseDelete :
+        Route<Unit>(HttpMethod.Delete, "/webhooks/$ApplicationId/$InteractionToken/messages/@original", NoStrategy)
+
     public object FollowupMessageCreate :
         Route<DiscordMessage>(
             HttpMethod.Post,
-            "/webhooks/${ApplicationId}/${InteractionToken}",
+            "/webhooks/$ApplicationId/$InteractionToken",
             DiscordMessage.serializer()
         )
 
     public object FollowupMessageModify :
         Route<DiscordMessage>(
             HttpMethod.Patch,
-            "/webhooks/${ApplicationId}/${InteractionToken}/messages/${MessageId}",
+            "/webhooks/$ApplicationId/$InteractionToken/messages/$MessageId",
             DiscordMessage.serializer()
         )
 
     public object FollowupMessageDelete :
         Route<Unit>(
             HttpMethod.Delete,
-            "/webhooks/${ApplicationId}/${InteractionToken}/messages/${MessageId}",
+            "/webhooks/$ApplicationId/$InteractionToken/messages/$MessageId",
             NoStrategy
         )
 
-    public object SelfVoiceStatePatch :
-        Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/@me", NoStrategy)
 
-
-    public object OthersVoiceStatePatch :
-        Route<Unit>(HttpMethod.Patch, "/guilds/${GuildId}/voice-states/${UserId}", NoStrategy)
+    /*
+     * Stage Instance:
+     * https://discord.com/developers/docs/resources/stage-instance
+     */
 
     public object StageInstanceGet :
         Route<DiscordStageInstance>(HttpMethod.Get, "/stage-instances/$ChannelId", DiscordStageInstance.serializer())
@@ -757,71 +873,4 @@ public sealed class Route<T>(
 
     public object StageInstanceDelete :
         Route<Unit>(HttpMethod.Delete, "/stage-instances/$ChannelId", NoStrategy)
-
-    public object StartPublicThreadWithMessagePost :
-        Route<DiscordChannel>(
-            HttpMethod.Post,
-            "/channels/${ChannelId}/messages/${MessageId}/threads",
-            DiscordChannel.serializer()
-        )
-
-
-    public object StartThreadPost :
-        Route<DiscordChannel>(HttpMethod.Post, "/channels/${ChannelId}/threads", DiscordChannel.serializer())
-
-    public object JoinThreadPut :
-        Route<Unit>(HttpMethod.Put, "/channels/${ChannelId}/thread-members/@me", NoStrategy)
-
-    public object AddThreadMemberPut :
-        Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/thread-members/${UserId}", NoStrategy)
-
-    public object LeaveThreadDelete :
-        Route<Unit>(HttpMethod.Delete, "/channels/${ChannelId}/thread-members/@me", NoStrategy)
-
-    public object RemoveUserFromThreadDelete :
-        Route<Unit>(HttpMethod.Delete, "/channels/${ChannelId}/thread-members/${UserId}", NoStrategy)
-
-    public object ThreadMembersGet :
-        Route<List<DiscordThreadMember>>(
-            HttpMethod.Get,
-            "/channels/${ChannelId}/thread-members",
-            ListSerializer(DiscordThreadMember.serializer())
-        )
-
-
-    public object PrivateThreadsGet :
-        Route<ListThreadsResponse>(
-            HttpMethod.Get,
-            "/channels/${ChannelId}/threads/private",
-            ListThreadsResponse.serializer()
-        )
-
-
-    public object PrivateArchivedThreadsGet :
-        Route<ListThreadsResponse>(
-            HttpMethod.Get,
-            "/channels/${ChannelId}/threads/archived/private",
-            ListThreadsResponse.serializer()
-        )
-
-    public object PublicArchivedThreadsGet :
-        Route<ListThreadsResponse>(
-            HttpMethod.Get,
-            "/channels/${ChannelId}/threads/archived/public",
-            ListThreadsResponse.serializer()
-        )
-
-    public object JoinedPrivateArchivedThreadsGet :
-        Route<ListThreadsResponse>(
-            HttpMethod.Get,
-            "/channels/$ChannelId/users/@me/threads/archived/private",
-            ListThreadsResponse.serializer()
-        )
-
-    public object ActiveThreadsGet :
-        Route<ListThreadsResponse>(
-            HttpMethod.Get,
-            "/guilds/${GuildId}/threads/active",
-            ListThreadsResponse.serializer()
-        )
 }
