@@ -1,6 +1,7 @@
 package dev.kord.rest.service
 
 import dev.kord.common.entity.DiscordChannel
+import dev.kord.common.entity.DiscordPartialGuild
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
@@ -8,39 +9,41 @@ import dev.kord.rest.builder.user.GroupDMCreateBuilder
 import dev.kord.rest.json.request.CurrentUserModifyRequest
 import dev.kord.rest.json.request.DMCreateRequest
 import dev.kord.rest.json.request.GroupDMCreateRequest
+import dev.kord.rest.json.response.Connection
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class UserService(requestHandler: RequestHandler) : RestService(requestHandler) {
+public class UserService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend fun getCurrentUser() = call(Route.CurrentUserGet)
+    public suspend fun getCurrentUser(): DiscordUser = call(Route.CurrentUserGet)
 
-    suspend fun getUser(userId: Snowflake) = call(Route.UserGet) {
+    public suspend fun getUser(userId: Snowflake): DiscordUser = call(Route.UserGet) {
         keys[Route.UserId] = userId
     }
 
-    suspend fun getCurrentUserGuilds(position: Position? = null, limit: Int = 100) = call(Route.CurrentUsersGuildsGet) {
-        if (position != null) {
-            parameter(position.key, position.value)
+    public suspend fun getCurrentUserGuilds(position: Position? = null, limit: Int = 100): List<DiscordPartialGuild> =
+        call(Route.CurrentUsersGuildsGet) {
+            if (position != null) {
+                parameter(position.key, position.value)
+            }
+
+            parameter("limit", "$limit")
         }
 
-        parameter("limit", "$limit")
-    }
-
-    suspend fun leaveGuild(guildId: Snowflake) = call(Route.GuildLeave) {
+    public suspend fun leaveGuild(guildId: Snowflake): Unit = call(Route.GuildLeave) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun getUserConnections() = call(Route.UserConnectionsGet)
+    public suspend fun getUserConnections(): List<Connection> = call(Route.UserConnectionsGet)
 
-    suspend fun createDM(dm: DMCreateRequest) = call(Route.DMPost) {
+    public suspend fun createDM(dm: DMCreateRequest): DiscordChannel = call(Route.DMPost) {
         body(DMCreateRequest.serializer(), dm)
     }
 
-    suspend inline fun createGroupDM(builder: GroupDMCreateBuilder.() -> Unit): DiscordChannel {
+    public suspend inline fun createGroupDM(builder: GroupDMCreateBuilder.() -> Unit): DiscordChannel {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -50,7 +53,7 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
         }
     }
 
-    suspend inline fun modifyCurrentUser(builder: CurrentUserModifyBuilder.() -> Unit): DiscordUser {
+    public suspend inline fun modifyCurrentUser(builder: CurrentUserModifyBuilder.() -> Unit): DiscordUser {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -59,5 +62,4 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
             body(CurrentUserModifyRequest.serializer(), CurrentUserModifyBuilder().apply(builder).toRequest())
         }
     }
-
 }
