@@ -19,6 +19,7 @@ public sealed class Command {
             element("d", JsonObject.serializer().descriptor)
         }
 
+        @OptIn(KordVoice::class)
         override fun serialize(encoder: Encoder, value: Command) {
             val composite = encoder.beginStructure(descriptor)
 
@@ -72,6 +73,7 @@ public data class SendSpeaking(
     val ssrc: UInt
 ) : Command()
 
+@KordVoice
 @Serializable
 public data class SelectProtocol(
     val protocol: String,

@@ -13,7 +13,6 @@ import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.message.*
 import dev.kord.gateway.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
@@ -67,8 +66,8 @@ internal class MessageEventHandler(
 
         //cache interaction user if present.
         if (interaction is Optional.Value) {
-            val userData = UserData.from(interaction.value!!.user)
-            cache.put(userData)
+            val interactionUserData = UserData.from(interaction.value!!.user)
+            cache.put(interactionUserData)
         }
 
         mentions.forEach {

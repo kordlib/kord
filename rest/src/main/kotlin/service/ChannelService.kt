@@ -120,6 +120,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest, reason: String?) = call(Route.BulkMessageDeletePost) {
         keys[Route.ChannelId] = channelId
         body(BulkDeleteRequest.serializer(), messages)
+        auditLogReason(reason)
     }
 
     suspend fun deleteChannel(channelId: Snowflake, reason: String? = null) = call(Route.ChannelDelete) {

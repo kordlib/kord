@@ -155,11 +155,11 @@ data class AuditLogChange<T>(
 
         @Suppress("UNCHECKED_CAST")
         override fun serialize(encoder: Encoder, value: AuditLogChange<T>) {
-            val value = value as AuditLogChange<Unit>
+            val logChange = value as AuditLogChange<Unit>
             encoder.encodeStructure(descriptor) {
-                encodeSerializableElement(descriptor, 0, value.key.serializer, value.new as Unit)
-                encodeSerializableElement(descriptor, 0, value.key.serializer, value.old as Unit)
-                encodeSerializableElement(descriptor, 0, AuditLogChangeKey.serializer(Unit.serializer()), value.key)
+                encodeSerializableElement(descriptor, 0, logChange.key.serializer, logChange.new as Unit)
+                encodeSerializableElement(descriptor, 0, logChange.key.serializer, logChange.old as Unit)
+                encodeSerializableElement(descriptor, 0, AuditLogChangeKey.serializer(Unit.serializer()), logChange.key)
             }
         }
     }

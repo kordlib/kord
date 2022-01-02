@@ -539,8 +539,8 @@ suspend inline fun GuildService.modifyGuildWelcomeScreen(
     builder: WelcomeScreenModifyBuilder.() -> Unit
 ): DiscordWelcomeScreen {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = WelcomeScreenModifyBuilder().apply(builder)
-    return modifyGuildWelcomeScreen(guildId, builder.toRequest(), builder.reason)
+    val appliedBuilder= WelcomeScreenModifyBuilder().apply(builder)
+    return modifyGuildWelcomeScreen(guildId, appliedBuilder.toRequest(), appliedBuilder.reason)
 }
 
 @OptIn(ExperimentalContracts::class)

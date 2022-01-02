@@ -46,7 +46,7 @@ public interface FollowupMessageBehavior : KordEntity, Strategizable {
 @OptIn(ExperimentalContracts::class)
 public suspend inline fun FollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = FollowupMessageModifyBuilder().apply(builder)
-    val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, builder.toRequest())
+    val appliedBuilder = FollowupMessageModifyBuilder().apply(builder)
+    val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, appliedBuilder.toRequest())
     return EphemeralFollowupMessage(Message(response.toData(), kord), applicationId, token, kord)
 }

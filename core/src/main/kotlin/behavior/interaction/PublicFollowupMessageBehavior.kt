@@ -46,8 +46,8 @@ public interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
 @OptIn(ExperimentalContracts::class)
 public suspend inline fun PublicFollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = FollowupMessageModifyBuilder().apply(builder)
-    val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, builder.toRequest())
+    val appliedBuilder = FollowupMessageModifyBuilder().apply(builder)
+    val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, appliedBuilder.toRequest())
     return PublicFollowupMessage(Message(response.toData(), kord), applicationId, token, kord)
 }
 

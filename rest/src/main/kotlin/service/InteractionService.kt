@@ -3,45 +3,13 @@ package dev.kord.rest.service
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
-import dev.kord.common.entity.Choice
-import dev.kord.common.entity.DiscordApplicationCommand
-import dev.kord.common.entity.DiscordAutoComplete
-import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
-import dev.kord.common.entity.DiscordMessage
-import dev.kord.common.entity.InteractionResponseType
-import dev.kord.common.entity.PartialDiscordGuildApplicationCommandPermissions
-import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
-import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
-import dev.kord.rest.builder.interaction.BaseChoiceBuilder
-import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
-import dev.kord.rest.builder.interaction.ChatInputModifyBuilder
-import dev.kord.rest.builder.interaction.IntChoiceBuilder
-import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
-import dev.kord.rest.builder.interaction.MessageCommandModifyBuilder
-import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
-import dev.kord.rest.builder.interaction.NumberChoiceBuilder
-import dev.kord.rest.builder.interaction.StringChoiceBuilder
-import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
-import dev.kord.rest.builder.interaction.UserCommandModifyBuilder
+import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
 import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
-import dev.kord.rest.json.request.ApplicationCommandCreateRequest
-import dev.kord.rest.json.request.ApplicationCommandModifyRequest
-import dev.kord.rest.json.request.ApplicationCommandPermissionsEditRequest
-import dev.kord.rest.json.request.AutoCompleteResponseCreateRequest
-import dev.kord.rest.json.request.FollowupMessageCreateRequest
-import dev.kord.rest.json.request.FollowupMessageModifyRequest
-import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
-import dev.kord.rest.json.request.InteractionResponseCreateRequest
-import dev.kord.rest.json.request.InteractionResponseModifyRequest
-import dev.kord.rest.json.request.MultipartFollowupMessageCreateRequest
-import dev.kord.rest.json.request.MultipartFollowupMessageModifyRequest
-import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
-import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
+import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlinx.serialization.KSerializer
@@ -623,7 +591,6 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend inline fun modifyInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,
-        ephemeral: Boolean = false,
         builder: InteractionResponseModifyBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -696,7 +663,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         )
     }
 
-    public suspend fun acknowledge(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
+    suspend fun acknowledge(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
         val request = InteractionResponseCreateRequest(
             type = InteractionResponseType.DeferredChannelMessageWithSource,
             data = Optional(

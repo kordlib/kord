@@ -29,8 +29,8 @@ public interface InteractionResponseBehavior : KordObject {
 @OptIn(ExperimentalContracts::class)
 public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = FollowupMessageCreateBuilder(false).apply(builder)
-    val message = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest())
+    val appliedBuilder = FollowupMessageCreateBuilder(false).apply(builder)
+    val message = kord.rest.interaction.createFollowupMessage(applicationId, token, appliedBuilder.toRequest())
     return PublicFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
 }
 
@@ -42,8 +42,8 @@ public suspend inline fun InteractionResponseBehavior.followUp(builder: Followup
 @OptIn(ExperimentalContracts::class)
 public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder: FollowupMessageCreateBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = FollowupMessageCreateBuilder(true).apply(builder)
-    val message = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest())
+    val appliedBuilder = FollowupMessageCreateBuilder(true).apply(builder)
+    val message = kord.rest.interaction.createFollowupMessage(applicationId, token, appliedBuilder.toRequest())
     return EphemeralFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
 }
 
@@ -58,6 +58,6 @@ public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder:
 @OptIn(ExperimentalContracts::class)
 public suspend inline fun InteractionResponseBehavior.edit(builder: InteractionResponseModifyBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = InteractionResponseModifyBuilder().apply(builder)
-    kord.rest.interaction.modifyInteractionResponse(applicationId, token, builder.toRequest())
+    val appliedBuilder = InteractionResponseModifyBuilder().apply(builder)
+    kord.rest.interaction.modifyInteractionResponse(applicationId, token, appliedBuilder.toRequest())
 }
