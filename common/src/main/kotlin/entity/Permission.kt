@@ -14,7 +14,7 @@ import kotlin.contracts.contract
 
 
 @Serializable(with = Permissions.Serializer::class)
-public data class Permissions constructor(val code: DiscordBitSet) {
+public data class Permissions(val code: DiscordBitSet) {
     /**
      *  Returns this [Permissions] as a [Set] of [Permission]
      */

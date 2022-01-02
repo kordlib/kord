@@ -116,7 +116,7 @@ public enum class UserFlag(public val code: Int) {
 }
 
 @Serializable(with = UserFlags.Serializer::class)
-public data class UserFlags constructor(val code: Int) {
+public data class UserFlags(val code: Int) {
 
     val flags: List<UserFlag> = UserFlag.values().filter { code and it.code != 0 }
 
