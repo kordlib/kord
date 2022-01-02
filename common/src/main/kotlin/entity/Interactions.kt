@@ -137,9 +137,9 @@ public sealed class Choice<out T> {
     public abstract val name: String
     public abstract val value: T
 
-    public class IntChoice(override val name: String, override val value: Long) : Choice<Long>()
-    public class NumberChoice(override val name: String, override val value: Double) : Choice<Double>()
-    public class StringChoice(override val name: String, override val value: String) : Choice<String>()
+    public data class IntChoice(override val name: String, override val value: Long) : Choice<Long>()
+    public data class NumberChoice(override val name: String, override val value: Double) : Choice<Double>()
+    public data class StringChoice(override val name: String, override val value: String) : Choice<String>()
 
     internal class Serializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
@@ -423,92 +423,76 @@ public sealed class CommandArgument<out T> : Option() {
     public abstract val value: T
     public abstract val focused: OptionalBoolean
 
-    public class StringArgument(
+    public data class StringArgument(
         override val name: String,
         override val value: String,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<String>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.String
-
-        override fun toString(): String = "StringArgument(name=$name, value=$value)"
     }
 
-    public class IntegerArgument(
+    public data class IntegerArgument(
         override val name: String,
         override val value: Long,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Long>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Integer
-
-        override fun toString(): String = "IntegerArgument(name=$name, value=$value)"
     }
 
-    public class NumberArgument(
+    public data class NumberArgument(
         override val name: String,
         override val value: Double,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Double>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Number
-
-        override fun toString(): String = "NumberArgument(name=$name, value=$value)"
     }
 
-    public class BooleanArgument(
+    public data class BooleanArgument(
         override val name: String,
         override val value: Boolean,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Boolean>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Boolean
-
-        override fun toString(): String = "BooleanArgument(name=$name, value=$value)"
     }
 
-    public class UserArgument(
+    public data class UserArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.User
-
-        override fun toString(): String = "UserArgument(name=$name, value=$value)"
     }
 
-    public class ChannelArgument(
+    public data class ChannelArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Channel
-
-        override fun toString(): String = "ChannelArgument(name=$name, value=$value)"
     }
 
-    public class RoleArgument(
+    public data class RoleArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Role
-
-        override fun toString(): String = "RoleArgument(name=$name, value=$value)"
     }
 
-    public class MentionableArgument(
+    public data class MentionableArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Mentionable
-
-        override fun toString(): String = "MentionableArgument(name=$name, value=$value)"
     }
 
     internal object Serializer : KSerializer<CommandArgument<*>> {
