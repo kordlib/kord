@@ -60,28 +60,28 @@ public class PartialGuild(
     /**
      * The vanity code of this server used in the [vanityUrl], if present.
      */
-    public val vanityCode: String? get() = data.vanityUrlCode
+    public val vanityCode: String? get() = data.vanityUrlCode.value
 
     /**
      * The vanity invite URL of this server, if present.
      */
-    public val vanityUrl: String? get() = data.vanityUrlCode?.let { "https://discord.gg/$it" }
+    public val vanityUrl: String? get() = vanityCode?.let { "https://discord.gg/$it" }
 
     /**
      * The description of this guild, if present.
      */
-    public val description: String? get() = data.description
+    public val description: String? get() = data.description.value
 
 
     /**
      * The [NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level) of this Guild
      */
-    public val nsfw: NsfwLevel get() = data.nsfwLevel
+    public val nsfw: NsfwLevel? get() = data.nsfwLevel.value
 
     /**
      * The verification level required for the guild.
      */
-    public val verificationLevel: VerificationLevel get() = data.verificationLevel
+    public val verificationLevel: VerificationLevel? get() = data.verificationLevel.value
 
     public val splashHash: String? get() = data.splash.value
 
@@ -125,7 +125,7 @@ public class PartialGuild(
      * Gets the banner url in the specified format.
      */
     public fun getBannerUrl(format: Image.Format): String? =
-        data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
+        data.banner.value?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
     /**
      * Requests to get the banner image in the specified [format], if present.

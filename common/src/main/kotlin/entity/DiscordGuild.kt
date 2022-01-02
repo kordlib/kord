@@ -149,13 +149,13 @@ class DiscordPartialGuild(
     val permissions: Optional<Permissions> = Optional.Missing(),
     val features: List<GuildFeature>,
     @SerialName("welcome_screen") val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
-    @SerialName("vanity_url_code") val vanityUrlCode: String?,
-    val description: String?,
-    val banner: String?,
+    @SerialName("vanity_url_code") val vanityUrlCode: Optional<String?> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing(),
+    val banner: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
-    @SerialName("nsfw_level") val nsfwLevel: NsfwLevel,
+    @SerialName("nsfw_level") val nsfwLevel: Optional<NsfwLevel> = Optional.Missing(),
     @SerialName("verification_level")
-    val verificationLevel: VerificationLevel
+    val verificationLevel: Optional<VerificationLevel> = Optional.Missing()
     )
 
 /**

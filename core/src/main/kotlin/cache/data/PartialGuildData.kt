@@ -16,12 +16,14 @@ public class PartialGuildData(
     public val permissions: Optional<Permissions> = Optional.Missing(),
     public val features: List<GuildFeature>,
     public val welcomeScreen: Optional<WelcomeScreenData> = Optional.Missing(),
-    public val vanityUrlCode: String?,
-    public val description: String?,
-    public val banner: String?,
+    @SerialName("vanity_url_code") public val vanityUrlCode: Optional<String?> = Optional.Missing(),
+    public val description: Optional<String?> = Optional.Missing(),
+    public val banner: Optional<String?> = Optional.Missing(),
     public val splash: Optional<String?> = Optional.Missing(),
-    public val nsfwLevel: NsfwLevel,
-    public val verificationLevel: VerificationLevel,
+    @SerialName("nsfw_level") public val nsfwLevel: Optional<NsfwLevel> = Optional.Missing(),
+    @SerialName("verification_level")
+    public val verificationLevel: Optional<VerificationLevel> = Optional.Missing()
+
 ) {
     public companion object {
         public fun from(partialGuild: DiscordPartialGuild): PartialGuildData = with(partialGuild) {
