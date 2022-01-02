@@ -82,9 +82,9 @@ public data class ApplicationCommandOption(
  */
 @KordExperimental
 public object NotSerializable : KSerializer<Any?> {
-    override fun deserialize(decoder: Decoder): Nothing = throw UnsupportedOperationException("This operation is not supported.")
+    override fun deserialize(decoder: Decoder): Nothing = error("This operation is not supported.")
     override val descriptor: SerialDescriptor = String.serializer().descriptor
-    override fun serialize(encoder: Encoder, value: Any?): Nothing = throw UnsupportedOperationException("This operation is not supported.")
+    override fun serialize(encoder: Encoder, value: Any?): Nothing = error("This operation is not supported.")
 }
 
 
