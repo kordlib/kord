@@ -21,7 +21,7 @@ public enum class OpCode(public val code: Int) {
     Resumed(9),
     ClientDisconnect(13);
 
-    internal companion object OpCodeSerializer : KSerializer<OpCode> {
+    internal object Serializer : KSerializer<OpCode> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("op", PrimitiveKind.INT)
 

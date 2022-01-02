@@ -166,7 +166,7 @@ public data class AuditLogChange<T>(
 }
 
 @Serializable(with = AuditLogChangeKey.Serializer::class)
-public sealed class AuditLogChangeKey<T>(public val name: String, internal val serializer: KSerializer<T>) {
+public sealed class AuditLogChangeKey<T>(public val name: String, public val serializer: KSerializer<T>) {
 
     override fun toString(): String = "AuditLogChangeKey(name=$name)"
 

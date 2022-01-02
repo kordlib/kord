@@ -33,7 +33,7 @@ public class Color(rgb: Int) {
         return color.rgb == rgb
     }
 
-    private companion object {
+    public companion object {
         private const val MIN_COLOR = 0
         private const val MAX_COLOR = 0xFFFFFF
     }

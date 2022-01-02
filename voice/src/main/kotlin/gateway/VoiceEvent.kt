@@ -23,7 +23,7 @@ private val jsonLogger = KotlinLogging.logger { }
 public sealed class VoiceEvent {
     internal companion object : DeserializationStrategy<VoiceEvent?> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
-            element("op", OpCode.descriptor)
+            element("op", OpCode.Serializer.descriptor)
             element("d", JsonElement.serializer().descriptor)
         }
 
@@ -36,7 +36,7 @@ public sealed class VoiceEvent {
                 loop@ while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
                         CompositeDecoder.DECODE_DONE -> break@loop
-                        0 -> op = OpCode.deserialize(decoder)
+                        0 -> op = OpCode.Serializer.deserialize(decoder)
                         1 -> data = when (op) {
                             OpCode.Hello -> decodeSerializableElement(
                                 descriptor,

@@ -41,7 +41,7 @@ private object NullDecoder : DeserializationStrategy<Nothing?> {
 public sealed class Event {
     internal companion object : DeserializationStrategy<Event?> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
-            element("op", OpCode.descriptor)
+            element("op", OpCode.Serializer.descriptor)
             element("t", String.serializer().descriptor, isOptional = true)
             element("s", Int.serializer().descriptor, isOptional = true)
             element("d", JsonObject.serializer().descriptor, isOptional = true)
@@ -63,7 +63,7 @@ public sealed class Event {
                         decodeElementIndex(descriptor)) {//we assume the all fields to be present *before* the data field
                         CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> {
-                            op = OpCode.deserialize(decoder)
+                            op = OpCode.Serializer.deserialize(decoder)
                             @Suppress("NON_EXHAUSTIVE_WHEN")
                             when (op) {
                                 OpCode.HeartbeatACK -> data = HeartbeatACK
