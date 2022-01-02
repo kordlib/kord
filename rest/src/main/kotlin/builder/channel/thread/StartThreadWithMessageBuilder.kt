@@ -4,7 +4,10 @@ import dev.kord.common.entity.ArchiveDuration
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.StartThreadRequest
 
-class StartThreadWithMessageBuilder(var name: String, var autoArchiveDuration: ArchiveDuration) : AuditRequestBuilder<StartThreadRequest> {
+public class StartThreadWithMessageBuilder(
+    public var name: String,
+    public var autoArchiveDuration: ArchiveDuration,
+) : AuditRequestBuilder<StartThreadRequest> {
     override var reason: String? = null
 
     override fun toRequest(): StartThreadRequest {
