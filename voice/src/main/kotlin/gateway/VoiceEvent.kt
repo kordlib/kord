@@ -127,7 +127,7 @@ public sealed class Close : VoiceEvent() {
      *
      * @param recoverable true if the gateway will automatically try to reconnect.
      */
-    public data class DiscordClose(public val closeCode: VoiceGatewayCloseCode, public val recoverable: Boolean) : Close()
+    public data class DiscordClose(val closeCode: VoiceGatewayCloseCode, val recoverable: Boolean) : Close()
 
     /**
      * The gateway closed and will attempt to resume the session.

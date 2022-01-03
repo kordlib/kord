@@ -295,7 +295,7 @@ public sealed class GuildFeature(public val value: String) {
 }
 
 @Serializable(with = SystemChannelFlags.Serializer::class)
-public data class SystemChannelFlags(public val code: Int) {
+public data class SystemChannelFlags(val code: Int) {
 
     public operator fun contains(flag: SystemChannelFlags): Boolean {
         return this.code and flag.code == flag.code
