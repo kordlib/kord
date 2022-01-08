@@ -66,7 +66,7 @@ inline fun PermissionOverwritesBuilder.addRoleOverwrite(
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val overwrite = PermissionOverwriteBuilder(OverwriteType.Member, roleId).apply(builder).toOverwrite()
+    val overwrite = PermissionOverwriteBuilder(OverwriteType.Role, roleId).apply(builder).toOverwrite()
 
     return addOverwrite(overwrite)
 }
