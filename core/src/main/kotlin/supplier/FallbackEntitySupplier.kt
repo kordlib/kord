@@ -217,6 +217,24 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
         first.getGuildScheduledEventOrNull(guildId, eventId) ?: second.getGuildScheduledEventOrNull(guildId, eventId)
 
+    override fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        withMember: Boolean?,
+        before: Snowflake
+    ): Flow<User> = first.getGuildScheduledEventUsersBefore(guildId, eventId, limit, withMember, before)
+        .switchIfEmpty(second.getGuildScheduledEventUsersBefore(guildId, eventId, limit, withMember, before))
+
+    override fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        withMember: Boolean?,
+        after: Snowflake
+    ): Flow<User> = first.getGuildScheduledEventUsersAfter(guildId, eventId, limit, withMember, after)
+        .switchIfEmpty(second.getGuildScheduledEventUsersAfter(guildId, eventId, limit, withMember, after))
+
 
     override fun toString(): String {
         return "FallbackEntitySupplier(first=$first, second=$second)"

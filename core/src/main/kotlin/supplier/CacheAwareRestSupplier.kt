@@ -238,6 +238,24 @@ public class StoreEntitySupplier(
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
         storeAndReturn(supplier.getGuildScheduledEvent(guildId, eventId)) { it.data }
 
+    override fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        withMember: Boolean?,
+        before: Snowflake
+    ): Flow<User> =
+        storeOnEach(supplier.getGuildScheduledEventUsersBefore(guildId, eventId, limit, withMember, before)) { it.data }
+
+    override fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        withMember: Boolean?,
+        after: Snowflake
+    ): Flow<User> =
+        storeOnEach(supplier.getGuildScheduledEventUsersAfter(guildId, eventId, limit, withMember, after)) { it.data }
+
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake
