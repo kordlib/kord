@@ -26,6 +26,7 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.cache.data.WebhookData
 import dev.kord.core.cache.idEq
 import dev.kord.core.cache.idGt
+import dev.kord.core.cache.idLt
 import dev.kord.core.entity.Ban
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.GuildEmoji
@@ -311,7 +312,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override fun getTemplates(guildId: Snowflake): Flow<Template> {
-        return cache.query<TemplateData>() {
+        return cache.query<TemplateData> {
             idEq(TemplateData::sourceGuildId, guildId)
         }.asFlow().map { Template(it, kord) }
     }
@@ -467,6 +468,30 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.singleOrNull() ?: return null
 
         return GuildScheduledEvent(data, kord)
+    }
+
+    public override fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        withMember: Boolean?,
+        before: Snowflake
+    ): Flow<User> {
+        val flow = cache.query<UserData> { idLt(UserData::id, before) }.asFlow()
+            .map { User(it, kord) }
+        return if(limit != Int.MAX_VALUE) flow.take(limit) else flow
+    }
+
+    public override fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        withMember: Boolean?,
+        after: Snowflake
+    ): Flow<User> {
+        val flow = cache.query<UserData> { idGt(UserData::id, after) }.asFlow()
+            .map { User(it, kord) }
+        return if(limit != Int.MAX_VALUE) flow.take(limit) else flow
     }
 
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =

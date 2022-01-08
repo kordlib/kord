@@ -472,6 +472,30 @@ public interface EntitySupplier {
 
     public suspend fun getGuildScheduledEvent(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent =
         getGuildScheduledEventOrNull(guildId, eventId) ?: EntityNotFoundException.guildScheduledEventNotFound(eventId)
+
+    public  fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int = Int.MAX_VALUE,
+        withMember: Boolean? = null,
+        before: Snowflake = Snowflake.max
+    ): Flow<User>
+
+
+    public fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int = Int.MAX_VALUE,
+        withMember: Boolean? = null,
+        after: Snowflake = Snowflake.min
+    ): Flow<User>
+
+    public fun getGuildScheduledEventUsers(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int = Int.MAX_VALUE,
+        withMember: Boolean? = null,
+    ): Flow<User> = getGuildScheduledEventUsersAfter(guildId, eventId, limit, withMember)
 }
 
 

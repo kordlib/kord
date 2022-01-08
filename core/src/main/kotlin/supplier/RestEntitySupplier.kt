@@ -489,6 +489,42 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             GuildScheduledEvent(data, kord)
         }
 
+    public override fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        withMember: Boolean?,
+        before: Snowflake
+    ): Flow<User> {
+        val batch = min(100, limit)
+        return paginateBackwards(before, batch, { it.id }) { position ->
+            kord.rest.guild.getScheduledEventUsers(guildId, eventId, batch, withMember, position).users
+        }.map {
+            val data = UserData.from(it)
+            User(data, kord)
+        }
+
+    }
+
+
+    override fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        withMember: Boolean?,
+        after: Snowflake
+    ): Flow<User> {
+
+        val batch = min(100, limit)
+        return paginateBackwards(after, batch, { it.id }) { position ->
+            kord.rest.guild.getScheduledEventUsers(guildId, eventId, batch, withMember, position).users
+        }.map {
+            val data = UserData.from(it)
+            User(data, kord)
+        }
+
+    }
+
     override suspend fun getApplicationCommandPermissionsOrNull(
         applicationId: Snowflake,
         guildId: Snowflake,

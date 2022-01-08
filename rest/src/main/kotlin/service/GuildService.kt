@@ -518,7 +518,8 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         guildId: Snowflake,
         eventId: Snowflake,
         limit: Int? = null,
-        withMember: Boolean? = null
+        withMember: Boolean? = null,
+        position: Position? = null
     ) = call(Route.GuildScheduledEventUsersGet) {
         keys[Route.GuildId] = guildId
         keys[Route.ScheduledEventId] = eventId
@@ -531,10 +532,28 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
             parameter("with_member", withMember)
         }
 
-        if(position != null) {
+        if (position != null) {
             parameter(position.key, position.value)
         }
     }
+
+    suspend fun getScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int? = null,
+        withMember: Boolean? = null,
+        before: Snowflake? = null
+    ) = getScheduledEventUsers(guildId, eventId, limit, withMember, before?.let { Position.Before(it) })
+
+
+    suspend fun getScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int? = null,
+        withMember: Boolean? = null,
+        after: Snowflake? = null
+    ) = getScheduledEventUsers(guildId, eventId, limit, withMember, after?.let { Position.After(it) })
+
 }
 
 @OptIn(ExperimentalContracts::class)
@@ -543,7 +562,7 @@ suspend inline fun GuildService.modifyGuildWelcomeScreen(
     builder: WelcomeScreenModifyBuilder.() -> Unit
 ): DiscordWelcomeScreen {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val appliedBuilder= WelcomeScreenModifyBuilder().apply(builder)
+    val appliedBuilder = WelcomeScreenModifyBuilder().apply(builder)
     return modifyGuildWelcomeScreen(guildId, appliedBuilder.toRequest(), appliedBuilder.reason)
 }
 

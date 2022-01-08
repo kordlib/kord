@@ -27,17 +27,14 @@ import kotlin.contracts.contract
 public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
     public val guildId: Snowflake
 
+
     /**
      * Requests all the users which are interested in this event.
      *
      * @throws RequestException if anything goes wrong during the request
      */
-    public val users: Flow<User> get() = flow {
-        kord.rest.guild.getScheduledEventUsers(guildId, id).users.forEach {
-            val userData = UserData.from(it)
-            emit(User(userData, kord, supplier))
-        }
-    }
+    @Deprecated("Use getUsersBefore or getUsersAfter")
+    public val users: Flow<User> get() = supplier.getGuildScheduledEventUsersBefore(guildId, id)
 
     /**
      * Deletes this event.
