@@ -530,6 +530,10 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         if (withMember != null) {
             parameter("with_member", withMember)
         }
+
+        if(position != null) {
+            parameter(position.key, position.value)
+        }
     }
 }
 

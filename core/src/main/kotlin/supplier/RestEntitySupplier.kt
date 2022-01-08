@@ -273,13 +273,25 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Webhook(data, kord)
     }
 
-    public suspend fun getInviteOrNull(code: String, withCounts: Boolean): Invite? = catchNotFound {
-        val response = invite.getInvite(code, withCounts)
+    public suspend fun getInviteOrNull(
+        code: String,
+        withCounts: Boolean,
+        withExpiration: Boolean = true,
+        scheduledEventId: Snowflake? = null
+    ): Invite? = catchNotFound {
+        val response = invite.getInvite(code, withCounts, withExpiration, scheduledEventId)
         Invite(InviteData.from(response), kord)
     }
 
-    public suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
-        getInviteOrNull(code, withCounts) ?: EntityNotFoundException.inviteNotFound(code)
+    public suspend fun getInvite(
+        code: String,
+        withCounts: Boolean = true,
+        withExpiration: Boolean = true,
+        scheduledEventId: Snowflake? = null
+    ): Invite =
+        getInviteOrNull(code, withCounts, withExpiration, scheduledEventId) ?: EntityNotFoundException.inviteNotFound(
+            code
+        )
 
     /**
      * Requests to get the information of the current application.
@@ -412,7 +424,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
     }
 
-    override fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake): Flow<GuildApplicationCommand> = flow {
+    override fun getGuildApplicationCommands(
+        applicationId: Snowflake,
+        guildId: Snowflake
+    ): Flow<GuildApplicationCommand> = flow {
         for (command in interaction.getGuildApplicationCommands(applicationId, guildId)) {
             val data = ApplicationCommandData.from(command)
             emit(GuildApplicationCommand(data, interaction))
@@ -420,7 +435,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
 
-    override suspend fun getGlobalApplicationCommandOrNull(applicationId: Snowflake, commandId: Snowflake): GlobalApplicationCommand? = catchNotFound {
+    override suspend fun getGlobalApplicationCommandOrNull(
+        applicationId: Snowflake,
+        commandId: Snowflake
+    ): GlobalApplicationCommand? = catchNotFound {
         val response = interaction.getGlobalCommand(applicationId, commandId)
         val data = ApplicationCommandData.from(response)
         GlobalApplicationCommand(data, interaction)
@@ -433,7 +451,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
-     public suspend fun getOriginalInteractionOrNull(applicationId: Snowflake, token: String): Message? = catchNotFound {
+    public suspend fun getOriginalInteractionOrNull(applicationId: Snowflake, token: String): Message? = catchNotFound {
         val response = interaction.getInteractionResponse(applicationId, token)
         val data = MessageData.from(response)
         Message(data, kord)
@@ -443,11 +461,12 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     public suspend fun getOriginalInteraction(applicationId: Snowflake, token: String): Message {
         return getOriginalInteractionOrNull(applicationId, token) ?: EntityNotFoundException.interactionNotFound(token)
     }
+
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
     ): Flow<ApplicationCommandPermissions> = flow {
-         interaction.getGuildApplicationCommandPermissions(applicationId, guildId)
+        interaction.getGuildApplicationCommandPermissions(applicationId, guildId)
             .forEach {
                 val data = GuildApplicationCommandPermissionsData.from(it)
                 emit(ApplicationCommandPermissions(data))
@@ -462,12 +481,13 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
-    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? = catchNotFound {
-        val event = kord.rest.guild.getScheduledEvent(guildId, eventId)
-        val data = GuildScheduledEventData.from(event)
+    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
+        catchNotFound {
+            val event = kord.rest.guild.getScheduledEvent(guildId, eventId)
+            val data = GuildScheduledEventData.from(event)
 
-        GuildScheduledEvent(data, kord)
-    }
+            GuildScheduledEvent(data, kord)
+        }
 
     override suspend fun getApplicationCommandPermissionsOrNull(
         applicationId: Snowflake,

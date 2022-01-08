@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 data class DiscordInvite(
     val code: String,
     val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
-    val channel: DiscordChannel,
+    val channel: DiscordChannel?,
     val inviter: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("target_user")
     val targetUser: Optional<DiscordUser> = Optional.Missing(),

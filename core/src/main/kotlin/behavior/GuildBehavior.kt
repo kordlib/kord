@@ -432,8 +432,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Invite] wasn't present.
      */
-    public suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
-        kord.with(rest).getInvite(code, withCounts)
+    public suspend fun getInvite(code: String, withCounts: Boolean = true, withExpiration: Boolean = true,scheduledEventId: Snowflake? = null): Invite =
+        kord.with(rest).getInvite(code, withCounts, withExpiration, scheduledEventId)
 
     /**
      * Requests to get the [Invite] represented by the [code],
