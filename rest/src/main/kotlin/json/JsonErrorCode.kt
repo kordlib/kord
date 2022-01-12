@@ -13,9 +13,10 @@ import kotlinx.serialization.encoding.Encoder
  *
  * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
  */
-@Serializable(with = JsonErrorCode.JsonErrorCodeSerializer::class)
+@Serializable(with = JsonErrorCode.Serializer::class)
 enum class JsonErrorCode(val code: Int) {
-    /** Undocumented error */
+
+    /** Undocumented error. */
     Unknown(-1),
 
     /** General error (such as a malformed request body, amongst other things). */
@@ -102,6 +103,12 @@ enum class JsonErrorCode(val code: Int) {
     /** Unknown gift code. */
     UnknownGiftCode(10038),
 
+    /** Unknown stream. */
+    UnknownStream(10049),
+
+    /** Unknown premium server subscribe cooldown. */
+    UnknownPremiumServerSubscribeCooldown(10050),
+
     /** Unknown guild template. */
     UnknownGuildTemplate(10057),
 
@@ -129,6 +136,12 @@ enum class JsonErrorCode(val code: Int) {
     /** Unknown Guild Welcome Screen. */
     UnknownGuildWelcomeScreen(10069),
 
+    /** Unknown Guild Scheduled Event. */
+    UnknownGuildScheduledEvent(10070),
+
+    /** Unknown Guild Scheduled Event User. */
+    UnknownGuildScheduledEventUser(10071),
+
     /** Bots cannot use this endpoint. */
     NonBotEndpoint(20001),
 
@@ -148,10 +161,13 @@ enum class JsonErrorCode(val code: Int) {
     OnlyOwner(20018),
 
     /** This message cannot be edited due to announcement rate limits. */
-    AnnouncementRateLimit(2022),
+    AnnouncementRateLimit(20022),
 
     /** The channel you are writing has hit the write rate limit. */
     ChannelWriteRateLimit(20028),
+
+    /** The write action you are performing on the server has hit the write rate limit. */
+    ServerWriteRateLimit(20029),
 
     /** Your Stage topic, server name, server description, or channel names contain words that are not allowed. */
     DisallowedName(20031),
@@ -204,7 +220,7 @@ enum class JsonErrorCode(val code: Int) {
     /** Guild already has a template. */
     GuildAlreadyHadTemplate(30031),
 
-    /** Max number of thread participants has been reached. */
+    /** Max number of thread participants has been reached (1000). */
     MaxThreadParticipants(30033),
 
     /** Maximum number of bans for non-guild members have been exceeded. */
@@ -213,8 +229,17 @@ enum class JsonErrorCode(val code: Int) {
     /** Maximum number of bans fetches has been reached. */
     MaxBanFetches(30037),
 
+    /** Maximum number of uncompleted guild scheduled events reached (100). */
+    MaxUncompletedGuildScheduledEvents(30038),
+
     /** Maximum number of stickers reached. */
     MaxStickers(30039),
+
+    /** Maximum number of prune requests has been reached. Try again later. */
+    MaxPruneRequests(30040),
+
+    /** Maximum number of guild widget settings updates has been reached. Try again later. */
+    MaxGuildWidgetSettingsUpdates(30042),
 
     /** Unauthorized. Provide a valid token and try again. */
     Unauthorized(40001),
@@ -238,7 +263,7 @@ enum class JsonErrorCode(val code: Int) {
     UserNotInVoice(40032),
 
     /** This message has already been crossposted. */
-    AlreadyCrossposted(40041),
+    AlreadyCrossposted(40033),
 
     /** An application command with that name already exists. */
     ApplicationCommandNameExists(40041),
@@ -273,7 +298,7 @@ enum class JsonErrorCode(val code: Int) {
     /** OAuth2 application does not have a bot. */
     OAuth2HasNoBot(50010),
 
-    /** OAuth2 application limit reachedOAuth2 application limit reached. */
+    /** OAuth2 application limit reached. */
     OAuth2ApplicationLimit(50011),
 
     /** Invalid OAuth2 state. */
@@ -285,10 +310,12 @@ enum class JsonErrorCode(val code: Int) {
     /** Invalid authentication token provided. */
     InvalidAuthToken(50014),
 
-    /** Provided too few or too many messages to delete. Must provide at least 2 and fewer than 100 messages to delete. */
+    /** Note was too long. */
     TooLongNote(50015),
 
-    /** A message can only be pinned to the channel it was sent in. */
+    /**
+     * Provided too few or too many messages to delete. Must provide at least 2 and fewer than 100 messages to delete.
+     */
     ProvidedMessageCountInsufficient(50016),
 
     /** A message can only be pinned to the channel it was sent in. */
@@ -321,7 +348,9 @@ enum class JsonErrorCode(val code: Int) {
     /** A message provided was too old to bulk delete. */
     BulkDeleteOldMessage(50034),
 
-    /** Invalid form body (returned for both application/json and multipart/form-data bodies), * or invalid Content-Type provided.
+    /**
+     * Invalid form body (returned for both `application/json` and `multipart/form-data` bodies),
+     * or invalid `Content-Type` provided.
      */
     InvalidFormBody(50035),
 
@@ -331,8 +360,17 @@ enum class JsonErrorCode(val code: Int) {
     /** Invalid API version provided. */
     InvalidAPIVersion(50041),
 
+    /** File uploaded exceeds the maximum size. */
+    FileTooLarge(50045),
+
+    /** Invalid file uploaded. */
+    InvalidFile(50046),
+
     /** Cannot self-redeem this gift. */
     CannotSelfRedeemGift(50054),
+
+    /** Invalid Guild. */
+    InvalidGuild(50055),
 
     /** Payment source required to redeem gift. */
     GiftRequiresPaymentSource(50070),
@@ -343,14 +381,34 @@ enum class JsonErrorCode(val code: Int) {
     /** Invalid sticker sent. */
     InvalidStickerSent(50081),
 
+    /**
+     * Tried to perform an operation on an archived thread, such as editing a message or adding a user to the thread.
+     */
+    OperationOnArchivedThread(50083),
+
     /** Invalid thread notification settings. */
     InvalidThreadNotificationSettings(50084),
 
     /** `before` value is earlier than the thread creation date. */
     BeforeValueBeforeThreadCreate(50085),
 
-    /** 2 Factor Authentication is required. */
+    /** This server is not available in your location. */
+    ServerNotAvailableInLocation(50095),
+
+    /** This server needs monetization enabled in order to perform this action. */
+    ServerNeedsMonetizationEnabled(50097),
+
+    /** This server needs more boosts to perform this action. */
+    ServerNeedsMoreBoosts(50101),
+
+    /** The request body contains invalid JSON. */
+    InvalidJsonInRequestBody(50109),
+
+    /** Two factor is required for this operation. */
     Require2FA(60003),
+
+    /** No users with DiscordTag exist. */
+    NoUsersWithDiscordTag(80004),
 
     /** Reaction was blocked. */
     ReactionBlocked(90001),
@@ -360,6 +418,9 @@ enum class JsonErrorCode(val code: Int) {
 
     /** The Stage is already open. */
     StageAlreadyOpen(150006),
+
+    /** Cannot reply without permission to read message history. */
+    CannotReplyWithoutMessageHistoryPermission(160002),
 
     /** A thread has already been created for this message. */
     MessageAlreadyHasThread(160004),
@@ -373,15 +434,63 @@ enum class JsonErrorCode(val code: Int) {
     /** Maximum number of active announcement threads reached. */
     MaxActiveAnnouncementThreads(160007),
 
-    OperationOnAchievedThread(50083),
+    /** Invalid JSON for uploaded Lottie file. */
+    InvalidJsonForLottieFile(170001),
 
-    InvalidThreadSettings(50084),
+    /** Uploaded Lotties cannot contain rasterized images such as PNG or JPEG. */
+    RasterizedImagesInLotties(170002),
 
-    InvalidThreadBefore(50085),;
+    /** Sticker maximum framerate exceeded. */
+    MaxStickerFrameRate(170003),
 
-    companion object JsonErrorCodeSerializer : KSerializer<JsonErrorCode> {
+    /** Sticker frame count exceeds maximum of 1000 frames. */
+    MaxStickerFrameCount(170004),
+
+    /** Lottie animation maximum dimensions exceeded. */
+    MaxLottieAnimationDimensions(170005),
+
+    /** Sticker frame rate is either too small or too large. */
+    InvalidStickerFrameRate(170006),
+
+    /** Sticker animation duration exceeds maximum of 5 seconds. */
+    MaxStickerAnimationDuration(170007),
+
+    /** Cannot update a finished event. */
+    CannotUpdateFinishedEvent(180000),
+
+    /** Failed to create stage needed for stage event. */
+    FailedToCreateStage(180002),
+
+    ;
+
+    companion object {
+        @Deprecated(
+            "JsonErrorCode.OperationOnAchievedThread was renamed to JsonErrorCode.OperationOnArchivedThread.",
+            ReplaceWith("JsonErrorCode.OperationOnArchivedThread"),
+            DeprecationLevel.ERROR,
+        )
+        val OperationOnAchievedThread: JsonErrorCode
+            get() = OperationOnArchivedThread
+
+        @Deprecated(
+            "JsonErrorCode.InvalidThreadSettings was removed because it was a duplicate of JsonErrorCode.InvalidThreadNotificationSettings.",
+            ReplaceWith("JsonErrorCode.InvalidThreadNotificationSettings"),
+            DeprecationLevel.ERROR,
+        )
+        val InvalidThreadSettings: JsonErrorCode
+            get() = InvalidThreadNotificationSettings
+
+        @Deprecated(
+            "JsonErrorCode.InvalidThreadBefore was removed because it was a duplicate of JsonErrorCode.BeforeValueBeforeThreadCreate.",
+            ReplaceWith("JsonErrorCode.BeforeValueBeforeThreadCreate"),
+            DeprecationLevel.ERROR,
+        )
+        val InvalidThreadBefore: JsonErrorCode
+            get() = BeforeValueBeforeThreadCreate
+    }
+
+    internal object Serializer : KSerializer<JsonErrorCode> {
         override val descriptor = PrimitiveSerialDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)
-
 
         override fun deserialize(decoder: Decoder): JsonErrorCode {
             val code = decoder.decodeInt()
@@ -392,5 +501,4 @@ enum class JsonErrorCode(val code: Int) {
             encoder.encodeInt(value.code)
         }
     }
-
 }
