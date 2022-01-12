@@ -12,7 +12,7 @@ import java.util.Locale as JLocale
 /**
  * Representation of a locale.
  *
- * @property language an ISO 369 language code representing the language
+ * @property language an ISO 639 language code representing the language
  * @property country an ISO 3166 country code representing the country
  */
 @Serializable(with = Locale.Serializer::class)
