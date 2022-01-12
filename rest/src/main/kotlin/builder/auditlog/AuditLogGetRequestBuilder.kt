@@ -8,12 +8,12 @@ import dev.kord.rest.json.request.AuditLogGetRequest
 class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
 
     /**
-     * The id of the user whose actions should be filtered for. `null` be default.
+     * The id of the user whose actions should be filtered for. `null` by default.
      */
     var userId: Snowflake? = null
 
     /**
-     * The type of [AuditLogEvent] which should be filtered for. `null` be default.
+     * The type of [AuditLogEvent] which should be filtered for. `null` by default.
      */
     var action: AuditLogEvent? = null
 
@@ -23,7 +23,10 @@ class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
     var before: Snowflake? = null
 
     /**
-     * How many entries are returned (default 50, minimum 1, maximum 100).
+     * How many entries are returned (default 50, minimum 1, maximum 100)
+     * ([see Discord's docs](https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log)).
+     *
+     * Set to `100` by default.
      */
     var limit: Int = 100
 
