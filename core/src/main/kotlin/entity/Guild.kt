@@ -56,8 +56,8 @@ public class Guild(
     public val threads: Flow<ThreadChannel>
         get() = flow {
             data.threads.mapList {
-               val channel =  Channel.from(it, kord)
-               if(channel is ThreadChannel) emit(channel)
+                val channel = Channel.from(it, kord)
+                if (channel is ThreadChannel) emit(channel)
             }
         }
 
@@ -267,8 +267,12 @@ public class Guild(
     /**
      * The voice region id for the guild.
      */
-    @Deprecated("The region field has been moved to Channel#rtcRegion in Discord API v9", ReplaceWith("Channel#rtcRegion"))
-    public val regionId: String get() = data.region
+    @Deprecated(
+        "The region field has been moved to Channel#rtcRegion in Discord API v9",
+        ReplaceWith("Channel#rtcRegion")
+    )
+    public val regionId: String
+        get() = data.region
 
     /**
      * The id of the channel in which a discoverable server's rules should be found
@@ -349,6 +353,14 @@ public class Guild(
      * The [NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level) of this Guild
      */
     public val nsfw: NsfwLevel get() = data.nsfwLevel
+
+    public val premiumProgressBarEnabled: Boolean get() = data.premiumProgressBarEnabled
+
+    public val stageInstances: Set<StageInstance>
+        get() = data.stageInstances.orEmpty().map { StageInstance(it, kord) }.toSet()
+
+    public val stickers: Set<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }.toSet()
+
 
     /**
      * Requests to get the [VoiceChannel] represented by the [afkChannelId],

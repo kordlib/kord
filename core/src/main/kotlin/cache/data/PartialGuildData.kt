@@ -4,6 +4,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.mapList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -22,7 +23,11 @@ public class PartialGuildData(
     public val splash: Optional<String?> = Optional.Missing(),
     @SerialName("nsfw_level") public val nsfwLevel: Optional<NsfwLevel> = Optional.Missing(),
     @SerialName("verification_level")
-    public val verificationLevel: Optional<VerificationLevel> = Optional.Missing()
+    public val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
+    public val stageInstances: Optional<List<StageInstanceData>> = Optional.Missing(),
+    public val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
+    public val guildScheduledEvents: Optional<List<GuildScheduledEventData>> = Optional.Missing(),
+    public val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing
 
 ) {
     public companion object {
@@ -41,6 +46,10 @@ public class PartialGuildData(
                 splash,
                 nsfwLevel,
                 verificationLevel,
+                stageInstances = stageInstances.mapList { StageInstanceData.from(it) },
+                stickers = stickers.mapList { MessageStickerData.from(it) },
+                guildScheduledEvents = guildScheduledEvents.mapList { GuildScheduledEventData.from(it) },
+                premiumProgressBarEnabled = premiumProgressBarEnabled
             )
         }
     }

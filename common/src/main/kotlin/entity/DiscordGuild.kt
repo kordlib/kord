@@ -128,7 +128,14 @@ data class DiscordGuild(
     @SerialName("approximate_member_count") val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_presence_count") val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("welcome_screen") val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
-    @SerialName("nsfw_level") val nsfwLevel: NsfwLevel
+    @SerialName("nsfw_level") val nsfwLevel: NsfwLevel,
+    @SerialName("stage_instances")
+    val stageInstances: Optional<List<DiscordStageInstance>> = Optional.Missing(),
+    val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
+    @SerialName("guild_scheduled_events")
+    val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
+    @SerialName("premium_progress_bar_enabled")
+    val premiumProgressBarEnabled: Boolean
 )
 
 /**
@@ -155,7 +162,15 @@ class DiscordPartialGuild(
     val splash: Optional<String?> = Optional.Missing(),
     @SerialName("nsfw_level") val nsfwLevel: Optional<NsfwLevel> = Optional.Missing(),
     @SerialName("verification_level")
-    val verificationLevel: Optional<VerificationLevel> = Optional.Missing()
+    val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
+    @SerialName("stage_instances")
+    val stageInstances: Optional<List<DiscordStageInstance>> = Optional.Missing(),
+    val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
+    @SerialName("guild_scheduled_events")
+    val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
+    @SerialName("premium_progress_bar_enabled")
+    val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing
+
     )
 
 /**

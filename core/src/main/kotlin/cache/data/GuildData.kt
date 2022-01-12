@@ -58,7 +58,11 @@ public data class GuildData(
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     val welcomeScreen: Optional<WelcomeScreenData> = Optional.Missing(),
     val nsfwLevel: NsfwLevel,
-    val threads: Optional<List<ChannelData>> = Optional.Missing()
+    val threads: Optional<List<ChannelData>> = Optional.Missing(),
+    val stageInstances: Optional<List<StageInstanceData>> = Optional.Missing(),
+    val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
+    val guildScheduledEvents: Optional<List<GuildScheduledEventData>> = Optional.Missing(),
+    val premiumProgressBarEnabled: Boolean
 ) {
     public companion object {
 
@@ -120,7 +124,11 @@ public data class GuildData(
                 approximatePresenceCount = approximatePresenceCount,
                 welcomeScreen = welcomeScreen.map { WelcomeScreenData.from(it) },
                 nsfwLevel = nsfwLevel,
-                threads = threads.mapList { it.toData() }
+                threads = threads.mapList { it.toData() },
+                stageInstances = stageInstances.mapList { StageInstanceData.from(it) },
+                stickers = stickers.mapList { MessageStickerData.from(it) },
+                guildScheduledEvents = guildScheduledEvents.mapList { GuildScheduledEventData.from(it) },
+                premiumProgressBarEnabled = premiumProgressBarEnabled
             )
         }
     }
