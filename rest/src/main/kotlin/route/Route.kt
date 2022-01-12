@@ -2,28 +2,7 @@ package dev.kord.rest.route
 
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.entity.DiscordApplicationCommand
-import dev.kord.common.entity.DiscordAuditLog
-import dev.kord.common.entity.DiscordChannel
-import dev.kord.common.entity.DiscordGuild
-import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
-import dev.kord.common.entity.DiscordGuildMember
-import dev.kord.common.entity.DiscordGuildPreview
-import dev.kord.common.entity.DiscordGuildScheduledEvent
-import dev.kord.common.entity.DiscordGuildWidget
-import dev.kord.common.entity.DiscordIntegration
-import dev.kord.common.entity.DiscordInvite
-import dev.kord.common.entity.DiscordMessage
-import dev.kord.common.entity.DiscordPartialGuild
-import dev.kord.common.entity.DiscordPartialInvite
-import dev.kord.common.entity.DiscordRole
-import dev.kord.common.entity.DiscordStageInstance
-import dev.kord.common.entity.DiscordTemplate
-import dev.kord.common.entity.DiscordThreadMember
-import dev.kord.common.entity.DiscordUser
-import dev.kord.common.entity.DiscordVoiceRegion
-import dev.kord.common.entity.DiscordWebhook
-import dev.kord.common.entity.DiscordWelcomeScreen
+import dev.kord.common.entity.*
 import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
 import dev.kord.rest.json.response.ApplicationInfoResponse
 import dev.kord.rest.json.response.BanResponse
@@ -821,6 +800,50 @@ sealed class Route<T>(
         ListThreadsResponse.serializer()
     )
 
+    object StickerGet : Route<DiscordMessageSticker>(
+        HttpMethod.Get,
+        "/stickers/${StickerId}",
+        DiscordMessageSticker.serializer()
+    )
+
+    object NitroStickerPacks : Route<List<DiscordStickerPack>>(
+        HttpMethod.Get,
+        "/sticker-packs",
+        ListSerializer(DiscordStickerPack.serializer())
+    )
+
+    object GuildStickersGet : Route<List<DiscordMessageSticker>>(
+        HttpMethod.Get,
+        "/guilds/${GuildId}/stickers",
+        ListSerializer(DiscordMessageSticker.serializer())
+    )
+
+    object GuildStickerGet : Route<DiscordMessageSticker>(
+        HttpMethod.Get,
+        "/guilds/${GuildId}/stickers/${StickerId}",
+        DiscordMessageSticker.serializer()
+    )
+
+
+    object GuildStickerDelete : Route<Unit>(
+        HttpMethod.Delete,
+        "/guilds/${GuildId}/stickers/${StickerId}",
+        NoStrategy
+    )
+
+    object GuildStickerPost: Route<DiscordMessageSticker>(
+        HttpMethod.Post,
+        "/guilds/${GuildId}/stickers",
+        DiscordMessageSticker.serializer()
+    )
+
+
+    object GuildStickerPatch: Route<DiscordMessageSticker>(
+        HttpMethod.Patch,
+        "/guilds/${GuildId}/stickers/${StickerId}",
+        DiscordMessageSticker.serializer()
+    )
+
 
     companion object {
         val baseUrl = "https://discord.com/api/$restVersion"
@@ -848,6 +871,7 @@ sealed class Route<T>(
     object InteractionId : Key("interaction.id", true)
     object InteractionToken : Key("{interaction.token}", true)
     object ScheduledEventId : Key("{event.id}", true)
+    object StickerId : Key("{sticker.id}")
 
 }
 

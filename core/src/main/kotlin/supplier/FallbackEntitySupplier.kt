@@ -1,20 +1,7 @@
 package dev.kord.core.supplier
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.entity.Ban
-import dev.kord.core.entity.Guild
-import dev.kord.core.entity.GuildEmoji
-import dev.kord.core.entity.GuildPreview
-import dev.kord.core.entity.GuildScheduledEvent
-import dev.kord.core.entity.GuildWidget
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Message
-import dev.kord.core.entity.Region
-import dev.kord.core.entity.Role
-import dev.kord.core.entity.StageInstance
-import dev.kord.core.entity.Template
-import dev.kord.core.entity.User
-import dev.kord.core.entity.Webhook
+import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
@@ -216,6 +203,22 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
         first.getGuildScheduledEventOrNull(guildId, eventId) ?: second.getGuildScheduledEventOrNull(guildId, eventId)
+
+    override suspend fun getStickerOrNull(id: Snowflake): Sticker? =
+        first.getStickerOrNull(id) ?: second.getStickerOrNull(id)
+
+
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker? =
+        first.getGuildStickerOrNull(guildId, id) ?: second.getGuildStickerOrNull(guildId, id)
+
+
+    override fun getNitroStickerPacks(): Flow<StickerPack> =
+        first.getNitroStickerPacks().switchIfEmpty(second.getNitroStickerPacks())
+
+
+    override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> =
+        first.getGuildStickers(guildId).switchIfEmpty(second.getGuildStickers(guildId))
+
 
 
     override fun toString(): String {

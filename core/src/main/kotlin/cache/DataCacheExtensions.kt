@@ -20,7 +20,10 @@ internal suspend fun DataCache.registerKordData() = register(
     PresenceData.description,
     VoiceStateData.description,
     ApplicationCommandData.description,
-    GuildApplicationCommandPermissionsData.description
+    GuildApplicationCommandPermissionsData.description,
+    StickerPackData.description,
+    StickerData.description,
+
 )
 
 /**
