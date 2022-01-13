@@ -12,15 +12,7 @@ import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
-import dev.kord.core.entity.ApplicationInfo
-import dev.kord.core.entity.Guild
-import dev.kord.core.entity.GuildPreview
-import dev.kord.core.entity.Invite
-import dev.kord.core.entity.KordEntity
-import dev.kord.core.entity.Region
-import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.User
-import dev.kord.core.entity.Webhook
+import dev.kord.core.entity.*
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GlobalChatInputCommand
 import dev.kord.core.entity.application.GlobalMessageCommand
@@ -105,6 +97,9 @@ public class Kord(
 
     public val globalCommands: Flow<GlobalApplicationCommand>
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
+
+    public val nitroStickerPacks: Flow<StickerPack>
+        get() = defaultSupplier.getNitroStickerPacks()
 
 
     /**
@@ -367,6 +362,9 @@ public class Kord(
         withCounts: Boolean,
     ): Invite? =
         EntitySupplyStrategy.rest.supply(this).getInviteOrNull(code, withCounts)
+
+    public suspend fun getSticker(id: Snowflake): Sticker = defaultSupplier.getSticker(id)
+
 
 
     /**

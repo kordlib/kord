@@ -472,6 +472,22 @@ public interface EntitySupplier {
 
     public suspend fun getGuildScheduledEvent(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent =
         getGuildScheduledEventOrNull(guildId, eventId) ?: EntityNotFoundException.guildScheduledEventNotFound(eventId)
+
+    public suspend fun getStickerOrNull(id: Snowflake): Sticker?
+
+    public suspend fun getSticker(id: Snowflake): Sticker =
+        getStickerOrNull(id) ?: EntityNotFoundException.stickerNotFound(id)
+
+    public suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker?
+
+    public suspend fun getGuildSticker(guildId: Snowflake, id: Snowflake): GuildSticker =
+        getGuildStickerOrNull(guildId, id) ?: EntityNotFoundException.stickerNotFound(id)
+
+    public fun getNitroStickerPacks(): Flow<StickerPack>
+
+    public fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker>
+
+
 }
 
 

@@ -22,7 +22,7 @@ public class RestClient(requestHandler: RequestHandler) : RestService(requestHan
     public val template: TemplateService = TemplateService(requestHandler)
     public val interaction: InteractionService = InteractionService(requestHandler)
     public val stageInstance: StageInstanceService = StageInstanceService(requestHandler)
-
+    val sticker: StickerService = StickerService(requestHandler)
     /**
      * Sends a request to the given [route]. This function exposes a direct call to the Discord api and allows
      * the user to send a custom [RequestBuilder.body].
