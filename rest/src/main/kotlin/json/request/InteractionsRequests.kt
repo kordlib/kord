@@ -9,6 +9,7 @@ import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.DiscordGuildApplicationCommandPermission
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.MessageFlags
+import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.rest.NamedFile
@@ -23,7 +24,11 @@ data class ApplicationCommandCreateRequest(
     val description: Optional<String> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_permission")
-    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
+    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("dm_permissions")
+    val dmPermissions: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("default_member_permissions")
+    val defaultMemberPermissions: Optional<Permissions> = Optional.Missing(),
 )
 
 @Serializable
@@ -33,7 +38,11 @@ data class ApplicationCommandModifyRequest(
     val description: Optional<String> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_permission")
-    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
+    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("dm_permissions")
+    val dmPermissions: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("default_member_permissions")
+    val defaultMemberPermissions: Optional<Permissions> = Optional.Missing(),
 )
 
 @Serializable

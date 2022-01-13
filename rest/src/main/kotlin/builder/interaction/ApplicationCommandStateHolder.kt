@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.interaction
 
+import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.SerialName
@@ -19,5 +20,11 @@ internal class ApplicationCommandModifyStateHolder {
 
     @SerialName("default_permission")
     var defaultPermission: OptionalBoolean = OptionalBoolean.Missing
+
+    @SerialName("dm_permissions")
+    val dmPermissions: OptionalBoolean = OptionalBoolean.Missing
+
+    @SerialName("default_member_permissions")
+    val defaultMemberPermissions: Optional<Permissions> = Optional.Missing()
 
 }
