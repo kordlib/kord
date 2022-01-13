@@ -469,24 +469,32 @@ enum class JsonErrorCode(val code: Int) {
             ReplaceWith("JsonErrorCode.OperationOnArchivedThread"),
             DeprecationLevel.ERROR,
         )
-        val OperationOnAchievedThread: JsonErrorCode
-            get() = OperationOnArchivedThread
+        @JvmField
+        val OperationOnAchievedThread: JsonErrorCode = OperationOnArchivedThread
 
         @Deprecated(
             "JsonErrorCode.InvalidThreadSettings was removed because it was a duplicate of JsonErrorCode.InvalidThreadNotificationSettings.",
             ReplaceWith("JsonErrorCode.InvalidThreadNotificationSettings"),
             DeprecationLevel.ERROR,
         )
-        val InvalidThreadSettings: JsonErrorCode
-            get() = InvalidThreadNotificationSettings
+        @JvmField
+        val InvalidThreadSettings: JsonErrorCode = InvalidThreadNotificationSettings
 
         @Deprecated(
             "JsonErrorCode.InvalidThreadBefore was removed because it was a duplicate of JsonErrorCode.BeforeValueBeforeThreadCreate.",
             ReplaceWith("JsonErrorCode.BeforeValueBeforeThreadCreate"),
             DeprecationLevel.ERROR,
         )
-        val InvalidThreadBefore: JsonErrorCode
-            get() = BeforeValueBeforeThreadCreate
+        @JvmField
+        val InvalidThreadBefore: JsonErrorCode = BeforeValueBeforeThreadCreate
+
+        @Deprecated(
+            "Object JsonErrorCode.JsonErrorCodeSerializer is internal now, use JsonErrorCode.serializer() instead.",
+            ReplaceWith("JsonErrorCode.serializer()", "dev.kord.rest.json.JsonErrorCode"),
+            DeprecationLevel.ERROR
+        )
+        @JvmField
+        val JsonErrorCodeSerializer: KSerializer<JsonErrorCode> = Serializer
     }
 
     internal object Serializer : KSerializer<JsonErrorCode> {
