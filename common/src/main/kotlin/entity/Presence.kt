@@ -67,7 +67,7 @@ public data class DiscordClientStatus(
     val web: Optional<PresenceStatus> = Optional.Missing(),
 )
 
-@Serializable(with = PresenceStatus.Serializer::class)
+@Serializable(with = PresenceStatus.StatusSerializer::class)
 public sealed class PresenceStatus(public val value: String) {
 
     public class Unknown(value: String) : PresenceStatus(value)
@@ -77,7 +77,7 @@ public sealed class PresenceStatus(public val value: String) {
     public object Offline : PresenceStatus("offline")
     public object Invisible : PresenceStatus("invisible")
 
-    internal object Serializer : KSerializer<PresenceStatus> {
+    public companion object StatusSerializer : KSerializer<PresenceStatus> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Kord.ClientStatus", PrimitiveKind.STRING)
 
         override fun deserialize(decoder: Decoder): PresenceStatus = when (val value = decoder.decodeString()) {

@@ -54,7 +54,7 @@ public sealed class StageInstancePrivacyLevel(public val value: Int) {
      */
     public class Unknown(value: Int) : StageInstancePrivacyLevel(value)
 
-    internal object Serializer : KSerializer<StageInstancePrivacyLevel> {
+    public companion object Serializer : KSerializer<StageInstancePrivacyLevel> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("StageInstancePrivacyLevel", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): StageInstancePrivacyLevel {
@@ -65,7 +65,7 @@ public sealed class StageInstancePrivacyLevel(public val value: Int) {
             }
         }
 
-        override fun serialize(encoder: Encoder, value: StageInstancePrivacyLevel) = encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, value: StageInstancePrivacyLevel): Unit = encoder.encodeInt(value.value)
 
     }
 }

@@ -9,10 +9,10 @@ import kotlinx.serialization.json.*
 /**
  * An instance of a [Discord shard](https://discord.com/developers/docs/topics/gateway#sharding).
  */
-@Serializable(with = DiscordShard.Serializer::class)
+@Serializable(with = DiscordShard.Companion::class)
 public data class DiscordShard(val index: Int, val count: Int) {
 
-    internal object Serializer : KSerializer<DiscordShard> {
+    public companion object : KSerializer<DiscordShard> {
 
         @OptIn(ExperimentalSerializationApi::class)
         override val descriptor: SerialDescriptor

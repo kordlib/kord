@@ -141,7 +141,7 @@ public fun DiscordBitSet(value: String): DiscordBitSet {
 }
 
 
-internal object DiscordBitSetSerializer : KSerializer<DiscordBitSet> {
+public object DiscordBitSetSerializer : KSerializer<DiscordBitSet> {
     override val descriptor: SerialDescriptor
         get() = PrimitiveSerialDescriptor("DiscordBitSet", PrimitiveKind.STRING)
 

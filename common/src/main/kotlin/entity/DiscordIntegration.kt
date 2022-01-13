@@ -59,7 +59,7 @@ public sealed class IntegrationExpireBehavior(public val value: Int) {
     public object RemoveRole : IntegrationExpireBehavior(0)
     public object Kick : IntegrationExpireBehavior(1)
 
-    internal object Serializer : KSerializer<IntegrationExpireBehavior> {
+    public companion object Serializer : KSerializer<IntegrationExpireBehavior> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("expire_behavior", PrimitiveKind.INT)
 

@@ -136,7 +136,7 @@ public data class DiscordActivitySecrets(
     val match: Optional<String> = Optional.Missing()
 )
 
-@Serializable(with = ActivityType.Serializer::class)
+@Serializable(with = ActivityType.ActivityTypeSerializer::class)
 public enum class ActivityType(public val code: Int) {
     /** The default code for unknown values. */
     Unknown(Int.MIN_VALUE),
@@ -147,7 +147,7 @@ public enum class ActivityType(public val code: Int) {
     Custom(4),
     Competing(5);
 
-    internal object Serializer : KSerializer<ActivityType> {
+    public companion object ActivityTypeSerializer : KSerializer<ActivityType> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("op", PrimitiveKind.INT)
 

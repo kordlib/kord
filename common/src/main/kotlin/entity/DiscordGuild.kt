@@ -294,14 +294,14 @@ public sealed class GuildFeature(public val value: String) {
     }
 }
 
-@Serializable(with = SystemChannelFlags.Serializer::class)
+@Serializable(with = SystemChannelFlags.Companion::class)
 public data class SystemChannelFlags(val code: Int) {
 
     public operator fun contains(flag: SystemChannelFlags): Boolean {
         return this.code and flag.code == flag.code
     }
 
-    internal object Serializer : KSerializer<SystemChannelFlags> {
+    public companion object : KSerializer<SystemChannelFlags> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("system_channel_flags", PrimitiveKind.INT)

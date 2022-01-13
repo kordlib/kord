@@ -67,7 +67,7 @@ public sealed class ScheduledEntityType(public val value: Int) {
     public object External : ScheduledEntityType(3)
     public class Unknown(value: Int) : ScheduledEntityType(value)
 
-    internal object Serializer : KSerializer<ScheduledEntityType> {
+    public companion object Serializer : KSerializer<ScheduledEntityType> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ScheduledEntityType", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ScheduledEntityType {
@@ -80,7 +80,7 @@ public sealed class ScheduledEntityType(public val value: Int) {
             }
         }
 
-        override fun serialize(encoder: Encoder, value: ScheduledEntityType) = encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, value: ScheduledEntityType): Unit = encoder.encodeInt(value.value)
 
     }
 }
@@ -93,7 +93,7 @@ public sealed class GuildScheduledEventStatus(public val value: Int) {
     public object Cancelled : GuildScheduledEventStatus(4)
     public class Unknown(value: Int) : GuildScheduledEventStatus(value)
 
-    internal object Serializer : KSerializer<GuildScheduledEventStatus> {
+    public companion object Serializer : KSerializer<GuildScheduledEventStatus> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("GuildScheduledEventStatus", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): GuildScheduledEventStatus {
@@ -106,7 +106,7 @@ public sealed class GuildScheduledEventStatus(public val value: Int) {
             }
         }
 
-        override fun serialize(encoder: Encoder, value: GuildScheduledEventStatus) = encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, value: GuildScheduledEventStatus): Unit = encoder.encodeInt(value.value)
 
     }
 }

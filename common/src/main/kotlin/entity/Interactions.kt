@@ -700,7 +700,7 @@ public data class DiscordGuildApplicationCommandPermission(
         public object User : Type(2)
         public class Unknown(value: Int) : Type(value)
 
-        internal object Serializer : KSerializer<Type> {
+        public object Serializer : KSerializer<Type> {
             override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
@@ -711,7 +711,7 @@ public data class DiscordGuildApplicationCommandPermission(
                     else -> Unknown(value)
                 }
 
-            override fun serialize(encoder: Encoder, value: Type) = encoder.encodeInt(value.value)
+            override fun serialize(encoder: Encoder, value: Type): Unit = encoder.encodeInt(value.value)
         }
     }
 }

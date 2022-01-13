@@ -22,7 +22,7 @@ public data class DiscordTeam(
 /**
  * The state of membership on a Discord developer team.
  */
-@Serializable(with = TeamMembershipState.Serializer::class)
+@Serializable(with = TeamMembershipState.TeamMembershipStateSerializer::class)
 public sealed class TeamMembershipState(public val value: Int) {
     /**
      * Unknown membership state.
@@ -40,7 +40,7 @@ public sealed class TeamMembershipState(public val value: Int) {
     public object Accepted : TeamMembershipState(2)
 
 
-    internal object Serializer : KSerializer<TeamMembershipState> {
+    public companion object TeamMembershipStateSerializer : KSerializer<TeamMembershipState> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("membership_state", PrimitiveKind.INT)

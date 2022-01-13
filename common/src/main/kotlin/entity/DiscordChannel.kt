@@ -188,7 +188,7 @@ public sealed class ArchiveDuration(public val duration: Int) {
     public object ThreeDays : ArchiveDuration(4320)
     public object Week : ArchiveDuration(10080)
 
-    internal object Serializer : KSerializer<ArchiveDuration> {
+    public object Serializer : KSerializer<ArchiveDuration> {
         override fun deserialize(decoder: Decoder): ArchiveDuration {
             val value = decoder.decodeInt()
             return values.firstOrNull { it.duration == value } ?: Unknown(value)

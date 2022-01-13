@@ -478,7 +478,7 @@ public sealed class AuditLogEvent(public val value: Int) {
     public object ThreadDelete : AuditLogEvent(112)
 
 
-    internal object Serializer : KSerializer<AuditLogEvent> {
+    public object Serializer : KSerializer<AuditLogEvent> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("Kord.AuditLogEvent", PrimitiveKind.INT)
 

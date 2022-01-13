@@ -77,7 +77,7 @@ public sealed class ComponentType(public val value: Int) {
      */
     public object SelectMenu : ComponentType(3)
 
-    internal object Serializer : KSerializer<ComponentType> {
+    public companion object Serializer : KSerializer<ComponentType> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ComponentType", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ComponentType =
@@ -88,7 +88,7 @@ public sealed class ComponentType(public val value: Int) {
                 else -> Unknown(value)
             }
 
-        override fun serialize(encoder: Encoder, value: ComponentType) = encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, value: ComponentType): Unit = encoder.encodeInt(value.value)
     }
 }
 
@@ -138,7 +138,7 @@ public sealed class ButtonStyle(public val value: Int) {
      */
     public object Link : ButtonStyle(5)
 
-    internal object Serializer : KSerializer<ButtonStyle> {
+    public companion object Serializer : KSerializer<ButtonStyle> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ButtonStyle", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ButtonStyle =
@@ -151,6 +151,6 @@ public sealed class ButtonStyle(public val value: Int) {
                 else -> Unknown(value)
             }
 
-        override fun serialize(encoder: Encoder, value: ButtonStyle) = encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, value: ButtonStyle): Unit = encoder.encodeInt(value.value)
     }
 }

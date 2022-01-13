@@ -13,7 +13,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 
-@Serializable(with = Permissions.Serializer::class)
+@Serializable(with = Permissions.Companion::class)
 public data class Permissions(val code: DiscordBitSet) {
     /**
      *  Returns this [Permissions] as a [Set] of [Permission]
@@ -53,7 +53,7 @@ public data class Permissions(val code: DiscordBitSet) {
         return "Permissions(values=$code)"
     }
 
-    internal object Serializer : KSerializer<Permissions> {
+    public companion object : KSerializer<Permissions> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("permission", PrimitiveKind.STRING)

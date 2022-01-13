@@ -115,7 +115,7 @@ public enum class UserFlag(public val code: Int) {
     DiscordCertifiedModerator(1 shl 18)
 }
 
-@Serializable(with = UserFlags.Serializer::class)
+@Serializable(with = UserFlags.UserFlagsSerializer::class)
 public data class UserFlags(val code: Int) {
 
     val flags: List<UserFlag> = UserFlag.values().filter { code and it.code != 0 }
@@ -142,7 +142,7 @@ public data class UserFlags(val code: Int) {
     }
 
 
-    internal object Serializer : KSerializer<UserFlags> {
+    public companion object UserFlagsSerializer : KSerializer<UserFlags> {
 
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("userFlag", PrimitiveKind.INT)
 
