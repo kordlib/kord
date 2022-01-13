@@ -3,6 +3,7 @@ package dev.kord.rest.json
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
@@ -12,7 +13,7 @@ import kotlinx.serialization.encoding.Encoder
  * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
  * */
 @Serializable(with = JsonErrorCode.JsonErrorCodeSerializer::class)
-enum class JsonErrorCode(val code: Int) {
+public enum class JsonErrorCode(public val code: Int) {
     /**
      * Undocumented error
      */
@@ -844,15 +845,15 @@ enum class JsonErrorCode(val code: Int) {
      * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
      */
     MaxActiveAnnouncementThreads(160007),
-    
+
     OperationOnAchievedThread(50083),
 
     InvalidThreadSettings(50084),
 
     InvalidThreadBefore(50085),;
 
-    companion object JsonErrorCodeSerializer : KSerializer<JsonErrorCode> {
-        override val descriptor = PrimitiveSerialDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)
+    public companion object JsonErrorCodeSerializer : KSerializer<JsonErrorCode> {
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)
 
 
         override fun deserialize(decoder: Decoder): JsonErrorCode {
