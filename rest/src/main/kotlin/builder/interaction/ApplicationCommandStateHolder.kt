@@ -22,9 +22,9 @@ internal class ApplicationCommandModifyStateHolder {
     var defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 
     @SerialName("dm_permissions")
-    val dmPermissions: OptionalBoolean = OptionalBoolean.Missing
+    var dmPermissions: OptionalBoolean = OptionalBoolean.Missing
 
     @SerialName("default_member_permissions")
-    val defaultMemberPermissions: Optional<Permissions> = Optional.Missing()
+    var defaultMemberPermissions: Optional<Permissions> = Optional.Missing()
 
 }

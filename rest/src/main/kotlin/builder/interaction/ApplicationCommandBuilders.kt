@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.DiscordGuildApplicationCommandPermission
 import dev.kord.common.entity.PartialDiscordGuildApplicationCommandPermissions
+import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
@@ -16,6 +17,8 @@ import kotlin.contracts.contract
 interface ApplicationCommandCreateBuilder : RequestBuilder<ApplicationCommandCreateRequest> {
     var name: String
     var defaultPermission: Boolean?
+    var dmPermissions: Boolean?
+    var defaultMemberPermissions: Permissions?
     val type: ApplicationCommandType
 
 
@@ -25,6 +28,8 @@ interface ApplicationCommandCreateBuilder : RequestBuilder<ApplicationCommandCre
 interface ApplicationCommandModifyBuilder : RequestBuilder<ApplicationCommandModifyRequest> {
     var name: String?
     var defaultPermission: Boolean?
+    var dmPermissions: Boolean?
+    var defaultMemberPermissions: Permissions?
 }
 
 @KordDsl

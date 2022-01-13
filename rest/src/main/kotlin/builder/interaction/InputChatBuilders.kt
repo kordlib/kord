@@ -2,6 +2,7 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapList
@@ -100,7 +101,8 @@ class ChatInputCreateBuilder(
 
     override var options: MutableList<OptionsBuilder>? by state::options.delegate()
     override var defaultPermission: Boolean? by state::defaultPermission.delegate()
-
+    override var dmPermissions: Boolean? by state::dmPermissions.delegate()
+    override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
 
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
@@ -108,7 +110,9 @@ class ChatInputCreateBuilder(
             type,
             Optional.Value(description),
             state.options.mapList { it.toRequest() },
-            state.defaultPermission
+            state.defaultPermission,
+            state.dmPermissions,
+            state.defaultMemberPermissions
         )
 
     }
@@ -125,15 +129,18 @@ class ChatInputModifyBuilder : ApplicationCommandModifyBuilder, RootInputChatBui
     var description: String? by state::description.delegate()
 
     override var options: MutableList<OptionsBuilder>? by state::options.delegate()
-
     override var defaultPermission: Boolean? by state::defaultPermission.delegate()
+    override var dmPermissions: Boolean? by state::dmPermissions.delegate()
+    override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
 
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
-           state.name,
+            state.name,
             state.description,
             state.options.mapList { it.toRequest() },
-            state.defaultPermission
+            state.defaultPermission,
+            state.dmPermissions,
+            state.defaultMemberPermissions
         )
 
     }
