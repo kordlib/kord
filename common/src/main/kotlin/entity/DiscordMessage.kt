@@ -140,8 +140,9 @@ public data class DiscordMessageSticker(
     @SerialName("sort_value")
     val sortValue: OptionalInt = OptionalInt.Missing
 )
+
 @Serializable
-data class DiscordStickerPack(
+public data class DiscordStickerPack(
     val id: Snowflake,
     val stickers: List<DiscordMessageSticker>,
     val name: String,
@@ -152,11 +153,10 @@ data class DiscordStickerPack(
     val description: String,
     @SerialName("banner_asset_id")
     val bannerAssetId: Snowflake
-
 )
 
 @Serializable
-data class DiscordStickerItem(
+public data class DiscordStickerItem(
     val id: Snowflake,
     val name: String,
     @SerialName("format_type")
@@ -239,7 +239,6 @@ public sealed class MessageStickerType(public val value: Int) {
  * @param referencedMessage the message associated with [messageReference].
  */
 @Serializable
-
 public data class DiscordPartialMessage(
     val id: Snowflake,
     @SerialName("channel_id")

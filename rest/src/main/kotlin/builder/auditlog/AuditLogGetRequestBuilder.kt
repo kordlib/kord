@@ -25,7 +25,7 @@ public class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
     /**
      * How many entries are returned (default 50, minimum 1, maximum 100).
      */
-    var limit: Int = 100
+    public var limit: Int = 100
 
     override fun toRequest(): AuditLogGetRequest = AuditLogGetRequest(userId, action, before, limit)
 }

@@ -81,7 +81,7 @@ public sealed class Route<T>(
     public object InteractionId : Key("interaction.id", true)
     public object InteractionToken : Key("{interaction.token}", true)
     public object ScheduledEventId : Key("{event.id}", true)
-    object StickerId : Key("{sticker.id}")
+    public object StickerId : Key("{sticker.id}")
 
 
     protected constructor(
@@ -876,47 +876,45 @@ public sealed class Route<T>(
         Route<Unit>(HttpMethod.Delete, "/stage-instances/$ChannelId", NoStrategy)
 
 
-    object StickerGet : Route<DiscordMessageSticker>(
-        HttpMethod.Get,
-        "/stickers/${StickerId}",
-        DiscordMessageSticker.serializer()
-    )
+    /*
+     * Sticker:
+     * https://discord.com/developers/docs/resources/sticker
+     */
 
-    object NitroStickerPacks : Route<List<DiscordStickerPack>>(
-        HttpMethod.Get,
-        "/sticker-packs",
-        ListSerializer(DiscordStickerPack.serializer())
-    )
+    public object StickerGet :
+        Route<DiscordMessageSticker>(HttpMethod.Get, "/stickers/$StickerId", DiscordMessageSticker.serializer())
 
-    object GuildStickersGet : Route<List<DiscordMessageSticker>>(
-        HttpMethod.Get,
-        "/guilds/${GuildId}/stickers",
-        ListSerializer(DiscordMessageSticker.serializer())
-    )
+    public object NitroStickerPacks :
+        Route<List<DiscordStickerPack>>(
+            HttpMethod.Get,
+            "/sticker-packs",
+            ListSerializer(DiscordStickerPack.serializer())
+        )
 
-    object GuildStickerGet : Route<DiscordMessageSticker>(
-        HttpMethod.Get,
-        "/guilds/${GuildId}/stickers/${StickerId}",
-        DiscordMessageSticker.serializer()
-    )
+    public object GuildStickersGet :
+        Route<List<DiscordMessageSticker>>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/stickers",
+            ListSerializer(DiscordMessageSticker.serializer())
+        )
 
+    public object GuildStickerGet :
+        Route<DiscordMessageSticker>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/stickers/$StickerId",
+            DiscordMessageSticker.serializer()
+        )
 
-    object GuildStickerDelete : Route<Unit>(
-        HttpMethod.Delete,
-        "/guilds/${GuildId}/stickers/${StickerId}",
-        NoStrategy
-    )
+    public object GuildStickerDelete :
+        Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/stickers/$StickerId", NoStrategy)
 
-    object GuildStickerPost: Route<DiscordMessageSticker>(
-        HttpMethod.Post,
-        "/guilds/${GuildId}/stickers",
-        DiscordMessageSticker.serializer()
-    )
+    public object GuildStickerPost :
+        Route<DiscordMessageSticker>(HttpMethod.Post, "/guilds/$GuildId/stickers", DiscordMessageSticker.serializer())
 
-
-    object GuildStickerPatch: Route<DiscordMessageSticker>(
-        HttpMethod.Patch,
-        "/guilds/${GuildId}/stickers/${StickerId}",
-        DiscordMessageSticker.serializer()
-    )
+    public object GuildStickerPatch :
+        Route<DiscordMessageSticker>(
+            HttpMethod.Patch,
+            "/guilds/$GuildId/stickers/$StickerId",
+            DiscordMessageSticker.serializer()
+        )
 }
