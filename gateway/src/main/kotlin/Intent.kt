@@ -211,7 +211,7 @@ public fun Intents(intents: Iterable<Intent>): Intents = Intents {
 /**
  * A set of [intents][Intent] to be used while [identifying][Identify] a [Gateway] connection to communicate the events the client wishes to receive.
  */
-@Serializable(with = Intents.Serializer::class)
+@Serializable(with = IntentsSerializer::class)
 public data class Intents internal constructor(val code: DiscordBitSet) {
     /**
      *  Returns this [Intents] as a [Set] of [Intent]
@@ -292,20 +292,20 @@ public data class Intents internal constructor(val code: DiscordBitSet) {
         public fun flags(): Intents = Intents(code)
     }
 
+}
 
-    internal object Serializer : KSerializer<Intents> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("intents", PrimitiveKind.STRING)
+public object IntentsSerializer : KSerializer<Intents> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("intents", PrimitiveKind.STRING)
 
-        override fun deserialize(decoder: Decoder): Intents {
-            val intents = decoder.decodeString()
-            return Intents(intents)
-        }
+    override fun deserialize(decoder: Decoder): Intents {
+        val intents = decoder.decodeString()
+        return Intents(intents)
+    }
 
 
-        override fun serialize(encoder: Encoder, value: Intents) {
-            val intents = value.code
-            encoder.encodeString(intents.value)
+    override fun serialize(encoder: Encoder, value: Intents) {
+        val intents = value.code
+        encoder.encodeString(intents.value)
 
-        }
     }
 }

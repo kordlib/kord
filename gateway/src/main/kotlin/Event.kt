@@ -42,7 +42,7 @@ private object NullDecoder : KDeserializationStrategy<Nothing?> {
 public sealed class Event {
     public object DeserializationStrategy : KDeserializationStrategy<Event?> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
-            element("op", OpCode.Serializer.descriptor)
+            element("op", OpCode.serializer().descriptor)
             element("t", String.serializer().descriptor, isOptional = true)
             element("s", Int.serializer().descriptor, isOptional = true)
             element("d", JsonObject.serializer().descriptor, isOptional = true)
@@ -64,7 +64,7 @@ public sealed class Event {
                         decodeElementIndex(descriptor)) {//we assume the all fields to be present *before* the data field
                         CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> {
-                            op = OpCode.Serializer.deserialize(decoder)
+                            op = OpCode.serializer().deserialize(decoder)
                             @Suppress("NON_EXHAUSTIVE_WHEN")
                             when (op) {
                                 OpCode.HeartbeatACK -> data = HeartbeatACK
@@ -85,7 +85,7 @@ public sealed class Event {
                             OpCode.InvalidSession -> decodeSerializableElement(
                                 descriptor,
                                 index,
-                                InvalidSession.Serializer
+                                InvalidSession.serializer()
                             )
                             OpCode.Hello -> decodeSerializableElement(descriptor, index, Hello.serializer())
                             //some events contain undocumented data fields, we'll only assume an unknown opcode with no data to be an error
@@ -535,13 +535,13 @@ public data class ReadyData(
     val shard: Optional<DiscordShard> = Optional.Missing(),
 )
 
-@Serializable(with = Heartbeat.Serializer::class)
+@Serializable(with = Heartbeat.Companion::class)
 public data class Heartbeat(val data: Long) : Event() {
-    internal object Serializer : KSerializer<Heartbeat> {
+    public companion object : KSerializer<Heartbeat> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
 
-        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
+        override fun deserialize(decoder: Decoder): Heartbeat = Heartbeat(decoder.decodeLong())
 
         override fun serialize(encoder: Encoder, value: Heartbeat) {
             encoder.encodeLong(value.data)

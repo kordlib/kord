@@ -8,7 +8,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@Serializable(with = OpCode.Serializer::class)
+@Serializable(with = OpCode.OpCodeSerializer::class)
 public enum class OpCode(public val code: Int) {
     /** The default code for unknown values. */
     Unknown(Int.MIN_VALUE),
@@ -68,7 +68,7 @@ public enum class OpCode(public val code: Int) {
      */
     HeartbeatACK(11);
 
-    internal object Serializer : KSerializer<OpCode> {
+    public companion object OpCodeSerializer : KSerializer<OpCode> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("op", PrimitiveKind.INT)
 

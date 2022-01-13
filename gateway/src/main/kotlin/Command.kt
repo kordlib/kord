@@ -35,7 +35,7 @@ public sealed class Command {
     public object SerializationStrategy : KSerializationStrategy<Command> {
 
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Command") {
-            element("op", OpCode.Serializer.descriptor)
+            element("op", OpCode.serializer().descriptor)
             element("d", JsonObject.serializer().descriptor)
         }
 
@@ -44,27 +44,27 @@ public sealed class Command {
             val composite = encoder.beginStructure(descriptor)
             when (value) {
                 is RequestGuildMembers -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.RequestGuildMembers)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.RequestGuildMembers)
                     composite.encodeSerializableElement(descriptor, 1, RequestGuildMembers.serializer(), value)
                 }
                 is UpdateVoiceStatus -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.VoiceStateUpdate)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.VoiceStateUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateVoiceStatus.serializer(), value)
                 }
                 is UpdateStatus -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.StatusUpdate)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.StatusUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateStatus.serializer(), value)
                 }
                 is Identify -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.Identify)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Identify)
                     composite.encodeSerializableElement(descriptor, 1, Identify.serializer(), value)
                 }
                 is Resume -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.Resume)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Resume)
                     composite.encodeSerializableElement(descriptor, 1, Resume.serializer(), value)
                 }
                 is Heartbeat -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.Heartbeat)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Heartbeat)
                     composite.encodeSerializableElement(descriptor, 1, Heartbeat.SerializationStrategy, value)
                 }
             }
