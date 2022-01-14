@@ -10,10 +10,6 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
-import mu.KLogger
-import mu.KotlinLogging
-
-public val kordLogger: KLogger = KotlinLogging.logger { }
 
 @Serializable
 public data class DiscordApplicationCommand(
@@ -317,7 +313,7 @@ public sealed class Option {
         }
 
         override fun deserialize(decoder: Decoder): Option {
-            decoder as? JsonDecoder ?: error("Option can only be deserialize with a JsonDecoder")
+            decoder as? JsonDecoder ?: error("Option can only be deserialized with a JsonDecoder")
             val json = decoder.json
 
             var name = ""
