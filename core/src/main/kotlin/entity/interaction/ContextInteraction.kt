@@ -1,6 +1,7 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.ApplicationCommandType
+import dev.kord.common.entity.CommandArgument
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.unwrap
@@ -15,7 +16,7 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.User
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import java.util.Objects
+import java.util.*
 
 /**
  * Interaction which contains a contains command data.
@@ -224,6 +225,8 @@ public class UnknownApplicationCommandInteraction(
  * ActionInteraction indicating an auto-complete request from Discord.
  *
  * **Follow-ups and normals responses don't work on this type**
+ *
+ * **No matter what argument type is used all arguments will be [CommandArgument.AutoCompleteArgument]s
  *
  * Check [AutoCompleteInteractionBehavior] for response options
  */
