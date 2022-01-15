@@ -322,9 +322,17 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     public fun getAuditLogEntries(
         guildId: Snowflake,
-        request: AuditLogGetRequest = AuditLogGetRequest()
-    ): Flow<DiscordAuditLogEntry> = paginateBackwards(batchSize = 100, idSelector = DiscordAuditLogEntry::id) {
-        auditLog.getAuditLogs(guildId, request.copy(before = it.value)).auditLogEntries
+        request: AuditLogGetRequest = AuditLogGetRequest(),
+    ): Flow<DiscordAuditLogEntry> {
+        // max: see https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
+        val batchSize = checkLimitAndGetBatchSize(request.limit, max = 100)
+
+        val flow = paginateBackwards(batchSize = batchSize, idSelector = { it.id }) { beforePosition ->
+            val r = request.copy(before = beforePosition.value, limit = batchSize)
+            auditLog.getAuditLogs(guildId, request = r).auditLogEntries
+        }
+
+        return flow.limitPagination(request.limit)
     }
 
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = catchNotFound {
