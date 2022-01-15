@@ -57,8 +57,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     override val guilds: Flow<Guild>
         get() = paginateForwards(
             idSelector = DiscordPartialGuild::id,
-            batchSize = 100
-        ) { position -> user.getCurrentUserGuilds(position, 100) }
+            batchSize = 200 // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
+        ) { position -> user.getCurrentUserGuilds(position, limit = 200) }
             .map {
                 val guild = guild.getGuild(it.id)
                 val data = GuildData.from(guild)
