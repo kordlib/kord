@@ -129,7 +129,6 @@ internal fun <C : Collection<T>, T, P : Position> paginate(
     request: suspend (position: P) -> C,
 ): Flow<T> = flow {
     var position = directionSelector(start)
-    var size = batchSize
 
     while (true) {
         val response = request(position)
@@ -138,8 +137,7 @@ internal fun <C : Collection<T>, T, P : Position> paginate(
         val id = itemSelector(response)?.let(idSelector) ?: break
         position = directionSelector(id)
 
-        if (response.size < size) break
-        size = response.size
+        if (response.size < batchSize) break
     }
 }
 
