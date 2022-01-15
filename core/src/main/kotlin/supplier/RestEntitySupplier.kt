@@ -121,7 +121,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     // maxBatchSize: see https://discord.com/developers/docs/resources/channel#get-channel-messages
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
-            paginateForwards(start = messageId, batchSize, idSelector = { it.id }) { after ->
+            paginateForwards(batchSize, start = messageId, idSelector = { it.id }) { after ->
                 channel.getMessages(channelId, position = after, limit = batchSize)
             }
         }.map {
@@ -132,7 +132,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     // maxBatchSize: see https://discord.com/developers/docs/resources/channel#get-channel-messages
     override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
-            paginateBackwards(start = messageId, batchSize, idSelector = { it.id }) { before ->
+            paginateBackwards(batchSize, start = messageId, idSelector = { it.id }) { before ->
                 channel.getMessages(channelId, position = before, limit = batchSize)
             }
         }.map {
@@ -181,7 +181,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     // maxBatchSize: see https://discord.com/developers/docs/resources/guild#list-guild-members
     override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> =
         limitedPagination(limit, maxBatchSize = 1000) { batchSize ->
-            paginateForwards(idSelector = { it.user.value!!.id }, batchSize = batchSize) { after ->
+            paginateForwards(batchSize, idSelector = { it.user.value!!.id }) { after ->
                 guild.getGuildMembers(guildId, after, limit = batchSize)
             }
         }.map {
@@ -222,7 +222,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     // maxBatchSize: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
     override fun getCurrentUserGuilds(limit: Int): Flow<Guild> =
         limitedPagination(limit, maxBatchSize = 200) { batchSize ->
-            paginateForwards(batchSize = batchSize, idSelector = { it.id }) { after ->
+            paginateForwards(batchSize, idSelector = { it.id }) { after ->
                 user.getCurrentUserGuilds(position = after, limit = batchSize)
             }
         }.map {
@@ -313,7 +313,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         guildId: Snowflake,
         request: AuditLogGetRequest = AuditLogGetRequest(),
     ): Flow<DiscordAuditLogEntry> = limitedPagination(request.limit, maxBatchSize = 100) { batchSize ->
-        paginateBackwards(batchSize = batchSize, idSelector = { it.id }) { beforePosition ->
+        paginateBackwards(batchSize, idSelector = { it.id }) { beforePosition ->
             val r = request.copy(before = beforePosition.value, limit = batchSize)
             auditLog.getAuditLogs(guildId, request = r).auditLogEntries
         }
@@ -371,7 +371,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         before: Snowflake,
         limit: Int,
     ): Flow<ThreadChannel> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
-        paginateBackwards(start = before, batchSize, idSelector = { it.id }) { beforePosition ->
+        paginateBackwards(batchSize, start = before, idSelector = { it.id }) { beforePosition ->
             val request = ListThreadsBySnowflakeRequest(before = beforePosition.value, limit = batchSize)
             channel.listJoinedPrivateArchivedThreads(channelId, request).threads
         }.mapNotNull {
