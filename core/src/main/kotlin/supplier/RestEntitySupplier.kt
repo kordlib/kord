@@ -49,8 +49,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     private val voice: VoiceService get() = kord.rest.voice
     private val webhook: WebhookService get() = kord.rest.webhook
     private val application: ApplicationService get() = kord.rest.application
-    private val template: TemplateService = kord.rest.template
-    private val interaction: InteractionService = kord.rest.interaction
+    private val template: TemplateService get() = kord.rest.template
+    private val interaction: InteractionService get() = kord.rest.interaction
+    private val stageInstance: StageInstanceService get() = kord.rest.stageInstance
+    private val sticker: StickerService get() = kord.rest.sticker
 
     override val guilds: Flow<Guild>
         get() = paginateForwards(
@@ -124,7 +126,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         val batchSize = min(100, limit)
 
         val flow = paginateForwards(messageId, batchSize, idSelector = { it.id }) { position ->
-            kord.rest.channel.getMessages(channelId, position, batchSize)
+            channel.getMessages(channelId, position, batchSize)
         }.map {
             val data = MessageData.from(it)
             Message(data, kord)
@@ -138,7 +140,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         val batchSize = min(100, limit)
 
         val flow = paginateBackwards(messageId, batchSize, idSelector = { it.id }) { position ->
-            kord.rest.channel.getMessages(channelId, position, batchSize)
+            channel.getMessages(channelId, position, batchSize)
         }.map {
             val data = MessageData.from(it)
             Message(data, kord)
@@ -148,7 +150,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> = flow {
-        val responses = kord.rest.channel.getMessages(channelId, Position.Around(messageId))
+        val responses = channel.getMessages(channelId, Position.Around(messageId))
 
         for (response in responses) {
             val data = MessageData.from(response)
@@ -190,7 +192,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         val batchSize = min(1000, limit)
 
         val flow = paginateForwards(idSelector = { it.user.value!!.id }, batchSize = batchSize) { position ->
-            kord.rest.guild.getGuildMembers(guildId = guildId, position = position, limit = batchSize)
+            guild.getGuildMembers(guildId = guildId, position = position, limit = batchSize)
         }.map {
             val userData = it.user.value!!.toData()
             val memberData = it.toData(guildId = guildId, userId = it.user.value!!.id)
@@ -212,7 +214,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     public fun getReactors(channelId: Snowflake, messageId: Snowflake, emoji: ReactionEmoji): Flow<User> =
         paginateForwards(batchSize = 100, idSelector = { it.id }) { position ->
-            kord.rest.channel.getReactions(
+            channel.getReactions(
                 channelId = channelId,
                 messageId = messageId,
                 emoji = emoji.urlFormat,
@@ -334,21 +336,21 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = catchNotFound {
-        val instance = kord.rest.stageInstance.getStageInstance(channelId)
+        val instance = stageInstance.getStageInstance(channelId)
         val data = StageInstanceData.from(instance)
 
         StageInstance(data, kord, this)
     }
 
     override fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember> = flow {
-        kord.rest.channel.listThreadMembers(channelId).onEach {
+        channel.listThreadMembers(channelId).onEach {
             val data = ThreadMemberData.from(it)
             emit(ThreadMember(data, kord))
         }
     }
 
     override fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel> = flow {
-        kord.rest.guild.listActiveThreads(guildId).threads.onEach {
+        guild.listActiveThreads(guildId).threads.onEach {
             val data = ChannelData.from(it)
             val channel = Channel.from(data, kord)
             if (channel is ThreadChannel) emit(channel)
@@ -361,7 +363,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         val batchSize = min(100, limit)
 
         val flow = paginateThreads(100, before) {
-            kord.rest.channel.listPublicArchivedThreads(
+            channel.listPublicArchivedThreads(
                 channelId,
                 ListThreadsByTimestampRequest(before, batchSize)
             ).threads.mapNotNull {
@@ -378,7 +380,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         val batchSize = min(100, limit)
 
         val flow = paginateThreads(100, before) {
-            kord.rest.channel.listPrivateArchivedThreads(
+            channel.listPrivateArchivedThreads(
                 channelId,
                 ListThreadsByTimestampRequest(before, batchSize)
             ).threads.mapNotNull {
@@ -399,7 +401,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         val batchSize = min(100, limit)
 
         val flow = paginateBackwards(batchSize = batchSize, idSelector = { it.id }) {
-            kord.rest.channel.listJoinedPrivateArchivedThreads(
+            channel.listJoinedPrivateArchivedThreads(
                 channelId,
                 ListThreadsBySnowflakeRequest(before, batchSize)
             ).threads.mapNotNull {
@@ -460,7 +462,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> = flow {
-        kord.rest.guild.listScheduledEvents(guildId).forEach {
+        guild.listScheduledEvents(guildId).forEach {
             val data = GuildScheduledEventData.from(it)
 
             emit(GuildScheduledEvent(data, kord))
@@ -469,26 +471,26 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
         catchNotFound {
-            val event = kord.rest.guild.getScheduledEvent(guildId, eventId)
+            val event = guild.getScheduledEvent(guildId, eventId)
             val data = GuildScheduledEventData.from(event)
 
             GuildScheduledEvent(data, kord)
         }
 
     override suspend fun getStickerOrNull(id: Snowflake): Sticker? = catchNotFound {
-        val response = kord.rest.sticker.getSticker(id)
+        val response = sticker.getSticker(id)
         val data = StickerData.from(response)
         Sticker(data, kord)
     }
 
     override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker? = catchNotFound {
-        val response = kord.rest.sticker.getGuildSticker(guildId, id)
+        val response = sticker.getGuildSticker(guildId, id)
         val data = StickerData.from(response)
         GuildSticker(data, kord)
     }
 
     override fun getNitroStickerPacks(): Flow<StickerPack> = flow {
-        val responses = kord.rest.sticker.getNitroStickerPacks()
+        val responses = sticker.getNitroStickerPacks()
 
         responses.forEach { response ->
             val data = StickerPackData.from(response)
@@ -497,7 +499,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> = flow {
-        val responses = kord.rest.sticker.getGuildStickers(guildId)
+        val responses = sticker.getGuildStickers(guildId)
 
         responses.forEach { response ->
             val data = StickerData.from(response)
