@@ -150,7 +150,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> = flow {
-        val responses = channel.getMessages(channelId, Position.Around(messageId))
+        val responses = channel.getMessages(channelId, Position.Around(messageId), limit)
 
         for (response in responses) {
             val data = MessageData.from(response)
