@@ -122,8 +122,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        val batchSize = min(100, limit)
+        // max: see https://discord.com/developers/docs/resources/channel#get-channel-messages
+        val batchSize = checkLimitAndGetBatchSize(limit, max = 100)
 
         val flow = paginateForwards(messageId, batchSize, idSelector = { it.id }) { position ->
             channel.getMessages(channelId, position, batchSize)
@@ -136,8 +136,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        val batchSize = min(100, limit)
+        // max: see https://discord.com/developers/docs/resources/channel#get-channel-messages
+        val batchSize = checkLimitAndGetBatchSize(limit, max = 100)
 
         val flow = paginateBackwards(messageId, batchSize, idSelector = { it.id }) { position ->
             channel.getMessages(channelId, position, batchSize)
@@ -188,8 +188,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        val batchSize = min(1000, limit)
+        // max: see https://discord.com/developers/docs/resources/guild#list-guild-members
+        val batchSize = checkLimitAndGetBatchSize(limit, max = 1000)
 
         val flow = paginateForwards(idSelector = { it.user.value!!.id }, batchSize = batchSize) { position ->
             guild.getGuildMembers(guildId = guildId, position = position, limit = batchSize)
@@ -239,8 +239,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getCurrentUserGuilds(limit: Int): Flow<Guild> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        val batchSize = min(100, limit)
+        // max: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
+        val batchSize = checkLimitAndGetBatchSize(limit, max = 200)
 
         val flow = paginateForwards(batchSize = batchSize, idSelector = { it.id }) { position ->
             user.getCurrentUserGuilds(position, batchSize).map { Guild(guild.getGuild(it.id).toData(), kord) }
@@ -358,9 +358,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-
-        val batchSize = min(100, limit)
+        // no max documented: see https://discord.com/developers/docs/resources/channel#list-public-archived-threads
+        val batchSize = checkLimitAndGetBatchSize(limit, max = 100)
 
         val flow = paginateThreads(100, before) {
             channel.listPublicArchivedThreads(
@@ -375,9 +374,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-
-        val batchSize = min(100, limit)
+        // no max documented: see https://discord.com/developers/docs/resources/channel#list-private-archived-threads
+        val batchSize = checkLimitAndGetBatchSize(limit, max = 100)
 
         val flow = paginateThreads(100, before) {
             channel.listPrivateArchivedThreads(
@@ -396,9 +394,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         before: Snowflake,
         limit: Int
     ): Flow<ThreadChannel> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-
-        val batchSize = min(100, limit)
+        // no max documented: see https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads
+        val batchSize = checkLimitAndGetBatchSize(limit, max = 100)
 
         val flow = paginateBackwards(batchSize = batchSize, idSelector = { it.id }) {
             channel.listJoinedPrivateArchivedThreads(
@@ -532,5 +529,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     override fun toString(): String {
         return "RestEntitySupplier(rest=${kord.rest})"
     }
+}
 
+
+private fun checkLimitAndGetBatchSize(limit: Int, max: Int): Int {
+    require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+    return min(limit, max)
 }
