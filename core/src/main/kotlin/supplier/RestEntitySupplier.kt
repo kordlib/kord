@@ -132,7 +132,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             Message(data, kord)
         }
 
-        return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
+        return flow.limitPagination(limit)
     }
 
     override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
@@ -146,7 +146,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             Message(data, kord)
         }
 
-        return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
+        return flow.limitPagination(limit)
     }
 
     override fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> = flow {
@@ -199,9 +199,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             Member(memberData, userData, kord)
         }
 
-
-        return if (limit != Int.MAX_VALUE) flow.take(limit)
-        else flow
+        return flow.limitPagination(limit)
     }
 
 
@@ -246,8 +244,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             user.getCurrentUserGuilds(position, batchSize).map { Guild(guild.getGuild(it.id).toData(), kord) }
         }
 
-        return if (limit != Int.MAX_VALUE) flow.take(limit)
-        else flow
+        return flow.limitPagination(limit)
     }
 
     override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> = flow {
@@ -370,7 +367,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
                 Channel.from(data, kord) as? ThreadChannel
             }
         }
-        return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
+
+        return flow.limitPagination(limit)
     }
 
     override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
@@ -386,7 +384,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
                 Channel.from(data, kord) as? ThreadChannel
             }
         }
-        return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
+
+        return flow.limitPagination(limit)
     }
 
     override fun getJoinedPrivateArchivedThreads(
@@ -406,7 +405,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
                 Channel.from(data, kord) as? ThreadChannel
             }
         }
-        return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
+
+        return flow.limitPagination(limit)
     }
 
     override fun getGuildApplicationCommands(
@@ -536,3 +536,5 @@ private fun checkLimitAndGetBatchSize(limit: Int, max: Int): Int {
     require(limit > 0) { "At least 1 item should be requested, but got $limit." }
     return min(limit, max)
 }
+
+private fun <T> Flow<T>.limitPagination(limit: Int): Flow<T> = if (limit == Int.MAX_VALUE) this else take(limit)
