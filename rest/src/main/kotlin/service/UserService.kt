@@ -22,7 +22,7 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
         keys[Route.UserId] = userId
     }
 
-    suspend fun getCurrentUserGuilds(position: Position? = null, limit: Int = 200) = call(Route.CurrentUsersGuildsGet) {
+    suspend fun getCurrentUserGuilds(position: Position.BeforeOrAfter? = null, limit: Int = 200) = call(Route.CurrentUsersGuildsGet) {
         if (position != null) {
             parameter(position.key, position.value)
         }

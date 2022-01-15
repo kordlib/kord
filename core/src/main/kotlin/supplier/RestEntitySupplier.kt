@@ -53,8 +53,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     private val stageInstance: StageInstanceService get() = kord.rest.stageInstance
     private val sticker: StickerService get() = kord.rest.sticker
 
+    // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
     override val guilds: Flow<Guild>
-        // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
         get() = paginateForwards(batchSize = 200, idSelector = { it.id }) { after ->
             user.getCurrentUserGuilds(position = after, limit = 200)
         }.map {
