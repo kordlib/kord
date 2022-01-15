@@ -1,7 +1,6 @@
 package dev.kord.core.supplier
 
 import dev.kord.common.entity.DiscordAuditLogEntry
-import dev.kord.common.entity.DiscordPartialGuild
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.optionalSnowflake
@@ -55,10 +54,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     private val sticker: StickerService get() = kord.rest.sticker
 
     override val guilds: Flow<Guild>
-        get() = paginateForwards(
-            idSelector = DiscordPartialGuild::id,
-            batchSize = 200 // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
-        ) { after ->
+        // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
+        get() = paginateForwards(batchSize = 200, idSelector = { it.id }) { after ->
             user.getCurrentUserGuilds(position = after, limit = 200)
         }.map {
             val data = guild.getGuild(it.id).toData()
