@@ -23,12 +23,9 @@ class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
     var before: Snowflake? = null
 
     /**
-     * How many entries are returned (default 50, minimum 1, maximum 100)
-     * ([see Discord's docs](https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log)).
-     *
-     * Set to `100` by default.
+     * How many entries are returned (default 50, minimum 1, maximum 100).
      */
-    var limit: Int = 100
+    var limit: Int = 50
 
     override fun toRequest(): AuditLogGetRequest = AuditLogGetRequest(userId, action, before, limit)
 }
