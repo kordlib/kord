@@ -136,11 +136,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         keys[Route.UserId] = userId
     }
 
-    suspend fun getGuildMembers(guildId: Snowflake, position: Position? = null, limit: Int = 1) =
+    suspend fun getGuildMembers(guildId: Snowflake, after: Position.After? = null, limit: Int = 1) =
         call(Route.GuildMembersGet) {
             keys[Route.GuildId] = guildId
-            if (position != null) {
-                parameter(position.key, position.value)
+            if (after != null) {
+                parameter(after.key, after.value)
             }
             parameter("limit", "$limit")
         }

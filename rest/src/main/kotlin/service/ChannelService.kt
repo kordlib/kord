@@ -147,15 +147,15 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         channelId: Snowflake,
         messageId: Snowflake,
         emoji: String,
-        position: Position? = null,
+        after: Position.After? = null,
         limit: Int = 25
     ) = call(Route.ReactionsGet) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
 
-        if (position != null) {
-            parameter(position.key, position.value)
+        if (after != null) {
+            parameter(after.key, after.value)
         }
         parameter("limit", "$limit")
     }

@@ -58,12 +58,12 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         get() = paginateForwards(
             idSelector = DiscordPartialGuild::id,
             batchSize = 200 // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
-        ) { position -> user.getCurrentUserGuilds(position, limit = 200) }
-            .map {
-                val guild = guild.getGuild(it.id)
-                val data = GuildData.from(guild)
-                Guild(data, kord)
-            }
+        ) { after ->
+            user.getCurrentUserGuilds(position = after, limit = 200)
+        }.map {
+            val data = guild.getGuild(it.id).toData()
+            Guild(data, kord)
+        }
 
     override val regions: Flow<Region>
         get() = flow {
@@ -125,8 +125,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         // max: see https://discord.com/developers/docs/resources/channel#get-channel-messages
         val batchSize = checkLimitAndGetBatchSize(limit, max = 100)
 
-        val flow = paginateForwards(messageId, batchSize, idSelector = { it.id }) { position ->
-            channel.getMessages(channelId, position, batchSize)
+        val flow = paginateForwards(start = messageId, batchSize, idSelector = { it.id }) { after ->
+            channel.getMessages(channelId, position = after, limit = batchSize)
         }.map {
             val data = MessageData.from(it)
             Message(data, kord)
@@ -139,8 +139,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         // max: see https://discord.com/developers/docs/resources/channel#get-channel-messages
         val batchSize = checkLimitAndGetBatchSize(limit, max = 100)
 
-        val flow = paginateBackwards(messageId, batchSize, idSelector = { it.id }) { position ->
-            channel.getMessages(channelId, position, batchSize)
+        val flow = paginateBackwards(start = messageId, batchSize, idSelector = { it.id }) { before ->
+            channel.getMessages(channelId, position = before, limit = batchSize)
         }.map {
             val data = MessageData.from(it)
             Message(data, kord)
@@ -191,8 +191,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         // max: see https://discord.com/developers/docs/resources/guild#list-guild-members
         val batchSize = checkLimitAndGetBatchSize(limit, max = 1000)
 
-        val flow = paginateForwards(idSelector = { it.user.value!!.id }, batchSize = batchSize) { position ->
-            guild.getGuildMembers(guildId = guildId, position = position, limit = batchSize)
+        val flow = paginateForwards(idSelector = { it.user.value!!.id }, batchSize = batchSize) { after ->
+            guild.getGuildMembers(guildId, after, limit = batchSize)
         }.map {
             val userData = it.user.value!!.toData()
             val memberData = it.toData(guildId = guildId, userId = it.user.value!!.id)
@@ -211,14 +211,9 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     public fun getReactors(channelId: Snowflake, messageId: Snowflake, emoji: ReactionEmoji): Flow<User> =
-        paginateForwards(batchSize = 100, idSelector = { it.id }) { position ->
-            channel.getReactions(
-                channelId = channelId,
-                messageId = messageId,
-                emoji = emoji.urlFormat,
-                limit = 100,
-                position = position
-            )
+        // max batchSize/limit: see https://discord.com/developers/docs/resources/channel#get-reactions
+        paginateForwards(batchSize = 100, idSelector = { it.id }) { after ->
+            channel.getReactions(channelId, messageId, emoji = emoji.urlFormat, after, limit = 100)
         }.map {
             val data = UserData.from(it)
             User(data, kord)
@@ -240,8 +235,11 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         // max: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
         val batchSize = checkLimitAndGetBatchSize(limit, max = 200)
 
-        val flow = paginateForwards(batchSize = batchSize, idSelector = { it.id }) { position ->
-            user.getCurrentUserGuilds(position, batchSize).map { Guild(guild.getGuild(it.id).toData(), kord) }
+        val flow = paginateForwards(batchSize = batchSize, idSelector = { it.id }) { after ->
+            user.getCurrentUserGuilds(position = after, limit = batchSize)
+        }.map {
+            val data = guild.getGuild(it.id).toData()
+            Guild(data, kord)
         }
 
         return flow.limitPagination(limit)
