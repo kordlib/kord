@@ -356,11 +356,9 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         // no max documented: see https://discord.com/developers/docs/resources/channel#list-public-archived-threads
         val batchSize = checkLimitAndGetBatchSize(limit, max = 100)
 
-        val flow = paginateThreads(100, before) {
-            channel.listPublicArchivedThreads(
-                channelId,
-                ListThreadsByTimestampRequest(before, batchSize)
-            ).threads.mapNotNull {
+        val flow = paginateThreads(batchSize, start = before) { beforeTimestamp ->
+            val request = ListThreadsByTimestampRequest(before = beforeTimestamp, limit = batchSize)
+            channel.listPublicArchivedThreads(channelId, request).threads.mapNotNull {
                 val data = ChannelData.from(it)
                 Channel.from(data, kord) as? ThreadChannel
             }
@@ -373,11 +371,9 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         // no max documented: see https://discord.com/developers/docs/resources/channel#list-private-archived-threads
         val batchSize = checkLimitAndGetBatchSize(limit, max = 100)
 
-        val flow = paginateThreads(100, before) {
-            channel.listPrivateArchivedThreads(
-                channelId,
-                ListThreadsByTimestampRequest(before, batchSize)
-            ).threads.mapNotNull {
+        val flow = paginateThreads(batchSize, start = before) { beforeTimestamp ->
+            val request = ListThreadsByTimestampRequest(before = beforeTimestamp, limit = batchSize)
+            channel.listPrivateArchivedThreads(channelId, request).threads.mapNotNull {
                 val data = ChannelData.from(it)
                 Channel.from(data, kord) as? ThreadChannel
             }
@@ -394,14 +390,12 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         // no max documented: see https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads
         val batchSize = checkLimitAndGetBatchSize(limit, max = 100)
 
-        val flow = paginateBackwards(batchSize = batchSize, idSelector = { it.id }) {
-            channel.listJoinedPrivateArchivedThreads(
-                channelId,
-                ListThreadsBySnowflakeRequest(before, batchSize)
-            ).threads.mapNotNull {
-                val data = ChannelData.from(it)
-                Channel.from(data, kord) as? ThreadChannel
-            }
+        val flow = paginateBackwards(start = before, batchSize, idSelector = { it.id }) { beforePosition ->
+            val request = ListThreadsBySnowflakeRequest(before = beforePosition.value, limit = batchSize)
+            channel.listJoinedPrivateArchivedThreads(channelId, request).threads
+        }.mapNotNull {
+            val data = ChannelData.from(it)
+            Channel.from(data, kord) as? ThreadChannel
         }
 
         return flow.limitPagination(limit)

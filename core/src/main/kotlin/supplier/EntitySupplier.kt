@@ -14,6 +14,7 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
 /**
@@ -61,7 +62,7 @@ public interface EntitySupplier {
         getGuildPreviewOrNull(guildId) ?: EntityNotFoundException.entityNotFound("Guild Preview", guildId)
 
     /**
-     * Requests to get the widget of this guild through the [strategy],
+     * Requests to get the widget of a [Guild] with the given [id][guildId],
      * returns null if the [GuildWidget] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -70,7 +71,7 @@ public interface EntitySupplier {
 
 
     /**
-     * Requests to get the widget of this [guildId].
+     * Requests to get the widget of a [Guild] with the given [id][guildId].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [GuildWidget] wasn't present.
@@ -314,9 +315,9 @@ public interface EntitySupplier {
     public fun getEmojis(guildId: Snowflake): Flow<GuildEmoji>
 
     /**
-     * Requests the [guild emojis][GuildEmoji] of the [Guild] with the given [guildId].
+     * Requests [guilds][Guild] this bot is known to be part of.
      *
-     *  The flow may use paginated requests to supply guilds, [limit] will limit the maximum number of guilds
+     * The flow may use paginated requests to supply guilds, [limit] will limit the maximum number of guilds
      * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
@@ -377,12 +378,10 @@ public interface EntitySupplier {
 
     /**
      * Requests the [Template] with the given [code].
-     * returns null when the webhook isn't present.
+     * returns null when the template isn't present.
      *
      * @throws RequestException if something went wrong while retrieving the template.
      */
-
-
     public suspend fun getTemplateOrNull(code: String): Template?
 
     /**
@@ -406,11 +405,23 @@ public interface EntitySupplier {
 
     public fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel>
 
-    public fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
+    public fun getPublicArchivedThreads(
+        channelId: Snowflake,
+        before: Instant = Clock.System.now(),
+        limit: Int = Int.MAX_VALUE,
+    ): Flow<ThreadChannel>
 
-    public fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
+    public fun getPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Instant = Clock.System.now(),
+        limit: Int = Int.MAX_VALUE,
+    ): Flow<ThreadChannel>
 
-    public fun getJoinedPrivateArchivedThreads(channelId: Snowflake, before: Snowflake, limit: Int): Flow<ThreadChannel>
+    public fun getJoinedPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Snowflake = Snowflake.max,
+        limit: Int = Int.MAX_VALUE,
+    ): Flow<ThreadChannel>
 
     public fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake): Flow<GuildApplicationCommand>
 
