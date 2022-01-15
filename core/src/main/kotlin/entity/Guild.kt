@@ -354,7 +354,7 @@ public class Guild(
      */
     public val nsfw: NsfwLevel get() = data.nsfwLevel
 
-    public val premiumProgressBarEnabled: Boolean get() = data.premiumProgressBarEnabled
+    public val premiumProgressBarEnabled: Boolean get() = data.premiumProgressBarEnabled.discordBoolean
 
     public val stageInstances: Set<StageInstance>
         get() = data.stageInstances.orEmpty().map { StageInstance(it, kord) }.toSet()

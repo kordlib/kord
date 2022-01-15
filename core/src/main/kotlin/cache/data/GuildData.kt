@@ -62,7 +62,7 @@ public data class GuildData(
     val stageInstances: Optional<List<StageInstanceData>> = Optional.Missing(),
     val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
     val guildScheduledEvents: Optional<List<GuildScheduledEventData>> = Optional.Missing(),
-    val premiumProgressBarEnabled: Boolean
+    val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing
 ) {
     public companion object {
 

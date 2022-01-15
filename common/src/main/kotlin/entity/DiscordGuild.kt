@@ -135,7 +135,7 @@ data class DiscordGuild(
     @SerialName("guild_scheduled_events")
     val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
     @SerialName("premium_progress_bar_enabled")
-    val premiumProgressBarEnabled: Boolean
+    val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing
 )
 
 /**
