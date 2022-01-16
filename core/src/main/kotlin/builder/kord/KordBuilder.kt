@@ -1,4 +1,3 @@
-
 package dev.kord.core.builder.kord
 
 import dev.kord.cache.api.DataCache
@@ -26,11 +25,11 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.isError
 import dev.kord.rest.route.Route
 import dev.kord.rest.service.RestClient
-import io.ktor.client.HttpClient
-import io.ktor.client.request.get
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.readText
-import io.ktor.http.HttpStatusCode
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.http.HttpHeaders.Authorization
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -56,6 +55,7 @@ public operator fun DefaultGateway.Companion.invoke(
 }
 
 private val logger = KotlinLogging.logger { }
+private val gatewayInfoJson = Json { ignoreUnknownKeys = true }
 
 public class KordBuilder(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
@@ -83,7 +83,7 @@ public class KordBuilder(public val token: String) {
      * The event flow used by [Kord.eventFlow] to publish [events][Kord.events].
      *
      *
-     * By default a [MutableSharedFlow] with an `extraBufferCapacity` of `Int.MAX_VALUE`.
+     * By default, a [MutableSharedFlow] with an `extraBufferCapacity` of `Int.MAX_VALUE` is used.
      */
     public var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(
         extraBufferCapacity = Int.MAX_VALUE
@@ -184,7 +184,9 @@ public class KordBuilder(public val token: String) {
      * Requests the gateway info for the bot, or throws a [KordInitializationException] when something went wrong.
      */
     private suspend fun HttpClient.getGatewayInfo(): BotGatewayResponse {
-        val response = get<HttpResponse>("${Route.baseUrl}${Route.GatewayBotGet.path}")
+        val response = get<HttpResponse>("${Route.baseUrl}${Route.GatewayBotGet.path}") {
+            header(Authorization, token)
+        }
         val responseBody = response.readText()
         if (response.isError) {
             val message = buildString {
@@ -199,7 +201,7 @@ public class KordBuilder(public val token: String) {
             throw KordInitializationException(message)
         }
 
-        return Json { ignoreUnknownKeys = true }.decodeFromString(BotGatewayResponse.serializer(), responseBody)
+        return gatewayInfoJson.decodeFromString(BotGatewayResponse.serializer(), responseBody)
     }
 
     /**
@@ -216,11 +218,13 @@ public class KordBuilder(public val token: String) {
             logger.warn {
                 """
                 kord's http client is currently using ${client.engine.config.threadsCount} threads, 
-                which is less than the advised threadcount of ${shards.size + 1} (number of shards + 1)""".trimIndent()
+                which is less than the advised thread count of ${shards.size + 1} (number of shards + 1)
+                """.trimIndent()
             }
         }
 
-        val resources = ClientResources(token,applicationId ?: getBotIdFromToken(token), shardsInfo, client, defaultStrategy)
+        val resources =
+            ClientResources(token, applicationId ?: getBotIdFromToken(token), shardsInfo, client, defaultStrategy)
         val rest = RestClient(handlerBuilder(resources))
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()

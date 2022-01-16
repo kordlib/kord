@@ -28,7 +28,22 @@ class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
 
     fun parameter(key: String, value: Any) = parameters.append(key, value.toString())
 
-    fun header(key: String, value: String) = headers.append(key, value.encodeURLQueryComponent())
+    @Deprecated(
+        "'header' was renamed to 'urlEncodedHeader'",
+        ReplaceWith("urlEncodedHeader(key, value)"),
+        DeprecationLevel.ERROR,
+    )
+    fun header(key: String, value: String) = urlEncodedHeader(key, value)
+
+    /** Adds a header and encodes its [value] as an [URL query component][encodeURLQueryComponent]. */
+    fun urlEncodedHeader(key: String, value: String) {
+        headers.append(key, value.encodeURLQueryComponent())
+    }
+
+    /** Adds a header without encoding its [value]. */
+    fun unencodedHeader(key: String, value: String) {
+        headers.append(key, value)
+    }
 
     fun file(name: String, input: java.io.InputStream) {
         files.add(NamedFile(name, input))

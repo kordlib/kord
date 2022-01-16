@@ -117,6 +117,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
     suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest, reason: String?) = call(Route.BulkMessageDeletePost) {
         keys[Route.ChannelId] = channelId
         body(BulkDeleteRequest.serializer(), messages)
+        auditLogReason(reason)
     }
 
     suspend fun deleteChannel(channelId: Snowflake, reason: String? = null) = call(Route.ChannelDelete) {
@@ -243,7 +244,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         call(Route.ChannelPut) {
             keys[Route.ChannelId] = channelId
             body(ChannelModifyPutRequest.serializer(), channel)
-            reason?.let { header("X-Audit-Log-Reason", reason) }
+            auditLogReason(reason)
         }
 
     suspend fun patchChannel(channelId: Snowflake, channel: ChannelModifyPatchRequest, reason: String? = null) =
@@ -256,7 +257,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         call(Route.ChannelPatch) {
             keys[Route.ChannelId] = threadId
             body(ChannelModifyPatchRequest.serializer(), thread)
-            reason?.let { header("X-Audit-Log-Reason", reason) }
+            auditLogReason(reason)
         }
 
 
@@ -282,7 +283,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             keys[Route.ChannelId] = channelId
             keys[Route.MessageId] = messageId
             body(StartThreadRequest.serializer(), request)
-            reason?.let { header("X-Audit-Log-Reason", reason) }
+            auditLogReason(reason)
         }
     }
 
@@ -306,7 +307,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         return call(Route.StartThreadPost) {
             keys[Route.ChannelId] = channelId
             body(StartThreadRequest.serializer(), request)
-            reason?.let { header("X-Audit-Log-Reason", reason) }
+            auditLogReason(reason)
         }
     }
 
