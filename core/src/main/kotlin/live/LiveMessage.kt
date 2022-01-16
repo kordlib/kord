@@ -11,6 +11,7 @@ import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.Event
 import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
+import dev.kord.core.event.interaction.InteractionCreateEvent
 import dev.kord.core.event.message.*
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -162,6 +163,8 @@ public class LiveMessage(
         is ChannelDeleteEvent -> event.channel.id == message.channelId
 
         is GuildDeleteEvent -> event.guildId == guildId
+
+        is InteractionCreateEvent -> event.interaction.data.message.value?.id == message.id
         else -> false
     }
 
@@ -181,6 +184,8 @@ public class LiveMessage(
         is ChannelDeleteEvent -> shutDown(LiveCancellationException(event, "The channel is deleted"))
 
         is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
+
+        is InteractionCreateEvent -> Unit
         else -> Unit
     }
 
