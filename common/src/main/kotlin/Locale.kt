@@ -22,6 +22,7 @@ data class Locale(val language: String, val country: String? = null) {
      */
     fun asJavaLocale() = JLocale(language, country ?: "")
 
+    @Suppress("MemberVisibilityCanBePrivate")
     companion object {
 
         /**
@@ -215,6 +216,8 @@ data class Locale(val language: String, val country: String? = null) {
 
         /**
          * Decodes the language from a `languageCode_countryCode` or `languageCode` format.
+         *
+         * This does not validate the actually languages and countries, it just validates the format.
          */
         fun fromString(string: String): Locale {
             val match = languageTagFormat.matchEntire(string) ?: error("$string is not a valid Locale")
@@ -223,7 +226,7 @@ data class Locale(val language: String, val country: String? = null) {
 
             return ALL.firstOrNull { (l, c) ->
                 language == l && country == (c ?: "")
-            } ?: error("This locale is not supported by Discord")
+            } ?: Locale(language, country)
         }
     }
 
