@@ -376,10 +376,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         paginateBackwards(batchSize, start = before ?: Snowflake.max, idSelector = { it.id }) { beforePosition ->
             val request = ListThreadsBySnowflakeRequest(before = beforePosition.value, limit = batchSize)
             channel.listJoinedPrivateArchivedThreads(channelId, request).threads
-        }.mapNotNull {
-            val data = ChannelData.from(it)
-            Channel.from(data, kord) as? ThreadChannel
         }
+    }.mapNotNull {
+        val data = ChannelData.from(it)
+        Channel.from(data, kord) as? ThreadChannel
     }
 
     override fun getGuildApplicationCommands(
