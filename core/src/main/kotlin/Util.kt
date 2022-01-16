@@ -120,7 +120,7 @@ internal suspend fun <T> Flow<T>.indexOfFirstOrNull(predicate: suspend (T) -> Bo
         .singleOrNull()?.first
 }
 
-internal fun <Batch : Collection<Item>, Item, Direction : Position.BeforeOrAfter> paginate(
+internal fun <Batch : Collection<Item>, Item : Any, Direction : Position.BeforeOrAfter> paginate(
     start: Snowflake,
     batchSize: Int,
     itemSelector: (Batch) -> Item?,
@@ -179,7 +179,7 @@ internal fun <T> oldestItem(idSelector: (T) -> Snowflake): (Collection<T>) -> T?
 /**
  *  Selects the [Position.After] the youngest item in the batch.
  */
-internal fun <T> paginateForwards(
+internal fun <T : Any> paginateForwards(
     batchSize: Int,
     start: Snowflake = Snowflake.min,
     idSelector: (T) -> Snowflake,
@@ -212,7 +212,7 @@ internal fun <T : KordEntity> paginateForwards(
 /**
  *  Selects the [Position.Before] the oldest item in the batch.
  */
-internal fun <T> paginateBackwards(
+internal fun <T : Any> paginateBackwards(
     batchSize: Int,
     start: Snowflake = Snowflake.max,
     idSelector: (T) -> Snowflake,
@@ -250,7 +250,7 @@ internal fun <T : KordEntity> paginateBackwards(
  * * [Collection]'s size fall behind [batchSize].
  * * [instantSelector] returns null.
  */
-internal fun <Batch : Collection<Item>, Item> paginateByDate(
+internal fun <Batch : Collection<Item>, Item : Any> paginateByDate(
     batchSize: Int,
     start: Instant?,
     instantSelector: (Batch) -> Instant?,
