@@ -120,24 +120,25 @@ internal suspend fun <T> Flow<T>.indexOfFirstOrNull(predicate: suspend (T) -> Bo
         .singleOrNull()?.first
 }
 
-internal fun <C : Collection<T>, T, P : Position> paginate(
+internal fun <Batch : Collection<Item>, Item, Direction : Position.BeforeOrAfter> paginate(
     start: Snowflake,
     batchSize: Int,
-    idSelector: (T) -> Snowflake,
-    itemSelector: (C) -> T?,
-    directionSelector: (Snowflake) -> P,
-    request: suspend (position: P) -> C,
-): Flow<T> = flow {
-    var position = directionSelector(start)
+    itemSelector: (Batch) -> Item?,
+    idSelector: (Item) -> Snowflake,
+    directionSelector: (Snowflake) -> Direction,
+    request: suspend (Direction) -> Batch,
+): Flow<Item> = flow {
+
+    var direction = directionSelector(start)
 
     while (true) {
-        val response = request(position)
-        for (item in response) emit(item)
+        val batch = request(direction)
+        for (item in batch) emit(item)
 
-        val id = itemSelector(response)?.let(idSelector) ?: break
-        position = directionSelector(id)
+        if (batch.size < batchSize) break
 
-        if (response.size < batchSize) break
+        val item = itemSelector(batch) ?: break
+        direction = directionSelector(idSelector(item))
     }
 }
 
@@ -186,8 +187,8 @@ internal fun <T> paginateForwards(
 ): Flow<T> = paginate(
     start,
     batchSize,
-    idSelector,
     itemSelector = youngestItem(idSelector),
+    idSelector,
     directionSelector = Position::After,
     request,
 )
@@ -202,8 +203,8 @@ internal fun <T : KordEntity> paginateForwards(
 ): Flow<T> = paginate(
     start,
     batchSize,
-    idSelector = { it.id },
     itemSelector = youngestItem { it.id },
+    idSelector = { it.id },
     directionSelector = Position::After,
     request,
 )
@@ -219,8 +220,8 @@ internal fun <T> paginateBackwards(
 ): Flow<T> = paginate(
     start,
     batchSize,
-    idSelector,
     itemSelector = oldestItem(idSelector),
+    idSelector,
     directionSelector = Position::Before,
     request,
 )
@@ -235,8 +236,8 @@ internal fun <T : KordEntity> paginateBackwards(
 ): Flow<T> = paginate(
     start,
     batchSize,
-    idSelector = { it.id },
     itemSelector = oldestItem { it.id },
+    idSelector = { it.id },
     directionSelector = Position::Before,
     request,
 )
@@ -249,27 +250,28 @@ internal fun <T : KordEntity> paginateBackwards(
  * * [Collection]'s size fall behind [batchSize].
  * * [instantSelector] returns null.
  */
-internal fun <C : Collection<T>, T> paginateByDate(
+internal fun <Batch : Collection<Item>, Item> paginateByDate(
     batchSize: Int,
     start: Instant?,
-    instantSelector: (C) -> Instant?,
-    request: suspend (Instant) -> C,
-): Flow<T> = flow {
+    instantSelector: (Batch) -> Instant?,
+    request: suspend (Instant) -> Batch,
+): Flow<Item> = flow {
 
-    var currentTimestamp = start
+    var currentTimestamp = start ?: Clock.System.now() // get default current time as late as possible
+
     while (true) {
-        val response = request(currentTimestamp ?: Clock.System.now()) // get default current time as late as possible
+        val batch = request(currentTimestamp)
+        for (item in batch) emit(item)
 
-        for (item in response) emit(item)
+        if (batch.size < batchSize) break
 
-        currentTimestamp = instantSelector(response) ?: break
-        if (response.size < batchSize) break
+        currentTimestamp = instantSelector(batch) ?: break
     }
 }
 
 /**
  * A special function to paginate [ThreadChannel] endpoints.
- * selects the earliest time reference found in the response of the request on each pagination.
+ * selects the earliest reference in time found in the response of the request on each pagination.
  * see [paginateByDate]
  */
 internal fun paginateThreads(
