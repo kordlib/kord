@@ -185,14 +185,16 @@ public class KordBuilder(public val token: String) {
      */
     private suspend fun HttpClient.getGatewayInfo(): BotGatewayResponse {
         val response = get<HttpResponse>("${Route.baseUrl}${Route.GatewayBotGet.path}") {
-            header(Authorization, token)
+            header(Authorization, "Bot $token")
         }
         val responseBody = response.readText()
         if (response.isError) {
             val message = buildString {
-                append("Something went wrong while initializing Kord.")
+                append("Something went wrong while initializing Kord")
                 if (response.status == HttpStatusCode.Unauthorized) {
                     append(", make sure the bot token you entered is valid.")
+                } else {
+                    append('.')
                 }
 
                 appendLine(responseBody)
