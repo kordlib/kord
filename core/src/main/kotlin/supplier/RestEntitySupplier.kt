@@ -343,7 +343,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
-    // no maxBatchSize documented: see https://discord.com/developers/docs/resources/channel#list-public-archived-threads
+    // no maxBatchSize documented (but api errors say it's 100): see https://discord.com/developers/docs/resources/channel#list-public-archived-threads
     override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
             paginateThreads(batchSize, start = before) { beforeTimestamp ->
@@ -355,7 +355,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             }
         }
 
-    // no maxBatchSize documented: see https://discord.com/developers/docs/resources/channel#list-private-archived-threads
+    // no maxBatchSize documented (but api errors say it's 100): see https://discord.com/developers/docs/resources/channel#list-private-archived-threads
     override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
             paginateThreads(batchSize, start = before) { beforeTimestamp ->
@@ -367,7 +367,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             }
         }
 
-    // no maxBatchSize documented: see https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads
+    // no maxBatchSize documented (but api errors say it's 100): see https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads
     override fun getJoinedPrivateArchivedThreads(
         channelId: Snowflake,
         before: Snowflake?,
