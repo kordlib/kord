@@ -7,5 +7,5 @@ data class AuditLogGetRequest(
     val userId: Snowflake? = null,
     val action: AuditLogEvent? = null,
     val before: Snowflake? = null,
-    val limit: Int = 50,
+    val limit: Int? = null,
 )

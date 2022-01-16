@@ -1,7 +1,6 @@
 package dev.kord.core.supplier
 
 import dev.kord.cache.api.DataCache
-import dev.kord.cache.api.count
 import dev.kord.cache.api.query
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
@@ -11,7 +10,6 @@ import dev.kord.core.Kord
 import dev.kord.core.any
 import dev.kord.core.cache.data.*
 import dev.kord.core.cache.idEq
-import dev.kord.core.cache.idGt
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
@@ -22,15 +20,7 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 
@@ -52,10 +42,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      *
      * The Cache this [CacheEntitySupplier] operates on.
      *
-     * short-hand for [Kord.cache]
+     * Shorthand for [kord.cache][Kord.cache].
      *
      */
-    private val cache: DataCache = kord.cache
+    private val cache: DataCache get() = kord.cache
 
     /**
      *  Returns a [Flow] of [Channel]s fetched from cache.
@@ -157,20 +147,20 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Message(data, kord)
     }
 
-    override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+    override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> {
+        checkLimit(limit)
         return cache.query<MessageData> {
             idEq(MessageData::channelId, channelId)
             MessageData::id gt messageId
-        }.asFlow().map { Message(it, kord) }.take(limit)
+        }.asFlow().map { Message(it, kord) }.limit(limit)
     }
 
-    override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+    override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> {
+        checkLimit(limit)
         return cache.query<MessageData> {
             idEq(MessageData::channelId, channelId)
-            idGt(MessageData::id, messageId)
-        }.asFlow().map { Message(it, kord) }.take(limit)
+            MessageData::id lt messageId
+        }.asFlow().map { Message(it, kord) }.limit(limit)
     }
 
 
@@ -178,6 +168,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         require(limit in 1..100) { "Expected limit to be in 1..100, but was $limit" }
         return flow {
             emitAll(getMessagesBefore(messageId, channelId, limit / 2))
+            getMessageOrNull(channelId, messageId)?.let { emit(it) }
             emitAll(getMessagesAfter(messageId, channelId, limit / 2))
         }
     }
@@ -209,13 +200,15 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         idEq(BanData::guildId, guildId)
     }.asFlow().map { Ban(it, kord) }
 
-    override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-        return cache.query<MemberData> { idEq(MemberData::guildId, guildId) }.asFlow().mapNotNull {
-            val userData =
-                cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull() ?: return@mapNotNull null
-            Member(it, userData, kord)
-        }
+    override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> {
+        checkLimit(limit)
+        return cache.query<MemberData> { idEq(MemberData::guildId, guildId) }
+            .asFlow()
+            .mapNotNull { memberData ->
+                val userData = cache.query<UserData> { idEq(UserData::id, memberData.userId) }.singleOrNull()
+                userData?.let { Member(memberData, userData = it, kord) }
+            }
+            .limit(limit)
     }
 
     override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = cache.query<RegionData> {
@@ -235,11 +228,11 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         idEq(EmojiData::guildId, guildId)
     }.asFlow().map { GuildEmoji(it, kord) }
 
-    override fun getCurrentUserGuilds(limit: Int): Flow<Guild> {
-        require(limit > 0) { "At least 1 item should be requested, but got $limit." }
+    override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> {
+        checkLimit(limit)
         return guilds.filter {
             members.any { it.id == kord.selfId }
-        }.take(limit)
+        }.limit(limit)
     }
 
     override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> = cache.query<WebhookData> {
@@ -310,60 +303,70 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         emitAll(result)
     }
 
-    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> =
-        flow {
-            val result = cache.query<ChannelData> {
-                idEq(ChannelData::parentId, channelId)
-            }.toCollection()
+    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> {
+        checkLimit(limit)
+        return flow {
+            val result = cache.query<ChannelData> { idEq(ChannelData::parentId, channelId) }
+                .toCollection()
                 .sortedByDescending { it.threadMetadata.value?.archiveTimestamp?.toInstant() }
                 .asFlow()
                 .filter {
                     val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
                     it.threadMetadata.value?.archived == true
                             && time != null
-                            && time < before
+                            && (before == null || time < before)
                             && (it.type == ChannelType.PublicGuildThread || it.type == ChannelType.PublicNewsThread)
-                }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
+                }
+                .limit(limit)
+                .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
 
             emitAll(result)
         }
+    }
 
-    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> =
-        flow {
-            val result = cache.query<ChannelData> {
-                idEq(ChannelData::parentId, channelId)
-            }.toCollection()
+    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> {
+        checkLimit(limit)
+        return flow {
+            val result = cache.query<ChannelData> { idEq(ChannelData::parentId, channelId) }
+                .toCollection()
                 .sortedByDescending { it.threadMetadata.value?.archiveTimestamp?.toInstant() }
                 .asFlow()
                 .filter {
                     val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
                     it.threadMetadata.value?.archived == true
                             && time != null
-                            && time < before
+                            && (before == null || time < before)
                             && it.type == ChannelType.PrivateThread
-                }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
+                }
+                .limit(limit)
+                .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
 
             emitAll(result)
         }
+    }
 
     override fun getJoinedPrivateArchivedThreads(
         channelId: Snowflake,
-        before: Snowflake,
-        limit: Int
-    ): Flow<ThreadChannel> = flow {
-        val result = cache.query<ChannelData> {
-            idEq(ChannelData::parentId, channelId)
-        }.toCollection()
-            .sortedByDescending { it.id }
-            .asFlow()
-            .filter {
-                it.threadMetadata.value?.archived == true
-                        && it.id < before
-                        && it.type == ChannelType.PrivateThread
-                        && it.member !is Optional.Missing
-            }.take(limit).mapNotNull { Channel.from(it, kord) as? ThreadChannel }
+        before: Snowflake?,
+        limit: Int?,
+    ): Flow<ThreadChannel> {
+        checkLimit(limit)
+        return flow {
+            val result = cache.query<ChannelData> { idEq(ChannelData::parentId, channelId) }
+                .toCollection()
+                .sortedByDescending { it.id }
+                .asFlow()
+                .filter {
+                    it.threadMetadata.value?.archived == true
+                            && (before == null || it.id < before)
+                            && it.type == ChannelType.PrivateThread
+                            && it.member !is Optional.Missing
+                }
+                .limit(limit)
+                .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
 
-        emitAll(result)
+            emitAll(result)
+        }
     }
 
     override fun getGuildApplicationCommands(
@@ -474,5 +477,11 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun toString(): String {
         return "CacheEntitySupplier(cache=$cache)"
     }
-
 }
+
+
+private fun checkLimit(limit: Int?) {
+    require(limit == null || limit > 0) { "At least 1 item should be requested, but got $limit." }
+}
+
+private fun <T> Flow<T>.limit(limit: Int?): Flow<T> = if (limit == null) this else take(limit)

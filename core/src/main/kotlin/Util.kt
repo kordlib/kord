@@ -242,7 +242,7 @@ internal fun <T : KordEntity> paginateBackwards(
 )
 
 /**
- * Paginates the [Collection] returned by [request] with [start] as a initial reference in time.
+ * Paginates the [Collection] returned by [request] with [start] as an initial reference in time.
  * [instantSelector] is used to select the new reference to fetch from.
  *
  * Termination scenarios:
@@ -251,14 +251,14 @@ internal fun <T : KordEntity> paginateBackwards(
  */
 internal fun <C : Collection<T>, T> paginateByDate(
     batchSize: Int,
-    start: Instant = Clock.System.now(),
+    start: Instant?,
     instantSelector: (C) -> Instant?,
     request: suspend (Instant) -> C,
 ): Flow<T> = flow {
 
     var currentTimestamp = start
     while (true) {
-        val response = request(currentTimestamp)
+        val response = request(currentTimestamp ?: Clock.System.now()) // get default current time as late as possible
 
         for (item in response) emit(item)
 
@@ -274,7 +274,7 @@ internal fun <C : Collection<T>, T> paginateByDate(
  */
 internal fun paginateThreads(
     batchSize: Int,
-    start: Instant = Clock.System.now(),
+    start: Instant?,
     request: suspend (Instant) -> Collection<ThreadChannel>,
 ) = paginateByDate(
     batchSize,

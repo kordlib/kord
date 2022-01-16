@@ -4,6 +4,7 @@ import dev.kord.common.entity.AuditLogEvent
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
+import dev.kord.rest.service.AuditLogService
 
 class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
 
@@ -23,9 +24,13 @@ class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
     var before: Snowflake? = null
 
     /**
-     * How many entries are returned (default 50, minimum 1, maximum 100).
+     * How many entries are returned.
+     *
+     * When used in a [direct rest request][AuditLogService.getAuditLogs]: default 50, minimum 1, maximum 100.
+     *
+     * When used through pagination in core module: `null` means no limit, must be positive otherwise.
      */
-    var limit: Int = 50
+    var limit: Int? = null
 
     override fun toRequest(): AuditLogGetRequest = AuditLogGetRequest(userId, action, before, limit)
 }

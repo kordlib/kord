@@ -32,7 +32,7 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         get() = super.activeThreads.filterIsInstance()
 
     /**
-     * Requests to get the this behavior as a [TextChannel].
+     * Requests to get this behavior as a [TextChannel].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
@@ -96,15 +96,15 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration, reason) as TextChannelThread
     }
 
-    override fun getPublicArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
+    override fun getPublicArchivedThreads(before: Instant?, limit: Int?): Flow<TextChannelThread> {
         return super.getPublicArchivedThreads(before, limit).filterIsInstance()
     }
 
-    override fun getPrivateArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
+    override fun getPrivateArchivedThreads(before: Instant?, limit: Int?): Flow<TextChannelThread> {
         return super.getPrivateArchivedThreads(before, limit).filterIsInstance()
     }
 
-    override fun getJoinedPrivateArchivedThreads(before: Snowflake, limit: Int): Flow<TextChannelThread> {
+    override fun getJoinedPrivateArchivedThreads(before: Snowflake?, limit: Int?): Flow<TextChannelThread> {
         return super.getJoinedPrivateArchivedThreads(before, limit).filterIsInstance()
     }
 

@@ -35,7 +35,7 @@ import kotlin.math.min
  * 404(Not Found) will be caught by the `xOrNull` variant and return null instead.
  *
  * This supplier will always be able to resolve entities if they exist according
- * to Discord, entities will always be up to date at the moment of the call.
+ * to Discord, entities will always be up-to-date at the moment of the call.
  */
 public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
@@ -119,7 +119,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     // maxBatchSize: see https://discord.com/developers/docs/resources/channel#get-channel-messages
-    override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> =
+    override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
             paginateForwards(batchSize, start = messageId, idSelector = { it.id }) { after ->
                 channel.getMessages(channelId, position = after, limit = batchSize)
@@ -130,7 +130,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
 
     // maxBatchSize: see https://discord.com/developers/docs/resources/channel#get-channel-messages
-    override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> =
+    override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
             paginateBackwards(batchSize, start = messageId, idSelector = { it.id }) { before ->
                 channel.getMessages(channelId, position = before, limit = batchSize)
@@ -140,12 +140,14 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             Message(data, kord)
         }
 
-    override fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> = flow {
-        val responses = channel.getMessages(channelId, Position.Around(messageId), limit)
-
-        for (response in responses) {
-            val data = MessageData.from(response)
-            emit(Message(data, kord))
+    override fun getMessagesAround(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> {
+        require(limit in 1..100) { "Expected limit to be in 1..100, but was $limit" }
+        return flow {
+            val responses = channel.getMessages(channelId, Position.Around(messageId), limit)
+            for (response in responses) {
+                val data = MessageData.from(response)
+                emit(Message(data, kord))
+            }
         }
     }
 
@@ -179,7 +181,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     // maxBatchSize: see https://discord.com/developers/docs/resources/guild#list-guild-members
-    override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> =
+    override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> =
         limitedPagination(limit, maxBatchSize = 1000) { batchSize ->
             paginateForwards(batchSize, idSelector = { it.user.value!!.id }) { after ->
                 guild.getGuildMembers(guildId, after, limit = batchSize)
@@ -220,7 +222,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     // maxBatchSize: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
-    override fun getCurrentUserGuilds(limit: Int): Flow<Guild> =
+    override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> =
         limitedPagination(limit, maxBatchSize = 200) { batchSize ->
             paginateForwards(batchSize, idSelector = { it.id }) { after ->
                 user.getCurrentUserGuilds(position = after, limit = batchSize)
@@ -342,7 +344,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     // no maxBatchSize documented: see https://discord.com/developers/docs/resources/channel#list-public-archived-threads
-    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> =
+    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
             paginateThreads(batchSize, start = before) { beforeTimestamp ->
                 val request = ListThreadsByTimestampRequest(before = beforeTimestamp, limit = batchSize)
@@ -354,7 +356,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
 
     // no maxBatchSize documented: see https://discord.com/developers/docs/resources/channel#list-private-archived-threads
-    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> =
+    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> =
         limitedPagination(limit, maxBatchSize = 100) { batchSize ->
             paginateThreads(batchSize, start = before) { beforeTimestamp ->
                 val request = ListThreadsByTimestampRequest(before = beforeTimestamp, limit = batchSize)
@@ -368,10 +370,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     // no maxBatchSize documented: see https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads
     override fun getJoinedPrivateArchivedThreads(
         channelId: Snowflake,
-        before: Snowflake,
-        limit: Int,
+        before: Snowflake?,
+        limit: Int?,
     ): Flow<ThreadChannel> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
-        paginateBackwards(batchSize, start = before, idSelector = { it.id }) { beforePosition ->
+        paginateBackwards(batchSize, start = before ?: Snowflake.max, idSelector = { it.id }) { beforePosition ->
             val request = ListThreadsBySnowflakeRequest(before = beforePosition.value, limit = batchSize)
             channel.listJoinedPrivateArchivedThreads(channelId, request).threads
         }.mapNotNull {
@@ -503,15 +505,15 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 }
 
 
-private fun checkLimitAndGetBatchSize(limit: Int, maxBatchSize: Int): Int {
-    require(limit > 0) { "At least 1 item should be requested, but got $limit." }
-    return min(limit, maxBatchSize)
+private fun checkLimitAndGetBatchSize(limit: Int?, maxBatchSize: Int): Int {
+    require(limit == null || limit > 0) { "At least 1 item should be requested, but got $limit." }
+    return if (limit == null) maxBatchSize else min(limit, maxBatchSize)
 }
 
-private fun <T> Flow<T>.limitPagination(limit: Int): Flow<T> = if (limit == Int.MAX_VALUE) this else take(limit)
+private fun <T> Flow<T>.limitPagination(limit: Int?): Flow<T> = if (limit == null) this else take(limit)
 
 private inline fun <T> limitedPagination(
-    limit: Int,
+    limit: Int?,
     maxBatchSize: Int,
     paginationCreator: (batchSize: Int) -> Flow<T>,
 ): Flow<T> {

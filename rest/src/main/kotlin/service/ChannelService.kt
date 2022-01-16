@@ -34,14 +34,11 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         return createMessage(channelId, multipartRequest)
     }
 
-    suspend fun getMessages(channelId: Snowflake, position: Position? = null, limit: Int = 50) =
+    suspend fun getMessages(channelId: Snowflake, position: Position? = null, limit: Int? = null) =
         call(Route.MessagesGet) {
             keys[Route.ChannelId] = channelId
-            if (position != null) {
-                parameter(position.key, position.value)
-            }
-            parameter("limit", "$limit")
-
+            position?.let { parameter(it.key, it.value) }
+            limit?.let { parameter("limit", it) }
         }
 
     suspend fun getMessage(channelId: Snowflake, messageId: Snowflake) = call(Route.MessageGet) {
@@ -148,16 +145,14 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         messageId: Snowflake,
         emoji: String,
         after: Position.After? = null,
-        limit: Int = 25
+        limit: Int? = null,
     ) = call(Route.ReactionsGet) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
 
-        if (after != null) {
-            parameter(after.key, after.value)
-        }
-        parameter("limit", "$limit")
+        after?.let { parameter(it.key, it.value) }
+        limit?.let { parameter("limit", it) }
     }
 
     suspend fun triggerTypingIndicator(channelId: Snowflake) = call(Route.TypingIndicatorPost) {
