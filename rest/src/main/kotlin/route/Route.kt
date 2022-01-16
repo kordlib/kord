@@ -52,6 +52,7 @@ public sealed class Route<T>(
     public val method: HttpMethod,
     public val path: String,
     public val mapper: ResponseMapper<T>,
+    public val requiresAuthorization: Boolean = true,
 ) {
 
     public companion object {
@@ -87,8 +88,9 @@ public sealed class Route<T>(
     protected constructor(
         method: HttpMethod,
         path: String,
-        strategy: DeserializationStrategy<T>
-    ) : this(method, path, ValueJsonMapper(strategy))
+        strategy: DeserializationStrategy<T>,
+        requiresAuthorization: Boolean = true,
+    ) : this(method, path, ValueJsonMapper(strategy), requiresAuthorization)
 
     override fun toString(): String = "Route(method:${method.value},path:$path,mapper:$mapper)"
 
@@ -99,7 +101,7 @@ public sealed class Route<T>(
      */
 
     public object GatewayGet :
-        Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer())
+        Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer(), false)
 
     public object GatewayBotGet :
         Route<BotGatewayResponse>(HttpMethod.Get, "/gateway/bot", BotGatewayResponse.serializer())
@@ -561,19 +563,24 @@ public sealed class Route<T>(
         Route<DiscordWebhook>(HttpMethod.Post, "/channels/$ChannelId/webhooks", DiscordWebhook.serializer())
 
     public object WebhookByTokenGet :
-        Route<DiscordWebhook>(HttpMethod.Get, "/webhooks/$WebhookId/$WebhookToken", DiscordWebhook.serializer())
+        Route<DiscordWebhook>(HttpMethod.Get, "/webhooks/$WebhookId/$WebhookToken", DiscordWebhook.serializer(), false)
 
     public object WebhookPatch :
-        Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId", DiscordWebhook.serializer())
+        Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId", DiscordWebhook.serializer(), false)
 
     public object WebhookByTokenPatch :
-        Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId/$WebhookToken", DiscordWebhook.serializer())
+        Route<DiscordWebhook>(
+            HttpMethod.Patch,
+            "/webhooks/$WebhookId/$WebhookToken",
+            DiscordWebhook.serializer(),
+            false,
+        )
 
     public object WebhookDelete :
         Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId", NoStrategy)
 
     public object WebhookByTokenDelete :
-        Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
+        Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId/$WebhookToken", NoStrategy, false)
 
     public object ExecuteWebhookPost :
         Route<DiscordMessage?>(
@@ -817,24 +824,31 @@ public sealed class Route<T>(
      */
 
     public object InteractionResponseCreate :
-        Route<Unit>(HttpMethod.Post, "/interactions/$InteractionId/$InteractionToken/callback", NoStrategy)
+        Route<Unit>(HttpMethod.Post, "/interactions/$InteractionId/$InteractionToken/callback", NoStrategy, false)
 
     public object OriginalInteractionResponseGet :
         Route<DiscordMessage>(
             HttpMethod.Get,
             "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
-            DiscordMessage.serializer()
+            DiscordMessage.serializer(),
+            false,
         )
 
     public object OriginalInteractionResponseModify :
         Route<DiscordMessage>(
             HttpMethod.Patch,
             "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
-            DiscordMessage.serializer()
+            DiscordMessage.serializer(),
+            false,
         )
 
     public object OriginalInteractionResponseDelete :
-        Route<Unit>(HttpMethod.Delete, "/webhooks/$ApplicationId/$InteractionToken/messages/@original", NoStrategy)
+        Route<Unit>(
+            HttpMethod.Delete,
+            "/webhooks/$ApplicationId/$InteractionToken/messages/@original",
+            NoStrategy,
+            false,
+        )
 
     public object FollowupMessageCreate :
         Route<DiscordMessage>(

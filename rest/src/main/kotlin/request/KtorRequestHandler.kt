@@ -36,6 +36,7 @@ public class KtorRequestHandler(
     private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
     private val clock: Clock = Clock.System,
     private val parser: Json = jsonDefault,
+    override val token: String
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
 
@@ -110,9 +111,8 @@ public fun KtorRequestHandler(
 ): KtorRequestHandler {
     val client = HttpClient(CIO) {
         expectSuccess = false
-        defaultRequest { header("Authorization", "Bot $token") }
     }
-    return KtorRequestHandler(client, requestRateLimiter, clock, parser)
+    return KtorRequestHandler(client, requestRateLimiter, clock, parser, token)
 }
 
 public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): RequestResponse {

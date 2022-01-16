@@ -1,6 +1,12 @@
 package dev.kord.core.builder.kord
 
 import dev.kord.common.entity.Snowflake
+import io.ktor.client.HttpClient
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.engine.cio.CIO
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.*
@@ -9,21 +15,18 @@ import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
 import kotlinx.serialization.json.Json
-import java.util.*
+import java.util.Base64
 
-internal fun HttpClientConfig<*>.defaultConfig(token: String) {
+internal fun HttpClientConfig<*>.defaultConfig() {
     expectSuccess = false
-    defaultRequest {
-        header("Authorization", "Bot $token")
-    }
 
     install(JsonFeature)
     install(WebSockets)
 }
 
-internal fun HttpClient?.configure(token: String): HttpClient {
+internal fun HttpClient?.configure(): HttpClient {
     if (this != null) return this.config {
-        defaultConfig(token)
+        defaultConfig()
     }
 
     val json = Json {
@@ -34,7 +37,7 @@ internal fun HttpClient?.configure(token: String): HttpClient {
     }
 
     return HttpClient(CIO) {
-        defaultConfig(token)
+        defaultConfig()
         install(JsonFeature) {
             serializer = KotlinxSerializer(json)
         }

@@ -6,6 +6,11 @@ package dev.kord.rest.request
 public interface RequestHandler {
 
     /**
+     * The Discord bot authorization token used on requests.
+     */
+    val token: String
+
+    /**
      * Executes the [request], abiding by the active rate limits and returning the response [R].
      * @throws RestRequestException when a non-rate limit error response is returned.
      */
