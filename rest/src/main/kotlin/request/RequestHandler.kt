@@ -8,7 +8,7 @@ public interface RequestHandler {
     /**
      * The Discord bot authorization token used on requests.
      */
-    val token: String
+    public val token: String
 
     /**
      * Executes the [request], abiding by the active rate limits and returning the response [R].
@@ -16,5 +16,4 @@ public interface RequestHandler {
      */
     @Throws(RestRequestException::class)
     public suspend fun <B : Any, R> handle(request: Request<B, R>): R
-
 }
