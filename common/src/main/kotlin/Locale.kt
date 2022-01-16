@@ -219,10 +219,10 @@ data class Locale(val language: String, val country: String? = null) {
         fun fromString(string: String): Locale {
             val match = languageTagFormat.matchEntire(string) ?: error("$string is not a valid Locale")
             val (language) = match.destructured
-            val country = match.groupValues.getOrNull(2)
+            val country = match.groupValues[2]
 
             return ALL.firstOrNull { (l, c) ->
-                language == l && country == c
+                language == l && country == (c ?: "")
             } ?: error("This locale is not supported by Discord")
         }
     }
