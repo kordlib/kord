@@ -3,19 +3,11 @@ package dev.kord.rest.route
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordInvite
+import dev.kord.common.entity.DiscordPartialInvite
 import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
-import dev.kord.rest.json.response.ApplicationInfoResponse
-import dev.kord.rest.json.response.BanResponse
-import dev.kord.rest.json.response.BotGatewayResponse
-import dev.kord.rest.json.response.Connection
-import dev.kord.rest.json.response.CurrentUserNicknameModifyResponse
-import dev.kord.rest.json.response.FollowedChannelResponse
-import dev.kord.rest.json.response.GatewayResponse
-import dev.kord.rest.json.response.GetPruneResponse
-import dev.kord.rest.json.response.ListThreadsResponse
-import dev.kord.rest.json.response.NothingSerializer
-import dev.kord.rest.json.response.PruneResponse
-import io.ktor.http.HttpMethod
+import dev.kord.rest.json.response.*
+import io.ktor.http.*
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
@@ -55,20 +47,22 @@ internal val <T> DeserializationStrategy<T>.optional: ResponseMapper<T?>
 sealed class Route<T>(
     val method: HttpMethod,
     val path: String,
-    val mapper: ResponseMapper<T>
+    val mapper: ResponseMapper<T>,
+    val requiresAuthorization: Boolean = true
 ) {
     constructor(
         method: HttpMethod,
         path: String,
-        strategy: DeserializationStrategy<T>
-    ) : this(method, path, ValueJsonMapper(strategy))
+        strategy: DeserializationStrategy<T>,
+        requiresAuthorization: Boolean = true,
+    ) : this(method, path, ValueJsonMapper(strategy), requiresAuthorization)
 
     @OptIn(ExperimentalSerializationApi::class)
     override fun toString(): String =
         "Route(method:${method.value},path:$path,mapper:$mapper)"
 
     object GatewayGet
-        : Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer())
+        : Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer(), false)
 
     object GatewayBotGet
         : Route<BotGatewayResponse>(HttpMethod.Get, "/gateway/bot", BotGatewayResponse.serializer())
@@ -434,19 +428,25 @@ sealed class Route<T>(
         : Route<DiscordWebhook>(HttpMethod.Post, "/channels/$ChannelId/webhooks", DiscordWebhook.serializer())
 
     object WebhookByTokenGet
-        : Route<DiscordWebhook>(HttpMethod.Get, "/webhooks/$WebhookId/$WebhookToken", DiscordWebhook.serializer())
+        :
+        Route<DiscordWebhook>(HttpMethod.Get, "/webhooks/$WebhookId/$WebhookToken", DiscordWebhook.serializer(), false)
 
     object WebhookPatch
-        : Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId", DiscordWebhook.serializer())
+        : Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId", DiscordWebhook.serializer(), false)
 
     object WebhookByTokenPatch
-        : Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId/$WebhookToken", DiscordWebhook.serializer())
+        : Route<DiscordWebhook>(
+        HttpMethod.Patch,
+        "/webhooks/$WebhookId/$WebhookToken",
+        DiscordWebhook.serializer(),
+        false
+    )
 
     object WebhookDelete
         : Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId", NoStrategy)
 
     object WebhookByTokenDelete
-        : Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId/$WebhookToken", NoStrategy)
+        : Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId/$WebhookToken", NoStrategy, false)
 
     //TODO Make sure of the return of these routes below
 
@@ -643,26 +643,34 @@ sealed class Route<T>(
     object InteractionResponseCreate : Route<Unit>(
         HttpMethod.Post,
         "/interactions/${InteractionId}/${InteractionToken}/callback",
-        NoStrategy
+        NoStrategy,
+        false
     )
 
     object OriginalInteractionResponseGet :
-        Route<DiscordMessage>(
-            HttpMethod.Get,
-            "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
-            DiscordMessage.serializer()
-        )
+            Route<DiscordMessage>(
+                HttpMethod.Get,
+                "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
+                DiscordMessage.serializer(),
+                false
+            )
 
     object OriginalInteractionResponseModify :
         Route<DiscordMessage>(
             HttpMethod.Patch,
             "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
-            DiscordMessage.serializer()
+            DiscordMessage.serializer(),
+            false
         )
 
     object OriginalInteractionResponseDelete
         :
-        Route<Unit>(HttpMethod.Delete, "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original", NoStrategy)
+        Route<Unit>(
+            HttpMethod.Delete,
+            "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
+            NoStrategy,
+            false
+        )
 
 
     object GuildApplicationCommandPermissionsGet
@@ -739,11 +747,11 @@ sealed class Route<T>(
             HttpMethod.Post,
             "/channels/${ChannelId}/messages/${MessageId}/threads",
             DiscordChannel.serializer()
-        );
+        )
 
 
     object StartThreadPost :
-        Route<DiscordChannel>(HttpMethod.Post, "/channels/${ChannelId}/threads", DiscordChannel.serializer());
+        Route<DiscordChannel>(HttpMethod.Post, "/channels/${ChannelId}/threads", DiscordChannel.serializer())
 
     object JoinThreadPut :
         Route<Unit>(HttpMethod.Put, "/channels/${ChannelId}/thread-members/@me", NoStrategy)

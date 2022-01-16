@@ -14,7 +14,7 @@ import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.service.RestClient
-import io.ktor.client.*
+import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 public class KordRestOnlyBuilder(public val token: String) {
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
-        { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter()) }
+        { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = it.token) }
 
     /**
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
@@ -56,7 +56,7 @@ public class KordRestOnlyBuilder(public val token: String) {
      * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
      */
     public fun build(): Kord {
-        val client = httpClient.configure(token)
+        val client = httpClient.configure()
 
         val resources = ClientResources(
             token,
