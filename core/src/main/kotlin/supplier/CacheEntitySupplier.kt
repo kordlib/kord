@@ -10,6 +10,8 @@ import dev.kord.core.Kord
 import dev.kord.core.any
 import dev.kord.core.cache.data.*
 import dev.kord.core.cache.idEq
+import dev.kord.core.cache.idGt
+import dev.kord.core.cache.idLt
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
@@ -151,7 +153,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         checkLimit(limit)
         return cache.query<MessageData> {
             idEq(MessageData::channelId, channelId)
-            MessageData::id gt messageId
+            idGt(MessageData::id, messageId)
         }.asFlow().map { Message(it, kord) }.limit(limit)
     }
 
@@ -159,7 +161,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         checkLimit(limit)
         return cache.query<MessageData> {
             idEq(MessageData::channelId, channelId)
-            MessageData::id lt messageId
+            idLt(MessageData::id, messageId)
         }.asFlow().map { Message(it, kord) }.limit(limit)
     }
 
