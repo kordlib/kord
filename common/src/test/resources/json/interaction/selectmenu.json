@@ -11,6 +11,8 @@
   },
   "guild_id": "772904309264089089",
   "id": "847587388497854464",
+  "locale": "de",
+  "guild_locale": "en-US",
   "member": {
     "avatar": null,
     "deaf": false,
