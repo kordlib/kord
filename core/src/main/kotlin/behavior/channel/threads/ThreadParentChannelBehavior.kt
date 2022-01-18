@@ -3,9 +3,6 @@ package dev.kord.core.behavior.channel.threads
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
@@ -22,7 +19,6 @@ import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import java.util.*
 
@@ -49,8 +45,8 @@ public interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public fun getPublicArchivedThreads(
-        before: Instant = Clock.System.now(),
-        limit: Int = Int.MAX_VALUE
+        before: Instant? = null,
+        limit: Int? = null,
     ): Flow<ThreadChannel> {
         return supplier.getPublicArchivedThreads(id, before, limit)
     }
@@ -103,8 +99,8 @@ public interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavio
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public fun getPrivateArchivedThreads(
-        before: Instant = Clock.System.now(),
-        limit: Int = Int.MAX_VALUE
+        before: Instant? = null,
+        limit: Int? = null,
     ): Flow<ThreadChannel> {
         return supplier.getPrivateArchivedThreads(id, before, limit)
     }
@@ -118,8 +114,8 @@ public interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavio
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public fun getJoinedPrivateArchivedThreads(
-        before: Snowflake = Snowflake.max,
-        limit: Int = Int.MAX_VALUE
+        before: Snowflake? = null,
+        limit: Int? = null,
     ): Flow<ThreadChannel> {
         return supplier.getJoinedPrivateArchivedThreads(id, before, limit)
     }

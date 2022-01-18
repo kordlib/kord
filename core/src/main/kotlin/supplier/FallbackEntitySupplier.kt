@@ -50,11 +50,11 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member =
         getMemberOrNull(guildId, userId)!!
 
-    override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> =
+    override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         first.getMessagesAfter(messageId, channelId, limit)
             .switchIfEmpty(second.getMessagesAfter(messageId, channelId, limit))
 
-    override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> =
+    override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         first.getMessagesBefore(messageId, channelId, limit)
             .switchIfEmpty(second.getMessagesBefore(messageId, channelId, limit))
 
@@ -81,7 +81,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override fun getGuildBans(guildId: Snowflake): Flow<Ban> =
         first.getGuildBans(guildId).switchIfEmpty(second.getGuildBans(guildId))
 
-    override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> =
+    override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> =
         first.getGuildMembers(guildId, limit).switchIfEmpty(second.getGuildMembers(guildId, limit))
 
     override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> =
@@ -93,7 +93,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> =
         first.getEmojis(guildId).switchIfEmpty(second.getEmojis(guildId))
 
-    override fun getCurrentUserGuilds(limit: Int): Flow<Guild> =
+    override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> =
         first.getCurrentUserGuilds(limit).switchIfEmpty(second.getCurrentUserGuilds(limit))
 
     override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> =
@@ -132,20 +132,20 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         return first.getActiveThreads(guildId).switchIfEmpty(second.getActiveThreads(guildId))
     }
 
-    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> {
         return first.getPublicArchivedThreads(channelId, before, limit)
             .switchIfEmpty(second.getPublicArchivedThreads(channelId, before, limit))
     }
 
-    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> {
         return first.getPrivateArchivedThreads(channelId, before, limit)
             .switchIfEmpty(second.getPrivateArchivedThreads(channelId, before, limit))
     }
 
     override fun getJoinedPrivateArchivedThreads(
         channelId: Snowflake,
-        before: Snowflake,
-        limit: Int
+        before: Snowflake?,
+        limit: Int?,
     ): Flow<ThreadChannel> {
         return first.getJoinedPrivateArchivedThreads(channelId, before, limit)
             .switchIfEmpty(second.getJoinedPrivateArchivedThreads(channelId, before, limit))
@@ -225,4 +225,3 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         return "FallbackEntitySupplier(first=$first, second=$second)"
     }
 }
-

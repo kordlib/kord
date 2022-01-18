@@ -61,7 +61,7 @@ public interface EntitySupplier {
         getGuildPreviewOrNull(guildId) ?: EntityNotFoundException.entityNotFound("Guild Preview", guildId)
 
     /**
-     * Requests to get the widget of this guild through the [strategy],
+     * Requests to get the widget of a [Guild] with the given [id][guildId],
      * returns null if the [GuildWidget] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -70,7 +70,7 @@ public interface EntitySupplier {
 
 
     /**
-     * Requests to get the widget of this [guildId].
+     * Requests to get the widget of a [Guild] with the given [id][guildId].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [GuildWidget] wasn't present.
@@ -150,28 +150,28 @@ public interface EntitySupplier {
      * in the [channel][MessageChannel] with the [channelId].
      *
      * The flow may use paginated requests to supply messages, [limit] will limit the maximum number of messages
-     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
+     * supplied and may optimize the batch size accordingly. `null` means no limit.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      *
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
-    public fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message>
+    public fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int? = null): Flow<Message>
 
     /**
      * Requests a flow of messages created before the [Message] with the [messageId]
      * in the [channel][MessageChannel] with the [channelId].
      *
      * The flow may use paginated requests to supply messages, [limit] will limit the maximum number of messages
-     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
+     * supplied and may optimize the batch size accordingly. `null` means no limit.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      *
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
-    public fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message>
+    public fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int? = null): Flow<Message>
 
     /**
      * Requests a flow of messages created around the [Message] with the [messageId]
@@ -182,7 +182,10 @@ public interface EntitySupplier {
      *
      * Supplied messages will be equally distributed
      * before and after the [messageId]. The remaining message for an odd [limit] is undefined and may appear on either
-     * side.
+     * side or no side at all.
+     *
+     * If a [Message] with the given [messageId] exists, the flow might also contain it, so it **could have one more
+     * element than the given [limit]**.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
@@ -278,7 +281,7 @@ public interface EntitySupplier {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    public fun getGuildMembers(guildId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Member>
+    public fun getGuildMembers(guildId: Snowflake, limit: Int? = null): Flow<Member>
 
     /**
      * Requests the [regions][Region] of the [Guild] with the given [guildId].
@@ -314,17 +317,17 @@ public interface EntitySupplier {
     public fun getEmojis(guildId: Snowflake): Flow<GuildEmoji>
 
     /**
-     * Requests the [guild emojis][GuildEmoji] of the [Guild] with the given [guildId].
+     * Requests [guilds][Guild] this bot is known to be part of.
      *
-     *  The flow may use paginated requests to supply guilds, [limit] will limit the maximum number of guilds
-     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
+     * The flow may use paginated requests to supply guilds, [limit] will limit the maximum number of guilds
+     * supplied and may optimize the batch size accordingly. `null` means no limit.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      *
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
-    public fun getCurrentUserGuilds(limit: Int = Int.MAX_VALUE): Flow<Guild>
+    public fun getCurrentUserGuilds(limit: Int? = null): Flow<Guild>
 
     /**
      * Requests the [webhooks][Webhook] of the [MessageChannel] with the given [channelId].
@@ -377,12 +380,10 @@ public interface EntitySupplier {
 
     /**
      * Requests the [Template] with the given [code].
-     * returns null when the webhook isn't present.
+     * returns null when the template isn't present.
      *
      * @throws RequestException if something went wrong while retrieving the template.
      */
-
-
     public suspend fun getTemplateOrNull(code: String): Template?
 
     /**
@@ -406,11 +407,23 @@ public interface EntitySupplier {
 
     public fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel>
 
-    public fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
+    public fun getPublicArchivedThreads(
+        channelId: Snowflake,
+        before: Instant? = null,
+        limit: Int? = null,
+    ): Flow<ThreadChannel>
 
-    public fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
+    public fun getPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Instant? = null,
+        limit: Int? = null,
+    ): Flow<ThreadChannel>
 
-    public fun getJoinedPrivateArchivedThreads(channelId: Snowflake, before: Snowflake, limit: Int): Flow<ThreadChannel>
+    public fun getJoinedPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Snowflake? = null,
+        limit: Int? = null,
+    ): Flow<ThreadChannel>
 
     public fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake): Flow<GuildApplicationCommand>
 

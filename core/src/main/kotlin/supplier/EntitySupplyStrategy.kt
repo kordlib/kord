@@ -41,12 +41,12 @@ public interface EntitySupplyStrategy<T : EntitySupplier> {
 
         /**
          * A supplier providing a strategy which exclusively uses REST calls to fetch entities.
-         * fetched entities are stored in [Kord's cache][kord.cache].
+         * fetched entities are stored in [Kord's cache][Kord.cache].
          * See [StoreEntitySupplier] for more details.
          */
         public val cachingRest: EntitySupplyStrategy<EntitySupplier> = object : EntitySupplyStrategy<EntitySupplier> {
             override fun supply(kord: Kord): EntitySupplier {
-                return StoreEntitySupplier(rest.supply(kord), kord.cache, kord)
+                return StoreEntitySupplier(rest.supply(kord), kord.cache)
             }
 
             override fun toString(): String = "EntitySupplyStrategy.cacheAwareRest"

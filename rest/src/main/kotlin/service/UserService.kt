@@ -22,13 +22,11 @@ class UserService(requestHandler: RequestHandler) : RestService(requestHandler) 
         keys[Route.UserId] = userId
     }
 
-    suspend fun getCurrentUserGuilds(position: Position? = null, limit: Int = 100) = call(Route.CurrentUsersGuildsGet) {
-        if (position != null) {
-            parameter(position.key, position.value)
+    suspend fun getCurrentUserGuilds(position: Position.BeforeOrAfter? = null, limit: Int? = null) =
+        call(Route.CurrentUsersGuildsGet) {
+            position?.let { parameter(it.key, it.value) }
+            limit?.let { parameter("limit", it) }
         }
-
-        parameter("limit", "$limit")
-    }
 
     suspend fun leaveGuild(guildId: Snowflake) = call(Route.GuildLeave) {
         keys[Route.GuildId] = guildId

@@ -100,7 +100,7 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
     }
 
 
-    override fun getPublicArchivedThreads(before: Instant, limit: Int): Flow<NewsChannelThread> {
+    override fun getPublicArchivedThreads(before: Instant?, limit: Int?): Flow<NewsChannelThread> {
         return super.getPublicArchivedThreads(before, limit).filterIsInstance()
     }
 
