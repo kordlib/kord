@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GatewayResponse(val url: String, val shards: Int)
+data class GatewayResponse(val url: String)
 
 @Serializable
 data class BotGatewayResponse(
