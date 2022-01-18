@@ -89,7 +89,7 @@ public interface TopGuildChannelBehavior : GuildChannelBehavior {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    public suspend fun addOverwrite(overwrite: PermissionOverwrite, reason: String?) {
+    public suspend fun addOverwrite(overwrite: PermissionOverwrite, reason: String? = null) {
         kord.rest.channel.editChannelPermissions(
             channelId = id,
             overwriteId = overwrite.target,
