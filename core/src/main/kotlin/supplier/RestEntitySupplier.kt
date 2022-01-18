@@ -275,7 +275,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     public suspend fun getInviteOrNull(
         code: String,
-        withCounts: Boolean,
+        withCounts: Boolean = true,
         withExpiration: Boolean = true,
         scheduledEventId: Snowflake? = null
     ): Invite? = catchNotFound {
@@ -516,7 +516,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     ): Flow<User> {
 
         val batch = min(100, limit)
-        return paginateBackwards(after, batch, { it.id }) { position ->
+        return paginateForwards(after, batch, { it.id }) { position ->
             kord.rest.guild.getScheduledEventUsers(guildId, eventId, batch, withMember, position).users
         }.map {
             val data = UserData.from(it)

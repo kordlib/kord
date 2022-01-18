@@ -33,8 +33,21 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
      *
      * @throws RequestException if anything goes wrong during the request
      */
-    @Deprecated("Use getUsersBefore or getUsersAfter")
-    public val users: Flow<User> get() = supplier.getGuildScheduledEventUsersBefore(guildId, id)
+    @Deprecated("Use getUsersBefore or getUsersAfter", ReplaceWith("getGuildScheduledEventUsersAfter()"))
+    public val users: Flow<User>
+        get() = supplier.getGuildScheduledEventUsersAfter(guildId, id)
+
+    public fun getGuildScheduledEventUsersAfter(
+        limit: Int = Int.MAX_VALUE,
+        withMembers: Boolean = true,
+        after: Snowflake = Snowflake.min
+    ): Flow<User> = supplier.getGuildScheduledEventUsersAfter(guildId, id, limit, withMembers, after)
+
+    public fun getGuildScheduledEventUsersBefore(
+        limit: Int = Int.MAX_VALUE,
+        withMembers: Boolean = true,
+        before: Snowflake = Snowflake.max
+    ): Flow<User> = supplier.getGuildScheduledEventUsersBefore(guildId, id, limit, withMembers, before)
 
     /**
      * Deletes this event.
@@ -57,7 +70,8 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun asGuildScheduledEventOrNull(): GuildScheduledEvent? = supplier.getGuildScheduledEventOrNull(guildId, id)
+    public suspend fun asGuildScheduledEventOrNull(): GuildScheduledEvent? =
+        supplier.getGuildScheduledEventOrNull(guildId, id)
 
     /**
      * Fetches to get this behavior as a [GuildScheduledEvent].

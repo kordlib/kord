@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test
 internal class UtilKtTest {
 
     @Test
-    @ExperimentalStdlibApi
     fun `paginate forwards selects the right id`() = runTest {
 
         val flow = paginateForwards(start = Snowflake(0u), batchSize = 100, idSelector = { it }) {
@@ -28,7 +27,6 @@ internal class UtilKtTest {
     }
 
     @Test
-    @ExperimentalStdlibApi
     fun `paginate backwards selects the right id`() = runTest {
 
         val flow = paginateBackwards(start = Snowflake(1000u), batchSize = 100, idSelector = { it }) {

@@ -499,8 +499,16 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         withMember: Boolean?,
         after: Snowflake
     ): Flow<User> {
-        val flow = cache.query<UserData> { idGt(UserData::id, after) }.asFlow()
-            .map { User(it, kord) }
+        val flow = cache.query<MemberData> {
+            idGt(MemberData::userId, after)
+            idEq(MemberData::guildId, guildId)
+        }.asFlow().mapNotNull {
+            val userData = cache.query<UserData> {
+                idEq(UserData::id, it.userId)
+
+            }.singleOrNull() ?: return@mapNotNull null
+            User(userData, kord)
+        }
         return if (limit != Int.MAX_VALUE) flow.take(limit) else flow
     }
 
