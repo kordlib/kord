@@ -40,14 +40,11 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
     public suspend fun getMessages(
         channelId: Snowflake,
         position: Position? = null,
-        limit: Int = 50,
+        limit: Int? = null,
     ): List<DiscordMessage> = call(Route.MessagesGet) {
         keys[Route.ChannelId] = channelId
-        if (position != null) {
-            parameter(position.key, position.value)
-        }
-        parameter("limit", "$limit")
-
+        position?.let { parameter(it.key, it.value) }
+        limit?.let { parameter("limit", it) }
     }
 
     public suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): DiscordMessage = call(Route.MessageGet) {
@@ -127,7 +124,7 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
             auditLogReason(reason)
         }
 
-    public suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest, reason: String?): Unit =
+    public suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest, reason: String? = null): Unit =
         call(Route.BulkMessageDeletePost) {
             keys[Route.ChannelId] = channelId
             body(BulkDeleteRequest.serializer(), messages)
@@ -166,17 +163,15 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         channelId: Snowflake,
         messageId: Snowflake,
         emoji: String,
-        position: Position? = null,
-        limit: Int = 25,
+        after: Position.After? = null,
+        limit: Int? = null,
     ): List<DiscordUser> = call(Route.ReactionsGet) {
         keys[Route.ChannelId] = channelId
         keys[Route.MessageId] = messageId
         keys[Route.Emoji] = emoji
 
-        if (position != null) {
-            parameter(position.key, position.value)
-        }
-        parameter("limit", "$limit")
+        after?.let { parameter(it.key, it.value) }
+        limit?.let { parameter("limit", it) }
     }
 
     public suspend fun triggerTypingIndicator(channelId: Snowflake): Unit = call(Route.TypingIndicatorPost) {

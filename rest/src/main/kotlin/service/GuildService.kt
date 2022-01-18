@@ -105,28 +105,29 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
 
     public suspend fun getGuildMembers(
         guildId: Snowflake,
-        position: Position? = null,
-        limit: Int = 1,
+        after: Position.After? = null,
+        limit: Int? = null,
     ): List<DiscordGuildMember> = call(Route.GuildMembersGet) {
         keys[Route.GuildId] = guildId
-        if (position != null) {
-            parameter(position.key, position.value)
-        }
-        parameter("limit", "$limit")
+        after?.let { parameter(it.key, it.value) }
+        limit?.let { parameter("limit", it) }
     }
 
     /**
-     * Requests members with a username or nickname matching [query].
+     * Requests members with a username or nickname starting with [query].
      *
      * @param limit limits the maximum amount of members returned. Max `1000`, defaults to `1`.
      */
     @KordExperimental
-    public suspend fun getGuildMembers(guildId: Snowflake, query: String, limit: Int = 1): List<DiscordGuildMember> =
-        call(Route.GuildMembersSearchGet) {
-            keys[Route.GuildId] = guildId
-            parameter("query", query)
-            parameter("limit", "$limit")
-        }
+    public suspend fun getGuildMembers(
+        guildId: Snowflake,
+        query: String,
+        limit: Int? = null,
+    ): List<DiscordGuildMember> = call(Route.GuildMembersSearchGet) {
+        keys[Route.GuildId] = guildId
+        parameter("query", query)
+        limit?.let { parameter("limit", it) }
+    }
 
     public suspend fun addGuildMember(
         guildId: Snowflake,

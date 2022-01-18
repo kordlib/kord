@@ -24,14 +24,13 @@ public class UserService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.UserId] = userId
     }
 
-    public suspend fun getCurrentUserGuilds(position: Position? = null, limit: Int = 100): List<DiscordPartialGuild> =
-        call(Route.CurrentUsersGuildsGet) {
-            if (position != null) {
-                parameter(position.key, position.value)
-            }
-
-            parameter("limit", "$limit")
-        }
+    public suspend fun getCurrentUserGuilds(
+        position: Position.BeforeOrAfter? = null,
+        limit: Int? = null,
+    ): List<DiscordPartialGuild> = call(Route.CurrentUsersGuildsGet) {
+        position?.let { parameter(it.key, it.value) }
+        limit?.let { parameter("limit", it) }
+    }
 
     public suspend fun leaveGuild(guildId: Snowflake): Unit = call(Route.GuildLeave) {
         keys[Route.GuildId] = guildId

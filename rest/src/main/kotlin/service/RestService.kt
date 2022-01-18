@@ -3,7 +3,7 @@ package dev.kord.rest.service
 import dev.kord.rest.request.RequestBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
-import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpHeaders.Authorization
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -18,11 +18,10 @@ public abstract class RestService(@PublishedApi internal val requestHandler: Req
             .apply(builder)
             .apply {
                 if (route.requiresAuthorization) {
-                    header(HttpHeaders.Authorization, "Bot ${requestHandler.token}")
+                    unencodedHeader(Authorization, "Bot ${requestHandler.token}")
                 }
             }
             .build()
         return requestHandler.handle(request)
     }
-
 }

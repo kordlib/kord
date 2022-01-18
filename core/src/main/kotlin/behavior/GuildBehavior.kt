@@ -161,9 +161,9 @@ public interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests to get all present members in this guild.
      *
-     * Unrestricted consumption of the returned [Flow] is a potentially performance intensive operation, it is thus recommended
-     * to limit the amount of messages requested by using [Flow.take], [Flow.takeWhile] or other functions that limit the amount
-     * of messages requested.
+     * Unrestricted consumption of the returned [Flow] is a potentially performance-intensive operation, it is thus
+     * recommended limiting the amount of messages requested by using [Flow.take], [Flow.takeWhile] or other functions
+     * that limit the amount of messages requested.
      *
      * ```kotlin
      *  guild.members.first { it.displayName == targetName }
@@ -288,7 +288,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
         supplier.getGuildApplicationCommandOrNull(kord.resources.applicationId, id, commandId)
 
     /**
-     * Requests to get the this behavior as a [Guild].
+     * Requests to get this behavior as a [Guild].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the guild wasn't present.
@@ -350,11 +350,9 @@ public interface GuildBehavior : KordEntity, Strategizable {
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
-     *
-     * This function is not part of the officially documented Discord API and may be removed/altered/stop working in the future.
      */
     @KordExperimental
-    public suspend fun getMembers(query: String, limit: Int = 1000): Flow<Member> = flow {
+    public fun getMembers(query: String, limit: Int = 1000): Flow<Member> = flow {
         kord.rest.guild.getGuildMembers(id, query, limit).forEach {
             emit(
                 Member(

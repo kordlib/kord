@@ -1,5 +1,6 @@
 package dev.kord.common.entity
 
+import dev.kord.common.Locale
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -192,6 +193,7 @@ public data class DiscordInteraction(
     val id: Snowflake,
     @SerialName("application_id")
     val applicationId: Snowflake,
+    val type: InteractionType,
     val data: InteractionCallbackData,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -203,7 +205,9 @@ public data class DiscordInteraction(
     val version: Int,
     @Serializable(with = MaybeMessageSerializer::class)
     val message: Optional<DiscordMessage> = Optional.Missing(),
-    val type: InteractionType
+    val locale: Locale?,
+    @SerialName("guild_locale")
+    val guildLocale: Locale?
 ) {
 
     /**
