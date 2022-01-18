@@ -9,17 +9,17 @@ public sealed interface Position {
     public sealed interface BeforeOrAfter : Position
 
     public class Before(id: Snowflake) : BeforeOrAfter {
-        override val key get() = "before"
-        override val value = id
+        override val key: String get() = "before"
+        override val value: Snowflake = id
     }
 
     public class After(id: Snowflake) : BeforeOrAfter {
-        override val key get() = "after"
-        override val value = id
+        override val key: String get() = "after"
+        override val value: Snowflake = id
     }
 
     public class Around(id: Snowflake) : Position {
-        override val key get() = "around"
-        override val value = id
+        override val key: String get() = "around"
+        override val value: Snowflake = id
     }
 }

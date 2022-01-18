@@ -41,7 +41,7 @@ public class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
         ReplaceWith("urlEncodedHeader(key, value)"),
         DeprecationLevel.ERROR,
     )
-    public fun header(key: String, value: String) = urlEncodedHeader(key, value)
+    public fun header(key: String, value: String): Unit = urlEncodedHeader(key, value)
 
     /** Adds a header and encodes its [value] as an [URL query component][encodeURLQueryComponent]. */
     public fun urlEncodedHeader(key: String, value: String) {
