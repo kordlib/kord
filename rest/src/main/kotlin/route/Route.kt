@@ -3,8 +3,6 @@ package dev.kord.rest.route
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
-import dev.kord.common.entity.DiscordInvite
-import dev.kord.common.entity.DiscordPartialInvite
 import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
 import dev.kord.rest.json.response.*
 import io.ktor.http.*
@@ -48,21 +46,26 @@ sealed class Route<T>(
     val method: HttpMethod,
     val path: String,
     val mapper: ResponseMapper<T>,
-    val requiresAuthorization: Boolean = true
+    val requiresAuthorizationHeader: Boolean = true,
 ) {
     constructor(
         method: HttpMethod,
         path: String,
         strategy: DeserializationStrategy<T>,
-        requiresAuthorization: Boolean = true,
-    ) : this(method, path, ValueJsonMapper(strategy), requiresAuthorization)
+        requiresAuthorizationHeader: Boolean = true,
+    ) : this(method, path, ValueJsonMapper(strategy), requiresAuthorizationHeader)
 
     @OptIn(ExperimentalSerializationApi::class)
     override fun toString(): String =
         "Route(method:${method.value},path:$path,mapper:$mapper)"
 
-    object GatewayGet
-        : Route<GatewayResponse>(HttpMethod.Get, "/gateway", GatewayResponse.serializer(), false)
+    object GatewayGet :
+        Route<GatewayResponse>(
+            HttpMethod.Get,
+            "/gateway",
+            GatewayResponse.serializer(),
+            requiresAuthorizationHeader = false,
+        )
 
     object GatewayBotGet
         : Route<BotGatewayResponse>(HttpMethod.Get, "/gateway/bot", BotGatewayResponse.serializer())
@@ -427,47 +430,69 @@ sealed class Route<T>(
     object WebhookPost
         : Route<DiscordWebhook>(HttpMethod.Post, "/channels/$ChannelId/webhooks", DiscordWebhook.serializer())
 
-    object WebhookByTokenGet
-        :
-        Route<DiscordWebhook>(HttpMethod.Get, "/webhooks/$WebhookId/$WebhookToken", DiscordWebhook.serializer(), false)
+    object WebhookByTokenGet :
+        Route<DiscordWebhook>(
+            HttpMethod.Get,
+            "/webhooks/$WebhookId/$WebhookToken",
+            DiscordWebhook.serializer(),
+            requiresAuthorizationHeader = false,
+        )
 
-    object WebhookPatch
-        : Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId", DiscordWebhook.serializer(), false)
+    object WebhookPatch :
+        Route<DiscordWebhook>(HttpMethod.Patch, "/webhooks/$WebhookId", DiscordWebhook.serializer())
 
-    object WebhookByTokenPatch
-        : Route<DiscordWebhook>(
-        HttpMethod.Patch,
-        "/webhooks/$WebhookId/$WebhookToken",
-        DiscordWebhook.serializer(),
-        false
-    )
+    object WebhookByTokenPatch :
+        Route<DiscordWebhook>(
+            HttpMethod.Patch,
+            "/webhooks/$WebhookId/$WebhookToken",
+            DiscordWebhook.serializer(),
+            requiresAuthorizationHeader = false,
+        )
 
     object WebhookDelete
         : Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId", NoStrategy)
 
-    object WebhookByTokenDelete
-        : Route<Unit>(HttpMethod.Delete, "/webhooks/$WebhookId/$WebhookToken", NoStrategy, false)
+    object WebhookByTokenDelete :
+        Route<Unit>(
+            HttpMethod.Delete,
+            "/webhooks/$WebhookId/$WebhookToken",
+            NoStrategy,
+            requiresAuthorizationHeader = false,
+        )
 
     //TODO Make sure of the return of these routes below
 
-    object ExecuteWebhookPost
-        : Route<DiscordMessage?>(
-        HttpMethod.Post,
-        "/webhooks/$WebhookId/$WebhookToken",
-        DiscordMessage.serializer().optional
-    )
+    object ExecuteWebhookPost :
+        Route<DiscordMessage?>(
+            HttpMethod.Post,
+            "/webhooks/$WebhookId/$WebhookToken",
+            DiscordMessage.serializer().optional,
+            requiresAuthorizationHeader = false,
+        )
 
-    object ExecuteSlackWebhookPost
-        : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken/slack", NoStrategy)
+    object ExecuteSlackWebhookPost :
+        Route<Unit>(
+            HttpMethod.Post,
+            "/webhooks/$WebhookId/$WebhookToken/slack",
+            NoStrategy,
+            requiresAuthorizationHeader = false,
+        )
 
-    object ExecuteGithubWebhookPost
-        : Route<Unit>(HttpMethod.Post, "/webhooks/$WebhookId/$WebhookToken/github", NoStrategy)
+    object ExecuteGithubWebhookPost :
+        Route<Unit>(
+            HttpMethod.Post,
+            "/webhooks/$WebhookId/$WebhookToken/github",
+            NoStrategy,
+            requiresAuthorizationHeader = false,
+        )
 
-    object EditWebhookMessage : Route<DiscordMessage>(
-        HttpMethod.Patch,
-        "/webhooks/$WebhookId/$WebhookToken/messages/$MessageId",
-        DiscordMessage.serializer()
-    )
+    object EditWebhookMessage :
+        Route<DiscordMessage>(
+            HttpMethod.Patch,
+            "/webhooks/$WebhookId/$WebhookToken/messages/$MessageId",
+            DiscordMessage.serializer(),
+            requiresAuthorizationHeader = false,
+        )
 
     object VoiceRegionsGet
         : Route<List<DiscordVoiceRegion>>(
@@ -640,36 +665,36 @@ sealed class Route<T>(
         DiscordGuildScheduledEvent.serializer()
     )
 
-    object InteractionResponseCreate : Route<Unit>(
-        HttpMethod.Post,
-        "/interactions/${InteractionId}/${InteractionToken}/callback",
-        NoStrategy,
-        false
-    )
+    object InteractionResponseCreate :
+        Route<Unit>(
+            HttpMethod.Post,
+            "/interactions/${InteractionId}/${InteractionToken}/callback",
+            NoStrategy,
+            requiresAuthorizationHeader = false,
+        )
 
     object OriginalInteractionResponseGet :
-            Route<DiscordMessage>(
-                HttpMethod.Get,
-                "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
-                DiscordMessage.serializer(),
-                false
-            )
+        Route<DiscordMessage>(
+            HttpMethod.Get,
+            "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
+            DiscordMessage.serializer(),
+            requiresAuthorizationHeader = false,
+        )
 
     object OriginalInteractionResponseModify :
         Route<DiscordMessage>(
             HttpMethod.Patch,
             "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
             DiscordMessage.serializer(),
-            false
+            requiresAuthorizationHeader = false,
         )
 
-    object OriginalInteractionResponseDelete
-        :
+    object OriginalInteractionResponseDelete :
         Route<Unit>(
             HttpMethod.Delete,
             "/webhooks/${ApplicationId}/${InteractionToken}/messages/@original",
             NoStrategy,
-            false
+            requiresAuthorizationHeader = false,
         )
 
 
@@ -704,23 +729,28 @@ sealed class Route<T>(
         serializer()
     )
 
-    object FollowupMessageCreate : Route<DiscordMessage>(
-        HttpMethod.Post,
-        "/webhooks/${ApplicationId}/${InteractionToken}",
-        DiscordMessage.serializer()
-    )
+    object FollowupMessageCreate :
+        Route<DiscordMessage>(
+            HttpMethod.Post,
+            "/webhooks/${ApplicationId}/${InteractionToken}",
+            DiscordMessage.serializer(),
+            requiresAuthorizationHeader = false,
+        )
 
-    object FollowupMessageModify : Route<DiscordMessage>(
-        HttpMethod.Patch,
-        "/webhooks/${ApplicationId}/${InteractionToken}/messages/${MessageId}",
-        DiscordMessage.serializer()
-    )
+    object FollowupMessageModify :
+        Route<DiscordMessage>(
+            HttpMethod.Patch,
+            "/webhooks/${ApplicationId}/${InteractionToken}/messages/${MessageId}",
+            DiscordMessage.serializer(),
+            requiresAuthorizationHeader = false,
+        )
 
     object FollowupMessageDelete :
         Route<Unit>(
             HttpMethod.Delete,
             "/webhooks/${ApplicationId}/${InteractionToken}/messages/${MessageId}",
-            NoStrategy
+            NoStrategy,
+            requiresAuthorizationHeader = false,
         )
 
     object SelfVoiceStatePatch :
