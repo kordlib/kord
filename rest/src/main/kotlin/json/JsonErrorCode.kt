@@ -392,7 +392,7 @@ enum class JsonErrorCode(val code: Int) {
     /** `before` value is earlier than the thread creation date. */
     BeforeValueBeforeThreadCreate(50085),
 
-    /** Community server channels must be text channels */
+    /** Community server channels must be text channels. */
     CommunityServerChannelMustBeTextChannel(50086),
 
     /** This server is not available in your location. */
