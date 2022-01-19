@@ -14,7 +14,7 @@ import kotlinx.serialization.json.*
  * Represents a [Discord error response](https://discord.com/developers/docs/topics/opcodes-and-status-codes#json).
  */
 @Serializable
-class DiscordErrorResponse(
+data class DiscordErrorResponse(
     val code: JsonErrorCode = JsonErrorCode.Unknown,
     val errors: JsonElement? = null,
     val message: String? = null,
