@@ -16,7 +16,8 @@ public class GuildPreviewData(
     public val features: List<GuildFeature>,
     public val approximateMemberCount: Int,
     public val approximatePresenceCount: Int,
-    public val description: String? = null
+    public val description: String? = null,
+    public val stickers: List<StickerData>,
 ) {
     public companion object {
         public fun from(entity: DiscordGuildPreview): GuildPreviewData = with(entity) {
@@ -30,9 +31,9 @@ public class GuildPreviewData(
                 features,
                 approximateMemberCount,
                 approximatePresenceCount,
-                description
+                description,
+                stickers.map { StickerData.from(it) },
             )
         }
     }
-
 }
