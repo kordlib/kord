@@ -13,7 +13,6 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
-import dev.kord.rest.request.RestRequestException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 
@@ -57,19 +56,19 @@ public interface EntitySupplier {
     public suspend fun getGuild(id: Snowflake): Guild = getGuildOrNull(id) ?: EntityNotFoundException.guildNotFound(id)
 
     /**
-     * Returns the preview of the guild matching the [guildId].
+     * Requests the preview of the guild matching the [guildId].
      * If the bot is not in the guild, then the guild must be lurkable.
      * Returns `null` if the preview was not found.
      *
-     * @throws RestRequestException if something went wrong during the request.
+     * @throws RequestException if something went wrong during the request.
      */
     public suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview?
 
     /**
-     * Returns the preview of the guild matching the [guildId].
+     * Requests the preview of the guild matching the [guildId].
      * If the bot is not in the guild, then the guild must be lurkable.
      *
-     * @throws RestRequestException if something went wrong during the request.
+     * @throws RequestException if something went wrong during the request.
      * @throws EntityNotFoundException if the preview was not found.
      */
     public suspend fun getGuildPreview(guildId: Snowflake): GuildPreview =
