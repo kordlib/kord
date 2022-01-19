@@ -266,4 +266,7 @@ public class StoreEntitySupplier(
         cache.put(transform(value))
         return value
     }
+
+
+    override fun toString(): String = "StoreEntitySupplier(supplier=$supplier, cache=$cache)"
 }

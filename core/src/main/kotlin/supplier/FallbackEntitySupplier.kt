@@ -47,9 +47,6 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? =
         first.getMessageOrNull(channelId, messageId) ?: second.getMessageOrNull(channelId, messageId)
 
-    override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member =
-        getMemberOrNull(guildId, userId)!!
-
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         first.getMessagesAfter(messageId, channelId, limit)
             .switchIfEmpty(second.getMessagesAfter(messageId, channelId, limit))
@@ -220,8 +217,5 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         first.getGuildStickers(guildId).switchIfEmpty(second.getGuildStickers(guildId))
 
 
-
-    override fun toString(): String {
-        return "FallbackEntitySupplier(first=$first, second=$second)"
-    }
+    override fun toString(): String = "FallbackEntitySupplier(first=$first, second=$second)"
 }
