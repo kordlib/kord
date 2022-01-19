@@ -30,6 +30,7 @@ data class DiscordStageInstance(
     val topic: String,
     @SerialName("privacy_level")
     val privacyLevel: StageInstancePrivacyLevel,
+    @Deprecated("Stages are no longer discoverable")
     @SerialName("discoverable_disabled")
     val discoverableDisabled: Boolean
 )
@@ -39,9 +40,11 @@ data class DiscordStageInstance(
  */
 @Serializable(with = StageInstancePrivacyLevel.Serializer::class)
 sealed class StageInstancePrivacyLevel(val value: Int) {
+
     /**
      * The Stage instance is visible publicly, such as on Stage Discovery.
      */
+    @Deprecated("Stages are no longer discoverable")
     object Public : StageInstancePrivacyLevel(1)
 
     /**
@@ -58,6 +61,7 @@ sealed class StageInstancePrivacyLevel(val value: Int) {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("StageInstancePrivacyLevel", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): StageInstancePrivacyLevel {
+            @Suppress("DEPRECATION")
             return when (val value = decoder.decodeInt()) {
                 1 -> Public
                 2 -> GuildOnly
