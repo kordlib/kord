@@ -33,9 +33,9 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
      *
      * @throws RequestException if anything goes wrong during the request
      */
-    @Deprecated("Use getUsersBefore or getUsersAfter", ReplaceWith("getGuildScheduledEventUsersAfter()"))
+
     public val users: Flow<User>
-        get() = supplier.getGuildScheduledEventUsersAfter(guildId, id)
+        get() = getGuildScheduledEventUsersAfter()
 
     public fun getGuildScheduledEventUsersAfter(
         limit: Int = Int.MAX_VALUE,
