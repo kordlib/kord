@@ -4,6 +4,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -178,14 +179,16 @@ sealed class OverwriteType(val value: Int) {
 }
 
 @Serializable
-class DiscordThreadMetadata(
+data class DiscordThreadMetadata(
     val archived: Boolean,
     @SerialName("archive_timestamp")
     val archiveTimestamp: String,
     @SerialName("auto_archive_duration")
     val autoArchiveDuration: ArchiveDuration,
     val locked: OptionalBoolean = OptionalBoolean.Missing,
-    val invitable: OptionalBoolean = OptionalBoolean.Missing
+    val invitable: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("create_timestamp")
+    val createTimestamp: Optional<Instant> = Optional.Missing(),
 )
 
 @Serializable(with = ArchiveDuration.Serializer::class)
