@@ -576,7 +576,11 @@ sealed class CommandArgument<out T> : Option() {
                     )
                     is IntegerArgument -> encodeLongElement(descriptor, 1, value.value)
                     is NumberArgument -> encodeDoubleElement(descriptor, 1, value.value)
-                    is StringArgument -> encodeStringElement(descriptor, 1, value.value)
+                    is AutoCompleteArgument, is StringArgument -> encodeStringElement(
+                        descriptor,
+                        1,
+                        value.value as String
+                    )
                 }
             }
         }

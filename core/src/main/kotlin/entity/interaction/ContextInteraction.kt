@@ -226,7 +226,7 @@ public class UnknownApplicationCommandInteraction(
  *
  * **Follow-ups and normals responses don't work on this type**
  *
- * **No matter what argument type is used all arguments will be [CommandArgument.AutoCompleteArgument]s
+ * **No matter what argument type is used all [focused][CommandArgument.focused] arguments will be [CommandArgument.AutoCompleteArgument]s**
  *
  * Check [AutoCompleteInteractionBehavior] for response options
  */
