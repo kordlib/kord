@@ -7,7 +7,6 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.value
 import kotlinx.serialization.*
-import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
@@ -505,7 +504,7 @@ public sealed class CommandArgument<out T> : Option() {
      * @property value whatever the user already typed into the argument field
      * @property focused always true, since this is an auto complete argument
      */
-    class AutoCompleteArgument(
+    public class AutoCompleteArgument(
         override val name: String,
         override val type: ApplicationCommandOptionType,
         override val value: String,
