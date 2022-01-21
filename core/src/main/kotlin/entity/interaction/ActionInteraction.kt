@@ -18,11 +18,7 @@ import dev.kord.core.behavior.interaction.ActionInteractionBehavior
 import dev.kord.core.cache.data.ApplicationInteractionData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
-import dev.kord.core.entity.Entity
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Message
-import dev.kord.core.entity.Role
-import dev.kord.core.entity.User
+import dev.kord.core.entity.*
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.channel.ResolvedChannel
 import dev.kord.core.supplier.EntitySupplier
@@ -279,7 +275,10 @@ public fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjec
         is CommandArgument.NumberArgument -> OptionValue.NumberOptionValue(value.value, focused)
         is CommandArgument.BooleanArgument -> OptionValue.BooleanOptionValue(value.value, focused)
         is CommandArgument.IntegerArgument -> OptionValue.IntOptionValue(value.value, focused)
-        is CommandArgument.StringArgument -> OptionValue.StringOptionValue(value.value, focused)
+        is CommandArgument.StringArgument, is CommandArgument.AutoCompleteArgument -> OptionValue.StringOptionValue(
+            value.value as String,
+            focused
+        )
         is CommandArgument.ChannelArgument -> {
             val channel = resolvedObjects?.channels.orEmpty()[value.value]
             requireNotNull(channel) { "channel expected for $value but was missing" }
