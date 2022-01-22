@@ -372,6 +372,9 @@ enum class JsonErrorCode(val code: Int) {
     /** Invalid Guild. */
     InvalidGuild(50055),
 
+    /** Invalid message type. */
+    InvalidMessageType(50068),
+
     /** Payment source required to redeem gift. */
     GiftRequiresPaymentSource(50070),
 
