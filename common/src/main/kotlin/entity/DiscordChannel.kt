@@ -178,7 +178,7 @@ sealed class OverwriteType(val value: Int) {
 }
 
 @Serializable
-class DiscordThreadMetadata(
+data class DiscordThreadMetadata(
     val archived: Boolean,
     @SerialName("archive_timestamp")
     val archiveTimestamp: String,
