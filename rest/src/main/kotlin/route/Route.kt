@@ -486,11 +486,27 @@ sealed class Route<T>(
             requiresAuthorizationHeader = false,
         )
 
+    object GetWebhookMessage :
+        Route<DiscordMessage>(
+            HttpMethod.Get,
+            "/webhooks/$WebhookId/$WebhookToken/messages/$MessageId",
+            DiscordMessage.serializer(),
+            requiresAuthorizationHeader = false,
+        )
+
     object EditWebhookMessage :
         Route<DiscordMessage>(
             HttpMethod.Patch,
             "/webhooks/$WebhookId/$WebhookToken/messages/$MessageId",
             DiscordMessage.serializer(),
+            requiresAuthorizationHeader = false,
+        )
+
+    object DeleteWebhookMessage :
+        Route<Unit>(
+            HttpMethod.Delete,
+            "/webhooks/$WebhookId/$WebhookToken/messages/$MessageId",
+            NoStrategy,
             requiresAuthorizationHeader = false,
         )
 
@@ -737,6 +753,14 @@ sealed class Route<T>(
             requiresAuthorizationHeader = false,
         )
 
+    object FollowupMessageGet :
+        Route<DiscordMessage>(
+            HttpMethod.Get,
+            "/webhooks/$ApplicationId/$InteractionToken/messages/$MessageId",
+            DiscordMessage.serializer(),
+            requiresAuthorizationHeader = false,
+        )
+
     object FollowupMessageModify :
         Route<DiscordMessage>(
             HttpMethod.Patch,
@@ -906,7 +930,7 @@ sealed class Route<T>(
     object TemplateCode : Key("{template.code}")
     object ApplicationId : Key("{application.id}", true)
     object CommandId : Key("{command.id}", true)
-    object InteractionId : Key("interaction.id", true)
+    object InteractionId : Key("{interaction.id}", true)
     object InteractionToken : Key("{interaction.token}", true)
     object ScheduledEventId : Key("{event.id}", true)
     object StickerId : Key("{sticker.id}")
