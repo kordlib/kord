@@ -13,6 +13,21 @@ import dev.kord.common.entity.optional.delegate.delegate
 @KordDsl
 sealed class ButtonBuilder : ActionRowComponentBuilder() {
 
+    @Suppress("unused", "SpellCheckingInspection")
+    @Deprecated(
+        "Only kept for binary compatibility, was primitive (not nullable) before.",
+        ReplaceWith("disabled"),
+        DeprecationLevel.HIDDEN, // not accessible from source code, just by already compiled classes
+    )
+    @get:JvmName("getDisabled") // preserve: `fun getDisabled ()Z`, new: `fun getDisabled ()Ljava/lang/Boolean;`
+    @set:JvmName("setDisabled") // preserve: `fun setDisabled (Z)V`, new: `fun setDisabled (Ljava/lang/Boolean;)V`
+    var primitiveDisabledForBinaryCompatibility: Boolean
+        get() = disabled ?: false
+        set(value) {
+            disabled = value
+        }
+
+
     protected var _label: Optional<String> = Optional.Missing()
         private set
 
