@@ -30,12 +30,13 @@ public data class MemberData(
             MemberData(
                 userId = userId,
                 guildId = guildId,
-                nick,
-                roles,
-                joinedAt,
-                premiumSince,
+                nick = nick,
+                roles = roles,
+                joinedAt = joinedAt,
+                premiumSince = premiumSince,
+                pending = pending,
                 avatar = avatar,
-                communicationDisabledUntil = communicationDisabledUntil
+                communicationDisabledUntil = communicationDisabledUntil,
             )
         }
 
@@ -45,12 +46,13 @@ public data class MemberData(
                 MemberData(
                     userId = userId,
                     guildId = guildId,
-                    nick,
-                    roles,
-                    joinedAt,
-                    premiumSince,
+                    nick = nick,
+                    roles = roles,
+                    joinedAt = joinedAt,
+                    premiumSince = premiumSince,
+                    pending = pending,
                     avatar = avatar,
-                    communicationDisabledUntil = communicationDisabledUntil
+                    communicationDisabledUntil = communicationDisabledUntil,
                 )
             }
 
@@ -58,12 +60,13 @@ public data class MemberData(
             MemberData(
                 userId = userId,
                 guildId = guildId,
-                nick,
-                roles,
-                joinedAt,
-                premiumSince,
+                nick = nick,
+                roles = roles,
+                joinedAt = joinedAt,
+                premiumSince = premiumSince,
+                pending = pending,
                 avatar = avatar,
-                communicationDisabledUntil = communicationDisabledUntil
+                communicationDisabledUntil = communicationDisabledUntil,
             )
         }
 
@@ -71,16 +74,15 @@ public data class MemberData(
             MemberData(
                 userId = user.id,
                 guildId = guildId,
-                nick,
-                roles,
-                joinedAt,
-                premiumSince,
-                pending,
+                nick = nick,
+                roles = roles,
+                joinedAt = joinedAt,
+                premiumSince = premiumSince,
+                pending = pending,
                 avatar = avatar,
-                communicationDisabledUntil
+                communicationDisabledUntil = communicationDisabledUntil,
             )
         }
-
     }
 }
 
