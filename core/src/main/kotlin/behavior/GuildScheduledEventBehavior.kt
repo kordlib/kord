@@ -39,15 +39,15 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
 
     public fun getGuildScheduledEventUsersAfter(
         limit: Int = Int.MAX_VALUE,
-        withMembers: Boolean = true,
+        withMember: Boolean = true,
         after: Snowflake = Snowflake.min
-    ): Flow<User> = supplier.getGuildScheduledEventUsersAfter(guildId, id, limit, withMembers, after)
+    ): Flow<User> = supplier.getGuildScheduledEventUsersAfter(guildId, id, limit, withMember, after)
 
     public fun getGuildScheduledEventUsersBefore(
         limit: Int = Int.MAX_VALUE,
-        withMembers: Boolean = true,
+        withMember: Boolean = true,
         before: Snowflake = Snowflake.max
-    ): Flow<User> = supplier.getGuildScheduledEventUsersBefore(guildId, id, limit, withMembers, before)
+    ): Flow<User> = supplier.getGuildScheduledEventUsersBefore(guildId, id, limit, withMember, before)
 
     /**
      * Deletes this event.
