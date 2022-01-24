@@ -46,12 +46,12 @@ public sealed interface Interaction : InteractionBehavior {
      *
      * This is available on all interaction types except [InteractionType.Ping]
      */
-    public val locale: Locale? get() = data.locale
+    public val locale: Locale? get() = data.locale.value
 
     /**
      * The guild's preferred locale, if invoked in a guild.
      */
-    public val guildLocale: Locale? get() = data.guildLocale
+    public val guildLocale: Locale? get() = data.guildLocale.value
 
     /**
      * read-only property, always 1

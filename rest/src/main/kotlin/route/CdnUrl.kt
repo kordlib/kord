@@ -23,5 +23,8 @@ class CdnUrl(private val rawAssetUri: String) {
         return "CdnUrl(rawAssetUri=$rawAssetUri)"
     }
 
-    data class UrlFormatBuilder(var format: Image.Format = Image.Format.WEBP, var size: Image.Size? = null)
+    class UrlFormatBuilder {
+        var format: Image.Format = Image.Format.WEBP
+        var size: Image.Size? = null
+    }
 }

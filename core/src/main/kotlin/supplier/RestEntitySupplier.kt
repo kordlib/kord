@@ -86,22 +86,6 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     override suspend fun getGuildOrNull(id: Snowflake): Guild? =
         catchNotFound { Guild(guild.getGuild(id).toData(), kord) }
 
-    /**
-     * Returns the preview of the guild matching the [guildId]. The bot does not need to present in this guild
-     * for this to complete successfully.
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     * @throws [EntityNotFoundException] if the preview was not found.
-     */
-    override suspend fun getGuildPreview(guildId: Snowflake): GuildPreview =
-        getGuildPreviewOrNull(guildId) ?: EntityNotFoundException.entityNotFound("Guild preview", guildId)
-
-    /**
-     * Returns the preview of the guild matching the [guildId]. The bot does not need to present in this guild
-     * for this to complete successfully. Returns null if the preview was not found.
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     */
     override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? = catchNotFound {
         val discordPreview = guild.getGuildPreview(guildId)
         GuildPreview(GuildPreviewData.from(discordPreview), kord)
@@ -499,9 +483,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GuildApplicationCommand(data, interaction)
     }
 
-    override fun toString(): String {
-        return "RestEntitySupplier(rest=${kord.rest})"
-    }
+
+    override fun toString(): String = "RestEntitySupplier(rest=${kord.rest})"
 }
 
 
