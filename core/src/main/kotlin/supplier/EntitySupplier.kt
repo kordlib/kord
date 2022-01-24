@@ -477,7 +477,6 @@ public interface EntitySupplier {
         guildId: Snowflake,
         eventId: Snowflake,
         limit: Int = Int.MAX_VALUE,
-        withMember: Boolean? = null,
         before: Snowflake = Snowflake.max
     ): Flow<User>
 
@@ -486,16 +485,29 @@ public interface EntitySupplier {
         guildId: Snowflake,
         eventId: Snowflake,
         limit: Int = Int.MAX_VALUE,
-        withMember: Boolean? = null,
         after: Snowflake = Snowflake.min
     ): Flow<User>
+
+    public  fun getGuildScheduledEventMembersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int = Int.MAX_VALUE,
+        before: Snowflake = Snowflake.max
+    ): Flow<Member>
+
+
+    public fun getGuildScheduledEventMembersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int = Int.MAX_VALUE,
+        after: Snowflake = Snowflake.min
+    ): Flow<Member>
 
     public fun getGuildScheduledEventUsers(
         guildId: Snowflake,
         eventId: Snowflake,
         limit: Int = Int.MAX_VALUE,
-        withMember: Boolean? = null,
-    ): Flow<User> = getGuildScheduledEventUsersAfter(guildId, eventId, limit, withMember)
+    ): Flow<User> = getGuildScheduledEventUsersAfter(guildId, eventId, limit)
 }
 
 

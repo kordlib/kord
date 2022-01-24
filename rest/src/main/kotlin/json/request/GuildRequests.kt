@@ -3,19 +3,7 @@ package dev.kord.rest.json.request
 import dev.kord.common.Color
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.entity.ChannelType
-import dev.kord.common.entity.DefaultMessageNotificationLevel
-import dev.kord.common.entity.DiscordOptionallyMemberUser
-import dev.kord.common.entity.DiscordWelcomeScreenChannel
-import dev.kord.common.entity.ExplicitContentFilter
-import dev.kord.common.entity.GuildScheduledEventEntityMetadata
-import dev.kord.common.entity.IntegrationExpireBehavior
-import dev.kord.common.entity.Overwrite
-import dev.kord.common.entity.Permissions
-import dev.kord.common.entity.ScheduledEntityType
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.StageInstancePrivacyLevel
-import dev.kord.common.entity.VerificationLevel
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -277,5 +265,10 @@ data class GuildScheduledEventCreateRequest(
 )
 
 @Serializable
-data class GuildScheduledEventUsersResponse(val users: List<DiscordOptionallyMemberUser>)
+data class GuildScheduledEventUsersResponse(
+    @SerialName("guild_scheduled_event_id")
+    val guildScheduledEventId: Snowflake,
+    val user: DiscordUser,
+    val member: Optional<DiscordGuildMember> = Optional.Missing()
+    )
 

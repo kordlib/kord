@@ -637,10 +637,10 @@ sealed class Route<T>(
         DiscordGuildScheduledEvent.serializer()
     )
 
-    object GuildScheduledEventUsersGet : Route<GuildScheduledEventUsersResponse>(
+    object GuildScheduledEventUsersGet : Route<List<GuildScheduledEventUsersResponse>>(
         HttpMethod.Get,
         "/guilds/$GuildId/events/$ScheduledEventId/users",
-        GuildScheduledEventUsersResponse.serializer()
+        ListSerializer(GuildScheduledEventUsersResponse.serializer())
     )
 
     object GuildScheduledEventPatch : Route<DiscordGuildScheduledEvent>(

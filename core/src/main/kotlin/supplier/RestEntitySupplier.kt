@@ -1,6 +1,7 @@
 package dev.kord.core.supplier
 
 import dev.kord.common.entity.DiscordAuditLogEntry
+import dev.kord.common.entity.DiscordOptionallyMemberUser
 import dev.kord.common.entity.DiscordPartialGuild
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -18,6 +19,7 @@ import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
+import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
 import dev.kord.rest.json.request.ListThreadsBySnowflakeRequest
 import dev.kord.rest.json.request.ListThreadsByTimestampRequest
 import dev.kord.rest.request.RestRequestException
@@ -489,38 +491,82 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             GuildScheduledEvent(data, kord)
         }
 
-    public override fun getGuildScheduledEventUsersBefore(
+    override fun getGuildScheduledEventUsersBefore(
         guildId: Snowflake,
         eventId: Snowflake,
         limit: Int,
-        withMember: Boolean?,
         before: Snowflake
     ): Flow<User> {
-        val batch = min(100, limit)
-        return paginateBackwards(before, batch, { it.id }) { position ->
-            kord.rest.guild.getScheduledEventUsers(guildId, eventId, batch, withMember, position).users
-        }.map {
-            val data = UserData.from(it)
-            User(data, kord)
-        }
-
+       return getGuildScheduledEventUsersBefore(guildId, eventId, limit, false, before).map {
+           val data = UserData.from(it.user)
+           User(data, kord)
+       }
     }
-
 
     override fun getGuildScheduledEventUsersAfter(
         guildId: Snowflake,
         eventId: Snowflake,
         limit: Int,
-        withMember: Boolean?,
         after: Snowflake
     ): Flow<User> {
+        return getGuildScheduledEventUsersAfter(guildId, eventId, limit, false, after).map {
+            val data = UserData.from(it.user)
+            User(data, kord)
+        }
+    }
+
+    override fun getGuildScheduledEventMembersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        before: Snowflake
+    ): Flow<Member> {
+      return getGuildScheduledEventUsersBefore(guildId, eventId, limit,true, before).map {
+          val data = UserData.from(it.user)
+          val memberData = it.member.value!!.toData(data.id, guildId)
+          Member(memberData, data, kord)
+      }
+    }
+
+    override fun getGuildScheduledEventMembersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        after: Snowflake
+    ): Flow<Member> {
+        return getGuildScheduledEventUsersAfter(guildId, eventId, limit,true, after).map {
+            val data = UserData.from(it.user)
+            val memberData = it.member.value!!.toData(data.id, guildId)
+            Member(memberData, data, kord)
+        }
+    }
+
+    private fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        withMember: Boolean?,
+        before: Snowflake
+    ): Flow<GuildScheduledEventUsersResponse> {
+        val batch = min(100, limit)
+        return paginateBackwards(before, batch, { it.user.id }) { position ->
+            kord.rest.guild.getScheduledEventUsers(guildId, eventId, batch, withMember, position)
+        }
+
+    }
+
+
+    private fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        withMember: Boolean?,
+        after: Snowflake
+    ): Flow<GuildScheduledEventUsersResponse> {
 
         val batch = min(100, limit)
-        return paginateForwards(after, batch, { it.id }) { position ->
-            kord.rest.guild.getScheduledEventUsers(guildId, eventId, batch, withMember, position).users
-        }.map {
-            val data = UserData.from(it)
-            User(data, kord)
+        return paginateForwards(after, batch, { it.user.id }) { position ->
+            kord.rest.guild.getScheduledEventUsers(guildId, eventId, batch, withMember, position)
         }
 
     }
