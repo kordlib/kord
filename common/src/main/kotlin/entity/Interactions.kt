@@ -62,7 +62,7 @@ sealed class ApplicationCommandType(val value: Int) {
 }
 
 @Serializable
-class ApplicationCommandOption(
+data class ApplicationCommandOption(
     val type: ApplicationCommandOptionType,
     val name: String,
     val description: String,
@@ -143,9 +143,9 @@ sealed class Choice<out T> {
     abstract val name: String
     abstract val value: T
 
-    class IntChoice(override val name: String, override val value: Long) : Choice<Long>()
-    class NumberChoice(override val name: String, override val value: Double) : Choice<Double>()
-    class StringChoice(override val name: String, override val value: String) : Choice<String>()
+    data class IntChoice(override val name: String, override val value: Long) : Choice<Long>()
+    data class NumberChoice(override val name: String, override val value: Double) : Choice<Double>()
+    data class StringChoice(override val name: String, override val value: String) : Choice<String>()
     internal class ChoiceSerializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
             element<String>("name")
@@ -197,7 +197,7 @@ data class ResolvedObjects(
 )
 
 @Serializable
-class DiscordInteraction(
+data class DiscordInteraction(
     val id: Snowflake,
     @SerialName("application_id")
     val applicationId: Snowflake,
@@ -213,9 +213,9 @@ class DiscordInteraction(
     val version: Int,
     @Serializable(with = MaybeMessageSerializer::class)
     val message: Optional<DiscordMessage> = Optional.Missing(),
-    val locale: Locale?,
+    val locale: Optional<Locale> = Optional.Missing(),
     @SerialName("guild_locale")
-    val guildLocale: Locale?
+    val guildLocale: Optional<Locale> = Optional.Missing()
 ) {
 
     /**
@@ -433,92 +433,76 @@ sealed class CommandArgument<out T> : Option() {
     abstract val value: T
     abstract val focused: OptionalBoolean
 
-    class StringArgument(
+    data class StringArgument(
         override val name: String,
         override val value: String,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<String>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.String
-
-        override fun toString(): String = "StringArgument(name=$name, value=$value)"
     }
 
-    class IntegerArgument(
+    data class IntegerArgument(
         override val name: String,
         override val value: Long,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Long>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Integer
-
-        override fun toString(): String = "IntegerArgument(name=$name, value=$value)"
     }
 
-    class NumberArgument(
+    data class NumberArgument(
         override val name: String,
         override val value: Double,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Double>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Number
-
-        override fun toString(): String = "NumberArgument(name=$name, value=$value)"
     }
 
-    class BooleanArgument(
+    data class BooleanArgument(
         override val name: String,
         override val value: Boolean,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Boolean>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Boolean
-
-        override fun toString(): String = "BooleanArgument(name=$name, value=$value)"
     }
 
-    class UserArgument(
+    data class UserArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.User
-
-        override fun toString(): String = "UserArgument(name=$name, value=$value)"
     }
 
-    class ChannelArgument(
+    data class ChannelArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Channel
-
-        override fun toString(): String = "ChannelArgument(name=$name, value=$value)"
     }
 
-    class RoleArgument(
+    data class RoleArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Role
-
-        override fun toString(): String = "RoleArgument(name=$name, value=$value)"
     }
 
-    class MentionableArgument(
+    data class MentionableArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<Snowflake>() {
         override val type: ApplicationCommandOptionType
             get() = ApplicationCommandOptionType.Mentionable
-
-        override fun toString(): String = "MentionableArgument(name=$name, value=$value)"
     }
 
     /**

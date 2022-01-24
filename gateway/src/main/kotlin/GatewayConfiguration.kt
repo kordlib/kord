@@ -17,7 +17,7 @@ data class GatewayConfiguration(
     val intents: Intents
 )
 
-data class GatewayConfigurationBuilder(
+class GatewayConfigurationBuilder(
     /**
      * The token of the bot.
      */

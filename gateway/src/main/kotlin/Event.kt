@@ -478,7 +478,7 @@ sealed class Close : Event() {
      *
      * @param recoverable true if the gateway will automatically try to reconnect.
      */
-    class DiscordClose(val closeCode: GatewayCloseCode, val recoverable: Boolean) : Close()
+    data class DiscordClose(val closeCode: GatewayCloseCode, val recoverable: Boolean) : Close()
 
     /**
      * The gateway closed and will attempt to resume the session.

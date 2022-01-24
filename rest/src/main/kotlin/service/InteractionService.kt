@@ -604,7 +604,6 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
     suspend inline fun modifyInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,
-        ephemeral: Boolean = false,
         builder: InteractionResponseModifyBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
