@@ -14,7 +14,7 @@ public data class GatewayConfiguration(
     val shard: DiscordShard,
     val presence: Optional<DiscordPresence> = Optional.Missing(),
     val threshold: Int,
-    val intents: Intents,
+    val intents: Intents
 )
 
 public class GatewayConfigurationBuilder(

@@ -568,7 +568,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun modifyInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,
-        builder: InteractionResponseModifyBuilder.() -> Unit,
+        builder: InteractionResponseModifyBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return modifyInteractionResponse(

@@ -25,8 +25,8 @@ public data class InteractionData(
     val permissions: Optional<Permissions> = Optional.Missing(),
     val version: Int,
     val message: Optional<MessageData> = Optional.Missing(),
-    val locale: Locale?,
-    val guildLocale: Locale?
+    val locale: Optional<Locale> = Optional.Missing(),
+    val guildLocale: Optional<Locale> = Optional.Missing()
 ) {
     public companion object {
         public fun from(interaction: DiscordInteraction): InteractionData {
