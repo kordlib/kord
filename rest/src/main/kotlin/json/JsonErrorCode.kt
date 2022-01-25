@@ -241,6 +241,9 @@ enum class JsonErrorCode(val code: Int) {
     /** Maximum number of guild widget settings updates has been reached. Try again later. */
     MaxGuildWidgetSettingsUpdates(30042),
 
+    /** Maximum number of edits to messages older than 1 hour reached. Try again later. */
+    MaxOldMessageEdits(30046),
+
     /** Unauthorized. Provide a valid token and try again. */
     Unauthorized(40001),
 
