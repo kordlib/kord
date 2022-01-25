@@ -13,6 +13,7 @@ import dev.kord.rest.json.request.WebhookCreateRequest
 import dev.kord.rest.json.request.WebhookEditMessageRequest
 import dev.kord.rest.json.request.WebhookExecuteRequest
 import dev.kord.rest.json.request.WebhookModifyRequest
+import dev.kord.rest.request.RequestBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
@@ -52,8 +53,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     suspend fun getWebhookWithToken(webhookId: Snowflake, token: String) = call(Route.WebhookByTokenGet) {
-        keys[Route.WebhookId] = webhookId
-        keys[Route.WebhookToken] = token
+        webhookIdToken(webhookId, token)
     }
 
     suspend inline fun modifyWebhook(webhookId: Snowflake, builder: WebhookModifyBuilder.() -> Unit): DiscordWebhook {
@@ -79,8 +79,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         }
 
         return call(Route.WebhookByTokenPatch) {
-            keys[Route.WebhookId] = webhookId
-            keys[Route.WebhookToken] = token
+            webhookIdToken(webhookId, token)
             val modifyBuilder = WebhookModifyBuilder().apply(builder)
             body(WebhookModifyRequest.serializer(), modifyBuilder.toRequest())
             auditLogReason(modifyBuilder.reason)
@@ -94,8 +93,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
 
     suspend fun deleteWebhookWithToken(webhookId: Snowflake, token: String, reason: String? = null) =
         call(Route.WebhookByTokenDelete) {
-            keys[Route.WebhookId] = webhookId
-            keys[Route.WebhookToken] = token
+            webhookIdToken(webhookId, token)
             auditLogReason(reason)
         }
 
@@ -111,10 +109,7 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         }
 
         return call(Route.ExecuteWebhookPost) {
-            keys[Route.WebhookId] = webhookId
-            keys[Route.WebhookToken] = token
-            if(wait != null) parameter("wait", "$wait")
-            if(threadId != null) parameter("thread_id", threadId.toString())
+            webhookIdTokenWaitThreadId(webhookId, token, wait, threadId)
             val request = WebhookMessageCreateBuilder().apply(builder).toRequest()
             body(WebhookExecuteRequest.serializer(), request.request)
             request.files.forEach { file(it) }
@@ -122,27 +117,43 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
     }
 
     @KordExperimental
-    suspend fun executeSlackWebhook(webhookId: Snowflake, token: String, body: JsonObject, wait: Boolean = false) =
-        call(Route.ExecuteSlackWebhookPost) {
-            keys[Route.WebhookId] = webhookId
-            keys[Route.WebhookToken] = token
-            parameter("wait", "$wait")
-            body(JsonObject.serializer(), body)
-        }
+    suspend fun executeSlackWebhook(
+        webhookId: Snowflake,
+        token: String,
+        body: JsonObject,
+        wait: Boolean? = null,
+        threadId: Snowflake? = null,
+    ) = call(Route.ExecuteSlackWebhookPost) {
+        webhookIdTokenWaitThreadId(webhookId, token, wait, threadId)
+        body(JsonObject.serializer(), body)
+    }
 
     @KordExperimental
-    suspend fun executeGithubWebhook(webhookId: Snowflake, token: String, body: JsonObject, wait: Boolean = false) =
-        call(Route.ExecuteGithubWebhookPost) {
-            keys[Route.WebhookId] = webhookId
-            keys[Route.WebhookToken] = token
-            parameter("wait", "$wait")
-            body(JsonObject.serializer(), body)
-        }
+    suspend fun executeGithubWebhook(
+        webhookId: Snowflake,
+        token: String,
+        body: JsonObject,
+        wait: Boolean? = null,
+        threadId: Snowflake? = null,
+    ) = call(Route.ExecuteGithubWebhookPost) {
+        webhookIdTokenWaitThreadId(webhookId, token, wait, threadId)
+        body(JsonObject.serializer(), body)
+    }
+
+    suspend fun getWebhookMessage(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake? = null,
+    ): DiscordMessage = call(Route.GetWebhookMessage) {
+        webhookIdTokenMessageIdThreadId(webhookId, token, messageId, threadId)
+    }
 
     suspend inline fun editWebhookMessage(
         webhookId: Snowflake,
         token: String,
         messageId: Snowflake,
+        threadId: Snowflake? = null,
         builder: WebhookMessageModifyBuilder.() -> Unit
     ): DiscordMessage {
         contract {
@@ -150,13 +161,49 @@ class WebhookService(requestHandler: RequestHandler) : RestService(requestHandle
         }
 
         return call(Route.EditWebhookMessage) {
-
-            keys[Route.WebhookId] = webhookId
-            keys[Route.WebhookToken] = token
-            keys[Route.MessageId] = messageId
+            webhookIdTokenMessageIdThreadId(webhookId, token, messageId, threadId)
             val body = WebhookMessageModifyBuilder().apply(builder).toRequest()
             body(WebhookEditMessageRequest.serializer(), body.request)
             body.files.orEmpty().onEach { file(it) }
         }
     }
+
+    suspend fun deleteWebhookMessage(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake? = null,
+    ) = call(Route.DeleteWebhookMessage) {
+        webhookIdTokenMessageIdThreadId(webhookId, token, messageId, threadId)
+    }
+}
+
+@PublishedApi
+internal fun RequestBuilder<*>.webhookIdToken(webhookId: Snowflake, token: String) {
+    keys[Route.WebhookId] = webhookId
+    keys[Route.WebhookToken] = token
+}
+
+@PublishedApi
+internal fun RequestBuilder<*>.webhookIdTokenWaitThreadId(
+    webhookId: Snowflake,
+    token: String,
+    wait: Boolean?,
+    threadId: Snowflake?,
+) {
+    webhookIdToken(webhookId, token)
+    wait?.let { parameter("wait", it) }
+    threadId?.let { parameter("thread_id", it) }
+}
+
+@PublishedApi
+internal fun RequestBuilder<*>.webhookIdTokenMessageIdThreadId(
+    webhookId: Snowflake,
+    token: String,
+    messageId: Snowflake,
+    threadId: Snowflake?,
+) {
+    webhookIdToken(webhookId, token)
+    keys[Route.MessageId] = messageId
+    threadId?.let { parameter("thread_id", it) }
 }
