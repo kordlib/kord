@@ -31,7 +31,7 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
      */
 
     public val users: Flow<User>
-        get() = getGuildScheduledEventUsersAfter()
+        get() = supplier.getGuildScheduledEventUsers(guildId, id)
 
     public fun getGuildScheduledEventUsersAfter(
         limit: Int = Int.MAX_VALUE,
