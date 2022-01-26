@@ -3,9 +3,11 @@ package dev.kord.core.behavior.interaction
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.entity.Message
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
+import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -35,8 +37,23 @@ public interface ActionInteractionBehavior : InteractionBehavior {
         return PublicInteractionResponseBehavior(applicationId, token, kord)
     }
 
-    public suspend fun getOriginalInteractionResponse(): Message? {
+    /**
+     * Returns the initial interaction response or `null` if it was not found.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getOriginalInteractionResponseOrNull(): Message? {
         return EntitySupplyStrategy.rest.supply(kord).getOriginalInteractionOrNull(applicationId, token)
+    }
+
+    /**
+     * Returns the initial interaction response.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the initial interaction response was not found.
+     */
+    public suspend fun getOriginalInteractionResponse(): Message {
+        return EntitySupplyStrategy.rest.supply(kord).getOriginalInteraction(applicationId, token)
     }
 }
 

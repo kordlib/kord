@@ -6,6 +6,8 @@ import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.EphemeralFollowupMessage
 import dev.kord.core.entity.interaction.PublicFollowupMessage
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
 import dev.kord.rest.request.RestRequestException
@@ -13,17 +15,38 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * The behavior of a [Discord ActionInteraction Response](https://discord.com/developers/docs/interactions/slash-commands#interaction-response)
+ * The behavior of a [Discord ActionInteraction Response](https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction)
  */
-
 public interface InteractionResponseBehavior : KordObject {
     public val applicationId: Snowflake
     public val token: String
 
+    /**
+     * Returns a followup message for an interaction response or `null` if it was not found. Does not support ephemeral
+     * followups.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getFollowupMessageOrNull(messageId: Snowflake): PublicFollowupMessage? {
+        val message = EntitySupplyStrategy.rest.supply(kord).getFollowupMessageOrNull(applicationId, token, messageId)
+            ?: return null
+        return PublicFollowupMessage(message, applicationId, token, kord)
+    }
+
+    /**
+     * Returns a followup message for an interaction response. Does not support ephemeral followups.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the followup message was not found.
+     */
+    public suspend fun getFollowupMessage(messageId: Snowflake): PublicFollowupMessage {
+        val message = EntitySupplyStrategy.rest.supply(kord).getFollowupMessage(applicationId, token, messageId)
+        return PublicFollowupMessage(message, applicationId, token, kord)
+    }
 }
 
 /**
- * Follows up an interaction response without the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral]
+ * Follows up an interaction response without the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral].
  */
 public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -31,10 +54,8 @@ public suspend inline fun InteractionResponseBehavior.followUp(builder: Followup
     return PublicFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
 }
 
-
 /**
- * Follows up an interaction response with the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral]
- *
+ * Follows up an interaction response with the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral].
  */
 public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder: FollowupMessageCreateBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -47,10 +68,12 @@ public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder:
  *
  * @return The edited [Message] of the interaction response.
  *
- * @throws [RestRequestException] if something went wrong during the request.
+ * @throws RestRequestException if something went wrong during the request.
  */
-
-public suspend inline fun InteractionResponseBehavior.edit(builder: InteractionResponseModifyBuilder.() -> Unit) {
+public suspend inline fun InteractionResponseBehavior.edit(
+    builder: InteractionResponseModifyBuilder.() -> Unit,
+): Message {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    kord.rest.interaction.modifyInteractionResponse(applicationId, token, builder)
+    val message = kord.rest.interaction.modifyInteractionResponse(applicationId, token, builder)
+    return Message(message.toData(), kord)
 }

@@ -404,6 +404,21 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         return getOriginalInteractionOrNull(applicationId, token) ?: EntityNotFoundException.interactionNotFound(token)
     }
 
+    public suspend fun getFollowupMessageOrNull(
+        applicationId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+    ): Message? = catchNotFound {
+        val response = interaction.getFollowupMessage(applicationId, token, messageId)
+        val data = MessageData.from(response)
+        Message(data, kord)
+    }
+
+    public suspend fun getFollowupMessage(applicationId: Snowflake, token: String, messageId: Snowflake): Message {
+        return getFollowupMessageOrNull(applicationId, token, messageId)
+            ?: EntityNotFoundException.followupMessageNotFound(token, messageId)
+    }
+
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
