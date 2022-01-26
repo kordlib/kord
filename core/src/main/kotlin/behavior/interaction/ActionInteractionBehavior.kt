@@ -21,7 +21,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
      */
     public suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
-         kord.rest.interaction.acknowledge(id, token, true)
+        kord.rest.interaction.acknowledge(id, token, ephemeral = true)
         return EphemeralInteractionResponseBehavior(applicationId, token, kord)
     }
 
@@ -31,7 +31,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
      */
     public suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
-        kord.rest.interaction.acknowledge(id, token)
+        kord.rest.interaction.acknowledge(id, token, ephemeral = false)
         return PublicInteractionResponseBehavior(applicationId, token, kord)
     }
 
@@ -50,13 +50,9 @@ public interface ActionInteractionBehavior : InteractionBehavior {
 public suspend inline fun ActionInteractionBehavior.respondPublic(
     builder: InteractionResponseCreateBuilder.() -> Unit
 ): PublicInteractionResponseBehavior {
-
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-    val request = InteractionResponseCreateBuilder().apply(builder).toRequest()
-    kord.rest.interaction.createInteractionResponse(id, token, request)
+    kord.rest.interaction.createInteractionResponse(id, token, ephemeral = false, builder)
     return PublicInteractionResponseBehavior(applicationId, token, kord)
-
 }
 
 
@@ -69,13 +65,9 @@ public suspend inline fun ActionInteractionBehavior.respondPublic(
 public suspend inline fun ActionInteractionBehavior.respondEphemeral(
     builder: InteractionResponseCreateBuilder.() -> Unit
 ): EphemeralInteractionResponseBehavior {
-
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = InteractionResponseCreateBuilder(true).apply(builder)
-    val request = builder.toRequest()
-    kord.rest.interaction.createInteractionResponse(id, token, request)
+    kord.rest.interaction.createInteractionResponse(id, token, ephemeral = true, builder)
     return EphemeralInteractionResponseBehavior(applicationId, token, kord)
-
 }
 
 public fun InteractionBehavior(
