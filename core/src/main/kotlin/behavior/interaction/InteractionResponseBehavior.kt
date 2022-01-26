@@ -27,8 +27,7 @@ public interface InteractionResponseBehavior : KordObject {
  */
 public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = FollowupMessageCreateBuilder(false).apply(builder)
-    val message = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest())
+    val message = kord.rest.interaction.createFollowupMessage(applicationId, token, ephemeral = false, builder)
     return PublicFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
 }
 
@@ -39,8 +38,7 @@ public suspend inline fun InteractionResponseBehavior.followUp(builder: Followup
  */
 public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder: FollowupMessageCreateBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = FollowupMessageCreateBuilder(true).apply(builder)
-    val message = kord.rest.interaction.createFollowupMessage(applicationId, token, builder.toRequest())
+    val message = kord.rest.interaction.createFollowupMessage(applicationId, token, ephemeral = true, builder)
     return EphemeralFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
 }
 
@@ -54,6 +52,5 @@ public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder:
 
 public suspend inline fun InteractionResponseBehavior.edit(builder: InteractionResponseModifyBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val builder = InteractionResponseModifyBuilder().apply(builder)
-    kord.rest.interaction.modifyInteractionResponse(applicationId, token, builder.toRequest())
+    kord.rest.interaction.modifyInteractionResponse(applicationId, token, builder)
 }
