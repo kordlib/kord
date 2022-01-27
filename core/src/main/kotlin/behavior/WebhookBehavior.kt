@@ -1,6 +1,7 @@
 package dev.kord.core.behavior
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.WebhookData
@@ -8,6 +9,7 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.Webhook
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.WebhookMessageCreateBuilder
@@ -26,7 +28,7 @@ public interface WebhookBehavior : KordEntity, Strategizable {
      * Requests to delete this webhook, this user must be the creator.
      *
      * @param reason the reason showing up in the audit log
-     * @throws [RestRequestException] if something went wrong during the request.
+     * @throws RestRequestException if something went wrong during the request.
      */
     public suspend fun delete(reason: String? = null) {
         kord.rest.webhook.deleteWebhook(id, reason)
@@ -36,10 +38,51 @@ public interface WebhookBehavior : KordEntity, Strategizable {
      * Requests to delete this webhook.
      *
      * @param reason the reason showing up in the audit log
-     * @throws [RestRequestException] if something went wrong during the request.
+     * @throws RestRequestException if something went wrong during the request.
      */
     public suspend fun delete(token: String, reason: String? = null) {
         kord.rest.webhook.deleteWebhookWithToken(id, token, reason)
+    }
+
+    /**
+     * Requests the [Message] with the given [messageId] previously sent from this webhook using the [token] for
+     * authentication, returns `null` when the message isn't present.
+     *
+     * If the message is in a thread, [threadId] must be specified.
+     *
+     * @throws RequestException if something went wrong while retrieving the message.
+     */
+    public suspend fun getMessageOrNull(
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake? = null,
+    ): Message? = supplier.getWebhookMessageOrNull(id, token, messageId, threadId)
+
+    /**
+     * Requests the [Message] with the given [messageId] previously sent from this webhook using the [token] for
+     * authentication.
+     *
+     * If the message is in a thread, [threadId] must be specified.
+     *
+     * @throws RequestException if something went wrong while retrieving the message.
+     * @throws EntityNotFoundException if the message is null.
+     */
+    public suspend fun getMessage(
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake? = null,
+    ): Message = supplier.getWebhookMessage(id, token, messageId, threadId)
+
+    /**
+     * Requests to delete the [Message] with the given [messageId] previously sent from this webhook using the [token]
+     * for authentication.
+     *
+     * If the message is in a thread, [threadId] must be specified.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun deleteMessage(token: String, messageId: Snowflake, threadId: Snowflake? = null) {
+        kord.rest.webhook.deleteWebhookMessage(id, token, messageId, threadId)
     }
 
     /**
@@ -108,23 +151,21 @@ public suspend inline fun WebhookBehavior.edit(token: String, builder: WebhookMo
 
 /**
  * Requests to execute this webhook.
- * if [threadId] is specified the execution will occur in that thread.
+ *
+ * If [threadId] is specified the execution will occur in that thread.
+ *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-public suspend inline fun WebhookBehavior.execute(token: String, threadId: Snowflake? = null, builder: WebhookMessageCreateBuilder.() -> Unit): Message {
+public suspend inline fun WebhookBehavior.execute(
+    token: String,
+    threadId: Snowflake? = null,
+    builder: WebhookMessageCreateBuilder.() -> Unit,
+): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.webhook.executeWebhook(
-        token = token,
-        webhookId = id,
-        wait = true,
-        threadId = threadId,
-        builder = builder
-    )!!
-
+    val response = kord.rest.webhook.executeWebhook(id, token, wait = true, threadId, builder)!!
     val data = MessageData.from(response)
-
     return Message(data, kord)
 }
 
@@ -133,11 +174,18 @@ public suspend inline fun WebhookBehavior.execute(token: String, threadId: Snowf
  *
  * This is a 'fire and forget' variant of [execute]. It will not wait for a response and might not throw an
  * Exception if the request wasn't executed.
- * if [threadId] is specified the execution will occur in that thread.
+ *
+ * If [threadId] is specified the execution will occur in that thread.
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
  */
-public suspend inline fun WebhookBehavior.executeIgnored(token: String, threadId: Snowflake? = null, builder: WebhookMessageCreateBuilder.() -> Unit) {
+public suspend inline fun WebhookBehavior.executeIgnored(
+    token: String,
+    threadId: Snowflake? = null,
+    builder: WebhookMessageCreateBuilder.() -> Unit,
+) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    kord.rest.webhook.executeWebhook(token = token, webhookId = id, wait = false, threadId = threadId, builder = builder)
+    kord.rest.webhook.executeWebhook(id, token, wait = false, threadId, builder)
 }

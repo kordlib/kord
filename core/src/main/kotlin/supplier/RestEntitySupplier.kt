@@ -241,6 +241,17 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Webhook(data, kord)
     }
 
+    override suspend fun getWebhookMessageOrNull(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake?,
+    ): Message? = catchNotFound {
+        val response = webhook.getWebhookMessage(webhookId, token, messageId, threadId)
+        val data = MessageData.from(response)
+        Message(data, kord)
+    }
+
     public suspend fun getInviteOrNull(code: String, withCounts: Boolean): Invite? = catchNotFound {
         val response = invite.getInvite(code, withCounts)
         Invite(InviteData.from(response), kord)

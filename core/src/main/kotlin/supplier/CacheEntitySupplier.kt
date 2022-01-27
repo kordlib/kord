@@ -262,6 +262,21 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Webhook(data, kord)
     }
 
+    override suspend fun getWebhookMessageOrNull(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake?,
+    ): Message? {
+        val data = cache.query<MessageData> {
+            idEq(MessageData::webhookId, webhookId)
+            idEq(MessageData::id, messageId)
+            if (threadId != null) idEq(MessageData::channelId, threadId)
+        }.singleOrNull() ?: return null
+
+        return Message(data, kord)
+    }
+
     override suspend fun getUserOrNull(id: Snowflake): User? {
         val data = cache.query<UserData> { idEq(UserData::id, id) }.singleOrNull() ?: return null
 

@@ -394,6 +394,38 @@ public interface EntitySupplier {
         getWebhookWithTokenOrNull(id, token) ?: EntityNotFoundException.webhookNotFound(id)
 
     /**
+     * Requests the [Message] with the given [messageId] previously sent from a [Webhook] with the given [webhookId]
+     * using the [token] for authentication, returns `null` when the message isn't present.
+     *
+     * If the message is in a thread, [threadId] must be specified.
+     *
+     * @throws RequestException if something went wrong while retrieving the message.
+     */
+    public suspend fun getWebhookMessageOrNull(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake? = null,
+    ): Message?
+
+    /**
+     * Requests the [Message] with the given [messageId] previously sent from a [Webhook] with the given [webhookId]
+     * using the [token] for authentication.
+     *
+     * If the message is in a thread, [threadId] must be specified.
+     *
+     * @throws RequestException if something went wrong while retrieving the message.
+     * @throws EntityNotFoundException if the message is null.
+     */
+    public suspend fun getWebhookMessage(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake? = null,
+    ): Message = getWebhookMessageOrNull(webhookId, token, messageId, threadId)
+        ?: EntityNotFoundException.webhookMessageNotFound(webhookId, token, messageId, threadId)
+
+    /**
      * Requests the [Template] with the given [code].
      * returns null when the template isn't present.
      *

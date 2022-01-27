@@ -150,6 +150,15 @@ public class StoreEntitySupplier(
         return storeAndReturn(supplier.getWebhookWithTokenOrNull(id, token)) { it.data }
     }
 
+    override suspend fun getWebhookMessageOrNull(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake?,
+    ): Message? {
+        return storeAndReturn(supplier.getWebhookMessageOrNull(webhookId, token, messageId, threadId)) { it.data }
+    }
+
     override suspend fun getTemplateOrNull(code: String): Template? {
         return storeAndReturn(supplier.getTemplateOrNull(code)) { it.data }
     }

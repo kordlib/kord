@@ -32,13 +32,13 @@ public class EntityNotFoundException : Exception {
             guildEntityNotFound("Member", guildId = guildId, id = userId)
 
         public inline fun messageNotFound(channelId: Snowflake, messageId: Snowflake): Nothing =
-            throw EntityNotFoundException("Message with id $messageId in channel $channelId was not found")
+            throw EntityNotFoundException("Message with id $messageId in channel $channelId was not found.")
 
         public inline fun userNotFound(userId: Snowflake): Nothing =
             entityNotFound("User", userId)
 
         public inline fun selfNotFound(): Nothing =
-            throw EntityNotFoundException("Self user not found")
+            throw EntityNotFoundException("Self user was not found.")
 
         public inline fun roleNotFound(guildId: Snowflake, roleId: Snowflake): Nothing =
             guildEntityNotFound("Role", guildId = guildId, id = roleId)
@@ -51,6 +51,17 @@ public class EntityNotFoundException : Exception {
 
         public inline fun webhookNotFound(webhookId: Snowflake): Nothing =
             entityNotFound("Webhook", webhookId)
+
+        public inline fun webhookMessageNotFound(
+            webhookId: Snowflake,
+            token: String,
+            messageId: Snowflake,
+            threadId: Snowflake? = null,
+        ): Nothing = throw EntityNotFoundException(
+            "Message with id $messageId ${
+                if (threadId != null) "in thread $threadId " else ""
+            }from webhook $webhookId with token $token was not found."
+        )
 
         public inline fun inviteNotFound(code: String): Nothing =
             throw EntityNotFoundException("Invite with code $code was not found.")
