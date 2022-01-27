@@ -20,6 +20,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
+import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.flow.*
@@ -433,6 +434,19 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.singleOrNull() ?: return null
 
         return ApplicationCommandPermissions(data)
+    }
+
+    override suspend fun getFollowupMessageOrNull(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+    ): PublicFollowupMessage? {
+        val data = cache.query<MessageData> {
+            idEq(MessageData::applicationId, applicationId)
+            idEq(MessageData::id, messageId)
+        }.singleOrNull() ?: return null
+
+        return PublicFollowupMessage(Message(data, kord), applicationId, interactionToken, kord)
     }
 
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? {

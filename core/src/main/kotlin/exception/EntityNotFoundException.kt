@@ -79,12 +79,13 @@ public class EntityNotFoundException : Exception {
         public inline fun <reified T : ApplicationCommand> applicationCommandNotFound(commandId: Snowflake): Nothing =
             entityNotFound(T::class.simpleName!!, commandId)
 
-        public inline fun interactionNotFound(token: String): Nothing =
-            throw EntityNotFoundException("ActionInteraction with token $token was not found.")
+        public inline fun interactionNotFound(token: String): Nothing = throw EntityNotFoundException(
+            "Initial interaction response for interaction with token $token was not found."
+        )
 
         public inline fun followupMessageNotFound(token: String, messageId: Snowflake): Nothing =
             throw EntityNotFoundException(
-                "Followup message with id $messageId from ActionInteraction with token $token was not found"
+                "Followup message with id $messageId for interaction with token $token was not found."
             )
     }
 }

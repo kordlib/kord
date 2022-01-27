@@ -4,10 +4,10 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
+import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.interaction.EphemeralFollowupMessage
 import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
-import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
 import dev.kord.rest.request.RestRequestException
@@ -17,7 +17,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord ActionInteraction Response](https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction)
  */
-public interface InteractionResponseBehavior : KordObject {
+public interface InteractionResponseBehavior : KordObject, Strategizable {
     public val applicationId: Snowflake
     public val token: String
 
@@ -27,11 +27,8 @@ public interface InteractionResponseBehavior : KordObject {
      *
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun getFollowupMessageOrNull(messageId: Snowflake): PublicFollowupMessage? {
-        val message = EntitySupplyStrategy.rest.supply(kord).getFollowupMessageOrNull(applicationId, token, messageId)
-            ?: return null
-        return PublicFollowupMessage(message, applicationId, token, kord)
-    }
+    public suspend fun getFollowupMessageOrNull(messageId: Snowflake): PublicFollowupMessage? =
+        supplier.getFollowupMessageOrNull(applicationId, token, messageId)
 
     /**
      * Returns a followup message for an interaction response. Does not support ephemeral followups.
@@ -39,10 +36,8 @@ public interface InteractionResponseBehavior : KordObject {
      * @throws RestRequestException if something went wrong during the request.
      * @throws EntityNotFoundException if the followup message was not found.
      */
-    public suspend fun getFollowupMessage(messageId: Snowflake): PublicFollowupMessage {
-        val message = EntitySupplyStrategy.rest.supply(kord).getFollowupMessage(applicationId, token, messageId)
-        return PublicFollowupMessage(message, applicationId, token, kord)
-    }
+    public suspend fun getFollowupMessage(messageId: Snowflake): PublicFollowupMessage =
+        supplier.getFollowupMessage(applicationId, token, messageId)
 }
 
 /**

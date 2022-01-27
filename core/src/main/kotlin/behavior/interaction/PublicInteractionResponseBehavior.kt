@@ -2,6 +2,8 @@ package dev.kord.core.behavior.interaction
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.request.RestRequestException
 
 
@@ -27,15 +29,18 @@ public interface PublicInteractionResponseBehavior : InteractionResponseBehavior
 public fun PublicInteractionResponseBehavior(
     applicationId: Snowflake,
     token: String,
-    kord: Kord
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
 ): PublicInteractionResponseBehavior =
     object : PublicInteractionResponseBehavior {
-        override val applicationId: Snowflake
-            get() = applicationId
+        override val applicationId: Snowflake = applicationId
 
-        override val token: String
-            get() = token
+        override val token: String = token
 
-        override val kord: Kord
-            get() = kord
+        override val kord: Kord = kord
+
+        override val supplier: EntitySupplier = strategy.supply(kord)
+
+        override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicInteractionResponseBehavior =
+            PublicInteractionResponseBehavior(applicationId, token, kord, strategy)
     }

@@ -6,6 +6,7 @@ import dev.kord.core.entity.Message
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
@@ -42,9 +43,8 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      *
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun getOriginalInteractionResponseOrNull(): Message? {
-        return EntitySupplyStrategy.rest.supply(kord).getOriginalInteractionOrNull(applicationId, token)
-    }
+    public suspend fun getOriginalInteractionResponseOrNull(): Message? =
+        kord.with(rest).getOriginalInteractionOrNull(applicationId, token)
 
     /**
      * Returns the initial interaction response.
@@ -52,9 +52,8 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * @throws RestRequestException if something went wrong during the request.
      * @throws EntityNotFoundException if the initial interaction response was not found.
      */
-    public suspend fun getOriginalInteractionResponse(): Message {
-        return EntitySupplyStrategy.rest.supply(kord).getOriginalInteraction(applicationId, token)
-    }
+    public suspend fun getOriginalInteractionResponse(): Message =
+        kord.with(rest).getOriginalInteraction(applicationId, token)
 }
 
 
