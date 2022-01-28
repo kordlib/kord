@@ -2,7 +2,6 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.AttachmentData
@@ -27,12 +26,12 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
     /**
      * The description for the file.
      */
-    val description: Optional<String> get() = data.description
+    val description: String? get() = data.description.value
 
     /**
      * The attachment's [media type](https://en.wikipedia.org/wiki/Media_type).
      */
-    val contentType: Optional<String> get() = data.contentType
+    val contentType: String? get() = data.contentType.value
 
     /**
      * The size of the file in bytes.
