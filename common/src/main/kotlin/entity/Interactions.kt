@@ -322,7 +322,7 @@ public sealed class Option {
         }
 
         override fun deserialize(decoder: Decoder): Option {
-            decoder as? JsonDecoder ?: error("Option can only be deserialize with a JsonDecoder")
+            decoder as? JsonDecoder ?: error("Option can only be deserialized with a JsonDecoder")
             val json = decoder.json
 
             var name = ""
