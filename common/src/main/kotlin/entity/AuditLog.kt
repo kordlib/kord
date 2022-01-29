@@ -3,25 +3,13 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerializationException
+import kotlinx.datetime.Instant
+import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.encoding.decodeStructure
-import kotlinx.serialization.encoding.encodeStructure
+import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.serializer
 import dev.kord.common.Color as CommonColor
 import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
 import dev.kord.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
@@ -255,6 +243,9 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
     @SerialName("color")
     object Color : AuditLogChangeKey<CommonColor>("color", serializer())
 
+    @SerialName("communication_disabled_until")
+    object CommunicationDisabledUntil : AuditLogChangeKey<Instant>("communication_disabled_until", serializer())
+
     @SerialName("hoist")
     object Hoist : AuditLogChangeKey<Boolean>("hoist", serializer())
 
@@ -391,6 +382,7 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
                 "rate_limit_per_user" -> RateLimitPerUser
                 "permissions" -> Permissions
                 "color" -> Color
+                "communication_disabled_until" -> CommunicationDisabledUntil
                 "hoist" -> Hoist
                 "mentionable" -> Mentionable
                 "allow" -> Allow
