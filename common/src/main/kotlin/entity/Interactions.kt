@@ -7,15 +7,11 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.value
 import kotlinx.serialization.*
-import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
-import mu.KotlinLogging
-
-val kordLogger = KotlinLogging.logger { }
 
 @Serializable
 data class DiscordApplicationCommand(
