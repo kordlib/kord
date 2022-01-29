@@ -425,6 +425,8 @@ public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFl
  *
  * @param id The attachment id.
  * @param filename The name of the attached file.
+ * @param description The description for the file.
+ * @param contentType The attachment's [media type](https://en.wikipedia.org/wiki/Media_type).
  * @param size The size of the file in bytes.
  * @param url The source url of the file.
  * @param proxyUrl A proxied url of the field.
@@ -435,6 +437,9 @@ public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFl
 public data class DiscordAttachment(
     val id: Snowflake,
     val filename: String,
+    val description: Optional<String> = Optional.Missing(),
+    @SerialName("content_type")
+    val contentType: Optional<String> = Optional.Missing(),
     val size: Int,
     val url: String,
     @SerialName("proxy_url")

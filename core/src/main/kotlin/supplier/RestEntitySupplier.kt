@@ -39,19 +39,19 @@ import kotlin.math.min
  */
 public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
-    private val auditLog: AuditLogService get() = kord.rest.auditLog
-    private val channel: ChannelService get() = kord.rest.channel
-    private val emoji: EmojiService get() = kord.rest.emoji
-    private val guild: GuildService get() = kord.rest.guild
-    private val invite: InviteService get() = kord.rest.invite
-    private val user: UserService get() = kord.rest.user
-    private val voice: VoiceService get() = kord.rest.voice
-    private val webhook: WebhookService get() = kord.rest.webhook
-    private val application: ApplicationService get() = kord.rest.application
-    private val template: TemplateService get() = kord.rest.template
-    private val interaction: InteractionService get() = kord.rest.interaction
-    private val stageInstance: StageInstanceService get() = kord.rest.stageInstance
-    private val sticker: StickerService get() = kord.rest.sticker
+    private inline val auditLog: AuditLogService get() = kord.rest.auditLog
+    private inline val channel: ChannelService get() = kord.rest.channel
+    private inline val emoji: EmojiService get() = kord.rest.emoji
+    private inline val guild: GuildService get() = kord.rest.guild
+    private inline val invite: InviteService get() = kord.rest.invite
+    private inline val user: UserService get() = kord.rest.user
+    private inline val voice: VoiceService get() = kord.rest.voice
+    private inline val webhook: WebhookService get() = kord.rest.webhook
+    private inline val application: ApplicationService get() = kord.rest.application
+    private inline val template: TemplateService get() = kord.rest.template
+    private inline val interaction: InteractionService get() = kord.rest.interaction
+    private inline val stageInstance: StageInstanceService get() = kord.rest.stageInstance
+    private inline val sticker: StickerService get() = kord.rest.sticker
 
     // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
     override val guilds: Flow<Guild>

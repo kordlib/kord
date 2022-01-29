@@ -241,6 +241,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of guild widget settings updates has been reached. Try again later. */
     MaxGuildWidgetSettingsUpdates(30042),
 
+    /** Maximum number of edits to messages older than 1 hour reached. Try again later. */
+    MaxOldMessageEdits(30046),
+
     /** Unauthorized. Provide a valid token and try again. */
     Unauthorized(40001),
 
@@ -371,6 +374,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Invalid Guild. */
     InvalidGuild(50055),
+
+    /** Invalid message type. */
+    InvalidMessageType(50068),
 
     /** Payment source required to redeem gift. */
     GiftRequiresPaymentSource(50070),

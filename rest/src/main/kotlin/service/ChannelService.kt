@@ -60,7 +60,7 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         keys[Route.ChannelId] = channelId
     }
 
-    public suspend fun addPinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String?): Unit =
+    public suspend fun addPinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null): Unit =
         call(Route.PinPut) {
             keys[Route.MessageId] = messageId
             keys[Route.ChannelId] = channelId

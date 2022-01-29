@@ -46,7 +46,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      *
      * Shorthand for [kord.cache][Kord.cache].
      */
-    private val cache: DataCache get() = kord.cache
+    private inline val cache: DataCache get() = kord.cache
 
     /**
      *  Returns a [Flow] of [Channel]s fetched from cache.
