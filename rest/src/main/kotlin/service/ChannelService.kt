@@ -54,7 +54,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
         keys[Route.ChannelId] = channelId
     }
 
-    suspend fun addPinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String?) = call(Route.PinPut) {
+    suspend fun addPinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null) = call(Route.PinPut) {
         keys[Route.MessageId] = messageId
         keys[Route.ChannelId] = channelId
         auditLogReason(reason)
@@ -111,7 +111,7 @@ class ChannelService(requestHandler: RequestHandler) : RestService(requestHandle
             auditLogReason(reason)
         }
 
-    suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest, reason: String?) = call(Route.BulkMessageDeletePost) {
+    suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest, reason: String? = null) = call(Route.BulkMessageDeletePost) {
         keys[Route.ChannelId] = channelId
         body(BulkDeleteRequest.serializer(), messages)
         auditLogReason(reason)

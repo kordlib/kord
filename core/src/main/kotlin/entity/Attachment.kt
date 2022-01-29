@@ -24,6 +24,16 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
     val filename: String get() = data.filename
 
     /**
+     * The description for the file.
+     */
+    val description: String? get() = data.description.value
+
+    /**
+     * The attachment's [media type](https://en.wikipedia.org/wiki/Media_type).
+     */
+    val contentType: String? get() = data.contentType.value
+
+    /**
      * The size of the file in bytes.
      */
     val size: Int get() = data.size
@@ -73,6 +83,6 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
 
 public fun Attachment.toRawType(): DiscordAttachment {
     with(data) {
-        return DiscordAttachment(id, filename, size, url, proxyUrl, height, width)
+        return DiscordAttachment(id, filename, description, contentType, size, url, proxyUrl, height, width)
     }
 }
