@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DiscordGuildPreview(
+public data class DiscordGuildPreview(
     val id: Snowflake,
     val name: String,
     val icon: String?,

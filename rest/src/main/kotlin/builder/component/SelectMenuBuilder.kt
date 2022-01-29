@@ -16,20 +16,20 @@ import kotlin.contracts.contract
  * @param customId The identifier for the menu, max 100 characters.
  */
 @KordDsl
-class SelectMenuBuilder(
-    var customId: String
+public class SelectMenuBuilder(
+    public var customId: String,
 ) : ActionRowComponentBuilder() {
 
     /**
      * The choices in the select, max 25.
      */
-    val options: MutableList<SelectOptionBuilder> = mutableListOf()
+    public val options: MutableList<SelectOptionBuilder> = mutableListOf()
 
     /**
      * The range of values that can be accepted. Accepts any range between [0,25].
      * Defaults to `1..1`.
      */
-    var allowedValues: IntRange = 1..1
+    public var allowedValues: IntRange = 1..1
 
 
     private var _placeholder: Optional<String> = Optional.Missing()
@@ -40,7 +40,7 @@ class SelectMenuBuilder(
      * [Option defaults][SelectOptionBuilder.default] have priority over placeholders,
      * if any option is marked as default then that label will be shown instead.
      */
-    var placeholder: String? by ::_placeholder.delegate()
+    public var placeholder: String? by ::_placeholder.delegate()
 
     /**
      * Adds a new option to the select menu with the given [label] and [value] and configured by the [builder].
@@ -48,7 +48,7 @@ class SelectMenuBuilder(
      * @param label The user-facing name of the option, max 25 characters.
      * @param value The dev-define value of the option, max 100 characters.
      */
-    inline fun option(label: String, value: String, builder: SelectOptionBuilder.() -> Unit = {}) {
+    public inline fun option(label: String, value: String, builder: SelectOptionBuilder.() -> Unit = {}) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }

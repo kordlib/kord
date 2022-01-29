@@ -1,6 +1,5 @@
 package dev.kord.common.entity
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -12,7 +11,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.JsonNames
 
 /**
  * Represent a [intractable component within a message sent in Discord](https://discord.com/developers/docs/interactions/message-components#what-are-components).
@@ -32,7 +30,7 @@ import kotlinx.serialization.json.JsonNames
  */
 
 @Serializable
-data class DiscordComponent(
+public data class DiscordComponent(
     val type: ComponentType,
     val style: Optional<ButtonStyle> = Optional.Missing(),
     val label: Optional<String> = Optional.Missing(),
@@ -57,29 +55,29 @@ data class DiscordComponent(
  */
 
 @Serializable(with = ComponentType.Serializer::class)
-sealed class ComponentType(val value: Int) {
+public sealed class ComponentType(public val value: Int) {
 
     /**
      * Fallback type used for types that haven't been added to Kord yet.
      */
-    class Unknown(value: Int) : ComponentType(value)
+    public class Unknown(value: Int) : ComponentType(value)
 
     /**
      * A container for other components.
      */
-    object ActionRow : ComponentType(1)
+    public object ActionRow : ComponentType(1)
 
     /**
      * A clickable button.
      */
-    object Button : ComponentType(2)
+    public object Button : ComponentType(2)
 
     /**
      * A select menu for picking from choices.
      */
-    object SelectMenu : ComponentType(3)
+    public object SelectMenu : ComponentType(3)
 
-    companion object Serializer : KSerializer<ComponentType> {
+    public companion object Serializer : KSerializer<ComponentType> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ComponentType", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ComponentType =
@@ -90,7 +88,7 @@ sealed class ComponentType(val value: Int) {
                 else -> Unknown(value)
             }
 
-        override fun serialize(encoder: Encoder, value: ComponentType) = encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, value: ComponentType): Unit = encoder.encodeInt(value.value)
     }
 }
 
@@ -103,44 +101,44 @@ sealed class ComponentType(val value: Int) {
  */
 
 @Serializable(with = ButtonStyle.Serializer::class)
-sealed class ButtonStyle(val value: Int) {
+public sealed class ButtonStyle(public val value: Int) {
 
     /**
      * A fallback style used for styles that haven't been added to Kord yet.
      */
-    class Unknown(value: Int) : ButtonStyle(value)
+    public class Unknown(value: Int) : ButtonStyle(value)
 
     /**
      * Blurple.
      * Requires: [DiscordComponent.customId]
      */
-    object Primary : ButtonStyle(1)
+    public object Primary : ButtonStyle(1)
 
     /**
      * Grey.
      * Requires: [DiscordComponent.customId]
      */
-    object Secondary : ButtonStyle(2)
+    public object Secondary : ButtonStyle(2)
 
     /**
      * Green
      * Requires: [DiscordComponent.customId]
      */
-    object Success : ButtonStyle(3)
+    public object Success : ButtonStyle(3)
 
     /**
      * Red.
      * Requires: [DiscordComponent.customId]
      */
-    object Danger : ButtonStyle(4)
+    public object Danger : ButtonStyle(4)
 
     /**
      * Grey, navigates to an URL.
      * Requires: [DiscordComponent.url]
      */
-    object Link : ButtonStyle(5)
+    public object Link : ButtonStyle(5)
 
-    companion object Serializer : KSerializer<ButtonStyle> {
+    public companion object Serializer : KSerializer<ButtonStyle> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ButtonStyle", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ButtonStyle =
@@ -153,6 +151,6 @@ sealed class ButtonStyle(val value: Int) {
                 else -> Unknown(value)
             }
 
-        override fun serialize(encoder: Encoder, value: ButtonStyle) = encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, value: ButtonStyle): Unit = encoder.encodeInt(value.value)
     }
 }

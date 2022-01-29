@@ -1,6 +1,7 @@
 package dev.kord.gateway
 
-import kotlinx.serialization.*
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -8,7 +9,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = OpCode.OpCodeSerializer::class)
-enum class OpCode(val code: Int) {
+public enum class OpCode(public val code: Int) {
     /** The default code for unknown values. */
     Unknown(Int.MIN_VALUE),
 
@@ -67,7 +68,7 @@ enum class OpCode(val code: Int) {
      */
     HeartbeatACK(11);
 
-    companion object OpCodeSerializer : KSerializer<OpCode> {
+    public companion object OpCodeSerializer : KSerializer<OpCode> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("op", PrimitiveKind.INT)
 

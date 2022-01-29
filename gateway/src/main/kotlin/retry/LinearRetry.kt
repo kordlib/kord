@@ -5,7 +5,6 @@ import kotlinx.atomicfu.update
 import kotlinx.coroutines.delay
 import mu.KotlinLogging
 import kotlin.time.Duration
-import kotlin.time.milliseconds
 
 private val linearRetryLogger = KotlinLogging.logger { }
 
@@ -16,7 +15,7 @@ private val linearRetryLogger = KotlinLogging.logger { }
  * @param maxBackoff the maximum delay for a [retry] invocation.
  * @param maxTries the maximum amount of consecutive retries before [hasNext] returns false.
  */
-class LinearRetry constructor(
+public class LinearRetry(
     private val firstBackoff: Duration,
     private val maxBackoff: Duration,
     private val maxTries: Int

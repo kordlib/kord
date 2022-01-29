@@ -26,7 +26,7 @@ import kotlinx.serialization.encoding.Encoder
  * @param visibility The visibility of this connection.
  */
 @Serializable
-data class DiscordConnection(
+public data class DiscordConnection(
     val id: String,
     val name: String,
     val type: String,
@@ -41,18 +41,18 @@ data class DiscordConnection(
 )
 
 @Serializable(with = DiscordConnectionVisibility.Serializer::class)
-sealed class DiscordConnectionVisibility(val value: Int) {
-    class Unknown(value: Int) : DiscordConnectionVisibility(value)
+public sealed class DiscordConnectionVisibility(public val value: Int) {
+    public class Unknown(value: Int) : DiscordConnectionVisibility(value)
 
     /**
      * The connection is invisible to everyone except the user themselves.
      */
-    object None : DiscordConnectionVisibility(0)
+    public object None : DiscordConnectionVisibility(0)
 
     /**
      * The connection is visible to everyone.
      */
-    object Everyone : DiscordConnectionVisibility(1)
+    public object Everyone : DiscordConnectionVisibility(1)
 
     internal object Serializer : KSerializer<DiscordConnectionVisibility> {
         override val descriptor: SerialDescriptor

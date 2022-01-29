@@ -12,21 +12,22 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 
 @KordDsl
-class VoiceChannelCreateBuilder(var name: String) :
-    PermissionOverwritesCreateBuilder, AuditRequestBuilder<GuildChannelCreateRequest> {
+public class VoiceChannelCreateBuilder(public var name: String) :
+    PermissionOverwritesCreateBuilder,
+    AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
 
     private var _bitrate: OptionalInt = OptionalInt.Missing
-    var bitrate: Int? by ::_bitrate.delegate()
+    public var bitrate: Int? by ::_bitrate.delegate()
 
     private var _userLimit: OptionalInt = OptionalInt.Missing
-    var userLimit: Int? by ::_userLimit.delegate()
+    public var userLimit: Int? by ::_userLimit.delegate()
 
     private var _parentId: OptionalSnowflake = OptionalSnowflake.Missing
-    var parentId: Snowflake? by ::_parentId.delegate()
+    public var parentId: Snowflake? by ::_parentId.delegate()
 
     private var _position: OptionalInt = OptionalInt.Missing
-    var position: Int? by ::_position.delegate()
+    public var position: Int? by ::_position.delegate()
 
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 

@@ -14,7 +14,7 @@ import kotlinx.serialization.Serializable
  * Payload gotten from [GET /oauth2/applications/@me](https://discord.com/developers/docs/topics/oauth2#get-current-application-information)
  */
 @Serializable
-data class ApplicationInfoResponse(
+public data class ApplicationInfoResponse(
     val id: Snowflake,
     val name: String,
     val icon: String?,

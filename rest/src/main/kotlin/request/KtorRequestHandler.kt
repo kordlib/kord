@@ -1,28 +1,17 @@
 package dev.kord.rest.request
 
 import dev.kord.rest.json.response.DiscordErrorResponse
-import dev.kord.rest.ratelimit.BucketKey
-import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
-import dev.kord.rest.ratelimit.RateLimit
-import dev.kord.rest.ratelimit.Remaining
-import dev.kord.rest.ratelimit.RequestRateLimiter
-import dev.kord.rest.ratelimit.RequestResponse
-import dev.kord.rest.ratelimit.Reset
-import dev.kord.rest.ratelimit.Total
-import dev.kord.rest.ratelimit.consume
+import dev.kord.rest.ratelimit.*
 import dev.kord.rest.route.optional
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.request.forms.MultiPartFormDataContent
-import io.ktor.client.request.request
-import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.HttpStatement
-import io.ktor.client.statement.readText
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.features.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
 import io.ktor.content.TextContent
-import io.ktor.http.ContentType
-import io.ktor.http.content.PartData
-import io.ktor.http.contentType
-import io.ktor.http.takeFrom
+import io.ktor.http.*
+import io.ktor.http.content.*
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
@@ -42,7 +31,7 @@ internal val jsonDefault = Json {
  * @param clock A [Clock] to calculate bucket reset times, exposed for testing.
  * @param parser Serializer used to parse payloads.
  */
-class KtorRequestHandler(
+public class KtorRequestHandler(
     private val client: HttpClient,
     private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
     private val clock: Clock = Clock.System,
@@ -114,7 +103,7 @@ class KtorRequestHandler(
 }
 
 
-fun KtorRequestHandler(
+public fun KtorRequestHandler(
     token: String,
     requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
     clock: Clock = Clock.System,
@@ -126,7 +115,7 @@ fun KtorRequestHandler(
     return KtorRequestHandler(client, requestRateLimiter, clock, parser, token)
 }
 
-fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): RequestResponse {
+public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): RequestResponse {
     val bucket = response.bucket
     val rateLimit = run {
         val total = Total(response.rateLimitTotal ?: return@run null)

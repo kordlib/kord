@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Connection(
+public data class Connection(
     val id: String,
     val name: String,
     val type: String,

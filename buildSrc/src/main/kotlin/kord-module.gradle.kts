@@ -19,6 +19,10 @@ dependencies {
     testRuntimeOnly(kotlin("test-junit5"))
 }
 
+kotlin {
+    explicitApi()
+}
+
 tasks {
     tasks.getByName("apiCheck") {
         onlyIf { Library.isRelease }

@@ -7,7 +7,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CurrentVoiceStateModifyRequest(
+public data class CurrentVoiceStateModifyRequest(
     @SerialName("channel_id")
     val channelId: Snowflake,
     val suppress: OptionalBoolean = OptionalBoolean.Missing,
@@ -25,7 +25,7 @@ data class CurrentVoiceStateModifyRequest(
 
 
 @Serializable
-data class VoiceStateModifyRequest(
+public data class VoiceStateModifyRequest(
     @SerialName("channel_id")
     val channelId: Snowflake,
     val suppress: OptionalBoolean = OptionalBoolean.Missing

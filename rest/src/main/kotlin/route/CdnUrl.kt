@@ -2,18 +2,18 @@ package dev.kord.rest.route
 
 import dev.kord.rest.Image
 
-class CdnUrl(private val rawAssetUri: String) {
+public class CdnUrl(private val rawAssetUri: String) {
 
-    fun toUrl(): String {
+    public fun toUrl(): String {
         return toUrl(UrlFormatBuilder())
     }
 
-    inline fun toUrl(format: UrlFormatBuilder.() -> Unit): String {
+    public inline fun toUrl(format: UrlFormatBuilder.() -> Unit): String {
         val config = UrlFormatBuilder().apply(format)
         return toUrl(config)
     }
 
-    fun toUrl(config: UrlFormatBuilder): String {
+    public fun toUrl(config: UrlFormatBuilder): String {
         val urlBuilder = StringBuilder(rawAssetUri).append(".").append(config.format.extension)
         config.size?.let { urlBuilder.append("?size=").append(it.maxRes) }
         return urlBuilder.toString()
@@ -23,8 +23,8 @@ class CdnUrl(private val rawAssetUri: String) {
         return "CdnUrl(rawAssetUri=$rawAssetUri)"
     }
 
-    class UrlFormatBuilder {
-        var format: Image.Format = Image.Format.WEBP
-        var size: Image.Size? = null
+    public class UrlFormatBuilder {
+        public var format: Image.Format = Image.Format.WEBP
+        public var size: Image.Size? = null
     }
 }
