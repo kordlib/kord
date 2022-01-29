@@ -53,8 +53,8 @@ sealed class BaseChoiceBuilder<T>(
     description: String,
     type: ApplicationCommandOptionType
 ) : OptionsBuilder(name, description, type) {
-    private var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
-    var choices: MutableList<Choice<*>>? by ::_choices.delegate()
+    private var _choices: Optional<MutableList<Choice<T>>> = Optional.Missing()
+    var choices: MutableList<Choice<T>>? by ::_choices.delegate()
 
     abstract fun choice(name: String, value: T)
 
