@@ -12,10 +12,6 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
-import mu.KLogger
-import mu.KotlinLogging
-
-public val kordLogger: KLogger = KotlinLogging.logger { }
 
 @Serializable
 public data class DiscordApplicationCommand(
