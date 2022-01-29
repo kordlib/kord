@@ -244,7 +244,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object Color : AuditLogChangeKey<CommonColor>("color", serializer())
 
     @SerialName("communication_disabled_until")
-    object CommunicationDisabledUntil : AuditLogChangeKey<Instant>("communication_disabled_until", serializer())
+    public object CommunicationDisabledUntil : AuditLogChangeKey<Instant>("communication_disabled_until", serializer())
 
     @SerialName("hoist")
     public object Hoist : AuditLogChangeKey<Boolean>("hoist", serializer())
