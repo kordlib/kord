@@ -1,6 +1,5 @@
 package dev.kord.rest.json.request
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.DiscordComponent
@@ -12,10 +11,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WebhookCreateRequest(val name: String, val avatar: Optional<String> = Optional.Missing())
+public data class WebhookCreateRequest(val name: String, val avatar: Optional<String> = Optional.Missing())
 
 @Serializable
-data class WebhookModifyRequest(
+public data class WebhookModifyRequest(
     val name: Optional<String> = Optional.Missing(),
     val avatar: Optional<String?> = Optional.Missing(),
     @SerialName("channel_id")
@@ -23,8 +22,7 @@ data class WebhookModifyRequest(
 )
 
 @Serializable
-@OptIn(KordPreview::class)
-data class WebhookExecuteRequest constructor(
+public data class WebhookExecuteRequest(
     val content: Optional<String> = Optional.Missing(),
     val username: Optional<String> = Optional.Missing(),
     @SerialName("avatar_url")
@@ -36,14 +34,13 @@ data class WebhookExecuteRequest constructor(
     val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
-data class MultiPartWebhookExecuteRequest(
-        val request: WebhookExecuteRequest,
-        val files: List<NamedFile> = emptyList()
+public data class MultiPartWebhookExecuteRequest(
+    val request: WebhookExecuteRequest,
+    val files: List<NamedFile> = emptyList(),
 )
 
 @Serializable
-@OptIn(KordPreview::class)
-data class WebhookEditMessageRequest(
+public data class WebhookEditMessageRequest(
     val content: Optional<String?> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
@@ -52,7 +49,7 @@ data class WebhookEditMessageRequest(
     val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing()
 )
 
-data class MultipartWebhookEditMessageRequest(
+public data class MultipartWebhookEditMessageRequest(
     val request: WebhookEditMessageRequest,
     val files: Optional<List<NamedFile>> = Optional.Missing()
 )

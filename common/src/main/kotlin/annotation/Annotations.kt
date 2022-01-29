@@ -5,7 +5,7 @@ package dev.kord.common.annotation
  */
 @DslMarker
 @Target(AnnotationTarget.CLASS)
-annotation class KordDsl
+public annotation class KordDsl
 
 /**
  * Marks a Kord-related API as a feature preview.
@@ -19,7 +19,7 @@ annotation class KordDsl
 @Retention(value = AnnotationRetention.BINARY)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
-annotation class KordPreview
+public annotation class KordPreview
 
 /**
  * Marks a Kord-related API as experimental.
@@ -34,7 +34,7 @@ annotation class KordPreview
 @Retention(value = AnnotationRetention.BINARY)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
-annotation class KordExperimental
+public annotation class KordExperimental
 
 /**
  * Marks a Kord-voice related API as experimental.
@@ -48,7 +48,8 @@ annotation class KordExperimental
 @Retention(value = AnnotationRetention.BINARY)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
-annotation class KordVoice
+public annotation class KordVoice
+
 /**
  * Marks a Kord-related API as potentially unsafe.
  *
@@ -63,7 +64,7 @@ annotation class KordVoice
 @Retention(value = AnnotationRetention.BINARY)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
-annotation class KordUnsafe
+public annotation class KordUnsafe
 
 /**
  * Marks the annotated declaration as deprecated since [version].
@@ -79,4 +80,4 @@ annotation class KordUnsafe
     AnnotationTarget.PROPERTY_GETTER,
     AnnotationTarget.TYPEALIAS
 )
-annotation class DeprecatedSinceKord(val version: String)
+public annotation class DeprecatedSinceKord(val version: String)

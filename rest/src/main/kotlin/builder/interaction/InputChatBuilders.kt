@@ -12,43 +12,43 @@ import kotlin.contracts.contract
 
 
 @KordDsl
-sealed interface BaseInputChatBuilder {
-    var options: MutableList<OptionsBuilder>?
+public sealed interface BaseInputChatBuilder {
+    public var options: MutableList<OptionsBuilder>?
 
 }
 
-inline fun BaseInputChatBuilder.mentionable(name: String, description: String, builder: MentionableBuilder.() -> Unit = {}) {
+public inline fun BaseInputChatBuilder.mentionable(name: String, description: String, builder: MentionableBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
     options!!.add(MentionableBuilder(name, description).apply(builder))
 
 }
 
-inline fun BaseInputChatBuilder.channel(name: String, description: String, builder: ChannelBuilder.() -> Unit = {}) {
+public inline fun BaseInputChatBuilder.channel(name: String, description: String, builder: ChannelBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
     options!!.add(ChannelBuilder(name, description).apply(builder))
 }
 
-inline fun BaseInputChatBuilder.user(name: String, description: String, builder: UserBuilder.() -> Unit = {}) {
+public inline fun BaseInputChatBuilder.user(name: String, description: String, builder: UserBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
     options!!.add(UserBuilder(name, description).apply(builder))
 }
 
-inline fun BaseInputChatBuilder.role(name: String, description: String, builder: RoleBuilder.() -> Unit = {}) {
+public inline fun BaseInputChatBuilder.role(name: String, description: String, builder: RoleBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
     options!!.add(RoleBuilder(name, description).apply(builder))
 }
 
-inline fun BaseInputChatBuilder.number(name: String, description: String, builder: NumberChoiceBuilder.() -> Unit = {}) {
+public inline fun BaseInputChatBuilder.number(name: String, description: String, builder: NumberChoiceBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
     options!!.add(NumberChoiceBuilder(name, description).apply(builder))
 }
 
-inline fun BaseInputChatBuilder.string(
+public inline fun BaseInputChatBuilder.string(
     name: String,
     description: String,
     builder: StringChoiceBuilder.() -> Unit = {},
@@ -58,28 +58,28 @@ inline fun BaseInputChatBuilder.string(
     options!!.add(StringChoiceBuilder(name, description).apply(builder))
 }
 
-inline fun BaseInputChatBuilder.int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
+public inline fun BaseInputChatBuilder.int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
     options!!.add(IntChoiceBuilder(name, description).apply(builder))
 }
 
-inline fun BaseInputChatBuilder.boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
+public inline fun BaseInputChatBuilder.boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
     options!!.add(BooleanBuilder(name, description).apply(builder))
 }
 
 @KordDsl
-interface RootInputChatBuilder : BaseInputChatBuilder
+public interface RootInputChatBuilder : BaseInputChatBuilder
 
-inline fun RootInputChatBuilder.subCommand(name: String, description: String, builder: SubCommandBuilder.() -> Unit = {}) {
+public inline fun RootInputChatBuilder.subCommand(name: String, description: String, builder: SubCommandBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
     options!!.add(SubCommandBuilder(name, description).apply(builder))
 }
 
-inline fun RootInputChatBuilder.group(name: String, description: String, builder: GroupCommandBuilder.() -> Unit = {}) {
+public inline fun RootInputChatBuilder.group(name: String, description: String, builder: GroupCommandBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
     options!!.add(GroupCommandBuilder(name, description).apply(builder))
@@ -87,9 +87,9 @@ inline fun RootInputChatBuilder.group(name: String, description: String, builder
 
 
 @KordDsl
-class ChatInputCreateBuilder(
+public class ChatInputCreateBuilder(
     override var name: String,
-    var description: String,
+    public var description: String,
 ) : ApplicationCommandCreateBuilder, RootInputChatBuilder {
     private val state = ApplicationCommandModifyStateHolder()
 
@@ -117,12 +117,12 @@ class ChatInputCreateBuilder(
 
 
 @KordDsl
-class ChatInputModifyBuilder : ApplicationCommandModifyBuilder, RootInputChatBuilder {
+public class ChatInputModifyBuilder : ApplicationCommandModifyBuilder, RootInputChatBuilder {
 
     private val state = ApplicationCommandModifyStateHolder()
     override var name: String? by state::name.delegate()
 
-    var description: String? by state::description.delegate()
+    public var description: String? by state::description.delegate()
 
     override var options: MutableList<OptionsBuilder>? by state::options.delegate()
 
@@ -130,7 +130,7 @@ class ChatInputModifyBuilder : ApplicationCommandModifyBuilder, RootInputChatBui
 
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
-           state.name,
+            state.name,
             state.description,
             state.options.mapList { it.toRequest() },
             state.defaultPermission

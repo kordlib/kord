@@ -8,14 +8,14 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.json.request.EmojiModifyRequest
 
 @KordDsl
-class EmojiModifyBuilder : AuditRequestBuilder<EmojiModifyRequest> {
+public class EmojiModifyBuilder : AuditRequestBuilder<EmojiModifyRequest> {
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
-    var name: String? by ::_name.delegate()
+    public var name: String? by ::_name.delegate()
 
     private var _roles: Optional<MutableSet<Snowflake>?> = Optional.Missing()
-    var roles: MutableSet<Snowflake>? by ::_roles.delegate()
+    public var roles: MutableSet<Snowflake>? by ::_roles.delegate()
 
     override fun toRequest(): EmojiModifyRequest = EmojiModifyRequest(
         name = _name,

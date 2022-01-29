@@ -9,10 +9,10 @@ import dev.kord.rest.json.request.GuildFromTemplateCreateRequest
 import dev.kord.rest.json.request.GuildTemplateCreateRequest
 import dev.kord.rest.json.request.GuildTemplateModifyRequest
 
-class GuildFromTemplateCreateBuilder(var name: String) : RequestBuilder<GuildFromTemplateCreateRequest> {
+public class GuildFromTemplateCreateBuilder(public var name: String) : RequestBuilder<GuildFromTemplateCreateRequest> {
 
     private var _image: Optional<Image> = Optional.Missing()
-    var image: Image? by ::_image.delegate()
+    public var image: Image? by ::_image.delegate()
 
 
     override fun toRequest(): GuildFromTemplateCreateRequest = GuildFromTemplateCreateRequest(
@@ -20,21 +20,21 @@ class GuildFromTemplateCreateBuilder(var name: String) : RequestBuilder<GuildFro
     )
 }
 
-class GuildTemplateCreateBuilder(var name: String) : RequestBuilder<GuildTemplateCreateRequest> {
+public class GuildTemplateCreateBuilder(public var name: String) : RequestBuilder<GuildTemplateCreateRequest> {
     private var _description: Optional<String> = Optional.Missing()
-    var description: String? by ::_description.delegate()
+    public var description: String? by ::_description.delegate()
 
     override fun toRequest(): GuildTemplateCreateRequest = GuildTemplateCreateRequest(name, _description)
 }
 
 
-class GuildTemplateModifyBuilder : RequestBuilder<GuildTemplateModifyRequest> {
+public class GuildTemplateModifyBuilder : RequestBuilder<GuildTemplateModifyRequest> {
 
     private var _name: Optional<String> = Optional.Missing()
-    var name: String? by ::_name.delegate()
+    public var name: String? by ::_name.delegate()
 
     private var _description: Optional<String> = Optional.Missing()
-    var description: String? by ::_description.delegate()
+    public var description: String? by ::_description.delegate()
 
     override fun toRequest(): GuildTemplateModifyRequest = GuildTemplateModifyRequest(_name, _description)
 }

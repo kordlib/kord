@@ -35,15 +35,15 @@ import kotlinx.serialization.encoding.Encoder
  * ```
  */
 @Serializable(with = OptionalInt.Serializer::class)
-sealed class OptionalInt {
+public sealed class OptionalInt {
 
-    val asNullable: Int?
+    public val asNullable: Int?
         get() = when (this) {
             Missing -> null
             is Value -> value
         }
 
-    val asOptional: Optional<Int>
+    public val asOptional: Optional<Int>
         get() = when (this) {
             Missing -> Optional.Missing()
             is Value -> Optional.Value(value)
@@ -52,7 +52,7 @@ sealed class OptionalInt {
     /**
      * returns [default] if the optional is [Missing], or [Value.value] if is [Value].
      */
-    fun orElse(default: Int): Int = when (this) {
+    public fun orElse(default: Int): Int = when (this) {
         Missing -> default
         is Value -> value
     }
@@ -60,7 +60,7 @@ sealed class OptionalInt {
     /**
      * Represents an Int field that was not present in the serialized entity.
      */
-    object Missing : OptionalInt() {
+    public object Missing : OptionalInt() {
         override fun toString(): String = "OptionalInt.Missing"
     }
 
@@ -70,12 +70,12 @@ sealed class OptionalInt {
      *
      * @param value the value this optional wraps.
      */
-    class Value(val value: Int) : OptionalInt() {
+    public class Value(public val value: Int) : OptionalInt() {
 
         /**
          * Destructures this optional to its [value].
          */
-        operator fun component1(): Int = value
+        public operator fun component1(): Int = value
 
         override fun toString(): String = "Optional.Value(value=$value)"
 
@@ -106,7 +106,7 @@ sealed class OptionalInt {
 /**
  * returns `null` if this is `null` or [OptionalInt.Missing], calls [OptionalInt.Value.value] otherwise.
  */
-val OptionalInt?.value: Int?
+public val OptionalInt?.value: Int?
     get() = when (this) {
         is Value -> value
         Missing, null -> null
@@ -115,26 +115,26 @@ val OptionalInt?.value: Int?
 /**
  * returns `null` if this is `null`, calls [OptionalInt.asNullable] otherwise.
  */
-val OptionalInt?.asNullable: Int? get() = this?.asNullable
+public val OptionalInt?.asNullable: Int? get() = this?.asNullable
 
 /**
  * returns [default] if this is `null`, calls [OptionalInt.asNullable] otherwise.
  */
-fun OptionalInt?.orElse(default: Int): Int = this?.orElse(default) ?: default
+public fun OptionalInt?.orElse(default: Int): Int = this?.orElse(default) ?: default
 
 /**
  * returns the value of the optional or throws a [IllegalStateException] if the optional doesn't contain a value or is `null`.
  */
-fun OptionalInt?.getOrThrow(): Int = when (this) {
+public fun OptionalInt?.getOrThrow(): Int = when (this) {
     Missing, null -> throw IllegalStateException("Optional did not contain a value")
     is Value -> value
 }
 
 
 @Suppress("RemoveRedundantQualifierName")
-fun Int.optionalInt(): OptionalInt.Value = OptionalInt.Value(this)
+public fun Int.optionalInt(): OptionalInt.Value = OptionalInt.Value(this)
 
-inline fun OptionalInt.map(mapper: (Int) -> Int): OptionalInt = when (this) {
+public inline fun OptionalInt.map(mapper: (Int) -> Int): OptionalInt = when (this) {
     Missing -> Missing
     is Value -> Value(mapper(value))
 }

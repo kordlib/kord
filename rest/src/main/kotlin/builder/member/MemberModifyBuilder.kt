@@ -11,26 +11,26 @@ import dev.kord.rest.json.request.GuildMemberModifyRequest
 import kotlinx.datetime.Instant
 
 @KordDsl
-class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest> {
+public class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest> {
     override var reason: String? = null
 
     private var _voiceChannelId: OptionalSnowflake? = OptionalSnowflake.Missing
-    var voiceChannelId: Snowflake? by ::_voiceChannelId.delegate()
+    public var voiceChannelId: Snowflake? by ::_voiceChannelId.delegate()
 
     private var _muted: OptionalBoolean? = OptionalBoolean.Missing
-    var muted: Boolean? by ::_muted.delegate()
+    public var muted: Boolean? by ::_muted.delegate()
 
     private var _deafened: OptionalBoolean? = OptionalBoolean.Missing
-    var deafened: Boolean? by ::_deafened.delegate()
+    public var deafened: Boolean? by ::_deafened.delegate()
 
     private var _nickname: Optional<String?> = Optional.Missing()
-    var nickname: String? by ::_nickname.delegate()
+    public var nickname: String? by ::_nickname.delegate()
 
     private var _communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
-    var communicationDisabledUntil: Instant? by ::_communicationDisabledUntil.delegate()
+    public var communicationDisabledUntil: Instant? by ::_communicationDisabledUntil.delegate()
 
     private var _roles: Optional<MutableSet<Snowflake>?> = Optional.Missing()
-    var roles: MutableSet<Snowflake>? by ::_roles.delegate()
+    public var roles: MutableSet<Snowflake>? by ::_roles.delegate()
 
     override fun toRequest(): GuildMemberModifyRequest = GuildMemberModifyRequest(
         nick = _nickname,

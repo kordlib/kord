@@ -7,7 +7,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 
-fun KMutableProperty0<OptionalBoolean>.delegate(): ReadWriteProperty<Any?, Boolean?> =
+public fun KMutableProperty0<OptionalBoolean>.delegate(): ReadWriteProperty<Any?, Boolean?> =
     object : ReadWriteProperty<Any?, Boolean?> {
 
         override fun getValue(thisRef: Any?, property: KProperty<*>): Boolean? {
@@ -23,7 +23,7 @@ fun KMutableProperty0<OptionalBoolean>.delegate(): ReadWriteProperty<Any?, Boole
     }
 
 @JvmName("provideNullableDelegate")
-fun <T> KMutableProperty0<OptionalBoolean?>.delegate(): ReadWriteProperty<T, Boolean?> =
+public fun <T> KMutableProperty0<OptionalBoolean?>.delegate(): ReadWriteProperty<T, Boolean?> =
     object : ReadWriteProperty<T, Boolean?> {
 
         override fun getValue(thisRef: T, property: KProperty<*>): Boolean? {

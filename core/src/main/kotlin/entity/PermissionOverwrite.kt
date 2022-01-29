@@ -7,7 +7,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.PermissionOverwriteData
 import dev.kord.rest.json.request.ChannelPermissionEditRequest
 
-public open class PermissionOverwrite constructor(
+public open class PermissionOverwrite(
     public val data: PermissionOverwriteData,
 ) {
     public val allowed: Permissions get() = data.allowed

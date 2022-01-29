@@ -2,11 +2,11 @@ package dev.kord.rest
 
 import java.io.InputStream
 
-class NamedFile(val name: String, val inputStream: InputStream) {
+public class NamedFile(public val name: String, public val inputStream: InputStream) {
 
-    val url: String get() = "attachment://$name"
+    public val url: String get() = "attachment://$name"
 
-    operator fun component1() = name
-    operator fun component2() = inputStream
-    operator fun component3() = url
+    public operator fun component1(): String = name
+    public operator fun component2(): InputStream = inputStream
+    public operator fun component3(): String = url
 }

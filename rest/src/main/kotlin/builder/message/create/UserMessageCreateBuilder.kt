@@ -11,12 +11,11 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.MessageCreateRequest
 import dev.kord.rest.json.request.MultipartMessageCreateRequest
-import java.io.InputStream
 
 /**
  * Message builder for creating messages as a bot user.
  */
-class UserMessageCreateBuilder
+public class UserMessageCreateBuilder
     : MessageCreateBuilder,
     RequestBuilder<MultipartMessageCreateRequest> {
 
@@ -25,7 +24,7 @@ class UserMessageCreateBuilder
     /**
      * An identifier that can be used to validate the message was sent.
      */
-    var nonce: String? = null
+    public var nonce: String? = null
 
     override var tts: Boolean? = null
 
@@ -43,13 +42,13 @@ class UserMessageCreateBuilder
      * Replying will not mention the author by default,
      * set [AllowedMentionsBuilder.repliedUser] to `true` via [allowedMentions]  to mention the author.
      */
-    var messageReference: Snowflake? = null
+    public var messageReference: Snowflake? = null
 
     /**
      * whether to error if the referenced message doesn't exist instead of sending as a normal (non-reply) message,
      * defaults to true.
      */
-    var failIfNotExists: Boolean? = null
+    public var failIfNotExists: Boolean? = null
 
     override val files: MutableList<NamedFile> = mutableListOf()
 
