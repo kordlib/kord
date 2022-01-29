@@ -39,7 +39,7 @@ public class Team(
      * The ID of the user that owns the team.
      */
     public val ownerUserId: Snowflake
-        get() = data.id
+        get() = data.ownerUserId
 
 
     /**

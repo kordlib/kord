@@ -171,8 +171,7 @@ class InteractionService(requestHandler: RequestHandler) : RestService(requestHa
         builder: Builder,
         builderFunction: Builder.() -> Unit
     ) {
-        @Suppress("UNCHECKED_CAST")
-        val choices = builder.apply(builderFunction).choices as List<Choice<T>>
+        val choices = builder.apply(builderFunction).choices ?: emptyList()
 
         return createAutoCompleteInteractionResponse(interactionId, interactionToken, DiscordAutoComplete(choices))
     }
