@@ -11,23 +11,23 @@ import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.GuildScheduledEventCreateRequest
 import kotlinx.datetime.Instant
 
-class ScheduledEventCreateBuilder(
-    val name: String,
-    val privacyLevel: StageInstancePrivacyLevel,
-    val scheduledStartTime: Instant,
-    val entityType: ScheduledEntityType
+public class ScheduledEventCreateBuilder(
+    public val name: String,
+    public val privacyLevel: StageInstancePrivacyLevel,
+    public val scheduledStartTime: Instant,
+    public val entityType: ScheduledEntityType,
 ) : RequestBuilder<GuildScheduledEventCreateRequest> {
     private var _channelId: OptionalSnowflake = OptionalSnowflake.Missing
-    var channelId: Snowflake? by ::_channelId.delegate()
+    public var channelId: Snowflake? by ::_channelId.delegate()
 
     private var _description: Optional<String> = Optional.Missing()
-    var description: String? by ::_description.delegate()
+    public var description: String? by ::_description.delegate()
 
     private var _entityMetadata: Optional<GuildScheduledEventEntityMetadata> = Optional.Missing()
-    var entityMetadata: GuildScheduledEventEntityMetadata? by ::_entityMetadata.delegate()
+    public var entityMetadata: GuildScheduledEventEntityMetadata? by ::_entityMetadata.delegate()
 
     private var _scheduledEndTime: Optional<Instant> = Optional.Missing()
-    var scheduledEndTime: Instant? by ::_scheduledEndTime.delegate()
+    public var scheduledEndTime: Instant? by ::_scheduledEndTime.delegate()
 
     override fun toRequest(): GuildScheduledEventCreateRequest = GuildScheduledEventCreateRequest(
         _channelId,

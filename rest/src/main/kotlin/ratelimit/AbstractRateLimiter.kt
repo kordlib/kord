@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.Duration.Companion.minutes
 
 
-abstract class AbstractRateLimiter internal constructor(val clock: Clock) : RequestRateLimiter {
+public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
 
     internal val autoBanRateLimiter = BucketRateLimiter(25000, 10.minutes)
@@ -33,7 +33,7 @@ abstract class AbstractRateLimiter internal constructor(val clock: Clock) : Requ
         delay(duration)
     }
 
-    open override suspend fun await(request: Request<*, *>): RequestToken {
+    override suspend fun await(request: Request<*, *>): RequestToken {
         globalSuspensionPoint.value.await()
         val buckets = request.buckets
         buckets.forEach { it.awaitAndLock() }

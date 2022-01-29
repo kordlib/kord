@@ -7,59 +7,61 @@ import dev.kord.rest.builder.guild.StickerModifyBuilder
 import dev.kord.rest.json.request.GuildStickerCreateRequest
 import dev.kord.rest.json.request.GuildStickerModifyRequest
 import dev.kord.rest.json.request.MultipartGuildStickerCreateRequest
-import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class StickerService(requestHandler: RequestHandler) : RestService(requestHandler) {
+public class StickerService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
+    public suspend fun getNitroStickerPacks(): List<DiscordStickerPack> = call(Route.NitroStickerPacks)
 
-    suspend fun getNitroStickerPacks(): List<DiscordStickerPack> = call(Route.NitroStickerPacks)
+    public suspend fun getGuildStickers(guildId: Snowflake): List<DiscordMessageSticker> =
+        call(Route.GuildStickersGet) {
+            keys[Route.GuildId] = guildId
+        }
 
-    suspend fun getGuildStickers(guildId: Snowflake): List<DiscordMessageSticker> = call(Route.GuildStickersGet) {
-        keys[Route.GuildId] = guildId
-    }
-
-    suspend fun getSticker(id: Snowflake): DiscordMessageSticker = call(Route.StickerGet) {
+    public suspend fun getSticker(id: Snowflake): DiscordMessageSticker = call(Route.StickerGet) {
         keys[Route.StickerId] = id
     }
 
-    suspend fun getGuildSticker(guildId: Snowflake, id: Snowflake): DiscordMessageSticker =
+    public suspend fun getGuildSticker(guildId: Snowflake, id: Snowflake): DiscordMessageSticker =
         call(Route.GuildStickerGet) {
             keys[Route.GuildId] = guildId
             keys[Route.StickerId] = id
         }
 
-    suspend fun createGuildSticker(guildId: Snowflake, multipartRequest: MultipartGuildStickerCreateRequest) =
-        call(Route.GuildStickerPost) {
-            keys[Route.GuildId] = guildId
-            body(GuildStickerCreateRequest.serializer(), multipartRequest.request)
-            file(multipartRequest.file)
-        }
+    public suspend fun createGuildSticker(
+        guildId: Snowflake,
+        multipartRequest: MultipartGuildStickerCreateRequest,
+    ): DiscordMessageSticker = call(Route.GuildStickerPost) {
+        keys[Route.GuildId] = guildId
+        body(GuildStickerCreateRequest.serializer(), multipartRequest.request)
+        file(multipartRequest.file)
+    }
 
-    suspend fun modifyGuildSticker(
+    public suspend fun modifyGuildSticker(
         guildId: Snowflake,
         id: Snowflake,
-        request: GuildStickerModifyRequest
-    ) = call(Route.GuildStickerPatch) {
+        request: GuildStickerModifyRequest,
+    ): DiscordMessageSticker = call(Route.GuildStickerPatch) {
         keys[Route.GuildId] = guildId
         keys[Route.StickerId] = id
         body(GuildStickerModifyRequest.serializer(), request)
     }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyGuildSticker(guildId: Snowflake, id: Snowflake, builder: StickerModifyBuilder.() -> Unit): DiscordMessageSticker {
+    public suspend inline fun modifyGuildSticker(
+        guildId: Snowflake,
+        id: Snowflake,
+        builder: StickerModifyBuilder.() -> Unit,
+    ): DiscordMessageSticker {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val request = StickerModifyBuilder().apply(builder).toRequest()
         return modifyGuildSticker(guildId, id, request)
     }
 
-    suspend fun deleteSticker(guildId: Snowflake, id: Snowflake) = call(Route.GuildStickerDelete) {
+    public suspend fun deleteSticker(guildId: Snowflake, id: Snowflake): Unit = call(Route.GuildStickerDelete) {
         keys[Route.GuildId] = guildId
         keys[Route.StickerId] = id
     }
-
 }

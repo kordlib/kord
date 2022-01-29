@@ -38,7 +38,7 @@ import kotlinx.serialization.encoding.Encoder
  * @param lastPinTimestamp When the last pinned message was pinned.
  */
 @Serializable
-data class DiscordChannel(
+public data class DiscordChannel(
     val id: Snowflake,
     val type: ChannelType,
     @SerialName("guild_id")
@@ -81,42 +81,39 @@ data class DiscordChannel(
 )
 
 @Serializable(with = ChannelType.Serializer::class)
-sealed class ChannelType(val value: Int) {
+public sealed class ChannelType(public val value: Int) {
     /** The default code for unknown values. */
-    class Unknown(value: Int) : ChannelType(value)
+    public class Unknown(value: Int) : ChannelType(value)
 
     /** A text channel within a server. */
-    object GuildText : ChannelType(0)
+    public object GuildText : ChannelType(0)
 
     /** A direct message between users. */
-    object DM : ChannelType(1)
+    public object DM : ChannelType(1)
 
     /** A voice channel within a server. */
-    object GuildVoice : ChannelType(2)
+    public object GuildVoice : ChannelType(2)
 
     /** A direct message between multiple users. */
-    object GroupDM : ChannelType(3)
+    public object GroupDM : ChannelType(3)
 
     /** An organization category. */
-    object GuildCategory : ChannelType(4)
+    public object GuildCategory : ChannelType(4)
 
     /** A channel that users can follow and crosspost into their own server. */
-    object GuildNews : ChannelType(5)
+    public object GuildNews : ChannelType(5)
 
     /** A channel in which game developers can sell their game on Discord. */
-    object GuildStore : ChannelType(6)
+    public object GuildStore : ChannelType(6)
 
-    object PublicNewsThread : ChannelType(10)
+    public object PublicNewsThread : ChannelType(10)
 
-    object PublicGuildThread : ChannelType(11)
+    public object PublicGuildThread : ChannelType(11)
 
-    object PrivateThread : ChannelType(12)
+    public object PrivateThread : ChannelType(12)
 
+    public object GuildStageVoice : ChannelType(13)
 
-
-    object GuildStageVoice : ChannelType(13)
-
-    companion object;
 
     internal object Serializer : KSerializer<ChannelType> {
         override val descriptor: SerialDescriptor
@@ -143,24 +140,19 @@ sealed class ChannelType(val value: Int) {
 }
 
 @Serializable
-data class Overwrite(
+public data class Overwrite(
     val id: Snowflake,
     val type: OverwriteType,
     val allow: Permissions,
     val deny: Permissions,
-) {
-    companion object;
-
-}
+)
 
 @Serializable(with = OverwriteType.Serializer::class)
-sealed class OverwriteType(val value: Int) {
+public sealed class OverwriteType(public val value: Int) {
 
-    class Unknown(value: Int) : OverwriteType(value)
-    object Role : OverwriteType(0)
-    object Member : OverwriteType(1)
-
-    companion object;
+    public class Unknown(value: Int) : OverwriteType(value)
+    public object Role : OverwriteType(0)
+    public object Member : OverwriteType(1)
 
     internal object Serializer : KSerializer<OverwriteType> {
         override val descriptor: SerialDescriptor
@@ -179,7 +171,7 @@ sealed class OverwriteType(val value: Int) {
 }
 
 @Serializable
-data class DiscordThreadMetadata(
+public data class DiscordThreadMetadata(
     val archived: Boolean,
     @SerialName("archive_timestamp")
     val archiveTimestamp: String,
@@ -192,14 +184,14 @@ data class DiscordThreadMetadata(
 )
 
 @Serializable(with = ArchiveDuration.Serializer::class)
-sealed class ArchiveDuration(val duration: Int) {
-    class Unknown(duration: Int) : ArchiveDuration(duration)
-    object Hour : ArchiveDuration(60)
-    object Day : ArchiveDuration(1440)
-    object ThreeDays : ArchiveDuration(4320)
-    object Week : ArchiveDuration(10080)
+public sealed class ArchiveDuration(public val duration: Int) {
+    public class Unknown(duration: Int) : ArchiveDuration(duration)
+    public object Hour : ArchiveDuration(60)
+    public object Day : ArchiveDuration(1440)
+    public object ThreeDays : ArchiveDuration(4320)
+    public object Week : ArchiveDuration(10080)
 
-    object Serializer : KSerializer<ArchiveDuration> {
+    public object Serializer : KSerializer<ArchiveDuration> {
         override fun deserialize(decoder: Decoder): ArchiveDuration {
             val value = decoder.decodeInt()
             return values.firstOrNull { it.duration == value } ?: Unknown(value)
@@ -213,8 +205,8 @@ sealed class ArchiveDuration(val duration: Int) {
         }
     }
 
-    companion object {
-        val values: Set<ArchiveDuration>
+    public companion object {
+        public val values: Set<ArchiveDuration>
             get() = setOf(
                 Hour,
                 Day,

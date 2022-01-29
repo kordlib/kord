@@ -14,7 +14,7 @@ import kotlinx.serialization.encoding.Encoder
  * [JSON Error Codes](https://github.com/discord/discord-api-docs/blob/master/docs/topics/Opcodes_and_Status_Codes.md#json-error-codes)
  */
 @Serializable(with = JsonErrorCode.Serializer::class)
-enum class JsonErrorCode(val code: Int) {
+public enum class JsonErrorCode(public val code: Int) {
 
     /** Undocumented error. */
     Unknown(-1),
@@ -472,14 +472,14 @@ enum class JsonErrorCode(val code: Int) {
 
     ;
 
-    companion object {
+    public companion object {
         @Deprecated(
             "JsonErrorCode.OperationOnAchievedThread was renamed to JsonErrorCode.OperationOnArchivedThread.",
             ReplaceWith("JsonErrorCode.OperationOnArchivedThread"),
             DeprecationLevel.ERROR,
         )
         @JvmField
-        val OperationOnAchievedThread: JsonErrorCode = OperationOnArchivedThread
+        public val OperationOnAchievedThread: JsonErrorCode = OperationOnArchivedThread
 
         @Deprecated(
             "JsonErrorCode.InvalidThreadSettings was removed because it was a duplicate of JsonErrorCode.InvalidThreadNotificationSettings.",
@@ -487,7 +487,7 @@ enum class JsonErrorCode(val code: Int) {
             DeprecationLevel.ERROR,
         )
         @JvmField
-        val InvalidThreadSettings: JsonErrorCode = InvalidThreadNotificationSettings
+        public val InvalidThreadSettings: JsonErrorCode = InvalidThreadNotificationSettings
 
         @Deprecated(
             "JsonErrorCode.InvalidThreadBefore was removed because it was a duplicate of JsonErrorCode.BeforeValueBeforeThreadCreate.",
@@ -495,15 +495,15 @@ enum class JsonErrorCode(val code: Int) {
             DeprecationLevel.ERROR,
         )
         @JvmField
-        val InvalidThreadBefore: JsonErrorCode = BeforeValueBeforeThreadCreate
+        public val InvalidThreadBefore: JsonErrorCode = BeforeValueBeforeThreadCreate
 
         @Deprecated(
             "Object JsonErrorCode.JsonErrorCodeSerializer is internal now, use JsonErrorCode.serializer() instead.",
             ReplaceWith("JsonErrorCode.serializer()", "dev.kord.rest.json.JsonErrorCode"),
-            DeprecationLevel.ERROR
+            DeprecationLevel.ERROR,
         )
         @JvmField
-        val JsonErrorCodeSerializer: KSerializer<JsonErrorCode> = Serializer
+        public val JsonErrorCodeSerializer: KSerializer<JsonErrorCode> = Serializer
     }
 
     internal object Serializer : KSerializer<JsonErrorCode> {

@@ -41,7 +41,7 @@ public class SelectMenuComponent(override val data: ComponentData) : Component {
     public val maxValues: Int get() = data.maxValues.orElse(1)
 
     /**
-     * Disable the select, default `false`
+     * Whether this select menu can be used.
      */
     public val disabled: Boolean get() = data.disabled.discordBoolean
 

@@ -12,21 +12,25 @@ import dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class WelcomeScreenModifyBuilder : AuditRequestBuilder<GuildWelcomeScreenModifyRequest> {
+public class WelcomeScreenModifyBuilder : AuditRequestBuilder<GuildWelcomeScreenModifyRequest> {
 
     override var reason: String? = null
 
     private var _enabled: OptionalBoolean = OptionalBoolean.Missing
 
-    var enabled: Boolean? by ::_enabled.delegate()
+    public var enabled: Boolean? by ::_enabled.delegate()
     private var _description: Optional<String> = Optional.Missing()
 
-    var description: String? by ::_description.delegate()
+    public var description: String? by ::_description.delegate()
     private var _welcomeScreenChannels: Optional<MutableList<WelcomeScreenChannelBuilder>> = Optional.Missing()
 
-    var welcomeScreenChannels: MutableList<WelcomeScreenChannelBuilder>? by ::_welcomeScreenChannels.delegate()
+    public var welcomeScreenChannels: MutableList<WelcomeScreenChannelBuilder>? by ::_welcomeScreenChannels.delegate()
 
-    inline fun welcomeChannel(id: Snowflake, description: String, builder: WelcomeScreenChannelBuilder.() -> Unit) {
+    public inline fun welcomeChannel(
+        id: Snowflake,
+        description: String,
+        builder: WelcomeScreenChannelBuilder.() -> Unit,
+    ) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         if (welcomeScreenChannels == null) welcomeScreenChannels = mutableListOf()
         welcomeScreenChannels!!.add(WelcomeScreenChannelBuilder(id, description, null, null).apply(builder))
@@ -43,11 +47,11 @@ class WelcomeScreenModifyBuilder : AuditRequestBuilder<GuildWelcomeScreenModifyR
 }
 
 
-class WelcomeScreenChannelBuilder(
-    var channelId: Snowflake,
-    var description: String,
-    var emojiId: Snowflake?,
-    var emojiName: String?
+public class WelcomeScreenChannelBuilder(
+    public var channelId: Snowflake,
+    public var description: String,
+    public var emojiId: Snowflake?,
+    public var emojiName: String?,
 ) : RequestBuilder<DiscordWelcomeScreenChannel> {
     override fun toRequest(): DiscordWelcomeScreenChannel {
         return DiscordWelcomeScreenChannel(channelId, description, emojiId, emojiName)

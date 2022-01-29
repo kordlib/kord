@@ -14,7 +14,7 @@ import kotlin.time.Duration
  * @param capacity The maximum amount of permits that are given for each permit.
  * @param refillInterval The duration between permit refills.
  */
-class BucketRateLimiter(
+public class BucketRateLimiter(
     private val capacity: Int,
     private val refillInterval: Duration,
     private val clock: Clock = Clock.System
@@ -44,7 +44,7 @@ class BucketRateLimiter(
         kotlinx.coroutines.delay(delay)
     }
 
-    override suspend fun consume() = mutex.withLock {
+    override suspend fun consume(): Unit = mutex.withLock {
         if (isNextInterval) resetState()
 
         if (isAtCapacity) {

@@ -14,17 +14,17 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-sealed class OptionsBuilder(
-    var name: String,
-    var description: String,
-    val type: ApplicationCommandOptionType,
+public sealed class OptionsBuilder(
+    public var name: String,
+    public var description: String,
+    public val type: ApplicationCommandOptionType,
 ) :
     RequestBuilder<ApplicationCommandOption> {
     internal var _default: OptionalBoolean = OptionalBoolean.Missing
-    var default: Boolean? by ::_default.delegate()
+    public var default: Boolean? by ::_default.delegate()
 
     internal var _required: OptionalBoolean = OptionalBoolean.Missing
-    var required: Boolean? by ::_required.delegate()
+    public var required: Boolean? by ::_required.delegate()
 
     internal var _autocomplete: OptionalBoolean = OptionalBoolean.Missing
 
@@ -35,9 +35,9 @@ sealed class OptionsBuilder(
      *
      * Enabling this also means that you cannot add any other option.
      */
-    var autocomplete: Boolean? by ::_autocomplete.delegate()
+    public var autocomplete: Boolean? by ::_autocomplete.delegate()
 
-    override fun toRequest() = ApplicationCommandOption(
+    override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
         type,
         name,
         description,
@@ -48,17 +48,17 @@ sealed class OptionsBuilder(
 }
 
 @KordDsl
-sealed class BaseChoiceBuilder<T>(
+public sealed class BaseChoiceBuilder<T>(
     name: String,
     description: String,
     type: ApplicationCommandOptionType
 ) : OptionsBuilder(name, description, type) {
     private var _choices: Optional<MutableList<Choice<T>>> = Optional.Missing()
-    var choices: MutableList<Choice<T>>? by ::_choices.delegate()
+    public var choices: MutableList<Choice<T>>? by ::_choices.delegate()
 
-    abstract fun choice(name: String, value: T)
+    public abstract fun choice(name: String, value: T)
 
-    override fun toRequest() = ApplicationCommandOption(
+    override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
         type,
         name,
         description,
@@ -70,7 +70,7 @@ sealed class BaseChoiceBuilder<T>(
 }
 
 @KordDsl
-class IntChoiceBuilder(name: String, description: String) :
+public class IntChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Long>(name, description, ApplicationCommandOptionType.Integer) {
 
     override fun choice(name: String, value: Long) {
@@ -81,7 +81,7 @@ class IntChoiceBuilder(name: String, description: String) :
 
 
 @KordDsl
-class NumberChoiceBuilder(name: String, description: String) :
+public class NumberChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Double>(name, description, ApplicationCommandOptionType.Number) {
     override fun choice(name: String, value: Double) {
         if (choices == null) choices = mutableListOf()
@@ -91,8 +91,7 @@ class NumberChoiceBuilder(name: String, description: String) :
 }
 
 @KordDsl
-
-class StringChoiceBuilder(name: String, description: String) :
+public class StringChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
 
     override fun choice(name: String, value: String) {
@@ -102,53 +101,48 @@ class StringChoiceBuilder(name: String, description: String) :
 }
 
 @KordDsl
-
-class BooleanBuilder(name: String, description: String) :
+public class BooleanBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Boolean)
 
 @KordDsl
-
-class UserBuilder(name: String, description: String) :
+public class UserBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.User)
 
 @KordDsl
-
-class RoleBuilder(name: String, description: String) :
+public class RoleBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Role)
 
 @KordDsl
-
-class ChannelBuilder(name: String, description: String) :
+public class ChannelBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Channel) {
-        private var _channelTypes: Optional<List<ChannelType>> = Optional.Missing()
-        var channelTypes: List<ChannelType>? by ::_channelTypes.delegate()
-        override fun toRequest() = ApplicationCommandOption(
-            type,
-            name,
-            description,
-            _default,
-            _required,
-            autocomplete = _autocomplete,
-            channelTypes = _channelTypes
-        )
-    }
+    private var _channelTypes: Optional<List<ChannelType>> = Optional.Missing()
+    public var channelTypes: List<ChannelType>? by ::_channelTypes.delegate()
+    override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
+        type,
+        name,
+        description,
+        _default,
+        _required,
+        autocomplete = _autocomplete,
+        channelTypes = _channelTypes
+    )
+}
 
-
-class MentionableBuilder(name: String, description: String) :
+@KordDsl
+public class MentionableBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Mentionable)
 
 @KordDsl
-
-sealed class BaseCommandOptionBuilder(
+public sealed class BaseCommandOptionBuilder(
     name: String,
     description: String,
     type: ApplicationCommandOptionType,
-) :
-    OptionsBuilder(name, description, type) {
-    private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
-    var options by ::_options.delegate()
+) : OptionsBuilder(name, description, type) {
 
-    override fun toRequest() = ApplicationCommandOption(
+    private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
+    public var options: MutableList<OptionsBuilder>? by ::_options.delegate()
+
+    override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
         type,
         name,
         description,
@@ -157,14 +151,14 @@ sealed class BaseCommandOptionBuilder(
 }
 
 @KordDsl
-class SubCommandBuilder(name: String, description: String) :
+public class SubCommandBuilder(name: String, description: String) :
     BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommand), BaseInputChatBuilder
 
 @KordDsl
-class GroupCommandBuilder(name: String, description: String) :
+public class GroupCommandBuilder(name: String, description: String) :
     BaseCommandOptionBuilder(name, description, ApplicationCommandOptionType.SubCommandGroup) {
 
-    inline fun subCommand(
+    public inline fun subCommand(
         name: String,
         description: String,
         builder: SubCommandBuilder.() -> Unit,

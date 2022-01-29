@@ -14,11 +14,6 @@ dependencies {
     api(libs.ktor.network)
 }
 
-// Move this into the build script plugins when implemented in all modules
-kotlin {
-    explicitApi()
-}
-
 // by convention, java classes (TweetNaclFast) should be in their own java source.
 // however, this breaks atomicfu.
 // to work around it we just make the kotlin src directory also a java src directory.

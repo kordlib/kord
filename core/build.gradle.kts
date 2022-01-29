@@ -24,11 +24,6 @@ dependencies {
     testRuntimeOnly(libs.bundles.test.runtime)
 }
 
-// Move this into the build script plugins when implemented in all modules
-kotlin {
-    explicitApi()
-}
-
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = freeCompilerArgs + CompilerArguments.stdLib
