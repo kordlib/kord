@@ -20,7 +20,6 @@ import kotlinx.serialization.serializer
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-
 public class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
     public suspend fun getGlobalApplicationCommands(applicationId: Snowflake): List<DiscordApplicationCommand> =
@@ -239,10 +238,13 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         multipart.files.forEach { file(it) }
     }
 
-    suspend fun getFollowupMessage(applicationId: Snowflake, interactionToken: String, messageId: Snowflake) =
-        call(Route.FollowupMessageGet) {
-            applicationIdInteractionTokenMessageId(applicationId, interactionToken, messageId)
-        }
+    public suspend fun getFollowupMessage(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+    ): DiscordMessage = call(Route.FollowupMessageGet) {
+        applicationIdInteractionTokenMessageId(applicationId, interactionToken, messageId)
+    }
 
     public suspend fun deleteFollowupMessage(
         applicationId: Snowflake,
@@ -540,7 +542,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createInteractionResponse(interactionId, interactionToken, ephemeral, builder)
     }
 
-    suspend inline fun createInteractionResponse(
+    public suspend inline fun createInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         ephemeral: Boolean = false,

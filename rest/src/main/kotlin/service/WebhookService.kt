@@ -172,12 +172,12 @@ public class WebhookService(requestHandler: RequestHandler) : RestService(reques
         }
     }
 
-    suspend fun deleteWebhookMessage(
+    public suspend fun deleteWebhookMessage(
         webhookId: Snowflake,
         token: String,
         messageId: Snowflake,
         threadId: Snowflake? = null,
-    ) = call(Route.DeleteWebhookMessage) {
+    ): Unit = call(Route.DeleteWebhookMessage) {
         webhookIdTokenMessageIdThreadId(webhookId, token, messageId, threadId)
     }
 }

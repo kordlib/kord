@@ -637,7 +637,7 @@ public sealed class Route<T>(
             requiresAuthorizationHeader = false,
         )
 
-    object DeleteWebhookMessage :
+    public object DeleteWebhookMessage :
         Route<Unit>(
             HttpMethod.Delete,
             "/webhooks/$WebhookId/$WebhookToken/messages/$MessageId",
