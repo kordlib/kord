@@ -29,7 +29,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
 
     public suspend fun createGlobalApplicationCommand(
         applicationId: Snowflake,
-        request: ApplicationCommandCreateRequest,
+        request: ApplicationCommandCreateRequest
     ): DiscordApplicationCommand = call(Route.GlobalApplicationCommandCreate) {
         keys[Route.ApplicationId] = applicationId
         body(ApplicationCommandCreateRequest.serializer(), request)
@@ -37,7 +37,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
 
     public suspend fun createGlobalApplicationCommands(
         applicationId: Snowflake,
-        request: List<ApplicationCommandCreateRequest>,
+        request: List<ApplicationCommandCreateRequest>
     ): List<DiscordApplicationCommand> = call(Route.GlobalApplicationCommandsCreate) {
         keys[Route.ApplicationId] = applicationId
         body(ListSerializer(ApplicationCommandCreateRequest.serializer()), request)
@@ -60,10 +60,9 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend fun getGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
-    ): List<DiscordApplicationCommand> =
-        call(Route.GuildApplicationCommandsGet) {
-            applicationIdGuildId(applicationId, guildId)
-        }
+    ): List<DiscordApplicationCommand> = call(Route.GuildApplicationCommandsGet) {
+        applicationIdGuildId(applicationId, guildId)
+    }
 
     public suspend fun createGuildApplicationCommand(
         applicationId: Snowflake,
@@ -141,7 +140,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         interactionId: Snowflake,
         interactionToken: String,
         builder: Builder,
-        builderFunction: Builder.() -> Unit,
+        builderFunction: Builder.() -> Unit
     ) {
         val choices = builder.apply(builderFunction).choices ?: emptyList()
 
@@ -151,7 +150,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun createIntAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        builderFunction: IntChoiceBuilder.() -> Unit,
+        builderFunction: IntChoiceBuilder.() -> Unit
     ) {
         contract {
             callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE)
@@ -168,7 +167,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun createNumberAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        builderFunction: NumberChoiceBuilder.() -> Unit,
+        builderFunction: NumberChoiceBuilder.() -> Unit
     ) {
         contract {
             callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE)
@@ -185,7 +184,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun createStringAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        builderFunction: StringChoiceBuilder.() -> Unit,
+        builderFunction: StringChoiceBuilder.() -> Unit
     ) {
         contract {
             callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE)
@@ -326,7 +325,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         name: String,
         description: String,
-        builder: ChatInputCreateBuilder.() -> Unit = {},
+        builder: ChatInputCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return createGlobalApplicationCommand(
@@ -338,7 +337,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun createGlobalMessageCommandApplicationCommand(
         applicationId: Snowflake,
         name: String,
-        builder: MessageCommandCreateBuilder.() -> Unit = {},
+        builder: MessageCommandCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -352,7 +351,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun createGlobalUserCommandApplicationCommand(
         applicationId: Snowflake,
         name: String,
-        builder: UserCommandCreateBuilder.() -> Unit = {},
+        builder: UserCommandCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -365,7 +364,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
 
     public suspend inline fun createGlobalApplicationCommands(
         applicationId: Snowflake,
-        builder: MultiApplicationCommandBuilder.() -> Unit,
+        builder: MultiApplicationCommandBuilder.() -> Unit
     ): List<DiscordApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -379,7 +378,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun modifyGlobalChatInputApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
-        builder: ChatInputModifyBuilder.() -> Unit,
+        builder: ChatInputModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
@@ -393,7 +392,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun modifyGlobalMessageApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
-        builder: MessageCommandModifyBuilder.() -> Unit,
+        builder: MessageCommandModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
@@ -407,7 +406,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun modifyGlobalUserApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
-        builder: UserCommandModifyBuilder.() -> Unit,
+        builder: UserCommandModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return modifyGlobalApplicationCommand(
@@ -422,7 +421,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         guildId: Snowflake,
         name: String,
         description: String,
-        builder: ChatInputCreateBuilder.() -> Unit = {},
+        builder: ChatInputCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return createGuildApplicationCommand(
@@ -436,7 +435,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         guildId: Snowflake,
         name: String,
-        builder: MessageCommandCreateBuilder.() -> Unit = {},
+        builder: MessageCommandCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -452,7 +451,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         guildId: Snowflake,
         name: String,
-        builder: UserCommandCreateBuilder.() -> Unit = {},
+        builder: UserCommandCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -467,7 +466,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun createGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
-        builder: MultiApplicationCommandBuilder.() -> Unit,
+        builder: MultiApplicationCommandBuilder.() -> Unit
     ): List<DiscordApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -483,7 +482,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
-        builder: ChatInputModifyBuilder.() -> Unit,
+        builder: ChatInputModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
@@ -499,7 +498,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
-        builder: MessageCommandModifyBuilder.() -> Unit,
+        builder: MessageCommandModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
@@ -515,7 +514,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
-        builder: UserCommandModifyBuilder.() -> Unit,
+        builder: UserCommandModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return modifyGuildApplicationCommand(
@@ -536,7 +535,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         interactionId: Snowflake,
         interactionToken: String,
         ephemeral: Boolean = false,
-        builder: InteractionResponseCreateBuilder.() -> Unit,
+        builder: InteractionResponseCreateBuilder.() -> Unit
     ) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return createInteractionResponse(interactionId, interactionToken, ephemeral, builder)
@@ -559,7 +558,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun modifyInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,
-        builder: InteractionResponseModifyBuilder.() -> Unit,
+        builder: InteractionResponseModifyBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return modifyInteractionResponse(
@@ -573,7 +572,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         interactionToken: String,
         ephemeral: Boolean = false,
-        builder: FollowupMessageCreateBuilder.() -> Unit,
+        builder: FollowupMessageCreateBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return createFollowupMessage(
@@ -587,7 +586,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-        builder: FollowupMessageModifyBuilder.() -> Unit = {},
+        builder: FollowupMessageModifyBuilder.() -> Unit = {}
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return modifyFollowupMessage(
@@ -601,7 +600,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun bulkEditApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
-        builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit = {},
+        builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit = {}
     ): List<DiscordGuildApplicationCommandPermissions> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return bulkEditApplicationCommandPermissions(
@@ -615,7 +614,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
-        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
+        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
     ): DiscordGuildApplicationCommandPermissions {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return editApplicationCommandPermissions(
