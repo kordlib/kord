@@ -18,7 +18,7 @@ import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.component.Component
 import dev.kord.core.entity.interaction.ActionInteraction
-import dev.kord.core.entity.interaction.InteractionFollowup
+import dev.kord.core.entity.interaction.FollowupMessage
 import dev.kord.core.entity.interaction.MessageInteraction
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -62,7 +62,7 @@ public class Message(
      * The author of this message, if it was created by a [User].
      *
      * Returns null if the author is not a Discord account, like a [Webhook] or systems message. This also applies to
-     * [interaction responses][InteractionResponseBehavior] and [followup messages][InteractionFollowup] since
+     * [interaction responses][InteractionResponseBehavior] and [followup messages][FollowupMessage] since
      * [they are webhooks under the hood](https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction).
      */
     public val author: User?

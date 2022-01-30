@@ -28,12 +28,12 @@ import kotlinx.coroutines.CoroutineScope
  * Once an interaction has been acknowledged,
  * you can use [PublicInteractionResponseBehavior.followUp] or [EphemeralInteractionResponseBehavior.followUp] to display additional messages.
  *
- * The resulting follow-up message and its methods may differ based on which method is used.
- * * Following up an acknowledgement results in replacing "The bot is thinking" prompt with the follow-up content.
+ * The resulting followup message and its methods may differ based on which method is used.
+ * * Following up an acknowledgement results in replacing "The bot is thinking" prompt with the followup content.
  * * Following up a response results in a completely new message instance.
  *
  * As such, due to how Discord handles ephemeral acknowledgements,
- * a follow-up on ephemeral acknowledgement will result in an ephemeral message.
+ * a followup on ephemeral acknowledgement will result in an ephemeral message.
  *
  * In the current iteration, ephemeral messages (regardless of the type) don't support files and/or embeds.
  */

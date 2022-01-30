@@ -39,9 +39,11 @@ public interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
  *
  * @return The edited [PublicFollowupMessage] of the interaction response.
  *
- * @throws [RestRequestException] if something went wrong during the request.
+ * @throws RestRequestException if something went wrong during the request.
  */
-public suspend inline fun PublicFollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): PublicFollowupMessage {
+public suspend inline fun PublicFollowupMessageBehavior.edit(
+    builder: FollowupMessageModifyBuilder.() -> Unit,
+): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, builder)
     return PublicFollowupMessage(Message(response.toData(), kord), applicationId, token, kord)
