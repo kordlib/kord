@@ -221,19 +221,38 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         guildId: Snowflake,
         eventId: Snowflake,
         limit: Int,
-        withMember: Boolean?,
         before: Snowflake
-    ): Flow<User> = first.getGuildScheduledEventUsersBefore(guildId, eventId, limit, withMember, before)
-        .switchIfEmpty(second.getGuildScheduledEventUsersBefore(guildId, eventId, limit, withMember, before))
+    ): Flow<User> =
+        first.getGuildScheduledEventUsersBefore(guildId, eventId, limit, before)
+        .switchIfEmpty(second.getGuildScheduledEventUsersBefore(guildId, eventId, limit, before))
 
     override fun getGuildScheduledEventUsersAfter(
         guildId: Snowflake,
         eventId: Snowflake,
         limit: Int,
-        withMember: Boolean?,
         after: Snowflake
-    ): Flow<User> = first.getGuildScheduledEventUsersAfter(guildId, eventId, limit, withMember, after)
-        .switchIfEmpty(second.getGuildScheduledEventUsersAfter(guildId, eventId, limit, withMember, after))
+    ): Flow<User> =
+        first.getGuildScheduledEventUsersAfter(guildId, eventId, limit, after)
+        .switchIfEmpty(second.getGuildScheduledEventUsersAfter(guildId, eventId, limit, after))
+
+
+    override fun getGuildScheduledEventMembersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        before: Snowflake
+    ): Flow<Member> =
+        first.getGuildScheduledEventMembersBefore(guildId, eventId, limit, before)
+        .switchIfEmpty(second.getGuildScheduledEventMembersBefore(guildId, eventId, limit, before))
+
+    override fun getGuildScheduledEventMembersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        limit: Int,
+        after: Snowflake
+    ): Flow<Member> =
+        first.getGuildScheduledEventMembersAfter(guildId, eventId, limit, after)
+        .switchIfEmpty(second.getGuildScheduledEventMembersAfter(guildId, eventId, limit, after))
 
 
     override fun toString(): String {
