@@ -1,6 +1,7 @@
 package dev.kord.voice.gateway.handler
 
 import dev.kord.voice.gateway.*
+import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -18,11 +19,16 @@ internal class HeartbeatHandler(
     private val timeSource: TimeSource = TimeSource.Monotonic
 ) : GatewayEventHandler(flow, "HeartbeatHandler") {
     private var timestamp: TimeMark = timeSource.markNow()
+    private var interval by atomic(0L)
 
     override suspend fun start() = coroutineScope {
         on<Hello> {
+            interval = it.heartbeatInterval.toLong()
+        }
+
+        on<Ready> {
             launch {
-                ticker.tickAt(it.heartbeatInterval.toLong()) {
+                ticker.tickAt(interval) {
                     timestamp = timeSource.markNow()
                     send(Heartbeat(timestamp.elapsedNow().inWholeMilliseconds))
                 }
