@@ -62,7 +62,6 @@ public data class DiscordGuildScheduledEvent(
 
 @Serializable(with = ScheduledEntityType.Serializer::class)
 public sealed class ScheduledEntityType(public val value: Int) {
-    public object None : ScheduledEntityType(0)
     public object StageInstance : ScheduledEntityType(1)
     public object Voice : ScheduledEntityType(2)
     public object External : ScheduledEntityType(3)
@@ -73,7 +72,6 @@ public sealed class ScheduledEntityType(public val value: Int) {
 
         override fun deserialize(decoder: Decoder): ScheduledEntityType {
             return when (val value = decoder.decodeInt()) {
-                0 -> None
                 1 -> StageInstance
                 2 -> Voice
                 3 -> External
