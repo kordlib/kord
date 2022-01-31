@@ -1,8 +1,6 @@
 package dev.kord.rest.builder.message.modify
 
 import dev.kord.common.entity.DiscordAttachment
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
@@ -15,8 +13,8 @@ import dev.kord.rest.json.request.InteractionResponseModifyRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
 
 
-class InteractionResponseModifyBuilder
-    : MessageModifyBuilder,
+public class InteractionResponseModifyBuilder :
+    MessageModifyBuilder,
     RequestBuilder<MultipartInteractionResponseModifyRequest> {
 
     private var state = MessageModifyStateHolder()

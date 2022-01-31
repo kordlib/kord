@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class ChannelFollowRequest(
+public data class ChannelFollowRequest(
     @SerialName("webhook_channel_id")
     val webhookChannelId: Snowflake,
 )

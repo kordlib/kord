@@ -4,10 +4,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GatewayResponse(val url: String, val shards: Int)
+public data class GatewayResponse(val url: String)
 
 @Serializable
-data class BotGatewayResponse(
+public data class BotGatewayResponse(
     val url: String,
     val shards: Int,
     @SerialName("session_start_limit")
@@ -15,7 +15,7 @@ data class BotGatewayResponse(
 )
 
 @Serializable
-data class SessionStartLimitResponse(
+public data class SessionStartLimitResponse(
     val total: Int,
     val remaining: Int,
     @SerialName("reset_after")

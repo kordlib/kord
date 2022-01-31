@@ -6,28 +6,25 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-class MultiApplicationCommandBuilder {
-    val commands = mutableListOf<ApplicationCommandCreateBuilder>()
+public class MultiApplicationCommandBuilder {
+    public val commands: MutableList<ApplicationCommandCreateBuilder> = mutableListOf()
 
-    inline fun message(name: String, builder: MessageCommandCreateBuilder.() -> Unit = {}) {
+    public inline fun message(name: String, builder: MessageCommandCreateBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += MessageCommandCreateBuilder(name).apply(builder)
     }
 
-    inline fun user(name: String, builder: UserCommandCreateBuilder.() -> Unit = {}) {
+    public inline fun user(name: String, builder: UserCommandCreateBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += UserCommandCreateBuilder(name).apply(builder)
     }
 
-    inline fun input(
-        name: String,
-        description: String,
-        builder: ChatInputCreateBuilder.() -> Unit = {}) {
+    public inline fun input(name: String, description: String, builder: ChatInputCreateBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += ChatInputCreateBuilder(name, description).apply(builder)
     }
 
-    fun build(): List<ApplicationCommandCreateRequest> {
+    public fun build(): List<ApplicationCommandCreateRequest> {
         return commands.map { it.toRequest() }
     }
 }

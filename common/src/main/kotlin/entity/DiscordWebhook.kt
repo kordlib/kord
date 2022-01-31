@@ -23,7 +23,7 @@ import kotlinx.serialization.encoding.Encoder
  * @param applicationId The bot/OAuth2 application that created this webhook.
  */
 @Serializable
-data class DiscordWebhook(
+public data class DiscordWebhook(
     val id: Snowflake,
     val type: WebhookType,
     @SerialName("guild_id")
@@ -39,18 +39,18 @@ data class DiscordWebhook(
 )
 
 @Serializable(with = WebhookType.Serializer::class)
-sealed class WebhookType(val value: Int) {
-    class Unknown(value: Int) : WebhookType(value)
+public sealed class WebhookType(public val value: Int) {
+    public class Unknown(value: Int) : WebhookType(value)
 
     /**
      * Incoming Webhooks can post messages to channels with a generated token.
      */
-    object Incoming : WebhookType(1)
+    public object Incoming : WebhookType(1)
 
     /**
      * 	Channel Follower Webhooks are internal webhooks used with Channel Following to post new messages into channels.
      */
-    object ChannelFollower : WebhookType(2)
+    public object ChannelFollower : WebhookType(2)
 
     internal object Serializer : KSerializer<WebhookType> {
 

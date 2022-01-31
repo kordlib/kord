@@ -12,29 +12,27 @@ import dev.kord.rest.json.request.ApplicationCommandPermissionsEditRequest
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-
-interface ApplicationCommandCreateBuilder : RequestBuilder<ApplicationCommandCreateRequest> {
-    var name: String
-    var defaultPermission: Boolean?
-    val type: ApplicationCommandType
-
-
-}
-
-
-interface ApplicationCommandModifyBuilder : RequestBuilder<ApplicationCommandModifyRequest> {
-    var name: String?
-    var defaultPermission: Boolean?
+@KordDsl
+public interface ApplicationCommandCreateBuilder : RequestBuilder<ApplicationCommandCreateRequest> {
+    public var name: String
+    public var defaultPermission: Boolean?
+    public val type: ApplicationCommandType
 }
 
 @KordDsl
-class ApplicationCommandPermissionsBulkModifyBuilder :
+public interface ApplicationCommandModifyBuilder : RequestBuilder<ApplicationCommandModifyRequest> {
+    public var name: String?
+    public var defaultPermission: Boolean?
+}
+
+@KordDsl
+public class ApplicationCommandPermissionsBulkModifyBuilder :
     RequestBuilder<List<PartialDiscordGuildApplicationCommandPermissions>> {
 
     @PublishedApi
-    internal val permissions = mutableMapOf<Snowflake, ApplicationCommandPermissionsModifyBuilder>()
+    internal val permissions: MutableMap<Snowflake, ApplicationCommandPermissionsModifyBuilder> = mutableMapOf()
 
-    inline fun command(
+    public inline fun command(
         commandId: Snowflake,
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
     ) {
@@ -55,12 +53,12 @@ class ApplicationCommandPermissionsBulkModifyBuilder :
 }
 
 @KordDsl
-class ApplicationCommandPermissionsModifyBuilder :
+public class ApplicationCommandPermissionsModifyBuilder :
     RequestBuilder<ApplicationCommandPermissionsEditRequest> {
 
-    var permissions = mutableListOf<DiscordGuildApplicationCommandPermission>()
+    public var permissions: MutableList<DiscordGuildApplicationCommandPermission> = mutableListOf()
 
-    fun role(id: Snowflake, allow: Boolean = true) {
+    public fun role(id: Snowflake, allow: Boolean = true) {
         permissions.add(
             DiscordGuildApplicationCommandPermission(
                 id,
@@ -70,7 +68,7 @@ class ApplicationCommandPermissionsModifyBuilder :
         )
     }
 
-    fun user(id: Snowflake, allow: Boolean = true) {
+    public fun user(id: Snowflake, allow: Boolean = true) {
         permissions.add(
             DiscordGuildApplicationCommandPermission(
                 id,

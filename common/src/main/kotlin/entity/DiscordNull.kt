@@ -12,7 +12,7 @@ import kotlinx.serialization.encoding.Encoder
  * Type to represent a Discord value that can only be null. This class cannot be instantiated.
  */
 @Serializable(with = DiscordNull.Serializer::class)
-class DiscordNull private constructor() {
+public class DiscordNull private constructor() {
 
     internal object Serializer : KSerializer<DiscordNull> {
 

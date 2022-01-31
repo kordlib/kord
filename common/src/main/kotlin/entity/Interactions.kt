@@ -7,18 +7,14 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.value
 import kotlinx.serialization.*
-import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
-import mu.KotlinLogging
-
-val kordLogger = KotlinLogging.logger { }
 
 @Serializable
-data class DiscordApplicationCommand(
+public data class DiscordApplicationCommand(
     val id: Snowflake,
     val type: Optional<ApplicationCommandType> = Optional.Missing(),
     @SerialName("application_id")
@@ -37,13 +33,12 @@ data class DiscordApplicationCommand(
 )
 
 @Serializable(with = ApplicationCommandType.Serializer::class)
-sealed class ApplicationCommandType(val value: Int) {
+public sealed class ApplicationCommandType(public val value: Int) {
     /** The default code for unknown values. */
-    class Unknown(value: Int) : ApplicationCommandType(value)
-    object ChatInput : ApplicationCommandType(1)
-    object User : ApplicationCommandType(2)
-    object Message : ApplicationCommandType(3)
-    companion object;
+    public class Unknown(value: Int) : ApplicationCommandType(value)
+    public object ChatInput : ApplicationCommandType(1)
+    public object User : ApplicationCommandType(2)
+    public object Message : ApplicationCommandType(3)
 
     internal object Serializer : KSerializer<ApplicationCommandType> {
         override val descriptor: SerialDescriptor
@@ -62,7 +57,7 @@ sealed class ApplicationCommandType(val value: Int) {
 }
 
 @Serializable
-data class ApplicationCommandOption(
+public data class ApplicationCommandOption(
     val type: ApplicationCommandOptionType,
     val name: String,
     val description: String,
@@ -84,30 +79,27 @@ data class ApplicationCommandOption(
  * The serialization is handled by [Choice] serializer instead where we don't care about the generic type.
  */
 @KordExperimental
-object NotSerializable : KSerializer<Any?> {
-    override fun deserialize(decoder: Decoder) = error("This operation is not supported.")
+public object NotSerializable : KSerializer<Any?> {
+    override fun deserialize(decoder: Decoder): Nothing = error("This operation is not supported.")
     override val descriptor: SerialDescriptor = String.serializer().descriptor
-    override fun serialize(encoder: Encoder, value: Any?) = error("This operation is not supported.")
+    override fun serialize(encoder: Encoder, value: Any?): Nothing = error("This operation is not supported.")
 }
 
 
 @Serializable(ApplicationCommandOptionType.Serializer::class)
-sealed class ApplicationCommandOptionType(val type: Int) {
+public sealed class ApplicationCommandOptionType(public val type: Int) {
 
-
-    object SubCommand : ApplicationCommandOptionType(1)
-    object SubCommandGroup : ApplicationCommandOptionType(2)
-    object String : ApplicationCommandOptionType(3)
-    object Integer : ApplicationCommandOptionType(4)
-    object Boolean : ApplicationCommandOptionType(5)
-    object User : ApplicationCommandOptionType(6)
-    object Channel : ApplicationCommandOptionType(7)
-    object Role : ApplicationCommandOptionType(8)
-    object Mentionable : ApplicationCommandOptionType(9)
-    object Number : ApplicationCommandOptionType(10)
-    class Unknown(type: Int) : ApplicationCommandOptionType(type)
-
-    companion object;
+    public object SubCommand : ApplicationCommandOptionType(1)
+    public object SubCommandGroup : ApplicationCommandOptionType(2)
+    public object String : ApplicationCommandOptionType(3)
+    public object Integer : ApplicationCommandOptionType(4)
+    public object Boolean : ApplicationCommandOptionType(5)
+    public object User : ApplicationCommandOptionType(6)
+    public object Channel : ApplicationCommandOptionType(7)
+    public object Role : ApplicationCommandOptionType(8)
+    public object Mentionable : ApplicationCommandOptionType(9)
+    public object Number : ApplicationCommandOptionType(10)
+    public class Unknown(type: Int) : ApplicationCommandOptionType(type)
 
     internal object Serializer : KSerializer<ApplicationCommandOptionType> {
 
@@ -138,15 +130,16 @@ sealed class ApplicationCommandOptionType(val type: Int) {
 
 }
 
-@Serializable(Choice.ChoiceSerializer::class)
-sealed class Choice<out T> {
-    abstract val name: String
-    abstract val value: T
+@Serializable(Choice.Serializer::class)
+public sealed class Choice<out T> {
+    public abstract val name: String
+    public abstract val value: T
 
-    data class IntChoice(override val name: String, override val value: Long) : Choice<Long>()
-    data class NumberChoice(override val name: String, override val value: Double) : Choice<Double>()
-    data class StringChoice(override val name: String, override val value: String) : Choice<String>()
-    internal class ChoiceSerializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
+    public data class IntChoice(override val name: String, override val value: Long) : Choice<Long>()
+    public data class NumberChoice(override val name: String, override val value: Double) : Choice<Double>()
+    public data class StringChoice(override val name: String, override val value: String) : Choice<String>()
+
+    internal class Serializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
             element<String>("name")
             element<String>("value")
@@ -188,7 +181,7 @@ sealed class Choice<out T> {
 }
 
 @Serializable
-data class ResolvedObjects(
+public data class ResolvedObjects(
     val members: Optional<Map<Snowflake, DiscordInteractionGuildMember>> = Optional.Missing(),
     val users: Optional<Map<Snowflake, DiscordUser>> = Optional.Missing(),
     val roles: Optional<Map<Snowflake, DiscordRole>> = Optional.Missing(),
@@ -197,7 +190,7 @@ data class ResolvedObjects(
 )
 
 @Serializable
-data class DiscordInteraction(
+public data class DiscordInteraction(
     val id: Snowflake,
     @SerialName("application_id")
     val applicationId: Snowflake,
@@ -215,7 +208,7 @@ data class DiscordInteraction(
     val message: Optional<DiscordMessage> = Optional.Missing(),
     val locale: Optional<Locale> = Optional.Missing(),
     @SerialName("guild_locale")
-    val guildLocale: Optional<Locale> = Optional.Missing()
+    val guildLocale: Optional<Locale> = Optional.Missing(),
 ) {
 
     /**
@@ -249,19 +242,19 @@ data class DiscordInteraction(
 
 
 @Serializable(InteractionType.Serializer::class)
-sealed class InteractionType(val type: Int) {
-    object Ping : InteractionType(1)
-    object ApplicationCommand : InteractionType(2)
+public sealed class InteractionType(public val type: Int) {
+    public object Ping : InteractionType(1)
+    public object ApplicationCommand : InteractionType(2)
 
     /*
      * don't trust the docs:
      *
      * this type exists and is needed for components even though it's not documented
      */
-    object Component : InteractionType(3)
+    public object Component : InteractionType(3)
 
-    object AutoComplete : InteractionType(4)
-    class Unknown(type: Int) : InteractionType(type)
+    public object AutoComplete : InteractionType(4)
+    public class Unknown(type: Int) : InteractionType(type)
 
     override fun toString(): String = when (this) {
         Ping -> "InteractionType.Ping($type)"
@@ -271,7 +264,6 @@ sealed class InteractionType(val type: Int) {
         is Unknown -> "InteractionType.Unknown($type)"
     }
 
-    companion object;
     internal object Serializer : KSerializer<InteractionType> {
 
         override val descriptor: SerialDescriptor
@@ -295,7 +287,7 @@ sealed class InteractionType(val type: Int) {
 }
 
 @Serializable
-data class InteractionCallbackData(
+public data class InteractionCallbackData(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     val type: Optional<ApplicationCommandType> = Optional.Missing(),
     @SerialName("target_id")
@@ -311,9 +303,9 @@ data class InteractionCallbackData(
 )
 
 @Serializable(with = Option.Serializer::class)
-sealed class Option {
-    abstract val name: String
-    abstract val type: ApplicationCommandOptionType
+public sealed class Option {
+    public abstract val name: String
+    public abstract val type: ApplicationCommandOptionType
 
     internal object Serializer : KSerializer<Option> {
 
@@ -326,7 +318,7 @@ sealed class Option {
         }
 
         override fun deserialize(decoder: Decoder): Option {
-            decoder as? JsonDecoder ?: error("Option can only be deserialize with a JsonDecoder")
+            decoder as? JsonDecoder ?: error("Option can only be deserialized with a JsonDecoder")
             val json = decoder.json
 
             var name = ""
@@ -417,8 +409,7 @@ sealed class Option {
 }
 
 @Serializable
-
-data class SubCommand(
+public data class SubCommand(
     override val name: String,
     val options: Optional<List<CommandArgument<@Contextual Any?>>> = Optional.Missing()
 ) : Option() {
@@ -428,12 +419,12 @@ data class SubCommand(
 
 
 @Serializable(with = CommandArgument.Serializer::class)
-sealed class CommandArgument<out T> : Option() {
+public sealed class CommandArgument<out T> : Option() {
 
-    abstract val value: T
-    abstract val focused: OptionalBoolean
+    public abstract val value: T
+    public abstract val focused: OptionalBoolean
 
-    data class StringArgument(
+    public data class StringArgument(
         override val name: String,
         override val value: String,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
@@ -442,7 +433,7 @@ sealed class CommandArgument<out T> : Option() {
             get() = ApplicationCommandOptionType.String
     }
 
-    data class IntegerArgument(
+    public data class IntegerArgument(
         override val name: String,
         override val value: Long,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
@@ -451,7 +442,7 @@ sealed class CommandArgument<out T> : Option() {
             get() = ApplicationCommandOptionType.Integer
     }
 
-    data class NumberArgument(
+    public data class NumberArgument(
         override val name: String,
         override val value: Double,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
@@ -460,7 +451,7 @@ sealed class CommandArgument<out T> : Option() {
             get() = ApplicationCommandOptionType.Number
     }
 
-    data class BooleanArgument(
+    public data class BooleanArgument(
         override val name: String,
         override val value: Boolean,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
@@ -469,7 +460,7 @@ sealed class CommandArgument<out T> : Option() {
             get() = ApplicationCommandOptionType.Boolean
     }
 
-    data class UserArgument(
+    public data class UserArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
@@ -478,7 +469,7 @@ sealed class CommandArgument<out T> : Option() {
             get() = ApplicationCommandOptionType.User
     }
 
-    data class ChannelArgument(
+    public data class ChannelArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
@@ -487,7 +478,7 @@ sealed class CommandArgument<out T> : Option() {
             get() = ApplicationCommandOptionType.Channel
     }
 
-    data class RoleArgument(
+    public data class RoleArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
@@ -496,7 +487,7 @@ sealed class CommandArgument<out T> : Option() {
             get() = ApplicationCommandOptionType.Role
     }
 
-    data class MentionableArgument(
+    public data class MentionableArgument(
         override val name: String,
         override val value: Snowflake,
         override val focused: OptionalBoolean = OptionalBoolean.Missing
@@ -513,7 +504,7 @@ sealed class CommandArgument<out T> : Option() {
      * @property value whatever the user already typed into the argument field
      * @property focused always true, since this is an auto complete argument
      */
-    class AutoCompleteArgument(
+    public class AutoCompleteArgument(
         override val name: String,
         override val type: ApplicationCommandOptionType,
         override val value: String,
@@ -645,7 +636,7 @@ sealed class CommandArgument<out T> : Option() {
     }
 }
 
-data class CommandGroup(
+public data class CommandGroup(
     override val name: String,
     val options: Optional<List<SubCommand>> = Optional.Missing(),
 ) : Option() {
@@ -653,38 +644,36 @@ data class CommandGroup(
         get() = ApplicationCommandOptionType.SubCommandGroup
 }
 
-fun CommandArgument<*>.int(): Long {
+public fun CommandArgument<*>.int(): Long {
     return value as? Long ?: error("$value wasn't an int.")
 }
 
 
-fun CommandArgument<*>.string(): String {
+public fun CommandArgument<*>.string(): String {
     return value.toString()
 }
 
 
-fun CommandArgument<*>.boolean(): Boolean {
+public fun CommandArgument<*>.boolean(): Boolean {
     return value as? Boolean ?: error("$value wasn't a Boolean.")
 }
 
 
-fun CommandArgument<*>.snowflake(): Snowflake {
+public fun CommandArgument<*>.snowflake(): Snowflake {
     val id = string().toULongOrNull() ?: error("$value wasn't a Snowflake")
     return Snowflake(id)
 }
 
 @Serializable(InteractionResponseType.Serializer::class)
 
-sealed class InteractionResponseType(val type: Int) {
-    object Pong : InteractionResponseType(1)
-    object ChannelMessageWithSource : InteractionResponseType(4)
-    object DeferredChannelMessageWithSource : InteractionResponseType(5)
-    object DeferredUpdateMessage : InteractionResponseType(6)
-    object UpdateMessage : InteractionResponseType(7)
-    object ApplicationCommandAutoCompleteResult : InteractionResponseType(8)
-    class Unknown(type: Int) : InteractionResponseType(type)
-
-    companion object;
+public sealed class InteractionResponseType(public val type: Int) {
+    public object Pong : InteractionResponseType(1)
+    public object ChannelMessageWithSource : InteractionResponseType(4)
+    public object DeferredChannelMessageWithSource : InteractionResponseType(5)
+    public object DeferredUpdateMessage : InteractionResponseType(6)
+    public object UpdateMessage : InteractionResponseType(7)
+    public object ApplicationCommandAutoCompleteResult : InteractionResponseType(8)
+    public class Unknown(type: Int) : InteractionResponseType(type)
 
     internal object Serializer : KSerializer<InteractionResponseType> {
 
@@ -711,7 +700,7 @@ sealed class InteractionResponseType(val type: Int) {
 
 
 @Serializable
-data class DiscordGuildApplicationCommandPermissions(
+public data class DiscordGuildApplicationCommandPermissions(
     val id: Snowflake,
     @SerialName("application_id")
     val applicationId: Snowflake,
@@ -722,25 +711,25 @@ data class DiscordGuildApplicationCommandPermissions(
 
 
 @Serializable
-data class PartialDiscordGuildApplicationCommandPermissions(
+public data class PartialDiscordGuildApplicationCommandPermissions(
     val id: Snowflake,
     val permissions: List<DiscordGuildApplicationCommandPermission>
 )
 
 
 @Serializable
-data class DiscordGuildApplicationCommandPermission(
+public data class DiscordGuildApplicationCommandPermission(
     val id: Snowflake,
     val type: Type,
     val permission: Boolean
 ) {
     @Serializable(with = Type.Serializer::class)
-    sealed class Type(val value: Int) {
-        object Role : Type(1)
-        object User : Type(2)
-        class Unknown(value: Int) : Type(value)
+    public sealed class Type(public val value: Int) {
+        public object Role : Type(1)
+        public object User : Type(2)
+        public class Unknown(value: Int) : Type(value)
 
-        object Serializer : KSerializer<Type> {
+        public object Serializer : KSerializer<Type> {
             override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
 
@@ -751,12 +740,12 @@ data class DiscordGuildApplicationCommandPermission(
                     else -> Unknown(value)
                 }
 
-            override fun serialize(encoder: Encoder, value: Type) = encoder.encodeInt(value.value)
+            override fun serialize(encoder: Encoder, value: Type): Unit = encoder.encodeInt(value.value)
         }
     }
 }
 
 @Serializable
-data class DiscordAutoComplete<T>(
+public data class DiscordAutoComplete<T>(
     val choices: List<Choice<T>>
 )

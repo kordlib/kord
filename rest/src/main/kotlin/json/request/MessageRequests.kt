@@ -1,7 +1,6 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.Color
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -11,8 +10,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-@OptIn(KordPreview::class)
-data class MessageCreateRequest constructor(
+public data class MessageCreateRequest(
     val content: Optional<String> = Optional.Missing(),
     val nonce: Optional<String> = Optional.Missing(),
     val tts: OptionalBoolean = OptionalBoolean.Missing,
@@ -24,14 +22,13 @@ data class MessageCreateRequest constructor(
     val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
-
-data class MultipartMessageCreateRequest(
+public data class MultipartMessageCreateRequest(
     val request: MessageCreateRequest,
     val files: List<NamedFile> = emptyList(),
 )
 
 @Serializable
-data class EmbedRequest(
+public data class EmbedRequest(
     val title: Optional<String> = Optional.Missing(),
     val type: Optional<String> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
@@ -45,22 +42,21 @@ data class EmbedRequest(
     val fields: Optional<List<EmbedFieldRequest>> = Optional.Missing(),
 )
 
-
 @Serializable
-data class EmbedFooterRequest(
+public data class EmbedFooterRequest(
     val text: String,
     @SerialName("icon_url")
     val iconUrl: String? = null,
 )
 
 @Serializable
-data class EmbedImageRequest(val url: String)
+public data class EmbedImageRequest(val url: String)
 
 @Serializable
-data class EmbedThumbnailRequest(val url: String)
+public data class EmbedThumbnailRequest(val url: String)
 
 @Serializable
-data class EmbedAuthorRequest(
+public data class EmbedAuthorRequest(
     val name: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
     @SerialName("icon_url")
@@ -68,15 +64,14 @@ data class EmbedAuthorRequest(
 )
 
 @Serializable
-data class EmbedFieldRequest(
+public data class EmbedFieldRequest(
     val name: String,
     val value: String,
     val inline: OptionalBoolean = OptionalBoolean.Missing,
 )
 
 @Serializable
-@OptIn(KordPreview::class)
-data class MessageEditPatchRequest(
+public data class MessageEditPatchRequest(
     val content: Optional<String?> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
     val flags: Optional<MessageFlags?> = Optional.Missing(),
@@ -86,10 +81,10 @@ data class MessageEditPatchRequest(
     val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing()
 )
 
-data class MultipartMessagePatchRequest(
+public data class MultipartMessagePatchRequest(
     val requests: MessageEditPatchRequest,
     val files: Optional<List<NamedFile>> = Optional.Missing()
 )
 
 @Serializable
-data class BulkDeleteRequest(val messages: List<Snowflake>)
+public data class BulkDeleteRequest(val messages: List<Snowflake>)

@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DiscordPinsUpdateData(
+public data class DiscordPinsUpdateData(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("channel_id")
@@ -21,7 +21,7 @@ data class DiscordPinsUpdateData(
 )
 
 @Serializable
-data class DiscordTyping(
+public data class DiscordTyping(
     @SerialName("channel_id")
     val channelId: Snowflake,
     @SerialName("guild_id")
@@ -31,4 +31,3 @@ data class DiscordTyping(
     val timestamp: Long,
     val member: Optional<DiscordGuildMember> = Optional.Missing()
 )
-

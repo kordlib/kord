@@ -4,17 +4,11 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerializationException
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 @Serializable
-data class DiscordRole(
+public data class DiscordRole(
     val id: Snowflake,
     val name: String,
     val color: Int,
@@ -30,7 +24,7 @@ data class DiscordRole(
 )
 
 @Serializable
-data class DiscordRoleTags(
+public data class DiscordRoleTags(
     val botId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("integration_id")
     val integrationId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -39,7 +33,7 @@ data class DiscordRoleTags(
 )
 
 @Serializable
-data class DiscordPartialRole(
+public data class DiscordPartialRole(
     val id: Snowflake,
     val name: Optional<String> = Optional.Missing(),
     val color: OptionalInt = OptionalInt.Missing,
@@ -55,7 +49,7 @@ data class DiscordPartialRole(
 )
 
 @Serializable
-data class DiscordAuditLogRoleChange(
+public data class DiscordAuditLogRoleChange(
     val id: String,
     val name: String? = null,
     val color: Int? = null,
@@ -67,14 +61,14 @@ data class DiscordAuditLogRoleChange(
 )
 
 @Serializable
-data class DiscordGuildRole(
+public data class DiscordGuildRole(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val role: DiscordRole,
 )
 
 @Serializable
-data class DiscordDeletedGuildRole(
+public data class DiscordDeletedGuildRole(
     @SerialName("guild_id")
     val guildId: Snowflake,
     @SerialName("role_id")

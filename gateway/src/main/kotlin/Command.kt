@@ -5,7 +5,10 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import kotlinx.atomicfu.atomic
-import kotlinx.serialization.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Required
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -13,11 +16,12 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.SerializationStrategy as KSerializationStrategy
 
-sealed class Command {
+public sealed class Command {
     internal data class Heartbeat(val sequenceNumber: Int? = null) : Command() {
 
-        companion object : SerializationStrategy<Heartbeat> {
+        object SerializationStrategy : KSerializationStrategy<Heartbeat> {
             override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Heartbeat", PrimitiveKind.INT)
 
             @OptIn(ExperimentalSerializationApi::class)
@@ -28,10 +32,10 @@ sealed class Command {
 
     }
 
-    companion object : SerializationStrategy<Command> {
+    public object SerializationStrategy : KSerializationStrategy<Command> {
 
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Command") {
-            element("op", OpCode.descriptor)
+            element("op", OpCode.serializer().descriptor)
             element("d", JsonObject.serializer().descriptor)
         }
 
@@ -40,28 +44,28 @@ sealed class Command {
             val composite = encoder.beginStructure(descriptor)
             when (value) {
                 is RequestGuildMembers -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.RequestGuildMembers)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.RequestGuildMembers)
                     composite.encodeSerializableElement(descriptor, 1, RequestGuildMembers.serializer(), value)
                 }
                 is UpdateVoiceStatus -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.VoiceStateUpdate)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.VoiceStateUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateVoiceStatus.serializer(), value)
                 }
                 is UpdateStatus -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.StatusUpdate)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.StatusUpdate)
                     composite.encodeSerializableElement(descriptor, 1, UpdateStatus.serializer(), value)
                 }
                 is Identify -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.Identify)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Identify)
                     composite.encodeSerializableElement(descriptor, 1, Identify.serializer(), value)
                 }
                 is Resume -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.Resume)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Resume)
                     composite.encodeSerializableElement(descriptor, 1, Resume.serializer(), value)
                 }
                 is Heartbeat -> {
-                    composite.encodeSerializableElement(descriptor, 0, OpCode, OpCode.Heartbeat)
-                    composite.encodeSerializableElement(descriptor, 1, Heartbeat.Companion, value)
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Heartbeat)
+                    composite.encodeSerializableElement(descriptor, 1, Heartbeat.SerializationStrategy, value)
                 }
             }
 
@@ -90,7 +94,7 @@ internal data class Identify(
 }
 
 @Serializable
-data class IdentifyProperties(
+public data class IdentifyProperties(
     @Required
     @SerialName("\$os")
     val os: String,
@@ -101,7 +105,7 @@ data class IdentifyProperties(
 )
 
 @Serializable
-data class GuildMembersChunkData(
+public data class GuildMembersChunkData(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val members: List<DiscordGuildMember>,
@@ -116,7 +120,7 @@ data class GuildMembersChunkData(
 )
 
 @Serializable
-data class DiscordPresence(
+public data class DiscordPresence(
     val status: PresenceStatus,
     val afk: Boolean,
     val since: Long? = null,
@@ -160,7 +164,7 @@ internal data class Resume(
  */
 @PrivilegedIntent
 @Serializable
-data class RequestGuildMembers(
+public data class RequestGuildMembers(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val query: Optional<String> = Optional.Missing(),
@@ -171,18 +175,17 @@ data class RequestGuildMembers(
     val nonce: Optional<String> = Optional.Missing()
 ) : Command() {
 
-    object Nonce {
+    public object Nonce {
         private val counter = atomic(0)
 
-        @OptIn(ExperimentalUnsignedTypes::class)
-        fun new(): String = counter.getAndIncrement().toUInt().toString()
+        public fun new(): String = counter.getAndIncrement().toUInt().toString()
 
     }
 
 }
 
 @Serializable
-data class UpdateVoiceStatus(
+public data class UpdateVoiceStatus(
     @SerialName("guild_id")
     val guildId: Snowflake,
     @SerialName("channel_id")
@@ -194,7 +197,7 @@ data class UpdateVoiceStatus(
 ) : Command()
 
 @Serializable
-data class UpdateStatus(
+public data class UpdateStatus(
     val since: Long?,
     val activities: List<DiscordBotActivity>,
     val status: PresenceStatus,

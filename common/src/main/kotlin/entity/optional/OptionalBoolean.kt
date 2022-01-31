@@ -32,22 +32,22 @@ import kotlinx.serialization.encoding.Encoder
  * ```
  */
 @Serializable(with = OptionalBoolean.Serializer::class)
-sealed class OptionalBoolean {
+public sealed class OptionalBoolean {
 
-    val discordBoolean get() = orElse(false)
+    public val discordBoolean: Boolean get() = orElse(false)
 
-    operator fun not(): OptionalBoolean = when (this) {
+    public operator fun not(): OptionalBoolean = when (this) {
         Missing -> this
         is Value -> Value(!value)
     }
 
-    val asNullable: Boolean?
+    public val asNullable: Boolean?
         get() = when (this) {
             Missing -> null
             is Value -> value
         }
 
-    val asOptional: Optional<Boolean>
+    public val asOptional: Optional<Boolean>
         get() = when (this) {
             Missing -> Optional.Missing()
             is Value -> Optional.Value(value)
@@ -56,7 +56,7 @@ sealed class OptionalBoolean {
     /**
      * returns [default] if the optional is [Missing], or [Value.value] if is [Value].
      */
-    fun orElse(default: Boolean): Boolean = when (this) {
+    public fun orElse(default: Boolean): Boolean = when (this) {
         Missing -> default
         is Value -> value
     }
@@ -64,7 +64,7 @@ sealed class OptionalBoolean {
     /**
      * Represents a Boolean field that was not present in the serialized entity.
      */
-    object Missing : OptionalBoolean() {
+    public object Missing : OptionalBoolean() {
         override fun toString(): String = "OptionalBoolean.Missing"
     }
 
@@ -74,12 +74,12 @@ sealed class OptionalBoolean {
      *
      * @param value the value this optional wraps.
      */
-    class Value(val value: Boolean) : OptionalBoolean() {
+    public class Value(public val value: Boolean) : OptionalBoolean() {
 
         /**
          * Destructures this optional to its [value].
          */
-        operator fun component1(): Boolean = value
+        public operator fun component1(): Boolean = value
 
         override fun toString(): String = "Optional.Value(value=$value)"
 
@@ -110,7 +110,7 @@ sealed class OptionalBoolean {
 /**
  * returns `null` if this is `null` or [OptionalBoolean.Missing], calls [OptionalBoolean.Value.value] otherwise.
  */
-val OptionalBoolean?.value: Boolean?
+public val OptionalBoolean?.value: Boolean?
     get() = when (this) {
         is OptionalBoolean.Value -> value
         OptionalBoolean.Missing, null -> null
@@ -119,11 +119,11 @@ val OptionalBoolean?.value: Boolean?
 /**
  * returns `null` if this is `null`, calls [OptionalBoolean.asNullable] otherwise.
  */
-val OptionalBoolean?.asNullable: Boolean? get() = this?.asNullable
+public val OptionalBoolean?.asNullable: Boolean? get() = this?.asNullable
 
 /**
  * returns [default] if this is `null`, calls [OptionalBoolean.asNullable] otherwise.
  */
-fun OptionalBoolean?.orElse(default: Boolean) = this?.orElse(default) ?: default
+public fun OptionalBoolean?.orElse(default: Boolean): Boolean = this?.orElse(default) ?: default
 
-fun Boolean.optional(): OptionalBoolean.Value = OptionalBoolean.Value(this)
+public fun Boolean.optional(): OptionalBoolean.Value = OptionalBoolean.Value(this)
