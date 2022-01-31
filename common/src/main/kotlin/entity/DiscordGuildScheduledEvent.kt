@@ -55,7 +55,7 @@ public data class DiscordGuildScheduledEvent(
     val entityId: Snowflake?,
     @SerialName("entity_metadata")
     val entityMetadata: GuildScheduledEventEntityMetadata?,
-    val creator: Optional<DiscordUser>,
+    val creator: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("user_count")
     val userCount: OptionalInt = OptionalInt.Missing,
 )

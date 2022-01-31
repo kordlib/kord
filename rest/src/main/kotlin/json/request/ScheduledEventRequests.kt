@@ -22,7 +22,7 @@ public data class GuildScheduledEventCreateRequest(
     @SerialName("scheduled_start_time")
     val scheduledStartTime: Instant,
     @SerialName("scheduled_end_time")
-    val scheduledEndTime: Optional<Instant>,
+    val scheduledEndTime: Optional<Instant> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     @SerialName("entity_type")
     val entityType: ScheduledEntityType,
@@ -43,6 +43,6 @@ public data class ScheduledEventModifyRequest(
     val scheduledEndTime: Optional<Instant> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     @SerialName("entity_type")
-    val entityType: Optional<ScheduledEntityType>,
+    val entityType: Optional<ScheduledEntityType> = Optional.Missing(),
     val status: Optional<GuildScheduledEventStatus> = Optional.Missing()
 )
