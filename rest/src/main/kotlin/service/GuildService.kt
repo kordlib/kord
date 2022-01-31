@@ -451,9 +451,10 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
     public suspend fun createScheduledEvent(
         guildId: Snowflake,
         request: GuildScheduledEventCreateRequest,
+        reason: String? = null,
     ): DiscordGuildScheduledEvent = call(Route.GuildScheduledEventsPost) {
         keys[Route.GuildId] = guildId
-
+        auditLogReason(reason)
         body(GuildScheduledEventCreateRequest.serializer(), request)
     }
 
@@ -461,10 +462,11 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         guildId: Snowflake,
         eventId: Snowflake,
         request: ScheduledEventModifyRequest,
+        reason: String? = null,
     ): DiscordGuildScheduledEvent = call(Route.GuildScheduledEventPatch) {
         keys[Route.GuildId] = guildId
         keys[Route.ScheduledEventId] = eventId
-
+        auditLogReason(reason)
         body(ScheduledEventModifyRequest.serializer(), request)
     }
 
@@ -582,7 +584,7 @@ public suspend inline fun GuildService.createScheduledEvent(
         entityType
     ).apply(builder)
 
-    return createScheduledEvent(guildId, appliedBuilder.toRequest())
+    return createScheduledEvent(guildId, appliedBuilder.toRequest(), appliedBuilder.reason)
 }
 
 public suspend inline fun GuildService.modifyScheduledEvent(
@@ -596,5 +598,5 @@ public suspend inline fun GuildService.modifyScheduledEvent(
 
     val appliedBuilder = ScheduledEventModifyBuilder().apply(builder)
 
-    return modifyScheduledEvent(guildId, eventId, appliedBuilder.toRequest())
+    return modifyScheduledEvent(guildId, eventId, appliedBuilder.toRequest(), appliedBuilder.reason)
 }
