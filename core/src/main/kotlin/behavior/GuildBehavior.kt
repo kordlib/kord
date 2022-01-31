@@ -4,9 +4,9 @@ import dev.kord.cache.api.query
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.GuildScheduledEventPrivacyLevel
 import dev.kord.common.entity.ScheduledEntityType
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.StageInstancePrivacyLevel
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
@@ -19,13 +19,7 @@ import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.application.GuildChatInputCommand
 import dev.kord.core.entity.application.GuildMessageCommand
 import dev.kord.core.entity.application.GuildUserCommand
-import dev.kord.core.entity.channel.Category
-import dev.kord.core.entity.channel.Channel
-import dev.kord.core.entity.channel.GuildChannel
-import dev.kord.core.entity.channel.NewsChannel
-import dev.kord.core.entity.channel.TextChannel
-import dev.kord.core.entity.channel.TopGuildChannel
-import dev.kord.core.entity.channel.VoiceChannel
+import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.exception.EntityNotFoundException
@@ -41,21 +35,9 @@ import dev.kord.rest.Image
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.builder.ban.BanCreateBuilder
-import dev.kord.rest.builder.channel.CategoryCreateBuilder
-import dev.kord.rest.builder.channel.GuildChannelPositionModifyBuilder
-import dev.kord.rest.builder.channel.NewsChannelCreateBuilder
-import dev.kord.rest.builder.channel.TextChannelCreateBuilder
-import dev.kord.rest.builder.channel.VoiceChannelCreateBuilder
-import dev.kord.rest.builder.guild.EmojiCreateBuilder
-import dev.kord.rest.builder.guild.GuildModifyBuilder
-import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
-import dev.kord.rest.builder.guild.ScheduledEventCreateBuilder
-import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
-import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
-import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
-import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
-import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
+import dev.kord.rest.builder.channel.*
+import dev.kord.rest.builder.guild.*
+import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
@@ -63,24 +45,8 @@ import dev.kord.rest.json.request.CurrentUserNicknameModifyRequest
 import dev.kord.rest.json.request.GuildStickerCreateRequest
 import dev.kord.rest.json.request.MultipartGuildStickerCreateRequest
 import dev.kord.rest.request.RestRequestException
-import dev.kord.rest.service.RestClient
-import dev.kord.rest.service.createCategory
-import dev.kord.rest.service.createNewsChannel
-import dev.kord.rest.service.createScheduledEvent
-import dev.kord.rest.service.createTextChannel
-import dev.kord.rest.service.createVoiceChannel
-import dev.kord.rest.service.modifyGuildWelcomeScreen
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onSubscription
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.takeWhile
-import kotlinx.coroutines.flow.transformWhile
+import dev.kord.rest.service.*
+import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import java.util.Objects
 import kotlin.contracts.InvocationKind
@@ -1049,7 +1015,7 @@ public suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline
  */
 public suspend fun GuildBehavior.createScheduledEvent(
     name: String,
-    privacyLevel: StageInstancePrivacyLevel,
+    privacyLevel: GuildScheduledEventPrivacyLevel,
     scheduledStartTime: Instant,
     entityType: ScheduledEntityType,
     builder: ScheduledEventCreateBuilder.() -> Unit

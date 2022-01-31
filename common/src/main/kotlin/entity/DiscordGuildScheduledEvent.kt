@@ -23,7 +23,7 @@ import kotlinx.serialization.encoding.Encoder
  * @property description the description of the event
  * @property scheduledStartTime the [Instant] in which the event will start
  * @property scheduledEndTime the [Instant] in which the event wil stop, if any
- * @property privacyLevel the [event privacy level][StageInstancePrivacyLevel]
+ * @property privacyLevel the [event privacy level][GuildScheduledEventPrivacyLevel]
  * @property status the [event status][GuildScheduledEventStatus]
  * @property entityType the [ScheduledEntityType] of the event
  * @property entityId entity id
@@ -47,7 +47,7 @@ public data class DiscordGuildScheduledEvent(
     @SerialName("scheduled_end_time")
     val scheduledEndTime: Instant?,
     @SerialName("privacy_level")
-    val privacyLevel: StageInstancePrivacyLevel,
+    val privacyLevel: GuildScheduledEventPrivacyLevel,
     val status: GuildScheduledEventStatus,
     @SerialName("entity_type")
     val entityType: ScheduledEntityType,
@@ -59,6 +59,33 @@ public data class DiscordGuildScheduledEvent(
     @SerialName("user_count")
     val userCount: OptionalInt = OptionalInt.Missing,
 )
+
+/** Privacy level of a [DiscordGuildScheduledEvent]. */
+@Serializable(with = GuildScheduledEventPrivacyLevel.Serializer::class)
+public sealed class GuildScheduledEventPrivacyLevel(public val value: Int) {
+
+    /** The scheduled event is only accessible to guild members. */
+    public object GuildOnly : GuildScheduledEventPrivacyLevel(2)
+
+    /** An unknown privacy level. */
+    public class Unknown(value: Int) : GuildScheduledEventPrivacyLevel(value)
+
+    internal object Serializer : KSerializer<GuildScheduledEventPrivacyLevel> {
+        override val descriptor: SerialDescriptor =
+            PrimitiveSerialDescriptor("GuildScheduledEventPrivacyLevel", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): GuildScheduledEventPrivacyLevel {
+            return when (val value = decoder.decodeInt()) {
+                2 -> GuildOnly
+                else -> Unknown(value)
+            }
+        }
+
+        override fun serialize(encoder: Encoder, value: GuildScheduledEventPrivacyLevel) {
+            encoder.encodeInt(value.value)
+        }
+    }
+}
 
 @Serializable(with = ScheduledEntityType.Serializer::class)
 public sealed class ScheduledEntityType(public val value: Int) {

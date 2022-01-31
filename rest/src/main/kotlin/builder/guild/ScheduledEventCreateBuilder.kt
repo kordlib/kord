@@ -1,9 +1,9 @@
 package dev.kord.rest.builder.guild
 
 import dev.kord.common.entity.GuildScheduledEventEntityMetadata
+import dev.kord.common.entity.GuildScheduledEventPrivacyLevel
 import dev.kord.common.entity.ScheduledEntityType
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.StageInstancePrivacyLevel
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
@@ -13,7 +13,7 @@ import kotlinx.datetime.Instant
 
 public class ScheduledEventCreateBuilder(
     public var name: String,
-    public var privacyLevel: StageInstancePrivacyLevel,
+    public var privacyLevel: GuildScheduledEventPrivacyLevel,
     public var scheduledStartTime: Instant,
     public var entityType: ScheduledEntityType,
 ) : AuditRequestBuilder<GuildScheduledEventCreateRequest> {

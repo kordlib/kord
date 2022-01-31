@@ -17,8 +17,8 @@ public class ScheduledEventModifyBuilder : AuditRequestBuilder<ScheduledEventMod
     private var _name: Optional<String> = Optional.Missing()
     public var name: String? by ::_name.delegate()
 
-    private var _privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing()
-    public var privacyLevel: StageInstancePrivacyLevel? by ::_privacyLevel.delegate()
+    private var _privacyLevel: Optional<GuildScheduledEventPrivacyLevel> = Optional.Missing()
+    public var privacyLevel: GuildScheduledEventPrivacyLevel? by ::_privacyLevel.delegate()
 
     private var _scheduledStartTime: Optional<Instant> = Optional.Missing()
     public var scheduledStartTime: Instant? by ::_scheduledStartTime.delegate()

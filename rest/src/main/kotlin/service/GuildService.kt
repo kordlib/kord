@@ -568,7 +568,7 @@ public suspend inline fun GuildService.modifyVoiceState(
 public suspend inline fun GuildService.createScheduledEvent(
     guildId: Snowflake,
     name: String,
-    privacyLevel: StageInstancePrivacyLevel,
+    privacyLevel: GuildScheduledEventPrivacyLevel,
     scheduledStartTime: Instant,
     entityType: ScheduledEntityType,
     builder: ScheduledEventCreateBuilder.() -> Unit = {}

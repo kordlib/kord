@@ -17,7 +17,7 @@ public data class GuildScheduledEventData(
     val description: Optional<String> = Optional.Missing(),
     val scheduledStartTime: Instant,
     val scheduledEndTime: Instant?,
-    val privacyLevel: StageInstancePrivacyLevel,
+    val privacyLevel: GuildScheduledEventPrivacyLevel,
     val status: GuildScheduledEventStatus,
     val entityId: Snowflake?,
     val entityType: ScheduledEntityType,

@@ -74,9 +74,9 @@ public class GuildScheduledEvent(
         get() = data.scheduledEndTime
 
     /**
-     * The [privacy level][StageInstancePrivacyLevel] of this event.
+     * The [privacy level][GuildScheduledEventPrivacyLevel] of this event.
      */
-    public val privacyLevel: StageInstancePrivacyLevel
+    public val privacyLevel: GuildScheduledEventPrivacyLevel
         get() = data.privacyLevel
 
     /**
