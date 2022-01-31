@@ -12,10 +12,10 @@ import dev.kord.rest.json.request.GuildScheduledEventCreateRequest
 import kotlinx.datetime.Instant
 
 public class ScheduledEventCreateBuilder(
-    public val name: String,
-    public val privacyLevel: StageInstancePrivacyLevel,
-    public val scheduledStartTime: Instant,
-    public val entityType: ScheduledEntityType,
+    public var name: String,
+    public var privacyLevel: StageInstancePrivacyLevel,
+    public var scheduledStartTime: Instant,
+    public var entityType: ScheduledEntityType,
 ) : AuditRequestBuilder<GuildScheduledEventCreateRequest> {
     override var reason: String? = null
 
