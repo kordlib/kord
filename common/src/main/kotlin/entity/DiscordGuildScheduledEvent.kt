@@ -113,11 +113,9 @@ public sealed class GuildScheduledEventStatus(public val value: Int) {
 /**
  * Entity metadata for [DiscordGuildScheduledEvent].
  *
- * @property speakerIds the speakers of the stage channel
  * @property location location of the event
  */
 @Serializable
 public data class GuildScheduledEventEntityMetadata(
-    val speakerIds: Optional<List<Snowflake>> = Optional.Missing(),
     val location: Optional<String> = Optional.Missing()
 )
