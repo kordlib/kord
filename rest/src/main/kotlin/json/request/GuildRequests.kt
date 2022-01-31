@@ -244,21 +244,6 @@ public data class GuildWelcomeScreenModifyRequest(
     val description: Optional<String> = Optional.Missing()
 )
 
-@Serializable
-public data class GuildScheduledEventCreateRequest(
-    val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val entityMetadata: Optional<GuildScheduledEventEntityMetadata> = Optional.Missing(),
-    val name: String,
-    @SerialName("privacy_level")
-    val privacyLevel: StageInstancePrivacyLevel,
-    @SerialName("scheduled_start_time")
-    val scheduledStartTime: Instant,
-    @SerialName("scheduled_end_time")
-    val scheduledEndTime: Optional<Instant>,
-    val description: Optional<String> = Optional.Missing(),
-    @SerialName("entity_type")
-    val entityType: ScheduledEntityType
-)
 
 @Serializable
 public data class GuildScheduledEventUsersResponse(val users: List<DiscordOptionallyMemberUser>)

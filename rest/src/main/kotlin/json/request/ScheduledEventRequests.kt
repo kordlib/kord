@@ -11,9 +11,28 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-public data class ScheduledEventModifyRequest(
+public data class GuildScheduledEventCreateRequest(
     @SerialName("channel_id")
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("entity_metadata")
+    val entityMetadata: Optional<GuildScheduledEventEntityMetadata> = Optional.Missing(),
+    val name: String,
+    @SerialName("privacy_level")
+    val privacyLevel: StageInstancePrivacyLevel,
+    @SerialName("scheduled_start_time")
+    val scheduledStartTime: Instant,
+    @SerialName("scheduled_end_time")
+    val scheduledEndTime: Optional<Instant>,
+    val description: Optional<String> = Optional.Missing(),
+    @SerialName("entity_type")
+    val entityType: ScheduledEntityType,
+)
+
+@Serializable
+public data class ScheduledEventModifyRequest(
+    @SerialName("channel_id")
+    val channelId: OptionalSnowflake? = OptionalSnowflake.Missing,
+    @SerialName("entity_metadata")
     val entityMetadata: Optional<GuildScheduledEventEntityMetadata> = Optional.Missing(),
     val name: Optional<String> = Optional.Missing(),
     @SerialName("privacy_level")

@@ -9,7 +9,7 @@ import dev.kord.rest.json.request.ScheduledEventModifyRequest
 import kotlinx.datetime.Instant
 
 public class ScheduledEventModifyBuilder : RequestBuilder<ScheduledEventModifyRequest> {
-    private var _channelId: OptionalSnowflake = OptionalSnowflake.Missing
+    private var _channelId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var channelId: Snowflake? by ::_channelId.delegate()
 
     private var _name: Optional<String> = Optional.Missing()

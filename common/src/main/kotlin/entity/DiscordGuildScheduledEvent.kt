@@ -1,7 +1,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.OptionalInt
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -36,9 +36,10 @@ public data class DiscordGuildScheduledEvent(
     val id: Snowflake,
     @SerialName("guild_id")
     val guildId: Snowflake,
+    @SerialName("channel_id")
     val channelId: Snowflake?,
     @SerialName("creator_id")
-    val creatorId: OptionalSnowflake,
+    val creatorId: Snowflake?,
     val name: String,
     val description: Optional<String> = Optional.Missing(),
     @SerialName("scheduled_start_time")
@@ -53,10 +54,10 @@ public data class DiscordGuildScheduledEvent(
     @SerialName("entity_id")
     val entityId: Snowflake?,
     @SerialName("entity_metadata")
-    val entityMetadata: GuildScheduledEventEntityMetadata,
+    val entityMetadata: GuildScheduledEventEntityMetadata?,
     val creator: Optional<DiscordUser>,
     @SerialName("user_count")
-    val userCount: Int
+    val userCount: OptionalInt = OptionalInt.Missing,
 )
 
 @Serializable(with = ScheduledEntityType.Serializer::class)

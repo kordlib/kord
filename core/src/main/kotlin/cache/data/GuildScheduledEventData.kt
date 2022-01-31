@@ -1,13 +1,8 @@
 package dev.kord.core.cache.data
 
-import dev.kord.common.entity.DiscordGuildScheduledEvent
-import dev.kord.common.entity.GuildScheduledEventEntityMetadata
-import dev.kord.common.entity.GuildScheduledEventStatus
-import dev.kord.common.entity.ScheduledEntityType
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.StageInstancePrivacyLevel
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.map
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
@@ -17,7 +12,7 @@ public data class GuildScheduledEventData(
     val id: Snowflake,
     val guildId: Snowflake,
     val channelId: Snowflake?,
-    val creatorId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val creatorId: Snowflake?,
     val name: String,
     val description: Optional<String> = Optional.Missing(),
     val scheduledStartTime: Instant,
@@ -26,9 +21,9 @@ public data class GuildScheduledEventData(
     val status: GuildScheduledEventStatus,
     val entityId: Snowflake?,
     val entityType: ScheduledEntityType,
-    val entityMetadata: GuildScheduledEventEntityMetadata,
+    val entityMetadata: GuildScheduledEventEntityMetadata?,
     val creator: Optional<UserData> = Optional.Missing(),
-    val userCount: Int
+    val userCount: OptionalInt = OptionalInt.Missing,
 ) {
     public companion object {
         public fun from(event: DiscordGuildScheduledEvent): GuildScheduledEventData = GuildScheduledEventData(
@@ -50,4 +45,3 @@ public data class GuildScheduledEventData(
         )
     }
 }
-
