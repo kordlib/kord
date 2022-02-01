@@ -1,7 +1,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.OptionalInt
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -23,7 +23,7 @@ import kotlinx.serialization.encoding.Encoder
  * @property description the description of the event
  * @property scheduledStartTime the [Instant] in which the event will start
  * @property scheduledEndTime the [Instant] in which the event wil stop, if any
- * @property privacyLevel the [event privacy level][StageInstancePrivacyLevel]
+ * @property privacyLevel the [event privacy level][GuildScheduledEventPrivacyLevel]
  * @property status the [event status][GuildScheduledEventStatus]
  * @property entityType the [ScheduledEntityType] of the event
  * @property entityId entity id
@@ -36,9 +36,10 @@ public data class DiscordGuildScheduledEvent(
     val id: Snowflake,
     @SerialName("guild_id")
     val guildId: Snowflake,
+    @SerialName("channel_id")
     val channelId: Snowflake?,
     @SerialName("creator_id")
-    val creatorId: OptionalSnowflake,
+    val creatorId: Snowflake?,
     val name: String,
     val description: Optional<String> = Optional.Missing(),
     @SerialName("scheduled_start_time")
@@ -46,22 +47,48 @@ public data class DiscordGuildScheduledEvent(
     @SerialName("scheduled_end_time")
     val scheduledEndTime: Instant?,
     @SerialName("privacy_level")
-    val privacyLevel: StageInstancePrivacyLevel,
+    val privacyLevel: GuildScheduledEventPrivacyLevel,
     val status: GuildScheduledEventStatus,
     @SerialName("entity_type")
     val entityType: ScheduledEntityType,
     @SerialName("entity_id")
     val entityId: Snowflake?,
     @SerialName("entity_metadata")
-    val entityMetadata: GuildScheduledEventEntityMetadata,
-    val creator: Optional<DiscordUser>,
+    val entityMetadata: GuildScheduledEventEntityMetadata?,
+    val creator: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("user_count")
-    val userCount: Int
+    val userCount: OptionalInt = OptionalInt.Missing,
 )
+
+/** Privacy level of a [DiscordGuildScheduledEvent]. */
+@Serializable(with = GuildScheduledEventPrivacyLevel.Serializer::class)
+public sealed class GuildScheduledEventPrivacyLevel(public val value: Int) {
+
+    /** The scheduled event is only accessible to guild members. */
+    public object GuildOnly : GuildScheduledEventPrivacyLevel(2)
+
+    /** An unknown privacy level. */
+    public class Unknown(value: Int) : GuildScheduledEventPrivacyLevel(value)
+
+    internal object Serializer : KSerializer<GuildScheduledEventPrivacyLevel> {
+        override val descriptor: SerialDescriptor =
+            PrimitiveSerialDescriptor("GuildScheduledEventPrivacyLevel", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): GuildScheduledEventPrivacyLevel {
+            return when (val value = decoder.decodeInt()) {
+                2 -> GuildOnly
+                else -> Unknown(value)
+            }
+        }
+
+        override fun serialize(encoder: Encoder, value: GuildScheduledEventPrivacyLevel) {
+            encoder.encodeInt(value.value)
+        }
+    }
+}
 
 @Serializable(with = ScheduledEntityType.Serializer::class)
 public sealed class ScheduledEntityType(public val value: Int) {
-    public object None : ScheduledEntityType(0)
     public object StageInstance : ScheduledEntityType(1)
     public object Voice : ScheduledEntityType(2)
     public object External : ScheduledEntityType(3)
@@ -72,7 +99,6 @@ public sealed class ScheduledEntityType(public val value: Int) {
 
         override fun deserialize(decoder: Decoder): ScheduledEntityType {
             return when (val value = decoder.decodeInt()) {
-                0 -> None
                 1 -> StageInstance
                 2 -> Voice
                 3 -> External
@@ -114,11 +140,9 @@ public sealed class GuildScheduledEventStatus(public val value: Int) {
 /**
  * Entity metadata for [DiscordGuildScheduledEvent].
  *
- * @property speakerIds the speakers of the stage channel
  * @property location location of the event
  */
 @Serializable
 public data class GuildScheduledEventEntityMetadata(
-    val speakerIds: Optional<List<Snowflake>> = Optional.Missing(),
     val location: Optional<String> = Optional.Missing()
 )

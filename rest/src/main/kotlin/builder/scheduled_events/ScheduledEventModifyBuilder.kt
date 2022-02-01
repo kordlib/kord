@@ -4,19 +4,21 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ScheduledEventModifyRequest
 import kotlinx.datetime.Instant
 
-public class ScheduledEventModifyBuilder : RequestBuilder<ScheduledEventModifyRequest> {
-    private var _channelId: OptionalSnowflake = OptionalSnowflake.Missing
+public class ScheduledEventModifyBuilder : AuditRequestBuilder<ScheduledEventModifyRequest> {
+    override var reason: String? = null
+
+    private var _channelId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var channelId: Snowflake? by ::_channelId.delegate()
 
     private var _name: Optional<String> = Optional.Missing()
     public var name: String? by ::_name.delegate()
 
-    private var _privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing()
-    public var privacyLevel: StageInstancePrivacyLevel? by ::_privacyLevel.delegate()
+    private var _privacyLevel: Optional<GuildScheduledEventPrivacyLevel> = Optional.Missing()
+    public var privacyLevel: GuildScheduledEventPrivacyLevel? by ::_privacyLevel.delegate()
 
     private var _scheduledStartTime: Optional<Instant> = Optional.Missing()
     public var scheduledStartTime: Instant? by ::_scheduledStartTime.delegate()

@@ -1,11 +1,8 @@
 package dev.kord.core.entity
 
-import dev.kord.common.entity.GuildScheduledEventEntityMetadata
-import dev.kord.common.entity.GuildScheduledEventStatus
-import dev.kord.common.entity.ScheduledEntityType
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.StageInstancePrivacyLevel
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.unwrap
+import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildScheduledEventBehavior
@@ -45,10 +42,12 @@ public class GuildScheduledEvent(
         get() = data.channelId
 
     /**
-     * The id of the user that created the scheduled event
+     * The id of the user that created the scheduled event.
+     *
+     * This is only available for events created after 2021-10-25.
      */
     public val creatorId: Snowflake?
-        get() = data.creatorId.value
+        get() = data.creatorId
 
     /**
      * The name of this event.
@@ -75,9 +74,9 @@ public class GuildScheduledEvent(
         get() = data.scheduledEndTime
 
     /**
-     * The [privacy level][StageInstancePrivacyLevel] of this event.
+     * The [privacy level][GuildScheduledEventPrivacyLevel] of this event.
      */
-    public val privacyLevel: StageInstancePrivacyLevel
+    public val privacyLevel: GuildScheduledEventPrivacyLevel
         get() = data.privacyLevel
 
     /**
@@ -98,17 +97,17 @@ public class GuildScheduledEvent(
     /**
      * The [entity metadata][GuildScheduledEventEntityMetadata] for the scheduled event
      */
-    public val entityMetadata: GuildScheduledEventEntityMetadata
+    public val entityMetadata: GuildScheduledEventEntityMetadata?
         get() = data.entityMetadata
 
     public val creator: User?
         get() = data.creator.unwrap { User(it, kord, supplier) }
 
     /**
-     * The amount of users subscribed to this event.
+     * The number of users subscribed to this event.
      */
-    public val userCount: Int
-        get() = data.userCount
+    public val userCount: Int?
+        get() = data.userCount.value
 
     /**
      * Requests the [Guild] this event is on.
