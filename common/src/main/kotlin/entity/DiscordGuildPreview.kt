@@ -17,5 +17,6 @@ public data class DiscordGuildPreview(
     val approximateMemberCount: Int,
     @SerialName("approximate_presence_count")
     val approximatePresenceCount: Int,
-    val description: String?
+    val description: String?,
+    val stickers: List<DiscordMessageSticker>,
 )

@@ -14,7 +14,7 @@ public class GuildPreview(
         get() = data.id
 
     /**
-     * The name of the guild
+     * The name of the guild.
      */
     public val name: String get() = data.name
 
@@ -34,7 +34,7 @@ public class GuildPreview(
     public val discoverySplash: String? get() = data.discoverySplash
 
     /**
-     * Ids of custom guild emojis.
+     * Custom guild emojis.
      */
     public val emojis: Set<GuildEmoji> get() = data.emojis.map { GuildEmoji(it, kord) }.toSet()
 
@@ -58,8 +58,12 @@ public class GuildPreview(
      */
     public val description: String? get() = data.description
 
+    /**
+     * Custom guild stickers.
+     */
+    public val stickers: Set<Sticker> get() = data.stickers.map { GuildSticker(it, kord) }.toSet()
+
     override fun toString(): String {
         return "GuildPreview(data=$data, kord=$kord)"
     }
-
 }
