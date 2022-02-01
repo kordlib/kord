@@ -486,8 +486,8 @@ public class Kord(
         builder: MessageCommandCreateBuilder.() -> Unit = {},
     ): GlobalMessageCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = MessageCommandCreateBuilder(name).apply(builder).toRequest()
-        val response = rest.interaction.createGlobalApplicationCommand(resources.applicationId, request)
+        val response =
+            rest.interaction.createGlobalMessageCommandApplicationCommand(resources.applicationId, name, builder)
         val data = ApplicationCommandData.from(response)
         return GlobalMessageCommand(data, rest.interaction)
     }

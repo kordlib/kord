@@ -14,6 +14,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
+import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
@@ -240,6 +241,17 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Webhook(data, kord)
     }
 
+    override suspend fun getWebhookMessageOrNull(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake?,
+    ): Message? = catchNotFound {
+        val response = webhook.getWebhookMessage(webhookId, token, messageId, threadId)
+        val data = MessageData.from(response)
+        Message(data, kord)
+    }
+
     public suspend fun getInviteOrNull(code: String, withCounts: Boolean): Invite? = catchNotFound {
         val response = invite.getInvite(code, withCounts)
         Invite(InviteData.from(response), kord)
@@ -393,15 +405,35 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
+    /**
+     * Requests the initial interaction response, returns `null` if the initial interaction response isn't present.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
     public suspend fun getOriginalInteractionOrNull(applicationId: Snowflake, token: String): Message? = catchNotFound {
         val response = interaction.getInteractionResponse(applicationId, token)
         val data = MessageData.from(response)
         Message(data, kord)
     }
 
+    /**
+     * Requests the initial interaction response.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the initial interaction response is null.
+     */
+    public suspend fun getOriginalInteraction(applicationId: Snowflake, token: String): Message =
+        getOriginalInteractionOrNull(applicationId, token) ?: EntityNotFoundException.interactionNotFound(token)
 
-    public suspend fun getOriginalInteraction(applicationId: Snowflake, token: String): Message {
-        return getOriginalInteractionOrNull(applicationId, token) ?: EntityNotFoundException.interactionNotFound(token)
+    override suspend fun getFollowupMessageOrNull(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+    ): PublicFollowupMessage? = catchNotFound {
+        val response = interaction.getFollowupMessage(applicationId, interactionToken, messageId)
+        val data = MessageData.from(response)
+        val message = Message(data, kord)
+        PublicFollowupMessage(message, applicationId, interactionToken, kord)
     }
 
     override fun getGuildApplicationCommandPermissions(

@@ -224,7 +224,7 @@ public class UnknownApplicationCommandInteraction(
 /**
  * ActionInteraction indicating an auto-complete request from Discord.
  *
- * **Follow-ups and normals responses don't work on this type**
+ * **Followups and normals responses don't work on this type**
  *
  * **No matter what argument type is used all [focused][CommandArgument.focused] arguments will be [CommandArgument.AutoCompleteArgument]s**
  *
@@ -246,7 +246,7 @@ internal fun AutoCompleteInteraction(
 /**
  * ActionInteraction indicating an auto-complete request from Discord.
  *
- * **Follow-ups and normals responses don't work on this type**
+ * **Followups and normals responses don't work on this type**
  *
  * @see ApplicationCommandInteraction
  */
@@ -262,7 +262,7 @@ public class GlobalAutoCompleteInteraction(
 /**
  * ActionInteraction indicating an auto-complete request from Discord on a guild.
  *
- * **Follow-ups and normals responses don't work on this type**
+ * **Followups and normals responses don't work on this type**
  *
  * @see ApplicationCommandInteraction
  */

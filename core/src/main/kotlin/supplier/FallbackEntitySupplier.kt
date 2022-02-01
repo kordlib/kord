@@ -9,6 +9,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
+import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
@@ -105,6 +106,14 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? =
         first.getWebhookWithTokenOrNull(id, token) ?: second.getWebhookWithTokenOrNull(id, token)
 
+    override suspend fun getWebhookMessageOrNull(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake?,
+    ): Message? = first.getWebhookMessageOrNull(webhookId, token, messageId, threadId)
+        ?: second.getWebhookMessageOrNull(webhookId, token, messageId, threadId)
+
     override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? =
         first.getGuildPreviewOrNull(guildId) ?: second.getGuildPreviewOrNull(guildId)
 
@@ -194,6 +203,13 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     ): Flow<ApplicationCommandPermissions> =
         first.getGuildApplicationCommandPermissions(applicationId, guildId)
             .switchIfEmpty(second.getGuildApplicationCommandPermissions(applicationId, guildId))
+
+    override suspend fun getFollowupMessageOrNull(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+    ): PublicFollowupMessage? = first.getFollowupMessageOrNull(applicationId, interactionToken, messageId)
+        ?: second.getFollowupMessageOrNull(applicationId, interactionToken, messageId)
 
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =
         first.getGuildScheduledEvents(guildId).switchIfEmpty(second.getGuildScheduledEvents(guildId))
