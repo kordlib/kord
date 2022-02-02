@@ -35,15 +35,15 @@ import kotlinx.serialization.encoding.Encoder
  * ```
  */
 @Serializable(with = OptionalSnowflake.Serializer::class)
-sealed class OptionalSnowflake {
+public sealed class OptionalSnowflake {
 
-    open val value: Snowflake?
+    public open val value: Snowflake?
         get() = when (this) {
             Missing -> null
             is Value -> value
         }
 
-    val asOptional: Optional<Snowflake>
+    public val asOptional: Optional<Snowflake>
         get() = when (this) {
             Missing -> Optional.Missing()
             is Value -> Optional.Value(value)
@@ -52,7 +52,7 @@ sealed class OptionalSnowflake {
     /**
      * returns [default] if the optional is [Missing], or [Value.value] if is [Value].
      */
-    fun orElse(default: Snowflake): Snowflake = when (this) {
+    public fun orElse(default: Snowflake): Snowflake = when (this) {
         Missing -> default
         is Value -> value
     }
@@ -60,7 +60,7 @@ sealed class OptionalSnowflake {
     /**
      * Represents a [Snowflake] field that was not present in the serialized entity.
      */
-    object Missing : OptionalSnowflake() {
+    public object Missing : OptionalSnowflake() {
         override fun toString(): String = "OptionalSnowflake.Missing"
     }
 
@@ -71,16 +71,16 @@ sealed class OptionalSnowflake {
      * @param uLongValue the raw value this optional wraps.
      * See [Snowflake.value] and [Snowflake.validValues] for more details.
      */
-    class Value(private val uLongValue: ULong) : OptionalSnowflake() {
+    public class Value(private val uLongValue: ULong) : OptionalSnowflake() {
 
-        constructor(value: Snowflake) : this(value.value)
+        public constructor(value: Snowflake) : this(value.value)
 
         override val value: Snowflake get() = Snowflake(uLongValue)
 
         /**
          * Destructures this optional to its [value].
          */
-        operator fun component1(): Snowflake = value
+        public operator fun component1(): Snowflake = value
 
         override fun toString(): String = "OptionalSnowflake.Value(snowflake=$value)"
 
@@ -110,18 +110,18 @@ sealed class OptionalSnowflake {
 /**
  * returns `null` if this is `null` or [OptionalSnowflake.Missing], calls [OptionalSnowflake.Value.value] otherwise.
  */
-val OptionalSnowflake?.value: Snowflake?
+public val OptionalSnowflake?.value: Snowflake?
     get() = when (this) {
         is OptionalSnowflake.Value -> value
         OptionalSnowflake.Missing, null -> null
     }
 
-fun Snowflake.optionalSnowflake(): OptionalSnowflake.Value = OptionalSnowflake.Value(this.value)
+public fun Snowflake.optionalSnowflake(): OptionalSnowflake.Value = OptionalSnowflake.Value(this.value)
 
 @JvmName("optionalNullable")
-fun Snowflake?.optionalSnowflake(): OptionalSnowflake.Value? = this?.optionalSnowflake()
+public fun Snowflake?.optionalSnowflake(): OptionalSnowflake.Value? = this?.optionalSnowflake()
 
-inline fun <T : Any> OptionalSnowflake.map(mapper: (Snowflake) -> T): Optional<T> = when (this) {
+public inline fun <T : Any> OptionalSnowflake.map(mapper: (Snowflake) -> T): Optional<T> = when (this) {
     OptionalSnowflake.Missing -> Optional.Missing()
     is OptionalSnowflake.Value -> Optional.Value(mapper(value))
 }

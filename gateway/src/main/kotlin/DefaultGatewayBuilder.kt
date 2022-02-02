@@ -12,21 +12,19 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.time.Duration.Companion.seconds
 
-class DefaultGatewayBuilder {
-    var url = "wss://gateway.discord.gg/?v=9&encoding=json&compress=zlib-stream"
-    var client: HttpClient? = null
-    var reconnectRetry: Retry? = null
-    var sendRateLimiter: RateLimiter? = null
-    var identifyRateLimiter: RateLimiter? = null
-    var dispatcher: CoroutineDispatcher = Dispatchers.Default
-    var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
+public class DefaultGatewayBuilder {
+    public var url: String = "wss://gateway.discord.gg/?v=9&encoding=json&compress=zlib-stream"
+    public var client: HttpClient? = null
+    public var reconnectRetry: Retry? = null
+    public var sendRateLimiter: RateLimiter? = null
+    public var identifyRateLimiter: RateLimiter? = null
+    public var dispatcher: CoroutineDispatcher = Dispatchers.Default
+    public var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
-    @OptIn(ObsoleteCoroutinesApi::class)
-    fun build(): DefaultGateway {
+    public fun build(): DefaultGateway {
         val client = client ?: HttpClient(CIO) {
             install(WebSockets)
             install(JsonFeature)

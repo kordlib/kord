@@ -20,7 +20,7 @@ import kotlinx.serialization.encoding.Encoder
  * @param unavailable Whether the Guild is unavailable. Contains a value on true.
  */
 @Serializable
-data class DiscordUnavailableGuild(
+public data class DiscordUnavailableGuild(
     val id: Snowflake,
     val unavailable: OptionalBoolean = OptionalBoolean.Missing,
 )
@@ -77,7 +77,7 @@ data class DiscordUnavailableGuild(
  * @param nsfwLevel Guild NSFW level.
  */
 @Serializable
-data class DiscordGuild(
+public data class DiscordGuild(
     val id: Snowflake,
     val name: String,
     val icon: String?,
@@ -171,7 +171,7 @@ data class DiscordGuild(
  * @param features The enabled guild features.
  */
 @Serializable
-data class DiscordPartialGuild(
+public data class DiscordPartialGuild(
     val id: Snowflake,
     val name: String,
     val icon: String?,
@@ -186,77 +186,77 @@ data class DiscordPartialGuild(
  * A representation of a [Discord Guild Feature](https://discord.com/developers/docs/resources/guild#guild-object-guild-features).
  */
 @Serializable(with = GuildFeature.Serializer::class)
-sealed class GuildFeature(val value: String) {
+public sealed class GuildFeature(public val value: String) {
 
     override fun toString(): String = "GuildFeature(value=$value)"
 
-    class Unknown(value: String) : GuildFeature(value)
+    public class Unknown(value: String) : GuildFeature(value)
 
     /** Guild has access to set an invite splash background */
-    object InviteSplash : GuildFeature("INVITE_SPLASH")
+    public object InviteSplash : GuildFeature("INVITE_SPLASH")
 
     /** Guild has access to set 384kbps bitrate in voice (previously VIP voice servers) */
-    object VIPRegions : GuildFeature("VIP_REGIONS")
+    public object VIPRegions : GuildFeature("VIP_REGIONS")
 
     /** Guild has access to set a vanity URL */
-    object VanityUrl : GuildFeature("VANITY_URL")
+    public object VanityUrl : GuildFeature("VANITY_URL")
 
     /** Guild is verified */
-    object Verified : GuildFeature("VERIFIED")
+    public object Verified : GuildFeature("VERIFIED")
 
     /** Guild is partnered */
-    object Partnered : GuildFeature("PARTNERED")
+    public object Partnered : GuildFeature("PARTNERED")
 
     /** Guild can enable welcome screen and discovery, and receives community updates */
-    object Community : GuildFeature("COMMUNITY")
+    public object Community : GuildFeature("COMMUNITY")
 
     /** Guild has access to use commerce features (i.e. create store channels) */
-    object Commerce : GuildFeature("COMMERCE")
+    public object Commerce : GuildFeature("COMMERCE")
 
     /** Guild has access to create news channels */
-    object News : GuildFeature("NEWS")
+    public object News : GuildFeature("NEWS")
 
     /** Guild is lurkable and able to be discovered directly */
-    object Discoverable : GuildFeature("DISCOVERABLE")
+    public object Discoverable : GuildFeature("DISCOVERABLE")
 
     /** Guild is able to be featured in the directory */
-    object Featurable : GuildFeature("FEATURABLE")
+    public object Featurable : GuildFeature("FEATURABLE")
 
     /** Guild has access to set an animated guild icon */
-    object AnimatedIcon : GuildFeature("ANIMATED_ICON")
+    public object AnimatedIcon : GuildFeature("ANIMATED_ICON")
 
     /** Guild has access to set a guild banner image */
-    object Banner : GuildFeature("BANNER")
+    public object Banner : GuildFeature("BANNER")
 
     /** Guild has enabled the welcome screen */
-    object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
+    public object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
 
     /** Guild has enabled ticketed events */
-    object TicketedEventsEnabled : GuildFeature("TICKETED_EVENTS_ENABLED")
+    public object TicketedEventsEnabled : GuildFeature("TICKETED_EVENTS_ENABLED")
 
     /** Guild has enabled monetization */
-    object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
+    public object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
 
     /** Guild has increased custom sticker slots */
-    object MoreStickers : GuildFeature("MORE_STICKERS")
+    public object MoreStickers : GuildFeature("MORE_STICKERS")
 
     /** Guild has access to the three-day archive time for threads */
-    object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
+    public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
 
     /** Guild has access to the seven day archive time for threads */
-    object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
+    public object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
 
     /** Guild has access to create private threads */
-    object PrivateThreads : GuildFeature("PRIVATE_THREADS")
+    public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
 
     /** Guild has enabled Membership Screening */
-    object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED")
+    public object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED")
 
     /** Guild can be previewed before joining via Membership Screening or the directory */
-    object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
+    public object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
 
     /** Guild is able to set role icons */
-    object RoleIcons : GuildFeature("ROLE_ICONS")
+    public object RoleIcons : GuildFeature("ROLE_ICONS")
 
     internal object Serializer : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor
@@ -295,17 +295,13 @@ sealed class GuildFeature(val value: String) {
 }
 
 @Serializable(with = SystemChannelFlags.Companion::class)
-class SystemChannelFlags constructor(val code: Int) {
+public data class SystemChannelFlags(val code: Int) {
 
-    operator fun contains(flag: SystemChannelFlags): Boolean {
+    public operator fun contains(flag: SystemChannelFlags): Boolean {
         return this.code and flag.code == flag.code
     }
 
-    override fun equals(other: Any?): Boolean {
-        return (other as? SystemChannelFlags ?: return false).code == code
-    }
-
-    companion object : KSerializer<SystemChannelFlags> {
+    public companion object : KSerializer<SystemChannelFlags> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("system_channel_flags", PrimitiveKind.INT)
@@ -324,7 +320,7 @@ class SystemChannelFlags constructor(val code: Int) {
 /**
  * A representation of a [Discord Channels Flag](https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags).
  */
-enum class SystemChannelFlag(val code: Int) {
+public enum class SystemChannelFlag(public val code: Int) {
     /** Suppress member join notifications. **/
     SuppressJoinNotifications(1.shl(0)),
 
@@ -333,20 +329,20 @@ enum class SystemChannelFlag(val code: Int) {
 }
 
 @Serializable
-data class DiscordGuildBan(
+public data class DiscordGuildBan(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val user: DiscordUser,
 )
 
 @Serializable
-data class DiscordGuildIntegrations(
+public data class DiscordGuildIntegrations(
     @SerialName("guild_id")
     val guildId: Snowflake,
 )
 
 @Serializable
-data class DiscordIntegrationAccount(
+public data class DiscordIntegrationAccount(
     val id: String,
     val name: String,
 )
@@ -361,7 +357,7 @@ data class DiscordIntegrationAccount(
  * and not attempt to reconnect until a new voice server is allocated.
  */
 @Serializable
-data class DiscordVoiceServerUpdateData(
+public data class DiscordVoiceServerUpdateData(
     val token: String,
     @SerialName("guild_id")
     val guildId: Snowflake,
@@ -369,7 +365,7 @@ data class DiscordVoiceServerUpdateData(
 )
 
 @Serializable
-data class DiscordWebhooksUpdateData(
+public data class DiscordWebhooksUpdateData(
     @SerialName("guild_id")
     val guildId: Snowflake,
     @SerialName("channel_id")
@@ -394,7 +390,7 @@ data class DiscordWebhooksUpdateData(
  * @param suppress Whether this user is muted by the current user.
  */
 @Serializable
-data class DiscordVoiceState(
+public data class DiscordVoiceState(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("channel_id")
@@ -425,13 +421,12 @@ data class DiscordVoiceState(
  *
  * @param id Unique id for the region.
  * @param name Name of the region.
- * @param vip True if this is a vip-only server.
  * @param optimal True for a single server that is closest to the current user's client.
  * @param deprecated Whether this is a deprecated voice server (avoid switching to these).
  * @param custom Whether this is a custom voice region (used for events/etc).
  */
 @Serializable
-data class DiscordVoiceRegion(
+public data class DiscordVoiceRegion(
     val id: String,
     val name: String,
     val optimal: Boolean,
@@ -443,12 +438,12 @@ data class DiscordVoiceRegion(
  * A representation of a [Discord Premium tier](https://discord.com/developers/docs/resources/guild#guild-object-premium-tier).
  */
 @Serializable(with = PremiumTier.Serializer::class)
-sealed class PremiumTier(val value: Int) {
-    class Unknown(value: Int) : PremiumTier(value)
-    object None : PremiumTier(0)
-    object One : PremiumTier(1)
-    object Two : PremiumTier(2)
-    object Three : PremiumTier(3)
+public sealed class PremiumTier(public val value: Int) {
+    public class Unknown(value: Int) : PremiumTier(value)
+    public object None : PremiumTier(0)
+    public object One : PremiumTier(1)
+    public object Two : PremiumTier(2)
+    public object Three : PremiumTier(3)
 
     internal object Serializer : KSerializer<PremiumTier> {
         override val descriptor: SerialDescriptor
@@ -470,10 +465,10 @@ sealed class PremiumTier(val value: Int) {
 }
 
 @Serializable(with = DefaultMessageNotificationLevel.Serializer::class)
-sealed class DefaultMessageNotificationLevel(val value: Int) {
-    class Unknown(value: Int) : DefaultMessageNotificationLevel(value)
-    object AllMessages : DefaultMessageNotificationLevel(0)
-    object OnlyMentions : DefaultMessageNotificationLevel(1)
+public sealed class DefaultMessageNotificationLevel(public val value: Int) {
+    public class Unknown(value: Int) : DefaultMessageNotificationLevel(value)
+    public object AllMessages : DefaultMessageNotificationLevel(0)
+    public object OnlyMentions : DefaultMessageNotificationLevel(1)
 
     internal object Serializer : KSerializer<DefaultMessageNotificationLevel> {
         override val descriptor: SerialDescriptor
@@ -494,11 +489,11 @@ sealed class DefaultMessageNotificationLevel(val value: Int) {
 }
 
 @Serializable(with = ExplicitContentFilter.Serializer::class)
-sealed class ExplicitContentFilter(val value: Int) {
-    class Unknown(value: Int) : ExplicitContentFilter(value)
-    object Disabled : ExplicitContentFilter(0)
-    object MembersWithoutRoles : ExplicitContentFilter(1)
-    object AllMembers : ExplicitContentFilter(2)
+public sealed class ExplicitContentFilter(public val value: Int) {
+    public class Unknown(value: Int) : ExplicitContentFilter(value)
+    public object Disabled : ExplicitContentFilter(0)
+    public object MembersWithoutRoles : ExplicitContentFilter(1)
+    public object AllMembers : ExplicitContentFilter(2)
 
     internal object Serializer : KSerializer<ExplicitContentFilter> {
 
@@ -520,10 +515,10 @@ sealed class ExplicitContentFilter(val value: Int) {
 }
 
 @Serializable(with = MFALevel.Serializer::class)
-sealed class MFALevel(val value: Int) {
-    class Unknown(value: Int) : MFALevel(value)
-    object None : MFALevel(0)
-    object Elevated : MFALevel(1)
+public sealed class MFALevel(public val value: Int) {
+    public class Unknown(value: Int) : MFALevel(value)
+    public object None : MFALevel(0)
+    public object Elevated : MFALevel(1)
 
     internal object Serializer : KSerializer<MFALevel> {
 
@@ -546,16 +541,16 @@ sealed class MFALevel(val value: Int) {
  * A representation of a [Discord Guild NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level).
  */
 @Serializable(with = NsfwLevel.Serializer::class)
-sealed class NsfwLevel(val value: Int) {
-    class Unknown(value: Int) : NsfwLevel(value)
+public sealed class NsfwLevel(public val value: Int) {
+    public class Unknown(value: Int) : NsfwLevel(value)
 
-    object Default : NsfwLevel(0)
+    public object Default : NsfwLevel(0)
 
-    object Explicit : NsfwLevel(1)
+    public object Explicit : NsfwLevel(1)
 
-    object Safe : NsfwLevel(2)
+    public object Safe : NsfwLevel(2)
 
-    object AgeRestricted : NsfwLevel(3)
+    public object AgeRestricted : NsfwLevel(3)
 
     internal object Serializer : KSerializer<NsfwLevel> {
 
@@ -582,23 +577,23 @@ sealed class NsfwLevel(val value: Int) {
  * A representation of a [Discord Verification Level](https://discord.com/developers/docs/resources/guild#guild-object-verification-level).
  */
 @Serializable(with = VerificationLevel.Serializer::class)
-sealed class VerificationLevel(val value: Int) {
-    class Unknown(value: Int) : VerificationLevel(value)
+public sealed class VerificationLevel(public val value: Int) {
+    public class Unknown(value: Int) : VerificationLevel(value)
 
     /** Unrestricted. */
-    object None : VerificationLevel(0)
+    public object None : VerificationLevel(0)
 
     /** Must have verified email and account.  */
-    object Low : VerificationLevel(1)
+    public object Low : VerificationLevel(1)
 
     /** Must be registered on Discord for longer than 5 minutes. */
-    object Medium : VerificationLevel(2)
+    public object Medium : VerificationLevel(2)
 
     /** Must be member of the server for longer than 10 minutes */
-    object High : VerificationLevel(3)
+    public object High : VerificationLevel(3)
 
     /** Must have a verified phone number */
-    object VeryHigh : VerificationLevel(4)
+    public object VeryHigh : VerificationLevel(4)
 
     internal object Serializer : KSerializer<VerificationLevel> {
 
@@ -622,7 +617,7 @@ sealed class VerificationLevel(val value: Int) {
 }
 
 @Serializable
-data class DiscordWelcomeScreenChannel(
+public data class DiscordWelcomeScreenChannel(
     @SerialName("channel_id")
     val channelId: Snowflake,
     val description: String,
@@ -633,7 +628,7 @@ data class DiscordWelcomeScreenChannel(
 )
 
 @Serializable
-data class DiscordWelcomeScreen(
+public data class DiscordWelcomeScreen(
     val description: String?,
     @SerialName("welcome_channels")
     val welcomeChannels: List<DiscordWelcomeScreenChannel>

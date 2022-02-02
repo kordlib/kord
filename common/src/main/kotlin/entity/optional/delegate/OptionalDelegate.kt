@@ -5,7 +5,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 
-fun <V : Any> KMutableProperty0<Optional<V>>.delegate(): ReadWriteProperty<Any?, V?> =
+public fun <V : Any> KMutableProperty0<Optional<V>>.delegate(): ReadWriteProperty<Any?, V?> =
     object : ReadWriteProperty<Any?, V?> {
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: V?) {
@@ -23,7 +23,7 @@ fun <V : Any> KMutableProperty0<Optional<V>>.delegate(): ReadWriteProperty<Any?,
         }
     }
 
-fun <V : Any> KMutableProperty0<Optional<List<V>>>.delegateList(): ReadWriteProperty<Any?, List<V>> =
+public fun <V : Any> KMutableProperty0<Optional<List<V>>>.delegateList(): ReadWriteProperty<Any?, List<V>> =
     object : ReadWriteProperty<Any?, List<V>> {
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: List<V>) {
@@ -42,7 +42,7 @@ fun <V : Any> KMutableProperty0<Optional<List<V>>>.delegateList(): ReadWriteProp
     }
 
 @JvmName("provideNullableDelegate")
-fun <V : Any> KMutableProperty0<Optional<V?>>.delegate(): ReadWriteProperty<Any?, V?> =
+public fun <V : Any> KMutableProperty0<Optional<V?>>.delegate(): ReadWriteProperty<Any?, V?> =
     object : ReadWriteProperty<Any?, V?> {
 
         override fun getValue(thisRef: Any?, property: KProperty<*>): V? {

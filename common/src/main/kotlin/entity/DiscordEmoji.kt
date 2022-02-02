@@ -18,7 +18,7 @@ import kotlinx.serialization.Serializable
  * @param available Whether this emoji can be used, may be false due to loss of [boost level][PremiumTier].
  */
 @Serializable
-data class DiscordEmoji(
+public data class DiscordEmoji(
     val id: Snowflake?,
     val name: String?,
     val roles: Optional<List<Snowflake>> = Optional.Missing(),
@@ -31,7 +31,7 @@ data class DiscordEmoji(
 )
 
 @Serializable
-data class DiscordUpdatedEmojis(
+public data class DiscordUpdatedEmojis(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val emojis: List<DiscordEmoji>,
@@ -46,7 +46,7 @@ data class DiscordUpdatedEmojis(
  * @param animated Whether this emoji is animated.
  */
 @Serializable
-data class DiscordPartialEmoji(
+public data class DiscordPartialEmoji(
     val id: Snowflake? = null,
     val name: String? = null,
     val animated: OptionalBoolean = OptionalBoolean.Missing,

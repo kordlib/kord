@@ -7,7 +7,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 
-fun KMutableProperty0<OptionalInt>.delegate(): ReadWriteProperty<Any?, Int?> = object : ReadWriteProperty<Any?, Int?> {
+public fun KMutableProperty0<OptionalInt>.delegate(): ReadWriteProperty<Any?, Int?> = object : ReadWriteProperty<Any?, Int?> {
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): Int? {
         return this@delegate.get().value
@@ -22,7 +22,7 @@ fun KMutableProperty0<OptionalInt>.delegate(): ReadWriteProperty<Any?, Int?> = o
 }
 
 @JvmName("provideNullableDelegate")
-fun KMutableProperty0<OptionalInt?>.delegate(): ReadWriteProperty<Any?, Int?> = object : ReadWriteProperty<Any?, Int?> {
+public fun KMutableProperty0<OptionalInt?>.delegate(): ReadWriteProperty<Any?, Int?> = object : ReadWriteProperty<Any?, Int?> {
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): Int? {
         return this@delegate.get().value

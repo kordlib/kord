@@ -18,10 +18,18 @@ public class TextChannelThread(
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : ThreadChannel {
+
     /**
-     * Whether this thread is private
+     * Whether this thread is private.
      */
     public val isPrivate: Boolean get() = data.type == ChannelType.PrivateThread
+
+    /**
+     * Whether non-moderators can add other non-moderators to a thread.
+     *
+     * This is only applicable to [private][isPrivate] threads and will always be `false` for public threads.
+     */
+    public val isInvitable: Boolean get() = data.threadMetadata.value!!.invitable.discordBoolean
 
     override suspend fun getParent(): TextChannel {
         return supplier.getChannelOf(parentId)

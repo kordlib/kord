@@ -10,6 +10,7 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.behavior.interaction.InteractionResponseBehavior
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
@@ -17,17 +18,14 @@ import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.component.Component
 import dev.kord.core.entity.interaction.ActionInteraction
+import dev.kord.core.entity.interaction.FollowupMessage
 import dev.kord.core.entity.interaction.MessageInteraction
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import java.util.Objects
@@ -63,7 +61,9 @@ public class Message(
     /**
      * The author of this message, if it was created by a [User].
      *
-     * Returns null if the author is not a Discord account, like a [Webhook] or systems message.
+     * Returns null if the author is not a Discord account, like a [Webhook] or systems message. This also applies to
+     * [interaction responses][InteractionResponseBehavior] and [followup messages][FollowupMessage] since
+     * [they are webhooks under the hood](https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction).
      */
     public val author: User?
         get() = if (data.webhookId.value == data.author.id) null
@@ -109,7 +109,7 @@ public class Message(
     /**
      * The stickers sent with this message.
      */
-    public val stickers: List<StickerItem> get() = data.stickers.orEmpty().map { StickerItem(it, kord,) }
+    public val stickers: List<StickerItem> get() = data.stickers.orEmpty().map { StickerItem(it, kord) }
 
     /**
      * If the message is a response to an [ActionInteraction], this is the id of the interaction's application

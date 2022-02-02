@@ -2,24 +2,24 @@ package dev.kord.rest.route
 
 import dev.kord.common.entity.Snowflake
 
-sealed interface Position {
-    val key: String
-    val value: Snowflake
+public sealed interface Position {
+    public val key: String
+    public val value: Snowflake
 
-    sealed interface BeforeOrAfter : Position
+    public sealed interface BeforeOrAfter : Position
 
-    class Before(id: Snowflake) : BeforeOrAfter {
-        override val key get() = "before"
-        override val value = id
+    public class Before(id: Snowflake) : BeforeOrAfter {
+        override val key: String get() = "before"
+        override val value: Snowflake = id
     }
 
-    class After(id: Snowflake) : BeforeOrAfter {
-        override val key get() = "after"
-        override val value = id
+    public class After(id: Snowflake) : BeforeOrAfter {
+        override val key: String get() = "after"
+        override val value: Snowflake = id
     }
 
-    class Around(id: Snowflake) : Position {
-        override val key get() = "around"
-        override val value = id
+    public class Around(id: Snowflake) : Position {
+        override val key: String get() = "around"
+        override val value: Snowflake = id
     }
 }

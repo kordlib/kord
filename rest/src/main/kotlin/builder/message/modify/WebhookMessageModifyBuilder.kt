@@ -13,8 +13,8 @@ import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.MultipartWebhookEditMessageRequest
 import dev.kord.rest.json.request.WebhookEditMessageRequest
 
-class WebhookMessageModifyBuilder
-    : MessageModifyBuilder,
+public class WebhookMessageModifyBuilder :
+    MessageModifyBuilder,
     RequestBuilder<MultipartWebhookEditMessageRequest> {
 
     private var state = MessageModifyStateHolder()

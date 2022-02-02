@@ -12,6 +12,7 @@ import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
+import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
@@ -393,6 +394,38 @@ public interface EntitySupplier {
         getWebhookWithTokenOrNull(id, token) ?: EntityNotFoundException.webhookNotFound(id)
 
     /**
+     * Requests the [Message] with the given [messageId] previously sent from a [Webhook] with the given [webhookId]
+     * using the [token] for authentication, returns `null` when the message isn't present.
+     *
+     * If the message is in a thread, [threadId] must be specified.
+     *
+     * @throws RequestException if something went wrong while retrieving the message.
+     */
+    public suspend fun getWebhookMessageOrNull(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake? = null,
+    ): Message?
+
+    /**
+     * Requests the [Message] with the given [messageId] previously sent from a [Webhook] with the given [webhookId]
+     * using the [token] for authentication.
+     *
+     * If the message is in a thread, [threadId] must be specified.
+     *
+     * @throws RequestException if something went wrong while retrieving the message.
+     * @throws EntityNotFoundException if the message is null.
+     */
+    public suspend fun getWebhookMessage(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake? = null,
+    ): Message = getWebhookMessageOrNull(webhookId, token, messageId, threadId)
+        ?: EntityNotFoundException.webhookMessageNotFound(webhookId, token, messageId, threadId)
+
+    /**
      * Requests the [Template] with the given [code].
      * returns null when the template isn't present.
      *
@@ -492,6 +525,32 @@ public interface EntitySupplier {
         applicationId: Snowflake,
         guildId: Snowflake,
     ): Flow<ApplicationCommandPermissions>
+
+    /**
+     * Requests a followup message for an interaction response. Does not support ephemeral followups.
+     * Returns `null` if the followup message isn't present.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun getFollowupMessageOrNull(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+    ): PublicFollowupMessage?
+
+    /**
+     * Requests a followup message for an interaction response. Does not support ephemeral followups.
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the followup message is null.
+     */
+    public suspend fun getFollowupMessage(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+    ): PublicFollowupMessage =
+        getFollowupMessageOrNull(applicationId, interactionToken, messageId)
+            ?: EntityNotFoundException.followupMessageNotFound(interactionToken, messageId)
 
     public fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent>
 

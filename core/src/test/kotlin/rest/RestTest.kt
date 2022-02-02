@@ -377,7 +377,7 @@ class RestServiceTest {
             content = "a"
         }
 
-        message.editWebhookMessage(webhook.id, webhook.token!!) {
+        message.edit(webhook.id, webhook.token!!) {
             content = "b"
         }
 

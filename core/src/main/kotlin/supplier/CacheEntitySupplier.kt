@@ -20,6 +20,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
+import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.flow.*
@@ -46,7 +47,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      *
      * Shorthand for [kord.cache][Kord.cache].
      */
-    private val cache: DataCache get() = kord.cache
+    private inline val cache: DataCache get() = kord.cache
 
     /**
      *  Returns a [Flow] of [Channel]s fetched from cache.
@@ -261,6 +262,21 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Webhook(data, kord)
     }
 
+    override suspend fun getWebhookMessageOrNull(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake?,
+    ): Message? {
+        val data = cache.query<MessageData> {
+            idEq(MessageData::webhookId, webhookId)
+            idEq(MessageData::id, messageId)
+            if (threadId != null) idEq(MessageData::channelId, threadId)
+        }.singleOrNull() ?: return null
+
+        return Message(data, kord)
+    }
+
     override suspend fun getUserOrNull(id: Snowflake): User? {
         val data = cache.query<UserData> { idEq(UserData::id, id) }.singleOrNull() ?: return null
 
@@ -433,6 +449,19 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.singleOrNull() ?: return null
 
         return ApplicationCommandPermissions(data)
+    }
+
+    override suspend fun getFollowupMessageOrNull(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+    ): PublicFollowupMessage? {
+        val data = cache.query<MessageData> {
+            idEq(MessageData::applicationId, applicationId)
+            idEq(MessageData::id, messageId)
+        }.singleOrNull() ?: return null
+
+        return PublicFollowupMessage(Message(data, kord), applicationId, interactionToken, kord)
     }
 
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? {

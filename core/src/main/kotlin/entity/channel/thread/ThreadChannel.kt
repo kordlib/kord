@@ -63,7 +63,7 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
         get() = archiveTimestamp
 
     /**
-     * timestamp when the thread's archive status was last changed.
+     * The timestamp when the thread's archive status was last changed.
      */
     public val archiveTimestamp: Instant get() = threadData.archiveTimestamp.toInstant()
 
@@ -71,6 +71,13 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
      * The time in which the thread will be auto archived after inactivity.
      */
     public val autoArchiveDuration: ArchiveDuration get() = threadData.autoArchiveDuration
+
+    /**
+     * The timestamp when the thread was created.
+     *
+     * This is only available for threads created after 2022-01-09.
+     */
+    public val createTimestamp: Instant? get() = threadData.createTimestamp.value
 
     /**
      * amount of seconds a user has to wait before sending another message

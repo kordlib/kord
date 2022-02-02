@@ -13,9 +13,9 @@ import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler) {
+public class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend inline fun createEmoji(
+    public suspend inline fun createEmoji(
         guildId: Snowflake,
         name: String,
         image: Image,
@@ -33,21 +33,24 @@ class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend fun createEmoji(guildId: Snowflake, emoji: EmojiCreateRequest, reason: String? = null) =
-        call(Route.GuildEmojiPost) {
-            keys[Route.GuildId] = guildId
-            body(EmojiCreateRequest.serializer(), emoji)
-            auditLogReason(reason)
-        }
+    public suspend fun createEmoji(
+        guildId: Snowflake,
+        emoji: EmojiCreateRequest,
+        reason: String? = null,
+    ): DiscordEmoji = call(Route.GuildEmojiPost) {
+        keys[Route.GuildId] = guildId
+        body(EmojiCreateRequest.serializer(), emoji)
+        auditLogReason(reason)
+    }
 
-    suspend fun deleteEmoji(guildId: Snowflake, emojiId: Snowflake, reason: String? = null) =
+    public suspend fun deleteEmoji(guildId: Snowflake, emojiId: Snowflake, reason: String? = null): Unit =
         call(Route.GuildEmojiDelete) {
             keys[Route.GuildId] = guildId
             keys[Route.EmojiId] = emojiId
             auditLogReason(reason)
         }
 
-    suspend inline fun modifyEmoji(
+    public suspend inline fun modifyEmoji(
         guildId: Snowflake,
         emojiId: Snowflake,
         builder: EmojiModifyBuilder.() -> Unit
@@ -64,12 +67,12 @@ class EmojiService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake) = call(Route.GuildEmojiGet) {
+    public suspend fun getEmoji(guildId: Snowflake, emojiId: Snowflake): DiscordEmoji = call(Route.GuildEmojiGet) {
         keys[Route.GuildId] = guildId
         keys[Route.EmojiId] = emojiId
     }
 
-    suspend fun getEmojis(guildId: Snowflake) = call(Route.GuildEmojisGet) {
+    public suspend fun getEmojis(guildId: Snowflake): List<DiscordEmoji> = call(Route.GuildEmojisGet) {
         keys[Route.GuildId] = guildId
     }
 }

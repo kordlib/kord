@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DiscordGuildPreview(
+public data class DiscordGuildPreview(
     val id: Snowflake,
     val name: String,
     val icon: String?,
@@ -17,5 +17,6 @@ data class DiscordGuildPreview(
     val approximateMemberCount: Int,
     @SerialName("approximate_presence_count")
     val approximatePresenceCount: Int,
-    val description: String?
+    val description: String?,
+    val stickers: List<DiscordMessageSticker>,
 )

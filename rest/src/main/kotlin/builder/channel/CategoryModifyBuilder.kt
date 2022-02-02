@@ -9,7 +9,7 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
 
 @KordDsl
-class CategoryModifyBuilder : PermissionOverwritesModifyBuilder, AuditRequestBuilder<ChannelModifyPatchRequest> {
+public class CategoryModifyBuilder : PermissionOverwritesModifyBuilder, AuditRequestBuilder<ChannelModifyPatchRequest> {
 
     override var reason: String? = null
 
@@ -18,21 +18,21 @@ class CategoryModifyBuilder : PermissionOverwritesModifyBuilder, AuditRequestBui
     /**
      * The name of the category.
      */
-    var name: String? by ::_name.delegate()
+    public var name: String? by ::_name.delegate()
 
     private var _position: OptionalInt? = OptionalInt.Missing
 
     /**
      * The position of this category in the guild's channel list.
      */
-    var position: Int? by ::_position.delegate()
+    public var position: Int? by ::_position.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
 
     /**
      *  The permission overwrites for this category.
      */
-    override var permissionOverwrites by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,

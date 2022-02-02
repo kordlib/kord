@@ -6,22 +6,22 @@ import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
 import dev.kord.rest.service.AuditLogService
 
-class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
+public class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
 
     /**
      * The id of the user whose actions should be filtered for. `null` by default.
      */
-    var userId: Snowflake? = null
+    public var userId: Snowflake? = null
 
     /**
      * The type of [AuditLogEvent] which should be filtered for. `null` by default.
      */
-    var action: AuditLogEvent? = null
+    public var action: AuditLogEvent? = null
 
     /**
      * The time, represented as a Snowflake, after which entries are no longer returned.
      */
-    var before: Snowflake? = null
+    public var before: Snowflake? = null
 
     /**
      * How many entries are returned.
@@ -30,7 +30,7 @@ class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
      *
      * When used through pagination in core module: `null` means no limit, must be positive otherwise.
      */
-    var limit: Int? = null
+    public var limit: Int? = null
 
     override fun toRequest(): AuditLogGetRequest = AuditLogGetRequest(userId, action, before, limit)
 }

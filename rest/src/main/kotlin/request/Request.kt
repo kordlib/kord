@@ -4,19 +4,20 @@ import dev.kord.rest.NamedFile
 import dev.kord.rest.route.Route
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
+import io.ktor.http.content.*
 import io.ktor.util.*
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 
-sealed class Request<B : Any, R> {
-    abstract val route: Route<R>
-    abstract val routeParams: Map<Route.Key, String>
-    abstract val headers: StringValues
-    abstract val parameters: StringValues
-    abstract val body: RequestBody<B>?
-    abstract val files: List<NamedFile>?
+public sealed class Request<B : Any, R> {
+    public abstract val route: Route<R>
+    public abstract val routeParams: Map<Route.Key, String>
+    public abstract val headers: StringValues
+    public abstract val parameters: StringValues
+    public abstract val body: RequestBody<B>?
+    public abstract val files: List<NamedFile>?
 
-    val path: String
+    public val path: String
         get() {
             var path = route.path
             routeParams.forEach { (k, v) -> path = path.replaceFirst(k.identifier, v.encodeURLQueryComponent()) }
@@ -24,7 +25,7 @@ sealed class Request<B : Any, R> {
         }
 }
 
-val Request<*, *>.identifier
+public val Request<*, *>.identifier: RequestIdentifier
     get() = when { //The major identifier is always the 'biggest' entity.
         Route.GuildId in routeParams -> RequestIdentifier.MajorParamIdentifier(
             route,
@@ -44,21 +45,21 @@ val Request<*, *>.identifier
 /**
  * A ['per-route'](https://discord.com/developers/docs/topics/rate-limits) identifier for rate limiting purposes.
  */
-sealed class RequestIdentifier {
+public sealed class RequestIdentifier {
     /**
      * An identifier that does not contain any major parameters.
      */
-    data class RouteIdentifier(val route: Route<*>) : RequestIdentifier()
+    public data class RouteIdentifier(val route: Route<*>) : RequestIdentifier()
 
     /**
      * An identifier with a major parameter.
      */
-    data class MajorParamIdentifier(val route: Route<*>, val param: String) : RequestIdentifier()
+    public data class MajorParamIdentifier(val route: Route<*>, val param: String) : RequestIdentifier()
 }
 
-data class RequestBody<T>(val strategy: SerializationStrategy<T>, val body: T) where T : Any
+public data class RequestBody<T>(val strategy: SerializationStrategy<T>, val body: T) where T : Any
 
-class JsonRequest<B : Any, R>(
+public class JsonRequest<B : Any, R>(
     override val route: Route<R>,
     override val routeParams: Map<Route.Key, String>,
     override val parameters: StringValues,
@@ -68,7 +69,7 @@ class JsonRequest<B : Any, R>(
     override val files: List<NamedFile>? = null
 }
 
-class MultipartRequest<B : Any, R>(
+public class MultipartRequest<B : Any, R>(
     override val route: Route<R>,
     override val routeParams: Map<Route.Key, String>,
     override val parameters: StringValues,
@@ -77,7 +78,7 @@ class MultipartRequest<B : Any, R>(
     override val files: List<NamedFile> = emptyList()
 ) : Request<B, R>() {
 
-    val data = formData {
+    public val data: List<PartData> = formData {
         body?.let {
             append("payload_json", Json.encodeToString(it.strategy, it.body))
         }
@@ -97,4 +98,3 @@ class MultipartRequest<B : Any, R>(
         }
     }
 }
-

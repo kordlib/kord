@@ -26,13 +26,13 @@ import kotlin.contracts.contract
     See https://discord.com/developers/docs/topics/gateway#privileged-intents for more info on how to enable these.
 """, Level.ERROR
 )
-annotation class PrivilegedIntent
+public annotation class PrivilegedIntent
 
 /**
  * Values that enable a group of events as [defined by Discord](https://github.com/discord/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents).
  */
-sealed class Intent(val code: DiscordBitSet) {
-    constructor(vararg code: Long) : this(DiscordBitSet(code))
+public sealed class Intent(public val code: DiscordBitSet) {
+    protected constructor(vararg code: Long) : this(DiscordBitSet(code))
 
 
     /**
@@ -47,7 +47,7 @@ sealed class Intent(val code: DiscordBitSet) {
      * - [ChannelDelete]
      * - [ChannelPinsUpdate]
      */
-    object Guilds : Intent(1 shl 0)
+    public object Guilds : Intent(1 shl 0)
 
     /**
      * Enables the following events:
@@ -56,52 +56,52 @@ sealed class Intent(val code: DiscordBitSet) {
      * - [GuildMemberRemove]
      */
     @PrivilegedIntent
-    object GuildMembers : Intent(1 shl 1)
+    public object GuildMembers : Intent(1 shl 1)
 
     /**
      * Enables the following events:
      * - [GuildBanAdd]
      * - [GuildBanRemove]
      */
-    object GuildBans : Intent(1 shl 2)
+    public object GuildBans : Intent(1 shl 2)
 
     /**
      * Enables the following events:
      * - [GuildEmojisUpdate]
      */
-    object GuildEmojis : Intent(1 shl 3)
+    public object GuildEmojis : Intent(1 shl 3)
 
     /**
      * Enables the following events:
      * - [GuildIntegrationsUpdate]
      */
-    object GuildIntegrations : Intent(1 shl 4)
+    public object GuildIntegrations : Intent(1 shl 4)
 
     /**
      * Enables the following events:
      * - [WebhooksUpdate]
      */
-    object GuildWebhooks : Intent(1 shl 5)
+    public object GuildWebhooks : Intent(1 shl 5)
 
     /**
      * Enables the following events:
      * - INVITE_CREATE
      * - INVITE_DELETE
      */
-    object GuildInvites : Intent(1 shl 6)
+    public object GuildInvites : Intent(1 shl 6)
 
     /**
      * Enables the following events:
      * - [VoiceStateUpdate]
      */
-    object GuildVoiceStates : Intent(1 shl 7)
+    public object GuildVoiceStates : Intent(1 shl 7)
 
     /**
      * Enables the following events:
      * - [PresenceUpdate]
      */
     @PrivilegedIntent
-    object GuildPresences : Intent(1 shl 8)
+    public object GuildPresences : Intent(1 shl 8)
 
     /**
      * Enables the following events:
@@ -110,7 +110,7 @@ sealed class Intent(val code: DiscordBitSet) {
      * - [MessageDelete]
      * - [MessageDeleteBulk]
      */
-    object GuildMessages : Intent(1 shl 9)
+    public object GuildMessages : Intent(1 shl 9)
 
     /**
      * Enables the following events:
@@ -119,13 +119,13 @@ sealed class Intent(val code: DiscordBitSet) {
      * - [MessageReactionRemoveAll]
      * - MESSAGE_REACTION_REMOVE_EMOJI
      */
-    object GuildMessageReactions : Intent(1 shl 10)
+    public object GuildMessageReactions : Intent(1 shl 10)
 
     /**
      * Enables the following events:
      * - [TypingStart]
      */
-    object GuildMessageTyping : Intent(1 shl 11)
+    public object GuildMessageTyping : Intent(1 shl 11)
 
     /**
      * Enables the following events:
@@ -134,7 +134,7 @@ sealed class Intent(val code: DiscordBitSet) {
      * - [MessageUpdate]
      * - [MessageDelete]
      */
-    object DirectMessages : Intent(1 shl 12)
+    public object DirectMessages : Intent(1 shl 12)
 
     /**
      * Enables the following events:
@@ -143,13 +143,13 @@ sealed class Intent(val code: DiscordBitSet) {
      * - [MessageReactionRemoveAll]
      * - MESSAGE_REACTION_REMOVE_EMOJI
      */
-    object DirectMessagesReactions : Intent(1 shl 13)
+    public object DirectMessagesReactions : Intent(1 shl 13)
 
     /**
      * Enables the following events:
      * - [TypingStart]
      */
-    object DirectMessageTyping : Intent(1 shl 14)
+    public object DirectMessageTyping : Intent(1 shl 14)
 
     /**
      * Enables the following events:
@@ -159,52 +159,52 @@ sealed class Intent(val code: DiscordBitSet) {
      * - [GuildScheduledEventUserAdd]
      * - [GuildScheduledEventUserRemove]
      */
-    object GuildScheduledEvents : Intent(1 shl 16)
+    public object GuildScheduledEvents : Intent(1 shl 16)
 
-    companion object {
+    public companion object {
         @OptIn(PrivilegedIntent::class)
-        val values: Set<Intent>
-        get() = setOf(
-            DirectMessageTyping,
-            GuildIntegrations,
-            GuildEmojis,
-            DirectMessageTyping,
-            DirectMessages,
-            DirectMessagesReactions,
-            GuildBans,
-            Guilds,
-            GuildVoiceStates,
-            GuildMessages,
-            GuildMessageReactions,
-            GuildWebhooks,
-            GuildInvites,
-            GuildPresences,
-            GuildMembers
-        )
+        public val values: Set<Intent>
+            get() = setOf(
+                DirectMessageTyping,
+                GuildIntegrations,
+                GuildEmojis,
+                DirectMessageTyping,
+                DirectMessages,
+                DirectMessagesReactions,
+                GuildBans,
+                Guilds,
+                GuildVoiceStates,
+                GuildMessages,
+                GuildMessageReactions,
+                GuildWebhooks,
+                GuildInvites,
+                GuildPresences,
+                GuildMembers
+            )
     }
 }
 
-inline fun Intents(builder: Intents.IntentsBuilder.() -> Unit = {}): Intents {
+public inline fun Intents(builder: Intents.IntentsBuilder.() -> Unit = {}): Intents {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return Intents.IntentsBuilder().apply(builder).flags()
 }
 
-fun Intents(vararg intents: Intents) = Intents {
+public fun Intents(vararg intents: Intents): Intents = Intents {
     intents.forEach { +it }
 }
 
-fun Intents(vararg intents: Intent) = Intents {
+public fun Intents(vararg intents: Intent): Intents = Intents {
     intents.forEach { +it }
 }
 
-fun Intents(intents: Iterable<Intents>) = Intents {
+public fun Intents(intents: Iterable<Intents>): Intents = Intents {
     intents.forEach { +it }
 }
 
-fun Intents(value: String) = Intents(DiscordBitSet(value))
+public fun Intents(value: String): Intents = Intents(DiscordBitSet(value))
 
 @JvmName("IntentsWithIterable")
-fun Intents(intents: Iterable<Intent>) = Intents {
+public fun Intents(intents: Iterable<Intent>): Intents = Intents {
     intents.forEach { +it }
 }
 
@@ -212,43 +212,42 @@ fun Intents(intents: Iterable<Intent>) = Intents {
  * A set of [intents][Intent] to be used while [identifying][Identify] a [Gateway] connection to communicate the events the client wishes to receive.
  */
 @Serializable(with = IntentsSerializer::class)
-data class Intents internal constructor(val code: DiscordBitSet) {
+public data class Intents internal constructor(val code: DiscordBitSet) {
     /**
      *  Returns this [Intents] as a [Set] of [Intent]
      */
-    @OptIn(PrivilegedIntent::class)
-    val values = Intent.values.filter { it.code in code }.toSet()
+    val values: Set<Intent> = Intent.values.filter { it.code in code }.toSet()
 
-    operator fun contains(intent: Intent) = intent.code in code
-
-    /**
-     * Returns an [Intents] that added the [intent] to this [code].
-     */
-    operator fun plus(intent: Intent): Intents = Intents(code + intent.code)
-
-    /**
-     * Returns an [Intents] that removed the [intent] from this [code].
-     */
-    operator fun minus(intent: Intent): Intents = Intents(code - intent.code)
-
-
-    operator fun contains(intent: Intents) = intent.code in code
+    public operator fun contains(intent: Intent): Boolean = intent.code in code
 
     /**
      * Returns an [Intents] that added the [intent] to this [code].
      */
-    operator fun plus(intent: Intents): Intents = Intents(code + intent.code)
+    public operator fun plus(intent: Intent): Intents = Intents(code + intent.code)
 
     /**
      * Returns an [Intents] that removed the [intent] from this [code].
      */
-    operator fun minus(intent: Intents): Intents = Intents(code - intent.code)
+    public operator fun minus(intent: Intent): Intents = Intents(code - intent.code)
+
+
+    public operator fun contains(intent: Intents): Boolean = intent.code in code
+
+    /**
+     * Returns an [Intents] that added the [intent] to this [code].
+     */
+    public operator fun plus(intent: Intents): Intents = Intents(code + intent.code)
+
+    /**
+     * Returns an [Intents] that removed the [intent] from this [code].
+     */
+    public operator fun minus(intent: Intents): Intents = Intents(code - intent.code)
 
 
     /**
      * copy this [Intents] and apply the [block] to it.
      */
-    inline fun copy(block: IntentsBuilder.() -> Unit): Intents {
+    public inline fun copy(block: IntentsBuilder.() -> Unit): Intents {
         contract {
             callsInPlace(block, InvocationKind.EXACTLY_ONCE)
         }
@@ -257,45 +256,45 @@ data class Intents internal constructor(val code: DiscordBitSet) {
         return builder.flags()
     }
 
-    companion object {
+    public companion object {
 
         @PrivilegedIntent
-        val all: Intents
+        public val all: Intents
             get() = Intents(Intent.values)
 
         @OptIn(PrivilegedIntent::class)
-        val nonPrivileged: Intents
+        public val nonPrivileged: Intents
             get() = Intents {
                 +all
                 -Intent.GuildPresences
                 -Intent.GuildMembers
             }
 
-        val none: Intents = Intents()
+        public val none: Intents = Intents()
 
     }
 
 
-    class IntentsBuilder(internal var code: DiscordBitSet = EmptyBitSet()) {
-        operator fun Intents.unaryPlus() {
+    public class IntentsBuilder(internal var code: DiscordBitSet = EmptyBitSet()) {
+        public operator fun Intents.unaryPlus() {
             this@IntentsBuilder.code.add(code)
         }
 
-        operator fun Intent.unaryPlus() {
+        public operator fun Intent.unaryPlus() {
             this@IntentsBuilder.code.add(code)
         }
 
-        operator fun Intent.unaryMinus() {
+        public operator fun Intent.unaryMinus() {
             this@IntentsBuilder.code.remove(code)
 
         }
 
-        fun flags() = Intents(code)
+        public fun flags(): Intents = Intents(code)
     }
 
 }
 
-object IntentsSerializer : KSerializer<Intents> {
+public object IntentsSerializer : KSerializer<Intents> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("intents", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): Intents {

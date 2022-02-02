@@ -11,7 +11,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 
 @KordDsl
-sealed class ButtonBuilder : ActionRowComponentBuilder() {
+public sealed class ButtonBuilder : ActionRowComponentBuilder() {
 
     protected var _label: Optional<String> = Optional.Missing()
         private set
@@ -20,7 +20,7 @@ sealed class ButtonBuilder : ActionRowComponentBuilder() {
      * The text that appears on the button, either this and/or [emoji] need to be set
      * for the button to be valid.
      */
-    var label: String? by ::_label.delegate()
+    public var label: String? by ::_label.delegate()
 
     protected var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
         private set
@@ -29,7 +29,7 @@ sealed class ButtonBuilder : ActionRowComponentBuilder() {
      * The emoji that appears on the button, either this and/or [label] need to be set
      * for the button to be valid.
      */
-    var emoji: DiscordPartialEmoji? by ::_emoji.delegate()
+    public var emoji: DiscordPartialEmoji? by ::_emoji.delegate()
 
     /**
      * A builder for a button that can create Interactions when clicked.
@@ -37,9 +37,9 @@ sealed class ButtonBuilder : ActionRowComponentBuilder() {
      * @param style the style of this button, [ButtonStyle.Link] is not valid.
      * @param customId the ID of this button, used to identify component interactions.
      */
-    class InteractionButtonBuilder(
-        var style: ButtonStyle,
-        var customId: String
+    public class InteractionButtonBuilder(
+        public var style: ButtonStyle,
+        public var customId: String,
     ) : ButtonBuilder() {
         override fun build(): DiscordComponent = DiscordComponent(
             ComponentType.Button,
@@ -57,8 +57,8 @@ sealed class ButtonBuilder : ActionRowComponentBuilder() {
      *
      * @param url The url to open when clicked.
      */
-    class LinkButtonBuilder(
-        var url: String
+    public class LinkButtonBuilder(
+        public var url: String,
     ) : ButtonBuilder() {
         override fun build(): DiscordComponent = DiscordComponent(
             ComponentType.Button,

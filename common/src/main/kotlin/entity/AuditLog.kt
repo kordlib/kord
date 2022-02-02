@@ -3,25 +3,13 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerializationException
+import kotlinx.datetime.Instant
+import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.descriptors.element
-import kotlinx.serialization.encoding.CompositeDecoder
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.encoding.decodeStructure
-import kotlinx.serialization.encoding.encodeStructure
+import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.serializer
 import dev.kord.common.Color as CommonColor
 import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
 import dev.kord.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
@@ -30,7 +18,7 @@ import dev.kord.common.entity.Permissions as CommonPermissions
 import dev.kord.common.entity.VerificationLevel as CommonVerificationLevel
 
 @Serializable
-data class DiscordAuditLog(
+public data class DiscordAuditLog(
     val webhooks: List<DiscordWebhook>,
     val users: List<DiscordUser>,
     @SerialName("audit_log_entries")
@@ -40,7 +28,7 @@ data class DiscordAuditLog(
 )
 
 @Serializable
-data class DiscordAuditLogEntry(
+public data class DiscordAuditLogEntry(
     @SerialName("target_id")
     val targetId: Snowflake?,
     val changes: Optional<List<AuditLogChange<in @Contextual Any?>>> = Optional.Missing(),
@@ -54,13 +42,13 @@ data class DiscordAuditLogEntry(
 ) {
 
     @Suppress("UNCHECKED_CAST")
-    operator fun <T> get(value: AuditLogChangeKey<T>): AuditLogChange<T>? =
+    public operator fun <T> get(value: AuditLogChangeKey<T>): AuditLogChange<T>? =
         changes.orEmpty().firstOrNull { it.key == value } as? AuditLogChange<T>
 
 }
 
 @Serializable
-data class AuditLogEntryOptionalInfo(
+public data class AuditLogEntryOptionalInfo(
     /*
     Do not trust the docs:
     2020-11-12 field is described as present but is in fact optional
@@ -109,7 +97,7 @@ data class AuditLogEntryOptionalInfo(
 )
 
 @Serializable(with = AuditLogChange.Serializer::class)
-data class AuditLogChange<T>(
+public data class AuditLogChange<T>(
     val new: T?,
     val old: T?,
     val key: AuditLogChangeKey<T>,
@@ -166,188 +154,191 @@ data class AuditLogChange<T>(
 }
 
 @Serializable(with = AuditLogChangeKey.Serializer::class)
-sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<T>) {
+public sealed class AuditLogChangeKey<T>(public val name: String, public val serializer: KSerializer<T>) {
 
     override fun toString(): String = "AuditLogChangeKey(name=$name)"
 
-    class Unknown(name: String) : AuditLogChangeKey<JsonElement>(name, JsonElement.serializer())
+    public class Unknown(name: String) : AuditLogChangeKey<JsonElement>(name, JsonElement.serializer())
 
     @SerialName("name")
-    object Name : AuditLogChangeKey<String>("name", serializer())
+    public object Name : AuditLogChangeKey<String>("name", serializer())
 
     @SerialName("icon_hash")
-    object IconHash : AuditLogChangeKey<String>("icon_hash", serializer())
+    public object IconHash : AuditLogChangeKey<String>("icon_hash", serializer())
 
     @SerialName("splash_hash")
-    object SplashHash : AuditLogChangeKey<String>("splash_hash", serializer())
+    public object SplashHash : AuditLogChangeKey<String>("splash_hash", serializer())
 
     @SerialName("owner_id")
-    object OwnerId : AuditLogChangeKey<Snowflake>("owner_id", serializer())
+    public object OwnerId : AuditLogChangeKey<Snowflake>("owner_id", serializer())
 
     @SerialName("region")
-    object Region : AuditLogChangeKey<String>("region", serializer())
+    public object Region : AuditLogChangeKey<String>("region", serializer())
 
     @SerialName("afk_channel_id")
-    object AfkChannelId : AuditLogChangeKey<Snowflake>("afk_channel_id", serializer())
+    public object AfkChannelId : AuditLogChangeKey<Snowflake>("afk_channel_id", serializer())
 
     @SerialName("afk_timeout")
-    object AfkTimeout : AuditLogChangeKey<Int>("afk_timeout", serializer())
+    public object AfkTimeout : AuditLogChangeKey<Int>("afk_timeout", serializer())
 
     @SerialName("mfa_level")
-    object MFALevel : AuditLogChangeKey<CommonMFALevel>("mfa_level", serializer())
+    public object MFALevel : AuditLogChangeKey<CommonMFALevel>("mfa_level", serializer())
 
     @SerialName("verification_level")
-    object VerificationLevel : AuditLogChangeKey<CommonVerificationLevel>("verification_level", serializer())
+    public object VerificationLevel : AuditLogChangeKey<CommonVerificationLevel>("verification_level", serializer())
 
     @SerialName("explicit_content_filter")
-    object ExplicitContentFilter :
+    public object ExplicitContentFilter :
         AuditLogChangeKey<CommonExplicitContentFilter>("explicit_content_filter", serializer())
 
     @SerialName("default_message_notifications")
-    object DefaultMessageNotificationLevel :
+    public object DefaultMessageNotificationLevel :
         AuditLogChangeKey<CommonDefaultMessageNotificationLevel>("default_message_notifications", serializer())
 
     @SerialName("vanity_url_code")
-    object VanityUrlCode : AuditLogChangeKey<String>("vanity_url_code", serializer())
+    public object VanityUrlCode : AuditLogChangeKey<String>("vanity_url_code", serializer())
 
     @SerialName("\$add")
-    object Add : AuditLogChangeKey<List<DiscordPartialRole>>("\$add", serializer())
+    public object Add : AuditLogChangeKey<List<DiscordPartialRole>>("\$add", serializer())
 
     @SerialName("\$remove")
-    object Remove : AuditLogChangeKey<List<DiscordPartialRole>>("\$remove", serializer())
+    public object Remove : AuditLogChangeKey<List<DiscordPartialRole>>("\$remove", serializer())
 
     @SerialName("prune_delete_days")
-    object PruneDeleteDays : AuditLogChangeKey<Int>("prune_delete_days", serializer())
+    public object PruneDeleteDays : AuditLogChangeKey<Int>("prune_delete_days", serializer())
 
     @SerialName("widget_enabled")
-    object WidgetEnabled : AuditLogChangeKey<Boolean>("widget_enabled", serializer())
+    public object WidgetEnabled : AuditLogChangeKey<Boolean>("widget_enabled", serializer())
 
     @SerialName("widget_channel_id")
-    object WidgetChannelId : AuditLogChangeKey<Snowflake>("widget_channel_id", serializer())
+    public object WidgetChannelId : AuditLogChangeKey<Snowflake>("widget_channel_id", serializer())
 
     @SerialName("system_channel_id")
-    object SystemChannelId : AuditLogChangeKey<Snowflake>("system_channel_id", serializer())
+    public object SystemChannelId : AuditLogChangeKey<Snowflake>("system_channel_id", serializer())
 
     @SerialName("position")
-    object Position : AuditLogChangeKey<Int>("position", serializer())
+    public object Position : AuditLogChangeKey<Int>("position", serializer())
 
     @SerialName("topic")
-    object Topic : AuditLogChangeKey<String>("topic", serializer())
+    public object Topic : AuditLogChangeKey<String>("topic", serializer())
 
     @SerialName("bitrate")
-    object Bitrate : AuditLogChangeKey<Int>("bitrate", serializer())
+    public object Bitrate : AuditLogChangeKey<Int>("bitrate", serializer())
 
     @SerialName("permission_overwrites")
-    object PermissionOverwrites : AuditLogChangeKey<List<Overwrite>>("permission_overwrites", serializer())
+    public object PermissionOverwrites : AuditLogChangeKey<List<Overwrite>>("permission_overwrites", serializer())
 
     @SerialName("nsfw")
-    object Nsfw : AuditLogChangeKey<Boolean>("nsfw", serializer())
+    public object Nsfw : AuditLogChangeKey<Boolean>("nsfw", serializer())
 
     @SerialName("application_id")
-    object ApplicationId : AuditLogChangeKey<Snowflake>("application_id", serializer())
+    public object ApplicationId : AuditLogChangeKey<Snowflake>("application_id", serializer())
 
     @SerialName("rate_limit_per_user")
-    object RateLimitPerUser : AuditLogChangeKey<Int>("rate_limit_per_user", serializer())
+    public object RateLimitPerUser : AuditLogChangeKey<Int>("rate_limit_per_user", serializer())
 
     @SerialName("permissions")
-    object Permissions : AuditLogChangeKey<CommonPermissions>("permissions", serializer())
+    public object Permissions : AuditLogChangeKey<CommonPermissions>("permissions", serializer())
 
     @SerialName("color")
-    object Color : AuditLogChangeKey<CommonColor>("color", serializer())
+    public object Color : AuditLogChangeKey<CommonColor>("color", serializer())
+
+    @SerialName("communication_disabled_until")
+    public object CommunicationDisabledUntil : AuditLogChangeKey<Instant>("communication_disabled_until", serializer())
 
     @SerialName("hoist")
-    object Hoist : AuditLogChangeKey<Boolean>("hoist", serializer())
+    public object Hoist : AuditLogChangeKey<Boolean>("hoist", serializer())
 
     @SerialName("mentionable")
-    object Mentionable : AuditLogChangeKey<Boolean>("mentionable", serializer())
+    public object Mentionable : AuditLogChangeKey<Boolean>("mentionable", serializer())
 
     @SerialName("allow")
-    object Allow : AuditLogChangeKey<CommonPermissions>("allow", serializer())
+    public object Allow : AuditLogChangeKey<CommonPermissions>("allow", serializer())
 
     @SerialName("deny")
-    object Deny : AuditLogChangeKey<CommonPermissions>("deny", serializer())
+    public object Deny : AuditLogChangeKey<CommonPermissions>("deny", serializer())
 
     @SerialName("code")
-    object Code : AuditLogChangeKey<String>("code", serializer())
+    public object Code : AuditLogChangeKey<String>("code", serializer())
 
     @SerialName("channel_id")
-    object ChannelId : AuditLogChangeKey<Snowflake>("channel_id", serializer())
+    public object ChannelId : AuditLogChangeKey<Snowflake>("channel_id", serializer())
 
     @SerialName("inviter_id")
-    object InviterId : AuditLogChangeKey<Snowflake>("inviter_id", serializer())
+    public object InviterId : AuditLogChangeKey<Snowflake>("inviter_id", serializer())
 
     @SerialName("location")
-    object Location : AuditLogChangeKey<String>("location", serializer())
+    public object Location : AuditLogChangeKey<String>("location", serializer())
 
     @SerialName("max_uses")
-    object MaxUses : AuditLogChangeKey<Int>("max_uses", serializer())
+    public object MaxUses : AuditLogChangeKey<Int>("max_uses", serializer())
 
     @SerialName("uses")
-    object Uses : AuditLogChangeKey<Int>("uses", serializer())
+    public object Uses : AuditLogChangeKey<Int>("uses", serializer())
 
     @SerialName("max_age")
-    object MaxAges : AuditLogChangeKey<Int>("max_age", serializer())
+    public object MaxAges : AuditLogChangeKey<Int>("max_age", serializer())
 
     @SerialName("temporary")
-    object Temporary : AuditLogChangeKey<Boolean>("temporary", serializer())
+    public object Temporary : AuditLogChangeKey<Boolean>("temporary", serializer())
 
     @SerialName("deaf")
-    object Deaf : AuditLogChangeKey<Boolean>("deaf", serializer())
+    public object Deaf : AuditLogChangeKey<Boolean>("deaf", serializer())
 
     @SerialName("mute")
-    object Mute : AuditLogChangeKey<Boolean>("mute", serializer())
+    public object Mute : AuditLogChangeKey<Boolean>("mute", serializer())
 
     @SerialName("nick")
-    object Nick : AuditLogChangeKey<String>("nick", serializer())
+    public object Nick : AuditLogChangeKey<String>("nick", serializer())
 
     @SerialName("avatar_hash")
-    object AvatarHash : AuditLogChangeKey<String>("avatar_hash", serializer())
+    public object AvatarHash : AuditLogChangeKey<String>("avatar_hash", serializer())
 
     @SerialName("id")
-    object Id : AuditLogChangeKey<Snowflake>("id", serializer())
+    public object Id : AuditLogChangeKey<Snowflake>("id", serializer())
 
     @SerialName("type")
-    object Type : AuditLogChangeKey<ChannelType>("type", serializer())
+    public object Type : AuditLogChangeKey<ChannelType>("type", serializer())
 
     @SerialName("enable_emoticons")
-    object EnableEmoticons : AuditLogChangeKey<Boolean>("enable_emoticons", serializer())
+    public object EnableEmoticons : AuditLogChangeKey<Boolean>("enable_emoticons", serializer())
 
     @SerialName("expire_behavior")
-    object ExpireBehavior : AuditLogChangeKey<IntegrationExpireBehavior>("expire_behavior", serializer())
+    public object ExpireBehavior : AuditLogChangeKey<IntegrationExpireBehavior>("expire_behavior", serializer())
 
     @SerialName("expire_grace_period")
-    object ExpireGracePeriod : AuditLogChangeKey<Int>("expire_grace_period", serializer())
+    public object ExpireGracePeriod : AuditLogChangeKey<Int>("expire_grace_period", serializer())
 
     @SerialName("user_limit")
-    object UserLimit : AuditLogChangeKey<Int>("user_limit", serializer())
+    public object UserLimit : AuditLogChangeKey<Int>("user_limit", serializer())
 
     @SerialName("archived")
-    object Archived : AuditLogChangeKey<Boolean>("archived", serializer())
+    public object Archived : AuditLogChangeKey<Boolean>("archived", serializer())
 
     @SerialName("locked")
-    object Locked : AuditLogChangeKey<Boolean>("locked", serializer())
+    public object Locked : AuditLogChangeKey<Boolean>("locked", serializer())
 
     @SerialName("auto_archive_duration")
-    object AutoArchiveDuration : AuditLogChangeKey<ArchiveDuration>("auto_archive_duration", serializer())
+    public object AutoArchiveDuration : AuditLogChangeKey<ArchiveDuration>("auto_archive_duration", serializer())
 
     @SerialName("default_auto_archive_duration")
-    object DefaultAutoArchiveDuration :
+    public object DefaultAutoArchiveDuration :
         AuditLogChangeKey<ArchiveDuration>("default_auto_archive_duration", serializer())
 
     @SerialName("entity_type")
-    object EntityType : AuditLogChangeKey<ScheduledEntityType>(
+    public object EntityType : AuditLogChangeKey<ScheduledEntityType>(
         "entity_type",
         serializer()
     )
 
     @SerialName("status")
-    object Status : AuditLogChangeKey<GuildScheduledEventStatus>(
+    public object Status : AuditLogChangeKey<GuildScheduledEventStatus>(
         "status",
         serializer()
     )
 
     @SerialName("sku_ids")
-    object SkuIds : AuditLogChangeKey<List<Snowflake>>(
+    public object SkuIds : AuditLogChangeKey<List<Snowflake>>(
         "sku_ids",
         serializer()
     )
@@ -391,6 +382,7 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
                 "rate_limit_per_user" -> RateLimitPerUser
                 "permissions" -> Permissions
                 "color" -> Color
+                "communication_disabled_until" -> CommunicationDisabledUntil
                 "hoist" -> Hoist
                 "mentionable" -> Mentionable
                 "allow" -> Allow
@@ -427,55 +419,55 @@ sealed class AuditLogChangeKey<T>(val name: String, val serializer: KSerializer<
 }
 
 @Serializable(with = AuditLogEvent.Serializer::class)
-sealed class AuditLogEvent(val value: Int) {
-    class Unknown(value: Int) : AuditLogEvent(value)
-    object GuildUpdate : AuditLogEvent(1)
-    object ChannelCreate : AuditLogEvent(10)
-    object ChannelUpdate : AuditLogEvent(11)
-    object ChannelDelete : AuditLogEvent(12)
-    object ChannelOverwriteCreate : AuditLogEvent(13)
-    object ChannelOverwriteUpdate : AuditLogEvent(14)
-    object ChannelOverwriteDelete : AuditLogEvent(15)
-    object MemberKick : AuditLogEvent(20)
-    object MemberPrune : AuditLogEvent(21)
-    object MemberBanAdd : AuditLogEvent(22)
-    object MemberBanRemove : AuditLogEvent(23)
-    object MemberUpdate : AuditLogEvent(24)
-    object MemberRoleUpdate : AuditLogEvent(25)
-    object MemberMove : AuditLogEvent(26)
-    object MemberDisconnect : AuditLogEvent(27)
-    object BotAdd : AuditLogEvent(28)
-    object RoleCreate : AuditLogEvent(30)
-    object RoleUpdate : AuditLogEvent(31)
-    object RoleDelete : AuditLogEvent(32)
-    object InviteCreate : AuditLogEvent(40)
-    object InviteUpdate : AuditLogEvent(41)
-    object InviteDelete : AuditLogEvent(42)
-    object WebhookCreate : AuditLogEvent(50)
-    object WebhookUpdate : AuditLogEvent(51)
-    object WebhookDelete : AuditLogEvent(52)
-    object EmojiCreate : AuditLogEvent(60)
-    object EmojiUpdate : AuditLogEvent(61)
-    object EmojiDelete : AuditLogEvent(62)
-    object MessageDelete : AuditLogEvent(72)
-    object MessageBulkDelete : AuditLogEvent(73)
-    object MessagePin : AuditLogEvent(74)
-    object MessageUnpin : AuditLogEvent(75)
-    object IntegrationCreate : AuditLogEvent(80)
-    object IntegrationUpdate : AuditLogEvent(81)
-    object IntegrationDelete : AuditLogEvent(82)
-    object StageInstanceCreate : AuditLogEvent(83)
-    object StageInstanceUpdate : AuditLogEvent(84)
-    object StageInstanceDelete : AuditLogEvent(85)
-    object StickerCreate : AuditLogEvent(90)
-    object StickerUpdate : AuditLogEvent(91)
-    object StickerDelete : AuditLogEvent(92)
-    object GuildScheduledEventCreate : AuditLogEvent(100)
-    object GuildScheduledEventUpdate : AuditLogEvent(101)
-    object GuildScheduledEventDelete : AuditLogEvent(102)
-    object ThreadCreate : AuditLogEvent(110)
-    object ThreadUpdate : AuditLogEvent(111)
-    object ThreadDelete : AuditLogEvent(112)
+public sealed class AuditLogEvent(public val value: Int) {
+    public class Unknown(value: Int) : AuditLogEvent(value)
+    public object GuildUpdate : AuditLogEvent(1)
+    public object ChannelCreate : AuditLogEvent(10)
+    public object ChannelUpdate : AuditLogEvent(11)
+    public object ChannelDelete : AuditLogEvent(12)
+    public object ChannelOverwriteCreate : AuditLogEvent(13)
+    public object ChannelOverwriteUpdate : AuditLogEvent(14)
+    public object ChannelOverwriteDelete : AuditLogEvent(15)
+    public object MemberKick : AuditLogEvent(20)
+    public object MemberPrune : AuditLogEvent(21)
+    public object MemberBanAdd : AuditLogEvent(22)
+    public object MemberBanRemove : AuditLogEvent(23)
+    public object MemberUpdate : AuditLogEvent(24)
+    public object MemberRoleUpdate : AuditLogEvent(25)
+    public object MemberMove : AuditLogEvent(26)
+    public object MemberDisconnect : AuditLogEvent(27)
+    public object BotAdd : AuditLogEvent(28)
+    public object RoleCreate : AuditLogEvent(30)
+    public object RoleUpdate : AuditLogEvent(31)
+    public object RoleDelete : AuditLogEvent(32)
+    public object InviteCreate : AuditLogEvent(40)
+    public object InviteUpdate : AuditLogEvent(41)
+    public object InviteDelete : AuditLogEvent(42)
+    public object WebhookCreate : AuditLogEvent(50)
+    public object WebhookUpdate : AuditLogEvent(51)
+    public object WebhookDelete : AuditLogEvent(52)
+    public object EmojiCreate : AuditLogEvent(60)
+    public object EmojiUpdate : AuditLogEvent(61)
+    public object EmojiDelete : AuditLogEvent(62)
+    public object MessageDelete : AuditLogEvent(72)
+    public object MessageBulkDelete : AuditLogEvent(73)
+    public object MessagePin : AuditLogEvent(74)
+    public object MessageUnpin : AuditLogEvent(75)
+    public object IntegrationCreate : AuditLogEvent(80)
+    public object IntegrationUpdate : AuditLogEvent(81)
+    public object IntegrationDelete : AuditLogEvent(82)
+    public object StageInstanceCreate : AuditLogEvent(83)
+    public object StageInstanceUpdate : AuditLogEvent(84)
+    public object StageInstanceDelete : AuditLogEvent(85)
+    public object StickerCreate : AuditLogEvent(90)
+    public object StickerUpdate : AuditLogEvent(91)
+    public object StickerDelete : AuditLogEvent(92)
+    public object GuildScheduledEventCreate : AuditLogEvent(100)
+    public object GuildScheduledEventUpdate : AuditLogEvent(101)
+    public object GuildScheduledEventDelete : AuditLogEvent(102)
+    public object ThreadCreate : AuditLogEvent(110)
+    public object ThreadUpdate : AuditLogEvent(111)
+    public object ThreadDelete : AuditLogEvent(112)
 
 
     internal object Serializer : KSerializer<AuditLogEvent> {

@@ -9,18 +9,18 @@ import kotlin.contracts.contract
 /**
  * Builder that can modify [permission overwrites][Overwrite].
  */
-sealed interface PermissionOverwritesBuilder {
+public sealed interface PermissionOverwritesBuilder {
     /**
      * Adds [overwrite] to this builder.
      */
-    fun addOverwrite(overwrite: Overwrite)
+    public fun addOverwrite(overwrite: Overwrite)
 }
 
 /**
  * [PermissionOverwritesBuilder] which creates an entity with overwrites.
  */
-interface PermissionOverwritesCreateBuilder : PermissionOverwritesBuilder {
-    var permissionOverwrites: MutableSet<Overwrite>
+public interface PermissionOverwritesCreateBuilder : PermissionOverwritesBuilder {
+    public var permissionOverwrites: MutableSet<Overwrite>
 
     override fun addOverwrite(overwrite: Overwrite) {
         permissionOverwrites.add(overwrite)
@@ -30,8 +30,8 @@ interface PermissionOverwritesCreateBuilder : PermissionOverwritesBuilder {
 /**
  * [PermissionOverwritesBuilder] which modifies an existing entity with overwrites.
  */
-interface PermissionOverwritesModifyBuilder : PermissionOverwritesBuilder {
-    var permissionOverwrites: MutableSet<Overwrite>?
+public interface PermissionOverwritesModifyBuilder : PermissionOverwritesBuilder {
+    public var permissionOverwrites: MutableSet<Overwrite>?
 
     override fun addOverwrite(overwrite: Overwrite) {
         val overwrites = permissionOverwrites ?: mutableSetOf()
@@ -44,7 +44,7 @@ interface PermissionOverwritesModifyBuilder : PermissionOverwritesBuilder {
 /**
  * Adds an [Overwrite] for the [memberId].
  */
-inline fun PermissionOverwritesBuilder.addMemberOverwrite(
+public inline fun PermissionOverwritesBuilder.addMemberOverwrite(
     memberId: Snowflake,
     builder: PermissionOverwriteBuilder.() -> Unit
 ) {
@@ -59,7 +59,7 @@ inline fun PermissionOverwritesBuilder.addMemberOverwrite(
 /**
  * Adds an [Overwrite] for the [roleId].
  */
-inline fun PermissionOverwritesBuilder.addRoleOverwrite(
+public inline fun PermissionOverwritesBuilder.addRoleOverwrite(
     roleId: Snowflake,
     builder: PermissionOverwriteBuilder.() -> Unit
 ) {

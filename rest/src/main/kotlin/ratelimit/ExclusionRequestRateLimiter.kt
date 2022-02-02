@@ -4,9 +4,9 @@ import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.datetime.Clock
 import mu.KLogger
 import mu.KotlinLogging
-import kotlinx.datetime.Clock
 
 private val requestLogger = KotlinLogging.logger {}
 
@@ -17,7 +17,7 @@ private val requestLogger = KotlinLogging.logger {}
  *
  * @param clock a [Clock] used for calculating suspension times, present for testing purposes.
  */
-class ExclusionRequestRateLimiter(clock: Clock = Clock.System) : AbstractRateLimiter(clock) {
+public class ExclusionRequestRateLimiter(clock: Clock = Clock.System) : AbstractRateLimiter(clock) {
 
     override val logger: KLogger get() = requestLogger
     private val sequentialLock = Mutex()
