@@ -8,7 +8,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DiscordGuildMember(
+public data class DiscordGuildMember(
     val user: Optional<DiscordUser> = Optional.Missing(),
     /*
     Don't trust the docs:
@@ -30,7 +30,7 @@ data class DiscordGuildMember(
 
 
 @Serializable
-data class DiscordInteractionGuildMember(
+public data class DiscordInteractionGuildMember(
     val user: Optional<DiscordUser> = Optional.Missing(),
     /*
     Don't trust the docs:
@@ -51,7 +51,7 @@ data class DiscordInteractionGuildMember(
 
 
 @Serializable
-data class DiscordAddedGuildMember(
+public data class DiscordAddedGuildMember(
     val user: Optional<DiscordUser> = Optional.Missing(),
     /*
     Don't trust the docs:
@@ -74,14 +74,14 @@ data class DiscordAddedGuildMember(
 )
 
 @Serializable
-data class DiscordRemovedGuildMember(
+public data class DiscordRemovedGuildMember(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val user: DiscordUser
 )
 
 @Serializable
-data class DiscordUpdatedGuildMember(
+public data class DiscordUpdatedGuildMember(
     @SerialName("guild_id")
     val guildId: Snowflake,
     val roles: List<Snowflake>,
@@ -98,7 +98,7 @@ data class DiscordUpdatedGuildMember(
 )
 
 @Serializable
-data class DiscordThreadMember(
+public data class DiscordThreadMember(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("user_id")
     val userId: OptionalSnowflake = OptionalSnowflake.Missing,

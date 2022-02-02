@@ -9,7 +9,6 @@ import dev.kord.core.entity.Template
 import dev.kord.rest.builder.template.GuildFromTemplateCreateBuilder
 import dev.kord.rest.builder.template.GuildTemplateModifyBuilder
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -32,7 +31,6 @@ public interface TemplateBehavior : KordObject {
 }
 
 
-@OptIn(ExperimentalContracts::class)
 public suspend fun TemplateBehavior.edit(builder: GuildTemplateModifyBuilder.() -> Unit): Template {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.template.modifyGuildTemplate(guildId, code, builder)
@@ -40,7 +38,6 @@ public suspend fun TemplateBehavior.edit(builder: GuildTemplateModifyBuilder.() 
     return Template(data, kord)
 }
 
-@OptIn(ExperimentalContracts::class)
 public suspend fun TemplateBehavior.createGuild(name: String, builder: GuildFromTemplateCreateBuilder.() -> Unit): Guild {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.template.createGuildFromTemplate(code, name, builder)

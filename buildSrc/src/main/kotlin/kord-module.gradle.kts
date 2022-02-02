@@ -19,6 +19,10 @@ dependencies {
     testRuntimeOnly(kotlin("test-junit5"))
 }
 
+kotlin {
+    explicitApi()
+}
+
 tasks {
     tasks.getByName("apiCheck") {
         onlyIf { Library.isRelease }
@@ -35,7 +39,8 @@ tasks {
             freeCompilerArgs = listOf(
                 CompilerArguments.coroutines,
                 CompilerArguments.time,
-                CompilerArguments.optIn
+                CompilerArguments.optIn,
+                CompilerArguments.contracts,
             )
         }
     }

@@ -12,6 +12,7 @@ import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
+import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
@@ -55,13 +56,27 @@ public interface EntitySupplier {
      */
     public suspend fun getGuild(id: Snowflake): Guild = getGuildOrNull(id) ?: EntityNotFoundException.guildNotFound(id)
 
+    /**
+     * Requests the preview of the guild matching the [guildId].
+     * If the bot is not in the guild, then the guild must be lurkable.
+     * Returns `null` if the preview was not found.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
     public suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview?
 
+    /**
+     * Requests the preview of the guild matching the [guildId].
+     * If the bot is not in the guild, then the guild must be lurkable.
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the preview was not found.
+     */
     public suspend fun getGuildPreview(guildId: Snowflake): GuildPreview =
         getGuildPreviewOrNull(guildId) ?: EntityNotFoundException.entityNotFound("Guild Preview", guildId)
 
     /**
-     * Requests to get the widget of this guild through the [strategy],
+     * Requests to get the widget of a [Guild] with the given [id][guildId],
      * returns null if the [GuildWidget] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -70,7 +85,7 @@ public interface EntitySupplier {
 
 
     /**
-     * Requests to get the widget of this [guildId].
+     * Requests to get the widget of a [Guild] with the given [id][guildId].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [GuildWidget] wasn't present.
@@ -150,28 +165,28 @@ public interface EntitySupplier {
      * in the [channel][MessageChannel] with the [channelId].
      *
      * The flow may use paginated requests to supply messages, [limit] will limit the maximum number of messages
-     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
+     * supplied and may optimize the batch size accordingly. `null` means no limit.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      *
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
-    public fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message>
+    public fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int? = null): Flow<Message>
 
     /**
      * Requests a flow of messages created before the [Message] with the [messageId]
      * in the [channel][MessageChannel] with the [channelId].
      *
      * The flow may use paginated requests to supply messages, [limit] will limit the maximum number of messages
-     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
+     * supplied and may optimize the batch size accordingly. `null` means no limit.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      *
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
-    public fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message>
+    public fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int? = null): Flow<Message>
 
     /**
      * Requests a flow of messages created around the [Message] with the [messageId]
@@ -182,7 +197,10 @@ public interface EntitySupplier {
      *
      * Supplied messages will be equally distributed
      * before and after the [messageId]. The remaining message for an odd [limit] is undefined and may appear on either
-     * side.
+     * side or no side at all.
+     *
+     * If a [Message] with the given [messageId] exists, the flow might also contain it, so it **could have one more
+     * element than the given [limit]**.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
@@ -278,7 +296,7 @@ public interface EntitySupplier {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    public fun getGuildMembers(guildId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Member>
+    public fun getGuildMembers(guildId: Snowflake, limit: Int? = null): Flow<Member>
 
     /**
      * Requests the [regions][Region] of the [Guild] with the given [guildId].
@@ -314,17 +332,17 @@ public interface EntitySupplier {
     public fun getEmojis(guildId: Snowflake): Flow<GuildEmoji>
 
     /**
-     * Requests the [guild emojis][GuildEmoji] of the [Guild] with the given [guildId].
+     * Requests [guilds][Guild] this bot is known to be part of.
      *
-     *  The flow may use paginated requests to supply guilds, [limit] will limit the maximum number of guilds
-     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
+     * The flow may use paginated requests to supply guilds, [limit] will limit the maximum number of guilds
+     * supplied and may optimize the batch size accordingly. `null` means no limit.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      *
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
-    public fun getCurrentUserGuilds(limit: Int = Int.MAX_VALUE): Flow<Guild>
+    public fun getCurrentUserGuilds(limit: Int? = null): Flow<Guild>
 
     /**
      * Requests the [webhooks][Webhook] of the [MessageChannel] with the given [channelId].
@@ -376,13 +394,43 @@ public interface EntitySupplier {
         getWebhookWithTokenOrNull(id, token) ?: EntityNotFoundException.webhookNotFound(id)
 
     /**
+     * Requests the [Message] with the given [messageId] previously sent from a [Webhook] with the given [webhookId]
+     * using the [token] for authentication, returns `null` when the message isn't present.
+     *
+     * If the message is in a thread, [threadId] must be specified.
+     *
+     * @throws RequestException if something went wrong while retrieving the message.
+     */
+    public suspend fun getWebhookMessageOrNull(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake? = null,
+    ): Message?
+
+    /**
+     * Requests the [Message] with the given [messageId] previously sent from a [Webhook] with the given [webhookId]
+     * using the [token] for authentication.
+     *
+     * If the message is in a thread, [threadId] must be specified.
+     *
+     * @throws RequestException if something went wrong while retrieving the message.
+     * @throws EntityNotFoundException if the message is null.
+     */
+    public suspend fun getWebhookMessage(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake? = null,
+    ): Message = getWebhookMessageOrNull(webhookId, token, messageId, threadId)
+        ?: EntityNotFoundException.webhookMessageNotFound(webhookId, token, messageId, threadId)
+
+    /**
      * Requests the [Template] with the given [code].
-     * returns null when the webhook isn't present.
+     * returns null when the template isn't present.
      *
      * @throws RequestException if something went wrong while retrieving the template.
      */
-
-
     public suspend fun getTemplateOrNull(code: String): Template?
 
     /**
@@ -406,11 +454,23 @@ public interface EntitySupplier {
 
     public fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel>
 
-    public fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
+    public fun getPublicArchivedThreads(
+        channelId: Snowflake,
+        before: Instant? = null,
+        limit: Int? = null,
+    ): Flow<ThreadChannel>
 
-    public fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel>
+    public fun getPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Instant? = null,
+        limit: Int? = null,
+    ): Flow<ThreadChannel>
 
-    public fun getJoinedPrivateArchivedThreads(channelId: Snowflake, before: Snowflake, limit: Int): Flow<ThreadChannel>
+    public fun getJoinedPrivateArchivedThreads(
+        channelId: Snowflake,
+        before: Snowflake? = null,
+        limit: Int? = null,
+    ): Flow<ThreadChannel>
 
     public fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake): Flow<GuildApplicationCommand>
 
@@ -466,6 +526,32 @@ public interface EntitySupplier {
         guildId: Snowflake,
     ): Flow<ApplicationCommandPermissions>
 
+    /**
+     * Requests a followup message for an interaction response. Does not support ephemeral followups.
+     * Returns `null` if the followup message isn't present.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun getFollowupMessageOrNull(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+    ): PublicFollowupMessage?
+
+    /**
+     * Requests a followup message for an interaction response. Does not support ephemeral followups.
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the followup message is null.
+     */
+    public suspend fun getFollowupMessage(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+    ): PublicFollowupMessage =
+        getFollowupMessageOrNull(applicationId, interactionToken, messageId)
+            ?: EntityNotFoundException.followupMessageNotFound(interactionToken, messageId)
+
     public fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent>
 
     public suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent?
@@ -508,6 +594,20 @@ public interface EntitySupplier {
         eventId: Snowflake,
         limit: Int = Int.MAX_VALUE,
     ): Flow<User> = getGuildScheduledEventUsersAfter(guildId, eventId, limit)
+
+    public suspend fun getStickerOrNull(id: Snowflake): Sticker?
+
+    public suspend fun getSticker(id: Snowflake): Sticker =
+        getStickerOrNull(id) ?: EntityNotFoundException.stickerNotFound(id)
+
+    public suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker?
+
+    public suspend fun getGuildSticker(guildId: Snowflake, id: Snowflake): GuildSticker =
+        getGuildStickerOrNull(guildId, id) ?: EntityNotFoundException.stickerNotFound(id)
+
+    public fun getNitroStickerPacks(): Flow<StickerPack>
+
+    public fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker>
 }
 
 

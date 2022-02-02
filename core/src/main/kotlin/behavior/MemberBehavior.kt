@@ -17,7 +17,6 @@ import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.member.MemberModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -217,7 +216,6 @@ public fun MemberBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MemberBehavior.ban(builder: BanCreateBuilder.() -> Unit = {}) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -230,7 +228,6 @@ public suspend inline fun MemberBehavior.ban(builder: BanCreateBuilder.() -> Uni
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MemberBehavior.edit(builder: MemberModifyBuilder.() -> Unit): Member {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

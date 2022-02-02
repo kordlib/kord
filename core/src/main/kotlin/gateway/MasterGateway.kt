@@ -1,7 +1,6 @@
 package dev.kord.core.gateway
 
 import dev.kord.gateway.*
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -21,7 +20,6 @@ public interface MasterGateway {
     public val averagePing: Duration?
 
 
-    @OptIn(FlowPreview::class)
     public val events: Flow<ShardEvent>
 
     public suspend fun startWithConfig(configuration: GatewayConfiguration): Unit = coroutineScope {

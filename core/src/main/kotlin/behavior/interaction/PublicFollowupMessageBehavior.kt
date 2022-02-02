@@ -9,7 +9,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -40,14 +39,13 @@ public interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
  *
  * @return The edited [PublicFollowupMessage] of the interaction response.
  *
- * @throws [RestRequestException] if something went wrong during the request.
+ * @throws RestRequestException if something went wrong during the request.
  */
-
-@OptIn(ExperimentalContracts::class)
-public suspend inline fun PublicFollowupMessageBehavior.edit(builder: FollowupMessageModifyBuilder.() -> Unit): PublicFollowupMessage {
+public suspend inline fun PublicFollowupMessageBehavior.edit(
+    builder: FollowupMessageModifyBuilder.() -> Unit,
+): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val appliedBuilder = FollowupMessageModifyBuilder().apply(builder)
-    val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, appliedBuilder.toRequest())
+    val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, builder)
     return PublicFollowupMessage(Message(response.toData(), kord), applicationId, token, kord)
 }
 

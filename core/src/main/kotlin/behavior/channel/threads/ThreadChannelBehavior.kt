@@ -16,7 +16,6 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.channel.thread.ThreadModifyBuilder
 import kotlinx.coroutines.flow.Flow
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -136,7 +135,6 @@ public interface ThreadChannelBehavior : GuildMessageChannelBehavior {
  * [autoArchiveDuration][ThreadModifyBuilder.autoArchiveDuration] fields
  * requires [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] or that the current user is the thread creator.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun ThreadChannelBehavior.edit(builder: ThreadModifyBuilder.() -> Unit): ThreadChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val appliedBuilder = ThreadModifyBuilder().apply(builder)

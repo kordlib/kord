@@ -23,7 +23,6 @@ import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
@@ -41,7 +40,6 @@ internal fun ULong?.toSnowflakeOrNull(): Snowflake? = when {
 internal fun Int.toInstant() = Instant.fromEpochMilliseconds(toLong())
 internal fun Long.toInstant() = Instant.fromEpochMilliseconds(this)
 
-@OptIn(ExperimentalContracts::class)
 internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -54,7 +52,6 @@ internal inline fun <T> catchNotFound(block: () -> T): T? {
     }
 }
 
-@OptIn(ExperimentalContracts::class)
 internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: () -> T): T? {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -123,26 +120,25 @@ internal suspend fun <T> Flow<T>.indexOfFirstOrNull(predicate: suspend (T) -> Bo
         .singleOrNull()?.first
 }
 
-internal fun <C : Collection<T>, T> paginate(
+internal fun <Batch : Collection<Item>, Item : Any, Direction : Position.BeforeOrAfter> paginate(
     start: Snowflake,
     batchSize: Int,
-    idSelector: (T) -> Snowflake,
-    itemSelector: (Collection<T>) -> T?,
-    directionSelector: (Snowflake) -> Position,
-    request: suspend (position: Position) -> C,
-): Flow<T> = flow {
-    var position = directionSelector(start)
-    var size = batchSize
+    itemSelector: (Batch) -> Item?,
+    idSelector: (Item) -> Snowflake,
+    directionSelector: (Snowflake) -> Direction,
+    request: suspend (Direction) -> Batch,
+): Flow<Item> = flow {
+
+    var direction = directionSelector(start)
 
     while (true) {
-        val response = request(position)
-        for (item in response) emit(item)
+        val batch = request(direction)
+        for (item in batch) emit(item)
 
-        val id = itemSelector(response)?.let(idSelector) ?: break
-        position = directionSelector(id)
+        if (batch.size < batchSize) break
 
-        if (response.size < size) break
-        size = response.size
+        val item = itemSelector(batch) ?: break
+        direction = directionSelector(idSelector(item))
     }
 }
 
@@ -183,87 +179,111 @@ internal fun <T> oldestItem(idSelector: (T) -> Snowflake): (Collection<T>) -> T?
 /**
  *  Selects the [Position.After] the youngest item in the batch.
  */
-internal fun <C : Collection<T>, T> paginateForwards(
-    start: Snowflake = Snowflake("0"),
+internal fun <T : Any> paginateForwards(
     batchSize: Int,
+    start: Snowflake = Snowflake.min,
     idSelector: (T) -> Snowflake,
-    request: suspend (position: Position) -> C
-): Flow<T> =
-    paginate(start, batchSize, idSelector, youngestItem(idSelector), Position::After, request)
+    request: suspend (after: Position.After) -> Collection<T>,
+): Flow<T> = paginate(
+    start,
+    batchSize,
+    itemSelector = youngestItem(idSelector),
+    idSelector,
+    directionSelector = Position::After,
+    request,
+)
 
 /**
  *  Selects the [Position.After] the youngest item in the batch.
  */
-internal fun <C : Collection<T>, T : KordEntity> paginateForwards(
-    start: Snowflake = Snowflake("0"),
+internal fun <T : KordEntity> paginateForwards(
     batchSize: Int,
-    request: suspend (position: Position) -> C
-): Flow<T> =
-    paginate(start, batchSize, { it.id }, youngestItem { it.id }, Position::After, request)
+    start: Snowflake = Snowflake.min,
+    request: suspend (after: Position.After) -> Collection<T>,
+): Flow<T> = paginate(
+    start,
+    batchSize,
+    itemSelector = youngestItem { it.id },
+    idSelector = { it.id },
+    directionSelector = Position::After,
+    request,
+)
 
 /**
  *  Selects the [Position.Before] the oldest item in the batch.
  */
-internal fun <C : Collection<T>, T> paginateBackwards(
-    start: Snowflake = Snowflake.max,
+internal fun <T : Any> paginateBackwards(
     batchSize: Int,
+    start: Snowflake = Snowflake.max,
     idSelector: (T) -> Snowflake,
-    request: suspend (position: Position) -> C
-): Flow<T> =
-    paginate(start, batchSize, idSelector, oldestItem(idSelector), Position::Before, request)
+    request: suspend (before: Position.Before) -> Collection<T>,
+): Flow<T> = paginate(
+    start,
+    batchSize,
+    itemSelector = oldestItem(idSelector),
+    idSelector,
+    directionSelector = Position::Before,
+    request,
+)
 
 /**
  *  Selects the [Position.Before] the oldest item in the batch.
  */
-internal fun <C : Collection<T>, T : KordEntity> paginateBackwards(
-    start: Snowflake = Snowflake.max,
+internal fun <T : KordEntity> paginateBackwards(
     batchSize: Int,
-    request: suspend (position: Position) -> C
-): Flow<T> =
-    paginate(start, batchSize, { it.id }, oldestItem { it.id }, Position::Before, request)
+    start: Snowflake = Snowflake.max,
+    request: suspend (before: Position.Before) -> Collection<T>,
+): Flow<T> = paginate(
+    start,
+    batchSize,
+    itemSelector = oldestItem { it.id },
+    idSelector = { it.id },
+    directionSelector = Position::Before,
+    request,
+)
 
 /**
- * Paginates the [Collection] returned by [request] with [start] as a initial reference in time.
+ * Paginates the [Collection] returned by [request] with [start] as an initial reference in time.
  * [instantSelector] is used to select the new reference to fetch from.
  *
  * Termination scenarios:
  * * [Collection]'s size fall behind [batchSize].
  * * [instantSelector] returns null.
  */
-internal fun <C : Collection<T>, T> paginateByDate(
-    start: Instant = Clock.System.now(),
+internal fun <Batch : Collection<Item>, Item : Any> paginateByDate(
     batchSize: Int,
-    instantSelector: (Collection<T>) -> Instant?,
-    request: suspend (Instant) -> C
-): Flow<T> = flow {
+    start: Instant?,
+    instantSelector: (Batch) -> Instant?,
+    request: suspend (Instant) -> Batch,
+): Flow<Item> = flow {
 
-    var currentTimestamp = start
+    var currentTimestamp = start ?: Clock.System.now() // get default current time as late as possible
+
     while (true) {
-        val response = request(currentTimestamp)
+        val batch = request(currentTimestamp)
+        for (item in batch) emit(item)
 
-        for (item in response) emit(item)
+        if (batch.size < batchSize) break
 
-        currentTimestamp = instantSelector(response) ?: break
-        if (response.size < batchSize) break
+        currentTimestamp = instantSelector(batch) ?: break
     }
 }
 
 /**
  * A special function to paginate [ThreadChannel] endpoints.
- * selects the earliest time reference found in the response of the request on each pagination.
+ * selects the earliest reference in time found in the response of the request on each pagination.
  * see [paginateByDate]
  */
 internal fun paginateThreads(
     batchSize: Int,
-    start: Instant = Clock.System.now(),
-    request: suspend (Instant) -> Collection<ThreadChannel>
-) =
-    paginateByDate(
-        start,
-        batchSize,
-        { threads -> threads.minOfOrNull { it.archiveTimestamp } },
-        request
-    )
+    start: Instant?,
+    request: suspend (Instant) -> Collection<ThreadChannel>,
+) = paginateByDate(
+    batchSize,
+    start,
+    instantSelector = { threads -> threads.minOfOrNull { it.archiveTimestamp } },
+    request,
+)
 
 public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent(T::class)
 

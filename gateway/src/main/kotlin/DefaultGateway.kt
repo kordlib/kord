@@ -26,7 +26,6 @@ import mu.KotlinLogging
 import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -48,7 +47,7 @@ private sealed class State(val retry: Boolean) {
  * @param sendRateLimiter A rate limiter than follows the Discord API specifications for sending messages.
  * @param identifyRateLimiter: A rate limiter that follows the Discord API specifications for identifying.
  */
-data class DefaultGatewayData(
+public data class DefaultGatewayData(
     val url: String,
     val client: HttpClient,
     val reconnectRetry: Retry,
@@ -61,16 +60,15 @@ data class DefaultGatewayData(
 /**
  * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
  */
-class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
+public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
-    override val coroutineContext: CoroutineContext = SupervisorJob() +data.dispatcher
+    override val coroutineContext: CoroutineContext = SupervisorJob() + data.dispatcher
 
     private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
 
     private val _ping = MutableStateFlow<Duration?>(null)
     override val ping: StateFlow<Duration?> get() = _ping
 
-    @OptIn(FlowPreview::class)
     override val events: SharedFlow<Event> = data.eventFlow
 
     private lateinit var socket: DefaultClientWebSocketSession
@@ -189,7 +187,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
         try {
             defaultGatewayLogger.trace { "Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(Event.Companion, json) ?: return
+            val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json) ?: return
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
             defaultGatewayLogger.error(exception)
@@ -261,7 +259,7 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
     }
 
-    override suspend fun send(command: Command) = stateMutex.withLock {
+    override suspend fun send(command: Command): Unit = stateMutex.withLock {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         sendUnsafe(command)
     }
@@ -271,14 +269,13 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         sendUnsafe(command)
     }
 
-    @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun sendUnsafe(command: Command) {
         data.sendRateLimiter.consume()
-        val json = Json.encodeToString(Command.Companion, command)
+        val json = Json.encodeToString(Command.SerializationStrategy, command)
         if (command is Identify) {
             defaultGatewayLogger.trace {
                 val copy = command.copy(token = "token")
-                "Gateway >>> ${Json.encodeToString(Command.Companion, copy)}"
+                "Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
             }
         } else defaultGatewayLogger.trace { "Gateway >>> $json" }
         socket.send(Frame.Text(json))
@@ -286,15 +283,14 @@ class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
 
-    companion object {
+    public companion object {
         private const val gatewayRunningError = "The Gateway is already running, call stop() first."
         private const val gatewayDetachedError =
             "The Gateway has been detached and can no longer be used, create a new instance instead."
     }
 }
 
-@OptIn(ExperimentalContracts::class)
-inline fun DefaultGateway(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway {
+public inline fun DefaultGateway(builder: DefaultGatewayBuilder.() -> Unit = {}): DefaultGateway {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return DefaultGatewayBuilder().apply(builder).build()
 }

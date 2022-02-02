@@ -1,7 +1,6 @@
 package dev.kord.rest.builder.interaction
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
@@ -9,7 +8,7 @@ import dev.kord.rest.json.request.ApplicationCommandModifyRequest
 
 
 @KordDsl
-class MessageCommandModifyBuilder : ApplicationCommandModifyBuilder {
+public class MessageCommandModifyBuilder : ApplicationCommandModifyBuilder {
 
     private val state = ApplicationCommandModifyStateHolder()
 
@@ -28,7 +27,7 @@ class MessageCommandModifyBuilder : ApplicationCommandModifyBuilder {
 }
 
 @KordDsl
-class MessageCommandCreateBuilder(override var name: String) : ApplicationCommandCreateBuilder {
+public class MessageCommandCreateBuilder(override var name: String) : ApplicationCommandCreateBuilder {
     override val type: ApplicationCommandType
         get() = ApplicationCommandType.Message
 

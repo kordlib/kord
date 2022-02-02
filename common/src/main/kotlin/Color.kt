@@ -10,14 +10,14 @@ import kotlinx.serialization.encoding.Encoder
 
 
 @Serializable(with = Color.Serializer::class)
-class Color(rgb: Int) {
-    constructor(red: Int, green: Int, blue: Int) : this(rgb(red, green, blue))
+public class Color(rgb: Int) {
+    public constructor(red: Int, green: Int, blue: Int) : this(rgb(red, green, blue))
 
-    val rgb = rgb and 0xFFFFFF
+    public val rgb: Int = rgb and 0xFFFFFF
 
-    val red: Int get() = (rgb shr 16) and 0xFF
-    val green: Int get() = (rgb shr 8) and 0xFF
-    val blue: Int get() = (rgb shr 0) and 0xFF
+    public val red: Int get() = (rgb shr 16) and 0xFF
+    public val green: Int get() = (rgb shr 8) and 0xFF
+    public val blue: Int get() = (rgb shr 0) and 0xFF
 
     init {
         require(this.rgb in MIN_COLOR..MAX_COLOR) { "RGB should be in range of $MIN_COLOR..$MAX_COLOR but was ${this.rgb}" }
@@ -33,7 +33,7 @@ class Color(rgb: Int) {
         return color.rgb == rgb
     }
 
-    companion object {
+    public companion object {
         private const val MIN_COLOR = 0
         private const val MAX_COLOR = 0xFFFFFF
     }
@@ -61,4 +61,4 @@ private fun rgb(red: Int, green: Int, blue: Int): Int {
             (blue and 0xFF) shl 0
 }
 
-val java.awt.Color.kColor get() = Color(rgb)
+public val java.awt.Color.kColor: Color get() = Color(rgb)

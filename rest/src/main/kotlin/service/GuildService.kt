@@ -2,29 +2,10 @@ package dev.kord.rest.service
 
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.entity.DiscordChannel
-import dev.kord.common.entity.DiscordGuild
-import dev.kord.common.entity.DiscordGuildMember
-import dev.kord.common.entity.DiscordGuildScheduledEvent
-import dev.kord.common.entity.DiscordGuildWidget
-import dev.kord.common.entity.DiscordRole
-import dev.kord.common.entity.DiscordWelcomeScreen
-import dev.kord.common.entity.ScheduledEntityType
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.StageInstancePrivacyLevel
+import dev.kord.common.entity.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
-import dev.kord.rest.builder.channel.CategoryCreateBuilder
-import dev.kord.rest.builder.channel.GuildChannelPositionModifyBuilder
-import dev.kord.rest.builder.channel.NewsChannelCreateBuilder
-import dev.kord.rest.builder.channel.TextChannelCreateBuilder
-import dev.kord.rest.builder.channel.VoiceChannelCreateBuilder
-import dev.kord.rest.builder.guild.CurrentVoiceStateModifyBuilder
-import dev.kord.rest.builder.guild.GuildCreateBuilder
-import dev.kord.rest.builder.guild.GuildModifyBuilder
-import dev.kord.rest.builder.guild.GuildWidgetModifyBuilder
-import dev.kord.rest.builder.guild.ScheduledEventCreateBuilder
-import dev.kord.rest.builder.guild.VoiceStateModifyBuilder
-import dev.kord.rest.builder.guild.WelcomeScreenModifyBuilder
+import dev.kord.rest.builder.channel.*
+import dev.kord.rest.builder.guild.*
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.builder.member.MemberAddBuilder
 import dev.kord.rest.builder.member.MemberModifyBuilder
@@ -32,39 +13,19 @@ import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RoleModifyBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.builder.scheduled_events.ScheduledEventModifyBuilder
-import dev.kord.rest.json.request.CurrentUserNicknameModifyRequest
-import dev.kord.rest.json.request.CurrentVoiceStateModifyRequest
-import dev.kord.rest.json.request.GuildBanCreateRequest
-import dev.kord.rest.json.request.GuildChannelCreateRequest
-import dev.kord.rest.json.request.GuildChannelPositionModifyRequest
-import dev.kord.rest.json.request.GuildCreateRequest
-import dev.kord.rest.json.request.GuildIntegrationCreateRequest
-import dev.kord.rest.json.request.GuildIntegrationModifyRequest
-import dev.kord.rest.json.request.GuildMemberAddRequest
-import dev.kord.rest.json.request.GuildMemberModifyRequest
-import dev.kord.rest.json.request.GuildModifyRequest
-import dev.kord.rest.json.request.GuildRoleCreateRequest
-import dev.kord.rest.json.request.GuildRoleModifyRequest
-import dev.kord.rest.json.request.GuildRolePositionModifyRequest
-import dev.kord.rest.json.request.GuildScheduledEventCreateRequest
-import dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest
-import dev.kord.rest.json.request.GuildWidgetModifyRequest
-import dev.kord.rest.json.request.ScheduledEventModifyRequest
-import dev.kord.rest.json.request.VoiceStateModifyRequest
-import dev.kord.rest.json.response.ListThreadsResponse
+import dev.kord.rest.json.request.*
+import dev.kord.rest.json.response.*
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlinx.datetime.Instant
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
+public class GuildService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGuild(name: String, builder: GuildCreateBuilder.() -> Unit): DiscordGuild {
+    public suspend inline fun createGuild(name: String, builder: GuildCreateBuilder.() -> Unit): DiscordGuild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -77,7 +38,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
      * @param withCounts whether to include the [DiscordGuild.approximateMemberCount]
      * and [DiscordGuild.approximatePresenceCount] fields, `false` by default.
      */
-    suspend fun getGuild(guildId: Snowflake, withCounts: Boolean = false) = call(Route.GuildGet) {
+    public suspend fun getGuild(guildId: Snowflake, withCounts: Boolean = false): DiscordGuild = call(Route.GuildGet) {
         keys[Route.GuildId] = guildId
         parameter("with_count", withCounts.toString())
     }
@@ -85,12 +46,11 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
     /**
      * Returns the preview of this [guildId].
      */
-    suspend fun getGuildPreview(guildId: Snowflake) = call(Route.GuildPreviewGet) {
+    public suspend fun getGuildPreview(guildId: Snowflake): DiscordGuildPreview = call(Route.GuildPreviewGet) {
         keys[Route.GuildId] = guildId
     }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyGuild(guildId: Snowflake, builder: GuildModifyBuilder.() -> Unit): DiscordGuild {
+    public suspend inline fun modifyGuild(guildId: Snowflake, builder: GuildModifyBuilder.() -> Unit): DiscordGuild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -103,23 +63,25 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend fun deleteGuild(guildId: Snowflake) = call(Route.GuildDelete) {
+    public suspend fun deleteGuild(guildId: Snowflake): Unit = call(Route.GuildDelete) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun getGuildChannels(guildId: Snowflake) = call(Route.GuildChannelsGet) {
+    public suspend fun getGuildChannels(guildId: Snowflake): List<DiscordChannel> = call(Route.GuildChannelsGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun createGuildChannel(guildId: Snowflake, channel: GuildChannelCreateRequest, reason: String? = null) =
-        call(Route.GuildChannelsPost) {
-            keys[Route.GuildId] = guildId
-            body(GuildChannelCreateRequest.serializer(), channel)
-            auditLogReason(reason)
-        }
+    public suspend fun createGuildChannel(
+        guildId: Snowflake,
+        channel: GuildChannelCreateRequest,
+        reason: String? = null,
+    ): DiscordChannel = call(Route.GuildChannelsPost) {
+        keys[Route.GuildId] = guildId
+        body(GuildChannelCreateRequest.serializer(), channel)
+        auditLogReason(reason)
+    }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyGuildChannelPosition(
+    public suspend inline fun modifyGuildChannelPosition(
         guildId: Snowflake,
         builder: GuildChannelPositionModifyBuilder.() -> Unit
     ) {
@@ -135,34 +97,39 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend fun getGuildMember(guildId: Snowflake, userId: Snowflake) = call(Route.GuildMemberGet) {
-        keys[Route.GuildId] = guildId
-        keys[Route.UserId] = userId
-    }
-
-    suspend fun getGuildMembers(guildId: Snowflake, position: Position? = null, limit: Int = 1) =
-        call(Route.GuildMembersGet) {
+    public suspend fun getGuildMember(guildId: Snowflake, userId: Snowflake): DiscordGuildMember =
+        call(Route.GuildMemberGet) {
             keys[Route.GuildId] = guildId
-            if (position != null) {
-                parameter(position.key, position.value)
-            }
-            parameter("limit", "$limit")
+            keys[Route.UserId] = userId
         }
 
+    public suspend fun getGuildMembers(
+        guildId: Snowflake,
+        after: Position.After? = null,
+        limit: Int? = null,
+    ): List<DiscordGuildMember> = call(Route.GuildMembersGet) {
+        keys[Route.GuildId] = guildId
+        after?.let { parameter(it.key, it.value) }
+        limit?.let { parameter("limit", it) }
+    }
+
     /**
-     * Requests members with a username or nickname matching [query].
+     * Requests members with a username or nickname starting with [query].
      *
      * @param limit limits the maximum amount of members returned. Max `1000`, defaults to `1`.
      */
     @KordExperimental
-    suspend fun getGuildMembers(guildId: Snowflake, query: String, limit: Int = 1) = call(Route.GuildMembersSearchGet) {
+    public suspend fun getGuildMembers(
+        guildId: Snowflake,
+        query: String,
+        limit: Int? = null,
+    ): List<DiscordGuildMember> = call(Route.GuildMembersSearchGet) {
         keys[Route.GuildId] = guildId
         parameter("query", query)
-        parameter("limit", "$limit")
+        limit?.let { parameter("limit", it) }
     }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend fun addGuildMember(
+    public suspend fun addGuildMember(
         guildId: Snowflake,
         userId: Snowflake,
         token: String,
@@ -176,8 +143,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyGuildMember(
+    public suspend inline fun modifyGuildMember(
         guildId: Snowflake,
         userId: Snowflake,
         builder: MemberModifyBuilder.() -> Unit
@@ -195,44 +161,47 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend fun addRoleToGuildMember(guildId: Snowflake, userId: Snowflake, roleId: Snowflake, reason: String? = null) =
-        call(Route.GuildMemberRolePut) {
-            keys[Route.GuildId] = guildId
-            keys[Route.UserId] = userId
-            keys[Route.RoleId] = roleId
-            auditLogReason(reason)
-        }
-
-    suspend fun deleteRoleFromGuildMember(
+    public suspend fun addRoleToGuildMember(
         guildId: Snowflake,
         userId: Snowflake,
         roleId: Snowflake,
-        reason: String? = null
-    ) = call(Route.GuildMemberRoleDelete) {
+        reason: String? = null,
+    ): Unit = call(Route.GuildMemberRolePut) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
         keys[Route.RoleId] = roleId
         auditLogReason(reason)
     }
 
-    suspend fun deleteGuildMember(guildId: Snowflake, userId: Snowflake, reason: String? = null) =
+    public suspend fun deleteRoleFromGuildMember(
+        guildId: Snowflake,
+        userId: Snowflake,
+        roleId: Snowflake,
+        reason: String? = null,
+    ): Unit = call(Route.GuildMemberRoleDelete) {
+        keys[Route.GuildId] = guildId
+        keys[Route.UserId] = userId
+        keys[Route.RoleId] = roleId
+        auditLogReason(reason)
+    }
+
+    public suspend fun deleteGuildMember(guildId: Snowflake, userId: Snowflake, reason: String? = null): Unit =
         call(Route.GuildMemberDelete) {
             keys[Route.GuildId] = guildId
             keys[Route.UserId] = userId
             auditLogReason(reason)
         }
 
-    suspend fun getGuildBans(guildId: Snowflake) = call(Route.GuildBansGet) {
+    public suspend fun getGuildBans(guildId: Snowflake): List<BanResponse> = call(Route.GuildBansGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake) = call(Route.GuildBanGet) {
+    public suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): BanResponse = call(Route.GuildBanGet) {
         keys[Route.GuildId] = guildId
         keys[Route.UserId] = userId
     }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun addGuildBan(guildId: Snowflake, userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
+    public suspend inline fun addGuildBan(guildId: Snowflake, userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -246,19 +215,21 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend fun deleteGuildBan(guildId: Snowflake, userId: Snowflake, reason: String? = null) =
+    public suspend fun deleteGuildBan(guildId: Snowflake, userId: Snowflake, reason: String? = null): Unit =
         call(Route.GuildBanDelete) {
             keys[Route.GuildId] = guildId
             keys[Route.UserId] = userId
             auditLogReason(reason)
         }
 
-    suspend fun getGuildRoles(guildId: Snowflake) = call(Route.GuildRolesGet) {
+    public suspend fun getGuildRoles(guildId: Snowflake): List<DiscordRole> = call(Route.GuildRolesGet) {
         keys[Route.GuildId] = guildId
     }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun createGuildRole(guildId: Snowflake, builder: RoleCreateBuilder.() -> Unit = {}): DiscordRole {
+    public suspend inline fun createGuildRole(
+        guildId: Snowflake,
+        builder: RoleCreateBuilder.() -> Unit = {},
+    ): DiscordRole {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
@@ -271,8 +242,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyGuildRolePosition(
+    public suspend inline fun modifyGuildRolePosition(
         guildId: Snowflake,
         builder: RolePositionsModifyBuilder.() -> Unit
     ): List<DiscordRole> {
@@ -286,8 +256,7 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyGuildRole(
+    public suspend inline fun modifyGuildRole(
         guildId: Snowflake,
         roleId: Snowflake,
         builder: RoleModifyBuilder.() -> Unit
@@ -302,50 +271,52 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend fun deleteGuildRole(guildId: Snowflake, roleId: Snowflake, reason: String? = null) =
+    public suspend fun deleteGuildRole(guildId: Snowflake, roleId: Snowflake, reason: String? = null): Unit =
         call(Route.GuildRoleDelete) {
             keys[Route.GuildId] = guildId
             keys[Route.RoleId] = roleId
             auditLogReason(reason)
         }
 
-    suspend fun getGuildPruneCount(guildId: Snowflake, days: Int = 7) = call(Route.GuildPruneCountGet) {
-        keys[Route.GuildId] = guildId
-        parameter("days", days)
-    }
+    public suspend fun getGuildPruneCount(guildId: Snowflake, days: Int = 7): GetPruneResponse =
+        call(Route.GuildPruneCountGet) {
+            keys[Route.GuildId] = guildId
+            parameter("days", days)
+        }
 
-    suspend fun beginGuildPrune(
+    public suspend fun beginGuildPrune(
         guildId: Snowflake,
         days: Int = 7,
         computePruneCount: Boolean = true,
-        reason: String? = null
-    ) = call(Route.GuildPrunePost) {
+        reason: String? = null,
+    ): PruneResponse = call(Route.GuildPrunePost) {
         keys[Route.GuildId] = guildId
         parameter("days", days)
         parameter("compute_prune_count", computePruneCount)
         auditLogReason(reason)
     }
 
-    suspend fun getGuildVoiceRegions(guildId: Snowflake) = call(Route.GuildVoiceRegionsGet) {
+    public suspend fun getGuildVoiceRegions(guildId: Snowflake): List<DiscordVoiceRegion> =
+        call(Route.GuildVoiceRegionsGet) {
+            keys[Route.GuildId] = guildId
+        }
+
+    public suspend fun getGuildInvites(guildId: Snowflake): List<DiscordInvite> = call(Route.GuildInvitesGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun getGuildInvites(guildId: Snowflake) = call(Route.GuildInvitesGet) {
-        keys[Route.GuildId] = guildId
-    }
+    public suspend fun getGuildIntegrations(guildId: Snowflake): List<DiscordIntegration> =
+        call(Route.GuildIntegrationGet) {
+            keys[Route.GuildId] = guildId
+        }
 
-    suspend fun getGuildIntegrations(guildId: Snowflake) = call(Route.GuildIntegrationGet) {
-        keys[Route.GuildId] = guildId
-    }
-
-    suspend fun createGuildIntegration(guildId: Snowflake, integration: GuildIntegrationCreateRequest) =
+    public suspend fun createGuildIntegration(guildId: Snowflake, integration: GuildIntegrationCreateRequest): Unit =
         call(Route.GuildIntegrationPost) {
             keys[Route.GuildId] = guildId
             body(GuildIntegrationCreateRequest.serializer(), integration)
         }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyGuildIntegration(
+    public suspend inline fun modifyGuildIntegration(
         guildId: Snowflake,
         integrationId: Snowflake,
         builder: IntegrationModifyBuilder.() -> Unit
@@ -360,14 +331,17 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         }
     }
 
-    suspend fun deleteGuildIntegration(guildId: Snowflake, integrationId: Snowflake, reason: String? = null) =
-        call(Route.GuildIntegrationDelete) {
-            keys[Route.GuildId] = guildId
-            keys[Route.IntegrationId] = integrationId
-            auditLogReason(reason)
-        }
+    public suspend fun deleteGuildIntegration(
+        guildId: Snowflake,
+        integrationId: Snowflake,
+        reason: String? = null,
+    ): Unit = call(Route.GuildIntegrationDelete) {
+        keys[Route.GuildId] = guildId
+        keys[Route.IntegrationId] = integrationId
+        auditLogReason(reason)
+    }
 
-    suspend fun syncGuildIntegration(guildId: Snowflake, integrationId: Snowflake) =
+    public suspend fun syncGuildIntegration(guildId: Snowflake, integrationId: Snowflake): Unit =
         call(Route.GuildIntegrationSyncPost) {
             keys[Route.GuildId] = guildId
             keys[Route.IntegrationId] = integrationId
@@ -376,7 +350,8 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
     @Suppress("RedundantSuspendModifier")
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("getGuildWidget(guildId)"), DeprecationLevel.ERROR)
-    suspend fun getGuildEmbed(guildId: Snowflake): Nothing = throw Exception("Guild embeds were renamed to widgets.")
+    public suspend fun getGuildEmbed(guildId: Snowflake): Nothing =
+        throw Exception("Guild embeds were renamed to widgets.")
 
     @Suppress("RedundantSuspendModifier")
     @DeprecatedSinceKord("0.7.0")
@@ -385,26 +360,24 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         ReplaceWith("modifyGuildWidget(guildId, embed)"),
         DeprecationLevel.ERROR
     )
-    suspend fun modifyGuildEmbed(guildId: Snowflake, embed: Any): Nothing =
+    public suspend fun modifyGuildEmbed(guildId: Snowflake, embed: Any): Nothing =
         throw Exception("Guild embeds were renamed to widgets.")
 
-    suspend fun getGuildWidget(guildId: Snowflake): DiscordGuildWidget = call(Route.GuildWidgetGet) {
+    public suspend fun getGuildWidget(guildId: Snowflake): DiscordGuildWidget = call(Route.GuildWidgetGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyGuildWidget(
+    public suspend fun modifyGuildWidget(
         guildId: Snowflake,
         widget: GuildWidgetModifyRequest,
-        reason: String? = null
-    ): DiscordGuildWidget =
-        call(Route.GuildWidgetPatch) {
-            keys[Route.GuildId] = guildId
-            body(GuildWidgetModifyRequest.serializer(), widget)
-            auditLogReason(reason)
-        }
+        reason: String? = null,
+    ): DiscordGuildWidget = call(Route.GuildWidgetPatch) {
+        keys[Route.GuildId] = guildId
+        body(GuildWidgetModifyRequest.serializer(), widget)
+        auditLogReason(reason)
+    }
 
-    @OptIn(ExperimentalContracts::class)
-    suspend inline fun modifyGuildWidget(
+    public suspend inline fun modifyGuildWidget(
         guildId: Snowflake,
         builder: GuildWidgetModifyBuilder.() -> Unit
     ): DiscordGuildWidget {
@@ -413,113 +386,102 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
         return modifyGuildWidget(guildId, modifyBuilder.toRequest(), modifyBuilder.reason)
     }
 
-    suspend fun getVanityInvite(guildId: Snowflake) = call(Route.GuildVanityInviteGet) {
+    public suspend fun getVanityInvite(guildId: Snowflake): DiscordPartialInvite = call(Route.GuildVanityInviteGet) {
         keys[Route.GuildId] = guildId
     }
 
-    suspend fun modifyCurrentUserNickname(
+    public suspend fun modifyCurrentUserNickname(
         guildId: Snowflake,
         nick: CurrentUserNicknameModifyRequest,
-        reason: String? = null
-    ) =
-        call(Route.GuildCurrentUserNickPatch) {
-            keys[Route.GuildId] = guildId
-            body(CurrentUserNicknameModifyRequest.serializer(), nick)
-            auditLogReason(reason)
-        }
-
-    suspend fun getGuildWelcomeScreen(guildId: Snowflake) = call(Route.GuildWelcomeScreenGet) {
+        reason: String? = null,
+    ): CurrentUserNicknameModifyResponse = call(Route.GuildCurrentUserNickPatch) {
         keys[Route.GuildId] = guildId
+        body(CurrentUserNicknameModifyRequest.serializer(), nick)
+        auditLogReason(reason)
     }
 
-
-    suspend fun modifyGuildWelcomeScreen(
-        guildId: Snowflake,
-        request: GuildWelcomeScreenModifyRequest,
-        reason: String? = null
-    ) =
-        call(Route.GuildWelcomeScreenPatch) {
+    public suspend fun getGuildWelcomeScreen(guildId: Snowflake): DiscordWelcomeScreen =
+        call(Route.GuildWelcomeScreenGet) {
             keys[Route.GuildId] = guildId
-            body(GuildWelcomeScreenModifyRequest.serializer(), request)
-            auditLogReason(reason)
         }
 
+    public suspend fun modifyGuildWelcomeScreen(
+        guildId: Snowflake,
+        request: GuildWelcomeScreenModifyRequest,
+        reason: String? = null,
+    ): DiscordWelcomeScreen = call(Route.GuildWelcomeScreenPatch) {
+        keys[Route.GuildId] = guildId
+        body(GuildWelcomeScreenModifyRequest.serializer(), request)
+        auditLogReason(reason)
+    }
 
-    suspend fun modifyCurrentVoiceState(guildId: Snowflake, request: CurrentVoiceStateModifyRequest) =
+    public suspend fun modifyCurrentVoiceState(guildId: Snowflake, request: CurrentVoiceStateModifyRequest): Unit =
         call(Route.SelfVoiceStatePatch) {
             keys[Route.GuildId] = guildId
             body(CurrentVoiceStateModifyRequest.serializer(), request)
         }
 
-
-    suspend fun modifyVoiceState(guildId: Snowflake, userId: Snowflake, request: VoiceStateModifyRequest) =
+    public suspend fun modifyVoiceState(guildId: Snowflake, userId: Snowflake, request: VoiceStateModifyRequest): Unit =
         call(Route.OthersVoiceStatePatch) {
             keys[Route.GuildId] = guildId
             keys[Route.UserId] = userId
             body(VoiceStateModifyRequest.serializer(), request)
         }
 
+    public suspend fun listActiveThreads(guildId: Snowflake): ListThreadsResponse = call(Route.ActiveThreadsGet) {
+        keys[Route.GuildId] = guildId
+    }
 
-    suspend fun listActiveThreads(guildId: Snowflake): ListThreadsResponse {
-        return call(Route.ActiveThreadsGet) {
-            keys[Route.GuildId] = guildId
+    public suspend fun listScheduledEvents(
+        guildId: Snowflake,
+        withUserCount: Boolean? = null,
+    ): List<DiscordGuildScheduledEvent> = call(Route.GuildScheduledEventsGet) {
+        keys[Route.GuildId] = guildId
+        if (withUserCount != null) {
+            parameter("with_user_count", withUserCount)
         }
     }
 
-    suspend fun listScheduledEvents(
-        guildId: Snowflake,
-        withUserCount: Boolean? = null
-    ): List<DiscordGuildScheduledEvent> =
-        call(Route.GuildScheduledEventsGet) {
-            keys[Route.GuildId] = guildId
-            if (withUserCount != null) {
-                parameter("with_user_count", withUserCount)
-            }
-        }
-
-    suspend fun getScheduledEvent(
-        guildId: Snowflake,
-        eventId: Snowflake
-    ): DiscordGuildScheduledEvent =
+    public suspend fun getScheduledEvent(guildId: Snowflake, eventId: Snowflake): DiscordGuildScheduledEvent =
         call(Route.GuildScheduledEventGet) {
             keys[Route.GuildId] = guildId
             keys[Route.ScheduledEventId] = eventId
         }
 
-    suspend fun createScheduledEvent(
+    public suspend fun createScheduledEvent(
         guildId: Snowflake,
-        request: GuildScheduledEventCreateRequest
-    ) = call(Route.GuildScheduledEventsPost) {
+        request: GuildScheduledEventCreateRequest,
+        reason: String? = null,
+    ): DiscordGuildScheduledEvent = call(Route.GuildScheduledEventsPost) {
         keys[Route.GuildId] = guildId
-
+        auditLogReason(reason)
         body(GuildScheduledEventCreateRequest.serializer(), request)
     }
 
-    suspend fun modifyScheduledEvent(
+    public suspend fun modifyScheduledEvent(
         guildId: Snowflake,
         eventId: Snowflake,
-        request: ScheduledEventModifyRequest
-    ) = call(Route.GuildScheduledEventPatch) {
+        request: ScheduledEventModifyRequest,
+        reason: String? = null,
+    ): DiscordGuildScheduledEvent = call(Route.GuildScheduledEventPatch) {
         keys[Route.GuildId] = guildId
         keys[Route.ScheduledEventId] = eventId
-
+        auditLogReason(reason)
         body(ScheduledEventModifyRequest.serializer(), request)
     }
 
-    suspend fun deleteScheduledEvent(
-        guildId: Snowflake,
-        eventId: Snowflake
-    ) = call(Route.GuildScheduledEventDelete) {
-        keys[Route.GuildId] = guildId
-        keys[Route.ScheduledEventId] = eventId
-    }
+    public suspend fun deleteScheduledEvent(guildId: Snowflake, eventId: Snowflake): Unit =
+        call(Route.GuildScheduledEventDelete) {
+            keys[Route.GuildId] = guildId
+            keys[Route.ScheduledEventId] = eventId
+        }
 
-    suspend fun getScheduledEventUsers(
+    public suspend fun getScheduledEventUsers(
         guildId: Snowflake,
         eventId: Snowflake,
         limit: Int? = null,
         withMember: Boolean? = null,
-        position: Position? = null
+        position: Position? = null,
     ) = call(Route.GuildScheduledEventUsersGet) {
         keys[Route.GuildId] = guildId
         keys[Route.ScheduledEventId] = eventId
@@ -556,18 +518,16 @@ class GuildService(requestHandler: RequestHandler) : RestService(requestHandler)
 
 }
 
-@OptIn(ExperimentalContracts::class)
-suspend inline fun GuildService.modifyGuildWelcomeScreen(
+public suspend inline fun GuildService.modifyGuildWelcomeScreen(
     guildId: Snowflake,
     builder: WelcomeScreenModifyBuilder.() -> Unit
 ): DiscordWelcomeScreen {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val appliedBuilder = WelcomeScreenModifyBuilder().apply(builder)
-    return modifyGuildWelcomeScreen(guildId, appliedBuilder.toRequest(), appliedBuilder.reason)
+    val modifiedBuilder = WelcomeScreenModifyBuilder().apply(builder)
+    return modifyGuildWelcomeScreen(guildId, modifiedBuilder.toRequest(), modifiedBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
-suspend inline fun GuildService.createTextChannel(
+public suspend inline fun GuildService.createTextChannel(
     guildId: Snowflake,
     name: String,
     builder: TextChannelCreateBuilder.() -> Unit
@@ -577,8 +537,7 @@ suspend inline fun GuildService.createTextChannel(
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
-suspend inline fun GuildService.createNewsChannel(
+public suspend inline fun GuildService.createNewsChannel(
     guildId: Snowflake,
     name: String,
     builder: NewsChannelCreateBuilder.() -> Unit
@@ -588,8 +547,7 @@ suspend inline fun GuildService.createNewsChannel(
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
-suspend inline fun GuildService.createVoiceChannel(
+public suspend inline fun GuildService.createVoiceChannel(
     guildId: Snowflake,
     name: String,
     builder: VoiceChannelCreateBuilder.() -> Unit
@@ -599,8 +557,7 @@ suspend inline fun GuildService.createVoiceChannel(
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
-suspend inline fun GuildService.createCategory(
+public suspend inline fun GuildService.createCategory(
     guildId: Snowflake,
     name: String,
     builder: CategoryCreateBuilder.() -> Unit
@@ -610,9 +567,7 @@ suspend inline fun GuildService.createCategory(
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
-
-@OptIn(ExperimentalContracts::class)
-suspend inline fun GuildService.modifyCurrentVoiceState(
+public suspend inline fun GuildService.modifyCurrentVoiceState(
     guildId: Snowflake,
     channelId: Snowflake,
     builder: CurrentVoiceStateModifyBuilder.() -> Unit
@@ -622,9 +577,7 @@ suspend inline fun GuildService.modifyCurrentVoiceState(
     modifyCurrentVoiceState(guildId, modifyBuilder.toRequest())
 }
 
-
-@OptIn(ExperimentalContracts::class)
-suspend inline fun GuildService.modifyVoiceState(
+public suspend inline fun GuildService.modifyVoiceState(
     guildId: Snowflake,
     channelId: Snowflake,
     userId: Snowflake,
@@ -635,11 +588,10 @@ suspend inline fun GuildService.modifyVoiceState(
     modifyVoiceState(guildId, userId, modifyBuilder.toRequest())
 }
 
-@OptIn(ExperimentalContracts::class)
-suspend inline fun GuildService.createScheduledEvent(
+public suspend inline fun GuildService.createScheduledEvent(
     guildId: Snowflake,
     name: String,
-    privacyLevel: StageInstancePrivacyLevel,
+    privacyLevel: GuildScheduledEventPrivacyLevel,
     scheduledStartTime: Instant,
     entityType: ScheduledEntityType,
     builder: ScheduledEventCreateBuilder.() -> Unit = {}
@@ -655,11 +607,10 @@ suspend inline fun GuildService.createScheduledEvent(
         entityType
     ).apply(builder)
 
-    return createScheduledEvent(guildId, appliedBuilder.toRequest())
+    return createScheduledEvent(guildId, appliedBuilder.toRequest(), appliedBuilder.reason)
 }
 
-@OptIn(ExperimentalContracts::class)
-suspend inline fun GuildService.modifyScheduledEvent(
+public suspend inline fun GuildService.modifyScheduledEvent(
     guildId: Snowflake,
     eventId: Snowflake,
     builder: ScheduledEventModifyBuilder.() -> Unit
@@ -670,5 +621,5 @@ suspend inline fun GuildService.modifyScheduledEvent(
 
     val appliedBuilder = ScheduledEventModifyBuilder().apply(builder)
 
-    return modifyScheduledEvent(guildId, eventId, appliedBuilder.toRequest())
+    return modifyScheduledEvent(guildId, eventId, appliedBuilder.toRequest(), appliedBuilder.reason)
 }

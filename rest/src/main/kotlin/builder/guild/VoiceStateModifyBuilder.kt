@@ -10,7 +10,8 @@ import dev.kord.rest.json.request.CurrentVoiceStateModifyRequest
 import dev.kord.rest.json.request.VoiceStateModifyRequest
 import kotlinx.datetime.Instant
 
-class CurrentVoiceStateModifyBuilder(val channelId: Snowflake) : RequestBuilder<CurrentVoiceStateModifyRequest> {
+public class CurrentVoiceStateModifyBuilder(public val channelId: Snowflake) :
+    RequestBuilder<CurrentVoiceStateModifyRequest> {
 
     private var _requestToSpeakTimestamp: Optional<Instant> = Optional.Missing()
 
@@ -26,12 +27,12 @@ class CurrentVoiceStateModifyBuilder(val channelId: Snowflake) : RequestBuilder<
      * * A date in the past is treated as "now" by Discord.
      * * A null value removes the request to speak.
      */
-    var requestToSpeakTimestamp: Instant? by ::_requestToSpeakTimestamp.delegate()
+    public var requestToSpeakTimestamp: Instant? by ::_requestToSpeakTimestamp.delegate()
 
     /**
      *  whether this user is muted by the current user.
      */
-    var suppress: Boolean? by ::_suppress.delegate()
+    public var suppress: Boolean? by ::_suppress.delegate()
 
 
     override fun toRequest(): CurrentVoiceStateModifyRequest {
@@ -40,14 +41,14 @@ class CurrentVoiceStateModifyBuilder(val channelId: Snowflake) : RequestBuilder<
 }
 
 
-class VoiceStateModifyBuilder(val channelId: Snowflake) : RequestBuilder<VoiceStateModifyRequest> {
+public class VoiceStateModifyBuilder(public val channelId: Snowflake) : RequestBuilder<VoiceStateModifyRequest> {
 
     private var _suppress: OptionalBoolean = OptionalBoolean.Missing
 
     /**
      *  whether this user is muted by the current user.
      */
-    var suppress: Boolean? by ::_suppress.delegate()
+    public var suppress: Boolean? by ::_suppress.delegate()
 
     override fun toRequest(): VoiceStateModifyRequest {
         return VoiceStateModifyRequest(channelId, _suppress)

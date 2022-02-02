@@ -14,7 +14,6 @@ import dev.kord.voice.streams.Streams
 import dev.kord.voice.udp.AudioFrameSender
 import dev.kord.voice.udp.VoiceUdpSocket
 import kotlinx.coroutines.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -126,7 +125,6 @@ public class VoiceConnection(
  * @throws dev.kord.voice.exception.VoiceConnectionInitializationException when there was a problem retrieving voice information from Discord.
  */
 @KordVoice
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun VoiceConnection(
     gateway: Gateway,
     selfId: Snowflake,

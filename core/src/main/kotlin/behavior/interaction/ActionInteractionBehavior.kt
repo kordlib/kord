@@ -3,10 +3,12 @@ package dev.kord.core.behavior.interaction
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.entity.Message
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
-import kotlin.contracts.ExperimentalContracts
+import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -22,7 +24,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
      */
     public suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
-         kord.rest.interaction.acknowledge(id, token, true)
+        kord.rest.interaction.acknowledge(id, token, ephemeral = true)
         return EphemeralInteractionResponseBehavior(applicationId, token, kord)
     }
 
@@ -32,13 +34,26 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
      */
     public suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
-        kord.rest.interaction.acknowledge(id, token)
+        kord.rest.interaction.acknowledge(id, token, ephemeral = false)
         return PublicInteractionResponseBehavior(applicationId, token, kord)
     }
 
-    public suspend fun getOriginalInteractionResponse(): Message? {
-        return EntitySupplyStrategy.rest.supply(kord).getOriginalInteractionOrNull(applicationId, token)
-    }
+    /**
+     * Returns the initial interaction response or `null` if it was not found.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getOriginalInteractionResponseOrNull(): Message? =
+        kord.with(rest).getOriginalInteractionOrNull(applicationId, token)
+
+    /**
+     * Returns the initial interaction response.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the initial interaction response was not found.
+     */
+    public suspend fun getOriginalInteractionResponse(): Message =
+        kord.with(rest).getOriginalInteraction(applicationId, token)
 }
 
 
@@ -48,18 +63,12 @@ public interface ActionInteractionBehavior : InteractionBehavior {
  * @param builder [InteractionResponseCreateBuilder] used to create a public response.
  * @return [PublicInteractionResponseBehavior] public response to the interaction.
  */
-
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun ActionInteractionBehavior.respondPublic(
     builder: InteractionResponseCreateBuilder.() -> Unit
 ): PublicInteractionResponseBehavior {
-
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-    val request = InteractionResponseCreateBuilder().apply(builder).toRequest()
-    kord.rest.interaction.createInteractionResponse(id, token, request)
+    kord.rest.interaction.createInteractionResponse(id, token, ephemeral = false, builder)
     return PublicInteractionResponseBehavior(applicationId, token, kord)
-
 }
 
 
@@ -69,18 +78,12 @@ public suspend inline fun ActionInteractionBehavior.respondPublic(
  * @param builder [InteractionResponseCreateBuilder] used to a create an ephemeral response.
  * @return [InteractionResponseBehavior] ephemeral response to the interaction.
  */
-
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun ActionInteractionBehavior.respondEphemeral(
     builder: InteractionResponseCreateBuilder.() -> Unit
 ): EphemeralInteractionResponseBehavior {
-
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val appliedBuilder = InteractionResponseCreateBuilder(true).apply(builder)
-    val request = appliedBuilder.toRequest()
-    kord.rest.interaction.createInteractionResponse(id, token, request)
+    kord.rest.interaction.createInteractionResponse(id, token, ephemeral = true, builder)
     return EphemeralInteractionResponseBehavior(applicationId, token, kord)
-
 }
 
 public fun InteractionBehavior(

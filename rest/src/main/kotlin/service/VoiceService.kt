@@ -1,10 +1,10 @@
 package dev.kord.rest.service
 
+import dev.kord.common.entity.DiscordVoiceRegion
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 
-class VoiceService(requestHandler: RequestHandler) : RestService(requestHandler) {
+public class VoiceService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    suspend fun getVoiceRegions() = call(Route.VoiceRegionsGet)
-
+    public suspend fun getVoiceRegions(): List<DiscordVoiceRegion> = call(Route.VoiceRegionsGet)
 }

@@ -12,15 +12,7 @@ import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
-import dev.kord.core.entity.ApplicationInfo
-import dev.kord.core.entity.Guild
-import dev.kord.core.entity.GuildPreview
-import dev.kord.core.entity.Invite
-import dev.kord.core.entity.KordEntity
-import dev.kord.core.entity.Region
-import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.User
-import dev.kord.core.entity.Webhook
+import dev.kord.core.entity.*
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GlobalChatInputCommand
 import dev.kord.core.entity.application.GlobalMessageCommand
@@ -73,7 +65,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import mu.KLogger
 import mu.KotlinLogging
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -106,6 +97,9 @@ public class Kord(
 
     public val globalCommands: Flow<GlobalApplicationCommand>
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
+
+    public val nitroStickerPacks: Flow<StickerPack>
+        get() = defaultSupplier.getNitroStickerPacks()
 
 
     /**
@@ -160,7 +154,6 @@ public class Kord(
     /**
      * Logs in to the configured [Gateways][Gateway]. Suspends until [logout] or [shutdown] is called.
      */
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun login(builder: LoginBuilder.() -> Unit = {}) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -206,7 +199,6 @@ public class Kord(
         ReplaceWith("createGuild(\"name\", builder)"),
         DeprecationLevel.WARNING
     )
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -221,7 +213,6 @@ public class Kord(
      * @throws [RequestException] if anything went wrong during the request.
      * @return The newly created Guild.
      */
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun createGuild(name: String, builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -345,7 +336,6 @@ public class Kord(
     public suspend fun getSelf(strategy: EntitySupplyStrategy<*> = resources.defaultStrategy): User =
         strategy.supply(this).getSelf()
 
-    @OptIn(ExperimentalContracts::class)
     public suspend fun editSelf(builder: CurrentUserModifyBuilder.() -> Unit): User {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return User(UserData.from(rest.user.modifyCurrentUser(builder)), this)
@@ -373,6 +363,9 @@ public class Kord(
     ): Invite? =
         EntitySupplyStrategy.rest.supply(this).getInviteOrNull(code, withCounts)
 
+    public suspend fun getSticker(id: Snowflake): Sticker = defaultSupplier.getSticker(id)
+
+
 
     /**
      * Requests to edit the presence of the bot user configured by the [builder].
@@ -381,7 +374,6 @@ public class Kord(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun editPresence(builder: PresenceBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -411,7 +403,6 @@ public class Kord(
          * Similarly, [cache][Kord.cache] related functionality has been disabled and
          * replaced with a no-op implementation.
          */
-        @OptIn(ExperimentalContracts::class)
         @KordExperimental
         public inline fun restOnly(token: String, builder: KordRestOnlyBuilder.() -> Unit = {}): Kord {
             contract {
@@ -474,7 +465,6 @@ public class Kord(
     }
 
 
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun createGlobalChatInputCommand(
         name: String,
         description: String,
@@ -491,19 +481,17 @@ public class Kord(
         return GlobalChatInputCommand(data, rest.interaction)
     }
 
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun createGlobalMessageCommand(
         name: String,
         builder: MessageCommandCreateBuilder.() -> Unit = {},
     ): GlobalMessageCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val request = MessageCommandCreateBuilder(name).apply(builder).toRequest()
-        val response = rest.interaction.createGlobalApplicationCommand(resources.applicationId, request)
+        val response =
+            rest.interaction.createGlobalMessageCommandApplicationCommand(resources.applicationId, name, builder)
         val data = ApplicationCommandData.from(response)
         return GlobalMessageCommand(data, rest.interaction)
     }
 
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun createGlobalUserCommand(
         name: String,
         builder: UserCommandCreateBuilder.() -> Unit = {},
@@ -516,7 +504,6 @@ public class Kord(
     }
 
 
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun createGlobalApplicationCommands(
         builder: MultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GlobalApplicationCommand> {
@@ -531,7 +518,6 @@ public class Kord(
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun createGuildChatInputCommand(
         guildId: Snowflake,
         name: String,
@@ -552,7 +538,6 @@ public class Kord(
     }
 
 
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun createGuildMessageCommand(
         guildId: Snowflake,
         name: String,
@@ -569,7 +554,6 @@ public class Kord(
         return GuildMessageCommand(data, rest.interaction)
     }
 
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun createGuildUserCommand(
         guildId: Snowflake,
         name: String,
@@ -588,7 +572,6 @@ public class Kord(
     }
 
 
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,
         builder: MultiApplicationCommandBuilder.() -> Unit,
@@ -605,7 +588,6 @@ public class Kord(
         }
     }
 
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun editApplicationCommandPermissions(
         guildId: Snowflake,
         commandId: Snowflake,
@@ -616,7 +598,6 @@ public class Kord(
     }
 
 
-    @OptIn(ExperimentalContracts::class)
     public suspend inline fun bulkEditApplicationCommandPermissions(
         guildId: Snowflake,
         builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
@@ -631,7 +612,6 @@ public class Kord(
  *
  * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun Kord(token: String, builder: KordBuilder.() -> Unit = {}): Kord {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return KordBuilder(token).apply(builder).build()

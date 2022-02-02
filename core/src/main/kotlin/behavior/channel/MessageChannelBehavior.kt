@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.coroutineContext
@@ -38,7 +37,7 @@ import kotlin.time.TimeMark
 public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
 
     /**
-     * Requests to get the this behavior as a [MessageChannel].
+     * Requests to get this behavior as a [MessageChannel].
      *
      * @throws [RequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
@@ -75,9 +74,9 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * Requests to get all messages in this channel.
      *
      * Messages retrieved by this function will be emitted in chronological order (oldest -> newest).
-     * Unrestricted consumption of the returned [Flow] is a potentially performance intensive operation, it is thus recommended
-     * to limit the amount of messages requested by using [Flow.take], [Flow.takeWhile] or other functions that limit the amount
-     * of messages requested.
+     * Unrestricted consumption of the returned [Flow] is a potentially performance-intensive operation, it is thus
+     * recommended limiting the amount of messages requested by using [Flow.take], [Flow.takeWhile] or other functions
+     * that limit the amount of messages requested.
      *
      * ```kotlin
      *  channel.getMessagesBefore(newer.id).takeWhile { it.id > older.id }
@@ -128,11 +127,11 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * Messages retrieved by this function will be emitted in reverse-chronological older (newest -> oldest).
      *
      * The flow may use paginated requests to supply messages, [limit] will limit the maximum number of messages
-     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
+     * supplied and may optimize the batch size accordingly. `null` means no limit.
      *
-     * Unrestricted consumption of the returned [Flow] is a potentially performance intensive operation, it is thus recommended
-     * to limit the amount of messages requested by using [Flow.take], [Flow.takeWhile] or other functions that limit the amount
-     * of messages requested.
+     * Unrestricted consumption of the returned [Flow] is a potentially performance-intensive operation, it is thus
+     * recommended limiting the amount of messages requested by using [Flow.take], [Flow.takeWhile] or other functions
+     * that limit the amount of messages requested.
      *
      * ```kotlin
      *  channel.getMessagesBefore(newer.id).takeWhile { it.id > older.id }
@@ -143,7 +142,7 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
-    public fun getMessagesBefore(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
+    public fun getMessagesBefore(messageId: Snowflake, limit: Int? = null): Flow<Message> =
         supplier.getMessagesBefore(channelId = id, messageId = messageId, limit = limit)
 
     /**
@@ -152,11 +151,11 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * Messages retrieved by this function will be emitted in chronological older (oldest -> newest).
      *
      * The flow may use paginated requests to supply messages, [limit] will limit the maximum number of messages
-     * supplied and may optimize the batch size accordingly. A value of [Int.MAX_VALUE] means no limit.
+     * supplied and may optimize the batch size accordingly. `null` means no limit.
      *
-     * Unrestricted consumption of the returned [Flow] is a potentially performance intensive operation, it is thus recommended
-     * to limit the amount of messages requested by using [Flow.take], [Flow.takeWhile] or other functions that limit the amount
-     * of messages requested.
+     * Unrestricted consumption of the returned [Flow] is a potentially performance-intensive operation, it is thus
+     * recommended limiting the amount of messages requested by using [Flow.take], [Flow.takeWhile] or other functions
+     * that limit the amount of messages requested.
      *
      * ```kotlin
      *  channel.getMessagesAfter(older.id).takeWhile { it.id < newer.id }
@@ -166,19 +165,22 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws IllegalArgumentException if a [limit] < 1 was supplied.
      */
-    public fun getMessagesAfter(messageId: Snowflake, limit: Int = Int.MAX_VALUE): Flow<Message> =
+    public fun getMessagesAfter(messageId: Snowflake, limit: Int? = null): Flow<Message> =
         supplier.getMessagesAfter(channelId = id, messageId = messageId, limit = limit)
 
     /**
-     * Requests to get messages around (both older and newer) the [messageId].
+     * Requests to get [Message]s around (both older and newer) the [messageId].
      *
      * Messages retrieved by this function will be emitted in chronological older (oldest -> newest).
      *
      * Unlike [getMessagesAfter] and [getMessagesBefore], this flow can return **a maximum of 100 messages**.
      * As such, the accepted range of [limit] is reduced to 1..100.
      *
-     * Supplied messages will be equally distributed  before and after the [messageId].
-     * The remaining message for an odd [limit] is undefined and may appear on either side.
+     * Supplied messages will be equally distributed before and after the [messageId].
+     * The remaining message for an odd [limit] is undefined and may appear on either side or no side at all.
+     *
+     * If a message with the given [messageId] exists, the flow might also contain it, so it **could have one more
+     * element than the given [limit]**.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
@@ -186,7 +188,7 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws IllegalArgumentException if the [limit] is outside the range of 1..100.
      */
     public fun getMessagesAround(messageId: Snowflake, limit: Int = 100): Flow<Message> =
-        supplier.getMessagesAround(channelId = id, messageId = messageId, limit = 100)
+        supplier.getMessagesAround(channelId = id, messageId = messageId, limit = limit)
 
     /**
      * Requests to get a message with the given [messageId].
@@ -274,7 +276,6 @@ public fun MessageChannelBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MessageChannelBehavior.createMessage(builder: UserMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -290,7 +291,6 @@ public suspend inline fun MessageChannelBehavior.createMessage(builder: UserMess
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder.() -> Unit): Message {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -311,7 +311,6 @@ public suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() -> Unit) {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)

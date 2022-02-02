@@ -1,9 +1,6 @@
 package dev.kord.rest.builder.message.modify
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordAttachment
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
@@ -14,11 +11,10 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.FollowupMessageModifyRequest
 import dev.kord.rest.json.request.MultipartFollowupMessageModifyRequest
-import java.io.InputStream
 
 
-class FollowupMessageModifyBuilder
-    : MessageModifyBuilder,
+public class FollowupMessageModifyBuilder :
+    MessageModifyBuilder,
     RequestBuilder<MultipartFollowupMessageModifyRequest> {
 
     private var state = MessageModifyStateHolder()

@@ -6,7 +6,6 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags
-import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -17,13 +16,14 @@ import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.json.JsonElement
 import mu.KotlinLogging
+import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
 
 public sealed class VoiceEvent {
-    internal companion object : DeserializationStrategy<VoiceEvent?> {
+    public object DeserializationStrategy : KDeserializationStrategy<VoiceEvent?> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
-            element("op", OpCode.descriptor)
+            element("op", OpCode.Serializer.descriptor)
             element("d", JsonElement.serializer().descriptor)
         }
 
@@ -36,7 +36,7 @@ public sealed class VoiceEvent {
                 loop@ while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
                         CompositeDecoder.DECODE_DONE -> break@loop
-                        0 -> op = OpCode.deserialize(decoder)
+                        0 -> op = OpCode.Serializer.deserialize(decoder)
                         1 -> data = when (op) {
                             OpCode.Hello -> decodeSerializableElement(
                                 descriptor,
@@ -127,7 +127,7 @@ public sealed class Close : VoiceEvent() {
      *
      * @param recoverable true if the gateway will automatically try to reconnect.
      */
-    public class DiscordClose(public val closeCode: VoiceGatewayCloseCode, public val recoverable: Boolean) : Close()
+    public data class DiscordClose(val closeCode: VoiceGatewayCloseCode, val recoverable: Boolean) : Close()
 
     /**
      * The gateway closed and will attempt to resume the session.

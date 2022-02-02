@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -122,7 +121,6 @@ public fun CategoryBehavior(
  * @return The edited [Category].
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Unit): Category {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchCategory(id, builder)
@@ -138,8 +136,6 @@ public suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Un
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun CategoryBehavior.createTextChannel(
     name: String,
     builder: TextChannelCreateBuilder.() -> Unit = {}
@@ -164,7 +160,6 @@ public suspend inline fun CategoryBehavior.createTextChannel(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun CategoryBehavior.createVoiceChannel(
     name: String,
     builder: VoiceChannelCreateBuilder.() -> Unit = {}
@@ -188,7 +183,6 @@ public suspend inline fun CategoryBehavior.createVoiceChannel(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun CategoryBehavior.createNewsChannel(
     name: String,
     builder: NewsChannelCreateBuilder.() -> Unit = {}

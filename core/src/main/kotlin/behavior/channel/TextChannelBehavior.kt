@@ -3,8 +3,6 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
@@ -25,7 +23,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -35,7 +32,7 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         get() = super.activeThreads.filterIsInstance()
 
     /**
-     * Requests to get the this behavior as a [TextChannel].
+     * Requests to get this behavior as a [TextChannel].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the channel wasn't present.
@@ -99,15 +96,15 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration, reason) as TextChannelThread
     }
 
-    override fun getPublicArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
+    override fun getPublicArchivedThreads(before: Instant?, limit: Int?): Flow<TextChannelThread> {
         return super.getPublicArchivedThreads(before, limit).filterIsInstance()
     }
 
-    override fun getPrivateArchivedThreads(before: Instant, limit: Int): Flow<TextChannelThread> {
+    override fun getPrivateArchivedThreads(before: Instant?, limit: Int?): Flow<TextChannelThread> {
         return super.getPrivateArchivedThreads(before, limit).filterIsInstance()
     }
 
-    override fun getJoinedPrivateArchivedThreads(before: Snowflake, limit: Int): Flow<TextChannelThread> {
+    override fun getJoinedPrivateArchivedThreads(before: Snowflake?, limit: Int?): Flow<TextChannelThread> {
         return super.getJoinedPrivateArchivedThreads(before, limit).filterIsInstance()
     }
 
@@ -152,7 +149,6 @@ public fun TextChannelBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun TextChannelBehavior.edit(builder: TextChannelModifyBuilder.() -> Unit): TextChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchTextChannel(id, builder)

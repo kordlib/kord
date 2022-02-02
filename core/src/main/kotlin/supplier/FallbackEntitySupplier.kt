@@ -1,20 +1,7 @@
 package dev.kord.core.supplier
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.entity.Ban
-import dev.kord.core.entity.Guild
-import dev.kord.core.entity.GuildEmoji
-import dev.kord.core.entity.GuildPreview
-import dev.kord.core.entity.GuildScheduledEvent
-import dev.kord.core.entity.GuildWidget
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Message
-import dev.kord.core.entity.Region
-import dev.kord.core.entity.Role
-import dev.kord.core.entity.StageInstance
-import dev.kord.core.entity.Template
-import dev.kord.core.entity.User
-import dev.kord.core.entity.Webhook
+import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
@@ -22,6 +9,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
+import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
@@ -60,14 +48,11 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? =
         first.getMessageOrNull(channelId, messageId) ?: second.getMessageOrNull(channelId, messageId)
 
-    override suspend fun getMember(guildId: Snowflake, userId: Snowflake): Member =
-        getMemberOrNull(guildId, userId)!!
-
-    override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> =
+    override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         first.getMessagesAfter(messageId, channelId, limit)
             .switchIfEmpty(second.getMessagesAfter(messageId, channelId, limit))
 
-    override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int): Flow<Message> =
+    override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> =
         first.getMessagesBefore(messageId, channelId, limit)
             .switchIfEmpty(second.getMessagesBefore(messageId, channelId, limit))
 
@@ -94,7 +79,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override fun getGuildBans(guildId: Snowflake): Flow<Ban> =
         first.getGuildBans(guildId).switchIfEmpty(second.getGuildBans(guildId))
 
-    override fun getGuildMembers(guildId: Snowflake, limit: Int): Flow<Member> =
+    override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> =
         first.getGuildMembers(guildId, limit).switchIfEmpty(second.getGuildMembers(guildId, limit))
 
     override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> =
@@ -106,7 +91,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> =
         first.getEmojis(guildId).switchIfEmpty(second.getEmojis(guildId))
 
-    override fun getCurrentUserGuilds(limit: Int): Flow<Guild> =
+    override fun getCurrentUserGuilds(limit: Int?): Flow<Guild> =
         first.getCurrentUserGuilds(limit).switchIfEmpty(second.getCurrentUserGuilds(limit))
 
     override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> =
@@ -120,6 +105,14 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? =
         first.getWebhookWithTokenOrNull(id, token) ?: second.getWebhookWithTokenOrNull(id, token)
+
+    override suspend fun getWebhookMessageOrNull(
+        webhookId: Snowflake,
+        token: String,
+        messageId: Snowflake,
+        threadId: Snowflake?,
+    ): Message? = first.getWebhookMessageOrNull(webhookId, token, messageId, threadId)
+        ?: second.getWebhookMessageOrNull(webhookId, token, messageId, threadId)
 
     override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? =
         first.getGuildPreviewOrNull(guildId) ?: second.getGuildPreviewOrNull(guildId)
@@ -145,20 +138,20 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         return first.getActiveThreads(guildId).switchIfEmpty(second.getActiveThreads(guildId))
     }
 
-    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+    override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> {
         return first.getPublicArchivedThreads(channelId, before, limit)
             .switchIfEmpty(second.getPublicArchivedThreads(channelId, before, limit))
     }
 
-    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant, limit: Int): Flow<ThreadChannel> {
+    override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> {
         return first.getPrivateArchivedThreads(channelId, before, limit)
             .switchIfEmpty(second.getPrivateArchivedThreads(channelId, before, limit))
     }
 
     override fun getJoinedPrivateArchivedThreads(
         channelId: Snowflake,
-        before: Snowflake,
-        limit: Int
+        before: Snowflake?,
+        limit: Int?,
     ): Flow<ThreadChannel> {
         return first.getJoinedPrivateArchivedThreads(channelId, before, limit)
             .switchIfEmpty(second.getJoinedPrivateArchivedThreads(channelId, before, limit))
@@ -211,6 +204,13 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         first.getGuildApplicationCommandPermissions(applicationId, guildId)
             .switchIfEmpty(second.getGuildApplicationCommandPermissions(applicationId, guildId))
 
+    override suspend fun getFollowupMessageOrNull(
+        applicationId: Snowflake,
+        interactionToken: String,
+        messageId: Snowflake,
+    ): PublicFollowupMessage? = first.getFollowupMessageOrNull(applicationId, interactionToken, messageId)
+        ?: second.getFollowupMessageOrNull(applicationId, interactionToken, messageId)
+
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =
         first.getGuildScheduledEvents(guildId).switchIfEmpty(second.getGuildScheduledEvents(guildId))
 
@@ -224,7 +224,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         before: Snowflake
     ): Flow<User> =
         first.getGuildScheduledEventUsersBefore(guildId, eventId, limit, before)
-        .switchIfEmpty(second.getGuildScheduledEventUsersBefore(guildId, eventId, limit, before))
+            .switchIfEmpty(second.getGuildScheduledEventUsersBefore(guildId, eventId, limit, before))
 
     override fun getGuildScheduledEventUsersAfter(
         guildId: Snowflake,
@@ -233,7 +233,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         after: Snowflake
     ): Flow<User> =
         first.getGuildScheduledEventUsersAfter(guildId, eventId, limit, after)
-        .switchIfEmpty(second.getGuildScheduledEventUsersAfter(guildId, eventId, limit, after))
+            .switchIfEmpty(second.getGuildScheduledEventUsersAfter(guildId, eventId, limit, after))
 
 
     override fun getGuildScheduledEventMembersBefore(
@@ -243,7 +243,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         before: Snowflake
     ): Flow<Member> =
         first.getGuildScheduledEventMembersBefore(guildId, eventId, limit, before)
-        .switchIfEmpty(second.getGuildScheduledEventMembersBefore(guildId, eventId, limit, before))
+            .switchIfEmpty(second.getGuildScheduledEventMembersBefore(guildId, eventId, limit, before))
 
     override fun getGuildScheduledEventMembersAfter(
         guildId: Snowflake,
@@ -252,11 +252,23 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         after: Snowflake
     ): Flow<Member> =
         first.getGuildScheduledEventMembersAfter(guildId, eventId, limit, after)
-        .switchIfEmpty(second.getGuildScheduledEventMembersAfter(guildId, eventId, limit, after))
+            .switchIfEmpty(second.getGuildScheduledEventMembersAfter(guildId, eventId, limit, after))
+
+    override suspend fun getStickerOrNull(id: Snowflake): Sticker? =
+        first.getStickerOrNull(id) ?: second.getStickerOrNull(id)
 
 
-    override fun toString(): String {
-        return "FallbackEntitySupplier(first=$first, second=$second)"
-    }
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker? =
+        first.getGuildStickerOrNull(guildId, id) ?: second.getGuildStickerOrNull(guildId, id)
+
+
+    override fun getNitroStickerPacks(): Flow<StickerPack> =
+        first.getNitroStickerPacks().switchIfEmpty(second.getNitroStickerPacks())
+
+
+    override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> =
+        first.getGuildStickers(guildId).switchIfEmpty(second.getGuildStickers(guildId))
+
+
+    override fun toString(): String = "FallbackEntitySupplier(first=$first, second=$second)"
 }
-

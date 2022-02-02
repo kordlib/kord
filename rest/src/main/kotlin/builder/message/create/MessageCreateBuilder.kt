@@ -1,6 +1,5 @@
 package dev.kord.rest.builder.message.create
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
@@ -11,51 +10,50 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
  * The base builder for creating a new message.
  */
-sealed interface MessageCreateBuilder {
+public sealed interface MessageCreateBuilder {
 
     /**
      * The text content of the message.
      */
-    var content: String?
+    public var content: String?
 
     /**
      * Whether this message should be played as a text-to-speech message.
      */
-    var tts: Boolean?
+    public var tts: Boolean?
 
     /**
      * The embedded content of the message.
      */
-    val embeds: MutableList<EmbedBuilder>
+    public val embeds: MutableList<EmbedBuilder>
 
     /**
      * The mentions in this message that are allowed to raise a notification.
      * Setting this to null will default to creating notifications for all mentions.
      */
-    var allowedMentions: AllowedMentionsBuilder?
+    public var allowedMentions: AllowedMentionsBuilder?
 
     /**
      * The message components to include in this message.
      */
 
-    val components: MutableList<MessageComponentBuilder>
+    public val components: MutableList<MessageComponentBuilder>
 
     /**
      * The files to include as attachments.
      */
-    val files: MutableList<NamedFile>
+    public val files: MutableList<NamedFile>
 
     /**
      * Adds a file with the [name] and [content] to the attachments.
      */
-    fun addFile(name: String, content: InputStream): NamedFile {
+    public fun addFile(name: String, content: InputStream): NamedFile {
         val namedFile = NamedFile(name, content)
         files += namedFile
         return namedFile
@@ -64,7 +62,7 @@ sealed interface MessageCreateBuilder {
     /**
      * Adds a file with the given [path] to the attachments.
      */
-    suspend fun addFile(path: Path): NamedFile = withContext(Dispatchers.IO) {
+    public suspend fun addFile(path: Path): NamedFile = withContext(Dispatchers.IO) {
         addFile(path.fileName.toString(), Files.newInputStream(path))
     }
 
@@ -74,8 +72,7 @@ sealed interface MessageCreateBuilder {
 /**
  * Adds an embed to the message, configured by the [block]. A message can have up to 10 embeds.
  */
-@OptIn(ExperimentalContracts::class)
-inline fun MessageCreateBuilder.embed(block: EmbedBuilder.() -> Unit) {
+public inline fun MessageCreateBuilder.embed(block: EmbedBuilder.() -> Unit) {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     embeds.add(EmbedBuilder().apply(block))
 }
@@ -85,8 +82,7 @@ inline fun MessageCreateBuilder.embed(block: EmbedBuilder.() -> Unit) {
  * (ping everything), calling this function but not configuring it before the request is build will result in all
  * pings being ignored.
  */
-@OptIn(ExperimentalContracts::class)
-inline fun MessageCreateBuilder.allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
+public inline fun MessageCreateBuilder.allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
     allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
 }
@@ -94,9 +90,7 @@ inline fun MessageCreateBuilder.allowedMentions(block: AllowedMentionsBuilder.()
 /**
  * Adds an Action Row to the message, configured by the [builder]. A message can have up to 5 action rows.
  */
-@OptIn(ExperimentalContracts::class)
-
-inline fun MessageCreateBuilder.actionRow(builder: ActionRowBuilder.() -> Unit) {
+public inline fun MessageCreateBuilder.actionRow(builder: ActionRowBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }

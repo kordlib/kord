@@ -3,5 +3,6 @@
   "name": "1337 Krew",
   "icon": "8342729096ea3675442027381ff50dfe",
   "owner": true,
-  "permissions": 36953089
+  "permissions": "36953089",
+  "features": ["COMMUNITY", "NEWS"]
 }

@@ -29,7 +29,7 @@ public fun <T : Any> QueryBuilder<T>.idGt(property: KProperty1<T, Snowflake>, va
     property.gt(value)
 }
 
-public fun <T: Any> QueryBuilder<T>.idLt(property: KProperty1<T, Snowflake>, value: Snowflake) {
+public fun <T : Any> QueryBuilder<T>.idLt(property: KProperty1<T, Snowflake>, value: Snowflake) {
     property.lt(value)
 }
 

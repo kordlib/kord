@@ -9,20 +9,19 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.MultiPartWebhookExecuteRequest
 import dev.kord.rest.json.request.WebhookExecuteRequest
-import java.io.InputStream
 
 /**
  * Message builder for creating messages as a webhook user.
  */
-class WebhookMessageCreateBuilder
-    : MessageCreateBuilder,
+public class WebhookMessageCreateBuilder :
+    MessageCreateBuilder,
     RequestBuilder<MultiPartWebhookExecuteRequest> {
 
     override var content: String? = null
 
-    var username: String? = null
+    public var username: String? = null
 
-    var avatarUrl: String? = null
+    public var avatarUrl: String? = null
 
     override var tts: Boolean? = null
 

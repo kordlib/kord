@@ -1,8 +1,5 @@
-@file:Suppress("EXPERIMENTAL_API_USAGE")
-
 package json
 
-import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.UserPremium
 import dev.kord.common.entity.optional.value
@@ -19,14 +16,14 @@ class SerializationTest {
 
     @Test
     fun `HeartbeatACK Event serialization`() {
-        val event = Json.decodeFromString(Event.Companion, file("ack"))
+        val event = Json.decodeFromString(Event.DeserializationStrategy, file("ack"))
         event shouldBe HeartbeatACK
     }
 
 
     @Test
     fun `Hello Event serialization`() {
-        val event = Json.decodeFromString(Event.Companion, file("hello")) as Hello
+        val event = Json.decodeFromString(Event.DeserializationStrategy, file("hello")) as Hello
         with(event) {
             heartbeatInterval shouldBe 1337
         }
@@ -35,14 +32,14 @@ class SerializationTest {
 
     @Test
     fun `Reconnect Event serialization`() {
-        val event = Json.decodeFromString(Event.Companion, file("reconnect"))
+        val event = Json.decodeFromString(Event.DeserializationStrategy, file("reconnect"))
         event shouldBe Reconnect
     }
 
 
     @Test
     fun `Ready Event serialization`() {
-        val event = Json.decodeFromString(Event.Companion, file("ready")) as Ready
+        val event = Json.decodeFromString(Event.DeserializationStrategy, file("ready")) as Ready
         with(event.data) {
             with(event.data.guilds) {
                 val guild = get(0)
@@ -72,20 +69,20 @@ class SerializationTest {
 
     @Test
     fun `Resumed Event serialization`() {
-        Json.decodeFromString(Event.Companion, file("resumed")) as Resumed
+        Json.decodeFromString(Event.DeserializationStrategy, file("resumed")) as Resumed
     }
 
 
     @Test
     fun `InvalidSession command serialization`() {
-        val event = Json.decodeFromString(Event.Companion, file("invalid")) as InvalidSession
+        val event = Json.decodeFromString(Event.DeserializationStrategy, file("invalid")) as InvalidSession
         with(event) { resumable shouldBe false }
     }
 
 
     @Test
     fun `ChannelPinsUpdate Event serialization`() {
-        val event = Json.decodeFromString(Event.Companion, file("channelpinsupdate")) as ChannelPinsUpdate
+        val event = Json.decodeFromString(Event.DeserializationStrategy, file("channelpinsupdate")) as ChannelPinsUpdate
         with(event.pins) {
             guildId.value?.toString() shouldBe "41771983423143937"
             channelId.toString() shouldBe "399942396007890945"
@@ -97,7 +94,7 @@ class SerializationTest {
 
     @Test
     fun `ChannelCreate Event serialization`() {
-        val event = Json.decodeFromString(Event.Companion, file("channelcreate")) as ChannelCreate
+        val event = Json.decodeFromString(Event.DeserializationStrategy, file("channelcreate")) as ChannelCreate
         with(event.channel) {
             id.toString() shouldBe "41771983423143937"
             guildId.value?.toString() shouldBe "41771983423143937"
@@ -116,7 +113,7 @@ class SerializationTest {
 
     @Test
     fun `ChannelUpdate Event serialization`() {
-        val event = Json.decodeFromString(Event.Companion, file("channelupdate")) as ChannelUpdate
+        val event = Json.decodeFromString(Event.DeserializationStrategy, file("channelupdate")) as ChannelUpdate
         with(event.channel) {
             id.toString() shouldBe "41771983423143937"
             guildId.value?.toString() shouldBe "41771983423143937"
@@ -134,7 +131,7 @@ class SerializationTest {
 
     @Test
     fun `ChannelDelete Event serialization`() {
-        val event = Json.decodeFromString(Event.Companion, file("channeldelete")) as ChannelDelete
+        val event = Json.decodeFromString(Event.DeserializationStrategy, file("channeldelete")) as ChannelDelete
         with(event.channel) {
             id.toString() shouldBe "41771983423143937"
             guildId.value?.toString() shouldBe "41771983423143937"

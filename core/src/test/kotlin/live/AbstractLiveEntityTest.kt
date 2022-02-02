@@ -41,7 +41,6 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
     class GatewayMock : Gateway {
         override val coroutineContext: CoroutineContext = EmptyCoroutineContext + SupervisorJob()
 
-        @OptIn(FlowPreview::class)
         override val events: MutableSharedFlow<Event> = MutableSharedFlow()
 
         override val ping: StateFlow<Duration?> = MutableStateFlow(null)

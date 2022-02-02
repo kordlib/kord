@@ -15,6 +15,7 @@ jobs:
   build:
     if: |
       !contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.pull_request.title, '[ci skip]')
+      && !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'kordlib/kord')
 
     name: Build Kord
     runs-on: ubuntu-latest
@@ -40,8 +41,7 @@ jobs:
     name: Publish artifacts
     runs-on: ubuntu-latest
     if: |
-      !contains(github.event.head_commit.message, '[publish skip]') && !contains(github.event.pull_request.title, '[publish skip]')
-      && github.event_name != 'pull_request' &&  github.ref != 'refs/heads/master'
+      !contains(github.event.head_commit.message, '[publish skip]') && github.event_name != 'pull_request' &&  github.ref != 'refs/heads/master'
 
     needs: build
     env:
