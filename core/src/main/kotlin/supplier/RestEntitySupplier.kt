@@ -534,7 +534,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         before: Snowflake
     ): Flow<GuildScheduledEventUsersResponse> {
         val batch = min(100, limit)
-        return paginateBackwards(before, batch, { it.user.id }) { position ->
+        return paginateBackwards(batch, before, { it.user.id }) { position ->
             kord.rest.guild.getScheduledEventUsers(guildId, eventId, batch, withMember, position)
         }
 
@@ -549,7 +549,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     ): Flow<GuildScheduledEventUsersResponse> {
 
         val batch = min(100, limit)
-        return paginateForwards(after, batch, { it.user.id }) { position ->
+        return paginateForwards(batch, after, { it.user.id }) { position ->
             kord.rest.guild.getScheduledEventUsers(guildId, eventId, batch, withMember, position)
         }
 

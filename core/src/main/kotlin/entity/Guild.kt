@@ -21,6 +21,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.core.switchIfEmpty
 import dev.kord.rest.Image
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
@@ -359,7 +360,10 @@ public class Guild(
     public val stageInstances: Set<StageInstance>
         get() = data.stageInstances.orEmpty().map { StageInstance(it, kord) }.toSet()
 
-    public val stickers: Set<MessageSticker> get() = data.stickers.orEmpty().map { MessageSticker(it, kord) }.toSet()
+    override val stickers: Flow<GuildSticker>
+        get() = flow {
+            for (sticker in data.stickers.orEmpty()) emit(GuildSticker(sticker, kord))
+        }.switchIfEmpty(super.stickers)
 
 
     /**
