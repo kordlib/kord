@@ -268,10 +268,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         withCounts: Boolean = true,
         withExpiration: Boolean = true,
         scheduledEventId: Snowflake? = null,
-    ): Invite =
-        getInviteOrNull(code, withCounts, withExpiration, scheduledEventId) ?: EntityNotFoundException.inviteNotFound(
-            code
-        )
+    ): Invite = getInviteOrNull(code, withCounts, withExpiration, scheduledEventId)
+        ?: EntityNotFoundException.inviteNotFound(code)
 
     /**
      * Requests to get the information of the current application.

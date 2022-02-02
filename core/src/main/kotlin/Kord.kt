@@ -351,17 +351,39 @@ public class Kord(
         strategy.supply(this).getUserOrNull(id)
 
     /**
-     * Requests to get the [Invite] with [code] through the [EntitySupplyStrategy.rest][rest].
+     * Requests to get the [Invite] represented by the [code].
+     *
      * The returned [Invite], if found, uses the default strategy used by Kord.
      *
-     * @throws [RequestException] if anything went wrong during the request.
+     * This is not resolvable through cache and will always use the [rest strategy][EntitySupplyStrategy.rest] instead.
      *
+     * @throws RestRequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the [Invite] wasn't present.
      */
     public suspend fun getInvite(
         code: String,
-        withCounts: Boolean,
-    ): Invite? =
-        EntitySupplyStrategy.rest.supply(this).getInviteOrNull(code, withCounts)
+        withCounts: Boolean = true,
+        withExpiration: Boolean = true,
+        scheduledEventId: Snowflake? = null,
+    ): Invite = with(EntitySupplyStrategy.rest).getInvite(code, withCounts, withExpiration, scheduledEventId)
+
+    /**
+     * Requests to get the [Invite] represented by the [code],
+     * returns null if the [Invite] isn't present.
+     *
+     * The returned [Invite], if found, uses the default strategy used by Kord.
+     *
+     * This is not resolvable through cache and will always use the [rest strategy][EntitySupplyStrategy.rest] instead.
+     *
+     * @throws RestRequestException if anything went wrong during the request.
+     */
+    public suspend fun getInviteOrNull(
+        code: String,
+        withCounts: Boolean = true,
+        withExpiration: Boolean = true,
+        scheduledEventId: Snowflake? = null,
+    ): Invite? = with(EntitySupplyStrategy.rest).getInviteOrNull(code, withCounts, withExpiration, scheduledEventId)
+
 
     public suspend fun getSticker(id: Snowflake): Sticker = defaultSupplier.getSticker(id)
 

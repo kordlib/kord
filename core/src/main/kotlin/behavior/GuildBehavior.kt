@@ -358,25 +358,32 @@ public interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Requests to get the [Invite] represented by the [code].
      *
+     * This is not resolvable through cache and will always use the [rest strategy][EntitySupplyStrategy.rest] instead.
      *
-     * This property is not resolvable through cache and will always use the [RestClient] instead.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the [Invite] wasn't present.
+     * @throws RestRequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the [Invite] wasn't present.
      */
-    public suspend fun getInvite(code: String, withCounts: Boolean = true, withExpiration: Boolean = true,scheduledEventId: Snowflake? = null): Invite =
-        kord.with(rest).getInvite(code, withCounts, withExpiration, scheduledEventId)
+    public suspend fun getInvite(
+        code: String,
+        withCounts: Boolean = true,
+        withExpiration: Boolean = true,
+        scheduledEventId: Snowflake? = null,
+    ): Invite = kord.with(rest).getInvite(code, withCounts, withExpiration, scheduledEventId)
 
     /**
      * Requests to get the [Invite] represented by the [code],
      * returns null if the [Invite] isn't present.
      *
-     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     * This is not resolvable through cache and will always use the [rest strategy][EntitySupplyStrategy.rest] instead.
      *
-     * @throws [RequestException] if anything went wrong during the request.
+     * @throws RestRequestException if anything went wrong during the request.
      */
-    public suspend fun getInviteOrNull(code: String, withCounts: Boolean = true): Invite? =
-        kord.with(rest).getInviteOrNull(code, withCounts)
+    public suspend fun getInviteOrNull(
+        code: String,
+        withCounts: Boolean = true,
+        withExpiration: Boolean = true,
+        scheduledEventId: Snowflake? = null,
+    ): Invite? = kord.with(rest).getInviteOrNull(code, withCounts, withExpiration, scheduledEventId)
 
 
     /**
