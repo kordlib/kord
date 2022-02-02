@@ -11,10 +11,10 @@ import kotlin.contracts.contract
 /**
  * Behavior of an AutoComplete interaction.
  *
- * @see respondNumber
- * @see respondString
- * @see respondInt
- * @see respond
+ * @see suggestString
+ * @see suggestInt
+ * @see suggestNumber
+ * @see suggest
  */
 public interface AutoCompleteInteractionBehavior : InteractionBehavior
 
@@ -37,6 +37,7 @@ public suspend inline fun AutoCompleteInteractionBehavior.suggestInt(builder: In
  * Responds with the number choices specified by [builder].
  *
  * The provided choices are only suggestions and the user can provide any other input as well.
+ *
  * @see NumberChoiceBuilder
  */
 public suspend inline fun AutoCompleteInteractionBehavior.suggestNumber(builder: NumberChoiceBuilder.() -> Unit) {

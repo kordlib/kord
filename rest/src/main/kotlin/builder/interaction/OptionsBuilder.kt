@@ -18,8 +18,7 @@ public sealed class OptionsBuilder(
     public var name: String,
     public var description: String,
     public val type: ApplicationCommandOptionType,
-) :
-    RequestBuilder<ApplicationCommandOption> {
+) : RequestBuilder<ApplicationCommandOption> {
     internal var _default: OptionalBoolean = OptionalBoolean.Missing
     public var default: Boolean? by ::_default.delegate()
 
@@ -53,6 +52,9 @@ public sealed class BaseChoiceBuilder<T>(
     description: String,
     type: ApplicationCommandOptionType
 ) : OptionsBuilder(name, description, type) {
+    // TODO We can change these types to Optional<MutableList<Choice<T>>> and MutableList<Choice<T>> once
+    //  https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
+    //  The bug from that issue prevents you from setting BaseChoiceBuilder<*>.choices to `null`.
     private var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
     public var choices: MutableList<Choice<*>>? by ::_choices.delegate()
 

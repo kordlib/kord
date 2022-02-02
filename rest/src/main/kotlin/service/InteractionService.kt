@@ -142,7 +142,11 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         builder: Builder,
         builderFunction: Builder.() -> Unit
     ) {
-        val choices = builder.apply(builderFunction).choices ?: emptyList()
+        // TODO We can remove this cast when we change the type of BaseChoiceBuilder.choices to MutableList<Choice<T>>.
+        //  This can be done once https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
+        //  Until then this cast is necessary to get the right serializer through reified generics.
+        @Suppress("UNCHECKED_CAST")
+        val choices = (builder.apply(builderFunction).choices ?: emptyList()) as List<Choice<T>>
 
         return createAutoCompleteInteractionResponse(interactionId, interactionToken, DiscordAutoComplete(choices))
     }
