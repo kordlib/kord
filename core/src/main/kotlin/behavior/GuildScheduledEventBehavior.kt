@@ -4,7 +4,6 @@ import dev.kord.common.entity.DiscordGuildScheduledEvent
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -12,7 +11,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.scheduled_events.ScheduledEventModifyBuilder
 import dev.kord.rest.service.modifyScheduledEvent
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -28,26 +26,28 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
      *
      * @throws RequestException if anything goes wrong during the request
      */
-
     public val users: Flow<User>
         get() = supplier.getGuildScheduledEventUsers(guildId, id)
 
-    public fun getGuildScheduledEventUsersAfter(
-        limit: Int = Int.MAX_VALUE,
-        after: Snowflake = Snowflake.min
-    ): Flow<User> = supplier.getGuildScheduledEventUsersAfter(guildId, id, limit, after)
+    public fun getGuildScheduledEventUsersAfter(after: Snowflake = Snowflake.min, limit: Int? = null): Flow<User> =
+        supplier.getGuildScheduledEventUsersAfter(guildId, id, after, limit)
 
-    public fun getGuildScheduledEventUsersBefore(
-        limit: Int = Int.MAX_VALUE,
-        before: Snowflake = Snowflake.max
-    ): Flow<User> = supplier.getGuildScheduledEventUsersBefore(guildId, id, limit, before)
+    public fun getGuildScheduledEventUsersBefore(before: Snowflake = Snowflake.max, limit: Int? = null): Flow<User> =
+        supplier.getGuildScheduledEventUsersBefore(guildId, id, before, limit)
 
-    public fun getGuildScheduledEventMembersAfter(limit: Int = Int.MAX_VALUE, after: Snowflake = Snowflake.min): Flow<Member> =
-        supplier.getGuildScheduledEventMembersAfter(guildId, id, limit, after)
+    public val members: Flow<Member>
+        get() = supplier.getGuildScheduledEventMembers(guildId, id)
 
+    public fun getGuildScheduledEventMembersAfter(
+        after: Snowflake = Snowflake.min,
+        limit: Int? = null,
+    ): Flow<Member> = supplier.getGuildScheduledEventMembersAfter(guildId, id, after, limit)
 
-    public fun getGuildScheduledEventMembersBefore(limit: Int = Int.MAX_VALUE, before: Snowflake = Snowflake.max): Flow<Member> =
-        supplier.getGuildScheduledEventMembersBefore(guildId, id, limit, before)
+    public fun getGuildScheduledEventMembersBefore(
+        before: Snowflake = Snowflake.max,
+        limit: Int? = null,
+    ): Flow<Member> = supplier.getGuildScheduledEventMembersBefore(guildId, id, before, limit)
+
     /**
      * Deletes this event.
      *
@@ -81,7 +81,7 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
     public suspend fun fetchGuildScheduledEvent(): GuildScheduledEvent = supplier.getGuildScheduledEvent(guildId, id)
 
     /**
-     * Fetches to get the this behavior as a [Guild],
+     * Fetches to get this behavior as a [Guild],
      * returns null if the event isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.

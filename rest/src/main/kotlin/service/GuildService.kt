@@ -479,53 +479,44 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
     public suspend fun getScheduledEventUsers(
         guildId: Snowflake,
         eventId: Snowflake,
-        limit: Int? = null,
+        position: Position.BeforeOrAfter? = null,
         withMember: Boolean? = null,
-        position: Position? = null,
+        limit: Int? = null,
     ): List<GuildScheduledEventUsersResponse> = call(Route.GuildScheduledEventUsersGet) {
         keys[Route.GuildId] = guildId
         keys[Route.ScheduledEventId] = eventId
 
-        if (limit != null) {
-            parameter("limit", limit)
-        }
-
-        if (withMember != null) {
-            parameter("with_member", withMember)
-        }
-
-        if (position != null) {
-            parameter(position.key, position.value)
-        }
+        limit?.let { parameter("limit", it) }
+        withMember?.let { parameter("with_member", it) }
+        position?.let { parameter(it.key, it.value) }
     }
 
     public suspend fun getScheduledEventUsersBefore(
         guildId: Snowflake,
         eventId: Snowflake,
-        limit: Int? = null,
+        before: Snowflake,
         withMember: Boolean? = null,
-        before: Snowflake? = null,
+        limit: Int? = null,
     ): List<GuildScheduledEventUsersResponse> = getScheduledEventUsers(
         guildId,
         eventId,
-        limit,
+        Position.Before(before),
         withMember,
-        before?.let { Position.Before(it) },
+        limit,
     )
-
 
     public suspend fun getScheduledEventUsersAfter(
         guildId: Snowflake,
         eventId: Snowflake,
-        limit: Int? = null,
+        after: Snowflake,
         withMember: Boolean? = null,
-        after: Snowflake? = null,
+        limit: Int? = null,
     ): List<GuildScheduledEventUsersResponse> = getScheduledEventUsers(
         guildId,
         eventId,
-        limit,
+        Position.After(after),
         withMember,
-        after?.let { Position.After(it) },
+        limit,
     )
 }
 

@@ -559,41 +559,42 @@ public interface EntitySupplier {
     public suspend fun getGuildScheduledEvent(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent =
         getGuildScheduledEventOrNull(guildId, eventId) ?: EntityNotFoundException.guildScheduledEventNotFound(eventId)
 
-    public  fun getGuildScheduledEventUsersBefore(
+
+    public fun getGuildScheduledEventUsers(guildId: Snowflake, eventId: Snowflake, limit: Int? = null): Flow<User> =
+        getGuildScheduledEventUsersAfter(guildId, eventId, after = Snowflake.min, limit)
+
+    public fun getGuildScheduledEventUsersBefore(
         guildId: Snowflake,
         eventId: Snowflake,
-        limit: Int = Int.MAX_VALUE,
-        before: Snowflake = Snowflake.max
+        before: Snowflake,
+        limit: Int? = null,
     ): Flow<User>
-
 
     public fun getGuildScheduledEventUsersAfter(
         guildId: Snowflake,
         eventId: Snowflake,
-        limit: Int = Int.MAX_VALUE,
-        after: Snowflake = Snowflake.min
+        after: Snowflake,
+        limit: Int? = null,
     ): Flow<User>
 
-    public  fun getGuildScheduledEventMembersBefore(
+
+    public fun getGuildScheduledEventMembers(guildId: Snowflake, eventId: Snowflake, limit: Int? = null): Flow<Member> =
+        getGuildScheduledEventMembersAfter(guildId, eventId, after = Snowflake.min, limit)
+
+    public fun getGuildScheduledEventMembersBefore(
         guildId: Snowflake,
         eventId: Snowflake,
-        limit: Int = Int.MAX_VALUE,
-        before: Snowflake = Snowflake.max
+        before: Snowflake,
+        limit: Int? = null,
     ): Flow<Member>
-
 
     public fun getGuildScheduledEventMembersAfter(
         guildId: Snowflake,
         eventId: Snowflake,
-        limit: Int = Int.MAX_VALUE,
-        after: Snowflake = Snowflake.min
+        after: Snowflake,
+        limit: Int? = null,
     ): Flow<Member>
 
-    public fun getGuildScheduledEventUsers(
-        guildId: Snowflake,
-        eventId: Snowflake,
-        limit: Int = Int.MAX_VALUE,
-    ): Flow<User> = getGuildScheduledEventUsersAfter(guildId, eventId, limit)
 
     public suspend fun getStickerOrNull(id: Snowflake): Sticker?
 
