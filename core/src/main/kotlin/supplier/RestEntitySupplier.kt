@@ -18,6 +18,7 @@ import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
+import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
 import dev.kord.rest.json.request.ListThreadsBySnowflakeRequest
 import dev.kord.rest.json.request.ListThreadsByTimestampRequest
 import dev.kord.rest.request.RestRequestException
@@ -252,13 +253,23 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Message(data, kord)
     }
 
-    public suspend fun getInviteOrNull(code: String, withCounts: Boolean): Invite? = catchNotFound {
-        val response = invite.getInvite(code, withCounts)
+    public suspend fun getInviteOrNull(
+        code: String,
+        withCounts: Boolean = true,
+        withExpiration: Boolean = true,
+        scheduledEventId: Snowflake? = null,
+    ): Invite? = catchNotFound {
+        val response = invite.getInvite(code, withCounts, withExpiration, scheduledEventId)
         Invite(InviteData.from(response), kord)
     }
 
-    public suspend fun getInvite(code: String, withCounts: Boolean = true): Invite =
-        getInviteOrNull(code, withCounts) ?: EntityNotFoundException.inviteNotFound(code)
+    public suspend fun getInvite(
+        code: String,
+        withCounts: Boolean = true,
+        withExpiration: Boolean = true,
+        scheduledEventId: Snowflake? = null,
+    ): Invite = getInviteOrNull(code, withCounts, withExpiration, scheduledEventId)
+        ?: EntityNotFoundException.inviteNotFound(code)
 
     /**
      * Requests to get the information of the current application.
@@ -462,6 +473,74 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
             GuildScheduledEvent(data, kord)
         }
+
+    override fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        limit: Int?,
+    ): Flow<User> = getGuildScheduledEventUsersBefore(guildId, eventId, before, withMember = false, limit).map {
+        val data = UserData.from(it.user)
+        User(data, kord)
+    }
+
+    override fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        limit: Int?,
+    ): Flow<User> = getGuildScheduledEventUsersAfter(guildId, eventId, after, withMember = false, limit).map {
+        val data = UserData.from(it.user)
+        User(data, kord)
+    }
+
+    override fun getGuildScheduledEventMembersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        limit: Int?,
+    ): Flow<Member> = getGuildScheduledEventUsersBefore(guildId, eventId, before, withMember = true, limit).map {
+        val userData = UserData.from(it.user)
+        val memberData = it.member.value!!.toData(userData.id, guildId)
+        Member(memberData, userData, kord)
+    }
+
+    override fun getGuildScheduledEventMembersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        limit: Int?,
+    ): Flow<Member> = getGuildScheduledEventUsersAfter(guildId, eventId, after, withMember = true, limit).map {
+        val userData = UserData.from(it.user)
+        val memberData = it.member.value!!.toData(userData.id, guildId)
+        Member(memberData, userData, kord)
+    }
+
+    // maxBatchSize: see https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
+    private fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        withMember: Boolean,
+        limit: Int?,
+    ): Flow<GuildScheduledEventUsersResponse> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
+        paginateBackwards(batchSize, start = before, idSelector = { it.user.id }) { beforePosition ->
+            guild.getScheduledEventUsers(guildId, eventId, beforePosition, withMember, limit = batchSize)
+        }
+    }
+
+    // maxBatchSize: see https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
+    private fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        withMember: Boolean,
+        limit: Int?,
+    ): Flow<GuildScheduledEventUsersResponse> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
+        paginateForwards(batchSize, start = after, idSelector = { it.user.id }) { afterPosition ->
+            guild.getScheduledEventUsers(guildId, eventId, afterPosition, withMember, limit = batchSize)
+        }
+    }
 
     override suspend fun getStickerOrNull(id: Snowflake): Sticker? = catchNotFound {
         val response = sticker.getSticker(id)

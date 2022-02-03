@@ -21,6 +21,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.core.switchIfEmpty
 import dev.kord.rest.Image
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
@@ -56,8 +57,8 @@ public class Guild(
     public val threads: Flow<ThreadChannel>
         get() = flow {
             data.threads.mapList {
-               val channel =  Channel.from(it, kord)
-               if(channel is ThreadChannel) emit(channel)
+                val channel = Channel.from(it, kord)
+                if (channel is ThreadChannel) emit(channel)
             }
         }
 
@@ -267,8 +268,12 @@ public class Guild(
     /**
      * The voice region id for the guild.
      */
-    @Deprecated("The region field has been moved to Channel#rtcRegion in Discord API v9", ReplaceWith("Channel#rtcRegion"))
-    public val regionId: String get() = data.region
+    @Deprecated(
+        "The region field has been moved to Channel#rtcRegion in Discord API v9",
+        ReplaceWith("Channel#rtcRegion")
+    )
+    public val regionId: String
+        get() = data.region
 
     /**
      * The id of the channel in which a discoverable server's rules should be found
@@ -350,6 +355,17 @@ public class Guild(
      */
     public val nsfw: NsfwLevel get() = data.nsfwLevel
 
+    public val premiumProgressBarEnabled: Boolean get() = data.premiumProgressBarEnabled
+
+    public val stageInstances: Set<StageInstance>
+        get() = data.stageInstances.orEmpty().map { StageInstance(it, kord) }.toSet()
+
+    override val stickers: Flow<GuildSticker>
+        get() = flow {
+            for (sticker in data.stickers.orEmpty()) emit(GuildSticker(sticker, kord))
+        }.switchIfEmpty(super.stickers)
+
+
     /**
      * Requests to get the [VoiceChannel] represented by the [afkChannelId],
      * returns null if the [afkChannelId] isn't present or the channel itself isn't present.
@@ -421,7 +437,7 @@ public class Guild(
      * Gets the discovery splash url in the specified [format], if present.
      */
     public fun getDiscoverySplashUrl(format: Image.Format): String? =
-        data.splash.value?.let { "discovery-splashes/$id/${it}.${format.extension}" }
+        splashHash?.let { "discovery-splashes/$id/${it}.${format.extension}" }
 
     /**
      * Requests to get the splash image in the specified [format], if present.

@@ -837,10 +837,10 @@ public sealed class Route<T>(
         )
 
     public object GuildScheduledEventUsersGet :
-        Route<GuildScheduledEventUsersResponse>(
+        Route<List<GuildScheduledEventUsersResponse>>(
             HttpMethod.Get,
             "/guilds/$GuildId/scheduled-events/$ScheduledEventId/users",
-            GuildScheduledEventUsersResponse.serializer()
+            ListSerializer(GuildScheduledEventUsersResponse.serializer()),
         )
 
     public object GuildScheduledEventPatch :

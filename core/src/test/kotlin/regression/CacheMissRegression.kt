@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
@@ -124,7 +124,7 @@ class CacheMissingRegressions {
     lateinit var kord: Kord
 
     @BeforeTest
-    fun setup() = runBlockingTest { //TODO, move this over to entity supplier tests instead, eventually.
+    fun setup() = runTest { //TODO, move this over to entity supplier tests instead, eventually.
         val token = System.getenv("KORD_TEST_TOKEN")
         val resources = ClientResources(
             token,

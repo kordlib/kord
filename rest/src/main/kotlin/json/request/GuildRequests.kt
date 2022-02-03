@@ -246,4 +246,9 @@ public data class GuildWelcomeScreenModifyRequest(
 
 
 @Serializable
-public data class GuildScheduledEventUsersResponse(val users: List<DiscordOptionallyMemberUser>)
+public data class GuildScheduledEventUsersResponse(
+    @SerialName("guild_scheduled_event_id")
+    val guildScheduledEventId: Snowflake,
+    val user: DiscordUser,
+    val member: Optional<DiscordGuildMember> = Optional.Missing(),
+)

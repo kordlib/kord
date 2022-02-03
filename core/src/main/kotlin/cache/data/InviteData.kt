@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 public data class InviteData(
     val code: String,
     val guild: Optional<PartialGuildData> = Optional.Missing(),
-    val channelId: Snowflake,
+    val channelId: Snowflake?,
     val inviterId: OptionalSnowflake = OptionalSnowflake.Missing,
     val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
     val targetUserType: Optional<TargetUserType> = Optional.Missing(),
@@ -24,7 +24,7 @@ public data class InviteData(
             InviteData(
                 code,
                 guild = guild.map { PartialGuildData.from(it) },
-                channelId = channel.id,
+                channelId = channel?.id,
                 inviterId = inviter.mapSnowflake { it.id },
                 targetUserId = targetUser.mapSnowflake { it.id },
                 targetUserType,

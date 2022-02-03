@@ -473,6 +473,62 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return GuildScheduledEvent(data, kord)
     }
 
+    override fun getGuildScheduledEventMembersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        limit: Int?,
+    ): Flow<Member> {
+        checkLimit(limit)
+        return cache
+            .query<MemberData> {
+                idLt(MemberData::userId, before)
+                idEq(MemberData::guildId, guildId)
+            }
+            .asFlow()
+            .mapNotNull {
+                val userData = cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull()
+                    ?: return@mapNotNull null
+                Member(it, userData, kord)
+            }
+            .limit(limit)
+    }
+
+    override fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        limit: Int?,
+    ): Flow<User> = getGuildScheduledEventMembersBefore(guildId, eventId, before, limit).map { it.asUser() }
+
+    override fun getGuildScheduledEventMembersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        limit: Int?,
+    ): Flow<Member> {
+        checkLimit(limit)
+        return cache
+            .query<MemberData> {
+                idGt(MemberData::userId, after)
+                idEq(MemberData::guildId, guildId)
+            }
+            .asFlow()
+            .mapNotNull {
+                val userData = cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull()
+                    ?: return@mapNotNull null
+                Member(it, userData, kord)
+            }
+            .limit(limit)
+    }
+
+    override fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        limit: Int?,
+    ): Flow<User> = getGuildScheduledEventMembersAfter(guildId, eventId, after, limit).map { it.asUser() }
+
     override suspend fun getStickerOrNull(id: Snowflake): Sticker? {
         val data = cache.query<StickerData> { idEq(StickerData::id, id) }.singleOrNull() ?: return null
         return Sticker(data, kord)

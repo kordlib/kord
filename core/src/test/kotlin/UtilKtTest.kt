@@ -2,14 +2,14 @@ package dev.kord.core
 
 import dev.kord.common.entity.Snowflake
 import kotlinx.coroutines.flow.count
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 internal class UtilKtTest {
 
     @Test
-    fun `paginate forwards selects the right id`() = runBlockingTest {
+    fun `paginate forwards selects the right id`() = runTest {
 
         val flow = paginateForwards(start = Snowflake(0u), batchSize = 100, idSelector = { it }) {
             var value = it.value.value
@@ -27,7 +27,7 @@ internal class UtilKtTest {
     }
 
     @Test
-    fun `paginate backwards selects the right id`() = runBlockingTest {
+    fun `paginate backwards selects the right id`() = runTest {
 
         val flow = paginateBackwards(start = Snowflake(1000u), batchSize = 100, idSelector = { it }) {
             var value = it.value.value
