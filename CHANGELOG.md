@@ -30,6 +30,7 @@
 * Add new JsonErrorCodes and fix existing ones (#482 #504 #501)
 * Add new fields and parameters for scheduled events and invites (#518)
 * Add new fields for attachments. (#506)
+* Add interaction localization support
 
 ## Dependencies
 * Kotlin: 1.5.10 -> 1.6.10
