@@ -29,24 +29,20 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
     public val users: Flow<User>
         get() = supplier.getGuildScheduledEventUsers(guildId, id)
 
-    public fun getGuildScheduledEventUsersAfter(after: Snowflake = Snowflake.min, limit: Int? = null): Flow<User> =
+    public fun getUsersAfter(after: Snowflake, limit: Int? = null): Flow<User> =
         supplier.getGuildScheduledEventUsersAfter(guildId, id, after, limit)
 
-    public fun getGuildScheduledEventUsersBefore(before: Snowflake = Snowflake.max, limit: Int? = null): Flow<User> =
+    public fun getUsersBefore(before: Snowflake, limit: Int? = null): Flow<User> =
         supplier.getGuildScheduledEventUsersBefore(guildId, id, before, limit)
 
     public val members: Flow<Member>
         get() = supplier.getGuildScheduledEventMembers(guildId, id)
 
-    public fun getGuildScheduledEventMembersAfter(
-        after: Snowflake = Snowflake.min,
-        limit: Int? = null,
-    ): Flow<Member> = supplier.getGuildScheduledEventMembersAfter(guildId, id, after, limit)
+    public fun getMembersAfter(after: Snowflake, limit: Int? = null): Flow<Member> =
+        supplier.getGuildScheduledEventMembersAfter(guildId, id, after, limit)
 
-    public fun getGuildScheduledEventMembersBefore(
-        before: Snowflake = Snowflake.max,
-        limit: Int? = null,
-    ): Flow<Member> = supplier.getGuildScheduledEventMembersBefore(guildId, id, before, limit)
+    public fun getMembersBefore(before: Snowflake, limit: Int? = null): Flow<Member> =
+        supplier.getGuildScheduledEventMembersBefore(guildId, id, before, limit)
 
     /**
      * Deletes this event.
