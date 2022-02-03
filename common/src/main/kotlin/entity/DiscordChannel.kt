@@ -180,7 +180,7 @@ public data class DiscordThreadMetadata(
     val locked: OptionalBoolean = OptionalBoolean.Missing,
     val invitable: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("create_timestamp")
-    val createTimestamp: Optional<Instant> = Optional.Missing(),
+    val createTimestamp: Optional<Instant?> = Optional.Missing(),
 )
 
 @Serializable(with = ArchiveDuration.Serializer::class)
