@@ -559,6 +559,43 @@ public interface EntitySupplier {
     public suspend fun getGuildScheduledEvent(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent =
         getGuildScheduledEventOrNull(guildId, eventId) ?: EntityNotFoundException.guildScheduledEventNotFound(eventId)
 
+
+    public fun getGuildScheduledEventUsers(guildId: Snowflake, eventId: Snowflake, limit: Int? = null): Flow<User> =
+        getGuildScheduledEventUsersAfter(guildId, eventId, after = Snowflake.min, limit)
+
+    public fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        limit: Int? = null,
+    ): Flow<User>
+
+    public fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        limit: Int? = null,
+    ): Flow<User>
+
+
+    public fun getGuildScheduledEventMembers(guildId: Snowflake, eventId: Snowflake, limit: Int? = null): Flow<Member> =
+        getGuildScheduledEventMembersAfter(guildId, eventId, after = Snowflake.min, limit)
+
+    public fun getGuildScheduledEventMembersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        limit: Int? = null,
+    ): Flow<Member>
+
+    public fun getGuildScheduledEventMembersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        limit: Int? = null,
+    ): Flow<Member>
+
+
     public suspend fun getStickerOrNull(id: Snowflake): Sticker?
 
     public suspend fun getSticker(id: Snowflake): Sticker =
@@ -572,8 +609,6 @@ public interface EntitySupplier {
     public fun getNitroStickerPacks(): Flow<StickerPack>
 
     public fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker>
-
-
 }
 
 

@@ -217,6 +217,42 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
         first.getGuildScheduledEventOrNull(guildId, eventId) ?: second.getGuildScheduledEventOrNull(guildId, eventId)
 
+    override fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        limit: Int?,
+    ): Flow<User> =
+        first.getGuildScheduledEventUsersBefore(guildId, eventId, before, limit)
+            .switchIfEmpty(second.getGuildScheduledEventUsersBefore(guildId, eventId, before, limit))
+
+    override fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        limit: Int?,
+    ): Flow<User> =
+        first.getGuildScheduledEventUsersAfter(guildId, eventId, after, limit)
+            .switchIfEmpty(second.getGuildScheduledEventUsersAfter(guildId, eventId, after, limit))
+
+    override fun getGuildScheduledEventMembersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        limit: Int?,
+    ): Flow<Member> =
+        first.getGuildScheduledEventMembersBefore(guildId, eventId, before, limit)
+            .switchIfEmpty(second.getGuildScheduledEventMembersBefore(guildId, eventId, before, limit))
+
+    override fun getGuildScheduledEventMembersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        limit: Int?,
+    ): Flow<Member> =
+        first.getGuildScheduledEventMembersAfter(guildId, eventId, after, limit)
+            .switchIfEmpty(second.getGuildScheduledEventMembersAfter(guildId, eventId, after, limit))
+
     override suspend fun getStickerOrNull(id: Snowflake): Sticker? =
         first.getStickerOrNull(id) ?: second.getStickerOrNull(id)
 

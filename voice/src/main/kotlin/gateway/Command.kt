@@ -73,7 +73,7 @@ public data class SendSpeaking(
     val ssrc: UInt
 ) : Command()
 
-@OptIn(KordVoice::class)
+@KordVoice
 @Serializable
 public data class SelectProtocol(
     val protocol: String,

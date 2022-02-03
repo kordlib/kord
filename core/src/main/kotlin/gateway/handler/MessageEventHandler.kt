@@ -65,8 +65,8 @@ internal class MessageEventHandler(
 
         //cache interaction user if present.
         if (interaction is Optional.Value) {
-            val userData = UserData.from(interaction.value!!.user)
-            cache.put(userData)
+            val interactionUserData = UserData.from(interaction.value!!.user)
+            cache.put(interactionUserData)
         }
 
         mentions.forEach {

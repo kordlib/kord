@@ -33,7 +33,7 @@ public data class Invite(
     /**
      * The id of the channel this invite is associated to.
      */
-    public val channelId: Snowflake get() = data.channelId
+    public val channelId: Snowflake? get() = data.channelId
 
     /**
      * Returns [PartialGuild] if the invite was made in a guild, or null if not.
@@ -53,7 +53,7 @@ public data class Invite(
     /**
      * The behavior of the channel this invite is associated to.
      */
-    public val channel: ChannelBehavior get() = ChannelBehavior(channelId, kord)
+    public val channel: ChannelBehavior? get() = channelId?.let { ChannelBehavior(it, kord) }
 
 
     /**
@@ -87,7 +87,7 @@ public data class Invite(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Channel] wasn't present.
      */
-    public suspend fun getChannel(): Channel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): Channel? = channelId?.let { supplier.getChannelOf(it) }
 
     /**
      * Requests to get the channel this invite is for,
@@ -95,7 +95,7 @@ public data class Invite(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getChannelOrNull(): Channel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): Channel? = channelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Requests to get the creator of the invite for,

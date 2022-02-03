@@ -81,7 +81,7 @@ public fun ComponentInteraction(
     data: InteractionData,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier,
-): ComponentInteraction = when (val type = data.data.componentType.value) {
+): ComponentInteraction = when (data.data.componentType.value) {
     ComponentType.Button -> if (data.guildId.value == null) GlobalButtonInteraction(
         data,
         kord,

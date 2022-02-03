@@ -268,6 +268,37 @@ public class StoreEntitySupplier(
 
     }
 
+    override fun getGuildScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        limit: Int?,
+    ): Flow<User> = storeOnEach(supplier.getGuildScheduledEventUsersBefore(guildId, eventId, before, limit)) { it.data }
+
+    public override fun getGuildScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        limit: Int?,
+    ): Flow<User> = storeOnEach(supplier.getGuildScheduledEventUsersAfter(guildId, eventId, after, limit)) { it.data }
+
+    override fun getGuildScheduledEventMembersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        limit: Int?,
+    ): Flow<Member> =
+        storeOnEach(supplier.getGuildScheduledEventMembersBefore(guildId, eventId, before, limit)) { it.data }
+
+    override fun getGuildScheduledEventMembersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        limit: Int?,
+    ): Flow<Member> =
+        storeOnEach(supplier.getGuildScheduledEventMembersAfter(guildId, eventId, after, limit)) { it.data }
+
+
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake

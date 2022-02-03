@@ -479,20 +479,45 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
     public suspend fun getScheduledEventUsers(
         guildId: Snowflake,
         eventId: Snowflake,
-        limit: Int? = null,
+        position: Position.BeforeOrAfter? = null,
         withMember: Boolean? = null,
-    ): GuildScheduledEventUsersResponse = call(Route.GuildScheduledEventUsersGet) {
+        limit: Int? = null,
+    ): List<GuildScheduledEventUsersResponse> = call(Route.GuildScheduledEventUsersGet) {
         keys[Route.GuildId] = guildId
         keys[Route.ScheduledEventId] = eventId
 
-        if (limit != null) {
-            parameter("limit", limit)
-        }
-
-        if (withMember != null) {
-            parameter("with_member", withMember)
-        }
+        limit?.let { parameter("limit", it) }
+        withMember?.let { parameter("with_member", it) }
+        position?.let { parameter(it.key, it.value) }
     }
+
+    public suspend fun getScheduledEventUsersBefore(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        before: Snowflake,
+        withMember: Boolean? = null,
+        limit: Int? = null,
+    ): List<GuildScheduledEventUsersResponse> = getScheduledEventUsers(
+        guildId,
+        eventId,
+        Position.Before(before),
+        withMember,
+        limit,
+    )
+
+    public suspend fun getScheduledEventUsersAfter(
+        guildId: Snowflake,
+        eventId: Snowflake,
+        after: Snowflake,
+        withMember: Boolean? = null,
+        limit: Int? = null,
+    ): List<GuildScheduledEventUsersResponse> = getScheduledEventUsers(
+        guildId,
+        eventId,
+        Position.After(after),
+        withMember,
+        limit,
+    )
 }
 
 public suspend inline fun GuildService.modifyGuildWelcomeScreen(
