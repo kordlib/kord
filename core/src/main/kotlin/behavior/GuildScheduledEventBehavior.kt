@@ -69,7 +69,7 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
         supplier.getGuildScheduledEventOrNull(guildId, id)
 
     /**
-     * Fetches to get this behavior as a [GuildScheduledEvent].
+     * Fetches this behavior as a [GuildScheduledEvent].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the event wasn't present.
@@ -77,8 +77,7 @@ public interface GuildScheduledEventBehavior : KordEntity, Strategizable {
     public suspend fun fetchGuildScheduledEvent(): GuildScheduledEvent = supplier.getGuildScheduledEvent(guildId, id)
 
     /**
-     * Fetches to get this behavior as a [Guild],
-     * returns null if the event isn't present.
+     * Fetches this behavior as a [GuildScheduledEvent], returns null if the event isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
