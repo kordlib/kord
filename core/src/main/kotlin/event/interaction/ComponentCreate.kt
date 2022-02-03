@@ -11,13 +11,13 @@ public sealed interface ComponentInteractionCreateEvent<out I : ComponentInterac
 }
 
 public sealed interface GlobalComponentInteractionCreateEvent<out I : GlobalComponentInteraction> :
-    InteractionCreateEvent<I> {
+    ComponentInteractionCreateEvent<I> {
     override val interaction: I
 }
 
 
 public sealed interface GuildComponentInteractionCreateEvent<out I : GuildComponentInteraction> :
-    InteractionCreateEvent<I> {
+    ComponentInteractionCreateEvent<I> {
     override val interaction: I
 }
 
