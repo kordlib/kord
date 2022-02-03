@@ -165,8 +165,8 @@ public class LiveMessage(
 
         is GuildDeleteEvent -> event.guildId == guildId
 
-        is MessageCommandInteractionCreateEvent -> event.interaction.messages.keys.contains(message.id)
-        is InteractionCreateEvent -> event.interaction.data.message.value?.id == message.id
+        is MessageCommandInteractionCreateEvent<*> -> event.interaction.messages.keys.contains(message.id)
+        is InteractionCreateEvent<*> -> event.interaction.data.message.value?.id == message.id
         else -> false
     }
 
@@ -187,8 +187,8 @@ public class LiveMessage(
 
         is GuildDeleteEvent -> shutDown(LiveCancellationException(event, "The guild is deleted"))
 
-        is MessageCommandInteractionCreateEvent -> Unit
-        is InteractionCreateEvent -> Unit
+        is MessageCommandInteractionCreateEvent<*> -> Unit
+        is InteractionCreateEvent<*> -> Unit
         else -> Unit
     }
 
