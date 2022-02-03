@@ -33,7 +33,6 @@ class KordEventDropTest {
 
         override val coroutineContext: CoroutineContext = SupervisorJob() + EmptyCoroutineContext
 
-        @OptIn(FlowPreview::class)
         override val events: MutableSharedFlow<Event> = MutableSharedFlow()
 
         override val ping: StateFlow<Duration?> = MutableStateFlow(null)

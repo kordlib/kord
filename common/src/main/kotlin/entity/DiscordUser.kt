@@ -12,7 +12,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonNames
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -34,7 +33,7 @@ import kotlin.contracts.contract
  * @param publicFlags The public flags on a user's account. Unlike [flags], these **are** visible ot other users.
  */
 @Serializable
-data class DiscordUser(
+public data class DiscordUser(
     val id: Snowflake,
     val username: String,
     val discriminator: String,
@@ -76,7 +75,7 @@ data class DiscordUser(
  */
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
-data class DiscordOptionallyMemberUser(
+public data class DiscordOptionallyMemberUser(
     val id: Snowflake,
     val username: String,
     val discriminator: String,
@@ -98,7 +97,7 @@ data class DiscordOptionallyMemberUser(
 )
 
 
-enum class UserFlag(val code: Int) {
+public enum class UserFlag(public val code: Int) {
     None(0),
     DiscordEmployee(1 shl 0),
     DiscordPartner(1 shl 1),
@@ -117,24 +116,23 @@ enum class UserFlag(val code: Int) {
 }
 
 @Serializable(with = UserFlags.UserFlagsSerializer::class)
-data class UserFlags constructor(val code: Int) {
+public data class UserFlags(val code: Int) {
 
-    val flags = UserFlag.values().filter { code and it.code != 0 }
+    val flags: List<UserFlag> = UserFlag.values().filter { code and it.code != 0 }
 
-    operator fun contains(flag: UserFlag) = flag in flags
+    public operator fun contains(flag: UserFlag): Boolean = flag in flags
 
-    operator fun plus(flags: UserFlags): UserFlags = when {
+    public operator fun plus(flags: UserFlags): UserFlags = when {
         code and flags.code == flags.code -> this
         else -> UserFlags(this.code or flags.code)
     }
 
-    operator fun minus(flag: UserFlag): UserFlags = when {
+    public operator fun minus(flag: UserFlag): UserFlags = when {
         code and flag.code == flag.code -> UserFlags(code xor flag.code)
         else -> this
     }
 
-    @OptIn(ExperimentalContracts::class)
-    inline fun copy(block: UserFlagsBuilder.() -> Unit): UserFlags {
+    public inline fun copy(block: UserFlagsBuilder.() -> Unit): UserFlags {
         contract {
             callsInPlace(block, InvocationKind.EXACTLY_ONCE)
         }
@@ -144,7 +142,7 @@ data class UserFlags constructor(val code: Int) {
     }
 
 
-    companion object UserFlagsSerializer : KSerializer<UserFlags> {
+    public companion object UserFlagsSerializer : KSerializer<UserFlags> {
 
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("userFlag", PrimitiveKind.INT)
 
@@ -159,25 +157,24 @@ data class UserFlags constructor(val code: Int) {
 
     }
 
-    class UserFlagsBuilder(internal var code: Int = 0) {
-        operator fun UserFlag.unaryPlus() {
+    public class UserFlagsBuilder(internal var code: Int = 0) {
+        public operator fun UserFlag.unaryPlus() {
             this@UserFlagsBuilder.code = this@UserFlagsBuilder.code or code
         }
 
-        operator fun UserFlag.unaryMinus() {
+        public operator fun UserFlag.unaryMinus() {
             if (this@UserFlagsBuilder.code and code == code) {
                 this@UserFlagsBuilder.code = this@UserFlagsBuilder.code xor code
             }
         }
 
-        fun flags() = UserFlags(code)
+        public fun flags(): UserFlags = UserFlags(code)
     }
 
 }
 
 
-@OptIn(ExperimentalContracts::class)
-inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags {
+public inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return UserFlags.UserFlagsBuilder().apply(builder).flags()
 }
@@ -187,16 +184,14 @@ inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags 
  *
  * Premium types denote the level of premium a user has.
  */
-@Serializable(with = UserPremium.Serialization::class)
-sealed class UserPremium(val value: Int) {
-    class Unknown(value: Int) : UserPremium(value)
-    object None : UserPremium(0)
-    object NitroClassic : UserPremium(1)
-    object Nitro : UserPremium(2)
+@Serializable(with = UserPremium.Serializer::class)
+public sealed class UserPremium(public val value: Int) {
+    public class Unknown(value: Int) : UserPremium(value)
+    public object None : UserPremium(0)
+    public object NitroClassic : UserPremium(1)
+    public object Nitro : UserPremium(2)
 
-    companion object;
-
-    internal object Serialization : KSerializer<UserPremium> {
+    internal object Serializer : KSerializer<UserPremium> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("premium_type", PrimitiveKind.INT)
 

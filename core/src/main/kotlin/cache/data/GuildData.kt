@@ -60,7 +60,7 @@ public data class GuildData(
     val nsfwLevel: NsfwLevel,
     val threads: Optional<List<ChannelData>> = Optional.Missing(),
     val stageInstances: Optional<List<StageInstanceData>> = Optional.Missing(),
-    val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
+    val stickers: Optional<List<StickerData>> = Optional.Missing(),
     val guildScheduledEvents: Optional<List<GuildScheduledEventData>> = Optional.Missing(),
     val premiumProgressBarEnabled: Boolean
 ) {
@@ -126,7 +126,7 @@ public data class GuildData(
                 nsfwLevel = nsfwLevel,
                 threads = threads.mapList { it.toData() },
                 stageInstances = stageInstances.mapList { StageInstanceData.from(it) },
-                stickers = stickers.mapList { MessageStickerData.from(it) },
+                stickers = stickers.mapList { StickerData.from(it) },
                 guildScheduledEvents = guildScheduledEvents.mapList { GuildScheduledEventData.from(it) },
                 premiumProgressBarEnabled = premiumProgressBarEnabled
             )

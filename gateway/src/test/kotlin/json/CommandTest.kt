@@ -1,5 +1,3 @@
-@file:Suppress("EXPERIMENTAL_API_USAGE")
-
 package json
 
 import dev.kord.common.entity.DiscordBotActivity
@@ -25,7 +23,7 @@ class CommandTest {
         val sessionId = "session"
         val sequence = 1337
 
-        val resume = json.encodeToString(Command.Companion, Resume(token, sessionId, sequence))
+        val resume = json.encodeToString(Command.SerializationStrategy, Resume(token, sessionId, sequence))
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.Resume.code)
@@ -44,7 +42,7 @@ class CommandTest {
     fun `Heartbeat command serialization`() {
         val interval = 1337
 
-        val heartbeat = json.encodeToString(Command.Companion, Command.Heartbeat(interval))
+        val heartbeat = json.encodeToString(Command.SerializationStrategy, Command.Heartbeat(interval))
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.Heartbeat.code)
@@ -63,7 +61,7 @@ class CommandTest {
         val limit = 1337
 
         val request = json.encodeToString(
-            Command.Companion,
+            Command.SerializationStrategy,
             RequestGuildMembers(Snowflake(guildId), query.optional(), OptionalInt.Value(limit))
         )
 
@@ -88,7 +86,7 @@ class CommandTest {
         val selfDeaf = false
 
         val status = json.encodeToString(
-            Command.Companion,
+            Command.SerializationStrategy,
             UpdateVoiceStatus(Snowflake(guildId), Snowflake(channelId), selfMute, selfDeaf)
         )
 
@@ -113,7 +111,8 @@ class CommandTest {
         val status = PresenceStatus.Online
         val afk = false
 
-        val updateStatus = json.encodeToString(Command.Companion, UpdateStatus(since, activities, status, afk))
+        val updateStatus =
+            json.encodeToString(Command.SerializationStrategy, UpdateStatus(since, activities, status, afk))
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.StatusUpdate.code)
@@ -140,7 +139,7 @@ class CommandTest {
         val presence: DiscordPresence? = null
 
         val identify = json.encodeToString(
-            Command.Companion,
+            Command.SerializationStrategy,
             Identify(
                 token,
                 properties,

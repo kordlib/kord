@@ -11,7 +11,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.guild.EmojiModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -77,7 +76,6 @@ internal fun GuildEmojiBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun GuildEmojiBehavior.edit(builder: EmojiModifyBuilder.() -> Unit): GuildEmoji {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.emoji.modifyEmoji(guildId, id, builder)

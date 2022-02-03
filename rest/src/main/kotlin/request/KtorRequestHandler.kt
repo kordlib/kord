@@ -12,9 +12,9 @@ import io.ktor.client.statement.*
 import io.ktor.content.TextContent
 import io.ktor.http.*
 import io.ktor.http.content.*
+import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
-import kotlinx.datetime.Clock
 
 internal val jsonDefault = Json {
     encodeDefaults = false
@@ -31,12 +31,12 @@ internal val jsonDefault = Json {
  * @param clock A [Clock] to calculate bucket reset times, exposed for testing.
  * @param parser Serializer used to parse payloads.
  */
-@Suppress("EXPERIMENTAL_API_USAGE")
-class KtorRequestHandler(
+public class KtorRequestHandler(
     private val client: HttpClient,
     private val requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
     private val clock: Clock = Clock.System,
     private val parser: Json = jsonDefault,
+    override val token: String
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
 
@@ -86,7 +86,7 @@ class KtorRequestHandler(
                 val requestBody = request.body ?: return@run
                 val json = parser.encodeToString(requestBody.strategy, requestBody.body)
                 logger.debug { request.logString(json) }
-                this.body = TextContent(json, io.ktor.http.ContentType.Application.Json)
+                this.body = TextContent(json, ContentType.Application.Json)
             }
             is MultipartRequest -> {
                 val content = request.data
@@ -103,7 +103,7 @@ class KtorRequestHandler(
 }
 
 
-fun KtorRequestHandler(
+public fun KtorRequestHandler(
     token: String,
     requestRateLimiter: RequestRateLimiter = ExclusionRequestRateLimiter(),
     clock: Clock = Clock.System,
@@ -111,12 +111,11 @@ fun KtorRequestHandler(
 ): KtorRequestHandler {
     val client = HttpClient(CIO) {
         expectSuccess = false
-        defaultRequest { header("Authorization", "Bot $token") }
     }
-    return KtorRequestHandler(client, requestRateLimiter, clock, parser)
+    return KtorRequestHandler(client, requestRateLimiter, clock, parser, token)
 }
 
-fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): RequestResponse {
+public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): RequestResponse {
     val bucket = response.bucket
     val rateLimit = run {
         val total = Total(response.rateLimitTotal ?: return@run null)

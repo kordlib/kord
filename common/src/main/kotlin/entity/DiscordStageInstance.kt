@@ -21,7 +21,7 @@ import kotlinx.serialization.encoding.Encoder
  * @property discoverableDisabled Whether or not Stage Discovery is disabled
  */
 @Serializable
-data class DiscordStageInstance(
+public data class DiscordStageInstance(
     val id: Snowflake,
     @SerialName("guild_id")
     val guildId: Snowflake,
@@ -30,6 +30,7 @@ data class DiscordStageInstance(
     val topic: String,
     @SerialName("privacy_level")
     val privacyLevel: StageInstancePrivacyLevel,
+    @Deprecated("Stages are no longer discoverable")
     @SerialName("discoverable_disabled")
     val discoverableDisabled: Boolean
 )
@@ -38,26 +39,29 @@ data class DiscordStageInstance(
  * Privacy level of a [DiscordStageInstance].
  */
 @Serializable(with = StageInstancePrivacyLevel.Serializer::class)
-sealed class StageInstancePrivacyLevel(val value: Int) {
+public sealed class StageInstancePrivacyLevel(public val value: Int) {
+
     /**
      * The Stage instance is visible publicly, such as on Stage Discovery.
      */
-    object Public : StageInstancePrivacyLevel(1)
+    @Deprecated("Stages are no longer discoverable")
+    public object Public : StageInstancePrivacyLevel(1)
 
     /**
      * The Stage instance is visible to only guild members.
      */
-    object GuildOnly : StageInstancePrivacyLevel(2)
+    public object GuildOnly : StageInstancePrivacyLevel(2)
 
     /**
      * An unknown privacy level.
      */
-    class Unknown(value: Int) : StageInstancePrivacyLevel(value)
+    public class Unknown(value: Int) : StageInstancePrivacyLevel(value)
 
-    companion object Serializer : KSerializer<StageInstancePrivacyLevel> {
+    public companion object Serializer : KSerializer<StageInstancePrivacyLevel> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("StageInstancePrivacyLevel", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): StageInstancePrivacyLevel {
+            @Suppress("DEPRECATION")
             return when (val value = decoder.decodeInt()) {
                 1 -> Public
                 2 -> GuildOnly
@@ -65,7 +69,7 @@ sealed class StageInstancePrivacyLevel(val value: Int) {
             }
         }
 
-        override fun serialize(encoder: Encoder, value: StageInstancePrivacyLevel) = encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, value: StageInstancePrivacyLevel): Unit = encoder.encodeInt(value.value)
 
     }
 }

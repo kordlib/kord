@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -101,7 +100,7 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
     }
 
 
-    override fun getPublicArchivedThreads(before: Instant, limit: Int): Flow<NewsChannelThread> {
+    override fun getPublicArchivedThreads(before: Instant?, limit: Int?): Flow<NewsChannelThread> {
         return super.getPublicArchivedThreads(before, limit).filterIsInstance()
     }
 
@@ -144,7 +143,6 @@ public fun NewsChannelBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun NewsChannelBehavior.edit(builder: NewsChannelModifyBuilder.() -> Unit): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

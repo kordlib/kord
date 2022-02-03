@@ -9,13 +9,12 @@ import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.builder.message.create.MessageCreateBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 
 
-class UpdateMessageInteractionResponseCreateBuilder(var ephemeral: Boolean = false) :
+public class UpdateMessageInteractionResponseCreateBuilder(public var ephemeral: Boolean = false) :
     MessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {
 

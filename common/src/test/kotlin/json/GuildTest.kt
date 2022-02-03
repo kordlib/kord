@@ -1,5 +1,3 @@
-@file:Suppress("EXPERIMENTAL_API_USAGE")
-
 package json
 
 import dev.kord.common.entity.*
@@ -61,47 +59,43 @@ class GuildTest {
             publicUpdatesChannelId shouldBe "281283303326089216"
             nsfwLevel shouldBe NsfwLevel.Default
         }
-
-    }
-}
-
-@Test
-fun `UnavailableGuild serialization`() {
-    val guild = Json.decodeFromString(DiscordUnavailableGuild.serializer(), file("unavailableguild"))
-
-    with(guild) {
-        id shouldBe "41771983423143937"
-        unavailable shouldBe true
     }
 
-}
+    @Test
+    fun `UnavailableGuild serialization`() {
+        val guild = Json.decodeFromString(DiscordUnavailableGuild.serializer(), file("unavailableguild"))
 
+        with(guild) {
+            id shouldBe "41771983423143937"
+            unavailable shouldBe true
+        }
 
-@Test
-fun `GuildMember serialization`() {
-    val member = Json.decodeFromString(DiscordGuildMember.serializer(), file("guildmember"))
-
-    with(member) {
-        nick shouldBe "NOT API SUPPORT"
-        roles shouldBe emptyList()
-        joinedAt shouldBe "2015-04-26T06:26:56.936000+00:00"
-        deaf shouldBe false
-        mute shouldBe false
-    }
-}
-
-
-@Test
-fun `PartialGuild serialization`() {
-    val guild = Json.decodeFromString(DiscordGuild.serializer(), file("partialguild"))
-
-    with(guild) {
-        id shouldBe "80351110224678912"
-        name shouldBe "1337 Krew"
-        icon shouldBe "8342729096ea3675442027381ff50dfe"
-        owner shouldBe true
-        permissions.value shouldBe 36953089
     }
 
-}
+    @Test
+    fun `GuildMember serialization`() {
+        val member = Json.decodeFromString(DiscordGuildMember.serializer(), file("guildmember"))
 
+        with(member) {
+            nick shouldBe "NOT API SUPPORT"
+            roles shouldBe emptyList()
+            joinedAt shouldBe "2015-04-26T06:26:56.936000+00:00"
+            deaf shouldBe false
+            mute shouldBe false
+        }
+    }
+
+    @Test
+    fun `PartialGuild serialization`() {
+        val guild = Json.decodeFromString(DiscordPartialGuild.serializer(), file("partialguild"))
+
+        with(guild) {
+            id shouldBe "80351110224678912"
+            name shouldBe "1337 Krew"
+            icon shouldBe "8342729096ea3675442027381ff50dfe"
+            owner shouldBe true
+            permissions shouldBe Permissions("36953089")
+            features shouldBe listOf(GuildFeature.Community, GuildFeature.News)
+        }
+    }
+}

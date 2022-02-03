@@ -2,7 +2,6 @@ package dev.kord.rest.ratelimit
 
 import dev.kord.rest.request.Request
 import kotlinx.datetime.Instant
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -10,13 +9,13 @@ import kotlin.contracts.contract
  * A rate limiter that follows [Discord's rate limits](https://discord.com/developers/docs/topics/rate-limits) for
  * the REST api.
  */
-interface RequestRateLimiter {
+public interface RequestRateLimiter {
 
     /**
      * Awaits all active rate limits for the [request], returning a [RequestToken] used to process the result of the
      * [request].
      */
-    suspend fun await(request: Request<*, *>): RequestToken
+    public suspend fun await(request: Request<*, *>): RequestToken
 
 }
 
@@ -24,8 +23,7 @@ interface RequestRateLimiter {
  * [Awaits][RequestRateLimiter.await] the rate limits for the [request] and then runs [consumer].
  * Throws an [IllegalStateException] if the supplied [RequestToken] was not completed.
  */
-@OptIn(ExperimentalContracts::class)
-suspend inline fun <T> RequestRateLimiter.consume(
+public suspend inline fun <T> RequestRateLimiter.consume(
     request: Request<*, *>,
     consumer: (token: RequestToken) -> T
 ): T {
@@ -47,48 +45,39 @@ suspend inline fun <T> RequestRateLimiter.consume(
 
 }
 
-data class RateLimit(val total: Total, val remaining: Remaining) {
+public data class RateLimit(val total: Total, val remaining: Remaining) {
     val isExhausted: Boolean get() = remaining.value == 0L
 
-    companion object
+    public companion object
 }
 
 @JvmInline
-value class Total(val value: Long) {
-    companion object
-}
-
+public value class Total(public val value: Long)
 
 @JvmInline
-value class Remaining(val value: Long) {
-    companion object
-}
+public value class Remaining(public val value: Long)
 
 /**
  * The unique identifier of this bucket.
  */
 @JvmInline
-value class BucketKey(val value: String) {
-    companion object
-}
+public value class BucketKey(public val value: String)
 
 /**
  * The [instant][value] when the current bucket gets reset.
  */
 @JvmInline
-value class Reset(val value: Instant) {
-    companion object
-}
+public value class Reset(public val value: Instant)
 
-sealed class RequestResponse {
-    abstract val bucketKey: BucketKey?
-    abstract val rateLimit: RateLimit?
-    abstract val reset: Reset?
+public sealed class RequestResponse {
+    public abstract val bucketKey: BucketKey?
+    public abstract val rateLimit: RateLimit?
+    public abstract val reset: Reset?
 
     /**
      * The request returned a non-rate limit error code.
      */
-    object Error : RequestResponse() {
+    public object Error : RequestResponse() {
         override val bucketKey: BucketKey? = null
         override val rateLimit: RateLimit? = null
         override val reset: Reset? = null
@@ -97,7 +86,7 @@ sealed class RequestResponse {
     /**
      * The request returned a response without errors.
      */
-    data class Accepted(
+    public data class Accepted(
         override val bucketKey: BucketKey?,
         override val rateLimit: RateLimit?,
         override val reset: Reset
@@ -106,7 +95,7 @@ sealed class RequestResponse {
     /**
      * The request returned a global rate limit error.
      */
-    data class GlobalRateLimit(
+    public data class GlobalRateLimit(
         override val bucketKey: BucketKey?,
         override val rateLimit: RateLimit?,
         override val reset: Reset
@@ -115,28 +104,28 @@ sealed class RequestResponse {
     /**
      * The request returned a bucket rate limit error.
      */
-    data class BucketRateLimit(
+    public data class BucketRateLimit(
         override val bucketKey: BucketKey,
         override val rateLimit: RateLimit?,
         override val reset: Reset
     ) : RequestResponse()
 
-    companion object
+    public companion object
 
 }
 
 /**
  * A completable token linked to a [Request].
  */
-interface RequestToken {
+public interface RequestToken {
 
     /**
      * Whether [complete] has been called.
      */
-    val completed: Boolean
+    public val completed: Boolean
 
     /**
      * Completes the [Request], updating the rate limit data from the [response].
      */
-    suspend fun complete(response: RequestResponse)
+    public suspend fun complete(response: RequestResponse)
 }

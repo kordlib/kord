@@ -1,6 +1,5 @@
 package dev.kord.common.entity
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -13,7 +12,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -67,7 +65,7 @@ import kotlin.contracts.contract
  */
 
 @Serializable
-data class DiscordMessage(
+public data class DiscordMessage(
     val id: Snowflake,
     @SerialName("channel_id")
     val channelId: Snowflake,
@@ -102,7 +100,8 @@ data class DiscordMessage(
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
+    @SerialName("sticker_items")
+    val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     /*
@@ -125,30 +124,54 @@ data class DiscordMessage(
  * @param formatType type of sticker format
  */
 @Serializable
-data class DiscordMessageSticker(
+public data class DiscordMessageSticker(
     val id: Snowflake,
     @SerialName("pack_id")
-    val packId: Snowflake,
+    val packId: OptionalSnowflake = OptionalSnowflake.Missing,
     val name: String,
-    val description: String,
+    val description: String?,
     val tags: Optional<String> = Optional.Missing(),
-    val asset: String,
-    @SerialName("preview_asset")
-    // https://github.com/kordlib/kord/issues/207
-    val previewAsset: Optional<String?> = Optional.Missing(),
     @SerialName("format_type")
     val formatType: MessageStickerType,
+    val available: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val user: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("sort_value")
+    val sortValue: OptionalInt = OptionalInt.Missing
+)
+
+@Serializable
+public data class DiscordStickerPack(
+    val id: Snowflake,
+    val stickers: List<DiscordMessageSticker>,
+    val name: String,
+    @SerialName("sku_id")
+    val skuId: Snowflake,
+    @SerialName("cover_sticker_id")
+    val coverStickerId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val description: String,
+    @SerialName("banner_asset_id")
+    val bannerAssetId: Snowflake
+)
+
+@Serializable
+public data class DiscordStickerItem(
+    val id: Snowflake,
+    val name: String,
+    @SerialName("format_type")
+    val formatType: MessageStickerType
 )
 
 @Serializable(with = MessageStickerType.Serializer::class)
-sealed class MessageStickerType(val value: Int) {
-    class Unknown(value: Int) : MessageStickerType(value)
-    object PNG : MessageStickerType(1)
-    object APNG : MessageStickerType(2)
-    object LOTTIE : MessageStickerType(3)
+public sealed class MessageStickerType(public val value: Int) {
+    public class Unknown(value: Int) : MessageStickerType(value)
+    public object PNG : MessageStickerType(1)
+    public object APNG : MessageStickerType(2)
+    public object LOTTIE : MessageStickerType(3)
 
-    companion object {
-        val values: Set<MessageStickerType> = setOf(PNG, APNG, LOTTIE)
+    public companion object {
+        public val values: Set<MessageStickerType> = setOf(PNG, APNG, LOTTIE)
     }
 
     internal object Serializer : KSerializer<MessageStickerType> {
@@ -216,8 +239,7 @@ sealed class MessageStickerType(val value: Int) {
  * @param referencedMessage the message associated with [messageReference].
  */
 @Serializable
-
-data class DiscordPartialMessage(
+public data class DiscordPartialMessage(
     val id: Snowflake,
     @SerialName("channel_id")
     val channelId: Snowflake,
@@ -250,14 +272,14 @@ data class DiscordPartialMessage(
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
-    val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
+    val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
 )
 
 @Serializable
-data class DiscordMessageReference(
+public data class DiscordMessageReference(
     @SerialName("message_id")
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("channel_id")
@@ -277,7 +299,7 @@ data class DiscordMessageReference(
  * @param name the name of the channel.
  */
 @Serializable
-data class DiscordMentionedChannel(
+public data class DiscordMentionedChannel(
     val id: Snowflake,
     @SerialName("guild_id")
     val guildId: Snowflake,
@@ -285,7 +307,7 @@ data class DiscordMentionedChannel(
     val name: String,
 )
 
-enum class MessageFlag(val code: Int) {
+public enum class MessageFlag(public val code: Int) {
     /** This message has been published to subscribed channels (via Channel Following) */
     CrossPosted(1),
 
@@ -309,24 +331,24 @@ enum class MessageFlag(val code: Int) {
 }
 
 @Serializable(with = MessageFlags.Serializer::class)
-class MessageFlags internal constructor(val code: Int) {
+public data class MessageFlags internal constructor(val code: Int) {
 
-    val flags = MessageFlag.values().filter { code and it.code != 0 }
+    val flags: List<MessageFlag> = MessageFlag.values().filter { code and it.code != 0 }
 
-    operator fun contains(flag: MessageFlag) = flag.code and this.code == flag.code
+    public operator fun contains(flag: MessageFlag): Boolean = flag.code and this.code == flag.code
 
-    operator fun contains(flags: MessageFlags) = flags.code and this.code == flags.code
+    public operator fun contains(flags: MessageFlags): Boolean = flags.code and this.code == flags.code
 
-    operator fun plus(flags: MessageFlags): MessageFlags = MessageFlags(this.code or flags.code)
+    public operator fun plus(flags: MessageFlags): MessageFlags = MessageFlags(this.code or flags.code)
 
-    operator fun plus(flags: MessageFlag): MessageFlags = MessageFlags(this.code or flags.code)
+    public operator fun plus(flags: MessageFlag): MessageFlags = MessageFlags(this.code or flags.code)
 
-    operator fun minus(flags: MessageFlags): MessageFlags = MessageFlags(this.code xor flags.code)
+    public operator fun minus(flags: MessageFlags): MessageFlags = MessageFlags(this.code xor flags.code)
 
-    operator fun minus(flags: MessageFlag): MessageFlags = MessageFlags(this.code xor flags.code)
+    public operator fun minus(flags: MessageFlag): MessageFlags = MessageFlags(this.code xor flags.code)
 
 
-    inline fun copy(block: Builder.() -> Unit): MessageFlags {
+    public inline fun copy(block: Builder.() -> Unit): MessageFlags {
         val builder = Builder(code)
         builder.apply(block)
         return builder.flags()
@@ -348,53 +370,52 @@ class MessageFlags internal constructor(val code: Int) {
         }
     }
 
-    class Builder(internal var code: Int = 0) {
-        operator fun MessageFlag.unaryPlus() {
+    public class Builder(internal var code: Int = 0) {
+        public operator fun MessageFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or code
         }
 
-        operator fun MessageFlag.unaryMinus() {
+        public operator fun MessageFlag.unaryMinus() {
             if (this@Builder.code and code == code) {
                 this@Builder.code = this@Builder.code xor code
             }
         }
 
-        operator fun MessageFlags.unaryPlus() {
+        public operator fun MessageFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or code
         }
 
-        operator fun MessageFlags.unaryMinus() {
+        public operator fun MessageFlags.unaryMinus() {
             if (this@Builder.code and code == code) {
                 this@Builder.code = this@Builder.code xor code
             }
         }
 
-        fun flags() = MessageFlags(code)
+        public fun flags(): MessageFlags = MessageFlags(code)
     }
 
 }
 
-@OptIn(ExperimentalContracts::class)
-inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
+public inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return MessageFlags.Builder().apply(builder).flags()
 }
 
-fun MessageFlags(vararg flags: MessageFlag) = MessageFlags {
+public fun MessageFlags(vararg flags: MessageFlag): MessageFlags = MessageFlags {
     flags.forEach { +it }
 }
 
-fun MessageFlags(vararg flags: MessageFlags) = MessageFlags {
+public fun MessageFlags(vararg flags: MessageFlags): MessageFlags = MessageFlags {
     flags.forEach { +it }
 }
 
-fun MessageFlags(flags: Iterable<MessageFlag>) = MessageFlags {
+public fun MessageFlags(flags: Iterable<MessageFlag>): MessageFlags = MessageFlags {
     flags.forEach { +it }
 }
 
 
 @JvmName("MessageFlagsWithIterable")
-fun MessageFlags(flags: Iterable<MessageFlags>) = MessageFlags {
+public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFlags {
     flags.forEach { +it }
 }
 
@@ -404,6 +425,8 @@ fun MessageFlags(flags: Iterable<MessageFlags>) = MessageFlags {
  *
  * @param id The attachment id.
  * @param filename The name of the attached file.
+ * @param description The description for the file.
+ * @param contentType The attachment's [media type](https://en.wikipedia.org/wiki/Media_type).
  * @param size The size of the file in bytes.
  * @param url The source url of the file.
  * @param proxyUrl A proxied url of the field.
@@ -411,9 +434,12 @@ fun MessageFlags(flags: Iterable<MessageFlags>) = MessageFlags {
  * @param width The width of the file (if it is an image).
  */
 @Serializable
-data class DiscordAttachment(
+public data class DiscordAttachment(
     val id: Snowflake,
     val filename: String,
+    val description: Optional<String> = Optional.Missing(),
+    @SerialName("content_type")
+    val contentType: Optional<String> = Optional.Missing(),
     val size: Int,
     val url: String,
     @SerialName("proxy_url")
@@ -450,7 +476,7 @@ data class DiscordAttachment(
  * @param fields The fields information.
  */
 @Serializable
-data class DiscordEmbed(
+public data class DiscordEmbed(
     val title: Optional<String> = Optional.Missing(),
     @Suppress("DEPRECATION")
     val type: Optional<EmbedType> = Optional.Missing(),
@@ -475,7 +501,7 @@ data class DiscordEmbed(
      * @param proxyIconUrl A proxied url of a footer icon.
      */
     @Serializable
-    data class Footer(
+    public data class Footer(
         val text: String,
         @SerialName("icon_url")
         val iconUrl: Optional<String> = Optional.Missing(),
@@ -492,7 +518,7 @@ data class DiscordEmbed(
      * @param width The width of the image.
      */
     @Serializable
-    data class Image(
+    public data class Image(
         val url: Optional<String> = Optional.Missing(),
         @SerialName("proxy_url")
         val proxyUrl: Optional<String> = Optional.Missing(),
@@ -509,7 +535,7 @@ data class DiscordEmbed(
      * @param width The height of the thumbnail.
      */
     @Serializable
-    data class Thumbnail(
+    public data class Thumbnail(
         val url: Optional<String> = Optional.Missing(),
         @SerialName("proxy_url")
         val proxyUrl: Optional<String> = Optional.Missing(),
@@ -525,7 +551,7 @@ data class DiscordEmbed(
      * @param width The width of the video.
      */
     @Serializable
-    data class Video(
+    public data class Video(
         val url: Optional<String> = Optional.Missing(),
         val height: OptionalInt = OptionalInt.Missing,
         val width: OptionalInt = OptionalInt.Missing,
@@ -538,7 +564,7 @@ data class DiscordEmbed(
      * @param url The url of the provider.
      */
     @Serializable
-    data class Provider(
+    public data class Provider(
         val name: Optional<String> = Optional.Missing(),
         val url: Optional<String?> = Optional.Missing(), //see https://github.com/kordlib/kord/issues/149
     )
@@ -552,7 +578,7 @@ data class DiscordEmbed(
      * @param proxyIconUrl A proxied url of the author icon.
      */
     @Serializable
-    data class Author(
+    public data class Author(
         val name: Optional<String> = Optional.Missing(),
         val url: Optional<String> = Optional.Missing(),
         @SerialName("icon_url")
@@ -569,7 +595,7 @@ data class DiscordEmbed(
      * @param inline Whether or not this field should display inline.
      */
     @Serializable
-    data class Field(
+    public data class Field(
         val name: String,
         val value: String,
         val inline: OptionalBoolean = OptionalBoolean.Missing,
@@ -592,26 +618,26 @@ data class DiscordEmbed(
 """
 )
 @Serializable(with = EmbedType.Serializer::class)
-sealed class EmbedType(val value: String) {
-    class Unknown(value: String) : EmbedType(value)
+public sealed class EmbedType(public val value: String) {
+    public class Unknown(value: String) : EmbedType(value)
 
     /** Generic embed rendered from embed attributes. */
-    object Rich : EmbedType("rich")
+    public object Rich : EmbedType("rich")
 
     /** Image embed. */
-    object Image : EmbedType("image")
+    public object Image : EmbedType("image")
 
     /** Video embed. */
-    object Video : EmbedType("video")
+    public object Video : EmbedType("video")
 
     /** Animated gif image embed rendered as a video embed. */
-    object Gifv : EmbedType("gifv")
+    public object Gifv : EmbedType("gifv")
 
     /** Article embed. */
-    object Article : EmbedType("article")
+    public object Article : EmbedType("article")
 
     /** Link embed. */
-    object Link : EmbedType("link")
+    public object Link : EmbedType("link")
 
     internal object Serializer : KSerializer<EmbedType> {
         override val descriptor: SerialDescriptor
@@ -635,26 +661,26 @@ sealed class EmbedType(val value: String) {
 }
 
 @Serializable
-data class Reaction(
+public data class Reaction(
     val count: Int,
     val me: Boolean,
     val emoji: DiscordEmoji,
 )
 
 @Serializable
-data class MessageActivity(
+public data class MessageActivity(
     val type: MessageActivityType,
     @SerialName("party_id")
     val partyId: Optional<String> = Optional.Missing(),
 )
 
 @Serializable(with = MessageActivityType.Serializer::class)
-sealed class MessageActivityType(val value: Int) {
-    class Unknown(value: Int) : MessageActivityType(value)
-    object Join : MessageActivityType(1)
-    object Spectate : MessageActivityType(2)
-    object Listen : MessageActivityType(3)
-    object JoinRequest : MessageActivityType(5)
+public sealed class MessageActivityType(public val value: Int) {
+    public class Unknown(value: Int) : MessageActivityType(value)
+    public object Join : MessageActivityType(1)
+    public object Spectate : MessageActivityType(2)
+    public object Listen : MessageActivityType(3)
+    public object JoinRequest : MessageActivityType(5)
 
     internal object Serializer : KSerializer<MessageActivityType> {
         override val descriptor: SerialDescriptor
@@ -675,7 +701,7 @@ sealed class MessageActivityType(val value: Int) {
 }
 
 @Serializable
-data class MessageApplication(
+public data class MessageApplication(
     val id: Snowflake,
     @SerialName("cover_image")
     val coverImage: Optional<String> = Optional.Missing(),
@@ -685,7 +711,7 @@ data class MessageApplication(
 )
 
 @Serializable
-data class DeletedMessage(
+public data class DeletedMessage(
     val id: Snowflake,
     @SerialName("channel_id")
     val channelId: Snowflake,
@@ -694,7 +720,7 @@ data class DeletedMessage(
 )
 
 @Serializable
-data class BulkDeleteData(
+public data class BulkDeleteData(
     val ids: List<Snowflake>,
     @SerialName("channel_id")
     val channelId: Snowflake,
@@ -703,7 +729,7 @@ data class BulkDeleteData(
 )
 
 @Serializable
-data class MessageReactionAddData(
+public data class MessageReactionAddData(
     @SerialName("user_id")
     val userId: Snowflake,
     @SerialName("channel_id")
@@ -717,7 +743,7 @@ data class MessageReactionAddData(
 )
 
 @Serializable
-data class MessageReactionRemoveData(
+public data class MessageReactionRemoveData(
     @SerialName("user_id")
     val userId: Snowflake,
     @SerialName("channel_id")
@@ -730,7 +756,7 @@ data class MessageReactionRemoveData(
 )
 
 @Serializable
-data class AllRemovedMessageReactions(
+public data class AllRemovedMessageReactions(
     @SerialName("channel_id")
     val channelId: Snowflake,
     @SerialName("message_id")
@@ -740,33 +766,33 @@ data class AllRemovedMessageReactions(
 )
 
 @Serializable(with = MessageType.MessageTypeSerializer::class)
-sealed class MessageType(val code: Int) {
+public sealed class MessageType(public val code: Int) {
     /** The default code for unknown values. */
-    class Unknown(code: Int) : MessageType(code)
-    object Default : MessageType(0)
-    object RecipientAdd : MessageType(1)
-    object RecipientRemove : MessageType(2)
-    object Call : MessageType(3)
-    object ChannelNameChange : MessageType(4)
-    object ChannelIconChange : MessageType(5)
-    object ChannelPinnedMessage : MessageType(6)
-    object GuildMemberJoin : MessageType(7)
-    object UserPremiumGuildSubscription : MessageType(8)
-    object UserPremiumGuildSubscriptionTierOne : MessageType(9)
-    object UserPremiumGuildSubscriptionTwo : MessageType(10)
-    object UserPremiumGuildSubscriptionThree : MessageType(11)
-    object ChannelFollowAdd : MessageType(12)
-    object GuildDiscoveryDisqualified : MessageType(14)
+    public class Unknown(code: Int) : MessageType(code)
+    public object Default : MessageType(0)
+    public object RecipientAdd : MessageType(1)
+    public object RecipientRemove : MessageType(2)
+    public object Call : MessageType(3)
+    public object ChannelNameChange : MessageType(4)
+    public object ChannelIconChange : MessageType(5)
+    public object ChannelPinnedMessage : MessageType(6)
+    public object GuildMemberJoin : MessageType(7)
+    public object UserPremiumGuildSubscription : MessageType(8)
+    public object UserPremiumGuildSubscriptionTierOne : MessageType(9)
+    public object UserPremiumGuildSubscriptionTwo : MessageType(10)
+    public object UserPremiumGuildSubscriptionThree : MessageType(11)
+    public object ChannelFollowAdd : MessageType(12)
+    public object GuildDiscoveryDisqualified : MessageType(14)
 
     @Suppress("SpellCheckingInspection")
-    object GuildDiscoveryRequalified : MessageType(15)
-    object GuildDiscoveryGracePeriodInitialWarning : MessageType(16)
-    object GuildDiscoveryGracePeriodFinalWarning : MessageType(17)
-    object ThreadCreated : MessageType(18)
-    object Reply : MessageType(19)
-    object ApplicationCommand : MessageType(20)
-    object ThreadStarterMessage : MessageType(21)
-    object GuildInviteReminder : MessageType(22)
+    public object GuildDiscoveryRequalified : MessageType(15)
+    public object GuildDiscoveryGracePeriodInitialWarning : MessageType(16)
+    public object GuildDiscoveryGracePeriodFinalWarning : MessageType(17)
+    public object ThreadCreated : MessageType(18)
+    public object Reply : MessageType(19)
+    public object ApplicationCommand : MessageType(20)
+    public object ThreadStarterMessage : MessageType(21)
+    public object GuildInviteReminder : MessageType(22)
 
     internal object MessageTypeSerializer : KSerializer<MessageType> {
 
@@ -783,8 +809,8 @@ sealed class MessageType(val code: Int) {
         }
     }
 
-    companion object {
-        val values: Set<MessageType>
+    public companion object {
+        public val values: Set<MessageType>
             get() = setOf(
                 Default,
                 RecipientAdd,
@@ -814,13 +840,13 @@ sealed class MessageType(val code: Int) {
 }
 
 @Serializable(with = AllowedMentionType.Serializer::class)
-sealed class AllowedMentionType(val value: String) {
-    class Unknown(value: String) : AllowedMentionType(value)
-    object RoleMentions : AllowedMentionType("roles")
-    object UserMentions : AllowedMentionType("users")
-    object EveryoneMentions : AllowedMentionType("everyone")
+public sealed class AllowedMentionType(public val value: String) {
+    public class Unknown(value: String) : AllowedMentionType(value)
+    public object RoleMentions : AllowedMentionType("roles")
+    public object UserMentions : AllowedMentionType("users")
+    public object EveryoneMentions : AllowedMentionType("everyone")
 
-    internal class Serializer : KSerializer<AllowedMentionType> {
+    internal object Serializer : KSerializer<AllowedMentionType> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("Kord.DiscordAllowedMentionType", PrimitiveKind.STRING)
 
@@ -838,19 +864,19 @@ sealed class AllowedMentionType(val value: String) {
 }
 
 @Serializable
-data class AllowedMentions(
+public data class AllowedMentions(
     val parse: List<AllowedMentionType>,
     val users: List<String>,
     val roles: List<String>,
     @SerialName("replied_user")
-    val repliedUser: OptionalBoolean = OptionalBoolean.Missing
+    val repliedUser: OptionalBoolean = OptionalBoolean.Missing,
 )
 
 
 @Serializable
-data class DiscordMessageInteraction(
+public data class DiscordMessageInteraction(
     val id: Snowflake,
     val type: InteractionType,
     val name: String,
-    val user: DiscordUser
+    val user: DiscordUser,
 )

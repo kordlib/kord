@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import dev.kord.core.event.Event as CoreEvent
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 internal class UserEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {

@@ -14,7 +14,7 @@ import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.MessageEditPatchRequest
 import dev.kord.rest.json.request.MultipartMessagePatchRequest
 
-class UserMessageModifyBuilder
+public class UserMessageModifyBuilder
     : MessageModifyBuilder,
     RequestBuilder<MultipartMessagePatchRequest> {
 
@@ -28,7 +28,7 @@ class UserMessageModifyBuilder
 
     override var embeds: MutableList<EmbedBuilder>? by state::embeds.delegate()
 
-    var flags: MessageFlags? by state::flags.delegate()
+    public var flags: MessageFlags? by state::flags.delegate()
 
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()
 

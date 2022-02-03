@@ -16,7 +16,6 @@ import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
@@ -187,7 +186,6 @@ public class Integration(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun Integration.edit(builder: IntegrationModifyBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

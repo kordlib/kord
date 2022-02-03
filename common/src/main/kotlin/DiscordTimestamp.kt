@@ -2,13 +2,13 @@ package dev.kord.common
 
 import kotlinx.datetime.Instant
 
-fun Instant.toMessageFormat(style: DiscordTimestampStyle = DiscordTimestampStyle.ShortDateTime) =
+public fun Instant.toMessageFormat(style: DiscordTimestampStyle = DiscordTimestampStyle.ShortDateTime): String =
     "<t:$epochSeconds:${style.style}>"
 
 /**
  * The class representing the [style of a timestamp](https://discord.com/developers/docs/reference#message-formatting-timestamp-styles)
  */
-enum class DiscordTimestampStyle(val style: String) {
+public enum class DiscordTimestampStyle(public val style: String) {
 
     /**
      * For example 16:20

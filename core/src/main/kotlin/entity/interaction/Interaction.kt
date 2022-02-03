@@ -1,5 +1,6 @@
 package dev.kord.core.entity.interaction
 
+import dev.kord.common.Locale
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -39,6 +40,18 @@ public sealed interface Interaction : InteractionBehavior {
     public val type: InteractionType get() = data.type
 
     public val user: UserBehavior
+
+    /**
+     * The selected language of the invoking user
+     *
+     * This is available on all interaction types except [InteractionType.Ping]
+     */
+    public val locale: Locale? get() = data.locale.value
+
+    /**
+     * The guild's preferred locale, if invoked in a guild.
+     */
+    public val guildLocale: Locale? get() = data.guildLocale.value
 
     /**
      * read-only property, always 1

@@ -18,7 +18,7 @@ private val logger = KotlinLogging.logger { }
  * @param dispatcher The dispatchers the events will be fired on.
  */
 @ObsoleteCoroutinesApi
-class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.Default) : CoroutineScope {
+public class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.Default) : CoroutineScope {
 
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + dispatcher
@@ -27,10 +27,11 @@ class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.Default) 
 
     private var ticker: ReceiveChannel<Unit>? = null
 
-    suspend fun tickAt(intervalMillis: Long, block: suspend () -> Unit) {
+    public suspend fun tickAt(intervalMillis: Long, block: suspend () -> Unit) {
         stop()
         mutex.withLock {
             ticker = ticker(intervalMillis)
+
             launch {
                 ticker?.consumeEach {
                     try {
@@ -43,7 +44,7 @@ class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.Default) 
         }
     }
 
-    suspend fun stop() {
+    public suspend fun stop() {
         mutex.withLock {
             ticker?.cancel()
         }

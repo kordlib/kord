@@ -4,6 +4,7 @@ import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -78,12 +79,13 @@ public data class ThreadMetadataData(
     val archiveTimestamp: String,
     val autoArchiveDuration: ArchiveDuration,
     val locked: OptionalBoolean = OptionalBoolean.Missing,
-    val invitable: OptionalBoolean = OptionalBoolean.Missing
+    val invitable: OptionalBoolean = OptionalBoolean.Missing,
+    val createTimestamp: Optional<Instant> = Optional.Missing(),
 ) {
-    
-  public companion object {
+
+    public companion object {
         public fun from(threadMetadata: DiscordThreadMetadata): ThreadMetadataData = with(threadMetadata) {
-            ThreadMetadataData(archived, archiveTimestamp, autoArchiveDuration, locked, invitable)
+            ThreadMetadataData(archived, archiveTimestamp, autoArchiveDuration, locked, invitable, createTimestamp)
 
         }
     }

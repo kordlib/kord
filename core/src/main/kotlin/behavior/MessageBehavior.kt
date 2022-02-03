@@ -14,7 +14,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.rest.builder.message.create.MessageCreateBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.builder.message.modify.WebhookMessageModifyBuilder
@@ -22,7 +21,6 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -48,10 +46,10 @@ public interface MessageBehavior : KordEntity, Strategizable {
     public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
-     * Requests to get the this behavior as a [Message].
+     * Requests to get this behavior as a [Message].
      *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the message wasn't present.
+     * @throws RequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the message wasn't present.
      */
     public suspend fun asMessage(): Message = supplier.getMessage(channelId = channelId, messageId = id)
 
@@ -88,6 +86,18 @@ public interface MessageBehavior : KordEntity, Strategizable {
      */
     public suspend fun delete(reason: String? = null) {
         kord.rest.channel.deleteMessage(channelId = channelId, messageId = id, reason = reason)
+    }
+
+    /**
+     * Requests to delete this message if it was previously sent from a [Webhook] with the given [webhookId] using the
+     * [token] for authentication.
+     *
+     * If this message is in a thread, [threadId] must be specified.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun delete(webhookId: Snowflake, token: String, threadId: Snowflake? = null) {
+        kord.rest.webhook.deleteWebhookMessage(webhookId, token, messageId = id, threadId)
     }
 
     /**
@@ -236,10 +246,8 @@ public fun MessageBehavior(
  *
  * @return The edited [Message].
  *
- * @throws [RestRequestException] if something went wrong during the request.
- * @see editWebhookMessage
+ * @throws RestRequestException if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MessageBehavior.edit(builder: UserMessageModifyBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -252,42 +260,50 @@ public suspend inline fun MessageBehavior.edit(builder: UserMessageModifyBuilder
     return Message(data, kord)
 }
 
-/**
- * Requests to edit this message.
- *
- * @return The edited [Message].
- *
- * @throws [RestRequestException] if something went wrong during the request.
- * @see edit
- */
-@OptIn(ExperimentalContracts::class)
+@Deprecated(
+    "'editWebhookMessage' was renamed to 'edit'",
+    ReplaceWith("this.edit(webhookId, token, threadId = null) { builder() }", "dev.kord.core.behavior.edit"),
+    DeprecationLevel.ERROR,
+)
 public suspend inline fun MessageBehavior.editWebhookMessage(
     webhookId: Snowflake,
     token: String,
+    builder: WebhookMessageModifyBuilder.() -> Unit,
+): Message {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return edit(webhookId, token, threadId = null, builder)
+}
+
+/**
+ * Requests to edit this message if it was previously sent from a [Webhook] with the given [webhookId] using the
+ * [token] for authentication.
+ *
+ * If this message is in a thread, [threadId] must be specified.
+ *
+ * @return The edited [Message].
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+public suspend inline fun MessageBehavior.edit(
+    webhookId: Snowflake,
+    token: String,
+    threadId: Snowflake? = null,
     builder: WebhookMessageModifyBuilder.() -> Unit
 ): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-
-    val response =
-        kord.rest.webhook.editWebhookMessage(
-            webhookId = webhookId,
-            messageId = id,
-            token = token,
-            builder = builder
-        )
+    val response = kord.rest.webhook.editWebhookMessage(webhookId, token, messageId = id, threadId, builder)
     val data = MessageData.from(response)
-
     return Message(data, kord)
 }
 
 /**
- * Request to reply to this message, setting [MessageCreateBuilder.messageReference] to this message [id][MessageBehavior.id].
+ * Request to reply to this message, setting [messageReference][UserMessageCreateBuilder.messageReference] to this
+ * message's [id][MessageBehavior.id].
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun MessageBehavior.reply(builder: UserMessageCreateBuilder.() -> Unit): Message {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

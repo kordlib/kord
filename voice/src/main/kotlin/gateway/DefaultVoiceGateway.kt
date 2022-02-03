@@ -143,7 +143,7 @@ public class DefaultVoiceGateway(
         val json = String(frame.data, Charsets.UTF_8)
 
         try {
-            val event = jsonParser.decodeFromString(VoiceEvent, json)
+            val event = jsonParser.decodeFromString(VoiceEvent.DeserializationStrategy, json)
 
             if (event is SessionDescription)
                 defaultVoiceGatewayLogger.trace { "Voice Gateway <<< SESSION_DESCRIPTION" }
@@ -182,18 +182,17 @@ public class DefaultVoiceGateway(
         sendUnsafe(command)
     }
 
-    @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun sendUnsafe(command: Command) {
-        val json = Json.encodeToString(Command, command)
+        val json = Json.encodeToString(Command.SerializationStrategy, command)
         if (command is Identify) {
             defaultVoiceGatewayLogger.trace {
                 val copy = command.copy(token = "token")
-                "Voice Gateway >>> ${Json.encodeToString(Command, copy)}"
+                "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
             }
         } else if (command is SelectProtocol) {
             defaultVoiceGatewayLogger.trace {
                 val copy = command.copy(data = command.data.copy(address = "ip"))
-                "Voice Gateway >>> ${Json.encodeToString(Command, copy)}"
+                "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
             }
         } else {
             defaultVoiceGatewayLogger.trace { "Voice Gateway >>> $json" }

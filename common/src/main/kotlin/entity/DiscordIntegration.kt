@@ -12,7 +12,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
-data class DiscordIntegration(
+public data class DiscordIntegration(
     val id: Snowflake,
     val name: String,
     val type: String,
@@ -36,7 +36,7 @@ data class DiscordIntegration(
 )
 
 @Serializable
-data class DiscordPartialIntegration(
+public data class DiscordPartialIntegration(
     val id: Snowflake,
     val name: String,
     val type: String,
@@ -44,7 +44,7 @@ data class DiscordPartialIntegration(
 )
 
 @Serializable
-data class IntegrationApplication(
+public data class IntegrationApplication(
     val id: Snowflake,
     val name: String,
     val icon: String?,
@@ -54,12 +54,12 @@ data class IntegrationApplication(
 )
 
 @Serializable(with = IntegrationExpireBehavior.Serializer::class)
-sealed class IntegrationExpireBehavior(val value: Int) {
-    class Unknown(value: Int) : IntegrationExpireBehavior(value)
-    object RemoveRole : IntegrationExpireBehavior(0)
-    object Kick : IntegrationExpireBehavior(1)
+public sealed class IntegrationExpireBehavior(public val value: Int) {
+    public class Unknown(value: Int) : IntegrationExpireBehavior(value)
+    public object RemoveRole : IntegrationExpireBehavior(0)
+    public object Kick : IntegrationExpireBehavior(1)
 
-    companion object Serializer : KSerializer<IntegrationExpireBehavior> {
+    public companion object Serializer : KSerializer<IntegrationExpireBehavior> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("expire_behavior", PrimitiveKind.INT)
 
@@ -77,7 +77,7 @@ sealed class IntegrationExpireBehavior(val value: Int) {
 }
 
 @Serializable
-data class DiscordIntegrationsAccount(
+public data class DiscordIntegrationsAccount(
     val id: String,
     val name: String
 )

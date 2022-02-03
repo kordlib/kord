@@ -17,7 +17,6 @@ import dev.kord.rest.service.createStageInstance
 import dev.kord.rest.service.modifyCurrentVoiceState
 import dev.kord.rest.service.modifyVoiceState
 import dev.kord.rest.service.patchStageVoiceChannel
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -48,7 +47,6 @@ public interface StageChannelBehavior : BaseVoiceChannelBehavior {
 /**
  * Requests to edit the current user's voice state in this [StageChannel].
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun StageChannelBehavior.editCurrentVoiceState(builder: CurrentVoiceStateModifyBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     kord.rest.guild.modifyCurrentVoiceState(guildId, id, builder)
@@ -57,7 +55,6 @@ public suspend inline fun StageChannelBehavior.editCurrentVoiceState(builder: Cu
 /**
  * Requests to edit the another user's voice state in this [StageChannel].
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun StageChannelBehavior.editVoiceState(
     userId: Snowflake,
     builder: VoiceStateModifyBuilder.() -> Unit
@@ -73,7 +70,6 @@ public suspend inline fun StageChannelBehavior.editVoiceState(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend fun StageChannelBehavior.edit(builder: StageVoiceChannelModifyBuilder.() -> Unit): StageChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchStageVoiceChannel(id, builder)

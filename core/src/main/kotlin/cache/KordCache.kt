@@ -101,6 +101,8 @@ public class KordCacheBuilder {
      */
     public fun users(generator: Generator<UserData, Snowflake>): Unit = forDescription(UserData.description, generator)
 
+    public fun stickers(generator: Generator<StickerData, Snowflake>): Unit = forDescription(StickerData.description, generator)
+
 
     /**
      *  Configures the caching for [EmojiData].

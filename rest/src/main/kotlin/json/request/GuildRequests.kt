@@ -9,11 +9,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.datetime.Instant
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.InternalSerializationApi
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.listSerialDescriptor
@@ -21,7 +17,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable
-data class GuildCreateRequest(
+public data class GuildCreateRequest(
     val name: String,
     val region: Optional<String> = Optional.Missing(),
     val icon: Optional<String> = Optional.Missing(),
@@ -41,7 +37,7 @@ data class GuildCreateRequest(
 )
 
 @Serializable
-data class GuildChannelCreateRequest(
+public data class GuildChannelCreateRequest(
     val name: String,
     val type: ChannelType,
     val topic: Optional<String> = Optional.Missing(),
@@ -60,7 +56,7 @@ data class GuildChannelCreateRequest(
 )
 
 @Serializable
-data class ChannelPositionSwapRequest(
+public data class ChannelPositionSwapRequest(
     val id: Snowflake,
     val position: OptionalInt? = OptionalInt.Missing,
     @KordExperimental
@@ -72,7 +68,7 @@ data class ChannelPositionSwapRequest(
 )
 
 @Serializable(with = GuildChannelPositionModifyRequest.Serializer::class)
-data class GuildChannelPositionModifyRequest(
+public data class GuildChannelPositionModifyRequest(
     val swaps: List<ChannelPositionSwapRequest>
 ) {
     internal object Serializer : KSerializer<GuildChannelPositionModifyRequest> {
@@ -94,7 +90,7 @@ data class GuildChannelPositionModifyRequest(
 }
 
 @Serializable
-data class GuildMemberAddRequest(
+public data class GuildMemberAddRequest(
     @SerialName("access_token")
     val token: String,
     val nick: Optional<String> = Optional.Missing(),
@@ -106,7 +102,7 @@ data class GuildMemberAddRequest(
 )
 
 @Serializable
-data class GuildMemberModifyRequest(
+public data class GuildMemberModifyRequest(
     val nick: Optional<String?> = Optional.Missing(),
     val roles: Optional<Set<Snowflake>?> = Optional.Missing(),
     val mute: OptionalBoolean? = OptionalBoolean.Missing,
@@ -119,14 +115,14 @@ data class GuildMemberModifyRequest(
 
 
 @Serializable
-data class GuildBanCreateRequest(
+public data class GuildBanCreateRequest(
     val reason: Optional<String> = Optional.Missing(),
     @SerialName("delete_message_days")
     val deleteMessagesDays: OptionalInt = OptionalInt.Missing,
 )
 
 @Serializable
-data class GuildRoleCreateRequest(
+public data class GuildRoleCreateRequest(
     val name: Optional<String> = Optional.Missing(),
     val permissions: Optional<Permissions> = Optional.Missing(),
     val color: Optional<Color> = Optional.Missing(),
@@ -141,7 +137,7 @@ data class GuildRoleCreateRequest(
 
 
 @Serializable(with = GuildRolePositionModifyRequest.Serializer::class)
-data class GuildRolePositionModifyRequest(val swaps: List<Pair<Snowflake, Int>>) {
+public data class GuildRolePositionModifyRequest(val swaps: List<Pair<Snowflake, Int>>) {
 
     internal object Serializer : KSerializer<GuildRolePositionModifyRequest> {
 
@@ -166,7 +162,7 @@ data class GuildRolePositionModifyRequest(val swaps: List<Pair<Snowflake, Int>>)
 }
 
 @Serializable
-data class GuildRoleModifyRequest(
+public data class GuildRoleModifyRequest(
     val name: Optional<String?> = Optional.Missing(),
     val permissions: Optional<Permissions?> = Optional.Missing(),
     val color: Optional<Color?> = Optional.Missing(),
@@ -179,10 +175,10 @@ data class GuildRoleModifyRequest(
 )
 
 @Serializable
-data class GuildIntegrationCreateRequest(val type: Int, val id: String)
+public data class GuildIntegrationCreateRequest(val type: Int, val id: String)
 
 @Serializable
-data class GuildIntegrationModifyRequest(
+public data class GuildIntegrationModifyRequest(
     @SerialName("expire_behavior")
     val expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing(),
     @SerialName("expire_grace_period")
@@ -194,26 +190,26 @@ data class GuildIntegrationModifyRequest(
 @Serializable
 @DeprecatedSinceKord("0.7.0")
 @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("GuildWidgetModifyRequest"), DeprecationLevel.ERROR)
-data class GuildEmbedModifyRequest(
+public data class GuildEmbedModifyRequest(
     val enabled: Boolean,
     @SerialName("channel_id")
     val channelId: Snowflake,
 )
 
 @Serializable
-data class GuildWidgetModifyRequest(
+public data class GuildWidgetModifyRequest(
     val enabled: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("channel_id")
     val channelId: OptionalSnowflake? = OptionalSnowflake.Missing,
 )
 
 @Serializable
-data class CurrentUserNicknameModifyRequest(
+public data class CurrentUserNicknameModifyRequest(
     val nick: Optional<String?> = Optional.Missing()
 )
 
 @Serializable
-data class GuildModifyRequest(
+public data class GuildModifyRequest(
     val name: Optional<String> = Optional.Missing(),
     val region: Optional<String?> = Optional.Missing(),
     @SerialName("verification_level")
@@ -242,33 +238,17 @@ data class GuildModifyRequest(
 )
 
 @Serializable
-data class GuildWelcomeScreenModifyRequest(
+public data class GuildWelcomeScreenModifyRequest(
     val enabled: OptionalBoolean = OptionalBoolean.Missing,
     val welcomeScreenChannels: Optional<List<DiscordWelcomeScreenChannel>> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing()
 )
 
-@Serializable
-data class GuildScheduledEventCreateRequest(
-    val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val entityMetadata: Optional<GuildScheduledEventEntityMetadata> = Optional.Missing(),
-    val name: String,
-    @SerialName("privacy_level")
-    val privacyLevel: StageInstancePrivacyLevel,
-    @SerialName("scheduled_start_time")
-    val scheduledStartTime: Instant,
-    @SerialName("scheduled_end_time")
-    val scheduledEndTime: Optional<Instant>,
-    val description: Optional<String> = Optional.Missing(),
-    @SerialName("entity_type")
-    val entityType: ScheduledEntityType
-)
 
 @Serializable
-data class GuildScheduledEventUsersResponse(
+public data class GuildScheduledEventUsersResponse(
     @SerialName("guild_scheduled_event_id")
     val guildScheduledEventId: Snowflake,
     val user: DiscordUser,
-    val member: Optional<DiscordGuildMember> = Optional.Missing()
-    )
-
+    val member: Optional<DiscordGuildMember> = Optional.Missing(),
+)

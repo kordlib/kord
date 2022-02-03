@@ -4,7 +4,6 @@ import dev.kord.common.entity.DiscordGuild
 import dev.kord.rest.request.JsonRequest
 import dev.kord.rest.route.Route
 import io.ktor.util.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withTimeout
@@ -14,10 +13,7 @@ import kotlinx.datetime.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
-@ExperimentalCoroutinesApi
 abstract class AbstractRequestRateLimiterTest {
 
     abstract fun newRequestRateLimiter(clock: Clock): RequestRateLimiter

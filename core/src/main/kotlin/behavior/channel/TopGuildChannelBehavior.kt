@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.withIndex
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -90,7 +89,7 @@ public interface TopGuildChannelBehavior : GuildChannelBehavior {
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    public suspend fun addOverwrite(overwrite: PermissionOverwrite, reason: String?) {
+    public suspend fun addOverwrite(overwrite: PermissionOverwrite, reason: String? = null) {
         kord.rest.channel.editChannelPermissions(
             channelId = id,
             overwriteId = overwrite.target,
@@ -147,7 +146,6 @@ internal fun TopGuildChannelBehavior(
  *
  *  @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun TopGuildChannelBehavior.editRolePermission(
     roleId: Snowflake,
     builder: ChannelPermissionModifyBuilder.() -> Unit
@@ -163,7 +161,6 @@ public suspend inline fun TopGuildChannelBehavior.editRolePermission(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-@OptIn(ExperimentalContracts::class)
 public suspend inline fun TopGuildChannelBehavior.editMemberPermission(
     memberId: Snowflake,
     builder: ChannelPermissionModifyBuilder.() -> Unit

@@ -25,7 +25,7 @@ public class PartialGuildData(
     @SerialName("verification_level")
     public val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
     public val stageInstances: Optional<List<StageInstanceData>> = Optional.Missing(),
-    public val stickers: Optional<List<MessageStickerData>> = Optional.Missing(),
+    public val stickers: Optional<List<StickerData>> = Optional.Missing(),
     public val guildScheduledEvents: Optional<List<GuildScheduledEventData>> = Optional.Missing(),
     public val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing
 
@@ -47,7 +47,7 @@ public class PartialGuildData(
                 nsfwLevel,
                 verificationLevel,
                 stageInstances = stageInstances.mapList { StageInstanceData.from(it) },
-                stickers = stickers.mapList { MessageStickerData.from(it) },
+                stickers = stickers.mapList { StickerData.from(it) },
                 guildScheduledEvents = guildScheduledEvents.mapList { GuildScheduledEventData.from(it) },
                 premiumProgressBarEnabled = premiumProgressBarEnabled
             )

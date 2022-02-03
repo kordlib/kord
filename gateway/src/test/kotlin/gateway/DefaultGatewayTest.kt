@@ -11,7 +11,6 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.websocket.*
-import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flowOn
@@ -21,17 +20,11 @@ import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.ExperimentalTime
 
-@FlowPreview
-@KtorExperimentalAPI
-@ObsoleteCoroutinesApi
-@ExperimentalCoroutinesApi
 class DefaultGatewayTest {
     @OptIn(DelicateCoroutinesApi::class)
     @Test
     @Disabled
-    @ExperimentalTime
     fun `default gateway functions correctly`() {
         val token = System.getenv("KORD_TEST_TOKEN")
 

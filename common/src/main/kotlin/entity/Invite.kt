@@ -8,9 +8,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = TargetUserType.Serializer::class)
-sealed class TargetUserType(val value: Int) {
-    class Unknown(value: Int) : TargetUserType(value)
-    object Stream : TargetUserType(1)
+public sealed class TargetUserType(public val value: Int) {
+    public class Unknown(value: Int) : TargetUserType(value)
+    public object Stream : TargetUserType(1)
 
     internal object Serializer : KSerializer<TargetUserType> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Kord.TargetUserType", PrimitiveKind.INT)

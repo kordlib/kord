@@ -14,7 +14,7 @@ import kotlinx.serialization.Serializable
     ),
     DeprecationLevel.ERROR
 )
-data class EmbedResponse(
+public data class EmbedResponse(
     val enabled: Boolean,
     @SerialName("channel_id")
     val channelId: String

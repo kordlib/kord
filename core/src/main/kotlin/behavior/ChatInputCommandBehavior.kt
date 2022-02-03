@@ -5,7 +5,6 @@ import dev.kord.core.entity.application.ChatInputCommandCommand
 import dev.kord.core.entity.application.GlobalChatInputCommand
 import dev.kord.core.entity.application.GuildChatInputCommand
 import dev.kord.rest.builder.interaction.ChatInputModifyBuilder
-import kotlin.contracts.ExperimentalContracts
 
 
 public interface ChatInputCommandBehavior : ApplicationCommandBehavior {
@@ -17,7 +16,6 @@ public interface ChatInputCommandBehavior : ApplicationCommandBehavior {
 
 public interface GuildChatInputCommandBehavior : ChatInputCommandBehavior, GuildApplicationCommandBehavior {
 
-     @OptIn(ExperimentalContracts::class)
      override suspend fun edit(builder: suspend ChatInputModifyBuilder.() -> Unit): GuildChatInputCommand {
           val request = ChatInputModifyBuilder().apply { builder() }.toRequest()
           val response = service.modifyGuildApplicationCommand(applicationId, guildId, id, request)
@@ -30,7 +28,6 @@ public interface GuildChatInputCommandBehavior : ChatInputCommandBehavior, Guild
 
 public interface GlobalChatInputCommandBehavior : ChatInputCommandBehavior,GlobalApplicationCommandBehavior {
 
-     @OptIn(ExperimentalContracts::class)
      override suspend fun edit(builder: suspend ChatInputModifyBuilder.() -> Unit): GlobalChatInputCommand {
           val request = ChatInputModifyBuilder().apply { builder() }.toRequest()
           val response = service.modifyGlobalApplicationCommand(applicationId,id, request)

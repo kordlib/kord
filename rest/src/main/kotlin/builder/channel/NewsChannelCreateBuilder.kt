@@ -13,21 +13,22 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 
 @KordDsl
-class NewsChannelCreateBuilder(var name: String) : PermissionOverwritesCreateBuilder,
+public class NewsChannelCreateBuilder(public var name: String) :
+    PermissionOverwritesCreateBuilder,
     AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
 
     private var _topic: Optional<String> = Optional.Missing()
-    var topic: String? by ::_topic.delegate()
+    public var topic: String? by ::_topic.delegate()
 
     private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
-    var nsfw: Boolean? by ::_nsfw.delegate()
+    public var nsfw: Boolean? by ::_nsfw.delegate()
 
     private var _parentId: OptionalSnowflake = OptionalSnowflake.Missing
-    var parentId: Snowflake? by ::_parentId.delegate()
+    public var parentId: Snowflake? by ::_parentId.delegate()
 
     private var _position: OptionalInt = OptionalInt.Missing
-    var position: Int? by ::_position.delegate()
+    public var position: Int? by ::_position.delegate()
 
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 

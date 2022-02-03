@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DiscordTemplate(
+public data class DiscordTemplate(
     val code: String,
     val name: String,
     val description: String?,
