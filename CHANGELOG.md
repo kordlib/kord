@@ -1,3 +1,47 @@
+# 0.8.0-M9
+
+## Fixes
+
+* Fix .jpg not being detected (#458)
+* Fix gateway not using provided threshold (#465) 
+* Fix bug causing role PermissionOverwrites being added for members (#479)
+* Fix Team.ownerUserId returning the wrong id (#509)
+* Fix exception when choices are never set (#505 #512)
+* Voice: fix race condition where heartbeat is sent before authentication (#511)
+
+## Changes
+
+* Allow providing  limit in AuditLogGetRequestBuilder (#477)
+* Optional timestamp style (#516)
+* No longer send Authorization header on endpoints without authorization (#450 #486)
+* Suppliers and pagination logic refactor (#484)
+* ComponentBuilders refactor (#494)
+* Enable explicit API (#474)
+
+## Additions
+
+* Add mutes support (#448 #508)
+* Add channel types in slash commands (#464)
+* Add ActionInteractionCreateEvent (#456)
+* Add autocomplete support (#456)
+* Add disabled property to SelectMenuComponent(#492)
+* Add limit to AuditLogGetRequestBuilder (#477)
+* Add missing Webhook and Interaction functionality (#507)
+* Add new JsonErrorCodes and fix existing ones (#482 #504 #501)
+* Add new fields and parameters for scheduled events and invites (#518)
+* Add new fields for attachments. (#506)
+
+## Dependencies
+* Kotlin: 1.5.10 -> 1.6.10
+* KotlinxSerialization: 1.2.1 -> 1.3.2
+* Coroutines: 1.5.0 -> 1.6.0
+* Ktor: 1.6.0 -> 1.6.7
+* AtomicFu: 0.16.1 -> 0.17.0
+* Datetime: 0.2.1 -> 0.3.1
+* KotlinLogging: 2.0.6 -> 2.1.21
+* binaryValidator: 0.5.0 -> 0.6.0
+
+
 # 0.8.0-M8
 
 

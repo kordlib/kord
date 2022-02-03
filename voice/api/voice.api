@@ -423,8 +423,15 @@ public abstract class dev/kord/voice/gateway/Close : dev/kord/voice/gateway/Voic
 
 public final class dev/kord/voice/gateway/Close$DiscordClose : dev/kord/voice/gateway/Close {
 	public fun <init> (Ldev/kord/voice/gateway/VoiceGatewayCloseCode;Z)V
+	public final fun component1 ()Ldev/kord/voice/gateway/VoiceGatewayCloseCode;
+	public final fun component2 ()Z
+	public final fun copy (Ldev/kord/voice/gateway/VoiceGatewayCloseCode;Z)Ldev/kord/voice/gateway/Close$DiscordClose;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/Close$DiscordClose;Ldev/kord/voice/gateway/VoiceGatewayCloseCode;ZILjava/lang/Object;)Ldev/kord/voice/gateway/Close$DiscordClose;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCloseCode ()Ldev/kord/voice/gateway/VoiceGatewayCloseCode;
 	public final fun getRecoverable ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/voice/gateway/Close$Reconnecting : dev/kord/voice/gateway/Close {
@@ -444,6 +451,13 @@ public final class dev/kord/voice/gateway/Close$UserClose : dev/kord/voice/gatew
 }
 
 public abstract class dev/kord/voice/gateway/Command {
+}
+
+public final class dev/kord/voice/gateway/Command$SerializationStrategy : kotlinx/serialization/SerializationStrategy {
+	public static final field INSTANCE Ldev/kord/voice/gateway/Command$SerializationStrategy;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Command;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 }
 
 public final class dev/kord/voice/gateway/DefaultVoiceGateway : dev/kord/voice/gateway/VoiceGateway {
@@ -880,6 +894,13 @@ public final class dev/kord/voice/gateway/Speaking$Companion {
 }
 
 public abstract class dev/kord/voice/gateway/VoiceEvent {
+}
+
+public final class dev/kord/voice/gateway/VoiceEvent$DeserializationStrategy : kotlinx/serialization/DeserializationStrategy {
+	public static final field INSTANCE Ldev/kord/voice/gateway/VoiceEvent$DeserializationStrategy;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/VoiceEvent;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 }
 
 public abstract interface class dev/kord/voice/gateway/VoiceGateway {
