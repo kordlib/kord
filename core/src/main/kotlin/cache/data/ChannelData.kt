@@ -80,7 +80,7 @@ public data class ThreadMetadataData(
     val autoArchiveDuration: ArchiveDuration,
     val locked: OptionalBoolean = OptionalBoolean.Missing,
     val invitable: OptionalBoolean = OptionalBoolean.Missing,
-    val createTimestamp: Optional<Instant> = Optional.Missing(),
+    val createTimestamp: Optional<Instant?> = Optional.Missing(),
 ) {
 
     public companion object {
