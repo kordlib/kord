@@ -15,6 +15,7 @@ dependencies {
     compileOnly(projects.kspAnnotations)
     ksp(projects.kspProcessors)
 
+    compileOnly(libs.markdown)
     testImplementation(libs.bundles.test.implementation)
     testRuntimeOnly(libs.bundles.test.runtime)
 }

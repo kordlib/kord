@@ -20,6 +20,7 @@ dependencies {
     "voiceApi"(projects.core)
     "voiceApi"(projects.voice)
 
+    api(libs.markdown)
     api(libs.kord.cache.api)
     api(libs.kord.cache.map)
 
