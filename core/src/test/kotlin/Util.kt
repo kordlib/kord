@@ -3,6 +3,9 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.test.TestCoroutineScope
+
+private val mockCoroutineScope = TestCoroutineScope()
 
 fun mockKord(): Kord =
         mockk {
@@ -16,4 +19,5 @@ fun mockKord(): Kord =
                 every { defaultStrategy } returns strategy
             }
             every { defaultSupplier } returns supplier
+            every { coroutineContext } returns mockCoroutineScope.coroutineContext
         }

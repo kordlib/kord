@@ -13,10 +13,9 @@ import dev.kord.core.Markdown
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
 import dev.kord.core.behavior.channel.asChannelOf
 import dev.kord.core.behavior.channel.asChannelOfOrNull
-import dev.kord.core.behavior.interaction.InteractionResponseBehavior
+import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageInteractionData
 import dev.kord.core.entity.application.ApplicationCommand
@@ -38,7 +37,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import java.util.*
 
 /**
