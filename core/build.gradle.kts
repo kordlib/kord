@@ -7,10 +7,10 @@ plugins {
 }
 
 dependencies {
-    api(common)
-    api(rest)
-    api(gateway)
-    api(voice)
+    api(projects.common)
+    api(projects.rest)
+    api(projects.gateway)
+    api(projects.voice)
 
     implementation(libs.bundles.common)
 

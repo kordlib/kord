@@ -1,12 +1,6 @@
 import org.gradle.kotlin.dsl.DependencyHandlerScope
 import org.gradle.kotlin.dsl.project
 
-val DependencyHandlerScope.common get() = project(":common")
-val DependencyHandlerScope.rest get() = project(":rest")
-val DependencyHandlerScope.gateway get() = project(":gateway")
-val DependencyHandlerScope.core get() = project(":core")
-val DependencyHandlerScope.voice get() = project(":voice")
-
 /**
  * whether the process has been invoked by JitPack
  */

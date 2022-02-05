@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    api(common)
+    api(projects.common)
     implementation(libs.bundles.common)
 
     api(libs.ktor.client.json)
