@@ -119,6 +119,7 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
                 8 -> Role
                 9 -> Mentionable
                 10 -> Number
+                11 -> Attachment
                 else -> Unknown(type)
             }
         }
@@ -371,6 +372,7 @@ public sealed class Option {
                 ApplicationCommandOptionType.Mentionable,
                 ApplicationCommandOptionType.Role,
                 ApplicationCommandOptionType.String,
+                ApplicationCommandOptionType.Attachment,
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
                     json, jsonValue!!, name, type!!, focused
                 )
