@@ -47,7 +47,7 @@ public class GuildScheduledEvent(
      * This is only available for events created after 2021-10-25.
      */
     public val creatorId: Snowflake?
-        get() = data.creatorId
+        get() = data.creatorId.value
 
     /**
      * The name of this event.
