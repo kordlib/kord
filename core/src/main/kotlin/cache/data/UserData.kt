@@ -8,8 +8,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.gateway.DiscordInviteUser
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 private val WebhookData.nullableUserId get() = userId.value
@@ -39,7 +37,9 @@ public data class UserData(
             UserData(id, username, discriminator, avatar, bot, publicFlags, banner, accentColor)
         }
 
-        public fun from(entity: DiscordInviteUser): UserData = with(entity) {
+        @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
+        @Deprecated("'DiscordInviteUser' is deprecated. Use 'DiscordUser' instead.")
+        public fun from(entity: dev.kord.gateway.DiscordInviteUser): UserData = with(entity) {
             UserData(id, username, discriminator, avatar, bot, publicFlags)
         }
 
