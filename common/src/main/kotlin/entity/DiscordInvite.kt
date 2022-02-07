@@ -3,8 +3,14 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import kotlinx.datetime.Instant
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 public data class DiscordInvite(
@@ -50,3 +56,24 @@ public data class DiscordInviteMetadata(
     @SerialName("created_at")
     val createdAt: String,
 )
+
+@Serializable(with = InviteTargetType.Serializer::class)
+public sealed class InviteTargetType(public val value: Int) {
+    public class Unknown(value: Int) : InviteTargetType(value)
+    public object Stream : InviteTargetType(1)
+    public object EmbeddedApplication : InviteTargetType(2)
+
+    internal object Serializer : KSerializer<InviteTargetType> {
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("InviteTargetType", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): InviteTargetType = when (val value = decoder.decodeInt()) {
+            1 -> Stream
+            2 -> EmbeddedApplication
+            else -> Unknown(value)
+        }
+
+        override fun serialize(encoder: Encoder, value: InviteTargetType) {
+            encoder.encodeInt(value.value)
+        }
+    }
+}
