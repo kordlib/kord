@@ -39,3 +39,25 @@ public data class DiscordApplication(
     val coverImage: Optional<String> = Optional.Missing(),
     // TODO flags field and type
 )
+
+/**
+ * A representation of the partial
+ * [Application Structure](https://discord.com/developers/docs/resources/application#application-object-application-structure)
+ * sent in [invite create events](https://discord.com/developers/docs/topics/gateway#invite-create).
+ */
+@Serializable
+public data class DiscordPartialApplication(
+    val id: Snowflake,
+    val name: String,
+    val icon: String?,
+    val description: String,
+    @SerialName("terms_of_service_url")
+    val termsOfServiceUrl: Optional<String> = Optional.Missing(),
+    @SerialName("privacy_policy_url")
+    val privacyPolicyUrl: Optional<String> = Optional.Missing(),
+    val summary: String,
+    @SerialName("verify_key")
+    val verifyKey: String,
+    @SerialName("cover_image")
+    val coverImage: Optional<String> = Optional.Missing(),
+)

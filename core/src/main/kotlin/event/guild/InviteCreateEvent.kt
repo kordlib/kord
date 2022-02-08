@@ -116,10 +116,10 @@ public class InviteCreateEvent(
         }
 
     /**
-     * The embedded [application][ApplicationInfo] to open for this voice channel embedded application invite.
+     * The embedded [application][PartialApplication] to open for this voice channel embedded application invite.
      */
-    public val targetApplication: ApplicationInfo?
-        get() = data.targetApplication.value?.let { ApplicationInfo(it, kord) }
+    public val targetApplication: PartialApplication?
+        get() = data.targetApplication.value?.let { PartialApplication(it, kord) }
 
     /**
      * Whether the invite is temporary (invited users will be kicked on disconnect unless they're assigned a role).

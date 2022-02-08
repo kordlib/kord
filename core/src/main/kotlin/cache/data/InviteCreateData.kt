@@ -21,7 +21,7 @@ public data class InviteCreateData(
     val maxUses: Int,
     val targetType: Optional<InviteTargetType> = Optional.Missing(),
     val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val targetApplication: Optional<ApplicationInfoData> = Optional.Missing(),
+    val targetApplication: Optional<PartialApplicationData> = Optional.Missing(),
     @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     val targetUserType: Optional<TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
@@ -40,7 +40,7 @@ public data class InviteCreateData(
                 maxUses,
                 targetType,
                 targetUser.mapSnowflake { it.id },
-                targetApplication.map { ApplicationInfoData.from(it) },
+                targetApplication.map { PartialApplicationData.from(it) },
                 @Suppress("DEPRECATION")
                 targetUserType,
                 temporary,
