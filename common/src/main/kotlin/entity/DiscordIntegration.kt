@@ -50,7 +50,7 @@ public data class IntegrationApplication(
     val icon: String?,
     val description: String,
     val summary: String,
-    val bot: Optional<DiscordUser>
+    val bot: Optional<DiscordUser> = Optional.Missing(),
 )
 
 @Serializable(with = IntegrationExpireBehavior.Serializer::class)
