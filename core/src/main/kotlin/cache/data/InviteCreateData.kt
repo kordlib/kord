@@ -5,6 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.TargetUserType
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapSnowflake
 import dev.kord.gateway.DiscordCreatedInvite
 import kotlinx.serialization.Serializable
@@ -18,12 +19,13 @@ public data class InviteCreateData(
     val inviterId: OptionalSnowflake = OptionalSnowflake.Missing,
     val maxAge: Int,
     val maxUses: Int,
+    val targetType: Optional<InviteTargetType> = Optional.Missing(),
     val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val targetApplication: Optional<ApplicationInfoData> = Optional.Missing(),
     @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     val targetUserType: Optional<TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
     val uses: Int,
-    val targetType: Optional<InviteTargetType> = Optional.Missing(),
 ) {
 
     public companion object {
@@ -36,12 +38,13 @@ public data class InviteCreateData(
                 inviter.mapSnowflake { it.id },
                 maxAge,
                 maxUses,
+                targetType,
                 targetUser.mapSnowflake { it.id },
+                targetApplication.map { ApplicationInfoData.from(it) },
                 @Suppress("DEPRECATION")
                 targetUserType,
                 temporary,
                 uses,
-                targetType,
             )
         }
     }

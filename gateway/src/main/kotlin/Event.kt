@@ -629,15 +629,17 @@ public data class DiscordCreatedInvite(
     val maxAge: Int,
     @SerialName("max_uses")
     val maxUses: Int,
+    @SerialName("target_type")
+    val targetType: Optional<InviteTargetType> = Optional.Missing(),
     @SerialName("target_user")
     val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("target_application")
+    val targetApplication: Optional<DiscordApplication> = Optional.Missing(),
     @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     @SerialName("target_user_type")
     val targetUserType: Optional<TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
     val uses: Int,
-    @SerialName("target_type")
-    val targetType: Optional<InviteTargetType> = Optional.Missing(),
 )
 
 @Deprecated(
