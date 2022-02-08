@@ -22,8 +22,6 @@ include("core")
 include("voice")
 include("bom")
 
-enableFeaturePreview("VERSION_CATALOGS")
-
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
