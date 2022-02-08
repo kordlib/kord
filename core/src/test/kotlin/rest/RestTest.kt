@@ -446,16 +446,34 @@ class RestServiceTest {
 
         assertEquals("test", command.name)
         assertEquals("automated test", command.description)
-        assertEquals(1, command.subCommands.size)
+
         assertEquals(1, command.groups.size)
+        val group = command.groups.values.first()
+        assertEquals("test-group", group.name)
+        assertEquals("automated test", group.description)
 
-        assertEquals(1, command.subCommands.values.first().parameters.size)
-        val parameter = command.subCommands.values.first().parameters.values.first()
-        assertEquals(1, parameter.choices.size)
-        assertEquals("1", parameter.choices.values.first())
+        assertEquals(1, group.subcommands.size)
+        val commandInGroup = group.subcommands.values.first()
+        assertEquals("test-sub-command", commandInGroup.name)
+        assertEquals("automated test", commandInGroup.description)
 
-        assertEquals("test-group", command.groups.values.first().name)
-        assertEquals("test-sub-command", command.subCommands.values.first().name)
+        assertEquals(1, commandInGroup.parameters.size)
+        val commandInGroupParameter = commandInGroup.parameters.values.first()
+        assertEquals("integer", commandInGroupParameter.name)
+        assertEquals("test choice", commandInGroupParameter.description)
+        assertEquals(2, commandInGroupParameter.choices.size)
+        assertEquals("1", commandInGroupParameter.choices["one"])
+        assertEquals("2", commandInGroupParameter.choices["two"])
+
+        assertEquals(1, command.subCommands.size)
+        val subCommand = command.subCommands.values.first()
+        assertEquals("test-sub-command", subCommand.name)
+        assertEquals("automated test", subCommand.description)
+
+        assertEquals(1, subCommand.parameters.size)
+        val subCommandParameter = subCommand.parameters.values.first()
+        assertEquals("integer", subCommandParameter.name)
+        assertEquals("test choice", subCommandParameter.description)
 
         val updated = command.edit {
             description = "other description"
