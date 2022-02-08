@@ -23,7 +23,7 @@ public data class InviteCreateData(
     val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
     val targetApplication: Optional<PartialApplicationData> = Optional.Missing(),
     @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
-    val targetUserType: Optional<TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
     val uses: Int,
 ) {

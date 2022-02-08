@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.entity.InviteTargetType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.TargetUserType
 import dev.kord.common.entity.optional.value
@@ -62,6 +63,11 @@ public data class Invite(
     public val inviter: UserBehavior? get() = inviterId?.let { UserBehavior(it, kord) }
 
     /**
+     * The [type of target][InviteTargetType] for this voice channel invite.
+     */
+    public val targetType: InviteTargetType? get() = data.targetType.value
+
+    /**
      * The user behavior of the target user this invite is associated to, if present.
      */
     public val targetUser: UserBehavior? get() = targetUserId?.let { UserBehavior(it, kord) }
@@ -69,6 +75,8 @@ public data class Invite(
     /**
      * The type of user target for this invite, if present.
      */
+    @Suppress("DEPRECATION")
+    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     public val targetUserType: TargetUserType? get() = data.targetUserType.value
 
     /**

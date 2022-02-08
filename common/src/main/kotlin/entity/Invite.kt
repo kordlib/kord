@@ -7,6 +7,11 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+@Suppress("DEPRECATION")
+@Deprecated(
+    "This is no longer documented. Use 'InviteTargetType' instead.",
+    ReplaceWith("InviteTargetType", "dev.kord.common.entity.InviteTargetType"),
+)
 @Serializable(with = TargetUserType.Serializer::class)
 public sealed class TargetUserType(public val value: Int) {
     public class Unknown(value: Int) : TargetUserType(value)

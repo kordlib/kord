@@ -93,7 +93,7 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
             unique = _unique,
             uses = _uses,
             targetUser = _targetUser,
-            targetUserType = _targetUser.map { TargetUserType.Stream },
+            targetUserType = _targetUser.map { @Suppress("DEPRECATION") TargetUserType.Stream },
             targetType = target,
             targetUserId = _targetUserId,
             targetApplicationId = _targetApplicationId,

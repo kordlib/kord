@@ -22,7 +22,7 @@ public data class InviteCreateRequest(
     val targetUser: OptionalSnowflake = OptionalSnowflake.Missing,
     @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     @SerialName("target_user_type")
-    val targetUserType: Optional<TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
     @SerialName("target_type")
     val targetType: Optional<InviteTargetType> = Optional.Missing(),
     @SerialName("target_user_id")

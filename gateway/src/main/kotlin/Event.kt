@@ -637,7 +637,7 @@ public data class DiscordCreatedInvite(
     val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
     @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     @SerialName("target_user_type")
-    val targetUserType: Optional<TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
     val uses: Int,
 )

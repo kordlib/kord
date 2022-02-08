@@ -18,10 +18,13 @@ public data class DiscordInvite(
     val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
     val channel: DiscordChannel?,
     val inviter: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("target_type")
+    val targetType: Optional<InviteTargetType> = Optional.Missing(),
     @SerialName("target_user")
     val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     @SerialName("target_user_type")
-    val targetUserType: Optional<TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
     @SerialName("approximate_presence_count")
     val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_member_count")
