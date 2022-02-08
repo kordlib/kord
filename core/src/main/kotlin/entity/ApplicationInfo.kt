@@ -1,7 +1,6 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
@@ -13,7 +12,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
 
 /**
- * The details of a [Discord OAuth2](https://discord.com/developers/docs/topics/oauth2) application.
+ * The details of an
+ * [Application](https://discord.com/developers/docs/resources/application#application-object-application-structure).
  */
 public class ApplicationInfo(
     public val data: ApplicationInfoData,
@@ -26,6 +26,8 @@ public class ApplicationInfo(
 
     public val name: String get() = data.name
 
+    public val iconHash: String? get() = data.icon
+
     public val description: String get() = data.description
 
     public val isPublic: Boolean get() = data.botPublic
@@ -35,11 +37,15 @@ public class ApplicationInfo(
     /**
      * The rpc origins of this application, empty if disabled.
      */
-    public val rpcOrigins: List<String> get() = data.rpcOrigins.coerceToMissing().orEmpty()
+    public val rpcOrigins: List<String> get() = data.rpcOrigins.orEmpty()
 
-    public val ownerId: Snowflake get() = data.ownerId
+    public val termsOfServiceUrl: String? get() = data.termsOfServiceUrl.value
 
-    public val owner: UserBehavior get() = UserBehavior(ownerId, kord)
+    public val privacyPolicyUrl: String? get() = data.privacyPolicyUrl.value
+
+    public val ownerId: Snowflake? get() = data.ownerId.value
+
+    public val owner: UserBehavior? get() = ownerId?.let { UserBehavior(it, kord) }
 
     public val summary: String get() = data.summary
 
@@ -59,13 +65,18 @@ public class ApplicationInfo(
 
     public val coverImageHash: String? get() = data.coverImage.value
 
-    public suspend fun getOwner(): User = supplier.getUser(ownerId)
+    // TODO flags field
 
-    public suspend fun getOwnerOrNull(): User? = supplier.getUserOrNull(ownerId)
+    @Deprecated(
+        "'ownerId' might not be present, use 'getOwnerOrNull' instead.",
+        ReplaceWith("this.getOwnerOrNull()!!"),
+        DeprecationLevel.ERROR,
+    )
+    public suspend fun getOwner(): User = supplier.getUser(ownerId!!)
 
-    public suspend fun getGuildOrNull(): Guild? {
-        return supplier.getGuildOrNull(guildId ?: return null)
-    }
+    public suspend fun getOwnerOrNull(): User? = ownerId?.let { supplier.getUserOrNull(it) }
+
+    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     /**
      * Returns a new [ApplicationInfo] with the given [strategy].

@@ -1,31 +1,37 @@
 package dev.kord.core.cache.data
 
+import dev.kord.common.entity.DiscordApplication
 import dev.kord.common.entity.DiscordTeam
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.rest.json.response.ApplicationInfoResponse
+import dev.kord.common.entity.optional.mapSnowflake
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class ApplicationInfoData(
     val id: Snowflake,
     val name: String,
-    val icon: String? = null,
+    val icon: String?,
     val description: String,
-    val rpcOrigins: Optional<List<String>?> = Optional.Missing(),
+    val rpcOrigins: Optional<List<String>> = Optional.Missing(),
     val botPublic: Boolean,
     val botRequireCodeGrant: Boolean,
-    val ownerId: Snowflake,
+    val termsOfServiceUrl: Optional<String> = Optional.Missing(),
+    val privacyPolicyUrl: Optional<String> = Optional.Missing(),
+    val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
     val summary: String,
     val verifyKey: String,
-    val team: DiscordTeam? = null,
+    val team: DiscordTeam?,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
     val slug: Optional<String> = Optional.Missing(),
     val coverImage: Optional<String> = Optional.Missing(),
+    // TODO flags field
 ) {
     public companion object {
 
-        public fun from(entity: ApplicationInfoResponse): ApplicationInfoData = with(entity) {
+        public fun from(entity: DiscordApplication): ApplicationInfoData = with(entity) {
             ApplicationInfoData(
                 id,
                 name,
@@ -34,7 +40,9 @@ public data class ApplicationInfoData(
                 rpcOrigins,
                 botPublic,
                 botRequireCodeGrant,
-                owner.id,
+                termsOfServiceUrl,
+                privacyPolicyUrl,
+                owner.mapSnowflake { it.id },
                 summary,
                 verifyKey,
                 team,
@@ -44,6 +52,5 @@ public data class ApplicationInfoData(
                 coverImage,
             )
         }
-
     }
 }

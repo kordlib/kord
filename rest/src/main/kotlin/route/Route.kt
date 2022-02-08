@@ -665,7 +665,7 @@ public sealed class Route<T>(
      */
 
     public object CurrentApplicationInfo :
-        Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())
+        Route<DiscordApplication>(HttpMethod.Get, "/oauth2/applications/@me", DiscordApplication.serializer())
 
 
     /*
