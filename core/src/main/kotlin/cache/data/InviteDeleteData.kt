@@ -1,13 +1,14 @@
 package dev.kord.core.cache.data
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.gateway.DiscordDeletedInvite
 import kotlinx.serialization.Serializable
 
 @Serializable
 public data class InviteDeleteData(
     val channelId: Snowflake,
-    val guildId: Snowflake,
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val code: String
 ) {
 

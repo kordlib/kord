@@ -69,7 +69,7 @@ public class ApplicationInfo(
 
     @Deprecated(
         "'ownerId' might not be present, use 'getOwnerOrNull' instead.",
-        ReplaceWith("this.getOwnerOrNull()!!"),
+        ReplaceWith("this.getOwnerOrNull()"),
         DeprecationLevel.ERROR,
     )
     public suspend fun getOwner(): User = supplier.getUser(ownerId!!)

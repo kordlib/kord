@@ -611,7 +611,7 @@ public data class DiscordDeletedInvite(
     @SerialName("channel_id")
     val channelId: Snowflake,
     @SerialName("guild_id")
-    val guildId: Snowflake,
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val code: String,
 )
 
