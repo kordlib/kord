@@ -612,7 +612,6 @@ public fun GuildBehavior(
 
     override fun equals(other: Any?): Boolean = when (other) {
         is GuildBehavior -> other.id == id
-        is PartialGuild -> other.id == id
         else -> false
     }
 

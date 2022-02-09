@@ -21,7 +21,7 @@ public class PartialGuild(
     public val data: PartialGuildData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : KordEntity, Strategizable {
+) : GuildBehavior {
 
     /**
      * The name of this guild.
@@ -158,7 +158,6 @@ public class PartialGuild(
 
     override fun equals(other: Any?): Boolean = when (other) {
         is GuildBehavior -> other.id == id
-        is PartialGuild -> other.id == id
         else -> false
     }
 

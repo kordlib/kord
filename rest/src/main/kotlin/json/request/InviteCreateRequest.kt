@@ -1,7 +1,6 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.entity.InviteTargetType
-import dev.kord.common.entity.TargetUserType
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -22,7 +21,7 @@ public data class InviteCreateRequest(
     val targetUser: OptionalSnowflake = OptionalSnowflake.Missing,
     @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     @SerialName("target_user_type")
-    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION") dev.kord.common.entity.TargetUserType> = Optional.Missing(),
     @SerialName("target_type")
     val targetType: Optional<InviteTargetType> = Optional.Missing(),
     @SerialName("target_user_id")

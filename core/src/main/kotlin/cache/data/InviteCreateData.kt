@@ -2,7 +2,6 @@ package dev.kord.core.cache.data
 
 import dev.kord.common.entity.InviteTargetType
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.TargetUserType
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.map
@@ -23,7 +22,7 @@ public data class InviteCreateData(
     val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
     val targetApplication: Optional<PartialApplicationData> = Optional.Missing(),
     @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
-    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION") dev.kord.common.entity.TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
     val uses: Int,
 ) {
