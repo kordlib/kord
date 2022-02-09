@@ -2,14 +2,13 @@ package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.optional.orEmpty
-import dev.kord.core.cache.data.ActionRowComponentData
 import dev.kord.core.cache.data.ComponentData
 
 /**
  * A non-interactive container component for other types of component.
  */
 
-public class ActionRowComponent(override val data: ActionRowComponentData) : Component {
+public class ActionRowComponent(override val data: ComponentData) : Component {
 
     override val type: ComponentType
         get() = ComponentType.ActionRow

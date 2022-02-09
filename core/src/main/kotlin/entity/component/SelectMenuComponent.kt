@@ -4,7 +4,6 @@ import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ComponentData
-import dev.kord.core.cache.data.SelectMenuComponentData
 import dev.kord.core.cache.data.SelectOptionData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.SelectMenuInteraction
@@ -13,7 +12,7 @@ import dev.kord.core.entity.interaction.SelectMenuInteraction
  * An interactive dropdown menu rendered on a [Message] that consists of multiple [options].
  */
 
-public class SelectMenuComponent(override val data: SelectMenuComponentData) : Component {
+public class SelectMenuComponent(override val data: ComponentData) : Component {
 
     /**
      * The custom identifier for any [ComponentInteractions][SelectMenuInteraction]

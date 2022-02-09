@@ -25,6 +25,7 @@ import dev.kord.core.entity.interaction.GuildSelectMenuInteraction
 import dev.kord.core.entity.interaction.GuildUserCommandInteraction
 import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.entity.interaction.UnknownApplicationCommandInteraction
+import dev.kord.core.entity.interaction.UnknownComponentInteraction
 import dev.kord.core.event.interaction.AutoCompleteInteractionCreateEvent
 import dev.kord.core.event.interaction.ChatInputCommandCreateEvent
 import dev.kord.core.event.interaction.ChatInputCommandDeleteEvent
@@ -80,6 +81,7 @@ public class InteractionEventHandler(
             is GuildUserCommandInteraction -> GuildUserCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GuildButtonInteraction -> GuildButtonInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GuildSelectMenuInteraction -> GuildSelectMenuInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is UnknownComponentInteraction -> error("Unknown component.")
             is UnknownApplicationCommandInteraction -> error("Unknown component.")
         }
         return coreEvent
