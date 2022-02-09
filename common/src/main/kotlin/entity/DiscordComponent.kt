@@ -161,6 +161,7 @@ public sealed class ComponentType(public val value: Int) {
                 1 -> ActionRow
                 2 -> Button
                 3 -> SelectMenu
+                4 -> TextInput
                 else -> Unknown(value)
             }
 
