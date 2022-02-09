@@ -619,7 +619,7 @@ public sealed class CommandArgument<out T> : Option() {
                 ApplicationCommandOptionType.User -> UserArgument(
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
-                ApplicationCommandOptionType.Attachment -> UserArgument(
+                ApplicationCommandOptionType.Attachment -> AttachmentArgument(
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
                 ApplicationCommandOptionType.SubCommand,
