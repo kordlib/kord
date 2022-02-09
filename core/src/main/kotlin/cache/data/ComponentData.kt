@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class ComponentData(
     val type: ComponentType,
-    val style: Optional<ButtonStyle> = Optional.Missing(),
+    val style: Optional<ComponentStyle> = Optional.Missing(),
     val label: Optional<String> = Optional.Missing(),
     //TODO: turn this emoji into a EmojiData, it's lacking the guild id
     val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),

@@ -1,7 +1,7 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ButtonStyle
+import dev.kord.common.entity.ComponentStyle
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.optional.Optional
@@ -13,7 +13,7 @@ public class ActionRowBuilder : MessageComponentBuilder {
     public val components: MutableList<ActionRowComponentBuilder> = mutableListOf()
 
     public inline fun interactionButton(
-        style: ButtonStyle,
+        style: ComponentStyle.Button,
         customId: String,
         builder: ButtonBuilder.InteractionButtonBuilder.() -> Unit
     ) {
@@ -49,6 +49,23 @@ public class ActionRowBuilder : MessageComponentBuilder {
         }
 
         components.add(SelectMenuBuilder(customId).apply(builder))
+    }
+
+    /**
+     * Creates and adds a text input with the [customId] and configured by the [builder].
+     * Text Inputs can only be used within modals.
+     */
+    public inline fun textInput(
+        style: ComponentStyle.TextInput,
+        customId: String,
+        label: String,
+        builder: TextInputBuilder.() -> Unit
+    ) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(TextInputBuilder(style, customId, label).apply(builder))
     }
 
     override fun build(): DiscordComponent =

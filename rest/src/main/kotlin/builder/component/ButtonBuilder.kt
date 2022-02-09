@@ -3,7 +3,7 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ButtonStyle
+import dev.kord.common.entity.ComponentStyle
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.DiscordPartialEmoji
@@ -38,7 +38,7 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
      * @param customId the ID of this button, used to identify component interactions.
      */
     public class InteractionButtonBuilder(
-        public var style: ButtonStyle,
+        public var style: ComponentStyle.Button,
         public var customId: String,
     ) : ButtonBuilder() {
         override fun build(): DiscordComponent = DiscordComponent(
@@ -62,7 +62,7 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
     ) : ButtonBuilder() {
         override fun build(): DiscordComponent = DiscordComponent(
             ComponentType.Button,
-            Optional(ButtonStyle.Link),
+            Optional(ComponentStyle.Button.Link),
             _label,
             _emoji,
             Optional.Missing(),

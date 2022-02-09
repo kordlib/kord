@@ -34,5 +34,6 @@ public fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.ActionRow -> ActionRowComponent(data)
     ComponentType.Button -> ButtonComponent(data)
     ComponentType.SelectMenu -> SelectMenuComponent(data)
+    ComponentType.TextInput ->
     is ComponentType.Unknown -> UnknownComponent(data)
 }

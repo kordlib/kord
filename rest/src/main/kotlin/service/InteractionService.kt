@@ -5,6 +5,8 @@ import dev.kord.common.entity.MessageFlag.Ephemeral
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.rest.builder.component.ActionRowBuilder
+import dev.kord.rest.builder.component.ComponentBuilder
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
@@ -135,23 +137,40 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    @PublishedApi
-    internal suspend inline fun <reified T, Builder : BaseChoiceBuilder<T>> createBuilderAutoCompleteInteractionResponse(
+    public suspend fun createModalInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        builder: Builder,
-        builderFunction: Builder.() -> Unit
-    ) {
-        // TODO We can remove this cast when we change the type of BaseChoiceBuilder.choices to MutableList<Choice<T>>.
-        //  This can be done once https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
-        //  Until then this cast is necessary to get the right serializer through reified generics.
-        @Suppress("UNCHECKED_CAST")
-        val choices = (builder.apply(builderFunction).choices ?: emptyList()) as List<Choice<T>>
-
-        return createAutoCompleteInteractionResponse(interactionId, interactionToken, DiscordAutoComplete(choices))
+        modal: DiscordModal
+    ): Unit = call(Route.InteractionResponseCreate) {
+        interactionIdInteractionToken(interactionId, interactionToken)
+        body(
+            ModalResponseCreateRequest.serializer(),
+            ModalResponseCreateRequest(
+                InteractionResponseType.Modal,
+                modal
+            )
+        )
     }
 
-    public suspend inline fun createIntAutoCompleteInteractionResponse(
+    public suspend inline fun createModalInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        title: String,
+        customId: String,
+        builderFunction: ModalBuilder.() -> Unit
+    ) {
+        contract {
+            callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return createModalInteractionResponse(
+            interactionId,
+            interactionToken,
+            ModalBuilder(title, customId).apply(builderFunction).toRequest()
+        )
+    }
+
+    public inline suspend fun createIntAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         builderFunction: IntChoiceBuilder.() -> Unit
@@ -168,7 +187,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public suspend inline fun createNumberAutoCompleteInteractionResponse(
+    public inline suspend fun createNumberAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         builderFunction: NumberChoiceBuilder.() -> Unit
@@ -185,7 +204,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public suspend inline fun createStringAutoCompleteInteractionResponse(
+    public inline suspend fun createStringAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         builderFunction: StringChoiceBuilder.() -> Unit
@@ -200,6 +219,21 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             StringChoiceBuilder("<auto-complete>", ""),
             builderFunction
         )
+    }
+
+    public suspend inline fun <reified T, Builder : BaseChoiceBuilder<T>> createBuilderAutoCompleteInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        builder: Builder,
+        builderFunction: Builder.() -> Unit
+    ) {
+        // TODO We can remove this cast when we change the type of BaseChoiceBuilder.choices to MutableList<Choice<T>>.
+        //  This can be done once https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
+        //  Until then this cast is necessary to get the right serializer through reified generics.
+        @Suppress("UNCHECKED_CAST")
+        val choices = (builder.apply(builderFunction).choices ?: emptyList()) as List<Choice<T>>
+
+        return createAutoCompleteInteractionResponse(interactionId, interactionToken, DiscordAutoComplete(choices))
     }
 
     public suspend fun getInteractionResponse(applicationId: Snowflake, interactionToken: String): DiscordMessage =
