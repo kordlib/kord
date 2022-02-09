@@ -170,7 +170,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public inline suspend fun createIntAutoCompleteInteractionResponse(
+    public suspend inline fun createIntAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         builderFunction: IntChoiceBuilder.() -> Unit
@@ -187,7 +187,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public inline suspend fun createNumberAutoCompleteInteractionResponse(
+    public suspend inline fun createNumberAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         builderFunction: NumberChoiceBuilder.() -> Unit
@@ -204,7 +204,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public inline suspend fun createStringAutoCompleteInteractionResponse(
+    public suspend inline fun createStringAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         builderFunction: StringChoiceBuilder.() -> Unit
