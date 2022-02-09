@@ -12,7 +12,6 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
-import dev.kord.core.entity.channel.createInvite
 import dev.kord.rest.Image
 import dev.kord.rest.builder.interaction.group
 import dev.kord.rest.builder.interaction.int

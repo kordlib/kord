@@ -15,16 +15,10 @@ import dev.kord.core.behavior.StageInstanceBehavior
 import dev.kord.core.behavior.ThreadMemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.WebhookBehavior
-import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.*
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.channel.MessageChannelBehavior
-import dev.kord.core.behavior.channel.NewsChannelBehavior
-import dev.kord.core.behavior.channel.StoreChannelBehavior
-import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
-import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
@@ -57,6 +51,9 @@ public class Unsafe(private val kord: Kord) {
 
     public fun topGuildChannel(guildId: Snowflake, id: Snowflake): TopGuildChannelBehavior =
         TopGuildChannelBehavior(guildId = guildId, id = id, kord = kord)
+
+    public fun categorizableChannel(guildId: Snowflake, id: Snowflake): CategorizableChannelBehavior =
+        CategorizableChannelBehavior(guildId, id, kord)
 
     public fun topGuildMessageChannel(guildId: Snowflake, id: Snowflake): TopGuildMessageChannelBehavior =
         TopGuildMessageChannelBehavior(guildId = guildId, id = id, kord = kord)

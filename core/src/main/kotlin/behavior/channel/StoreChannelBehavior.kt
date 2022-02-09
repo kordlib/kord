@@ -19,7 +19,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord Store Channel associated to a guild.
  */
-public interface StoreChannelBehavior : TopGuildChannelBehavior {
+public interface StoreChannelBehavior : CategorizableChannelBehavior {
 
     /**
      * Requests to get the this behavior as a [StoreChannel].
@@ -58,7 +58,7 @@ public interface StoreChannelBehavior : TopGuildChannelBehavior {
     /**
      * returns a new [StoreChannelBehavior] with the given [strategy].
      *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.cacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StoreChannelBehavior =
         StoreChannelBehavior(guildId, id, kord, strategy)
