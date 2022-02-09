@@ -184,7 +184,7 @@ public class Kord(
 
     public fun <T : EntitySupplier> with(strategy: EntitySupplyStrategy<T>): T = strategy.supply(this)
 
-    public suspend fun getApplicationInfo(): ApplicationInfo = with(EntitySupplyStrategy.rest).getApplicationInfo()
+    public suspend fun getApplicationInfo(): Application = with(EntitySupplyStrategy.rest).getApplicationInfo()
 
     /**
      * Requests to create a new Guild configured through the [builder].

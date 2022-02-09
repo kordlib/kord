@@ -5,18 +5,25 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
-import dev.kord.core.cache.data.ApplicationInfoData
+import dev.kord.core.cache.data.ApplicationData
 import dev.kord.core.cache.data.TeamData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
 
+@Deprecated(
+    "'ApplicationInfo' was renamed to 'Application'.",
+    ReplaceWith("Application", "dev.kord.core.entity.Application"),
+    DeprecationLevel.ERROR,
+)
+public typealias ApplicationInfo = Application
+
 /**
  * The details of an
  * [Application](https://discord.com/developers/docs/resources/application#application-object-application-structure).
  */
-public class ApplicationInfo(
-    public val data: ApplicationInfoData,
+public class Application(
+    public val data: ApplicationData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordEntity, Strategizable {
@@ -79,21 +86,21 @@ public class ApplicationInfo(
     public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     /**
-     * Returns a new [ApplicationInfo] with the given [strategy].
+     * Returns a new [Application] with the given [strategy].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ApplicationInfo =
-        ApplicationInfo(data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Application =
+        Application(data, kord, strategy.supply(kord))
 
     override fun hashCode(): Int = Objects.hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
-        is ApplicationInfo -> other.id == id
+        is Application -> other.id == id
         is PartialApplication -> other.id == id
         else -> false
     }
 
     override fun toString(): String {
-        return "ApplicationInfo(data=$data, kord=$kord, supplier=$supplier)"
+        return "Application(data=$data, kord=$kord, supplier=$supplier)"
     }
 
 }

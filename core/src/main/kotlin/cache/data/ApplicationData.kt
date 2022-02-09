@@ -8,8 +8,15 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.mapSnowflake
 import kotlinx.serialization.Serializable
 
+@Deprecated(
+    "'ApplicationInfoData' was renamed to 'ApplicationData'.",
+    ReplaceWith("ApplicationData", "dev.kord.core.cache.data.ApplicationData"),
+    DeprecationLevel.ERROR,
+)
+public typealias ApplicationInfoData = ApplicationData
+
 @Serializable
-public data class ApplicationInfoData(
+public data class ApplicationData(
     val id: Snowflake,
     val name: String,
     val icon: String?,
@@ -31,8 +38,8 @@ public data class ApplicationInfoData(
 ) {
     public companion object {
 
-        public fun from(entity: DiscordApplication): ApplicationInfoData = with(entity) {
-            ApplicationInfoData(
+        public fun from(entity: DiscordApplication): ApplicationData = with(entity) {
+            ApplicationData(
                 id,
                 name,
                 icon,

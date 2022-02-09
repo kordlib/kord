@@ -37,7 +37,7 @@ public class PartialApplication(
     override fun hashCode(): Int = Objects.hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
-        is ApplicationInfo -> other.id == id
+        is Application -> other.id == id
         is PartialApplication -> other.id == id
         else -> false
     }
