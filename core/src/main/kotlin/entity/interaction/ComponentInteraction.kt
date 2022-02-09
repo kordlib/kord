@@ -92,8 +92,9 @@ public fun ComponentInteraction(
         kord,
         supplier
     ) else GuildSelectMenuInteraction(data, kord, supplier)
+    ComponentType.TextInput -> TODO("Implement global text input interactions")
     ComponentType.ActionRow -> error("Action rows can't have interactions")
-    is ComponentType.Unknown -> UnknownComponentInteraction(data, kord, supplier)
+    is ComponentType.Unknown -> error("Can't create a interaction for an unknown component!")
     null -> error("Component type was null")
 }
 
@@ -150,25 +151,6 @@ public class GuildButtonInteraction(
 
     override fun toString(): String =
         "GuildButtonInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
-}
-
-public class UnknownComponentInteraction(
-    override val data: InteractionData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier
-) : ComponentInteraction {
-    override val component: UnknownComponent?
-        get() = message?.components.orEmpty()
-            .filterIsInstance<UnknownComponent>()
-            .firstOrNull { it.data.customId.value == componentId }
-
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): UnknownComponentInteraction {
-        return UnknownComponentInteraction(data, kord, strategy.supply(kord))
-    }
-
-    override fun toString(): String {
-        return "UnknownComponentInteraction(data=$data, applicationId=$applicationId, kord=$kord, supplier=$supplier, user=$user)"
-    }
 }
 
 /**

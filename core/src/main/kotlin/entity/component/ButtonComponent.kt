@@ -3,6 +3,7 @@ package dev.kord.core.entity.component
 import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.optional.value
+import dev.kord.core.cache.data.ButtonComponentData
 import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.interaction.ComponentInteraction
@@ -13,7 +14,7 @@ import dev.kord.core.entity.interaction.ComponentInteraction
  * a [InteractionCreateEvent] with a [ComponentInteraction] will fire.
  */
 
-public class ButtonComponent(override val data: ComponentData) : Component {
+public class ButtonComponent(override val data: ButtonComponentData) : Component {
 
     override val type: ComponentType
         get() = ComponentType.Button
@@ -22,7 +23,7 @@ public class ButtonComponent(override val data: ComponentData) : Component {
      * The style of this button, [ButtonStyle.Link] buttons will always
      * have a [url].
      */
-    public val style: ButtonStyle get() = data.style.value!!
+    public val style: ButtonStyle get() = data.style
 
     /**
      * The text that appears on the button, if present.

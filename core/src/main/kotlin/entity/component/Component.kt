@@ -1,7 +1,14 @@
 package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ComponentType
+import dev.kord.common.entity.TextInputComponent
+import dev.kord.core.cache.data.ActionRowComponentData
+import dev.kord.core.cache.data.ButtonComponentData
 import dev.kord.core.cache.data.ComponentData
+import dev.kord.core.cache.data.ModalResponseTextInputComponentData
+import dev.kord.core.cache.data.SelectMenuComponentData
+import dev.kord.core.cache.data.TextInputComponentData
+import dev.kord.core.cache.data.UnknownComponentData
 import dev.kord.core.entity.Message
 
 /**
@@ -30,10 +37,11 @@ public sealed interface Component {
  * @see UnknownComponent
  */
 
-public fun Component(data: ComponentData): Component = when (data.type) {
-    ComponentType.ActionRow -> ActionRowComponent(data)
-    ComponentType.Button -> ButtonComponent(data)
-    ComponentType.SelectMenu -> SelectMenuComponent(data)
-    ComponentType.TextInput ->
-    is ComponentType.Unknown -> UnknownComponent(data)
+public fun Component(data: ComponentData): Component = when (data) {
+    is ActionRowComponentData -> ActionRowComponent(data)
+    is ButtonComponentData -> ButtonComponent(data)
+    is SelectMenuComponentData -> SelectMenuComponent(data)
+    is TextInputComponentData -> TextInputComponent(data)
+    is ModalResponseTextInputComponentData -> ModalResponseTextInputComponent(data)
+    is UnknownComponentData -> UnknownComponent(data)
 }

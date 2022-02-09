@@ -1,9 +1,11 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ComponentStyle
+import dev.kord.common.entity.ActionRowComponent
+import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
+import dev.kord.common.entity.TextInputStyle
 import dev.kord.common.entity.optional.Optional
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -13,7 +15,7 @@ public class ActionRowBuilder : MessageComponentBuilder {
     public val components: MutableList<ActionRowComponentBuilder> = mutableListOf()
 
     public inline fun interactionButton(
-        style: ComponentStyle.Button,
+        style: ButtonStyle,
         customId: String,
         builder: ButtonBuilder.InteractionButtonBuilder.() -> Unit
     ) {
@@ -56,7 +58,7 @@ public class ActionRowBuilder : MessageComponentBuilder {
      * Text Inputs can only be used within modals.
      */
     public inline fun textInput(
-        style: ComponentStyle.TextInput,
+        style: TextInputStyle,
         customId: String,
         label: String,
         builder: TextInputBuilder.() -> Unit
@@ -69,7 +71,7 @@ public class ActionRowBuilder : MessageComponentBuilder {
     }
 
     override fun build(): DiscordComponent =
-        DiscordComponent(
+        ActionRowComponent(
             ComponentType.ActionRow,
             components = Optional.missingOnEmpty(components.map(ActionRowComponentBuilder::build))
         )
