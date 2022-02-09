@@ -1,8 +1,8 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ActionRowComponent
 import dev.kord.common.entity.ButtonStyle
+import dev.kord.common.entity.ChatDiscordComponent
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.TextInputStyle
@@ -71,7 +71,7 @@ public class ActionRowBuilder : MessageComponentBuilder {
     }
 
     override fun build(): DiscordComponent =
-        ActionRowComponent(
+        ChatDiscordComponent(
             ComponentType.ActionRow,
             components = Optional.missingOnEmpty(components.map(ActionRowComponentBuilder::build))
         )

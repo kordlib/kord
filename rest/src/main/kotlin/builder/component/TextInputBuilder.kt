@@ -3,7 +3,7 @@ package dev.kord.rest.builder.component
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
-import dev.kord.common.entity.TextInputComponent
+import dev.kord.common.entity.ModalDiscordComponent
 import dev.kord.common.entity.TextInputStyle
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -48,11 +48,11 @@ public class TextInputBuilder(
     public var required: Boolean? by ::_required.delegate()
 
     override fun build(): DiscordComponent {
-        return TextInputComponent(
+        return ModalDiscordComponent(
             type = ComponentType.TextInput,
-            style = style,
-            customId = customId,
-            label = label,
+            style = Optional(style),
+            customId = Optional(customId),
+            label = Optional(label),
             minLength = allowedLength?.let { OptionalInt.Value(it.first) } ?: OptionalInt.Missing,
             maxLength = allowedLength?.let { OptionalInt.Value(it.last) } ?: OptionalInt.Missing,
             placeholder = _placeholder,
