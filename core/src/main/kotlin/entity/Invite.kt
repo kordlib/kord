@@ -13,8 +13,6 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOf
-import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.datetime.Instant
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -130,7 +128,8 @@ public class Invite(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Channel] wasn't present.
      */
-    public suspend fun getChannel(): Channel? = channelId?.let { supplier.getChannelOf(it) }
+    @Deprecated("Use 'getChannelOrNull' instead.", ReplaceWith("this.getChannelOrNull()"), DeprecationLevel.ERROR)
+    public suspend fun getChannel(): Channel? = channelId?.let { supplier.getChannel(it) }
 
     /**
      * Requests to get the channel this invite is for,
@@ -138,7 +137,10 @@ public class Invite(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getChannelOrNull(): Channel? = channelId?.let { supplier.getChannelOfOrNull(it) }
+    public suspend fun getChannelOrNull(): Channel? = channelId?.let { supplier.getChannelOrNull(it) }
+
+    @Deprecated("Renamed to 'getInviterOrNull'", ReplaceWith("this.getInviterOrNull()"), DeprecationLevel.ERROR)
+    public suspend fun getInviter(): User? = getInviterOrNull()
 
     /**
      * Requests to get the creator of the invite for,
@@ -146,7 +148,10 @@ public class Invite(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getInviter(): User? = inviterId?.let { supplier.getUserOrNull(it) }
+    public suspend fun getInviterOrNull(): User? = inviterId?.let { supplier.getUserOrNull(it) }
+
+    @Deprecated("Renamed to 'getTargetUserOrNull'", ReplaceWith("this.getTargetUserOrNull()"), DeprecationLevel.ERROR)
+    public suspend fun getTargetUser(): User? = getTargetUserOrNull()
 
     /**
      * Requests to get the user this invite was created for,
@@ -154,7 +159,7 @@ public class Invite(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getTargetUser(): User? = targetUserId?.let { supplier.getUserOrNull(it) }
+    public suspend fun getTargetUserOrNull(): User? = targetUserId?.let { supplier.getUserOrNull(it) }
 
     /**
      * Requests to delete this invite.
