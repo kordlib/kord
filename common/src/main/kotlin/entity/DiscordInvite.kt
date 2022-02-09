@@ -12,30 +12,77 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+public sealed interface DiscordInviteBase {
+    public val code: String
+    public val guild: Optional<DiscordPartialGuild>
+    public val channel: DiscordChannel?
+    public val inviter: Optional<DiscordUser>
+    public val targetType: Optional<InviteTargetType>
+    public val targetUser: Optional<DiscordUser>
+    public val targetApplication: Optional<DiscordPartialApplication>
+    public val approximatePresenceCount: OptionalInt
+    public val approximateMemberCount: OptionalInt
+    public val expiresAt: Optional<Instant?>
+    public val guildScheduledEvent: Optional<DiscordGuildScheduledEvent>
+}
+
 @Serializable
 public data class DiscordInvite(
-    val code: String,
-    val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
-    val channel: DiscordChannel?,
-    val inviter: Optional<DiscordUser> = Optional.Missing(),
+    override val code: String,
+    override val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
+    override val channel: DiscordChannel?,
+    override val inviter: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("target_type")
-    val targetType: Optional<InviteTargetType> = Optional.Missing(),
+    override val targetType: Optional<InviteTargetType> = Optional.Missing(),
     @SerialName("target_user")
-    val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    override val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("target_application")
+    override val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
     @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     @SerialName("target_user_type")
     val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
     @SerialName("approximate_presence_count")
-    val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
+    override val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_member_count")
-    val approximateMemberCount: OptionalInt = OptionalInt.Missing,
+    override val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     @SerialName("expires_at")
-    val expiresAt: Optional<Instant?> = Optional.Missing(),
+    override val expiresAt: Optional<Instant?> = Optional.Missing(),
     @SerialName("stage_instance")
+    @Deprecated("Stages are no longer discoverable")
     val stageInstance: Optional<DiscordStageInstance> = Optional.Missing(),
     @SerialName("guild_scheduled_event")
-    val guildScheduledEvent: Optional<DiscordGuildScheduledEvent> = Optional.Missing(),
-)
+    override val guildScheduledEvent: Optional<DiscordGuildScheduledEvent> = Optional.Missing(),
+) : DiscordInviteBase
+
+@Serializable
+public data class DiscordInviteWithMetadata(
+    override val code: String,
+    override val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
+    override val channel: DiscordChannel?,
+    override val inviter: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("target_type")
+    override val targetType: Optional<InviteTargetType> = Optional.Missing(),
+    @SerialName("target_user")
+    override val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("target_application")
+    override val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
+    @SerialName("approximate_presence_count")
+    override val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("approximate_member_count")
+    override val approximateMemberCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("expires_at")
+    override val expiresAt: Optional<Instant?> = Optional.Missing(),
+    @SerialName("guild_scheduled_event")
+    override val guildScheduledEvent: Optional<DiscordGuildScheduledEvent> = Optional.Missing(),
+    val uses: Int,
+    @SerialName("max_uses")
+    val maxUses: Int,
+    @SerialName("max_age")
+    val maxAge: Int,
+    val temporary: Boolean,
+    @SerialName("created_at")
+    val createdAt: Instant,
+) : DiscordInviteBase
 
 @Serializable
 public data class DiscordPartialInvite(
@@ -46,18 +93,6 @@ public data class DiscordPartialInvite(
      */
     val code: String?,
     val uses: Int
-)
-
-@Serializable
-public data class DiscordInviteMetadata(
-    val uses: Int,
-    @SerialName("max_uses")
-    val maxUses: Int,
-    @SerialName("max_age")
-    val maxAge: Int,
-    val temporary: Boolean,
-    @SerialName("created_at")
-    val createdAt: String,
 )
 
 @Serializable(with = InviteTargetType.Serializer::class)

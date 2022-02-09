@@ -10,6 +10,7 @@ import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.InviteCreateData
+import dev.kord.core.cache.data.InviteData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
@@ -21,7 +22,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 /**
  * Sent when a new invite to a channel is created.
@@ -85,7 +87,7 @@ public class InviteCreateEvent(
     /**
      * How long the invite is valid for.
      */
-    public val maxAge: Duration get() = data.maxAge.seconds
+    public val maxAge: Duration get() = data.maxAge.toDuration(DurationUnit.SECONDS)
 
     /**
      * The maximum number of times the invite can be used.
@@ -225,6 +227,17 @@ public class InviteCreateEvent(
      */
     public suspend fun getTargetUserAsMemberOrNull(): Member? {
         return supplier.getMemberOrNull(guildId = guildId ?: return null, userId = targetUserId ?: return null)
+    }
+
+    /**
+     * Requests to delete this invite.
+     *
+     * @param reason the reason showing up in the audit log
+     */
+    public suspend fun delete(reason: String? = null): Invite {
+        val response = kord.rest.invite.deleteInvite(data.code, reason)
+        val data = InviteData.from(response)
+        return Invite(data, kord)
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteCreateEvent =

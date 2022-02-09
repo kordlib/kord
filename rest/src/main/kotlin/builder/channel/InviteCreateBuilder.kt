@@ -3,7 +3,6 @@ package dev.kord.rest.builder.channel
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.InviteTargetType
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.TargetUserType
 import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
@@ -83,7 +82,7 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
                     InviteTargetType.Stream.optional()
                 _targetUserId.isMissing && _targetApplicationId.isPresent ->
                     InviteTargetType.EmbeddedApplication.optional()
-                else -> Optional.Missing() // both missing or both present
+                else -> Optional.Missing() // both missing or both present, we should not decide in this case
             }
         )
 
@@ -93,7 +92,7 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
             unique = _unique,
             uses = _uses,
             targetUser = _targetUser,
-            targetUserType = _targetUser.map { @Suppress("DEPRECATION") TargetUserType.Stream },
+            targetUserType = _targetUser.map { @Suppress("DEPRECATION") dev.kord.common.entity.TargetUserType.Stream },
             targetType = target,
             targetUserId = _targetUserId,
             targetApplicationId = _targetApplicationId,

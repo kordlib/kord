@@ -15,15 +15,9 @@ public class InviteService(requestHandler: RequestHandler) : RestService(request
         guildScheduledEventId: Snowflake? = null,
     ): DiscordInvite = call(Route.InviteGet) {
         keys[Route.InviteCode] = code
-        if (withCounts != null) {
-            parameter("with_counts", withCounts)
-        }
-        if (withExpiration != null) {
-            parameter("with_expiration", withExpiration)
-        }
-        if (guildScheduledEventId != null) {
-            parameter("guild_scheduled_event_id", guildScheduledEventId)
-        }
+        withCounts?.let { parameter("with_counts", it) }
+        withExpiration?.let { parameter("with_expiration", it) }
+        guildScheduledEventId?.let { parameter("guild_scheduled_event_id", it) }
     }
 
     public suspend fun deleteInvite(code: String, reason: String? = null): DiscordInvite = call(Route.InviteDelete) {

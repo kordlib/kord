@@ -301,9 +301,10 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             keys[Route.GuildId] = guildId
         }
 
-    public suspend fun getGuildInvites(guildId: Snowflake): List<DiscordInvite> = call(Route.GuildInvitesGet) {
-        keys[Route.GuildId] = guildId
-    }
+    public suspend fun getGuildInvites(guildId: Snowflake): List<DiscordInviteWithMetadata> =
+        call(Route.GuildInvitesGet) {
+            keys[Route.GuildId] = guildId
+        }
 
     public suspend fun getGuildIntegrations(guildId: Snowflake): List<DiscordIntegration> =
         call(Route.GuildIntegrationGet) {
