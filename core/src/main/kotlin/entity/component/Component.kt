@@ -1,7 +1,9 @@
 package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ComponentType
+import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.cache.data.ComponentData
+import dev.kord.core.cache.data.ModalComponentData
 import dev.kord.core.entity.Message
 
 /**
@@ -29,10 +31,10 @@ public sealed interface Component {
  * @see SelectMenuComponent
  * @see UnknownComponent
  */
-
 public fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.ActionRow -> ActionRowComponent(data)
-    ComponentType.Button -> ButtonComponent(data)
+    ComponentType.Button -> ButtonComponent(data as ChatComponentData)
     ComponentType.SelectMenu -> SelectMenuComponent(data)
+    ComponentType.TextInput -> TextInputComponent(data as ModalComponentData)
     is ComponentType.Unknown -> UnknownComponent(data)
 }
