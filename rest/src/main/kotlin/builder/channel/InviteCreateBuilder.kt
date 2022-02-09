@@ -7,24 +7,44 @@ import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.InviteCreateRequest
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 @KordDsl
 public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
     override var reason: String? = null
 
-    private var _age: OptionalInt = OptionalInt.Missing
+    private var _maxAge: OptionalInt = OptionalInt.Missing
 
     /**
      * The duration of invite in seconds before expiry, or 0 for never. 86400 (24 hours) by default.
      */
-    public var age: Int? by ::_age.delegate()
+    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"))
+    public var age: Int? by ::_maxAge.delegate()
 
-    private var _uses: OptionalInt = OptionalInt.Missing
+    /**
+     * The duration before invite expiry, or 0 for never. Between 0 and 604800 seconds (7 days). 24 hours by default.
+     */
+    public var maxAge: Duration?
+        get() = _maxAge.value?.toDuration(DurationUnit.SECONDS)
+        set(value) {
+            _maxAge = when (value) {
+                null -> OptionalInt.Missing
+                else -> OptionalInt.Value(value.inWholeSeconds.coerceIn(intValues).toInt())
+            }
+        }
+
+    private var _maxUses: OptionalInt = OptionalInt.Missing
 
     /**
      * The maximum number of uses, or 0 for unlimited. 0 by default.
      */
-    public var uses: Int? by ::_uses.delegate()
+    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"))
+    public var uses: Int? by ::_maxUses.delegate()
+
+    /** The maximum number of uses, or 0 for unlimited. Between 0 and 100. 0 by default. */
+    public var maxUses: Int? by ::_maxUses.delegate()
 
     private var _temporary: OptionalBoolean = OptionalBoolean.Missing
 
@@ -88,9 +108,9 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
 
         return InviteCreateRequest(
             temporary = _temporary,
-            age = _age,
+            maxAge = _maxAge,
             unique = _unique,
-            uses = _uses,
+            maxUses = _maxUses,
             targetUser = _targetUser,
             targetUserType = _targetUser.map { @Suppress("DEPRECATION") dev.kord.common.entity.TargetUserType.Stream },
             targetType = target,
@@ -100,5 +120,6 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
     }
 }
 
-private val OptionalSnowflake.isMissing get() = this == OptionalSnowflake.Missing
-private val OptionalSnowflake.isPresent get() = this != OptionalSnowflake.Missing
+private inline val OptionalSnowflake.isMissing get() = this == OptionalSnowflake.Missing
+private inline val OptionalSnowflake.isPresent get() = this != OptionalSnowflake.Missing
+private inline val intValues get() = Int.MIN_VALUE.toLong()..Int.MAX_VALUE.toLong()

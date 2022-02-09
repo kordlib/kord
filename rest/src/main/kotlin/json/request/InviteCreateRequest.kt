@@ -11,9 +11,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class InviteCreateRequest(
     @SerialName("max_age")
-    val age: OptionalInt = OptionalInt.Missing,
+    val maxAge: OptionalInt = OptionalInt.Missing,
     @SerialName("max_uses")
-    val uses: OptionalInt = OptionalInt.Missing,
+    val maxUses: OptionalInt = OptionalInt.Missing,
     val temporary: OptionalBoolean = OptionalBoolean.Missing,
     val unique: OptionalBoolean = OptionalBoolean.Missing,
     @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"))
@@ -28,4 +28,12 @@ public data class InviteCreateRequest(
     val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("target_application_id")
     val targetApplicationId: OptionalSnowflake = OptionalSnowflake.Missing,
-)
+) {
+    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"))
+    public val age: OptionalInt
+        get() = maxAge
+
+    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"))
+    public val uses: OptionalInt
+        get() = maxUses
+}
