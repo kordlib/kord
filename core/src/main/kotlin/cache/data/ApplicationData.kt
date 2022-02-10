@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.common.entity.ApplicationFlags
 import dev.kord.common.entity.DiscordApplication
 import dev.kord.common.entity.DiscordTeam
 import dev.kord.common.entity.Snowflake
@@ -34,7 +35,7 @@ public data class ApplicationData(
     val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
     val slug: Optional<String> = Optional.Missing(),
     val coverImage: Optional<String> = Optional.Missing(),
-    // TODO flags field
+    val flags: Optional<ApplicationFlags> = Optional.Missing(),
 ) {
     public companion object {
 
@@ -57,6 +58,7 @@ public data class ApplicationData(
                 primarySkuId,
                 slug,
                 coverImage,
+                flags,
             )
         }
     }

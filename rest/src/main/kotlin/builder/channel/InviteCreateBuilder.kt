@@ -1,6 +1,7 @@
 package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.ApplicationFlag
 import dev.kord.common.entity.InviteTargetType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
@@ -91,7 +92,8 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
     private var _targetApplicationId: OptionalSnowflake = OptionalSnowflake.Missing
 
     /**
-     * The id of the embedded application to open for this invite, the application must have the `EMBEDDED` flag.
+     * The id of the embedded application to open for this invite, the application must have the
+     * [Embedded][ApplicationFlag.Embedded] flag.
      */
     public var targetApplicationId: Snowflake? by ::_targetApplicationId.delegate()
 

@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.entity.ApplicationFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
@@ -72,7 +73,7 @@ public class Application(
 
     public val coverImageHash: String? get() = data.coverImage.value
 
-    // TODO flags field
+    public val flags: ApplicationFlags? get() = data.flags.value
 
     @Deprecated(
         "'ownerId' might not be present, use 'getOwnerOrNull' instead.",
