@@ -39,7 +39,7 @@ import kotlinx.coroutines.CoroutineScope
  */
 
 public sealed interface ApplicationInteractionCreateEvent : ActionInteractionCreateEvent {
-    override val interaction: ApplicationCommandInvocationInteraction
+    override val interaction: ApplicationCommandInteraction
 }
 
 public sealed interface GlobalApplicationInteractionCreateEvent : ApplicationInteractionCreateEvent {
@@ -89,7 +89,7 @@ public class GlobalMessageCommandInteractionCreateEvent(
 
 
 public sealed interface ChatInputCommandInteractionCreateEvent : ApplicationInteractionCreateEvent {
-    override val interaction: ChatInputCommandInvocationInteraction
+    override val interaction: ChatInputCommandInteraction
 }
 
 public class GuildChatInputCommandInteractionCreateEvent(
