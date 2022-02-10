@@ -10,6 +10,7 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
+import dev.kord.core.behavior.GlobalInteractionBehavior
 import dev.kord.core.behavior.GuildInteractionBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
@@ -309,8 +310,8 @@ public fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjec
 }
 
 
-public sealed interface GlobalInteraction : Interaction {
-    override val user: User get() = User(data.user.value!!, kord)
+public sealed interface GlobalInteraction : GlobalInteractionBehavior, Interaction {
+    public override val user: User get() = User(data.user.value!!, kord)
 }
 
 /**

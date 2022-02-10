@@ -21,7 +21,7 @@ import java.util.*
 /**
  * Represents an interaction of type [ApplicationCommand][dev.kord.common.entity.InteractionType.ApplicationCommand]
  */
-public sealed interface ApplicationCommandInteraction :  ActionInteraction {
+public sealed interface ApplicationCommandInteraction :  ActionInteraction, ApplicationCommandInteractionBehavior {
     public val invokedCommandType: ApplicationCommandType get() = data.data.type.value!!
 
     public val resolvedObjects: ResolvedObjects?
