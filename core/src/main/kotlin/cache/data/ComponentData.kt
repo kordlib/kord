@@ -50,7 +50,7 @@ public sealed class ComponentData {
                     )
                 }
                 is DiscordModalComponent -> {
-                    ModalComponentData(
+                    TextInputComponentData(
                         type,
                         entity.style,
                         label,
@@ -96,7 +96,7 @@ public data class ChatComponentData(
 ) : ComponentData()
 
 @Serializable
-public data class ModalComponentData(
+public data class TextInputComponentData(
     override val type: ComponentType,
     val style: Optional<TextInputStyle> = Optional.Missing(),
     override val label: Optional<String> = Optional.Missing(),

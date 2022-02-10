@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.builder.interaction.ModalBuilder
 import dev.kord.rest.builder.message.create.UpdateMessageInteractionResponseCreateBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
@@ -69,6 +70,12 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
         return ComponentInteractionBehavior(id, channelId, token, applicationId, kord, strategy)
     }
 
+}
+
+public inline suspend fun ComponentInteractionBehavior.modal(title: String, customId: String, builder: ModalBuilder.() -> Unit): PublicInteractionResponseBehavior {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    kord.rest.interaction.createModalInteractionResponse(id, token,title, customId, builder)
+    return PublicInteractionResponseBehavior(applicationId, token, kord)
 }
 
 /**

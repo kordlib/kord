@@ -253,7 +253,7 @@ public sealed class TextInputStyle(public val value: Int) {
      */
     public object Paragraph : TextInputStyle(2)
 
-    public companion object Serializer : KSerializer<TextInputStyle> {
+    internal companion object Serializer : KSerializer<TextInputStyle> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("TextInput", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): TextInputStyle =

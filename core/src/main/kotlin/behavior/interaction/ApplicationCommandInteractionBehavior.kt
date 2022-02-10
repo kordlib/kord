@@ -3,6 +3,9 @@ package dev.kord.core.behavior.interaction
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.supplier.EntitySupplier
+import dev.kord.rest.builder.interaction.ModalBuilder
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * The behavior of a [Discord ActionInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction)
@@ -33,4 +36,10 @@ internal fun ApplicationCommandInteractionBehavior(
     override val supplier: EntitySupplier
         get() = supplier
 
+}
+
+public inline suspend fun ApplicationCommandInteractionBehavior.modal(title: String, customId: String,builder: ModalBuilder.() -> Unit): PublicInteractionResponseBehavior {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+     kord.rest.interaction.createModalInteractionResponse(id, token,title, customId, builder)
+    return PublicInteractionResponseBehavior(applicationId, token, kord)
 }

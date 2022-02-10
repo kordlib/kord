@@ -1,14 +1,9 @@
 package dev.kord.core.entity.component
 
-import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.TextInputStyle
-import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.value
-import dev.kord.core.cache.data.ChatComponentData
-import dev.kord.core.cache.data.ComponentData
-import dev.kord.core.cache.data.ModalComponentData
-import dev.kord.core.entity.ReactionEmoji
+import dev.kord.core.cache.data.TextInputComponentData
 import dev.kord.core.entity.interaction.ComponentInteraction
 
 /**
@@ -17,7 +12,7 @@ import dev.kord.core.entity.interaction.ComponentInteraction
  * a [InteractionCreateEvent] with a [ComponentInteraction] will fire.
  */
 
-public class TextInputComponent(override val data: ModalComponentData) : Component {
+public class TextInputComponent(override val data: TextInputComponentData) : Component {
 
     override val type: ComponentType
         get() = ComponentType.TextInput

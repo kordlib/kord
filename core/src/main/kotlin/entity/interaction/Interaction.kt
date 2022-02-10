@@ -67,8 +67,9 @@ public sealed interface Interaction : InteractionBehavior {
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): Interaction {
             return when {
-                data.type == InteractionType.Component -> ComponentInteraction(data, kord, strategy.supply(kord))
-                data.type == InteractionType.AutoComplete -> AutoCompleteInteraction(data, kord, strategy.supply(kord))
+                data.type is InteractionType.Component -> ComponentInteraction(data, kord, strategy.supply(kord))
+                data.type is InteractionType.AutoComplete -> AutoCompleteInteraction(data, kord, strategy.supply(kord))
+                data.type is InteractionType.ModalSubmit -> ModalSubmitInteraction(data, kord, strategy.supply(kord))
                 data.guildId !is OptionalSnowflake.Missing -> GuildApplicationCommandInteraction(
                     data,
                     kord,

@@ -106,6 +106,25 @@ public class GlobalChatInputCommandInteractionCreateEvent(
     public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
 ) : GlobalApplicationInteractionCreateEvent, ChatInputCommandInteractionCreateEvent, CoroutineScope by coroutineScope
 
+public sealed interface ModalSubmitInteractionCreateEvent : ActionInteractionCreateEvent {
+    override val interaction: ModalSubmitInteraction
+}
+
+public class GuildModalSubmitInteractionCreateEvent(
+    override val interaction: GuildModalSubmitInteraction,
+    override val kord: Kord,
+    override val shard: Int,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ModalSubmitInteractionCreateEvent, CoroutineScope by coroutineScope
+
+
+public class GlobalModalSubmitInteractionCreateEvent(
+    override val interaction: GlobalModalSubmitInteraction,
+    override val shard: Int,
+    override val kord: Kord,
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
+) : ModalSubmitInteractionCreateEvent, CoroutineScope by coroutineScope
+
 /**
  * ActionInteraction received when a users types into an auto-completed option.
  *
