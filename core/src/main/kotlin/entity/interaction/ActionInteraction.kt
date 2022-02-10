@@ -34,16 +34,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public sealed interface ActionInteraction : Interaction, ActionInteractionBehavior
 
 /**
- * The base interaction for all slash-command related interactions.
- *
- * @see GuildApplicationCommandInteraction
- */
-public sealed class CommandInteraction : ActionInteraction {
-    public val command: InteractionCommand
-        get() = InteractionCommand(data.data, kord)
-}
-
-/**
  * The base command of all commands that can be executed under an interaction event.
  */
 public sealed interface InteractionCommand : KordObject {
@@ -326,7 +316,7 @@ public sealed interface GlobalInteraction : Interaction {
 /**
  * An [ActionInteraction] that took place in a Global Context with [GlobalApplicationCommand].
  */
-public sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInvocationInteraction, GlobalInteraction {
+public sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInteraction, GlobalInteraction {
     /**
      * The user who invoked the interaction.
      */
@@ -334,7 +324,7 @@ public sealed interface GlobalApplicationCommandInteraction : ApplicationCommand
         GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
 
     override val applicationId: Snowflake
-        get() = super<ApplicationCommandInvocationInteraction>.applicationId
+        get() = super<ApplicationCommandInteraction>.applicationId
 }
 
 public fun GlobalApplicationCommandInteraction(
@@ -356,32 +346,7 @@ public fun GlobalApplicationCommandInteraction(
  */
 
 
-public sealed interface GuildApplicationCommandInteraction : ApplicationCommandInvocationInteraction, GuildInteractionBehavior {
-
-    override val guildId: Snowflake
-        get() = data.guildId.value!!
-
-    /**
-     * Overridden permissions of the interaction invoker in the channel.
-     */
-    public val permissions: Permissions get() = data.permissions.value!!
-
-
-    /**
-     * The invoker of the command as [MemberBehavior].
-     */
-    public val member: Member
-        get() = Member(
-            data.member.value!!,
-            data.user.value!!,
-            kord
-        )
-
-    override val channel: GuildMessageChannelBehavior
-        get() = GuildMessageChannelBehavior(guildId, channelId, kord)
-
-    override val user: UserBehavior
-        get() = UserBehavior(member.id, kord)
+public sealed interface GuildApplicationCommandInteraction : ApplicationCommandInteraction, GuildInteraction {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildApplicationCommandInteraction =
         GuildApplicationCommandInteraction(data, kord, strategy.supply(kord))

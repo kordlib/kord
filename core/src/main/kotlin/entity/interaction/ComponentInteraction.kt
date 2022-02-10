@@ -48,17 +48,17 @@ public sealed interface ComponentInteraction : ActionInteraction, ComponentInter
 
     abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): ComponentInteraction
 
-    abstract override fun toString(): String
 
 }
 
-public sealed interface GlobalComponentInteraction : ComponentInteraction
+public sealed interface GlobalComponentInteraction : ComponentInteraction, GlobalInteraction {
+    override val user: User
+        get() = super<GlobalInteraction>.user
+}
 
-public sealed interface GuildComponentInteraction : ComponentInteraction {
-
-    public val guildId: Snowflake get() = data.guildId.value!!
-
-    public val member: Member get() = Member(data.member.value!!, user.data, kord)
+public sealed interface GuildComponentInteraction : ComponentInteraction, GuildInteraction {
+    override val user: Member
+        get() = super<GuildInteraction>.user
 }
 
 public sealed interface ButtonInteraction : ComponentInteraction {
