@@ -182,7 +182,7 @@ public sealed class Choice<out T> {
 
 @Serializable
 public data class ResolvedObjects(
-    val members: Optional<Map<Snowflake, DiscordGuildMember>> = Optional.Missing(),
+    val members: Optional<Map<Snowflake, DiscordInteractionGuildMember>> = Optional.Missing(),
     val users: Optional<Map<Snowflake, DiscordUser>> = Optional.Missing(),
     val roles: Optional<Map<Snowflake, DiscordRole>> = Optional.Missing(),
     val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing(),
