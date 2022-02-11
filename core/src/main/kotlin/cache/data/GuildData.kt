@@ -88,7 +88,7 @@ public data class GuildData(
                 //owner = owner,
                 ownerId = ownerId,
                 permissions = permissions,
-                region = region,
+                region = @Suppress("DEPRECATION") region,
                 afkChannelId = afkChannelId,
                 afkTimeout = afkTimeout,
                 widgetEnabled = widgetEnabled,
