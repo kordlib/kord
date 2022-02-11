@@ -99,6 +99,7 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
     public object Role : ApplicationCommandOptionType(8)
     public object Mentionable : ApplicationCommandOptionType(9)
     public object Number : ApplicationCommandOptionType(10)
+    public object Attachment : ApplicationCommandOptionType(11)
     public class Unknown(type: Int) : ApplicationCommandOptionType(type)
 
     internal object Serializer : KSerializer<ApplicationCommandOptionType> {
@@ -118,6 +119,7 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
                 8 -> Role
                 9 -> Mentionable
                 10 -> Number
+                11 -> Attachment
                 else -> Unknown(type)
             }
         }
@@ -186,7 +188,8 @@ public data class ResolvedObjects(
     val users: Optional<Map<Snowflake, DiscordUser>> = Optional.Missing(),
     val roles: Optional<Map<Snowflake, DiscordRole>> = Optional.Missing(),
     val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing(),
-    val messages: Optional<Map<Snowflake, DiscordMessage>> = Optional.Missing()
+    val messages: Optional<Map<Snowflake, DiscordMessage>> = Optional.Missing(),
+    val attachments: Optional<Map<Snowflake, DiscordAttachment>> = Optional.Missing()
 )
 
 @Serializable
@@ -369,6 +372,7 @@ public sealed class Option {
                 ApplicationCommandOptionType.Mentionable,
                 ApplicationCommandOptionType.Role,
                 ApplicationCommandOptionType.String,
+                ApplicationCommandOptionType.Attachment,
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
                     json, jsonValue!!, name, type!!, focused
                 )
@@ -496,6 +500,15 @@ public sealed class CommandArgument<out T> : Option() {
             get() = ApplicationCommandOptionType.Mentionable
     }
 
+    public data class AttachmentArgument(
+        override val name: String,
+        override val value: Snowflake,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
+    ) : CommandArgument<Snowflake>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.Attachment
+    }
+
     /**
      * Representation of a partial user input of an auto completed argument.
      *
@@ -551,6 +564,12 @@ public sealed class CommandArgument<out T> : Option() {
                     )
                     is IntegerArgument -> encodeLongElement(descriptor, 1, value.value)
                     is NumberArgument -> encodeDoubleElement(descriptor, 1, value.value)
+                    is AttachmentArgument -> encodeSerializableElement(
+                        descriptor,
+                        1,
+                        Snowflake.serializer(),
+                        value.value
+                    )
                     is AutoCompleteArgument, is StringArgument -> encodeStringElement(
                         descriptor,
                         1,
@@ -598,6 +617,9 @@ public sealed class CommandArgument<out T> : Option() {
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
                 ApplicationCommandOptionType.User -> UserArgument(
+                    name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
+                )
+                ApplicationCommandOptionType.Attachment -> AttachmentArgument(
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
                 ApplicationCommandOptionType.SubCommand,
