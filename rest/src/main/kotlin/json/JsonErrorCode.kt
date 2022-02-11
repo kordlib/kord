@@ -253,6 +253,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** You are opening direct messages too fast. */
     TooFastDM(40003),
 
+    /** Send messages has been temporarily disabled. */
+    SendMessagesTemporarilyDisabled(40004),
+
     /** Request entity too large. Try sending something smaller in size. */
     RequestEntityTooLarge(40005),
 
