@@ -271,6 +271,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** An application command with that name already exists. */
     ApplicationCommandNameExists(40041),
 
+    /** Interaction has already been acknowledged. */
+    InteractionAlreadyAcknowledged(40060),
+
     /** Missing access. */
     MissingAccess(50001),
 
