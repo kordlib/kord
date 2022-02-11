@@ -14,7 +14,7 @@ public sealed interface GuildInteraction : Interaction, GuildInteractionBehavior
     /**
      * Overridden permissions of the interaction invoker in the channel.
      */
-    public val permission: Permissions get() = data.permissions.value!!
+    public val permissions: Permissions get() = data.permissions.value!!
 
     /**
      * The invoker of the command as [Member].

@@ -157,16 +157,16 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         interactionToken: String,
         title: String,
         customId: String,
-        builderFunction: ModalBuilder.() -> Unit
+        builder: ModalBuilder.() -> Unit,
     ) {
         contract {
-            callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE)
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
         return createModalInteractionResponse(
             interactionId,
             interactionToken,
-            ModalBuilder(title, customId).apply(builderFunction).toRequest()
+            ModalBuilder(title, customId).apply(builder).toRequest()
         )
     }
 

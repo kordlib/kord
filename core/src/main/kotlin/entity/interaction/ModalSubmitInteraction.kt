@@ -32,7 +32,7 @@ public class GlobalModalSubmitInteraction(
     override val supplier: EntitySupplier = kord.defaultSupplier
 
 ) : GlobalInteraction, ModalSubmitInteraction {
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction {
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GlobalModalSubmitInteraction {
         return GlobalModalSubmitInteraction(data, kord, strategy.supply(kord))
     }
 }
@@ -41,7 +41,7 @@ public fun ModalSubmitInteraction(
     data: InteractionData,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier
-): ModalSubmitInteraction {
-    if(data.guildId is Optional<*>) return GlobalModalSubmitInteraction(data, kord, supplier)
-    else return GuildModalSubmitInteraction(data, kord, supplier)
+): ModalSubmitInteraction = when (data.guildId) {
+    is OptionalSnowflake.Missing -> GlobalModalSubmitInteraction(data, kord, supplier)
+    else -> GuildModalSubmitInteraction(data, kord, supplier)
 }

@@ -45,7 +45,7 @@ public class TextInputComponent(override val data: TextInputComponentData) : Com
     /**
      * If the text input is required.
      */
-    public val required: Boolean? get() = data.required.value
+    public val required: Boolean get() = data.required.discordBoolean
 
     /**
      * The value of the text input.

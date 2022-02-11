@@ -92,7 +92,7 @@ public fun ComponentInteraction(
         kord,
         supplier
     ) else GuildSelectMenuInteraction(data, kord, supplier)
-    ComponentType.TextInput -> TODO("Form interactions are not supported yet!")
+    ComponentType.TextInput -> error("Text inputs can't have interactions")
     ComponentType.ActionRow -> error("Action rows can't have interactions")
     is ComponentType.Unknown -> UnknownComponentInteraction(data, kord, supplier)
     null -> error("Component type was null")
