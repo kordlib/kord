@@ -1,9 +1,8 @@
-package dev.kord.core.behavior
+package dev.kord.core.behavior.interaction
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.ActionInteractionBehavior
-import dev.kord.core.behavior.interaction.InteractionBehavior
+import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.entity.channel.MessageChannel

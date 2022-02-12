@@ -2,7 +2,6 @@ package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.CommandArgument
-import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.mapValues
@@ -10,11 +9,7 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
-import dev.kord.core.behavior.GlobalInteractionBehavior
-import dev.kord.core.behavior.GuildInteractionBehavior
-import dev.kord.core.behavior.MemberBehavior
-import dev.kord.core.behavior.UserBehavior
-import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
+import dev.kord.core.behavior.interaction.GlobalInteractionBehavior
 import dev.kord.core.behavior.interaction.ActionInteractionBehavior
 import dev.kord.core.cache.data.ApplicationInteractionData
 import dev.kord.core.cache.data.InteractionData
