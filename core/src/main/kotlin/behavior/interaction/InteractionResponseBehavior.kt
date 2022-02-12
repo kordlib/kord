@@ -6,6 +6,7 @@ import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.interaction.EphemeralFollowupMessage
+import dev.kord.core.entity.interaction.FollowupMessage
 import dev.kord.core.entity.interaction.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
@@ -39,10 +40,19 @@ public interface InteractionResponseBehavior : KordObject, Strategizable {
         supplier.getFollowupMessage(applicationId, token, messageId)
 }
 
+@Deprecated(
+    "Renamed to 'followUpPublic'",
+    ReplaceWith("this.followUpPublic { builder() }", "dev.kord.core.behavior.interaction.followUpPublic"),
+)
+public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return followUpPublic(builder)
+}
+
 /**
  * Follows up an interaction response without the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral].
  */
-public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
+public suspend inline fun InteractionResponseBehavior.followUpPublic(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val message = kord.rest.interaction.createFollowupMessage(applicationId, token, ephemeral = false, builder)
     return PublicFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)

@@ -1,12 +1,7 @@
 package dev.kord.core.event.interaction
 
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.AutoCompleteInteractionBehavior
-import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
-import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
-import dev.kord.core.behavior.interaction.followUp
-import dev.kord.core.behavior.interaction.respondEphemeral
-import dev.kord.core.behavior.interaction.respondPublic
+import dev.kord.core.behavior.interaction.*
 import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.interaction.*
 import dev.kord.core.event.kordCoroutineScope
@@ -26,7 +21,8 @@ import kotlinx.coroutines.CoroutineScope
  * * [respondEphemeral][ActionInteraction.respondEphemeral] - same as ephemeral acknowledgement, but an immediate result (message) can be supplied.
  *
  * Once an interaction has been acknowledged,
- * you can use [PublicInteractionResponseBehavior.followUp] or [EphemeralInteractionResponseBehavior.followUp] to display additional messages.
+ * you can use [InteractionResponseBehavior.followUpPublic] or [InteractionResponseBehavior.followUpEphemeral] to
+ * display additional messages.
  *
  * The resulting followup message and its methods may differ based on which method is used.
  * * Following up an acknowledgement results in replacing "The bot is thinking" prompt with the followup content.
