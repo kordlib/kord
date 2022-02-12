@@ -49,7 +49,7 @@ public sealed class ComponentData {
                         value = value
                     )
                 }
-                is DiscordModalComponent -> {
+                is DiscordTextInputComponent -> {
                     TextInputComponentData(
                         type,
                         entity.style,

@@ -64,7 +64,7 @@ public sealed class DiscordComponent {
             val componentType = element.jsonObject["type"]?.jsonPrimitive?.intOrNull ?: error("Missing component type ID!")
 
             return when (componentType) {
-                ComponentType.TextInput.value -> DiscordModalComponent.serializer()
+                ComponentType.TextInput.value -> DiscordTextInputComponent.serializer()
                 else -> DiscordChatComponent.serializer()
             }
         }
@@ -97,7 +97,7 @@ public data class DiscordChatComponent(
 ) : DiscordComponent()
 
 @Serializable
-public data class DiscordModalComponent(
+public data class DiscordTextInputComponent(
      override val type: ComponentType,
     public val style: Optional<TextInputStyle> = Optional.Missing(),
      override val label: Optional<String> = Optional.Missing(),
