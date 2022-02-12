@@ -56,7 +56,7 @@ public data class AutoCompleteResponseCreateRequest<T>(
 
 @Serializable
 public data class ModalResponseCreateRequest(
-    val type: InteractionResponseType,
+    val type: InteractionResponseType.Modal,
     val data: DiscordModal
 )
 

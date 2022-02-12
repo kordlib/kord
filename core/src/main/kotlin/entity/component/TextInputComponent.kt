@@ -7,9 +7,7 @@ import dev.kord.core.cache.data.TextInputComponentData
 import dev.kord.core.entity.interaction.ComponentInteraction
 
 /**
- * An interactive component rendered on a Message.
- * If this button contains a [customId] and is clicked by a user,
- * a [InteractionCreateEvent] with a [ComponentInteraction] will fire.
+ * An interactive component rendered on a Modal.
  */
 
 public class TextInputComponent(override val data: TextInputComponentData) : Component {
@@ -23,9 +21,9 @@ public class TextInputComponent(override val data: TextInputComponentData) : Com
     public val style: TextInputStyle get() = data.style.value!!
 
     /**
-     * The text that appears on the button, if present.
+     * The label for this text input.
      */
-    public val label: String? get() = data.label.value
+    public val label: String get() = data.label.value!!
 
     /**
      * The custom identifier for this Text Input.
