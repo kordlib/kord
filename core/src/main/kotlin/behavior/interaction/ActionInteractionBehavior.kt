@@ -2,9 +2,7 @@ package dev.kord.core.behavior.interaction
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.response.EphemeralInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.response.EphemeralMessageInteractionResponseBehavior
-import dev.kord.core.behavior.interaction.response.PublicInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.response.PublicMessageInteractionResponseBehavior
 import dev.kord.core.entity.Message
 import dev.kord.core.exception.EntityNotFoundException
@@ -25,7 +23,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
     /**
      * Acknowledges an interaction ephemerally.
      *
-     * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
+     * @return [EphemeralMessageInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
      */
     public suspend fun acknowledgeEphemeral(): EphemeralMessageInteractionResponseBehavior {
         kord.rest.interaction.acknowledge(id, token, ephemeral = true)
@@ -35,9 +33,9 @@ public interface ActionInteractionBehavior : InteractionBehavior {
     /**
      * Acknowledges an interaction.
      *
-     * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
+     * @return [PublicMessageInteractionResponseBehavior] public acknowledgement of an interaction.
      */
-    public suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
+    public suspend fun acknowledgePublic(): PublicMessageInteractionResponseBehavior {
         kord.rest.interaction.acknowledge(id, token, ephemeral = false)
         return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
     }
@@ -62,14 +60,14 @@ public interface ActionInteractionBehavior : InteractionBehavior {
 
 
 /**
- * Acknowledges an interaction and responds with [PublicInteractionResponseBehavior].
+ * Acknowledges an interaction and responds with [PublicMessageInteractionResponseBehavior].
  *
  * @param builder [InteractionResponseCreateBuilder] used to create a public response.
- * @return [PublicInteractionResponseBehavior] public response to the interaction.
+ * @return [PublicMessageInteractionResponseBehavior] public response to the interaction.
  */
 public suspend inline fun ActionInteractionBehavior.respondPublic(
     builder: InteractionResponseCreateBuilder.() -> Unit
-): PublicInteractionResponseBehavior {
+): PublicMessageInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     kord.rest.interaction.createInteractionResponse(id, token, ephemeral = false, builder)
     return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
@@ -77,14 +75,14 @@ public suspend inline fun ActionInteractionBehavior.respondPublic(
 
 
 /**
- * Acknowledges an interaction and responds with [EphemeralInteractionResponseBehavior] with ephemeral flag.
+ * Acknowledges an interaction and responds with [EphemeralMessageInteractionResponseBehavior] with ephemeral flag.
  *
- * @param builder [InteractionResponseCreateBuilder] used to a create an ephemeral response.
- * @return [InteractionResponseBehavior] ephemeral response to the interaction.
+ * @param builder [InteractionResponseCreateBuilder] used to create an ephemeral response.
+ * @return [EphemeralMessageInteractionResponseBehavior] ephemeral response to the interaction.
  */
 public suspend inline fun ActionInteractionBehavior.respondEphemeral(
     builder: InteractionResponseCreateBuilder.() -> Unit
-): EphemeralInteractionResponseBehavior {
+): EphemeralMessageInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     kord.rest.interaction.createInteractionResponse(id, token, ephemeral = true, builder)
     return EphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
