@@ -9,7 +9,6 @@ import dev.kord.core.entity.interaction.followup.EphemeralFollowupMessage
 import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
-import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -17,7 +16,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a [Discord ActionInteraction Response](https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction)
  */
-public interface InteractionResponseBehavior : KordObject, Strategizable {
+public sealed interface InteractionResponseBehavior : KordObject, Strategizable {
     public val applicationId: Snowflake
     public val token: String
 
@@ -57,4 +56,3 @@ public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder:
     val message = kord.rest.interaction.createFollowupMessage(applicationId, token, ephemeral = true, builder)
     return EphemeralFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
 }
-
