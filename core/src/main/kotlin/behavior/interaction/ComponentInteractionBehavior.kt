@@ -6,7 +6,6 @@ import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.response.EphemeralInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.response.EphemeralMessageInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.response.PopupInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.response.PublicMessageInteractionResponseBehavior
@@ -148,7 +147,7 @@ public suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
  */
 public suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessage(
     builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
-): EphemeralInteractionResponseBehavior {
+): EphemeralMessageInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
     val request = UpdateMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
