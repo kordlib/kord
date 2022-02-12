@@ -1,4 +1,4 @@
-package dev.kord.core.behavior.interaction
+package behavior.interaction.followup
 
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake

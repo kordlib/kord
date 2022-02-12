@@ -2,12 +2,9 @@ package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.GuildInteractionBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.entity.Guild
+import dev.kord.core.behavior.interaction.GuildInteractionBehavior
 import dev.kord.core.entity.Member
-import dev.kord.core.entity.channel.GuildMessageChannel
-import dev.kord.core.entity.channel.MessageChannel
 
 public sealed interface GuildInteraction : Interaction, GuildInteractionBehavior {
     public override val guildId: Snowflake get() = data.guildId.value!!

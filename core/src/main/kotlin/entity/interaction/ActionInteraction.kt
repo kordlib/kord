@@ -309,61 +309,6 @@ public sealed interface GlobalInteraction : GlobalInteractionBehavior, Interacti
     public override val user: User get() = User(data.user.value!!, kord)
 }
 
-/**
- * An [ActionInteraction] that took place in a Global Context with [GlobalApplicationCommand].
- */
-public sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInteraction, GlobalInteraction {
-    /**
-     * The user who invoked the interaction.
-     */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GlobalApplicationCommandInteraction =
-        GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
-
-    override val applicationId: Snowflake
-        get() = super<ApplicationCommandInteraction>.applicationId
-}
-
-public fun GlobalApplicationCommandInteraction(
-    data: InteractionData,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier
-): GlobalApplicationCommandInteraction {
-    return when (data.data.type.value) {
-        ApplicationCommandType.ChatInput -> GlobalChatInputCommandInteraction(data, kord, supplier)
-        ApplicationCommandType.User -> GlobalUserCommandInteraction(data, kord, supplier)
-        ApplicationCommandType.Message -> GlobalMessageCommandInteraction(data, kord, supplier)
-        is ApplicationCommandType.Unknown -> error("Unknown interaction.")
-        null -> error("No component type was provided")
-    }
-}
-
-/**
- * An [ActionInteraction] that took place in a Global Context with [dev.kord.core.entity.application.GuildApplicationCommand].
- */
-
-
-public sealed interface GuildApplicationCommandInteraction : ApplicationCommandInteraction, GuildInteraction {
-
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildApplicationCommandInteraction =
-        GuildApplicationCommandInteraction(data, kord, strategy.supply(kord))
-
-}
-
-public fun GuildApplicationCommandInteraction(
-    data: InteractionData,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier
-): GuildApplicationCommandInteraction {
-    return when (data.data.type.value) {
-        ApplicationCommandType.ChatInput -> GuildChatInputCommandInteraction(data, kord, supplier)
-        ApplicationCommandType.User -> GuildUserCommandInteraction(data, kord, supplier)
-        ApplicationCommandType.Message -> GuildMessageCommandInteraction(data, kord, supplier)
-        is ApplicationCommandType.Unknown -> error("Unknown interaction.")
-        null -> error("No interaction type provided.")
-    }
-}
-
-
 public fun OptionValue<*>.user(): User = value as User
 
 
