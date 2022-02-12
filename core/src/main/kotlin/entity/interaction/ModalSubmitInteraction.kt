@@ -8,6 +8,7 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.component.Component
+import dev.kord.core.entity.component.SelectMenuComponent
 import dev.kord.core.event.interaction.GlobalModalSubmitInteractionCreateEvent
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -15,6 +16,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public sealed interface ModalSubmitInteraction : Interaction, ActionInteraction {
     public val customId: String get() = data.data.customId.value!!
     public val components: List<ActionRowComponent> get() = data.data.components.orEmpty().map { ActionRowComponent(it) }
+
 }
 
 public class GuildModalSubmitInteraction(

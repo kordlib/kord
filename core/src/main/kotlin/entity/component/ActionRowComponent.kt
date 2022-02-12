@@ -33,6 +33,12 @@ public class ActionRowComponent(override val data: ComponentData) : Component {
     public val selectMenus: List<SelectMenuComponent>
         get() = components.filterIsInstance<SelectMenuComponent>()
 
+    /**
+     * The [TextInputComponent] that are nested inside this component.
+     */
+    public val textInputs: List<TextInputComponent>
+        get() = components.filterIsInstance<TextInputComponent>()
+
     override fun toString(): String = "ActionRowComponent(data=$data)"
 
 }

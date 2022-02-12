@@ -30,7 +30,7 @@ public class TextInputComponent(override val data: TextInputComponentData) : Com
     /**
      * The custom identifier for this Text Input.
      */
-    public val customId: String? get() = data.customId.value
+    public val customId: String get() = data.customId.value!!
 
     /**
      * The minimum text length of the text input, if present.
