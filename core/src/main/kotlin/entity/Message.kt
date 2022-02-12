@@ -10,7 +10,6 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.interaction.InteractionResponseBehavior
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
@@ -18,7 +17,6 @@ import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.component.Component
 import dev.kord.core.entity.interaction.ActionInteraction
-import dev.kord.core.entity.interaction.FollowupMessage
 import dev.kord.core.entity.interaction.MessageInteraction
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier

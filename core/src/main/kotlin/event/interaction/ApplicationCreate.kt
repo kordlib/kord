@@ -2,9 +2,6 @@ package dev.kord.core.event.interaction
 
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.AutoCompleteInteractionBehavior
-import dev.kord.core.behavior.interaction.EphemeralInteractionResponseBehavior
-import dev.kord.core.behavior.interaction.PublicInteractionResponseBehavior
-import dev.kord.core.behavior.interaction.followUp
 import dev.kord.core.behavior.interaction.respondEphemeral
 import dev.kord.core.behavior.interaction.respondPublic
 import dev.kord.core.entity.application.ApplicationCommand

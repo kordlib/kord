@@ -1,12 +1,12 @@
-package behavior.interaction.response
+package dev.kord.core.behavior.interaction.response
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.interaction.EphemeralFollowupMessage
-import dev.kord.core.entity.interaction.PublicFollowupMessage
+import dev.kord.core.entity.interaction.followup.EphemeralFollowupMessage
+import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
@@ -58,17 +58,3 @@ public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder:
     return EphemeralFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
 }
 
-/**
- * Requests to edit this interaction response.
- *
- * @return The edited [Message] of the interaction response.
- *
- * @throws RestRequestException if something went wrong during the request.
- */
-public suspend inline fun InteractionResponseBehavior.edit(
-    builder: InteractionResponseModifyBuilder.() -> Unit,
-): Message {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val message = kord.rest.interaction.modifyInteractionResponse(applicationId, token, builder)
-    return Message(message.toData(), kord)
-}

@@ -1,10 +1,10 @@
-package behavior.interaction.followup
+package dev.kord.core.behavior.interaction.followup
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
-import dev.kord.core.entity.interaction.EphemeralFollowupMessage
+import dev.kord.core.entity.interaction.followup.EphemeralFollowupMessage
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder

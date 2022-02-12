@@ -6,6 +6,10 @@ import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
+import dev.kord.core.behavior.interaction.response.EphemeralInteractionResponseBehavior
+import dev.kord.core.behavior.interaction.response.EphemeralMessageInteractionResponseBehavior
+import dev.kord.core.behavior.interaction.response.PopupInteractionResponseBehavior
+import dev.kord.core.behavior.interaction.response.PublicMessageInteractionResponseBehavior
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.interaction.ModalBuilder
@@ -29,14 +33,14 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * on public and ephemeral messages. The only difference is in the **followUp** calls,
      * which will become public or ephemeral respectively.
      */
-    public suspend fun acknowledgePublicDeferredMessageUpdate(): PublicInteractionResponseBehavior {
+    public suspend fun acknowledgePublicDeferredMessageUpdate(): PublicMessageInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
             type = InteractionResponseType.DeferredUpdateMessage
         )
 
         kord.rest.interaction.createInteractionResponse(id, token, request)
 
-        return PublicInteractionResponseBehavior(applicationId, token, kord)
+        return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
     }
 
     /**
@@ -50,7 +54,7 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * on public and ephemeral messages. The only difference is in the **followUp** calls,
      * which will become ephemeral or public respectively.
      */
-    public suspend fun acknowledgeEphemeralDeferredMessageUpdate(): EphemeralInteractionResponseBehavior {
+    public suspend fun acknowledgeEphemeralDeferredMessageUpdate(): EphemeralMessageInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
             data = Optional.Value(
                 InteractionApplicationCommandCallbackData(
@@ -62,7 +66,7 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
 
         kord.rest.interaction.createInteractionResponse(id, token, request)
 
-        return EphemeralInteractionResponseBehavior(applicationId, token, kord)
+        return EphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
     }
 
 
@@ -72,10 +76,10 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
 
 }
 
-public inline suspend fun ComponentInteractionBehavior.modal(title: String, customId: String, builder: ModalBuilder.() -> Unit): PublicInteractionResponseBehavior {
+public suspend inline fun ComponentInteractionBehavior.modal(title: String, customId: String, builder: ModalBuilder.() -> Unit): PopupInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     kord.rest.interaction.createModalInteractionResponse(id, token,title, customId, builder)
-    return PublicInteractionResponseBehavior(applicationId, token, kord)
+    return PopupInteractionResponseBehavior(applicationId, token, kord)
 }
 
 /**
@@ -120,7 +124,7 @@ public fun ComponentInteractionBehavior(
  */
 public suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
     builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
-): PublicInteractionResponseBehavior {
+): PublicMessageInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
     val request = UpdateMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
@@ -131,7 +135,7 @@ public suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
         request.copy(request = request.request.copy(InteractionResponseType.UpdateMessage))
     )
 
-    return PublicInteractionResponseBehavior(applicationId, token, kord)
+    return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
 }
 
 /**
@@ -155,5 +159,5 @@ public suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessag
         request
     )
 
-    return EphemeralInteractionResponseBehavior(applicationId, token, kord)
+    return EphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
 }

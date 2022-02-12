@@ -1,6 +1,7 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.mapList
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
