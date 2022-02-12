@@ -1,5 +1,6 @@
 package dev.kord.core.entity.interaction
 
+import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.EphemeralFollowupMessageBehavior
@@ -35,8 +36,16 @@ public sealed class FollowupMessage(public val message: Message) : FollowupMessa
      * The id of the [MessageChannel] the followup message was sent in.
      */
     override val channelId: Snowflake get() = message.channelId
+}
 
 
+@PublishedApi
+internal fun FollowupMessage(message: Message, applicationId: Snowflake, token: String, kord: Kord): FollowupMessage {
+    val isEphemeral = message.flags?.contains(MessageFlag.Ephemeral) ?: false
+    return when {
+        isEphemeral -> EphemeralFollowupMessage(message, applicationId, token, kord)
+        else -> PublicFollowupMessage(message, applicationId, token, kord)
+    }
 }
 
 

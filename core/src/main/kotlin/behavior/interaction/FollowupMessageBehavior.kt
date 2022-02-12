@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.interaction
 
-import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.toData
@@ -49,11 +48,5 @@ public suspend inline fun FollowupMessageBehavior.edit(
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, builder)
 
-    val isEphemeral = response.flags.value?.contains(MessageFlag.Ephemeral) ?: false
-    val message = Message(response.toData(), kord)
-
-    return when {
-        isEphemeral -> EphemeralFollowupMessage(message, applicationId, token, kord)
-        else -> PublicFollowupMessage(message, applicationId, token, kord)
-    }
+    return FollowupMessage(Message(response.toData(), kord), applicationId, token, kord)
 }

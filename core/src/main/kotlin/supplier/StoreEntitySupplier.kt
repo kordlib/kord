@@ -12,7 +12,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
-import dev.kord.core.entity.interaction.PublicFollowupMessage
+import dev.kord.core.entity.interaction.FollowupMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Instant
@@ -239,7 +239,7 @@ public class StoreEntitySupplier(
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): PublicFollowupMessage? {
+    ): FollowupMessage? {
         return storeAndReturn(supplier.getFollowupMessageOrNull(applicationId, interactionToken, messageId)) {
             it.message.data
         }
