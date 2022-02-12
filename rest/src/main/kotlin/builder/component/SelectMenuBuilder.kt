@@ -30,7 +30,7 @@ public class SelectMenuBuilder(
      * The range of values that can be accepted. Accepts any range between [0,25].
      * Defaults to `1..1`.
      */
-    public var allowedValues: IntRange = 1..1
+    public var allowedValues: ClosedRange<Int> = 1..1
 
 
     private var _placeholder: Optional<String> = Optional.Missing()
@@ -63,8 +63,8 @@ public class SelectMenuBuilder(
             customId = Optional(customId),
             disabled = _disabled,
             placeholder = _placeholder,
-            minValues = OptionalInt.Value(allowedValues.first),
-            maxValues = OptionalInt.Value(allowedValues.last),
+            minValues = OptionalInt.Value(allowedValues.start),
+            maxValues = OptionalInt.Value(allowedValues.endInclusive),
             options = Optional(options.map { it.build() })
         )
     }
