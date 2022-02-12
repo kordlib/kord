@@ -24,7 +24,7 @@ public class GuildModalSubmitInteraction(
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : GuildInteraction, ModalSubmitInteraction {
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction {
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildModalSubmitInteraction {
         return GuildModalSubmitInteraction(data, kord, strategy.supply(kord))
     }
 }
