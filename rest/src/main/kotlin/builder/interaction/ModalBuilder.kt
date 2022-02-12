@@ -13,7 +13,7 @@ public class ModalBuilder(
     public var title: String,
     public var customId: String
 ) : RequestBuilder<DiscordModal> {
-    public val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    public val components: MutableList<ActionRowBuilder> = mutableListOf()
 
     /**
      * Adds an Action Row to the modal, configured by the [builder].
