@@ -1,13 +1,10 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.CommandArgument
-import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.AutoCompleteInteractionBehavior
-import dev.kord.core.behavior.interaction.GuildInteractionBehavior
 import dev.kord.core.cache.data.InteractionData
-import dev.kord.core.entity.User
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -60,12 +57,7 @@ public class GuildAutoCompleteInteraction(
     override val data: InteractionData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : AutoCompleteInteraction, GuildInteractionBehavior {
-    override val guildId: Snowflake
-        get() = data.guildId.value!!
-
-    override val user: User get() = User(data.user.value!!, kord)
-
+) : AutoCompleteInteraction, GuildInteraction {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction =
         GuildAutoCompleteInteraction(data, kord, strategy.supply(kord))
 }
