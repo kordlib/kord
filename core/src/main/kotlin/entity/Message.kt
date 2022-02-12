@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.mapNullable
@@ -230,6 +231,9 @@ public class Message(
      * The type of this message.
      */
     public val type: MessageType get() = data.type
+
+    /** The flags of this message. */
+    public val flags: MessageFlags? get() = data.flags.value
 
     /**
      * The [id][Webhook.id] of the [Webhook] that was used to send this message.

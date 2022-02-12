@@ -308,26 +308,32 @@ public data class DiscordMentionedChannel(
 )
 
 public enum class MessageFlag(public val code: Int) {
-    /** This message has been published to subscribed channels (via Channel Following) */
-    CrossPosted(1),
+    /** This message has been published to subscribed channels (via Channel Following). */
+    CrossPosted(1 shl 0),
 
-    /** This message originated from a message in another channel (via Channel Following) */
-    IsCrossPost(2),
+    /** This message originated from a message in another channel (via Channel Following). */
+    IsCrossPost(1 shl 1),
 
     /** Do not include any embeds when serializing this message. */
-    SuppressEmbeds(4),
+    SuppressEmbeds(1 shl 2),
 
     /** The source message for this crosspost has been deleted (via Channel Following). */
-    SourceMessageDeleted(8),
+    SourceMessageDeleted(1 shl 3),
 
-    /* This message came from the urgent message system. */
-    Urgent(16),
+    /** This message came from the urgent message system. */
+    Urgent(1 shl 4),
 
-    HasThread(32),
+    /** This message has an associated thread, with the same id as the message. */
+    HasThread(1 shl 5),
 
-    Ephemeral(64),
+    /** This message is only visible to the user who invoked the Interaction. */
+    Ephemeral(1 shl 6),
 
-    Loading(128);
+    /** This message is an Interaction Response and the bot is "thinking". */
+    Loading(1 shl 7),
+
+    /** This message failed to mention some roles and add their members to the thread. */
+    FailedToMentionSomeRolesInThread(1 shl 8),
 }
 
 @Serializable(with = MessageFlags.Serializer::class)
@@ -790,9 +796,10 @@ public sealed class MessageType(public val code: Int) {
     public object GuildDiscoveryGracePeriodFinalWarning : MessageType(17)
     public object ThreadCreated : MessageType(18)
     public object Reply : MessageType(19)
-    public object ApplicationCommand : MessageType(20)
+    public object ChatInputCommand : MessageType(20)
     public object ThreadStarterMessage : MessageType(21)
     public object GuildInviteReminder : MessageType(22)
+    public object ContextMenuCommand : MessageType(23)
 
     internal object MessageTypeSerializer : KSerializer<MessageType> {
 
@@ -831,11 +838,11 @@ public sealed class MessageType(public val code: Int) {
                 GuildDiscoveryGracePeriodInitialWarning,
                 GuildDiscoveryGracePeriodFinalWarning,
                 ThreadCreated,
-                ApplicationCommand,
+                ChatInputCommand,
                 ThreadStarterMessage,
                 GuildInviteReminder,
-
-                )
+                ContextMenuCommand,
+            )
     }
 }
 
