@@ -2,7 +2,6 @@ package dev.kord.core.behavior.interaction.response
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.entity.Strategizable
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.request.RestRequestException
