@@ -4,38 +4,37 @@ import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
-import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
 import dev.kord.core.cache.data.InteractionData
-import dev.kord.core.entity.application.GlobalApplicationCommand
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import java.util.*
 
-/**
- * Represents an interaction of type [ApplicationCommand][dev.kord.common.entity.InteractionType.ApplicationCommand]
- */
-public sealed interface ApplicationCommandInteraction :  ActionInteraction, ApplicationCommandInteractionBehavior {
+/** An [ActionInteraction] created when a user uses an [ApplicationCommand]. */
+public sealed interface ApplicationCommandInteraction : ActionInteraction, ApplicationCommandInteractionBehavior {
+
+    /** The id of the invoked command. */
+    public val invokedCommandId: Snowflake get() = data.data.id.value!!
+
+    /** The name of the invoked command. */
+    public val invokedCommandName: String get() = data.data.name.value!!
+
+    /** The type of the invoked command. */
     public val invokedCommandType: ApplicationCommandType get() = data.data.type.value!!
 
     public val resolvedObjects: ResolvedObjects?
-        get() = data.data.resolvedObjectsData.unwrap {
-            ResolvedObjects(it, kord)
-        }
+        get() = data.data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ApplicationCommandInteraction
 }
 
-/**
- * An [ActionInteraction] that took place in a Global Context with [GlobalApplicationCommand].
- */
+
+/** An [ApplicationCommandInteraction] that took place in a global context (e.g. a DM). */
 public sealed interface GlobalApplicationCommandInteraction : ApplicationCommandInteraction, GlobalInteraction {
-    /**
-     * The user who invoked the interaction.
-     */
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GlobalApplicationCommandInteraction =
         GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
-
-    override val applicationId: Snowflake
-        get() = super<ApplicationCommandInteraction>.applicationId
 }
 
 public fun GlobalApplicationCommandInteraction(
@@ -43,25 +42,21 @@ public fun GlobalApplicationCommandInteraction(
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier
 ): GlobalApplicationCommandInteraction {
-    return when (data.data.type.value) {
+    return when (val type = data.data.type.value) {
         ApplicationCommandType.ChatInput -> GlobalChatInputCommandInteraction(data, kord, supplier)
         ApplicationCommandType.User -> GlobalUserCommandInteraction(data, kord, supplier)
         ApplicationCommandType.Message -> GlobalMessageCommandInteraction(data, kord, supplier)
-        is ApplicationCommandType.Unknown -> error("Unknown interaction.")
-        null -> error("No component type was provided")
+        is ApplicationCommandType.Unknown -> error("Unknown application command type ${type.value}")
+        null -> error("No application command type was provided")
     }
 }
 
-/**
- * An [ActionInteraction] that took place in a Global Context with [dev.kord.core.entity.application.GuildApplicationCommand].
- */
 
-
+/** An [ApplicationCommandInteraction] that took place in the context of a [Guild]. */
 public sealed interface GuildApplicationCommandInteraction : ApplicationCommandInteraction, GuildInteraction {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildApplicationCommandInteraction =
         GuildApplicationCommandInteraction(data, kord, strategy.supply(kord))
-
 }
 
 public fun GuildApplicationCommandInteraction(
@@ -69,33 +64,11 @@ public fun GuildApplicationCommandInteraction(
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier
 ): GuildApplicationCommandInteraction {
-    return when (data.data.type.value) {
+    return when (val type = data.data.type.value) {
         ApplicationCommandType.ChatInput -> GuildChatInputCommandInteraction(data, kord, supplier)
         ApplicationCommandType.User -> GuildUserCommandInteraction(data, kord, supplier)
         ApplicationCommandType.Message -> GuildMessageCommandInteraction(data, kord, supplier)
-        is ApplicationCommandType.Unknown -> error("Unknown interaction.")
-        null -> error("No interaction type provided.")
-    }
-}
-
-public class UnknownApplicationCommandInteraction(
-    override val data: InteractionData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier
-) : ApplicationCommandInteraction {
-    override val user: UserBehavior
-        get() = UserBehavior(data.user.value!!.id, kord)
-
-    override fun equals(other: Any?): Boolean {
-        return if (other !is ApplicationCommandInteraction) false
-        else id == other.id
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hash(id)
-    }
-
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): UnknownApplicationCommandInteraction {
-        return UnknownApplicationCommandInteraction(data, kord, strategy.supply(kord))
+        is ApplicationCommandType.Unknown -> error("Unknown application command type ${type.value}")
+        null -> error("No application command type was provided")
     }
 }

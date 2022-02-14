@@ -1,10 +1,13 @@
 package dev.kord.core.behavior.interaction
 
+import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.response.EphemeralMessageInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.response.PublicMessageInteractionResponseBehavior
+import dev.kord.core.behavior.interaction.response.edit
 import dev.kord.core.entity.Message
+import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -14,16 +17,13 @@ import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-/**
- * The behavior of a [Discord ActionInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction) which does perform an action
- * (e.g. slash commands and context actions)
- */
+/** The behavior of an [ActionInteraction]. */
 public interface ActionInteractionBehavior : InteractionBehavior {
 
     /**
-     * Acknowledges an interaction ephemerally.
+     * Acknowledges the interaction ephemerally. The user will see a 'loading' animation.
      *
-     * @return [EphemeralMessageInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
+     * Call [edit][EphemeralMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
      */
     public suspend fun acknowledgeEphemeral(): EphemeralMessageInteractionResponseBehavior {
         kord.rest.interaction.acknowledge(id, token, ephemeral = true)
@@ -31,9 +31,9 @@ public interface ActionInteractionBehavior : InteractionBehavior {
     }
 
     /**
-     * Acknowledges an interaction.
+     * Acknowledges the interaction publicly. The user will see a 'loading' animation.
      *
-     * @return [PublicMessageInteractionResponseBehavior] public acknowledgement of an interaction.
+     * Call [edit][PublicMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
      */
     public suspend fun acknowledgePublic(): PublicMessageInteractionResponseBehavior {
         kord.rest.interaction.acknowledge(id, token, ephemeral = false)
@@ -56,11 +56,14 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      */
     public suspend fun getOriginalInteractionResponse(): Message =
         kord.with(rest).getOriginalInteraction(applicationId, token)
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ActionInteractionBehavior =
+        ActionInteractionBehavior(id, channelId, token, applicationId, kord, strategy)
 }
 
 
 /**
- * Acknowledges an interaction and responds with [PublicMessageInteractionResponseBehavior].
+ * Responds to the interaction with a public message.
  *
  * @param builder [InteractionResponseCreateBuilder] used to create a public response.
  * @return [PublicMessageInteractionResponseBehavior] public response to the interaction.
@@ -75,7 +78,7 @@ public suspend inline fun ActionInteractionBehavior.respondPublic(
 
 
 /**
- * Acknowledges an interaction and responds with [EphemeralMessageInteractionResponseBehavior] with ephemeral flag.
+ * Responds to the interaction with an [ephemeral][MessageFlag.Ephemeral] message.
  *
  * @param builder [InteractionResponseCreateBuilder] used to create an ephemeral response.
  * @return [EphemeralMessageInteractionResponseBehavior] ephemeral response to the interaction.
@@ -88,7 +91,7 @@ public suspend inline fun ActionInteractionBehavior.respondEphemeral(
     return EphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
 }
 
-public fun InteractionBehavior(
+public fun ActionInteractionBehavior(
     id: Snowflake,
     channelId: Snowflake,
     token: String,
@@ -96,22 +99,10 @@ public fun InteractionBehavior(
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ): ActionInteractionBehavior = object : ActionInteractionBehavior {
-    override val id: Snowflake
-        get() = id
-
-    override val token: String
-        get() = token
-
-    override val applicationId: Snowflake
-        get() = applicationId
-
-    override val kord: Kord
-        get() = kord
-
-    override val channelId: Snowflake
-        get() = channelId
-
-
+    override val id: Snowflake = id
+    override val channelId: Snowflake = channelId
+    override val token: String = token
+    override val applicationId: Snowflake = applicationId
+    override val kord: Kord = kord
     override val supplier: EntitySupplier = strategy.supply(kord)
-
 }

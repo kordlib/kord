@@ -1,10 +1,14 @@
 package dev.kord.core.entity.interaction
 
+import dev.kord.core.behavior.interaction.DataInteractionBehavior
+import dev.kord.core.supplier.EntitySupplyStrategy
+
 /**
- * An instance of [ActionInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction) which does respond to a data request from
- * Discord like [AutoCompleteInteractions][AutoCompleteInteraction].
+ * An [Interaction] created when Discord requests some form of data (e.g. for auto-complete).
  *
  * @see ActionInteraction
- * @see Interaction
  */
-public sealed interface DataInteraction : Interaction
+public sealed interface DataInteraction : Interaction, DataInteractionBehavior {
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): DataInteraction
+}

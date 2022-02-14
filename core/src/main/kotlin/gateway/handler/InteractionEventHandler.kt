@@ -7,14 +7,9 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.idEq
-import dev.kord.core.entity.application.GuildApplicationCommand
-import dev.kord.core.entity.application.GuildChatInputCommand
-import dev.kord.core.entity.application.GuildMessageCommand
-import dev.kord.core.entity.application.GuildUserCommand
-import dev.kord.core.entity.application.UnknownGuildApplicationCommand
+import dev.kord.core.entity.application.*
 import dev.kord.core.entity.interaction.*
 import dev.kord.core.event.interaction.*
-import dev.kord.core.event.interaction.AutoCompleteInteractionCreateEvent
 import dev.kord.gateway.*
 import kotlinx.coroutines.CoroutineScope
 import dev.kord.core.event.Event as CoreEvent
@@ -36,21 +31,20 @@ public class InteractionEventHandler(
     private fun handle(event: InteractionCreate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent {
         val data = InteractionData.from(event.interaction)
         val coreEvent = when(val interaction = Interaction.from(data, kord)) {
-            is AutoCompleteInteraction -> AutoCompleteInteractionCreateEvent(interaction, kord, shard, coroutineScope)
+            is GlobalAutoCompleteInteraction -> GlobalAutoCompleteInteractionCreateEvent(kord, shard, interaction, coroutineScope)
             is GlobalChatInputCommandInteraction -> GlobalChatInputCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GlobalUserCommandInteraction -> GlobalUserCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GlobalMessageCommandInteraction -> GlobalMessageCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GlobalButtonInteraction -> GlobalButtonInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GlobalSelectMenuInteraction -> GlobalSelectMenuInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GlobalModalSubmitInteraction -> GlobalModalSubmitInteractionCreateEvent(interaction, shard, kord, coroutineScope)
+            is GuildAutoCompleteInteraction -> GuildAutoCompleteInteractionCreateEvent(kord, shard, interaction, coroutineScope)
             is GuildChatInputCommandInteraction -> GuildChatInputCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GuildMessageCommandInteraction -> GuildMessageCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GuildUserCommandInteraction -> GuildUserCommandInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GuildButtonInteraction -> GuildButtonInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GuildSelectMenuInteraction -> GuildSelectMenuInteractionCreateEvent(interaction, kord, shard, coroutineScope)
             is GuildModalSubmitInteraction -> GuildModalSubmitInteractionCreateEvent(interaction, kord, shard, coroutineScope)
-            is UnknownComponentInteraction -> error("Unknown component.")
-            is UnknownApplicationCommandInteraction -> error("Unknown component.")
         }
         return coreEvent
     }

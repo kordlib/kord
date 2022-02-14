@@ -1,8 +1,6 @@
 package dev.kord.rest.builder.message.create
 
 import dev.kord.common.entity.InteractionResponseType
-import dev.kord.common.entity.MessageFlag
-import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.*
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.RequestBuilder
@@ -14,7 +12,7 @@ import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 
 
-public class UpdateMessageInteractionResponseCreateBuilder(public var ephemeral: Boolean = false) :
+public class UpdateMessageInteractionResponseCreateBuilder :
     MessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {
 
@@ -41,12 +39,10 @@ public class UpdateMessageInteractionResponseCreateBuilder(public var ephemeral:
                     allowedMentions = Optional(allowedMentions).map { it.build() },
                     components = Optional(components).mapList { it.build() },
                     tts = Optional(tts).coerceToMissing().toPrimitive(),
-                    flags = Optional(if (ephemeral) MessageFlags(MessageFlag.Ephemeral) else null).coerceToMissing()
                 ).optional()
             ),
             Optional(files)
         )
 
     }
-
 }
