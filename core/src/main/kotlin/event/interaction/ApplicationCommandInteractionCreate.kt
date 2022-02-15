@@ -7,26 +7,26 @@ import dev.kord.core.event.kordCoroutineScope
 import kotlinx.coroutines.CoroutineScope
 
 /** An [Event] that fires when an [ApplicationCommandInteraction] is created. */
-public sealed interface ApplicationCommandInteractionInteractionCreateEvent : ActionInteractionCreateEvent {
+public sealed interface ApplicationCommandInteractionCreateEvent : ActionInteractionCreateEvent {
     override val interaction: ApplicationCommandInteraction
 }
 
 
 /** An [Event] that fires when a [GlobalApplicationCommandInteraction] is created. */
 public sealed interface GlobalApplicationCommandInteractionCreateEvent :
-    ApplicationCommandInteractionInteractionCreateEvent {
+    ApplicationCommandInteractionCreateEvent {
     override val interaction: GlobalApplicationCommandInteraction
 }
 
 /** An [Event] that fires when a [GuildApplicationCommandInteraction] is created. */
 public sealed interface GuildApplicationCommandInteractionCreateEvent :
-    ApplicationCommandInteractionInteractionCreateEvent {
+    ApplicationCommandInteractionCreateEvent {
     override val interaction: GuildApplicationCommandInteraction
 }
 
 
 /** An [Event] that fires when a [UserCommandInteraction] is created. */
-public sealed interface UserCommandInteractionCreateEvent : ApplicationCommandInteractionInteractionCreateEvent {
+public sealed interface UserCommandInteractionCreateEvent : ApplicationCommandInteractionCreateEvent {
     override val interaction: UserCommandInteraction
 }
 
@@ -48,7 +48,7 @@ public class GlobalUserCommandInteractionCreateEvent(
 
 
 /** An [Event] that fires when a [MessageCommandInteraction] is created. */
-public sealed interface MessageCommandInteractionCreateEvent : ApplicationCommandInteractionInteractionCreateEvent {
+public sealed interface MessageCommandInteractionCreateEvent : ApplicationCommandInteractionCreateEvent {
     override val interaction: MessageCommandInteraction
 }
 
@@ -74,7 +74,7 @@ public class GlobalMessageCommandInteractionCreateEvent(
 
 
 /** An [Event] that fires when a [ChatInputCommandInteraction] is created. */
-public sealed interface ChatInputCommandInteractionCreateEvent : ApplicationCommandInteractionInteractionCreateEvent {
+public sealed interface ChatInputCommandInteractionCreateEvent : ApplicationCommandInteractionCreateEvent {
     override val interaction: ChatInputCommandInteraction
 }
 
