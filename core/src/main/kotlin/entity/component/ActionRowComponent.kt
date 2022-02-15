@@ -10,7 +10,7 @@ import dev.kord.core.cache.data.ComponentData
 
 public class ActionRowComponent(override val data: ComponentData) : Component {
 
-    override val type: ComponentType
+    override val type: ComponentType.ActionRow
         get() = ComponentType.ActionRow
 
     /**

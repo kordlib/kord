@@ -43,7 +43,7 @@ public class TextInputBuilder(
     private var _required: OptionalBoolean = OptionalBoolean.Missing
 
     /**
-     * Whether this component is required to be filled, default false.
+     * Whether this component is required to be filled, default true.
      */
     public var required: Boolean? by ::_required.delegate()
 
