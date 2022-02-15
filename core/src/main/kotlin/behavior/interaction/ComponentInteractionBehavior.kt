@@ -24,6 +24,8 @@ import kotlin.contracts.contract
  * [message][ModalSubmitInteraction.message].
  */
 public interface ComponentInteractionBehavior : ActionInteractionBehavior {
+// this can not be a ModalParentInteractionBehavior since ModalSubmitInteractions implement ComponentInteractionBehavior
+// but can not be responded to with another modal (yet?)
 
     /**
      * Acknowledges a component interaction publicly with the intent of updating it later.
