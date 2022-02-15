@@ -58,7 +58,7 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * There is no requirement to actually update the message later, calling this is sufficient to handle the
      * interaction and stops any 'loading' animations in the client.
      *
-     * There is nothing that will prevent you from calling this for a [ephemeral][MessageFlag.Ephemeral] message but
+     * There is nothing that will prevent you from calling this for an [ephemeral][MessageFlag.Ephemeral] message but
      * subsequent operations on the returned [PublicMessageInteractionResponseBehavior] might fail.
      *
      * This is not available for [ModalSubmitInteraction]s that do not contain a
@@ -176,7 +176,7 @@ public suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
 /**
  * Responds to the interaction by updating the original public message.
  *
- * There is nothing that will prevent you from calling this for a [ephemeral][MessageFlag.Ephemeral] message but
+ * There is nothing that will prevent you from calling this for an [ephemeral][MessageFlag.Ephemeral] message but
  * subsequent operations on the returned [PublicMessageInteractionResponseBehavior] might fail.
  *
  * This is not available for [ModalSubmitInteraction]s that do not contain a [message][ModalSubmitInteraction.message].
