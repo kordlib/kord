@@ -1,6 +1,5 @@
 package dev.kord.core.entity.interaction
 
-import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.CommandArgument
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
@@ -12,12 +11,9 @@ import dev.kord.core.KordObject
 import dev.kord.core.behavior.interaction.GlobalInteractionBehavior
 import dev.kord.core.behavior.interaction.ActionInteractionBehavior
 import dev.kord.core.cache.data.ApplicationInteractionData
-import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.data.ResolvedObjectsData
 import dev.kord.core.entity.*
-import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.channel.ResolvedChannel
-import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
@@ -214,138 +210,3 @@ public class ResolvedObjects(
 }
 
 
-public sealed class OptionValue<out T>(public val value: T, public val focused: Boolean) {
-
-    public class RoleOptionValue(value: Role, focused: Boolean) : OptionValue<Role>(value, focused) {
-        override fun toString(): String = "RoleOptionValue(value=$value)"
-    }
-
-    public open class UserOptionValue(value: User, focused: Boolean) : OptionValue<User>(value, focused) {
-        override fun toString(): String = "UserOptionValue(value=$value)"
-    }
-
-    public class MemberOptionValue(value: Member, focused: Boolean) : UserOptionValue(value, focused) {
-        override fun toString(): String = "MemberOptionValue(value=$value)"
-    }
-
-    public class ChannelOptionValue(value: ResolvedChannel, focused: Boolean) :
-        OptionValue<ResolvedChannel>(value, focused) {
-        override fun toString(): String = "ChannelOptionValue(value=$value)"
-    }
-
-    public class AttachmentOptionValue(value: Attachment, focused: Boolean) : OptionValue<Attachment>(value, focused) {
-        override fun toString(): String = "AttachmentOptionValue(value=$value)"
-    }
-
-    public class IntOptionValue(value: Long, focused: Boolean) : OptionValue<Long>(value, focused) {
-        override fun toString(): String = "IntOptionValue(value=$value)"
-    }
-
-
-    public class NumberOptionValue(value: Double, focused: Boolean) : OptionValue<Double>(value, focused) {
-        override fun toString(): String = "DoubleOptionValue(value=$value)"
-    }
-
-    public class StringOptionValue(value: String, focused: Boolean) : OptionValue<String>(value, focused) {
-        override fun toString(): String = "StringOptionValue(value=$value)"
-    }
-
-    public class BooleanOptionValue(value: Boolean, focused: Boolean) : OptionValue<Boolean>(value, focused) {
-        override fun toString(): String = "BooleanOptionValue(value=$value)"
-    }
-
-    public class MentionableOptionValue(value: Entity, focused: Boolean) : OptionValue<Entity>(value, focused) {
-        override fun toString(): String = "MentionableOptionValue(value=$value)"
-    }
-
-}
-
-
-public fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjects?): OptionValue<*> {
-    val focused = value.focused.orElse(false)
-    return when (value) {
-        is CommandArgument.NumberArgument -> OptionValue.NumberOptionValue(value.value, focused)
-        is CommandArgument.BooleanArgument -> OptionValue.BooleanOptionValue(value.value, focused)
-        is CommandArgument.IntegerArgument -> OptionValue.IntOptionValue(value.value, focused)
-        is CommandArgument.StringArgument, is CommandArgument.AutoCompleteArgument -> OptionValue.StringOptionValue(
-            value.value as String,
-            focused
-        )
-        is CommandArgument.ChannelArgument -> {
-            val channel = resolvedObjects?.channels.orEmpty()[value.value]
-            requireNotNull(channel) { "channel expected for $value but was missing" }
-
-            OptionValue.ChannelOptionValue(channel, focused)
-        }
-
-        is CommandArgument.MentionableArgument -> {
-            val channel = resolvedObjects?.channels.orEmpty()[value.value]
-            val user = resolvedObjects?.users.orEmpty()[value.value]
-            val member = resolvedObjects?.members.orEmpty()[value.value]
-            val role = resolvedObjects?.roles.orEmpty()[value.value]
-
-            val entity = channel ?: member ?: user ?: role
-            requireNotNull(entity) { "user, member, or channel expected for $value but was missing" }
-
-            OptionValue.MentionableOptionValue(entity, focused)
-        }
-
-        is CommandArgument.RoleArgument -> {
-            val role = resolvedObjects?.roles.orEmpty()[value.value]
-            requireNotNull(role) { "role expected for $value but was missing" }
-
-            OptionValue.RoleOptionValue(role, focused)
-        }
-
-        is CommandArgument.UserArgument -> {
-            val member = resolvedObjects?.members.orEmpty()[value.value]
-
-            if (member != null) return OptionValue.MemberOptionValue(member, focused)
-
-            val user = resolvedObjects?.users.orEmpty()[value.value]
-            requireNotNull(user) { "user expected for $value but was missing" }
-
-            OptionValue.UserOptionValue(user, focused)
-        }
-
-        is CommandArgument.AttachmentArgument -> {
-            val attachment = resolvedObjects?.attachments.orEmpty()[value.value]
-            requireNotNull(attachment) { "attachment expected for $value but was missing" }
-
-            OptionValue.AttachmentOptionValue(attachment, focused)
-        }
-    }
-}
-
-
-public sealed interface GlobalInteraction : GlobalInteractionBehavior, Interaction {
-    public override val user: User get() = User(data.user.value!!, kord)
-}
-
-public fun OptionValue<*>.user(): User = value as User
-
-
-public fun OptionValue<*>.channel(): ResolvedChannel = value as ResolvedChannel
-
-
-public fun OptionValue<*>.role(): Role = value as Role
-
-
-public fun OptionValue<*>.member(): Member = value as Member
-
-
-public fun OptionValue<*>.string(): String = value.toString()
-
-
-public fun OptionValue<*>.boolean(): Boolean = value as Boolean
-
-
-public fun OptionValue<*>.int(): Long = value as Long
-
-
-public fun OptionValue<*>.number(): Double = value as Double
-
-
-public fun OptionValue<*>.mentionable(): Entity {
-    return value as Entity
-}
