@@ -8,11 +8,9 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.RoleBehavior
-import dev.kord.core.behavior.channel.GuildChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildChannelBehavior
-import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.TextChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.entity.channel.*
@@ -25,7 +23,6 @@ import dev.kord.core.switchIfEmpty
 import dev.kord.rest.Image
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
@@ -268,6 +265,7 @@ public class Guild(
     /**
      * The voice region id for the guild.
      */
+    @Suppress("DEPRECATION")
     @Deprecated(
         "The region field has been moved to Channel#rtcRegion in Discord API v9",
         ReplaceWith("Channel#rtcRegion")
@@ -487,8 +485,8 @@ public class Guild(
     public suspend fun getPublicUpdatesChannel(): TopGuildMessageChannel? = publicUpdatesChannel?.asChannel()
 
     /**
-     * Requests to get the the channel in which a discoverable server's rules should be found represented
-     *, returns null if the [TopGuildMessageChannel] isn't present, or [rulesChannelId] is null.
+     * Requests to get the channel in which a discoverable server's rules should be found represented,
+     * returns null if the [TopGuildMessageChannel] isn't present, or [rulesChannelId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -510,7 +508,7 @@ public class Guild(
     }
 
     /**
-     * Requests to get the channel where system messages (member joins, server boosts, etc) are sent,
+     * Requests to get the channel where system messages (member joins, server boosts, etc.) are sent,
      * returns null if the [TextChannel] isn't present or the [systemChannelId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.

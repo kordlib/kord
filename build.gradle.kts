@@ -1,4 +1,5 @@
 import org.ajoberstar.gradle.git.publish.GitPublishExtension
+import org.gradle.api.tasks.wrapper.Wrapper.DistributionType.ALL
 
 plugins {
     kotlin("jvm")
@@ -21,6 +22,11 @@ group = Library.group
 version = Library.version
 
 tasks {
+    wrapper {
+        gradleVersion = "7.4"
+        distributionType = ALL
+    }
+
     val dokkaOutputDir = "${rootProject.projectDir}/dokka"
 
     clean {
