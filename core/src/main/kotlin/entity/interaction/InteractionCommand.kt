@@ -7,10 +7,7 @@ import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.ApplicationInteractionData
-import dev.kord.core.entity.Entity
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Role
-import dev.kord.core.entity.User
+import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.ResolvedChannel
 
 /**
@@ -50,7 +47,9 @@ public sealed interface InteractionCommand : KordObject {
 
     public val roles: Map<String, Role> get() = filterOptions()
 
-    public val mentionables: Map<String, Entity> get() = filterOptions()
+    public val mentionables: Map<String, KordEntity> get() = filterOptions()
+
+    public val attachments: Map<String, Attachment> get() = filterOptions()
 
     private inline fun <reified T> filterOptions(): Map<String, T> {
         return buildMap {
@@ -76,7 +75,7 @@ public fun InteractionCommand(
         rootPredicate -> RootCommand(data, kord)
         groupPredicate -> GroupCommand(data, kord)
         subCommandPredicate -> SubCommand(data, kord)
-        else -> error("The interaction data provided is not an chat input command")
+        else -> error("The interaction data provided is not a chat input command")
     }
 }
 
