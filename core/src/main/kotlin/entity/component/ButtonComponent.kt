@@ -4,7 +4,6 @@ import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ChatComponentData
-import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.interaction.ComponentInteraction
 
@@ -16,7 +15,7 @@ import dev.kord.core.entity.interaction.ComponentInteraction
 
 public class ButtonComponent(override val data: ChatComponentData) : Component {
 
-    override val type: ComponentType
+    override val type: ComponentType.Button
         get() = ComponentType.Button
 
     /**

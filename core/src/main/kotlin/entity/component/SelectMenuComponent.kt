@@ -1,8 +1,8 @@
 package dev.kord.core.entity.component
 
+import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.optional.orEmpty
-import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.cache.data.SelectOptionData
 import dev.kord.core.entity.Message
@@ -13,6 +13,9 @@ import dev.kord.core.entity.interaction.SelectMenuInteraction
  */
 
 public class SelectMenuComponent(override val data: ComponentData) : Component {
+
+    override val type: ComponentType.SelectMenu
+        get() = ComponentType.SelectMenu
 
     /**
      * The custom identifier for any [ComponentInteractions][SelectMenuInteraction]
@@ -86,7 +89,7 @@ public class SelectOption(public val data: SelectOptionData) {
     /**
      * Whether this option is selected by default.
      */
-    public val default: Boolean? = data.default.value
+    public val default: Boolean = data.default.discordBoolean
 
     override fun equals(other: Any?): Boolean {
         if (other !is SelectOption) return false

@@ -4,7 +4,6 @@ import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.TextInputStyle
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.TextInputComponentData
-import dev.kord.core.entity.interaction.ComponentInteraction
 
 /**
  * An interactive component rendered on a Modal.
@@ -12,7 +11,7 @@ import dev.kord.core.entity.interaction.ComponentInteraction
 
 public class TextInputComponent(override val data: TextInputComponentData) : Component {
 
-    override val type: ComponentType
+    override val type: ComponentType.TextInput
         get() = ComponentType.TextInput
 
     /**
@@ -43,7 +42,7 @@ public class TextInputComponent(override val data: TextInputComponentData) : Com
     /**
      * If the text input is required.
      */
-    public val required: Boolean get() = data.required.discordBoolean
+    public val required: Boolean get() = data.required.orElse(true)
 
     /**
      * The value of the text input.

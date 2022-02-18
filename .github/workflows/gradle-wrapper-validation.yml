@@ -1,0 +1,14 @@
+# This workflow will validate the checksums of Gradle Wrapper JAR files
+
+name: Gradle Wrapper Validation
+
+on: [ push, pull_request ]
+
+jobs:
+  validation:
+    name: Validate Gradle Wrapper
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
