@@ -51,11 +51,17 @@ public sealed interface InteractionCommand : KordObject {
 
     public val attachments: Map<String, Attachment> get() = filterOptions()
 
-    private inline fun <reified T> filterOptions(): Map<String, T> {
-        return buildMap {
-            options.onEach { (key, value) ->
-                val wrappedValue = value.value
-                if (wrappedValue is T) put(key, wrappedValue)
+    private inline fun <reified T> filterOptions(): Map<String, T> = buildMap {
+        options.forEach { (key, value) ->
+            when (value) {
+                is ResolvableOptionValue<*> -> {
+                    val resolvedObject = value.resolvedObject
+                    if (resolvedObject is T) put(key, resolvedObject)
+                }
+                else -> {
+                    val wrappedValue = value.value
+                    if (wrappedValue is T) put(key, wrappedValue)
+                }
             }
         }
     }
