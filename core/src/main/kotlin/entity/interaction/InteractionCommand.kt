@@ -11,25 +11,28 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.ResolvedChannel
 
 /**
- * The base command of all commands that can be executed under an interaction event.
+ * The base interface of all commands that can be executed under a [ChatInputCommandInteraction].
+ *
+ * See [here](https://discord.com/developers/docs/interactions/application-commands#subcommands-and-subcommand-groups)
+ * for more information about sub-commands and groups.
+ *
+ * @see RootCommand
+ * @see SubCommand
+ * @see GroupCommand
  */
 public sealed interface InteractionCommand : KordObject {
-    /**
-     * The id of the root command.
-     */
-    public val rootId: Snowflake
+    public val data: ApplicationInteractionData
 
-    /**
-     * The root command name
-     */
-    public val rootName: String
+    /** The id of the root command. */
+    public val rootId: Snowflake get() = data.id.value!!
 
-    /**
-     * the values passed to the command.
-     */
+    /** The name of the root command. */
+    public val rootName: String get() = data.name.value!!
+
+    /** The values passed to the command. */
     public val options: Map<String, OptionValue<*>>
 
-    public val resolved: ResolvedObjects?
+    public val resolvedObjects: ResolvedObjects? get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
 
     public val strings: Map<String, String> get() = filterOptions()
 
@@ -67,6 +70,7 @@ public sealed interface InteractionCommand : KordObject {
     }
 }
 
+
 public fun InteractionCommand(
     data: ApplicationInteractionData,
     kord: Kord,
@@ -85,95 +89,69 @@ public fun InteractionCommand(
     }
 }
 
+
 /**
  * Represents an invocation of a root command.
  *
  * The root command is the first command defined in a slash-command structure.
+ *
+ * See [here](https://discord.com/developers/docs/interactions/application-commands#subcommands-and-subcommand-groups)
+ * for more information about sub-commands and groups.
  */
-
 public class RootCommand(
-    public val data: ApplicationInteractionData,
+    override val data: ApplicationInteractionData,
     override val kord: Kord,
 ) : InteractionCommand {
 
-    override val rootId: Snowflake
-        get() = data.id.value!!
-
-    override val rootName: String get() = data.name.value!!
-
     override val options: Map<String, OptionValue<*>>
         get() = data.options.orEmpty()
-            .associate { it.name to OptionValue(it.value.value!!, resolved) }
-
-    override val resolved: ResolvedObjects?
-        get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
-
+            .associate { it.name to OptionValue(it.value.value!!, resolvedObjects) }
 }
 
-/**
- * Represents an invocation of a sub-command under the [RootCommand]
- */
 
+/**
+ * Represents an invocation of a sub-command under the root command.
+ *
+ * See [here](https://discord.com/developers/docs/interactions/application-commands#subcommands-and-subcommand-groups)
+ * for more information about sub-commands and groups.
+ */
 public class SubCommand(
-    public val data: ApplicationInteractionData,
+    override val data: ApplicationInteractionData,
     override val kord: Kord,
 ) : InteractionCommand {
 
     private val subCommandData = data.options.orEmpty().first()
 
-    override val rootName: String get() = data.name.value!!
-
-    override val rootId: Snowflake
-        get() = data.id.value!!
-
-    /**
-     * Name of the sub-command executed.
-     */
+    /** The name of the sub-command. */
     public val name: String get() = subCommandData.name
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.values.orEmpty()
-            .associate { it.name to OptionValue(it, resolved) }
-
-
-    override val resolved: ResolvedObjects?
-        get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
-
-
+            .associate { it.name to OptionValue(it, resolvedObjects) }
 }
 
-/**
- * Represents an invocation of a sub-command under a group.
- */
 
+/**
+ * Represents an invocation of a sub-command under a group under the root command.
+ *
+ * See [here](https://discord.com/developers/docs/interactions/application-commands#subcommands-and-subcommand-groups)
+ * for more information about sub-commands and groups.
+ */
 public class GroupCommand(
-    public val data: ApplicationInteractionData,
+    override val data: ApplicationInteractionData,
     override val kord: Kord,
 ) : InteractionCommand {
 
     private val groupData get() = data.options.orEmpty().first()
     private val subCommandData get() = groupData.subCommands.orEmpty().first()
 
-    override val rootId: Snowflake
-        get() = data.id.value!!
-
-    override val rootName: String get() = data.name.value!!
-
-    /**
-     * Name of the group of this sub-command.
-     */
+    /** The name of the group of this sub-command. */
     public val groupName: String get() = groupData.name
 
-    /**
-     * Name of this sub-command
-     */
+    /** The name of this sub-command. */
     public val name: String get() = subCommandData.name
 
     override val options: Map<String, OptionValue<*>>
         get() = subCommandData.options.orEmpty()
-            .associate { it.name to OptionValue(it, resolved) }
-
-
-    override val resolved: ResolvedObjects?
-        get() = data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
+            .associate { it.name to OptionValue(it, resolvedObjects) }
 }
