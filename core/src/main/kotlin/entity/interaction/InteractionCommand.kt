@@ -47,7 +47,7 @@ public sealed interface InteractionCommand : KordObject {
 
     public val roles: Map<String, Role> get() = filterOptions()
 
-    public val mentionables: Map<String, KordEntity> get() = filterOptions()
+    public val mentionables: Map<String, Entity> get() = filterOptions()
 
     public val attachments: Map<String, Attachment> get() = filterOptions()
 
