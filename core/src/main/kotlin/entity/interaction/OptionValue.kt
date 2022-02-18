@@ -11,17 +11,26 @@ public sealed interface OptionValue<out T> {
     public val focused: Boolean
 }
 
-public sealed interface ResolvableOptionValue<out T> : OptionValue<Snowflake> {
+public sealed interface ResolvableOptionValue<out T : Entity> : OptionValue<Snowflake> {
     public val resolvedObject: T?
 }
-
+public class IntegerOptionValue(override val value: Long, override val focused: Boolean) : OptionValue<Long> {
+    override fun toString(): String = "IntegerOptionValue(value=$value)"
+}
+@Deprecated(
+    "This will be replaced with IntegerOptionValue in future releases",
+    ReplaceWith(
+        "IntegerOptionValue(value, focused)",
+        "dev.kord.core.entity.interaction.IntegerOptionValue"
+    )
+)
 public class IntOptionValue(override val value: Long, override val focused: Boolean) : OptionValue<Long> {
     override fun toString(): String = "IntOptionValue(value=$value)"
 }
 
 
 public class NumberOptionValue(override val value: Double, override val focused: Boolean) : OptionValue<Double> {
-    override fun toString(): String = "DoubleOptionValue(value=$value)"
+    override fun toString(): String = "NumberOptionValue(value=$value)"
 }
 
 public class StringOptionValue(override val value: String, override val focused: Boolean) : OptionValue<String> {
