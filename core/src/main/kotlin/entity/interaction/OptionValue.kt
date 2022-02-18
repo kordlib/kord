@@ -11,17 +11,15 @@ public sealed interface OptionValue<out T> {
     public val focused: Boolean
 }
 
-public sealed interface ResolvableOptionValue<out T> : OptionValue<Snowflake> {
+public sealed interface ResolvableOptionValue<out T : Entity> : OptionValue<Snowflake> {
     public val resolvedObject: T?
 }
-
-public class IntOptionValue(override val value: Long, override val focused: Boolean) : OptionValue<Long> {
-    override fun toString(): String = "IntOptionValue(value=$value)"
+public class IntegerOptionValue(override val value: Long, override val focused: Boolean) : OptionValue<Long> {
+    override fun toString(): String = "IntegerOptionValue(value=$value)"
 }
 
-
 public class NumberOptionValue(override val value: Double, override val focused: Boolean) : OptionValue<Double> {
-    override fun toString(): String = "DoubleOptionValue(value=$value)"
+    override fun toString(): String = "NumberOptionValue(value=$value)"
 }
 
 public class StringOptionValue(override val value: String, override val focused: Boolean) : OptionValue<String> {
@@ -62,7 +60,7 @@ public fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjec
     return when (value) {
         is CommandArgument.NumberArgument -> NumberOptionValue(value.value, focused)
         is CommandArgument.BooleanArgument -> BooleanOptionValue(value.value, focused)
-        is CommandArgument.IntegerArgument -> IntOptionValue(value.value, focused)
+        is CommandArgument.IntegerArgument -> IntegerOptionValue(value.value, focused)
         is CommandArgument.StringArgument, is CommandArgument.AutoCompleteArgument ->
             StringOptionValue(value.value as String, focused)
         is CommandArgument.ChannelArgument -> {
