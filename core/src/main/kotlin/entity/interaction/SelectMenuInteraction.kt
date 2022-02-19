@@ -4,7 +4,6 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.Guild
-import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.component.SelectMenuComponent
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -21,10 +20,7 @@ public sealed interface SelectMenuInteraction : ComponentInteraction {
     public val values: List<String> get() = data.data.values.orEmpty()
 
     override val component: SelectMenuComponent
-        get() = message.components
-            .filterIsInstance<ActionRowComponent>()
-            .flatMap { it.selectMenus }
-            .first { it.customId == componentId }
+        get() = message.actionRows.firstNotNullOf { it.selectMenus[componentId] }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): SelectMenuInteraction
 }

@@ -10,6 +10,7 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.component.Component
+import dev.kord.core.entity.component.TextInputComponent
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -26,9 +27,19 @@ public sealed interface ModalSubmitInteraction : ActionInteraction, ComponentInt
      */
     public val modalId: String get() = data.data.customId.value!!
 
-    /** The components of the modal containing the values submitted by the user. */
-    public val modalComponents: List<ActionRowComponent>
+    /** The [ActionRowComponent]s of the modal containing the values submitted by the user. */
+    public val actionRows: List<ActionRowComponent>
         get() = data.data.components.orEmpty().map { ActionRowComponent(it) }
+
+    /**
+     * The [TextInputComponent]s of the modal, indexed by their [customId][TextInputComponent.customId]. They contain
+     * the [value][TextInputComponent.value]s submitted by the user.
+     */
+    public val textInputs: Map<String, TextInputComponent>
+        get() = actionRows
+            .flatMap { it.components }
+            .filterIsInstance<TextInputComponent>()
+            .associateBy { it.customId }
 
     /**
      * The message the [Component], to which the modal was the response for, is attached to.

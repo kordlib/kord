@@ -3,7 +3,6 @@ package dev.kord.core.entity.interaction
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.Guild
-import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.component.ButtonComponent
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -12,10 +11,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public sealed interface ButtonInteraction : ComponentInteraction {
 
     override val component: ButtonComponent
-        get() = message.components
-            .filterIsInstance<ActionRowComponent>()
-            .flatMap { it.buttons }
-            .first { it.customId == componentId }
+        get() = message.actionRows.firstNotNullOf { it.interactionButtons[componentId] }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ButtonInteraction
 }

@@ -19,6 +19,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
+import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.component.Component
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
@@ -283,9 +284,13 @@ public class Message(
      */
     public val webhookId: Snowflake? get() = data.webhookId.value
 
-
+    @Deprecated("Replaced with 'actionRows'.", ReplaceWith("this.actionRows"))
     public val components: List<Component>
         get() = data.components.orEmpty().map { Component(it) }
+
+    /** The [ActionRowComponent]s of this message. */
+    public val actionRows: List<ActionRowComponent>
+        get() = data.components.orEmpty().map { ActionRowComponent(it) }
 
     /**
      * Returns itself.
