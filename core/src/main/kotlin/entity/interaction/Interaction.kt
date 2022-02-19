@@ -5,13 +5,14 @@ import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.entity.User
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * An instance of [ActionInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction).
+ * An instance of an
+ * [interaction](https://discord.com/developers/docs/interactions/receiving-and-responding#interactions).
  *
  * @see ActionInteraction
  * @see DataInteraction
@@ -21,17 +22,10 @@ public sealed interface Interaction : InteractionBehavior {
 
     override val id: Snowflake get() = data.id
 
-    override val applicationId: Snowflake
-        get() = data.applicationId
+    override val applicationId: Snowflake get() = data.applicationId
 
-    /**
-     * The channel id where the interaction took place.
-     */
     override val channelId: Snowflake get() = data.channelId
 
-    /**
-     * a continuation token for responding to the interaction
-     */
     override val token: String get() = data.token
 
     /**
@@ -39,10 +33,11 @@ public sealed interface Interaction : InteractionBehavior {
      */
     public val type: InteractionType get() = data.type
 
-    public val user: UserBehavior
+    /** The invoker of the interaction. */
+    public val user: User
 
     /**
-     * The selected language of the invoking user
+     * The selected language of the invoking user.
      *
      * This is available on all interaction types except [InteractionType.Ping]
      */
@@ -58,7 +53,7 @@ public sealed interface Interaction : InteractionBehavior {
      */
     public val version: Int get() = data.version
 
-    abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction
 
     public companion object {
         public fun from(
