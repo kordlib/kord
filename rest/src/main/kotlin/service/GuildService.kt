@@ -348,13 +348,13 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             keys[Route.IntegrationId] = integrationId
         }
 
-    @Suppress("RedundantSuspendModifier")
+    @Suppress("RedundantSuspendModifier", "UNUSED_PARAMETER")
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("getGuildWidget(guildId)"), DeprecationLevel.ERROR)
     public suspend fun getGuildEmbed(guildId: Snowflake): Nothing =
         throw Exception("Guild embeds were renamed to widgets.")
 
-    @Suppress("RedundantSuspendModifier")
+    @Suppress("RedundantSuspendModifier", "UNUSED_PARAMETER")
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(
         "Guild embeds were renamed to widgets.",

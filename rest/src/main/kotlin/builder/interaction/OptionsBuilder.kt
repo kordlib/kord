@@ -135,6 +135,10 @@ public class MentionableBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Mentionable)
 
 @KordDsl
+public class AttachmentBuilder(name: String, description: String) :
+    OptionsBuilder(name, description, ApplicationCommandOptionType.Attachment)
+
+@KordDsl
 public sealed class BaseCommandOptionBuilder(
     name: String,
     description: String,

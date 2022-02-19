@@ -42,6 +42,12 @@ public inline fun BaseInputChatBuilder.role(name: String, description: String, b
     options!!.add(RoleBuilder(name, description).apply(builder))
 }
 
+public inline fun BaseInputChatBuilder.attachment(name: String, description: String, builder: AttachmentBuilder.() -> Unit = {}) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    if (options == null) options = mutableListOf()
+    options!!.add(AttachmentBuilder(name, description).apply(builder))
+}
+
 public inline fun BaseInputChatBuilder.number(name: String, description: String, builder: NumberChoiceBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()

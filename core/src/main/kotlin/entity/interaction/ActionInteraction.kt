@@ -223,6 +223,8 @@ public class ResolvedObjects(
     public val messages: Map<Snowflake, Message>?
         get() = data.messages.mapValues { Message(it.value, kord) }.value
 
+    public val attachments: Map<Snowflake, Attachment>?
+        get() = data.attachments.mapValues { Attachment(it.value, kord) }.value
 }
 
 
@@ -243,6 +245,10 @@ public sealed class OptionValue<out T>(public val value: T, public val focused: 
     public class ChannelOptionValue(value: ResolvedChannel, focused: Boolean) :
         OptionValue<ResolvedChannel>(value, focused) {
         override fun toString(): String = "ChannelOptionValue(value=$value)"
+    }
+
+    public class AttachmentOptionValue(value: Attachment, focused: Boolean) : OptionValue<Attachment>(value, focused) {
+        override fun toString(): String = "AttachmentOptionValue(value=$value)"
     }
 
     public class IntOptionValue(value: Long, focused: Boolean) : OptionValue<Long>(value, focused) {
@@ -314,6 +320,13 @@ public fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjec
             requireNotNull(user) { "user expected for $value but was missing" }
 
             OptionValue.UserOptionValue(user, focused)
+        }
+
+        is CommandArgument.AttachmentArgument -> {
+            val attachment = resolvedObjects?.attachments.orEmpty()[value.value]
+            requireNotNull(attachment) { "attachment expected for $value but was missing" }
+
+            OptionValue.AttachmentOptionValue(attachment, focused)
         }
     }
 }

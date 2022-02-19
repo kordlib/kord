@@ -322,7 +322,7 @@ public class Kord(
     public suspend fun getWebhookWithTokenOrNull(
         id: Snowflake,
         token: String,
-        strategy: EntitySupplyStrategy<*>
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
     ): Webhook? =
         strategy.supply(this).getWebhookWithTokenOrNull(id, token)
 

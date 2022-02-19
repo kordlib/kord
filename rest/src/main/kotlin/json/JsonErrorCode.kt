@@ -253,6 +253,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** You are opening direct messages too fast. */
     TooFastDM(40003),
 
+    /** Send messages has been temporarily disabled. */
+    SendMessagesTemporarilyDisabled(40004),
+
     /** Request entity too large. Try sending something smaller in size. */
     RequestEntityTooLarge(40005),
 
@@ -270,6 +273,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** An application command with that name already exists. */
     ApplicationCommandNameExists(40041),
+
+    /** Interaction has already been acknowledged. */
+    InteractionAlreadyAcknowledged(40060),
 
     /** Missing access. */
     MissingAccess(50001),

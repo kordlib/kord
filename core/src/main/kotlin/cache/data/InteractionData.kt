@@ -61,7 +61,8 @@ public data class ResolvedObjectsData(
     val users: Optional<Map<Snowflake, UserData>> = Optional.Missing(),
     val roles: Optional<Map<Snowflake, RoleData>> = Optional.Missing(),
     val channels: Optional<Map<Snowflake, ChannelData>> = Optional.Missing(),
-    val messages: Optional<Map<Snowflake, MessageData>> = Optional.Missing()
+    val messages: Optional<Map<Snowflake, MessageData>> = Optional.Missing(),
+    val attachments: Optional<Map<Snowflake, AttachmentData>> = Optional.Missing()
 ) {
     public companion object {
         public fun from(data: ResolvedObjects, guildId: Snowflake?): ResolvedObjectsData {
@@ -70,7 +71,8 @@ public data class ResolvedObjectsData(
                 channels = data.channels.mapValues { ChannelData.from(it.value) },
                 roles = data.roles.mapValues { RoleData.from(guildId!!, it.value) },
                 users = data.users.mapValues { it.value.toData() },
-                messages = data.messages.mapValues { it.value.toData() }
+                messages = data.messages.mapValues { it.value.toData() },
+                attachments = data.attachments.mapValues { AttachmentData.from(it.value) }
             )
         }
     }
