@@ -5,8 +5,6 @@ import dev.kord.common.entity.MessageFlag.Ephemeral
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.orEmpty
-import dev.kord.rest.builder.component.ActionRowBuilder
-import dev.kord.rest.builder.component.ComponentBuilder
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
@@ -663,7 +661,15 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
+    @Deprecated(
+        "Renamed to 'deferMessage'.",
+        ReplaceWith("this.deferMessage(interactionId, interactionToken, ephemeral)"),
+    )
     public suspend fun acknowledge(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
+        deferMessage(interactionId, interactionToken, ephemeral)
+    }
+
+    public suspend fun deferMessage(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
         val flags = if (ephemeral) MessageFlags(Ephemeral) else null
         val request = InteractionResponseCreateRequest(
             type = InteractionResponseType.DeferredChannelMessageWithSource,
@@ -671,6 +677,11 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
                 flags?.let { InteractionApplicationCommandCallbackData(flags = Optional(it)) }
             ).coerceToMissing()
         )
+        createInteractionResponse(interactionId, interactionToken, request)
+    }
+
+    public suspend fun deferMessageUpdate(interactionId: Snowflake, interactionToken: String) {
+        val request = InteractionResponseCreateRequest(type = InteractionResponseType.DeferredUpdateMessage)
         createInteractionResponse(interactionId, interactionToken, request)
     }
 }

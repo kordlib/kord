@@ -38,8 +38,8 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * on public and ephemeral messages.
      */
     @Deprecated(
-        "Renamed to 'acknowledgeDeferredPublicMessageUpdate'. Also take a look at the new documentation.",
-        ReplaceWith("this.acknowledgeDeferredPublicMessageUpdate()"),
+        "Renamed to 'deferPublicMessageUpdate'. Also take a look at the new documentation.",
+        ReplaceWith("this.deferPublicMessageUpdate()"),
     )
     public suspend fun acknowledgePublicDeferredMessageUpdate(): PublicMessageInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
@@ -64,11 +64,8 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * This is not available for [ModalSubmitInteraction]s that do not contain a
      * [message][ModalSubmitInteraction.message].
      */
-    public suspend fun acknowledgeDeferredPublicMessageUpdate(): PublicMessageInteractionResponseBehavior {
-
-        val request = InteractionResponseCreateRequest(type = InteractionResponseType.DeferredUpdateMessage)
-        kord.rest.interaction.createInteractionResponse(id, token, request)
-
+    public suspend fun deferPublicMessageUpdate(): PublicMessageInteractionResponseBehavior {
+        kord.rest.interaction.deferMessageUpdate(id, token)
         return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
     }
 
@@ -83,8 +80,8 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * on public and ephemeral messages.
      */
     @Deprecated(
-        "Renamed to 'acknowledgeDeferredEphemeralMessageUpdate'. Also take a look at the new documentation.",
-        ReplaceWith("this.acknowledgeDeferredEphemeralMessageUpdate()"),
+        "Renamed to 'deferEphemeralMessageUpdate'. Also take a look at the new documentation.",
+        ReplaceWith("this.deferEphemeralMessageUpdate()"),
     )
     public suspend fun acknowledgeEphemeralDeferredMessageUpdate(): EphemeralMessageInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
@@ -114,11 +111,8 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * This is not available for [ModalSubmitInteraction]s that do not contain a
      * [message][ModalSubmitInteraction.message].
      */
-    public suspend fun acknowledgeDeferredEphemeralMessageUpdate(): EphemeralMessageInteractionResponseBehavior {
-
-        val request = InteractionResponseCreateRequest(type = InteractionResponseType.DeferredUpdateMessage)
-        kord.rest.interaction.createInteractionResponse(id, token, request)
-
+    public suspend fun deferEphemeralMessageUpdate(): EphemeralMessageInteractionResponseBehavior {
+        kord.rest.interaction.deferMessageUpdate(id, token)
         return EphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
     }
 

@@ -25,8 +25,16 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      *
      * Call [edit][EphemeralMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
      */
-    public suspend fun acknowledgeEphemeral(): EphemeralMessageInteractionResponseBehavior {
-        kord.rest.interaction.acknowledge(id, token, ephemeral = true)
+    @Deprecated("Renamed to 'deferEphemeralMessage'.", ReplaceWith("this.deferEphemeralMessage()"))
+    public suspend fun acknowledgeEphemeral(): EphemeralMessageInteractionResponseBehavior = deferEphemeralMessage()
+
+    /**
+     * Acknowledges the interaction ephemerally with the intent of responding with an [ephemeral][MessageFlag.Ephemeral]
+     * message later by calling [edit][EphemeralMessageInteractionResponseBehavior.edit] on the returned object. The
+     * user will see a 'loading' animation.
+     */
+    public suspend fun deferEphemeralMessage(): EphemeralMessageInteractionResponseBehavior {
+        kord.rest.interaction.deferMessage(id, token, ephemeral = true)
         return EphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
     }
 
@@ -35,8 +43,16 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      *
      * Call [edit][PublicMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
      */
-    public suspend fun acknowledgePublic(): PublicMessageInteractionResponseBehavior {
-        kord.rest.interaction.acknowledge(id, token, ephemeral = false)
+    @Deprecated("Renamed to 'deferPublicMessage'.", ReplaceWith("this.deferPublicMessage()"))
+    public suspend fun acknowledgePublic(): PublicMessageInteractionResponseBehavior = deferPublicMessage()
+
+    /**
+     * Acknowledges the interaction publicly with the intent of responding with a public message later by calling
+     * [edit][PublicMessageInteractionResponseBehavior.edit] on the returned object. The user will see a 'loading'
+     * animation.
+     */
+    public suspend fun deferPublicMessage(): PublicMessageInteractionResponseBehavior {
+        kord.rest.interaction.deferMessage(id, token, ephemeral = false)
         return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
     }
 
