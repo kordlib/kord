@@ -257,6 +257,7 @@ public sealed class InteractionType(public val type: Int) {
     public object Component : InteractionType(3)
 
     public object AutoComplete : InteractionType(4)
+    public object ModalSubmit : InteractionType(5)
     public class Unknown(type: Int) : InteractionType(type)
 
     override fun toString(): String = when (this) {
@@ -264,6 +265,7 @@ public sealed class InteractionType(public val type: Int) {
         ApplicationCommand -> "InteractionType.ApplicationCommand($type)"
         Component -> "InteractionType.ComponentInvoke($type)"
         AutoComplete -> "InteractionType.AutoComplete($type)"
+        ModalSubmit -> "InteractionType.ModalSubmit($type)"
         is Unknown -> "InteractionType.Unknown($type)"
     }
 
@@ -278,6 +280,7 @@ public sealed class InteractionType(public val type: Int) {
                 2 -> ApplicationCommand
                 3 -> Component
                 4 -> AutoComplete
+                5 -> ModalSubmit
                 else -> Unknown(type)
             }
         }
@@ -303,6 +306,7 @@ public data class InteractionCallbackData(
     @SerialName("component_type")
     val componentType: Optional<ComponentType> = Optional.Missing(),
     val values: Optional<List<String>> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
 @Serializable(with = Option.Serializer::class)
@@ -695,6 +699,7 @@ public sealed class InteractionResponseType(public val type: Int) {
     public object DeferredUpdateMessage : InteractionResponseType(6)
     public object UpdateMessage : InteractionResponseType(7)
     public object ApplicationCommandAutoCompleteResult : InteractionResponseType(8)
+    public object Modal : InteractionResponseType(9)
     public class Unknown(type: Int) : InteractionResponseType(type)
 
     internal object Serializer : KSerializer<InteractionResponseType> {
@@ -710,6 +715,7 @@ public sealed class InteractionResponseType(public val type: Int) {
                 6 -> DeferredUpdateMessage
                 7 -> UpdateMessage
                 8 -> ApplicationCommandAutoCompleteResult
+                9 -> Modal
                 else -> Unknown(type)
             }
         }
@@ -770,4 +776,12 @@ public data class DiscordGuildApplicationCommandPermission(
 @Serializable
 public data class DiscordAutoComplete<T>(
     val choices: List<Choice<T>>
+)
+
+@Serializable
+public data class DiscordModal(
+    val title: String,
+    @SerialName("custom_id")
+    val customId: String,
+    val components: List<DiscordComponent>,
 )
