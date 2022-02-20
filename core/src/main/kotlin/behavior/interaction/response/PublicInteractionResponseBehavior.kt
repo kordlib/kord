@@ -9,7 +9,7 @@ import dev.kord.rest.request.RestRequestException
 
 
 /**
- * The behavior of a public [Discord ActionInteraction Response](https://discord.com/developers/docs/interactions/slash-commands#interaction-response)
+ * The behavior of a public Discord Interaction Response
  * This response is visible to all users in the channel.
  */
 

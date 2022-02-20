@@ -670,26 +670,6 @@ public data class CommandGroup(
         get() = ApplicationCommandOptionType.SubCommandGroup
 }
 
-public fun CommandArgument<*>.int(): Long {
-    return value as? Long ?: error("$value wasn't an int.")
-}
-
-
-public fun CommandArgument<*>.string(): String {
-    return value.toString()
-}
-
-
-public fun CommandArgument<*>.boolean(): Boolean {
-    return value as? Boolean ?: error("$value wasn't a Boolean.")
-}
-
-
-public fun CommandArgument<*>.snowflake(): Snowflake {
-    val id = string().toULongOrNull() ?: error("$value wasn't a Snowflake")
-    return Snowflake(id)
-}
-
 @Serializable(InteractionResponseType.Serializer::class)
 
 public sealed class InteractionResponseType(public val type: Int) {
@@ -715,6 +695,7 @@ public sealed class InteractionResponseType(public val type: Int) {
                 6 -> DeferredUpdateMessage
                 7 -> UpdateMessage
                 8 -> ApplicationCommandAutoCompleteResult
+                9 -> Modal
                 else -> Unknown(type)
             }
         }

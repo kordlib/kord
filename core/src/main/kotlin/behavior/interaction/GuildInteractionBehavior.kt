@@ -37,7 +37,7 @@ public interface GuildInteractionBehavior : InteractionBehavior {
 
     override suspend fun getChannel(): GuildMessageChannel = supplier.getChannelOf(channelId)
 
-    override suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    override suspend fun getChannelOrNull(): GuildMessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildInteractionBehavior =
         GuildInteractionBehavior(guildId, id, channelId, applicationId, token, kord, supplier)
