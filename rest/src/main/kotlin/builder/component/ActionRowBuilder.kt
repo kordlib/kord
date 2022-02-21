@@ -2,8 +2,10 @@ package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ButtonStyle
+import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
+import dev.kord.common.entity.TextInputStyle
 import dev.kord.common.entity.optional.Optional
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -51,8 +53,25 @@ public class ActionRowBuilder : MessageComponentBuilder {
         components.add(SelectMenuBuilder(customId).apply(builder))
     }
 
+    /**
+     * Creates and adds a text input with the [customId] and configured by the [builder].
+     * Text Inputs can only be used within modals.
+     */
+    public inline fun textInput(
+        style: TextInputStyle,
+        customId: String,
+        label: String,
+        builder: TextInputBuilder.() -> Unit
+    ) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(TextInputBuilder(style, customId, label).apply(builder))
+    }
+
     override fun build(): DiscordComponent =
-        DiscordComponent(
+        DiscordChatComponent(
             ComponentType.ActionRow,
             components = Optional.missingOnEmpty(components.map(ActionRowComponentBuilder::build))
         )

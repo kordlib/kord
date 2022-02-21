@@ -1,6 +1,7 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.optional.Optional
@@ -29,7 +30,7 @@ public class SelectMenuBuilder(
      * The range of values that can be accepted. Accepts any range between [0,25].
      * Defaults to `1..1`.
      */
-    public var allowedValues: IntRange = 1..1
+    public var allowedValues: ClosedRange<Int> = 1..1
 
 
     private var _placeholder: Optional<String> = Optional.Missing()
@@ -57,13 +58,13 @@ public class SelectMenuBuilder(
     }
 
     override fun build(): DiscordComponent {
-        return DiscordComponent(
+        return DiscordChatComponent(
             ComponentType.SelectMenu,
             customId = Optional(customId),
             disabled = _disabled,
             placeholder = _placeholder,
-            minValues = OptionalInt.Value(allowedValues.first),
-            maxValues = OptionalInt.Value(allowedValues.last),
+            minValues = OptionalInt.Value(allowedValues.start),
+            maxValues = OptionalInt.Value(allowedValues.endInclusive),
             options = Optional(options.map { it.build() })
         )
     }

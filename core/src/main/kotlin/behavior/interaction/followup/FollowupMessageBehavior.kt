@@ -1,4 +1,4 @@
-package dev.kord.core.behavior.interaction
+package dev.kord.core.behavior.interaction.followup
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.MessageChannelBehavior
@@ -7,9 +7,9 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.MessageChannel
-import dev.kord.core.entity.interaction.EphemeralFollowupMessage
-import dev.kord.core.entity.interaction.FollowupMessage
-import dev.kord.core.entity.interaction.PublicFollowupMessage
+import dev.kord.core.entity.interaction.followup.EphemeralFollowupMessage
+import dev.kord.core.entity.interaction.followup.FollowupMessage
+import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder

@@ -33,7 +33,7 @@ public data class Locale(val language: String, val country: String? = null) {
         /**
          * English (Great Britain).
          */
-        public val ENGLISH_GREAT_BRITAN: Locale = Locale("en", "GB")
+        public val ENGLISH_GREAT_BRITAIN: Locale = Locale("en", "GB")
 
         /**
          * Bulgarian.
@@ -108,7 +108,7 @@ public data class Locale(val language: String, val country: String? = null) {
         /**
          * Japanese.
          */
-        public val JAPENESE: Locale = Locale("ja")
+        public val JAPANESE: Locale = Locale("ja")
 
         /**
          * Korean.
@@ -180,7 +180,7 @@ public data class Locale(val language: String, val country: String? = null) {
          * All languages [supported by Discord](https://discord.com/developers/docs/reference#Locales).
          */
         public val ALL: List<Locale> = listOf(
-            ENGLISH_UNITED_STATES, ENGLISH_GREAT_BRITAN,
+            ENGLISH_UNITED_STATES, ENGLISH_GREAT_BRITAIN,
             BULGARIAN,
             CHINESE_CHINA, CHINESE_TAIWAN,
             CROATIAN,
@@ -194,7 +194,7 @@ public data class Locale(val language: String, val country: String? = null) {
             HINDI,
             HUNGARIAN,
             ITALIAN,
-            JAPENESE,
+            JAPANESE,
             KOREAN,
             LITHUANIAN,
             NORWEGIAN,
