@@ -6,6 +6,7 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.followup.FollowupMessageBehavior
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.supplier.EntitySupplyStrategy
 
 @Deprecated(
     "'InteractionFollowup' was renamed to 'FollowupMessage'.",
@@ -32,6 +33,8 @@ public sealed class FollowupMessage(public val message: Message) : FollowupMessa
      * The id of the [MessageChannel] the followup message was sent in.
      */
     override val channelId: Snowflake get() = message.channelId
+
+    abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): FollowupMessage
 }
 
 

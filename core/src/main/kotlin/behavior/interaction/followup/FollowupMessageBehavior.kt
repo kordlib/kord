@@ -10,6 +10,7 @@ import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.interaction.followup.EphemeralFollowupMessage
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
@@ -32,6 +33,7 @@ public interface FollowupMessageBehavior : KordEntity, Strategizable {
 
     public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): FollowupMessageBehavior
 }
 
 /**
