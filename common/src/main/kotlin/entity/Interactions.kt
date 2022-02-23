@@ -521,7 +521,7 @@ public sealed class CommandArgument<out T> : Option() {
      * @property value whatever the user already typed into the argument field
      * @property focused always true, since this is an auto complete argument
      */
-    public class AutoCompleteArgument(
+    public data class AutoCompleteArgument(
         override val name: String,
         override val type: ApplicationCommandOptionType,
         override val value: String,

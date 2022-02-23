@@ -1,7 +1,6 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.CommandArgument
-import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.AutoCompleteInteractionBehavior
@@ -20,11 +19,22 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  */
 public sealed interface AutoCompleteInteraction : DataInteraction, AutoCompleteInteractionBehavior {
 
-    /** The id of the command. */
-    public val commandId: Snowflake get() = data.data.id.value!!
+    /**
+     * An [InteractionCommand] that contains the values the user filled so far.
+     *
+     * This might not contain all [options][InteractionCommand.options] and
+     * [resolvedObjects][InteractionCommand.resolvedObjects], they will be available in a [ChatInputCommandInteraction].
+     */
+    public val command: InteractionCommand get() = InteractionCommand(data.data, kord)
 
-    /** The name of the command. */
-    public val commandName: String get() = data.data.name.value!!
+    /**
+     * The single [focused][OptionValue.focused] option the user is currently typing.
+     *
+     * This is always a [StringOptionValue], the [value][OptionValue.value] is not validated yet, so it could be
+     * anything.
+     */
+    public val focusedOption: StringOptionValue
+        get() = command.options.values.single { it.focused } as StringOptionValue
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoCompleteInteraction
 }
