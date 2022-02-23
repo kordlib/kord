@@ -129,6 +129,7 @@ public sealed class Permission(public val code: DiscordBitSet) {
     public object ManageGuild : Permission(0x00000020)
     public object AddReactions : Permission(0x00000040)
     public object ViewAuditLog : Permission(0x00000080)
+    public object PrioritySpeaker : Permission(0x00000100)
     public object Stream : Permission(0x00000200)
     public object ViewChannel : Permission(0x00000400)
     public object SendMessages : Permission(0x00000800)
@@ -146,23 +147,41 @@ public sealed class Permission(public val code: DiscordBitSet) {
     public object DeafenMembers : Permission(0x00800000)
     public object MoveMembers : Permission(0x01000000)
     public object UseVAD : Permission(0x02000000)
-    public object PrioritySpeaker : Permission(0x00000100)
     public object ChangeNickname : Permission(0x04000000)
     public object ManageNicknames : Permission(0x08000000)
     public object ManageRoles : Permission(0x10000000)
     public object ManageWebhooks : Permission(0x20000000)
-    public object ManageEmojis : Permission(0x40000000)
-    public object UseSlashCommands : Permission(0x80000000)
+    public object ManageEmojisAndStickers : Permission(0x40000000)
+    public object UseApplicationCommands : Permission(0x80000000)
     public object RequestToSpeak : Permission(0x100000000)
     public object ManageEvents : Permission(0x0200000000)
     public object ManageThreads : Permission(0x0400000000)
     public object CreatePublicThreads : Permission(0x0800000000)
     public object CreatePrivateThreads : Permission(0x1000000000)
+    public object UseExternalStickers : Permission(0x0000002000000000)
     public object SendMessagesInThreads : Permission(0x4000000000)
+    public object UseEmbeddedActivities : Permission(0x0000008000000000)
     public object ModerateMembers : Permission(0x0000010000000000)
     public object All : Permission(buildAll())
 
     public companion object {
+
+        @Deprecated(
+            "Renamed to 'ManageEmojisAndStickers'.",
+            ReplaceWith("Permission.ManageEmojisAndStickers", "dev.kord.common.entity.Permission"),
+            DeprecationLevel.ERROR,
+        )
+        public val ManageEmojis: ManageEmojisAndStickers
+            get() = ManageEmojisAndStickers
+
+        @Deprecated(
+            "Renamed to 'UseApplicationCommands'.",
+            ReplaceWith("Permission.UseApplicationCommands", "dev.kord.common.entity.Permission"),
+            DeprecationLevel.ERROR,
+        )
+        public val UseSlashCommands: UseApplicationCommands
+            get() = UseApplicationCommands
+
         // We cannot inline this into the "All" object, because that causes a weird compiler error
         private fun buildAll(): DiscordBitSet = values.fold(EmptyBitSet()) { acc, value -> acc + value.code }
 
@@ -176,6 +195,8 @@ public sealed class Permission(public val code: DiscordBitSet) {
                 ManageGuild,
                 AddReactions,
                 ViewAuditLog,
+                PrioritySpeaker,
+                Stream,
                 ViewChannel,
                 SendMessages,
                 SendTTSMessages,
@@ -192,19 +213,20 @@ public sealed class Permission(public val code: DiscordBitSet) {
                 DeafenMembers,
                 MoveMembers,
                 UseVAD,
-                PrioritySpeaker,
                 ChangeNickname,
                 ManageNicknames,
                 ManageRoles,
                 ManageWebhooks,
-                ManageEmojis,
-                UseSlashCommands,
+                ManageEmojisAndStickers,
+                UseApplicationCommands,
                 RequestToSpeak,
                 ManageEvents,
                 ManageThreads,
                 CreatePublicThreads,
                 CreatePrivateThreads,
+                UseExternalStickers,
                 SendMessagesInThreads,
+                UseEmbeddedActivities,
                 ModerateMembers
             )
     }
