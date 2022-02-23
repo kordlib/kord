@@ -118,51 +118,150 @@ public fun Permissions(permissions: Iterable<Permissions>): Permissions = Permis
 }
 
 
+/** A [Permission](https://discord.com/developers/docs/topics/permissions) in Discord. */
 public sealed class Permission(public val code: DiscordBitSet) {
     protected constructor(vararg values: Long) : this(DiscordBitSet(values))
 
+    /** Allows creation of instant invites. */
     public object CreateInstantInvite : Permission(1L shl 0)
+
+    /** Allows kicking members. */
     public object KickMembers : Permission(1L shl 1)
+
+    /** Allows banning members. */
     public object BanMembers : Permission(1L shl 2)
+
+    /** Allows all permissions and bypasses channel permission overwrites. */
     public object Administrator : Permission(1L shl 3)
+
+    /** Allows management and editing of channels. */
     public object ManageChannels : Permission(1L shl 4)
+
+    /** Allows management and editing of the guild. */
     public object ManageGuild : Permission(1L shl 5)
+
+    /** Allows for the addition of reactions to messages. */
     public object AddReactions : Permission(1L shl 6)
+
+    /** Allows for viewing of audit logs. */
     public object ViewAuditLog : Permission(1L shl 7)
+
+    /** Allows for using priority speaker in a voice channel. */
     public object PrioritySpeaker : Permission(1L shl 8)
+
+    /** Allows the user to go live. */
     public object Stream : Permission(1L shl 9)
+
+    /**
+     * Allows guild members to view a channel, which includes reading messages in text channels and joining voice
+     * channels.
+     */
     public object ViewChannel : Permission(1L shl 10)
+
+    /** Allows for sending messages in a channel (does not allow sending messages in threads). */
     public object SendMessages : Permission(1L shl 11)
+
+    /** Allows for sending of `/tts` messages. */
     public object SendTTSMessages : Permission(1L shl 12)
+
+    /** Allows for deletion of other users messages. */
     public object ManageMessages : Permission(1L shl 13)
+
+    /** Links sent by users with this permission will be auto-embedded. */
     public object EmbedLinks : Permission(1L shl 14)
+
+    /** Allows for uploading images and files. */
     public object AttachFiles : Permission(1L shl 15)
+
+    /** Allows for reading of message history. */
     public object ReadMessageHistory : Permission(1L shl 16)
+
+    /**
+     * Allows for using the `@everyone` tag to notify all users in a channel, and the `@here` tag to notify all online
+     * users in a channel.
+     */
     public object MentionEveryone : Permission(1L shl 17)
+
+    /** Allows the usage of custom emojis from other servers. */
     public object UseExternalEmojis : Permission(1L shl 18)
+
+    /** Allows for viewing guild insights. */
     public object ViewGuildInsights : Permission(1L shl 19)
+
+    /** Allows for joining of a voice channel. */
     public object Connect : Permission(1L shl 20)
+
+    /** Allows for speaking in a voice channel. */
     public object Speak : Permission(1L shl 21)
+
+    /** Allows for muting members in a voice channel. */
     public object MuteMembers : Permission(1L shl 22)
+
+    /** Allows for deafening of members in a voice channel. */
     public object DeafenMembers : Permission(1L shl 23)
+
+    /** Allows for moving of members between voice channels. */
     public object MoveMembers : Permission(1L shl 24)
+
+    /** Allows for using voice-activity-detection in a voice channel. */
     public object UseVAD : Permission(1L shl 25)
+
+    /** Allows for modification of own nickname. */
     public object ChangeNickname : Permission(1L shl 26)
+
+    /** Allows for modification of other users nicknames. */
     public object ManageNicknames : Permission(1L shl 27)
+
+    /** Allows management and editing of roles. */
     public object ManageRoles : Permission(1L shl 28)
+
+    /** Allows management and editing of webhooks. */
     public object ManageWebhooks : Permission(1L shl 29)
+
+    /** Allows management and editing of emojis and stickers. */
     public object ManageEmojisAndStickers : Permission(1L shl 30)
+
+    /** Allows members to use application commands, including slash commands and context menu commands. */
     public object UseApplicationCommands : Permission(1L shl 31)
+
+    /**
+     * Allows for requesting to speak in stage channels.
+     *
+     * _This permission is under active development and may be changed or removed._
+     */
     public object RequestToSpeak : Permission(1L shl 32)
+
+    /** Allows for creating, editing, and deleting scheduled events. */
     public object ManageEvents : Permission(1L shl 33)
+
+    /** Allows for deleting and archiving threads, and viewing all private threads. */
     public object ManageThreads : Permission(1L shl 34)
+
+    /** Allows for creating public and announcement threads. */
     public object CreatePublicThreads : Permission(1L shl 35)
+
+    /** Allows for creating private threads. */
     public object CreatePrivateThreads : Permission(1L shl 36)
+
+    /** Allows the usage of custom stickers from other servers. */
     public object UseExternalStickers : Permission(1L shl 37)
+
+    /** Allows for sending messages in threads. */
     public object SendMessagesInThreads : Permission(1L shl 38)
+
+    /** Allows for using Activities (applications with the `EMBEDDED` flag) in a voice channel. */
     public object UseEmbeddedActivities : Permission(1L shl 39)
+
+    /**
+     * Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from
+     * speaking in voice and stage channels.
+     */
     public object ModerateMembers : Permission(1L shl 40)
+
+
+    /** All [Permission]s combined into one. */
     public object All : Permission(buildAll())
+
 
     public companion object {
 
