@@ -1,9 +1,8 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordComponent
+import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
@@ -57,7 +56,7 @@ public class SelectMenuBuilder(
         options.add(SelectOptionBuilder(label = label, value = value).apply(builder))
     }
 
-    override fun build(): DiscordComponent {
+    override fun build(): DiscordChatComponent {
         return DiscordChatComponent(
             ComponentType.SelectMenu,
             customId = Optional(customId),
