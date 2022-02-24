@@ -28,8 +28,9 @@ public data class VoiceStateData(
     val mute: Boolean,
     val selfDeaf: Boolean,
     val selfMute: Boolean,
-    val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val suppress: Boolean,
+    val selfVideo: Boolean,
+    val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val requestToSpeakTimestamp: String?
 ) {
     public companion object {
@@ -47,6 +48,7 @@ public data class VoiceStateData(
                 selfDeaf = selfDeaf,
                 selfMute = selfMute,
                 selfStream = selfStream,
+                selfVideo = selfVideo,
                 suppress = suppress,
                 requestToSpeakTimestamp = requestToSpeakTimestamp
             )
